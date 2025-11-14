@@ -1,0 +1,1342 @@
+{
+  "schema_version": "2.2",
+  "domain": "Interventional Pulmonology",
+  "generated_at": "2025-11-08",
+  "license_note": "CPT® content is owned by the AMA; verify selections with current CPT manuals and payer policies. This is for educational purposes; always verify with current coding resources.",
+  "metadata": {
+    "author": "IP Assist Lite - Enhanced",
+    "provenance": [
+      "configs/_shared/ifu_frontmatter.yaml",
+      "internal coding curriculum",
+      "ip_coding_billing v1",
+      "AABIP guideline references",
+      "NCCI Policy Manual",
+      "Medicare LCDs/NCDs"
+    ],
+    "sources_summary": [
+      "Internal coding rules and OPPS notes (MER, sedation coding, facility vs professional, OPPS packaging for +31627).",
+      "Narrative expert guide linking CPT/ICD/HCPCS, POS impact, and documentation standards.",
+      "NCCI edits, CMS transmittals, and LCD requirements for bronchoscopy and pleural procedures."
+    ]
+  },
+
+  "global": {
+    "principles": [
+      {
+        "id": "diagnostic_included_with_surgical_endoscopy",
+        "statement": "Surgical bronchoscopy includes diagnostic bronchoscopy performed by the same physician in the same session—do not separately report 31622 when a therapeutic endoscopic code is billed.",
+        "rationale": "CPT/NCCI bundling principle.",
+        "citations": ["ip_coding_billing.global_principles.surgical_includes_diagnostic_endoscopy", "NCCI Policy Manual Chapter 5"]
+      },
+      {
+        "id": "multiple_endoscopy_rule_mer",
+        "statement": "Apply the Multiple Endoscopy Rule (MER): pay the highest-valued base bronchoscopy code at 100%; other non–add‑on bronchoscopic codes are reduced (typically 50% of difference) and add‑on codes are paid in full.",
+        "notes": [
+          "Use 31622 as the MER base when required by payer.",
+          "Sequence matters: primary first, then others with -51 or per payer.",
+          "MER applies within the bronchoscopy family (31622-31661).",
+          "Calculate: Primary at 100% + (Secondary - Base) × 50% for each additional"
+        ],
+        "citations": ["ip_coding_billing.global_principles.multiple_endoscopy_rule", "expert_guide.section_2.3_multiple_endoscopy_rule", "CPT Appendix E"]
+      },
+      {
+        "id": "sedation_moderate",
+        "statement": "When the bronchoscopist provides moderate sedation, report 99152 (initial 15 min) and +99153 (each additional 15 min); document start/stop times and the independent trained observer.",
+        "facility_flag": "Medicare commonly treats 99153 as technical-only in facilities. Do not bill moderate sedation codes if anesthesia provides MAC/general.",
+        "documentation_requirements": [
+          "Pre-sedation assessment (ASA, NPO status, consent)",
+          "Continuous monitoring (vitals, O2 sat, EtCO2)",
+          "Start/stop times (induction to emergence)",
+          "Independent observer name and credentials",
+          "Medications with doses and times",
+          "Complications and interventions"
+        ],
+        "citations": ["ip_coding_billing.global_principles.moderate_sedation", "CPT 99151-99157 guidelines"]
+      },
+      {
+        "id": "anesthesia_involvement",
+        "statement": "If anesthesia provides MAC or general anesthesia, do NOT bill moderate sedation codes (99152/99153). Anesthesia bills their codes (00520, 00524, 00542, etc.).",
+        "citations": ["CPT sedation guidelines"]
+      },
+      {
+        "id": "opps_packaging_navigation",
+        "statement": "Under OPPS, +31627 (computer‑assisted navigation) is typically packaged (SI=N)—report for rate-setting but expect no separate facility payment when paired with a primary bronchoscopic service.",
+        "note": "Professional component (-26) may still be separately payable in some scenarios.",
+        "citations": ["ip_coding_billing.procedures.nav_bronchoscopy.opps", "CMS OPPS Final Rule"]
+      },
+      {
+        "id": "post_procedure_imaging",
+        "statement": "Post‑procedure chest imaging to confirm tube/drainage/device or exclude complications is generally not separately reportable per NCCI when performed same session.",
+        "exceptions": "If imaging reveals unexpected findings requiring separate interpretation and management beyond routine confirmation, may be separately reportable with -59.",
+        "citations": ["ip_coding_billing.global_principles.post_procedure_imaging", "NCCI Policy Manual"]
+      },
+      {
+        "id": "pos_split_billing",
+        "statement": "Place of Service determines payment split: in hospital outpatient (POS 22/19) physicians bill professional fees (MPFS) while the facility bills OPPS/APC technical fees. In office (POS 11), physician bills global.",
+        "citations": ["expert_guide.section_6.1_pos_split_billing"]
+      },
+      {
+        "id": "fluoroscopy_included",
+        "statement": "Fluoroscopic guidance is included in bronchoscopy codes and should not be separately reported (76000, 76001). Exception: if complex fluoroscopy/CT guidance beyond routine scope visualization.",
+        "citations": ["NCCI edits", "CPT parenthetical notes"]
+      },
+      {
+        "id": "bilateral_procedures",
+        "statement": "For pleural procedures performed bilaterally on same date, append modifier -50. Documentation must clearly support bilateral medical necessity.",
+        "payment_impact": "Typically 150% of unilateral fee (100% + 50%).",
+        "citations": ["CPT modifier -50 guidelines"]
+      },
+      {
+        "id": "global_surgical_package",
+        "statement": "Bronchoscopic procedures generally have 0-day or 10-day global periods. E/M services within global period require modifier -25 and distinct documentation.",
+        "citations": ["Medicare Global Surgery Data File"]
+      }
+    ],
+    "modifiers": [
+      {"code": "-22", "name": "Increased procedural services", "doc": "Requires detailed op note explaining extra complexity (e.g., severe bleeding, difficult anatomy). Often requires additional documentation/appeal.", "frequent_audit": true},
+      {"code": "-25", "name": "Significant, separate E/M same day", "doc": "Document distinct E/M beyond pre/post procedural work. Must meet criteria for separately identifiable service.", "frequent_audit": true},
+      {"code": "-26", "name": "Professional component only", "doc": "Facility owns equipment/technical component. Used for split billing in hospital setting."},
+      {"code": "-50", "name": "Bilateral procedure", "doc": "Common for pleural procedures when truly bilateral same session."},
+      {"code": "-51", "name": "Multiple procedures", "doc": "Use per payer; MER may apply to endoscopy families. Some payers auto-apply."},
+      {"code": "-52", "name": "Reduced services", "doc": "Part of planned service performed; not for cancellations before starting. Requires documentation of what was NOT done."},
+      {"code": "-53", "name": "Discontinued procedure", "doc": "Aborted for patient safety after initiation (document timestamps and reason). Separate from never-started procedure."},
+      {"code": "-58", "name": "Staged procedure", "doc": "Planned staged procedure during postoperative period (e.g., second-stage valve placement)."},
+      {"code": "-59", "name": "Distinct procedural service", "doc": "Use sparingly to bypass NCCI when distinct site/encounter; prefer -XS/-XE/-XP/-XU if payer requires. Heavily audited—ensure true distinctness."},
+      {"code": "-76", "name": "Repeat procedure same physician", "doc": "Same procedure repeated same day by same physician (e.g., repeat therapeutic aspiration for re-accumulating secretions)."},
+      {"code": "-77", "name": "Repeat procedure different physician", "doc": "Same procedure repeated same day by different physician."},
+      {"code": "-78", "name": "Unplanned return to OR", "doc": "Related complication requiring return to procedure room during postoperative period."},
+      {"code": "-79", "name": "Unrelated procedure during postop", "doc": "New unrelated procedure during postoperative period of another procedure."},
+      {"code": "XE", "name": "Separate encounter", "doc": "NCCI X-modifier: distinct encounter same day."},
+      {"code": "XP", "name": "Separate practitioner", "doc": "NCCI X-modifier: different provider same day."},
+      {"code": "XS", "name": "Separate structure", "doc": "NCCI X-modifier: distinct anatomic site (preferred over -59 for CMS)."},
+      {"code": "XU", "name": "Unusual non-overlapping service", "doc": "NCCI X-modifier: services not ordinarily performed together."}
+    ]
+  },
+
+  "rules": {
+    "global": [
+      {
+        "if_all": ["any(bronchoscopic_therapeutic_code) == true", "contains(31622) == true"],
+        "then": ["drop_code(31622)"],
+        "why": "Surgical includes diagnostic endoscopy per CPT guidelines."
+      },
+      {
+        "if_all": ["contains(31636) == true", "contains(31630) == true", "same_segment == true"],
+        "then": ["drop_code(31630)"],
+        "why": "Dilation bundled with stent in the same airway segment per NCCI."
+      },
+      {
+        "if_all": ["contains(31640) == true", "contains(31641) == true", "same_site == true"],
+        "then": ["deny_combo(31640,31641)"],
+        "why": "Excision and destruction at the same site bundle—choose one that best describes dominant modality."
+      },
+      {
+        "if_all": ["contains(+31654) == true", "any_of(31652,31653) == true"],
+        "then": ["deny_combo(+31654, linear_ebus_sampling)"],
+        "why": "Radial EBUS (+31654) is not billed with linear EBUS sampling codes 31652/31653 per CPT instructions."
+      },
+      {
+        "if_all": ["contains(+31627) == true", "navigation_initiated == false"],
+        "then": ["drop_code(+31627)"],
+        "why": "Navigation add‑on requires actual initiation; do not report if never started."
+      },
+      {
+        "if_all": ["moderate_sedation_by_proceduralist == true", "anesthesia_involved == false"],
+        "then": ["require_fields(['sedation_start','sedation_stop','observer_present','pre_sedation_assessment'])",
+                 "suggest_codes(['99152','+99153*'])"]
+      },
+      {
+        "if_all": ["moderate_sedation_by_proceduralist == true", "anesthesia_involved == true"],
+        "then": ["drop_codes(['99152','+99153'])", "flag('Anesthesia providing sedation—do not bill moderate sedation')"]
+      },
+      {
+        "if_all": ["thoracentesis_bilateral == true"],
+        "then": ["append_modifier(pleural_code,'-50')", "require_field('bilateral_medical_necessity')"]
+      },
+      {
+        "if_all": ["contains(31646) == true", "no_prior_31645_this_hospitalization == true"],
+        "then": ["flag('31646 requires prior 31645 during same hospitalization')"]
+      },
+      {
+        "if_all": ["bronchoscopy_performed == true", "fluoroscopy_separately_coded == true"],
+        "then": ["drop_codes(['76000','76001'])", "flag('Fluoroscopy included in bronchoscopy')"]
+      },
+      {
+        "if_all": ["contains(31641) == true", "contains(31643) == true", "same_lesion == true"],
+        "then": ["deny_combo(31641,31643)"],
+        "why": "Cryotherapy/cryoablation (31641) and cryorecanalization (31643) are distinct—select appropriate code."
+      },
+      {
+        "if_all": ["em_code_same_day == true", "lacks_modifier_25 == true", "not_global_period_exempt == true"],
+        "then": ["flag('E/M same day as procedure requires -25 modifier with distinct documentation')"]
+      }
+    ],
+    "mer": {
+      "family": "bronchoscopy",
+      "base_hint": "31622",
+      "base_rvu": 3.92,
+      "add_on_whitelist": ["+31627","+31632","+31633","+31637","+31649","+31651","+31654"],
+      "algorithm": "primary = highest_rvu_non_addon; pay primary at 100%; for each additional non-addon: pay (Code_RVU - Base_RVU) × 50% + Base_RVU; add‑ons paid in full at 100%.",
+      "note": "Payer-specific variations exist; verify local policy."
+    },
+    "ncci_edits": {
+      "note": "Representative NCCI edits; verify with current NCCI tables",
+      "examples": [
+        {"column_1": "31622", "column_2": "31624", "modifier_allowed": "0", "note": "Diagnostic bronch bundled with brushing/BAL"},
+        {"column_1": "31631", "column_2": "31630", "modifier_allowed": "1", "note": "Stent bundles dilation same site; -59 for distinct site"},
+        {"column_1": "31640", "column_2": "31641", "modifier_allowed": "1", "note": "Tumor excision vs destruction same site; -59 if distinct"},
+        {"column_1": "32554", "column_2": "76942", "modifier_allowed": "0", "note": "US guidance included in thoracentesis"}
+      ]
+    }
+  },
+
+  "procedures": [
+    {
+      "id": "bronchoscopy_diagnostic",
+      "cpt": ["31622"],
+      "descriptor": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; diagnostic, with cell washing, when performed",
+      "synonyms": ["diagnostic bronchoscopy", "bronch with washing"],
+      "rvu": {"work": 3.92, "pe_nonfacility": 7.21, "pe_facility": 2.54, "mp": 0.37},
+      "global_period": "0",
+      "documentation_min": [
+        "Indication with supporting diagnoses",
+        "Extent of exam (all visualized structures)",
+        "Findings (normal vs abnormal with description)",
+        "Complications and immediate management",
+        "Patient tolerance and disposition"
+      ],
+      "coding_notes": [
+        "Included within surgical bronchoscopy same session (drop 31622 if any therapeutic bronchoscopic code billed).",
+        "Cell washing/lavage included in base code.",
+        "Fluoroscopy included; do not separately report 76000/76001."
+      ],
+      "anatomic_detail": "Document all visualized structures: vocal cords, trachea, carina, bilateral mainstem, lobar, and segmental bronchi to extent visualized.",
+      "citations": ["ip_coding_billing.procedures.bronchoscopy_diagnostic", "expert_guide.section_2.1_foundation", "CPT 2025"]
+    },
+    {
+      "id": "brush_bal",
+      "cpt": {
+        "31623": "Bronchoscopy, rigid or flexible; with brushing or protected brushings",
+        "31624": "Bronchoscopy, rigid or flexible; with bronchial alveolar lavage"
+      },
+      "synonyms": ["bronchial brushing", "BAL", "bronchoalveolar lavage"],
+      "doc_fields": [
+        "Explicit 'brushing' or 'BAL' terminology",
+        "Anatomic location (specific lobe/segment)",
+        "Volume instilled and recovered (for BAL)",
+        "Specimen handling and destination"
+      ],
+      "coding_notes": [
+        "31623 and 31624 are mutually exclusive same site per NCCI but may be reported for different sites with appropriate modifier.",
+        "Diagnostic bronch (31622) bundled—don't report separately if brushing/BAL performed."
+      ],
+      "mer_family": "bronchoscopy",
+      "citations": ["expert_guide.section_2.2_specimen_collection", "CPT 2025"]
+    },
+    {
+      "id": "tblb_forceps_or_cryo",
+      "cpt": {
+        "31628": "Bronchoscopy, rigid or flexible; with transbronchial lung biopsy(s), single lobe",
+        "+31632": "Bronchoscopy, rigid or flexible; with transbronchial lung biopsy(s), each additional lobe (List separately)"
+      },
+      "synonyms": ["TBLB", "transbronchial biopsy", "cryobiopsy", "cryo-TBB"],
+      "doc_fields": [
+        "Lobe(s) sampled with laterality",
+        "Technique (conventional forceps vs cryoprobe)",
+        "Number of passes per lobe",
+        "Fluoroscopy used (included, don't separately code)",
+        "Specimen adequacy assessment",
+        "Hemostasis method if needed",
+        "Complications (pneumothorax, bleeding)"
+      ],
+      "coding_notes": [
+        "31628 once per session for first lobe; +31632 per each additional lobe.",
+        "No separate 'cryobiopsy' CPT—use 31628/+31632 regardless of technique (forceps vs cryoprobe).",
+        "Do not pair with linear EBUS sampling code (31652/31653) for same target—choose dominant sampling method.",
+        "Fluoroscopy included; do not bill separately."
+      ],
+      "documentation_emphasis": "Clearly document each lobe sampled separately to support +31632 add-on code(s).",
+      "citations": ["ip_coding_billing.procedures.tblb_forceps_or_cryo", "CPT 2025"]
+    },
+    {
+      "id": "tbna_conventional",
+      "cpt": {
+        "31629": "Bronchoscopy, rigid or flexible; with transbronchial needle aspiration biopsy(s), trachea, main stem and/or lobar bronchus(i)",
+        "+31633": "Bronchoscopy, rigid or flexible; with transbronchial needle aspiration biopsy(s), each additional lobe (List separately)"
+      },
+      "synonyms": ["TBNA", "conventional TBNA", "blind TBNA"],
+      "doc_fields": [
+        "Lobe/region sampled",
+        "Lymph node station if known",
+        "Needle size (typically 19G, 21G, 22G)",
+        "Passes per site",
+        "ROSE (rapid on-site evaluation) used: Y/N",
+        "Specimen adequacy"
+      ],
+      "coding_notes": [
+        "31629 for initial lobe/region; +31633 for each additional lobe.",
+        "Distinct from EBUS-TBNA (31652/31653) which requires ultrasound guidance.",
+        "Cannot bill conventional TBNA with EBUS-TBNA for same target."
+      ],
+      "citations": ["ip_coding_billing.procedures.tbna_conventional", "CPT 2025"]
+    },
+    {
+      "id": "linear_ebus_tbna",
+      "cpt": {
+        "31652": "Bronchoscopy, rigid or flexible; with endobronchial ultrasound (EBUS) guided transbronchial needle aspiration biopsy(s), trachea, main stem and/or lobar bronchus(i), single or first lobe",
+        "31653": "Bronchoscopy, rigid or flexible; with endobronchial ultrasound (EBUS) guided transbronchial needle aspiration biopsy(s), 3 or more mediastinal and/or hilar lymph node stations or structures"
+      },
+      "synonyms": ["EBUS-TBNA", "linear EBUS", "endobronchial ultrasound with FNA"],
+      "doc_fields": [
+        "Named LN stations per IASLC map (e.g., 2R, 4R, 4L, 7, 10R, 11L)",
+        "Passes per station",
+        "Needle gauge (typically 21G, 22G)",
+        "ROSE present: Y/N",
+        "Adequacy per station",
+        "Findings per station (benign, malignant, suspicious)"
+      ],
+      "coding_notes": [
+        "31652 for 1-2 lymph node stations/structures.",
+        "31653 for 3+ lymph node stations/structures.",
+        "Report once per session regardless of laterality.",
+        "Do not report with 31654 (radial EBUS) in same session.",
+        "Consider appending anatomic modifier if payer requires side distinction."
+      ],
+      "station_mapping": {
+        "supraclavicular": ["1"],
+        "upper_paratracheal": ["2R", "2L"],
+        "prevascular_retrotracheal": ["3a", "3p"],
+        "lower_paratracheal": ["4R", "4L"],
+        "subaortic": ["5"],
+        "para_aortic": ["6"],
+        "subcarinal": ["7"],
+        "paraesophageal": ["8"],
+        "pulmonary_ligament": ["9"],
+        "hilar": ["10R", "10L"],
+        "interlobar": ["11R", "11L"],
+        "lobar": ["12R", "12L"],
+        "segmental": ["13R", "13L"],
+        "subsegmental": ["14R", "14L"]
+      },
+      "documentation_emphasis": "Must explicitly name each LN station; 'hilar' or 'mediastinal' alone insufficient. Use IASLC station numbering.",
+      "citations": ["ip_coding_billing.procedures.ebus_tbna", "CPT 2025", "IASLC LN Map"]
+    },
+    {
+      "id": "radial_ebus_addon",
+      "cpt": ["+31654"],
+      "descriptor": "Bronchoscopy, rigid or flexible; with transendoscopic endobronchial ultrasound (EBUS) during bronchoscopic diagnostic or therapeutic intervention(s) for peripheral lesion(s) (List separately in addition to code for primary procedure[s])",
+      "synonyms": ["radial EBUS", "radial probe EBUS", "miniprobe"],
+      "requires_primary": true,
+      "primary_codes_allowed": ["31622-31653"],
+      "incompatible_with": ["31652", "31653"],
+      "doc_fields": [
+        "Peripheral lesion localization via radial EBUS",
+        "Lobe and segment",
+        "Probe size",
+        "Relationship to lesion (concentric, eccentric, adjacent)",
+        "Tool-in-lesion confirmation images",
+        "Primary procedure coded"
+      ],
+      "coding_notes": [
+        "Add-on code; requires primary bronchoscopy code.",
+        "Reported once per session (payer policies vary on per-lobe usage; most treat +31654 as once per session).",
+        "Cannot bill with linear EBUS sampling (31652/31653).",
+        "Radial probe used for localization; actual sampling coded separately (e.g., 31628, 31629)."
+      ],
+      "citations": ["ip_coding_billing.procedures.ebus_without_tbna", "CPT 2025"]
+    },
+    {
+      "id": "navigation_addon",
+      "cpt": ["+31627"],
+      "descriptor": "Bronchoscopy, rigid or flexible; with computer-assisted, image-guided navigation (List separately in addition to code for primary procedure)",
+      "synonyms": ["electromagnetic navigation", "ENB", "image-guided bronchoscopy"],
+      "requires_primary": true,
+      "primary_codes_allowed": ["31622-31646", "31648-31651"],
+      "opps": {"status_indicator": "N (packaged)", "note": "No separate facility payment under OPPS; report for data/rate-setting."},
+      "doc_fields": [
+        "System used (manufacturer/model)",
+        "CT integration and planning",
+        "Navigation initiated: Y/N",
+        "Target reached: Y/N",
+        "If aborted: reason and at what stage",
+        "Accuracy assessment"
+      ],
+      "coding_notes": [
+        "Bill only if navigation actually initiated (equipment turned on, planning performed, catheter placed).",
+        "Do not bill if navigation planned but never started.",
+        "Professional component may be separately payable even if facility component packaged.",
+        "Requires CT scan for planning; ensure CT interpretable and sufficient quality documented."
+      ],
+      "lcd_considerations": "Some Medicare contractors require documentation of CT planning software and target coordinates.",
+      "citations": ["ip_coding_billing.procedures.nav_bronchoscopy", "CPT 2025", "CMS OPPS"]
+    },
+    {
+      "id": "fiducials",
+      "cpt": ["31626"],
+      "descriptor": "Bronchoscopy, rigid or flexible; with placement of fiducial markers, single or multiple",
+      "synonyms": ["fiducial marker placement", "radiation therapy planning"],
+      "doc_fields": [
+        "Number of markers placed",
+        "Type/manufacturer of markers",
+        "Anatomic location(s) with lobe/segment",
+        "Guidance modality (fluoroscopy, navigation, other)",
+        "Confirmation of placement"
+      ],
+      "coding_notes": [
+        "Report once per session regardless of number of markers.",
+        "Typically for radiation therapy planning (CyberKnife, etc.).",
+        "Document medical necessity (e.g., upcoming SBRT treatment)."
+      ],
+      "citations": ["ip_coding_billing.procedures.fiducial_markers", "CPT 2025"]
+    },
+    {
+      "id": "chartis",
+      "cpt": ["31634"],
+      "descriptor": "Bronchoscopy, rigid or flexible; with balloon occlusion, with assessment of air flow, with administration of therapeutic agent(s) (eg, assessment for bronchoscopic lung volume reduction)",
+      "synonyms": ["Chartis assessment", "collateral ventilation assessment"],
+      "doc_fields": [
+        "Lobe(s) assessed with laterality",
+        "Collateral ventilation result (CV+, CV-, indeterminate)",
+        "Impact on treatment plan (valve candidate vs not)",
+        "Duration of assessment per lobe"
+      ],
+      "coding_notes": [
+        "Typically performed prior to endobronchial valve placement.",
+        "Some payers may not allow same-session billing with valve placement (31647/31651)—check LCD/local policy.",
+        "Medical necessity should clearly link to BLVR candidacy assessment."
+      ],
+      "mutual_exclusion_hints": ["Payer policies may disallow same-session billing with valves—check NCCI/LCDs"],
+      "lcd_reference": "Verify local coverage determination for BLVR procedures.",
+      "citations": ["ip_coding_billing.procedures.chartis_assessment", "CPT 2025"]
+    },
+    {
+      "id": "blvr_valves",
+      "cpt": {
+        "31647": "Bronchoscopy, rigid or flexible; with balloon occlusion, when performed, assessment of air leak, airway sizing, and insertion of bronchial valve(s), initial lobe",
+        "+31651": "Bronchoscopy, rigid or flexible; with balloon occlusion, when performed, assessment of air leak, airway sizing, and insertion of bronchial valve(s), each additional lobe (List separately in addition to code for primary procedure)",
+        "31648": "Bronchoscopy, rigid or flexible; with removal of bronchial valve(s), initial lobe",
+        "+31649": "Bronchoscopy, rigid or flexible; with removal of bronchial valve(s), each additional lobe (List separately in addition to code for primary procedure)"
+      },
+      "synonyms": ["endobronchial valve", "EBV", "bronchoscopic lung volume reduction", "BLVR", "Zephyr valve", "Spiration valve"],
+      "doc_fields": [
+        "Treated lobe(s) with laterality",
+        "Number of valves per lobe",
+        "Valve size(s)",
+        "Manufacturer (Zephyr, Spiration, etc.)",
+        "Pre-placement assessment (sizing, air leak)",
+        "Deployment confirmation",
+        "For removal: indication (infection, pneumothorax, ineffective, etc.)"
+      ],
+      "coding_notes": [
+        "31647 for initial lobe insertion; +31651 each additional lobe.",
+        "31648 for initial lobe removal; +31649 each additional lobe.",
+        "Cannot bill both insertion and removal same lobe same session.",
+        "Chartis (31634) may not be separately billable same session per some payer policies.",
+        "Requires CT evidence of emphysema and appropriate patient selection per NCD."
+      ],
+      "ncd_reference": "NCD 240.10 - Bronchoscopic Lung Volume Reduction",
+      "lcd_emphasis": "Document heterogeneous emphysema, fissure integrity, absence of collateral ventilation, and appropriate patient selection criteria.",
+      "citations": ["ip_coding_billing.procedures.endobronchial_valves", "CPT 2025", "NCD 240.10"]
+    },
+    {
+      "id": "bronchial_thermoplasty",
+      "cpt": ["31660", "+31661"],
+      "descriptor": {
+        "31660": "Bronchoscopy, rigid or flexible; with bronchial thermoplasty, 1 lobe",
+        "+31661": "Bronchoscopy, rigid or flexible; with bronchial thermoplasty, 1 additional lobe (List separately)"
+      },
+      "synonyms": ["BT", "Alair therapy"],
+      "indication": "Severe persistent asthma",
+      "doc_fields": [
+        "Lobe treated with laterality",
+        "Number of activations",
+        "Airway segments treated",
+        "Pre/post-bronchodilation documented",
+        "Complications and management"
+      ],
+      "coding_notes": [
+        "Typically performed in staged fashion (3 procedures over several weeks).",
+        "31660 first lobe; +31661 each additional lobe same session.",
+        "Limited coverage—verify insurance authorization pre-procedure."
+      ],
+      "lcd_note": "Coverage varies; many payers restrict to clinical trial or specific criteria.",
+      "citations": ["CPT 2025"]
+    },
+    {
+      "id": "stents_airway",
+      "cpt": {
+        "31631": "Bronchoscopy, rigid or flexible; with placement of tracheal stent(s) (includes tracheal/bronchial dilation as required)",
+        "31636": "Bronchoscopy, rigid or flexible; with placement of bronchial stent(s) (includes tracheal/bronchial dilation as required), initial bronchus",
+        "+31637": "Bronchoscopy, rigid or flexible; with placement of bronchial stent(s) (includes tracheal/bronchial dilation as required), each additional major bronchus stented (List separately)",
+        "31638": "Bronchoscopy, rigid or flexible; with revision of tracheal or bronchial stent(s) (includes pre- and post-dilation and aspiration as required)",
+        "31635": "Bronchoscopy, rigid or flexible; with removal of foreign body"
+      },
+      "synonyms": ["airway stent", "tracheal stent", "bronchial stent", "silicone stent", "covered stent", "uncovered stent"],
+      "doc_fields": [
+        "Stent type (silicone, covered metallic, uncovered metallic)",
+        "Manufacturer and model",
+        "Size (diameter × length in mm)",
+        "Precise location (trachea vs RMB vs LMB vs lobar with side)",
+        "Pre-dilation performed: Y/N with balloon specs if yes",
+        "Post-dilation performed: Y/N",
+        "Deployment technique (rigid vs flexible bronchoscope)",
+        "Position confirmation (bronchoscopy, fluoro, imaging)",
+        "For revision: what revised and why",
+        "Images/diagrams documenting position"
+      ],
+      "coding_notes": [
+        "31631 for tracheal stent (±carina).",
+        "31636 for first bronchial stent (mainstem or lobar); +31637 each additional major bronchus.",
+        "Dilation included with stent placement same segment—do not separately report 31630.",
+        "If dilating distinct segment NOT stented, may report 31630 with modifier -59/XS.",
+        "31638 for revision/repositioning of previously placed stent.",
+        "31635 for stent removal per CPT guidelines (foreign body removal code used)."
+      ],
+      "bundling": [
+        "Dilation included with stent in same airway segment per CPT descriptor.",
+        "Append -59/XS only if distinct airway dilated (requires clear documentation)."
+      ],
+      "anatomic_specificity": "Document exact location: 'trachea,' 'right mainstem bronchus,' 'left upper lobe bronchus,' etc. Not just 'central airway.'",
+      "citations": ["ip_coding_billing.procedures.airway_stenting", "CPT 2025"]
+    },
+    {
+      "id": "airway_dilation",
+      "cpt": ["31630"],
+      "descriptor": "Bronchoscopy, rigid or flexible; with tracheal/bronchial dilation or closed reduction of fracture",
+      "synonyms": ["balloon dilation", "airway dilation", "bronchial dilation"],
+      "doc_fields": [
+        "Site(s) dilated with anatomic detail",
+        "Indication (stricture, stenosis, fracture)",
+        "Balloon size (diameter in mm)",
+        "Inflation pressure (atm)",
+        "Duration of inflation",
+        "Pre/post airway diameter if measurable",
+        "Complications"
+      ],
+      "coding_notes": [
+        "Bundled with stent placement (31631, 31636) in same airway segment.",
+        "May report separately with -59/XS if distinct segment from stent.",
+        "Report once per session even if multiple inflations same site.",
+        "For fracture reduction, must document closed reduction technique."
+      ],
+      "conflicts": ["Bundled with 31631/31636 in same segment per CPT descriptor"],
+      "citations": ["ip_coding_billing.procedures.balloon_dilation_airway", "CPT 2025"]
+    },
+    {
+      "id": "tumor_excision_vs_destruction",
+      "cpt": {
+        "31640": "Bronchoscopy, rigid or flexible; with tumor excision, with or without electrocautery",
+        "31641": "Bronchoscopy, rigid or flexible; with tumor destruction by ablative energy (eg, argon plasma coagulation, cryotherapy)"
+      },
+      "synonyms": ["tumor debulking", "endobronchial tumor removal", "APC", "argon plasma coagulation", "cryotherapy", "cryoablation", "laser", "electrocautery"],
+      "mutual_exclusion": [
+        {"pair": ["31640", "31641"], "scope": "same site", "note": "Choose code that best represents dominant technique"}
+      ],
+      "doc_fields": [
+        "Modality: excision vs specific ablative energy (APC, cryotherapy, laser, electrocautery)",
+        "Anatomic site(s) with side and airway level",
+        "Tumor size and estimated % obstruction pre/post",
+        "Volume/extent removed or ablated",
+        "Hemostasis method",
+        "Airway patency achieved",
+        "Complications"
+      ],
+      "coding_notes": [
+        "31640 for mechanical excision (snare, forceps, ±electrocautery for hemostasis).",
+        "31641 for ablative energy as primary modality (APC, cryotherapy, laser).",
+        "Cannot bill both same site same session—select one that best describes primary technique.",
+        "May bill both if truly distinct anatomic sites (different lobes) with modifier -59/XS.",
+        "Distinguish 31641 cryotherapy/ablation from 31643 cryorecanalization."
+      ],
+      "technique_mapping": {
+        "31640": ["mechanical excision", "forceps excision", "snare excision", "rigid bronchoscopy excision", "electrocautery for excision"],
+        "31641": ["argon plasma coagulation (APC)", "cryotherapy", "cryoablation", "laser ablation", "electrocautery as primary ablation"]
+      },
+      "citations": ["ip_coding_billing.procedures.therapeutic_aspiration_bleeding_control", "CPT 2025"]
+    },
+    {
+      "id": "cryorecanalization",
+      "cpt": ["31643"],
+      "descriptor": "Bronchoscopy, rigid or flexible; with placement of catheter(s) for intracavitary radioelement application",
+      "note": "Code 31643 historically used for brachytherapy catheter placement, but per local conventions sometimes reported for cryorecanalization. Verify payer interpretation.",
+      "synonyms": ["cryorecanalization", "cryodebulking", "freeze-thaw tumor removal"],
+      "doc_fields": [
+        "Technique (cryoprobe for rapid tumor debulking via freeze-thaw)",
+        "Site and laterality",
+        "Number of freeze-thaw cycles",
+        "Airway patency achieved"
+      ],
+      "coding_caution": "Lack of specific cryorecanalization code; some use 31641, others use 31643. Document clearly and verify payer preference.",
+      "citations": ["CPT 2025", "Local coding guidance"]
+    },
+    {
+      "id": "foreign_body_removal",
+      "cpt": ["31635"],
+      "descriptor": "Bronchoscopy, rigid or flexible; with removal of foreign body",
+      "synonyms": ["foreign body retrieval", "aspirated object removal"],
+      "doc_fields": [
+        "Foreign body description",
+        "Location with anatomic detail",
+        "Removal technique (forceps, basket, suction, etc.)",
+        "Complications",
+        "Completeness of removal"
+      ],
+      "coding_notes": [
+        "Also used for stent removal per CPT guidelines.",
+        "Report once per session even if multiple objects removed."
+      ],
+      "citations": ["CPT 2025"]
+    },
+    {
+      "id": "therapeutic_aspiration",
+      "cpt": {
+        "31645": "Bronchoscopy, rigid or flexible; with therapeutic aspiration of tracheobronchial tree, initial",
+        "31646": "Bronchoscopy, rigid or flexible; with therapeutic aspiration of tracheobronchial tree, subsequent, same hospital stay"
+      },
+      "synonyms": ["mucus plugging", "therapeutic lavage", "secretion clearance"],
+      "doc_fields": [
+        "Indication (mucus plugging, atelectasis, secretion retention)",
+        "Sites treated",
+        "Volume/character of secretions removed",
+        "Clinical improvement documented",
+        "For 31646: reference to prior 31645 during same hospitalization"
+      ],
+      "coding_notes": [
+        "31645 for initial therapeutic aspiration procedure during hospitalization.",
+        "31646 for subsequent therapeutic aspiration by same physician/group during same hospital stay.",
+        "Cannot bill 31646 without prior 31645 same hospitalization.",
+        "Distinct from routine suctioning during other bronchoscopy—must be primary therapeutic indication.",
+        "Diagnostic bronch (31622) bundled if no other procedures performed."
+      ],
+      "usage": ["31645 initial", "31646 repeat during same hospitalization same provider/group"],
+      "citations": ["ip_coding_billing.procedures.therapeutic_aspiration_bleeding_control", "CPT 2025"]
+    },
+    {
+      "id": "thoracentesis",
+      "cpt": {
+        "32554": "Thoracentesis, needle or catheter, aspiration of the pleural space; without imaging guidance",
+        "32555": "Thoracentesis, needle or catheter, aspiration of the pleural space; with imaging guidance"
+      },
+      "synonyms": ["pleural tap", "pleural fluid aspiration"],
+      "doc_fields": [
+        "Laterality (right, left, or bilateral with -50)",
+        "Imaging modality used (ultrasound, fluoroscopy, or none)",
+        "Permanent image archived: Y/N (required for 32555)",
+        "Volume removed (mL)",
+        "Fluid character (color, clarity)",
+        "Immediate complications (pneumothorax, bleeding, re-expansion pulmonary edema)",
+        "Specimen sent for analysis"
+      ],
+      "coding_notes": [
+        "32555 requires real-time imaging guidance and permanent image documentation.",
+        "Ultrasound guidance (76942) bundled—do not report separately.",
+        "Bilateral procedures: append -50 modifier with supporting documentation of medical necessity.",
+        "Post-procedure CXR typically bundled per NCCI unless new finding requiring separate interpretation."
+      ],
+      "bilateral_modifier": "-50",
+      "imaging_bundling": "76942 (US guidance) bundled per NCCI; do not separately report.",
+      "citations": ["ip_coding_billing.procedures.thoracentesis", "CPT 2025", "NCCI"]
+    },
+    {
+      "id": "pleural_drainage_catheter",
+      "cpt": {
+        "32556": "Pleural drainage, percutaneous, with insertion of indwelling catheter; without imaging guidance",
+        "32557": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance"
+      },
+      "synonyms": ["pigtail catheter", "small-bore pleural drain", "non-tunneled pleural catheter"],
+      "doc_fields": [
+        "Laterality",
+        "Catheter size (French)",
+        "Catheter type (pigtail, straight, etc.)",
+        "Imaging guidance used (US, fluoro, CT)",
+        "Permanent image if imaging used",
+        "Insertion site with rib interspace",
+        "Immediate drainage volume/character",
+        "Suturing/securing method",
+        "Complications"
+      ],
+      "coding_notes": [
+        "32557 requires imaging guidance and permanent image.",
+        "Distinct from tunneled IPC (32550)—non-tunneled catheter typically for short-term drainage.",
+        "US guidance bundled (76942).",
+        "For complicated effusion (loculated), may require additional procedures (32560 pleurodesis, 32561 fibrinolytic instillation)."
+      ],
+      "citations": ["ip_coding_billing.procedures.pleural_drainage_catheter_non_tunneled", "CPT 2025"]
+    },
+    {
+      "id": "ipc_tunneled",
+      "cpt": {
+        "32550": "Insertion of indwelling tunneled pleural catheter with cuff",
+        "32552": "Removal of indwelling tunneled pleural catheter with cuff"
+      },
+      "synonyms": ["IPC", "PleurX catheter", "tunneled pleural catheter", "chronic indwelling catheter"],
+      "doc_fields": [
+        "Laterality",
+        "Catheter type/manufacturer (PleurX, etc.)",
+        "Tunnel length (cm)",
+        "Cuff position (subcutaneous)",
+        "Entry site and exit site locations",
+        "Imaging guidance used (US typically)",
+        "Permanent image documentation",
+        "Initial drainage volume/character",
+        "For removal: reason (spontaneous pleurodesis, infection, malfunction, etc.) and complications"
+      ],
+      "coding_notes": [
+        "Typically for malignant pleural effusion requiring chronic drainage.",
+        "US guidance (76942) bundled per NCCI.",
+        "Document medical necessity (recurrent symptomatic effusion despite thoracentesis, failed pleurodesis, etc.).",
+        "32552 for removal—document reason and whether pleurodesis achieved."
+      ],
+      "indication": "Recurrent symptomatic pleural effusion, typically malignant",
+      "lcd_emphasis": "Document failed conventional management (repeat thoracentesis, pleurodesis attempts).",
+      "citations": ["ip_coding_billing.procedures.ipc_tunneled_pleural_catheter", "CPT 2025"]
+    },
+    {
+      "id": "pleurodesis",
+      "cpt": {
+        "32560": "Instillation, via chest tube/catheter, agent for pleurodesis (eg, talc for recurrent or persistent pneumothorax)",
+        "+32562": "Instillation, via chest tube/catheter, agent for fibrinolysis (eg, fibrinolytic agent for break up of multiloculated effusion); initial day (List separately)"
+      },
+      "synonyms": ["talc pleurodesis", "chemical pleurodesis", "sclerosant instillation"],
+      "doc_fields": [
+        "Approach (thoracoscopic vs catheter-based for 32560)",
+        "Agent used and dose (e.g., talc 4-5g, doxycycline 500mg)",
+        "Laterality",
+        "Pre-existing catheter vs new placement",
+        "Clamping protocol and duration",
+        "For fibrinolysis (+32562): agent (tPA, DNase), dose, day of therapy"
+      ],
+      "coding_notes": [
+        "32560 for pleurodesis agent instillation.",
+        "+32562 add-on code for fibrinolytic agent initial day; report per day of instillation.",
+        "If performing thoracoscopy with talc poudrage, use 32650 instead.",
+        "Document failure of conventional management for medical necessity."
+      ],
+      "citations": ["ip_coding_billing.procedures.pleurodesis", "CPT 2025"]
+    },
+    {
+      "id": "pleuroscopy",
+      "cpt": {
+        "32601": "Thoracoscopy, diagnostic (separate procedure); lungs, pericardial sac, mediastinal or pleural space, without biopsy",
+        "32604": "Thoracoscopy, diagnostic (separate procedure); pericardial sac, with biopsy",
+        "32606": "Thoracoscopy, diagnostic (separate procedure); mediastinal space, with biopsy",
+        "32609": "Thoracoscopy, diagnostic (separate procedure); pleura, with biopsy",
+        "32650": "Thoracoscopy, surgical; with pleurodesis (eg, mechanical or chemical)"
+      },
+      "synonyms": ["medical thoracoscopy", "pleuroscopy", "VATS diagnostic"],
+      "doc_fields": [
+        "Approach (single port vs multiport)",
+        "Structures examined (pleura, lung, mediastinum, pericardium)",
+        "Biopsy performed: Y/N with number of samples and locations",
+        "Laterality",
+        "Findings (nodules, plaques, adhesions, effusion)",
+        "Pleurodesis performed: Y/N with agent if yes"
+      ],
+      "coding_notes": [
+        "32601 diagnostic only without biopsy.",
+        "32604/32606/32609 diagnostic with biopsy (pericardium/mediastinum/pleura respectively).",
+        "32650 if pleurodesis performed (talc poudrage or mechanical).",
+        "If converted to surgical VATS, report appropriate surgical VATS code instead.",
+        "Typically performed by IP in procedure room; distinguish from surgical VATS in OR."
+      ],
+      "distinction": "Medical thoracoscopy (single port, local/moderate sedation, bedside or procedure room) vs Surgical VATS (multiport, general anesthesia, OR)",
+      "citations": ["ip_coding_billing.procedures.pleuroscopy", "CPT 2025"]
+    },
+    {
+      "id": "ct_guided_procedures",
+      "cpt": {
+        "32554": "See thoracentesis above",
+        "32555": "See thoracentesis above",
+        "Note": "CT-guided lung biopsy typically 32554/32555 for pleural approach or refer to interventional radiology codes if transthoracic parenchymal"
+      },
+      "note": "IP physicians performing CT-guided lung biopsies should verify appropriate CPT selection and facility privileging.",
+      "citations": ["CPT 2025"]
+    }
+  ],
+
+  "diagnosis_coding": {
+    "principles": [
+      "ICD-10 must support medical necessity for procedure.",
+      "Primary diagnosis should be reason for encounter/procedure.",
+      "Code to highest specificity available.",
+      "Link diagnoses to appropriate procedures on claim."
+    ],
+    "common_indications": {
+      "lung_mass_nodule": {
+        "unspecified_side": ["R91.8 - Other nonspecific abnormal finding of lung field"],
+        "right": ["R91.1 - Solitary pulmonary nodule, right lung"],
+        "left": ["R91.2 - Solitary pulmonary nodule, left lung"],
+        "known_malignancy": ["C34.* - Malignant neoplasm of bronchus and lung (specify site)"],
+        "metastatic": ["C78.0* - Secondary malignant neoplasm of lung"]
+      },
+      "lymphadenopathy": {
+        "mediastinal": ["R59.0 - Localized enlarged lymph nodes"],
+        "hilar": ["R59.0 - Localized enlarged lymph nodes"],
+        "staging": ["Use primary cancer code + R59.0"]
+      },
+      "hemoptysis": ["R04.2 - Hemoptysis"],
+      "dyspnea": {
+        "unspecified": ["R06.00 - Dyspnea, unspecified"],
+        "at_rest": ["R06.01 - Orthopnea"],
+        "on_exertion": ["R06.02 - Shortness of breath"]
+      },
+      "airway_obstruction": {
+        "due_to_foreign_body": ["T17.* - Foreign body in respiratory tract"],
+        "tumor": ["C34.* or D38.1 depending on malignant vs benign"],
+        "stenosis": ["J39.8 - Other specified diseases of upper respiratory tract", "J98.09 - Other diseases of bronchus"]
+      },
+      "pleural_effusion": {
+        "unspecified": ["J90 - Pleural effusion, not elsewhere classified"],
+        "malignant": ["J91.0 - Malignant pleural effusion"],
+        "in_heart_failure": ["I50.* + J91.8"],
+        "parapneumonic": ["J86.* - Pyothorax"]
+      },
+      "pneumothorax": {
+        "spontaneous": ["J93.* - Spontaneous pneumothorax (specify type)"],
+        "iatrogenic": ["J95.811 - Postprocedural pneumothorax"],
+        "tension": ["J93.0 - Spontaneous tension pneumothorax"]
+      },
+      "empyema": ["J86.* - Pyothorax (specify with/without fistula)"],
+      "interstitial_lung_disease": {
+        "unspecified": ["J84.9 - Interstitial pulmonary disease, unspecified"],
+        "idiopathic_pulmonary_fibrosis": ["J84.112 - Idiopathic pulmonary fibrosis"]
+      },
+      "copd_emphysema": {
+        "copd": ["J44.* - Chronic obstructive pulmonary disease"],
+        "emphysema": ["J43.* - Emphysema"]
+      },
+      "lung_cancer_staging": ["C34.* - Malignant neoplasm of bronchus and lung + R59.0 for LN evaluation"],
+      "sarcoidosis": ["D86.* - Sarcoidosis"],
+      "infection": {
+        "pneumonia": ["J18.* - Pneumonia, unspecified organism"],
+        "tb_suspected": ["R76.11 - Nonspecific reaction to tuberculin skin test without active tuberculosis"],
+        "fungal": ["B44.* - Aspergillosis", "B39.* - Histoplasmosis"]
+      }
+    },
+    "documentation_emphasis": "Always document how diagnosis justifies procedure. For lung mass, document size, characteristics, and smoking/risk factors. For LN, document suspicion for malignancy or staging rationale."
+  },
+
+  "evaluation_management": {
+    "inpatient_observation": {
+      "codes": {
+        "initial": {
+          "99221": "Initial hospital care, low complexity (30 min)",
+          "99222": "Initial hospital care, moderate complexity (40 min)",
+          "99223": "Initial hospital care, high complexity (55 min)"
+        },
+        "subsequent": {
+          "99231": "Subsequent hospital care, low complexity (20 min)",
+          "99232": "Subsequent hospital care, moderate complexity (30 min)",
+          "99233": "Subsequent hospital care, high complexity (40 min)"
+        },
+        "discharge": {
+          "99238": "Hospital discharge day management, 30 min or less",
+          "99239": "Hospital discharge day management, more than 30 min"
+        }
+      },
+      "note": "Inpatient and observation codes merged (2023+). Time-based selection using total time on date of encounter. Medical decision making may be used instead of time.",
+      "prolonged": {
+        "medicare": "G0316 - Prolonged inpatient/observation service(s) beyond total time for primary service, first hour",
+        "non_medicare": "+99418 - Prolonged inpatient/observation service(s), first hour"
+      },
+      "coding_notes": [
+        "Do not pair Medicare prolonged code G0316 with 99221/99222/99231/99232.",
+        "G0316 only with 99223, 99233, or 99236 (obs to inpatient).",
+        "Document total time spent on floor/unit, including time away from bedside (reviewing records, discussing with staff, etc.).",
+        "For procedures same day, use -25 on E/M code with distinct documentation."
+      ],
+      "citations": ["ip_coding_billing.evaluation_management", "CPT 2025"]
+    },
+    "office_outpatient": {
+      "codes": {
+        "established": {
+          "99211": "Office visit, established, minimal (nurse/staff, typically no MD)",
+          "99212": "Office visit, established, straightforward MDM or 10-19 min",
+          "99213": "Office visit, established, low complexity MDM or 20-29 min",
+          "99214": "Office visit, established, moderate complexity MDM or 30-39 min",
+          "99215": "Office visit, established, high complexity MDM or 40-54 min"
+        },
+        "new": {
+          "99202": "Office visit, new, straightforward MDM or 15-29 min",
+          "99203": "Office visit, new, low complexity MDM or 30-44 min",
+          "99204": "Office visit, new, moderate complexity MDM or 45-59 min",
+          "99205": "Office visit, new, high complexity MDM or 60-74 min"
+        }
+      },
+      "prolonged": "+99417 - Prolonged office/outpatient service(s), first hour (15+ min beyond max time)",
+      "complexity_addon": {
+        "code": "G2211",
+        "descriptor": "Visit complexity inherent to E/M, add-on for established patients",
+        "rule": "Consider with office E/M (99202-99215) for ongoing, complex longitudinal care. NOT on same day as procedures.",
+        "criteria": "Requires 2 of: multiple chronic conditions, risk of complications, extensive treatment coordination, social determinants complexity.",
+        "citations": ["CMS G2211 guidance"]
+      },
+      "citations": ["CPT 2025"]
+    },
+    "consults": {
+      "note": "Medicare does not recognize consult codes; use office/outpatient (99202-99215) or initial inpatient (99221-99223) instead.",
+      "non_medicare": {
+        "outpatient": {
+          "99241": "Office consultation, self-limited problem",
+          "99242": "Office consultation, low complexity",
+          "99243": "Office consultation, moderate complexity",
+          "99244": "Office consultation, moderate-high complexity",
+          "99245": "Office consultation, high complexity"
+        },
+        "inpatient": {
+          "99251": "Initial inpatient consultation, self-limited",
+          "99252": "Initial inpatient consultation, low complexity",
+          "99253": "Initial inpatient consultation, moderate complexity",
+          "99254": "Initial inpatient consultation, moderate-high complexity",
+          "99255": "Initial inpatient consultation, high complexity"
+        }
+      },
+      "requirements": [
+        "Request from another provider documented",
+        "Reason for consultation documented",
+        "Opinion and advice provided documented",
+        "Report sent to requesting provider"
+      ],
+      "citations": ["CPT 2025", "CMS MLN consult policy"]
+    },
+    "critical_care": {
+      "codes": {
+        "99291": "Critical care, first 30-74 minutes",
+        "+99292": "Critical care, each additional 30 minutes (List separately)"
+      },
+      "requirements": [
+        "High probability of sudden deterioration",
+        "Direct personal management",
+        "Time documented (start/stop)",
+        "Critical care services documented (not just presence in ICU)"
+      ],
+      "bundled_services": [
+        "Interpretation of cardiac output measurements",
+        "Chest X-rays",
+        "Blood gases",
+        "Pulse oximetry",
+        "Information data stored in computers",
+        "Gastric intubation",
+        "Temporary transcutaneous pacing",
+        "Ventilatory management",
+        "Vascular access procedures (central line, arterial line)"
+      ],
+      "not_bundled": "Separately reportable: bronchoscopy, thoracentesis, cardioversion, intubation (if meets critical care criteria afterward).",
+      "coding_notes": [
+        "Must spend 30+ minutes to bill 99291.",
+        "Document total time (may be non-continuous but must be same calendar date).",
+        "Procedures (bronch, thoracentesis, etc.) separately reportable.",
+        "Do NOT bill critical care for time spent on procedures—subtract procedure time."
+      ],
+      "citations": ["CPT 2025", "CPT Critical Care Guidelines"]
+    },
+    "prolonged_services": {
+      "medicare": "G0316 (inpatient/observation), +99417 (office)",
+      "others": "+99418 (inpatient/observation), +99417 (office)",
+      "requirements": [
+        "Must meet threshold time beyond base code maximum",
+        "Inpatient: only with highest level codes (99223, 99233, 99236)",
+        "Office: 15+ minutes beyond max time of 99205/99215",
+        "Document total time and activities performed"
+      ],
+      "citations": ["CPT 2025", "ip_coding_billing.evaluation_management"]
+    }
+  },
+
+  "documentation_templates": {
+    "bronchoscopy_core": [
+      "**Indication(s)**: Detailed indication with supporting diagnoses and why procedure necessary",
+      "**Consent**: Obtained after discussion of risks/benefits/alternatives",
+      "**Anesthesia/Sedation**: Type, who provided, medications/doses, start/stop times, independent observer name/credentials (if moderate sedation)",
+      "**Approach**: Oral vs nasal, rigid vs flexible, bronchoscope type/size",
+      "**Airway Survey**: Complete description of visualized structures (vocal cords, trachea, carina, bilateral airways to extent visualized)",
+      "**Pathology**: Abnormal findings with size/location/characteristics",
+      "**Localization**: Navigation system used (Y/N with details), radial EBUS (Y/N with findings), fluoroscopy used",
+      "**Sampling Details**: For each sampling modality:",
+      "  - TBNA: station/lobe, passes, needle size, ROSE used",
+      "  - TBLB: lobe with laterality, passes, technique (forceps/cryo), fluoroscopy",
+      "  - BAL: lobe/segment, volume instilled/recovered",
+      "  - Brushing: location, brush type",
+      "**Therapeutics**: If applicable:",
+      "  - Modality (stent/dilation/ablation/excision/valves/etc.)",
+      "  - Device details (type/size/manufacturer)",
+      "  - Exact location(s)",
+      "  - Settings/technique",
+      "  - Pre/post status (e.g., % airway patency)",
+      "**Hemostasis**: Method if bleeding occurred",
+      "**Specimens**: What sent where (cytology, pathology, microbiology)",
+      "**Complications**: Any complications and management",
+      "**Estimated Blood Loss**: Quantify if significant",
+      "**Disposition**: Recovery status and plan",
+      "**Images**: Still images/video archived for medical record"
+    ],
+    "ebus_tbna_template": [
+      "**Stations Sampled**: Use IASLC nomenclature (e.g., 4R, 7, 11L)",
+      "**Per Station**:",
+      "  - EBUS appearance (size, echogenicity, borders)",
+      "  - Needle gauge",
+      "  - Number of passes",
+      "  - ROSE result if available (adequate/inadequate, preliminary interpretation)",
+      "  - Final adequacy",
+      "**Total Stations**: Clearly state total count (determines 31652 vs 31653)"
+    ],
+    "thoracentesis_core": [
+      "**Indication**: Symptomatic effusion, diagnostic evaluation, therapeutic drainage",
+      "**Laterality**: Right/left/bilateral",
+      "**Consent**: Risks/benefits discussed",
+      "**Imaging**: Real-time ultrasound used (Y/N), permanent image archived (Y/N with image reference)",
+      "**Technique**: Landmark vs ultrasound-guided, patient position, site preparation, local anesthesia",
+      "**Needle/Catheter**: Size, approach (intercostal space)",
+      "**Fluid**: Volume removed (mL), color, clarity, sent for analysis (Y/N with tests ordered)",
+      "**Immediate Complications**: Pneumothorax (Y/N), bleeding, re-expansion pulmonary edema, other",
+      "**Post-Procedure**: Imaging if indicated, patient disposition"
+    ],
+    "stent_core": [
+      "**Indication**: Malignant obstruction, benign stenosis, tracheobronchomalacia, fistula",
+      "**Device Type**: Silicone vs covered metallic vs uncovered metallic",
+      "**Manufacturer/Model**",
+      "**Size**: Diameter × length (mm)",
+      "**Exact Location**: Trachea vs right/left mainstem vs lobar bronchus with specific laterality and level",
+      "**Pre-Dilation**: Performed (Y/N), balloon size/pressure if yes",
+      "**Deployment Technique**: Rigid vs flexible bronchoscopy, deployment device used",
+      "**Post-Dilation**: Performed (Y/N), balloon size/pressure if yes",
+      "**Position Confirmation**: Bronchoscopic visualization, fluoroscopy, measurements from carina/vocal cords",
+      "**Post-Deployment Assessment**: Airway patency, stent position, airway diameter improvement",
+      "**Images**: Bronchoscopic images and/or diagrams clearly showing stent position saved to medical record"
+    ],
+    "valve_blvr_core": [
+      "**Patient Selection**: CT emphysema score, fissure integrity, CV assessment result",
+      "**Target Lobe(s)**: With laterality",
+      "**Chartis Assessment**: Performed (Y/N), CV+ or CV- result per lobe",
+      "**Valves Placed**:",
+      "  - Per lobe: number, sizes, locations within lobe",
+      "  - Manufacturer (Zephyr, Spiration)",
+      "  - Sizing method (balloon sizing, visual estimation)",
+      "**Deployment Confirmation**: All valves properly seated",
+      "**Post-Placement Assessment**: Air leak test if applicable",
+      "**Complications**: Pneumothorax, COPD exacerbation, hemoptysis, valve migration",
+      "**Follow-Up Plan**: CXR timing, clinic visit"
+    ],
+    "ipc_core": [
+      "**Indication**: Recurrent symptomatic malignant pleural effusion",
+      "**Prior Treatment**: Number of prior thoracenteses, prior pleurodesis attempts",
+      "**Laterality**: Right/left",
+      "**Catheter**: Type/manufacturer (PleurX, etc.), French size",
+      "**Imaging**: Ultrasound-guided (Y/N), permanent image archived",
+      "**Technique**: Entry site (intercostal space), tunnel creation, tunnel length (cm), exit site location, cuff position",
+      "**Initial Drainage**: Volume/character",
+      "**Patient Education**: Drainage procedure taught to patient/family (Y/N)",
+      "**Follow-Up Plan**: Drainage schedule, when to call"
+    ]
+  },
+
+  "validators": [
+    {
+      "id": "nav_started",
+      "when": "contains(+31627)",
+      "require_any": ["note.navigation_started == true", "note.navigation_aborted_after_start == true"],
+      "on_fail": "Drop +31627 (navigation not initiated)."
+    },
+    {
+      "id": "radial_vs_linear_exclusivity",
+      "when": "contains(+31654) && any_of(31652,31653)",
+      "on_fail": "Flag: radial EBUS add-on (+31654) not billable with linear EBUS sampling codes (31652/31653)."
+    },
+    {
+      "id": "stent_dilation_bundle",
+      "when": "contains_any(31631,31636) && contains(31630) && same_segment == true",
+      "on_fail": "Drop 31630 (bundled with stent in same segment per CPT descriptor)."
+    },
+    {
+      "id": "excision_vs_destruction_same_site",
+      "when": "contains_all(31640,31641) && same_site == true",
+      "on_fail": "Deny combination—select one code (31640 or 31641) that best describes dominant therapy at same site."
+    },
+    {
+      "id": "thoracentesis_bilateral",
+      "when": "thoracentesis_bilateral == true",
+      "on_pass": "Append -50 modifier. Verify documentation supports bilateral medical necessity."
+    },
+    {
+      "id": "sedation_required_fields",
+      "when": "moderate_sedation_by_proceduralist == true && anesthesia_involved == false",
+      "require_all": ["sedation_start", "sedation_stop", "observer_present", "pre_sedation_assessment", "continuous_monitoring"],
+      "on_fail": "Insufficient documentation for moderate sedation codes (99152/+99153)."
+    },
+    {
+      "id": "sedation_with_anesthesia_conflict",
+      "when": "moderate_sedation_by_proceduralist == true && anesthesia_involved == true",
+      "on_fail": "Drop moderate sedation codes (99152/+99153)—anesthesia providing sedation."
+    },
+    {
+      "id": "repeat_aspiration_requires_initial",
+      "when": "contains(31646) && no_prior_31645_this_hospitalization == true",
+      "on_fail": "Cannot bill 31646 without prior 31645 during same hospitalization."
+    },
+    {
+      "id": "diagnostic_bronch_with_surgical",
+      "when": "contains(31622) && any(bronchoscopic_therapeutic_code) == true",
+      "on_fail": "Drop 31622 (diagnostic bronch included with surgical bronchoscopy per CPT guidelines)."
+    },
+    {
+      "id": "fluoroscopy_bundled_check",
+      "when": "bronchoscopy_performed == true && contains_any(76000,76001)",
+      "on_fail": "Drop fluoroscopy codes (76000/76001)—included in bronchoscopy per NCCI."
+    },
+    {
+      "id": "em_modifier_25_check",
+      "when": "em_code_same_day == true && procedure_code_present == true && lacks_modifier_25 == true",
+      "on_fail": "E/M same day as procedure requires -25 modifier with distinct, separately identifiable documentation."
+    },
+    {
+      "id": "ebus_station_count",
+      "when": "contains(31653)",
+      "require": "documented_ln_stations >= 3",
+      "on_fail": "31653 requires 3+ documented lymph node stations. If <3 stations, use 31652."
+    },
+    {
+      "id": "thoracentesis_imaging_documentation",
+      "when": "contains(32555)",
+      "require_all": ["imaging_guidance_used == true", "permanent_image_archived == true"],
+      "on_fail": "32555 requires documented imaging guidance and permanent image in medical record."
+    },
+    {
+      "id": "valve_additional_lobe_check",
+      "when": "contains(+31651)",
+      "require": "contains(31647) == true",
+      "on_fail": "+31651 (additional lobe valve) requires 31647 (initial lobe valve) as primary code."
+    }
+  ],
+
+  "compliance_red_flags": [
+    {
+      "flag": "excessive_diagnostic_bronch_billing",
+      "description": "High frequency of 31622 without surgical codes suggests potential upcoding or lack of therapeutic intervention.",
+      "audit_risk": "high"
+    },
+    {
+      "flag": "routine_em_with_every_procedure",
+      "description": "E/M code with -25 modifier on every procedure date without clear distinct documentation.",
+      "audit_risk": "high"
+    },
+    {
+      "flag": "bilateral_thoracentesis_all_patients",
+      "description": "Consistently billing bilateral thoracentesis (-50) may indicate lack of medical necessity documentation.",
+      "audit_risk": "medium"
+    },
+    {
+      "flag": "navigation_every_case",
+      "description": "Billing +31627 on every bronchoscopy suggests potential overuse or inadequate case selection.",
+      "audit_risk": "medium"
+    },
+    {
+      "flag": "moderate_sedation_with_anesthesia",
+      "description": "Billing 99152/99153 when anesthesia present indicates incorrect coding.",
+      "audit_risk": "high"
+    },
+    {
+      "flag": "missing_laterality",
+      "description": "Failure to document laterality for bronchoscopy findings and pleural procedures.",
+      "audit_risk": "medium"
+    },
+    {
+      "flag": "bundled_codes_billed_together",
+      "description": "Billing NCCI edit pairs without appropriate modifiers (e.g., 31630 with 31636 same site).",
+      "audit_risk": "high"
+    },
+    {
+      "flag": "inadequate_time_documentation",
+      "description": "Time-based E/M or prolonged service codes without documented start/stop times.",
+      "audit_risk": "high"
+    },
+    {
+      "flag": "insufficient_medical_necessity",
+      "description": "ICD-10 codes not supporting procedure medical necessity (e.g., screening bronchoscopy without indication).",
+      "audit_risk": "high"
+    }
+  ],
+
+  "payer_specific_notes": {
+    "medicare": {
+      "mer_application": "Strictly applied; base 31622 used for calculation.",
+      "moderate_sedation": "G-codes for prolonged, 99153 facility-only.",
+      "consults": "Not recognized—use office/inpatient E/M codes instead.",
+      "blvr_coverage": "NCD 240.10 applies; requires emphysema, fissure integrity, CV assessment.",
+      "navigation": "+31627 facility component typically packaged under OPPS.",
+      "references": ["NCD 240.10", "OPPS Final Rule", "NCCI Policy Manual"]
+    },
+    "commercial_payers": {
+      "note": "Policies vary widely.",
+      "common_restrictions": [
+        "May require pre-authorization for BLVR, thermoplasty, navigation.",
+        "Radial EBUS coverage inconsistent—verify LCD.",
+        "IPC coverage often requires failed conventional management documentation.",
+        "Chartis same-session with valves: varies by payer."
+      ]
+    },
+    "tricare": {
+      "note": "Generally follows Medicare NCDs and coding rules.",
+      "specifics": "May have additional authorization requirements for experimental/emerging procedures."
+    }
+  },
+
+  "examples": {
+    "case_1_peripheral_lesion_complex": {
+      "input": {
+        "indication": "RUL spiculated nodule 2.5cm",
+        "navigation_system": "used and initiated",
+        "radial_ebus": "performed, concentric view achieved",
+        "sampling": [
+          {"type": "TBNA", "location": "RUL", "passes": 4},
+          {"type": "TBLB", "location": "RUL", "passes": 3, "technique": "cryoprobe"}
+        ],
+        "bal": ["RML for infectious workup"],
+        "fluoroscopy": true,
+        "moderate_sedation": {"by": "proceduralist", "start": "13:00", "stop": "13:45", "observer": "RN Smith"}
+      },
+      "expected_codes": [
+        "31629 (TBNA initial lobe)",
+        "31628 (TBLB initial lobe)",
+        "31624 (BAL)",
+        "+31627 (navigation)",
+        "+31654 (radial EBUS)",
+        "99152 (moderate sedation initial 15 min)",
+        "+99153 x2 (additional 30 min sedation)"
+      ],
+      "mer_application": "Primary: 31629 at 100%; 31628 and 31624 reduced per MER; add-ons (+31627, +31654) at 100%; sedation at 100%.",
+      "documentation_emphasis": "Document RUL as initial lobe for both TBNA and TBLB. RML BAL is distinct site. Navigation initiated with target coordinates. Radial probe tool-in-lesion images saved. Total sedation time 45 minutes with observer present entire time."
+    },
+    "case_2_stent_with_dilation_distinct": {
+      "input": {
+        "indication": "RMB malignant obstruction, separate LUL benign stenosis",
+        "procedures": [
+          {"type": "stent", "location": "RMB", "device": "covered metallic 14×60mm"},
+          {"type": "dilation", "location": "LUL segment stenosis", "balloon": "8mm×40mm", "pressure": "8 atm"}
+        ],
+        "same_segment": false
+      },
+      "expected_codes": [
+        "31636 (bronchial stent initial - RMB)",
+        "31630-59 (dilation distinct site - LUL)"
+      ],
+      "documentation_emphasis": "Clear anatomic distinction: RMB stent placed for malignant obstruction. Separate LUL segmental stenosis dilated—distinct airway from RMB stent. Modifier -59 justified by distinct anatomic structure. Document measurements and pre/post bronchoscopic images showing both sites.",
+      "notes": "Anticipate payer edit; appeal with anatomic clarity and images if denied."
+    },
+    "case_3_ebus_tbna_staging": {
+      "input": {
+        "indication": "RUL mass, mediastinal staging",
+        "stations_sampled": ["4R", "7", "11R", "2R"],
+        "passes_per_station": [3, 4, 3, 3],
+        "needle": "22G",
+        "rose": "present, adequate all stations"
+      },
+      "expected_codes": ["31653 (EBUS-TBNA 3+ stations)"],
+      "documentation_emphasis": "Explicitly name all 4 stations per IASLC map. Document passes per station. ROSE results documented. Total 4 stations (≥3) supports 31653."
+    },
+    "case_4_bilateral_ipc": {
+      "input": {
+        "indication": "Recurrent bilateral malignant pleural effusions, metastatic breast cancer",
+        "prior_management": "Multiple thoracenteses both sides, failed pleurodesis attempts",
+        "procedures": [
+          {"side": "right", "catheter": "PleurX 15.5F", "drainage": "850 mL"},
+          {"side": "left", "catheter": "PleurX 15.5F", "drainage": "1200 mL"}
+        ]
+      },
+      "expected_codes": ["32550-50 (bilateral IPC insertion)"],
+      "documentation_emphasis": "Document bilateral medical necessity: recurrent symptomatic effusions both sides despite multiple thoracenteses and failed pleurodesis. Patient requires ongoing home drainage management. Both procedures performed same session. -50 modifier appropriate.",
+      "billing_note": "Payment typically 150% of unilateral fee."
+    },
+    "case_5_blvr_two_lobes": {
+      "input": {
+        "indication": "Severe heterogeneous emphysema, CV- in target lobes",
+        "lobes_treated": ["RUL", "RML"],
+        "valves": [
+          {"lobe": "RUL", "count": 2, "sizes": ["4.0", "5.5"]},
+          {"lobe": "RML", "count": 2, "sizes": ["4.0", "4.0"]}
+        ],
+        "pre_assessment": "Chartis showed CV- both lobes, fissure integrity confirmed on CT"
+      },
+      "expected_codes": [
+        "31647 (valve placement initial lobe - RUL)",
+        "+31651 (valve placement additional lobe - RML)"
+      ],
+      "documentation_emphasis": "Document each lobe separately with valve sizes and count. Pre-procedure workup including CV assessment and fissure integrity. Medicare NCD 240.10 criteria met and documented.",
+      "ncd_compliance": "Heterogeneous emphysema, fissure integrity >80%, CV- documented, appropriate patient selection per NCD 240.10."
+    },
+    "case_6_repeat_aspiration_same_stay": {
+      "input": {
+        "hospitalization": "admitted for AECOPD with mucus plugging",
+        "procedures": [
+          {"date": "Monday", "procedure": "therapeutic aspiration", "code": "31645"},
+          {"date": "Wednesday", "procedure": "repeat therapeutic aspiration for re-accumulating secretions", "code": "31646"}
+        ]
+      },
+      "expected_codes": ["31645 on Monday", "31646 on Wednesday"],
+      "documentation_emphasis": "31645 initial therapeutic aspiration during hospitalization. 31646 subsequent therapeutic aspiration by same physician/group during same hospitalization for recurrent mucus plugging. Document distinct medical necessity for repeat procedure."
+    },
+    "case_7_tumor_ablation_two_sites": {
+      "input": {
+        "indications": ["RMB endobronchial tumor", "LLL endobronchial tumor"],
+        "techniques": [
+          {"site": "RMB", "modality": "APC", "wattage": "40W", "duration": "multiple applications"},
+          {"site": "LLL", "modality": "cryoablation", "cycles": 3}
+        ]
+      },
+      "expected_codes": [
+        "31641 (ablation RMB - primary)",
+        "31641-59 (ablation LLL - distinct site)"
+      ],
+      "documentation_emphasis": "Both lesions treated with ablative energy (31641 appropriate for both). Distinct anatomic sites (RMB vs LLL). Modifier -59 justified. Document pre/post airway patency for each site.",
+      "mer_application": "Both 31641 codes subject to MER reduction; -59 may override for distinct site—verify payer policy."
+    },
+    "case_8_critical_care_with_bronch": {
+      "input": {
+        "scenario": "ICU patient with massive hemoptysis, critical care provided including airway management, resuscitation",
+        "bronchoscopy": {"indication": "localize and control bleeding", "duration": "45 min"},
+        "critical_care_time": "Total 2 hours on date, minus 45 min procedure time = 75 min critical care"
+      },
+      "expected_codes": [
+        "99291 (critical care first 30-74 min)",
+        "+99292 (critical care additional 30 min)",
+        "31641 (bronchoscopy with ablation/cautery for hemostasis)"
+      ],
+      "documentation_emphasis": "Document total time on date (2 hours). Subtract procedure time from critical care time. Document critical care services (ventilator management, family discussion, hemodynamic management, etc.). Procedure separately reportable. Start/stop times for both critical care and procedure.",
+      "time_calculation": "Total 120 min - 45 min procedure = 75 min critical care (99291 + 99292)."
+    },
+    "case_9_em_same_day_procedure": {
+      "input": {
+        "scenario": "Established patient seen in clinic for new hemoptysis, decision made for urgent bronchoscopy later same day",
+        "em_time": "30 minutes evaluating patient, reviewing imaging, discussing plan",
+        "procedure": "Bronchoscopy with biopsy later same afternoon in procedure suite"
+      },
+      "expected_codes": [
+        "99214-25 (established patient office visit, moderate complexity, 30 min)",
+        "31629 (bronchoscopy with TBNA)"
+      ],
+      "documentation_emphasis": "E/M note must demonstrate significant, separately identifiable service beyond pre-procedure assessment. Document history, exam, and medical decision making that led to decision for bronchoscopy. Cannot just document 'patient needs bronch' with pre-procedure checklist. Modifier -25 required."
+    }
+  },
+
+  "quality_measures": {
+    "note": "Interventional pulmonology procedures may contribute to institutional quality measures",
+    "examples": [
+      {"measure": "Lung cancer staging completeness", "relevance": "EBUS-TBNA for mediastinal staging"},
+      {"measure": "Appropriate pleural effusion workup", "relevance": "Thoracentesis with appropriate testing"},
+      {"measure": "Device-related infections", "relevance": "Stent/valve surveillance"},
+      {"measure": "Procedure-related pneumothorax rate", "relevance": "TBLB, thoracentesis quality monitoring"}
+    ]
+  },
+
+  "resources": {
+    "cpt": "CPT® 2025, American Medical Association",
+    "icd10": "ICD-10-CM 2025",
+    "ncci": "NCCI Policy Manual, CMS",
+    "lcd_ncd": "Medicare Coverage Database (https://www.cms.gov/medicare-coverage-database)",
+    "aabip": "AABIP Clinical Guidelines and Educational Resources",
+    "ama_cpt_assistant": "CPT Assistant (monthly AMA publication)",
+    "coding_books": [
+      "Principles of CPT Coding (AMA)",
+      "ICD-10-CM Official Guidelines for Coding and Reporting"
+    ]
+  }
+}

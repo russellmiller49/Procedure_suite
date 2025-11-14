@@ -1,0 +1,73 @@
+
+# Bronchoscopy Synoptic Report
+
+## Procedure Overview
+- Procedure Type: {{ core.type }}
+- Laterality: {{ core.laterality or "Not documented" }}
+- Stations Sampled: {{ core.stations_sampled | join(", ") if core.stations_sampled else "None" }}
+- Guidance: {{ targets[0].guidance if targets else "Not documented" }}
+- Narrative Hashes: {{ report.nlp.paragraph_hashes | length }} segments
+
+## Targets & Specimens
+{% if targets %}
+| Target | Guidance | Specimens |
+|--------|----------|-----------|
+{% for target in targets %}
+| {{ target.segment or target.lobe or "N/A" }} | {{ target.guidance or "N/A" }} | {{ summarize_specimens(target.specimens) }} |
+{% endfor %}
+{% else %}
+_No targets recorded._
+{% endif %}
+
+## Devices
+{% if core.devices %}
+| Device | Value |
+|--------|-------|
+{% for key, value in core.devices.items() %}
+| {{ key | replace('_', ' ') | title }} | {{ value }} |
+{% endfor %}
+{% else %}
+_No devices documented._
+{% endif %}
+
+## Dose
+{% set dose = report.intraop.get("dose") %}
+{% if dose is mapping %}
+| Parameter | Value |
+|-----------|-------|
+{% for key, value in dose.items() %}
+| {{ key | replace('_', ' ') | title }} | {{ value }} |
+{% endfor %}
+{% elif dose %}
+{{ dose }}
+{% else %}
+_No dose parameters recorded._
+{% endif %}
+
+## Complications
+{% set comps = report.postop.get("complications") %}
+{% if comps is mapping %}
+| Event | Status |
+|-------|--------|
+{% for key, value in comps.items() %}
+| {{ key | replace('_', ' ') | title }} | {{ value }} |
+{% endfor %}
+{% elif comps %}
+{{ comps }}
+{% else %}
+_None reported._
+{% endif %}
+
+## Plan
+{% set plan = report.postop.get("plan") %}
+{% if plan is mapping %}
+| Action | Detail |
+|--------|--------|
+{% for key, value in plan.items() %}
+| {{ key | replace('_', ' ') | title }} | {{ value }} |
+{% endfor %}
+{% elif plan %}
+{{ plan }}
+{% else %}
+_Standard observation._
+{% endif %}

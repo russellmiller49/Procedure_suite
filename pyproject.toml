@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "proc-suite"
+version = "0.1.0"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+  "pydantic>=2.6,<3",
+  "jinja2>=3.1,<4",
+  "spacy==3.7.4",
+  "scispacy==0.5.4",
+  "scikit-learn>=1.7,<1.8",
+  "uvicorn>=0.30,<1",
+  "fastapi>=0.115,<1",
+  "psycopg[binary,pool]>=3.2,<4",
+  "python-dotenv>=1.0,<2"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+"proc_report" = ["templates/*.jinja", "templates/.keep"]
+"configs" = ["**/*.yaml"]
