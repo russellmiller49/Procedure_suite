@@ -9,13 +9,20 @@ requires-python = ">=3.11,<3.12"
 dependencies = [
   "pydantic>=2.6,<3",
   "jinja2>=3.1,<4",
-  "spacy==3.7.4",
+  "spacy>=3.7,<3.8",
   "scispacy==0.5.4",
+  "medspacy>=0.5.0,<1",
   "scikit-learn>=1.7,<1.8",
   "uvicorn>=0.30,<1",
   "fastapi>=0.115,<1",
   "psycopg[binary,pool]>=3.2,<4",
-  "python-dotenv>=1.0,<2"
+  "python-dotenv>=1.0,<2",
+  "rapidfuzz>=3.9,<4",
+  "regex>=2024.4.28",
+  "jsonschema>=4.23,<5",
+  "typer>=0.12,<0.13",
+  "rich>=13,<14",
+  "pytest>=8.2,<9",
 ]
 
 [tool.setuptools.packages.find]
@@ -24,3 +31,8 @@ where = ["."]
 [tool.setuptools.package-data]
 "proc_report" = ["templates/*.jinja", "templates/.keep"]
 "configs" = ["**/*.yaml"]
+
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+testpaths = ["tests"]
+pythonpath = ["."]
