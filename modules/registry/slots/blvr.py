@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 
-from modules.coder.dictionary import LOBES
+from modules.coder.dictionary import get_lobe_pattern_map
 from modules.common.sectionizer import Section
 from modules.common.spans import Span
 
@@ -22,12 +22,13 @@ class BLVRExtractor:
     slot_name = "blvr"
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
+        lobe_patterns = get_lobe_pattern_map()
         if "valve" not in text.lower() and "chartis" not in text.lower():
             return SlotResult(None, [], 0.0)
 
         lobes: list[str] = []
         evidence: list[Span] = []
-        for lobe, patterns in LOBES.items():
+        for lobe, patterns in lobe_patterns.items():
             for pattern in patterns:
                 for match in pattern.finditer(text):
                     lobes.append(lobe)
@@ -75,4 +76,3 @@ class BLVRExtractor:
 
 
 __all__ = ["BLVRExtractor"]
-

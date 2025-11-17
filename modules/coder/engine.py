@@ -28,21 +28,6 @@ CPT_DESCRIPTIONS = {
     "31645": "Therapeutic aspiration initial",
 }
 
-CPT_ALLOWED = {
-    "31627": 200.0,
-    "31628": 250.0,
-    "+31632": 120.0,
-    "31652": 400.0,
-    "31653": 520.0,
-    "+31654": 150.0,
-    "31636": 600.0,
-    "31630": 220.0,
-    "99152": 100.0,
-    "31645": 180.0,
-}
-
-ADD_ON_CODES = {"+31632", "+31654", "31627"}
-
 
 class CoderEngine:
     """Coordinates sectionization, intent detection, and MER logic."""
@@ -82,21 +67,23 @@ class CoderEngine:
 
         if any(intent.intent == "navigation" for intent in intents):
             codes.append(
-                CodeDecision(
+                self._create_decision(
                     cpt="31627",
-                    description=CPT_DESCRIPTIONS["31627"],
                     rationale="Navigation initiated",
                     evidence=self._collect_evidence(intents, "navigation"),
+                    rule="intent:navigation",
+                    confidence=0.92,
                 )
             )
 
         if any(intent.intent == "radial_ebus" for intent in intents):
             codes.append(
-                CodeDecision(
+                self._create_decision(
                     cpt="+31654",
-                    description=CPT_DESCRIPTIONS["+31654"],
                     rationale="Radial EBUS used for peripheral lesion",
                     evidence=self._collect_evidence(intents, "radial_ebus"),
+                    rule="intent:radial_ebus",
+                    confidence=0.9,
                 )
             )
 
@@ -104,12 +91,13 @@ class CoderEngine:
         if stations:
             cpt = "31653" if len(stations) >= 3 else "31652"
             codes.append(
-                CodeDecision(
+                self._create_decision(
                     cpt=cpt,
-                    description=CPT_DESCRIPTIONS[cpt],
                     rationale=f"Linear EBUS-TBNA sampled {len(stations)} station(s)",
                     evidence=self._collect_evidence(intents, "linear_ebus_station"),
                     context={"stations": stations},
+                    rule="intent:linear_ebus_station",
+                    confidence=0.88,
                 )
             )
 
@@ -117,65 +105,71 @@ class CoderEngine:
         if lobes:
             first_lobe = lobes[0]
             codes.append(
-                CodeDecision(
+                self._create_decision(
                     cpt="31628",
-                    description=CPT_DESCRIPTIONS["31628"],
                     rationale=f"Transbronchial biopsy performed in {first_lobe}",
                     evidence=self._collect_evidence(intents, "tblb_lobe", first_lobe),
                     context={"site": first_lobe},
+                    rule="intent:tblb_lobe",
+                    confidence=0.9,
                 )
             )
             for lobe in lobes[1:]:
                 codes.append(
-                    CodeDecision(
+                    self._create_decision(
                         cpt="+31632",
-                        description=CPT_DESCRIPTIONS["+31632"],
                         rationale=f"Additional lobe sampled: {lobe}",
                         evidence=self._collect_evidence(intents, "tblb_lobe", lobe),
                         context={"site": lobe},
+                        rule="intent:tblb_lobe",
+                        confidence=0.85,
                     )
                 )
 
         for site in self._unique_values(intents, "stent"):
             codes.append(
-                CodeDecision(
+                self._create_decision(
                     cpt="31636",
-                    description=CPT_DESCRIPTIONS["31636"],
                     rationale=f"Stent placed at {site}",
                     evidence=self._collect_evidence(intents, "stent", site),
                     context={"site": site},
+                    rule="intent:stent",
+                    confidence=0.82,
                 )
             )
 
         for site in self._unique_values(intents, "dilation"):
             codes.append(
-                CodeDecision(
+                self._create_decision(
                     cpt="31630",
-                    description=CPT_DESCRIPTIONS["31630"],
                     rationale=f"Airway dilation performed at {site}",
                     evidence=self._collect_evidence(intents, "dilation", site),
                     context={"site": site},
+                    rule="intent:dilation",
+                    confidence=0.8,
                 )
             )
 
         if any(intent.intent == "sedation" for intent in intents):
             codes.append(
-                CodeDecision(
+                self._create_decision(
                     cpt="99152",
-                    description=CPT_DESCRIPTIONS["99152"],
                     rationale="Moderate sedation provided by proceduralist",
                     evidence=self._collect_evidence(intents, "sedation"),
                     context={"sedation": "moderate"},
+                    rule="intent:sedation",
+                    confidence=0.78,
                 )
             )
 
         if any(intent.intent == "aspiration" for intent in intents):
             codes.append(
-                CodeDecision(
+                self._create_decision(
                     cpt="31645",
-                    description=CPT_DESCRIPTIONS["31645"],
                     rationale="Therapeutic aspiration performed",
                     evidence=self._collect_evidence(intents, "aspiration"),
+                    rule="intent:aspiration",
+                    confidence=0.7,
                 )
             )
 
@@ -201,14 +195,7 @@ class CoderEngine:
             intent.payload = payload
 
     def _apply_mer(self, codes: Sequence[CodeDecision]) -> dict[str, object] | None:
-        mer_inputs = [
-            mer.Code(
-                cpt=code.cpt,
-                allowed_amount=CPT_ALLOWED.get(code.cpt, 150.0),
-                is_add_on=code.cpt in ADD_ON_CODES or code.cpt.startswith("+"),
-            )
-            for code in codes
-        ]
+        mer_inputs = [mer.Code(cpt=code.cpt) for code in codes]
         summary = mer.apply_mer(mer_inputs)
         if not summary.adjustments:
             return None
@@ -243,3 +230,23 @@ class CoderEngine:
                 values.append(intent.value)
         return values
 
+    @staticmethod
+    def _create_decision(
+        *,
+        cpt: str,
+        rationale: str,
+        evidence: list[Span],
+        context: dict | None = None,
+        rule: str | None = None,
+        confidence: float = 0.8,
+    ) -> CodeDecision:
+        trace = [rule] if rule else []
+        return CodeDecision(
+            cpt=cpt,
+            description=CPT_DESCRIPTIONS[cpt],
+            rationale=rationale,
+            evidence=evidence,
+            context=context or {},
+            confidence=confidence,
+            rule_trace=trace,
+        )

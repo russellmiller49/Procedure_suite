@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 
-from modules.coder.dictionary import STATION_PATTERNS
+from modules.coder.dictionary import get_station_pattern_map
 from modules.common.sectionizer import Section
 from modules.common.spans import Span
 
@@ -26,10 +26,11 @@ class EbusExtractor:
     slot_name = "ebus"
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
+        station_patterns = get_station_pattern_map()
         evidence: list[Span] = []
         stations: list[str] = []
 
-        for station, patterns in STATION_PATTERNS.items():
+        for station, patterns in station_patterns.items():
             for pattern in patterns:
                 for match in pattern.finditer(text):
                     stations.append(station)
@@ -77,4 +78,3 @@ def _flag(text: str, patterns: tuple[re.Pattern[str], ...], sections: list[Secti
 
 
 __all__ = ["EbusExtractor"]
-

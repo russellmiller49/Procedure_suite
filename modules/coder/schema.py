@@ -26,6 +26,7 @@ class DetectedIntent(BaseModel):
     payload: dict[str, Any] | None = None
     confidence: float | None = None
     evidence: List[Span] = Field(default_factory=list)
+    rules: List[str] = Field(default_factory=list)
 
 
 class CodeDecision(BaseModel):
@@ -41,6 +42,8 @@ class CodeDecision(BaseModel):
     context: dict[str, Any] = Field(default_factory=dict)
     mer_role: str | None = None
     mer_allowed: float | None = None
+    confidence: float = 0.0
+    rule_trace: List[str] = Field(default_factory=list)
 
 
 class BundleDecision(BaseModel):
@@ -49,6 +52,7 @@ class BundleDecision(BaseModel):
     pair: tuple[str, str]
     action: str
     reason: str
+    rule: str | None = None
 
 
 class CoderOutput(BaseModel):
@@ -60,4 +64,3 @@ class CoderOutput(BaseModel):
     ncci_actions: list[BundleDecision] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
     version: str = "0.1.0"
-

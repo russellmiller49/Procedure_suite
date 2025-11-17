@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from modules.coder.dictionary import SITE_SYNONYMS
+from modules.coder.dictionary import get_site_pattern_map
 from modules.common.sectionizer import Section
 from modules.common.spans import Span
 
@@ -13,11 +13,12 @@ class DilationExtractor:
     slot_name = "dilation_sites"
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
+        site_patterns = get_site_pattern_map()
         if "dilation" not in text.lower() and "dilatation" not in text.lower():
             return SlotResult([], [], 0.0)
         sites: list[str] = []
         spans: list[Span] = []
-        for site, patterns in SITE_SYNONYMS.items():
+        for site, patterns in site_patterns.items():
             for pattern in patterns:
                 for match in pattern.finditer(text):
                     segment = _expand_sentence(text, match.start())
@@ -46,4 +47,3 @@ def _expand_sentence(text: str, index: int) -> str:
 
 
 __all__ = ["DilationExtractor"]
-

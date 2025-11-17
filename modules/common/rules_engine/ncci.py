@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Tuple
+from typing import Dict, Iterable, Tuple
 
 __all__ = [
     "NCCIEdit",
     "register_edit",
+    "replace_pairs",
     "deny_pair",
     "allow_with_modifier",
     "explain",
@@ -33,6 +34,14 @@ def register_edit(edit: NCCIEdit) -> None:
     EDIT_PAIRS[(edit.primary, edit.secondary)] = edit
 
 
+def replace_pairs(pairs: Iterable[NCCIEdit]) -> None:
+    """Replace the active edit table with *pairs*."""
+
+    EDIT_PAIRS.clear()
+    for pair in pairs:
+        register_edit(pair)
+
+
 def deny_pair(primary: str, secondary: str) -> bool:
     """Return True if the pair is denied outright per NCCI."""
 
@@ -54,15 +63,3 @@ def explain(pair: tuple[str, str]) -> str | None:
     if not edit:
         return None
     return edit.reason or "NCCI edit applies"
-
-
-# Seed with the most common bronchoscopic combination so fixtures work immediately.
-register_edit(
-    NCCIEdit(
-        primary="31636",
-        secondary="31630",
-        modifier_allowed=True,
-        reason="Stent placement bundles dilation when performed on the same anatomic site.",
-    )
-)
-

@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from pathlib import Path
-import json
 import re
 from typing import Iterable
+
+from .knowledge import DEFAULT_KNOWLEDGE_FILE, get_knowledge
 
 __all__ = [
     "DEFAULT_KNOWLEDGE_FILE",
@@ -14,13 +15,6 @@ __all__ = [
     "strip_headers",
     "load_knowledge_base",
 ]
-
-DEFAULT_KNOWLEDGE_FILE = (
-    Path(__file__).resolve().parents[2]
-    / "data"
-    / "knowledge"
-    / "ip_coding_billing.v2_2.json"
-)
 
 _HEADER_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"^\s*page\s+\d+\s+of\s+\d+", re.IGNORECASE),
@@ -64,14 +58,9 @@ def strip_headers(text: str) -> str:
 
 
 def load_knowledge_base(path: str | Path | None = None) -> dict:
-    """Load the shared coding knowledge base JSON document."""
+    """Load (and hot-reload) the shared coding knowledge base document."""
 
-    target = Path(path) if path else DEFAULT_KNOWLEDGE_FILE
-    with target.open("r", encoding="utf-8") as handle:
-        try:
-            return json.load(handle)
-        except json.JSONDecodeError as exc:  # pragma: no cover - obvious crash path
-            raise ValueError(f"Invalid knowledge base document: {target}") from exc
+    return get_knowledge(path)
 
 
 def _read_source(source: str | Path) -> str:
@@ -103,4 +92,3 @@ def _strip_matching(
             continue
         break
     return working
-

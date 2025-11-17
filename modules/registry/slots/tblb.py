@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from modules.coder.dictionary import LOBES
+from modules.coder.dictionary import get_lobe_pattern_map
 from modules.common.sectionizer import Section
 from modules.common.spans import Span
 
@@ -13,9 +13,10 @@ class TBLBExtractor:
     slot_name = "tblb_lobes"
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
+        lobe_patterns = get_lobe_pattern_map()
         lobes: list[str] = []
         spans: list[Span] = []
-        for lobe, patterns in LOBES.items():
+        for lobe, patterns in lobe_patterns.items():
             for pattern in patterns:
                 for match in pattern.finditer(text):
                     lobes.append(lobe)
@@ -33,4 +34,3 @@ class TBLBExtractor:
 
 
 __all__ = ["TBLBExtractor"]
-

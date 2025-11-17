@@ -6,6 +6,9 @@ import json
 from pathlib import Path
 
 import typer
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
 
 from modules.common.text_io import load_note
 
@@ -13,20 +16,27 @@ from .engine import ReportEngine
 from .schema import StructuredReport
 
 app = typer.Typer(help="Reporter CLI")
+console = Console()
 
 
 @app.command("gen")
 def generate(
     from_free_text: str = typer.Option(..., "--from-free-text", help="Source note path or text"),
     json_output: bool = typer.Option(False, "--json", help="Emit JSON output"),
+    explain: bool = typer.Option(False, "--explain", help="Show structured fields"),
 ) -> None:
     note = load_note(from_free_text)
     engine = ReportEngine()
     report = engine.from_free_text(note)
     if json_output:
         typer.echo(report.model_dump_json(indent=2))
-    else:
-        typer.echo(report.summary())
+        if explain:
+            _print_report(report)
+        return
+
+    _print_report(report)
+    if explain:
+        console.print(Panel(report.model_dump_json(indent=2), title="Structured JSON"))
 
 
 @app.command("render")
@@ -44,10 +54,24 @@ def render(
     typer.echo(output)
 
 
+def _print_report(report: StructuredReport) -> None:
+    table = Table(title="Structured Report", show_lines=False)
+    table.add_column("Section", style="cyan")
+    table.add_column("Content")
+    table.add_row("Indication", report.indication)
+    table.add_row("Anesthesia", report.anesthesia)
+    table.add_row("Localization", report.localization)
+    table.add_row("Survey", "\n".join(report.survey) or "—")
+    table.add_row("Sampling", "\n".join(report.sampling) or "—")
+    table.add_row("Therapeutics", "\n".join(report.therapeutics) or "—")
+    table.add_row("Complications", "\n".join(report.complications) or "—")
+    table.add_row("Disposition", report.disposition)
+    console.print(table)
+
+
 def main() -> None:  # pragma: no cover - CLI entry point
     app()
 
 
 if __name__ == "__main__":  # pragma: no cover - CLI
     main()
-

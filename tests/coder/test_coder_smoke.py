@@ -17,5 +17,11 @@ def test_ppl_nav_radial_tblb_tbna() -> None:
     assert {"31627", "31628", "31652", "+31654"}.issubset(codes)
     ebus = next(code for code in result.codes if code.cpt == "31652")
     assert ebus.context["stations"] == ["4R", "7"]
+    assert ebus.confidence > 0.5
+    assert "intent:linear_ebus_station" in ebus.rule_trace
     tblb = next(code for code in result.codes if code.cpt == "31628")
     assert tblb.context["site"] == "RUL"
+    assert tblb.rule_trace
+    navigation = next(code for code in result.codes if code.cpt == "31627")
+    assert navigation.confidence > 0.5
+    assert "intent:navigation" in navigation.rule_trace

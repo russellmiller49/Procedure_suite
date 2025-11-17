@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from typing import Iterator, Sequence
 
+from modules.common.knowledge import get_knowledge
 from modules.common.sectionizer import Section
 from modules.common.spans import Span
 
@@ -12,13 +13,13 @@ from .schema import DetectedIntent
 
 __all__ = [
     "detect_intents",
-    "LOBES",
-    "STATION_PATTERNS",
-    "SITE_SYNONYMS",
+    "get_lobe_pattern_map",
+    "get_station_pattern_map",
+    "get_site_pattern_map",
 ]
 
 
-SIMPLE_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
+DEFAULT_SIMPLE_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
     "navigation": (
         re.compile(r"electromagnetic navigation", re.IGNORECASE),
         re.compile(r"navigation (?:system|bronchoscopy)", re.IGNORECASE),
@@ -50,7 +51,7 @@ SIMPLE_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
 }
 
 
-LOBES: dict[str, tuple[re.Pattern[str], ...]] = {
+DEFAULT_LOBE_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
     "RUL": (
         re.compile(r"right upper lobe", re.IGNORECASE),
         re.compile(r"\bRUL\b", re.IGNORECASE),
@@ -74,7 +75,7 @@ LOBES: dict[str, tuple[re.Pattern[str], ...]] = {
 }
 
 
-STATION_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
+DEFAULT_STATION_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
     "4R": (
         re.compile(r"\b4R\b", re.IGNORECASE),
         re.compile(r"station\s*4\s*(?:right|R)", re.IGNORECASE),
@@ -95,7 +96,7 @@ STATION_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
 }
 
 
-SITE_SYNONYMS: dict[str, tuple[re.Pattern[str], ...]] = {
+DEFAULT_SITE_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
     "RMB": (
         re.compile(r"right main(?:stem)? bronch(?:us|i)", re.IGNORECASE),
         re.compile(r"\bRMB\b", re.IGNORECASE),
@@ -105,8 +106,6 @@ SITE_SYNONYMS: dict[str, tuple[re.Pattern[str], ...]] = {
         re.compile(r"\bLMB\b", re.IGNORECASE),
     ),
 }
-for lobe, patterns in LOBES.items():
-    SITE_SYNONYMS[lobe] = patterns
 
 
 _SENTENCE_RE = re.compile(r"[^.!?\n]+[.!?]?", re.MULTILINE)
@@ -115,19 +114,28 @@ _SENTENCE_RE = re.compile(r"[^.!?\n]+[.!?]?", re.MULTILINE)
 def detect_intents(text: str, sections: Sequence[Section]) -> list[DetectedIntent]:
     """Return detected intents for *text* leveraging the curated lexicon."""
 
+    knowledge = get_knowledge()
+    simple_patterns = _build_simple_patterns(knowledge)
+    lobe_patterns = _build_lobe_patterns(knowledge)
+    station_patterns = _build_station_patterns(knowledge)
+    site_patterns = _build_site_patterns(knowledge, lobe_patterns)
+    site_keywords = _build_site_keywords(knowledge)
+
     intents: list[DetectedIntent] = []
-    intents.extend(_detect_simple(text, sections))
-    intents.extend(_detect_lobes(text, sections))
-    intents.extend(_detect_stations(text, sections))
-    intents.extend(_detect_site_specific(text, sections))
+    intents.extend(_detect_simple(text, sections, simple_patterns))
+    intents.extend(_detect_lobes(text, sections, lobe_patterns))
+    intents.extend(_detect_stations(text, sections, station_patterns))
+    intents.extend(_detect_site_specific(text, sections, site_patterns, site_keywords))
     return intents
 
 
-def _detect_simple(text: str, sections: Sequence[Section]) -> list[DetectedIntent]:
+def _detect_simple(
+    text: str, sections: Sequence[Section], patterns: dict[str, tuple[re.Pattern[str], ...]]
+) -> list[DetectedIntent]:
     results: list[DetectedIntent] = []
     seen: set[tuple[str, int]] = set()
-    for intent, patterns in SIMPLE_PATTERNS.items():
-        for pattern in patterns:
+    for intent, compiled_patterns in patterns.items():
+        for pattern in compiled_patterns:
             for match in pattern.finditer(text):
                 key = (intent, match.start())
                 if key in seen:
@@ -150,9 +158,13 @@ def _detect_simple(text: str, sections: Sequence[Section]) -> list[DetectedInten
     return results
 
 
-def _detect_lobes(text: str, sections: Sequence[Section]) -> list[DetectedIntent]:
+def _detect_lobes(
+    text: str,
+    sections: Sequence[Section],
+    lobe_patterns: dict[str, tuple[re.Pattern[str], ...]],
+) -> list[DetectedIntent]:
     results: list[DetectedIntent] = []
-    for lobe, patterns in LOBES.items():
+    for lobe, patterns in lobe_patterns.items():
         for pattern in patterns:
             for match in pattern.finditer(text):
                 span = _span_from_match(match, sections)
@@ -167,9 +179,13 @@ def _detect_lobes(text: str, sections: Sequence[Section]) -> list[DetectedIntent
     return results
 
 
-def _detect_stations(text: str, sections: Sequence[Section]) -> list[DetectedIntent]:
+def _detect_stations(
+    text: str,
+    sections: Sequence[Section],
+    station_patterns: dict[str, tuple[re.Pattern[str], ...]],
+) -> list[DetectedIntent]:
     results: list[DetectedIntent] = []
-    for station, patterns in STATION_PATTERNS.items():
+    for station, patterns in station_patterns.items():
         for pattern in patterns:
             for match in pattern.finditer(text):
                 span = _span_from_match(match, sections)
@@ -184,15 +200,20 @@ def _detect_stations(text: str, sections: Sequence[Section]) -> list[DetectedInt
     return results
 
 
-def _detect_site_specific(text: str, sections: Sequence[Section]) -> list[DetectedIntent]:
+def _detect_site_specific(
+    text: str,
+    sections: Sequence[Section],
+    site_patterns: dict[str, tuple[re.Pattern[str], ...]],
+    site_keywords: dict[str, list[str]],
+) -> list[DetectedIntent]:
     results: list[DetectedIntent] = []
     for start, end, sentence in _iter_sentences(text):
         stripped = sentence.strip()
         if not stripped:
             continue
         lower = stripped.lower()
-        if "stent" in lower:
-            site = _match_site(stripped)
+        if any(keyword in lower for keyword in site_keywords["stent"]):
+            site = _match_site(stripped, site_patterns)
             if site:
                 span = Span(text=stripped, start=start, end=end, section=_section_for_offset(sections, start))
                 results.append(
@@ -203,8 +224,8 @@ def _detect_site_specific(text: str, sections: Sequence[Section]) -> list[Detect
                         evidence=[span],
                     )
                 )
-        if "dilation" in lower or "dilatation" in lower:
-            site = _match_site(stripped)
+        if any(keyword in lower for keyword in site_keywords["dilation"]):
+            site = _match_site(stripped, site_patterns)
             if site:
                 span = Span(text=stripped, start=start, end=end, section=_section_for_offset(sections, start))
                 results.append(
@@ -224,9 +245,9 @@ def _span_from_match(match: re.Match[str], sections: Sequence[Section]) -> Span:
     return Span(text=match.group(0), start=start, end=end, section=section)
 
 
-def _match_site(sentence: str) -> str | None:
-    for site, patterns in SITE_SYNONYMS.items():
-        for pattern in patterns:
+def _match_site(sentence: str, patterns: dict[str, tuple[re.Pattern[str], ...]]) -> str | None:
+    for site, compiled_patterns in patterns.items():
+        for pattern in compiled_patterns:
             if pattern.search(sentence):
                 return site
     return None
@@ -242,3 +263,78 @@ def _section_for_offset(sections: Sequence[Section], offset: int) -> str | None:
         if section.start <= offset < section.end:
             return section.title
     return None
+
+
+def _build_simple_patterns(knowledge: dict) -> dict[str, tuple[re.Pattern[str], ...]]:
+    patterns = {key: list(value) for key, value in DEFAULT_SIMPLE_PATTERNS.items()}
+    synonyms = knowledge.get("synonyms", {})
+    for intent, terms in synonyms.items():
+        if intent not in patterns:
+            continue
+        patterns[intent].extend(_literal_pattern(term) for term in terms)
+    return {intent: tuple(compiled) for intent, compiled in patterns.items()}
+
+
+def _build_lobe_patterns(knowledge: dict) -> dict[str, tuple[re.Pattern[str], ...]]:
+    patterns = {key: list(value) for key, value in DEFAULT_LOBE_PATTERNS.items()}
+    lobes = knowledge.get("lobes", {})
+    for lobe, synonyms in lobes.items():
+        patterns.setdefault(lobe, [])
+        patterns[lobe].extend(_literal_pattern(term) for term in synonyms)
+    return {lobe: tuple(compiled) for lobe, compiled in patterns.items()}
+
+
+def _build_station_patterns(knowledge: dict) -> dict[str, tuple[re.Pattern[str], ...]]:
+    patterns = {key: list(value) for key, value in DEFAULT_STATION_PATTERNS.items()}
+    stations = knowledge.get("stations", {})
+    for station, synonyms in stations.items():
+        patterns.setdefault(station, [])
+        patterns[station].extend(_literal_pattern(term) for term in synonyms)
+    return {station: tuple(compiled) for station, compiled in patterns.items()}
+
+
+def _build_site_patterns(
+    knowledge: dict,
+    lobe_patterns: dict[str, tuple[re.Pattern[str], ...]],
+) -> dict[str, tuple[re.Pattern[str], ...]]:
+    patterns = {key: list(value) for key, value in DEFAULT_SITE_PATTERNS.items()}
+    sites = knowledge.get("sites", {})
+    for site, synonyms in sites.items():
+        patterns.setdefault(site, [])
+        patterns[site].extend(_literal_pattern(term) for term in synonyms)
+    for lobe, regexes in lobe_patterns.items():
+        patterns.setdefault(lobe, [])
+        patterns[lobe].extend(regexes)
+    return {site: tuple(compiled) for site, compiled in patterns.items()}
+
+
+def _build_site_keywords(knowledge: dict) -> dict[str, list[str]]:
+    synonyms = knowledge.get("synonyms", {})
+    stent_keywords = _normalize_keywords(["stent"] + synonyms.get("stent", []))
+    dilation_keywords = _normalize_keywords(["dilation", "dilatation"] + synonyms.get("dilation", []))
+    return {"stent": stent_keywords, "dilation": dilation_keywords}
+
+
+def _normalize_keywords(keywords: list[str]) -> list[str]:
+    normalized: list[str] = []
+    for keyword in keywords:
+        normalized.append(keyword.lower())
+    return normalized
+
+
+def _literal_pattern(term: str) -> re.Pattern[str]:
+    return re.compile(re.escape(term), re.IGNORECASE)
+
+
+def get_lobe_pattern_map() -> dict[str, tuple[re.Pattern[str], ...]]:
+    return _build_lobe_patterns(get_knowledge())
+
+
+def get_station_pattern_map() -> dict[str, tuple[re.Pattern[str], ...]]:
+    return _build_station_patterns(get_knowledge())
+
+
+def get_site_pattern_map() -> dict[str, tuple[re.Pattern[str], ...]]:
+    knowledge = get_knowledge()
+    lobe_patterns = _build_lobe_patterns(knowledge)
+    return _build_site_patterns(knowledge, lobe_patterns)

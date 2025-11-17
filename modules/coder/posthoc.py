@@ -7,6 +7,7 @@ from typing import Sequence
 from .schema import CodeDecision
 
 DISTINCT_SITE_MODIFIERS = ("59", "XS")
+DISTINCT_RULE_TAG = "distinct_site_modifier"
 
 
 def apply_posthoc(codes: Sequence[CodeDecision]) -> list[CodeDecision]:
@@ -27,3 +28,5 @@ def assign_distinct_site_modifiers(codes: Sequence[CodeDecision]) -> None:
             if modifier not in code.modifiers:
                 code.modifiers.append(modifier)
         code.rationale += " Modifier appended for distinct airway."
+        if DISTINCT_RULE_TAG not in code.rule_trace:
+            code.rule_trace.append(DISTINCT_RULE_TAG)
