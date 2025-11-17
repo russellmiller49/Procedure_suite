@@ -1,104 +1,224 @@
 {
-  "version": "0.0.0",
-  "notes": "Placeholder knowledge base. Replace with production content.",
+  "version": "1.0.0",
+  "checksum": "f16927f601a89356936f40b062079d9b12e0fd22d8db3c0e0a1ead331ac2d9d1",
+  "rvus": {
+    "31622": {"work": 3.1, "pe": 6.0, "mp": 0.3},
+    "31627": {"work": 3.5, "pe": 5.8, "mp": 0.3},
+    "31628": {"work": 4.2, "pe": 8.3, "mp": 0.4},
+    "+31632": {"work": 2.1, "pe": 3.6, "mp": 0.2},
+    "31629": {"work": 4.0, "pe": 7.5, "mp": 0.3},
+    "+31633": {"work": 1.8, "pe": 3.2, "mp": 0.2},
+    "31631": {"work": 6.2, "pe": 11.5, "mp": 0.6},
+    "31636": {"work": 6.5, "pe": 12.0, "mp": 0.6},
+    "+31637": {"work": 2.4, "pe": 4.8, "mp": 0.2},
+    "31630": {"work": 3.0, "pe": 5.4, "mp": 0.3},
+    "31645": {"work": 3.5, "pe": 6.5, "mp": 0.3},
+    "31646": {"work": 3.0, "pe": 6.0, "mp": 0.3},
+    "31647": {"work": 10.0, "pe": 18.0, "mp": 0.9},
+    "+31651": {"work": 3.0, "pe": 5.5, "mp": 0.3},
+    "31652": {"work": 5.5, "pe": 9.8, "mp": 0.5},
+    "31653": {"work": 6.0, "pe": 10.5, "mp": 0.6},
+    "+31654": {"work": 2.2, "pe": 3.6, "mp": 0.2},
+    "99152": {"work": 2.0, "pe": 2.5, "mp": 0.1},
+    "+99153": {"work": 1.0, "pe": 1.2, "mp": 0.1}
+  },
+  "add_on_codes": [
+    "+31627",
+    "+31632",
+    "+31633",
+    "+31637",
+    "+31649",
+    "+31651",
+    "+31654",
+    "+32562",
+    "+99153"
+  ],
   "synonyms": {
-    "navigation": [
-      "electromagnetic navigation",
+    "navigation_terms": [
       "navigation bronchoscopy",
-      "emn guidance"
+      "emn guidance",
+      "computer-assisted navigation"
     ],
-    "radial_ebus": [
+    "navigation_initiated": [
+      "navigation successfully initiated",
+      "navigation was initiated",
+      "catheter advanced under navigation",
+      "emn catheter advanced"
+    ],
+    "navigation_planned": [
+      "navigation planned",
+      "navigation guidance planned"
+    ],
+    "radial_terms": [
       "radial ebus",
-      "radial probe"
+      "radial probe",
+      "miniprobe"
     ],
-    "chartis": [
-      "chartis"
+    "peripheral_terms": [
+      "peripheral lesion",
+      "peripheral nodule",
+      "ppl",
+      "tool-in-lesion",
+      "concentric",
+      "concentric view",
+      "miniprobe"
     ],
-    "valve": [
-      "endobronchial valve",
-      "zephyr valve",
-      "spiration"
+    "tblb_terms": [
+      "transbronchial lung biopsy",
+      "transbronchial lung biopsies",
+      "tblb",
+      "cryobiopsy"
     ],
-    "sedation": [
+    "tbna_terms": [
+      "tbna",
+      "transbronchial needle aspiration",
+      "transbronchial needle aspirations",
+      "needle aspiration"
+    ],
+    "blvr_terms": [
+      "blvr",
+      "bronchoscopic lung volume reduction",
+      "endobronchial valve"
+    ],
+    "chartis_terms": [
+      "chartis",
+      "collateral ventilation"
+    ],
+    "independent_observer_terms": [
+      "independent rn observer",
+      "independent nurse observer",
+      "independent observer",
+      "independent trained observer",
+      "observer present"
+    ],
+    "sedation_terms": [
       "moderate sedation",
       "conscious sedation",
       "procedural sedation"
     ],
-    "anesthesia": [
+    "anesthesia_terms": [
       "general anesthesia",
-      "mac anesthesia"
+      "mac anesthesia",
+      "anesthesiology"
     ],
-    "aspiration": [
-      "therapeutic aspiration"
-    ],
-    "stent": [
+    "stent_terms": [
       "stent",
       "stenting",
       "bronchial stent"
     ],
-    "dilation": [
+    "dilation_terms": [
       "dilation",
-      "dilatation"
+      "dilatation",
+      "balloon"
     ],
-    "imaging": [
+    "aspiration_terms": [
+      "therapeutic aspiration",
+      "airway toileting",
+      "secretion clearance"
+    ],
+    "aspiration_repeat_terms": [
+      "repeat therapeutic aspiration",
+      "earlier this admission",
+      "same hospitalization"
+    ],
+    "valve_terms": [
+      "valve",
+      "zephyr valve",
+      "spiration valve"
+    ],
+    "bal_terms": [
+      "bronchoalveolar lavage",
+      "bal"
+    ],
+    "thoracentesis_terms": [
+      "thoracentesis"
+    ],
+    "thoracentesis_imaging_terms": [
       "images archived",
-      "stored images"
+      "permanent image",
+      "ultrasound guidance",
+      "ultrasound-guided"
     ]
   },
   "lobes": {
-    "RUL": ["right upper lobe", "RUL"],
-    "RML": ["right middle lobe", "RML"],
-    "RLL": ["right lower lobe", "RLL"],
-    "LUL": ["left upper lobe", "LUL"],
-    "LLL": ["left lower lobe", "LLL"]
+    "RUL": ["right upper lobe", "rul"],
+    "RML": ["right middle lobe", "rml"],
+    "RLL": ["right lower lobe", "rll"],
+    "LUL": ["left upper lobe", "lul"],
+    "LLL": ["left lower lobe", "lll"]
   },
   "stations": {
-    "4R": ["4R", "station 4 right"],
-    "4L": ["4L", "station 4 left"],
-    "7": ["station 7"],
-    "11R": ["11R"],
-    "11L": ["11L"]
+    "4R": ["4r", "station 4r", "right lower paratracheal"],
+    "7": ["7", "station 7", "subcarinal"],
+    "11R": ["11r", "station 11r", "right hilar"],
+    "11L": ["11l", "station 11l", "left hilar"],
+    "4L": ["4l", "station 4l", "left lower paratracheal"]
   },
-  "sites": {
-    "RMB": ["right mainstem bronchus", "RMB"],
-    "LMB": ["left mainstem bronchus", "LMB"]
+  "airways": {
+    "TRACHEA": {"aliases": ["trachea"], "class": "trachea"},
+    "RMB": {"aliases": ["right main bronchus", "right mainstem bronchus", "rmb"], "class": "major_bronchus"},
+    "LMB": {"aliases": ["left main bronchus", "left mainstem bronchus", "lmb"], "class": "major_bronchus"},
+    "LOBAR": {"aliases": ["lobar", "segmental"], "class": "lobar"}
+  },
+  "blvr": {
+    "manufacturers": {
+      "Zephyr": ["zephyr"],
+      "Spiration": ["spiration"]
+    },
+    "chartis_negative_terms": ["cv-", "cv negative"],
+    "chartis_positive_terms": ["cv+", "cv positive"]
+  },
+  "policies": {
+    "chartis_same_session": "allow"
   },
   "bundling_rules": {
-    "navigation_required": ["31627"],
-    "radial_requires_tblb": true,
-    "radial_linear_exclusive": false,
-    "radial_codes": ["+31654"],
-    "linear_codes": ["31652", "31653"],
-    "sedation_blockers": ["anesthesia"],
-    "stent_codes": ["31631", "31636", "+31637"],
-    "dilation_codes": ["31630"],
-    "diagnostic_codes": ["31622"],
-    "surgical_codes": ["31627", "31628", "+31632", "31630", "31636", "31652", "31653", "+31654"],
-    "mutually_exclusive": [
-      {"codes": ["31640", "31641"], "keep": "31641"}
-    ]
+    "navigation_required": {
+      "codes": ["31627"],
+      "description": "Navigation add-on payable only when navigation was initiated and catheter advanced."
+    },
+    "radial_requires_tblb": {
+      "radial_codes": ["+31654"],
+      "description": "Radial EBUS add-on requires documentation of peripheral lesion localization and sampling."
+    },
+    "diagnostic_with_surgical": {
+      "drop_codes": ["31622"],
+      "therapeutic_codes": ["31627", "31628", "+31632", "31629", "+31633", "31630", "31636", "31652", "31653", "+31654"],
+      "description": "Diagnostic bronchoscopy bundled when therapeutic bronchoscopic procedures are billed on same DOS."
+    },
+    "stent_dilation_same_segment": {
+      "stent_codes": ["31631", "31636", "+31637"],
+      "dilation_codes": ["31630"],
+      "description": "Dilation of same airway segment as stent placement is bundled unless distinct site documented."
+    },
+    "31640_vs_31641_same_site": {
+      "dominant": "31641",
+      "paired": ["31640", "31641"],
+      "description": "Electrocautery vs. APC in same site: report higher-valued 31641 only."
+    },
+    "radial_linear_exclusive": {
+      "radial_codes": ["+31654"],
+      "linear_codes": ["31652", "31653"],
+      "description": "Radial EBUS add-on not allowed solely for nodal staging without documented peripheral lesion sampling."
+    }
   },
   "ncci_pairs": [
     {
       "primary": "31636",
       "secondary": "31630",
       "modifier_allowed": true,
-      "reason": "Stent placement bundles dilation when same segment."
-    }
-  ],
-  "mer": {
-    "allowed_amounts": {
-      "31627": 200.0,
-      "31628": 250.0,
-      "+31632": 120.0,
-      "31652": 400.0,
-      "31653": 520.0,
-      "+31654": 150.0,
-      "31636": 600.0,
-      "31630": 220.0,
-      "99152": 100.0,
-      "31645": 180.0
+      "reason": "Stent placement includes dilation when performed in the same airway; append -59/-XS only for distinct segment."
     },
-    "add_on_codes": ["+31632", "+31654", "31627"]
-  }
+    {
+      "primary": "31631",
+      "secondary": "31630",
+      "modifier_allowed": true,
+      "reason": "Tracheal stent bundles co-sited dilation except when clearly distinct sites are documented."
+    },
+    {
+      "primary": "31629",
+      "secondary": "31645",
+      "modifier_allowed": false,
+      "reason": "Endoscopic TBNA bundles therapeutic aspiration performed in same session."
+    }
+  ]
 }

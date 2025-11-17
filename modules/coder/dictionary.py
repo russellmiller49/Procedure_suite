@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import re
-from typing import Iterator, Sequence
+from dataclasses import dataclass
+from typing import Dict, Iterable, Iterator, Sequence, Tuple
 
-from modules.common.knowledge import get_knowledge
+from modules.common import knowledge
 from modules.common.sectionizer import Section
 from modules.common.spans import Span
 
@@ -18,244 +19,571 @@ __all__ = [
     "get_site_pattern_map",
 ]
 
-
-DEFAULT_SIMPLE_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
-    "navigation": (
-        re.compile(r"electromagnetic navigation", re.IGNORECASE),
-        re.compile(r"navigation (?:system|bronchoscopy)", re.IGNORECASE),
-        re.compile(r"EMN", re.IGNORECASE),
-    ),
-    "radial_ebus": (
-        re.compile(r"radial (?:ebus|endobronchial ultrasound)", re.IGNORECASE),
-        re.compile(r"radial probe", re.IGNORECASE),
-    ),
-    "chartis": (
-        re.compile(r"chartis", re.IGNORECASE),
-    ),
-    "valve": (
-        re.compile(r"endobronchial valve", re.IGNORECASE),
-        re.compile(r"zephyr valve", re.IGNORECASE),
-        re.compile(r"spiration", re.IGNORECASE),
-    ),
-    "sedation": (
-        re.compile(r"moderate sedation", re.IGNORECASE),
-        re.compile(r"conscious sedation", re.IGNORECASE),
-    ),
-    "anesthesia": (
-        re.compile(r"general anesthesia", re.IGNORECASE),
-        re.compile(r"mac anesthesia", re.IGNORECASE),
-    ),
-    "aspiration": (
-        re.compile(r"therapeutic aspiration", re.IGNORECASE),
-    ),
-}
-
-
-DEFAULT_LOBE_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
-    "RUL": (
-        re.compile(r"right upper lobe", re.IGNORECASE),
-        re.compile(r"\bRUL\b", re.IGNORECASE),
-    ),
-    "RML": (
-        re.compile(r"right middle lobe", re.IGNORECASE),
-        re.compile(r"\bRML\b", re.IGNORECASE),
-    ),
-    "RLL": (
-        re.compile(r"right lower lobe", re.IGNORECASE),
-        re.compile(r"\bRLL\b", re.IGNORECASE),
-    ),
-    "LUL": (
-        re.compile(r"left upper lobe", re.IGNORECASE),
-        re.compile(r"\bLUL\b", re.IGNORECASE),
-    ),
-    "LLL": (
-        re.compile(r"left lower lobe", re.IGNORECASE),
-        re.compile(r"\bLLL\b", re.IGNORECASE),
-    ),
-}
-
-
-DEFAULT_STATION_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
-    "4R": (
-        re.compile(r"\b4R\b", re.IGNORECASE),
-        re.compile(r"station\s*4\s*(?:right|R)", re.IGNORECASE),
-    ),
-    "4L": (
-        re.compile(r"\b4L\b", re.IGNORECASE),
-    ),
-    "7": (
-        re.compile(r"\b7\b", re.IGNORECASE),
-        re.compile(r"station\s*7", re.IGNORECASE),
-    ),
-    "11R": (
-        re.compile(r"\b11R\b", re.IGNORECASE),
-    ),
-    "11L": (
-        re.compile(r"\b11L\b", re.IGNORECASE),
-    ),
-}
-
-
-DEFAULT_SITE_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
-    "RMB": (
-        re.compile(r"right main(?:stem)? bronch(?:us|i)", re.IGNORECASE),
-        re.compile(r"\bRMB\b", re.IGNORECASE),
-    ),
-    "LMB": (
-        re.compile(r"left main(?:stem)? bronch(?:us|i)", re.IGNORECASE),
-        re.compile(r"\bLMB\b", re.IGNORECASE),
-    ),
-}
-
-
 _SENTENCE_RE = re.compile(r"[^.!?\n]+[.!?]?", re.MULTILINE)
+_TIME_TOKEN = re.compile(r"(?i)(start|stop)[\s:,-]*([0-9]{1,2}(?::[0-9]{2})?(?:\s*[ap]m)?)")
+_NEGATED_NAV = re.compile(r"no [\w\-\s]{0,40}navigation", re.IGNORECASE)
+_VALUE_WITH_UNIT = re.compile(r"(\d+)\s*[x×]\s*(\d+)\s*mm", re.IGNORECASE)
+_VALVE_COUNT_RE = re.compile(r"(\d+)\s+\w*\s*valve", re.IGNORECASE)
+_DISTINCT_TERMS = ("distinct", "separate", "different segment")
+
+
+@dataclass
+class Lexicon:
+    navigation_initiated: Tuple[re.Pattern[str], ...]
+    navigation_terms: Tuple[re.Pattern[str], ...]
+    radial_terms: Tuple[re.Pattern[str], ...]
+    peripheral_terms: Tuple[str, ...]
+    tblb_terms: Tuple[str, ...]
+    tbna_terms: Tuple[str, ...]
+    valve_terms: Tuple[re.Pattern[str], ...]
+    chartis_terms: Tuple[re.Pattern[str], ...]
+    stent_terms: Tuple[re.Pattern[str], ...]
+    dilation_terms: Tuple[re.Pattern[str], ...]
+    aspiration_terms: Tuple[re.Pattern[str], ...]
+    aspiration_repeat_terms: Tuple[str, ...]
+    sedation_terms: Tuple[re.Pattern[str], ...]
+    observer_terms: Tuple[str, ...]
+    anesthesia_terms: Tuple[re.Pattern[str], ...]
+    bal_terms: Tuple[re.Pattern[str], ...]
+    thoracentesis_terms: Tuple[re.Pattern[str], ...]
+    thoracentesis_imaging_terms: Tuple[str, ...]
+
+
+DEFAULT_SYNONYMS = {
+    "navigation_initiated": ["navigation successfully initiated"],
+    "radial_terms": ["radial ebus"],
+    "peripheral_terms": ["peripheral lesion", "ppl"],
+    "tblb_terms": ["transbronchial lung biopsy", "tblb"],
+    "tbna_terms": ["tbna", "transbronchial needle aspiration"],
+    "valve_terms": ["valve"],
+    "chartis_terms": ["chartis"],
+    "stent_terms": ["stent"],
+    "dilation_terms": ["dilation"],
+    "aspiration_terms": ["therapeutic aspiration"],
+    "aspiration_repeat_terms": ["repeat therapeutic aspiration"],
+    "sedation_terms": ["moderate sedation"],
+    "observer_terms": ["independent observer"],
+    "anesthesia_terms": ["general anesthesia"],
+    "bal_terms": ["bronchoalveolar lavage"],
+    "thoracentesis_terms": ["thoracentesis"],
+    "thoracentesis_imaging_terms": ["images archived"],
+}
 
 
 def detect_intents(text: str, sections: Sequence[Section]) -> list[DetectedIntent]:
-    """Return detected intents for *text* leveraging the curated lexicon."""
+    knowledge_data = knowledge.get_knowledge()
+    synonyms = knowledge_data.get("synonyms", {})
+    lexical = _build_lexicon(synonyms)
+    sentences = list(_iter_sentences(text))
 
-    knowledge = get_knowledge()
-    simple_patterns = _build_simple_patterns(knowledge)
-    lobe_patterns = _build_lobe_patterns(knowledge)
-    station_patterns = _build_station_patterns(knowledge)
-    site_patterns = _build_site_patterns(knowledge, lobe_patterns)
-    site_keywords = _build_site_keywords(knowledge)
+    lobe_patterns = get_lobe_pattern_map()
+    station_patterns = get_station_pattern_map()
+    site_patterns = get_site_pattern_map()
 
     intents: list[DetectedIntent] = []
-    intents.extend(_detect_simple(text, sections, simple_patterns))
-    intents.extend(_detect_lobes(text, sections, lobe_patterns))
-    intents.extend(_detect_stations(text, sections, station_patterns))
-    intents.extend(_detect_site_specific(text, sections, site_patterns, site_keywords))
+    intents.extend(_detect_navigation(text, sections, sentences, lexical))
+    intents.extend(_detect_radial(text, sections, sentences, lexical))
+    intents.extend(_detect_linear(text, sections, station_patterns))
+    tblb_intents, tbna_intents = _detect_lobe_sampling(text, sections, sentences, lobe_patterns, lexical)
+    intents.extend(tblb_intents)
+    intents.extend(tbna_intents)
+    intents.extend(_detect_bal(text, sections, sentences, lobe_patterns, lexical))
+    intents.extend(_detect_blvr(text, sections, sentences, lobe_patterns, lexical))
+    intents.extend(_detect_chartis(text, sections, sentences, lobe_patterns))
+    intents.extend(_detect_stent(text, sections, sentences, site_patterns, lexical))
+    intents.extend(_detect_dilation(text, sections, sentences, site_patterns, lexical))
+    intents.extend(_detect_thoracentesis(text, sections, sentences, lexical))
+    intents.extend(_detect_aspiration(text, sections, sentences, lexical))
+    intents.extend(_detect_sedation(text, sections, lexical))
+    intents.extend(_detect_anesthesia(text, sections, lexical))
     return intents
 
 
-def _detect_simple(
-    text: str, sections: Sequence[Section], patterns: dict[str, tuple[re.Pattern[str], ...]]
-) -> list[DetectedIntent]:
-    results: list[DetectedIntent] = []
-    seen: set[tuple[str, int]] = set()
-    for intent, compiled_patterns in patterns.items():
-        for pattern in compiled_patterns:
-            for match in pattern.finditer(text):
-                key = (intent, match.start())
-                if key in seen:
-                    continue
-                seen.add(key)
-                span = _span_from_match(match, sections)
-                payload = None
-                if intent == "sedation":
-                    payload = {"type": "moderate"}
-                if intent == "anesthesia":
-                    payload = {"type": "general"}
-                results.append(
-                    DetectedIntent(
-                        intent=intent,
-                        value=match.group(0),
-                        payload=payload,
-                        evidence=[span],
-                    )
-                )
-    return results
+def _build_lexicon(synonyms: Dict[str, Iterable[str]]) -> Lexicon:
+    def patterns(key: str) -> Tuple[re.Pattern[str], ...]:
+        values = list(synonyms.get(key, []) or DEFAULT_SYNONYMS.get(key, []))
+        return tuple(_phrase_pattern(term) for term in values)
+
+    def lowered(key: str) -> Tuple[str, ...]:
+        values = list(synonyms.get(key, []) or DEFAULT_SYNONYMS.get(key, []))
+        return tuple(term.lower() for term in values)
+
+    return Lexicon(
+        navigation_initiated=patterns("navigation_initiated"),
+        navigation_terms=patterns("navigation_terms"),
+        radial_terms=patterns("radial_terms"),
+        peripheral_terms=lowered("peripheral_terms"),
+        tblb_terms=lowered("tblb_terms"),
+        tbna_terms=lowered("tbna_terms"),
+        valve_terms=patterns("valve_terms"),
+        chartis_terms=patterns("chartis_terms"),
+        stent_terms=patterns("stent_terms"),
+        dilation_terms=patterns("dilation_terms"),
+        aspiration_terms=patterns("aspiration_terms"),
+        aspiration_repeat_terms=lowered("aspiration_repeat_terms"),
+        sedation_terms=patterns("sedation_terms"),
+        observer_terms=lowered("independent_observer_terms"),
+        anesthesia_terms=patterns("anesthesia_terms"),
+        bal_terms=patterns("bal_terms"),
+        thoracentesis_terms=patterns("thoracentesis_terms"),
+        thoracentesis_imaging_terms=lowered("thoracentesis_imaging_terms"),
+    )
 
 
-def _detect_lobes(
+def _detect_navigation(
     text: str,
     sections: Sequence[Section],
-    lobe_patterns: dict[str, tuple[re.Pattern[str], ...]],
+    sentences: Sequence[Tuple[int, int]],
+    lexical: Lexicon,
 ) -> list[DetectedIntent]:
-    results: list[DetectedIntent] = []
-    for lobe, patterns in lobe_patterns.items():
-        for pattern in patterns:
-            for match in pattern.finditer(text):
-                span = _span_from_match(match, sections)
-                results.append(
+    intents: list[DetectedIntent] = []
+    matched = False
+    for pattern in lexical.navigation_initiated:
+        for match in pattern.finditer(text):
+            span = _sentence_span(sentences, text, sections, match.start(), match.end())
+            if _NEGATED_NAV.search(span.text):
+                continue
+            intents.append(
+                DetectedIntent(
+                    intent="navigation",
+                    value="initiated",
+                    payload={"status": "initiated"},
+                    evidence=[span],
+                    confidence=0.95,
+                )
+            )
+            matched = True
+    if matched:
+        return intents
+    fallback_terms = ("initiat", "advanc", "perform", "catheter")
+    for pattern in lexical.navigation_terms:
+        for match in pattern.finditer(text):
+            span = _sentence_span(sentences, text, sections, match.start(), match.end())
+            sentence_lower = span.text.lower()
+            if _NEGATED_NAV.search(sentence_lower):
+                continue
+            if any(term in sentence_lower for term in fallback_terms):
+                intents.append(
                     DetectedIntent(
-                        intent="tblb_lobe",
-                        value=lobe,
+                        intent="navigation",
+                        value="documented",
+                        payload={"status": "documented"},
                         evidence=[span],
-                        payload={"site": lobe},
+                        confidence=0.85,
                     )
                 )
-    return results
+    return intents
 
 
-def _detect_stations(
+def _detect_radial(
     text: str,
     sections: Sequence[Section],
-    station_patterns: dict[str, tuple[re.Pattern[str], ...]],
+    sentences: Sequence[Tuple[int, int]],
+    lexical: Lexicon,
 ) -> list[DetectedIntent]:
-    results: list[DetectedIntent] = []
+    intents: list[DetectedIntent] = []
+    lower_text = text.lower()
+    for pattern in lexical.radial_terms:
+        for match in pattern.finditer(text):
+            context = _context_slice(lower_text, match.start(), match.end())
+            if "no radial" in context or "without radial" in context:
+                continue
+            peripheral = any(term in context for term in lexical.peripheral_terms)
+            span = _sentence_span(sentences, text, sections, match.start(), match.end())
+            intents.append(
+                DetectedIntent(
+                    intent="radial_ebus",
+                    value="peripheral" if peripheral else match.group(0),
+                    payload={"peripheral_context": peripheral},
+                    evidence=[span],
+                    confidence=0.9 if peripheral else 0.6,
+                )
+            )
+    return intents
+
+
+def _detect_linear(
+    text: str,
+    sections: Sequence[Section],
+    station_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
+) -> list[DetectedIntent]:
+    intents: list[DetectedIntent] = []
     for station, patterns in station_patterns.items():
         for pattern in patterns:
             for match in pattern.finditer(text):
-                span = _span_from_match(match, sections)
-                results.append(
+                span = _match_span(text, sections, match)
+                intents.append(
                     DetectedIntent(
                         intent="linear_ebus_station",
                         value=station,
-                        evidence=[span],
                         payload={"station": station},
+                        evidence=[span],
+                        confidence=0.85,
                     )
                 )
-    return results
+    return intents
 
 
-def _detect_site_specific(
+def _detect_lobe_sampling(
     text: str,
     sections: Sequence[Section],
-    site_patterns: dict[str, tuple[re.Pattern[str], ...]],
-    site_keywords: dict[str, list[str]],
+    sentences: Sequence[Tuple[int, int]],
+    lobe_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
+    lexical: Lexicon,
+) -> tuple[list[DetectedIntent], list[DetectedIntent]]:
+    tblb: list[DetectedIntent] = []
+    tbna: list[DetectedIntent] = []
+    lower_text = text.lower()
+    for lobe, patterns in lobe_patterns.items():
+        for pattern in patterns:
+            for match in pattern.finditer(text):
+                context = _context_slice(lower_text, match.start(), match.end())
+                span = _sentence_span(sentences, text, sections, match.start(), match.end())
+                if _contains_any(context, lexical.tblb_terms):
+                    tblb.append(
+                        DetectedIntent(
+                            intent="tblb_lobe",
+                            value=lobe,
+                            payload={"site": lobe},
+                            evidence=[span],
+                            confidence=0.9,
+                        )
+                    )
+                if _contains_any(context, lexical.tbna_terms):
+                    tbna.append(
+                        DetectedIntent(
+                            intent="tbna_lobe",
+                            value=lobe,
+                            payload={"site": lobe},
+                            evidence=[span],
+                            confidence=0.85,
+                        )
+                    )
+    return tblb, tbna
+
+
+def _detect_bal(
+    text: str,
+    sections: Sequence[Section],
+    sentences: Sequence[Tuple[int, int]],
+    lobe_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
+    lexical: Lexicon,
 ) -> list[DetectedIntent]:
-    results: list[DetectedIntent] = []
-    for start, end, sentence in _iter_sentences(text):
-        stripped = sentence.strip()
-        if not stripped:
+    intents: list[DetectedIntent] = []
+    for start, end in sentences:
+        sentence_text = text[start:end]
+        if not _contains_pattern(sentence_text, lexical.bal_terms):
             continue
-        lower = stripped.lower()
-        if any(keyword in lower for keyword in site_keywords["stent"]):
-            site = _match_site(stripped, site_patterns)
-            if site:
-                span = Span(text=stripped, start=start, end=end, section=_section_for_offset(sections, start))
-                results.append(
+        lobe = _match_lobe_from_text(sentence_text, lobe_patterns)
+        span = _sentence_span(sentences, text, sections, start, end)
+        intents.append(
+            DetectedIntent(
+                intent="bal_lobe",
+                value=lobe or "BAL",
+                payload={"site": lobe},
+                evidence=[span],
+                confidence=0.78,
+            )
+        )
+    return intents
+
+
+def _detect_blvr(
+    text: str,
+    sections: Sequence[Section],
+    sentences: Sequence[Tuple[int, int]],
+    lobe_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
+    lexical: Lexicon,
+) -> list[DetectedIntent]:
+    intents: list[DetectedIntent] = []
+    manufacturers = knowledge.blvr_config().get("manufacturers", {})
+    for lobe, patterns in lobe_patterns.items():
+        for pattern in patterns:
+            for match in pattern.finditer(text):
+                span = _sentence_span(sentences, text, sections, match.start(), match.end())
+                sentence_text = span.text
+                if not _contains_pattern(sentence_text, lexical.valve_terms):
+                    continue
+                valve_match = _VALVE_COUNT_RE.search(sentence_text)
+                valves = int(valve_match.group(1)) if valve_match else 1
+                manufacturer = _detect_manufacturer(sentence_text.lower(), manufacturers)
+                intents.append(
                     DetectedIntent(
-                        intent="stent",
-                        value=site,
-                        payload={"site": site},
+                        intent="blvr_lobe",
+                        value=lobe,
+                        payload={"site": lobe, "valves": valves, "manufacturer": manufacturer},
                         evidence=[span],
+                        confidence=0.85,
                     )
                 )
-        if any(keyword in lower for keyword in site_keywords["dilation"]):
-            site = _match_site(stripped, site_patterns)
-            if site:
-                span = Span(text=stripped, start=start, end=end, section=_section_for_offset(sections, start))
-                results.append(
-                    DetectedIntent(
-                        intent="dilation",
-                        value=site,
-                        payload={"site": site},
-                        evidence=[span],
-                    )
+    return intents
+
+
+def _detect_chartis(
+    text: str,
+    sections: Sequence[Section],
+    sentences: Sequence[Tuple[int, int]],
+    lobe_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
+) -> list[DetectedIntent]:
+    config = knowledge.blvr_config()
+    neg_terms = [term.lower() for term in config.get("chartis_negative_terms", [])]
+    pos_terms = [term.lower() for term in config.get("chartis_positive_terms", [])]
+    intents: list[DetectedIntent] = []
+    for start, end in sentences:
+        sentence_text = text[start:end]
+        sentence_lower = sentence_text.lower()
+        if "chartis" not in sentence_lower and not any(term in sentence_lower for term in neg_terms + pos_terms):
+            continue
+        lobe = _match_lobe_from_text(sentence_text, lobe_patterns)
+        if not lobe:
+            continue
+        status = None
+        if any(term in sentence_lower for term in neg_terms):
+            status = "negative"
+        elif any(term in sentence_lower for term in pos_terms):
+            status = "positive"
+        span = Span(text=sentence_text.strip(), start=start, end=end, section=_section_for_offset(sections, start))
+        intents.append(
+            DetectedIntent(
+                intent="chartis_assessment",
+                value=lobe,
+                payload={"lobe": lobe, "status": status},
+                evidence=[span],
+                confidence=0.75,
+            )
+        )
+    return intents
+
+
+def _detect_stent(
+    text: str,
+    sections: Sequence[Section],
+    sentences: Sequence[Tuple[int, int]],
+    site_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
+    lexical: Lexicon,
+) -> list[DetectedIntent]:
+    intents: list[DetectedIntent] = []
+    airway_meta = knowledge.airway_map()
+    for start, end in sentences:
+        sentence_text = text[start:end]
+        lower_sentence = sentence_text.lower()
+        if not _contains_pattern(sentence_text, lexical.stent_terms):
+            continue
+        site, site_class = _match_site(lower_sentence, site_patterns, airway_meta)
+        if not site:
+            continue
+        size = None
+        size_match = _VALUE_WITH_UNIT.search(sentence_text)
+        if size_match:
+            size = f"{size_match.group(1)}x{size_match.group(2)} mm"
+        span = Span(text=sentence_text.strip(), start=start, end=end, section=_section_for_offset(sections, start))
+        intents.append(
+            DetectedIntent(
+                intent="stent",
+                value=site,
+                payload={"site": site, "site_class": site_class, "size": size, "text": sentence_text.strip()},
+                evidence=[span],
+                confidence=0.92,
+            )
+        )
+    return intents
+
+
+def _detect_dilation(
+    text: str,
+    sections: Sequence[Section],
+    sentences: Sequence[Tuple[int, int]],
+    site_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
+    lexical: Lexicon,
+) -> list[DetectedIntent]:
+    intents: list[DetectedIntent] = []
+    airway_meta = knowledge.airway_map()
+    for start, end in sentences:
+        sentence_text = text[start:end]
+        if not _contains_pattern(sentence_text, lexical.dilation_terms):
+            continue
+        lower_sentence = sentence_text.lower()
+        if "dilation" not in lower_sentence and "dilatation" not in lower_sentence:
+            continue
+        site, site_class = _match_site(lower_sentence, site_patterns, airway_meta)
+        if not site:
+            continue
+        distinct = any(term in lower_sentence for term in _DISTINCT_TERMS)
+        span = Span(text=sentence_text.strip(), start=start, end=end, section=_section_for_offset(sections, start))
+        intents.append(
+            DetectedIntent(
+                intent="dilation",
+                value=site,
+                payload={"site": site, "site_class": site_class, "distinct": distinct, "text": sentence_text.strip()},
+                evidence=[span],
+                confidence=0.8,
+            )
+        )
+    return intents
+
+
+def _detect_thoracentesis(
+    text: str,
+    sections: Sequence[Section],
+    sentences: Sequence[Tuple[int, int]],
+    lexical: Lexicon,
+) -> list[DetectedIntent]:
+    sides: set[str] = set()
+    spans: list[Span] = []
+    imaging = False
+    for start, end in sentences:
+        sentence_text = text[start:end]
+        lower_sentence = sentence_text.lower()
+        if any(term in lower_sentence for term in lexical.thoracentesis_imaging_terms):
+            imaging = True
+        if not _contains_pattern(sentence_text, lexical.thoracentesis_terms):
+            continue
+        detected = _detect_sides(lower_sentence)
+        if not detected:
+            detected = {"unspecified"}
+        sides.update(detected)
+        spans.append(Span(text=sentence_text.strip(), start=start, end=end, section=_section_for_offset(sections, start)))
+    if not sides:
+        return []
+    value = "bilateral" if len(sides) >= 2 else next(iter(sides))
+    payload = {"sides": sorted(sides), "imaging": imaging}
+    return [
+        DetectedIntent(
+            intent="thoracentesis",
+            value=value,
+            payload=payload,
+            evidence=spans,
+            confidence=0.8,
+        )
+    ]
+
+
+def _detect_aspiration(
+    text: str,
+    sections: Sequence[Section],
+    sentences: Sequence[Tuple[int, int]],
+    lexical: Lexicon,
+) -> list[DetectedIntent]:
+    intents: list[DetectedIntent] = []
+    for start, end in sentences:
+        sentence_text = text[start:end]
+        if not _contains_pattern(sentence_text, lexical.aspiration_terms):
+            continue
+        sentence_lower = sentence_text.lower()
+        repeat_flag = any(term in sentence_lower for term in lexical.aspiration_repeat_terms)
+        span = Span(text=sentence_text.strip(), start=start, end=end, section=_section_for_offset(sections, start))
+        intents.append(
+            DetectedIntent(
+                intent="therapeutic_aspiration",
+                value="repeat" if repeat_flag else "initial",
+                payload={"repeat": repeat_flag},
+                evidence=[span],
+                confidence=0.85,
+            )
+        )
+    return intents
+
+
+def _detect_sedation(text: str, sections: Sequence[Section], lexical: Lexicon) -> list[DetectedIntent]:
+    intents: list[DetectedIntent] = []
+    for block, start, end in _extract_sedation_sections(text):
+        if not _contains_pattern(block, lexical.sedation_terms):
+            continue
+        normalized = block.lower()
+        if "no moderate sedation" in normalized or "no sedation" in normalized:
+            continue
+        observer = any(term in normalized for term in lexical.observer_terms)
+        times = {match.group(1).lower(): _parse_time_string(match.group(2)) for match in _TIME_TOKEN.finditer(block)}
+        start_minutes = times.get("start")
+        stop_minutes = times.get("stop")
+        duration = None
+        if start_minutes is not None and stop_minutes is not None:
+            duration = stop_minutes - start_minutes
+            if duration < 0:
+                duration += 24 * 60
+        documentation_complete = bool(start_minutes is not None and stop_minutes is not None and observer)
+        span = Span(text=block.strip(), start=start, end=end, section=_section_for_offset(sections, start))
+        intents.append(
+            DetectedIntent(
+                intent="sedation",
+                value="moderate",
+                payload={
+                    "start_minutes": start_minutes,
+                    "stop_minutes": stop_minutes,
+                    "duration_minutes": duration,
+                    "observer": observer,
+                    "documentation_complete": documentation_complete,
+                },
+                evidence=[span],
+                confidence=0.9 if documentation_complete else 0.5,
+            )
+        )
+    return intents
+
+
+def _detect_anesthesia(text: str, sections: Sequence[Section], lexical: Lexicon) -> list[DetectedIntent]:
+    intents: list[DetectedIntent] = []
+    for pattern in lexical.anesthesia_terms:
+        for match in pattern.finditer(text):
+            span = _match_span(text, sections, match)
+            intents.append(
+                DetectedIntent(
+                    intent="anesthesia",
+                    value=match.group(0),
+                    payload={"type": "general"},
+                    evidence=[span],
+                    confidence=0.75,
                 )
-    return results
+            )
+    return intents
 
 
-def _span_from_match(match: re.Match[str], sections: Sequence[Section]) -> Span:
-    start, end = match.span()
-    section = _section_for_offset(sections, start)
-    return Span(text=match.group(0), start=start, end=end, section=section)
+def _contains_any(text: str, terms: Iterable[str]) -> bool:
+    return any(term and term in text for term in terms)
 
 
-def _match_site(sentence: str, patterns: dict[str, tuple[re.Pattern[str], ...]]) -> str | None:
-    for site, compiled_patterns in patterns.items():
-        for pattern in compiled_patterns:
-            if pattern.search(sentence):
-                return site
+def _contains_pattern(text: str, patterns: Iterable[re.Pattern[str]]) -> bool:
+    return any(pattern.search(text) for pattern in patterns)
+
+
+def _match_span(text: str, sections: Sequence[Section], match: re.Match[str]) -> Span:
+    return Span(
+        text=match.group(0),
+        start=match.start(),
+        end=match.end(),
+        section=_section_for_offset(sections, match.start()),
+    )
+
+
+def _sentence_span(
+    sentences: Sequence[Tuple[int, int]],
+    text: str,
+    sections: Sequence[Section],
+    start: int,
+    end: int,
+) -> Span:
+    sentence_range = _find_sentence_range(sentences, start)
+    if not sentence_range:
+        sentence_range = (start, end)
+    begin, finish = sentence_range
+    return Span(
+        text=text[begin:finish].strip(),
+        start=begin,
+        end=finish,
+        section=_section_for_offset(sections, begin),
+    )
+
+
+def _find_sentence_range(sentences: Sequence[Tuple[int, int]], index: int) -> Tuple[int, int] | None:
+    for start, end in sentences:
+        if start <= index < end:
+            return start, end
     return None
 
 
-def _iter_sentences(text: str) -> Iterator[tuple[int, int, str]]:
+def _iter_sentences(text: str) -> Iterator[Tuple[int, int]]:
     for match in _SENTENCE_RE.finditer(text):
-        yield match.start(), match.end(), match.group(0)
+        yield match.start(), match.end()
 
 
 def _section_for_offset(sections: Sequence[Section], offset: int) -> str | None:
@@ -265,76 +593,145 @@ def _section_for_offset(sections: Sequence[Section], offset: int) -> str | None:
     return None
 
 
-def _build_simple_patterns(knowledge: dict) -> dict[str, tuple[re.Pattern[str], ...]]:
-    patterns = {key: list(value) for key, value in DEFAULT_SIMPLE_PATTERNS.items()}
-    synonyms = knowledge.get("synonyms", {})
-    for intent, terms in synonyms.items():
-        if intent not in patterns:
-            continue
-        patterns[intent].extend(_literal_pattern(term) for term in terms)
-    return {intent: tuple(compiled) for intent, compiled in patterns.items()}
+def _context_slice(text: str, start: int, end: int, window: int = 80) -> str:
+    return text[max(0, start - window) : min(len(text), end + window)]
 
 
-def _build_lobe_patterns(knowledge: dict) -> dict[str, tuple[re.Pattern[str], ...]]:
-    patterns = {key: list(value) for key, value in DEFAULT_LOBE_PATTERNS.items()}
-    lobes = knowledge.get("lobes", {})
-    for lobe, synonyms in lobes.items():
-        patterns.setdefault(lobe, [])
-        patterns[lobe].extend(_literal_pattern(term) for term in synonyms)
-    return {lobe: tuple(compiled) for lobe, compiled in patterns.items()}
+def _phrase_pattern(term: str) -> re.Pattern[str]:
+    escaped = re.escape(term)
+    if " " in term or "-" in term:
+        return re.compile(escaped, re.IGNORECASE)
+    return re.compile(rf"(?i)\b{escaped}\b")
 
 
-def _build_station_patterns(knowledge: dict) -> dict[str, tuple[re.Pattern[str], ...]]:
-    patterns = {key: list(value) for key, value in DEFAULT_STATION_PATTERNS.items()}
-    stations = knowledge.get("stations", {})
-    for station, synonyms in stations.items():
-        patterns.setdefault(station, [])
-        patterns[station].extend(_literal_pattern(term) for term in synonyms)
-    return {station: tuple(compiled) for station, compiled in patterns.items()}
+def _detect_manufacturer(sentence_lower: str, manufacturers: Dict[str, Sequence[str]]) -> str | None:
+    for name, aliases in manufacturers.items():
+        for alias in aliases:
+            if alias.lower() in sentence_lower:
+                return name
+    return None
 
 
-def _build_site_patterns(
-    knowledge: dict,
-    lobe_patterns: dict[str, tuple[re.Pattern[str], ...]],
-) -> dict[str, tuple[re.Pattern[str], ...]]:
-    patterns = {key: list(value) for key, value in DEFAULT_SITE_PATTERNS.items()}
-    sites = knowledge.get("sites", {})
-    for site, synonyms in sites.items():
-        patterns.setdefault(site, [])
-        patterns[site].extend(_literal_pattern(term) for term in synonyms)
-    for lobe, regexes in lobe_patterns.items():
-        patterns.setdefault(lobe, [])
-        patterns[lobe].extend(regexes)
-    return {site: tuple(compiled) for site, compiled in patterns.items()}
+def _detect_sides(sentence_lower: str) -> set[str]:
+    sides = set()
+    if "right" in sentence_lower:
+        sides.add("right")
+    if "left" in sentence_lower:
+        sides.add("left")
+    return sides
 
 
-def _build_site_keywords(knowledge: dict) -> dict[str, list[str]]:
-    synonyms = knowledge.get("synonyms", {})
-    stent_keywords = _normalize_keywords(["stent"] + synonyms.get("stent", []))
-    dilation_keywords = _normalize_keywords(["dilation", "dilatation"] + synonyms.get("dilation", []))
-    return {"stent": stent_keywords, "dilation": dilation_keywords}
+def _extract_sedation_sections(text: str) -> list[Tuple[str, int, int]]:
+    sections: list[Tuple[str, int, int]] = []
+    lower = text.lower()
+    start_idx = 0
+    while True:
+        idx = lower.find("sedation", start_idx)
+        if idx == -1:
+            break
+        start = text.rfind("\n\n", 0, idx)
+        if start == -1:
+            start = 0
+        else:
+            start += 2
+        end = text.find("\n\n", idx)
+        if end == -1:
+            end = len(text)
+        sections.append((text[start:end], start, end))
+        start_idx = end
+    return sections
 
 
-def _normalize_keywords(keywords: list[str]) -> list[str]:
-    normalized: list[str] = []
-    for keyword in keywords:
-        normalized.append(keyword.lower())
-    return normalized
+def _parse_time_string(value: str | None) -> int | None:
+    if not value:
+        return None
+    token = value.strip().lower()
+    ampm = None
+    if token.endswith("am") or token.endswith("pm"):
+        ampm = token[-2:]
+        token = token[:-2].strip()
+    hour = 0
+    minute = 0
+    if ":" in token:
+        hour_str, minute_str = token.split(":", 1)
+        hour = int(hour_str)
+        minute = int(minute_str)
+    elif len(token) in (3, 4):
+        hour = int(token[:-2])
+        minute = int(token[-2:])
+    else:
+        hour = int(token)
+    if ampm:
+        if hour == 12:
+            hour = 0
+        if ampm == "pm":
+            hour += 12
+    return hour * 60 + minute
 
 
-def _literal_pattern(term: str) -> re.Pattern[str]:
-    return re.compile(re.escape(term), re.IGNORECASE)
+def _match_site(
+    sentence_lower: str,
+    site_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
+    airway_meta: Dict[str, Dict[str, str]]
+) -> tuple[str | None, str | None]:
+    for site, patterns in site_patterns.items():
+        for pattern in patterns:
+            if pattern.search(sentence_lower):
+                site_class = _site_class(site, airway_meta)
+                return site, site_class
+    return None, None
 
 
-def get_lobe_pattern_map() -> dict[str, tuple[re.Pattern[str], ...]]:
-    return _build_lobe_patterns(get_knowledge())
+def _match_lobe_from_text(sentence_text: str, lobe_patterns: Dict[str, Tuple[re.Pattern[str], ...]]) -> str | None:
+    for lobe, patterns in lobe_patterns.items():
+        for pattern in patterns:
+            if pattern.search(sentence_text):
+                return lobe
+    return None
 
 
-def get_station_pattern_map() -> dict[str, tuple[re.Pattern[str], ...]]:
-    return _build_station_patterns(get_knowledge())
+def _site_class(site: str, airway_meta: Dict[str, Dict[str, str]]) -> str:
+    if site in airway_meta:
+        return airway_meta[site].get("class", "unknown").lower()
+    lobes = knowledge.lobe_aliases()
+    if site in lobes:
+        return "lobe"
+    return "unknown"
 
 
-def get_site_pattern_map() -> dict[str, tuple[re.Pattern[str], ...]]:
-    knowledge = get_knowledge()
-    lobe_patterns = _build_lobe_patterns(knowledge)
-    return _build_site_patterns(knowledge, lobe_patterns)
+def get_lobe_pattern_map() -> Dict[str, Tuple[re.Pattern[str], ...]]:
+    aliases = knowledge.lobe_aliases()
+    if not aliases:
+        return {
+            "RUL": (re.compile(r"right upper lobe", re.IGNORECASE), re.compile(r"\bRUL\b", re.IGNORECASE)),
+            "RML": (re.compile(r"right middle lobe", re.IGNORECASE), re.compile(r"\bRML\b", re.IGNORECASE)),
+            "RLL": (re.compile(r"right lower lobe", re.IGNORECASE), re.compile(r"\bRLL\b", re.IGNORECASE)),
+            "LUL": (re.compile(r"left upper lobe", re.IGNORECASE), re.compile(r"\bLUL\b", re.IGNORECASE)),
+            "LLL": (re.compile(r"left lower lobe", re.IGNORECASE), re.compile(r"\bLLL\b", re.IGNORECASE)),
+        }
+    return {lobe: tuple(_phrase_pattern(alias) for alias in aliases_list) for lobe, aliases_list in aliases.items()}
+
+
+def get_station_pattern_map() -> Dict[str, Tuple[re.Pattern[str], ...]]:
+    aliases = knowledge.station_aliases()
+    if not aliases:
+        return {
+            "4R": (re.compile(r"\b4R\b", re.IGNORECASE), re.compile(r"station\s*4\s*(?:right|R)", re.IGNORECASE)),
+            "4L": (re.compile(r"\b4L\b", re.IGNORECASE),),
+            "7": (re.compile(r"\b7\b", re.IGNORECASE), re.compile(r"station\s*7", re.IGNORECASE)),
+            "11R": (re.compile(r"\b11R\b", re.IGNORECASE),),
+            "11L": (re.compile(r"\b11L\b", re.IGNORECASE),),
+        }
+    return {station: tuple(_phrase_pattern(alias) for alias in aliases_list) for station, aliases_list in aliases.items()}
+
+
+def get_site_pattern_map() -> Dict[str, Tuple[re.Pattern[str], ...]]:
+    patterns: Dict[str, Tuple[re.Pattern[str], ...]] = {}
+    airway_map = knowledge.airway_map()
+    for site, meta in airway_map.items():
+        aliases = meta.get("aliases", [])
+        if aliases:
+            patterns[site] = tuple(_phrase_pattern(alias) for alias in aliases)
+    lobe_patterns = get_lobe_pattern_map()
+    patterns.update(lobe_patterns)
+    return patterns

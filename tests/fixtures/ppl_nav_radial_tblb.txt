@@ -1,0 +1,28 @@
+TITLE: Bronchoscopy with EMN navigation, radial EBUS localization, TBNA, TBLB, and BAL
+
+INDICATION
+Right upper lobe (RUL) spiculated peripheral pulmonary lesion, 2.5 cm; tissue diagnosis.
+
+ANESTHESIA / SEDATION
+Moderate sedation provided by the bronchoscopist with independent trained observer (RN Jones).
+Start 10:12, Stop 10:47 (35 minutes total). Continuous monitoring documented.
+
+PROCEDURE / TECHNIQUE
+Flexible bronchoscopy via oral route. Full airway inspection.
+
+NAVIGATION
+Computer-assisted, image-guided navigation was INITIATED. CT plan loaded; navigation catheter advanced toward the RUL target; waypoint confirmation achieved. (Navigation initiated: YES.)
+
+RADIAL EBUS (MINIPROBE)
+Radial probe deployed to the RUL lesion; concentric view with “tool-in-lesion” confirmation captured as still images. Peripheral lesion localization completed.
+
+SAMPLING
+• TBNA: RUL lesion, 22G needle, 4 passes; ROSE adequate.
+• Transbronchial lung biopsy (TBLB): RUL, 3 cryobiopsy passes with balloon-occlusion; fluoroscopy used.
+• BAL: Right middle lobe (RML), 100 mL instilled, 50 mL returned.
+
+COMPLICATIONS
+None.
+
+DISPOSITION
+Stable to recovery. Images archived in the medical record.

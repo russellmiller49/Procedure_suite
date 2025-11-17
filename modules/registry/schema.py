@@ -50,7 +50,7 @@ class StentPlacement(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     site: str
-    size_mm: float | None = None
+    size: str | None = None
     stent_type: str | None = None
 
 
@@ -59,7 +59,9 @@ class BLVRData(BaseModel):
 
     lobes: list[str]
     valve_count: int | None = None
+    valve_details: list[dict[str, object]] = Field(default_factory=list)
     manufacturer: str | None = None
+    chartis: dict[str, str] = Field(default_factory=dict)
 
     @field_validator("lobes")
     @classmethod

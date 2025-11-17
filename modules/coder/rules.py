@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Sequence
 
-from modules.common.knowledge import get_knowledge
+from modules.common import knowledge
 from modules.common.rules_engine import ncci
 
 from .schema import BundleDecision, CodeDecision, DetectedIntent
@@ -36,7 +36,7 @@ class RuleConfig:
 
 
 _RULE_CONFIG: RuleConfig | None = None
-_KNOWLEDGE_REF: dict | None = None
+_KNOWLEDGE_REF: str | None = None
 
 
 def apply_rules(
@@ -110,7 +110,10 @@ def _enforce_radial_requirements(
     filtered: list[CodeDecision] = []
     actions: list[BundleDecision] = []
     for code in codes:
-        if code.cpt in config.radial_codes and not has_tblb:
+        if code.cpt in config.radial_codes:
+            if has_tblb or (code.context or {}).get("peripheral_target"):
+                filtered.append(code)
+                continue
             actions.append(
                 BundleDecision(
                     pair=(code.cpt, "PERIPH"),
@@ -138,6 +141,9 @@ def _enforce_radial_linear_exclusive(
     actions: list[BundleDecision] = []
     for code in codes:
         if code.cpt in config.radial_codes:
+            if (code.context or {}).get("peripheral_target"):
+                filtered.append(code)
+                continue
             actions.append(
                 BundleDecision(
                     pair=("LINEAR", code.cpt),
@@ -194,6 +200,11 @@ def _resolve_stent_dilation(codes: list[CodeDecision], config: RuleConfig) -> tu
             (stent for stent in stents if (stent.context or {}).get("site") == site and site),
             None,
         )
+        distinct_doc = bool((code.context or {}).get("distinct"))
+        if not distinct_doc and site:
+            distinct_doc = all(
+                (stent.context or {}).get("site") != site for stent in stents if (stent.context or {}).get("site")
+            )
         if matching_stent:
             actions.append(
                 BundleDecision(
@@ -204,17 +215,29 @@ def _resolve_stent_dilation(codes: list[CodeDecision], config: RuleConfig) -> tu
                 )
             )
             continue
-        if stents and ncci.allow_with_modifier(stents[0].cpt, code.cpt):
-            code.context.setdefault("needs_distinct_modifier", True)
-            actions.append(
-                BundleDecision(
-                    pair=(stents[0].cpt, code.cpt),
-                    action=f"allow {code.cpt} with modifier",
-                    reason="Distinct airway segment",
-                    rule=DISTINCT_RULE,
+        can_modify = bool(stents) and ncci.allow_with_modifier(stents[0].cpt, code.cpt)
+        if can_modify:
+            if distinct_doc:
+                code.context.setdefault("needs_distinct_modifier", True)
+                actions.append(
+                    BundleDecision(
+                        pair=(stents[0].cpt, code.cpt),
+                        action=f"allow {code.cpt} with modifier",
+                        reason="Distinct airway segment",
+                        rule=DISTINCT_RULE,
+                    )
                 )
-            )
-            code.rule_trace.append(DISTINCT_RULE)
+                code.rule_trace.append(DISTINCT_RULE)
+            else:
+                actions.append(
+                    BundleDecision(
+                        pair=(stents[0].cpt, code.cpt),
+                        action=f"drop {code.cpt}",
+                        reason="Modifier requires explicit documentation of distinct site",
+                        rule=STENT_RULE,
+                    )
+                )
+                continue
         filtered.append(code)
     return filtered, actions
 
@@ -273,32 +296,66 @@ def _resolve_mutually_exclusive(
 
 def _get_rule_config() -> RuleConfig:
     global _RULE_CONFIG, _KNOWLEDGE_REF
-    knowledge = get_knowledge()
-    if _RULE_CONFIG is not None and knowledge is _KNOWLEDGE_REF:
+    knowledge_hash = knowledge.knowledge_hash()
+    if _RULE_CONFIG is not None and knowledge_hash == _KNOWLEDGE_REF:
         return _RULE_CONFIG
 
-    bundling = knowledge.get("bundling_rules", {})
+    bundling = knowledge.bundling_rules()
+    nav_entry = bundling.get("navigation_required", {}) or {}
+    radial_entry = bundling.get("radial_requires_tblb", {}) or {}
+    radial_linear_entry = bundling.get("radial_linear_exclusive", {}) or {}
+    stent_entry = bundling.get("stent_dilation_same_segment", {}) or {}
+    diagnostic_entry = bundling.get("diagnostic_with_surgical", {}) or {}
+    if "sedation_blockers" in bundling:
+        sedation_blockers = set(bundling.get("sedation_blockers", []))
+    else:
+        sedation_blockers = {"anesthesia"}
+
+    navigation_required = set(nav_entry.get("codes", []))
+    radial_requires_tblb = bool(radial_entry) or bool(radial_entry.get("requires_tblb", False))
+    radial_codes = set(radial_entry.get("radial_codes", [])) or set(radial_linear_entry.get("radial_codes", []))
+    linear_codes = set(radial_linear_entry.get("linear_codes", []))
+    stent_codes = set(stent_entry.get("stent_codes", []))
+    dilation_codes = set(stent_entry.get("dilation_codes", []))
+    diagnostic_codes = set(diagnostic_entry.get("drop_codes", []))
+    surgical_codes = set(diagnostic_entry.get("therapeutic_codes", []))
+
+    mutually_exclusive: list[tuple[set[str], str]] = []
+    exclusive_entry = bundling.get("31640_vs_31641_same_site")
+    if isinstance(exclusive_entry, dict):
+        paired = exclusive_entry.get("paired", [])
+        keep = exclusive_entry.get("dominant")
+        if paired and keep:
+            mutually_exclusive.append((set(paired), keep))
+
     config = RuleConfig(
-        navigation_required=set(bundling.get("navigation_required", [])),
-        radial_requires_tblb=bool(bundling.get("radial_requires_tblb", True)),
-        radial_linear_exclusive=bool(bundling.get("radial_linear_exclusive", False)),
-        radial_codes=set(bundling.get("radial_codes", [])),
-        linear_codes=set(bundling.get("linear_codes", [])),
-        sedation_blockers=set(bundling.get("sedation_blockers", [])),
-        stent_codes=set(bundling.get("stent_codes", [])),
-        dilation_codes=set(bundling.get("dilation_codes", [])),
-        diagnostic_codes=set(bundling.get("diagnostic_codes", [])),
-        surgical_codes=set(bundling.get("surgical_codes", [])),
-        mutually_exclusive=[
-            (set(entry.get("codes", [])), entry.get("keep"))
-            for entry in bundling.get("mutually_exclusive", [])
-            if entry.get("codes") and entry.get("keep")
-        ],
+        navigation_required=navigation_required,
+        radial_requires_tblb=radial_requires_tblb,
+        radial_linear_exclusive=bool(radial_linear_entry),
+        radial_codes=radial_codes or set(["+31654"]),
+        linear_codes=linear_codes or set(["31652", "31653"]),
+        sedation_blockers=sedation_blockers,
+        stent_codes=stent_codes or {"31631", "31636", "+31637"},
+        dilation_codes=dilation_codes or {"31630"},
+        diagnostic_codes=diagnostic_codes or {"31622"},
+        surgical_codes=surgical_codes or {
+            "31627",
+            "31628",
+            "+31632",
+            "31629",
+            "+31633",
+            "31630",
+            "31636",
+            "31652",
+            "31653",
+            "+31654",
+        },
+        mutually_exclusive=mutually_exclusive,
     )
 
-    _configure_ncci(knowledge.get("ncci_pairs", []))
+    _configure_ncci(knowledge.ncci_pairs())
     _RULE_CONFIG = config
-    _KNOWLEDGE_REF = knowledge
+    _KNOWLEDGE_REF = knowledge_hash
     return config
 
 

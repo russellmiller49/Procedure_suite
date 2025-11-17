@@ -22,11 +22,16 @@ def run(
     note: str,
     json_output: bool = typer.Option(False, "--json", help="Emit JSON output."),
     explain: bool = typer.Option(False, "--explain", help="Show rule trace and MER math."),
+    allow_weak_sedation_docs: bool = typer.Option(
+        False,
+        "--allow-weak-sedation-docs",
+        help="Emit sedation codes even when documentation lacks start/stop times or observer statement.",
+    ),
 ) -> None:
     """Run the coder against NOTE (path or raw text)."""
 
     text = load_note(note)
-    engine = CoderEngine()
+    engine = CoderEngine(allow_weak_sedation_docs=allow_weak_sedation_docs)
     result = engine.run(text)
 
     if json_output:

@@ -11,7 +11,7 @@ from modules.common.spans import Span
 from .base import SlotResult, section_for_offset
 
 SEDATION_PATTERN = re.compile(r"moderate sedation|conscious sedation", re.IGNORECASE)
-ANESTHESIA_PATTERN = re.compile(r"general anesthesia|MAC anesthesia", re.IGNORECASE)
+ANESTHESIA_PATTERN = re.compile(r"general anesthesia|mac anesthesia|monitored anesthesia care", re.IGNORECASE)
 TIME_PATTERN = re.compile(r"(\d{1,2}:\d{2})")
 
 
@@ -23,8 +23,9 @@ class SedationExtractor:
         sedation_type = None
         anesthesia_type = None
 
+        lower = text.lower()
         sed_match = SEDATION_PATTERN.search(text)
-        if sed_match:
+        if sed_match and "no moderate sedation" not in lower:
             sedation_type = "Moderate Sedation"
             evidence.append(_span_from_match(text, sed_match, sections))
 

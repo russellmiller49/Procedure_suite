@@ -47,7 +47,7 @@ class EbusExtractor:
         radial = _flag(text, RADIAL_PATTERNS, sections, evidence)
 
         value = {
-            "stations": sorted(dict.fromkeys(stations)),
+            "stations": _preserve_order(stations),
             "navigation": navigation,
             "radial": radial,
         }
@@ -75,6 +75,17 @@ def _flag(text: str, patterns: tuple[re.Pattern[str], ...], sections: list[Secti
                 )
             )
     return found
+
+
+def _preserve_order(items: list[str]) -> list[str]:
+    seen = set()
+    ordered: list[str] = []
+    for item in items:
+        if item in seen:
+            continue
+        seen.add(item)
+        ordered.append(item)
+    return ordered
 
 
 __all__ = ["EbusExtractor"]

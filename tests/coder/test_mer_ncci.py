@@ -49,27 +49,27 @@ def test_stent_dilation_distinct_sites_get_modifier() -> None:
     assert any(action.rule == "distinct_site_modifier" for action in result.ncci_actions)
 
 
-def test_sedation_synonym_from_knowledge_triggers_code() -> None:
+def test_sedation_requires_complete_documentation() -> None:
     note = """
     SEDATION:
     Procedural sedation provided by the bronchoscopist.
     """
     result = CoderEngine().run(note)
-    assert "99152" in {code.cpt for code in result.codes}
+    assert "99152" not in {code.cpt for code in result.codes}
+    assert any("documentation incomplete" in warning for warning in result.warnings)
 
 
-def test_mer_uses_allowed_amounts_from_knowledge() -> None:
-    knowledge = knowledge_mod.get_knowledge()
-    allowed = knowledge.get("mer", {}).get("allowed_amounts", {}).get("31627")
+def test_mer_uses_rvus_from_knowledge() -> None:
+    allowed = knowledge_mod.total_rvu("31627")
     summary = apply_mer([Code(cpt="31627")])
     assert summary.adjustments[0].allowed == allowed
 
 
 def test_hot_reload_updates_sedation_rules(tmp_path, monkeypatch) -> None:
     note = """
-    PROCEDURE:
-    Bronchoscopy performed.
-    SEDATION: Procedural sedation provided.
+    SEDATION:
+    Moderate sedation provided by the bronchoscopist. Independent RN observer present.
+    Start: 10:00  Stop: 10:30.
     Anesthesia: General anesthesia support present.
     """
 

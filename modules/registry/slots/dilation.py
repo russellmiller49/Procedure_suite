@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from modules.coder.dictionary import get_site_pattern_map
+from modules.common import knowledge
 from modules.common.sectionizer import Section
 from modules.common.spans import Span
 
@@ -22,6 +23,9 @@ class DilationExtractor:
             for pattern in patterns:
                 for match in pattern.finditer(text):
                     segment = _expand_sentence(text, match.start())
+                    lower_segment = segment.lower()
+                    if "dilation" not in lower_segment and "dilatation" not in lower_segment:
+                        continue
                     start = text.find(segment)
                     spans.append(
                         Span(
@@ -32,7 +36,10 @@ class DilationExtractor:
                         )
                     )
                     sites.append(site)
-        unique = sorted(dict.fromkeys(sites))
+        preferred_lobes = set(knowledge.lobe_aliases().keys())
+        ordered_unique = list(dict.fromkeys(sites))
+        filtered = [site for site in ordered_unique if site in preferred_lobes]
+        unique = filtered or [site for site in ordered_unique if site != "LOBAR"]
         return SlotResult(unique, spans, 0.7 if unique else 0.0)
 
 
