@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Dict, Sequence
 
 from modules.common.sectionizer import SectionizerService
+from modules.common.spans import Span
 
 from .schema import RegistryRecord
 from .slots.base import SlotExtractor, SlotResult
@@ -40,13 +41,15 @@ class RegistryEngine:
         self.sectionizer = sectionizer or SectionizerService()
         self.extractors: list[SlotExtractor] = [cls() for cls in EXTRACTOR_CLASSES]
 
-    def run(self, note_text: str) -> RegistryRecord:
+    def run(
+        self, note_text: str, *, explain: bool = False
+    ) -> RegistryRecord | tuple[RegistryRecord, dict[str, list[Span]]]:
         sections = self.sectionizer.sectionize(note_text)
         record_data: Dict[str, object] = {
             "navigation_used": False,
             "radial_ebus_used": False,
         }
-        evidence: Dict[str, list] = {}
+        evidence: Dict[str, list[Span]] = {}
 
         for extractor in self.extractors:
             result = extractor.extract(note_text, sections)
@@ -56,6 +59,8 @@ class RegistryEngine:
 
         record = RegistryRecord(**record_data)
         record.evidence = {field: spans for field, spans in evidence.items()}
+        if explain:
+            return record, record.evidence
         return record
 
     def _apply_result(
@@ -63,7 +68,7 @@ class RegistryEngine:
         slot_name: str,
         result: SlotResult,
         record_data: Dict[str, object],
-        evidence: Dict[str, list],
+        evidence: Dict[str, list[Span]],
     ) -> None:
         if slot_name == "indication":
             record_data["indication"] = result.value
@@ -111,11 +116,10 @@ class RegistryEngine:
             _add_evidence(evidence, "imaging_archived", result.evidence)
 
 
-def _add_evidence(target: Dict[str, list], field: str, spans: Sequence) -> None:
+def _add_evidence(target: Dict[str, list[Span]], field: str, spans: Sequence[Span]) -> None:
     if not spans:
         return
     target.setdefault(field, []).extend(spans)
 
 
 __all__ = ["RegistryEngine"]
-

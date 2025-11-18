@@ -5,24 +5,38 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "proc-suite"
 version = "0.1.0"
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.11,<3.14"
 dependencies = [
   "pydantic>=2.6,<3",
   "jinja2>=3.1,<4",
-  "spacy>=3.7,<3.8",
+  "spacy>=3.7,<4",
   "scispacy==0.5.4",
-  "medspacy>=0.5.0,<1",
+  "medspacy>=1.0,<2",
   "scikit-learn>=1.7,<1.8",
-  "uvicorn>=0.30,<1",
-  "fastapi>=0.115,<1",
   "psycopg[binary,pool]>=3.2,<4",
   "python-dotenv>=1.0,<2",
   "rapidfuzz>=3.9,<4",
   "regex>=2024.4.28",
   "jsonschema>=4.23,<5",
-  "typer>=0.12,<0.13",
+  "typer>=0.12,<0.17",
   "rich>=13,<14",
-  "pytest>=8.2,<9",
+  "httpx>=0.27,<1",
+  "google-auth>=2.23,<3",
+]
+
+[project.optional-dependencies]
+api = [
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+]
+dev = [
+  "pytest",
+  "pytest-cov",
+  "ruff",
+  "mypy",
+  "types-regex",
+  "httpx",
+  "pytest-asyncio",
 ]
 
 [tool.setuptools.packages.find]
@@ -36,3 +50,65 @@ where = ["."]
 addopts = "-ra -q"
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = [
+  "api",
+  "proc_autocode",
+  "proc_nlp",
+  "proc_registry",
+  "proc_report",
+  "proc_schemas",
+  "proc_suite.egg-info",
+]
+include = [
+  "modules/api/**/*.py",
+  "modules/common/knowledge*.py",
+  "modules/common/knowledge_cli.py",
+  "modules/registry/cli.py",
+  "modules/reporter/cli.py",
+  "tests/api/**/*.py",
+  "tests/unit/test_knowledge.py",
+  "tests/conftest.py",
+  "tests/coder/test_coder_smoke.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+extend-ignore = ["UP006", "UP035"]
+
+[tool.ruff.lint.per-file-ignores]
+"modules/coder/dictionary.py" = ["E501"]
+
+[tool.mypy]
+strict = true
+plugins = []
+
+[[tool.mypy.overrides]]
+module = "modules.*"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "modules.api.*"
+ignore_errors = false
+
+[[tool.mypy.overrides]]
+module = "modules.common.knowledge"
+ignore_errors = false
+
+[[tool.mypy.overrides]]
+module = "modules.common.knowledge_schema"
+ignore_errors = false
+
+[[tool.mypy.overrides]]
+module = "modules.common.knowledge_cli"
+ignore_errors = false
+
+[[tool.mypy.overrides]]
+module = "modules.registry.cli"
+ignore_errors = false
+
+[[tool.mypy.overrides]]
+module = "modules.reporter.cli"
+ignore_errors = false

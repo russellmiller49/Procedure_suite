@@ -1,4 +1,4 @@
-from proc_schemas.procedure_report import ProcedureReport, ProcedureCore, TargetSpecimen
+from proc_schemas.procedure_report import ProcedureCore, ProcedureReport, TargetSpecimen
 
 
 def test_procedure_report_instantiation():

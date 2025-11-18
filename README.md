@@ -19,3 +19,33 @@ make test
 ```
 
 Provide `.env` with Supabase credentials (see `.env.sample`).
+
+## Gemini API Authentication
+
+The reporter engine supports two authentication methods for the Gemini API:
+
+### Option 1: API Key (Default)
+Set the `GEMINI_API_KEY` environment variable:
+```bash
+export GEMINI_API_KEY="your-api-key-here"
+```
+
+### Option 2: OAuth2/Service Account (Subscription)
+For subscription-based authentication, set `GEMINI_USE_OAUTH=true` and configure Google Cloud credentials:
+
+**Using Application Default Credentials (recommended for local development):**
+```bash
+export GEMINI_USE_OAUTH=true
+gcloud auth application-default login
+```
+
+**Using a Service Account JSON file:**
+```bash
+export GEMINI_USE_OAUTH=true
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account.json"
+```
+
+**On Google Cloud Platform:**
+The system will automatically use the service account attached to the compute instance if `GEMINI_USE_OAUTH=true` is set.
+
+OAuth2 authentication uses the `Authorization: Bearer` header instead of API key query parameters, which is required for subscription-based access.

@@ -1,7 +1,7 @@
 """Registry extraction pipeline."""
 
-from .schema import RegistryRecord
 from .engine import RegistryEngine
+from .schema import RegistryRecord
 
 __all__ = ["RegistryRecord", "RegistryEngine"]
 

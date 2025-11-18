@@ -1,5 +1,5 @@
-from proc_registry.adapter import report_to_registry
 from proc_autocode.engine import autocode
+from proc_registry.adapter import report_to_registry
 from proc_report.engine import compose_report_from_text
 
 

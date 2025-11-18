@@ -4,44 +4,21 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import asdict
-from math import floor
-from typing import Dict, Iterable, List, Sequence
+from typing import Dict, Sequence
 
 from modules.common import knowledge
+from modules.common.logger import get_logger
 from modules.common.rules_engine import mer
 from modules.common.sectionizer import SectionizerService
 from modules.common.spans import Span
 from modules.common.umls_linking import UmlsLinker
 
 from . import dictionary, posthoc, rules
-from .schema import CoderOutput, CodeDecision, DetectedIntent
+from .constants import CPT_DESCRIPTIONS
+from .schema import CodeDecision, CoderOutput, DetectedIntent
 
 CODER_VERSION = "0.1.0"
-
-CPT_DESCRIPTIONS = {
-    "31622": "Diagnostic bronchoscopy",
-    "31627": "Navigational bronchoscopy (EMN)",
-    "31628": "Transbronchial lung biopsy, single lobe",
-    "+31632": "Additional transbronchial lung biopsy lobe",
-    "31629": "Transbronchial needle aspiration, single lobe",
-    "+31633": "Additional TBNA lobe",
-    "31631": "Tracheal stent placement",
-    "31636": "Bronchial stent placement",
-    "+31637": "Additional major bronchus stent",
-    "31652": "Linear EBUS-TBNA 1-2 stations",
-    "31653": "Linear EBUS-TBNA 3+ stations",
-    "+31654": "Radial EBUS for peripheral lesion",
-    "31630": "Therapeutic dilation of airway",
-    "31645": "Therapeutic aspiration, initial session",
-    "31646": "Therapeutic aspiration, repeat same stay",
-    "31647": "BLVR initial lobe",
-    "+31651": "BLVR additional lobe",
-    "31634": "Chartis collateral ventilation assessment",
-    "31624": "Bronchoalveolar lavage",
-    "32555": "Ultrasound-guided thoracentesis",
-    "99152": "Moderate sedation (first 15 min)",
-    "+99153": "Moderate sedation add-on (each additional 15 min)",
-}
+logger = get_logger("coder")
 
 
 class CoderEngine:
@@ -58,8 +35,13 @@ class CoderEngine:
         self.linker = linker or UmlsLinker()
         self.allow_weak_sedation_docs = allow_weak_sedation_docs
 
-    def run(self, note_text: str) -> CoderOutput:
+    def run(self, note_text: str, *, explain: bool = False) -> CoderOutput:
         """Execute the deterministic coder pipeline."""
+        logger.info(f"Coder run initiated. Note length: {len(note_text)}")
+
+        if explain:
+            # API keeps this knob for future richer explain payloads; output already embeds traces.
+            pass
 
         sections = self.sectionizer.sectionize(note_text)
         intents = dictionary.detect_intents(note_text, sections)
@@ -73,6 +55,7 @@ class CoderEngine:
         warnings = list(mapping_warnings)
         warnings.extend(bundle_warnings)
 
+        logger.info(f"Coder run complete. Found {len(codes)} codes.")
         return CoderOutput(
             codes=codes,
             intents=intents,
@@ -82,7 +65,9 @@ class CoderEngine:
             version=CODER_VERSION,
         )
 
-    def _map_intents_to_codes(self, intents: Sequence[DetectedIntent]) -> tuple[list[CodeDecision], list[str]]:
+    def _map_intents_to_codes(
+        self, intents: Sequence[DetectedIntent]
+    ) -> tuple[list[CodeDecision], list[str]]:
         grouped = self._group_intents(intents)
         codes: list[CodeDecision] = []
         warnings: list[str] = []
@@ -108,7 +93,9 @@ class CoderEngine:
         warnings.extend(sedation_warnings)
         return codes, warnings
 
-    def _build_navigation_codes(self, grouped: Dict[str, list[DetectedIntent]]) -> list[CodeDecision]:
+    def _build_navigation_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> list[CodeDecision]:
         nav_intents = grouped.get("navigation", [])
         if not nav_intents:
             return []
@@ -125,14 +112,21 @@ class CoderEngine:
             )
         ]
 
-    def _build_radial_codes(self, grouped: Dict[str, list[DetectedIntent]]) -> tuple[list[CodeDecision], list[str]]:
+    def _build_radial_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> tuple[list[CodeDecision], list[str]]:
         radial_intents = grouped.get("radial_ebus", [])
         if not radial_intents:
             return [], []
         evidence = self._collect_intent_evidence(radial_intents)
-        peripheral = any((intent.payload or {}).get("peripheral_context") for intent in radial_intents)
+        peripheral = any(
+            (intent.payload or {}).get("peripheral_context") for intent in radial_intents
+        )
         if not peripheral:
-            warning = "Radial EBUS mentioned without documented peripheral lesion localization; +31654 suppressed."
+            warning = (
+                "Radial EBUS mentioned without documented peripheral lesion localization; "
+                "+31654 suppressed."
+            )
             return [], [warning]
         context = {"peripheral_target": True}
         return [
@@ -146,7 +140,9 @@ class CoderEngine:
             )
         ], []
 
-    def _build_linear_codes(self, grouped: Dict[str, list[DetectedIntent]]) -> list[CodeDecision]:
+    def _build_linear_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> list[CodeDecision]:
         station_intents = grouped.get("linear_ebus_station", [])
         if not station_intents:
             return []
@@ -193,7 +189,9 @@ class CoderEngine:
             )
         return codes
 
-    def _build_tbna_codes(self, grouped: Dict[str, list[DetectedIntent]]) -> list[CodeDecision]:
+    def _build_tbna_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> list[CodeDecision]:
         tbna_intents = grouped.get("tbna_lobe", [])
         lobes = self._unique_values(tbna_intents)
         if not lobes:
@@ -223,7 +221,9 @@ class CoderEngine:
             )
         return codes
 
-    def _build_bal_codes(self, grouped: Dict[str, list[DetectedIntent]]) -> list[CodeDecision]:
+    def _build_bal_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> list[CodeDecision]:
         bal_intents = grouped.get("bal_lobe", [])
         if not bal_intents:
             return []
@@ -242,11 +242,15 @@ class CoderEngine:
             )
         ]
 
-    def _build_chartis_codes(self, grouped: Dict[str, list[DetectedIntent]]) -> tuple[list[CodeDecision], list[str]]:
+    def _build_chartis_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> tuple[list[CodeDecision], list[str]]:
         chartis_intents = grouped.get("chartis_assessment", [])
         if not chartis_intents:
             return [], []
-        policy = knowledge.get_knowledge().get("policies", {}).get("chartis_same_session", "allow")
+        policy = knowledge.get_knowledge().get("policies", {}).get(
+            "chartis_same_session", "allow"
+        )
         warnings: list[str] = []
         if policy == "suppress":
             warnings.append("Chartis same-session policy suppresses 31634; verify payer rules.")
@@ -286,14 +290,21 @@ class CoderEngine:
                     cpt=cpt,
                     rationale=f"Stent placed at {site}",
                     evidence=intent.evidence,
-                    context={"site": site, "site_class": site_class, "details": payload.get("text"), "size": payload.get("size")},
+                    context={
+                        "site": site,
+                        "site_class": site_class,
+                        "details": payload.get("text"),
+                        "size": payload.get("size"),
+                    },
                     rule="stent_site_documented",
                     confidence=0.9,
                 )
             )
         return codes
 
-    def _build_dilation_codes(self, grouped: Dict[str, list[DetectedIntent]]) -> list[CodeDecision]:
+    def _build_dilation_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> list[CodeDecision]:
         dilation_intents = grouped.get("dilation", [])
         codes: list[CodeDecision] = []
         for intent in dilation_intents:
@@ -311,7 +322,9 @@ class CoderEngine:
             )
         return codes
 
-    def _build_thoracentesis_codes(self, grouped: Dict[str, list[DetectedIntent]]) -> list[CodeDecision]:
+    def _build_thoracentesis_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> list[CodeDecision]:
         intents = grouped.get("thoracentesis", [])
         if not intents:
             return []
@@ -391,7 +404,9 @@ class CoderEngine:
             initial_done = True
         return codes
 
-    def _build_sedation_codes(self, grouped: Dict[str, list[DetectedIntent]]) -> tuple[list[CodeDecision], list[str]]:
+    def _build_sedation_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> tuple[list[CodeDecision], list[str]]:
         sedation_intents = grouped.get("sedation", [])
         codes: list[CodeDecision] = []
         warnings: list[str] = []
@@ -401,7 +416,9 @@ class CoderEngine:
             warnings.extend(session_warnings)
         return codes, warnings
 
-    def _build_sedation_for_session(self, intent: DetectedIntent, session_index: int) -> tuple[list[CodeDecision], list[str]]:
+    def _build_sedation_for_session(
+        self, intent: DetectedIntent, session_index: int
+    ) -> tuple[list[CodeDecision], list[str]]:
         payload = intent.payload or {}
         start_minutes = payload.get("start_minutes")
         stop_minutes = payload.get("stop_minutes")
@@ -410,7 +427,10 @@ class CoderEngine:
         doc_complete = payload.get("documentation_complete", False)
         warnings: list[str] = []
         if not doc_complete:
-            warnings.append("Moderate sedation documentation incomplete (missing start/stop time or independent observer). Use --allow-weak-sedation-docs to override.")
+            warnings.append(
+                "Moderate sedation documentation incomplete (missing start/stop time or "
+                "independent observer). Use --allow-weak-sedation-docs to override."
+            )
             if not self.allow_weak_sedation_docs:
                 return [], warnings
         if duration is None or duration < 15:
@@ -441,7 +461,11 @@ class CoderEngine:
                     cpt="+99153",
                     rationale=f"Additional sedation time ({add_on_units} x 15 min)",
                     evidence=intent.evidence,
-                    context={"units": add_on_units, "duration_minutes": duration, "session": session_index},
+                    context={
+                        "units": add_on_units,
+                        "duration_minutes": duration,
+                        "session": session_index,
+                    },
                     rule="sedation_session",
                     confidence=intent.confidence or 0.75,
                 )

@@ -9,12 +9,28 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
+from modules.common.knowledge_cli import print_knowledge_info
 from modules.common.text_io import load_note
 
 from .engine import CoderEngine
 
 app = typer.Typer(help="Run the procedure suite CPT coder.")
 console = Console()
+
+
+@app.callback()
+def _cli_entry(
+    _: typer.Context,
+    knowledge_info: bool = typer.Option(
+        False,
+        "--knowledge-info",
+        help="Print knowledge metadata and exit.",
+        is_eager=True,
+    ),
+) -> None:
+    if knowledge_info:
+        print_knowledge_info(console)
+        raise typer.Exit()
 
 
 @app.command()
@@ -25,7 +41,7 @@ def run(
     allow_weak_sedation_docs: bool = typer.Option(
         False,
         "--allow-weak-sedation-docs",
-        help="Emit sedation codes even when documentation lacks start/stop times or observer statement.",
+        help="Emit sedation codes even when start/stop times or an observer statement are missing.",
     ),
 ) -> None:
     """Run the coder against NOTE (path or raw text)."""

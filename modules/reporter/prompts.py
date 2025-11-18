@@ -48,14 +48,14 @@ def build_prompt(note: str) -> str:
     for example in examples:
         example_blocks.append(
             "Example:\nNote:\n{note}\nStructuredReport JSON:\n{json}\n".format(
-                note=example.summary(),
+                note=example.summary().replace(" | ", "\n"),
                 json=json.dumps(example.model_dump(), indent=2),
             )
         )
     guard = rail_guard_text()
     prompt = (
         "You are a pulmonary procedures documentation expert. "
-        "Read the procedure note and output JSON matching the StructuredReport schema.\n"
+        "Read the procedure note and output ONLY valid JSON matching the StructuredReport schema.\n"
         f"{guard}\n"
         + "\n".join(example_blocks)
         + f"\nNew note:\n{note}\nJSON:"  # Request JSON only

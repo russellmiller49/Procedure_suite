@@ -1,9 +1,9 @@
 """Sedation and BLVR slot tests."""
 
+from modules.common.sectionizer import SectionizerService
 from modules.registry.engine import RegistryEngine
 from modules.registry.slots.blvr import BLVRExtractor
 from modules.registry.slots.sedation import SedationExtractor
-from modules.common.sectionizer import SectionizerService
 
 
 def _sections(text: str):
@@ -51,4 +51,3 @@ def test_registry_engine_populates_sedation_and_blvr_fields() -> None:
     assert record.anesthesia == "Moderate Sedation"
     assert str(record.sedation_start) == "09:00:00"
     assert str(record.sedation_stop) == "09:40:00"
-

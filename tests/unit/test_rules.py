@@ -1,5 +1,5 @@
 from proc_autocode import rules
-from proc_schemas.procedure_report import ProcedureReport, ProcedureCore, TargetSpecimen
+from proc_schemas.procedure_report import ProcedureCore, ProcedureReport, TargetSpecimen
 
 
 def test_rule_engine_maps_ebus_codes():

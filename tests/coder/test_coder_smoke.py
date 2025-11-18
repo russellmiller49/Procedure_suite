@@ -7,7 +7,8 @@ def test_ppl_nav_radial_tblb_tbna() -> None:
     note = """
     INDICATION: Peripheral pulmonary lesion suspicious for malignancy.
     PROCEDURE:
-    Electromagnetic navigation bronchoscopy was performed with successful navigation to the RUL target.
+    Electromagnetic navigation bronchoscopy was performed.
+    Successful navigation to the RUL target was documented.
     Radial EBUS probe confirmed concentric lesion prior to sampling.
     Multiple transbronchial lung biopsies obtained from the right upper lobe.
     Linear EBUS-TBNA performed at stations 4R and station 7 with adequate samples.

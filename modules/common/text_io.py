@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import re
+from pathlib import Path
 from typing import Iterable
 
 from .knowledge import DEFAULT_KNOWLEDGE_FILE, get_knowledge

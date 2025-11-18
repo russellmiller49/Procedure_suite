@@ -9,8 +9,8 @@ import yaml
 
 
 def check_spacy_stack() -> None:
-    import spacy  # type: ignore
     import scispacy  # type: ignore
+    import spacy  # type: ignore
 
     print(f"spaCy {spacy.__version__} detected")
     print(f"scispaCy {scispacy.__version__} detected")

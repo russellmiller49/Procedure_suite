@@ -1,8 +1,8 @@
 """Tests for EBUS and TBLB slot extractors."""
 
+from modules.common.sectionizer import SectionizerService
 from modules.registry.slots.ebus import EbusExtractor
 from modules.registry.slots.tblb import TBLBExtractor
-from modules.common.sectionizer import SectionizerService
 
 
 def _sections(text: str):
@@ -32,4 +32,3 @@ def test_tblb_slot_extracts_lobes() -> None:
     result = TBLBExtractor().extract(text, sections)
     assert set(result.value) == {"RUL", "LLL"}
     assert result.evidence
-

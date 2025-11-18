@@ -1,4 +1,4 @@
-.PHONY: install test unit contracts integration lint preflight
+.PHONY: install test unit contracts integration lint preflight api tests type
 
 install:
 	pip install -e .
@@ -17,3 +17,15 @@ integration:
 	pytest -q tests/integration
 
 test: unit contracts integration
+
+lint:
+	ruff check .
+
+api:
+	scripts/devserver.sh
+
+tests:
+	pytest -q
+
+type:
+	mypy modules

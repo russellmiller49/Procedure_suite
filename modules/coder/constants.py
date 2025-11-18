@@ -1,0 +1,26 @@
+"""Constants for the CPT coder module."""
+
+CPT_DESCRIPTIONS = {
+    "31622": "Diagnostic bronchoscopy",
+    "31627": "Navigational bronchoscopy (EMN)",
+    "31628": "Transbronchial lung biopsy, single lobe",
+    "+31632": "Additional transbronchial lung biopsy lobe",
+    "31629": "Transbronchial needle aspiration, single lobe",
+    "+31633": "Additional TBNA lobe",
+    "31631": "Tracheal stent placement",
+    "31636": "Bronchial stent placement",
+    "+31637": "Additional major bronchus stent",
+    "31652": "Linear EBUS-TBNA 1-2 stations",
+    "31653": "Linear EBUS-TBNA 3+ stations",
+    "+31654": "Radial EBUS for peripheral lesion",
+    "31630": "Therapeutic dilation of airway",
+    "31645": "Therapeutic aspiration, initial session",
+    "31646": "Therapeutic aspiration, repeat same stay",
+    "31647": "BLVR initial lobe",
+    "+31651": "BLVR additional lobe",
+    "31634": "Chartis collateral ventilation assessment",
+    "31624": "Bronchoalveolar lavage",
+    "32555": "Ultrasound-guided thoracentesis",
+    "99152": "Moderate sedation (first 15 min)",
+    "+99153": "Moderate sedation add-on (each additional 15 min)",
+}

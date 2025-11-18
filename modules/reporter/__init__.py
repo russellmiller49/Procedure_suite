@@ -1,7 +1,6 @@
 """Structured report generation components."""
 
+from .engine import ReportEngine, ReporterEngine
 from .schema import StructuredReport
-from .engine import ReportEngine
 
-__all__ = ["StructuredReport", "ReportEngine"]
-
+__all__ = ["StructuredReport", "ReportEngine", "ReporterEngine"]

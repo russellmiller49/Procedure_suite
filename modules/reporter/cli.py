@@ -10,6 +10,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
+from modules.common.knowledge_cli import print_knowledge_info
 from modules.common.text_io import load_note
 
 from .engine import ReportEngine
@@ -17,6 +18,23 @@ from .schema import StructuredReport
 
 app = typer.Typer(help="Reporter CLI")
 console = Console()
+
+REPORT_PATH_ARGUMENT = typer.Argument(..., exists=True)
+
+
+@app.callback()
+def _cli_entry(
+    _: typer.Context,
+    knowledge_info: bool = typer.Option(
+        False,
+        "--knowledge-info",
+        help="Print knowledge metadata and exit.",
+        is_eager=True,
+    ),
+) -> None:
+    if knowledge_info:
+        print_knowledge_info(console)
+        raise typer.Exit()
 
 
 @app.command("gen")
@@ -41,7 +59,7 @@ def generate(
 
 @app.command("render")
 def render(
-    report_path: Path = typer.Argument(..., exists=True),
+    report_path: Path = REPORT_PATH_ARGUMENT,
     template: str = typer.Option("bronchoscopy", "--template", help="Template key or filename"),
 ) -> None:
     payload = json.loads(report_path.read_text(encoding="utf-8"))
