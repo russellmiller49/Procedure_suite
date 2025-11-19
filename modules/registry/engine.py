@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from typing import Dict, Sequence
 
 from modules.common.sectionizer import SectionizerService
@@ -11,7 +12,7 @@ from .schema import RegistryRecord
 from .slots.base import SlotExtractor, SlotResult
 from .slots.blvr import BLVRExtractor
 from .slots.complications import ComplicationsExtractor
-from .slots.dilation import DilationExtractor
+from .slots.disposition import DispositionExtractor
 from .slots.ebus import EbusExtractor
 from .slots.imaging import ImagingExtractor
 from .slots.indication import IndicationExtractor
@@ -19,18 +20,22 @@ from .slots.pleura import PleuraExtractor
 from .slots.sedation import SedationExtractor
 from .slots.stent import StentExtractor
 from .slots.tblb import TBLBExtractor
+from .slots.therapeutics import AspirationExtractor, DestructionExtractor, EnhancedDilationExtractor
 
 EXTRACTOR_CLASSES: tuple[type[SlotExtractor], ...] = (
     IndicationExtractor,
     EbusExtractor,
     TBLBExtractor,
     StentExtractor,
-    DilationExtractor,
+    EnhancedDilationExtractor, # Replaces basic DilationExtractor
+    DestructionExtractor,      # New
+    AspirationExtractor,       # New
     BLVRExtractor,
     PleuraExtractor,
     SedationExtractor,
     ComplicationsExtractor,
     ImagingExtractor,
+    DispositionExtractor,
 )
 
 
@@ -50,6 +55,10 @@ class RegistryEngine:
             "radial_ebus_used": False,
         }
         evidence: Dict[str, list[Span]] = {}
+
+        mrn_match = re.search(r"MRN:?\s*(\d+)", note_text, re.IGNORECASE)
+        if mrn_match:
+            record_data["patient_id"] = mrn_match.group(1)
 
         for extractor in self.extractors:
             result = extractor.extract(note_text, sections)
@@ -86,9 +95,18 @@ class RegistryEngine:
         elif slot_name == "stents":
             record_data["stents"] = result.value
             _add_evidence(evidence, "stents", result.evidence)
-        elif slot_name == "dilation_sites":
-            record_data["dilation_sites"] = list(result.value)
-            _add_evidence(evidence, "dilation_sites", result.evidence)
+        elif slot_name == "dilation_events":
+            # Map objects directly
+            record_data["dilation_events"] = result.value
+            # Maintain backward compatibility for simple list
+            record_data["dilation_sites"] = [d.site for d in result.value]
+            _add_evidence(evidence, "dilation_events", result.evidence)
+        elif slot_name == "destruction_events":
+            record_data["destruction_events"] = result.value
+            _add_evidence(evidence, "destruction_events", result.evidence)
+        elif slot_name == "aspiration_events":
+            record_data["aspiration_events"] = result.value
+            _add_evidence(evidence, "aspiration_events", result.evidence)
         elif slot_name == "blvr":
             record_data["blvr"] = result.value
             _add_evidence(evidence, "blvr", result.evidence)
@@ -114,6 +132,9 @@ class RegistryEngine:
         elif slot_name == "imaging_archived":
             record_data["imaging_archived"] = bool(result.value)
             _add_evidence(evidence, "imaging_archived", result.evidence)
+        elif slot_name == "disposition":
+            record_data["disposition"] = result.value
+            _add_evidence(evidence, "disposition", result.evidence)
 
 
 def _add_evidence(target: Dict[str, list[Span]], field: str, spans: Sequence[Span]) -> None:

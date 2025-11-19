@@ -14,6 +14,7 @@ INDICATION_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("Mass", re.compile(r"mass|tumor", re.IGNORECASE)),
     ("Lymphadenopathy", re.compile(r"lymphadenopathy|adenopathy", re.IGNORECASE)),
     ("Pleural Effusion", re.compile(r"pleural effusion", re.IGNORECASE)),
+    ("Airway Stenosis", re.compile(r"stenosis|stricture|obstruction", re.IGNORECASE)),
 ]
 
 

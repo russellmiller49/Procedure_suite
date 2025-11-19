@@ -48,10 +48,26 @@ ANESTHESIA_TYPES = {"Moderate Sedation", "MAC", "GA", "None"}
 
 class StentPlacement(BaseModel):
     model_config = ConfigDict(extra="forbid")
-
     site: str
     size: str | None = None
     stent_type: str | None = None
+
+class DilationEvent(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    site: str
+    balloon_size: str | None = None  # e.g., "10mm"
+    inflation_pressure: str | None = None # e.g., "8 atm"
+
+class DestructionEvent(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    modality: str  # APC, Cryotherapy, Laser, Electrocautery
+    site: str
+
+class AspirationEvent(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    site: str | None = None
+    volume: str | None = None # e.g. "50 cc", "large amount"
+    character: str | None = None # "purulent", "mucoid"
 
 
 class BLVRData(BaseModel):
@@ -91,13 +107,21 @@ class RegistryRecord(BaseModel):
     tblb_lobes: list[str] = Field(default_factory=list)
     blvr: BLVRData | None = None
     stents: list[StentPlacement] = Field(default_factory=list)
+    
+    # Updated fields
+    dilation_events: list[DilationEvent] = Field(default_factory=list)
+    destruction_events: list[DestructionEvent] = Field(default_factory=list)
+    aspiration_events: list[AspirationEvent] = Field(default_factory=list)
+    
+    # Legacy field for backward compatibility if needed, or remove
     dilation_sites: list[str] = Field(default_factory=list)
+
     pleural_procedures: list[str] = Field(default_factory=list)
     complications: list[str] = Field(default_factory=list)
     imaging_archived: bool | None = None
     disposition: str | None = None
     evidence: dict[str, list[Span]] = Field(default_factory=dict)
-    version: str = "0.1.0"
+    version: str = "0.2.0"
 
     @field_validator("setting")
     @classmethod

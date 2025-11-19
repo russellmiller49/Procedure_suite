@@ -742,6 +742,11 @@ def get_site_pattern_map() -> Dict[str, Tuple[re.Pattern[str], ...]]:
             patterns[site] = tuple(_phrase_pattern(alias) for alias in aliases)
     lobe_patterns = get_lobe_pattern_map()
     patterns.update(lobe_patterns)
+    
+    # Ensure Trachea is present if not already
+    if "Trachea" not in patterns and "TRACHEA" not in patterns:
+        patterns["Trachea"] = (re.compile(r"\btrachea\b", re.IGNORECASE),)
+        
     return patterns
 
 

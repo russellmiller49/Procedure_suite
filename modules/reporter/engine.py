@@ -37,7 +37,7 @@ class GeminiLLM:
     def __init__(
         self,
         api_key: str | None = None,
-        model: str = "gemini-1.5-flash",
+        model: str = "gemini-2.5-flash-preview-09-2025",
         use_oauth: bool | None = None,
     ) -> None:
         self.api_key = api_key
