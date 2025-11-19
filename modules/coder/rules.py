@@ -349,6 +349,8 @@ def _get_rule_config() -> RuleConfig:
             "31652",
             "31653",
             "+31654",
+            "31638",
+            "31641",
         },
         mutually_exclusive=mutually_exclusive,
     )

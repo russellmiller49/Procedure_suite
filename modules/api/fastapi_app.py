@@ -5,7 +5,9 @@ from __future__ import annotations
 from dataclasses import asdict
 from typing import Any
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from modules.api.schemas import (
     CoderRequest,
@@ -24,14 +26,21 @@ from modules.reporter.engine import ReporterEngine
 
 app = FastAPI(title="Procedure Suite API", version="0.1.0")
 
+app.mount("/ui", StaticFiles(directory="modules/api/static", html=True), name="ui")
+
 
 @app.get("/")
-def root() -> dict[str, Any]:
-    """Root endpoint with API information."""
+def root(request: Request) -> Any:
+    """Root endpoint with API information or redirect to UI."""
+    accept = request.headers.get("accept", "")
+    if "text/html" in accept:
+        return RedirectResponse(url="/ui/")
+        
     return {
         "name": "Procedure Suite API",
         "version": "0.1.0",
         "endpoints": {
+            "ui": "/ui/",
             "health": "/health",
             "knowledge": "/knowledge",
             "docs": "/docs",

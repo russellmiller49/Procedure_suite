@@ -38,6 +38,7 @@ class Lexicon:
     valve_terms: Tuple[re.Pattern[str], ...]
     chartis_terms: Tuple[re.Pattern[str], ...]
     stent_terms: Tuple[re.Pattern[str], ...]
+    stent_removal_terms: Tuple[re.Pattern[str], ...]
     dilation_terms: Tuple[re.Pattern[str], ...]
     aspiration_terms: Tuple[re.Pattern[str], ...]
     aspiration_repeat_terms: Tuple[str, ...]
@@ -47,6 +48,7 @@ class Lexicon:
     bal_terms: Tuple[re.Pattern[str], ...]
     thoracentesis_terms: Tuple[re.Pattern[str], ...]
     thoracentesis_imaging_terms: Tuple[str, ...]
+    destruction_terms: Tuple[re.Pattern[str], ...]
 
 
 DEFAULT_SYNONYMS = {
@@ -58,6 +60,7 @@ DEFAULT_SYNONYMS = {
     "valve_terms": ["valve"],
     "chartis_terms": ["chartis"],
     "stent_terms": ["stent"],
+    "stent_removal_terms": ["stent removal", "remove stent", "removing the stent", "stent.*removed", "remove.*stent"],
     "dilation_terms": ["dilation"],
     "aspiration_terms": ["therapeutic aspiration"],
     "aspiration_repeat_terms": ["repeat therapeutic aspiration"],
@@ -67,6 +70,7 @@ DEFAULT_SYNONYMS = {
     "bal_terms": ["bronchoalveolar lavage"],
     "thoracentesis_terms": ["thoracentesis"],
     "thoracentesis_imaging_terms": ["images archived"],
+    "destruction_terms": ["cryotherapy", "cryoablation", "laser", "argon plasma coagulation", "apc", "electrocautery", "destruction of lesion"],
 }
 
 
@@ -91,7 +95,9 @@ def detect_intents(text: str, sections: Sequence[Section]) -> list[DetectedInten
     intents.extend(_detect_blvr(text, sections, sentences, lobe_patterns, lexical))
     intents.extend(_detect_chartis(text, sections, sentences, lobe_patterns))
     intents.extend(_detect_stent(text, sections, sentences, site_patterns, lexical))
+    intents.extend(_detect_stent_removal(text, sections, sentences, lexical))
     intents.extend(_detect_dilation(text, sections, sentences, site_patterns, lexical))
+    intents.extend(_detect_destruction(text, sections, sentences, lexical))
     intents.extend(_detect_thoracentesis(text, sections, sentences, lexical))
     intents.extend(_detect_aspiration(text, sections, sentences, lexical))
     intents.extend(_detect_sedation(text, sections, lexical))
@@ -118,6 +124,7 @@ def _build_lexicon(synonyms: Dict[str, Iterable[str]]) -> Lexicon:
         valve_terms=patterns("valve_terms"),
         chartis_terms=patterns("chartis_terms"),
         stent_terms=patterns("stent_terms"),
+        stent_removal_terms=patterns("stent_removal_terms"),
         dilation_terms=patterns("dilation_terms"),
         aspiration_terms=patterns("aspiration_terms"),
         aspiration_repeat_terms=lowered("aspiration_repeat_terms"),
@@ -127,6 +134,7 @@ def _build_lexicon(synonyms: Dict[str, Iterable[str]]) -> Lexicon:
         bal_terms=patterns("bal_terms"),
         thoracentesis_terms=patterns("thoracentesis_terms"),
         thoracentesis_imaging_terms=lowered("thoracentesis_imaging_terms"),
+        destruction_terms=patterns("destruction_terms"),
     )
 
 
@@ -735,3 +743,51 @@ def get_site_pattern_map() -> Dict[str, Tuple[re.Pattern[str], ...]]:
     lobe_patterns = get_lobe_pattern_map()
     patterns.update(lobe_patterns)
     return patterns
+
+
+def _detect_stent_removal(
+    text: str,
+    sections: Sequence[Section],
+    sentences: Sequence[Tuple[int, int]],
+    lexical: Lexicon,
+) -> list[DetectedIntent]:
+    intents: list[DetectedIntent] = []
+    for start, end in sentences:
+        sentence_text = text[start:end]
+        if not _contains_pattern(sentence_text, lexical.stent_removal_terms):
+            continue
+        span = Span(text=sentence_text.strip(), start=start, end=end, section=_section_for_offset(sections, start))
+        intents.append(
+            DetectedIntent(
+                intent="stent_removal",
+                value="removal",
+                payload={"text": sentence_text.strip()},
+                evidence=[span],
+                confidence=0.9,
+            )
+        )
+    return intents
+
+
+def _detect_destruction(
+    text: str,
+    sections: Sequence[Section],
+    sentences: Sequence[Tuple[int, int]],
+    lexical: Lexicon,
+) -> list[DetectedIntent]:
+    intents: list[DetectedIntent] = []
+    for start, end in sentences:
+        sentence_text = text[start:end]
+        if not _contains_pattern(sentence_text, lexical.destruction_terms):
+            continue
+        span = Span(text=sentence_text.strip(), start=start, end=end, section=_section_for_offset(sections, start))
+        intents.append(
+            DetectedIntent(
+                intent="destruction",
+                value="destruction",
+                payload={"text": sentence_text.strip()},
+                evidence=[span],
+                confidence=0.85,
+            )
+        )
+    return intents

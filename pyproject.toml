@@ -45,6 +45,7 @@ where = ["."]
 [tool.setuptools.package-data]
 "proc_report" = ["templates/*.jinja", "templates/.keep"]
 "configs" = ["**/*.yaml"]
+"modules.api" = ["static/**/*"]
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"

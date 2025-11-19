@@ -85,7 +85,9 @@ class CoderEngine:
         warnings.extend(chartis_warnings)
         codes.extend(self._build_blvr_codes(grouped))
         codes.extend(self._build_stent_codes(grouped))
+        codes.extend(self._build_stent_removal_codes(grouped))
         codes.extend(self._build_dilation_codes(grouped))
+        codes.extend(self._build_destruction_codes(grouped))
         codes.extend(self._build_thoracentesis_codes(grouped))
         codes.extend(self._build_aspiration_codes(grouped))
         sedation_codes, sedation_warnings = self._build_sedation_codes(grouped)
@@ -321,6 +323,39 @@ class CoderEngine:
                 )
             )
         return codes
+
+    def _build_stent_removal_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> list[CodeDecision]:
+        intents = grouped.get("stent_removal", [])
+        if not intents:
+            return []
+        # Typically 31638 is used for revision/removal of stent.
+        return [
+            self._create_decision(
+                cpt="31638",
+                rationale="Removal or revision of airway stent",
+                evidence=self._collect_intent_evidence(intents),
+                rule="stent_removal_documented",
+                confidence=0.9,
+            )
+        ]
+
+    def _build_destruction_codes(
+        self, grouped: Dict[str, list[DetectedIntent]]
+    ) -> list[CodeDecision]:
+        intents = grouped.get("destruction", [])
+        if not intents:
+            return []
+        return [
+            self._create_decision(
+                cpt="31641",
+                rationale="Destruction of tumor or relief of stenosis (e.g., cryotherapy, laser)",
+                evidence=self._collect_intent_evidence(intents),
+                rule="destruction_documented",
+                confidence=0.85,
+            )
+        ]
 
     def _build_thoracentesis_codes(
         self, grouped: Dict[str, list[DetectedIntent]]
