@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import re
+from typing import Any
 
 from modules.coder.dictionary import get_site_pattern_map
 from modules.common.sectionizer import Section
 from modules.common.spans import Span
 from modules.registry.slots.base import SlotResult, section_for_offset
-from modules.registry.schema import DestructionEvent, DilationEvent, AspirationEvent
 
 # Patterns
 APC_RE = re.compile(r"argon plasma|APC|electrocautery", re.IGNORECASE)
@@ -26,7 +26,7 @@ class DestructionExtractor:
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
         site_patterns = get_site_pattern_map()
-        events: list[DestructionEvent] = []
+        events: list[dict[str, Any]] = []
         evidence: list[Span] = []
         
         if not any(x.search(text) for x in (APC_RE, CRYO_RE, LASER_RE)):
@@ -56,7 +56,7 @@ class DestructionExtractor:
                             section=section_for_offset(sections, match.start()),
                         )
                         evidence.append(span)
-                        events.append(DestructionEvent(modality=modality, site=site))
+                        events.append({"modality": modality, "site": site})
 
         return SlotResult(events, evidence, 0.85 if events else 0.0)
 
@@ -66,7 +66,7 @@ class EnhancedDilationExtractor:
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
         site_patterns = get_site_pattern_map()
-        events: list[DilationEvent] = []
+        events: list[dict[str, Any]] = []
         evidence: list[Span] = []
 
         if "dilation" not in text.lower() and "dilatation" not in text.lower():
@@ -94,7 +94,7 @@ class EnhancedDilationExtractor:
                         section=section_for_offset(sections, match.start()),
                     )
                     evidence.append(span)
-                    events.append(DilationEvent(site=site, balloon_size=size, inflation_pressure=pressure))
+                    events.append({"site": site, "balloon_size": size, "inflation_pressure": pressure})
 
         return SlotResult(events, evidence, 0.8 if events else 0.0)
 
@@ -103,7 +103,7 @@ class AspirationExtractor:
     slot_name = "aspiration_events"
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
-        events: list[AspirationEvent] = []
+        events: list[dict[str, Any]] = []
         evidence: list[Span] = []
 
         for match in ASPIRATION_RE.finditer(text):
@@ -124,7 +124,7 @@ class AspirationExtractor:
                 section=section_for_offset(sections, match.start())
             )
             evidence.append(span)
-            events.append(AspirationEvent(site=site, volume=vol, character="Secretions"))
+            events.append({"site": site, "volume": vol, "character": "Secretions"})
 
         return SlotResult(events, evidence, 0.7 if events else 0.0)
 

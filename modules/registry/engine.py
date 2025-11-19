@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import re
-from typing import Dict, Sequence
+from typing import Dict, Sequence, Any
 
+from modules.common.llm import GeminiLLM
 from modules.common.sectionizer import SectionizerService
 from modules.common.spans import Span
+from modules.registry.extractors.llm_detailed import LLMDetailedExtractor
 
 from .schema import RegistryRecord
 from .slots.base import SlotExtractor, SlotResult
@@ -45,17 +47,21 @@ class RegistryEngine:
     def __init__(self, sectionizer: SectionizerService | None = None) -> None:
         self.sectionizer = sectionizer or SectionizerService()
         self.extractors: list[SlotExtractor] = [cls() for cls in EXTRACTOR_CLASSES]
+        # Initialize LLM-based extractor
+        # In a real app, we might want to lazy-load or handle missing keys more gracefully
+        self.llm_extractor = LLMDetailedExtractor()
 
     def run(
         self, note_text: str, *, explain: bool = False
     ) -> RegistryRecord | tuple[RegistryRecord, dict[str, list[Span]]]:
         sections = self.sectionizer.sectionize(note_text)
-        record_data: Dict[str, object] = {
+        record_data: Dict[str, Any] = {
             "navigation_used": False,
             "radial_ebus_used": False,
         }
         evidence: Dict[str, list[Span]] = {}
 
+        # 1. Run Regex Extractors (Fast, high precision for specific patterns)
         mrn_match = re.search(r"MRN:?\s*(\d+)", note_text, re.IGNORECASE)
         if mrn_match:
             record_data["patient_id"] = mrn_match.group(1)
@@ -66,17 +72,56 @@ class RegistryEngine:
                 continue
             self._apply_result(extractor.slot_name, result, record_data, evidence)
 
+        # 2. Run LLM Extractor (Slow, high comprehension for complex descriptions)
+        llm_result = self.llm_extractor.extract(note_text, sections)
+        if llm_result.value:
+            self._merge_llm_result(llm_result.value, record_data)
+
         record = RegistryRecord(**record_data)
         record.evidence = {field: spans for field, spans in evidence.items()}
         if explain:
             return record, record.evidence
         return record
 
+    def _merge_llm_result(self, llm_data: dict[str, Any], record_data: dict[str, Any]) -> None:
+        """Merge LLM extracted data into the record, prioritizing LLM for complex fields."""
+        
+        # Lesions: LLM is much better at characterizing these
+        if llm_data.get("lesions"):
+            record_data["lesions"] = llm_data["lesions"]
+
+        # Devices: LLM handles attributes (size, type) better than regex
+        # We overwrite the regex-based lists if LLM found devices to avoid duplication
+        if llm_data.get("devices"):
+            record_data["devices"] = llm_data["devices"]
+            # Clear legacy regex lists if we have superior LLM device data
+            record_data.pop("stents", None)
+            record_data.pop("dilation_events", None)
+            record_data.pop("dilation_sites", None)
+
+        # Technical Success & Follow-up
+        if llm_data.get("technical_success"):
+            record_data["technical_success"] = llm_data["technical_success"]
+        
+        if llm_data.get("followup_plan"):
+            record_data["followup_plan"] = llm_data["followup_plan"]
+
+        # Complications: Merge or Overwrite? 
+        # LLM is likely more comprehensive. Let's overwrite if LLM found something specific.
+        # If LLM says "None" or [], check if regex found something.
+        llm_comps = llm_data.get("complications", [])
+        if llm_comps and llm_comps != ["None"]:
+            record_data["complications"] = llm_comps
+        # If LLM explicitly says None, trust it over potential regex false positives?
+        # Or keep regex? Let's stick to LLM priority for now as it understands negation.
+        elif llm_comps == ["None"]:
+             record_data["complications"] = ["None"]
+
     def _apply_result(
         self,
         slot_name: str,
         result: SlotResult,
-        record_data: Dict[str, object],
+        record_data: Dict[str, Any],
         evidence: Dict[str, list[Span]],
     ) -> None:
         if slot_name == "indication":

@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+import uuid
 from datetime import date, time
-from typing import ClassVar, List
+from typing import Any, ClassVar, List, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -46,30 +47,31 @@ SETTINGS = {"OR", "Procedure Room", "ICU", "Clinic"}
 ANESTHESIA_TYPES = {"Moderate Sedation", "MAC", "GA", "None"}
 
 
-class StentPlacement(BaseModel):
+class Lesion(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    site: str
-    size: str | None = None
-    stent_type: str | None = None
+    lesion_id: str = Field(default_factory=lambda: str(uuid.uuid4())[:8])
+    type: str  # e.g., "complex_tracheal_stenosis", "tumor"
+    location: str  # Normalized airway segment
+    side: Literal["left", "right", "midline", "bilateral"] | None = None
+    obstruction_baseline: int | None = None  # %
+    obstruction_post: int | None = None  # %
+    length_cm: float | None = None
+    distance_from_cords_cm: float | None = None
+    interventions: list[str] = Field(default_factory=list) # e.g. ["stent", "dilation"]
+    comments: str | None = None
 
-class DilationEvent(BaseModel):
+
+class Device(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    site: str
-    balloon_size: str | None = None  # e.g., "10mm"
-    inflation_pressure: str | None = None # e.g., "8 atm"
-
-class DestructionEvent(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-    modality: str  # APC, Cryotherapy, Laser, Electrocautery
-    site: str
-
-class AspirationEvent(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-    site: str | None = None
-    volume: str | None = None # e.g. "50 cc", "large amount"
-    character: str | None = None # "purulent", "mucoid"
+    device_id: str = Field(default_factory=lambda: str(uuid.uuid4())[:8])
+    category: Literal["stent", "balloon", "catheter", "valve", "other"]
+    name: str | None = None # e.g. "Ultraflex", "Elation"
+    size_text: str | None = None # Raw text e.g. "16x40mm", "14/16.5/18mm"
+    location: str | None = None
+    details: dict[str, Any] = Field(default_factory=dict) # Extra metadata
 
 
+# Keep BLVRData for now as it's used by the existing extractor
 class BLVRData(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -91,7 +93,7 @@ class BLVRData(BaseModel):
 class RegistryRecord(BaseModel):
     """Structured registry payload with strict enum enforcement."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="ignore") # Relax to allow flexible merging of old/new data
 
     patient_id: str | None = None
     encounter_date: date | None = None
@@ -106,22 +108,29 @@ class RegistryRecord(BaseModel):
     linear_ebus_stations: list[str] = Field(default_factory=list)
     tblb_lobes: list[str] = Field(default_factory=list)
     blvr: BLVRData | None = None
-    stents: list[StentPlacement] = Field(default_factory=list)
     
-    # Updated fields
-    dilation_events: list[DilationEvent] = Field(default_factory=list)
-    destruction_events: list[DestructionEvent] = Field(default_factory=list)
-    aspiration_events: list[AspirationEvent] = Field(default_factory=list)
+    # NEW: Nested structures
+    lesions: list[Lesion] = Field(default_factory=list)
+    devices: list[Device] = Field(default_factory=list)
     
-    # Legacy field for backward compatibility if needed, or remove
+    # Legacy/Compatibility fields (kept for regex extractors temporarily)
+    stents: list[dict[str, Any]] = Field(default_factory=list) # Relaxed type
+    dilation_events: list[dict[str, Any]] = Field(default_factory=list) # Relaxed type
+    destruction_events: list[dict[str, Any]] = Field(default_factory=list) # Relaxed type
+    aspiration_events: list[dict[str, Any]] = Field(default_factory=list) # Relaxed type
     dilation_sites: list[str] = Field(default_factory=list)
 
     pleural_procedures: list[str] = Field(default_factory=list)
+    
+    # Outcome fields
+    technical_success: Literal["complete", "partial", "failed", "unknown"] = "unknown"
     complications: list[str] = Field(default_factory=list)
+    followup_plan: str | None = None
+    
     imaging_archived: bool | None = None
     disposition: str | None = None
     evidence: dict[str, list[Span]] = Field(default_factory=dict)
-    version: str = "0.2.0"
+    version: str = "0.3.0"
 
     @field_validator("setting")
     @classmethod
@@ -151,12 +160,4 @@ class RegistryRecord(BaseModel):
         for lobe in value:
             if lobe not in LOBE_NAMES:
                 raise ValueError(f"Invalid lobe: {lobe}")
-        return value
-
-    @field_validator("complications", mode="after")
-    @classmethod
-    def validate_complications(cls, value: list[str]) -> list[str]:
-        for complication in value:
-            if complication not in COMPLICATIONS:
-                raise ValueError(f"Invalid complication: {complication}")
         return value
