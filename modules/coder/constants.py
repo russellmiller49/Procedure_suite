@@ -14,6 +14,7 @@ CPT_DESCRIPTIONS = {
     "31653": "Linear EBUS-TBNA 3+ stations",
     "+31654": "Radial EBUS for peripheral lesion",
     "31630": "Therapeutic dilation of airway",
+    "31641": "Bronchoscopy with tumor destruction by ablative energy",
     "31645": "Therapeutic aspiration, initial session",
     "31646": "Therapeutic aspiration, repeat same stay",
     "31647": "BLVR initial lobe",
