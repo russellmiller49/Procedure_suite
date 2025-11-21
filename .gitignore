@@ -6,5 +6,17 @@ __pycache__/
 .pytest_cache/
 .env
 .env.local
+.env.*
 *.egg-info/
 .DS_Store
+
+# API Keys and sensitive files
+*api_key*
+*API_KEY*
+*secret*
+*SECRET*
+*password*
+*PASSWORD*
+geminiquota.py
+*.key
+*.pem
