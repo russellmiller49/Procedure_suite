@@ -17,6 +17,6 @@ __pycache__/
 *SECRET*
 *password*
 *PASSWORD*
-geminiquota.py
+# Note: geminiquota.py is now safe (uses env var), so we can track it
 *.key
 *.pem
