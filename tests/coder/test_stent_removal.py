@@ -11,6 +11,6 @@ def test_stent_removal_and_cryo():
     """
     result = coder.run(note)
     codes = {c.cpt for c in result.codes}
-    assert "31638" in codes
+    assert "31635" in codes
     assert "31641" in codes
     assert "31622" not in codes  # Diagnostic should be bundled

@@ -2,6 +2,24 @@
 let currentMode = 'coder';
 let lastResult = null;
 
+function ensureReporterTemplates() {
+    const sel = document.getElementById('reporter-template');
+    if (!sel) return;
+    const desired = [
+        { value: 'knowledge', label: 'Comprehensive (knowledge)' },
+        { value: 'comprehensive', label: 'Comprehensive (alias)' },
+        { value: 'comprehensive_ip', label: 'Comprehensive IP (alias)' },
+    ];
+    desired.forEach(({ value, label }) => {
+        if (!Array.from(sel.options).some(opt => opt.value === value)) {
+            const opt = document.createElement('option');
+            opt.value = value;
+            opt.textContent = label;
+            sel.appendChild(opt);
+        }
+    });
+}
+
 function setMode(mode) {
     currentMode = mode;
     
@@ -171,3 +189,6 @@ fetch('/health')
         badge.className = 'badge bg-danger';
         badge.textContent = 'API Offline';
     });
+
+// Ensure reporter template dropdown includes all options even if the HTML was cached
+ensureReporterTemplates();

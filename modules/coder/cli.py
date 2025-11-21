@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import typer
 from rich.console import Console
@@ -11,6 +12,7 @@ from rich.table import Table
 
 from modules.common.knowledge_cli import print_knowledge_info
 from modules.common.text_io import load_note
+from modules.ml_coder.training import MLB_PATH, PIPELINE_PATH, train_model
 
 from .engine import CoderEngine
 
@@ -31,6 +33,23 @@ def _cli_entry(
     if knowledge_info:
         print_knowledge_info(console)
         raise typer.Exit()
+
+
+@app.command("train-ml")
+def train_ml(
+    csv_path: Path = typer.Argument(..., exists=True, readable=True, help="Path to the training CSV")
+) -> None:
+    """Train the ML classifier using the provided dataset."""
+
+    try:
+        train_model(csv_path)
+    except Exception as exc:  # pragma: no cover - CLI surface area
+        typer.secho(f"ML training failed: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    console.print(
+        f"[green]ML artifacts saved to[/green] {PIPELINE_PATH} and {MLB_PATH}"
+    )
 
 
 @app.command()

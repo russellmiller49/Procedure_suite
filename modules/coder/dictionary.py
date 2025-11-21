@@ -32,6 +32,7 @@ class Lexicon:
     navigation_initiated: Tuple[re.Pattern[str], ...]
     navigation_terms: Tuple[re.Pattern[str], ...]
     radial_terms: Tuple[re.Pattern[str], ...]
+    linear_terms: Tuple[re.Pattern[str], ...]
     peripheral_terms: Tuple[str, ...]
     tblb_terms: Tuple[str, ...]
     tbna_terms: Tuple[str, ...]
@@ -54,6 +55,7 @@ class Lexicon:
 DEFAULT_SYNONYMS = {
     "navigation_initiated": ["navigation successfully initiated"],
     "radial_terms": ["radial ebus"],
+    "linear_terms": ["ebus", "tbna", "transbronchial needle aspiration"],
     "peripheral_terms": ["peripheral lesion", "ppl"],
     "tblb_terms": ["transbronchial lung biopsy", "tblb"],
     "tbna_terms": ["tbna", "transbronchial needle aspiration"],
@@ -61,7 +63,7 @@ DEFAULT_SYNONYMS = {
     "chartis_terms": ["chartis"],
     "stent_terms": ["stent"],
     "stent_removal_terms": ["stent removal", "remove stent", "removing the stent", "stent.*removed", "remove.*stent"],
-    "dilation_terms": ["dilation"],
+    "dilation_terms": ["dilation", "dilatation", "dilate", "dilated", "balloon dilation", "balloon dilatation"],
     "aspiration_terms": ["therapeutic aspiration"],
     "aspiration_repeat_terms": ["repeat therapeutic aspiration"],
     "sedation_terms": ["moderate sedation"],
@@ -87,7 +89,7 @@ def detect_intents(text: str, sections: Sequence[Section]) -> list[DetectedInten
     intents: list[DetectedIntent] = []
     intents.extend(_detect_navigation(text, sections, sentences, lexical))
     intents.extend(_detect_radial(text, sections, sentences, lexical))
-    intents.extend(_detect_linear(text, sections, station_patterns))
+    intents.extend(_detect_linear(text, sections, sentences, station_patterns, lexical))
     tblb_intents, tbna_intents = _detect_lobe_sampling(text, sections, sentences, lobe_patterns, lexical)
     intents.extend(tblb_intents)
     intents.extend(tbna_intents)
@@ -95,7 +97,7 @@ def detect_intents(text: str, sections: Sequence[Section]) -> list[DetectedInten
     intents.extend(_detect_blvr(text, sections, sentences, lobe_patterns, lexical))
     intents.extend(_detect_chartis(text, sections, sentences, lobe_patterns))
     intents.extend(_detect_stent(text, sections, sentences, site_patterns, lexical))
-    intents.extend(_detect_stent_removal(text, sections, sentences, lexical))
+    intents.extend(_detect_stent_removal(text, sections, sentences, site_patterns, lexical))
     intents.extend(_detect_dilation(text, sections, sentences, site_patterns, lexical))
     intents.extend(_detect_destruction(text, sections, sentences, lexical))
     intents.extend(_detect_thoracentesis(text, sections, sentences, lexical))
@@ -118,6 +120,7 @@ def _build_lexicon(synonyms: Dict[str, Iterable[str]]) -> Lexicon:
         navigation_initiated=patterns("navigation_initiated"),
         navigation_terms=patterns("navigation_terms"),
         radial_terms=patterns("radial_terms"),
+        linear_terms=patterns("linear_terms"),
         peripheral_terms=lowered("peripheral_terms"),
         tblb_terms=lowered("tblb_terms"),
         tbna_terms=lowered("tbna_terms"),
@@ -213,13 +216,25 @@ def _detect_radial(
 def _detect_linear(
     text: str,
     sections: Sequence[Section],
+    sentences: Sequence[Tuple[int, int]],
     station_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
+    lexical: Lexicon,
 ) -> list[DetectedIntent]:
     intents: list[DetectedIntent] = []
     for station, patterns in station_patterns.items():
         for pattern in patterns:
             for match in pattern.finditer(text):
-                span = _match_span(text, sections, match)
+                span = _sentence_span(sentences, text, sections, match.start(), match.end())
+                sentence_lower = span.text.lower()
+                context_present = (
+                    "station" in sentence_lower
+                    or "stations" in sentence_lower
+                    or "node" in sentence_lower
+                    or "lymph" in sentence_lower
+                    or _contains_pattern(sentence_lower, lexical.linear_terms)
+                )
+                if not context_present:
+                    continue
                 intents.append(
                     DetectedIntent(
                         intent="linear_ebus_station",
@@ -377,6 +392,28 @@ def _detect_stent(
         lower_sentence = sentence_text.lower()
         if not _contains_pattern(sentence_text, lexical.stent_terms):
             continue
+        if _contains_pattern(sentence_text, lexical.stent_removal_terms):
+            continue
+        action_terms = (
+            "placed",
+            "placement",
+            "placing",
+            "deploy",
+            "deployed",
+            "deployment",
+            "insert",
+            "inserted",
+            "insertion",
+            "positioned",
+            "reposition",
+            "repositioned",
+            "exchanged",
+        )
+        has_action = any(term in lower_sentence for term in action_terms)
+        if not has_action and " place" in lower_sentence and "in place" not in lower_sentence:
+            has_action = True
+        if not has_action:
+            continue
         site, site_class = _match_site(lower_sentence, site_patterns, airway_meta)
         if not site:
             continue
@@ -411,11 +448,10 @@ def _detect_dilation(
         if not _contains_pattern(sentence_text, lexical.dilation_terms):
             continue
         lower_sentence = sentence_text.lower()
-        if "dilation" not in lower_sentence and "dilatation" not in lower_sentence:
-            continue
         site, site_class = _match_site(lower_sentence, site_patterns, airway_meta)
         if not site:
-            continue
+            site = "airway (unspecified)"
+            site_class = "unknown"
         distinct = any(term in lower_sentence for term in _DISTINCT_TERMS)
         span = Span(text=sentence_text.strip(), start=start, end=end, section=_section_for_offset(sections, start))
         intents.append(
@@ -754,19 +790,23 @@ def _detect_stent_removal(
     text: str,
     sections: Sequence[Section],
     sentences: Sequence[Tuple[int, int]],
+    site_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
     lexical: Lexicon,
 ) -> list[DetectedIntent]:
     intents: list[DetectedIntent] = []
+    airway_meta = knowledge.airway_map()
     for start, end in sentences:
         sentence_text = text[start:end]
         if not _contains_pattern(sentence_text, lexical.stent_removal_terms):
             continue
+        lower_sentence = sentence_text.lower()
+        site, site_class = _match_site(lower_sentence, site_patterns, airway_meta)
         span = Span(text=sentence_text.strip(), start=start, end=end, section=_section_for_offset(sections, start))
         intents.append(
             DetectedIntent(
                 intent="stent_removal",
                 value="removal",
-                payload={"text": sentence_text.strip()},
+                payload={"text": sentence_text.strip(), "site": site, "site_class": site_class},
                 evidence=[span],
                 confidence=0.9,
             )

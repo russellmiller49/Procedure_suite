@@ -7,12 +7,20 @@ import os
 from typing import Protocol
 
 import httpx
-from google.auth import default as google_auth_default
-from google.auth.transport.requests import Request as GoogleAuthRequest
+from dotenv import load_dotenv
+try:
+    from google.auth import default as google_auth_default
+    from google.auth.transport.requests import Request as GoogleAuthRequest
+except ImportError:  # google-auth is optional unless OAuth is used
+    google_auth_default = None  # type: ignore[assignment]
+    GoogleAuthRequest = None  # type: ignore[assignment]
 
 from modules.common.logger import get_logger
 
 logger = get_logger("common.llm")
+
+# Load environment variables from a .env file if present so GEMINI_* keys are available locally.
+load_dotenv()
 
 
 class LLMInterface(Protocol):
@@ -31,11 +39,11 @@ class GeminiLLM:
     def __init__(
         self,
         api_key: str | None = None,
-        model: str = "gemini-2.5-flash-preview-09-2025",
+        model: str | None = None,
         use_oauth: bool | None = None,
     ) -> None:
         self.api_key = api_key
-        self.model = model
+        self.model = model or os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
         self.base_url = "https://generativelanguage.googleapis.com/v1beta/models"
         
         # Determine authentication method
@@ -63,6 +71,10 @@ class GeminiLLM:
 
     def _refresh_credentials(self) -> None:
         """Refresh OAuth2 credentials using Application Default Credentials."""
+        if not google_auth_default or not GoogleAuthRequest:
+            raise RuntimeError(
+                "google-auth is required for OAuth2 Gemini access. Install google-auth and retry."
+            )
         try:
             credentials, _ = google_auth_default()
             # Ensure we have a valid token

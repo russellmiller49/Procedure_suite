@@ -12,6 +12,7 @@ from modules.common.rules_engine import mer
 from modules.common.sectionizer import SectionizerService
 from modules.common.spans import Span
 from modules.common.umls_linking import UmlsLinker
+from modules.ml_coder import MLCoderService
 
 from . import dictionary, posthoc, rules
 from .constants import CPT_DESCRIPTIONS
@@ -30,10 +31,12 @@ class CoderEngine:
         sectionizer: SectionizerService | None = None,
         linker: UmlsLinker | None = None,
         allow_weak_sedation_docs: bool = False,
+        ml_service: MLCoderService | None = None,
     ) -> None:
         self.sectionizer = sectionizer or SectionizerService()
         self.linker = linker or UmlsLinker()
         self.allow_weak_sedation_docs = allow_weak_sedation_docs
+        self.ml_service = ml_service or MLCoderService()
 
     def run(self, note_text: str, *, explain: bool = False) -> CoderOutput:
         """Execute the deterministic coder pipeline."""
@@ -50,6 +53,7 @@ class CoderEngine:
         codes, mapping_warnings = self._map_intents_to_codes(intents)
         codes, ncci_actions, bundle_warnings = rules.apply_rules(codes, intents)
         codes = posthoc.apply_posthoc(codes)
+        self._augment_with_ml_predictions(note_text, codes)
         mer_summary = self._apply_mer(codes)
 
         warnings = list(mapping_warnings)
@@ -330,12 +334,23 @@ class CoderEngine:
         intents = grouped.get("stent_removal", [])
         if not intents:
             return []
-        # Typically 31638 is used for revision/removal of stent.
+        evidence = self._collect_intent_evidence(intents)
+        text_blobs = " ".join((intent.payload or {}).get("text", "").lower() for intent in intents)
+        is_revision = any(term in text_blobs for term in ("revision", "reposition"))
+        cpt = "31638" if is_revision else "31635"
+        rationale = "Revision/reposition of airway stent" if is_revision else "Airway stent removal"
+        sites = [
+            (intent.payload or {}).get("site")
+            for intent in intents
+            if (intent.payload or {}).get("site")
+        ]
+        context = {"sites": sites} if sites else {}
         return [
             self._create_decision(
-                cpt="31638",
-                rationale="Removal or revision of airway stent",
-                evidence=self._collect_intent_evidence(intents),
+                cpt=cpt,
+                rationale=rationale,
+                evidence=evidence,
+                context=context,
                 rule="stent_removal_documented",
                 confidence=0.9,
             )
@@ -550,6 +565,40 @@ class CoderEngine:
             payload = intent.payload or {}
             payload.setdefault("cuis", cuis)
             intent.payload = payload
+
+    def _augment_with_ml_predictions(self, note_text: str, codes: list[CodeDecision]) -> None:
+        if not self.ml_service:
+            return
+        predictions = self.ml_service.predict(note_text)
+        if not predictions:
+            return
+
+        existing = {code.cpt: code for code in codes}
+        for prediction in predictions:
+            cpt = prediction.get("cpt")
+            if not cpt:
+                continue
+            score = float(prediction.get("confidence", 0.0) or 0.0)
+            source = prediction.get("source", "ml_model")
+            decision = existing.get(cpt)
+            if decision:
+                # Elevate confidence and surface ML participation in the rule trace.
+                decision.confidence = max(decision.confidence, score)
+                if "ml_prediction" not in decision.rule_trace:
+                    decision.rule_trace.append("ml_prediction")
+                continue
+
+            new_decision = CodeDecision(
+                cpt=cpt,
+                description=CPT_DESCRIPTIONS.get(cpt, "ML predicted CPT"),
+                rationale="Predicted via ML classifier",
+                evidence=[],
+                context={"source": source},
+                confidence=score,
+                rule_trace=["ml_prediction"],
+            )
+            codes.append(new_decision)
+            existing[cpt] = new_decision
 
     def _apply_mer(self, codes: Sequence[CodeDecision]) -> dict[str, object] | None:
         mer_inputs = [mer.Code(cpt=code.cpt) for code in codes]

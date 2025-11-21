@@ -32,7 +32,7 @@ class RegistryResponse(RegistryRecord):
 
 class ReporterRequest(BaseModel):
     note: str
-    template: Literal["bronchoscopy", "pleural", "blvr"] = "bronchoscopy"
+    template: Literal["bronchoscopy", "pleural", "blvr", "knowledge", "comprehensive", "comprehensive_ip"] = "bronchoscopy"
 
 
 class ReporterResponse(BaseModel):
