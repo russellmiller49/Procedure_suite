@@ -56,6 +56,23 @@ class RegistryEngine:
             if field in merged_data:
                 merged_data[field] = func(merged_data.get(field))
 
+        # Defaults based on cross-field context
+        sedation_val = merged_data.get("sedation_type")
+        airway_val = merged_data.get("airway_type")
+        if airway_val in (None, "", []):
+            if sedation_val == "General":
+                merged_data["airway_type"] = "ETT"
+            elif sedation_val in ("Moderate", "Deep"):
+                merged_data["airway_type"] = "Native"
+
+        # If pleural procedure present but no guidance, default to Blind
+        if merged_data.get("pleural_procedure_type") and not merged_data.get("pleural_guidance"):
+            merged_data["pleural_guidance"] = "Blind"
+
+        # EBUS fields suppressed per latest instructions
+        merged_data["ebus_needle_gauge"] = None
+        merged_data["ebus_rose_result"] = None
+
         record = RegistryRecord(**merged_data)
         normalized_evidence: dict[str, list[Span]] = {}
         if include_evidence:

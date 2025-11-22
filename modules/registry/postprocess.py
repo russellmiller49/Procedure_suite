@@ -15,6 +15,7 @@ __all__ = [
     "normalize_procedure_date",
     "normalize_disposition",
     "postprocess_asa_class",
+    "normalize_final_diagnosis_prelim",
     "normalize_stent_type",
     "normalize_stent_location",
     "normalize_stent_deployment_method",
@@ -37,7 +38,8 @@ def _coerce_to_text(raw: Any) -> str | None:
 def normalize_sedation_type(raw: Any) -> str | None:
     text_raw = _coerce_to_text(raw)
     if text_raw is None:
-        return None
+        # Default per instruction: moderate if undocumented
+        return "Moderate"
     text = text_raw.lower()
 
     mapping = {
@@ -84,7 +86,7 @@ def normalize_sedation_type(raw: Any) -> str | None:
             val = lowered_allowed.get(text, None)
 
     allowed = {"Moderate", "Deep", "General", "Local", "Monitored Anesthesia Care"}
-    return val if val in allowed else None
+    return val if val in allowed else "Moderate"
 
 
 def normalize_airway_type(raw: Any) -> str | None:
@@ -354,12 +356,47 @@ def normalize_disposition(raw: Any) -> str | None:
 
 def postprocess_asa_class(raw_text: Any) -> str | None:
     text_raw = _coerce_to_text(raw_text)
+    if text_raw is None or not str(text_raw).strip():
+        # Default ASA when not documented
+        return 3
+    cleaned = str(text_raw).strip().upper()
+    # Extract first digit if present
+    m = re.search(r"([1-5])", cleaned)
+    if m:
+        return int(m.group(1))
+    return 3
+
+
+def normalize_final_diagnosis_prelim(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
     if text_raw is None:
         return None
-    cleaned = text_raw.strip()
-    if not cleaned:
+    t = text_raw.strip().lower()
+    if not t:
         return None
-    return cleaned
+    mapping = {
+        "malignancy": "Malignancy",
+        "malignant": "Malignancy",
+        "infectious": "Infectious",
+        "infection": "Infectious",
+        "granulomatous": "Granulomatous",
+        "granuloma": "Granulomatous",
+        "non-diagnostic": "Non-diagnostic",
+        "nondiagnostic": "Non-diagnostic",
+        "non diagnostic": "Non-diagnostic",
+        "other": "Other",
+    }
+    if t in mapping:
+        return mapping[t]
+    if "granulom" in t:
+        return "Granulomatous"
+    if "infect" in t:
+        return "Infectious"
+    if "malig" in t or "carcinoma" in t or "adenocarcinoma" in t:
+        return "Malignancy"
+    if "non" in t and "diagnostic" in t:
+        return "Non-diagnostic"
+    return "Other"
 
 
 def normalize_stent_type(raw: Any) -> str | None:
@@ -429,59 +466,15 @@ def normalize_stent_deployment_method(raw: Any) -> str | None:
 
 
 def normalize_ebus_rose_result(raw: Any) -> str | None:
-    text_raw = _coerce_to_text(raw)
-    if text_raw is None:
-        return None
-    t = text_raw.strip().lower()
-    if not t:
-        return None
-    mapping = {
-        "malignant": "Malignant",
-        "benign": "Benign",
-        "granuloma": "Granuloma",
-        "nondiagnostic": "Nondiagnostic",
-        "non-diagnostic": "Nondiagnostic",
-        "atypical cells present": "Atypical cells present",
-        "atypical lymphoid proliferation": "Atypical lymphoid proliferation",
-    }
-    if t in mapping:
-        return mapping[t]
-    if "atypical lymphoid" in t:
-        return "Atypical lymphoid proliferation"
-    if "atypical cell" in t:
-        return "Atypical cells present"
-    if "non" in t and "diagnostic" in t:
-        return "Nondiagnostic"
+    # Per latest instructions, leave empty/None for now
     return None
 
 
 def normalize_ebus_needle_gauge(raw: Any) -> str | None:
-    text_raw = _coerce_to_text(raw)
-    if text_raw is None:
-        return None
-    t = text_raw.strip().lower().replace(" ", "")
-    if not t:
-        return None
-    if t in {"21g", "21"}:
-        return "21G"
-    if t in {"22g", "22"}:
-        return "22G"
-    if t in {"25g", "25"}:
-        return "25G"
     return None
 
 
 def normalize_ebus_needle_type(raw: Any) -> str | None:
-    text_raw = _coerce_to_text(raw)
-    if text_raw is None:
-        return None
-    t = text_raw.strip().lower()
-    if not t:
-        return None
-    if "fnb" in t:
-        return "FNB"
-    if "standard" in t:
-        return "Standard"
     return None
 
 
@@ -494,6 +487,7 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Optional[str]]] = {
     "procedure_date": normalize_procedure_date,
     "disposition": normalize_disposition,
     "asa_class": postprocess_asa_class,
+    "final_diagnosis_prelim": normalize_final_diagnosis_prelim,
     "stent_type": normalize_stent_type,
     "stent_location": normalize_stent_location,
     "stent_deployment_method": normalize_stent_deployment_method,
