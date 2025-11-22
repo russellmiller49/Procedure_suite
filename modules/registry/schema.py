@@ -1,236 +1,150 @@
-"""Registry data structures and validation utilities."""
+"""Registry data structures built from the JSON schema in data/knowledge/IP_Registry.json."""
 
 from __future__ import annotations
 
-from typing import Literal
+import json
+from pathlib import Path
+from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, create_model
 
 from modules.common.spans import Span
 
+_SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
 
-ProviderRole = Literal["Attending", "Fellow", "Resident"]
-Gender = Literal["M", "F", "Other"]
-AnticoagStatus = Literal["None", "Aspirin", "Plavix", "DOAC", "Warfarin", "Heparin"]
-PrimaryIndication = Literal[
-    "Lung Nodule",
-    "Lung Mass",
-    "Mediastinal Lymphadenopathy",
-    "Hemoptysis",
-    "Airway Obstruction",
-    "Pleural Effusion",
-    "ILD",
-    "COPD-Emphysema",
-    "Asthma",
-    "Foreign Body",
-    "Other",
+# Domain-specific enums that extend/override the JSON schema for validation.
+SedationType = Literal["Moderate", "Deep", "General", "Local", "Monitored Anesthesia Care"]
+NavImagingVerification = Literal["Fluoroscopy", "Cone Beam CT", "O-Arm", "Ultrasound", "None"]
+CaoTumorLocation = Literal[
+    "Trachea",
+    "RMS",
+    "LMS",
+    "Bronchus Intermedius",
+    "Lobar",
+    "RUL",
+    "RML",
+    "RLL",
+    "LUL",
+    "LLL",
+    "Mainstem",
 ]
-CaoLocation = Literal["None", "Trachea", "Mainstem", "Lobar"]
-PriorTherapy = Literal["None", "Chemo", "Radiation", "Immunotherapy", "Prior Resection"]
-SedationType = Literal["Moderate", "Deep", "General"]
-AirwayType = Literal["Native", "LMA", "ETT", "Tracheostomy", "Rigid Bronchoscope"]
-VentilationMode = Literal[
-    "Spontaneous",
-    "Jet Ventilation",
-    "Controlled Mechanical Ventilation",
-]
-EbusScopeBrand = Literal["Olympus", "Pentax", "Fuji", "Other"]
-EbusNeedleGauge = Literal["21G", "22G", "25G"]
-EbusNeedleType = Literal["Standard", "FNB"]
-EbusSystematicStaging = Literal["Yes", "No"]
-EbusRoseResult = Literal["Malignant", "Benign", "Granuloma", "Nondiagnostic"]
-NavPlatform = Literal[
-    "Electromagnetic-SuperDimension",
-    "Electromagnetic-Veran",
-    "Robotic-Ion",
-    "Robotic-Monarch",
-    "Fluoroscopy Only",
-]
-NavRegistrationMethod = Literal["Automatic", "Manual"]
-NavRebusView = Literal["Concentric", "Eccentric", "None"]
-NavImagingVerification = Literal["Fluoroscopy", "Cone Beam CT", "O-Arm", "None"]
-NavSamplingTool = Literal["Forceps", "Needle", "Brush", "Cryoprobe"]
-CaoPrimaryModality = Literal[
-    "Mechanical Core",
-    "APC",
-    "Electrocautery",
-    "Cryotherapy",
-    "Laser",
-    "Microdebrider",
-    "Photodynamic Therapy",
-]
-CaoTumorLocation = Literal["Trachea", "RMS", "LMS", "Bronchus Intermedius", "Lobar"]
-StentType = Literal[
-    "Silicone-Dumon",
-    "Silicone-Y-Stent",
-    "Hybrid",
-    "Metallic-Covered",
-    "Metallic-Uncovered",
-]
-StentDeploymentMethod = Literal["Rigid", "Flexible over Wire"]
-StentLocation = Literal["Trachea", "Mainstem", "Lobar"]
-BlvrTargetLobe = Literal["RUL", "RML", "RLL", "LUL", "LLL"]
-BlvrCvAssessment = Literal["Chartis", "Visual", "CT-based"]
-BlvrChartisResult = Literal["CV Negative", "CV Positive", "Indeterminate"]
-BlvrValveType = Literal["Zephyr", "Spiration"]
-ForeignBodyType = Literal["Organic", "Inorganic"]
 PleuralProcedureType = Literal[
     "Thoracentesis",
     "Chest Tube",
     "Tunneled Catheter",
     "Medical Thoracoscopy",
+    "Chemical Pleurodesis",
 ]
-PleuralGuidance = Literal["Ultrasound", "CT", "Blind"]
-PleuralFluidAppearance = Literal["Serous", "Sanguinous", "Purulent", "Chylous"]
-PleuralFinding = Literal["Adhesions", "Nodules", "Plaque", "Normal"]
-PleurodesisAgent = Literal["Talc Slurry", "Talc Poudrage", "Doxycycline"]
-BleedingSeverity = Literal["None/Scant", "Mild", "Moderate", "Severe"]
-PneumothoraxIntervention = Literal[
-    "Observation",
-    "O2",
-    "Aspiration",
-    "Chest Tube",
-    "Surgery",
+PleuralFluidAppearance = Literal[
+    "Serous",
+    "Sanguinous",
+    "Purulent",
+    "Chylous",
+    "Serosanguinous",
+    "Turbid",
+    "Other",
 ]
-HypoxiaRespiratoryFailure = Literal[
-    "None",
-    "Transient",
-    "Escalation of Care",
-    "Post-op Intubation",
+StentType = Literal[
+    "Silicone-Dumon",
+    "Silicone-Y-Stent",
+    "Silicone Y-Stent",
+    "Hybrid",
+    "Metallic-Covered",
+    "Metallic-Uncovered",
+    "Other",
 ]
 FinalDiagnosisPrelim = Literal[
     "Malignancy",
     "Granulomatous",
     "Infectious",
     "Non-diagnostic",
+    "Benign",
     "Other",
 ]
-Disposition = Literal[
-    "Discharge Home",
-    "PACU Recovery",
-    "Floor Admission",
-    "ICU Admission",
-]
-FollowUpPlan = Literal[
-    "Clinic",
-    "Oncology Referral",
-    "Repeat Bronchoscopy",
-    "Surveillance Imaging",
+EbusRoseResult = Literal[
+    "Malignant",
+    "Benign",
+    "Granuloma",
+    "Nondiagnostic",
+    "Atypical cells present",
+    "Atypical lymphoid proliferation",
 ]
 
+# Field-level overrides to keep validation flexible even when the JSON schema is more
+# restrictive. This avoids hard failures on newly observed real-world values.
+CUSTOM_FIELD_TYPES: dict[str, Any] = {
+    "sedation_type": SedationType,
+    "nav_imaging_verification": NavImagingVerification,
+    "cao_tumor_location": CaoTumorLocation,
+    "pleural_procedure_type": PleuralProcedureType,
+    "pleural_fluid_appearance": PleuralFluidAppearance,
+    "stent_type": StentType,
+    "final_diagnosis_prelim": FinalDiagnosisPrelim,
+    "ebus_rose_result": EbusRoseResult,
+    # Allow modifiers/verification text alongside integers for CPT entries.
+    "cpt_codes": list[int | str],
+}
 
-class RegistryRecord(BaseModel):
-    """Structured registry payload matching the flat Supabase schema."""
+
+def _json_type_to_py(prop: dict[str, Any]) -> Any:
+    """Map JSON schema type/enum to Python type."""
+    typ = prop.get("type")
+    enum = prop.get("enum")
+    if enum:
+        return Literal[tuple(enum)]  # type: ignore[arg-type]
+
+    # Handle union types like ["string", "null"]
+    if isinstance(typ, list):
+        base_types = [t for t in typ if t != "null"]
+        if not base_types:
+            return Any
+        typ = base_types[0]
+
+    if typ == "string":
+        return str
+    if typ == "number":
+        return float
+    if typ == "integer":
+        return int
+    if typ == "boolean":
+        return bool
+    if typ == "array":
+        items = prop.get("items", {}) or {}
+        item_type = _json_type_to_py(items)
+        return list[item_type]  # type: ignore[index]
+    if typ == "object":
+        return dict[str, Any]
+    return Any
+
+
+def _build_registry_model() -> type[BaseModel]:
+    if not _SCHEMA_PATH.exists():
+        raise FileNotFoundError(f"Registry schema not found at {_SCHEMA_PATH}")
+
+    schema = json.loads(_SCHEMA_PATH.read_text())
+    properties: dict[str, dict[str, Any]] = schema.get("properties", {})
+
+    field_defs: dict[str, tuple[Any, Any]] = {}
+    for name, prop in properties.items():
+        py_type = CUSTOM_FIELD_TYPES.get(name) or _json_type_to_py(prop)
+        # Allow nulls by default
+        py_type = py_type | None  # type: ignore[operator]
+        default = None
+        field_defs[name] = (py_type, default)
+
+    # Append metadata
+    field_defs["evidence"] = (dict[str, list[Span]], Field(default_factory=dict))
+    field_defs["version"] = (str, "0.5.0")
 
     model_config = ConfigDict(extra="ignore")
 
-    # Encounter & Demographics
-    patient_mrn: str | None = None
-    procedure_date: str | None = None
-    provider_role: ProviderRole | None = None
-    attending_name: str | None = None
-    fellow_name: str | None = None
-    patient_age: float | None = None
-    gender: Gender | None = None
-    asa_class: int | None = None
-    anticoag_status: AnticoagStatus | None = None
-    anticoag_held_preprocedure: bool | None = None
+    return create_model(
+        "RegistryRecord",
+        __config__=model_config,
+        **field_defs,  # type: ignore[arg-type]
+    )
 
-    # Indications & Pre-Op
-    primary_indication: PrimaryIndication | None = None
-    radiographic_findings: str | None = None
-    lesion_size_mm: float | None = None
-    lesion_location: str | None = None
-    pet_suv_max: float | None = None
-    pet_avid: bool | None = None
-    bronchus_sign_present: bool | None = None
-    cao_location: CaoLocation | None = None
-    prior_therapy: PriorTherapy | None = None
 
-    # Anesthesia
-    sedation_type: SedationType | None = None
-    airway_type: AirwayType | None = None
-    airway_device_size: float | None = None
-    ventilation_mode: VentilationMode | None = None
-    anesthesia_agents: list[Literal[
-        "Propofol",
-        "Fentanyl",
-        "Midazolam",
-        "Rocuronium",
-        "Succinylcholine",
-        "Remifentanil",
-        "Sevoflurane",
-    ]] | None = None
-
-    # Diagnostic (EBUS & Nav)
-    ebus_scope_brand: EbusScopeBrand | None = None
-    ebus_stations_sampled: list[str] | None = None
-    ebus_needle_gauge: EbusNeedleGauge | None = None
-    ebus_needle_type: EbusNeedleType | None = None
-    ebus_systematic_staging: EbusSystematicStaging | None = None
-    ebus_rose_available: bool | None = None
-    ebus_rose_result: EbusRoseResult | None = None
-    ebus_intranodal_forceps_used: bool | None = None
-
-    nav_platform: NavPlatform | None = None
-    nav_registration_method: NavRegistrationMethod | None = None
-    nav_registration_error_mm: float | None = None
-    nav_rebus_used: bool | None = None
-    nav_rebus_view: NavRebusView | None = None
-    nav_imaging_verification: NavImagingVerification | None = None
-    nav_tool_in_lesion: bool | None = None
-    nav_sampling_tools: list[NavSamplingTool] | None = None
-    nav_cryobiopsy_for_nodule: bool | None = None
-
-    # Therapeutics
-    cao_primary_modality: CaoPrimaryModality | None = None
-    cao_tumor_location: CaoTumorLocation | None = None
-    cao_obstruction_pre_pct: int | None = None
-    cao_obstruction_post_pct: int | None = None
-
-    stent_type: StentType | None = None
-    stent_deployment_method: StentDeploymentMethod | None = None
-    stent_diameter_mm: float | None = None
-    stent_length_mm: float | None = None
-    stent_location: StentLocation | None = None
-
-    blvr_target_lobe: BlvrTargetLobe | None = None
-    blvr_cv_assessment_method: BlvrCvAssessment | None = None
-    blvr_chartis_result: BlvrChartisResult | None = None
-    blvr_valve_type: BlvrValveType | None = None
-    blvr_number_of_valves: int | None = None
-
-    fb_object_type: ForeignBodyType | None = None
-    wll_volume_instilled_l: float | None = None
-
-    # Pleural Procedures
-    pleural_procedure_type: PleuralProcedureType | None = None
-    pleural_guidance: PleuralGuidance | None = None
-    pleural_opening_pressure_measured: bool | None = None
-    pleural_fluid_appearance: PleuralFluidAppearance | None = None
-    pleural_volume_drained_ml: float | None = None
-    pleural_thoracoscopy_findings: list[PleuralFinding] | None = None
-    pleurodesis_performed: bool | None = None
-    pleurodesis_agent: PleurodesisAgent | None = None
-
-    # Complications & Safety
-    ebl_ml: float | None = None
-    bleeding_severity: BleedingSeverity | None = None
-    pneumothorax: bool | None = None
-    pneumothorax_intervention: PneumothoraxIntervention | None = None
-    hypoxia_respiratory_failure: HypoxiaRespiratoryFailure | None = None
-    fluoro_time_min: float | None = None
-    radiation_dap_gycm2: float | None = None
-
-    # Diagnosis & Disposition
-    final_diagnosis_prelim: FinalDiagnosisPrelim | None = None
-    molecular_testing_requested: bool | None = None
-    disposition: Disposition | None = None
-    follow_up_plan: list[FollowUpPlan] | None = None
-
-    # Metadata
-    evidence: dict[str, list[Span]] = Field(default_factory=dict)
-    version: str = "0.4.0"
-
+RegistryRecord = _build_registry_model()
 
 __all__ = ["RegistryRecord"]

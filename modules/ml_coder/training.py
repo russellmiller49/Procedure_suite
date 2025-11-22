@@ -13,18 +13,13 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MultiLabelBinarizer
 
 from modules.common.logger import get_logger
+from modules.ml_coder.utils import clean_cpt_codes
 
 logger = get_logger("ml_coder.training")
 
 MODELS_DIR = Path("data/models")
 PIPELINE_PATH = MODELS_DIR / "cpt_classifier.pkl"
 MLB_PATH = MODELS_DIR / "mlb.pkl"
-
-
-def _normalize_codes(raw_value: str) -> list[str]:
-    """Split a comma-delimited CPT string into a clean list of codes."""
-
-    return [code.strip() for code in raw_value.split(",") if code and code.strip()]
 
 
 def _load_training_rows(csv_path: Path) -> tuple[list[str], list[list[str]]]:
@@ -44,8 +39,7 @@ def _load_training_rows(csv_path: Path) -> tuple[list[str], list[list[str]]]:
 
     cleaned = df.dropna(subset=["note_text", "verified_cpt_codes"]).copy()
     cleaned["note_text"] = cleaned["note_text"].astype(str)
-    cleaned["verified_cpt_codes"] = cleaned["verified_cpt_codes"].astype(str)
-    cleaned["verified_cpt_codes"] = cleaned["verified_cpt_codes"].apply(_normalize_codes)
+    cleaned["verified_cpt_codes"] = cleaned["verified_cpt_codes"].apply(clean_cpt_codes)
     cleaned = cleaned[cleaned["verified_cpt_codes"].map(bool)]
 
     texts = cleaned["note_text"].tolist()

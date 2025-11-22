@@ -1,0 +1,503 @@
+"""Field-specific normalization for registry extraction outputs."""
+
+from __future__ import annotations
+
+from typing import Any, Callable, Dict, Optional
+import re
+from datetime import datetime
+
+__all__ = [
+    "normalize_sedation_type",
+    "normalize_airway_type",
+    "map_pleural_guidance",
+    "normalize_pleural_procedure",
+    "postprocess_patient_mrn",
+    "normalize_procedure_date",
+    "normalize_disposition",
+    "postprocess_asa_class",
+    "normalize_stent_type",
+    "normalize_stent_location",
+    "normalize_stent_deployment_method",
+    "normalize_ebus_rose_result",
+    "normalize_ebus_needle_gauge",
+    "normalize_ebus_needle_type",
+    "POSTPROCESSORS",
+]
+
+
+def _coerce_to_text(raw: Any) -> str | None:
+    if raw is None:
+        return None
+    if isinstance(raw, list) and raw:
+        raw = raw[0]
+    text = str(raw).strip()
+    return text or None
+
+
+def normalize_sedation_type(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.lower()
+
+    mapping = {
+        "moderate": "Moderate",
+        "moderate sedation": "Moderate",
+        "conscious sedation": "Moderate",
+        "deep": "Deep",
+        "deep sedation": "Deep",
+        "general": "General",
+        "general anesthesia": "General",
+        "ga": "General",
+        "local": "Local",
+        "local anesthesia": "Local",
+        "local only": "Local",
+        "monitored anesthesia care": "Monitored Anesthesia Care",
+        "mac": "Monitored Anesthesia Care",
+        "mac anesthesia": "Monitored Anesthesia Care",
+    }
+
+    if text in mapping:
+        val = mapping[text]
+    else:
+        if "general" in text and "anesth" in text:
+            val = "General"
+        elif "deep" in text and "sedat" in text:
+            val = "Deep"
+        elif "conscious" in text and "sedat" in text:
+            val = "Moderate"
+        elif "moderate" in text and "sedat" in text:
+            val = "Moderate"
+        elif "local" in text and "anesth" in text:
+            val = "Local"
+        elif "mac" in text or "monitored anesthesia care" in text:
+            # Convention: MAC → Deep when not otherwise specified
+            val = "Deep"
+        else:
+            lowered_allowed = {
+                "moderate": "Moderate",
+                "deep": "Deep",
+                "general": "General",
+                "local": "Local",
+                "monitored anesthesia care": "Monitored Anesthesia Care",
+            }
+            val = lowered_allowed.get(text, None)
+
+    allowed = {"Moderate", "Deep", "General", "Local", "Monitored Anesthesia Care"}
+    return val if val in allowed else None
+
+
+def normalize_airway_type(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if text in {"", "none", "n/a", "na", "null"}:
+        return None
+
+    mapping = {
+        "native": "Native",
+        "natural": "Native",
+        "natural airway": "Native",
+        "spontaneous": "Native",
+        "lma": "LMA",
+        "laryngeal mask": "LMA",
+        "laryngeal mask airway": "LMA",
+        "ett": "ETT",
+        "endotracheal": "ETT",
+        "endotracheal tube": "ETT",
+        "et tube": "ETT",
+        "trach": "Tracheostomy",
+        "tracheostomy": "Tracheostomy",
+        "tracheostomy tube": "Tracheostomy",
+        "rigid": "Rigid Bronchoscope",
+        "rigid bronchoscope": "Rigid Bronchoscope",
+        "rigid bronch": "Rigid Bronchoscope",
+        "rigid bronchoscopy": "Rigid Bronchoscope",
+    }
+
+    if text in mapping:
+        return mapping[text]
+
+    if "rigid" in text and "bronch" in text:
+        return "Rigid Bronchoscope"
+    if "trach" in text:
+        return "Tracheostomy"
+    if "lma" in text or "laryngeal mask" in text:
+        return "LMA"
+    if "ett" in text or "endotracheal" in text or "et tube" in text:
+        return "ETT"
+    if "native" in text or "natural airway" in text:
+        return "Native"
+
+    return None
+
+
+def map_pleural_guidance(raw_value: Any) -> str | None:
+    text_raw = _coerce_to_text(raw_value)
+    if text_raw is None:
+        return None
+    text = text_raw.lower()
+
+    if text in {"ultrasound", "us", "u/s", "ultrasound-guided", "ultrasound guidance"}:
+        return "Ultrasound"
+    if text in {"ct", "ct-guided", "ct guidance", "computed tomography"}:
+        return "CT"
+    if text in {"blind", "no imaging", "unguided"}:
+        return "Blind"
+
+    if "ultrasound" in text or "sonograph" in text:
+        return "Ultrasound"
+    if "ct-guid" in text or " ct " in text or "computed tomography" in text:
+        return "CT"
+    if "no imaging" in text or "without imaging" in text or "blind" in text or "no image guidance" in text:
+        return "Blind"
+
+    return None
+
+
+def normalize_pleural_procedure(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.lower()
+
+    canonical = {
+        "thoracentesis": "Thoracentesis",
+        "chest tube": "Chest Tube",
+        "tunneled catheter": "Tunneled Catheter",
+        "tunnelled catheter": "Tunneled Catheter",
+        "medical thoracoscopy": "Medical Thoracoscopy",
+        "chemical pleurodesis": "Chemical Pleurodesis",
+    }
+    if text in canonical:
+        return canonical[text]
+
+    if "pleurodesis" in text:
+        return "Chemical Pleurodesis"
+
+    if "tunneled" in text or "tunnelled" in text:
+        if "catheter" in text or "pleural catheter" in text:
+            return "Tunneled Catheter"
+
+    if "thoracoscopy" in text or "pleuroscopy" in text:
+        return "Medical Thoracoscopy"
+
+    if any(k in text for k in ["chest tube", "pleural drain", "pleural tube", "pigtail", "intercostal drain", "icd"]):
+        return "Chest Tube"
+
+    if "thoracentesis" in text or "pleural tap" in text:
+        return "Thoracentesis"
+
+    for k, v in canonical.items():
+        if k in text:
+            return v
+
+    return None
+
+
+def postprocess_patient_mrn(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    s = text_raw
+    date_patterns = [
+        r"^\d{1,2}/\d{1,2}/\d{2,4}$",
+        r"^\d{1,2}-\d{1,2}-\d{2,4}$",
+        r"^\d{4}-\d{1,2}-\d{1,2}$",
+    ]
+    for pat in date_patterns:
+        if re.match(pat, s):
+            return None
+
+    m = re.match(r"^(?:MRN|Mrn|mrn|ID|Id|id)[:#\s-]*([A-Za-z0-9-]+)$", s)
+    if m:
+        s = m.group(1)
+    return s or None
+
+
+def normalize_procedure_date(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    raw = text_raw.strip()
+    if raw.lower() == "null" or raw == "":
+        return None
+
+    iso_match = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})", raw)
+    if iso_match:
+        try:
+            datetime.strptime(raw, "%Y-%m-%d")
+            return raw
+        except ValueError:
+            return None
+
+    candidates = [
+        "%m/%d/%Y",
+        "%m-%d-%Y",
+        "%Y/%m/%d",
+        "%Y-%m-%d",
+        "%m/%d/%y",
+        "%m-%d-%y",
+        "%B %d, %Y",
+        "%b %d, %Y",
+        "%d %B %Y",
+        "%d %b %Y",
+    ]
+    for fmt in candidates:
+        try:
+            dt = datetime.strptime(raw, fmt)
+            return dt.strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+
+    date_like = re.search(r"(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})", raw)
+    if date_like:
+        text = date_like.group(1)
+        for fmt in ["%m/%d/%Y", "%m-%d-%Y", "%m/%d/%y", "%m-%d-%y"]:
+            try:
+                dt = datetime.strptime(text, fmt)
+                return dt.strftime("%Y-%m-%d")
+            except ValueError:
+                continue
+
+    return None
+
+
+def normalize_disposition(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text:
+        return None
+
+    mapping_exact = {
+        "discharge home": "Discharge Home",
+        "home": "Discharge Home",
+        "pacu recovery": "PACU Recovery",
+        "pacu": "PACU Recovery",
+        "recovery": "PACU Recovery",
+        "floor admission": "Floor Admission",
+        "admit to floor": "Floor Admission",
+        "icu admission": "ICU Admission",
+        "admit to icu": "ICU Admission",
+    }
+    if text in mapping_exact:
+        return mapping_exact[text]
+
+    icu_keywords = [
+        "icu",
+        "micu",
+        "sicu",
+        "cticu",
+        "ccu",
+        "neuro icu",
+        "burn icu",
+        "intensive care",
+        "critical care",
+    ]
+    if any(k in text for k in icu_keywords):
+        return "ICU Admission"
+
+    floor_keywords = [
+        "admit to floor",
+        "to the floor",
+        "medicine floor",
+        "surgery floor",
+        "inpatient ward",
+        "telemetry",
+        "step-down",
+        "step down",
+        "intermediate care",
+        "imcu",
+        "admit to medicine",
+        "admit to oncology",
+        "admit to hospitalist",
+        "admit for observation",
+        "admitted for observation",
+    ]
+    if any(k in text for k in floor_keywords):
+        return "Floor Admission"
+
+    pacu_keywords = [
+        "to pacu",
+        "pacu",
+        "post-anesthesia care",
+        "post anesthesia care",
+        "recovery room",
+        "phase i recovery",
+        "postop recovery",
+        "short stay recovery",
+        "day surgery recovery",
+        "sds recovery",
+    ]
+    if any(k in text for k in pacu_keywords):
+        return "PACU Recovery"
+
+    home_keywords = [
+        "discharge home",
+        "discharged home",
+        "to home",
+        "go home",
+        "going home",
+        "ok for discharge",
+        "ok to discharge",
+        "same-day discharge",
+        "same day discharge",
+    ]
+    if any(k in text for k in home_keywords):
+        return "Discharge Home"
+
+    return None
+
+
+def postprocess_asa_class(raw_text: Any) -> str | None:
+    text_raw = _coerce_to_text(raw_text)
+    if text_raw is None:
+        return None
+    cleaned = text_raw.strip()
+    if not cleaned:
+        return None
+    return cleaned
+
+
+def normalize_stent_type(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    t = text_raw.strip().lower()
+    if not t:
+        return None
+    mapping = {
+        "silicone-dumon": "Silicone-Dumon",
+        "dumon": "Silicone-Dumon",
+        "silicone y-stent": "Silicone Y-Stent",
+        "silicone-y-stent": "Silicone-Y-Stent",
+        "y stent": "Silicone Y-Stent",
+        "hybrid": "Hybrid",
+        "metallic-covered": "Metallic-Covered",
+        "covered metallic": "Metallic-Covered",
+        "metallic-uncovered": "Metallic-Uncovered",
+        "uncovered metallic": "Metallic-Uncovered",
+    }
+    if t in mapping:
+        return mapping[t]
+    if "dumon" in t:
+        return "Silicone-Dumon"
+    if "y" in t and "stent" in t:
+        return "Silicone Y-Stent"
+    if "covered" in t and "metal" in t:
+        return "Metallic-Covered"
+    if "uncovered" in t and "metal" in t:
+        return "Metallic-Uncovered"
+    if "hybrid" in t:
+        return "Hybrid"
+    if "metal" in t:
+        return "Metallic-Uncovered"
+    return "Other" if t else None
+
+
+def normalize_stent_location(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    t = text_raw.strip().lower()
+    if not t:
+        return None
+    if "trache" in t:
+        return "Trachea"
+    if "mainstem" in t or "main stem" in t or "left main" in t or "right main" in t:
+        return "Mainstem"
+    if "lob" in t or "rul" in t or "rml" in t or "rll" in t or "lul" in t or "lll" in t:
+        return "Lobar"
+    return None
+
+
+def normalize_stent_deployment_method(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    t = text_raw.strip().lower()
+    if not t:
+        return None
+    if "rigid" in t:
+        return "Rigid"
+    if "flex" in t or "wire" in t:
+        return "Flexible over Wire"
+    return None
+
+
+def normalize_ebus_rose_result(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    t = text_raw.strip().lower()
+    if not t:
+        return None
+    mapping = {
+        "malignant": "Malignant",
+        "benign": "Benign",
+        "granuloma": "Granuloma",
+        "nondiagnostic": "Nondiagnostic",
+        "non-diagnostic": "Nondiagnostic",
+        "atypical cells present": "Atypical cells present",
+        "atypical lymphoid proliferation": "Atypical lymphoid proliferation",
+    }
+    if t in mapping:
+        return mapping[t]
+    if "atypical lymphoid" in t:
+        return "Atypical lymphoid proliferation"
+    if "atypical cell" in t:
+        return "Atypical cells present"
+    if "non" in t and "diagnostic" in t:
+        return "Nondiagnostic"
+    return None
+
+
+def normalize_ebus_needle_gauge(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    t = text_raw.strip().lower().replace(" ", "")
+    if not t:
+        return None
+    if t in {"21g", "21"}:
+        return "21G"
+    if t in {"22g", "22"}:
+        return "22G"
+    if t in {"25g", "25"}:
+        return "25G"
+    return None
+
+
+def normalize_ebus_needle_type(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    t = text_raw.strip().lower()
+    if not t:
+        return None
+    if "fnb" in t:
+        return "FNB"
+    if "standard" in t:
+        return "Standard"
+    return None
+
+
+POSTPROCESSORS: Dict[str, Callable[[Any], Optional[str]]] = {
+    "sedation_type": normalize_sedation_type,
+    "airway_type": normalize_airway_type,
+    "pleural_guidance": map_pleural_guidance,
+    "pleural_procedure_type": normalize_pleural_procedure,
+    "patient_mrn": postprocess_patient_mrn,
+    "procedure_date": normalize_procedure_date,
+    "disposition": normalize_disposition,
+    "asa_class": postprocess_asa_class,
+    "stent_type": normalize_stent_type,
+    "stent_location": normalize_stent_location,
+    "stent_deployment_method": normalize_stent_deployment_method,
+    "ebus_rose_result": normalize_ebus_rose_result,
+    "ebus_needle_gauge": normalize_ebus_needle_gauge,
+    "ebus_needle_type": normalize_ebus_needle_type,
+}

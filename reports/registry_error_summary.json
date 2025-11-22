@@ -1,0 +1,45 @@
+{
+  "procedure_date": {
+    "2025-02-14 vs ": 1,
+    "2025-02-19 vs ": 1,
+    "1963-08-19 vs 2025-03-23": 1,
+    "2022-08-01 vs ": 1,
+    "2025-01-01 vs ": 2,
+    "2025-01-01 vs 2024-10-15": 1,
+    "2025-03-05 vs ": 1
+  },
+  "asa_class": {
+    "3 vs ": 9
+  },
+  "sedation_type": {
+    "general vs ": 4,
+    "moderate vs ": 1,
+    "moderate vs local": 1
+  },
+  "airway_type": {
+    "ett vs ": 2,
+    "tracheostomy vs ": 1,
+    "native vs ": 1,
+    "rigid bronchoscope vs ": 1,
+    "tracheostomy vs native": 1
+  },
+  "pleural_procedure_type": {
+    "chest tube vs ": 1
+  },
+  "pleural_guidance": {
+    "ultrasound vs ": 1
+  },
+  "final_diagnosis_prelim": {
+    "malignancy vs ": 4,
+    "other vs ": 3,
+    "other vs malignancy": 1
+  },
+  "disposition": {
+    "icu admission vs ": 2,
+    "discharge home vs ": 5,
+    "pacu recovery vs ": 1
+  },
+  "patient_mrn": {
+    "mr4729384 vs 8362719": 1
+  }
+}

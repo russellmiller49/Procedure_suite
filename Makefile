@@ -29,3 +29,12 @@ tests:
 
 type:
 	mypy modules
+
+validate-registry:
+	python scripts/validate_registry.py
+
+analyze-registry-errors:
+	python scripts/analyze_registry_errors.py
+
+self-correct-registry:
+	python scripts/self_correct_registry.py --field $(FIELD)

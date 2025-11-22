@@ -20,12 +20,58 @@ from modules.common.logger import get_logger
 logger = get_logger("common.llm")
 
 # Load environment variables from a .env file if present so GEMINI_* keys are available locally.
-load_dotenv()
+# override=True ensures .env values take precedence over shell environment variables
+load_dotenv(override=True)
 
 
 class LLMInterface(Protocol):
     def generate(self, prompt: str) -> str:
         ...
+
+
+class OpenAILLM:
+    """Minimal OpenAI chat client for use in self-correction flows."""
+
+    def __init__(self, api_key: str | None = None, model: str | None = None) -> None:
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.model = model or os.getenv("OPENAI_MODEL", "gpt-5.1")
+        self.base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
+
+        if not self.api_key:
+            logger.warning("OPENAI_API_KEY not set; OpenAILLM calls will fail.")
+
+    def generate(self, prompt: str) -> str:
+        url = f"{self.base_url}/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {self.api_key}" if self.api_key else "",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "model": self.model,
+            "messages": [{"role": "user", "content": prompt}],
+            # Encourage JSON output; the prompt should still enforce structure.
+            "response_format": {"type": "json_object"},
+        }
+
+        try:
+            with httpx.Client(timeout=30.0) as client:
+                response = client.post(url, headers=headers, json=payload)
+                response.raise_for_status()
+                data = response.json()
+                choices = data.get("choices", [])
+                if not choices:
+                    logger.error("No choices returned from OpenAI API")
+                    return "{}"
+                return choices[0].get("message", {}).get("content", "")
+        except httpx.RequestError as e:
+            logger.error(f"Network error contacting OpenAI API: {e}")
+            return "{}"
+        except httpx.HTTPStatusError as e:
+            logger.error(f"HTTP error from OpenAI API: {e.response.text}")
+            return "{}"
+        except Exception as e:
+            logger.error(f"Unexpected error in OpenAILLM: {e}")
+            return "{}"
 
 
 class GeminiLLM:
@@ -162,3 +208,6 @@ class DeterministicStubLLM:
     def generate(self, prompt: str) -> str:
         logger.warning("Using DeterministicStubLLM. Set GEMINI_API_KEY for real inference.")
         return json.dumps(self.payload)
+
+
+__all__ = ["LLMInterface", "GeminiLLM", "OpenAILLM", "DeterministicStubLLM"]

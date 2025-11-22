@@ -1,0 +1,511 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Interventional Pulmonology Procedure Registry Entry",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "patient_mrn": {
+        "type": "string",
+        "description": "Patient medical record number"
+      },
+      "procedure_date": {
+        "type": "string",
+        "format": "date",
+        "description": "Date of the procedure (YYYY-MM-DD)"
+      },
+      "institution_name": {
+        "type": "string",
+        "description": "Name of hospital or facility"
+      },
+      "procedure_setting": {
+        "type": "string",
+        "enum": ["Bronchoscopy Suite", "Operating Room", "ICU", "Bedside", "Office/Clinic"],
+        "description": "Location/setting of the procedure"
+      },
+      "provider_role": {
+        "type": "string",
+        "enum": ["Attending", "Fellow", "Resident"],
+        "description": "Role of primary proceduralist"
+      },
+      "attending_name": {
+        "type": "string",
+        "description": "Last name of primary attending"
+      },
+      "fellow_name": {
+        "type": ["string", "null"],
+        "description": "Last name of fellow if present"
+      },
+      "assistant_name": {
+        "type": ["string", "null"],
+        "description": "Name of assistant (e.g., 'James Smith, MD')"
+      },
+      "assistant_role": {
+        "type": ["string", "null"],
+        "enum": ["Fellow", "Resident", "Medical Student", "Attending", "APP"],
+        "description": "Role of assistant"
+      },
+      "trainee_present": {
+        "type": "boolean",
+        "description": "True if fellow, resident, or student involved in the case"
+      },
+      "patient_age": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Age in years at time of procedure"
+      },
+      "gender": {
+        "type": "string",
+        "enum": ["M", "F", "Other"],
+        "description": "Gender"
+      },
+      "asa_class": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5,
+        "description": "ASA physical status (1–5)"
+      },
+      "anticoag_status": {
+        "type": "string",
+        "enum": ["None", "Aspirin", "Plavix", "DOAC", "Warfarin", "Heparin"],
+        "description": "Pre-procedure anticoagulant/antiplatelet therapy"
+      },
+      "anticoag_held_preprocedure": {
+        "type": "boolean",
+        "description": "True if anticoagulant/antiplatelet held before procedure"
+      },
+  
+      "primary_indication": {
+        "type": "string",
+        "description": "Primary indication for procedure (e.g., lung nodule, lung mass, airway obstruction)"
+      },
+      "radiographic_findings": {
+        "type": ["string", "null"],
+        "description": "Summary of CT/imaging findings"
+      },
+      "lesion_size_mm": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Maximum diameter of target lesion in millimeters"
+      },
+      "lesion_location": {
+        "type": ["string", "null"],
+        "description": "Anatomic location description of lesion (e.g., 'RUL apical')"
+      },
+      "pet_suv_max": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Maximum SUV on PET if available"
+      },
+      "pet_avid": {
+        "type": ["boolean", "null"],
+        "description": "True if lesion is PET-avid"
+      },
+      "bronchus_sign_present": {
+        "type": ["boolean", "null"],
+        "description": "True if bronchus sign present on CT"
+      },
+      "cao_location": {
+        "type": "string",
+        "enum": ["None", "Trachea", "Mainstem", "Lobar"],
+        "description": "Location of central airway obstruction (if present)"
+      },
+      "prior_therapy": {
+        "type": "string",
+        "enum": ["None", "Chemo", "Radiation", "Immunotherapy", "Prior Resection"],
+        "description": "Most intensive prior oncologic therapy"
+      },
+  
+      "sedation_type": {
+        "type": "string",
+        "enum": ["Moderate", "Deep", "General", "Local", "Monitored Anesthesia Care"],
+        "description": "Sedation/anesthesia type"
+      },
+      "airway_type": {
+        "type": "string",
+        "enum": ["Native", "LMA", "ETT", "Tracheostomy", "Rigid Bronchoscope"],
+        "description": "Airway used for procedure"
+      },
+      "airway_device_size": {
+        "type": ["string", "number", "null"],
+        "description": "Size of airway device (e.g., ETT size)"
+      },
+      "ventilation_mode": {
+        "type": "string",
+        "enum": ["Spontaneous", "Jet Ventilation", "Controlled Mechanical Ventilation"],
+        "description": "Ventilation mode during procedure"
+      },
+      "anesthesia_agents": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "List of anesthetic/analgesic agents used"
+      },
+  
+      "ebus_scope_brand": {
+        "type": ["string", "null"],
+        "enum": ["Olympus", "Pentax", "Fuji", "Other"],
+        "description": "Brand of EBUS bronchoscope"
+      },
+      "ebus_stations_sampled": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Nodal stations sampled (e.g., '4R', '7', '11L')"
+      },
+      "ebus_needle_gauge": {
+        "type": ["string", "null"],
+        "enum": ["21G", "22G", "25G"],
+        "description": "Gauge of EBUS needle"
+      },
+      "ebus_needle_type": {
+        "type": ["string", "null"],
+        "enum": ["Standard", "FNB"],
+        "description": "Type of EBUS needle"
+      },
+      "ebus_systematic_staging": {
+        "type": ["boolean", "null"],
+        "description": "True if systematic mediastinal staging performed"
+      },
+      "ebus_rose_available": {
+        "type": ["boolean", "null"],
+        "description": "True if ROSE was available"
+      },
+      "ebus_rose_result": {
+        "type": ["string", "null"],
+        "enum": ["Malignant", "Benign", "Granuloma", "Nondiagnostic", "Atypical cells present", "Atypical lymphoid proliferation"],
+        "description": "ROSE result if performed"
+      },
+      "ebus_intranodal_forceps_used": {
+        "type": ["boolean", "null"],
+        "description": "True if intranodal forceps biopsy performed"
+      },
+  
+      "nav_platform": {
+        "type": ["string", "null"],
+        "description": "Navigation platform (e.g., EMN, robotic)"
+      },
+      "nav_registration_method": {
+        "type": ["string", "null"],
+        "enum": ["Automatic", "Manual"],
+        "description": "Registration method for navigation"
+      },
+      "nav_registration_error_mm": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Registration error in millimeters"
+      },
+      "nav_rebus_used": {
+        "type": ["boolean", "null"],
+        "description": "True if radial EBUS used"
+      },
+      "nav_rebus_view": {
+        "type": ["string", "null"],
+        "enum": ["Concentric", "Eccentric", "None"],
+        "description": "Radial EBUS view relative to lesion"
+      },
+      "nav_imaging_verification": {
+        "type": ["string", "null"],
+        "enum": ["Fluoroscopy", "Cone Beam CT", "O-Arm", "Ultrasound", "None"],
+        "description": "Imaging modality for lesion/tool verification"
+      },
+      "nav_tool_in_lesion": {
+        "type": ["boolean", "null"],
+        "description": "Imaging-confirmed tool-in-lesion"
+      },
+      "nav_sampling_tools": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Sampling tools used (e.g., forceps, needle, brush, cryoprobe)"
+      },
+      "nav_cryobiopsy_for_nodule": {
+        "type": ["boolean", "null"],
+        "description": "True if cryobiopsy performed for peripheral nodule"
+      },
+  
+      "cao_primary_modality": {
+        "type": ["string", "null"],
+        "enum": ["Mechanical Core", "APC", "Electrocautery", "Cryotherapy", "Laser", "Other"],
+        "description": "Primary debulking modality for CAO"
+      },
+      "cao_tumor_location": {
+        "type": ["string", "null"],
+        "enum": ["Trachea", "RMS", "LMS", "Bronchus Intermedius", "Lobar", "RUL", "RML", "RLL", "LUL", "LLL", "Mainstem"],
+        "description": "Location of central airway tumor"
+      },
+      "cao_obstruction_pre_pct": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Pre-procedure luminal obstruction (%)"
+      },
+      "cao_obstruction_post_pct": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Post-procedure luminal obstruction (%)"
+      },
+  
+      "stent_type": {
+        "type": ["string", "null"],
+        "enum": ["Silicone-Dumon", "Silicone-Y-Stent", "Silicone Y-Stent", "Hybrid", "Metallic-Covered", "Metallic-Uncovered", "Other"],
+        "description": "Airway stent type"
+      },
+      "stent_deployment_method": {
+        "type": ["string", "null"],
+        "enum": ["Rigid", "Flexible over Wire"],
+        "description": "Stent deployment method"
+      },
+      "stent_diameter_mm": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Stent diameter (mm)"
+      },
+      "stent_length_mm": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Stent length (mm)"
+      },
+      "stent_location": {
+        "type": ["string", "null"],
+        "enum": ["Trachea", "Mainstem", "Lobar"],
+        "description": "Location of stent"
+      },
+  
+      "blvr_target_lobe": {
+        "type": ["string", "null"],
+        "enum": ["RUL", "RML", "RLL", "LUL", "LLL"],
+        "description": "Target lobe for BLVR"
+      },
+      "blvr_cv_assessment_method": {
+        "type": ["string", "null"],
+        "enum": ["Chartis", "Visual", "CT-based"],
+        "description": "Collateral ventilation assessment method"
+      },
+      "blvr_chartis_result": {
+        "type": ["string", "null"],
+        "enum": ["CV Negative", "CV Positive", "Indeterminate"],
+        "description": "Chartis result"
+      },
+      "blvr_valve_type": {
+        "type": ["string", "null"],
+        "enum": ["Zephyr", "Spiration"],
+        "description": "Type of BLVR valve"
+      },
+      "blvr_number_of_valves": {
+        "type": ["integer", "null"],
+        "minimum": 0,
+        "description": "Number of valves placed"
+      },
+  
+      "wll_volume_instilled_l": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Total WLL volume instilled (liters)"
+      },
+      "wll_volume_returned_l": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Total WLL volume returned (liters)"
+      },
+      "wll_dlt_used": {
+        "type": ["boolean", "null"],
+        "description": "True if double lumen tube used for WLL"
+      },
+  
+      "fb_object_type": {
+        "type": ["string", "null"],
+        "enum": ["Organic", "Inorganic", "Unknown"],
+        "description": "Type of foreign body"
+      },
+      "fb_tool_used": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Tools used for foreign body removal"
+      },
+      "fb_removal_success": {
+        "type": ["string", "null"],
+        "enum": ["Complete", "Partial", "Failed"],
+        "description": "Success of foreign body removal"
+      },
+  
+      "bt_lobe_treated": {
+        "type": ["string", "null"],
+        "enum": ["RUL", "RML", "RLL", "LUL", "LLL"],
+        "description": "Lobe treated during bronchial thermoplasty"
+      },
+      "bt_activation_count": {
+        "type": ["integer", "null"],
+        "minimum": 0,
+        "description": "Number of activations delivered (bronchial thermoplasty)"
+      },
+  
+      "ablation_peripheral_performed": {
+        "type": "boolean",
+        "description": "True if peripheral ablation performed"
+      },
+      "ablation_modality": {
+        "type": ["string", "null"],
+        "enum": ["Microwave (MWA)", "Radiofrequency (RFA)", "Cryoablation", "Laser", "Brachytherapy"],
+        "description": "Peripheral ablation modality"
+      },
+      "ablation_device_name": {
+        "type": ["string", "null"],
+        "description": "Ablation device name (e.g., NeuWave, Emprint, Galaxy)"
+      },
+      "ablation_power_watts": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Ablation power (watts) if applicable"
+      },
+      "ablation_duration_seconds": {
+        "type": ["integer", "null"],
+        "minimum": 0,
+        "description": "Total ablation time in seconds"
+      },
+      "ablation_max_temp_c": {
+        "type": ["integer", "null"],
+        "description": "Max temperature achieved (°C), if monitored"
+      },
+      "ablation_margin_assessed": {
+        "type": ["string", "null"],
+        "enum": ["CBCT Ground Glass", "REBUS Hyperechoic", "None"],
+        "description": "Method for assessing ablation zone margin"
+      },
+  
+      "pleural_procedure_type": {
+        "type": ["string", "null"],
+        "enum": ["Thoracentesis", "Chest Tube", "Tunneled Catheter", "Medical Thoracoscopy", "Chemical Pleurodesis"],
+        "description": "Type of pleural procedure"
+      },
+      "pleural_guidance": {
+        "type": ["string", "null"],
+        "enum": ["Ultrasound", "CT", "Blind"],
+        "description": "Imaging guidance for pleural procedure"
+      },
+      "pleural_opening_pressure_measured": {
+        "type": ["boolean", "null"],
+        "description": "True if pleural opening pressure measured"
+      },
+      "pleural_opening_pressure_cmh2o": {
+        "type": ["number", "null"],
+        "description": "Pleural opening pressure (cm H2O) if measured"
+      },
+      "pleural_fluid_appearance": {
+        "type": ["string", "null"],
+        "enum": ["Serous", "Sanguinous", "Purulent", "Chylous", "Serosanguinous", "Turbid", "Other"],
+        "description": "Pleural fluid gross appearance"
+      },
+      "pleural_volume_drained_ml": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Pleural fluid volume drained (mL)"
+      },
+      "pleural_thoracoscopy_findings": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Medical thoracoscopy findings (e.g., adhesions, nodules, plaque, normal)"
+      },
+      "pleurodesis_performed": {
+        "type": ["boolean", "null"],
+        "description": "True if pleurodesis performed"
+      },
+      "pleurodesis_agent": {
+        "type": ["string", "null"],
+        "enum": ["Talc Slurry", "Talc Poudrage", "Doxycycline", "Other"],
+        "description": "Agent used for pleurodesis"
+      },
+  
+      "ebl_ml": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Estimated blood loss (mL)"
+      },
+      "bleeding_severity": {
+        "type": "string",
+        "enum": ["None/Scant", "Mild", "Moderate", "Severe"],
+        "description": "Severity of procedural bleeding"
+      },
+      "pneumothorax": {
+        "type": "boolean",
+        "description": "True if pneumothorax occurred"
+      },
+      "pneumothorax_intervention": {
+        "type": ["string", "null"],
+        "enum": ["Observation", "O2", "Aspiration", "Chest Tube", "Surgery", "None"],
+        "description": "Most intensive intervention for pneumothorax"
+      },
+      "hypoxia_respiratory_failure": {
+        "type": "string",
+        "enum": ["None", "Transient", "Escalation of Care", "Post-op Intubation"],
+        "description": "Hypoxia/respiratory failure outcome"
+      },
+      "fluoro_time_min": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Fluoroscopy time (minutes)"
+      },
+      "radiation_dap_gycm2": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "description": "Radiation dose-area product (Gy·cm²)"
+      },
+      "ablation_complication_immediate": {
+        "type": ["string", "null"],
+        "enum": ["Cavitation", "Hemorrhage", "Pneumothorax", "None"],
+        "description": "Immediate ablation-related complication"
+      },
+  
+      "final_diagnosis_prelim": {
+        "type": "string",
+        "enum": ["Malignancy", "Granulomatous", "Infectious", "Non-diagnostic", "Benign", "Other"],
+        "description": "Preliminary final diagnosis category"
+      },
+      "molecular_testing_requested": {
+        "type": "boolean",
+        "description": "True if molecular testing requested (e.g., NGS, PD-L1)"
+      },
+      "disposition": {
+        "type": "string",
+        "enum": ["Discharge Home", "PACU Recovery", "Floor Admission", "ICU Admission"],
+        "description": "Immediate post-procedure disposition"
+      },
+      "follow_up_plan": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Planned follow-up actions (clinic, oncology referral, re-bronch, imaging, etc.)"
+      },
+  
+      "evidence": {
+        "type": "object",
+        "additionalProperties": { "type": "string" },
+        "description": "Map of field names to source text spans for traceability"
+      },
+      "version": {
+        "type": "string",
+        "description": "Schema version (e.g., '0.4.0')"
+      },
+      "cpt_codes": {
+        "type": "array",
+        "items": { "type": ["integer", "string"] },
+        "description": "CPT codes for the procedure (allow modifiers/verification text)"
+      },
+      "data_entry_status": {
+        "type": "string",
+        "enum": ["Complete", "Incomplete"],
+        "description": "Data entry status for this record"
+      }
+    },
+    "required": [
+      "patient_mrn",
+      "procedure_date",
+      "provider_role",
+      "attending_name",
+      "patient_age",
+      "gender",
+      "asa_class",
+      "primary_indication",
+      "sedation_type",
+      "airway_type",
+      "final_diagnosis_prelim",
+      "data_entry_status"
+    ]
+  }
+  
