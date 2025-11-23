@@ -343,12 +343,26 @@ This includes:
 
 **Purpose**: Help package and expose the core functionality (coder, registry, reporter) via APIs or demos, without changing domain logic.
 
+### ⚠️ CRITICAL: Source of Truth
+
+**IMPORTANT**: There are TWO FastAPI apps in this repo. Only ONE is active:
+
+- ✅ **MAIN APP**: `modules/api/fastapi_app.py` - **THIS IS THE ONE TO USE**
+  - Running on port 8000 via `scripts/devserver.sh`
+  - Uses `EnhancedCPTCoder` from `proc_autocode/coder.py`
+  - Routes: `/v1/coder/run`, `/v1/registry/run`, `/v1/coder/localities`, etc.
+
+- ❌ **OLD APP**: `api/app.py` - **DO NOT USE OR EDIT**
+  - Not running, deprecated, changes here will be ignored
+
+**See `AI_ASSISTANT_GUIDE.md` for complete details.**
+
 ### Responsibilities
 
 1. Maintain a simple API layer (FastAPI) that exposes:
-   - `/predict_cpt` – given a note, return codes + explanations.
-   - `/extract_registry` – given a note, return structured registry data.
-   - `/generate_report` – given structured data or a note, return a synoptic report.
+   - `/v1/coder/run` – given a note, return codes + RVU calculations.
+   - `/v1/registry/run` – given a note, return structured registry data.
+   - `/report/render` – given structured data, return a synoptic report.
 
 2. Enable integration with external frontends (e.g., a React/Supabase demo site) while:
    - Avoiding PHI in any demo environment.
@@ -360,19 +374,28 @@ This includes:
 
 ### Instructions
 
-1. **Keep the API layer thin**:
-   - It should call into the existing modules (`modules/api/`, `api/`) rather than duplicating logic.
+1. **ALWAYS edit `modules/api/fastapi_app.py`** - this is the active application
+   - Do NOT edit `api/app.py` - it's deprecated
+   - Check `scripts/devserver.sh` to confirm which app runs
+
+2. **Use EnhancedCPTCoder**:
+   - The coder endpoint uses `proc_autocode.coder.EnhancedCPTCoder`
+   - Do NOT use `modules.coder.engine.CoderEngine` (legacy)
+
+3. **Keep the API layer thin**:
+   - It should call into the existing modules rather than duplicating logic.
    - Include:
      - Minimal but clear validation.
      - Simple logging for debugging.
 
-2. **Add "demo-safe" guards/notes**:
+4. **Add "demo-safe" guards/notes**:
    - Warn that the deployment is for education/demo only, not for real patient billing.
 
-3. **Development server**:
+5. **Development server**:
    - Use `make api` or `scripts/devserver.sh` to run the FastAPI server locally.
+   - Server runs: `uvicorn modules.api.fastapi_app:app --host 0.0.0.0 --port 8000 --reload`
 
-4. **Dependencies**:
+6. **Dependencies**:
    - API dependencies are in `pyproject.toml` under `[project.optional-dependencies.api]` (FastAPI, uvicorn).
 
 ### Outputs

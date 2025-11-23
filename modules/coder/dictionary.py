@@ -637,7 +637,7 @@ def _section_for_offset(sections: Sequence[Section], offset: int) -> str | None:
     return None
 
 
-def _context_slice(text: str, start: int, end: int, window: int = 80) -> str:
+def _context_slice(text: str, start: int, end: int, window: int = 250) -> str:
     return text[max(0, start - window) : min(len(text), end + window)]
 
 

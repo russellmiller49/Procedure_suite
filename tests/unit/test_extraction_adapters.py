@@ -107,11 +107,15 @@ def test_ebus_and_tool_adapters():
             "ebus_passes": 3,
             "ebus_echo_features": "heterogeneous",
             "ebus_rose_result": "adequate",
+            "lesion_size_mm": 18,
+            "ebus_intranodal_forceps_used": True,
         }
     )
     assert isinstance(ebus, airway_schemas.EBUSTBNA)
     assert len(ebus.stations) == 2
     assert ebus.stations[0].station_name == "4R"
+    assert ebus.stations[0].size_mm == 18
+    assert "Forceps" in ebus.stations[0].biopsy_tools
 
 
 def test_whole_lung_lavage_and_blvr_adapters():

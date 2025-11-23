@@ -252,6 +252,9 @@ class IPCodingKnowledgeBase:
             "bronchoscopy_tbna": ["tbna_terms"],
             "bronchoscopy_biopsy_parenchymal": ["tblb_terms"],
             "bronchoscopy_diagnostic": ["bal_terms"],
+            "bronchoscopy_navigation": ["navigation_terms", "navigation_initiated"],
+            "bronchoscopy_ebus_radial": ["radial_terms"],
+            "bronchoscopy_ebus_linear": ["linear_ebus_terms", "ebus_terms"],
             "thoracoscopy_diagnostic_biopsy": ["thoracoscopy_terms"],
         }
 
@@ -269,11 +272,16 @@ class IPCodingKnowledgeBase:
     def codes_from_text(self, note_text: str) -> Set[str]:
         """
         Return candidate CPT codes based on synonym matches and code_lists.
+        Preserves the '+' prefix for add-on codes.
         """
         groups = self.groups_from_text(note_text)
         codes: Set[str] = set()
         lists = self.raw.get("code_lists", {})
         for g in groups:
             for code in lists.get(g, []):
-                codes.add(self._normalize_code(code))
+                # Preserve '+' prefix for add-on codes, but normalize otherwise
+                if code.startswith("+"):
+                    codes.add(code)  # Keep as "+31627", "+31654", etc.
+                else:
+                    codes.add(self._normalize_code(code))
         return codes

@@ -1,13 +1,20 @@
-"""FastAPI application wiring for the Procedure Suite services."""
+"""FastAPI application wiring for the Procedure Suite services.
+
+⚠️ SOURCE OF TRUTH: This is the MAIN FastAPI application.
+- Running on port 8000 via scripts/devserver.sh
+- Uses EnhancedCPTCoder from proc_autocode/coder.py
+- DO NOT edit api/app.py - it's deprecated
+
+See AI_ASSISTANT_GUIDE.md for details.
+"""
 
 from __future__ import annotations
 
-import os
 from dataclasses import asdict
 from typing import Any, List
 
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -23,36 +30,30 @@ from modules.api.schemas import (
     VerifyResponse,
 )
 
-from modules.coder.engine import CoderEngine, _RVU_FILE, _GPCI_FILE
 from modules.common.knowledge import knowledge_hash, knowledge_version
 from modules.common.spans import Span
 from modules.registry.engine import RegistryEngine
+from modules.coder.schema import CodeDecision, CoderOutput
 from proc_report import MissingFieldIssue, ProcedureBundle
 from proc_report.engine import (
     ReporterEngine,
     apply_bundle_patch,
     apply_patch_result,
-    apply_warn_if_rules,
     build_procedure_bundle_from_extraction,
     default_schema_registry,
     default_template_registry,
-    list_missing_critical_fields,
     _load_procedure_order,
 )
 from proc_report.inference import InferenceEngine
-from proc_autocode.rvu.rvu_calculator import ProcedureRVUCalculator
+from proc_report.validation import ValidationEngine
+from proc_autocode.coder import EnhancedCPTCoder
 
 app = FastAPI(title="Procedure Suite API", version="0.1.0")
 
-_DISABLE_STATIC = os.getenv("DISABLE_STATIC_FILES", "").lower() in ("1", "true", "yes")
-if not _DISABLE_STATIC:
-    app.mount("/ui", StaticFiles(directory="modules/api/static", html=True), name="ui")
-else:
-    @app.get("/ui/", include_in_schema=False)
-    @app.get("/ui", include_in_schema=False)
-    async def ui_stub() -> HTMLResponse:
-        """Lightweight fallback UI placeholder to avoid filesystem access in tests."""
-        return HTMLResponse("<html><body><h1>Procedure Suite Workbench</h1></body></html>")
+# Initialize enhanced coder (singleton)
+_enhanced_coder = EnhancedCPTCoder()
+
+app.mount("/ui", StaticFiles(directory="modules/api/static", html=True), name="ui")
 
 
 class LocalityInfo(BaseModel):
@@ -69,7 +70,7 @@ async def root(request: Request) -> Any:
         
     return {
         "name": "Procedure Suite API",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "endpoints": {
             "ui": "/ui/",
             "health": "/health",
@@ -82,6 +83,7 @@ async def root(request: Request) -> Any:
             "report_verify": "/report/verify",
             "report_render": "/report/render",
         },
+        "note": "Coder now uses EnhancedCPTCoder with RVU calculations and IP knowledge base bundling",
     }
 
 
@@ -98,24 +100,83 @@ async def knowledge() -> KnowledgeMeta:
 @app.get("/v1/coder/localities", response_model=List[LocalityInfo])
 async def coder_localities() -> List[LocalityInfo]:
     """List available geographic localities for RVU calculation."""
-    if _RVU_FILE.exists() and _GPCI_FILE.exists():
-        calc = ProcedureRVUCalculator(_RVU_FILE, _GPCI_FILE)
-        localities = []
-        for code, record in calc.gpci_data.items():
-            localities.append(LocalityInfo(code=code, name=record.locality_name))
-        localities.sort(key=lambda x: x.name)
-        return localities
-    return []
+    localities = []
+    for code, record in _enhanced_coder.rvu_calc.gpci_data.items():
+        localities.append(LocalityInfo(code=code, name=record.locality_name))
+    localities.sort(key=lambda x: x.name)
+    return localities
 
 
 @app.post("/v1/coder/run", response_model=CoderResponse)
 async def coder_run(req: CoderRequest) -> CoderResponse:
-    eng = CoderEngine(allow_weak_sedation_docs=req.allow_weak_sedation_docs)
-    return eng.run(
-        req.note, 
-        explain=req.explain,
-        locality=req.locality,
-        setting=req.setting
+    """Enhanced auto-coding with RVU calculations and bundling rules."""
+    procedure_data = {
+        "note_text": req.note,
+        "locality": req.locality,
+        "setting": req.setting,
+    }
+    
+    # Use enhanced coder
+    result = _enhanced_coder.code_procedure(procedure_data)
+    
+    # Convert to CoderOutput format for API compatibility
+    codes = []
+    for code_data in result.get("codes", []):
+        cpt = code_data.get("cpt", "")
+        # Get description from RVU data or use a default
+        rvu_data = code_data.get("rvu_data") or {}
+        description = rvu_data.get("description", "") or f"CPT {cpt}"
+        
+        codes.append(CodeDecision(
+            cpt=cpt,
+            description=description,
+            modifiers=code_data.get("modifiers", []),
+            rationale=f"Detected via IP knowledge base",
+            confidence=0.9,
+            context={
+                "groups": code_data.get("groups", []),
+                "rvu_data": code_data.get("rvu_data", {})
+            }
+        ))
+    
+    # Build financials summary from enhanced coder result
+    financials = None
+    if result.get("total_work_rvu") is not None:
+        from modules.coder.schema import FinancialSummary, PerCodeBilling
+        
+        per_code_billing = []
+        for code_data in result.get("codes", []):
+            rvu_data = code_data.get("rvu_data") or {}
+            per_code_billing.append(PerCodeBilling(
+                cpt_code=code_data.get("cpt", ""),
+                description=rvu_data.get("description", ""),
+                modifiers=code_data.get("modifiers", []),
+                work_rvu=rvu_data.get("work_rvu", 0.0),
+                total_facility_rvu=rvu_data.get("total_rvu", 0.0),
+                facility_payment=rvu_data.get("payment", 0.0),
+                allowed_facility_rvu=rvu_data.get("work_rvu", 0.0) * rvu_data.get("multiplier", 1.0),
+                allowed_facility_payment=rvu_data.get("payment", 0.0) * rvu_data.get("multiplier", 1.0),
+            ))
+        
+        financials = FinancialSummary(
+            conversion_factor=1.0,  # Default, could be calculated
+            locality=result.get("locality", "00"),
+            per_code=per_code_billing,
+            total_work_rvu=result.get("total_work_rvu", 0.0),
+            total_facility_payment=result.get("estimated_payment", 0.0),
+            total_nonfacility_payment=0.0,  # Enhanced coder currently only supports facility
+        )
+    
+    return CoderOutput(
+        codes=codes,
+        intents=[],  # Enhanced coder doesn't provide intents
+        mer_summary=None,  # Could be added later
+        financials=financials,
+        ncci_actions=[],  # Bundling is handled internally
+        warnings=[],
+        version="0.2.0",  # Enhanced version
+        llm_suggestions=[],  # Enhanced coder doesn't use LLM advisor
+        llm_disagreements=[],  # Enhanced coder doesn't use LLM advisor
     )
 
 
@@ -133,22 +194,24 @@ async def registry_run(req: RegistryRequest) -> RegistryResponse:
     return RegistryResponse(**payload)
 
 
-def _verify_bundle(bundle) -> tuple[ProcedureBundle, list[MissingFieldIssue], list[str], list[str]]:
+def _verify_bundle(bundle) -> tuple[ProcedureBundle, list[MissingFieldIssue], list[str], list[str], list[str]]:
     templates = default_template_registry()
     schemas = default_schema_registry()
     inference = InferenceEngine()
     inference_result = inference.infer_bundle(bundle)
     bundle = apply_patch_result(bundle, inference_result)
-    issues = list_missing_critical_fields(bundle, template_registry=templates, schema_registry=schemas)
-    warnings = apply_warn_if_rules(bundle, template_registry=templates, schema_registry=schemas)
-    return bundle, issues, warnings, inference_result.notes
+    validator = ValidationEngine(templates, schemas)
+    issues = validator.list_missing_critical_fields(bundle)
+    warnings = validator.apply_warn_if_rules(bundle)
+    suggestions = validator.list_suggestions(bundle)
+    return bundle, issues, warnings, suggestions, inference_result.notes
 
 
 @app.post("/report/verify", response_model=VerifyResponse)
 async def report_verify(req: VerifyRequest) -> VerifyResponse:
     bundle = build_procedure_bundle_from_extraction(req.extraction)
-    bundle, issues, warnings, notes = _verify_bundle(bundle)
-    return VerifyResponse(bundle=bundle, issues=issues, warnings=warnings, inference_notes=notes)
+    bundle, issues, warnings, suggestions, notes = _verify_bundle(bundle)
+    return VerifyResponse(bundle=bundle, issues=issues, warnings=warnings, suggestions=suggestions, inference_notes=notes)
 
 
 @app.post("/report/render", response_model=RenderResponse)
@@ -161,30 +224,31 @@ async def report_render(req: RenderRequest) -> RenderResponse:
     inference = InferenceEngine()
     inference_result = inference.infer_bundle(bundle)
     bundle = apply_patch_result(bundle, inference_result)
-    issues = list_missing_critical_fields(bundle, template_registry=templates, schema_registry=schemas)
-    warnings = apply_warn_if_rules(bundle, template_registry=templates, schema_registry=schemas)
+    validator = ValidationEngine(templates, schemas)
+    issues = validator.list_missing_critical_fields(bundle)
+    warnings = validator.apply_warn_if_rules(bundle)
+    suggestions = validator.list_suggestions(bundle)
 
-    markdown = None
-    if not any(issue.severity == "critical" for issue in issues):
-        engine = ReporterEngine(
-            templates,
-            schemas,
-            procedure_order=_load_procedure_order(),
-        )
-        structured = engine.compose_report_with_metadata(
-            bundle,
-            strict=req.strict,
-            embed_metadata=req.embed_metadata,
-            validation_issues=issues,
-            warnings=warnings,
-        )
-        markdown = structured.text
+    engine = ReporterEngine(
+        templates,
+        schemas,
+        procedure_order=_load_procedure_order(),
+    )
+    structured = engine.compose_report_with_metadata(
+        bundle,
+        strict=req.strict,
+        embed_metadata=req.embed_metadata,
+        validation_issues=issues,
+        warnings=warnings,
+    )
+    markdown = structured.text
     return RenderResponse(
         bundle=bundle,
         markdown=markdown,
         issues=issues,
         warnings=warnings,
         inference_notes=inference_result.notes,
+        suggestions=suggestions,
     )
 
 

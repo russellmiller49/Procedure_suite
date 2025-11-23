@@ -40,6 +40,40 @@ function showLoading(show) {
     document.querySelector('button').disabled = show;
 }
 
+async function postJSON(url, payload) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`API Error: ${response.status} ${response.statusText} - ${text}`);
+    }
+    return response.json();
+}
+
+async function runReporterFlow(noteText) {
+    // Step 1: registry extraction
+    const extraction = await postJSON('/v1/registry/run', {
+        note: noteText,
+        explain: document.getElementById('registry-explain')?.checked || false,
+    });
+
+    // Step 2: validation/inference
+    const verify = await postJSON('/report/verify', { extraction });
+
+    // Step 3: render (empty patch by default)
+    const render = await postJSON('/report/render', {
+        bundle: verify.bundle,
+        patch: { procedures: [] },
+        embed_metadata: false,
+        strict: false,
+    });
+
+    return { extraction, verify, render };
+}
+
 async function run() {
     const text = document.getElementById('input-text').value;
     if (!text.trim()) {
@@ -68,24 +102,12 @@ async function run() {
                 explain: document.getElementById('registry-explain').checked
             };
         } else if (currentMode === 'reporter') {
-            url = '/v1/reporter/generate';
-            payload = {
-                note: text,
-                template: document.getElementById('reporter-template').value
-            };
+            lastResult = await runReporterFlow(text);
+            renderResult();
+            return;
         }
 
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-            throw new Error(`API Error: ${response.statusText}`);
-        }
-
-        lastResult = await response.json();
+        lastResult = await postJSON(url, payload);
         console.log('API Response:', lastResult);
         console.log('Has financials:', !!lastResult.financials);
         if (lastResult.financials) {
@@ -215,16 +237,58 @@ function showResultTab(tab) {
         area.innerHTML = html;
 
     } else if (currentMode === 'reporter') {
-        // Reporter formatting
-        // lastResult.report (string markdown) and lastResult.struct (json)
-        if (lastResult.report) {
-            // Use marked to render markdown
-            html = `<h4>Generated Report</h4><div class="border p-3 bg-white">${marked.parse(lastResult.report)}</div>`;
-            html += `<hr><h5>Structured Data</h5><pre>${JSON.stringify(lastResult.struct, null, 2)}</pre>`;
-            area.innerHTML = html;
+        const { extraction, verify, render } = lastResult || {};
+        const issues = render?.issues || verify?.issues || [];
+        const warnings = render?.warnings || verify?.warnings || [];
+        const inferenceNotes = render?.inference_notes || verify?.inference_notes || [];
+        const suggestions = render?.suggestions || verify?.suggestions || [];
+
+        let html = "";
+
+        html += `<h4>Reporter Flow</h4>`;
+        html += `<p class="text-muted small">Registry extraction → verify → render</p>`;
+
+        if (render?.markdown) {
+            html += `<div class="mb-3"><h5>Rendered Markdown</h5><div class="border p-3 bg-white">${marked.parse(render.markdown)}</div></div>`;
         } else {
-            area.innerHTML = `<p>No report generated.</p>`;
+            html += `<div class="alert alert-warning">Report not rendered yet (critical issues or validation warnings must be resolved).</div>`;
         }
+
+        if (issues && issues.length) {
+            html += `<h6>Issues</h6><ul class="list-group mb-3">`;
+            issues.forEach(issue => {
+                html += `<li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <div><strong>${issue.proc_id || issue.proc_type}</strong>: ${issue.message || issue.field_path}</div>
+                        <small class="text-muted">Severity: ${issue.severity}</small>
+                    </div>
+                    <span class="badge bg-${issue.severity === 'critical' ? 'danger' : 'warning'} text-uppercase">${issue.severity}</span>
+                </li>`;
+            });
+            html += `</ul>`;
+        }
+
+        if (warnings && warnings.length) {
+            html += `<h6>Warnings</h6><div class="alert alert-warning">${warnings.map(w => `<div>${w}</div>`).join("")}</div>`;
+        }
+
+        if (suggestions && suggestions.length) {
+            html += `<h6>Suggestions</h6><div class="alert alert-info">${suggestions.map(s => `<div>${s}</div>`).join("")}</div>`;
+        }
+
+        if (inferenceNotes && inferenceNotes.length) {
+            html += `<h6>Inference Notes</h6><div class="alert alert-info">${inferenceNotes.map(n => `<div>${n}</div>`).join("")}</div>`;
+        }
+
+        if (verify?.bundle) {
+            html += `<h6>Bundle</h6><pre class="bg-light p-2 border rounded">${JSON.stringify(verify.bundle, null, 2)}</pre>`;
+        }
+
+        if (extraction) {
+            html += `<h6>Registry Extraction</h6><pre class="bg-light p-2 border rounded">${JSON.stringify(extraction, null, 2)}</pre>`;
+        }
+
+        area.innerHTML = html;
     }
 }
 

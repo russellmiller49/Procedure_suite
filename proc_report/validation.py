@@ -132,8 +132,9 @@ class ValidationEngine:
             configs.setdefault(path, FieldConfig(path=path, required=True, critical=False))
         return configs
 
-    def list_missing_critical_fields(self, bundle: "ProcedureBundle") -> list[MissingFieldIssue]:
+    def _collect_missing_and_suggestions(self, bundle: "ProcedureBundle") -> tuple[list[MissingFieldIssue], list[str]]:
         issues: list[MissingFieldIssue] = []
+        suggestions: list[str] = []
         acknowledged = {k: set(v) for k, v in (bundle.acknowledged_omissions or {}).items()}
 
         for proc in bundle.procedures:
@@ -146,27 +147,58 @@ class ValidationEngine:
 
             for meta in metas:
                 field_configs = self._field_configs(meta)
+                # Required / critical -> warning issues
                 for path, config in field_configs.items():
-                    if not (config.required or config.critical):
+                    if config.required or config.critical:
+                        for expanded_path in _expand_list_paths(payload, path):
+                            if expanded_path in acknowledged_fields:
+                                continue
+                            value = _get_field_value(payload, expanded_path)
+                            if value in (None, "", [], {}):
+                                message = f"Add {expanded_path} for {meta.label or proc.proc_type}"
+                                issues.append(
+                                    MissingFieldIssue(
+                                        proc_id=proc_id,
+                                        proc_type=proc.proc_type,
+                                        template_id=meta.id,
+                                        field_path=expanded_path,
+                                        severity="warning",
+                                        message=message,
+                                    )
+                                )
+                                suggestions.append(message)
+
+                # Optional fields -> suggestions only
+                optional_paths = set(getattr(meta, "optional_fields", []) or [])
+                for path in field_configs:
+                    if path in optional_paths:
                         continue
-                    severity: Literal["critical", "recommended"] = "critical" if config.critical else "recommended"
+                    if not field_configs[path].required and not field_configs[path].critical:
+                        optional_paths.add(path)
+                for path in optional_paths:
                     for expanded_path in _expand_list_paths(payload, path):
                         if expanded_path in acknowledged_fields:
                             continue
                         value = _get_field_value(payload, expanded_path)
                         if value in (None, "", [], {}):
-                            message = f"Missing {expanded_path} for {meta.label or proc.proc_type}"
-                            issues.append(
-                                MissingFieldIssue(
-                                    proc_id=proc_id,
-                                    proc_type=proc.proc_type,
-                                    template_id=meta.id,
-                                    field_path=expanded_path,
-                                    severity=severity,
-                                    message=message,
-                                )
-                            )
+                            suggestions.append(f"Consider adding {expanded_path} for {meta.label or proc.proc_type}")
+
+        # Deduplicate suggestions
+        deduped_suggestions: list[str] = []
+        seen = set()
+        for s in suggestions:
+            if s not in seen:
+                deduped_suggestions.append(s)
+                seen.add(s)
+        return issues, deduped_suggestions
+
+    def list_missing_critical_fields(self, bundle: "ProcedureBundle") -> list[MissingFieldIssue]:
+        issues, _ = self._collect_missing_and_suggestions(bundle)
         return issues
+
+    def list_suggestions(self, bundle: "ProcedureBundle") -> list[str]:
+        _, suggestions = self._collect_missing_and_suggestions(bundle)
+        return suggestions
 
     def apply_warn_if_rules(self, bundle: "ProcedureBundle") -> list[str]:
         warnings: list[str] = []

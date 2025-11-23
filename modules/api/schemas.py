@@ -42,6 +42,7 @@ class VerifyResponse(BaseModel):
     issues: list[MissingFieldIssue] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
     inference_notes: list[str] = Field(default_factory=list)
+    suggestions: list[str] = Field(default_factory=list)
 
 
 class RenderRequest(BaseModel):
@@ -57,6 +58,7 @@ class RenderResponse(BaseModel):
     issues: list[MissingFieldIssue] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
     inference_notes: list[str] = Field(default_factory=list)
+    suggestions: list[str] = Field(default_factory=list)
 
 
 class KnowledgeMeta(BaseModel):

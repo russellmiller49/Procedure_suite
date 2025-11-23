@@ -13,22 +13,23 @@ from modules.common.rules_engine import mer
 from modules.common.sectionizer import SectionizerService
 from modules.common.spans import Span
 from modules.common.umls_linking import UmlsLinker
+from modules.common.rvu_calc import RVUCalc
 from modules.ml_coder import MLCoderService
 
 from . import dictionary, posthoc, rules
 from .constants import CPT_DESCRIPTIONS
-from .schema import CodeDecision, CoderOutput, DetectedIntent
-
-from proc_autocode.rvu.rvu_calculator import ProcedureRVUCalculator
+from .schema import CodeDecision, CoderOutput, DetectedIntent, FinancialSummary, PerCodeBilling
 
 CODER_VERSION = "0.1.0"
 logger = get_logger("coder")
 
 _ROOT = Path(__file__).resolve().parents[2]
 _RVU_DIR = _ROOT / "proc_autocode" / "rvu" / "data"
-_RVU_FILE = _RVU_DIR / "rvu_ip_2025.csv"
-_GPCI_FILE = _RVU_DIR / "gpci_2025.csv"
+RVU_FILE = _RVU_DIR / "rvu_ip_2025.csv"
+GPCI_FILE = _RVU_DIR / "gpci_2025.csv"
 
+
+from .llm_coder import LLMCoder, LLMCodeSuggestion
 
 class CoderEngine:
     """Coordinates sectionization, intent detection, and MER logic."""
@@ -40,26 +41,23 @@ class CoderEngine:
         linker: UmlsLinker | None = None,
         allow_weak_sedation_docs: bool = False,
         ml_service: MLCoderService | None = None,
+        use_llm_advisor: bool = False,
     ) -> None:
         self.sectionizer = sectionizer or SectionizerService()
         self.linker = linker or UmlsLinker()
         self.allow_weak_sedation_docs = allow_weak_sedation_docs
         self.ml_service = ml_service or MLCoderService()
-        
-        # Initialize RVU calculator
-        if _RVU_FILE.exists() and _GPCI_FILE.exists():
-            self.rvu_calc = ProcedureRVUCalculator(_RVU_FILE, _GPCI_FILE)
-        else:
-            logger.warning("RVU data files not found; enhanced financials will be disabled.")
-            self.rvu_calc = None
+        self.rvu_calc = RVUCalc()
+        self.use_llm_advisor = use_llm_advisor
+        self.llm_coder = LLMCoder() if use_llm_advisor else None
 
     def run(
         self, 
         note_text: str, 
         *, 
         explain: bool = False,
-        locality: str = "00",
-        setting: str = "facility"
+        locality: str = "00", # Kept for API compat but not used in simple RVUCalc yet
+        setting: str = "facility" # Kept for API compat
     ) -> CoderOutput:
         """Execute the deterministic coder pipeline."""
         logger.info(f"Coder run initiated. Note length: {len(note_text)}")
@@ -78,10 +76,17 @@ class CoderEngine:
         self._augment_with_ml_predictions(note_text, codes)
         mer_summary = self._apply_mer(codes)
         
-        financials = self._calculate_financials(codes, locality, setting)
+        financials = self._compute_financials(codes, mer_summary)
+
+        llm_suggestions: list[LLMCodeSuggestion] = []
+        disagreements: list[str] = []
+        if self.llm_coder:
+            llm_suggestions = self.llm_coder.suggest_codes(note_text)
+            self._compare_llm_and_deterministic(codes, llm_suggestions, disagreements)
 
         warnings = list(mapping_warnings)
         warnings.extend(bundle_warnings)
+        warnings.extend(disagreements)
 
         logger.info(f"Coder run complete. Found {len(codes)} codes.")
         return CoderOutput(
@@ -92,203 +97,100 @@ class CoderEngine:
             ncci_actions=ncci_actions,
             warnings=warnings,
             version=CODER_VERSION,
+            llm_suggestions=llm_suggestions,
+            llm_disagreements=disagreements,
         )
 
-    def _calculate_financials(self, codes: Sequence[CodeDecision], locality: str, setting: str) -> Dict[str, Any] | None:
-        if not self.rvu_calc:
-            return None
-
-        endoscopy_family = self._endoscopy_family_codes
-        endoscopy_codes = [c for c in codes if c.cpt in endoscopy_family]
-        other_codes = [c for c in codes if c.cpt not in endoscopy_family]
-
-        # 1) Multiple endoscopy rule for the bronchoscopy family
-        endo_summary = self._compute_endoscopy_payments(
-            endoscopy_codes,
-            locality=locality,
-            setting=setting,
-        )
-
-        # 2) Generic 100% / 50% multi‑procedure rule for all other CPTs
-        other_procs = []
-        for i, code in enumerate(other_codes):
-            # Basic logic: first non-addon is 100%, others 50%. Add-ons 100%.
-            # But calculate_case_rvu relies on us passing the multiplier if we want to control it strictly,
-            # or we can let it handle it if we structure the input right.
-            # The previous implementation used a simple loop. Let's stick to 1.0/0.5 logic for "other".
-            # Note: In a mixed case, the primary of "other" might be 50% if endoscopy was primary?
-            # CMS "Multiple Procedure" indicator '2' means standard 100/50 rule.
-            # Usually, the highest valued procedure of the ENTIRE session is 100%, others 50%.
-            # But Endoscopy rule is a special logic for that family.
-            # If we have Endoscopy + Pleural, usually Pleural is separate family.
-            # If standard rule applies across families, we need to know which is globally highest.
-            # For now, we'll treat them as separate buckets to satisfy the requirement:
-            # "All non‑endoscopy codes ... still handled by the existing ... logic"
-            
-            is_addon = code.cpt.startswith("+")
-            multiplier = 1.0
-            if is_addon:
-                multiplier = 1.0
-            else:
-                # If we already have an endoscopy primary, does the first "other" code get 50%?
-                # Conservatively, yes, if it's subject to MP reduction.
-                # But let's stick to the user's request: "Generic 100% / 50% ... for all other CPTs".
-                # We will reset the counter for the "other" bucket.
-                multiplier = 1.0 if i == 0 else 0.5
-            
-            other_procs.append({
-                "cpt_code": code.cpt,
-                "modifiers": code.modifiers,
-                "multiplier": multiplier
-            })
-
-        if other_procs:
-            other_summary = self.rvu_calc.calculate_case_rvu(
-                procedures=other_procs,
-                locality=locality,
-                setting=setting,
-            )
-        else:
-            other_summary = {
-                "total_work_rvu": 0.0,
-                "total_payment": 0.0,
-                "breakdown": [],
-            }
-
-        # 3) Merge results
-        total_work_rvu = (
-            endo_summary["total_work_rvu"] +
-            other_summary["total_work_rvu"]
-        )
-        total_payment = (
-            endo_summary["total_payment"] +
-            other_summary["total_payment"]
-        )
-
-        breakdown = endo_summary["breakdown"] + other_summary["breakdown"]
-
-        return {
-            "total_work_rvu": total_work_rvu,
-            "total_payment": total_payment,
-            "breakdown": breakdown,
-            "locality": locality,
-            "setting": setting
-        }
-
-    @property
-    def _endoscopy_family_codes(self) -> set[str]:
-        """Bronchoscopy endoscopy family subject to multiple endoscopy rule."""
-        return set(
-            knowledge.get_knowledge()
-            .get("policies", {})
-            .get("multiple_endoscopy_rule", {})
-            .get("applies_to_family", [])
-        )
-
-    def _compute_endoscopy_payments(
-        self,
+    @staticmethod
+    def _compare_llm_and_deterministic(
         codes: Sequence[CodeDecision],
-        locality: str,
-        setting: str,
-    ) -> dict[str, Any]:
-        """
-        Apply CMS multiple endoscopy rule to bronchoscopy endoscopy family.
-        Rule: Highest valued code = 100%. Others = (Payment - Base Payment).
-        Base code is 31622.
-        """
-        if not codes:
-            return {
-                "total_work_rvu": 0.0,
-                "total_payment": 0.0,
-                "breakdown": [],
-            }
+        llm_suggestions: Sequence[LLMCodeSuggestion],
+        disagreements: list[str],
+    ) -> None:
+        if not llm_suggestions:
+            disagreements.append("LLM produced no valid CPT suggestions; skipping comparison.")
+            return
 
-        # 1) Get base endoscopy payment for 31622
-        # Use 'facility' setting if not specified, though standard for bronch is facility.
-        base_result = self.rvu_calc.calculate_procedure_rvu(
-            cpt_code="31622",
-            locality=locality,
-            setting=setting,
-            modifiers=[],
-        )
-        if not base_result:
-            # Fallback if 31622 missing from data
-            logger.warning("Base code 31622 missing from RVU data; skipping endoscopy rule.")
-            return {
-                "total_work_rvu": 0.0,
-                "total_payment": 0.0,
-                "breakdown": [],
-            }
+        det_codes = {c.cpt for c in codes}
+        llm_codes = {s.cpt for s in llm_suggestions}
 
-        base_payment = base_result["payment_amount"]
+        missing_in_det = llm_codes - det_codes
+        extra_in_det = det_codes - llm_codes
 
-        # 2) Get single‑procedure values for each code
-        single: dict[str, dict] = {}
-        for code in codes:
-            res = self.rvu_calc.calculate_procedure_rvu(
-                cpt_code=code.cpt,
-                locality=locality,
-                setting=setting,
-                modifiers=code.modifiers or [],
+        if missing_in_det:
+            disagreements.append(
+                f"LLM suggests additional CPT(s) not coded deterministically: {', '.join(sorted(missing_in_det))}"
             )
-            if res:
-                single[code.cpt] = res
+        if extra_in_det:
+            disagreements.append(
+                f"Deterministic coder produced CPT(s) not suggested by LLM: {', '.join(sorted(extra_in_det))}"
+            )
 
-        if not single:
-            return {
-                "total_work_rvu": 0.0,
-                "total_payment": 0.0,
-                "breakdown": [],
-            }
+    def _compute_financials(self, codes: Sequence[CodeDecision], mer_summary: dict | None) -> FinancialSummary:
+        """Build full per-code billing rows using MER math + RVU data."""
+        mer_adjustments = {row["cpt"]: row for row in (mer_summary or {}).get("adjustments", [])}
+        per_code_rows: list[PerCodeBilling] = []
 
-        # 3) Identify the highest‑valued endoscopy
-        max_code = max(
-            single.keys(),
-            key=lambda c: single[c]["payment_amount"]
-        )
-
-        total_work_rvu = 0.0
-        total_payment = 0.0
-        breakdown: list[dict] = []
-
-        # 4) Apply the rule
         for code in codes:
-            res = single.get(code.cpt)
-            if not res:
-                continue
-
-            if code.cpt == max_code:
-                effective_payment = res["payment_amount"]
-                rule_note = "multiple_endoscopy_primary"
+            base = self.rvu_calc.lookup(code.cpt)
+            if not base:
+                # Log or warn, but still emit a row with zeros
+                row = PerCodeBilling(cpt_code=code.cpt, description=code.description or "", modifiers=code.modifiers)
             else:
-                # Payment is difference between this code and base code
-                # If code < base (unlikely for therapeutic vs diagnostic), floor at 0
-                effective_payment = max(0.0, res["payment_amount"] - base_payment)
-                rule_note = "multiple_endoscopy_reduced"
+                row = PerCodeBilling(
+                    cpt_code=code.cpt,
+                    description=code.description or "",
+                    modifiers=code.modifiers,
+                    work_rvu=base.work_rvu,
+                    total_facility_rvu=base.total_facility_rvu,
+                    total_nonfacility_rvu=base.total_nonfacility_rvu,
+                    facility_payment=base.facility_payment,
+                    nonfacility_payment=base.nonfacility_payment,
+                )
 
-            # Work RVUs are typically summed fully in productivity reports
-            # even if payment is reduced.
-            work_rvu = float(res["work_rvu"])
+            adj = mer_adjustments.get(code.cpt)
+            if adj:
+                row.mer_role = adj.get("role")
+                row.mer_allowed = float(adj.get("allowed", 0.0))
+                row.mer_reduction = float(adj.get("reduction", 0.0))
+                # For endoscopy, MER allowed is the *facility* total RVU after multiple-endoscopy rules
+                row.allowed_facility_rvu = row.mer_allowed or 0.0
+            else:
+                # If MER didn't touch this code, allow full total RVU
+                # But MER usually touches everything if it runs.
+                # If MER engine only returns adjustments for modified codes, this handles untouched.
+                row.allowed_facility_rvu = row.total_facility_rvu
 
-            total_payment += effective_payment
-            total_work_rvu += work_rvu
+            # Payment: allowed RVU * CF; for now, mirror facility logic into nonfacility
+            row.allowed_facility_payment = row.allowed_facility_rvu * self.rvu_calc.cf
+            # If you want full nonfacility logic later, adjust here
+            # For now, assume similar reduction ratio or just full allowed if MER didn't specify
+            # Note: MER logic in mer.py might be calculating RVUs, not dollars.
+            # allowed_nonfacility_rvu calculation requires knowing if MER applies to non-fac similarly.
+            # Usually yes for multiple procedure.
+            
+            if row.total_facility_rvu > 0:
+                ratio = row.allowed_facility_rvu / row.total_facility_rvu
+                row.allowed_nonfacility_rvu = row.total_nonfacility_rvu * ratio
+            else:
+                row.allowed_nonfacility_rvu = 0.0
+                
+            row.allowed_nonfacility_payment = row.allowed_nonfacility_rvu * self.rvu_calc.cf
 
-            breakdown.append(
-                {
-                    "cpt_code": code.cpt,
-                    "work_rvu": work_rvu,
-                    "payment": effective_payment,
-                    "multiplier": 1.0 if code.cpt == max_code else 0.0, # Not strictly a multiplier
-                    "rule": rule_note,
-                }
-            )
+            per_code_rows.append(row)
 
-        return {
-            "total_work_rvu": total_work_rvu,
-            "total_payment": total_payment,
-            "breakdown": breakdown,
-        }
+        total_work = sum(row.work_rvu for row in per_code_rows)
+        total_fac_pay = sum(row.allowed_facility_payment for row in per_code_rows)
+        total_nonfac_pay = sum(row.allowed_nonfacility_payment for row in per_code_rows)
 
+        return FinancialSummary(
+            conversion_factor=self.rvu_calc.cf,
+            locality="00",
+            per_code=per_code_rows,
+            total_work_rvu=total_work,
+            total_facility_payment=total_fac_pay,
+            total_nonfacility_payment=total_nonfac_pay,
+        )
 
     def _map_intents_to_codes(
         self, intents: Sequence[DetectedIntent]

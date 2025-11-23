@@ -53,7 +53,7 @@ class MissingFieldIssue:
     proc_type: str
     template_id: str
     field_path: str
-    severity: Literal["critical", "recommended"]
+    severity: Literal["warning", "recommended"]
     message: str
 
 

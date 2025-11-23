@@ -62,11 +62,20 @@ def run(
         "--allow-weak-sedation-docs",
         help="Emit sedation codes even when start/stop times or an observer statement are missing.",
     ),
+    use_llm_advisor: bool = typer.Option(
+        False,
+        "--llm-advisor",
+        help="Call Gemini 2.5 to suggest codes and show disagreements.",
+    ),
 ) -> None:
     """Run the coder against NOTE (path or raw text)."""
 
     text = load_note(note)
-    engine = CoderEngine(allow_weak_sedation_docs=allow_weak_sedation_docs)
+    # Note: LLM advisor integrated in engine.
+    engine = CoderEngine(
+        allow_weak_sedation_docs=allow_weak_sedation_docs,
+        use_llm_advisor=use_llm_advisor,
+    )
     result = engine.run(text)
 
     if json_output:
@@ -97,6 +106,43 @@ def _print_summary(result) -> None:
             evidence,
         )
     console.print(table)
+
+    if result.financials:
+        fin = result.financials
+        bill = Table(title="RVU & Payment (Facility + Nonfacility)", show_lines=False)
+        bill.add_column("CPT", style="cyan")
+        bill.add_column("Desc")
+        bill.add_column("wRVU", justify="right")
+        bill.add_column("Fac RVU (allowed)", justify="right")
+        bill.add_column("Fac Pay", justify="right")
+        bill.add_column("Nonfac RVU (allowed)", justify="right")
+        bill.add_column("Nonfac Pay", justify="right")
+
+        for row in fin.per_code:
+            bill.add_row(
+                row.cpt_code,
+                (row.description or "")[:40],
+                f"{row.work_rvu:.2f}",
+                f"{row.allowed_facility_rvu:.2f}",
+                f"${row.allowed_facility_payment:.2f}",
+                f"{row.allowed_nonfacility_rvu:.2f}",
+                f"${row.allowed_nonfacility_payment:.2f}",
+            )
+
+        bill.add_row(
+            "[b]TOTAL[/b]",
+            "",
+            f"{fin.total_work_rvu:.2f}",
+            "",
+            f"${fin.total_facility_payment:.2f}",
+            "",
+            f"${fin.total_nonfacility_payment:.2f}",
+        )
+        console.print(bill)
+        
+        print(f"Total Work RVU: {fin.total_work_rvu:.2f}")
+        print(f"Estimated Payment (facility):    ${fin.total_facility_payment:.2f}")
+        print(f"Estimated Payment (nonfacility): ${fin.total_nonfacility_payment:.2f}")
 
     if result.warnings:
         console.print(Panel("\n".join(result.warnings), title="Warnings", style="yellow"))

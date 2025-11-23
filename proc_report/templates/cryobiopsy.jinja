@@ -1,73 +1,84 @@
-
 # Cryobiopsy Synoptic Report
 
-## Procedure Overview
-- Procedure Type: {{ core.type }}
-- Laterality: {{ core.laterality or "Not documented" }}
-- Stations Sampled: {{ core.stations_sampled | join(", ") if core.stations_sampled else "None" }}
-- Guidance: {{ targets[0].guidance if targets else "Not documented" }}
-- Narrative Hashes: {{ report.nlp.paragraph_hashes | length }} segments
+{% set overview_lines = [] %}
+{% if core and core.type %}{% set _ = overview_lines.append("- Procedure Type: " ~ core.type) %}{% endif %}
+{% if core and core.laterality %}{% set _ = overview_lines.append("- Laterality: " ~ core.laterality) %}{% endif %}
+{% if core and core.stations_sampled %}{% set _ = overview_lines.append("- Stations Sampled: " ~ (core.stations_sampled | join(", "))) %}{% endif %}
+{% if targets and targets[0].guidance %}{% set _ = overview_lines.append("- Guidance: " ~ targets[0].guidance) %}{% endif %}
+{% if report and report.nlp and report.nlp.paragraph_hashes %}{% set _ = overview_lines.append("- Narrative Hashes: " ~ (report.nlp.paragraph_hashes | length) ~ " segments") %}{% endif %}
 
-## Targets & Specimens
-{% if targets %}
-| Target | Guidance | Specimens |
-|--------|----------|-----------|
-{% for target in targets %}
-| {{ target.segment or target.lobe or "N/A" }} | {{ target.guidance or "N/A" }} | {{ summarize_specimens(target.specimens) }} |
-{% endfor %}
-{% else %}
-_No targets recorded._
+{% if overview_lines %}
+## Procedure Overview
+{{ overview_lines | join("\n") }}
 {% endif %}
 
+{% if targets %}
+{% set any_rows = false %}
+{% for target in targets %}
+{% if target.segment or target.lobe or target.guidance or target.specimens %}
+{% if not any_rows %}
+{% set any_rows = true %}
+## Targets & Specimens
+| Target | Guidance | Specimens |
+|--------|----------|-----------|
+{% endif %}
+| {{ target.segment or target.lobe or "" }} | {{ target.guidance or "" }} | {{ summarize_specimens(target.specimens) if target.specimens else "" }} |
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if core and core.devices %}
 ## Devices
-{% if core.devices %}
 | Device | Value |
 |--------|-------|
 {% for key, value in core.devices.items() %}
+{% if value %}
 | {{ key | replace('_', ' ') | title }} | {{ value }} |
+{% endif %}
 {% endfor %}
-{% else %}
-_No devices documented._
 {% endif %}
 
-## Dose
-{% set dose = report.intraop.get("dose") %}
+{% set dose = report.intraop.get("dose") if report and report.intraop else None %}
 {% if dose is mapping %}
+## Dose
 | Parameter | Value |
 |-----------|-------|
 {% for key, value in dose.items() %}
+{% if value %}
 | {{ key | replace('_', ' ') | title }} | {{ value }} |
+{% endif %}
 {% endfor %}
 {% elif dose %}
+## Dose
 {{ dose }}
-{% else %}
-_No dose parameters recorded._
 {% endif %}
 
-## Complications
-{% set comps = report.postop.get("complications") %}
+{% set comps = report.postop.get("complications") if report and report.postop else None %}
 {% if comps is mapping %}
+## Complications
 | Event | Status |
 |-------|--------|
 {% for key, value in comps.items() %}
+{% if value %}
 | {{ key | replace('_', ' ') | title }} | {{ value }} |
+{% endif %}
 {% endfor %}
 {% elif comps %}
+## Complications
 {{ comps }}
-{% else %}
-_None reported._
 {% endif %}
 
-## Plan
-{% set plan = report.postop.get("plan") %}
+{% set plan = report.postop.get("plan") if report and report.postop else None %}
 {% if plan is mapping %}
+## Plan
 | Action | Detail |
 |--------|--------|
 {% for key, value in plan.items() %}
+{% if value %}
 | {{ key | replace('_', ' ') | title }} | {{ value }} |
+{% endif %}
 {% endfor %}
 {% elif plan %}
+## Plan
 {{ plan }}
-{% else %}
-_Standard observation._
 {% endif %}

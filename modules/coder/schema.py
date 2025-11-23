@@ -13,6 +13,9 @@ __all__ = [
     "CodeDecision",
     "BundleDecision",
     "CoderOutput",
+    "PerCodeBilling",
+    "FinancialSummary",
+    "LLMCodeSuggestion",
 ]
 
 
@@ -55,13 +58,58 @@ class BundleDecision(BaseModel):
     rule: str | None = None
 
 
+class PerCodeBilling(BaseModel):
+    cpt_code: str
+    description: str | None = None
+    modifiers: list[str] = Field(default_factory=list)
+
+    # Base MPFS values (per-claim if billed alone)
+    work_rvu: float = 0.0
+    total_facility_rvu: float = 0.0
+    total_nonfacility_rvu: float = 0.0
+    facility_payment: float = 0.0
+    nonfacility_payment: float = 0.0
+
+    # Adjusted values after MER / multiple procedure rules
+    allowed_facility_rvu: float = 0.0
+    allowed_nonfacility_rvu: float = 0.0
+    allowed_facility_payment: float = 0.0
+    allowed_nonfacility_payment: float = 0.0
+
+    mer_role: str | None = None  # "primary", "secondary", "add_on"
+    mer_allowed: float | None = None
+    mer_reduction: float | None = None
+    mp_rule: str | None = None   # e.g. "multiple_endoscopy_primary", "multiple_procedure_50pct"
+
+
+class FinancialSummary(BaseModel):
+    conversion_factor: float
+    locality: str
+    per_code: list[PerCodeBilling]
+    total_work_rvu: float
+    total_facility_payment: float
+    total_nonfacility_payment: float
+
+
+class LLMCodeSuggestion(BaseModel):
+    cpt: str
+    description: str | None = None
+    rationale: str | None = None
+
+
 class CoderOutput(BaseModel):
     """Top-level payload returned by the coder pipeline."""
 
     codes: list[CodeDecision]
     intents: list[DetectedIntent] = Field(default_factory=list)
     mer_summary: dict[str, Any] | None = None
-    financials: dict[str, Any] | None = None
     ncci_actions: list[BundleDecision] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
     version: str = "0.1.0"
+
+    # NEW
+    financials: FinancialSummary | None = None
+    
+    # LLM Advisor
+    llm_suggestions: list[LLMCodeSuggestion] = Field(default_factory=list)
+    llm_disagreements: list[str] = Field(default_factory=list)

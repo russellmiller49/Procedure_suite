@@ -763,10 +763,10 @@ def _attach_validation_metadata(metadata: ReportMetadata, issues: list[MissingFi
         proc_issues = issues_by_proc.get(proc_meta.proc_id, [])
         if not proc_issues:
             continue
-        critical_paths = [issue.field_path for issue in proc_issues if issue.severity == "critical"]
+        warning_paths = [issue.field_path for issue in proc_issues if issue.severity in ("warning", "critical")]
         recommended_paths = [issue.field_path for issue in proc_issues if issue.severity == "recommended"]
-        proc_meta.missing_critical_fields = critical_paths
-        proc_meta.has_critical_missing = bool(critical_paths)
+        proc_meta.missing_critical_fields = warning_paths
+        proc_meta.has_critical_missing = bool(warning_paths)
         if recommended_paths:
             proc_meta.extra.setdefault("recommended_missing", recommended_paths)
 
@@ -1212,14 +1212,15 @@ def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
 
 def _infer_and_validate_bundle(
     bundle: ProcedureBundle, templates: TemplateRegistry, schemas: SchemaRegistry
-) -> tuple[ProcedureBundle, PatchResult, list[MissingFieldIssue], list[str]]:
+) -> tuple[ProcedureBundle, PatchResult, list[MissingFieldIssue], list[str], list[str]]:
     inference_engine = InferenceEngine()
     inference_result = inference_engine.infer_bundle(bundle)
     updated_bundle = apply_patch_result(bundle, inference_result)
     validator = ValidationEngine(templates, schemas)
     issues = validator.list_missing_critical_fields(updated_bundle)
     warnings = validator.apply_warn_if_rules(updated_bundle)
-    return updated_bundle, inference_result, issues, warnings
+    suggestions = validator.list_suggestions(updated_bundle)
+    return updated_bundle, inference_result, issues, warnings, suggestions
 
 
 def compose_structured_report(
@@ -1231,7 +1232,7 @@ def compose_structured_report(
 ) -> str:
     templates = template_registry or default_template_registry()
     schemas = schema_registry or default_schema_registry()
-    bundle, _, _, _ = _infer_and_validate_bundle(bundle, templates, schemas)
+    bundle, _, _, _, _ = _infer_and_validate_bundle(bundle, templates, schemas)
     engine = ReporterEngine(
         templates,
         schemas,
@@ -1261,7 +1262,7 @@ def compose_structured_report_with_meta(
 ) -> StructuredReport:
     templates = template_registry or default_template_registry()
     schemas = schema_registry or default_schema_registry()
-    bundle, _, issues, warnings = _infer_and_validate_bundle(bundle, templates, schemas)
+    bundle, _, issues, warnings, _ = _infer_and_validate_bundle(bundle, templates, schemas)
     engine = ReporterEngine(
         templates,
         schemas,

@@ -56,3 +56,8 @@ New fields added to `IP_Registry.json`:
 - `ebus_photodocumentation_complete` (boolean)
 
 These are extracted via heuristics in `modules/registry/engine.py`.
+
+uvicorn modules.api.fastapi_app:app --reload
+REGISTRY_USE_STUB_LLM=1 GEMINI_OFFLINE=1 DISABLE_STATIC_FILES=1 pytest -q
+if you want to avoid API tests for now, you can run everything else with:
+REGISTRY_USE_STUB_LLM=1 GEMINI_OFFLINE=1 DISABLE_STATIC_FILES=1 pytest tests/unit tests/registry tests/e2e -q

@@ -143,7 +143,7 @@ class GeminiLLM:
             self._refresh_credentials()
         return self._credentials.token  # type: ignore[return-value]
 
-    def generate(self, prompt: str) -> str:
+    def generate(self, prompt: str, response_schema: dict | None = None) -> str:
         if self.use_oauth:
             url = f"{self.base_url}/{self.model}:generateContent"
             access_token = self._get_access_token()
@@ -158,9 +158,13 @@ class GeminiLLM:
             url = f"{self.base_url}/{self.model}:generateContent?key={self.api_key}"
             headers = {"Content-Type": "application/json"}
         
+        generation_config = {"response_mime_type": "application/json"}
+        if response_schema:
+            generation_config["response_schema"] = response_schema
+
         payload = {
             "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"response_mime_type": "application/json"}
+            "generationConfig": generation_config
         }
         
         try:

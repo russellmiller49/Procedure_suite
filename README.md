@@ -2,6 +2,14 @@
 
 The Procedure Suite provides structured report composition, autonomous coding, registry exports, and API endpoints that sit between the existing extractor and downstream analytics. It reuses the medparse-py311 environment and expects scispaCy + spaCy models to be available locally.
 
+## ⚠️ For AI Assistants (Codex, Gemini CLI, etc.)
+
+**IMPORTANT**: Before making changes, read:
+- **`AI_ASSISTANT_GUIDE.md`** - Source of truth for which files to edit
+- **`MERGING_CHANGES.md`** - How to merge changes from multiple assistants
+
+**Quick rule**: Always edit `modules/api/fastapi_app.py`, never `api/app.py` (it's deprecated).
+
 ## Layout
 - `proc_report`: templated synoptic report builder that consumes extractor hints or free text.
 - `proc_autocode`: rule-driven coding pipeline with CPT maps, NCCI rules, and confidence scoring.

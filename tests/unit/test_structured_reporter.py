@@ -881,7 +881,7 @@ def test_missing_fields_checklist_flags_critical():
     fields = {issue.field_path: issue for issue in issues}
     assert "volume_removed_ml" in fields
     assert "fluid_appearance" in fields
-    assert fields["volume_removed_ml"].severity == "critical"
+    assert fields["volume_removed_ml"].severity == "warning"
 
 
 def test_patch_acknowledge_missing_fields():

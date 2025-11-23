@@ -1,3 +1,12 @@
+"""
+⚠️ DEPRECATED: This FastAPI app is NOT used.
+
+The active FastAPI application is: modules/api/fastapi_app.py
+This file exists for reference only. Do not edit or use this file.
+
+See AI_ASSISTANT_GUIDE.md for the current architecture.
+"""
+
 from fastapi import FastAPI
 
 from proc_schemas.procedure_report import ProcedureReport

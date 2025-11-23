@@ -725,10 +725,49 @@
     }
   },
   "synonyms": {
+    "tblb_terms": [
+      "transbronchial lung biopsy",
+      "transbronchial lung biopsies",
+      "tblb",
+      "forceps biopsy",
+      "forceps biopsies",
+      "peripheral needle forceps",
+      "transbronchial forceps",
+      "cryobiopsy",
+      "cryobiopsies",
+      "transbronchial biopsy"
+    ],
+    "tbna_terms": [
+      "tbna",
+      "transbronchial needle aspiration",
+      "needle aspiration",
+      "fine needle aspiration",
+      "fna"
+    ],
+    "radial_terms": [
+      "radial ebus",
+      "radial probe",
+      "radial ultrasound",
+      "radial mini probe",
+      "radial EBUS verification"
+    ],
     "navigation_terms": [
-      "navigation bronchoscopy",
-      "emn guidance",
-      "computer-assisted navigation"
+      "navigational bronchoscopy",
+      "ion robotic bronchoscopy",
+      "robotic bronchoscopy",
+      "electromagnetic navigation",
+      "EMN bronchoscopy"
+    ],
+    "sedation_terms": [
+      "moderate sedation",
+      "conscious sedation"
+    ],
+    "independent_observer_terms": [
+      "independent observer",
+      "separate observer",
+      "dedicated observer",
+      "a nurse monitored the patient",
+      "monitoring RN present"
     ],
     "navigation_initiated": [
       "navigation successfully initiated",
@@ -740,11 +779,6 @@
       "navigation planned",
       "navigation guidance planned"
     ],
-    "radial_terms": [
-      "radial ebus",
-      "radial probe",
-      "miniprobe"
-    ],
     "peripheral_terms": [
       "peripheral lesion",
       "peripheral nodule",
@@ -754,18 +788,6 @@
       "concentric view",
       "miniprobe"
     ],
-    "tblb_terms": [
-      "transbronchial lung biopsy",
-      "transbronchial lung biopsies",
-      "tblb",
-      "cryobiopsy"
-    ],
-    "tbna_terms": [
-      "tbna",
-      "transbronchial needle aspiration",
-      "transbronchial needle aspirations",
-      "needle aspiration"
-    ],
     "blvr_terms": [
       "blvr",
       "bronchoscopic lung volume reduction",
@@ -774,18 +796,6 @@
     "chartis_terms": [
       "chartis",
       "collateral ventilation"
-    ],
-    "independent_observer_terms": [
-      "independent rn observer",
-      "independent nurse observer",
-      "independent observer",
-      "independent trained observer",
-      "observer present"
-    ],
-    "sedation_terms": [
-      "moderate sedation",
-      "conscious sedation",
-      "procedural sedation"
     ],
     "anesthesia_terms": [
       "general anesthesia",

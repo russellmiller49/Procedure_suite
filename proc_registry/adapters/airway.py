@@ -11,6 +11,32 @@ def _nav_platform(source: dict[str, Any]) -> str:
     return (source.get("nav_platform") or "").lower()
 
 
+def _coerce_size_mm(value: Any) -> float | None:
+    """Try to coerce a size in mm, handling cm inputs."""
+    if value in (None, "", []):
+        return None
+    try:
+        num = float(value)
+    except Exception:
+        return None
+    return round(num, 2)
+
+
+def _station_size_mm(source: dict[str, Any]) -> float | None:
+    """Pick a best-effort station size from common extraction keys."""
+    # Prefer explicit EBUS station sizing if present
+    for key in ("ebus_station_size_mm", "station_size_mm", "lesion_size_mm", "nav_lesion_size_mm"):
+        size = _coerce_size_mm(source.get(key))
+        if size:
+            return size
+    # Handle cm inputs if available
+    for key in ("ebus_station_size_cm", "station_size_cm", "lesion_size_cm", "nav_lesion_size_cm"):
+        size_cm = _coerce_size_mm(source.get(key))
+        if size_cm:
+            return round(size_cm * 10, 2)
+    return None
+
+
 class BronchoscopyShellAdapter(ExtractionAdapter):
     proc_type = "bronchoscopy_core"
     schema_model = airway_schemas.BronchoscopyShell
@@ -206,14 +232,20 @@ class EBUSTBNAAdapter(ExtractionAdapter):
     @classmethod
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
         stations = source.get("ebus_stations_sampled") or []
+        station_size = _station_size_mm(source)
+        use_forceps = bool(source.get("ebus_intranodal_forceps_used"))
         station_entries = []
         for station in stations:
+            tools = ["TBNA"]
+            if use_forceps:
+                tools.append("Forceps")
             station_entries.append(
                 {
                     "station_name": station,
+                    "size_mm": station_size,
                     "passes": source.get("ebus_passes", 1),
                     "echo_features": source.get("ebus_echo_features"),
-                    "biopsy_tools": ["TBNA"],
+                    "biopsy_tools": tools,
                     "rose_result": source.get("ebus_rose_result"),
                 }
             )
