@@ -24,3 +24,7 @@ optional_fields:
   - pleura_description
 proc_types:
   - thoracentesis_manometry
+critical_fields:
+  - side
+  - total_removed_ml
+  - opening_pressure_cmh2o

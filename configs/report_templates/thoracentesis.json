@@ -16,6 +16,13 @@
     "fluid_appearance",
     "specimen_tests"
   ],
+  "critical_fields": [
+    "side",
+    "volume_removed_ml",
+    "fluid_appearance",
+    "specimen_tests",
+    "cxr_ordered"
+  ],
   "optional_fields": [
     "loculations",
     "anesthesia_lidocaine_1_pct_ml",

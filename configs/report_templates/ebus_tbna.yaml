@@ -14,3 +14,8 @@ optional_fields:
   - overall_rose_diagnosis
 proc_types:
   - ebus_tbna
+critical_fields:
+  - stations[].station_name
+  - stations[].passes
+  - stations[].size_mm
+  - needle_gauge

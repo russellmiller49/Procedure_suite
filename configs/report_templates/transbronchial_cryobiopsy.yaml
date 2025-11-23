@@ -20,3 +20,8 @@ optional_fields:
   - notes
 proc_types:
   - transbronchial_cryobiopsy
+critical_fields:
+  - lung_segment
+  - num_samples
+  - blocker_type
+  - cryoprobe_size_mm

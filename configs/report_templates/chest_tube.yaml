@@ -25,3 +25,9 @@ optional_fields:
   - pleura_description
 proc_types:
   - chest_tube
+critical_fields:
+  - side
+  - intercostal_space
+  - entry_line
+  - fluid_removed_ml
+  - fluid_appearance

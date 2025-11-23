@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from proc_report import (
@@ -7,8 +9,15 @@ from proc_report import (
     ProcedureBundle,
     ProcedureInput,
     SedationInfo,
+    BundlePatch,
+    ProcedurePatch,
     build_procedure_bundle_from_extraction,
     compose_structured_report,
+    compose_structured_report_with_meta,
+    compose_structured_report_from_extraction_with_meta,
+    compose_report_with_patch,
+    list_missing_critical_fields,
+    apply_bundle_patch,
 )
 
 
@@ -78,6 +87,258 @@ def _bronch_and_pleural_bundle() -> ProcedureBundle:
         estimated_blood_loss="Minimal",
     )
 
+
+def _bronch_bal_tblbx_bundle() -> ProcedureBundle:
+    return ProcedureBundle(
+        patient=PatientInfo(name="Casey Example", age=60, sex="female"),
+        encounter=EncounterInfo(date="2024-09-19", attending="Dr. Bronch"),
+        procedures=[
+            ProcedureInput(
+                proc_type="bronchoscopy_core",
+                schema_id="bronchoscopy_shell_v1",
+                data={
+                    "airway_overview": "Airway survey completed without obstruction.",
+                    "right_lung_overview": "Patent airways.",
+                    "left_lung_overview": "Patent airways.",
+                },
+                cpt_candidates=["31622"],
+            ),
+            ProcedureInput(
+                proc_type="bal",
+                schema_id="bal_v1",
+                data={
+                    "lung_segment": "RML medial segment",
+                    "instilled_volume_cc": 90,
+                    "returned_volume_cc": 60,
+                    "tests": ["cell count", "microbiology culture"],
+                },
+                cpt_candidates=["31624"],
+            ),
+            ProcedureInput(
+                proc_type="transbronchial_lung_biopsy",
+                schema_id="transbronchial_lung_biopsy_v1",
+                data={
+                    "lung_segment": "RLL lateral segment",
+                    "samples_collected": 4,
+                    "forceps_tools": "standard forceps",
+                    "tests": ["pathology"],
+                },
+                cpt_candidates=["31628"],
+            ),
+        ],
+    )
+
+
+def _pleural_combo_bundle() -> ProcedureBundle:
+    return ProcedureBundle(
+        patient=PatientInfo(name="Jordan Pleural", age=72, sex="male"),
+        encounter=EncounterInfo(date="2024-09-20", attending="Dr. Pleural"),
+        procedures=[
+            ProcedureInput(
+                proc_type="thoracentesis",
+                schema_id="thoracentesis_v1",
+                data={
+                    "side": "left",
+                    "effusion_size": "moderate",
+                    "effusion_echogenicity": "anechoic",
+                    "intercostal_space": "7th",
+                    "entry_location": "mid-axillary",
+                    "volume_removed_ml": 1100,
+                    "fluid_appearance": "serous",
+                    "specimen_tests": ["cell count"],
+                },
+                cpt_candidates=["32555"],
+            ),
+            ProcedureInput(
+                proc_type="chest_tube",
+                schema_id="chest_tube_v1",
+                data={
+                    "side": "right",
+                    "intercostal_space": "6th",
+                    "entry_line": "mid-axillary",
+                    "fluid_removed_ml": 300,
+                    "fluid_appearance": "serosanguinous",
+                },
+                cpt_candidates=["32551"],
+            ),
+        ],
+    )
+
+
+def _nav_ebus_blvr_bundle() -> ProcedureBundle:
+    return ProcedureBundle(
+        patient=PatientInfo(name="Jamie Smith", age=67, sex="female"),
+        encounter=EncounterInfo(
+            date="2024-09-18",
+            attending="Dr. Navigator",
+            assistant="Dr. Fellow",
+        ),
+        procedures=[
+            ProcedureInput(
+                proc_type="bronchoscopy_core",
+                schema_id="bronchoscopy_shell_v1",
+                data={
+                    "airway_overview": "Airway survey completed without obstruction.",
+                    "right_lung_overview": "Clear to subsegmental bronchi.",
+                    "left_lung_overview": "No endobronchial lesions.",
+                },
+                cpt_candidates=["31622"],
+            ),
+            ProcedureInput(
+                proc_type="robotic_ion_bronchoscopy",
+                schema_id="robotic_ion_bronchoscopy_v1",
+                data={
+                    "navigation_plan_source": "pre-procedure CT",
+                    "vent_mode": "VC",
+                    "vent_rr": 14,
+                    "vent_tv_ml": 450,
+                    "vent_peep_cm_h2o": 8,
+                    "vent_fio2_pct": 40,
+                    "vent_flow_rate": "30 L/min",
+                    "vent_pmean_cm_h2o": 12,
+                    "cbct_performed": True,
+                    "radial_pattern": "concentric",
+                },
+                cpt_candidates=["31627"],
+            ),
+            ProcedureInput(
+                proc_type="ion_registration_complete",
+                schema_id="ion_registration_complete_v1",
+                data={
+                    "method": "automatic",
+                    "airway_landmarks": ["carina", "lobar carinas"],
+                    "fiducial_error_mm": 1.2,
+                    "alignment_quality": "excellent",
+                },
+                cpt_candidates=["31627"],
+            ),
+            ProcedureInput(
+                proc_type="ebus_tbna",
+                schema_id="ebus_tbna_v1",
+                data={
+                    "needle_gauge": "22G",
+                    "stations": [
+                        {
+                            "station_name": "4R",
+                            "size_mm": 12,
+                            "passes": 3,
+                            "echo_features": "heterogeneous",
+                            "biopsy_tools": ["TBNA"],
+                            "rose_result": "adequate; lymphoid",
+                        },
+                        {
+                            "station_name": "7",
+                            "size_mm": 15,
+                            "passes": 4,
+                            "echo_features": "round, distinct margins",
+                            "biopsy_tools": ["TBNA"],
+                            "rose_result": "adequate; pending cytology",
+                        },
+                    ],
+                    "rose_available": True,
+                    "overall_rose_diagnosis": "Pending",
+                },
+            ),
+            ProcedureInput(
+                proc_type="radial_ebus_sampling",
+                schema_id="radial_ebus_sampling_v1",
+                data={
+                    "guide_sheath_diameter": "1.9 mm",
+                    "ultrasound_pattern": "concentric",
+                    "lesion_size_mm": 18,
+                    "sampling_tools": ["forceps", "brush"],
+                    "passes_per_tool": "3 forceps, 2 brush",
+                    "fluoro_used": True,
+                    "rose_result": "adequate",
+                    "specimens": ["cytology", "histology"],
+                    "cxr_ordered": False,
+                },
+            ),
+            ProcedureInput(
+                proc_type="blvr_valve_placement",
+                schema_id="blvr_valve_placement_v1",
+                data={
+                    "balloon_occlusion_performed": True,
+                    "chartis_used": True,
+                    "collateral_ventilation_absent": True,
+                    "lobes_treated": ["RUL", "RML"],
+                    "valves": [
+                        {"valve_type": "Zephyr", "valve_size": "4.0", "lobe": "RUL", "segment": "RB1"},
+                        {"valve_type": "Zephyr", "valve_size": "4.0", "lobe": "RUL", "segment": "RB2"},
+                        {"valve_type": "Zephyr", "valve_size": "4.0", "lobe": "RML", "segment": "RB4"},
+                    ],
+                    "air_leak_reduction": "complete",
+                },
+            ),
+            ProcedureInput(
+                proc_type="blvr_post_procedure_protocol",
+                schema_id="blvr_post_procedure_protocol_v1",
+                data={
+                    "cxr_schedule": ["immediate post-procedure", "4 hours post-procedure"],
+                    "monitoring_plan": "Continuous pulse oximetry and telemetry for 72 hours",
+                },
+                cpt_candidates=["31647"],
+            ),
+        ],
+        sedation=SedationInfo(type="General"),
+    )
+
+
+def _cryo_bpf_bundle() -> ProcedureBundle:
+    return ProcedureBundle(
+        patient=PatientInfo(name="Pat Lee", age=59, sex="male"),
+        encounter=EncounterInfo(date="2024-10-01", attending="Dr. Cryo"),
+        procedures=[
+            ProcedureInput(
+                proc_type="bronchoscopy_core",
+                schema_id="bronchoscopy_shell_v1",
+                data={"airway_overview": "Diffuse secretions cleared.", "right_lung_overview": "Patent.", "left_lung_overview": "Patent."},
+                cpt_candidates=["31622"],
+            ),
+            ProcedureInput(
+                proc_type="transbronchial_cryobiopsy",
+                schema_id="transbronchial_cryobiopsy_v1",
+                data={
+                    "lung_segment": "RLL posterior segment",
+                    "num_samples": 3,
+                    "cryoprobe_size_mm": 1.9,
+                    "freeze_seconds": 5,
+                    "thaw_seconds": 10,
+                    "blocker_type": "Arndt blocker",
+                    "blocker_volume_ml": 6,
+                    "blocker_location": "RLL ostium",
+                    "tests": ["pathology", "microbiology"],
+                    "radial_vessel_check": True,
+                },
+            ),
+            ProcedureInput(
+                proc_type="bpf_localization_occlusion",
+                schema_id="bpf_localization_occlusion_v1",
+                data={
+                    "culprit_segment": "RB6",
+                    "balloon_type": "Fogarty",
+                    "balloon_size_mm": 7,
+                    "leak_reduction": "partial",
+                    "methylene_blue_used": True,
+                    "instillation_findings": "dye visualized at occluded airway",
+                },
+                cpt_candidates=["31641"],
+            ),
+            ProcedureInput(
+                proc_type="bpf_valve_air_leak",
+                schema_id="bpf_valve_air_leak_v1",
+                data={
+                    "etiology": "post-operative air leak",
+                    "culprit_location": "RB6",
+                    "valve_type": "Zephyr",
+                    "valve_size": "4.0",
+                    "valves_placed": 1,
+                    "leak_reduction": "complete",
+                },
+                cpt_candidates=["31641"],
+            ),
+        ],
+    )
 
 def test_structured_reporter_renders_templates_cleanly():
     bundle = _bronch_and_pleural_bundle()
@@ -506,3 +767,184 @@ def test_wll_peg_instructions():
     assert "Discharge Instructions for Tunneled Pleural Catheter" in note
     assert "PEG Discharge Instructions" in note
     assert "{{" not in note and "[" not in note and "None mL" not in note
+
+
+@pytest.mark.parametrize(
+    "bundle, expected_proc_types",
+    [
+        (_bronch_bal_tblbx_bundle(), {"bronchoscopy_core", "bal", "transbronchial_lung_biopsy"}),
+        (_pleural_combo_bundle(), {"thoracentesis", "chest_tube"}),
+        (_nav_ebus_blvr_bundle(), {"bronchoscopy_core", "robotic_ion_bronchoscopy", "ion_registration_complete", "ebus_tbna", "radial_ebus_sampling", "blvr_valve_placement", "blvr_post_procedure_protocol"}),
+        (_cryo_bpf_bundle(), {"bronchoscopy_core", "transbronchial_cryobiopsy", "bpf_localization_occlusion", "bpf_valve_air_leak"}),
+    ],
+)
+def test_metadata_tracks_cpts_and_labels(bundle: ProcedureBundle, expected_proc_types: set[str]):
+    structured = compose_structured_report_with_meta(bundle)
+    meta = structured.metadata
+
+    proc_types = {proc.proc_type for proc in meta.procedures}
+    assert proc_types == expected_proc_types
+    assert len(meta.procedures) == len(expected_proc_types)
+    assert all(proc.label for proc in meta.procedures)
+    assert all(proc.cpt_candidates for proc in meta.procedures)
+
+
+def test_metadata_embedding_block_is_valid_json():
+    extraction = {
+        "patient_age": 63,
+        "gender": "female",
+        "procedure_date": "2024-09-18",
+        "attending_name": "Dr. Attending",
+        "sedation_type": "Moderate",
+        "cpt_codes": [31622, 31624, 32555],
+        "procedures": [
+            {
+                "proc_type": "bronchoscopy_core",
+                "schema_id": "bronchoscopy_shell_v1",
+                "data": {
+                    "airway_overview": "Systematic airway survey completed.",
+                    "right_lung_overview": "Patent to subsegmental bronchi.",
+                    "left_lung_overview": "No obstruction.",
+                },
+            },
+            {
+                "proc_type": "bal",
+                "schema_id": "bal_v1",
+                "data": {
+                    "lung_segment": "RML medial segment",
+                    "instilled_volume_cc": 80,
+                    "returned_volume_cc": 45,
+                    "tests": ["cell count", "culture"],
+                },
+            },
+            {
+                "proc_type": "bronchial_washing",
+                "schema_id": "bronchial_washing_v1",
+                "data": {
+                    "airway_segment": "RML",
+                    "instilled_volume_ml": 20,
+                    "returned_volume_ml": 15,
+                    "tests": ["cytology"],
+                },
+            },
+        ],
+        "pleural_procedure_type": "Thoracentesis",
+        "pleural_guidance": "Ultrasound",
+        "pleural_volume_drained_ml": 900,
+        "pleural_fluid_appearance": "Serous",
+        "pleural_opening_pressure_measured": True,
+        "pleural_opening_pressure_cmh2o": -6,
+        "intercostal_space": "7th",
+        "entry_location": "mid-axillary",
+        "specimen_tests": ["cell count", "chemistry"],
+        "pleural_effusion_volume": "Moderate",
+        "pleural_echogenicity": "Anechoic",
+    }
+
+    structured = compose_structured_report_from_extraction_with_meta(extraction, embed_metadata=True)
+    text = structured.text
+    start_marker = "---REPORT_METADATA_JSON_START---"
+    end_marker = "---REPORT_METADATA_JSON_END---"
+    assert start_marker in text and end_marker in text
+
+    start_idx = text.index(start_marker) + len(start_marker)
+    end_idx = text.index(end_marker)
+    block = text[start_idx:end_idx].strip()
+    payload = json.loads(block)
+    assert isinstance(payload.get("procedures"), list)
+    assert len(payload["procedures"]) >= 4
+    assert structured.metadata.procedures
+
+
+def test_missing_fields_checklist_flags_critical():
+    bundle = ProcedureBundle(
+        patient=PatientInfo(name="Missing Fields", age=55, sex="female"),
+        encounter=EncounterInfo(date="2024-09-21", attending="Dr. Pleural"),
+        procedures=[
+            ProcedureInput(
+                proc_type="thoracentesis",
+                schema_id="thoracentesis_v1",
+                proc_id="thoracentesis_1",
+                data={
+                    "side": "left",
+                    "effusion_size": "small",
+                    "effusion_echogenicity": "anechoic",
+                    "intercostal_space": "6th",
+                    "entry_location": "mid-axillary",
+                    "specimen_tests": ["cell count"],
+                },
+            )
+        ],
+    )
+
+    issues = list_missing_critical_fields(bundle)
+    fields = {issue.field_path: issue for issue in issues}
+    assert "volume_removed_ml" in fields
+    assert "fluid_appearance" in fields
+    assert fields["volume_removed_ml"].severity == "critical"
+
+
+def test_patch_acknowledge_missing_fields():
+    base_bundle = ProcedureBundle(
+        patient=PatientInfo(name="Patch Case", age=60, sex="male"),
+        encounter=EncounterInfo(date="2024-09-22", attending="Dr. Pleural"),
+        procedures=[
+            ProcedureInput(
+                proc_type="thoracentesis",
+                schema_id="thoracentesis_v1",
+                proc_id="thoracentesis_1",
+                data={
+                    "side": "right",
+                    "effusion_size": "moderate",
+                    "effusion_echogenicity": "anechoic",
+                    "intercostal_space": "7th",
+                    "entry_location": "mid-axillary",
+                    "specimen_tests": ["protein"],
+                },
+            )
+        ],
+    )
+    patch = BundlePatch(
+        procedures=[
+            ProcedurePatch(
+                proc_id="thoracentesis_1",
+                updates={"volume_removed_ml": 900},
+                acknowledge_missing=["fluid_appearance"],
+            )
+        ]
+    )
+
+    patched = apply_bundle_patch(base_bundle, patch)
+    issues = list_missing_critical_fields(patched)
+    missing_paths = [issue.field_path for issue in issues]
+    assert "volume_removed_ml" not in missing_paths
+    assert "fluid_appearance" not in missing_paths
+
+
+def test_end_to_end_patch_and_rerender():
+    extraction = {
+        "pleural_procedure_type": "chest tube",
+        "pleural_side": "left",
+        "intercostal_space": "6th",
+        "entry_location": "mid-axillary",
+        "pleural_fluid_appearance": None,
+    }
+    initial = compose_structured_report_from_extraction_with_meta(extraction)
+    assert initial.metadata.procedures
+    proc_meta = initial.metadata.procedures[0]
+    assert proc_meta.has_critical_missing
+    proc_id = proc_meta.proc_id
+
+    patch = BundlePatch(
+        procedures=[
+            ProcedurePatch(
+                proc_id=proc_id,
+                updates={"fluid_removed_ml": 500, "fluid_appearance": "serous"},
+            )
+        ]
+    )
+    updated = compose_report_with_patch(extraction, patch)
+    assert "500 mL" in updated.text
+    assert "serous" in updated.text
+    updated_proc = updated.metadata.procedures[0]
+    assert not updated_proc.has_critical_missing

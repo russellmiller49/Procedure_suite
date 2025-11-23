@@ -31,3 +31,8 @@ optional_fields:
 proc_types:
   - thoracentesis_detailed
   - thoracentesis
+critical_fields:
+  - side
+  - volume_removed_ml
+  - fluid_appearance
+  - intercostal_space

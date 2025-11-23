@@ -16,3 +16,9 @@ optional_fields:
   - notes
 proc_types:
   - blvr_valve_placement
+critical_fields:
+  - lobes_treated
+  - valves[].valve_size
+  - valves[].valve_type
+  - balloon_occlusion_performed
+  - chartis_used

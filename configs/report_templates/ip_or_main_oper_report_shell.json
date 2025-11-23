@@ -15,7 +15,8 @@
     "estimated_blood_loss",
     "complications_text",
     "specimens_text",
-    "impression_plan"
+    "impression_plan",
+    "cpt_summary"
   ],
   "proc_types": []
 }

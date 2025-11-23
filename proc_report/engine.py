@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import hashlib
 import json
 import re
 from dataclasses import dataclass, field
 from copy import deepcopy
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Sequence, Tuple
+from typing import Any, Dict, Iterable, List, Sequence, Tuple, Literal
 
 from jinja2 import Environment, FileSystemLoader, Template, TemplateNotFound, select_autoescape
 from pydantic import BaseModel, ConfigDict, Field
@@ -16,6 +17,14 @@ from pydantic import BaseModel, ConfigDict, Field
 from proc_schemas.procedure_report import ProcedureReport, ProcedureCore, NLPTrace
 from proc_nlp.normalize_proc import normalize_dictation
 from proc_nlp.umls_linker import umls_link
+from proc_report.metadata import (
+    MissingFieldIssue,
+    ProcedureAutocodeResult,
+    ProcedureMetadata,
+    ReportMetadata,
+    StructuredReport,
+    metadata_to_dict,
+)
 
 _TEMPLATE_ROOT = Path(__file__).parent / "templates"
 _TEMPLATE_MAP = {
@@ -194,6 +203,8 @@ class TemplateMeta:
     optional_fields: list[str]
     template: Template
     proc_types: list[str] = field(default_factory=list)
+    critical_fields: list[str] = field(default_factory=list)
+    recommended_fields: list[str] = field(default_factory=list)
     template_path: Path | None = None
 
 
@@ -245,6 +256,8 @@ class TemplateRegistry:
                 optional_fields=payload.get("optional_fields", []),
                 template=template,
                 proc_types=payload.get("proc_types", []),
+                critical_fields=payload.get("critical_fields", []),
+                recommended_fields=payload.get("recommended_fields", []),
                 template_path=meta_path,
             )
             self._register(meta)
@@ -301,11 +314,15 @@ class PatientInfo(BaseModel):
     name: str | None = None
     age: int | None = None
     sex: str | None = None
+    patient_id: str | None = None
+    mrn: str | None = None
 
 
 class EncounterInfo(BaseModel):
     model_config = ConfigDict(extra="ignore")
     date: str | None = None
+    encounter_id: str | None = None
+    location: str | None = None
     referred_physician: str | None = None
     attending: str | None = None
     assistant: str | None = None
@@ -1033,6 +1050,7 @@ class OperativeShellInputs(BaseModel):
     preop_diagnosis_text: str | None = None
     postop_diagnosis_text: str | None = None
     procedures_summary: str | None = None
+    cpt_summary: str | None = None
     estimated_blood_loss: str | None = None
     complications_text: str | None = None
     specimens_text: str | None = None
@@ -1043,6 +1061,7 @@ class ProcedureInput(BaseModel):
     model_config = ConfigDict(extra="ignore")
     proc_type: str
     schema_id: str
+    proc_id: str | None = None
     data: dict[str, Any] | BaseModel
     cpt_candidates: List[str | int] = Field(default_factory=list)
 
@@ -1063,6 +1082,19 @@ class ProcedureBundle(BaseModel):
     complications_text: str | None = None
     specimens_text: str | None = None
     free_text_hint: str | None = None
+    acknowledged_omissions: dict[str, list[str]] = Field(default_factory=dict)
+
+
+class ProcedurePatch(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    proc_id: str
+    updates: dict[str, Any] = Field(default_factory=dict)
+    acknowledge_missing: list[str] = Field(default_factory=list)
+
+
+class BundlePatch(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    procedures: list[ProcedurePatch]
 
 
 class ReporterEngine:
@@ -1082,6 +1114,29 @@ class ReporterEngine:
         self.shell_template_id = shell_template_id
 
     def compose_report(self, bundle: ProcedureBundle, *, strict: bool = False) -> str:
+        structured = self.compose_report_with_metadata(bundle, strict=strict, embed_metadata=False)
+        return structured.text
+
+    def compose_report_with_metadata(
+        self,
+        bundle: ProcedureBundle,
+        *,
+        strict: bool = False,
+        embed_metadata: bool = False,
+        autocode_result: ProcedureAutocodeResult | None = None,
+    ) -> StructuredReport:
+        note, metadata = self._compose_internal(bundle, strict=strict, autocode_result=autocode_result)
+        if embed_metadata:
+            note = _embed_metadata(note, metadata)
+        return StructuredReport(text=note, metadata=metadata)
+
+    def _compose_internal(
+        self,
+        bundle: ProcedureBundle,
+        *,
+        strict: bool = False,
+        autocode_result: ProcedureAutocodeResult | None = None,
+    ) -> tuple[str, ReportMetadata]:
         sections: dict[str, list[str]] = {
             "HEADER": [],
             "PRE_ANESTHESIA": [],
@@ -1091,8 +1146,14 @@ class ReporterEngine:
         }
         procedure_labels: list[str] = []
         bronchoscopy_blocks: list[str] = []
-        bronchoscopy_shells: list[tuple[TemplateMeta, ProcedureInput]] = []
-        discharge_templates: list[str] = []
+        bronchoscopy_shells: list[tuple[TemplateMeta, ProcedureInput, ProcedureMetadata]] = []
+        discharge_templates: dict[str, list[ProcedureMetadata]] = {}
+        procedures_metadata: list[ProcedureMetadata] = []
+
+        autocode_payload = autocode_result or _try_proc_autocode(bundle)
+        autocode_codes = [str(code) for code in autocode_payload.get("cpt", [])] if autocode_payload else []
+        autocode_modifiers = [str(mod) for mod in autocode_payload.get("modifiers", [])] if autocode_payload else []
+        unmatched_autocode = set(autocode_codes)
 
         pre_meta = self.templates.get("ip_pre_anesthesia_assessment")
         if pre_meta and bundle.pre_anesthesia:
@@ -1102,22 +1163,67 @@ class ReporterEngine:
 
         for proc in self._sorted_procedures(bundle.procedures):
             metas = self.templates.find_for_procedure(proc.proc_type, proc.cpt_candidates)
+            label = metas[0].label if metas else proc.proc_type
+            section = metas[0].output_section if metas else ""
+            proc_meta = ProcedureMetadata(
+                proc_id=proc.proc_id or proc.schema_id,
+                proc_type=proc.proc_type,
+                label=label,
+                cpt_candidates=[],
+                icd_candidates=[],
+                modifiers=[],
+                section=section,
+                templates_used=[],
+                has_critical_missing=False,
+                missing_critical_fields=[],
+                extra={"data": _normalize_payload(proc.data)},
+            )
+            procedures_metadata.append(proc_meta)
+
             if not metas:
+                proc_meta.has_critical_missing = True
+                proc_meta.missing_critical_fields.append("template_missing")
                 continue
+
             for meta in metas:
+                if not proc_meta.label:
+                    proc_meta.label = meta.label
+                if not proc_meta.section:
+                    proc_meta.section = meta.output_section
+
                 if meta.id == "ip_general_bronchoscopy_shell":
-                    bronchoscopy_shells.append((meta, proc))
+                    cpts, modifiers = _merge_cpt_sources(proc, meta, autocode_payload)
+                    proc_meta.cpt_candidates = _merge_str_lists(proc_meta.cpt_candidates, cpts)
+                    proc_meta.modifiers = _merge_str_lists(proc_meta.modifiers, modifiers or autocode_modifiers)
+                    proc_meta.icd_candidates = _merge_str_lists(
+                        proc_meta.icd_candidates, autocode_payload.get("icd", []) if autocode_payload else []
+                    )
+                    proc_meta.templates_used = _merge_str_lists(proc_meta.templates_used, [meta.id])
+                    for code in cpts:
+                        unmatched_autocode.discard(code)
+                    bronchoscopy_shells.append((meta, proc, proc_meta))
                     continue
                 # Track discharge/instructions attachments based on procedures
                 if meta.id in ("tunneled_pleural_catheter_insert", "ipc_insert"):
-                    discharge_templates.append("pleurx_instructions")
+                    discharge_templates.setdefault("pleurx_instructions", []).append(proc_meta)
                 if meta.id == "blvr_valve_placement":
-                    discharge_templates.append("blvr_discharge_instructions")
+                    discharge_templates.setdefault("blvr_discharge_instructions", []).append(proc_meta)
                 if meta.id in ("chest_tube", "pigtail_catheter"):
-                    discharge_templates.append("chest_tube_discharge")
+                    discharge_templates.setdefault("chest_tube_discharge", []).append(proc_meta)
                 if meta.id in ("peg_placement",):
-                    discharge_templates.append("peg_discharge")
+                    discharge_templates.setdefault("peg_discharge", []).append(proc_meta)
+
                 rendered = self._render_procedure_template(meta, proc, bundle)
+                proc_meta.templates_used = _merge_str_lists(proc_meta.templates_used, [meta.id])
+                cpts, modifiers = _merge_cpt_sources(proc, meta, autocode_payload)
+                proc_meta.cpt_candidates = _merge_str_lists(proc_meta.cpt_candidates, cpts)
+                proc_meta.modifiers = _merge_str_lists(proc_meta.modifiers, modifiers or autocode_modifiers)
+                proc_meta.icd_candidates = _merge_str_lists(
+                    proc_meta.icd_candidates, autocode_payload.get("icd", []) if autocode_payload else []
+                )
+                for code in cpts:
+                    unmatched_autocode.discard(code)
+
                 if not rendered:
                     continue
                 if meta.output_section == "PROCEDURE_DETAILS":
@@ -1130,7 +1236,16 @@ class ReporterEngine:
         if bronchoscopy_blocks:
             joined_bronch = self._join_blocks(bronchoscopy_blocks)
             if bronchoscopy_shells:
-                for meta, proc in bronchoscopy_shells:
+                for meta, proc, proc_meta in bronchoscopy_shells:
+                    cpts, modifiers = _merge_cpt_sources(proc, meta, autocode_payload)
+                    proc_meta.cpt_candidates = _merge_str_lists(proc_meta.cpt_candidates, cpts)
+                    proc_meta.modifiers = _merge_str_lists(proc_meta.modifiers, modifiers or autocode_modifiers)
+                    proc_meta.icd_candidates = _merge_str_lists(
+                        proc_meta.icd_candidates, autocode_payload.get("icd", []) if autocode_payload else []
+                    )
+                    proc_meta.templates_used = _merge_str_lists(proc_meta.templates_used, [meta.id])
+                    for code in cpts:
+                        unmatched_autocode.discard(code)
                     rendered = self._render_procedure_template(
                         meta,
                         proc,
@@ -1148,12 +1263,14 @@ class ReporterEngine:
                 sections["PROCEDURE_DETAILS"].append(joined_bronch)
 
         # Attach discharge/education templates driven by procedure presence
-        for discharge_id in _dedupe_labels(discharge_templates):
+        for discharge_id, owners in discharge_templates.items():
             discharge_meta = self.templates.get(discharge_id)
             if discharge_meta:
                 rendered = self._render_payload(discharge_meta, {}, bundle)
                 if rendered:
                     sections.setdefault(discharge_meta.output_section, []).append(rendered)
+                    for owner in owners:
+                        owner.templates_used = _merge_str_lists(owner.templates_used, [discharge_id])
 
         shell = self.templates.get(self.shell_template_id) if self.shell_template_id else None
         if shell:
@@ -1163,11 +1280,14 @@ class ReporterEngine:
                 + sections.get("INSTRUCTIONS", [])
                 + sections.get("DISCHARGE", [])
             )
+            label_summary = ", ".join(_dedupe_labels(procedure_labels))
+            cpt_summary = _summarize_cpt_candidates(procedures_metadata, unmatched_autocode)
             shell_payload = OperativeShellInputs(
                 indication_text=bundle.indication_text,
                 preop_diagnosis_text=bundle.preop_diagnosis_text,
                 postop_diagnosis_text=bundle.postop_diagnosis_text,
-                procedures_summary=", ".join(_dedupe_labels(procedure_labels)),
+                procedures_summary=label_summary,
+                cpt_summary=cpt_summary,
                 estimated_blood_loss=bundle.estimated_blood_loss,
                 complications_text=bundle.complications_text,
                 specimens_text=bundle.specimens_text,
@@ -1179,12 +1299,14 @@ class ReporterEngine:
             rendered = self._render_payload(shell, shell_payload, bundle, extra_context=shell_context)
             if strict:
                 self._validate_style(rendered)
-            return rendered
+            metadata = self._build_metadata(bundle, procedures_metadata, autocode_payload)
+            return rendered, metadata
 
         note = self._join_sections(sections)
         if strict:
             self._validate_style(note)
-        return note
+        metadata = self._build_metadata(bundle, procedures_metadata, autocode_payload)
+        return note, metadata
 
     def _sorted_procedures(self, procedures: Sequence[ProcedureInput]) -> list[ProcedureInput]:
         return sorted(
@@ -1298,6 +1420,37 @@ class ReporterEngine:
         if errors:
             raise ValueError("Style validation failed: " + "; ".join(errors))
 
+    def _build_metadata(
+        self,
+        bundle: ProcedureBundle,
+        procedures_metadata: list[ProcedureMetadata],
+        autocode_payload: dict[str, Any] | ProcedureAutocodeResult | None,
+    ) -> ReportMetadata:
+        missing = list_missing_critical_fields(
+            bundle,
+            template_registry=self.templates,
+            schema_registry=self.schemas,
+        )
+        missing_by_proc: dict[str, list[str]] = {}
+        for issue in missing:
+            missing_by_proc.setdefault(issue.proc_id, []).append(issue.field_path)
+
+        for proc_meta in procedures_metadata:
+            proc_missing = missing_by_proc.get(proc_meta.proc_id, [])
+            proc_meta.missing_critical_fields = proc_missing
+            proc_meta.has_critical_missing = bool(proc_missing)
+
+        return ReportMetadata(
+            patient_id=bundle.patient.patient_id,
+            mrn=bundle.patient.mrn,
+            encounter_id=bundle.encounter.encounter_id,
+            date_of_procedure=_parse_date(bundle.encounter.date),
+            attending=bundle.encounter.attending,
+            location=bundle.encounter.location,
+            procedures=procedures_metadata,
+            autocode_payload=autocode_payload or {},
+        )
+
 
 def _dedupe_labels(labels: Sequence[str]) -> list[str]:
     seen: set[str] = set()
@@ -1308,6 +1461,272 @@ def _dedupe_labels(labels: Sequence[str]) -> list[str]:
         seen.add(label)
         ordered.append(label)
     return ordered
+
+
+def _merge_str_lists(existing: Sequence[str] | None, new: Sequence[str] | None) -> list[str]:
+    merged: list[str] = list(existing or [])
+    for item in new or []:
+        val = str(item)
+        if val and val not in merged:
+            merged.append(val)
+    return merged
+
+
+def _normalize_payload(payload: BaseModel | dict[str, Any] | None) -> dict[str, Any]:
+    if payload is None:
+        return {}
+    if isinstance(payload, BaseModel):
+        return payload.model_dump(exclude_none=True)
+    if isinstance(payload, dict):
+        return {k: v for k, v in payload.items() if v not in (None, "", [], {})}
+    return {"value": payload}
+
+
+def _merge_cpt_sources(
+    proc: ProcedureInput, meta: TemplateMeta, autocode_payload: dict[str, Any] | None
+) -> tuple[list[str], list[str]]:
+    candidates: list[str] = []
+    modifiers: list[str] = []
+
+    def _add(items: Sequence[Any] | None) -> None:
+        for item in items or []:
+            val = str(item)
+            if val and val not in candidates:
+                candidates.append(val)
+
+    _add(proc.cpt_candidates)
+    _add(meta.cpt_hints)
+
+    if autocode_payload:
+        auto_codes = [str(code) for code in autocode_payload.get("cpt", []) or []]
+        hinted = set(proc.cpt_candidates or []) | set(meta.cpt_hints or [])
+        if hinted:
+            auto_codes = [code for code in auto_codes if code in hinted]
+        _add(auto_codes)
+        for mod in autocode_payload.get("modifiers", []) or []:
+            mod_str = str(mod)
+            if mod_str and mod_str not in modifiers:
+                modifiers.append(mod_str)
+
+    return candidates, modifiers
+
+
+def _summarize_cpt_candidates(
+    procedures: Sequence[ProcedureMetadata], unmatched_autocode: set[str] | Sequence[str] | None
+) -> str:
+    parts: list[str] = []
+    for proc in procedures:
+        if not proc.cpt_candidates and not proc.modifiers:
+            continue
+        codes = ", ".join(proc.cpt_candidates) if proc.cpt_candidates else "None"
+        modifier_suffix = f" [modifiers: {', '.join(proc.modifiers)}]" if proc.modifiers else ""
+        label = proc.label or proc.proc_type
+        parts.append(f"{label}: {codes}{modifier_suffix}")
+    unmatched = list(unmatched_autocode or [])
+    if unmatched:
+        parts.append(f"Unmapped autocode: {', '.join(sorted(set(unmatched)))}")
+    return "; ".join(parts) if parts else "Not available (verify locally)"
+
+
+def _parse_date(value: str | None) -> dt.date | None:
+    if not value:
+        return None
+    try:
+        return dt.date.fromisoformat(value)
+    except Exception:
+        try:
+            return dt.datetime.fromisoformat(value).date()
+        except Exception:
+            return None
+
+
+def _embed_metadata(text: str, metadata: ReportMetadata) -> str:
+    payload = metadata_to_dict(metadata)
+    metadata_json = json.dumps(payload, sort_keys=True, indent=2)
+    return "\n\n".join(
+        [
+            text.strip(),
+            "---REPORT_METADATA_JSON_START---",
+            metadata_json,
+            "---REPORT_METADATA_JSON_END---",
+        ]
+    ).strip()
+
+
+def _coerce_model_data(
+    proc: ProcedureInput,
+    schema_registry: SchemaRegistry,
+) -> dict[str, Any]:
+    try:
+        model_cls = schema_registry.get(proc.schema_id)
+    except KeyError:
+        return _normalize_payload(proc.data)
+    try:
+        model = proc.data if isinstance(proc.data, BaseModel) else model_cls.model_validate(proc.data or {})
+        return model.model_dump(exclude_none=False)
+    except Exception:
+        return _normalize_payload(proc.data)
+
+
+def _get_field_value(payload: Any, path: str) -> Any:
+    current = payload
+    for token in path.split("."):
+        if not isinstance(current, (dict, BaseModel, list)):
+            return None
+        if "[" in token and token.endswith("]"):
+            key, idx_str = token[:-1].split("[", 1)
+            idx = int(idx_str)
+            current = current.get(key) if isinstance(current, dict) else getattr(current, key, None)
+            if not isinstance(current, list) or idx >= len(current):
+                return None
+            current = current[idx]
+        else:
+            current = current.get(token) if isinstance(current, dict) else getattr(current, token, None)
+    return current
+
+
+def _expand_list_paths(payload: dict[str, Any], field_path: str) -> list[str]:
+    if "[]" not in field_path:
+        return [field_path]
+    head, tail = field_path.split("[]", 1)
+    key = head.rstrip(".")
+    remainder = tail.lstrip(".")
+    value = _get_field_value(payload, key)
+    if not isinstance(value, list) or not value:
+        suffix = f".{remainder}" if remainder else ""
+        return [f"{key}[0]{suffix}"]
+    paths: list[str] = []
+    for idx in range(len(value)):
+        suffix = f".{remainder}" if remainder else ""
+        paths.append(f"{key}[{idx}]{suffix}")
+    return paths
+
+
+def _try_proc_autocode(bundle: ProcedureBundle) -> dict[str, Any] | None:
+    note = getattr(bundle, "free_text_hint", None)
+    if not note:
+        return None
+    try:
+        from proc_autocode.engine import autocode
+    except Exception:
+        return None
+    try:
+        report, _ = compose_report_from_text(note, {})
+        billing = autocode(report)
+    except Exception:
+        return None
+
+    codes = [line.cpt for line in getattr(billing, "codes", []) or []]
+    modifiers: list[str] = []
+    for line in getattr(billing, "codes", []) or []:
+        for mod in line.modifiers:
+            if mod not in modifiers:
+                modifiers.append(mod)
+    payload: dict[str, Any] = {
+        "cpt": codes,
+        "modifiers": modifiers,
+        "icd": [],
+        "notes": "Generated via proc_autocode.engine.autocode",
+    }
+    if hasattr(billing, "model_dump"):
+        payload["billing"] = billing.model_dump()
+    return payload
+
+
+def list_missing_critical_fields(
+    bundle: ProcedureBundle,
+    *,
+    template_registry: TemplateRegistry | None = None,
+    schema_registry: SchemaRegistry | None = None,
+) -> list[MissingFieldIssue]:
+    templates = template_registry or default_template_registry()
+    schemas = schema_registry or default_schema_registry()
+    issues: list[MissingFieldIssue] = []
+    acknowledged = {k: set(v) for k, v in (bundle.acknowledged_omissions or {}).items()}
+
+    for proc in bundle.procedures:
+        metas = templates.find_for_procedure(proc.proc_type, proc.cpt_candidates)
+        if not metas:
+            continue
+        payload = _coerce_model_data(proc, schemas)
+        proc_id = proc.proc_id or proc.schema_id
+        acknowledged_fields = acknowledged.get(proc_id, set())
+        for meta in metas:
+            critical_fields = [(field, "critical") for field in meta.critical_fields]
+            recommended_fields = [(field, "recommended") for field in meta.recommended_fields]
+            for field_path, severity in critical_fields + recommended_fields:
+                for expanded_path in _expand_list_paths(payload, field_path):
+                    if expanded_path in acknowledged_fields:
+                        continue
+                    value = _get_field_value(payload, expanded_path)
+                    if value in (None, "", [], {}):
+                        message = f"Missing {expanded_path} for {meta.label or proc.proc_type}"
+                        issues.append(
+                            MissingFieldIssue(
+                                proc_id=proc_id,
+                                proc_type=proc.proc_type,
+                                template_id=meta.id,
+                                field_path=expanded_path,
+                                severity=severity,  # type: ignore[arg-type]
+                                message=message,
+                            )
+                        )
+    return issues
+
+
+def apply_bundle_patch(bundle: ProcedureBundle, patch: BundlePatch) -> ProcedureBundle:
+    patch_map = {p.proc_id: p for p in patch.procedures}
+    updated_procs: list[ProcedureInput] = []
+    ack_map: dict[str, list[str]] = deepcopy(bundle.acknowledged_omissions)
+
+    for proc in bundle.procedures:
+        proc_id = proc.proc_id or proc.schema_id
+        patch_item = patch_map.get(proc_id)
+        if not patch_item:
+            updated_procs.append(proc)
+            continue
+        data = _normalize_payload(proc.data)
+        merged = {**data, **(patch_item.updates or {})}
+        if isinstance(proc.data, BaseModel):
+            try:
+                new_data = proc.data.__class__(**merged)
+            except Exception:
+                new_data = merged
+        else:
+            new_data = merged
+        updated_procs.append(
+            ProcedureInput(
+                proc_type=proc.proc_type,
+                schema_id=proc.schema_id,
+                proc_id=proc_id,
+                data=new_data,
+                cpt_candidates=list(proc.cpt_candidates),
+            )
+        )
+        if patch_item.acknowledge_missing:
+            ack_list = ack_map.get(proc_id, [])
+            for field in patch_item.acknowledge_missing:
+                if field not in ack_list:
+                    ack_list.append(field)
+            ack_map[proc_id] = ack_list
+
+    return ProcedureBundle(
+        patient=bundle.patient,
+        encounter=bundle.encounter,
+        procedures=updated_procs,
+        sedation=bundle.sedation,
+        anesthesia=bundle.anesthesia,
+        pre_anesthesia=bundle.pre_anesthesia,
+        indication_text=bundle.indication_text,
+        preop_diagnosis_text=bundle.preop_diagnosis_text,
+        postop_diagnosis_text=bundle.postop_diagnosis_text,
+        impression_plan=bundle.impression_plan,
+        estimated_blood_loss=bundle.estimated_blood_loss,
+        complications_text=bundle.complications_text,
+        specimens_text=bundle.specimens_text,
+        free_text_hint=bundle.free_text_hint,
+        acknowledged_omissions=ack_map,
+    )
 
 
 def _load_procedure_order(order_path: Path | None = None) -> dict[str, int]:
@@ -1410,9 +1829,13 @@ def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
         name=raw.get("patient_name"),
         age=raw.get("patient_age"),
         sex=raw.get("gender") or raw.get("sex"),
+        patient_id=raw.get("patient_id") or raw.get("patient_identifier"),
+        mrn=raw.get("mrn") or raw.get("patient_mrn"),
     )
     encounter = EncounterInfo(
         date=raw.get("procedure_date"),
+        encounter_id=raw.get("encounter_id") or raw.get("visit_id"),
+        location=raw.get("location") or raw.get("procedure_location"),
         referred_physician=raw.get("referred_physician"),
         attending=raw.get("attending_name"),
         assistant=raw.get("fellow_name") or raw.get("assistant_name"),
@@ -1434,10 +1857,12 @@ def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
     procedures: list[ProcedureInput] = []
 
     def _append_proc(proc_type: str, schema_id: str, data: dict | BaseModel) -> None:
+        proc_id = f"{proc_type}_{len(procedures) + 1}"
         procedures.append(
             ProcedureInput(
                 proc_type=proc_type,
                 schema_id=schema_id,
+                proc_id=proc_id,
                 data=data,
                 cpt_candidates=list(cpt_codes) if isinstance(cpt_codes, list) else [],
             )
@@ -1454,8 +1879,18 @@ def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
                 proc_type = entry.get("proc_type")
                 schema_id = entry.get("schema_id")
                 data = entry.get("data", {})
+                proc_id = entry.get("proc_id")
                 if proc_type and schema_id:
-                    _append_proc(proc_type, schema_id, data)
+                    identifier = proc_id or f"{proc_type}_{len(procedures) + 1}"
+                    procedures.append(
+                        ProcedureInput(
+                            proc_type=proc_type,
+                            schema_id=schema_id,
+                            proc_id=identifier,
+                            data=data,
+                            cpt_candidates=list(cpt_codes) if isinstance(cpt_codes, list) else [],
+                        )
+                    )
 
     # Pre-anesthesia if available
     asa_status = raw.get("asa_class")
@@ -1814,6 +2249,7 @@ def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
         estimated_blood_loss=str(raw.get("ebl_ml")) if raw.get("ebl_ml") is not None else None,
         specimens_text=raw.get("specimens_text"),
         pre_anesthesia=pre_anesthesia,
+        free_text_hint=raw.get("source_text") or raw.get("note_text") or raw.get("raw_note"),
     )
     return bundle
 
@@ -1846,19 +2282,111 @@ def compose_structured_report_from_extraction(
     return compose_structured_report(bundle, template_registry, schema_registry, strict=strict)
 
 
+def compose_structured_report_with_meta(
+    bundle: ProcedureBundle,
+    template_registry: TemplateRegistry | None = None,
+    schema_registry: SchemaRegistry | None = None,
+    *,
+    strict: bool = False,
+    embed_metadata: bool = False,
+) -> StructuredReport:
+    templates = template_registry or default_template_registry()
+    schemas = schema_registry or default_schema_registry()
+    engine = ReporterEngine(
+        templates,
+        schemas,
+        procedure_order=_load_procedure_order(),
+    )
+    return engine.compose_report_with_metadata(bundle, strict=strict, embed_metadata=embed_metadata)
+
+
+def compose_structured_report_from_extraction_with_meta(
+    extraction: Any,
+    template_registry: TemplateRegistry | None = None,
+    schema_registry: SchemaRegistry | None = None,
+    *,
+    strict: bool = False,
+    embed_metadata: bool = False,
+) -> StructuredReport:
+    bundle = build_procedure_bundle_from_extraction(extraction)
+    return compose_structured_report_with_meta(
+        bundle,
+        template_registry=template_registry,
+        schema_registry=schema_registry,
+        strict=strict,
+        embed_metadata=embed_metadata,
+    )
+
+
+def get_missing_critical_fields_from_extraction(extraction: Any) -> list[MissingFieldIssue]:
+    bundle = build_procedure_bundle_from_extraction(extraction)
+    return list_missing_critical_fields(bundle)
+
+
+def compose_report_with_patch(extraction: Any, patch: BundlePatch, *, embed_metadata: bool = False) -> StructuredReport:
+    bundle = build_procedure_bundle_from_extraction(extraction)
+    patched = apply_bundle_patch(bundle, patch)
+    return compose_structured_report_with_meta(patched, embed_metadata=embed_metadata)
+
+
+def get_coder_view(bundle: ProcedureBundle) -> dict[str, Any]:
+    structured = compose_structured_report_with_meta(bundle)
+    meta = structured.metadata
+    return {
+        "global": {
+            "patient_id": meta.patient_id,
+            "mrn": meta.mrn,
+            "encounter_id": meta.encounter_id,
+            "date_of_procedure": meta.date_of_procedure.isoformat() if meta.date_of_procedure else None,
+            "attending": meta.attending,
+            "location": meta.location,
+        },
+        "procedures": [
+            {
+                "proc_type": proc.proc_type,
+                "label": proc.label,
+                "cpt_candidates": proc.cpt_candidates,
+                "modifiers": proc.modifiers,
+                "templates_used": proc.templates_used,
+                "section": proc.section,
+                "missing": proc.missing_critical_fields,
+                "data": proc.extra.get("data"),
+            }
+            for proc in meta.procedures
+        ],
+        "autocode": meta.autocode_payload,
+    }
+
+
 __all__ = [
     "compose_report_from_text",
     "compose_report_from_form",
     "compose_structured_report",
+    "compose_structured_report_from_extraction",
+    "compose_structured_report_with_meta",
+    "compose_structured_report_from_extraction_with_meta",
+    "compose_report_with_patch",
+    "get_missing_critical_fields_from_extraction",
     "ReporterEngine",
     "TemplateRegistry",
     "TemplateMeta",
     "SchemaRegistry",
     "ProcedureBundle",
     "ProcedureInput",
+    "BundlePatch",
+    "ProcedurePatch",
     "PatientInfo",
     "EncounterInfo",
     "SedationInfo",
     "AnesthesiaInfo",
     "build_procedure_bundle_from_extraction",
+    "default_template_registry",
+    "default_schema_registry",
+    "list_missing_critical_fields",
+    "apply_bundle_patch",
+    "get_coder_view",
+    "StructuredReport",
+    "ReportMetadata",
+    "ProcedureMetadata",
+    "MissingFieldIssue",
 ]
