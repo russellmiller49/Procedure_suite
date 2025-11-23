@@ -1,3 +1,39 @@
-from .engine import compose_report_from_text, compose_report_from_form
+from .engine import (
+    AnesthesiaInfo,
+    EncounterInfo,
+    PatientInfo,
+    ProcedureBundle,
+    ProcedureInput,
+    ReporterEngine,
+    SchemaRegistry,
+    SedationInfo,
+    TemplateMeta,
+    TemplateRegistry,
+    compose_report_from_form,
+    compose_report_from_text,
+    compose_structured_report,
+    compose_structured_report_from_extraction,
+    build_procedure_bundle_from_extraction,
+    default_schema_registry,
+    default_template_registry,
+)
 
-__all__ = ["compose_report_from_text", "compose_report_from_form"]
+__all__ = [
+    "compose_report_from_text",
+    "compose_report_from_form",
+    "compose_structured_report",
+    "compose_structured_report_from_extraction",
+    "build_procedure_bundle_from_extraction",
+    "default_template_registry",
+    "default_schema_registry",
+    "ReporterEngine",
+    "TemplateRegistry",
+    "TemplateMeta",
+    "SchemaRegistry",
+    "ProcedureBundle",
+    "ProcedureInput",
+    "PatientInfo",
+    "EncounterInfo",
+    "SedationInfo",
+    "AnesthesiaInfo",
+]

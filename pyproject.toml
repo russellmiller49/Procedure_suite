@@ -24,6 +24,7 @@ dependencies = [
   "httpx>=0.27,<1",
   "google-auth>=2.23,<3",
   "google-generativeai>=0.8,<1",
+  "pyyaml>=6.0,<7",
 ]
 
 [project.optional-dependencies]
@@ -46,13 +47,16 @@ where = ["."]
 
 [tool.setuptools.package-data]
 "proc_report" = ["templates/*.jinja", "templates/.keep"]
-"configs" = ["**/*.yaml"]
+"configs" = ["**/*.yaml", "**/*.json", "**/*.j2"]
 "modules.api" = ["static/**/*"]
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"
 testpaths = ["tests"]
 pythonpath = ["."]
+markers = [
+    "ebus: mark test as EBUS-specific registry extraction test"
+]
 
 [tool.ruff]
 line-length = 100

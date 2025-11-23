@@ -1,0 +1,5 @@
+Robotic navigation bronchoscopy was performed using the Monarch platform. The pre-procedure CT-based plan was loaded and airway registration completed. The robotic catheter and sheath were advanced to the target under navigational guidance.{% if proc.radial_pattern %} Radial EBUS verified {{ proc.radial_pattern }} position.{% endif %}{% if proc.cbct_used %} CBCT/augmented fluoroscopy was used for trajectory confirmation.{% endif %} Sampling through the working channel was performed as detailed. Hemostasis was confirmed. The patient tolerated the procedure well.
+{% if proc.vent_mode %}Ventilation Parameters:
+Mode {{ proc.vent_mode }}, RR {{ proc.vent_rr }}, TV {{ proc.vent_tv_ml }} mL, PEEP {{ proc.vent_peep_cm_h2o }} cm H₂O, FiO₂ {{ proc.vent_fio2_pct }}%{% if proc.vent_flow_rate %}, Flow {{ proc.vent_flow_rate }}{% endif %}{% if proc.vent_pmean_cm_h2o is not none %}, Pmean {{ proc.vent_pmean_cm_h2o }} cm H₂O{% endif %}.
+{% endif %}
+{% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}

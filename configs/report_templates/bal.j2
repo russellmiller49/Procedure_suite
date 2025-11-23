@@ -1,0 +1,4 @@
+Bronchoalveolar lavage was performed in the {{ proc.lung_segment }}.
+A total of {{ proc.instilled_volume_cc }} mL of normal saline was instilled with
+{{ proc.returned_volume_cc }} mL returned.
+{% if proc.tests %}Samples were sent for {{ proc.tests | join(', ') }}.{% endif %}

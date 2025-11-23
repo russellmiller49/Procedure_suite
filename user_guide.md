@@ -38,3 +38,21 @@ Per-run override via --model flag.
 
 
 REGISTRY_SELF_CORRECTION_MODEL=gpt-5.1 python scripts/self_correct_registry.py --field sedation_type
+
+## Testing
+
+### Targeted EBUS Testing
+Run tests specifically for EBUS extraction logic and new fields:
+```bash
+pytest -m ebus
+```
+This runs the suite defined in `tests/registry/test_registry_extraction_ebus.py` against the synthetic dataset.
+
+## Registry Schema Updates (v0.5.0)
+
+New fields added to `IP_Registry.json`:
+- `sedation_reversal_given` (boolean)
+- `sedation_reversal_agent` (string)
+- `ebus_photodocumentation_complete` (boolean)
+
+These are extracted via heuristics in `modules/registry/engine.py`.

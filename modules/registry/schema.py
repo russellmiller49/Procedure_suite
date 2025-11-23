@@ -147,4 +147,25 @@ def _build_registry_model() -> type[BaseModel]:
 
 RegistryRecord = _build_registry_model()
 
-__all__ = ["RegistryRecord"]
+class BLVRData(BaseModel):
+    lobes: list[str]
+    valve_count: int | None
+    valve_details: list[dict[str, Any]]
+    manufacturer: str | None
+    chartis: dict[str, str]
+
+class DestructionEvent(BaseModel):
+    modality: str
+    site: str
+
+class EnhancedDilationEvent(BaseModel):
+    site: str
+    balloon_size: str | None
+    inflation_pressure: str | None
+
+class AspirationEvent(BaseModel):
+    site: str
+    volume: str | None
+    character: str | None
+
+__all__ = ["RegistryRecord", "BLVRData", "DestructionEvent", "EnhancedDilationEvent", "AspirationEvent"]

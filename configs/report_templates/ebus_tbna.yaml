@@ -1,0 +1,16 @@
+id: ebus_tbna
+label: EBUS-TBNA
+category: ebus
+cpt_hints: ["31652", "31653"]
+schema_id: ebus_tbna_v1
+output_section: PROCEDURE_DETAILS
+template_path: ebus_tbna.j2
+required_fields:
+  - stations
+optional_fields:
+  - needle_gauge
+  - elastography_used
+  - rose_available
+  - overall_rose_diagnosis
+proc_types:
+  - ebus_tbna

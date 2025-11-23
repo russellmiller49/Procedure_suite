@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict, Optional, List
 import re
 from datetime import datetime
 
@@ -22,6 +22,13 @@ __all__ = [
     "normalize_ebus_rose_result",
     "normalize_ebus_needle_gauge",
     "normalize_ebus_needle_type",
+    "normalize_list_field",
+    "normalize_anesthesia_agents",
+    "normalize_ebus_stations",
+    "normalize_nav_sampling_tools",
+    "normalize_follow_up_plan",
+    "normalize_cao_location",
+    "normalize_cao_tumor_location",
     "POSTPROCESSORS",
 ]
 
@@ -478,7 +485,180 @@ def normalize_ebus_needle_type(raw: Any) -> str | None:
     return None
 
 
-POSTPROCESSORS: Dict[str, Callable[[Any], Optional[str]]] = {
+def normalize_list_field(raw: Any) -> List[str] | None:
+    """Convert comma-separated strings or mixed input to a list of strings."""
+    if raw is None:
+        return None
+    if isinstance(raw, list):
+        # Already a list, clean and return
+        return [str(item).strip() for item in raw if item and str(item).strip()]
+    if isinstance(raw, str):
+        # Comma-separated string - split and clean
+        if not raw.strip():
+            return None
+        items = [item.strip() for item in raw.split(",") if item.strip()]
+        return items if items else None
+    # Try to convert to string and split
+    try:
+        s = str(raw).strip()
+        if not s:
+            return None
+        items = [item.strip() for item in s.split(",") if item.strip()]
+        return items if items else None
+    except Exception:
+        return None
+
+
+def normalize_anesthesia_agents(raw: Any) -> List[str] | None:
+    """Normalize anesthesia agents list, handling comma-separated strings."""
+    result = normalize_list_field(raw)
+    if result is None:
+        return None
+    # Normalize common variations
+    normalized = []
+    agent_mapping = {
+        "propofol": "Propofol",
+        "fentanyl": "Fentanyl",
+        "midazolam": "Midazolam",
+        "rocuronium": "Rocuronium",
+        "succinylcholine": "Succinylcholine",
+        "remifentanil": "Remifentanil",
+        "sevoflurane": "Sevoflurane",
+        "isoflurane": "Isoflurane",
+        "desflurane": "Desflurane",
+    }
+    for agent in result:
+        agent_lower = agent.lower().strip()
+        normalized_agent = agent_mapping.get(agent_lower, agent.strip())
+        if normalized_agent and normalized_agent not in normalized:
+            normalized.append(normalized_agent)
+    return normalized if normalized else None
+
+
+def normalize_ebus_stations(raw: Any) -> List[str] | None:
+    """Normalize EBUS stations list, handling comma-separated strings."""
+    result = normalize_list_field(raw)
+    if result is None:
+        return None
+    # Clean and validate station format (e.g., "4R", "7", "11L")
+    normalized = []
+    for station in result:
+        cleaned = station.strip().upper()
+        # Remove common prefixes/suffixes
+        cleaned = re.sub(r"^(STATION|STN|NODE)[\s:]*", "", cleaned, flags=re.IGNORECASE)
+        cleaned = cleaned.strip()
+        if cleaned:
+            normalized.append(cleaned)
+    return normalized if normalized else None
+
+
+def normalize_nav_sampling_tools(raw: Any) -> List[str] | None:
+    """Normalize navigation sampling tools list, handling comma-separated strings."""
+    result = normalize_list_field(raw)
+    if result is None:
+        return None
+    # Normalize tool names
+    normalized = []
+    tool_mapping = {
+        "forceps": "Forceps",
+        "needle": "Needle",
+        "brush": "Brush",
+        "cryoprobe": "Cryoprobe",
+        "cryo": "Cryoprobe",
+        "cryobiopsy": "Cryoprobe",
+    }
+    for tool in result:
+        tool_lower = tool.lower().strip()
+        normalized_tool = tool_mapping.get(tool_lower, tool.strip().title())
+        if normalized_tool and normalized_tool not in normalized:
+            normalized.append(normalized_tool)
+    return normalized if normalized else None
+
+
+def normalize_follow_up_plan(raw: Any) -> List[str] | None:
+    """Normalize follow-up plan list, handling comma-separated strings."""
+    result = normalize_list_field(raw)
+    if result is None:
+        return None
+    # Clean and return as-is (follow-up plans are free text)
+    normalized = [item.strip() for item in result if item.strip()]
+    return normalized if normalized else None
+
+
+def normalize_cao_location(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip()
+    if not text:
+        return None
+    
+    # Allowed values: ["None", "Trachea", "Mainstem", "Lobar"]
+    # Hierarchy of severity/centrality: Trachea > Mainstem > Lobar > None
+    
+    # Check for presence of keywords in the text
+    lower_text = text.lower()
+    if "trachea" in lower_text:
+        return "Trachea"
+    if "mainstem" in lower_text:
+        return "Mainstem"
+    if "lobar" in lower_text:
+        return "Lobar"
+    if "none" in lower_text:
+        return "None"
+        
+    # If exact match with Enum
+    if text in {"Trachea", "Mainstem", "Lobar", "None"}:
+        return text
+        
+    return None
+
+def normalize_cao_tumor_location(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip()
+    if not text:
+        return None
+        
+    # Allowed: ["Trachea", "RMS", "LMS", "Bronchus Intermedius", "Lobar", "RUL", "RML", "RLL", "LUL", "LLL", "Mainstem"]
+    
+    lower_text = text.lower()
+    
+    # Priority 1: Trachea
+    if "trachea" in lower_text:
+        return "Trachea"
+        
+    # Priority 2: Mainstems
+    if "rms" in text or "right mainstem" in lower_text:
+        return "RMS"
+    if "lms" in text or "left mainstem" in lower_text:
+        return "LMS"
+    if "mainstem" in lower_text: # Generic mainstem if side not specified or both
+        return "Mainstem"
+        
+    # Priority 3: Bronchus Intermedius
+    if "bronchus intermedius" in lower_text or "bi" in lower_text.split(): # 'bi' might be risky as substring
+        return "Bronchus Intermedius"
+        
+    # Priority 4: Lobes
+    lobes = {
+        "rul": "RUL", "right upper": "RUL",
+        "rml": "RML", "right middle": "RML",
+        "rll": "RLL", "right lower": "RLL",
+        "lul": "LUL", "left upper": "LUL",
+        "lll": "LLL", "left lower": "LLL",
+        "lobar": "Lobar"
+    }
+    
+    for key, val in lobes.items():
+        if key in lower_text:
+            return val
+            
+    return None
+
+
+POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "sedation_type": normalize_sedation_type,
     "airway_type": normalize_airway_type,
     "pleural_guidance": map_pleural_guidance,
@@ -494,4 +674,11 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Optional[str]]] = {
     "ebus_rose_result": normalize_ebus_rose_result,
     "ebus_needle_gauge": normalize_ebus_needle_gauge,
     "ebus_needle_type": normalize_ebus_needle_type,
+    # List field normalizers - convert comma-separated strings to lists
+    "anesthesia_agents": normalize_anesthesia_agents,
+    "ebus_stations_sampled": normalize_ebus_stations,
+    "nav_sampling_tools": normalize_nav_sampling_tools,
+    "follow_up_plan": normalize_follow_up_plan,
+    "cao_location": normalize_cao_location,
+    "cao_tumor_location": normalize_cao_tumor_location,
 }
