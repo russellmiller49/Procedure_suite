@@ -1,0 +1,25 @@
+hcpcs_code,modifier,description,status_code,work_rvu,non_fac_pe_rvu,fac_pe_rvu,mp_rvu,total_non_fac_rvu,total_fac_rvu,pctc_indicator,global_surgery,mult_proc_indicator,bilateral_surgery,conversion_factor
+31622,,Diagnostic fiberoptic bronchoscopy,A,3.5,31.75,4.22,0.28,35.53,8.0,0,000,2,0,32.35
+31623,,Bronchoscopy; with brushing,A,4.02,32.69,4.74,0.31,37.02,9.07,0,000,2,0,32.35
+31624,,Bronchoscopy; with BAL,A,4.02,32.82,4.87,0.32,37.16,9.21,0,000,2,0,32.35
+31625,,Bronchoscopy; with biopsy(s),A,4.39,33.26,5.24,0.35,38.0,9.98,0,000,2,0,32.35
+31626,,Bronchoscopy; with TBNA,A,4.75,33.7,5.6,0.38,38.83,10.73,0,000,2,0,32.35
+31628,,Bronchoscopy; with transbronchial lung bx,A,5.03,34.01,5.88,0.4,39.44,11.31,0,000,2,0,32.35
+31629,,Bronchoscopy; with TBNA of mediastinal nodes,A,5.75,34.94,6.6,0.46,41.15,12.81,0,000,2,0,32.35
+31630,,Bronchoscopy; with tracheal/bronchial dilation,A,4.89,33.84,5.74,0.39,39.12,11.02,0,000,2,0,32.35
+31631,,Bronchoscopy; with placement of tracheal stent,A,9.0,38.83,10.23,0.72,48.55,19.95,0,000,2,0,32.35
+31632,,Bronchoscopy; with transbronchial lung biopsy,A,5.15,34.15,6.0,0.41,39.71,11.56,0,000,2,0,32.35
+31633,,Bronchoscopy; with transbronchial needle aspiration biopsy,A,5.75,34.94,6.6,0.46,41.15,12.81,0,000,2,0,32.35
+31634,,Bronchoscopy; with balloon occlusion,A,6.5,35.8,7.35,0.52,42.82,14.37,0,000,2,0,32.35
+31635,,Bronchoscopy; with removal of foreign body,A,5.5,34.65,6.35,0.44,40.59,12.29,0,000,2,0,32.35
+31645,,Bronchoscopy; with therapeutic aspiration,A,4.39,33.26,5.24,0.35,38.0,9.98,0,000,2,0,32.35
+31646,,Bronchoscopy; with bronchial valve placement,A,8.25,38.11,9.48,0.66,47.02,18.39,0,000,2,0,32.35
+31647,,Bronchoscopy; with balloon dilation,A,5.25,34.4,6.1,0.42,40.07,11.77,0,000,2,0,32.35
+31648,,Bronchoscopy; with excision of tumor,A,7.5,36.9,8.35,0.6,45.0,16.45,0,000,2,0,32.35
+31649,,Bronchoscopy; with removal of bronchial valve,A,6.0,35.2,6.85,0.48,41.68,13.33,0,000,2,0,32.35
+31651,,Bronchoscopy; with fiducial marker placement,A,4.75,33.7,5.6,0.38,38.83,10.73,0,000,2,0,32.35
+31652,,Endobronchial ultrasound (EBUS),A,6.25,35.55,7.1,0.5,42.3,13.85,0,000,2,0,32.35
+31653,,EBUS with TBNA; first lesion,A,7.0,36.35,7.85,0.56,43.91,15.41,0,000,2,0,32.35
+31654,,EBUS with TBNA; each additional lesion,A,3.0,31.25,3.72,0.24,34.49,6.96,0,ZZZ,3,0,32.35
+31660,,Bronchoscopy; with bronchial thermoplasty,A,10.5,40.3,11.73,0.84,51.64,23.07,0,000,2,0,32.35
+31661,,Bronchoscopy; with bronchial thermoplasty; subsequent sessions,A,10.0,39.8,11.23,0.8,50.6,22.03,0,000,2,0,32.35

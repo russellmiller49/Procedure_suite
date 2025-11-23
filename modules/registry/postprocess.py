@@ -29,6 +29,7 @@ __all__ = [
     "normalize_follow_up_plan",
     "normalize_cao_location",
     "normalize_cao_tumor_location",
+    "normalize_cpt_codes",
     "POSTPROCESSORS",
 ]
 
@@ -658,6 +659,68 @@ def normalize_cao_tumor_location(raw: Any) -> str | None:
     return None
 
 
+def normalize_cpt_codes(raw: Any) -> List[int | str] | None:
+    """Normalize CPT codes, handling comma-separated strings and converting to list of int/str."""
+    if raw is None:
+        return None
+    
+    # If already a list, normalize items
+    if isinstance(raw, list):
+        normalized = []
+        for item in raw:
+            if item is None:
+                continue
+            # Try to convert to int if it's a numeric string
+            if isinstance(item, str):
+                item_clean = item.strip()
+                if not item_clean:
+                    continue
+                try:
+                    normalized.append(int(item_clean))
+                except ValueError:
+                    # Keep as string if it contains non-numeric characters (e.g., modifiers)
+                    normalized.append(item_clean)
+            elif isinstance(item, int):
+                normalized.append(item)
+            else:
+                # Try to convert other types
+                try:
+                    normalized.append(int(item))
+                except (ValueError, TypeError):
+                    normalized.append(str(item).strip())
+        return normalized if normalized else None
+    
+    # If it's a string, split by comma and process
+    if isinstance(raw, str):
+        if not raw.strip():
+            return None
+        items = [item.strip() for item in raw.split(",") if item.strip()]
+        normalized = []
+        for item in items:
+            try:
+                normalized.append(int(item))
+            except ValueError:
+                # Keep as string if it contains non-numeric characters
+                normalized.append(item)
+        return normalized if normalized else None
+    
+    # Try to convert other types to string and split
+    try:
+        s = str(raw).strip()
+        if not s:
+            return None
+        items = [item.strip() for item in s.split(",") if item.strip()]
+        normalized = []
+        for item in items:
+            try:
+                normalized.append(int(item))
+            except ValueError:
+                normalized.append(item)
+        return normalized if normalized else None
+    except Exception:
+        return None
+
+
 POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "sedation_type": normalize_sedation_type,
     "airway_type": normalize_airway_type,
@@ -681,4 +744,5 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "follow_up_plan": normalize_follow_up_plan,
     "cao_location": normalize_cao_location,
     "cao_tumor_location": normalize_cao_tumor_location,
+    "cpt_codes": normalize_cpt_codes,
 }

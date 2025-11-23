@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 from pathlib import Path
-from typing import Any, Dict, List, Sequence
+from typing import Any, Dict, List, Sequence, Optional
 
 import yaml
 
@@ -11,10 +11,33 @@ from proc_schemas.procedure_report import ProcedureReport
 
 from .rules import RuleHit, derive_features, evaluate_rules, load_rulebook
 from .confidence import score_confidence
+from .ip_kb.ip_kb import IPCodingKnowledgeBase
+from .rvu.rvu_calculator import ProcedureRVUCalculator
 
 _ROOT = Path(__file__).resolve().parents[1]
 _NCCI_PATH = _ROOT / "configs" / "coding" / "ncci_edits.yaml"
 _PAYER_PATH = _ROOT / "configs" / "coding" / "payer_overrides.yaml"
+
+# Initialize singletons
+_KB_PATH = _ROOT / "proc_autocode" / "ip_kb" / "ip_coding_billing.v2_2.json"
+_RVU_DIR = _ROOT / "proc_autocode" / "rvu" / "data"
+_RVU_FILE = _RVU_DIR / "rvu_ip_2025.csv"
+_GPCI_FILE = _RVU_DIR / "gpci_2025.csv"
+
+_KB: Optional[IPCodingKnowledgeBase] = None
+_RVU_CALC: Optional[ProcedureRVUCalculator] = None
+
+def _get_kb() -> IPCodingKnowledgeBase:
+    global _KB
+    if _KB is None:
+        _KB = IPCodingKnowledgeBase(_KB_PATH)
+    return _KB
+
+def _get_rvu_calc() -> ProcedureRVUCalculator:
+    global _RVU_CALC
+    if _RVU_CALC is None:
+        _RVU_CALC = ProcedureRVUCalculator(_RVU_FILE, _GPCI_FILE)
+    return _RVU_CALC
 
 
 def autocode(report: ProcedureReport, payer: str | None = None) -> BillingResult:
@@ -22,10 +45,38 @@ def autocode(report: ProcedureReport, payer: str | None = None) -> BillingResult
     features = derive_features(report)
     hits = evaluate_rules(report, features, rulebook)
     codes = [_hit_to_line(hit, report) for hit in hits]
+    
+    # Apply bundling from KB
+    kb = _get_kb()
+    bundled_cpt_list = kb.apply_bundling([line.cpt for line in codes])
+    # Filter codes based on bundling
+    codes = [line for line in codes if line.cpt in bundled_cpt_list]
+
     _apply_rule_modifiers(codes, rulebook.get("modifiers", []), features)
     _apply_payer_overrides(codes, payer or report.meta.get("payer"))
     ncci_conflicts = _evaluate_ncci(codes)
+    
+    # Calculate RVUs
+    rvu_calc = _get_rvu_calc()
+    locality = report.meta.get("locality", "00")
+    setting = report.meta.get("setting", "facility")
+    
+    procedures = []
+    for i, line in enumerate(codes):
+        procedures.append({
+            "cpt_code": line.cpt,
+            "modifiers": line.modifiers,
+            "multiplier": 1.0 if i == 0 else 0.5  # Simple multiple procedure rule
+        })
+    
+    case_rvu = rvu_calc.calculate_case_rvu(procedures, locality, setting)
+    
+    # Attach RVU data to lines
+    for line, proc_rvu in zip(codes, case_rvu["breakdown"]):
+        line.rvu = proc_rvu
+
     confidence = score_confidence(features, codes, ncci_conflicts)
+    
     audit_trail = {
         "features": features,
         "matched_rules": [asdict(hit) for hit in hits],
@@ -34,12 +85,21 @@ def autocode(report: ProcedureReport, payer: str | None = None) -> BillingResult
         "confidence": confidence.details,
     }
     review_required = confidence.score < 0.6 or bool(ncci_conflicts)
+    
+    financials = {
+        "total_work_rvu": case_rvu["total_work_rvu"],
+        "estimated_payment": case_rvu["total_payment"],
+        "locality": locality,
+        "setting": setting
+    }
+
     return BillingResult(
         codes=codes,
         ncci_conflicts=ncci_conflicts,
         confidence=confidence.score,
         audit_trail=audit_trail,
         review_required=review_required,
+        financials=financials
     )
 
 

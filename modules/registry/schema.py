@@ -123,6 +123,7 @@ def _build_registry_model() -> type[BaseModel]:
 
     schema = json.loads(_SCHEMA_PATH.read_text())
     properties: dict[str, dict[str, Any]] = schema.get("properties", {})
+    properties.setdefault("linear_ebus_stations", {"type": "array", "items": {"type": "string"}})
 
     field_defs: dict[str, tuple[Any, Any]] = {}
     for name, prop in properties.items():

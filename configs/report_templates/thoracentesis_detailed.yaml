@@ -36,3 +36,33 @@ critical_fields:
   - volume_removed_ml
   - fluid_appearance
   - intercostal_space
+fields:
+  side:
+    required: true
+    critical: true
+  volume_removed_ml:
+    required: true
+    critical: true
+    validation:
+      warn_if:
+        op: lt
+        value: 50
+        message: Low drainage volume; confirm units
+  fluid_appearance:
+    required: true
+    critical: true
+  intercostal_space:
+    required: true
+    critical: true
+  entry_location:
+    required: true
+  pleural_guidance:
+    consistency_check:
+      target: volume_removed_ml
+      message: Document pleural guidance when drainage performed
+  cxr_ordered:
+    validation:
+      warn_if:
+        op: eq
+        value: false
+        message: Post-procedure CXR not ordered

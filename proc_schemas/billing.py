@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, Field
 
 
@@ -8,6 +8,7 @@ class BillingLine(BaseModel):
     modifiers: List[str] = Field(default_factory=list)
     reason: str
     evidence: List[Dict[str, Any]]
+    rvu: Optional[Dict[str, Any]] = None
 
 
 class BillingResult(BaseModel):
@@ -16,3 +17,4 @@ class BillingResult(BaseModel):
     confidence: float = 0.0
     audit_trail: Dict[str, Any] = Field(default_factory=dict)
     review_required: bool = False
+    financials: Optional[Dict[str, Any]] = None

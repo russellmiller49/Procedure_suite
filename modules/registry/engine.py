@@ -31,6 +31,7 @@ class RegistryEngine:
         sections = self.sectionizer.sectionize(note_text)
         evidence: Dict[str, list[Span]] = {}
         seed_data: Dict[str, Any] = {}
+        station_list, station_spans = self._extract_linear_station_spans(note_text)
 
         mrn_match = re.search(r"MRN:?\s*(\w+)", note_text, re.IGNORECASE)
         if mrn_match:
@@ -59,6 +60,8 @@ class RegistryEngine:
 
         # Apply heuristics for EBUS and new fields
         self._apply_ebus_heuristics(merged_data, note_text)
+        if station_list and not merged_data.get("linear_ebus_stations"):
+            merged_data["linear_ebus_stations"] = station_list
 
         # Defaults based on cross-field context
         sedation_val = merged_data.get("sedation_type")
@@ -86,14 +89,47 @@ class RegistryEngine:
             # evidence. The normalize helper already guards against malformed entries.
             for field, spans in evidence.items():
                 normalized_evidence.setdefault(field, []).extend(spans)
+            if station_spans:
+                normalized_evidence.setdefault("linear_ebus_stations", []).extend(station_spans)
 
         record.evidence = {field: spans for field, spans in normalized_evidence.items()}
         if explain:
             return record, record.evidence
         return record
 
+    def _extract_linear_station_spans(self, text: str) -> tuple[list[str], list[Span]]:
+        """Extract linear EBUS station mentions and their spans from raw text."""
+        pattern = r"(?mi)(?:station\s*)?(2R|2L|4R|4L|7|10R|10L|11R|11L)\s*[:\-]?"
+        stations: list[str] = []
+        spans: list[Span] = []
+        for match in re.finditer(pattern, text):
+            station = match.group(1).upper()
+            if station not in stations:
+                stations.append(station)
+            spans.append(Span(text=match.group(0).strip(), start=match.start(), end=match.end()))
+        return stations, spans
+
     def _apply_ebus_heuristics(self, data: dict[str, Any], text: str) -> None:
         """Apply regex/keyword heuristics for EBUS, sedation reversal, and basic BLVR."""
+        lowered = text.lower()
+        if not data.get("nav_platform"):
+            if "electromagnetic navigation" in lowered or "emn" in lowered:
+                data["nav_platform"] = "emn"
+            elif "ion" in lowered:
+                data["nav_platform"] = "ion"
+            elif "monarch" in lowered or "auris" in lowered:
+                data["nav_platform"] = "monarch"
+
+        if data.get("nav_rebus_used") is None:
+            if "radial ebus" in lowered or "rebus" in lowered:
+                data["nav_rebus_used"] = True
+        if not data.get("sedation_type"):
+            if "moderate sedation" in lowered:
+                data["sedation_type"] = "Moderate"
+            elif "deep sedation" in lowered:
+                data["sedation_type"] = "Deep"
+            elif "general anesthesia" in lowered:
+                data["sedation_type"] = "General"
         
         # --- EBUS Heuristics ---
         # ebus_scope_brand

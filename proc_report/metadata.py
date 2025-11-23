@@ -43,6 +43,8 @@ class ReportMetadata:
 class StructuredReport:
     text: str
     metadata: ReportMetadata
+    warnings: list[str] = field(default_factory=list)
+    issues: list["MissingFieldIssue"] = field(default_factory=list)
 
 
 @dataclass

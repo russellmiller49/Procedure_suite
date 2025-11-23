@@ -87,13 +87,27 @@
                         
                         <!-- Coder Options -->
                         <div id="opt-coder" class="mode-opt">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch mb-2">
                                 <input class="form-check-input" type="checkbox" id="coder-explain">
                                 <label class="form-check-label" for="coder-explain">Explain Reasoning</label>
                             </div>
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch mb-3">
                                 <input class="form-check-input" type="checkbox" id="coder-weak-sedation">
                                 <label class="form-check-label" for="coder-weak-sedation">Allow Weak Sedation Docs</label>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <label for="coder-locality" class="form-label small">Locality</label>
+                                    <input type="text" class="form-control form-control-sm" id="coder-locality" value="00" placeholder="00 (National)">
+                                    <small class="text-muted">e.g., 00 for National</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="coder-setting" class="form-label small">Setting</label>
+                                    <select class="form-select form-select-sm" id="coder-setting">
+                                        <option value="facility" selected>Facility</option>
+                                        <option value="non-facility">Non-Facility</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 

@@ -1,6 +1,12 @@
+import os
 import pytest
 
 from proc_report import engine as report_engine
+
+# Keep tests offline-friendly by default.
+os.environ.setdefault("REGISTRY_USE_STUB_LLM", "1")
+os.environ.setdefault("GEMINI_OFFLINE", "1")
+os.environ.setdefault("DISABLE_STATIC_FILES", "1")
 
 
 def _fake_umls_link(_: str):

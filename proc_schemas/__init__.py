@@ -1,7 +1,10 @@
 """Public schema exports for Procedure Suite."""
 
-from .procedure_report import ProcedureReport, ProcedureCore, TargetSpecimen, NLPTrace
+from . import clinical
+from .procedure_report import NLPTrace, ProcedureCore, ProcedureReport, TargetSpecimen
 from .billing import BillingLine, BillingResult
+
+from .clinical import *  # noqa: F401,F403
 
 __all__ = [
     "ProcedureReport",
@@ -11,3 +14,4 @@ __all__ = [
     "BillingLine",
     "BillingResult",
 ]
+__all__ += clinical.__all__

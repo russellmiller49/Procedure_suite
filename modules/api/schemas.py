@@ -2,20 +2,22 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any
 
 from pydantic import BaseModel, Field
 
 from modules.coder.schema import CoderOutput
 from modules.common.spans import Span
 from modules.registry.schema import RegistryRecord
-from modules.reporter.schema import StructuredReport
+from proc_report import BundlePatch, MissingFieldIssue, ProcedureBundle
 
 
 class CoderRequest(BaseModel):
     note: str
     allow_weak_sedation_docs: bool = False
     explain: bool = False
+    locality: str = "00"
+    setting: str = "facility"
 
 
 CoderResponse = CoderOutput
@@ -30,14 +32,31 @@ class RegistryResponse(RegistryRecord):
     evidence: dict[str, list[Span]] = Field(default_factory=dict)
 
 
-class ReporterRequest(BaseModel):
-    note: str
-    template: Literal["bronchoscopy", "pleural", "blvr", "knowledge", "comprehensive", "comprehensive_ip"] = "bronchoscopy"
+class VerifyRequest(BaseModel):
+    extraction: dict[str, Any]
+    strict: bool = False
 
 
-class ReporterResponse(BaseModel):
-    report: str
-    struct: StructuredReport
+class VerifyResponse(BaseModel):
+    bundle: ProcedureBundle
+    issues: list[MissingFieldIssue] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+    inference_notes: list[str] = Field(default_factory=list)
+
+
+class RenderRequest(BaseModel):
+    bundle: ProcedureBundle
+    patch: BundlePatch
+    embed_metadata: bool = False
+    strict: bool = False
+
+
+class RenderResponse(BaseModel):
+    bundle: ProcedureBundle
+    markdown: str | None
+    issues: list[MissingFieldIssue] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+    inference_notes: list[str] = Field(default_factory=list)
 
 
 class KnowledgeMeta(BaseModel):
@@ -50,7 +69,9 @@ __all__ = [
     "CoderResponse",
     "RegistryRequest",
     "RegistryResponse",
-    "ReporterRequest",
-    "ReporterResponse",
+    "VerifyRequest",
+    "VerifyResponse",
+    "RenderRequest",
+    "RenderResponse",
     "KnowledgeMeta",
 ]

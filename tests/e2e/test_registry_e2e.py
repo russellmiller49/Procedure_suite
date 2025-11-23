@@ -13,7 +13,7 @@ def test_complex_tracheal_extraction():
     record = engine.run(note_text)
 
     assert record.patient_mrn == "30020568"
-    assert record.version == "0.4.0"
+    assert record.version == "0.5.0"
     data = record.model_dump()
     assert "patient_mrn" in data
     assert "follow_up_plan" in data

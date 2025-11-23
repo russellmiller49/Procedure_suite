@@ -117,9 +117,15 @@ Before any deeper work, run this agent to:
    - **Never silently drop data**: If an element cannot be parsed reliably, include a fallback field (e.g., `unparsed_segments` in the evidence object) or add a TODO and log.
    - **Hybrid Extraction**: Extraction logic (`modules/registry/engine.py`) combines LLM-based extraction with regex/keyword heuristics for specific fields (e.g., EBUS details, sedation reversal, photodocumentation). Ensure heuristics are updated if schema field semantics change.
 
-6. **Validation**: Use `make validate-registry` to validate extraction against ground truth. Use `make analyze-registry-errors` to analyze mismatches.
+6. **Common LLM response issues to handle**:
+   - **List fields returned as comma-separated strings**: LLMs (especially Gemini 2.5, Codex, and Gemini CLI) sometimes return list fields (e.g., `cpt_codes`, `anesthesia_agents`, `ebus_stations_sampled`) as comma-separated strings (e.g., `"31654, 31629, 31627"`) instead of proper JSON arrays. This causes Pydantic validation errors.
+   - **Solution**: All list fields must have normalizers in `modules/registry/postprocess.py` that convert comma-separated strings to lists. The `POSTPROCESSORS` dictionary in `postprocess.py` maps field names to normalization functions that run before Pydantic validation in `engine.py`.
+   - **When adding new list fields**: Always add a corresponding normalizer function (e.g., `normalize_cpt_codes`, `normalize_anesthesia_agents`) and register it in `POSTPROCESSORS`. See existing normalizers like `normalize_list_field` for a template.
+   - **Testing**: When updating prompts or LLM models, test that list fields are properly normalized even when the LLM returns comma-separated strings.
 
-7. **Self-correction**: Use `make self-correct-registry FIELD=<field_name>` to get LLM suggestions for improving extraction rules (outputs to `reports/registry_self_correction_<field>.md`).
+7. **Validation**: Use `make validate-registry` to validate extraction against ground truth. Use `make analyze-registry-errors` to analyze mismatches.
+
+8. **Self-correction**: Use `make self-correct-registry FIELD=<field_name>` to get LLM suggestions for improving extraction rules (outputs to `reports/registry_self_correction_<field>.md`).
 
 ### Outputs
 

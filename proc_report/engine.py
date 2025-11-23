@@ -8,13 +8,31 @@ import json
 import re
 from dataclasses import dataclass, field
 from copy import deepcopy
+import functools
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Sequence, Tuple, Literal
 
 from jinja2 import Environment, FileSystemLoader, Template, TemplateNotFound, select_autoescape
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel
 
+import proc_schemas.clinical.airway as airway_schemas
+import proc_schemas.clinical.pleural as pleural_schemas
+from proc_schemas.clinical import (
+    AnesthesiaInfo,
+    BundlePatch,
+    EncounterInfo,
+    OperativeShellInputs,
+    PatientInfo,
+    PreAnesthesiaAssessment,
+    ProcedureBundle,
+    ProcedureInput,
+    ProcedurePatch,
+    SedationInfo,
+)
 from proc_schemas.procedure_report import ProcedureReport, ProcedureCore, NLPTrace
+from proc_registry.adapters import AdapterRegistry
+import proc_registry.adapters.airway  # noqa: F401
+import proc_registry.adapters.pleural  # noqa: F401
 from proc_nlp.normalize_proc import normalize_dictation
 from proc_nlp.umls_linker import umls_link
 from proc_report.metadata import (
@@ -25,6 +43,8 @@ from proc_report.metadata import (
     StructuredReport,
     metadata_to_dict,
 )
+from proc_report.inference import InferenceEngine, PatchResult
+from proc_report.validation import FieldConfig, ValidationEngine
 
 _TEMPLATE_ROOT = Path(__file__).parent / "templates"
 _TEMPLATE_MAP = {
@@ -206,6 +226,7 @@ class TemplateMeta:
     critical_fields: list[str] = field(default_factory=list)
     recommended_fields: list[str] = field(default_factory=list)
     template_path: Path | None = None
+    field_configs: dict[str, FieldConfig] = field(default_factory=dict)
 
 
 def _dedupe(items: Iterable[TemplateMeta]) -> list[TemplateMeta]:
@@ -245,6 +266,17 @@ class TemplateRegistry:
                 template = self.env.get_template(template_rel)
             except TemplateNotFound as exc:
                 raise FileNotFoundError(f"Template '{template_rel}' referenced in {meta_path.name} not found under {self.root}") from exc
+            raw_fields = payload.get("fields", {}) or {}
+            field_configs = {path: FieldConfig.from_template(path, cfg) for path, cfg in raw_fields.items()}
+            required_fields = payload.get("required_fields", [])
+            if not required_fields and field_configs:
+                required_fields = [path for path, cfg in field_configs.items() if cfg.required]
+            critical_fields = payload.get("critical_fields", [])
+            if not critical_fields and field_configs:
+                critical_fields = [path for path, cfg in field_configs.items() if cfg.critical]
+            recommended_fields = payload.get("recommended_fields", [])
+            if not recommended_fields and field_configs:
+                recommended_fields = [path for path, cfg in field_configs.items() if cfg.required and not cfg.critical]
             meta = TemplateMeta(
                 id=payload["id"],
                 label=payload.get("label", payload["id"]),
@@ -252,13 +284,14 @@ class TemplateRegistry:
                 cpt_hints=[str(item) for item in payload.get("cpt_hints", [])],
                 schema_id=payload["schema_id"],
                 output_section=payload.get("output_section", "PROCEDURE_DETAILS"),
-                required_fields=payload.get("required_fields", []),
+                required_fields=required_fields,
                 optional_fields=payload.get("optional_fields", []),
                 template=template,
                 proc_types=payload.get("proc_types", []),
-                critical_fields=payload.get("critical_fields", []),
-                recommended_fields=payload.get("recommended_fields", []),
+                critical_fields=critical_fields,
+                recommended_fields=recommended_fields,
                 template_path=meta_path,
+                field_configs=field_configs,
             )
             self._register(meta)
 
@@ -309,793 +342,6 @@ class SchemaRegistry:
         return self._schemas[schema_id]
 
 
-class PatientInfo(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    name: str | None = None
-    age: int | None = None
-    sex: str | None = None
-    patient_id: str | None = None
-    mrn: str | None = None
-
-
-class EncounterInfo(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    date: str | None = None
-    encounter_id: str | None = None
-    location: str | None = None
-    referred_physician: str | None = None
-    attending: str | None = None
-    assistant: str | None = None
-
-
-class SedationInfo(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    type: str | None = None
-    description: str | None = None
-
-
-class AnesthesiaInfo(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    type: str | None = None
-    description: str | None = None
-
-
-class EMNBronchoscopy(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    navigation_system: str
-    target_lung_segment: str
-    lesion_size_cm: float | None = None
-    tool_to_target_distance_cm: float | None = None
-    navigation_catheter: str | None = None
-    registration_method: str | None = None
-    adjunct_imaging: List[str] | None = None
-    notes: str | None = None
-
-
-class FiducialMarkerPlacement(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    airway_location: str
-    marker_details: str | None = None
-    confirmation_method: str | None = None
-
-
-class RadialEBUSSurvey(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    location: str
-    rebus_features: str | None = None
-    notes: str | None = None
-
-
-class RoboticIonBronchoscopy(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    navigation_plan_source: str | None = None
-    vent_mode: str
-    vent_rr: int
-    vent_tv_ml: int
-    vent_peep_cm_h2o: float
-    vent_fio2_pct: int
-    vent_flow_rate: str | None = None
-    vent_pmean_cm_h2o: float | None = None
-    cbct_performed: bool | None = None
-    radial_pattern: str | None = None
-    notes: str | None = None
-
-
-class IonRegistrationComplete(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    method: str | None = None
-    airway_landmarks: List[str] | None = None
-    fiducial_error_mm: float | None = None
-    alignment_quality: str | None = None
-    notes: str | None = None
-
-
-class IonRegistrationPartial(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    indication: str
-    scope_of_registration: str | None = None
-    registered_landmarks: List[str] | None = None
-    registration_start_time: str | None = None
-    registration_complete_time: str | None = None
-    navigation_start_time: str | None = None
-    time_to_primary_nodule_min: float | None = None
-    navigation_time_min: float | None = None
-    divergence_pct: float | None = None
-    rebus_pattern: str | None = None
-    tool_in_lesion_confirmation: str | None = None
-    rose_adequacy: str | None = None
-    diagnostic_yield_pct: float | None = None
-    followup_plan: str | None = None
-
-
-class IonRegistrationDrift(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    cause: str | None = None
-    findings: str | None = None
-    mitigation: str | None = None
-    post_correction_alignment: str | None = None
-    proceeded_strategy: str | None = None
-
-
-class CBCTFusion(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    ventilation_settings: str | None = None
-    translation_mm: str | None = None
-    rotation_degrees: str | None = None
-    overlay_result: str | None = None
-    confirmatory_spin_result: str | None = None
-    notes: str | None = None
-
-
-class ToolInLesionConfirmation(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    confirmation_method: str
-    margin_mm: float | None = None
-    rebus_pattern: str | None = None
-    lesion_size_mm: float | None = None
-    fluoro_angle_deg: str | None = None
-    projection: str | None = None
-    screenshots_saved: bool | None = None
-    notes: str | None = None
-
-
-class RoboticMonarchBronchoscopy(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    radial_pattern: str | None = None
-    cbct_used: bool | None = None
-    vent_mode: str | None = None
-    vent_rr: int | None = None
-    vent_tv_ml: int | None = None
-    vent_peep_cm_h2o: float | None = None
-    vent_fio2_pct: int | None = None
-    vent_flow_rate: str | None = None
-    vent_pmean_cm_h2o: float | None = None
-    notes: str | None = None
-
-
-class RadialEBUSSampling(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    guide_sheath_diameter: str | None = None
-    ultrasound_pattern: str
-    lesion_size_mm: float | None = None
-    sampling_tools: List[str]
-    passes_per_tool: str | None = None
-    fluoro_used: bool | None = None
-    rose_result: str | None = None
-    specimens: List[str] | None = None
-    cxr_ordered: bool | None = None
-    notes: str | None = None
-
-
-class CBCTAugmentedBronchoscopy(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    ventilation_settings: str | None = None
-    adjustment_description: str | None = None
-    final_position: str | None = None
-    radiation_parameters: str | None = None
-    notes: str | None = None
-
-
-class DyeMarkerPlacement(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    guidance_method: str
-    needle_gauge: str
-    distance_from_pleura_cm: float | None = None
-    dye_type: str
-    dye_concentration: str | None = None
-    volume_ml: float
-    diffusion_observed: str | None = None
-    notes: str | None = None
-
-
-class EBUSStationSample(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    station_name: str
-    size_mm: int | None = None
-    passes: int
-    echo_features: str | None = None
-    biopsy_tools: List[str] = Field(default_factory=list)
-    rose_result: str | None = None
-    comments: str | None = None
-
-
-class EBUSTBNA(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    needle_gauge: str | None = None
-    stations: List[EBUSStationSample]
-    elastography_used: bool | None = None
-    rose_available: bool | None = None
-    overall_rose_diagnosis: str | None = None
-
-
-class EBUSIntranodalForcepsBiopsy(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    station_name: str
-    size_mm: int | None = None
-    ultrasound_features: str | None = None
-    needle_gauge: str
-    core_samples: int
-    rose_result: str | None = None
-    specimen_medium: str | None = None
-
-
-class EBUS19GFNB(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    station_name: str
-    passes: int
-    rose_result: str | None = None
-    elastography_pattern: str | None = None
-    findings: str | None = None
-
-
-class ValvePlacement(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    valve_type: str
-    valve_size: str | None = None
-    lobe: str
-    segment: str | None = None
-
-
-class BLVRValvePlacement(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    balloon_occlusion_performed: bool | None = None
-    chartis_used: bool | None = None
-    collateral_ventilation_absent: bool | None = None
-    lobes_treated: List[str]
-    valves: List[ValvePlacement]
-    air_leak_reduction: str | None = None
-    notes: str | None = None
-
-
-class BLVRValveRemovalExchange(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    indication: str
-    device_brand: str | None = None
-    locations: List[str] = Field(default_factory=list)
-    valves_removed: int
-    valves_exchanged: int | None = None
-    replacement_sizes: str | None = None
-    mucosa_status: str | None = None
-    tolerance_notes: str | None = None
-
-
-class BLVRPostProcedureProtocol(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    cxr_schedule: List[str] | None = None
-    monitoring_plan: str | None = None
-    steroids_plan: str | None = None
-    antibiotics_plan: str | None = None
-    ambulation_plan: str | None = None
-    discharge_plan: str | None = None
-
-
-class BLVRDischargeInstructions(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    activity_restrictions: str | None = None
-    monitoring_plan: str | None = None
-    follow_up_plan: str | None = None
-    contact_info: str | None = None
-
-
-class TransbronchialCryobiopsy(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    lung_segment: str
-    num_samples: int
-    cryoprobe_size_mm: float | None = None
-    freeze_seconds: int | None = None
-    thaw_seconds: int | None = None
-    blocker_type: str | None = None
-    blocker_volume_ml: float | None = None
-    blocker_location: str | None = None
-    tests: List[str] | None = None
-    radial_vessel_check: bool | None = None
-    notes: str | None = None
-
-
-class EndobronchialCryoablation(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    site: str
-    cryoprobe_size_mm: float | None = None
-    freeze_seconds: int | None = None
-    thaw_seconds: int | None = None
-    cycles: int | None = None
-    pattern: str | None = None
-    post_patency: str | None = None
-    notes: str | None = None
-
-
-class CryoExtractionMucus(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    airway_segment: str
-    probe_size_mm: float | None = None
-    freeze_seconds: int | None = None
-    num_casts: int | None = None
-    ventilation_result: str | None = None
-    notes: str | None = None
-
-
-class BPFLocalizationOcclusion(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    culprit_segment: str
-    balloon_type: str | None = None
-    balloon_size_mm: int | None = None
-    leak_reduction: str | None = None
-    methylene_blue_used: bool | None = None
-    contrast_used: bool | None = None
-    instillation_findings: str | None = None
-    notes: str | None = None
-
-
-class BPFValvePlacement(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    etiology: str | None = None
-    culprit_location: str
-    valve_type: str | None = None
-    valve_size: str | None = None
-    valves_placed: int | None = None
-    leak_reduction: str | None = None
-    additional_valves: str | None = None
-    post_plan: str | None = None
-
-
-class BPFSealantApplication(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    sealant_type: str
-    volume_ml: float | None = None
-    dwell_minutes: int | None = None
-    leak_reduction: str | None = None
-    applications: int | None = None
-    notes: str | None = None
-
-
-class EndobronchialHemostasis(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    airway_segment: str
-    iced_saline_ml: int | None = None
-    epinephrine_concentration: str | None = None
-    epinephrine_volume_ml: float | None = None
-    tranexamic_acid_dose: str | None = None
-    topical_thrombin_dose: str | None = None
-    balloon_type: str | None = None
-    balloon_location: str | None = None
-    balloon_duration_sec: int | None = None
-    balloon_cycles: int | None = None
-    hemostasis_result: str | None = None
-    escalation_plan: str | None = None
-    tolerance: str | None = None
-
-
-class EndobronchialBlockerPlacement(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    blocker_type: str
-    size: str | None = None
-    side: str
-    location: str
-    inflation_volume_ml: float | None = None
-    secured_method: str | None = None
-    indication: str | None = None
-    tolerance: str | None = None
-
-
-class PhotodynamicTherapyLight(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    agent: str
-    administration_time: str | None = None
-    lesion_site: str
-    wavelength_nm: int | None = None
-    fluence_j_cm2: float | None = None
-    duration_minutes: int | None = None
-    notes: str | None = None
-
-
-class PhotodynamicTherapyDebridement(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    site: str
-    debridement_tool: str | None = None
-    pre_patency_pct: int | None = None
-    post_patency_pct: int | None = None
-    bleeding: bool | None = None
-    notes: str | None = None
-
-
-class ForeignBodyRemoval(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    airway_segment: str
-    tools_used: List[str]
-    passes: int | None = None
-    removed_intact: bool | None = None
-    mucosal_trauma: str | None = None
-    bleeding: str | None = None
-    hemostasis_method: str | None = None
-    cxr_ordered: bool | None = None
-
-
-class AwakeFiberopticIntubation(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    lidocaine_concentration: str | None = None
-    lidocaine_volume_ml: int | None = None
-    sedative: str | None = None
-    ett_size: str
-    route: str
-    depth_cm: float | None = None
-    tolerated: bool | None = None
-
-
-class DoubleLumenTubePlacement(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    side: str
-    size_fr: int
-    alignment: str | None = None
-    adjustments: str | None = None
-    tolerated: bool | None = None
-
-
-class AirwayStentSurveillance(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    stent_type: str
-    location: str
-    findings: List[str] | None = None
-    interventions: List[str] | None = None
-    final_patency_pct: int | None = None
-
-
-class WholeLungLavage(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    side: str
-    dlt_size_fr: int | None = None
-    position: str | None = None
-    total_volume_l: float | None = None
-    max_volume_l: float | None = None
-    aliquot_volume_l: float | None = None
-    dwell_time_min: int | None = None
-    num_cycles: int | None = None
-    notes: str | None = None
-
-
-class EUSB(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    stations_sampled: List[str]
-    needle_gauge: str | None = None
-    passes: int | None = None
-    rose_result: str | None = None
-    complications: str | None = None
-
-
-class Paracentesis(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    site_description: str | None = None
-    volume_removed_ml: int
-    fluid_character: str | None = None
-    tests: List[str] | None = None
-    imaging_guidance: str | None = None
-
-
-class PEGPlacement(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    incision_location: str | None = None
-    endoscope_time_seconds: int | None = None
-    wire_route: str | None = None
-    bumper_depth_cm: float | None = None
-    tube_size_fr: int | None = None
-    procedural_time_min: int | None = None
-    complications: str | None = None
-
-
-class PEGExchange(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    new_tube_size_fr: int | None = None
-    bumper_depth_cm: float | None = None
-    complications: str | None = None
-
-
-class PleurxInstructions(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    followup_timeframe: str | None = None
-    contact_info: str | None = None
-
-
-class ChestTubeDischargeInstructions(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    drainage_plan: str | None = None
-    infection_signs: str | None = None
-    followup_timeframe: str | None = None
-
-
-class PEGDischargeInstructions(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    feeding_plan: str | None = None
-    medication_plan: str | None = None
-    wound_care: str | None = None
-    contact_info: str | None = None
-
-
-class BronchialWashing(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    airway_segment: str
-    instilled_volume_ml: int
-    returned_volume_ml: int
-    tests: List[str]
-
-
-class BronchialBrushing(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    lung_segment: str
-    samples_collected: int
-    brush_tool: str | None = None
-    tests: List[str]
-
-
-class BronchoalveolarLavageAlt(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    lung_segment: str
-    instilled_volume_cc: int
-    returned_volume_cc: int
-    tests: List[str]
-
-
-class EndobronchialBiopsy(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    airway_segment: str
-    samples_collected: int
-    tests: List[str]
-    hemostasis_method: str | None = None
-    lesion_removed: bool | None = None
-
-
-class TransbronchialLungBiopsy(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    lung_segment: str
-    samples_collected: int
-    forceps_tools: str
-    tests: List[str]
-
-
-class TransbronchialNeedleAspiration(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    lung_segment: str
-    needle_tools: str
-    samples_collected: int
-    tests: List[str]
-
-
-class TherapeuticAspiration(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    airway_segment: str
-    aspirate_type: str
-
-
-class RigidBronchoscopy(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    size_or_model: str | None = None
-    hf_jv: bool | None = None
-    interventions: List[str]
-    flexible_scope_used: bool | None = None
-    estimated_blood_loss_ml: int | None = None
-    specimens: List[str] | None = None
-    post_procedure_plan: str | None = None
-
-
-class Thoracentesis(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    side: str
-    effusion_size: str
-    effusion_echogenicity: str
-    loculations: str | None = None
-    ultrasound_findings: str | None = None
-    anesthesia_lidocaine_1_pct_ml: int | None = None
-    intercostal_space: str
-    entry_location: str
-    volume_removed_ml: int
-    fluid_appearance: str
-    specimen_tests: List[str]
-    cxr_ordered: bool | None = None
-
-
-class ThoracentesisDetailed(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    side: str
-    ultrasound_feasible: bool | None = None
-    anesthesia_lidocaine_ml: int | None = None
-    intercostal_space: str
-    entry_location: str
-    volume_removed_ml: int
-    fluid_appearance: str
-    drainage_device: str | None = None
-    suction_cmh2o: str | None = None
-    specimen_tests: List[str] | None = None
-    cxr_ordered: bool | None = None
-    sutured: bool | None = None
-    effusion_volume: str | None = None
-    effusion_echogenicity: str | None = None
-    loculations: str | None = None
-    diaphragm_motion: str | None = None
-    lung_sliding_pre: str | None = None
-    lung_sliding_post: str | None = None
-    lung_consolidation: str | None = None
-    pleura_description: str | None = None
-    pleural_guidance: str | None = None
-
-
-class ThoracentesisManometry(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    side: str
-    guidance: str | None = None
-    opening_pressure_cmh2o: float | None = None
-    pressure_readings: List[str] | None = None
-    stopping_criteria: str | None = None
-    total_removed_ml: int
-    post_procedure_imaging: str | None = None
-    effusion_size: str | None = None
-    effusion_echogenicity: str | None = None
-    loculations: str | None = None
-    diaphragm_motion: str | None = None
-    lung_sliding_pre: str | None = None
-    lung_sliding_post: str | None = None
-    lung_consolidation: str | None = None
-    pleura_description: str | None = None
-
-
-class ChestTube(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    side: str
-    intercostal_space: str
-    entry_line: str
-    guidance: str | None = None
-    fluid_removed_ml: int | None = None
-    fluid_appearance: str | None = None
-    specimen_tests: List[str] | None = None
-    cxr_ordered: bool | None = None
-    effusion_volume: str | None = None
-    effusion_echogenicity: str | None = None
-    loculations: str | None = None
-    diaphragm_motion: str | None = None
-    lung_sliding_pre: str | None = None
-    lung_sliding_post: str | None = None
-    lung_consolidation: str | None = None
-    pleura_description: str | None = None
-
-
-class TunneledPleuralCatheterInsert(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    side: str | None = None
-    intercostal_space: str
-    entry_location: str
-    tunnel_length_cm: int | None = None
-    exit_site: str | None = None
-    anesthesia_lidocaine_ml: int | None = None
-    fluid_removed_ml: int | None = None
-    fluid_appearance: str | None = None
-    pleural_pressures: dict[str, float | int] | None = None
-    drainage_device: str | None = None
-    suction: str | None = None
-    specimen_tests: List[str] | None = None
-    cxr_ordered: bool | None = None
-    pleural_guidance: str | None = None
-    effusion_volume: str | None = None
-    effusion_echogenicity: str | None = None
-    loculations: str | None = None
-    diaphragm_motion: str | None = None
-    lung_sliding_pre: str | None = None
-    lung_sliding_post: str | None = None
-    lung_consolidation: str | None = None
-    pleura_description: str | None = None
-
-
-class TunneledPleuralCatheterRemove(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    side: str
-    insertion_date: str | None = None
-    reason: str | None = None
-    site_assessment: str | None = None
-    anesthesia_lidocaine_ml: int | None = None
-    sutured: bool | None = None
-    complications: str | None = None
-    antibiotics: str | None = None
-
-
-class PigtailCatheter(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    side: str
-    intercostal_space: str
-    entry_location: str
-    size_fr: str
-    anesthesia_lidocaine_ml: int | None = None
-    fluid_removed_ml: int | None = None
-    fluid_appearance: str | None = None
-    specimen_tests: List[str] | None = None
-    cxr_ordered: bool | None = None
-
-
-class TransthoracicNeedleBiopsy(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    needle_gauge: str
-    samples_collected: int
-    imaging_modality: str | None = None
-    cxr_ordered: bool | None = None
-
-
-class BAL(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    lung_segment: str
-    instilled_volume_cc: int
-    returned_volume_cc: int
-    tests: List[str]
-
-
-class PreAnesthesiaAssessment(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    anticoagulant_use: str | None = None
-    prophylactic_antibiotics: bool | None = None
-    asa_status: str
-    anesthesia_plan: str
-    sedation_history: str | None = None
-    time_out_confirmed: bool | None = None
-
-
-class BronchoscopyShell(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    sedation_type: str | None = None
-    airway_route: str | None = None
-    airway_overview: str | None = None
-    right_lung_overview: str | None = None
-    left_lung_overview: str | None = None
-    mucosa_overview: str | None = None
-    secretions_overview: str | None = None
-    summary: str | None = None
-
-
-class OperativeShellInputs(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    indication_text: str | None = None
-    preop_diagnosis_text: str | None = None
-    postop_diagnosis_text: str | None = None
-    procedures_summary: str | None = None
-    cpt_summary: str | None = None
-    estimated_blood_loss: str | None = None
-    complications_text: str | None = None
-    specimens_text: str | None = None
-    impression_plan: str | None = None
-
-
-class ProcedureInput(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    proc_type: str
-    schema_id: str
-    proc_id: str | None = None
-    data: dict[str, Any] | BaseModel
-    cpt_candidates: List[str | int] = Field(default_factory=list)
-
-
-class ProcedureBundle(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    patient: PatientInfo
-    encounter: EncounterInfo
-    procedures: List[ProcedureInput]
-    sedation: SedationInfo | None = None
-    anesthesia: AnesthesiaInfo | None = None
-    pre_anesthesia: PreAnesthesiaAssessment | dict[str, Any] | None = None
-    indication_text: str | None = None
-    preop_diagnosis_text: str | None = None
-    postop_diagnosis_text: str | None = None
-    impression_plan: str | None = None
-    estimated_blood_loss: str | None = None
-    complications_text: str | None = None
-    specimens_text: str | None = None
-    free_text_hint: str | None = None
-    acknowledged_omissions: dict[str, list[str]] = Field(default_factory=dict)
-
-
-class ProcedurePatch(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    proc_id: str
-    updates: dict[str, Any] = Field(default_factory=dict)
-    acknowledge_missing: list[str] = Field(default_factory=list)
-
-
-class BundlePatch(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    procedures: list[ProcedurePatch]
-
 
 class ReporterEngine:
     """Render structured procedure bundles into notes using template configs."""
@@ -1122,13 +368,21 @@ class ReporterEngine:
         bundle: ProcedureBundle,
         *,
         strict: bool = False,
+        validation_issues: list[MissingFieldIssue] | None = None,
+        warnings: list[str] | None = None,
         embed_metadata: bool = False,
         autocode_result: ProcedureAutocodeResult | None = None,
     ) -> StructuredReport:
         note, metadata = self._compose_internal(bundle, strict=strict, autocode_result=autocode_result)
-        if embed_metadata:
-            note = _embed_metadata(note, metadata)
-        return StructuredReport(text=note, metadata=metadata)
+        if validation_issues:
+            _attach_validation_metadata(metadata, validation_issues)
+        output_text = _embed_metadata(note, metadata) if embed_metadata else note
+        return StructuredReport(
+            text=output_text,
+            metadata=metadata,
+            warnings=warnings or [],
+            issues=validation_issues or [],
+        )
 
     def _compose_internal(
         self,
@@ -1482,6 +736,41 @@ def _normalize_payload(payload: BaseModel | dict[str, Any] | None) -> dict[str, 
     return {"value": payload}
 
 
+def apply_patch_result(bundle: ProcedureBundle, result: PatchResult) -> ProcedureBundle:
+    changes = result.changes or {}
+    updated = bundle
+    procedure_changes = changes.get("procedures", {}) or {}
+    if procedure_changes:
+        patch = BundlePatch(
+            procedures=[
+                ProcedurePatch(proc_id=proc_id, updates=updates or {}) for proc_id, updates in procedure_changes.items()
+            ]
+        )
+        updated = apply_bundle_patch(updated, patch)
+    bundle_updates = changes.get("bundle", {}) or {}
+    if bundle_updates:
+        data = updated.model_dump(exclude_none=False)
+        data.update(bundle_updates)
+        updated = ProcedureBundle.model_validate(data)
+    return updated
+
+
+def _attach_validation_metadata(metadata: ReportMetadata, issues: list[MissingFieldIssue]) -> None:
+    issues_by_proc: dict[str, list[MissingFieldIssue]] = {}
+    for issue in issues:
+        issues_by_proc.setdefault(issue.proc_id, []).append(issue)
+    for proc_meta in metadata.procedures:
+        proc_issues = issues_by_proc.get(proc_meta.proc_id, [])
+        if not proc_issues:
+            continue
+        critical_paths = [issue.field_path for issue in proc_issues if issue.severity == "critical"]
+        recommended_paths = [issue.field_path for issue in proc_issues if issue.severity == "recommended"]
+        proc_meta.missing_critical_fields = critical_paths
+        proc_meta.has_critical_missing = bool(critical_paths)
+        if recommended_paths:
+            proc_meta.extra.setdefault("recommended_missing", recommended_paths)
+
+
 def _merge_cpt_sources(
     proc: ProcedureInput, meta: TemplateMeta, autocode_payload: dict[str, Any] | None
 ) -> tuple[list[str], list[str]]:
@@ -1553,55 +842,6 @@ def _embed_metadata(text: str, metadata: ReportMetadata) -> str:
     ).strip()
 
 
-def _coerce_model_data(
-    proc: ProcedureInput,
-    schema_registry: SchemaRegistry,
-) -> dict[str, Any]:
-    try:
-        model_cls = schema_registry.get(proc.schema_id)
-    except KeyError:
-        return _normalize_payload(proc.data)
-    try:
-        model = proc.data if isinstance(proc.data, BaseModel) else model_cls.model_validate(proc.data or {})
-        return model.model_dump(exclude_none=False)
-    except Exception:
-        return _normalize_payload(proc.data)
-
-
-def _get_field_value(payload: Any, path: str) -> Any:
-    current = payload
-    for token in path.split("."):
-        if not isinstance(current, (dict, BaseModel, list)):
-            return None
-        if "[" in token and token.endswith("]"):
-            key, idx_str = token[:-1].split("[", 1)
-            idx = int(idx_str)
-            current = current.get(key) if isinstance(current, dict) else getattr(current, key, None)
-            if not isinstance(current, list) or idx >= len(current):
-                return None
-            current = current[idx]
-        else:
-            current = current.get(token) if isinstance(current, dict) else getattr(current, token, None)
-    return current
-
-
-def _expand_list_paths(payload: dict[str, Any], field_path: str) -> list[str]:
-    if "[]" not in field_path:
-        return [field_path]
-    head, tail = field_path.split("[]", 1)
-    key = head.rstrip(".")
-    remainder = tail.lstrip(".")
-    value = _get_field_value(payload, key)
-    if not isinstance(value, list) or not value:
-        suffix = f".{remainder}" if remainder else ""
-        return [f"{key}[0]{suffix}"]
-    paths: list[str] = []
-    for idx in range(len(value)):
-        suffix = f".{remainder}" if remainder else ""
-        paths.append(f"{key}[{idx}]{suffix}")
-    return paths
-
-
 def _try_proc_autocode(bundle: ProcedureBundle) -> dict[str, Any] | None:
     note = getattr(bundle, "free_text_hint", None)
     if not note:
@@ -1641,37 +881,20 @@ def list_missing_critical_fields(
 ) -> list[MissingFieldIssue]:
     templates = template_registry or default_template_registry()
     schemas = schema_registry or default_schema_registry()
-    issues: list[MissingFieldIssue] = []
-    acknowledged = {k: set(v) for k, v in (bundle.acknowledged_omissions or {}).items()}
+    validator = ValidationEngine(templates, schemas)
+    return validator.list_missing_critical_fields(bundle)
 
-    for proc in bundle.procedures:
-        metas = templates.find_for_procedure(proc.proc_type, proc.cpt_candidates)
-        if not metas:
-            continue
-        payload = _coerce_model_data(proc, schemas)
-        proc_id = proc.proc_id or proc.schema_id
-        acknowledged_fields = acknowledged.get(proc_id, set())
-        for meta in metas:
-            critical_fields = [(field, "critical") for field in meta.critical_fields]
-            recommended_fields = [(field, "recommended") for field in meta.recommended_fields]
-            for field_path, severity in critical_fields + recommended_fields:
-                for expanded_path in _expand_list_paths(payload, field_path):
-                    if expanded_path in acknowledged_fields:
-                        continue
-                    value = _get_field_value(payload, expanded_path)
-                    if value in (None, "", [], {}):
-                        message = f"Missing {expanded_path} for {meta.label or proc.proc_type}"
-                        issues.append(
-                            MissingFieldIssue(
-                                proc_id=proc_id,
-                                proc_type=proc.proc_type,
-                                template_id=meta.id,
-                                field_path=expanded_path,
-                                severity=severity,  # type: ignore[arg-type]
-                                message=message,
-                            )
-                        )
-    return issues
+
+def apply_warn_if_rules(
+    bundle: ProcedureBundle,
+    *,
+    template_registry: TemplateRegistry | None = None,
+    schema_registry: SchemaRegistry | None = None,
+) -> list[str]:
+    templates = template_registry or default_template_registry()
+    schemas = schema_registry or default_schema_registry()
+    validator = ValidationEngine(templates, schemas)
+    return validator.apply_warn_if_rules(bundle)
 
 
 def apply_bundle_patch(bundle: ProcedureBundle, patch: BundlePatch) -> ProcedureBundle:
@@ -1740,79 +963,214 @@ def _load_procedure_order(order_path: Path | None = None) -> dict[str, int]:
     return {}
 
 
-def default_template_registry(template_root: Path | None = None) -> TemplateRegistry:
-    root = template_root or _CONFIG_TEMPLATE_ROOT
+def _template_config_hash(root: Path) -> str:
+    hasher = hashlib.sha256()
+    if not root.exists():
+        return ""
+    exts = {".json", ".yaml", ".yml", ".j2", ".jinja"}
+    for meta_path in sorted(root.iterdir()):
+        if meta_path.suffix.lower() not in exts:
+            continue
+        try:
+            hasher.update(meta_path.read_bytes())
+        except Exception:
+            continue
+    return hasher.hexdigest()
+
+
+@functools.lru_cache(maxsize=None)
+def _build_cached_template_registry(root: Path, config_hash: str) -> TemplateRegistry:
     env = _build_structured_env(root)
     registry = TemplateRegistry(env, root)
     registry.load_from_configs(root)
     return registry
 
 
+def default_template_registry(template_root: Path | None = None) -> TemplateRegistry:
+    root = template_root or _CONFIG_TEMPLATE_ROOT
+    config_hash = _template_config_hash(root)
+    return _build_cached_template_registry(root, config_hash)
+
+
 def default_schema_registry() -> SchemaRegistry:
     registry = SchemaRegistry()
-    registry.register("emn_bronchoscopy_v1", EMNBronchoscopy)
-    registry.register("fiducial_marker_placement_v1", FiducialMarkerPlacement)
-    registry.register("radial_ebus_survey_v1", RadialEBUSSurvey)
-    registry.register("robotic_ion_bronchoscopy_v1", RoboticIonBronchoscopy)
-    registry.register("ion_registration_complete_v1", IonRegistrationComplete)
-    registry.register("ion_registration_partial_v1", IonRegistrationPartial)
-    registry.register("ion_registration_drift_v1", IonRegistrationDrift)
-    registry.register("cbct_cact_fusion_v1", CBCTFusion)
-    registry.register("tool_in_lesion_confirmation_v1", ToolInLesionConfirmation)
-    registry.register("robotic_monarch_bronchoscopy_v1", RoboticMonarchBronchoscopy)
-    registry.register("radial_ebus_sampling_v1", RadialEBUSSampling)
-    registry.register("cbct_augmented_bronchoscopy_v1", CBCTAugmentedBronchoscopy)
-    registry.register("dye_marker_placement_v1", DyeMarkerPlacement)
-    registry.register("ebus_tbna_v1", EBUSTBNA)
-    registry.register("ebus_ifb_v1", EBUSIntranodalForcepsBiopsy)
-    registry.register("ebus_19g_fnb_v1", EBUS19GFNB)
-    registry.register("blvr_valve_placement_v1", BLVRValvePlacement)
-    registry.register("blvr_valve_removal_exchange_v1", BLVRValveRemovalExchange)
-    registry.register("blvr_post_procedure_protocol_v1", BLVRPostProcedureProtocol)
-    registry.register("blvr_discharge_instructions_v1", BLVRDischargeInstructions)
-    registry.register("transbronchial_cryobiopsy_v1", TransbronchialCryobiopsy)
-    registry.register("endobronchial_cryoablation_v1", EndobronchialCryoablation)
-    registry.register("cryo_extraction_mucus_v1", CryoExtractionMucus)
-    registry.register("bpf_localization_occlusion_v1", BPFLocalizationOcclusion)
-    registry.register("bpf_valve_air_leak_v1", BPFValvePlacement)
-    registry.register("bpf_endobronchial_sealant_v1", BPFSealantApplication)
-    registry.register("endobronchial_hemostasis_v1", EndobronchialHemostasis)
-    registry.register("endobronchial_blocker_v1", EndobronchialBlockerPlacement)
-    registry.register("pdt_light_v1", PhotodynamicTherapyLight)
-    registry.register("pdt_debridement_v1", PhotodynamicTherapyDebridement)
-    registry.register("foreign_body_removal_v1", ForeignBodyRemoval)
-    registry.register("awake_foi_v1", AwakeFiberopticIntubation)
-    registry.register("dlt_placement_v1", DoubleLumenTubePlacement)
-    registry.register("stent_surveillance_v1", AirwayStentSurveillance)
-    registry.register("whole_lung_lavage_v1", WholeLungLavage)
-    registry.register("eusb_v1", EUSB)
-    registry.register("paracentesis_v1", Paracentesis)
-    registry.register("peg_placement_v1", PEGPlacement)
-    registry.register("peg_exchange_v1", PEGExchange)
-    registry.register("pleurx_instructions_v1", PleurxInstructions)
-    registry.register("chest_tube_discharge_v1", ChestTubeDischargeInstructions)
-    registry.register("peg_discharge_v1", PEGDischargeInstructions)
-    registry.register("thoracentesis_v1", Thoracentesis)
-    registry.register("thoracentesis_detailed_v1", ThoracentesisDetailed)
-    registry.register("thoracentesis_manometry_v1", ThoracentesisManometry)
-    registry.register("chest_tube_v1", ChestTube)
-    registry.register("tunneled_pleural_catheter_insert_v1", TunneledPleuralCatheterInsert)
-    registry.register("tunneled_pleural_catheter_remove_v1", TunneledPleuralCatheterRemove)
-    registry.register("pigtail_catheter_v1", PigtailCatheter)
-    registry.register("transthoracic_needle_biopsy_v1", TransthoracicNeedleBiopsy)
-    registry.register("bal_v1", BAL)
-    registry.register("bal_alt_v1", BronchoalveolarLavageAlt)
-    registry.register("bronchial_washing_v1", BronchialWashing)
-    registry.register("bronchial_brushings_v1", BronchialBrushing)
-    registry.register("endobronchial_biopsy_v1", EndobronchialBiopsy)
-    registry.register("transbronchial_lung_biopsy_v1", TransbronchialLungBiopsy)
-    registry.register("transbronchial_needle_aspiration_v1", TransbronchialNeedleAspiration)
-    registry.register("therapeutic_aspiration_v1", TherapeuticAspiration)
-    registry.register("rigid_bronchoscopy_v1", RigidBronchoscopy)
+    airway_models = {
+        "emn_bronchoscopy_v1": airway_schemas.EMNBronchoscopy,
+        "fiducial_marker_placement_v1": airway_schemas.FiducialMarkerPlacement,
+        "radial_ebus_survey_v1": airway_schemas.RadialEBUSSurvey,
+        "robotic_ion_bronchoscopy_v1": airway_schemas.RoboticIonBronchoscopy,
+        "ion_registration_complete_v1": airway_schemas.IonRegistrationComplete,
+        "ion_registration_partial_v1": airway_schemas.IonRegistrationPartial,
+        "ion_registration_drift_v1": airway_schemas.IonRegistrationDrift,
+        "cbct_cact_fusion_v1": airway_schemas.CBCTFusion,
+        "tool_in_lesion_confirmation_v1": airway_schemas.ToolInLesionConfirmation,
+        "robotic_monarch_bronchoscopy_v1": airway_schemas.RoboticMonarchBronchoscopy,
+        "radial_ebus_sampling_v1": airway_schemas.RadialEBUSSampling,
+        "cbct_augmented_bronchoscopy_v1": airway_schemas.CBCTAugmentedBronchoscopy,
+        "dye_marker_placement_v1": airway_schemas.DyeMarkerPlacement,
+        "ebus_tbna_v1": airway_schemas.EBUSTBNA,
+        "ebus_ifb_v1": airway_schemas.EBUSIntranodalForcepsBiopsy,
+        "ebus_19g_fnb_v1": airway_schemas.EBUS19GFNB,
+        "blvr_valve_placement_v1": airway_schemas.BLVRValvePlacement,
+        "blvr_valve_removal_exchange_v1": airway_schemas.BLVRValveRemovalExchange,
+        "blvr_post_procedure_protocol_v1": airway_schemas.BLVRPostProcedureProtocol,
+        "blvr_discharge_instructions_v1": airway_schemas.BLVRDischargeInstructions,
+        "transbronchial_cryobiopsy_v1": airway_schemas.TransbronchialCryobiopsy,
+        "endobronchial_cryoablation_v1": airway_schemas.EndobronchialCryoablation,
+        "cryo_extraction_mucus_v1": airway_schemas.CryoExtractionMucus,
+        "bpf_localization_occlusion_v1": airway_schemas.BPFLocalizationOcclusion,
+        "bpf_valve_air_leak_v1": airway_schemas.BPFValvePlacement,
+        "bpf_endobronchial_sealant_v1": airway_schemas.BPFSealantApplication,
+        "endobronchial_hemostasis_v1": airway_schemas.EndobronchialHemostasis,
+        "endobronchial_blocker_v1": airway_schemas.EndobronchialBlockerPlacement,
+        "pdt_light_v1": airway_schemas.PhotodynamicTherapyLight,
+        "pdt_debridement_v1": airway_schemas.PhotodynamicTherapyDebridement,
+        "foreign_body_removal_v1": airway_schemas.ForeignBodyRemoval,
+        "awake_foi_v1": airway_schemas.AwakeFiberopticIntubation,
+        "dlt_placement_v1": airway_schemas.DoubleLumenTubePlacement,
+        "stent_surveillance_v1": airway_schemas.AirwayStentSurveillance,
+        "whole_lung_lavage_v1": airway_schemas.WholeLungLavage,
+        "eusb_v1": airway_schemas.EUSB,
+        "bal_v1": airway_schemas.BAL,
+        "bal_alt_v1": airway_schemas.BronchoalveolarLavageAlt,
+        "bronchial_washing_v1": airway_schemas.BronchialWashing,
+        "bronchial_brushings_v1": airway_schemas.BronchialBrushing,
+        "endobronchial_biopsy_v1": airway_schemas.EndobronchialBiopsy,
+        "transbronchial_lung_biopsy_v1": airway_schemas.TransbronchialLungBiopsy,
+        "transbronchial_needle_aspiration_v1": airway_schemas.TransbronchialNeedleAspiration,
+        "therapeutic_aspiration_v1": airway_schemas.TherapeuticAspiration,
+        "rigid_bronchoscopy_v1": airway_schemas.RigidBronchoscopy,
+        "bronchoscopy_shell_v1": airway_schemas.BronchoscopyShell,
+    }
+    pleural_models = {
+        "paracentesis_v1": pleural_schemas.Paracentesis,
+        "peg_placement_v1": pleural_schemas.PEGPlacement,
+        "peg_exchange_v1": pleural_schemas.PEGExchange,
+        "pleurx_instructions_v1": pleural_schemas.PleurxInstructions,
+        "chest_tube_discharge_v1": pleural_schemas.ChestTubeDischargeInstructions,
+        "peg_discharge_v1": pleural_schemas.PEGDischargeInstructions,
+        "thoracentesis_v1": pleural_schemas.Thoracentesis,
+        "thoracentesis_detailed_v1": pleural_schemas.ThoracentesisDetailed,
+        "thoracentesis_manometry_v1": pleural_schemas.ThoracentesisManometry,
+        "chest_tube_v1": pleural_schemas.ChestTube,
+        "tunneled_pleural_catheter_insert_v1": pleural_schemas.TunneledPleuralCatheterInsert,
+        "tunneled_pleural_catheter_remove_v1": pleural_schemas.TunneledPleuralCatheterRemove,
+        "pigtail_catheter_v1": pleural_schemas.PigtailCatheter,
+        "transthoracic_needle_biopsy_v1": pleural_schemas.TransthoracicNeedleBiopsy,
+    }
+
+    for schema_id, model in airway_models.items():
+        registry.register(schema_id, model)
+    for schema_id, model in pleural_models.items():
+        registry.register(schema_id, model)
     registry.register("pre_anesthesia_assessment_v1", PreAnesthesiaAssessment)
-    registry.register("bronchoscopy_shell_v1", BronchoscopyShell)
     registry.register("ip_or_main_oper_report_shell_v1", OperativeShellInputs)
     return registry
+
+
+def _normalize_cpt_candidates(codes: Any) -> list[str | int]:
+    return list(codes) if isinstance(codes, list) else []
+
+
+def _extract_patient(raw: dict[str, Any]) -> PatientInfo:
+    return PatientInfo(
+        name=raw.get("patient_name"),
+        age=raw.get("patient_age"),
+        sex=raw.get("gender") or raw.get("sex"),
+        patient_id=raw.get("patient_id") or raw.get("patient_identifier"),
+        mrn=raw.get("mrn") or raw.get("patient_mrn"),
+    )
+
+
+def _extract_encounter(raw: dict[str, Any]) -> EncounterInfo:
+    return EncounterInfo(
+        date=raw.get("procedure_date"),
+        encounter_id=raw.get("encounter_id") or raw.get("visit_id"),
+        location=raw.get("location") or raw.get("procedure_location"),
+        referred_physician=raw.get("referred_physician"),
+        attending=raw.get("attending_name"),
+        assistant=raw.get("fellow_name") or raw.get("assistant_name"),
+    )
+
+
+def _extract_sedation_details(raw: dict[str, Any]) -> tuple[SedationInfo | None, AnesthesiaInfo | None]:
+    sedation = SedationInfo(type=raw.get("sedation_type")) if raw.get("sedation_type") else None
+    anesthesia_desc = None
+    agents = raw.get("anesthesia_agents")
+    if agents:
+        anesthesia_desc = ", ".join(agents)
+    anesthesia = None
+    if raw.get("sedation_type") or anesthesia_desc:
+        anesthesia = AnesthesiaInfo(
+            type=raw.get("sedation_type"),
+            description=anesthesia_desc,
+        )
+    return sedation, anesthesia
+
+
+def _extract_pre_anesthesia(raw: dict[str, Any]) -> dict[str, Any] | None:
+    asa_status = raw.get("asa_class")
+    if not asa_status:
+        return None
+    return {
+        "asa_status": f"ASA {asa_status}",
+        "anesthesia_plan": raw.get("sedation_type") or "Per anesthesia team",
+        "anticoagulant_use": raw.get("anticoagulant_use"),
+        "prophylactic_antibiotics": raw.get("prophylactic_antibiotics"),
+        "time_out_confirmed": True,
+    }
+
+
+def _coerce_prebuilt_procedures(entries: Any, cpt_candidates: list[str | int]) -> list[ProcedureInput]:
+    procedures: list[ProcedureInput] = []
+    if not isinstance(entries, list):
+        return procedures
+    for entry in entries:
+        if isinstance(entry, ProcedureInput):
+            procedures.append(entry)
+            continue
+        if not isinstance(entry, dict):
+            continue
+        proc_type = entry.get("proc_type")
+        schema_id = entry.get("schema_id")
+        data = entry.get("data", {})
+        proc_id = entry.get("proc_id")
+        if proc_type and schema_id:
+            identifier = proc_id or f"{proc_type}_{len(procedures) + 1}"
+            procedures.append(
+                ProcedureInput(
+                    proc_type=proc_type,
+                    schema_id=schema_id,
+                    proc_id=identifier,
+                    data=data,
+                    cpt_candidates=list(cpt_candidates),
+                )
+            )
+    return procedures
+
+
+def _procedures_from_adapters(
+    raw: dict[str, Any],
+    cpt_candidates: list[str | int],
+    *,
+    start_index: int = 0,
+) -> list[ProcedureInput]:
+    procedures: list[ProcedureInput] = []
+    for adapter_cls in AdapterRegistry.all():
+        model = adapter_cls.extract(raw)
+        if model is None:
+            continue
+        proc_id = f"{adapter_cls.proc_type}_{start_index + len(procedures) + 1}"
+        procedures.append(
+            ProcedureInput(
+                proc_type=adapter_cls.proc_type,
+                schema_id=adapter_cls.get_schema_id(),
+                proc_id=proc_id,
+                data=model,
+                cpt_candidates=list(cpt_candidates),
+            )
+        )
+    return procedures
 
 
 def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
@@ -1825,416 +1183,14 @@ def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
     """
     raw = extraction.model_dump() if hasattr(extraction, "model_dump") else deepcopy(extraction or {})
 
-    patient = PatientInfo(
-        name=raw.get("patient_name"),
-        age=raw.get("patient_age"),
-        sex=raw.get("gender") or raw.get("sex"),
-        patient_id=raw.get("patient_id") or raw.get("patient_identifier"),
-        mrn=raw.get("mrn") or raw.get("patient_mrn"),
-    )
-    encounter = EncounterInfo(
-        date=raw.get("procedure_date"),
-        encounter_id=raw.get("encounter_id") or raw.get("visit_id"),
-        location=raw.get("location") or raw.get("procedure_location"),
-        referred_physician=raw.get("referred_physician"),
-        attending=raw.get("attending_name"),
-        assistant=raw.get("fellow_name") or raw.get("assistant_name"),
-    )
+    patient = _extract_patient(raw)
+    encounter = _extract_encounter(raw)
+    sedation, anesthesia = _extract_sedation_details(raw)
+    pre_anesthesia = _extract_pre_anesthesia(raw)
+    cpt_candidates = _normalize_cpt_candidates(raw.get("cpt_codes") or raw.get("verified_cpt_codes") or [])
 
-    sedation = SedationInfo(type=raw.get("sedation_type")) if raw.get("sedation_type") else None
-    anesthesia_desc = None
-    agents = raw.get("anesthesia_agents")
-    if agents:
-        anesthesia_desc = ", ".join(agents)
-    anesthesia = None
-    if raw.get("sedation_type") or anesthesia_desc:
-        anesthesia = AnesthesiaInfo(
-            type=raw.get("sedation_type"),
-            description=anesthesia_desc,
-        )
-
-    cpt_codes = raw.get("cpt_codes") or raw.get("verified_cpt_codes") or []
-    procedures: list[ProcedureInput] = []
-
-    def _append_proc(proc_type: str, schema_id: str, data: dict | BaseModel) -> None:
-        proc_id = f"{proc_type}_{len(procedures) + 1}"
-        procedures.append(
-            ProcedureInput(
-                proc_type=proc_type,
-                schema_id=schema_id,
-                proc_id=proc_id,
-                data=data,
-                cpt_candidates=list(cpt_codes) if isinstance(cpt_codes, list) else [],
-            )
-        )
-
-    # Accept pre-built procedures for maximal flexibility.
-    prebuilt = raw.get("procedures")
-    if isinstance(prebuilt, list):
-        for entry in prebuilt:
-            if isinstance(entry, ProcedureInput):
-                procedures.append(entry)
-                continue
-            if isinstance(entry, dict):
-                proc_type = entry.get("proc_type")
-                schema_id = entry.get("schema_id")
-                data = entry.get("data", {})
-                proc_id = entry.get("proc_id")
-                if proc_type and schema_id:
-                    identifier = proc_id or f"{proc_type}_{len(procedures) + 1}"
-                    procedures.append(
-                        ProcedureInput(
-                            proc_type=proc_type,
-                            schema_id=schema_id,
-                            proc_id=identifier,
-                            data=data,
-                            cpt_candidates=list(cpt_codes) if isinstance(cpt_codes, list) else [],
-                        )
-                    )
-
-    # Pre-anesthesia if available
-    asa_status = raw.get("asa_class")
-    if asa_status:
-        pre_anesthesia = {
-            "asa_status": f"ASA {asa_status}",
-            "anesthesia_plan": raw.get("sedation_type") or "Per anesthesia team",
-            "anticoagulant_use": raw.get("anticoagulant_use"),
-            "prophylactic_antibiotics": raw.get("prophylactic_antibiotics"),
-            "time_out_confirmed": True,
-        }
-    else:
-        pre_anesthesia = None
-
-    # Bronchoscopy shell if airway survey fields exist
-    airway_overview = raw.get("airway_overview")
-    if airway_overview:
-        _append_proc(
-            "bronchoscopy_core",
-            "bronchoscopy_shell_v1",
-            {
-                "airway_overview": airway_overview,
-                "right_lung_overview": raw.get("right_lung_overview"),
-                "left_lung_overview": raw.get("left_lung_overview"),
-                "mucosa_overview": raw.get("mucosa_overview"),
-                "secretions_overview": raw.get("secretions_overview"),
-            },
-        )
-
-    # Navigation / robotic
-    nav_platform = (raw.get("nav_platform") or "").lower()
-    if nav_platform == "emn":
-        if raw.get("nav_registration_method") or raw.get("nav_rebus_used"):
-            _append_proc(
-                "emn_bronchoscopy",
-                "emn_bronchoscopy_v1",
-                {
-                    "navigation_system": raw.get("nav_platform", "EMN"),
-                    "target_lung_segment": raw.get("nav_target_segment", "target lesion"),
-                    "registration_method": raw.get("nav_registration_method"),
-                    "adjunct_imaging": [img for img in [raw.get("nav_imaging_verification")] if img],
-                    # TODO: extractor missing lesion_size_cm, tool_to_target_distance_cm
-                },
-            )
-    if nav_platform == "ion":
-        if raw.get("ventilation_mode"):
-            _append_proc(
-                "robotic_ion_bronchoscopy",
-                "robotic_ion_bronchoscopy_v1",
-                {
-                    "navigation_plan_source": "pre-procedure CT" if raw.get("nav_registration_method") else None,
-                    "vent_mode": raw.get("ventilation_mode"),
-                    "vent_rr": raw.get("vent_rr") or 14,
-                    "vent_tv_ml": raw.get("vent_tv_ml") or 450,
-                    "vent_peep_cm_h2o": raw.get("vent_peep_cm_h2o") or 8,
-                    "vent_fio2_pct": raw.get("vent_fio2_pct") or 40,
-                    "vent_flow_rate": raw.get("vent_flow_rate"),
-                    "vent_pmean_cm_h2o": raw.get("vent_pmean_cm_h2o"),
-                    "cbct_performed": raw.get("nav_imaging_verification") == "Cone Beam CT",
-                    "radial_pattern": raw.get("nav_rebus_view"),
-                },
-            )
-        if raw.get("nav_registration_method"):
-            _append_proc(
-                "ion_registration_complete",
-                "ion_registration_complete_v1",
-                {
-                    "method": raw.get("nav_registration_method"),
-                    "fiducial_error_mm": raw.get("nav_registration_error_mm"),
-                    "alignment_quality": raw.get("nav_registration_alignment"),
-                    # TODO: extractor missing airway_landmarks
-                },
-            )
-        if raw.get("nav_imaging_verification") in ("Cone Beam CT", "O-Arm"):
-            _append_proc(
-                "cbct_cact_fusion",
-                "cbct_cact_fusion_v1",
-                {
-                    "overlay_result": raw.get("nav_imaging_verification"),
-                    # TODO: extractor missing translation_mm, rotation_degrees
-                },
-            )
-    if nav_platform in ("monarch", "auris"):
-        _append_proc(
-            "robotic_monarch_bronchoscopy",
-            "robotic_monarch_bronchoscopy_v1",
-            {
-                "radial_pattern": raw.get("nav_rebus_view"),
-                "cbct_used": raw.get("nav_imaging_verification") in ("Cone Beam CT", "O-Arm"),
-                # TODO: extractor missing ventilation parameters
-            },
-        )
-    if raw.get("nav_rebus_used"):
-        # Survey level
-        _append_proc(
-            "radial_ebus_survey",
-            "radial_ebus_survey_v1",
-            {
-                "location": raw.get("nav_target_segment", "target lesion"),
-                "rebus_features": raw.get("nav_rebus_view"),
-            },
-        )
-    if raw.get("nav_sampling_tools"):
-        _append_proc(
-            "radial_ebus_sampling",
-            "radial_ebus_sampling_v1",
-            {
-                "ultrasound_pattern": raw.get("nav_rebus_view") or "concentric",
-                "sampling_tools": raw.get("nav_sampling_tools") or [],
-                "lesion_size_mm": raw.get("nav_lesion_size_mm"),
-                # TODO: extractor missing passes_per_tool, specimens
-            },
-        )
-    if raw.get("nav_tool_in_lesion"):
-        _append_proc(
-            "tool_in_lesion_confirmation",
-            "tool_in_lesion_confirmation_v1",
-            {
-                "confirmation_method": raw.get("nav_imaging_verification") or "imaging confirmation",
-                # TODO: extractor missing margin_mm, fluoro_angle_deg, projection
-            },
-        )
-
-    # EBUS
-    ebus_stations = raw.get("ebus_stations_sampled") or []
-    if ebus_stations:
-        station_entries = []
-        for station in ebus_stations:
-            station_entries.append(
-                {
-                    "station_name": station,
-                    "passes": raw.get("ebus_passes", 1),  # TODO: extractor missing per-station pass counts
-                    "echo_features": raw.get("ebus_echo_features"),
-                    "biopsy_tools": ["TBNA"],
-                    "rose_result": raw.get("ebus_rose_result"),
-                }
-            )
-        _append_proc(
-            "ebus_tbna",
-            "ebus_tbna_v1",
-            {
-                "needle_gauge": raw.get("ebus_needle_gauge"),
-                "stations": station_entries,
-                "elastography_used": raw.get("ebus_elastography"),
-                "rose_available": raw.get("ebus_rose_available"),
-                "overall_rose_diagnosis": raw.get("ebus_rose_result"),
-            },
-        )
-
-    # Pleural procedures derived from registry fields
-    # Bronchoscopy/airway procedures (if provided as dict payloads)
-    simple_map = [
-        ("bronchial_washing", "bronchial_washing_v1", "bronchial_washing"),
-        ("bronchial_brushings", "bronchial_brushings_v1", "bronchial_brushings"),
-        ("bal", "bal_v1", "bal"),
-        ("bal_variant", "bal_alt_v1", "bal_variant"),
-        ("endobronchial_biopsy", "endobronchial_biopsy_v1", "endobronchial_biopsy"),
-        ("transbronchial_lung_biopsy", "transbronchial_lung_biopsy_v1", "transbronchial_lung_biopsy"),
-        ("transbronchial_needle_aspiration", "transbronchial_needle_aspiration_v1", "transbronchial_needle_aspiration"),
-        ("therapeutic_aspiration", "therapeutic_aspiration_v1", "therapeutic_aspiration"),
-        ("rigid_bronchoscopy", "rigid_bronchoscopy_v1", "rigid_bronchoscopy"),
-        ("transbronchial_cryobiopsy", "transbronchial_cryobiopsy_v1", "transbronchial_cryobiopsy"),
-        ("endobronchial_cryoablation", "endobronchial_cryoablation_v1", "endobronchial_cryoablation"),
-        ("cryo_extraction_mucus", "cryo_extraction_mucus_v1", "cryo_extraction_mucus"),
-        ("endobronchial_hemostasis", "endobronchial_hemostasis_v1", "endobronchial_hemostasis"),
-        ("endobronchial_blocker", "endobronchial_blocker_v1", "endobronchial_blocker"),
-        ("pdt_light", "pdt_light_v1", "pdt_light"),
-        ("pdt_debridement", "pdt_debridement_v1", "pdt_debridement"),
-        ("foreign_body_removal", "foreign_body_removal_v1", "foreign_body_removal"),
-        ("awake_foi", "awake_foi_v1", "awake_foi"),
-        ("dlt_placement", "dlt_placement_v1", "dlt_placement"),
-        ("stent_surveillance", "stent_surveillance_v1", "stent_surveillance"),
-    ]
-    for key, schema_id, proc_type in simple_map:
-        if isinstance(raw.get(key), (dict, BaseModel)):
-            _append_proc(proc_type, schema_id, raw[key])
-
-    # Pleural procedures derived from registry fields
-    pleural_type = (raw.get("pleural_procedure_type") or "").lower()
-    pleural_side = raw.get("pleural_side") or raw.get("laterality") or raw.get("side")
-
-    if pleural_type == "thoracentesis":
-        uses_manometry = bool(raw.get("pleural_opening_pressure_measured")) or raw.get("pleural_opening_pressure_cmh2o") is not None
-        schema_id = "thoracentesis_manometry_v1" if uses_manometry else "thoracentesis_detailed_v1"
-        proc_type = "thoracentesis_manometry" if uses_manometry else "thoracentesis_detailed"
-        thoracentesis_payload = {
-            "side": pleural_side or "unspecified",
-            "guidance": raw.get("pleural_guidance"),
-            "intercostal_space": raw.get("intercostal_space", "unspecified"),
-            "entry_location": raw.get("entry_location", "mid-axillary"),
-            "volume_removed_ml": raw.get("pleural_volume_drained_ml"),
-            "fluid_appearance": raw.get("pleural_fluid_appearance"),
-            "specimen_tests": raw.get("specimen_tests") or raw.get("specimens"),
-            "effusion_volume": raw.get("pleural_effusion_volume"),
-            "effusion_echogenicity": raw.get("pleural_echogenicity"),
-            "loculations": raw.get("pleural_loculations"),
-            "diaphragm_motion": raw.get("pleural_diaphragm_motion"),
-            "lung_sliding_pre": raw.get("pleural_lung_sliding_pre"),
-            "lung_sliding_post": raw.get("pleural_lung_sliding_post"),
-            "lung_consolidation": raw.get("pleural_lung_consolidation"),
-            "pleura_description": raw.get("pleural_description"),
-            "opening_pressure_cmh2o": raw.get("pleural_opening_pressure_cmh2o"),
-            "pressure_readings": raw.get("pleural_pressure_readings"),
-            "stopping_criteria": raw.get("pleural_stopping_criteria"),
-            "post_procedure_imaging": raw.get("post_procedure_imaging"),
-            "total_removed_ml": raw.get("pleural_volume_drained_ml"),
-            "pleural_guidance": raw.get("pleural_guidance"),
-        }
-        _append_proc(proc_type, schema_id, thoracentesis_payload)
-    elif pleural_type == "chest tube":
-        chest_payload = {
-            "side": pleural_side or "unspecified",
-            "intercostal_space": raw.get("intercostal_space", "unspecified"),
-            "entry_line": raw.get("entry_location", "mid-axillary"),
-            "guidance": raw.get("pleural_guidance"),
-            "fluid_removed_ml": raw.get("pleural_volume_drained_ml"),
-            "fluid_appearance": raw.get("pleural_fluid_appearance"),
-            "specimen_tests": raw.get("specimen_tests") or raw.get("specimens"),
-            "cxr_ordered": raw.get("cxr_ordered"),
-            "effusion_volume": raw.get("pleural_effusion_volume"),
-            "effusion_echogenicity": raw.get("pleural_echogenicity"),
-            "loculations": raw.get("pleural_loculations"),
-            "diaphragm_motion": raw.get("pleural_diaphragm_motion"),
-            "lung_sliding_pre": raw.get("pleural_lung_sliding_pre"),
-            "lung_sliding_post": raw.get("pleural_lung_sliding_post"),
-            "lung_consolidation": raw.get("pleural_lung_consolidation"),
-            "pleura_description": raw.get("pleural_description"),
-        }
-        _append_proc("chest_tube", "chest_tube_v1", chest_payload)
-    elif pleural_type == "tunneled catheter":
-        tpc_payload = {
-            "side": pleural_side,
-            "intercostal_space": raw.get("intercostal_space", "unspecified"),
-            "entry_location": raw.get("entry_location", "mid-axillary"),
-            "tunnel_length_cm": raw.get("tunnel_length_cm"),
-            "exit_site": raw.get("exit_site"),
-            "anesthesia_lidocaine_ml": raw.get("anesthesia_lidocaine_ml"),
-            "fluid_removed_ml": raw.get("pleural_volume_drained_ml"),
-            "fluid_appearance": raw.get("pleural_fluid_appearance"),
-            "pleural_pressures": raw.get("pleural_pressures"),
-            "drainage_device": raw.get("drainage_device"),
-            "suction": raw.get("suction"),
-            "specimen_tests": raw.get("specimen_tests") or raw.get("specimens"),
-            "cxr_ordered": raw.get("cxr_ordered"),
-            "pleural_guidance": raw.get("pleural_guidance"),
-        }
-        _append_proc("tunneled_pleural_catheter_insert", "tunneled_pleural_catheter_insert_v1", tpc_payload)
-    elif pleural_type == "pigtail catheter":
-        pigtail_payload = {
-            "side": pleural_side or "unspecified",
-            "intercostal_space": raw.get("intercostal_space", "unspecified"),
-            "entry_location": raw.get("entry_location", "mid-axillary"),
-            "size_fr": raw.get("size_fr", "unspecified"),
-            "anesthesia_lidocaine_ml": raw.get("anesthesia_lidocaine_ml"),
-            "fluid_removed_ml": raw.get("pleural_volume_drained_ml"),
-            "fluid_appearance": raw.get("pleural_fluid_appearance"),
-            "specimen_tests": raw.get("specimen_tests") or raw.get("specimens"),
-            "cxr_ordered": raw.get("cxr_ordered"),
-        }
-        _append_proc("pigtail_catheter", "pigtail_catheter_v1", pigtail_payload)
-
-    # Whole lung lavage
-    if raw.get("wll_volume_instilled_l") is not None:
-        _append_proc(
-            "whole_lung_lavage",
-            "whole_lung_lavage_v1",
-            {
-                "side": raw.get("wll_side", "right"),
-                "dlt_size_fr": raw.get("wll_dlt_used_size"),
-                "position": raw.get("wll_position"),
-                "total_volume_l": raw.get("wll_volume_instilled_l"),
-                "max_volume_l": raw.get("wll_volume_instilled_l"),
-                "aliquot_volume_l": raw.get("wll_aliquot_volume_l"),
-                "dwell_time_min": raw.get("wll_dwell_time_min"),
-                "num_cycles": raw.get("wll_num_cycles"),
-            },
-        )
-
-    # BLVR if available from registry
-    if raw.get("blvr_valve_type") or raw.get("blvr_number_of_valves"):
-        target_lobe = raw.get("blvr_target_lobe") or "target lobe"
-        valves: list[dict[str, Any]] = []
-        valve_count = raw.get("blvr_number_of_valves") or 1
-        for _ in range(max(1, int(valve_count))):
-            valves.append({"valve_type": raw.get("blvr_valve_type") or "Valve", "lobe": target_lobe})
-        _append_proc(
-            "blvr_valve_placement",
-            "blvr_valve_placement_v1",
-            {
-                "lobes_treated": [target_lobe],
-                "valves": valves,
-                # TODO: extractor missing balloon_occlusion_performed, chartis_used, collateral_ventilation_absent
-            },
-        )
-
-    # BPF localization/valve/sealant if explicitly provided
-    if isinstance(raw.get("bpf_localization"), (dict, BaseModel)):
-        _append_proc("bpf_localization_occlusion", "bpf_localization_occlusion_v1", raw["bpf_localization"])
-    if isinstance(raw.get("bpf_valve_placement"), (dict, BaseModel)):
-        _append_proc("bpf_valve_air_leak", "bpf_valve_air_leak_v1", raw["bpf_valve_placement"])
-    if isinstance(raw.get("bpf_sealant_application"), (dict, BaseModel)):
-        _append_proc("bpf_endobronchial_sealant", "bpf_endobronchial_sealant_v1", raw["bpf_sealant_application"])
-
-    # Other large procedures
-    if raw.get("paracentesis_performed"):
-        _append_proc(
-            "paracentesis",
-            "paracentesis_v1",
-            {
-                "volume_removed_ml": raw.get("paracentesis_volume_ml") or 0,
-                "site_description": raw.get("paracentesis_site"),
-                "fluid_character": raw.get("paracentesis_fluid_character"),
-                "tests": raw.get("paracentesis_tests"),
-                "imaging_guidance": raw.get("paracentesis_guidance"),
-            },
-        )
-    if raw.get("peg_placed"):
-        _append_proc(
-            "peg_placement",
-            "peg_placement_v1",
-            {
-                "incision_location": raw.get("peg_incision_location"),
-                "tube_size_fr": raw.get("peg_size_fr"),
-                "bumper_depth_cm": raw.get("peg_bumper_depth_cm"),
-                "procedural_time_min": raw.get("peg_time_minutes"),
-                "complications": raw.get("peg_complications"),
-            },
-        )
-    if raw.get("peg_exchanged"):
-        _append_proc(
-            "peg_exchange",
-            "peg_exchange_v1",
-            {
-                "new_tube_size_fr": raw.get("peg_size_fr"),
-                "bumper_depth_cm": raw.get("peg_bumper_depth_cm"),
-                "complications": raw.get("peg_complications"),
-            },
-        )
-
-    # Direct payloads for removal or exchange actions
-    if isinstance(raw.get("tunneled_pleural_catheter_remove"), (dict, BaseModel)):
-        _append_proc("tunneled_pleural_catheter_remove", "tunneled_pleural_catheter_remove_v1", raw["tunneled_pleural_catheter_remove"])
-    if isinstance(raw.get("transthoracic_needle_biopsy"), (dict, BaseModel)):
-        _append_proc("transthoracic_needle_biopsy", "transthoracic_needle_biopsy_v1", raw["transthoracic_needle_biopsy"])
+    procedures = _coerce_prebuilt_procedures(raw.get("procedures"), cpt_candidates)
+    procedures.extend(_procedures_from_adapters(raw, cpt_candidates, start_index=len(procedures)))
 
     bundle = ProcedureBundle(
         patient=patient,
@@ -2254,6 +1210,18 @@ def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
     return bundle
 
 
+def _infer_and_validate_bundle(
+    bundle: ProcedureBundle, templates: TemplateRegistry, schemas: SchemaRegistry
+) -> tuple[ProcedureBundle, PatchResult, list[MissingFieldIssue], list[str]]:
+    inference_engine = InferenceEngine()
+    inference_result = inference_engine.infer_bundle(bundle)
+    updated_bundle = apply_patch_result(bundle, inference_result)
+    validator = ValidationEngine(templates, schemas)
+    issues = validator.list_missing_critical_fields(updated_bundle)
+    warnings = validator.apply_warn_if_rules(updated_bundle)
+    return updated_bundle, inference_result, issues, warnings
+
+
 def compose_structured_report(
     bundle: ProcedureBundle,
     template_registry: TemplateRegistry | None = None,
@@ -2263,6 +1231,7 @@ def compose_structured_report(
 ) -> str:
     templates = template_registry or default_template_registry()
     schemas = schema_registry or default_schema_registry()
+    bundle, _, _, _ = _infer_and_validate_bundle(bundle, templates, schemas)
     engine = ReporterEngine(
         templates,
         schemas,
@@ -2292,12 +1261,19 @@ def compose_structured_report_with_meta(
 ) -> StructuredReport:
     templates = template_registry or default_template_registry()
     schemas = schema_registry or default_schema_registry()
+    bundle, _, issues, warnings = _infer_and_validate_bundle(bundle, templates, schemas)
     engine = ReporterEngine(
         templates,
         schemas,
         procedure_order=_load_procedure_order(),
     )
-    return engine.compose_report_with_metadata(bundle, strict=strict, embed_metadata=embed_metadata)
+    return engine.compose_report_with_metadata(
+        bundle,
+        strict=strict,
+        embed_metadata=embed_metadata,
+        validation_issues=issues,
+        warnings=warnings,
+    )
 
 
 def compose_structured_report_from_extraction_with_meta(
@@ -2383,7 +1359,9 @@ __all__ = [
     "default_template_registry",
     "default_schema_registry",
     "list_missing_critical_fields",
+    "apply_warn_if_rules",
     "apply_bundle_patch",
+    "apply_patch_result",
     "get_coder_view",
     "StructuredReport",
     "ReportMetadata",

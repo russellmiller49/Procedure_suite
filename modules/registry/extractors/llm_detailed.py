@@ -5,8 +5,9 @@ from __future__ import annotations
 import json
 import re
 from typing import Any
+import os
 
-from modules.common.llm import GeminiLLM
+from modules.common.llm import DeterministicStubLLM, GeminiLLM
 from modules.common.logger import get_logger
 from modules.common.sectionizer import Section
 from modules.registry.prompts import build_registry_prompt
@@ -18,7 +19,17 @@ class LLMDetailedExtractor:
     slot_name = "llm_detailed"
 
     def __init__(self, llm: GeminiLLM | None = None) -> None:
-        self.llm = llm or GeminiLLM()
+        if llm is not None:
+            self.llm = llm
+            return
+
+        use_stub = os.getenv("REGISTRY_USE_STUB_LLM", "").lower() in ("1", "true", "yes")
+        use_stub = use_stub or os.getenv("GEMINI_OFFLINE", "").lower() in ("1", "true", "yes")
+
+        if use_stub or not os.getenv("GEMINI_API_KEY"):
+            self.llm = DeterministicStubLLM()
+        else:
+            self.llm = GeminiLLM()
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
         # Filter relevant sections to reduce context window and noise

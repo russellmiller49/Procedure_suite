@@ -57,7 +57,9 @@ async function run() {
             payload = {
                 note: text,
                 explain: document.getElementById('coder-explain').checked,
-                allow_weak_sedation_docs: document.getElementById('coder-weak-sedation').checked
+                allow_weak_sedation_docs: document.getElementById('coder-weak-sedation').checked,
+                locality: document.getElementById('coder-locality').value || '00',
+                setting: document.getElementById('coder-setting').value || 'facility'
             };
         } else if (currentMode === 'registry') {
             url = '/v1/registry/run';
@@ -84,6 +86,11 @@ async function run() {
         }
 
         lastResult = await response.json();
+        console.log('API Response:', lastResult);
+        console.log('Has financials:', !!lastResult.financials);
+        if (lastResult.financials) {
+            console.log('Financials data:', lastResult.financials);
+        }
         renderResult();
 
     } catch (error) {
@@ -133,9 +140,59 @@ function showResultTab(tab) {
             html += `<p class="text-muted">No codes generated.</p>`;
         }
 
+        // Display RVU/Financials data if available
+        // Always show financials section if it exists (even if empty)
+        if (lastResult.financials !== undefined && lastResult.financials !== null) {
+            const fin = lastResult.financials;
+            const totalWorkRVU = (fin.total_work_rvu !== undefined && fin.total_work_rvu !== null) ? fin.total_work_rvu.toFixed(2) : 'N/A';
+            const totalPayment = (fin.total_payment !== undefined && fin.total_payment !== null) ? fin.total_payment.toFixed(2) : 'N/A';
+            
+            html += `<hr><h5>RVU & Payment Information</h5>`;
+            html += `<div class="card mb-3">`;
+            html += `<div class="card-body">`;
+            html += `<div class="row mb-3">`;
+            html += `<div class="col-md-6"><strong>Total Work RVU:</strong> ${totalWorkRVU}</div>`;
+            html += `<div class="col-md-6"><strong>Estimated Payment:</strong> $${totalPayment}</div>`;
+            html += `</div>`;
+            if (fin.breakdown && Array.isArray(fin.breakdown) && fin.breakdown.length > 0) {
+                html += `<hr><h6>Per-Procedure Breakdown</h6>`;
+                html += `<table class="table table-sm table-striped">`;
+                html += `<thead><tr><th>CPT Code</th><th>Work RVU</th><th>Payment</th><th>Multiplier</th></tr></thead>`;
+                html += `<tbody>`;
+                fin.breakdown.forEach(proc => {
+                    const workRVU = (proc.work_rvu !== undefined && proc.work_rvu !== null) ? proc.work_rvu.toFixed(2) : 'N/A';
+                    const payment = (proc.payment !== undefined && proc.payment !== null) ? proc.payment.toFixed(2) : 'N/A';
+                    const multiplier = (proc.multiplier !== undefined && proc.multiplier !== null) ? proc.multiplier : 1.0;
+                    html += `<tr>`;
+                    html += `<td><code>${proc.cpt_code || 'N/A'}</code></td>`;
+                    html += `<td>${workRVU}</td>`;
+                    html += `<td>$${payment}</td>`;
+                    html += `<td>${multiplier}x</td>`;
+                    html += `</tr>`;
+                });
+                html += `</tbody></table>`;
+            } else if (fin.total_work_rvu === 0 && fin.total_payment === 0) {
+                html += `<p class="text-muted mb-0">No RVU calculations available (no billable codes found).</p>`;
+            }
+            html += `</div></div>`;
+        } else {
+            html += `<hr><div class="alert alert-info">RVU calculations not available.</div>`;
+        }
+
         if (lastResult.explanation) {
              html += `<hr><h5>Explanation</h5><pre>${lastResult.explanation}</pre>`;
         }
+        
+        // Display warnings if any
+        if (lastResult.warnings && lastResult.warnings.length > 0) {
+            html += `<hr><h5>Warnings</h5>`;
+            html += `<div class="alert alert-warning">`;
+            lastResult.warnings.forEach(warning => {
+                html += `<div>${warning}</div>`;
+            });
+            html += `</div>`;
+        }
+        
         area.innerHTML = html;
 
     } else if (currentMode === 'registry') {

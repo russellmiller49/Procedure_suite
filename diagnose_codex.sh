@@ -100,3 +100,4 @@ echo "1. Windows Firewall settings"
 echo "2. WSL2 network configuration"
 echo "3. VPN/Proxy settings"
 
+

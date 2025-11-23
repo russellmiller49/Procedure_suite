@@ -1,12 +1,17 @@
-from .engine import (
+from proc_schemas.clinical import (
     AnesthesiaInfo,
+    BundlePatch,
     EncounterInfo,
     PatientInfo,
     ProcedureBundle,
     ProcedureInput,
+    ProcedurePatch,
+    SedationInfo,
+)
+
+from .engine import (
     ReporterEngine,
     SchemaRegistry,
-    SedationInfo,
     TemplateMeta,
     TemplateRegistry,
     compose_report_from_form,
@@ -18,9 +23,9 @@ from .engine import (
     compose_report_with_patch,
     get_missing_critical_fields_from_extraction,
     list_missing_critical_fields,
+    apply_warn_if_rules,
     apply_bundle_patch,
-    BundlePatch,
-    ProcedurePatch,
+    apply_patch_result,
     MissingFieldIssue,
     get_coder_view,
     ProcedureMetadata,
@@ -59,7 +64,9 @@ __all__ = [
     "ProcedurePatch",
     "MissingFieldIssue",
     "list_missing_critical_fields",
+    "apply_warn_if_rules",
     "get_missing_critical_fields_from_extraction",
     "apply_bundle_patch",
+    "apply_patch_result",
     "get_coder_view",
 ]

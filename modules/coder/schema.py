@@ -61,6 +61,7 @@ class CoderOutput(BaseModel):
     codes: list[CodeDecision]
     intents: list[DetectedIntent] = Field(default_factory=list)
     mer_summary: dict[str, Any] | None = None
+    financials: dict[str, Any] | None = None
     ncci_actions: list[BundleDecision] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
     version: str = "0.1.0"

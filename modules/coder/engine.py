@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import asdict
-from typing import Dict, Sequence
+from typing import Dict, Sequence, Any
+from pathlib import Path
 
 from modules.common import knowledge
 from modules.common.logger import get_logger
@@ -18,8 +19,15 @@ from . import dictionary, posthoc, rules
 from .constants import CPT_DESCRIPTIONS
 from .schema import CodeDecision, CoderOutput, DetectedIntent
 
+from proc_autocode.rvu.rvu_calculator import ProcedureRVUCalculator
+
 CODER_VERSION = "0.1.0"
 logger = get_logger("coder")
+
+_ROOT = Path(__file__).resolve().parents[2]
+_RVU_DIR = _ROOT / "proc_autocode" / "rvu" / "data"
+_RVU_FILE = _RVU_DIR / "rvu_ip_2025.csv"
+_GPCI_FILE = _RVU_DIR / "gpci_2025.csv"
 
 
 class CoderEngine:
@@ -37,8 +45,22 @@ class CoderEngine:
         self.linker = linker or UmlsLinker()
         self.allow_weak_sedation_docs = allow_weak_sedation_docs
         self.ml_service = ml_service or MLCoderService()
+        
+        # Initialize RVU calculator
+        if _RVU_FILE.exists() and _GPCI_FILE.exists():
+            self.rvu_calc = ProcedureRVUCalculator(_RVU_FILE, _GPCI_FILE)
+        else:
+            logger.warning("RVU data files not found; enhanced financials will be disabled.")
+            self.rvu_calc = None
 
-    def run(self, note_text: str, *, explain: bool = False) -> CoderOutput:
+    def run(
+        self, 
+        note_text: str, 
+        *, 
+        explain: bool = False,
+        locality: str = "00",
+        setting: str = "facility"
+    ) -> CoderOutput:
         """Execute the deterministic coder pipeline."""
         logger.info(f"Coder run initiated. Note length: {len(note_text)}")
 
@@ -55,6 +77,8 @@ class CoderEngine:
         codes = posthoc.apply_posthoc(codes)
         self._augment_with_ml_predictions(note_text, codes)
         mer_summary = self._apply_mer(codes)
+        
+        financials = self._calculate_financials(codes, locality, setting)
 
         warnings = list(mapping_warnings)
         warnings.extend(bundle_warnings)
@@ -64,10 +88,207 @@ class CoderEngine:
             codes=codes,
             intents=intents,
             mer_summary=mer_summary,
+            financials=financials,
             ncci_actions=ncci_actions,
             warnings=warnings,
             version=CODER_VERSION,
         )
+
+    def _calculate_financials(self, codes: Sequence[CodeDecision], locality: str, setting: str) -> Dict[str, Any] | None:
+        if not self.rvu_calc:
+            return None
+
+        endoscopy_family = self._endoscopy_family_codes
+        endoscopy_codes = [c for c in codes if c.cpt in endoscopy_family]
+        other_codes = [c for c in codes if c.cpt not in endoscopy_family]
+
+        # 1) Multiple endoscopy rule for the bronchoscopy family
+        endo_summary = self._compute_endoscopy_payments(
+            endoscopy_codes,
+            locality=locality,
+            setting=setting,
+        )
+
+        # 2) Generic 100% / 50% multi‑procedure rule for all other CPTs
+        other_procs = []
+        for i, code in enumerate(other_codes):
+            # Basic logic: first non-addon is 100%, others 50%. Add-ons 100%.
+            # But calculate_case_rvu relies on us passing the multiplier if we want to control it strictly,
+            # or we can let it handle it if we structure the input right.
+            # The previous implementation used a simple loop. Let's stick to 1.0/0.5 logic for "other".
+            # Note: In a mixed case, the primary of "other" might be 50% if endoscopy was primary?
+            # CMS "Multiple Procedure" indicator '2' means standard 100/50 rule.
+            # Usually, the highest valued procedure of the ENTIRE session is 100%, others 50%.
+            # But Endoscopy rule is a special logic for that family.
+            # If we have Endoscopy + Pleural, usually Pleural is separate family.
+            # If standard rule applies across families, we need to know which is globally highest.
+            # For now, we'll treat them as separate buckets to satisfy the requirement:
+            # "All non‑endoscopy codes ... still handled by the existing ... logic"
+            
+            is_addon = code.cpt.startswith("+")
+            multiplier = 1.0
+            if is_addon:
+                multiplier = 1.0
+            else:
+                # If we already have an endoscopy primary, does the first "other" code get 50%?
+                # Conservatively, yes, if it's subject to MP reduction.
+                # But let's stick to the user's request: "Generic 100% / 50% ... for all other CPTs".
+                # We will reset the counter for the "other" bucket.
+                multiplier = 1.0 if i == 0 else 0.5
+            
+            other_procs.append({
+                "cpt_code": code.cpt,
+                "modifiers": code.modifiers,
+                "multiplier": multiplier
+            })
+
+        if other_procs:
+            other_summary = self.rvu_calc.calculate_case_rvu(
+                procedures=other_procs,
+                locality=locality,
+                setting=setting,
+            )
+        else:
+            other_summary = {
+                "total_work_rvu": 0.0,
+                "total_payment": 0.0,
+                "breakdown": [],
+            }
+
+        # 3) Merge results
+        total_work_rvu = (
+            endo_summary["total_work_rvu"] +
+            other_summary["total_work_rvu"]
+        )
+        total_payment = (
+            endo_summary["total_payment"] +
+            other_summary["total_payment"]
+        )
+
+        breakdown = endo_summary["breakdown"] + other_summary["breakdown"]
+
+        return {
+            "total_work_rvu": total_work_rvu,
+            "total_payment": total_payment,
+            "breakdown": breakdown,
+            "locality": locality,
+            "setting": setting
+        }
+
+    @property
+    def _endoscopy_family_codes(self) -> set[str]:
+        """Bronchoscopy endoscopy family subject to multiple endoscopy rule."""
+        return set(
+            knowledge.get_knowledge()
+            .get("policies", {})
+            .get("multiple_endoscopy_rule", {})
+            .get("applies_to_family", [])
+        )
+
+    def _compute_endoscopy_payments(
+        self,
+        codes: Sequence[CodeDecision],
+        locality: str,
+        setting: str,
+    ) -> dict[str, Any]:
+        """
+        Apply CMS multiple endoscopy rule to bronchoscopy endoscopy family.
+        Rule: Highest valued code = 100%. Others = (Payment - Base Payment).
+        Base code is 31622.
+        """
+        if not codes:
+            return {
+                "total_work_rvu": 0.0,
+                "total_payment": 0.0,
+                "breakdown": [],
+            }
+
+        # 1) Get base endoscopy payment for 31622
+        # Use 'facility' setting if not specified, though standard for bronch is facility.
+        base_result = self.rvu_calc.calculate_procedure_rvu(
+            cpt_code="31622",
+            locality=locality,
+            setting=setting,
+            modifiers=[],
+        )
+        if not base_result:
+            # Fallback if 31622 missing from data
+            logger.warning("Base code 31622 missing from RVU data; skipping endoscopy rule.")
+            return {
+                "total_work_rvu": 0.0,
+                "total_payment": 0.0,
+                "breakdown": [],
+            }
+
+        base_payment = base_result["payment_amount"]
+
+        # 2) Get single‑procedure values for each code
+        single: dict[str, dict] = {}
+        for code in codes:
+            res = self.rvu_calc.calculate_procedure_rvu(
+                cpt_code=code.cpt,
+                locality=locality,
+                setting=setting,
+                modifiers=code.modifiers or [],
+            )
+            if res:
+                single[code.cpt] = res
+
+        if not single:
+            return {
+                "total_work_rvu": 0.0,
+                "total_payment": 0.0,
+                "breakdown": [],
+            }
+
+        # 3) Identify the highest‑valued endoscopy
+        max_code = max(
+            single.keys(),
+            key=lambda c: single[c]["payment_amount"]
+        )
+
+        total_work_rvu = 0.0
+        total_payment = 0.0
+        breakdown: list[dict] = []
+
+        # 4) Apply the rule
+        for code in codes:
+            res = single.get(code.cpt)
+            if not res:
+                continue
+
+            if code.cpt == max_code:
+                effective_payment = res["payment_amount"]
+                rule_note = "multiple_endoscopy_primary"
+            else:
+                # Payment is difference between this code and base code
+                # If code < base (unlikely for therapeutic vs diagnostic), floor at 0
+                effective_payment = max(0.0, res["payment_amount"] - base_payment)
+                rule_note = "multiple_endoscopy_reduced"
+
+            # Work RVUs are typically summed fully in productivity reports
+            # even if payment is reduced.
+            work_rvu = float(res["work_rvu"])
+
+            total_payment += effective_payment
+            total_work_rvu += work_rvu
+
+            breakdown.append(
+                {
+                    "cpt_code": code.cpt,
+                    "work_rvu": work_rvu,
+                    "payment": effective_payment,
+                    "multiplier": 1.0 if code.cpt == max_code else 0.0, # Not strictly a multiplier
+                    "rule": rule_note,
+                }
+            )
+
+        return {
+            "total_work_rvu": total_work_rvu,
+            "total_payment": total_payment,
+            "breakdown": breakdown,
+        }
+
 
     def _map_intents_to_codes(
         self, intents: Sequence[DetectedIntent]
