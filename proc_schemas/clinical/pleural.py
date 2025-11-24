@@ -88,8 +88,8 @@ class ChestTube(BaseModel):
 class TunneledPleuralCatheterInsert(BaseModel):
     model_config = ConfigDict(extra="ignore")
     side: str | None = None
-    intercostal_space: str
-    entry_location: str
+    intercostal_space: str | None = None
+    entry_location: str | None = None
     tunnel_length_cm: int | None = None
     exit_site: str | None = None
     anesthesia_lidocaine_ml: int | None = None

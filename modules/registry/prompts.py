@@ -61,6 +61,46 @@ Leave ebus_rose_result as "" for now, even if ROSE is described.""".strip(),
 Leave ebus_needle_gauge as "" for now, even if the needle size is described.""".strip(),
     "ebus_needle_type": """
 Leave ebus_needle_type as "" for now.""".strip(),
+    "ebus_elastography_used": """
+True if the note explicitly states elastography was performed during EBUS; false if explicitly stated not done; null if not mentioned.""".strip(),
+    "ebus_elastography_pattern": """
+Elastography pattern or color map when documented (e.g., blue-green, predominantly blue). Strip trailing punctuation; null if not mentioned.""".strip(),
+    "pleural_side": """
+Pleural laterality for thoracentesis/chest tube/tunneled catheter. Allowed: Right, Left (capitalize first letter); accept R/L/right/left synonyms. Null if not documented.""".strip(),
+    "pleural_intercostal_space": """
+Intercostal space used for pleural access (e.g., '5th'). Accept ICS shorthand (\"5th ICS\" → \"5th\"). Null if not documented.""".strip(),
+    "linear_ebus_stations": """
+List of stations sampled with linear EBUS-TBNA (e.g., [\"4R\", \"7\", \"11L\"]). Use IASLC station names; null/[] if no stations documented.""".strip(),
+    "nav_platform": """
+Navigation platform (Ion/Monarch/EMN) only when robotic or navigation is explicitly documented by name. Do not set for standard mediastinal EBUS staging without navigation. Leave null unless the note clearly names Ion/robotic/Monarch/navigation system.""".strip(),
+    "nav_registration_method": """
+Only populate if robotic/navigation registration is clearly described. Leave null for non-navigation EBUS cases.""".strip(),
+    "nav_registration_error_mm": """
+Registration error in mm; only set when robotic/navigation registration is described. Null for non-navigation EBUS cases.""".strip(),
+    "nav_imaging_verification": """
+Imaging used to confirm tool-in-lesion (e.g., Cone Beam CT) only when navigation/robotic context exists. Null for routine EBUS without navigation.""".strip(),
+    "nav_tool_in_lesion": """
+True only when navigation/robotic tool-in-lesion confirmation is explicitly documented. Null otherwise; do not infer for standard EBUS.""".strip(),
+    "nav_sampling_tools": """
+Sampling tools used in navigation/robotic cases (forceps, needle, brush, cryoprobe). Leave null/[] for linear EBUS staging without navigation even if a generic needle is mentioned.""".strip(),
+    "ebus_stations_detail": """
+List of station-level details when available. Example: [{\"station\":\"4R\",\"size_mm\":13,\"passes\":3,\"rose_result\":\"Malignant\"},{\"station\":\"7\",\"size_mm\":15,\"passes\":3,\"rose_result\":\"Malignant\"},{\"station\":\"11L\",\"size_mm\":9,\"passes\":2,\"rose_result\":\"Benign\"}]. Use null if not documented.""".strip(),
+    "bronch_indication": """
+Brief indication for bronchoscopy (e.g., ILD workup). Use null if not documented.""".strip(),
+    "bronch_location_lobe": """
+Lobe targeted for transbronchial biopsies (e.g., RLL).""".strip(),
+    "bronch_location_segment": """
+Segment targeted for transbronchial biopsies (e.g., lateral basal).""".strip(),
+    "bronch_guidance": """
+Guidance modality for transbronchial biopsies (e.g., Fluoroscopy).""".strip(),
+    "bronch_num_tbbx": """
+Number of transbronchial biopsies obtained. Leave null if not documented.""".strip(),
+    "bronch_tbbx_tool": """
+Tool used for TBBx (e.g., Forceps).""".strip(),
+    "bronch_specimen_tests": """
+Specimen destinations/tests for TBBx (e.g., Histology, Microbiology).""".strip(),
+    "bronch_immediate_complications": """
+Immediate complications for TBBx (e.g., none, bleeding, pneumothorax).""".strip(),
 }
 
 

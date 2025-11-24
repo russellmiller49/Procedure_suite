@@ -5,10 +5,10 @@ cpt_hints: ["32550"]
 schema_id: tunneled_pleural_catheter_insert_v1
 output_section: PROCEDURE_DETAILS
 template_path: tunneled_pleural_catheter_insert.j2
-required_fields:
+required_fields: []
+optional_fields:
   - intercostal_space
   - entry_location
-optional_fields:
   - side
   - tunnel_length_cm
   - exit_site

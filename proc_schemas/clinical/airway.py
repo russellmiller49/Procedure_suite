@@ -55,6 +55,15 @@ class IonRegistrationComplete(BaseModel):
     notes: str | None = None
 
 
+class RoboticNavigation(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    platform: str | None = None
+    lesion_location: str | None = None
+    registration_method: str | None = None
+    registration_error_mm: float | None = None
+    notes: str | None = None
+
+
 class IonRegistrationPartial(BaseModel):
     model_config = ConfigDict(extra="ignore")
     indication: str
@@ -121,9 +130,9 @@ class RoboticMonarchBronchoscopy(BaseModel):
 class RadialEBUSSampling(BaseModel):
     model_config = ConfigDict(extra="ignore")
     guide_sheath_diameter: str | None = None
-    ultrasound_pattern: str
+    ultrasound_pattern: str | None = None
     lesion_size_mm: float | None = None
-    sampling_tools: List[str]
+    sampling_tools: List[str] = Field(default_factory=list)
     passes_per_tool: str | None = None
     fluoro_used: bool | None = None
     rose_result: str | None = None
@@ -156,8 +165,8 @@ class DyeMarkerPlacement(BaseModel):
 class EBUSStationSample(BaseModel):
     model_config = ConfigDict(extra="ignore")
     station_name: str
-    size_mm: int | None = None
-    passes: int
+    size_mm: float | None = None
+    passes: int | None = None
     echo_features: str | None = None
     biopsy_tools: List[str] = Field(default_factory=list)
     rose_result: str | None = None
@@ -169,6 +178,7 @@ class EBUSTBNA(BaseModel):
     needle_gauge: str | None = None
     stations: List[EBUSStationSample]
     elastography_used: bool | None = None
+    elastography_pattern: str | None = None
     rose_available: bool | None = None
     overall_rose_diagnosis: str | None = None
 
@@ -475,6 +485,18 @@ class TransbronchialNeedleAspiration(BaseModel):
     tests: List[str]
 
 
+class TransbronchialBiopsyBasic(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    lobe: str
+    segment: str | None = None
+    guidance: str
+    tool: str
+    number_of_biopsies: int
+    specimen_tests: List[str] | None = None
+    complications: str | None = None
+    notes: str | None = None
+
+
 class TherapeuticAspiration(BaseModel):
     model_config = ConfigDict(extra="ignore")
     airway_segment: str
@@ -546,6 +568,7 @@ __all__ = [
     "IonRegistrationComplete",
     "IonRegistrationDrift",
     "IonRegistrationPartial",
+    "RoboticNavigation",
     "DoubleLumenTubePlacement",
     "PhotodynamicTherapyDebridement",
     "PhotodynamicTherapyLight",
@@ -559,6 +582,7 @@ __all__ = [
     "TransbronchialCryobiopsy",
     "TransbronchialLungBiopsy",
     "TransbronchialNeedleAspiration",
+    "TransbronchialBiopsyBasic",
     "ValvePlacement",
     "WholeLungLavage",
 ]

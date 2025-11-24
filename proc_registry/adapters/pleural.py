@@ -30,7 +30,9 @@ class ThoracentesisAdapter(ExtractionAdapter):
         return {
             "side": _pleural_side(source) or "unspecified",
             "ultrasound_feasible": source.get("pleural_guidance") is not None,
-            "intercostal_space": source.get("intercostal_space", "unspecified"),
+            "intercostal_space": source.get("intercostal_space")
+            or source.get("pleural_intercostal_space")
+            or "unspecified",
             "entry_location": source.get("entry_location", "mid-axillary"),
             "volume_removed_ml": source.get("pleural_volume_drained_ml"),
             "fluid_appearance": source.get("pleural_fluid_appearance"),
@@ -65,7 +67,9 @@ class ThoracentesisManometryAdapter(ExtractionAdapter):
         return {
             "side": _pleural_side(source) or "unspecified",
             "guidance": source.get("pleural_guidance"),
-            "intercostal_space": source.get("intercostal_space", "unspecified"),
+            "intercostal_space": source.get("intercostal_space")
+            or source.get("pleural_intercostal_space")
+            or "unspecified",
             "entry_location": source.get("entry_location", "mid-axillary"),
             "fluid_appearance": source.get("pleural_fluid_appearance"),
             "specimen_tests": source.get("specimen_tests") or source.get("specimens"),
@@ -99,7 +103,9 @@ class ChestTubeAdapter(ExtractionAdapter):
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
         return {
             "side": _pleural_side(source) or "unspecified",
-            "intercostal_space": source.get("intercostal_space", "unspecified"),
+            "intercostal_space": source.get("intercostal_space")
+            or source.get("pleural_intercostal_space")
+            or "unspecified",
             "entry_line": source.get("entry_location", "mid-axillary"),
             "guidance": source.get("pleural_guidance"),
             "fluid_removed_ml": source.get("pleural_volume_drained_ml"),
@@ -131,8 +137,8 @@ class TunneledPleuralCatheterInsertAdapter(ExtractionAdapter):
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
         return {
             "side": _pleural_side(source),
-            "intercostal_space": source.get("intercostal_space", "unspecified"),
-            "entry_location": source.get("entry_location", "mid-axillary"),
+            "intercostal_space": source.get("pleural_intercostal_space") or source.get("intercostal_space"),
+            "entry_location": source.get("entry_location"),
             "tunnel_length_cm": source.get("tunnel_length_cm"),
             "exit_site": source.get("exit_site"),
             "anesthesia_lidocaine_ml": source.get("anesthesia_lidocaine_ml"),
@@ -161,7 +167,9 @@ class PigtailCatheterAdapter(ExtractionAdapter):
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
         return {
             "side": _pleural_side(source) or "unspecified",
-            "intercostal_space": source.get("intercostal_space", "unspecified"),
+            "intercostal_space": source.get("intercostal_space")
+            or source.get("pleural_intercostal_space")
+            or "unspecified",
             "entry_location": source.get("entry_location", "mid-axillary"),
             "size_fr": source.get("size_fr", "unspecified"),
             "anesthesia_lidocaine_ml": source.get("anesthesia_lidocaine_ml"),

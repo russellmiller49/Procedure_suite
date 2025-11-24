@@ -80,6 +80,40 @@ class RegistryEngine:
         if not merged_data.get("version"):
             merged_data["version"] = "0.5.0"
 
+        lowered = note_text.lower()
+
+        # Pleural laterality and access site heuristics
+        if merged_data.get("pleural_side") is None:
+            if re.search(r"\bright (?:pleural )?effusion", lowered):
+                merged_data["pleural_side"] = "Right"
+            elif re.search(r"\bleft (?:pleural )?effusion", lowered):
+                merged_data["pleural_side"] = "Left"
+            elif re.search(r"\bright hemithorax", lowered):
+                merged_data["pleural_side"] = "Right"
+            elif re.search(r"\bleft hemithorax", lowered):
+                merged_data["pleural_side"] = "Left"
+
+        if merged_data.get("pleural_intercostal_space") is None:
+            ics_match = re.search(r"(\d{1,2})(?:st|nd|rd|th)?\s*(?:intercostal\s*space|ics)", note_text, re.IGNORECASE)
+            if ics_match:
+                num = int(ics_match.group(1))
+                if 10 <= num % 100 <= 20:
+                    suffix = "th"
+                else:
+                    suffix = {1: "st", 2: "nd", 3: "rd"}.get(num % 10, "th")
+                formatted_ics = f"{num}{suffix}"
+                merged_data["pleural_intercostal_space"] = formatted_ics
+                merged_data.setdefault("intercostal_space", formatted_ics)
+                if not merged_data.get("entry_location"):
+                    window = note_text[max(0, ics_match.start() - 40) : ics_match.end() + 60]
+                    loc_match = re.search(
+                        r"(mid[-\\s]?axillary|anterior axillary|posterior axillary|midclavicular)",
+                        window,
+                        re.IGNORECASE,
+                    )
+                    if loc_match:
+                        merged_data["entry_location"] = loc_match.group(1)
+
         record = RegistryRecord(**merged_data)
         normalized_evidence: dict[str, list[Span]] = {}
         if include_evidence:
@@ -113,11 +147,11 @@ class RegistryEngine:
         """Apply regex/keyword heuristics for EBUS, sedation reversal, and basic BLVR."""
         lowered = text.lower()
         if not data.get("nav_platform"):
-            if "electromagnetic navigation" in lowered or "emn" in lowered:
+            if re.search(r"\belectromagnetic navigation\b", lowered) or re.search(r"\bemn\b", lowered):
                 data["nav_platform"] = "emn"
-            elif "ion" in lowered:
+            elif re.search(r"\bion\b", lowered):
                 data["nav_platform"] = "ion"
-            elif "monarch" in lowered or "auris" in lowered:
+            elif re.search(r"\bmonarch\b", lowered) or re.search(r"\bauris\b", lowered):
                 data["nav_platform"] = "monarch"
 
         if data.get("nav_rebus_used") is None:
@@ -207,7 +241,25 @@ class RegistryEngine:
             data["ebus_photodocumentation_complete"] = True
         elif "photos all stations" in text.lower():
             data["ebus_photodocumentation_complete"] = True
-        
+
+        # ebus elastography
+        if "elastograph" in lowered:
+            if "no elastograph" in lowered or "without elastograph" in lowered:
+                data.setdefault("ebus_elastography_used", False)
+            elif data.get("ebus_elastography_used") is None:
+                data["ebus_elastography_used"] = True
+
+        if data.get("ebus_elastography_pattern") is None and data.get("ebus_elastography_used"):
+            for sentence in re.split(r"[\n\.]", text):
+                if "elastograph" not in sentence.lower():
+                    continue
+                match = re.search(r"elastograph\w*(?:\s*(?:pattern|patterns|score|shows|was|were|with|used)?[^:;\\-]*)[:,-]\s*([^.;\\n]+)", sentence, re.IGNORECASE)
+                if match:
+                    candidate = match.group(1).strip()
+                    if candidate:
+                        data["ebus_elastography_pattern"] = candidate
+                        break
+
         # --- Sedation Reversal ---
         reversal_pattern = r"(Flumazenil|Naloxone|Narcan|Romazicon).*?(given|administered|IV)"
         reversal_match = re.search(reversal_pattern, text, re.IGNORECASE)

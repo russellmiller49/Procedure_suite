@@ -1,15 +1,20 @@
-A systematic EBUS survey was completed.{% if proc.needle_gauge %} Sampling was performed using a {{ proc.needle_gauge }} needle.{% endif %}{% if proc.elastography_used %} Elastography guided site selection.{% endif %}{% if proc.rose_available is not none %} ROSE {% if proc.rose_available %}was{% else %}was not{% endif %} available.{% endif %}
-The following lymph node stations were sampled based on ultrasound criteria:
+A systematic EBUS survey was completed.{% if proc.needle_gauge %} Sampling was performed using a {{ proc.needle_gauge }} needle.{% endif %}{% if proc.rose_available is not none %} ROSE {% if proc.rose_available %}was{% else %}was not{% endif %} available.{% endif %}
+
+{% if proc.elastography_used %}
+Elastography was performed; patterns were {{ proc.elastography_pattern or "noted" }}.
+{% endif %}
+
+The following lymph node stations were sampled:
 
 {% for station in proc.stations %}
 Station: {{ station.station_name }}
-{% if station.size_mm is not none %}Size (mm): {{ station.size_mm }}{% endif %}
-{% if station.echo_features %}Echo Features: {{ station.echo_features }}{% endif %}
+{% if station.size_mm is not none %}Size: {{ station.size_mm }} mm{% endif %}
 {% if station.biopsy_tools %}Biopsy Tools: {{ station.biopsy_tools | join(', ') }}{% endif %}
-Number of Passes: {{ station.passes }}
+{% if station.passes is not none %}Number of Passes: {{ station.passes }}{% endif %}
+{% if station.echo_features %}Echo Features: {{ station.echo_features }}{% endif %}
 {% if station.rose_result %}ROSE Results: {{ station.rose_result }}{% endif %}
 {% if station.comments %}Notes: {{ station.comments }}{% endif %}
 
-{% endfor -%}
+{% endfor %}
 {% if proc.overall_rose_diagnosis %}Overall ROSE Diagnosis: {{ proc.overall_rose_diagnosis }}.{% endif %}
 No immediate complications were observed.

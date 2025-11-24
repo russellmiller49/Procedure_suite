@@ -143,6 +143,8 @@ def _print_summary(result) -> None:
         print(f"Total Work RVU: {fin.total_work_rvu:.2f}")
         print(f"Estimated Payment (facility):    ${fin.total_facility_payment:.2f}")
         print(f"Estimated Payment (nonfacility): ${fin.total_nonfacility_payment:.2f}")
+    else:
+        print("Estimated Payment: $N/A")
 
     if result.warnings:
         console.print(Panel("\n".join(result.warnings), title="Warnings", style="yellow"))

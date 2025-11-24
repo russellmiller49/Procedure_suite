@@ -1,4 +1,1 @@
-Radial endobronchial ultrasound was performed to evaluate the target at {{ proc.location }}.
-{% if proc.rebus_features %}Features noted: {{ proc.rebus_features }}.{% endif %}
-{% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}
-The patient tolerated the survey without immediate complications.
+Radial endobronchial ultrasound was performed at the {{ proc.location }}{% if proc.rebus_features %}, demonstrating an {{ proc.rebus_features | lower }} pattern{% endif %}.{% if proc.notes %} Notes: {{ proc.notes }}.{% endif %}

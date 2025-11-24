@@ -167,33 +167,36 @@ function showResultTab(tab) {
         if (lastResult.financials !== undefined && lastResult.financials !== null) {
             const fin = lastResult.financials;
             const totalWorkRVU = (fin.total_work_rvu !== undefined && fin.total_work_rvu !== null) ? fin.total_work_rvu.toFixed(2) : 'N/A';
-            const totalPayment = (fin.total_payment !== undefined && fin.total_payment !== null) ? fin.total_payment.toFixed(2) : 'N/A';
+            // Use total_facility_payment as the primary estimate
+            const totalPayment = (fin.total_facility_payment !== undefined && fin.total_facility_payment !== null) ? fin.total_facility_payment.toFixed(2) : 'N/A';
             
             html += `<hr><h5>RVU & Payment Information</h5>`;
             html += `<div class="card mb-3">`;
             html += `<div class="card-body">`;
             html += `<div class="row mb-3">`;
             html += `<div class="col-md-6"><strong>Total Work RVU:</strong> ${totalWorkRVU}</div>`;
-            html += `<div class="col-md-6"><strong>Estimated Payment:</strong> $${totalPayment}</div>`;
+            html += `<div class="col-md-6"><strong>Estimated Payment (Facility):</strong> $${totalPayment}</div>`;
             html += `</div>`;
-            if (fin.breakdown && Array.isArray(fin.breakdown) && fin.breakdown.length > 0) {
+            
+            // Use per_code (list of PerCodeBilling) instead of breakdown
+            if (fin.per_code && Array.isArray(fin.per_code) && fin.per_code.length > 0) {
                 html += `<hr><h6>Per-Procedure Breakdown</h6>`;
                 html += `<table class="table table-sm table-striped">`;
-                html += `<thead><tr><th>CPT Code</th><th>Work RVU</th><th>Payment</th><th>Multiplier</th></tr></thead>`;
+                html += `<thead><tr><th>CPT Code</th><th>Work RVU</th><th>Facility Pay</th></tr></thead>`;
                 html += `<tbody>`;
-                fin.breakdown.forEach(proc => {
+                fin.per_code.forEach(proc => {
                     const workRVU = (proc.work_rvu !== undefined && proc.work_rvu !== null) ? proc.work_rvu.toFixed(2) : 'N/A';
-                    const payment = (proc.payment !== undefined && proc.payment !== null) ? proc.payment.toFixed(2) : 'N/A';
-                    const multiplier = (proc.multiplier !== undefined && proc.multiplier !== null) ? proc.multiplier : 1.0;
+                    // Use allowed_facility_payment
+                    const payment = (proc.allowed_facility_payment !== undefined && proc.allowed_facility_payment !== null) ? proc.allowed_facility_payment.toFixed(2) : 'N/A';
+                    
                     html += `<tr>`;
                     html += `<td><code>${proc.cpt_code || 'N/A'}</code></td>`;
                     html += `<td>${workRVU}</td>`;
                     html += `<td>$${payment}</td>`;
-                    html += `<td>${multiplier}x</td>`;
                     html += `</tr>`;
                 });
                 html += `</tbody></table>`;
-            } else if (fin.total_work_rvu === 0 && fin.total_payment === 0) {
+            } else if (fin.total_work_rvu === 0 && fin.total_facility_payment === 0) {
                 html += `<p class="text-muted mb-0">No RVU calculations available (no billable codes found).</p>`;
             }
             html += `</div></div>`;

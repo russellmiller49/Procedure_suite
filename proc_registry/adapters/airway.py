@@ -126,6 +126,47 @@ class IonRegistrationCompleteAdapter(ExtractionAdapter):
         }
 
 
+class RoboticNavigationAdapter(ExtractionAdapter):
+    proc_type = "robotic_navigation"
+    schema_model = airway_schemas.RoboticNavigation
+    schema_id = "robotic_navigation_v1"
+
+    @classmethod
+    def matches(cls, source: dict[str, Any]) -> bool:
+        platform = _nav_platform(source)
+        platform_match = platform in ("ion", "monarch", "auris", "robotic") or "ion" in platform or "monarch" in platform or "robot" in platform
+        has_nav_details = bool(
+            source.get("nav_registration_method")
+            or source.get("nav_registration_error_mm") is not None
+            or source.get("nav_imaging_verification")
+            or source.get("nav_rebus_used")
+            or source.get("nav_notes")
+        )
+        return platform_match and has_nav_details
+
+    @classmethod
+    def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
+        platform_raw = source.get("nav_platform")
+        platform = None
+        if platform_raw:
+            lowered = str(platform_raw).lower()
+            if "ion" in lowered:
+                platform = "Ion"
+            elif "monarch" in lowered or "auris" in lowered:
+                platform = "Monarch"
+            elif "robot" in lowered:
+                platform = platform_raw
+            else:
+                platform = platform_raw
+        return {
+            "platform": platform,
+            "lesion_location": source.get("lesion_location") or source.get("nav_target_segment"),
+            "registration_method": source.get("nav_registration_method"),
+            "registration_error_mm": source.get("nav_registration_error_mm"),
+            "notes": source.get("nav_notes"),
+        }
+
+
 class CBCTFusionAdapter(ExtractionAdapter):
     proc_type = "cbct_cact_fusion"
     schema_model = airway_schemas.CBCTFusion
@@ -175,7 +216,7 @@ class RadialEBUSSurveyAdapter(ExtractionAdapter):
 
     @classmethod
     def matches(cls, source: dict[str, Any]) -> bool:
-        return bool(source.get("nav_rebus_used"))
+        return bool(source.get("nav_rebus_used") or source.get("nav_rebus_view"))
 
     @classmethod
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
@@ -192,12 +233,13 @@ class RadialEBUSSamplingAdapter(ExtractionAdapter):
 
     @classmethod
     def matches(cls, source: dict[str, Any]) -> bool:
-        return bool(source.get("nav_sampling_tools"))
+        radial_evidence = bool(source.get("nav_rebus_used") or source.get("nav_rebus_view"))
+        return radial_evidence and bool(source.get("nav_sampling_tools"))
 
     @classmethod
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
         return {
-            "ultrasound_pattern": source.get("nav_rebus_view") or "concentric",
+            "ultrasound_pattern": source.get("nav_rebus_view"),
             "sampling_tools": source.get("nav_sampling_tools") or [],
             "lesion_size_mm": source.get("nav_lesion_size_mm"),
         }
@@ -216,6 +258,7 @@ class ToolInLesionConfirmationAdapter(ExtractionAdapter):
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
         return {
             "confirmation_method": source.get("nav_imaging_verification") or "imaging confirmation",
+            "rebus_pattern": source.get("nav_rebus_view"),
         }
 
 
@@ -226,33 +269,49 @@ class EBUSTBNAAdapter(ExtractionAdapter):
 
     @classmethod
     def matches(cls, source: dict[str, Any]) -> bool:
-        stations = source.get("ebus_stations_sampled") or []
+        stations = source.get("linear_ebus_stations") or source.get("ebus_stations_sampled") or []
         return isinstance(stations, list) and bool(stations)
 
     @classmethod
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
-        stations = source.get("ebus_stations_sampled") or []
-        station_size = _station_size_mm(source)
+        stations_raw = source.get("linear_ebus_stations") or source.get("ebus_stations_sampled") or []
+        stations = stations_raw if isinstance(stations_raw, list) else []
+        station_size = _station_size_mm(source) if len(stations) == 1 else None
         use_forceps = bool(source.get("ebus_intranodal_forceps_used"))
+        detail_map = {}
+        for item in source.get("ebus_stations_detail") or []:
+            name = (item.get("station") or "").upper() if isinstance(item, dict) else None
+            if name:
+                detail_map[name] = item
+
         station_entries = []
+        passes_global = source.get("ebus_passes")
+        try:
+            passes_global = int(passes_global) if passes_global not in (None, "", []) else None
+        except Exception:
+            passes_global = None
+
         for station in stations:
             tools = ["TBNA"]
             if use_forceps:
                 tools.append("Forceps")
+            detail = detail_map.get(station, {})
+            has_detail = isinstance(detail, dict) and bool(detail)
             station_entries.append(
                 {
                     "station_name": station,
-                    "size_mm": station_size,
-                    "passes": source.get("ebus_passes", 1),
-                    "echo_features": source.get("ebus_echo_features"),
+                    "size_mm": detail.get("size_mm") if has_detail else station_size,
+                    "passes": detail.get("passes") if has_detail else passes_global,
+                    "echo_features": source.get("ebus_echo_features") or source.get("ebus_elastography_pattern"),
                     "biopsy_tools": tools,
-                    "rose_result": source.get("ebus_rose_result"),
+                    "rose_result": detail.get("rose_result") if has_detail else source.get("ebus_rose_result"),
                 }
             )
         return {
             "needle_gauge": source.get("ebus_needle_gauge"),
             "stations": station_entries,
-            "elastography_used": source.get("ebus_elastography"),
+            "elastography_used": source.get("ebus_elastography_used") or source.get("ebus_elastography"),
+            "elastography_pattern": source.get("ebus_elastography_pattern"),
             "rose_available": source.get("ebus_rose_available"),
             "overall_rose_diagnosis": source.get("ebus_rose_result"),
         }
@@ -364,6 +423,38 @@ class TransbronchialLungBiopsyAdapter(DictPayloadAdapter):
     schema_model = airway_schemas.TransbronchialLungBiopsy
     schema_id = "transbronchial_lung_biopsy_v1"
     source_key = "transbronchial_lung_biopsy"
+
+
+class TransbronchialBiopsyAdapter(ExtractionAdapter):
+    proc_type = "transbronchial_biopsy"
+    schema_model = airway_schemas.TransbronchialBiopsyBasic
+    schema_id = "transbronchial_biopsy_v1"
+
+    @classmethod
+    def matches(cls, source: dict[str, Any]) -> bool:
+        num = source.get("bronch_num_tbbx")
+        try:
+            return num is not None and int(num) > 0
+        except Exception:
+            return False
+
+    @classmethod
+    def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
+        num_raw = source.get("bronch_num_tbbx")
+        try:
+            num_bx = int(num_raw) if num_raw is not None else None
+        except Exception:
+            num_bx = None
+        return {
+            "lobe": source.get("bronch_location_lobe") or "target lobe",
+            "segment": source.get("bronch_location_segment"),
+            "guidance": source.get("bronch_guidance") or "Fluoroscopy",
+            "tool": source.get("bronch_tbbx_tool") or "Forceps",
+            "number_of_biopsies": num_bx or 0,
+            "specimen_tests": source.get("bronch_specimen_tests"),
+            "complications": source.get("bronch_immediate_complications"),
+            "notes": source.get("bronch_indication"),
+        }
 
 
 class TransbronchialNeedleAspirationAdapter(DictPayloadAdapter):
@@ -486,6 +577,7 @@ __all__ = [
     "EndobronchialHemostasisAdapter",
     "ForeignBodyRemovalAdapter",
     "IonRegistrationCompleteAdapter",
+    "RoboticNavigationAdapter",
     "PDTDebridementAdapter",
     "PDTLightAdapter",
     "RadialEBUSSamplingAdapter",
@@ -498,6 +590,7 @@ __all__ = [
     "ToolInLesionConfirmationAdapter",
     "TransbronchialCryobiopsyAdapter",
     "TransbronchialLungBiopsyAdapter",
+    "TransbronchialBiopsyAdapter",
     "TransbronchialNeedleAspirationAdapter",
     "WholeLungLavageAdapter",
 ]

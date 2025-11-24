@@ -415,7 +415,23 @@ class ReporterEngine:
             if rendered:
                 sections["PRE_ANESTHESIA"].append(rendered)
 
-        for proc in self._sorted_procedures(bundle.procedures):
+        sorted_procs = self._sorted_procedures(bundle.procedures)
+        survey_procs = [p for p in sorted_procs if p.proc_type == "radial_ebus_survey"]
+        sampling_procs = [p for p in sorted_procs if p.proc_type == "radial_ebus_sampling"]
+        paired_surveys: dict[str, ProcedureInput] = {}
+        reserved_surveys: set[str] = set()
+        survey_iter = iter(survey_procs)
+        for sampling in sampling_procs:
+            survey = next(survey_iter, None)
+            if not survey:
+                break
+            key = sampling.proc_id or sampling.schema_id
+            paired_surveys[key] = survey
+            reserved_surveys.add(survey.proc_id or survey.schema_id)
+
+        for proc in sorted_procs:
+            if proc.proc_type == "radial_ebus_survey" and (proc.proc_id or proc.schema_id) in reserved_surveys:
+                continue
             metas = self.templates.find_for_procedure(proc.proc_type, proc.cpt_candidates)
             label = metas[0].label if metas else proc.proc_type
             section = metas[0].output_section if metas else ""
@@ -467,7 +483,22 @@ class ReporterEngine:
                 if meta.id in ("peg_placement",):
                     discharge_templates.setdefault("peg_discharge", []).append(proc_meta)
 
-                rendered = self._render_procedure_template(meta, proc, bundle)
+                extra_context: dict[str, Any] | None = None
+                if proc.proc_type == "radial_ebus_sampling":
+                    survey_proc = paired_surveys.get(proc.proc_id or proc.schema_id)
+                    if survey_proc:
+                        try:
+                            survey_model_cls = self.schemas.get(survey_proc.schema_id)
+                            survey_model = (
+                                survey_proc.data
+                                if isinstance(survey_proc.data, BaseModel)
+                                else survey_model_cls.model_validate(survey_proc.data or {})
+                            )
+                        except Exception:
+                            survey_model = survey_proc.data
+                        extra_context = {"survey": survey_model}
+
+                rendered = self._render_procedure_template(meta, proc, bundle, extra_context=extra_context)
                 proc_meta.templates_used = _merge_str_lists(proc_meta.templates_used, [meta.id])
                 cpts, modifiers = _merge_cpt_sources(proc, meta, autocode_payload)
                 proc_meta.cpt_candidates = _merge_str_lists(proc_meta.cpt_candidates, cpts)
@@ -656,6 +687,7 @@ class ReporterEngine:
             lines.append(cleaned)
         text = "\n".join(lines)
         text = re.sub(r"\n{3,}", "\n\n", text)
+        text = re.sub(r"(?<=[A-Za-z])\.(?=[A-Z])", ". ", text)
         return text.strip()
 
     def _validate_style(self, text: str) -> None:
@@ -999,6 +1031,7 @@ def default_schema_registry() -> SchemaRegistry:
         "fiducial_marker_placement_v1": airway_schemas.FiducialMarkerPlacement,
         "radial_ebus_survey_v1": airway_schemas.RadialEBUSSurvey,
         "robotic_ion_bronchoscopy_v1": airway_schemas.RoboticIonBronchoscopy,
+        "robotic_navigation_v1": airway_schemas.RoboticNavigation,
         "ion_registration_complete_v1": airway_schemas.IonRegistrationComplete,
         "ion_registration_partial_v1": airway_schemas.IonRegistrationPartial,
         "ion_registration_drift_v1": airway_schemas.IonRegistrationDrift,
@@ -1038,6 +1071,7 @@ def default_schema_registry() -> SchemaRegistry:
         "endobronchial_biopsy_v1": airway_schemas.EndobronchialBiopsy,
         "transbronchial_lung_biopsy_v1": airway_schemas.TransbronchialLungBiopsy,
         "transbronchial_needle_aspiration_v1": airway_schemas.TransbronchialNeedleAspiration,
+        "transbronchial_biopsy_v1": airway_schemas.TransbronchialBiopsyBasic,
         "therapeutic_aspiration_v1": airway_schemas.TherapeuticAspiration,
         "rigid_bronchoscopy_v1": airway_schemas.RigidBronchoscopy,
         "bronchoscopy_shell_v1": airway_schemas.BronchoscopyShell,
@@ -1192,13 +1226,15 @@ def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
     procedures = _coerce_prebuilt_procedures(raw.get("procedures"), cpt_candidates)
     procedures.extend(_procedures_from_adapters(raw, cpt_candidates, start_index=len(procedures)))
 
+    indication_text = raw.get("primary_indication") or raw.get("indication") or raw.get("radiographic_findings")
+
     bundle = ProcedureBundle(
         patient=patient,
         encounter=encounter,
         procedures=procedures,
         sedation=sedation,
         anesthesia=anesthesia,
-        indication_text=raw.get("primary_indication") or raw.get("indication"),
+        indication_text=indication_text,
         preop_diagnosis_text=raw.get("preop_diagnosis_text"),
         postop_diagnosis_text=raw.get("postop_diagnosis_text"),
         impression_plan=raw.get("follow_up_plan", [""])[0] if isinstance(raw.get("follow_up_plan"), list) else raw.get("follow_up_plan"),

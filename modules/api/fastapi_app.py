@@ -51,7 +51,10 @@ from proc_autocode.coder import EnhancedCPTCoder
 app = FastAPI(title="Procedure Suite API", version="0.1.0")
 
 # Initialize enhanced coder (singleton)
-_enhanced_coder = EnhancedCPTCoder()
+# Enable LLM advisor if CODER_USE_LLM_ADVISOR env var is set
+import os
+use_llm_advisor = os.getenv("CODER_USE_LLM_ADVISOR", "").lower() in ("true", "1", "yes")
+_enhanced_coder = EnhancedCPTCoder(use_llm_advisor=use_llm_advisor)
 
 app.mount("/ui", StaticFiles(directory="modules/api/static", html=True), name="ui")
 
@@ -167,16 +170,32 @@ async def coder_run(req: CoderRequest) -> CoderResponse:
             total_nonfacility_payment=0.0,  # Enhanced coder currently only supports facility
         )
     
+    # Extract LLM suggestions and disagreements if available
+    llm_suggestions = []
+    llm_disagreements = []
+    if result.get("llm_suggestions"):
+        from modules.coder.schema import LLMCodeSuggestion
+        llm_suggestions = [
+            LLMCodeSuggestion(
+                cpt=s.get("cpt", ""),
+                description=s.get("description", ""),
+                rationale=s.get("rationale", ""),
+            )
+            for s in result.get("llm_suggestions", [])
+        ]
+    if result.get("llm_disagreements"):
+        llm_disagreements = result.get("llm_disagreements", [])
+    
     return CoderOutput(
         codes=codes,
         intents=[],  # Enhanced coder doesn't provide intents
         mer_summary=None,  # Could be added later
         financials=financials,
         ncci_actions=[],  # Bundling is handled internally
-        warnings=[],
+        warnings=llm_disagreements,  # Include LLM disagreements in warnings
         version="0.2.0",  # Enhanced version
-        llm_suggestions=[],  # Enhanced coder doesn't use LLM advisor
-        llm_disagreements=[],  # Enhanced coder doesn't use LLM advisor
+        llm_suggestions=llm_suggestions,
+        llm_disagreements=llm_disagreements,
     )
 
 

@@ -14,6 +14,7 @@ from proc_registry.adapters.airway import (
     IonRegistrationCompleteAdapter,
     RadialEBUSSamplingAdapter,
     RadialEBUSSurveyAdapter,
+    RoboticNavigationAdapter,
     RoboticIonBronchoscopyAdapter,
     RoboticMonarchBronchoscopyAdapter,
     ToolInLesionConfirmationAdapter,
@@ -83,6 +84,11 @@ def test_navigation_adapters_for_ion_and_emn():
     assert isinstance(fusion, airway_schemas.CBCTFusion)
     assert fusion.overlay_result == "Cone Beam CT"
 
+    navigation = RoboticNavigationAdapter.extract(ion_source)
+    assert isinstance(navigation, airway_schemas.RoboticNavigation)
+    assert navigation.platform == "Ion"
+    assert navigation.registration_method == "fiducial"
+
     monarch = RoboticMonarchBronchoscopyAdapter.extract({"nav_platform": "Monarch", "nav_rebus_view": "eccentric"})
     assert isinstance(monarch, airway_schemas.RoboticMonarchBronchoscopy)
     assert monarch.radial_pattern == "eccentric"
@@ -114,7 +120,8 @@ def test_ebus_and_tool_adapters():
     assert isinstance(ebus, airway_schemas.EBUSTBNA)
     assert len(ebus.stations) == 2
     assert ebus.stations[0].station_name == "4R"
-    assert ebus.stations[0].size_mm == 18
+    assert ebus.stations[0].size_mm is None
+    assert ebus.stations[0].passes == 3
     assert "Forceps" in ebus.stations[0].biopsy_tools
 
 

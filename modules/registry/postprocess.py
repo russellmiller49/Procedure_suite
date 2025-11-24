@@ -11,6 +11,8 @@ __all__ = [
     "normalize_airway_type",
     "map_pleural_guidance",
     "normalize_pleural_procedure",
+    "normalize_pleural_side",
+    "normalize_pleural_intercostal_space",
     "postprocess_patient_mrn",
     "normalize_procedure_date",
     "normalize_disposition",
@@ -22,6 +24,7 @@ __all__ = [
     "normalize_ebus_rose_result",
     "normalize_ebus_needle_gauge",
     "normalize_ebus_needle_type",
+    "normalize_elastography_pattern",
     "normalize_list_field",
     "normalize_anesthesia_agents",
     "normalize_ebus_stations",
@@ -204,6 +207,46 @@ def normalize_pleural_procedure(raw: Any) -> str | None:
             return v
 
     return None
+
+
+def normalize_pleural_side(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if text in {"r", "rt", "right", "right-sided", "right side"}:
+        return "Right"
+    if text in {"l", "lt", "left", "left-sided", "left side"}:
+        return "Left"
+    if text.startswith("r"):
+        return "Right"
+    if text.startswith("l"):
+        return "Left"
+    return None
+
+
+def normalize_pleural_intercostal_space(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.lower()
+    match = re.search(r"(\\d{1,2})(?:st|nd|rd|th)?", text)
+    if not match:
+        return text_raw.strip() or None
+    num = int(match.group(1))
+    if 10 <= num % 100 <= 20:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(num % 10, "th")
+    return f"{num}{suffix}"
+
+
+def normalize_elastography_pattern(raw: Any) -> str | None:
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    cleaned = text_raw.strip().rstrip(".;,")
+    return cleaned or None
 
 
 def postprocess_patient_mrn(raw: Any) -> str | None:
@@ -726,6 +769,8 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "airway_type": normalize_airway_type,
     "pleural_guidance": map_pleural_guidance,
     "pleural_procedure_type": normalize_pleural_procedure,
+    "pleural_side": normalize_pleural_side,
+    "pleural_intercostal_space": normalize_pleural_intercostal_space,
     "patient_mrn": postprocess_patient_mrn,
     "procedure_date": normalize_procedure_date,
     "disposition": normalize_disposition,
@@ -737,6 +782,7 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "ebus_rose_result": normalize_ebus_rose_result,
     "ebus_needle_gauge": normalize_ebus_needle_gauge,
     "ebus_needle_type": normalize_ebus_needle_type,
+    "ebus_elastography_pattern": normalize_elastography_pattern,
     # List field normalizers - convert comma-separated strings to lists
     "anesthesia_agents": normalize_anesthesia_agents,
     "ebus_stations_sampled": normalize_ebus_stations,

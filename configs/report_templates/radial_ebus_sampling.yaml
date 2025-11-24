@@ -6,9 +6,9 @@ schema_id: radial_ebus_sampling_v1
 output_section: PROCEDURE_DETAILS
 template_path: radial_ebus_sampling.j2
 required_fields:
-  - ultrasound_pattern
   - sampling_tools
 optional_fields:
+  - ultrasound_pattern
   - guide_sheath_diameter
   - lesion_size_mm
   - passes_per_tool

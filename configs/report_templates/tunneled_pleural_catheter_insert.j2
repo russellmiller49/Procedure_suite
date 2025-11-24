@@ -1,6 +1,7 @@
-{% if proc.pleural_guidance %}{{ proc.pleural_guidance }} {% endif %}Ultrasound guided the insertion site on the{% if proc.side %} {{ proc.side }}{% endif %} chest, which was prepped and draped in sterile fashion.
+{% if proc.pleural_guidance %}{{ proc.pleural_guidance }} guidance was used to select the insertion site{% if proc.side %} on the {{ proc.side | lower }} chest{% endif %}.{% else %}{% if proc.side %}The {{ proc.side | lower }} chest was prepped and draped in sterile fashion.{% else %}The insertion site was prepped and draped in sterile fashion.{% endif %}{% endif %}
 Local anesthesia{% if proc.anesthesia_lidocaine_ml is not none %} with {{ proc.anesthesia_lidocaine_ml }} mL of 1% lidocaine{% endif %} was administered.
-A tunneled pleural catheter was placed using the Seldinger technique at the {{ proc.intercostal_space }} intercostal space along the {{ proc.entry_location }}.
+
+A tunneled pleural catheter was placed using the Seldinger technique{% if proc.intercostal_space %} at the {{ proc.intercostal_space }} intercostal space{% endif %}{% if proc.entry_location %} along the {{ proc.entry_location }}{% endif %}{% if proc.side %} on the {{ proc.side | lower }} side{% endif %}.
 {% if proc.tunnel_length_cm is not none %}Tunnel length: {{ proc.tunnel_length_cm }} cm.{% endif %}{% if proc.exit_site %} Exit site: {{ proc.exit_site }}.{% endif %}
 {% if proc.fluid_removed_ml is not none %}Fluid Removed: {{ proc.fluid_removed_ml }} mL{% if proc.fluid_appearance %} - {{ proc.fluid_appearance }}{% endif %}.{% endif %}
 {% if proc.pleural_pressures %}Pleural pressures: {{ proc.pleural_pressures }}.{% endif %}

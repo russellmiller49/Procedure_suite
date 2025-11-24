@@ -1,4 +1,4 @@
-# AI Agents for Procedure Suite (v3)
+# AI Agents for Procedure Suite (v4 - Enhanced Version)
 
 This document defines a set of AI "agents" (roles) that can work on this repository in a consistent, safe, and predictable way.
 
@@ -10,10 +10,11 @@ This document defines a set of AI "agents" (roles) that can work on this reposit
 
 ## All agents should assume:
 
-- **Branch**: `v3` is the main active development branch unless otherwise specified.
+- **Branch**: `v4` is the main active development branch (enhanced version with all Codex enhancements integrated).
 - **Language**: Python 3.11+ for backend / core logic; TypeScript/JavaScript for any future web integration scaffolding.
 - **Style**: Type hints, small pure functions when possible, docstrings for public APIs, and tests for any nontrivial logic.
 - **Environment**: Uses `medparse-py311` conda/micromamba environment with spaCy, scispaCy, and medspaCy models.
+- **Architecture**: Enhanced version uses `EnhancedCPTCoder`, adapter-based extraction, validation/inference engines, and verify/render API endpoints.
 
 ---
 
@@ -25,9 +26,16 @@ This document defines a set of AI "agents" (roles) that can work on this reposit
 
 ### Responsibilities
 
-1. Inspect the repo structure on branch `v3` (modules, CLI, tests, synthetic data, docs).
+1. Inspect the repo structure on branch `v4` (modules, CLI, tests, synthetic data, docs).
 
-2. **Crucial distinction**: Note that core logic resides in `modules/` (e.g., `modules/registry`, `modules/coder`, `modules/reporter`), while top-level packages like `proc_registry`, `proc_autocode`, or `proc_report` often contain adapters, CLI entry points, or legacy glue code. When in doubt, prioritize `modules/` for core business logic.
+2. **Architecture Overview**:
+   - **Enhanced Coder**: `proc_autocode/coder.py` contains `EnhancedCPTCoder` (main implementation) using IP knowledge base and RVU calculator
+   - **Legacy Coder**: `modules/coder/engine.py` contains old `CoderEngine` (being phased out)
+   - **Reporter Engine**: `proc_report/engine.py` is the canonical engine (replaces `modules/reporter/engine.py` which is now a deprecation shim)
+   - **Clinical Schemas**: `proc_schemas/clinical/` contains Pydantic models for procedures (airway, pleural, common)
+   - **Extraction Adapters**: `proc_registry/adapters/` contains adapter-based extraction (airway, pleural)
+   - **Validation/Inference**: `proc_report/validation.py` and `proc_report/inference.py` provide validation and auto-fill logic
+   - **Core Modules**: `modules/registry/`, `modules/api/` contain core extraction and API logic
 
 3. Summarize the purpose of the project:
 
@@ -39,14 +47,14 @@ This document defines a set of AI "agents" (roles) that can work on this reposit
 
 4. Identify key high-level components (names may vary slightly; agent should inspect the repo to confirm exact paths):
 
-   - **CPT coder module** – `modules/coder/` (core logic) and `proc_autocode/` (adapters/CLI) contain rule-driven coding pipeline with CPT maps, NCCI rules, and confidence scoring. ML-based classifier in `modules/ml_coder/`.
-   - **Registry extraction module** – `modules/registry/` (core extraction pipeline) and `proc_registry/` (Supabase adapters/export) parse notes into a registry schema (EBUS, navigational, robotic, pleural, etc.) using LLM-based extraction (Gemini API).
-   - **Reporter module** – `modules/reporter/` (core template engine) and `proc_report/` (adapters/CLI) fill comprehensive templates with patient/procedure-specific data using Jinja2 templates.
+   - **CPT coder module** – `proc_autocode/coder.py` contains `EnhancedCPTCoder` (main implementation) using IP knowledge base (`proc_autocode/ip_kb/`) for code detection and bundling, plus RVU calculator (`proc_autocode/rvu/`). Legacy `modules/coder/engine.py` (CoderEngine) is being phased out. ML-based classifier in `modules/ml_coder/`.
+   - **Registry extraction module** – `modules/registry/` (core extraction pipeline) uses LLM-based extraction (Gemini API). `proc_registry/adapters/` contains adapter-based extraction (airway, pleural) that converts registry data to clinical schemas. `proc_registry/` also contains Supabase adapters/export.
+   - **Reporter module** – `proc_report/engine.py` is the canonical reporter engine (replaces deprecated `modules/reporter/engine.py`). Uses `proc_schemas/clinical/` for Pydantic models, `proc_report/validation.py` for validation, `proc_report/inference.py` for auto-filling fields, and `proc_report/templates/` for Jinja2 templates.
    - **NLP module** – `proc_nlp/` provides UMLS linker and normalization helpers shared by the report engine + coder.
    - **Synthetic data / training data** – `data/synthetic_notes_with_registry.jsonl` (synthetic notes with ground truth), `data/cpt_training_data_cleaned.csv` (CPT training data), `data/cpt_multilabel_training_data_updated.csv`.
    - **Tests** – `tests/` contains unit tests (`tests/unit/`), contract tests (`tests/contracts/`), integration tests (`tests/integration/`), and end-to-end tests (`tests/e2e/`).
    - **API layer** – `modules/api/` and `api/` provide FastAPI surface for compose/code/upsert flows.
-   - **Schemas** – `proc_schemas/` contains Pydantic models for procedure reports and billing results. `data/knowledge/IP_Registry.json` defines the registry schema.
+   - **Schemas** – `proc_schemas/clinical/` contains Pydantic models for clinical procedures (airway, pleural, common). `modules/registry/schema.py` defines the registry extraction schema. `data/knowledge/IP_Registry.json` defines the registry schema. `modules/coder/schema.py` defines CoderOutput schema.
    - **Configs** – `configs/` contains YAML configuration for coding rules and NCCI edits.
 
 ### Instructions
@@ -70,7 +78,7 @@ Before any deeper work, run this agent to:
 
 **Short name**: `registry-agent`
 
-**Purpose**: Maintain the schema and extraction pipeline (`modules/registry`) and the export adapters (`proc_registry`). Core logic lives in `modules/registry/` (extractors, schema definitions, prompts), while `proc_registry/` contains adapters for Supabase/database export.
+**Purpose**: Maintain the schema and extraction pipeline (`modules/registry`) and the export adapters (`proc_registry`). Core logic lives in `modules/registry/` (extractors, schema definitions, prompts), while `proc_registry/adapters/` contains extraction adapters that convert registry data to clinical schemas, and `proc_registry/` contains adapters for Supabase/database export.
 
 ### Responsibilities
 
@@ -93,9 +101,10 @@ Before any deeper work, run this agent to:
 ### Instructions
 
 1. **Module distinction**: 
-   - Core extraction logic: `modules/registry/` (schema, extractors, prompts)
+   - Core extraction logic: `modules/registry/` (schema, extractors, prompts, LLM-based extraction)
+   - Extraction adapters: `proc_registry/adapters/` (convert registry data to clinical schemas - airway, pleural)
    - Export adapters: `proc_registry/` (Supabase sink, adapters for database export)
-   - When adding new extraction features, work in `modules/registry/`. When adding export/formatting features, work in `proc_registry/`.
+   - When adding new extraction features, work in `modules/registry/`. When adding adapters to convert registry to clinical schemas, work in `proc_registry/adapters/`. When adding export/formatting features, work in `proc_registry/`.
 
 2. **Schema location**: The central schema is defined in `data/knowledge/IP_Registry.json` (JSON Schema). Pydantic models are generated in `modules/registry/schema.py` from this JSON schema.
 
@@ -142,10 +151,16 @@ Before any deeper work, run this agent to:
 
 **Purpose**: Maintain and improve the CPT prediction engine.
 
+**⚠️ CRITICAL: Use EnhancedCPTCoder**
+
+- ✅ **MAIN**: `proc_autocode/coder.py` - `EnhancedCPTCoder` (uses IP knowledge base + RVU calculator)
+- ❌ **LEGACY**: `modules/coder/engine.py` - `CoderEngine` (being phased out, do not use for new work)
+
 This includes:
-- Rules-based logic (mutually exclusive codes, required combinations, NCCI edits).
-- ML-based multi-label classifier using synthetic training data.
-- Integration layer that merges rules + model predictions.
+- IP Knowledge Base-based code detection (`proc_autocode/ip_kb/ip_kb.py`)
+- Bundling rules from IP knowledge base JSON
+- RVU calculations using `ProcedureRVUCalculator` (`proc_autocode/rvu/`)
+- ML-based multi-label classifier using synthetic training data (optional, in `modules/ml_coder/`)
 
 ### Responsibilities
 
@@ -162,13 +177,22 @@ This includes:
 
 ### Instructions
 
-1. **When updating logic**:
+1. **ALWAYS use EnhancedCPTCoder**:
+   - Edit `proc_autocode/coder.py` for coder logic
+   - Edit `proc_autocode/ip_kb/ip_kb.py` for knowledge base logic
+   - Edit `proc_autocode/rvu/` for RVU calculation logic
+   - Do NOT edit `modules/coder/engine.py` (legacy, being phased out)
+
+2. **When updating logic**:
    - Reflect the underlying coding rationale in comments and docstrings.
    - Keep rule logic in a central, testable component:
-     - Rules: `proc_autocode/rules.py` and `modules/coder/engine.py`
-     - CPT maps: `configs/coding/ip_cpt_map.yaml`
-     - NCCI edits: `configs/coding/ncci_edits.yaml`
-     - Constants: `modules/coder/constants.py`
+     - IP Knowledge Base: `proc_autocode/ip_kb/ip_coding_billing.v2_2.json` (source of truth for codes and bundling)
+     - Knowledge Base Wrapper: `proc_autocode/ip_kb/ip_kb.py` (Python interface)
+     - Enhanced Coder: `proc_autocode/coder.py` (main implementation)
+     - Legacy rules: `proc_autocode/rules.py` and `modules/coder/engine.py` (deprecated)
+     - CPT maps: `configs/coding/ip_cpt_map.yaml` (legacy)
+     - NCCI edits: `configs/coding/ncci_edits.yaml` (legacy)
+     - Constants: `modules/coder/constants.py` (reference)
    - Do not scatter rules across the project.
 
 2. **For ML**:
@@ -188,8 +212,8 @@ This includes:
 
 ### Outputs
 
-- Updated coder modules (`proc_autocode/`, `modules/coder/`, `modules/ml_coder/`).
-- Updated config files (`configs/coding/*.yaml`).
+- Updated enhanced coder (`proc_autocode/coder.py`, `proc_autocode/ip_kb/ip_kb.py`, `proc_autocode/rvu/`).
+- Updated IP knowledge base JSON (`proc_autocode/ip_kb/ip_coding_billing.v2_2.json`) if adding new codes or bundling rules.
 - Expanded tests, including:
   - "Happy path" examples.
   - Edge cases (multiple procedures in same note, complex stents, redo procedures).
@@ -203,6 +227,11 @@ This includes:
 
 **Purpose**: Build and refine the synoptic reporting engine that takes structured registry data + note metadata and produces clean, human-readable procedure reports.
 
+**⚠️ CRITICAL: Use proc_report.engine**
+
+- ✅ **MAIN**: `proc_report/engine.py` - Canonical reporter engine
+- ❌ **DEPRECATED**: `modules/reporter/engine.py` - Deprecation shim (do not edit)
+
 ### Responsibilities
 
 1. Turn the comprehensive templates (EBUS, navigational, robotic, pleural, etc.) into parametrized templates.
@@ -210,33 +239,55 @@ This includes:
    - Professional phrasing.
    - Consistent structure.
    - Minimal redundancy, no contradictory statements.
+3. Use validation and inference engines to:
+   - Auto-fill obvious fields (e.g., anesthesia_type from propofol)
+   - Validate required fields and generate suggestions
+   - Provide warnings instead of blocking errors (render-always mode)
 
 ### Instructions
 
-1. **Template location**: Templates are in `proc_report/templates/` (Jinja2 templates).
+1. **Template location**: Templates are in `proc_report/templates/` (Jinja2 templates with `{% if %}` guards for missing fields).
 
-2. **Use a templating approach**:
-   - Template files define the verbiage and section structure (Jinja2 format).
-   - Renderer: `proc_report/engine.py` and `modules/reporter/` accept a structured record (registry object) and fill the fields.
-   - Second-pass processing: `proc_report/second_pass/` may contain post-processing logic.
+2. **Use the enhanced reporter pipeline**:
+   - **Clinical Schemas**: `proc_schemas/clinical/` contains Pydantic models (airway, pleural, common)
+   - **Extraction Adapters**: `proc_registry/adapters/` converts registry data to clinical schemas
+   - **Bundle Builder**: `proc_report/engine.py` - `build_procedure_bundle_from_extraction()` uses adapters
+   - **Inference Engine**: `proc_report/inference.py` - `InferenceEngine` auto-fills obvious fields
+   - **Validation Engine**: `proc_report/validation.py` - `ValidationEngine` validates and generates suggestions
+   - **Template Renderer**: `proc_report/engine.py` - `ReporterEngine` renders Jinja2 templates
+   - **Template Registry**: `proc_report/engine.py` - `default_template_registry()` with caching
+   - **Schema Registry**: `proc_report/engine.py` - `default_schema_registry()` for procedure models
 
 3. **Design the reporter to**:
    - Use tables or bullet lists for repeated structures (e.g., lymph node table, specimen tables).
-   - Handle optional data gracefully (skip sections or lines when fields are missing).
+   - Handle optional data gracefully (skip sections or lines when fields are missing using `{% if %}` guards).
    - Be deterministic: same inputs → same output.
+   - Never show "None", "missing", or "unspecified" - omit the phrase entirely if field is missing.
 
 4. **Ensure**:
    - No PHI is hard-coded into templates or tests.
    - The report remains readable and suitable for copy-paste into an EMR or for review.
+   - All templates use `{% if %}` guards to prevent showing missing values.
 
-5. **Knowledge base**: Reference `data/knowledge/comprehensive_ip_procedural_templates9_18.md` for template structure guidance.
+5. **API Endpoints**:
+   - `POST /report/verify` - Validates bundle, runs inference, returns issues/warnings/suggestions
+   - `POST /report/render` - Applies patch, validates, renders markdown (render-always mode)
+   - Both endpoints use `InferenceEngine` and `ValidationEngine`
+
+6. **Knowledge base**: Reference `data/knowledge/comprehensive_ip_procedural_templates9_18.md` for template structure guidance.
 
 ### Outputs
 
-- Template files (`proc_report/templates/*.jinja`) and a template renderer module (`proc_report/engine.py`, `modules/reporter/`).
+- Template files (`proc_report/templates/*.jinja`) with `{% if %}` guards and a template renderer module (`proc_report/engine.py`).
+- Clinical schema models (`proc_schemas/clinical/airway.py`, `proc_schemas/clinical/pleural.py`, `proc_schemas/clinical/common.py`).
+- Extraction adapters (`proc_registry/adapters/airway.py`, `proc_registry/adapters/pleural.py`).
+- Validation and inference engines (`proc_report/validation.py`, `proc_report/inference.py`).
+- Template metadata YAML files (`configs/report_templates/*.yaml`) with field validation rules.
 - Tests that:
-  - Render example notes and check for key phrases/sections (`tests/reporter/`).
+  - Render example notes and check for key phrases/sections (`tests/unit/test_structured_reporter.py`).
   - Confirm conditional logic (sections appear only when relevant).
+  - Test validation and inference engines (`tests/unit/test_validation_engine.py`).
+  - Test extraction adapters (`tests/unit/test_extraction_adapters.py`).
 
 ---
 
@@ -360,9 +411,11 @@ This includes:
 ### Responsibilities
 
 1. Maintain a simple API layer (FastAPI) that exposes:
-   - `/v1/coder/run` – given a note, return codes + RVU calculations.
+   - `/v1/coder/run` – given a note, return codes + RVU calculations (uses `EnhancedCPTCoder`).
+   - `/v1/coder/localities` – list available geographic localities for RVU calculation.
    - `/v1/registry/run` – given a note, return structured registry data.
-   - `/report/render` – given structured data, return a synoptic report.
+   - `/report/verify` – given extraction payload, validate bundle, run inference, return issues/warnings/suggestions.
+   - `/report/render` – given bundle + patch, apply patch, validate, render markdown (render-always mode).
 
 2. Enable integration with external frontends (e.g., a React/Supabase demo site) while:
    - Avoiding PHI in any demo environment.
@@ -380,27 +433,33 @@ This includes:
 
 2. **Use EnhancedCPTCoder**:
    - The coder endpoint uses `proc_autocode.coder.EnhancedCPTCoder`
-   - Do NOT use `modules.coder.engine.CoderEngine` (legacy)
+   - Do NOT use `modules.coder.engine.CoderEngine` (legacy, being phased out)
 
-3. **Keep the API layer thin**:
+3. **Reporter Endpoints**:
+   - `/report/verify` uses `InferenceEngine` and `ValidationEngine` from `proc_report/`
+   - `/report/render` uses `ReporterEngine` from `proc_report/engine.py`
+   - Both endpoints use adapter-based extraction from `proc_registry/adapters/`
+
+4. **Keep the API layer thin**:
    - It should call into the existing modules rather than duplicating logic.
    - Include:
      - Minimal but clear validation.
      - Simple logging for debugging.
 
-4. **Add "demo-safe" guards/notes**:
+5. **Add "demo-safe" guards/notes**:
    - Warn that the deployment is for education/demo only, not for real patient billing.
 
-5. **Development server**:
+6. **Development server**:
    - Use `make api` or `scripts/devserver.sh` to run the FastAPI server locally.
    - Server runs: `uvicorn modules.api.fastapi_app:app --host 0.0.0.0 --port 8000 --reload`
 
-6. **Dependencies**:
+7. **Dependencies**:
    - API dependencies are in `pyproject.toml` under `[project.optional-dependencies.api]` (FastAPI, uvicorn).
 
 ### Outputs
 
-- API routing files and configuration (`modules/api/`, `api/`).
+- API routing files and configuration (`modules/api/fastapi_app.py` - main app).
+- Frontend UI files (`modules/api/static/` - HTML/JS for web interface).
 - README or docs explaining how to run the demo locally and how to wire it into an external website.
 
 ---

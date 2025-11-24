@@ -10,6 +10,7 @@ required_fields:
 optional_fields:
   - needle_gauge
   - elastography_used
+  - elastography_pattern
   - rose_available
   - overall_rose_diagnosis
 proc_types:

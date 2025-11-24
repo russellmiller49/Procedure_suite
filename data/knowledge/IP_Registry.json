@@ -158,6 +158,11 @@
       "items": { "type": "string" },
       "description": "Nodal stations sampled (e.g., '4R', '7', '11L')"
     },
+    "linear_ebus_stations": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of stations sampled with linear EBUS-TBNA (e.g., ['4R', '7', '11L'])"
+    },
     "ebus_needle_gauge": {
       "type": ["string", "null"],
       "enum": ["21G", "22G", "25G"],
@@ -181,9 +186,30 @@
       "enum": ["Malignant", "Benign", "Granuloma", "Nondiagnostic", "Atypical cells present", "Atypical lymphoid proliferation"],
       "description": "ROSE result if performed"
     },
+    "ebus_elastography_used": {
+      "type": ["boolean", "null"],
+      "description": "True if elastography was performed during EBUS"
+    },
+    "ebus_elastography_pattern": {
+      "type": ["string", "null"],
+      "description": "Elastography pattern or color map (e.g., blue-green, predominantly blue)"
+    },
     "ebus_intranodal_forceps_used": {
       "type": ["boolean", "null"],
       "description": "True if intranodal forceps biopsy performed"
+    },
+    "ebus_stations_detail": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "station": { "type": ["string", "null"] },
+          "size_mm": { "type": ["number", "null"] },
+          "passes": { "type": ["integer", "null"] },
+          "rose_result": { "type": ["string", "null"] }
+        }
+      },
+      "description": "Station-level details for EBUS sampling"
     },
     "ebus_photodocumentation_complete": {
       "type": ["boolean", "null"],
@@ -392,6 +418,15 @@
       "enum": ["Ultrasound", "CT", "Blind"],
       "description": "Imaging guidance for pleural procedure"
     },
+    "pleural_side": {
+      "type": ["string", "null"],
+      "enum": ["Right", "Left"],
+      "description": "Side of pleural procedure or effusion"
+    },
+    "pleural_intercostal_space": {
+      "type": ["string", "null"],
+      "description": "Intercostal space used for pleural access (e.g., '5th')"
+    },
     "pleural_opening_pressure_measured": {
       "type": ["boolean", "null"],
       "description": "True if pleural opening pressure measured"
@@ -423,6 +458,39 @@
       "type": ["string", "null"],
       "enum": ["Talc Slurry", "Talc Poudrage", "Doxycycline", "Other"],
       "description": "Agent used for pleurodesis"
+    },
+    "bronch_indication": {
+      "type": ["string", "null"],
+      "description": "Indication for bronchoscopy (e.g., ILD workup)"
+    },
+    "bronch_location_lobe": {
+      "type": ["string", "null"],
+      "description": "Lobe targeted for transbronchial biopsies (e.g., RLL)"
+    },
+    "bronch_location_segment": {
+      "type": ["string", "null"],
+      "description": "Segment targeted for transbronchial biopsies (e.g., lateral basal)"
+    },
+    "bronch_guidance": {
+      "type": ["string", "null"],
+      "description": "Guidance modality for transbronchial biopsies (e.g., Fluoroscopy)"
+    },
+    "bronch_num_tbbx": {
+      "type": ["integer", "null"],
+      "description": "Number of transbronchial biopsies obtained"
+    },
+    "bronch_tbbx_tool": {
+      "type": ["string", "null"],
+      "description": "Tool used for transbronchial biopsies (e.g., Forceps)"
+    },
+    "bronch_specimen_tests": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tests or destinations for TBBx specimens (e.g., Histology, Microbiology)"
+    },
+    "bronch_immediate_complications": {
+      "type": ["string", "null"],
+      "description": "Immediate complications from transbronchial biopsies"
     },
 
     "ebl_ml": {

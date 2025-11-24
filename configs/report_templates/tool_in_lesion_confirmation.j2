@@ -1,4 +1,4 @@
-Tool-in-lesion was confirmed by {{ proc.confirmation_method }}{% if proc.margin_mm is not none %} showing the sampling tool within the lesion with a margin of {{ proc.margin_mm }} mm{% endif %}{% if proc.rebus_pattern %} and radial EBUS pattern {{ proc.rebus_pattern }}{% endif %}.{% if proc.lesion_size_mm is not none %} Lesion size: {{ proc.lesion_size_mm }} mm.{% endif %}
+Tool-in-lesion was confirmed by {{ proc.confirmation_method }}{% if proc.rebus_pattern %} after radial EBUS demonstrated an {{ proc.rebus_pattern | lower }} pattern{% endif %}{% if proc.margin_mm is not none %}, showing the sampling tool within the lesion with a margin of {{ proc.margin_mm }} mm{% endif %}.{% if proc.lesion_size_mm is not none %} Lesion size: {{ proc.lesion_size_mm }} mm.{% endif %}
 {% if proc.fluoro_angle_deg or proc.projection %}Fluoroscopy{% if proc.fluoro_angle_deg %} angle {{ proc.fluoro_angle_deg }}°{% endif %}{% if proc.projection %}, projection {{ proc.projection }}{% endif %}.{% endif %}
 {% if proc.screenshots_saved %}Screenshots were saved to the record.{% endif %}
 {% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}

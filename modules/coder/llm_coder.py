@@ -28,7 +28,7 @@ class LLMCoder:
         self.llm = GeminiLLM(model=model or "gemini-2.5-flash")
 
     def suggest_codes(self, note_text: str) -> List[LLMCodeSuggestion]:
-        prompt = f"""
+        PROMPT_TEMPLATE = """
 You are an expert CPT coder specializing in interventional pulmonology and bronchoscopy.
 You MUST return ONLY valid JSON and NOTHING else.
 
@@ -70,7 +70,7 @@ Return EXACTLY this structure:
 Now analyze this bronchoscopy note and produce the JSON ONLY.
 
 NOTE:
-{note_text}
+\"\"\"{note_text}\"\"\"
 """
         
         # Strict schema enforcement for Gemini
@@ -94,6 +94,8 @@ NOTE:
         }
 
         try:
+            # Use the template with the note text
+            prompt = PROMPT_TEMPLATE.format(note_text=note_text)
             raw = self.llm.generate(prompt, response_schema=schema)
             data = safe_extract_json(raw)
             
