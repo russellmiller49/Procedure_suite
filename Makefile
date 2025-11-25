@@ -1,7 +1,7 @@
 .PHONY: install test unit contracts integration lint preflight api tests type
 
 install:
-	pip install -e .
+	python -m pip install -e .
 
 preflight:
 	python -c "import spacy, sklearn; print('spaCy OK:', spacy.__version__); print('sklearn OK:', __import__('sklearn').__version__)"
@@ -38,3 +38,6 @@ analyze-registry-errors:
 
 self-correct-registry:
 	python scripts/self_correct_registry.py --field $(FIELD)
+
+eval-synthetic-notes:
+	python proc_autocode/tools/eval_synthetic_notes.py --baseline analysis/synthetic_notes_eval_after_kb_update.txt

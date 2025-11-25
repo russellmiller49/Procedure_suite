@@ -31,7 +31,10 @@ CaoTumorLocation = Literal[
 PleuralProcedureType = Literal[
     "Thoracentesis",
     "Chest Tube",
+    "Chest Tube Removal",
     "Tunneled Catheter",
+    "Tunneled Catheter Exchange",
+    "IPC Drainage",
     "Medical Thoracoscopy",
     "Chemical Pleurodesis",
 ]
@@ -83,6 +86,12 @@ CUSTOM_FIELD_TYPES: dict[str, Any] = {
     "ebus_rose_result": EbusRoseResult,
     # Allow modifiers/verification text alongside integers for CPT entries.
     "cpt_codes": list[int | str],
+    # Support multiple assistants (changed from string to list)
+    "assistant_names": list[str],
+    # CAO multi-site interventions (supplements flat cao_* fields)
+    "cao_interventions": list[dict],
+    # Multiple biopsy sites (supplements bronch_location_lobe)
+    "bronch_biopsy_sites": list[dict],
 }
 
 
@@ -136,6 +145,12 @@ def _build_registry_model() -> type[BaseModel]:
     # Append metadata
     field_defs["evidence"] = (dict[str, list[Span]], Field(default_factory=dict))
     field_defs["version"] = (str, "0.5.0")
+    field_defs["procedure_families"] = (list[str] | None, Field(default_factory=list))
+
+    # CAO multi-site interventions array
+    field_defs["cao_interventions"] = (list[dict] | None, Field(default_factory=list))
+    # Multiple biopsy sites array
+    field_defs["bronch_biopsy_sites"] = (list[dict] | None, Field(default_factory=list))
 
     model_config = ConfigDict(extra="ignore")
 
@@ -169,4 +184,39 @@ class AspirationEvent(BaseModel):
     volume: str | None
     character: str | None
 
-__all__ = ["RegistryRecord", "BLVRData", "DestructionEvent", "EnhancedDilationEvent", "AspirationEvent"]
+
+class CaoIntervention(BaseModel):
+    """Structured data for a single CAO intervention site.
+
+    Supports multi-site CAO procedures where each airway segment may have
+    different pre/post obstruction levels and treatment modalities.
+    """
+
+    location: str  # e.g., "RML", "RLL", "BI", "LMS", "distal_trachea"
+    pre_obstruction_pct: int | None = None  # 0-100, approximate pre-procedure obstruction
+    post_obstruction_pct: int | None = None  # 0-100, approximate post-procedure obstruction
+    modalities: list[str] = Field(default_factory=list)  # e.g., ["APC", "cryo", "mechanical"]
+    notes: str | None = None  # Additional context (e.g., "Post-obstructive pus drained")
+
+
+class BiopsySite(BaseModel):
+    """Structured data for a biopsy location.
+
+    Supports multiple biopsy sites beyond just lobar locations.
+    """
+
+    location: str  # e.g., "distal_trachea", "RLL", "carina", "LMS"
+    lobe: str | None = None  # If applicable: "RUL", "RML", "RLL", "LUL", "LLL"
+    segment: str | None = None  # If applicable: segment name
+    specimens_count: int | None = None  # Number of specimens from this site
+
+
+__all__ = [
+    "RegistryRecord",
+    "BLVRData",
+    "DestructionEvent",
+    "EnhancedDilationEvent",
+    "AspirationEvent",
+    "CaoIntervention",
+    "BiopsySite",
+]

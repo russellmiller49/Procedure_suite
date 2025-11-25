@@ -40,11 +40,12 @@ class CodeDecision(BaseModel):
     cpt: str
     description: str
     modifiers: list[str] = Field(default_factory=list)
-    rationale: str = ""
+    rationale: str | list[str] = ""
     evidence: List[Span] = Field(default_factory=list)
     context: dict[str, Any] = Field(default_factory=dict)
-    mer_role: str | None = None
+    mer_role: str | None = None  # "primary", "secondary", "add_on"
     mer_allowed: float | None = None
+    mer_explanation: str | None = None  # Human-readable explanation for MER
     confidence: float = 0.0
     rule_trace: List[str] = Field(default_factory=list)
 
@@ -113,3 +114,6 @@ class CoderOutput(BaseModel):
     # LLM Advisor
     llm_suggestions: list[LLMCodeSuggestion] = Field(default_factory=list)
     llm_disagreements: list[str] = Field(default_factory=list)
+
+    # Optional strict JSON payload for LLM assistant clients
+    llm_assistant_payload: dict[str, Any] | None = None

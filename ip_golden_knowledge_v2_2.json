@@ -90,6 +90,26 @@
         "id": "global_surgical_package",
         "statement": "Bronchoscopic procedures generally have 0-day or 10-day global periods. E/M services within global period require modifier -25 and distinct documentation.",
         "citations": ["Medicare Global Surgery Data File"]
+      },
+      {
+        "id": "telehealth_modifiers_audio_video",
+        "statement": "Telehealth office/clinic E/M codes (99202-99215) remain reportable in 2025; append -93 for audio-only encounters and -95 for synchronous audio-video.",
+        "notes": [
+          "Audio-only telephone visits require -93 to use office/outpatient E/M codes.",
+          "Audio-video visits require -95 to indicate the service was remote and synchronous."
+        ],
+        "citations": ["CPT 2025 telehealth guidance"]
+      },
+      {
+        "id": "artificial_airway_not_reduced_services",
+        "statement": "Do not append -52 solely because bronchoscopy was performed through an LMA or endotracheal tube; artificial airways often increase complexity.",
+        "rationale": "AABIP guidance: only use -52 when the planned service is technically reduced (e.g., unable to reach target). Use -53 only when stopped for patient safety after initiation.",
+        "citations": ["AABIP modifier guidance"]
+      },
+      {
+        "id": "single_dose_vial_wastage_reporting",
+        "statement": "For single-dose drugs billed by the practice, report wastage with -JW and attest no waste with -JZ when the full vial is used.",
+        "citations": ["CMS JW/JZ policy"]
       }
     ],
     "modifiers": [
@@ -98,18 +118,33 @@
       {"code": "-26", "name": "Professional component only", "doc": "Facility owns equipment/technical component. Used for split billing in hospital setting."},
       {"code": "-50", "name": "Bilateral procedure", "doc": "Common for pleural procedures when truly bilateral same session."},
       {"code": "-51", "name": "Multiple procedures", "doc": "Use per payer; MER may apply to endoscopy families. Some payers auto-apply."},
-      {"code": "-52", "name": "Reduced services", "doc": "Part of planned service performed; not for cancellations before starting. Requires documentation of what was NOT done."},
-      {"code": "-53", "name": "Discontinued procedure", "doc": "Aborted for patient safety after initiation (document timestamps and reason). Separate from never-started procedure."},
+      {"code": "-52", "name": "Reduced services", "doc": "Use when a planned service is partially completed for technical reasons (e.g., could not navigate to lesion); do NOT use solely for bronchoscopy via LMA/ETT/artificial airway.", "ip_guidance": "Document what portion was not completed. If stopped for patient safety after induction, use -53 instead."},
+      {"code": "-53", "name": "Discontinued procedure", "doc": "Aborted after initiation for patient safety/clinical instability (e.g., hypoxia, bleeding, arrhythmia). Document timestamps and reason.", "ip_guidance": "If termination was due to equipment/technical failure without patient risk, use -52 instead."},
       {"code": "-58", "name": "Staged procedure", "doc": "Planned staged procedure during postoperative period (e.g., second-stage valve placement)."},
       {"code": "-59", "name": "Distinct procedural service", "doc": "Use sparingly to bypass NCCI when distinct site/encounter; prefer -XS/-XE/-XP/-XU if payer requires. Heavily audited—ensure true distinctness."},
       {"code": "-76", "name": "Repeat procedure same physician", "doc": "Same procedure repeated same day by same physician (e.g., repeat therapeutic aspiration for re-accumulating secretions)."},
       {"code": "-77", "name": "Repeat procedure different physician", "doc": "Same procedure repeated same day by different physician."},
       {"code": "-78", "name": "Unplanned return to OR", "doc": "Related complication requiring return to procedure room during postoperative period."},
       {"code": "-79", "name": "Unrelated procedure during postop", "doc": "New unrelated procedure during postoperative period of another procedure."},
+      {"code": "-93", "name": "Audio-only telehealth", "doc": "Required for telephone-only E/M visits when reporting 99202-99215 as audio-only in 2025.", "ip_guidance": "Document total time/MDM and that encounter was telephone without video."},
+      {"code": "-95", "name": "Synchronous telehealth (audio-video)", "doc": "Append to real-time audio-video telehealth visits (e.g., 99213-95) to indicate remote service.", "ip_guidance": "Document patient location, consent, and technology used."},
+      {"code": "FT", "name": "Unrelated critical care during global period", "doc": "Use on 99291/99292 when providing critical care unrelated to another provider's global surgical period.", "ip_guidance": "Clarify unrelated diagnosis to avoid denials."},
+      {"code": "JW", "name": "Drug wastage", "doc": "Report unused amount from a single-dose vial on a separate claim line with -JW.", "ip_guidance": "Bill administered amount on one line and wasted amount with -JW on second line."},
+      {"code": "JZ", "name": "Zero drug waste", "doc": "Attest no wastage from a single-dose vial when entire amount was used. Required to avoid denials.", "ip_guidance": "Use alongside administered line to show full vial used."},
       {"code": "XE", "name": "Separate encounter", "doc": "NCCI X-modifier: distinct encounter same day."},
       {"code": "XP", "name": "Separate practitioner", "doc": "NCCI X-modifier: different provider same day."},
       {"code": "XS", "name": "Separate structure", "doc": "NCCI X-modifier: distinct anatomic site (preferred over -59 for CMS)."},
       {"code": "XU", "name": "Unusual non-overlapping service", "doc": "NCCI X-modifier: services not ordinarily performed together."}
+    ],
+    "modifier_quick_reference": [
+      {"code": "G2211", "name": "Visit Complexity", "ip_usage_note": "Add to office E/M (99202-99215) for longitudinal care when you are the continuing focal point. Invalid if E/M carries -25 for a same-day procedure."},
+      {"code": "-93", "name": "Audio-Only", "ip_usage_note": "Append to telephone-only office E/M visits in 2025."},
+      {"code": "-95", "name": "Audio-Video", "ip_usage_note": "Append to synchronous audio-video telehealth visits."},
+      {"code": "FT", "name": "Unrelated E/M (Global)", "ip_usage_note": "Use on critical care codes (99291/99292) when caring for a patient in another surgeon's global period for an unrelated issue."},
+      {"code": "-52", "name": "Reduced Services", "ip_usage_note": "Use for technical failures or intentionally partial services; not for bronchoscopy via artificial airway alone."},
+      {"code": "-53", "name": "Discontinued Procedure", "ip_usage_note": "Use only when the procedure stops for patient safety after initiation (e.g., hypoxia, bleeding)."},
+      {"code": "JW", "name": "Drug Wastage", "ip_usage_note": "Report wasted single-dose vial volume on a separate line with -JW."},
+      {"code": "JZ", "name": "Zero Drug Waste", "ip_usage_note": "Required attestation when a single-dose vial is fully used with no waste."}
     ]
   },
 
@@ -169,6 +204,11 @@
       {
         "if_all": ["em_code_same_day == true", "lacks_modifier_25 == true", "not_global_period_exempt == true"],
         "then": ["flag('E/M same day as procedure requires -25 modifier with distinct documentation')"]
+      },
+      {
+        "if_all": ["contains(G2211) == true", "modifier_25_on_em_same_day == true"],
+        "then": ["drop_code(G2211)", "flag('G2211 not allowed when E/M uses -25 for same-day procedure')"],
+        "why": "Visit complexity add-on is disallowed when the E/M relies on -25 for a same-day procedure."
       }
     ],
     "mer": {
@@ -239,7 +279,7 @@
         "31628": "Bronchoscopy, rigid or flexible; with transbronchial lung biopsy(s), single lobe",
         "+31632": "Bronchoscopy, rigid or flexible; with transbronchial lung biopsy(s), each additional lobe (List separately)"
       },
-      "synonyms": ["TBLB", "transbronchial biopsy", "cryobiopsy", "cryo-TBB"],
+      "synonyms": ["TBLB", "transbronchial biopsy", "cryobiopsy", "cryo-TBB", "TBBx", "forceps biopsy", "forceps biopsies"],
       "doc_fields": [
         "Lobe(s) sampled with laterality",
         "Technique (conventional forceps vs cryoprobe)",
@@ -264,7 +304,7 @@
         "31629": "Bronchoscopy, rigid or flexible; with transbronchial needle aspiration biopsy(s), trachea, main stem and/or lobar bronchus(i)",
         "+31633": "Bronchoscopy, rigid or flexible; with transbronchial needle aspiration biopsy(s), each additional lobe (List separately)"
       },
-      "synonyms": ["TBNA", "conventional TBNA", "blind TBNA"],
+      "synonyms": ["conventional TBNA", "blind TBNA"],
       "doc_fields": [
         "Lobe/region sampled",
         "Lymph node station if known",
@@ -349,7 +389,7 @@
       "id": "navigation_addon",
       "cpt": ["+31627"],
       "descriptor": "Bronchoscopy, rigid or flexible; with computer-assisted, image-guided navigation (List separately in addition to code for primary procedure)",
-      "synonyms": ["electromagnetic navigation", "ENB", "image-guided bronchoscopy"],
+      "synonyms": ["electromagnetic navigation", "ENB", "image-guided bronchoscopy", "navigational bronchoscopy", "Ion robotic bronchoscopy", "robotic navigational bronchoscopy", "EMN bronchoscopy", "robotic bronchoscopy"],
       "requires_primary": true,
       "primary_codes_allowed": ["31622-31646", "31648-31651"],
       "opps": {"status_indicator": "N (packaged)", "note": "No separate facility payment under OPPS; report for data/rate-setting."},
@@ -417,7 +457,7 @@
         "31648": "Bronchoscopy, rigid or flexible; with removal of bronchial valve(s), initial lobe",
         "+31649": "Bronchoscopy, rigid or flexible; with removal of bronchial valve(s), each additional lobe (List separately in addition to code for primary procedure)"
       },
-      "synonyms": ["endobronchial valve", "EBV", "bronchoscopic lung volume reduction", "BLVR", "Zephyr valve", "Spiration valve"],
+      "synonyms": ["endobronchial valve", "EBV", "bronchoscopic lung volume reduction", "BLVR", "Zephyr valve", "Spiration valve", "valve placement", "endobronchial valve placement"],
       "doc_fields": [
         "Treated lobe(s) with laterality",
         "Number of valves per lobe",
@@ -471,7 +511,7 @@
         "31638": "Bronchoscopy, rigid or flexible; with revision of tracheal or bronchial stent(s) (includes pre- and post-dilation and aspiration as required)",
         "31635": "Bronchoscopy, rigid or flexible; with removal of foreign body"
       },
-      "synonyms": ["airway stent", "tracheal stent", "bronchial stent", "silicone stent", "covered stent", "uncovered stent"],
+      "synonyms": ["airway stent", "tracheal stent", "bronchial stent", "silicone stent", "covered stent", "uncovered stent", "Y stent", "metallic stent", "self-expanding metal stent", "SEMS"],
       "doc_fields": [
         "Stent type (silicone, covered metallic, uncovered metallic)",
         "Manufacturer and model",
@@ -528,7 +568,7 @@
         "31640": "Bronchoscopy, rigid or flexible; with tumor excision, with or without electrocautery",
         "31641": "Bronchoscopy, rigid or flexible; with tumor destruction by ablative energy (eg, argon plasma coagulation, cryotherapy)"
       },
-      "synonyms": ["tumor debulking", "endobronchial tumor removal", "APC", "argon plasma coagulation", "cryotherapy", "cryoablation", "laser", "electrocautery"],
+      "synonyms": ["tumor debulking", "endobronchial tumor removal", "APC", "argon plasma coagulation", "cryotherapy", "cryoablation", "laser", "electrocautery", "radiofrequency ablation", "RFA"],
       "mutual_exclusion": [
         {"pair": ["31640", "31641"], "scope": "same site", "note": "Choose code that best represents dominant technique"}
       ],
@@ -550,7 +590,7 @@
       ],
       "technique_mapping": {
         "31640": ["mechanical excision", "forceps excision", "snare excision", "rigid bronchoscopy excision", "electrocautery for excision"],
-        "31641": ["argon plasma coagulation (APC)", "cryotherapy", "cryoablation", "laser ablation", "electrocautery as primary ablation"]
+        "31641": ["argon plasma coagulation (APC)", "cryotherapy", "cryoablation", "laser ablation", "electrocautery as primary ablation", "radiofrequency ablation", "RFA"]
       },
       "citations": ["ip_coding_billing.procedures.therapeutic_aspiration_bleeding_control", "CPT 2025"]
     },
@@ -593,7 +633,7 @@
         "31645": "Bronchoscopy, rigid or flexible; with therapeutic aspiration of tracheobronchial tree, initial",
         "31646": "Bronchoscopy, rigid or flexible; with therapeutic aspiration of tracheobronchial tree, subsequent, same hospital stay"
       },
-      "synonyms": ["mucus plugging", "therapeutic lavage", "secretion clearance"],
+      "synonyms": ["mucus plugging", "therapeutic lavage", "secretion clearance", "bronchial toilet", "bronchial toileting", "therapeutic bronchoscopy"],
       "doc_fields": [
         "Indication (mucus plugging, atelectasis, secretion retention)",
         "Sites treated",
@@ -617,7 +657,7 @@
         "32554": "Thoracentesis, needle or catheter, aspiration of the pleural space; without imaging guidance",
         "32555": "Thoracentesis, needle or catheter, aspiration of the pleural space; with imaging guidance"
       },
-      "synonyms": ["pleural tap", "pleural fluid aspiration"],
+      "synonyms": ["pleural tap", "pleural fluid aspiration", "thoracentesis"],
       "doc_fields": [
         "Laterality (right, left, or bilateral with -50)",
         "Imaging modality used (ultrasound, fluoroscopy, or none)",
@@ -643,7 +683,7 @@
         "32556": "Pleural drainage, percutaneous, with insertion of indwelling catheter; without imaging guidance",
         "32557": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance"
       },
-      "synonyms": ["pigtail catheter", "small-bore pleural drain", "non-tunneled pleural catheter"],
+      "synonyms": ["pigtail catheter", "small-bore pleural drain", "non-tunneled pleural catheter", "pigtail chest tube", "small-bore chest tube", "small bore chest tube"],
       "doc_fields": [
         "Laterality",
         "Catheter size (French)",
@@ -687,6 +727,24 @@
         "Document medical necessity (recurrent symptomatic effusion despite thoracentesis, failed pleurodesis, etc.).",
         "32552 for removal—document reason and whether pleurodesis achieved."
       ],
+      "verb_disambiguation": {
+        "32550": [
+          "place",
+          "placed",
+          "placement",
+          "insert",
+          "inserted",
+          "insertion"
+        ],
+        "32552": [
+          "remove",
+          "removed",
+          "removal",
+          "explant",
+          "taken out",
+          "explantation"
+        ]
+      },
       "indication": "Recurrent symptomatic pleural effusion, typically malignant",
       "lcd_emphasis": "Document failed conventional management (repeat thoracentesis, pleurodesis attempts).",
       "citations": ["ip_coding_billing.procedures.ipc_tunneled_pleural_catheter", "CPT 2025"]
@@ -751,6 +809,79 @@
       },
       "note": "IP physicians performing CT-guided lung biopsies should verify appropriate CPT selection and facility privileging.",
       "citations": ["CPT 2025"]
+    },
+    {
+      "id": "percutaneous_tracheostomy_31600",
+      "cpt": ["31600"],
+      "descriptor": "Percutaneous tracheostomy performed under bronchoscopic visualization and guidance.",
+      "synonyms": [
+        "tracheostomy",
+        "trach",
+        "percutaneous tracheostomy",
+        "percutaneous dilational tracheostomy",
+        "percutaneous dilatational tracheostomy",
+        "Ciaglia tracheostomy",
+        "Ciaglia Blue Rhino"
+      ],
+      "doc_fields": [
+        "Indication for long-term airway access",
+        "Technique (Ciaglia, single-dilator, other)",
+        "Bronchoscopic guidance used: Y/N",
+        "Complications and immediate management"
+      ],
+      "coding_notes": [
+        "Report 31600 for percutaneous tracheostomy performed with bronchoscopic guidance.",
+        "Do not separately report diagnostic bronchoscopy (31622) performed solely to guide tracheostomy.",
+        "Document approach, landmarks, and confirmation of tube position."
+      ],
+      "citations": ["CPT 31600", "internal_ip_coding_notes.tracheostomy"]
+    },
+    {
+      "id": "bronchial_endobronchial_biopsy_31625",
+      "cpt": ["31625"],
+      "descriptor": "Bronchoscopy with bronchial or endobronchial biopsy sampling, single or multiple sites.",
+      "synonyms": [
+        "endobronchial biopsy",
+        "endobronchial biopsies",
+        "bronchial biopsy",
+        "bronchial biopsies",
+        "EBBx"
+      ],
+      "doc_fields": [
+        "Exact location of lesion (bronchus, segment, side)",
+        "Number of biopsies obtained",
+        "Tool/technique (forceps vs other)",
+        "Hemostasis method and complications"
+      ],
+      "coding_notes": [
+        "Use 31625 for bronchial or endobronchial biopsies performed during bronchoscopy.",
+        "Do not report 31622 separately in the same session—diagnostic work is included.",
+        "Distinguish from transbronchial lung biopsy (31628/31632) which samples parenchyma."
+      ],
+      "citations": ["CPT 31625", "ip_coding_billing.procedures.endobronchial_biopsy"]
+    },
+    {
+      "id": "total_lung_lavage_32997",
+      "cpt": ["32997"],
+      "descriptor": "Total lung lavage, usually unilateral, using bronchoscopy and large-volume saline instillation and drainage.",
+      "synonyms": [
+        "total lung lavage",
+        "whole lung lavage",
+        "complete lung lavage",
+        "unilateral whole lung lavage"
+      ],
+      "doc_fields": [
+        "Indication (e.g., pulmonary alveolar proteinosis)",
+        "Side treated (right or left lung)",
+        "Number and volume of aliquots instilled and returned",
+        "Monitoring parameters (SpO2, PaO2, hemodynamics) and complications"
+      ],
+      "coding_notes": [
+        "32997 typically reported per lung treated (unilateral).",
+        "Document total instilled and returned volume and clinical response.",
+        "If staged bilateral procedures are performed on different dates, report per session."
+      ],
+      "citations": ["CPT 32997", "ip_coding_billing.procedures.total_lung_lavage"]
     }
   ],
 
@@ -866,9 +997,11 @@
       "prolonged": "+99417 - Prolonged office/outpatient service(s), first hour (15+ min beyond max time)",
       "complexity_addon": {
         "code": "G2211",
-        "descriptor": "Visit complexity inherent to E/M, add-on for established patients",
-        "rule": "Consider with office E/M (99202-99215) for ongoing, complex longitudinal care. NOT on same day as procedures.",
-        "criteria": "Requires 2 of: multiple chronic conditions, risk of complications, extensive treatment coordination, social determinants complexity.",
+        "descriptor": "Visit complexity inherent to evaluation and management associated with medical care services that serve as the continuing focal point for all needed health care services.",
+        "rule": "Use with office E/M (99202-99215) for longitudinal/complex patients when you are the primary focal point of their care. Do NOT report when the E/M requires modifier -25 for a same-day procedure.",
+        "criteria": "Document longitudinal relationship, multiple or serious chronic conditions, risk of complications, coordination across teams, or social determinants that increase complexity.",
+        "ip_relevance": "Long-term lung cancer, complex airway disease, ILD, and other longitudinal IP patients seen for management/coordination without procedures needing -25.",
+        "example": "Complex cancer discussion billed as 99214 with no same-day procedure; if paired with a procedure needing -25 (e.g., 31645), omit G2211.",
         "citations": ["CMS G2211 guidance"]
       },
       "citations": ["CPT 2025"]
@@ -926,7 +1059,8 @@
         "Must spend 30+ minutes to bill 99291.",
         "Document total time (may be non-continuous but must be same calendar date).",
         "Procedures (bronch, thoracentesis, etc.) separately reportable.",
-        "Do NOT bill critical care for time spent on procedures—subtract procedure time."
+        "Do NOT bill critical care for time spent on procedures—subtract procedure time.",
+        "If patient is in another surgeon's global period, append -FT to 99291/99292 when the critical care is unrelated to the surgery."
       ],
       "citations": ["CPT 2025", "CPT Critical Care Guidelines"]
     },
@@ -1105,6 +1239,26 @@
       "when": "contains(+31651)",
       "require": "contains(31647) == true",
       "on_fail": "+31651 (additional lobe valve) requires 31647 (initial lobe valve) as primary code."
+    },
+    {
+      "id": "tblb_additional_lobe_requires_multi_lobes",
+      "when": "contains(+31632)",
+      "require": "tblb_lobes_sampled >= 2",
+      "on_fail": "Drop +31632; documentation supports only a single lobe for transbronchial lung biopsy."
+    },
+    {
+      "id": "tbna_vs_ebus_same_target_check",
+      "when": "contains(31629) && any_of(31652,31653)",
+      "on_fail": "Do not bill conventional TBNA (31629) and EBUS-TBNA (31652/31653) for the same target. Choose the code set that best represents the guidance actually used."
+    },
+    {
+      "id": "ipc_action_required",
+      "when": "contains_any(32550,32552)",
+      "require_any": [
+        "note.ipc_action == 'insertion'",
+        "note.ipc_action == 'removal'"
+      ],
+      "on_fail": "Clarify whether the tunneled pleural catheter was inserted (32550) or removed (32552); ipc_action must be set to support correct code selection."
     }
   ],
 

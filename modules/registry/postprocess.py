@@ -24,15 +24,22 @@ __all__ = [
     "normalize_ebus_rose_result",
     "normalize_ebus_needle_gauge",
     "normalize_ebus_needle_type",
+    "normalize_ebus_stations_detail",
     "normalize_elastography_pattern",
     "normalize_list_field",
     "normalize_anesthesia_agents",
     "normalize_ebus_stations",
+    "normalize_linear_ebus_stations",
     "normalize_nav_sampling_tools",
     "normalize_follow_up_plan",
     "normalize_cao_location",
     "normalize_cao_tumor_location",
     "normalize_cpt_codes",
+    "normalize_assistant_names",
+    "normalize_ablation_modality",
+    "normalize_airway_device_size",
+    "normalize_nav_registration_method",
+    "normalize_assistant_name_single",
     "POSTPROCESSORS",
 ]
 
@@ -49,8 +56,7 @@ def _coerce_to_text(raw: Any) -> str | None:
 def normalize_sedation_type(raw: Any) -> str | None:
     text_raw = _coerce_to_text(raw)
     if text_raw is None:
-        # Default per instruction: moderate if undocumented
-        return "Moderate"
+        return None
     text = text_raw.lower()
 
     mapping = {
@@ -65,9 +71,10 @@ def normalize_sedation_type(raw: Any) -> str | None:
         "local": "Local",
         "local anesthesia": "Local",
         "local only": "Local",
-        "monitored anesthesia care": "Monitored Anesthesia Care",
-        "mac": "Monitored Anesthesia Care",
-        "mac anesthesia": "Monitored Anesthesia Care",
+        # Project convention: treat MAC as deep sedation when no explicit GA/ETT
+        "monitored anesthesia care": "Deep",
+        "mac": "Deep",
+        "mac anesthesia": "Deep",
     }
 
     if text in mapping:
@@ -75,6 +82,8 @@ def normalize_sedation_type(raw: Any) -> str | None:
     else:
         if "general" in text and "anesth" in text:
             val = "General"
+        elif "monitored anesthesia care" in text or " mac " in text or re.search(r"\bmac\b", text):
+            val = "Deep"
         elif "deep" in text and "sedat" in text:
             val = "Deep"
         elif "conscious" in text and "sedat" in text:
@@ -92,12 +101,12 @@ def normalize_sedation_type(raw: Any) -> str | None:
                 "deep": "Deep",
                 "general": "General",
                 "local": "Local",
-                "monitored anesthesia care": "Monitored Anesthesia Care",
+                "monitored anesthesia care": "Deep",
             }
             val = lowered_allowed.get(text, None)
 
     allowed = {"Moderate", "Deep", "General", "Local", "Monitored Anesthesia Care"}
-    return val if val in allowed else "Moderate"
+    return val if val in allowed else None
 
 
 def normalize_airway_type(raw: Any) -> str | None:
@@ -178,25 +187,41 @@ def normalize_pleural_procedure(raw: Any) -> str | None:
     canonical = {
         "thoracentesis": "Thoracentesis",
         "chest tube": "Chest Tube",
+        "chest tube removal": "Chest Tube Removal",
         "tunneled catheter": "Tunneled Catheter",
         "tunnelled catheter": "Tunneled Catheter",
+        "tunneled catheter exchange": "Tunneled Catheter Exchange",
+        "tunnelled catheter exchange": "Tunneled Catheter Exchange",
+        "ipc drainage": "IPC Drainage",
         "medical thoracoscopy": "Medical Thoracoscopy",
         "chemical pleurodesis": "Chemical Pleurodesis",
     }
     if text in canonical:
         return canonical[text]
 
+    # Map common brand names/abbreviations for tunneled catheters
+    if any(k in text for k in ["pleurx", "aspira", "denver catheter", "ipc", "indwelling pleural catheter"]):
+        if "exchange" in text or "replac" in text:
+            return "Tunneled Catheter Exchange"
+        if "drain" in text and "place" not in text and "insert" not in text:
+            return "IPC Drainage"
+        return "Tunneled Catheter"
+
     if "pleurodesis" in text:
         return "Chemical Pleurodesis"
 
     if "tunneled" in text or "tunnelled" in text:
         if "catheter" in text or "pleural catheter" in text:
+            if "exchange" in text or "replac" in text:
+                return "Tunneled Catheter Exchange"
             return "Tunneled Catheter"
 
     if "thoracoscopy" in text or "pleuroscopy" in text:
         return "Medical Thoracoscopy"
 
     if any(k in text for k in ["chest tube", "pleural drain", "pleural tube", "pigtail", "intercostal drain", "icd"]):
+        if "remov" in text:
+            return "Chest Tube Removal"
         return "Chest Tube"
 
     if "thoracentesis" in text or "pleural tap" in text:
@@ -253,20 +278,33 @@ def postprocess_patient_mrn(raw: Any) -> str | None:
     text_raw = _coerce_to_text(raw)
     if text_raw is None:
         return None
-    s = text_raw
+    raw_text = str(text_raw).strip()
+    if not raw_text:
+        return None
+
+    # Remove surrounding quotes/punctuation that sometimes wrap IDs
+    raw_text = raw_text.strip().strip("\"'").strip(",:;")
+
+    # Reject obvious dates
     date_patterns = [
         r"^\d{1,2}/\d{1,2}/\d{2,4}$",
         r"^\d{1,2}-\d{1,2}-\d{2,4}$",
         r"^\d{4}-\d{1,2}-\d{1,2}$",
     ]
     for pat in date_patterns:
-        if re.match(pat, s):
+        if re.match(pat, raw_text):
             return None
 
-    m = re.match(r"^(?:MRN|Mrn|mrn|ID|Id|id)[:#\s-]*([A-Za-z0-9-]+)$", s)
-    if m:
-        s = m.group(1)
-    return s or None
+    # Strip common labels if present
+    labeled = re.search(r"(?:MRN|Medical Record Number|Patient ID|Pt ID|ID)\s*[:#-]?\s*(.+)$", raw_text, re.IGNORECASE)
+    candidate = labeled.group(1).strip() if labeled else raw_text
+    candidate = candidate.strip().strip(",:;")
+
+    # Reject obvious phone-like strings only when separators are present
+    if re.search(r"[-()\s]", candidate) and re.fullmatch(r"[\d\s().+-]{6,}", candidate) and not re.search(r"[A-Za-z]", candidate):
+        return None
+
+    return candidate or None
 
 
 def normalize_procedure_date(raw: Any) -> str | None:
@@ -308,6 +346,17 @@ def normalize_procedure_date(raw: Any) -> str | None:
     if date_like:
         text = date_like.group(1)
         for fmt in ["%m/%d/%Y", "%m-%d-%Y", "%m/%d/%y", "%m-%d-%y"]:
+            try:
+                dt = datetime.strptime(text, fmt)
+                return dt.strftime("%Y-%m-%d")
+            except ValueError:
+                continue
+
+    # Handle compact formats like 03Nov17 or 3Nov2017
+    compact = re.search(r"(\d{1,2}[A-Za-z]{3}\d{2,4})", raw)
+    if compact:
+        text = compact.group(1)
+        for fmt in ["%d%b%Y", "%d%b%y"]:
             try:
                 dt = datetime.strptime(text, fmt)
                 return dt.strftime("%Y-%m-%d")
@@ -391,9 +440,13 @@ def normalize_disposition(raw: Any) -> str | None:
     home_keywords = [
         "discharge home",
         "discharged home",
+        "dc home",
+        "sent home",
         "to home",
+        "home after",
         "go home",
         "going home",
+        "return home",
         "ok for discharge",
         "ok to discharge",
         "same-day discharge",
@@ -405,17 +458,20 @@ def normalize_disposition(raw: Any) -> str | None:
     return None
 
 
-def postprocess_asa_class(raw_text: Any) -> str | None:
+def postprocess_asa_class(raw_text: Any) -> int | None:
     text_raw = _coerce_to_text(raw_text)
     if text_raw is None or not str(text_raw).strip():
-        # Default ASA when not documented
-        return 3
+        return None
     cleaned = str(text_raw).strip().upper()
     # Extract first digit if present
     m = re.search(r"([1-5])", cleaned)
     if m:
         return int(m.group(1))
-    return 3
+    roman_map = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5}
+    for roman, val in roman_map.items():
+        if re.search(rf"\b{roman}\b", cleaned):
+            return val
+    return None
 
 
 def normalize_final_diagnosis_prelim(raw: Any) -> str | None:
@@ -428,6 +484,7 @@ def normalize_final_diagnosis_prelim(raw: Any) -> str | None:
     mapping = {
         "malignancy": "Malignancy",
         "malignant": "Malignancy",
+        "cancer": "Malignancy",
         "infectious": "Infectious",
         "infection": "Infectious",
         "granulomatous": "Granulomatous",
@@ -443,11 +500,13 @@ def normalize_final_diagnosis_prelim(raw: Any) -> str | None:
         return "Granulomatous"
     if "infect" in t:
         return "Infectious"
+    if "benign" in t:
+        return "Benign"
     if "malig" in t or "carcinoma" in t or "adenocarcinoma" in t:
         return "Malignancy"
     if "non" in t and "diagnostic" in t:
         return "Non-diagnostic"
-    return "Other"
+    return None
 
 
 def normalize_stent_type(raw: Any) -> str | None:
@@ -529,6 +588,158 @@ def normalize_ebus_needle_type(raw: Any) -> str | None:
     return None
 
 
+def _parse_size_mm(value: Any) -> float | None:
+    """Convert size strings/numbers to millimeters."""
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    text = _coerce_to_text(value)
+    if text is None:
+        return None
+    lowered = text.lower()
+    # Handle two-dimension strings like 1.2 x 0.8 cm (use the smaller dimension)
+    dim_match = re.findall(r"(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)(?:\s*(mm|cm))?", lowered)
+    if dim_match:
+        dim1, dim2, unit = dim_match[0]
+        unit = unit or "mm"
+        vals = []
+        for dim in (dim1, dim2):
+            try:
+                num = float(dim)
+                vals.append(num * 10 if unit.startswith("c") else num)
+            except Exception:
+                continue
+        return min(vals) if vals else None
+
+    match = re.search(r"(\d+(?:\.\d+)?)(?:\s*(mm|cm))?", lowered)
+    if match:
+        try:
+            val = float(match.group(1))
+            unit = match.group(2) or "mm"
+            return val * 10 if unit.startswith("c") else val
+        except Exception:
+            return None
+    return None
+
+
+def _normalize_morphology_value(text: str | None, mapping: dict[str, str]) -> str | None:
+    if text is None:
+        return None
+    val = text.strip().lower()
+    if val in mapping:
+        return mapping[val]
+    for key, normalized in mapping.items():
+        if key in val:
+            return normalized
+    return None
+
+
+def normalize_ebus_stations_detail(raw: Any) -> list[dict[str, Any]] | None:
+    """Normalize station-level detail entries and pad morphology fields with nulls."""
+    if raw is None:
+        return None
+    entries: list[Any]
+    if isinstance(raw, list):
+        entries = raw
+    else:
+        entries = [raw]
+
+    normalized: list[dict[str, Any]] = []
+    shape_map = {
+        "oval": "oval",
+        "elliptical": "oval",
+        "elongated": "oval",
+        "round": "round",
+        "spherical": "round",
+        "irregular": "irregular",
+        "lobulated": "irregular",
+        "asymmetric": "irregular",
+    }
+    margin_map = {
+        "distinct": "distinct",
+        "well-defined": "distinct",
+        "well-circumscribed": "distinct",
+        "clear margin": "distinct",
+        "sharp": "distinct",
+        "indistinct": "indistinct",
+        "ill-defined": "indistinct",
+        "blurred": "indistinct",
+        "poorly defined": "indistinct",
+        "irregular": "irregular",
+        "spiculated": "irregular",
+    }
+    echo_map = {
+        "homogeneous": "homogeneous",
+        "uniform": "homogeneous",
+        "heterogeneous": "heterogeneous",
+        "mixed": "heterogeneous",
+        "non-uniform": "heterogeneous",
+    }
+    appearance_allowed = {"benign", "malignant", "indeterminate"}
+
+    for entry in entries:
+        if isinstance(entry, dict):
+            station = entry.get("station")
+            size_mm = _parse_size_mm(entry.get("size_mm"))
+            passes = entry.get("passes")
+            rose_result = normalize_ebus_rose_result(entry.get("rose_result"))
+            shape = _normalize_morphology_value(_coerce_to_text(entry.get("shape")), shape_map)
+            margin = _normalize_morphology_value(_coerce_to_text(entry.get("margin")), margin_map)
+            echogenicity = _normalize_morphology_value(_coerce_to_text(entry.get("echogenicity")), echo_map)
+            chs_raw = entry.get("chs_present")
+            if isinstance(chs_raw, str):
+                chs_lower = chs_raw.strip().lower()
+                if chs_lower in {"true", "yes", "present"}:
+                    chs_present = True
+                elif chs_lower in {"false", "no", "absent"}:
+                    chs_present = False
+                else:
+                    chs_present = None
+            else:
+                chs_present = bool(chs_raw) if isinstance(chs_raw, bool) else None
+
+            appearance = _coerce_to_text(entry.get("appearance_category"))
+            appearance = appearance.lower() if appearance else None
+            if appearance not in appearance_allowed:
+                appearance = None
+            normalized.append(
+                {
+                    "station": station if station is None else str(station),
+                    "size_mm": size_mm,
+                    "passes": passes if passes is None or isinstance(passes, int) else None,
+                    "shape": shape,
+                    "margin": margin,
+                    "echogenicity": echogenicity,
+                    "chs_present": chs_present,
+                    "appearance_category": appearance,
+                    "rose_result": rose_result,
+                }
+            )
+        elif isinstance(entry, str):
+            # Attempt minimal parsing from a string like "11L 5.4mm benign"
+            station_match = re.search(r"(2r|2l|4r|4l|7|10r|10l|11r|11l)", entry, re.IGNORECASE)
+            station = station_match.group(1).upper() if station_match else None
+            size_mm = _parse_size_mm(entry)
+            normalized.append(
+                {
+                    "station": station,
+                    "size_mm": size_mm,
+                    "passes": None,
+                    "shape": None,
+                    "margin": None,
+                    "echogenicity": None,
+                    "chs_present": None,
+                    "appearance_category": None,
+                    "rose_result": normalize_ebus_rose_result(entry),
+                }
+            )
+        else:
+            continue
+
+    return normalized or None
+
+
 def normalize_list_field(raw: Any) -> List[str] | None:
     """Convert comma-separated strings or mixed input to a list of strings."""
     if raw is None:
@@ -594,6 +805,11 @@ def normalize_ebus_stations(raw: Any) -> List[str] | None:
         if cleaned:
             normalized.append(cleaned)
     return normalized if normalized else None
+
+
+def normalize_linear_ebus_stations(raw: Any) -> List[str] | None:
+    """Alias for linear stations; keeps normalization consistent with ebus_stations_sampled."""
+    return normalize_ebus_stations(raw)
 
 
 def normalize_nav_sampling_tools(raw: Any) -> List[str] | None:
@@ -702,6 +918,171 @@ def normalize_cao_tumor_location(raw: Any) -> str | None:
     return None
 
 
+def normalize_assistant_names(raw: Any) -> List[str] | None:
+    """Normalize assistant names, handling both single strings and lists.
+
+    Supports:
+    - Single string: "Dr. Smith" -> ["Dr. Smith"]
+    - Comma-separated: "Dr. Smith, Dr. Jones" -> ["Dr. Smith", "Dr. Jones"]
+    - List: ["Dr. Smith", "Dr. Jones"] -> ["Dr. Smith", "Dr. Jones"]
+    - Legacy assistant_name field migration
+    """
+    if raw is None:
+        return None
+
+    # If already a list, clean each item
+    if isinstance(raw, list):
+        normalized = []
+        for item in raw:
+            if item is None:
+                continue
+            name = str(item).strip()
+            if name and name.lower() not in {"none", "n/a", "na", "null", ""}:
+                normalized.append(name)
+    return normalized if normalized else None
+
+
+def normalize_assistant_name_single(raw: Any) -> str | None:
+    """Normalize assistant_name (singular) to a string.
+
+    Handles list input by taking the first non-empty entry.
+    """
+    names = normalize_assistant_names(raw)
+    if not names:
+        return None
+    return names[0]
+
+
+def normalize_nav_registration_method(raw: Any) -> str | None:
+    text = _coerce_to_text(raw)
+    if text is None:
+        return None
+    lowered = text.strip().lower()
+    if lowered in {"auto", "automatic"}:
+        return "Automatic"
+    if lowered in {"manual"}:
+        return "Manual"
+    # Title-case fallback for unexpected casing
+    if text.strip():
+        candidate = text.strip().title()
+        if candidate in {"Manual", "Automatic"}:
+            return candidate
+    return None
+
+    # If it's a string, check for comma separation
+    if isinstance(raw, str):
+        text = raw.strip()
+        if not text or text.lower() in {"none", "n/a", "na", "null"}:
+            return None
+
+        # Check for common separators
+        if "," in text or ";" in text:
+            items = re.split(r"[,;]", text)
+            normalized = [item.strip() for item in items if item.strip()]
+            return normalized if normalized else None
+
+        # Single name
+        return [text]
+
+    # Try to convert other types
+    try:
+        text = str(raw).strip()
+        if text and text.lower() not in {"none", "n/a", "na", "null"}:
+            return [text]
+    except Exception:
+        pass
+
+    return None
+
+
+def normalize_airway_device_size(raw: Any) -> str | None:
+    """Normalize airway device size to string format.
+
+    Handles:
+    - Integer input: 12 -> "12"
+    - Float input: 7.5 -> "7.5"
+    - String input: "7.5 ETT" -> "7.5 ETT"
+    """
+    if raw is None:
+        return None
+
+    # Convert numbers to strings
+    if isinstance(raw, (int, float)):
+        # Format float nicely (remove trailing .0)
+        if isinstance(raw, float) and raw == int(raw):
+            return str(int(raw))
+        return str(raw)
+
+    # Handle string input
+    text = str(raw).strip()
+    if not text or text.lower() in {"none", "n/a", "na", "null"}:
+        return None
+
+    return text
+
+
+def normalize_ablation_modality(raw: Any) -> str | None:
+    """Normalize ablation modality to match schema enum values.
+
+    Handles:
+    - List input: Takes first valid item (e.g., ['Radiofrequency', 'Cryoablation'] -> "Radiofrequency (RFA)")
+    - String input: Maps to canonical enum value
+    - Common abbreviations: RFA, MWA, cryo, etc.
+
+    Schema enum: ["Microwave (MWA)", "Radiofrequency (RFA)", "Cryoablation", "Laser", "Brachytherapy"]
+    """
+    text_raw = _coerce_to_text(raw)  # _coerce_to_text already takes first item from list
+    if text_raw is None:
+        return None
+
+    text = text_raw.strip().lower()
+    if not text or text in {"none", "n/a", "na", "null"}:
+        return None
+
+    # Mapping from various inputs to canonical enum values
+    mapping = {
+        # Microwave
+        "microwave": "Microwave (MWA)",
+        "microwave (mwa)": "Microwave (MWA)",
+        "mwa": "Microwave (MWA)",
+        "microwave ablation": "Microwave (MWA)",
+        # Radiofrequency
+        "radiofrequency": "Radiofrequency (RFA)",
+        "radiofrequency (rfa)": "Radiofrequency (RFA)",
+        "rfa": "Radiofrequency (RFA)",
+        "rf ablation": "Radiofrequency (RFA)",
+        "radiofrequency ablation": "Radiofrequency (RFA)",
+        # Cryoablation
+        "cryoablation": "Cryoablation",
+        "cryo": "Cryoablation",
+        "cryotherapy": "Cryoablation",
+        "cryo ablation": "Cryoablation",
+        # Laser
+        "laser": "Laser",
+        "laser ablation": "Laser",
+        # Brachytherapy
+        "brachytherapy": "Brachytherapy",
+        "brachy": "Brachytherapy",
+    }
+
+    if text in mapping:
+        return mapping[text]
+
+    # Fuzzy matching for partial matches
+    if "microwave" in text or "mwa" in text:
+        return "Microwave (MWA)"
+    if "radiofrequency" in text or "rfa" in text:
+        return "Radiofrequency (RFA)"
+    if "cryo" in text:
+        return "Cryoablation"
+    if "laser" in text:
+        return "Laser"
+    if "brachy" in text:
+        return "Brachytherapy"
+
+    return None
+
+
 def normalize_cpt_codes(raw: Any) -> List[int | str] | None:
     """Normalize CPT codes, handling comma-separated strings and converting to list of int/str."""
     if raw is None:
@@ -782,13 +1163,27 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "ebus_rose_result": normalize_ebus_rose_result,
     "ebus_needle_gauge": normalize_ebus_needle_gauge,
     "ebus_needle_type": normalize_ebus_needle_type,
+    "ebus_stations_detail": normalize_ebus_stations_detail,
     "ebus_elastography_pattern": normalize_elastography_pattern,
     # List field normalizers - convert comma-separated strings to lists
     "anesthesia_agents": normalize_anesthesia_agents,
     "ebus_stations_sampled": normalize_ebus_stations,
+    "linear_ebus_stations": normalize_linear_ebus_stations,
     "nav_sampling_tools": normalize_nav_sampling_tools,
+    "nav_registration_method": normalize_nav_registration_method,
     "follow_up_plan": normalize_follow_up_plan,
+    "pleural_thoracoscopy_findings": normalize_list_field,
+    "fb_tool_used": normalize_list_field,
+    "bronch_specimen_tests": normalize_list_field,
     "cao_location": normalize_cao_location,
     "cao_tumor_location": normalize_cao_tumor_location,
     "cpt_codes": normalize_cpt_codes,
+    # Ablation modality - converts list to single value and normalizes to enum
+    "ablation_modality": normalize_ablation_modality,
+    # Airway device size - converts int/float to string
+    "airway_device_size": normalize_airway_device_size,
+    # Multi-assistant support - converts single name or comma-separated to list
+    "assistant_names": normalize_assistant_names,
+    # Also handle legacy field name migration
+    "assistant_name": normalize_assistant_name_single,
 }

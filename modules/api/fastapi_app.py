@@ -111,12 +111,13 @@ async def coder_localities() -> List[LocalityInfo]:
 
 
 @app.post("/v1/coder/run", response_model=CoderResponse)
-async def coder_run(req: CoderRequest) -> CoderResponse:
+async def coder_run(req: CoderRequest, mode: str | None = None) -> CoderResponse:
     """Enhanced auto-coding with RVU calculations and bundling rules."""
     procedure_data = {
         "note_text": req.note,
         "locality": req.locality,
         "setting": req.setting,
+        "output_mode": mode or req.mode,
     }
     
     # Use enhanced coder
@@ -126,20 +127,28 @@ async def coder_run(req: CoderRequest) -> CoderResponse:
     codes = []
     for code_data in result.get("codes", []):
         cpt = code_data.get("cpt", "")
-        # Get description from RVU data or use a default
+        # Get description from the code_data (populated by enhanced coder)
+        description = code_data.get("description") or f"CPT {cpt}"
         rvu_data = code_data.get("rvu_data") or {}
-        description = rvu_data.get("description", "") or f"CPT {cpt}"
-        
+        rationale_raw = code_data.get("rationale") or ["Detected via IP knowledge base"]
+        if isinstance(rationale_raw, list):
+            rationale_val = rationale_raw
+        else:
+            rationale_val = [str(rationale_raw)]
+
         codes.append(CodeDecision(
             cpt=cpt,
             description=description,
             modifiers=code_data.get("modifiers", []),
-            rationale=f"Detected via IP knowledge base",
+            rationale=rationale_val,
             confidence=0.9,
             context={
                 "groups": code_data.get("groups", []),
-                "rvu_data": code_data.get("rvu_data", {})
-            }
+                "rvu_data": rvu_data
+            },
+            mer_role=code_data.get("mer_role"),
+            mer_explanation=code_data.get("mer_explanation"),
+            mer_allowed=rvu_data.get("payment") * rvu_data.get("multiplier", 1.0) if rvu_data else None,
         ))
     
     # Build financials summary from enhanced coder result
@@ -150,15 +159,22 @@ async def coder_run(req: CoderRequest) -> CoderResponse:
         per_code_billing = []
         for code_data in result.get("codes", []):
             rvu_data = code_data.get("rvu_data") or {}
+            multiplier = rvu_data.get("multiplier", 1.0)
+            mer_role = code_data.get("mer_role")
+            payment = rvu_data.get("payment", 0.0)  # Note: key is "payment" not "payment_amount"
             per_code_billing.append(PerCodeBilling(
                 cpt_code=code_data.get("cpt", ""),
-                description=rvu_data.get("description", ""),
+                description=code_data.get("description") or rvu_data.get("description", ""),
                 modifiers=code_data.get("modifiers", []),
                 work_rvu=rvu_data.get("work_rvu", 0.0),
                 total_facility_rvu=rvu_data.get("total_rvu", 0.0),
-                facility_payment=rvu_data.get("payment", 0.0),
-                allowed_facility_rvu=rvu_data.get("work_rvu", 0.0) * rvu_data.get("multiplier", 1.0),
-                allowed_facility_payment=rvu_data.get("payment", 0.0) * rvu_data.get("multiplier", 1.0),
+                facility_payment=payment,
+                allowed_facility_rvu=rvu_data.get("work_rvu", 0.0) * multiplier,
+                allowed_facility_payment=payment * multiplier,
+                mer_role=mer_role,
+                mer_allowed=payment * multiplier if mer_role else None,
+                mer_reduction=(1.0 - multiplier) * payment if mer_role == "secondary" else None,
+                mp_rule=f"multiple_endoscopy_{mer_role}" if mer_role else None,
             ))
         
         financials = FinancialSummary(
@@ -185,17 +201,29 @@ async def coder_run(req: CoderRequest) -> CoderResponse:
         ]
     if result.get("llm_disagreements"):
         llm_disagreements = result.get("llm_disagreements", [])
-    
+
+    # Convert bundling decisions to BundleDecision format
+    from modules.coder.schema import BundleDecision
+    ncci_actions = []
+    for bundle in result.get("bundled_codes", []):
+        ncci_actions.append(BundleDecision(
+            pair=(bundle.get("dominant_cpt", ""), bundle.get("bundled_cpt", "")),
+            action="bundled",
+            reason=bundle.get("reason", ""),
+            rule=bundle.get("rule"),
+        ))
+
     return CoderOutput(
         codes=codes,
         intents=[],  # Enhanced coder doesn't provide intents
         mer_summary=None,  # Could be added later
         financials=financials,
-        ncci_actions=[],  # Bundling is handled internally
+        ncci_actions=ncci_actions,  # Bundling decisions with explanations
         warnings=llm_disagreements,  # Include LLM disagreements in warnings
         version="0.2.0",  # Enhanced version
         llm_suggestions=llm_suggestions,
         llm_disagreements=llm_disagreements,
+        llm_assistant_payload=result.get("llm_assistant_payload"),
     )
 
 

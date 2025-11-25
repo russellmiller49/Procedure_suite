@@ -85,6 +85,18 @@
           "opps_payment": 6922,
           "asc_payment": 2301
         },
+        "+31627": {
+          "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+          "work_rvu": 3.50,
+          "total_facility_rvu": 5.25,
+          "total_nonfacility_rvu": 9.60,
+          "mpfs_facility_payment": 170,
+          "mpfs_nonfacility_payment": 311,
+          "apc": null,
+          "opps_payment": 0,
+          "asc_payment": 0,
+          "notes": "Add-on code for computer-assisted, image-guided navigation. Report with primary bronchoscopy procedure."
+        },
         "31628": {
           "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
           "work_rvu": 3.55,
@@ -172,6 +184,39 @@
           "apc": "5155",
           "opps_payment": 6922,
           "asc_payment": 2426
+        },
+        "31640": {
+          "description": "Bronchoscopy; with excision of tumor",
+          "work_rvu": 5.19,
+          "total_facility_rvu": 7.61,
+          "total_nonfacility_rvu": null,
+          "mpfs_facility_payment": 246,
+          "mpfs_nonfacility_payment": null,
+          "apc": "5155",
+          "opps_payment": 6922,
+          "asc_payment": 2426
+        },
+        "31641": {
+          "description": "Bronchoscopy; with destruction of tumor or relief of stenosis",
+          "work_rvu": 4.71,
+          "total_facility_rvu": 6.95,
+          "total_nonfacility_rvu": null,
+          "mpfs_facility_payment": 225,
+          "mpfs_nonfacility_payment": null,
+          "apc": "5155",
+          "opps_payment": 6922,
+          "asc_payment": 2426
+        },
+        "31645": {
+          "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+          "work_rvu": 2.83,
+          "total_facility_rvu": 4.09,
+          "total_nonfacility_rvu": null,
+          "mpfs_facility_payment": 132,
+          "mpfs_nonfacility_payment": null,
+          "apc": "5153",
+          "opps_payment": 1724,
+          "asc_payment": 792
         },
         "31652": {
           "description": "Bronchoscopy; with EBUS sampling, 1–2 nodal stations",
@@ -336,7 +381,12 @@
     "32561": { "work": 1.39, "pe": null, "mp": null },
     "+32562": { "work": 1.24, "pe": null, "mp": null },
     "32601": { "work": 5.50, "pe": null, "mp": null },
+    "32602": { "work": 6.84, "pe": null, "mp": null },
     "32604": { "work": 8.77, "pe": null, "mp": null },
+    "32606": { "work": 8.39, "pe": null, "mp": null },
+    "32607": { "work": 5.50, "pe": null, "mp": null },
+    "32608": { "work": 6.84, "pe": null, "mp": null },
+    "32609": { "work": 4.58, "pe": null, "mp": null },
     "99151": { "work": 0.50, "pe": 0.18, "mp": 0.04 },
     "99152": { "work": 0.25, "pe": 0.08, "mp": 0.04 },
     "+99153": { "work": 0.00, "pe": 0.33, "mp": 0.02 },
@@ -354,48 +404,68 @@
   },
   "code_lists": {
     "bronchoscopy_diagnostic": [
-      "31622",
-      "31623",
+      "31622"
+    ],
+    "bronchoscopy_bal": [
       "31624"
+    ],
+    "bronchoscopy_brush": [
+      "31623"
     ],
     "bronchoscopy_biopsy_endobronchial": [
       "31625"
     ],
-    "bronchoscopy_biopsy_parenchymal": [
-      "31628",
-      "+31632"
-    ],
+  "bronchoscopy_biopsy_parenchymal": [
+    "31628"
+  ],
+  "bronchoscopy_biopsy_parenchymal_additional": [
+    "+31632"
+  ],
     "bronchoscopy_tbna": [
-      "31629",
+      "31629"
+    ],
+    "bronchoscopy_tbna_additional_lobe": [
       "+31633"
     ],
     "bronchoscopy_navigation": [
       "+31627"
     ],
     "bronchoscopy_ebus_linear": [
-      "31652",
-      "31653",
-      "+31654"
+      "31652"
     ],
-    "bronchoscopy_ebus_radial": [
-      "+31654"
-    ],
-    "bronchoscopy_therapeutic_airway_tumor": [
-      "31640",
-      "31641",
-      "31645",
-      "31646"
-    ],
-    "bronchoscopy_therapeutic_stent": [
-      "31631",
-      "31636",
-      "+31637",
-      "31638"
-    ],
-    "bronchoscopy_therapeutic_other": [
-      "31630",
-      "31635"
-    ],
+  "bronchoscopy_ebus_radial": [
+    "+31654"
+  ],
+  "bronchoscopy_ebus_linear_additional": [
+    "+31653"
+  ],
+  "bronchoscopy_therapeutic_airway_tumor": [
+    "31640",
+    "31641",
+    "31645",
+    "31646"
+  ],
+  "bronchoscopy_airway_stenosis": [
+    "31641"
+  ],
+  "bronchoscopy_airway_dilation": [
+    "31630"
+  ],
+  "bronchoscopy_therapeutic_stent": [
+    "31631",
+    "31636",
+    "+31637",
+    "31638"
+  ],
+  "bronchoscopy_therapeutic_other": [
+    "31635"
+  ],
+  "bronchoscopy_therapeutic_aspiration": [
+    "31645"
+  ],
+  "bronchoscopy_foreign_body": [
+    "31635"
+  ],
     "bronchoscopic_blvr_chartis_valves": [
       "31634",
       "31647",
@@ -425,19 +495,38 @@
       "32552",
       "49423"
     ],
-    "pleural_intrapleural_treatment": [
-      "32560",
-      "32561",
-      "+32562"
-    ],
-    "thoracoscopy_diagnostic_biopsy": [
-      "32601",
-      "32604",
-      "32606",
-      "32607",
-      "32608",
-      "32609"
-    ],
+  "pleural_intrapleural_treatment": [
+    "32560",
+    "32561",
+    "+32562"
+  ],
+  "pleural_pleurodesis": [
+    "32560"
+  ],
+  "thoracoscopy_diagnostic_biopsy": [
+    "32601",
+    "32602",
+    "32604",
+    "32606",
+    "32607",
+    "32608",
+    "32609"
+  ],
+  "thoracoscopy_diagnostic_only": [
+    "32601"
+  ],
+  "thoracoscopy_pleural_biopsy": [
+    "32609"
+  ],
+  "thoracoscopy_pericardial_biopsy": [
+    "32604"
+  ],
+  "thoracoscopy_mediastinal_biopsy": [
+    "32606"
+  ],
+  "thoracoscopy_lung_biopsy": [
+    "32607"
+  ],
     "thoracoscopy_surgical_pleurodesis_decortication": [
       "32650",
       "32651",
@@ -496,6 +585,9 @@
       "99283",
       "99284",
       "99285"
+    ],
+    "pdt_endobronchial": [
+      "96570"
     ]
   },
   "hcpcs": {
@@ -527,6 +619,7 @@
     "+31627",
     "+31632",
     "+31633",
+    "+31653",
     "+31637",
     "+31649",
     "+31651",
@@ -728,7 +821,63 @@
     "navigation_terms": [
       "navigation bronchoscopy",
       "emn guidance",
-      "computer-assisted navigation"
+      "computer-assisted navigation",
+      "ion",
+      "robotic bronchoscopy",
+      "robotic navigation",
+      "shape-sensing",
+      "shape sensing",
+      "enb",
+      "emn bronchoscopy",
+      "emn navigation",
+      "emn-guided",
+      "emn guided",
+      "electromagnetic navigation",
+      "superdimension",
+      "spin thoracic navigation"
+    ],
+    "navigation_platform_terms": [
+      "ion",
+      "robotic bronchoscopy",
+      "robotic navigation",
+      "emn",
+      "emn bronchoscopy",
+      "emn navigation",
+      "emn-guided",
+      "emn guided",
+      "superdimension",
+      "super-d",
+      "super d",
+      "spin thoracic navigation",
+      "shape-sensing",
+      "shape sensing"
+    ],
+    "navigation_concept_terms": [
+      "navigation bronchoscopy",
+      "navigational bronchoscopy",
+      "navigational",
+      "robotic bronchoscopy",
+      "ion robotic",
+      "ion robotic bronchoscopy",
+      "emn-guided bronchoscopy",
+      "emn guided bronchoscopy",
+      "emn-guided",
+      "emn guided",
+      "virtual pathway",
+      "pathway planned",
+      "pathway generation",
+      "planning",
+      "registration",
+      "registered",
+      "ct-based",
+      "ct based",
+      "ct to body",
+      "shape-sensing",
+      "shape sensing",
+      "full registration",
+      "pathway confirmed",
+      "pathway completed",
+      "navigation used"
     ],
     "navigation_initiated": [
       "navigation successfully initiated",
@@ -740,11 +889,16 @@
       "navigation planned",
       "navigation guidance planned"
     ],
-    "radial_terms": [
-      "radial ebus",
-      "radial probe",
-      "miniprobe"
-    ],
+  "radial_terms": [
+    "radial ebus",
+    "radial probe",
+    "miniprobe",
+    "rebus",
+    "peripheral ebus",
+    "radial ultrasound",
+    "radial ebus probe",
+    "rebus-guided"
+  ],
     "peripheral_terms": [
       "peripheral lesion",
       "peripheral nodule",
@@ -754,19 +908,75 @@
       "concentric view",
       "miniprobe"
     ],
+    "ebus_terms": [
+      "ebus",
+      "endobronchial ultrasound"
+    ],
+    "linear_ebus_terms": [
+      "linear ebus",
+      "systematic nodal staging",
+      "mediastinal staging"
+    ],
+    "mediastinal_station_terms": [
+      "station 4r",
+      "station 4l",
+      "station 7",
+      "station 11r",
+      "station 11l",
+      "station 10r",
+      "station 10l",
+      "mediastinal",
+      "hilar",
+      "subcarinal"
+    ],
     "tblb_terms": [
       "transbronchial lung biopsy",
       "transbronchial lung biopsies",
       "tblb",
       "cryobiopsy",
       "peripheral needle forceps",
-      "peripheral biopsy"
+      "transbronchial biopsy",
+      "transbronchial biopsies",
+      "lung biopsy",
+      "forceps biopsy",
+      "forceps biopsies",
+      "lung biopsies"
     ],
     "tbna_terms": [
       "tbna",
       "transbronchial needle aspiration",
       "transbronchial needle aspirations",
-      "needle aspiration"
+      "needle aspiration",
+      "needle aspiration biopsy"
+    ],
+    "additional_lobe_terms": [
+      "target 2",
+      "second target",
+      "second lesion",
+      "additional lobe",
+      "additional nodule",
+      "different lobe",
+      "another lobe"
+    ],
+    "endobronchial_biopsy_terms": [
+      "forceps biopsy",
+      "forceps biopsies",
+      "endobronchial biopsy",
+      "biopsies from the abnormal tissue"
+    ],
+    "airway_stenosis_terms": [
+      "electrocautery tissue debulking",
+      "electrocautery knife",
+      "relief of stenosis",
+      "scar tissue",
+      "fibrinous scar",
+      "stenosis",
+      "tumor debulking",
+      "ablation",
+      "argon plasma",
+      "laser therapy",
+      "radiofrequency ablation",
+      "recanalization"
     ],
     "blvr_terms": [
       "blvr",
@@ -797,12 +1007,36 @@
     "stent_terms": [
       "stent",
       "stenting",
-      "bronchial stent"
+      "bronchial stent",
+      "metallic stent",
+      "silicone stent",
+      "dumon stent",
+      "y-stent",
+      "y stent",
+      "sems"
+    ],
+    "stent_action_terms": [
+      "stent placed",
+      "stent placement",
+      "placement of a stent",
+      "placement of stent",
+      "stent implantation",
+      "stent deployed",
+      "stent deployment",
+      "stent inserted",
+      "stent insertion",
+      "stent positioned",
+      "stent placement performed",
+      "stent deployed successfully",
+      "stent deployed in"
     ],
     "dilation_terms": [
       "dilation",
       "dilatation",
-      "balloon"
+      "balloon",
+      "serial balloon",
+      "cre balloon",
+      "fogarty balloon"
     ],
     "aspiration_terms": [
       "therapeutic aspiration",
@@ -810,12 +1044,30 @@
       "secretion clearance",
       "airway toilet",
       "toilet bronchoscopy",
-      "therapeutic bronchoscopy for mucus plugging"
+      "therapeutic bronchoscopy for mucus plugging",
+      "suctioning of secretions",
+      "airway suction",
+      "suctioning",
+      "hemoptysis",
+      "bleeding control"
     ],
     "aspiration_repeat_terms": [
       "repeat therapeutic aspiration",
       "earlier this admission",
       "same hospitalization"
+    ],
+    "foreign_body_terms": [
+      "foreign body removal",
+      "retrieval of valve",
+      "retrieval of valves",
+      "valve retrieval",
+      "valve removal",
+      "removed valve",
+      "removed valves",
+      "valves removed",
+      "retrieval of zephyr",
+      "retrieved valve",
+      "object removal"
     ],
     "valve_terms": [
       "valve",
@@ -824,7 +1076,17 @@
     ],
     "bal_terms": [
       "bronchoalveolar lavage",
-      "bal"
+      "bal",
+      "lavage",
+      "instilled",
+      "aliquots",
+      "suction returned"
+    ],
+    "brush_terms": [
+      "bronchial brush",
+      "cytology brush",
+      "brushings",
+      "brush samples"
     ],
     "thoracentesis_terms": [
       "thoracentesis",
@@ -928,7 +1190,8 @@
       "talc pleurodesis",
       "talc insufflation",
       "chemical pleurodesis",
-      "mechanical pleurodesis"
+      "mechanical pleurodesis",
+      "talc slurry"
     ],
     "em_visit_terms": [
       "clinic visit",
@@ -937,6 +1200,12 @@
       "follow-up visit",
       "evaluation and management",
       "e/m service"
+    ],
+    "pdt_terms": [
+      "photodynamic therapy",
+      "pdt",
+      "photofrin",
+      "light application"
     ],
     "post_procedure_cxr_terms": [
       "post-procedure chest x-ray",
@@ -966,6 +1235,10 @@
     "LLL": [
       "left lower lobe",
       "lll"
+    ],
+    "LINGULA": [
+      "lingula",
+      "lingular"
     ]
   },
   "stations": {
@@ -1219,6 +1492,28 @@
       ],
       "description": "Diagnostic bronchoscopy (31622) is bundled when more extensive therapeutic or biopsy bronchoscopy procedures from the same family are performed by the same physician on the same date of service."
     },
+    "therapeutic_airway_bundles_diagnostic": {
+      "dominant_codes": [
+        "31641"
+      ],
+      "drop_codes": [
+        "31622",
+        "31623",
+        "31624"
+      ],
+      "description": "Destruction/ablation for airway stenosis (31641) subsumes diagnostic bronchoscopy, brush, and BAL performed in the same session."
+    },
+    "tblbx_bundles_tbna_brush": {
+      "dominant_codes": [
+        "31628"
+      ],
+      "drop_codes": [
+        "31623",
+        "31625",
+        "31629"
+      ],
+      "description": "When parenchymal transbronchial lung biopsy (31628) is performed, separate brush or TBNA from the same lobe is not reported."
+    },
     "stent_dilation_same_segment": {
       "stent_codes": [
         "31631",
@@ -1227,6 +1522,10 @@
       ],
       "dilation_codes": [
         "31630"
+      ],
+      "ablation_codes": [
+        "31640",
+        "31641"
       ],
       "description": "Dilation of the same tracheal/bronchial segment as stent placement is bundled into the stent code. Use -59 only if clearly distinct segments are dilated."
     },
@@ -1245,6 +1544,35 @@
         "+31654"
       ],
       "description": "Avoid double-counting linear and radial EBUS for the same nodal station set or peripheral lesion unless clearly distinct and separately documented sites are sampled."
+    },
+    "pleurodesis_with_thoracoscopy": {
+      "pleurodesis_codes": [
+        "32560"
+      ],
+      "thoracoscopy_codes": [
+        "32601",
+        "32602",
+        "32604",
+        "32606",
+        "32607",
+        "32608",
+        "32609",
+        "32650",
+        "32651",
+        "32652",
+        "32653",
+        "32654"
+      ],
+      "description": "Chemical pleurodesis performed during the same thoracoscopic procedure is typically included and not separately reported."
+    },
+    "pdt_bundles_diagnostic_bronch": {
+      "pdt_codes": [
+        "96570"
+      ],
+      "drop_codes": [
+        "31622"
+      ],
+      "description": "Diagnostic bronchoscopy is inherent when bronchoscopy is performed solely to deliver photodynamic therapy light."
     },
     "chartis_bundling": {
       "chartis_code": "31634",

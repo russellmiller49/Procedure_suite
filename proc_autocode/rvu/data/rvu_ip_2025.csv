@@ -37,7 +37,11 @@ HCPCS,MOD,DESCRIPTION,STATUS CODE,WORK RVU,NON-FAC PE RVU,FACILITY PE RVU,MP RVU
 32560,,Generated Description,A,1.54,0.00,0.00,0.00,1.54,1.54,0,000,2,0,0,0,0,32.35
 32561,,Generated Description,A,1.39,0.00,0.00,0.00,1.39,1.39,0,000,2,0,0,0,0,32.35
 32601,,"Diagnostic thoracoscopy, unilateral",A,5.5,0.00,0.00,0.00,5.50,5.50,0,000,2,0,0,0,0,32.35
-32604,,Diagnostic thoracoscopy with biopsy(ies),A,8.77,0.00,0.00,0.00,8.77,8.77,0,000,2,0,0,0,0,32.35
+32604,,Thoracoscopy; pericardial sac with biopsy,A,8.77,0.00,0.00,0.00,8.77,8.77,0,000,2,0,0,0,0,32.35
+32606,,Thoracoscopy; mediastinal space with biopsy,A,8.39,0.00,0.00,0.00,8.39,8.39,0,000,2,0,0,0,0,32.35
+32607,,Thoracoscopy; lung biopsy infiltrate(s),A,5.50,0.00,0.00,0.00,5.50,5.50,0,000,2,0,0,0,0,32.35
+32608,,Thoracoscopy; lung biopsy nodule(s)/mass(es),A,6.84,0.00,0.00,0.00,6.84,6.84,0,000,2,0,0,0,0,32.35
+32609,,Thoracoscopy; with biopsy(ies) of pleura,A,4.58,0.00,0.00,0.00,4.58,4.58,0,000,2,0,0,0,0,32.35
 99151,,Generated Description,A,0.5,0.18,0.18,0.04,0.72,0.72,0,000,2,0,0,0,0,32.35
 99152,,Generated Description,A,2.0,2.5,2.5,0.1,4.6,4.6,0,000,2,0,0,0,0,32.35
 99155,,Generated Description,A,1.9,0.34,0.34,0.2,2.44,2.44,0,000,2,0,0,0,0,32.35

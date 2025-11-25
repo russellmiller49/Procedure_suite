@@ -282,13 +282,15 @@ class CMSRVUParser:
         
         if not record.conversion_factor:
             return None
-        
+
         # Select PE RVU based on setting
         pe_rvu = record.fac_pe_rvu if setting == 'facility' else record.non_fac_pe_rvu
-        
-        if not all([record.work_rvu, pe_rvu, record.mp_rvu]):
+
+        # Check that required RVU values are present (None check, not falsey check)
+        # PE and MP RVUs can legitimately be 0.00 for facility-based procedures
+        if record.work_rvu is None or pe_rvu is None or record.mp_rvu is None:
             return None
-        
+
         # Calculate adjusted RVUs
         adj_work = record.work_rvu * work_gpci
         adj_pe = pe_rvu * pe_gpci

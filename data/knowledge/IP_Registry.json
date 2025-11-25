@@ -206,6 +206,11 @@
           "station": { "type": ["string", "null"] },
           "size_mm": { "type": ["number", "null"] },
           "passes": { "type": ["integer", "null"] },
+          "shape": { "type": ["string", "null"], "enum": ["oval", "round", "irregular"], "description": "Node shape on EBUS; map oval/elliptical, round/spherical, or irregular/lobulated. Null if not described." },
+          "margin": { "type": ["string", "null"], "enum": ["distinct", "indistinct", "irregular"], "description": "Node margin quality: distinct/well-defined, indistinct/ill-defined, or irregular/spiculated. Null if not described." },
+          "echogenicity": { "type": ["string", "null"], "enum": ["homogeneous", "heterogeneous"], "description": "Echo pattern if described; null if not mentioned." },
+          "chs_present": { "type": ["boolean", "null"], "description": "Central hilar structure present (true), absent (false), or null if not mentioned." },
+          "appearance_category": { "type": ["string", "null"], "enum": ["benign", "malignant", "indeterminate"], "description": "Overall morphology impression (benign/malignant/indeterminate) based on EBUS features only. Null if not described." },
           "rose_result": { "type": ["string", "null"] }
         }
       },

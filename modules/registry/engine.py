@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Dict
+from typing import Any, Dict, Set
 
 from modules.common.sectionizer import SectionizerService
 from modules.common.spans import Span
@@ -11,6 +11,535 @@ from modules.registry.extractors.llm_detailed import LLMDetailedExtractor
 from modules.registry.postprocess import POSTPROCESSORS
 
 from .schema import RegistryRecord
+
+
+# Procedure family tags used to gate schema fields and validation rules
+PROCEDURE_FAMILIES = {
+    "EBUS",           # Linear endobronchial ultrasound
+    "NAVIGATION",     # Electromagnetic or robotic navigation bronchoscopy
+    "CAO",            # Central airway obstruction / debulking
+    "PLEURAL",        # Thoracentesis, chest tube, pleuroscopy, pleurodesis
+    "BLVR",           # Bronchoscopic lung volume reduction (valves)
+    "STENT",          # Airway stent placement/removal
+    "BIOPSY",         # Tissue sampling (transbronchial, endobronchial)
+    "BAL",            # Bronchoalveolar lavage
+    "CRYO_BIOPSY",    # Transbronchial cryobiopsy
+    "THERMOPLASTY",   # Bronchial thermoplasty
+    "FOREIGN_BODY",   # Foreign body removal
+    "HEMOPTYSIS",     # Bronchoscopy for hemoptysis management
+    "DIAGNOSTIC",     # Diagnostic bronchoscopy (inspection only)
+    "THORACOSCOPY",   # Medical thoracoscopy / pleuroscopy
+}
+
+# Field applicability by procedure family
+# Fields not listed here are considered universal (e.g., patient_mrn, sedation_type)
+FIELD_APPLICABLE_TAGS: Dict[str, Set[str]] = {
+    # EBUS-specific fields
+    "ebus_scope_brand": {"EBUS"},
+    "ebus_stations_sampled": {"EBUS"},
+    "ebus_stations_detail": {"EBUS"},
+    "ebus_needle_gauge": {"EBUS"},
+    "ebus_needle_type": {"EBUS"},
+    "ebus_systematic_staging": {"EBUS"},
+    "ebus_rose_available": {"EBUS"},
+    "ebus_rose_result": {"EBUS"},
+    "ebus_intranodal_forceps_used": {"EBUS"},
+    "ebus_photodocumentation_complete": {"EBUS"},
+    "ebus_elastography_used": {"EBUS"},
+    "ebus_elastography_pattern": {"EBUS"},
+    "linear_ebus_stations": {"EBUS"},
+
+    # Navigation-specific fields
+    "nav_platform": {"NAVIGATION"},
+    "nav_target_location": {"NAVIGATION"},
+    "nav_imaging_verification": {"NAVIGATION"},
+    "nav_rebus_used": {"NAVIGATION"},
+    "nav_cone_beam_ct": {"NAVIGATION"},
+    "nav_divergence": {"NAVIGATION"},
+    "nav_target_size": {"NAVIGATION"},
+
+    # CAO-specific fields
+    "cao_location": {"CAO"},
+    "cao_primary_modality": {"CAO"},
+    "cao_tumor_location": {"CAO"},
+    "cao_obstruction_pre_pct": {"CAO"},
+    "cao_obstruction_post_pct": {"CAO"},
+    "cao_interventions": {"CAO"},  # Multi-site CAO intervention array
+
+    # STENT-specific fields
+    "stent_type": {"STENT", "CAO"},
+    "stent_location": {"STENT", "CAO"},
+    "stent_size": {"STENT", "CAO"},
+    "stent_action": {"STENT", "CAO"},
+
+    # Pleural-specific fields
+    "pleural_procedure_type": {"PLEURAL", "THORACOSCOPY"},
+    "pleural_side": {"PLEURAL", "THORACOSCOPY"},
+    "pleural_fluid_volume": {"PLEURAL", "THORACOSCOPY"},
+    "pleural_volume_drained_ml": {"PLEURAL", "THORACOSCOPY"},
+    "pleural_fluid_appearance": {"PLEURAL", "THORACOSCOPY"},
+    "pleural_guidance": {"PLEURAL"},
+    "pleural_intercostal_space": {"PLEURAL", "THORACOSCOPY"},
+    "pleural_catheter_type": {"PLEURAL"},
+    "pleural_pleurodesis_agent": {"PLEURAL", "THORACOSCOPY"},
+    "pleural_opening_pressure_measured": {"PLEURAL", "THORACOSCOPY"},
+    "pleural_opening_pressure_cmh2o": {"PLEURAL", "THORACOSCOPY"},
+    "pleural_thoracoscopy_findings": {"PLEURAL", "THORACOSCOPY"},
+
+    # BLVR-specific fields
+    "blvr_valve_type": {"BLVR"},
+    "blvr_target_lobe": {"BLVR"},
+    "blvr_valve_count": {"BLVR"},
+    "blvr_chartis_result": {"BLVR"},
+
+    # Thermoplasty-specific fields
+    "thermoplasty_activations": {"THERMOPLASTY"},
+    "thermoplasty_lobes_treated": {"THERMOPLASTY"},
+
+    # BAL-specific fields
+    "bal_location": {"BAL"},
+    "bal_volume_instilled": {"BAL"},
+    "bal_volume_returned": {"BAL"},
+
+    # Cryobiopsy-specific fields
+    "cryo_probe_size": {"CRYO_BIOPSY"},
+    "cryo_freeze_time": {"CRYO_BIOPSY"},
+    "cryo_specimens_count": {"CRYO_BIOPSY"},
+}
+
+
+def filter_inapplicable_fields(data: Dict[str, Any], families: Set[str]) -> Dict[str, Any]:
+    """Null out fields that don't apply to detected procedure families.
+
+    This prevents phantom data from being extracted for procedures not performed.
+    """
+    filtered = dict(data)
+    for field, applicable_tags in FIELD_APPLICABLE_TAGS.items():
+        if field in filtered and not applicable_tags.intersection(families):
+            # Field doesn't apply to any detected procedure family - null it out
+            filtered[field] = None
+    return filtered
+
+
+def validate_evidence_spans(
+    note_text: str,
+    evidence: Dict[str, list[Any]],
+    similarity_threshold: float = 0.7,
+) -> Dict[str, list[Any]]:
+    """Filter out hallucinated evidence spans that don't match the source text.
+
+    LLMs sometimes produce evidence spans with incorrect start/end offsets or
+    text that doesn't actually appear in the source document. This function
+    validates each span and removes any that fail validation.
+
+    Args:
+        note_text: The original procedure note text.
+        evidence: Dict mapping field names to lists of Span objects.
+        similarity_threshold: Minimum ratio of matching characters for fuzzy match.
+
+    Returns:
+        Filtered evidence dict with only validated spans.
+    """
+    from difflib import SequenceMatcher
+
+    validated: Dict[str, list[Any]] = {}
+
+    for field, spans in evidence.items():
+        valid_spans = []
+        for span in spans:
+            if not hasattr(span, "text") or not hasattr(span, "start") or not hasattr(span, "end"):
+                continue
+
+            span_text = span.text
+            start = span.start
+            end = span.end
+
+            # Skip if offsets are clearly invalid
+            if start is None or end is None:
+                continue
+            if start < 0 or end > len(note_text) or start >= end:
+                continue
+
+            # Extract actual text at the given offsets
+            actual_text = note_text[start:end]
+
+            # Check for exact match first
+            if span_text == actual_text:
+                valid_spans.append(span)
+                continue
+
+            # Fuzzy match - allow minor OCR/formatting differences
+            if span_text and actual_text:
+                ratio = SequenceMatcher(None, span_text.lower(), actual_text.lower()).ratio()
+                if ratio >= similarity_threshold:
+                    valid_spans.append(span)
+                    continue
+
+            # Check if span text appears anywhere in the note (offset might be wrong but text is real)
+            if span_text and span_text in note_text:
+                # Fix the offsets to where it actually appears
+                actual_start = note_text.find(span_text)
+                if actual_start >= 0:
+                    span.start = actual_start
+                    span.end = actual_start + len(span_text)
+                    span.text = note_text[span.start:span.end]
+                    valid_spans.append(span)
+                    continue
+
+        if valid_spans:
+            deduped: list[Any] = []
+            seen_keys: set[tuple[int, int, str]] = set()
+            for span in valid_spans:
+                key = (span.start, span.end, span.text)
+                if key in seen_keys:
+                    continue
+                seen_keys.add(key)
+                # Enforce exact text match after any corrections
+                try:
+                    span.text = note_text[span.start:span.end]
+                except Exception:
+                    pass
+                deduped.append(span)
+            if deduped:
+                validated[field] = deduped
+
+    return validated
+
+
+def classify_procedure_families(note_text: str) -> Set[str]:
+    """Return tags describing the procedures actually performed.
+
+    This function analyzes the procedure note to identify which procedure families
+    were actually performed (not just indicated or mentioned in history).
+
+    The classification focuses on:
+    - Procedural action verbs (performed, placed, obtained, sampled)
+    - Specific equipment/technique mentions in procedure context
+    - Explicit procedure names in PROCEDURE or TECHNIQUE sections
+
+    Returns:
+        Set of procedure family tags from PROCEDURE_FAMILIES.
+    """
+    families: Set[str] = set()
+    lowered = note_text.lower()
+
+    # Extract relevant sections for more accurate detection
+    # Focus on PROCEDURE, TECHNIQUE, DESCRIPTION sections
+    procedure_section_text = _extract_procedure_sections(note_text)
+    proc_lowered = procedure_section_text.lower() if procedure_section_text else lowered
+
+    # --- EBUS Detection ---
+    # Linear EBUS (not radial) with actual sampling
+    # Must be careful to exclude mentions of stations in non-EBUS context (e.g., CT findings)
+    ebus_indicators = [
+        r"\bebus\b.*(?:tbna|sampl|aspirat|needle|biops)",
+        r"(?:tbna|sampl|aspirat).*\bebus\b",
+        r"linear\s+(?:ebus|endobronchial ultrasound)",
+        # Station sampling - require close proximity and exclude negatives
+        r"station\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l).{0,30}(?:sampl|pass|needle|aspirat)",
+        r"(?:sampl|pass|needle|aspirat).{0,30}station\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l)",
+        r"endobronchial ultrasound.{0,50}(?:guided|needle|aspirat|biops)",
+    ]
+    # Exclude EBUS if there's explicit negative context about procedure not being done
+    ebus_exclusion_indicators = [
+        r"(?:not|no|without)\s+(?:ebus|tbna)\s+(?:performed|done|planned)",
+        r"ebus\s+(?:was\s+)?not\s+(?:performed|done)",
+        r"no\s+ebus\s+(?:was\s+)?performed",
+        r"tbna\s+(?:was\s+)?not\s+(?:performed|done|obtained)",
+    ]
+    ebus_match = any(re.search(pat, proc_lowered) for pat in ebus_indicators)
+    ebus_excluded = any(re.search(pat, proc_lowered) for pat in ebus_exclusion_indicators)
+
+    # Additional check: if "station X" is mentioned, verify it's not in negative context
+    if ebus_match and not ebus_excluded:
+        # Check if station mentions are actually sampled (not just described)
+        station_pattern = r"station\s*(2r|2l|4r|4l|7|10r|10l|11r|11l)"
+        station_matches = list(re.finditer(station_pattern, proc_lowered))
+        if station_matches:
+            # For each station mention, check surrounding context for negative phrases
+            all_stations_negative = True
+            for match in station_matches:
+                # Get surrounding context (100 chars around the match)
+                start = max(0, match.start() - 50)
+                end = min(len(proc_lowered), match.end() + 80)
+                context = proc_lowered[start:end]
+                # Check for actual sampling in this context
+                if re.search(r"(?:sampl|pass|needle|aspirat|biops)", context):
+                    # Also check it's not negative
+                    if not re.search(r"(?:not|no|wasn't|were\s+not|was\s+not)\s+sampl", context):
+                        all_stations_negative = False
+                        break
+            if all_stations_negative:
+                ebus_match = False
+
+    if ebus_match and not ebus_excluded:
+        families.add("EBUS")
+
+    # --- NAVIGATION Detection ---
+    nav_indicators = [
+        r"(?:electromagnetic|emn)\s+navigation",
+        r"\bion\b.*(?:catheter|target|nodule|bronchoscop)",
+        r"\bmonarch\b.*(?:robot|bronchoscop|navigat)",
+        r"\bauris\b",
+        r"navigat(?:ed|ion)\s+(?:bronchoscopy|to|biopsy)",
+        r"superDimension",
+        r"illumisite",
+        r"veran",
+        r"spin(?:drive)?.*(?:navigat|target)",
+    ]
+    if any(re.search(pat, proc_lowered, re.IGNORECASE) for pat in nav_indicators):
+        families.add("NAVIGATION")
+
+    # --- CAO (Central Airway Obstruction) Detection ---
+    cao_indicators = [
+        r"debulk",
+        r"tumor\s+(?:resect|ablat|destruct|remov|treat)",
+        r"(?:recanaliz|recanalis)",
+        r"central\s+airway\s+obstruct",
+        r"airway\s+(?:obstruct|stenosis).*(?:treat|interven)",
+        r"(?:apc|argon\s+plasma).*(?:ablat|coagul|tumor)",
+        r"(?:electrocautery|cautery).*(?:tumor|lesion|debulk)",
+        r"cryotherapy.*(?:tumor|ablat|destruct)",
+        r"laser.*(?:ablat|resect|tumor)",
+        r"mechanical.*(?:debulk|core.?out|resect)",
+        r"endobronchial\s+(?:tumor|mass|lesion).*(?:resect|remov|debulk|treat)",
+        # Therapeutic modalities applied to endobronchial tumors
+        r"endobronchial\s+(?:tumor|mass|lesion).{0,50}(?:apc|cryotherapy|cryo|cautery|laser)",
+        r"(?:apc|cryotherapy|cryo|cautery|laser).{0,50}endobronchial\s+(?:tumor|mass|lesion)",
+        # Treatment with interventional modalities
+        r"(?:tumor|mass|lesion).{0,30}(?:treated|ablated).{0,30}(?:apc|cryotherapy|cryo|cautery|laser)",
+    ]
+    if any(re.search(pat, proc_lowered) for pat in cao_indicators):
+        families.add("CAO")
+
+    # --- STENT Detection ---
+    # Must be an actual stent procedure, not just history/mention
+    stent_placement_indicators = [
+        r"stent\s+(?:plac|deploy|insert)",
+        r"(?:plac|deploy|insert).*stent",
+        r"(?:silicone|metallic|hybrid|dumon|y-stent).*(?:plac|deploy|insert)",
+        r"stent.*(?:remov|retriev|exchang)(?:ed|ing)",
+        r"stent\s+was\s+(?:plac|deploy|insert)",
+    ]
+    # Exclude history-only mentions
+    stent_history_indicators = [
+        r"(?:history|prior|previous)\s+(?:of\s+)?(?:.*\s+)?stent",
+        r"stent\s+(?:removed|was\s+removed)\s+\d+",  # "stent removed 2 years ago"
+        r"old\s+stent",
+        r"prior\s+stent",
+    ]
+    has_stent_procedure = any(re.search(pat, proc_lowered) for pat in stent_placement_indicators)
+    is_history_only = any(re.search(pat, proc_lowered) for pat in stent_history_indicators)
+
+    # Only add STENT if there's a procedure AND it's not history-only (unless there's also a new procedure)
+    if has_stent_procedure and not is_history_only:
+        families.add("STENT")
+    elif has_stent_procedure and is_history_only:
+        # Check if there's explicit new stent action beyond the history mention
+        new_action_patterns = [
+            r"(?:today|now|this\s+procedure).*stent",
+            r"stent.*(?:today|now|performed|deployed|placed)\b",
+            r"new\s+stent",
+        ]
+        if any(re.search(pat, proc_lowered) for pat in new_action_patterns):
+            families.add("STENT")
+
+    # --- PLEURAL Detection ---
+    pleural_indicators = [
+        r"thoracentesis",
+        r"pleural\s+(?:tap|drain|fluid\s+remov)",
+        r"pleural\s+effusion.*(?:drain|remov|tap)",
+        r"(?:drain|remov|tap).*pleural\s+effusion",
+        r"chest\s+tube\s+(?:plac|insert|remov|exchange)",
+        r"(?:plac|insert|remov|exchange).*chest\s+tube",
+        r"pigtail\s+(?:catheter|drain)",
+        r"tunneled\s+(?:pleural\s+)?catheter",
+        r"indwelling\s+pleural\s+catheter",
+        r"(pleurx|aspira|ipc)",
+        r"catheter\s+(?:exchange|replac)",
+        r"ultrasound.{0,20}guid.{0,30}(?:thoracentesis|pleural)",
+    ]
+    if any(re.search(pat, proc_lowered) for pat in pleural_indicators):
+        families.add("PLEURAL")
+
+    # --- THORACOSCOPY Detection ---
+    thoracoscopy_indicators = [
+        r"(?:medical\s+)?thoracoscopy",
+        r"pleuroscopy",
+        r"(?:vats|video.?assisted).*(?:biops|pleurodesis|inspect)",
+        r"thoracoscop.*(?:biops|pleurodesis|inspect)",
+        r"talc\s+(?:poudrage|pleurodesis|insufflat)",
+        r"chemical\s+pleurodesis",
+    ]
+    if any(re.search(pat, proc_lowered) for pat in thoracoscopy_indicators):
+        families.add("THORACOSCOPY")
+
+    # --- BLVR Detection ---
+    # BLVR may have its own section (BLVR:) so check full note text too
+    blvr_indicators = [
+        r"(?:zephyr|spiration)\s+valve",
+        r"endobronchial\s+valve",
+        r"(?:ebv|valve)\s+(?:plac|deploy|insert)",
+        r"lung\s+volume\s+reduction",
+        r"chartis\s+(?:assess|measur|catheter)",
+    ]
+    if any(re.search(pat, proc_lowered) for pat in blvr_indicators):
+        families.add("BLVR")
+    elif any(re.search(pat, lowered) for pat in blvr_indicators):  # Check full note
+        families.add("BLVR")
+
+    # --- BAL Detection ---
+    bal_indicators = [
+        r"bronchoalveolar\s+lavage",
+        r"\bbal\b.*(?:perform|obtain|sent|collect)",
+        r"(?:perform|obtain).*\bbal\b",
+        r"lavage\s+(?:perform|sent|obtain|specimen)",
+    ]
+    if any(re.search(pat, proc_lowered) for pat in bal_indicators):
+        families.add("BAL")
+
+    # --- BIOPSY Detection (general transbronchial/endobronchial) ---
+    biopsy_indicators = [
+        r"transbronchial\s+(?:biops|forceps)",
+        r"endobronchial\s+biops",
+        r"(?:forceps|brush)\s+biops",
+        r"biops(?:y|ies)\s+(?:obtain|perform|taken|sent)",
+        r"tissue\s+sampl(?:e|ing|ed)",
+    ]
+    if any(re.search(pat, proc_lowered) for pat in biopsy_indicators):
+        families.add("BIOPSY")
+
+    # --- CRYO_BIOPSY Detection ---
+    cryo_biopsy_indicators = [
+        r"cryobiops",
+        r"transbronchial\s+cryo",
+        r"cryo\s*(?:probe)?.*(?:biops|sampl)",
+        r"(?:biops|sampl).*cryo\s*probe",
+    ]
+    if any(re.search(pat, proc_lowered) for pat in cryo_biopsy_indicators):
+        families.add("CRYO_BIOPSY")
+
+    # --- FOREIGN_BODY Detection ---
+    fb_indicators = [
+        r"foreign\s+body\s+(?:remov|retriev|extract)",
+        r"(?:remov|retriev|extract).*foreign\s+body",
+        r"aspirat(?:ed|ion)\s+(?:object|material).*(?:remov|retriev)",
+    ]
+    if any(re.search(pat, proc_lowered) for pat in fb_indicators):
+        families.add("FOREIGN_BODY")
+
+    # --- HEMOPTYSIS Detection ---
+    hemoptysis_indicators = [
+        r"hemoptysis.*(?:control|manag|treat|tamponade)",
+        r"(?:control|manag|treat).*hemoptysis",
+        r"balloon\s+tamponade",
+        r"(?:cold|iced)\s+saline.*hemostasis",
+        r"bleeding.*(?:control|cauteriz|coagulat)",
+    ]
+    if any(re.search(pat, proc_lowered) for pat in hemoptysis_indicators):
+        families.add("HEMOPTYSIS")
+
+    # --- THERMOPLASTY Detection ---
+    thermoplasty_indicators = [
+        r"bronchial\s+thermoplasty",
+        r"alair",
+        r"thermoplasty.*(?:treat|activat|session)",
+    ]
+    if any(re.search(pat, proc_lowered) for pat in thermoplasty_indicators):
+        families.add("THERMOPLASTY")
+
+    # --- DIAGNOSTIC Detection ---
+    # Only if no other interventional procedures detected
+    diagnostic_indicators = [
+        r"diagnostic\s+bronchoscopy",
+        r"inspection\s+only",
+        r"airway\s+(?:survey|inspection|exam)",
+        r"flexible\s+bronchoscopy.*(?:inspect|survey|exam)",
+    ]
+    if not families and any(re.search(pat, proc_lowered) for pat in diagnostic_indicators):
+        families.add("DIAGNOSTIC")
+
+    # If still empty but procedure note exists, at least mark as DIAGNOSTIC
+    if not families and _has_procedure_content(note_text):
+        families.add("DIAGNOSTIC")
+
+    return families
+
+
+def _extract_procedure_sections(note_text: str) -> str:
+    """Extract text from procedure-relevant sections for more accurate classification.
+
+    Includes both the header line and the section content.
+    """
+    relevant_headers = [
+        r"procedure[s]?",
+        r"technique",
+        r"description",
+        r"operative\s+note",
+        r"findings",
+        r"intervention",
+    ]
+
+    extracted_parts = []
+    lines = note_text.split("\n")
+    in_relevant_section = False
+    current_section_text = []
+
+    # Match header with optional content after colon (e.g., "PROCEDURE: Thoracentesis")
+    header_pattern = re.compile(
+        r"^\s*(" + "|".join(relevant_headers) + r")\s*[:]\s*(.*)?$",
+        re.IGNORECASE
+    )
+    # Match header-only lines (no content on same line)
+    header_only_pattern = re.compile(
+        r"^\s*(?:" + "|".join(relevant_headers) + r")\s*[:]*\s*$",
+        re.IGNORECASE
+    )
+    any_header_pattern = re.compile(r"^\s*[A-Z][A-Z\s]{2,30}:\s*$")
+
+    for line in lines:
+        header_match = header_pattern.match(line)
+        if header_match:
+            # Save previous section if any
+            if current_section_text:
+                extracted_parts.append("\n".join(current_section_text))
+            in_relevant_section = True
+            current_section_text = []
+            # Include the header line content (everything after the colon)
+            content_after_colon = header_match.group(2)
+            if content_after_colon and content_after_colon.strip():
+                current_section_text.append(content_after_colon.strip())
+        elif in_relevant_section and any_header_pattern.match(line):
+            # Hit a different section header
+            if current_section_text:
+                extracted_parts.append("\n".join(current_section_text))
+            in_relevant_section = False
+            current_section_text = []
+        elif in_relevant_section:
+            current_section_text.append(line)
+
+    # Don't forget last section
+    if current_section_text:
+        extracted_parts.append("\n".join(current_section_text))
+
+    return "\n\n".join(extracted_parts) if extracted_parts else note_text
+
+
+def _has_procedure_content(note_text: str) -> bool:
+    """Check if note has actual procedure content vs just being a consult note."""
+    procedural_verbs = [
+        r"performed",
+        r"inserted",
+        r"placed",
+        r"obtained",
+        r"biopsied",
+        r"sampled",
+        r"advanced",
+        r"visualized",
+        r"inspected",
+    ]
+    lowered = note_text.lower()
+    return any(re.search(verb, lowered) for verb in procedural_verbs)
 
 
 class RegistryEngine:
@@ -31,7 +560,17 @@ class RegistryEngine:
         sections = self.sectionizer.sectionize(note_text)
         evidence: Dict[str, list[Span]] = {}
         seed_data: Dict[str, Any] = {}
-        station_list, station_spans = self._extract_linear_station_spans(note_text)
+
+        # Classify procedure families FIRST - this gates downstream extraction
+        procedure_families = classify_procedure_families(note_text)
+        seed_data["procedure_families"] = list(procedure_families)
+
+        # Only extract EBUS station data if EBUS procedure family detected
+        # This prevents hallucinated station "7" in CAO/rigid bronchoscopy cases
+        station_list: list[str] = []
+        station_spans: list[Span] = []
+        if "EBUS" in procedure_families:
+            station_list, station_spans = self._extract_linear_station_spans(note_text)
 
         mrn_match = re.search(r"MRN:?\s*(\w+)", note_text, re.IGNORECASE)
         if mrn_match:
@@ -59,38 +598,48 @@ class RegistryEngine:
                 merged_data[field] = func(merged_data.get(field))
 
         # Apply heuristics for EBUS and new fields
-        self._apply_ebus_heuristics(merged_data, note_text)
-        if station_list and not merged_data.get("linear_ebus_stations"):
+        # Pass procedure_families to gate EBUS-specific extractions
+        self._apply_ebus_heuristics(merged_data, note_text, procedure_families)
+        self._apply_pleural_heuristics(merged_data, note_text, procedure_families)
+        if station_list and not merged_data.get("linear_ebus_stations") and "EBUS" in procedure_families:
             merged_data["linear_ebus_stations"] = station_list
+
+        lowered_note = note_text.lower()
 
         # Defaults based on cross-field context
         sedation_val = merged_data.get("sedation_type")
         airway_val = merged_data.get("airway_type")
-        if airway_val in (None, "", []) :
-            if sedation_val == "General":
+        if airway_val in (None, "", []):
+            if re.search(r"rigid\s+bronch", lowered_note):
+                merged_data["airway_type"] = "Rigid Bronchoscope"
+            elif re.search(r"\blma\b", lowered_note) or "laryngeal mask" in lowered_note:
+                merged_data["airway_type"] = "LMA"
+            elif re.search(r"\btrach(?:eostomy| tube| stoma)?\b", lowered_note):
+                merged_data["airway_type"] = "Tracheostomy"
+            elif re.search(r"\bett\b", lowered_note) or "endotracheal tube" in lowered_note or "intubated" in lowered_note:
                 merged_data["airway_type"] = "ETT"
-            elif sedation_val in ("Moderate", "Deep"):
+            elif sedation_val in ("Moderate", "Deep", "Monitored Anesthesia Care"):
                 merged_data["airway_type"] = "Native"
 
-        # If pleural procedure present but no guidance, default to Blind
-        if merged_data.get("pleural_procedure_type") and not merged_data.get("pleural_guidance"):
+        # If pleural procedure present but no guidance, default to Blind; otherwise null out accidental guidance
+        if not merged_data.get("pleural_procedure_type"):
+            merged_data["pleural_guidance"] = None
+        elif not merged_data.get("pleural_guidance"):
             merged_data["pleural_guidance"] = "Blind"
 
         # Ensure version is set if missing (Pydantic default might not trigger if key is missing in dict passed to **)
         if not merged_data.get("version"):
             merged_data["version"] = "0.5.0"
 
-        lowered = note_text.lower()
-
         # Pleural laterality and access site heuristics
         if merged_data.get("pleural_side") is None:
-            if re.search(r"\bright (?:pleural )?effusion", lowered):
+            if re.search(r"\bright (?:pleural )?effusion", lowered_note):
                 merged_data["pleural_side"] = "Right"
-            elif re.search(r"\bleft (?:pleural )?effusion", lowered):
+            elif re.search(r"\bleft (?:pleural )?effusion", lowered_note):
                 merged_data["pleural_side"] = "Left"
-            elif re.search(r"\bright hemithorax", lowered):
+            elif re.search(r"\bright hemithorax", lowered_note):
                 merged_data["pleural_side"] = "Right"
-            elif re.search(r"\bleft hemithorax", lowered):
+            elif re.search(r"\bleft hemithorax", lowered_note):
                 merged_data["pleural_side"] = "Left"
 
         if merged_data.get("pleural_intercostal_space") is None:
@@ -114,6 +663,10 @@ class RegistryEngine:
                     if loc_match:
                         merged_data["entry_location"] = loc_match.group(1)
 
+        # Filter out fields that don't apply to the detected procedure families
+        # This prevents phantom data (e.g., EBUS fields when no EBUS performed)
+        merged_data = filter_inapplicable_fields(merged_data, procedure_families)
+
         record = RegistryRecord(**merged_data)
         normalized_evidence: dict[str, list[Span]] = {}
         if include_evidence:
@@ -125,6 +678,9 @@ class RegistryEngine:
                 normalized_evidence.setdefault(field, []).extend(spans)
             if station_spans:
                 normalized_evidence.setdefault("linear_ebus_stations", []).extend(station_spans)
+
+            # Validate evidence spans against source text to filter hallucinations
+            normalized_evidence = validate_evidence_spans(note_text, normalized_evidence)
 
         record.evidence = {field: spans for field, spans in normalized_evidence.items()}
         if explain:
@@ -143,9 +699,183 @@ class RegistryEngine:
             spans.append(Span(text=match.group(0).strip(), start=match.start(), end=match.end()))
         return stations, spans
 
-    def _apply_ebus_heuristics(self, data: dict[str, Any], text: str) -> None:
-        """Apply regex/keyword heuristics for EBUS, sedation reversal, and basic BLVR."""
+    def _parse_ebus_station_sizes(self, text: str) -> list[tuple[str, float | None]]:
+        """Parse station size mentions like 'station 11L (5.4mm)', '5.5 mm node at 4R', or '1.2 x 0.8 cm at 4R'."""
+        results: list[tuple[str, float | None]] = []
+        station_pattern = r"(2R|2L|4R|4L|7|10R|10L|11R|11L)"
+
+        def _to_mm(val_str: str, unit: str | None) -> float | None:
+            try:
+                val = float(val_str)
+            except Exception:
+                return None
+            if unit and unit.lower().startswith("c"):  # cm -> mm
+                return val * 10
+            return val
+
+        # Station followed by single dimension
+        patterns = [
+            re.compile(rf"\b{station_pattern}\b\s*\(?\s*(\d+(?:\.\d+)?)\s*(mm|cm)\b", re.IGNORECASE),
+            re.compile(rf"station\s*{station_pattern}\s*\(?\s*(\d+(?:\.\d+)?)\s*(mm|cm)\b", re.IGNORECASE),
+            re.compile(rf"(\d+(?:\.\d+)?)\s*(mm|cm)[^.\n]{{0,60}}?\b{station_pattern}\b", re.IGNORECASE),
+        ]
+
+        # Patterns with two dimensions (short-axis = smaller number)
+        dim_patterns = [
+            re.compile(rf"\b{station_pattern}\b[^.\n]{{0,80}}?(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)\s*(mm|cm)", re.IGNORECASE),
+            re.compile(rf"(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)\s*(mm|cm)[^.\n]{{0,80}}?\b{station_pattern}\b", re.IGNORECASE),
+        ]
+
+        for pat in patterns:
+            for match in pat.finditer(text):
+                if pat.pattern.startswith("\\b(") or pat.pattern.startswith("station"):
+                    station = match.group(1).upper()
+                    size_val = _to_mm(match.group(2), match.group(3))
+                else:
+                    size_val = _to_mm(match.group(1), match.group(2))
+                    station = match.group(3).upper()
+                results.append((station, size_val))
+
+        for pat in dim_patterns:
+            for match in pat.finditer(text):
+                # Depending on pattern order, station may be first or last
+                if pat.pattern.startswith("\\b("):
+                    station = match.group(1).upper()
+                    dim1, dim2, unit = match.group(2), match.group(3), match.group(4)
+                else:
+                    dim1, dim2, unit = match.group(1), match.group(2), match.group(3)
+                    station = match.group(4).upper()
+                dims = [_to_mm(dim1, unit), _to_mm(dim2, unit)]
+                dims_filtered = [d for d in dims if d is not None]
+                size_val = min(dims_filtered) if dims_filtered else None
+                results.append((station, size_val))
+
+        # Deduplicate keeping first occurrence
+        deduped: list[tuple[str, float | None]] = []
+        seen: set[str] = set()
+        for station, size in results:
+            if station in seen:
+                continue
+            seen.add(station)
+            deduped.append((station, size))
+        return deduped
+
+    def _parse_ebus_station_passes(self, text: str) -> dict[str, int]:
+        """Parse per-station needle pass counts from the narrative."""
         lowered = text.lower()
+        station_passes: dict[str, int] = {}
+        station_pattern = r"(2r|2l|4r|4l|7|10r|10l|11r|11l)"
+        word_to_int = {
+            "one": 1,
+            "two": 2,
+            "three": 3,
+            "four": 4,
+            "five": 5,
+            "six": 6,
+            "seven": 7,
+            "eight": 8,
+            "nine": 9,
+            "ten": 10,
+        }
+
+        # Look for "station X ... 3 passes" patterns
+        for match in re.finditer(rf"station\s*{station_pattern}", lowered, re.IGNORECASE):
+            station = match.group(1).upper()
+            window = lowered[match.start(): match.end() + 80]
+            pass_match = re.search(r"(\d{1,2})\s+(?:needle\s+)?passes?", window)
+            if pass_match:
+                station_passes.setdefault(station, int(pass_match.group(1)))
+                continue
+            word_match = re.search(r"(one|two|three|four|five|six|seven|eight|nine|ten)\s+(?:needle\s+)?passes?", window)
+            if word_match:
+                word_val = word_to_int.get(word_match.group(1))
+                if word_val:
+                    station_passes.setdefault(station, word_val)
+
+        # Look for "3 passes at station X" phrasing
+        for match in re.finditer(rf"(\d{{1,2}})\s+(?:passes|needle passes?).{{0,30}}station\s*{station_pattern}", lowered, re.IGNORECASE):
+            station_passes.setdefault(match.group(2).upper(), int(match.group(1)))
+
+        return station_passes
+
+    def _infer_station_rose(self, text: str, station: str) -> str | None:
+        """Infer station-specific ROSE result from nearby wording."""
+        lowered = text.lower()
+        priority = {
+            "Malignant": 5,
+            "Granuloma": 4,
+            "Benign": 3,
+            "Nondiagnostic": 2,
+            "Atypical cells present": 1,
+        }
+        best_val: str | None = None
+
+        # Prefer direct keyword-station associations (either order)
+        keyword_map = [
+            (r"malignan", "Malignant"),
+            (r"granuloma", "Granuloma"),
+            (r"non[-\\s]?diagnostic", "Nondiagnostic"),
+            (r"benign", "Benign"),
+            (r"atypical", "Atypical cells present"),
+        ]
+        for pattern, label in keyword_map:
+            if re.search(rf"{pattern}[^.;\n]{{0,50}}{re.escape(station.lower())}", lowered):
+                return label
+            if re.search(rf"{re.escape(station.lower())}[^.;\n]{{0,50}}{pattern}", lowered):
+                return label
+
+        def _maybe_update(candidate: str | None) -> None:
+            nonlocal best_val
+            if not candidate:
+                return
+            if best_val is None or priority.get(candidate, 0) > priority.get(best_val, 0):
+                best_val = candidate
+
+        station_mentions = list(re.finditer(r"(station\s*)?(2r|2l|4r|4l|7|10r|10l|11r|11l)", lowered))
+        for idx, match in enumerate(station_mentions):
+            if match.group(2).upper() != station.upper():
+                continue
+            next_start = len(lowered)
+            if idx + 1 < len(station_mentions):
+                next_start = station_mentions[idx + 1].start()
+            window = lowered[max(0, match.start() - 80) : min(next_start, match.end() + 120)]
+            if "malignan" in window:
+                _maybe_update("Malignant")
+            if "benign" in window:
+                _maybe_update("Benign")
+            if "granuloma" in window:
+                _maybe_update("Granuloma")
+            if "non-diagnostic" in window or "nondiagnostic" in window:
+                _maybe_update("Nondiagnostic")
+            if "atypical" in window:
+                _maybe_update("Atypical cells present")
+        if "rose" in lowered:
+            for segment in re.split(r"[.;]\s*", lowered):
+                if "rose" not in segment:
+                    continue
+                if station.lower() in segment:
+                    if "malignan" in segment:
+                        _maybe_update("Malignant")
+                    if "benign" in segment:
+                        _maybe_update("Benign")
+                    if "granuloma" in segment:
+                        _maybe_update("Granuloma")
+                    if "non-diagnostic" in segment or "nondiagnostic" in segment:
+                        _maybe_update("Nondiagnostic")
+                    if "atypical" in segment:
+                        _maybe_update("Atypical cells present")
+        return best_val
+
+    def _apply_ebus_heuristics(
+        self, data: dict[str, Any], text: str, procedure_families: Set[str] | None = None
+    ) -> None:
+        """Apply regex/keyword heuristics for EBUS, sedation reversal, and basic BLVR.
+
+        EBUS-specific extractions are gated by procedure_families to prevent
+        hallucinating EBUS data in non-EBUS procedures like CAO/rigid bronchoscopy.
+        """
+        lowered = text.lower()
+        is_ebus_procedure = procedure_families is None or "EBUS" in procedure_families
         if not data.get("nav_platform"):
             if re.search(r"\belectromagnetic navigation\b", lowered) or re.search(r"\bemn\b", lowered):
                 data["nav_platform"] = "emn"
@@ -158,106 +888,150 @@ class RegistryEngine:
             if "radial ebus" in lowered or "rebus" in lowered:
                 data["nav_rebus_used"] = True
         if not data.get("sedation_type"):
-            if "moderate sedation" in lowered:
+            if "monitored anesthesia care" in lowered or re.search(r"\bmac\b", lowered):
+                data["sedation_type"] = "Deep"
+            elif "moderate sedation" in lowered:
                 data["sedation_type"] = "Moderate"
             elif "deep sedation" in lowered:
                 data["sedation_type"] = "Deep"
             elif "general anesthesia" in lowered:
                 data["sedation_type"] = "General"
         
-        # --- EBUS Heuristics ---
-        # ebus_scope_brand
-        if "Olympus" in text and ("BF-UC" in text or "EBUS" in text):
-            data["ebus_scope_brand"] = "Olympus"
-        elif "Fujifilm" in text or "EB-530" in text or "Fuji" in text:
-            data["ebus_scope_brand"] = "Fuji"
-        elif "Pentax" in text or "EB-1970" in text:
-            data["ebus_scope_brand"] = "Pentax"
-        
-        # ebus_stations_sampled
-        stations_found = set()
-        station_pattern = r"Station\s*(2R|2L|4R|4L|7|10R|10L|11R|11L)"
-        for match in re.finditer(station_pattern, text, re.IGNORECASE):
-            snippet = text[match.end():match.end()+100].lower()
-            if any(kw in snippet for kw in ["pass", "sample", "needle", "tbna", "aspirat"]):
-                if "not sampled" not in snippet:
-                    stations_found.add(match.group(1).upper())
-        if stations_found:
-            data["ebus_stations_sampled"] = sorted(list(stations_found))
+        # --- EBUS Heuristics (gated by procedure family) ---
+        # Only extract EBUS-specific data if this is an EBUS procedure
+        if is_ebus_procedure:
+            # ebus_scope_brand
+            if "Olympus" in text and ("BF-UC" in text or "EBUS" in text):
+                data["ebus_scope_brand"] = "Olympus"
+            elif "Fujifilm" in text or "EB-530" in text or "Fuji" in text:
+                data["ebus_scope_brand"] = "Fuji"
+            elif "Pentax" in text or "EB-1970" in text:
+                data["ebus_scope_brand"] = "Pentax"
 
-        # ebus_needle_gauge
-        gauge_match = re.search(r"(21|22|25)G", text, re.IGNORECASE)
-        if gauge_match:
-            data["ebus_needle_gauge"] = f"{gauge_match.group(1)}G"
+            # ebus_stations_sampled
+            stations_found = set()
+            station_pattern = r"Station\s*(2R|2L|4R|4L|7|10R|10L|11R|11L)"
+            for match in re.finditer(station_pattern, text, re.IGNORECASE):
+                snippet = text[match.end():match.end()+100].lower()
+                if any(kw in snippet for kw in ["pass", "sample", "needle", "tbna", "aspirat"]):
+                    if "not sampled" not in snippet:
+                        stations_found.add(match.group(1).upper())
+            if stations_found:
+                data["ebus_stations_sampled"] = sorted(list(stations_found))
 
-        # ebus_needle_type
-        if any(kw in text for kw in ["FNB", "core biopsy", "Acquire"]):
-            data["ebus_needle_type"] = "FNB"
-        elif "needle" in text.lower() or "tbna" in text.lower():
-             if data.get("ebus_needle_type") not in ["FNB"]:
-                data["ebus_needle_type"] = "Standard"
+            # Station-level detail (size, passes, rose_result) when present
+            detail_entries = data.get("ebus_stations_detail") or []
+            detail_by_station: dict[str, dict[str, Any]] = {d.get("station"): dict(d) for d in detail_entries if d.get("station")}
+            station_pass_map = self._parse_ebus_station_passes(text)
 
-        # ebus_systematic_staging
-        if re.search(r"Systematic.*(evaluation|staging|N3)", text, re.IGNORECASE):
-             if "No systematic" in text or "not systematic" in text.lower():
-                 data["ebus_systematic_staging"] = False
-             else:
-                 data["ebus_systematic_staging"] = True
-        elif "No systematic" in text:
-             data["ebus_systematic_staging"] = False
+            for station, size in self._parse_ebus_station_sizes(text):
+                entry = detail_by_station.setdefault(station, {"station": station})
+                if size is not None:
+                    entry.setdefault("size_mm", size)
 
-        # ebus_rose_available
-        if "ROSE" in text or "rapid on-site" in text.lower():
-            data["ebus_rose_available"] = True
-            if "ROSE not available" in text or "no ROSE" in text.lower():
-                data["ebus_rose_available"] = False
+            for station, passes in station_pass_map.items():
+                entry = detail_by_station.setdefault(station, {"station": station})
+                entry.setdefault("passes", passes)
 
-        # ebus_rose_result
-        if data.get("ebus_rose_available"):
-            rose_snippets = []
-            for match in re.finditer(r"ROSE\b.*?(?::|-|is|shows|demonstrates|positive|negative)?\s*(.*?)(?:\n|\.|;)", text, re.IGNORECASE):
-                rose_snippets.append(match.group(1).lower())
-            
-            combined_rose = " ".join(rose_snippets)
-            if "malignan" in combined_rose or "adenocarcinoma" in combined_rose or "squamous" in combined_rose or "tumor" in combined_rose or "carcinoma" in combined_rose:
-                data["ebus_rose_result"] = "Malignant"
-            elif "granuloma" in combined_rose:
-                data["ebus_rose_result"] = "Granuloma"
-            elif "lymphoma" in combined_rose or "lymphoid proliferation" in combined_rose:
-                data["ebus_rose_result"] = "Atypical lymphoid proliferation"
-            elif "atypical" in combined_rose:
-                data["ebus_rose_result"] = "Atypical cells present"
-            elif "benign" in combined_rose or "reactive" in combined_rose or "lymphocytes" in combined_rose:
-                data["ebus_rose_result"] = "Benign"
-            elif "nondiagnostic" in combined_rose or "insufficient" in combined_rose:
-                data["ebus_rose_result"] = "Nondiagnostic"
+            stations_for_rose = set(detail_by_station.keys()) or stations_found
+            for station in stations_for_rose:
+                rose_val = self._infer_station_rose(text, station)
+                if rose_val:
+                    entry = detail_by_station.setdefault(station, {"station": station})
+                    entry["rose_result"] = rose_val
 
-        # ebus_intranodal_forceps_used
-        if "intranodal forceps" in text.lower() or "ebus-ifb" in text.lower():
-            data["ebus_intranodal_forceps_used"] = True
-        
-        # ebus_photodocumentation_complete
-        if re.search(r"(Complete\s*)?(Photodocumentation|Photodoc|Photos).*(all.*(accessible.*)?stations|complete|taken|archived)|all.*stations.*photographed", text, re.IGNORECASE):
-            data["ebus_photodocumentation_complete"] = True
-        elif "photos all stations" in text.lower():
-            data["ebus_photodocumentation_complete"] = True
+            if detail_by_station:
+                for entry in detail_by_station.values():
+                    entry.setdefault("shape", None)
+                    entry.setdefault("margin", None)
+                    entry.setdefault("echogenicity", None)
+                    entry.setdefault("chs_present", None)
+                    entry.setdefault("appearance_category", None)
+                    entry.setdefault("rose_result", entry.get("rose_result", None))
+                data["ebus_stations_detail"] = list(detail_by_station.values())
+                if data.get("ebus_stations_sampled"):
+                    merged = set(data["ebus_stations_sampled"]) | set(detail_by_station.keys())
+                    data["ebus_stations_sampled"] = sorted(merged)
+                else:
+                    data["ebus_stations_sampled"] = sorted(detail_by_station.keys())
 
-        # ebus elastography
-        if "elastograph" in lowered:
-            if "no elastograph" in lowered or "without elastograph" in lowered:
-                data.setdefault("ebus_elastography_used", False)
-            elif data.get("ebus_elastography_used") is None:
-                data["ebus_elastography_used"] = True
+            # ebus_needle_gauge
+            gauge_match = re.search(r"(21|22|25)G", text, re.IGNORECASE)
+            if gauge_match:
+                data["ebus_needle_gauge"] = f"{gauge_match.group(1)}G"
 
-        if data.get("ebus_elastography_pattern") is None and data.get("ebus_elastography_used"):
-            for sentence in re.split(r"[\n\.]", text):
-                if "elastograph" not in sentence.lower():
-                    continue
-                match = re.search(r"elastograph\w*(?:\s*(?:pattern|patterns|score|shows|was|were|with|used)?[^:;\\-]*)[:,-]\s*([^.;\\n]+)", sentence, re.IGNORECASE)
-                if match:
-                    candidate = match.group(1).strip()
-                    if candidate:
-                        data["ebus_elastography_pattern"] = candidate
+            # ebus_needle_type
+            if any(kw in text for kw in ["FNB", "core biopsy", "Acquire"]):
+                data["ebus_needle_type"] = "FNB"
+            elif "needle" in text.lower() or "tbna" in text.lower():
+                if data.get("ebus_needle_type") not in ["FNB"]:
+                    data["ebus_needle_type"] = "Standard"
+
+            # ebus_systematic_staging
+            if re.search(r"Systematic.*(evaluation|staging|N3)", text, re.IGNORECASE):
+                if "No systematic" in text or "not systematic" in text.lower():
+                    data["ebus_systematic_staging"] = False
+                else:
+                    data["ebus_systematic_staging"] = True
+            elif "No systematic" in text:
+                data["ebus_systematic_staging"] = False
+
+            # ebus_rose_available
+            if "ROSE" in text or "rapid on-site" in text.lower() or "rapid onsite" in lowered or "rapid on site" in lowered:
+                data["ebus_rose_available"] = True
+                if "ROSE not available" in text or "no ROSE" in text.lower():
+                    data["ebus_rose_available"] = False
+
+            # ebus_rose_result
+            if data.get("ebus_rose_available"):
+                rose_snippets = []
+                for match in re.finditer(r"ROSE\b.*?(?::|-|is|shows|demonstrates|positive|negative)?\s*(.*?)(?:\n|\.|;)", text, re.IGNORECASE):
+                    rose_snippets.append(match.group(1).lower())
+
+                combined_rose = " ".join(rose_snippets)
+                if "malignan" in combined_rose or "adenocarcinoma" in combined_rose or "squamous" in combined_rose or "tumor" in combined_rose or "carcinoma" in combined_rose:
+                    data["ebus_rose_result"] = "Malignant"
+                elif "granuloma" in combined_rose:
+                    data["ebus_rose_result"] = "Granuloma"
+                elif "lymphoma" in combined_rose or "lymphoid proliferation" in combined_rose:
+                    data["ebus_rose_result"] = "Atypical lymphoid proliferation"
+                elif "atypical" in combined_rose:
+                    data["ebus_rose_result"] = "Atypical cells present"
+                elif "benign" in combined_rose or "reactive" in combined_rose or "lymphocytes" in combined_rose:
+                    data["ebus_rose_result"] = "Benign"
+                elif "nondiagnostic" in combined_rose or "insufficient" in combined_rose:
+                    data["ebus_rose_result"] = "Nondiagnostic"
+
+            # ebus_intranodal_forceps_used
+            if "intranodal forceps" in text.lower() or "ebus-ifb" in text.lower():
+                data["ebus_intranodal_forceps_used"] = True
+
+            # ebus_photodocumentation_complete
+            if re.search(r"(Complete\s*)?(Photodocumentation|Photodoc|Photos).*(all.*(accessible.*)?stations|complete|taken|archived)|all.*stations.*photographed", text, re.IGNORECASE):
+                data["ebus_photodocumentation_complete"] = True
+            elif "photos all stations" in text.lower():
+                data["ebus_photodocumentation_complete"] = True
+
+            # ebus elastography
+            if "elastograph" in lowered:
+                if "no elastograph" in lowered or "without elastograph" in lowered:
+                    data.setdefault("ebus_elastography_used", False)
+                elif data.get("ebus_elastography_used") is None:
+                    data["ebus_elastography_used"] = True
+
+            if data.get("ebus_elastography_pattern") is None and data.get("ebus_elastography_used"):
+                for sentence in re.split(r"[\n\.]", text):
+                    if "elastograph" not in sentence.lower():
+                        continue
+                    match = re.search(r"elastograph\w*(?:\s*(?:pattern|patterns|score|shows|was|were|with|used)?[^:;\\-]*)[:,-]\s*([^.;\\n]+)", sentence, re.IGNORECASE)
+                    if match:
+                        candidate = match.group(1).strip()
+                        if candidate:
+                            data["ebus_elastography_pattern"] = candidate
+                            break
+                    lowered_sentence = sentence.lower()
+                    if any(color in lowered_sentence for color in ["blue", "green", "heterogeneous"]):
+                        data["ebus_elastography_pattern"] = sentence.strip().rstrip(".;")
                         break
 
         # --- Sedation Reversal ---
@@ -285,7 +1059,7 @@ class RegistryEngine:
                 data["blvr_valve_type"] = "Zephyr"
             elif "Spiration" in text:
                 data["blvr_valve_type"] = "Spiration"
-            
+
             # Target Lobe
             # Look for lobe mention near "valve" or "placed"
             # Simple check for lobe presence if not already set
@@ -301,6 +1075,460 @@ class RegistryEngine:
                 elif "right upper lobe" in text.lower() or "RUL" in text:
                     data["blvr_target_lobe"] = "RUL"
 
+        # --- CAO (Central Airway Obstruction) Heuristics ---
+        self._apply_cao_heuristics(data, text)
+
+        # --- Disposition Heuristics ---
+        if not data.get("disposition"):
+            if re.search(r"\bpacu\b", lowered) or "post-anesthesia" in lowered or "recovery room" in lowered:
+                data["disposition"] = "PACU Recovery"
+            elif re.search(r"\bicu\b", lowered) or "intensive care" in lowered:
+                data["disposition"] = "ICU Admission"
+            elif "floor" in lowered and ("admit" in lowered or "transfer" in lowered):
+                data["disposition"] = "Floor Admission"
+            elif "discharge" in lowered and "home" in lowered:
+                data["disposition"] = "Discharge Home"
+
+    def _apply_pleural_heuristics(
+        self, data: dict[str, Any], text: str, procedure_families: Set[str] | None = None
+    ) -> None:
+        """Deterministic parsing for pleural procedures (thoracentesis, chest tubes, IPC)."""
+        families = procedure_families or set()
+        if families and not families.intersection({"PLEURAL", "THORACOSCOPY"}):
+            return
+
+        lowered = text.lower()
+
+        # Procedure type (avoid overwriting explicit values)
+        if not data.get("pleural_procedure_type"):
+            if re.search(r"(medical\s+)?thoracoscopy|pleuroscopy", lowered):
+                data["pleural_procedure_type"] = "Medical Thoracoscopy"
+            elif "talc pleurodesis" in lowered or "chemical pleurodesis" in lowered:
+                data["pleural_procedure_type"] = "Chemical Pleurodesis"
+            elif re.search(r"(tunneled|tunnelled).*catheter|pleurx|aspira|ipc|indwelling pleural catheter", lowered):
+                if re.search(r"exchange|replac", lowered):
+                    data["pleural_procedure_type"] = "Tunneled Catheter Exchange"
+                elif re.search(r"\bdrain(ed|age)?\b", lowered) and not re.search(r"\bplace|insert", lowered):
+                    data["pleural_procedure_type"] = "IPC Drainage"
+                else:
+                    data["pleural_procedure_type"] = "Tunneled Catheter"
+            elif re.search(r"chest\s+tube|pigtail", lowered):
+                if re.search(r"remov", lowered):
+                    data["pleural_procedure_type"] = "Chest Tube Removal"
+                else:
+                    data["pleural_procedure_type"] = "Chest Tube"
+            elif re.search(r"thoracentesis|pleural tap", lowered):
+                data["pleural_procedure_type"] = "Thoracentesis"
+
+        if data.get("pleural_side") is None:
+            side_match = re.search(r"\b(right|left)\b\s+(?:pleural\s+)?(?:effusion|thoracentesis|chest tube|hemithorax)", lowered)
+            if side_match:
+                side = side_match.group(1).lower()
+                data["pleural_side"] = "Right" if side.startswith("r") else "Left"
+
+        if data.get("pleural_guidance") is None and data.get("pleural_procedure_type"):
+            if "ultrasound" in lowered or "sonograph" in lowered or "u/s" in lowered:
+                data["pleural_guidance"] = "Ultrasound"
+            elif "ct-guid" in lowered or "computed tomography" in lowered or re.search(r"\bct\b", lowered):
+                data["pleural_guidance"] = "CT"
+
+        if data.get("pleural_volume_drained_ml") is None:
+            vol_match = re.search(r"(\d+(?:\.\d+)?)\s*(l|liter|litre|liters|litres)\b", lowered)
+            ml_match = re.search(r"(\d{2,5})(?:\s*|\s*-?\s*)(?:ml|mL|cc)\b", text, re.IGNORECASE)
+            if vol_match:
+                try:
+                    liters = float(vol_match.group(1))
+                    data["pleural_volume_drained_ml"] = int(liters * 1000)
+                except ValueError:
+                    pass
+            elif ml_match:
+                try:
+                    data["pleural_volume_drained_ml"] = int(ml_match.group(1))
+                except ValueError:
+                    pass
+
+        if data.get("pleural_fluid_appearance") is None:
+            appearance_map = {
+                "serous": "Serous",
+                "serosanguinous": "Serosanguinous",
+                "sero-sanguinous": "Serosanguinous",
+                "sanguinous": "Sanguinous",
+                "bloody": "Sanguinous",
+                "purulent": "Purulent",
+                "pus": "Purulent",
+                "chylous": "Chylous",
+                "milky": "Chylous",
+                "turbid": "Turbid",
+            }
+            for key, val in appearance_map.items():
+                if key in lowered:
+                    data["pleural_fluid_appearance"] = val
+                    break
+
+        if data.get("pleural_opening_pressure_cmh2o") is None:
+            pressure_match = re.search(
+                r"opening pressure\D{0,20}(\d+(?:\.\d+)?)\s*(?:cm\s*h2o|cmh2o)",
+                lowered,
+                re.IGNORECASE,
+            )
+            if pressure_match:
+                try:
+                    data["pleural_opening_pressure_cmh2o"] = float(pressure_match.group(1))
+                    data["pleural_opening_pressure_measured"] = True
+                except ValueError:
+                    pass
+            elif "opening pressure" in lowered and data.get("pleural_opening_pressure_measured") is None:
+                data["pleural_opening_pressure_measured"] = True
+
+
+    def _apply_cao_heuristics(self, data: dict[str, Any], text: str) -> None:
+        """Apply regex/keyword heuristics for Central Airway Obstruction (CAO) procedures.
+
+        Supports multi-site CAO extraction, storing detailed per-site interventions
+        in cao_interventions array while also populating legacy flat fields for
+        backwards compatibility.
+        """
+        lowered = text.lower()
+
+        # Detect if this is a CAO/debulking procedure
+        is_cao_procedure = any(kw in lowered for kw in [
+            "debulk", "tumor debulk", "airway obstruction", "central airway",
+            "recanalization", "recanaliz", "obstruct", "endobronchial tumor",
+            "endobronchial lesion", "endobronchial mass", "airway tumor"
+        ])
+
+        if not is_cao_procedure:
+            return
+
+        # Extract multi-site CAO interventions
+        cao_interventions = self._extract_cao_interventions(text)
+        if cao_interventions:
+            data["cao_interventions"] = cao_interventions
+
+            # Populate legacy flat fields from the primary (most clinically significant) site
+            primary_site = self._get_primary_cao_site(cao_interventions)
+            if primary_site:
+                if not data.get("cao_tumor_location"):
+                    # Normalize location abbreviations to schema enum values
+                    location = primary_site.get("location")
+                    location_mapping = {
+                        "BI": "Bronchus Intermedius",
+                        "bi": "Bronchus Intermedius",
+                        "distal_trachea": "Trachea",
+                    }
+                    data["cao_tumor_location"] = location_mapping.get(location, location)
+                if not data.get("cao_obstruction_pre_pct") and primary_site.get("pre_obstruction_pct") is not None:
+                    data["cao_obstruction_pre_pct"] = primary_site["pre_obstruction_pct"]
+                if not data.get("cao_obstruction_post_pct") and primary_site.get("post_obstruction_pct") is not None:
+                    data["cao_obstruction_post_pct"] = primary_site["post_obstruction_pct"]
+                if not data.get("cao_primary_modality") and primary_site.get("modalities"):
+                    # Map modality to schema enum
+                    modality_mapping = {
+                        "APC": "APC",
+                        "apc": "APC",
+                        "argon": "APC",
+                        "cryo": "Cryotherapy",
+                        "cryotherapy": "Cryotherapy",
+                        "electrocautery": "Electrocautery",
+                        "cautery": "Electrocautery",
+                        "laser": "Laser",
+                        "mechanical": "Mechanical Core",
+                        "forceps": "Mechanical Core",
+                        "rigid_core": "Mechanical Core",
+                    }
+                    for mod in primary_site["modalities"]:
+                        mapped = modality_mapping.get(mod.lower(), mod)
+                        if mapped in ("APC", "Cryotherapy", "Electrocautery", "Laser", "Mechanical Core", "Other"):
+                            data["cao_primary_modality"] = mapped
+                            break
+
+        # Fallback to simple extraction if multi-site extraction didn't find anything
+        if not cao_interventions:
+            # --- cao_primary_modality ---
+            if not data.get("cao_primary_modality"):
+                if re.search(r"\bapc\b", lowered) or "argon plasma" in lowered:
+                    data["cao_primary_modality"] = "APC"
+                elif "cryotherapy" in lowered or "cryo" in lowered or "cryoprobe" in lowered:
+                    data["cao_primary_modality"] = "Cryotherapy"
+                elif "electrocautery" in lowered or "cautery" in lowered or "hot biopsy" in lowered:
+                    data["cao_primary_modality"] = "Electrocautery"
+                elif "laser" in lowered or "nd:yag" in lowered:
+                    data["cao_primary_modality"] = "Laser"
+                elif "microdebrider" in lowered:
+                    data["cao_primary_modality"] = "Other"
+                elif "forceps" in lowered or "mechanical" in lowered or "core out" in lowered:
+                    data["cao_primary_modality"] = "Mechanical Core"
+
+            # --- cao_tumor_location ---
+            if not data.get("cao_tumor_location"):
+                tumor_locations = []
+                if re.search(r"\bbronchus intermedius\b", lowered) or re.search(r"\bBI\b", text):
+                    tumor_locations.append("Bronchus Intermedius")
+                if re.search(r"\bright mainstem\b", lowered) or re.search(r"\bRMS\b", text) or re.search(r"\bright main.?stem\b", lowered):
+                    tumor_locations.append("RMS")
+                if re.search(r"\bleft mainstem\b", lowered) or re.search(r"\bLMS\b", text) or re.search(r"\bleft main.?stem\b", lowered):
+                    tumor_locations.append("LMS")
+                if "trachea" in lowered:
+                    tumor_locations.append("Trachea")
+                if re.search(r"\bright upper lobe\b", lowered) or re.search(r"\bRUL\b", text):
+                    tumor_locations.append("RUL")
+                if re.search(r"\bright middle lobe\b", lowered) or re.search(r"\bRML\b", text):
+                    tumor_locations.append("RML")
+                if re.search(r"\bright lower lobe\b", lowered) or re.search(r"\bRLL\b", text):
+                    tumor_locations.append("RLL")
+                if re.search(r"\bleft upper lobe\b", lowered) or re.search(r"\bLUL\b", text):
+                    tumor_locations.append("LUL")
+                if re.search(r"\bleft lower lobe\b", lowered) or re.search(r"\bLLL\b", text):
+                    tumor_locations.append("LLL")
+
+                priority_order = ["Trachea", "RMS", "LMS", "Bronchus Intermedius", "RUL", "RML", "RLL", "LUL", "LLL"]
+                for loc in priority_order:
+                    if loc in tumor_locations:
+                        data["cao_tumor_location"] = loc
+                        break
+
+        # --- cao_location (broader category) ---
+        if not data.get("cao_location"):
+            tumor_loc = data.get("cao_tumor_location")
+            if tumor_loc == "Trachea":
+                data["cao_location"] = "Trachea"
+            elif tumor_loc in ("RMS", "LMS", "Mainstem"):
+                data["cao_location"] = "Mainstem"
+            elif tumor_loc in ("Bronchus Intermedius", "RUL", "RML", "RLL", "LUL", "LLL", "Lobar"):
+                data["cao_location"] = "Lobar"
+
+        # Extract biopsy sites for CAO/bronchoscopy procedures
+        biopsy_sites = self._extract_biopsy_sites(text)
+        if biopsy_sites:
+            data["bronch_biopsy_sites"] = biopsy_sites
+            # Set primary bronch_location_lobe from the most significant biopsy site
+            if not data.get("bronch_location_lobe"):
+                for site in biopsy_sites:
+                    if site.get("lobe"):
+                        data["bronch_location_lobe"] = site["lobe"]
+                        break
+
+    def _extract_cao_interventions(self, text: str) -> list[dict]:
+        """Extract multi-site CAO intervention data from procedure text.
+
+        Identifies distinct anatomic sites and extracts per-site:
+        - pre_obstruction_pct
+        - post_obstruction_pct
+        - modalities used
+        - contextual notes
+        """
+        interventions: list[dict] = []
+        lowered = text.lower()
+
+        # Define location patterns with their canonical names
+        location_patterns = [
+            (r"\bright middle lobe\b|\bRML\b", "RML"),
+            (r"\bright lower lobe\b|\bRLL\b", "RLL"),
+            (r"\bright upper lobe\b|\bRUL\b", "RUL"),
+            (r"\bleft upper lobe\b|\bLUL\b", "LUL"),
+            (r"\bleft lower lobe\b|\bLLL\b", "LLL"),
+            (r"\bbronchus intermedius\b|\bBI\b", "BI"),
+            (r"\bright mainstem\b|\bRMS\b|\bright main.?stem\b", "RMS"),
+            (r"\bleft mainstem\b|\bLMS\b|\bleft main.?stem\b", "LMS"),
+            (r"\bdistal trachea\b", "distal_trachea"),
+            (r"\btrachea\b(?!\s+bifurc)", "Trachea"),
+        ]
+
+        # Modality patterns
+        modality_patterns = [
+            (r"\bapc\b|argon plasma", "APC"),
+            (r"cryotherap|cryoprobe|\bcryo\b", "cryo"),
+            (r"electrocauter|cautery|hot biopsy", "electrocautery"),
+            (r"\blaser\b|nd:yag", "laser"),
+            (r"forceps|mechanical|core.?out|rigid.{0,20}(?:debulk|shave)", "mechanical"),
+            (r"balloon.{0,20}dilat|dilat.{0,20}balloon", "balloon"),
+            (r"microdebrider", "microdebrider"),
+        ]
+
+        # Split text into sentences for context-aware extraction
+        sentences = re.split(r"[.;]\s*", text)
+
+        # Track which locations we've found
+        found_locations: dict[str, dict] = {}
+
+        # Track current context location for sentences without explicit location
+        # (e.g., "LMS: 80% obstruction. Mechanical debulking performed. APC applied.")
+        current_context_location: str | None = None
+
+        for sentence in sentences:
+            sent_lower = sentence.lower()
+
+            # Find locations mentioned in this sentence
+            locations_in_sentence = []
+            for pattern, canonical in location_patterns:
+                if re.search(pattern, sent_lower if canonical != "BI" else sentence, re.IGNORECASE):
+                    locations_in_sentence.append(canonical)
+
+            # Update context location if we found locations
+            if locations_in_sentence:
+                current_context_location = locations_in_sentence[0]
+
+            # Find modalities mentioned in this sentence
+            modalities_in_sentence = []
+            for pattern, mod_name in modality_patterns:
+                if re.search(pattern, sent_lower):
+                    modalities_in_sentence.append(mod_name)
+
+            # Extract obstruction percentages from this sentence
+            pre_pct = None
+            post_pct = None
+
+            # "completely obstructed" or "100% obstruction"
+            if "completely obstruct" in sent_lower or "total obstruct" in sent_lower:
+                pre_pct = 100
+            elif re.search(r"(\d{1,3})\s*(?:-\s*(\d{1,3}))?\s*%\s*(?:obstruct|occlu|stenosis|narrow|block)", sent_lower):
+                match = re.search(r"(\d{1,3})\s*(?:-\s*(\d{1,3}))?\s*%\s*(?:obstruct|occlu|stenosis|narrow|block)", sent_lower)
+                if match:
+                    val1 = int(match.group(1))
+                    val2 = int(match.group(2)) if match.group(2) else val1
+                    pre_pct = max(val1, val2)
+
+            # Recanalization percentage (e.g., "40% recanalization" means post = 60% obstruction)
+            recan_match = re.search(r"(\d{1,3})\s*%\s*(?:recanaliz|patent|open)", sent_lower)
+            if recan_match:
+                patency = int(recan_match.group(1))
+                if patency <= 100:
+                    post_pct = 100 - patency
+
+            # "complete recanalization" means 0% obstruction
+            if "complete recanaliz" in sent_lower or "fully patent" in sent_lower:
+                post_pct = 0
+
+            # Post-procedure obstruction patterns (e.g., "Post-procedure: 20% obstruction")
+            post_proc_match = re.search(
+                r"(?:post[-\s]?(?:procedure|intervention|treatment|op)|final(?:ly)?|result(?:ing)?).{0,30}?(\d{1,3})\s*%\s*(?:obstruct|occlu|stenosis|narrow|block)",
+                sent_lower
+            )
+            if post_proc_match and post_pct is None:
+                post_pct = int(post_proc_match.group(1))
+
+            # Also detect "improved to X% obstruction" as post
+            improved_match = re.search(
+                r"(?:improv|reduc|decreas).{0,30}?(\d{1,3})\s*%\s*(?:obstruct|occlu|stenosis|narrow|block)",
+                sent_lower
+            )
+            if improved_match and post_pct is None:
+                post_pct = int(improved_match.group(1))
+
+            # If no explicit location in sentence but we have modalities/percentages,
+            # associate with the current context location
+            if not locations_in_sentence and current_context_location:
+                if modalities_in_sentence or post_pct is not None:
+                    locations_in_sentence = [current_context_location]
+
+            # Associate data with locations
+            for loc in locations_in_sentence:
+                if loc not in found_locations:
+                    found_locations[loc] = {
+                        "location": loc,
+                        "pre_obstruction_pct": None,
+                        "post_obstruction_pct": None,
+                        "modalities": [],
+                        "notes": None,
+                    }
+
+                entry = found_locations[loc]
+
+                # Update pre/post percentages (don't overwrite if already set)
+                if pre_pct is not None and entry["pre_obstruction_pct"] is None:
+                    entry["pre_obstruction_pct"] = pre_pct
+                if post_pct is not None and entry["post_obstruction_pct"] is None:
+                    entry["post_obstruction_pct"] = post_pct
+
+                # Add modalities
+                for mod in modalities_in_sentence:
+                    if mod not in entry["modalities"]:
+                        entry["modalities"].append(mod)
+
+        # Convert to list
+        interventions = list(found_locations.values())
+        return interventions
+
+    def _get_primary_cao_site(self, interventions: list[dict]) -> dict | None:
+        """Select the primary (most clinically significant) CAO site.
+
+        Priority is based on:
+        1. Most proximal (central) location
+        2. Highest pre-procedure obstruction percentage
+        """
+        if not interventions:
+            return None
+
+        # Priority order (most proximal first)
+        priority_order = [
+            "Trachea", "distal_trachea", "RMS", "LMS",
+            "BI", "Bronchus Intermedius",
+            "RUL", "RML", "RLL", "LUL", "LLL"
+        ]
+
+        def sort_key(site: dict) -> tuple:
+            loc = site.get("location", "")
+            try:
+                loc_priority = priority_order.index(loc)
+            except ValueError:
+                loc_priority = len(priority_order)
+            # Secondary: highest pre_obstruction (use negative so higher values sort first)
+            pre_pct = site.get("pre_obstruction_pct") or 0
+            return (loc_priority, -pre_pct)
+
+        sorted_sites = sorted(interventions, key=sort_key)
+        return sorted_sites[0] if sorted_sites else None
+
+    def _extract_biopsy_sites(self, text: str) -> list[dict]:
+        """Extract multiple biopsy site locations from procedure text.
+
+        Supports non-lobar locations like "distal trachea", "carina", etc.
+        """
+        biopsy_sites: list[dict] = []
+        lowered = text.lower()
+
+        # Only extract if biopsy-related keywords present
+        if not any(kw in lowered for kw in ["biopsy", "biopsies", "biopsied", "sampled", "specimens"]):
+            return []
+
+        # Location patterns for biopsies
+        location_patterns = [
+            (r"distal\s+trachea", "distal_trachea", None),
+            (r"proximal\s+trachea", "proximal_trachea", None),
+            (r"carina", "carina", None),
+            (r"right\s+mainstem|RMS", "RMS", None),
+            (r"left\s+mainstem|LMS", "LMS", None),
+            (r"bronchus\s+intermedius|BI\b", "BI", None),
+            (r"right\s+upper\s+lobe|RUL", "RUL", "RUL"),
+            (r"right\s+middle\s+lobe|RML", "RML", "RML"),
+            (r"right\s+lower\s+lobe|RLL", "RLL", "RLL"),
+            (r"left\s+upper\s+lobe|LUL", "LUL", "LUL"),
+            (r"left\s+lower\s+lobe|LLL", "LLL", "LLL"),
+        ]
+
+        # Find biopsy mentions with locations
+        # Pattern: "biopsies ... from/of [location]" or "[location] ... biopsied"
+        for pattern, location, lobe in location_patterns:
+            # Check for location near biopsy keywords
+            context_patterns = [
+                rf"biops\w*\s+(?:were\s+)?(?:taken\s+|obtained\s+)?from\s+[^.]*?{pattern}",
+                rf"{pattern}[^.]*?biops\w*",
+                rf"from\s+(?:the\s+)?{pattern}[^.]*?(?:and|,)",
+            ]
+            for ctx_pat in context_patterns:
+                if re.search(ctx_pat, lowered, re.IGNORECASE):
+                    site_entry = {
+                        "location": location,
+                        "lobe": lobe,
+                        "segment": None,
+                        "specimens_count": None,
+                    }
+                    # Check if this location is already added
+                    if not any(s["location"] == location for s in biopsy_sites):
+                        biopsy_sites.append(site_entry)
+                    break
+
+        return biopsy_sites
 
     @staticmethod
     def _merge_llm_and_seed(llm_data: dict[str, Any], seed_data: dict[str, Any]) -> dict[str, Any]:
@@ -357,4 +1585,11 @@ class RegistryEngine:
         return normalized
 
 
-__all__ = ["RegistryEngine"]
+__all__ = [
+    "RegistryEngine",
+    "classify_procedure_families",
+    "filter_inapplicable_fields",
+    "validate_evidence_spans",
+    "PROCEDURE_FAMILIES",
+    "FIELD_APPLICABLE_TAGS",
+]

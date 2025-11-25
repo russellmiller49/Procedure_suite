@@ -143,7 +143,9 @@ class GeminiLLM:
             self._refresh_credentials()
         return self._credentials.token  # type: ignore[return-value]
 
-    def generate(self, prompt: str, response_schema: dict | None = None) -> str:
+    def generate(self, prompt: str, response_schema: dict | None = None, max_retries: int = 3) -> str:
+        import time
+
         if self.use_oauth:
             url = f"{self.base_url}/{self.model}:generateContent"
             access_token = self._get_access_token()
@@ -157,7 +159,7 @@ class GeminiLLM:
                  return "{}"
             url = f"{self.base_url}/{self.model}:generateContent?key={self.api_key}"
             headers = {"Content-Type": "application/json"}
-        
+
         generation_config = {"response_mime_type": "application/json"}
         if response_schema:
             generation_config["response_schema"] = response_schema
@@ -166,32 +168,54 @@ class GeminiLLM:
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": generation_config
         }
-        
-        try:
-            logger.info(f"Sending request to Gemini model: {self.model} (auth: {'OAuth2' if self.use_oauth else 'API key'})")
-            with httpx.Client(timeout=30.0) as client:
-                response = client.post(url, headers=headers, json=payload)
-                response.raise_for_status()
-                data = response.json()
-                
-                # Extract text from response structure
-                # { "candidates": [ { "content": { "parts": [ { "text": "..." } ] } } ] }
-                candidates = data.get("candidates", [])
-                if not candidates:
-                    logger.error("No candidates returned from Gemini API")
+
+        # Retry logic with exponential backoff
+        last_error = None
+        for attempt in range(max_retries):
+            try:
+                logger.info(f"Sending request to Gemini model: {self.model} (auth: {'OAuth2' if self.use_oauth else 'API key'}, attempt {attempt + 1}/{max_retries})")
+                # Increase timeout to 120s for complex extractions; use separate connect/read timeouts
+                timeout = httpx.Timeout(connect=10.0, read=120.0, write=30.0, pool=10.0)
+                with httpx.Client(timeout=timeout) as client:
+                    response = client.post(url, headers=headers, json=payload)
+                    response.raise_for_status()
+                    data = response.json()
+
+                    # Extract text from response structure
+                    # { "candidates": [ { "content": { "parts": [ { "text": "..." } ] } } ] }
+                    candidates = data.get("candidates", [])
+                    if not candidates:
+                        logger.error("No candidates returned from Gemini API")
+                        return "{}"
+
+                    text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                    return text
+            except httpx.RequestError as e:
+                last_error = e
+                logger.warning(f"Network error contacting Gemini API (attempt {attempt + 1}): {e}")
+                if attempt < max_retries - 1:
+                    wait_time = 2 ** attempt  # Exponential backoff: 1s, 2s, 4s
+                    logger.info(f"Retrying in {wait_time}s...")
+                    time.sleep(wait_time)
+            except httpx.HTTPStatusError as e:
+                # Don't retry on 4xx errors (client errors) - only on 5xx (server errors)
+                if e.response.status_code >= 500:
+                    last_error = e
+                    logger.warning(f"HTTP 5xx error from Gemini API (attempt {attempt + 1}): {e.response.text}")
+                    if attempt < max_retries - 1:
+                        wait_time = 2 ** attempt
+                        logger.info(f"Retrying in {wait_time}s...")
+                        time.sleep(wait_time)
+                else:
+                    logger.error(f"HTTP error from Gemini API: {e.response.text}")
                     return "{}"
-                
-                text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
-                return text
-        except httpx.RequestError as e:
-            logger.error(f"Network error contacting Gemini API: {e}")
-            return "{}"
-        except httpx.HTTPStatusError as e:
-            logger.error(f"HTTP error from Gemini API: {e.response.text}")
-            return "{}"
-        except Exception as e:
-            logger.error(f"Unexpected error in GeminiLLM: {e}")
-            return "{}"
+            except Exception as e:
+                logger.error(f"Unexpected error in GeminiLLM: {e}")
+                return "{}"
+
+        # All retries exhausted
+        logger.error(f"All {max_retries} retries exhausted. Last error: {last_error}")
+        return "{}"
 
 
 class DeterministicStubLLM:

@@ -12,6 +12,9 @@ class CodeSuggestion:
         self.modifiers = modifiers or []
         self.rvu_data = None
         self.groups = []
+        self.description = None
+        self.mer_role = None  # "primary", "secondary", or "add_on"
+        self.mer_explanation = None
 
 class EnhancedCPTCoder:
     def __init__(self, config: Optional[Dict] = None, use_llm_advisor: Optional[bool] = None):
@@ -48,38 +51,259 @@ class EnhancedCPTCoder:
 
     def _generate_codes(self, procedure_data: dict) -> list[CodeSuggestion]:
         """
-        Generate candidate codes. 
-        For this implementation, we use the Knowledge Base's synonym matcher
-        to find codes from the note text.
+        Generate candidate codes with CONSERVATIVE evidence-based filtering.
+
+        CODING PRINCIPLES:
+        1. High-value codes require STRONG positive evidence in the procedure note body
+        2. Indications, history, and boilerplate text do NOT count as procedure evidence
+        3. When ambiguous, prefer NOT billing (precision over recall for high-RVU codes)
+        4. Only emit codes present in the IP golden knowledge base
         """
         note_text = procedure_data.get("note_text") or procedure_data.get("findings", "") or ""
-        
-        # Use IP KB to find codes from text
-        candidates_from_text = self.ip_kb.codes_from_text(note_text)
-        
-        # Post-processing for EBUS-TBNA detection gap
-        # If we found TBNA (31629) but not EBUS-TBNA (31652/53), and text implies EBUS-TBNA
-        if "31629" in candidates_from_text and not any(c in candidates_from_text for c in ["31652", "31653"]):
-            lower_text = note_text.lower()
-            has_ebus = "ebus" in lower_text or "endobronchial ultrasound" in lower_text
-            has_tbna = "tbna" in lower_text or "needle aspiration" in lower_text
-            
-            if has_ebus and has_tbna:
-                candidates_from_text.remove("31629")
-                candidates_from_text.add("31652")
+        text_lower = note_text.lower()
 
-        # Post-processing: Suppress standard TBNA if EBUS-TBNA is present
-        # (Avoids double coding 31629 when 31652/53 is already capturing the aspiration)
-        if any(c in candidates_from_text for c in ["31652", "31653"]):
+        # Use IP KB to find groups and codes from text
+        groups_from_text = self.ip_kb.groups_from_text(note_text)
+        evidence = getattr(self.ip_kb, "last_group_evidence", {}) or {}
+        candidates_from_text = self.ip_kb.codes_for_groups(groups_from_text)
+
+        def discard(code: str) -> None:
+            if code in candidates_from_text:
+                candidates_from_text.discard(code)
+            plus = f"+{code}"
+            if plus in candidates_from_text:
+                candidates_from_text.discard(plus)
+
+        # ========== OUT-OF-DOMAIN CODE FILTER ==========
+        # Only emit codes that exist in the IP knowledge base
+        valid_cpts = self.ip_kb.all_relevant_cpt_codes()
+        invalid_codes = set()
+        for code in candidates_from_text:
+            norm_code = code.lstrip("+")
+            if norm_code not in valid_cpts:
+                invalid_codes.add(code)
+        for code in invalid_codes:
+            candidates_from_text.discard(code)
+
+        # ========== LINEAR vs RADIAL EBUS LOGIC ==========
+        # Upgrade standard TBNA to EBUS-TBNA only when linear/mediastinal EBUS is present
+        if "bronchoscopy_ebus_linear" in groups_from_text:
             if "31629" in candidates_from_text:
-                candidates_from_text.remove("31629")
+                candidates_from_text.discard("31629")
+            candidates_from_text.add("31652")
             if "+31633" in candidates_from_text:
-                candidates_from_text.remove("+31633")
+                candidates_from_text.discard("+31633")
+                candidates_from_text.add("31653")
+
+        # Avoid linear EBUS codes in radial-only peripheral cases
+        if "bronchoscopy_ebus_radial" in groups_from_text and "bronchoscopy_ebus_linear" not in groups_from_text:
+            discard("31652")
+            discard("31653")
+
+        # ========== NAVIGATION (31627) - CONSERVATIVE ==========
+        nav_ev = evidence.get("bronchoscopy_navigation", {})
+        if not (nav_ev.get("platform") and (nav_ev.get("concept") or nav_ev.get("direct"))):
+            discard("31627")
+
+        # ========== STENT CODES - VERY CONSERVATIVE ==========
+        # Per requirements: stent codes require strong evidence
+        stent_ev = evidence.get("bronchoscopy_therapeutic_stent", {})
+        has_stent_evidence = (
+            stent_ev.get("stent_word") and
+            stent_ev.get("placement_action") and
+            (stent_ev.get("tracheal_location") or stent_ev.get("bronchial_location")) and
+            not stent_ev.get("stent_negated")  # Check for negation like "no stent was placed"
+        )
+
+        if not has_stent_evidence:
+            # No strong stent evidence - remove ALL stent codes
+            for code in ("31631", "31636", "31638"):
+                discard(code)
+            discard("31637")
+        else:
+            # Determine which stent code to use based on anatomic location
+            # Per CPT coding rules (from ip_golden_knowledge_v2_2.json):
+            #   31631 = Tracheal stent (including carina)
+            #   31636 = Bronchial stent (initial bronchus - mainstem or lobar)
+            #   +31637 = Each additional major bronchus stented
+            has_tracheal = stent_ev.get("tracheal_location")
+            has_bronchial = stent_ev.get("bronchial_location")
+
+            if has_tracheal and not has_bronchial:
+                # Tracheal stent only - use 31631
+                discard("31636")
+            elif has_bronchial and not has_tracheal:
+                # Bronchial stent only - use 31636
+                discard("31631")
+            elif has_tracheal and has_bronchial:
+                # Both tracheal and bronchial - can bill both 31631 and 31636
+                pass
+            else:
+                # Should not reach here if has_stent_evidence is True
+                discard("31631")
+                discard("31636")
+
+            # +31637 requires multiple separate bronchial stents (additional to 31636)
+            if not stent_ev.get("multiple_stents"):
+                discard("31637")
+
+            # 31638 (revision) requires pre-existing stent + revision action
+            if not (stent_ev.get("revision_action") and stent_ev.get("has_preexisting")):
+                discard("31638")
+
+        # ========== BAL (31624) - CONSERVATIVE ==========
+        bal_ev = evidence.get("bronchoscopy_bal", {})
+        if not bal_ev.get("bal_explicit"):
+            discard("31624")
+        # If there's pleural context, don't code as BAL
+        if bal_ev.get("pleural_context"):
+            discard("31624")
+
+        # ========== IPC (32550/32552) - CONSERVATIVE ==========
+        ipc_ev = evidence.get("tunneled_pleural_catheter", {})
+        if not (ipc_ev.get("ipc_mentioned") and ipc_ev.get("insertion_action")):
+            discard("32550")
+        # Never bill removal if there's no explicit removal action
+        if not ipc_ev.get("removal_action"):
+            discard("32552")
+        # Never bill both insertion and removal together
+        if ipc_ev.get("removal_action") and ipc_ev.get("insertion_action"):
+            # Ambiguous - default to insertion
+            discard("32552")
+
+        # ========== ADDITIONAL LOBE TBLB (+31632) - CONSERVATIVE ==========
+        lobe_ev = evidence.get("bronchoscopy_biopsy_additional_lobe", {})
+        if lobe_ev.get("lobe_count", 0) < 2 and not lobe_ev.get("explicit_multilobe"):
+            discard("31632")
+
+        # ========== LINEAR EBUS (31652/31653) - CONSERVATIVE ==========
+        linear_ev = evidence.get("bronchoscopy_ebus_linear", {})
+        if not (linear_ev.get("ebus") and linear_ev.get("station_context")):
+            discard("31652")
+            discard("31653")
+        else:
+            # Use station count to determine code
+            station_count = linear_ev.get("station_count", 0)
+            if station_count >= 3:
+                # Use 31653 for 3+ stations
+                discard("31652")
+            else:
+                # Use 31652 for 1-2 stations
+                discard("31653")
+
+        # ========== RADIAL EBUS (+31654) - CONSERVATIVE ==========
+        radial_ev = evidence.get("bronchoscopy_ebus_radial", {})
+        if not radial_ev.get("radial"):
+            discard("31654")
+
+        # ========== TUMOR DEBULKING (31640/31641) - ENSURE PROPER CODING ==========
+        # 31640 = mechanical excision (snare, forceps)
+        # 31641 = ablative destruction (APC, laser, cryo)
+        # Per golden knowledge: when stent is placed, debulking to facilitate stent is bundled
+        ablation_terms = [
+            "apc", "argon", "electrocautery", "cautery", "laser", "ablation",
+            "cryotherapy", "cryoablation", "rfa", "radiofrequency"
+        ]
+        excision_terms = [
+            "snare", "forceps excision", "mechanical debulking", "excision of tumor",
+            "tumor excision", "debridement"
+        ]
+        has_ablation = any(t in text_lower for t in ablation_terms)
+        has_excision = any(t in text_lower for t in excision_terms)
+
+        # If stent is being placed, debulking is bundled - remove 31640/31641
+        if has_stent_evidence:
+            discard("31640")
+            discard("31641")
+        else:
+            # Not stent placement - check for standalone debulking
+            # Prefer 31641 for ablative, 31640 for mechanical
+            if "31640" in candidates_from_text and "31641" in candidates_from_text:
+                # Both present - choose based on predominant technique
+                if has_ablation:
+                    discard("31640")  # Keep 31641
+                elif has_excision:
+                    discard("31641")  # Keep 31640
+                else:
+                    # Default to 31641 if unclear
+                    discard("31640")
+
+        # ========== THORACOSCOPY - ONE CODE PER HEMITHORAX ==========
+        # Per coding rules:
+        # - 32601: Diagnostic only (NO biopsy)
+        # - 32604: Pericardial with biopsy
+        # - 32606: Mediastinal with biopsy
+        # - 32609: Pleural with biopsy
+        # - 32602/32607/32608: Lung parenchyma
+        #
+        # RULES:
+        # 1. Only ONE thoracoscopy code per session
+        # 2. Biopsy codes trump diagnostic-only (32601)
+        # 3. Select based on anatomic site
+        # 4. Temporary drains are bundled into thoracoscopy
+
+        thoracoscopy_ev = evidence.get("thoracoscopy", {})
+        thoracoscopy_codes_present = candidates_from_text & {
+            "32601", "32602", "32604", "32606", "32607", "32608", "32609"
+        }
+
+        if thoracoscopy_codes_present:
+            has_biopsy_code = bool(thoracoscopy_codes_present & {"32604", "32606", "32609", "32602", "32607", "32608"})
+
+            # Rule: If any biopsy code present, remove diagnostic-only (32601)
+            if has_biopsy_code and "32601" in candidates_from_text:
+                discard("32601")
+
+            # Rule: Select ONE thoracoscopy code based on anatomic site priority
+            # Priority: pleural > pericardial > mediastinal > lung > diagnostic
+            remaining_thoracoscopy = candidates_from_text & {
+                "32601", "32604", "32606", "32609", "32607"
+            }
+
+            if len(remaining_thoracoscopy) > 1:
+                # Multiple thoracoscopy codes - select based on documented site
+                pleural_site = thoracoscopy_ev.get("pleural_site", False)
+                pericardial_site = thoracoscopy_ev.get("pericardial_site", False)
+                mediastinal_site = thoracoscopy_ev.get("mediastinal_site", False)
+                lung_site = thoracoscopy_ev.get("lung_site", False)
+
+                # Keep only the code matching the documented site
+                codes_to_keep = set()
+                if pleural_site and "32609" in remaining_thoracoscopy:
+                    codes_to_keep.add("32609")
+                if pericardial_site and "32604" in remaining_thoracoscopy:
+                    codes_to_keep.add("32604")
+                if mediastinal_site and "32606" in remaining_thoracoscopy:
+                    codes_to_keep.add("32606")
+                if lung_site and "32607" in remaining_thoracoscopy:
+                    codes_to_keep.add("32607")
+
+                # If no specific site matched but biopsy performed, keep one
+                if not codes_to_keep and thoracoscopy_ev.get("has_biopsy", False):
+                    # Default priority: 32609 > 32604 > 32606 > 32607
+                    for preferred in ["32609", "32604", "32606", "32607"]:
+                        if preferred in remaining_thoracoscopy:
+                            codes_to_keep.add(preferred)
+                            break
+
+                # If still no code selected and diagnostic present
+                if not codes_to_keep and "32601" in remaining_thoracoscopy:
+                    codes_to_keep.add("32601")
+
+                # Remove all thoracoscopy codes not in codes_to_keep
+                for code in remaining_thoracoscopy - codes_to_keep:
+                    discard(code)
+
+            # Rule: Temporary drains during thoracoscopy are bundled
+            if thoracoscopy_ev.get("temporary_drain_bundled", False):
+                # Remove pleural drainage codes that are temporary
+                for drain_code in ["32556", "32557"]:
+                    discard(drain_code)
 
         codes: list[CodeSuggestion] = []
         for cpt in sorted(candidates_from_text):
             codes.append(CodeSuggestion(cpt))
-            
+
         return codes
 
     def code_procedure(self, procedure_data: dict) -> Dict[str, Any]:
@@ -88,68 +312,94 @@ class EnhancedCPTCoder:
         """
         # 1) Generate candidate codes
         codes: list[CodeSuggestion] = self._generate_codes(procedure_data)
+        initial_cpts = [c.cpt for c in codes]
 
-        # 2) Apply bundling rules from ip_coding_billing
-        bundled_cpt_list = self.ip_kb.apply_bundling([c.cpt for c in codes])
+        # 2) Apply bundling rules from ip_coding_billing (with explanations)
+        bundled_cpt_list, bundling_decisions = self.ip_kb.apply_bundling(initial_cpts, return_decisions=True)
         bundled_set = set(bundled_cpt_list)
 
         codes = [c for c in codes if c.cpt in bundled_set]
 
-        # 3) Attach group/category metadata and fetch base RVU for sorting
+        # 3) Attach group/category metadata, description, and fetch base RVU for sorting
         code_data_map = {}
         locality = procedure_data.get("locality", "00")
         setting = procedure_data.get("setting", "facility")
 
         for c in codes:
             c.groups = self.ip_kb.get_groups_for_code(c.cpt)
-            
+
             # Normalize for lookup
             norm_cpt = c.cpt.lstrip("+")
             is_addon = self.ip_kb.is_add_on(c.cpt)
-            
+
             # Get base RVU/Payment for sorting
             base_rvu = self.rvu_calc.calculate_procedure_rvu(
-                cpt_code=norm_cpt, 
-                locality=locality, 
+                cpt_code=norm_cpt,
+                locality=locality,
                 setting=setting
             )
-            
+
+            # Get CPT info including description - try KB first, then RVU data
+            cpt_info = self.ip_kb.get_cpt_info(c.cpt)
+            if cpt_info and cpt_info.description:
+                c.description = cpt_info.description
+            elif base_rvu and base_rvu.get("description") and base_rvu["description"] != "Generated Description":
+                c.description = base_rvu["description"]
+            else:
+                c.description = f"CPT {norm_cpt}"
+
             payment_val = float(base_rvu.get("payment_amount", 0.0)) if base_rvu else 0.0
-            
+
             code_data_map[c.cpt] = {
                 "norm_cpt": norm_cpt,
                 "is_addon": is_addon,
                 "payment_val": payment_val
             }
 
-        # 4) Sort and Assign Multipliers (MPPR Logic)
+        # 4) Sort and Assign Multipliers (Multiple Endoscopy Rule / MPPR Logic)
         # Standard Rule: Primary (Highest Value) @ 100%, Others @ 50%. Add-ons @ 100% (exempt).
-        
+
         main_codes = [c for c in codes if not code_data_map[c.cpt]["is_addon"]]
         addon_codes = [c for c in codes if code_data_map[c.cpt]["is_addon"]]
-        
+
         # Sort main codes by payment value descending
         main_codes.sort(key=lambda c: code_data_map[c.cpt]["payment_val"], reverse=True)
-        
+
         procedures = []
         ordered_codes = [] # Track order for final result
-        
-        # Process Main Codes
+
+        # Process Main Codes with MER explanations
+        primary_code = main_codes[0] if main_codes else None
         for i, code in enumerate(main_codes):
             multiplier = 1.0 if i == 0 else 0.5
+
+            # Assign MER role and explanation
+            if i == 0:
+                code.mer_role = "primary"
+                code.mer_explanation = "Primary procedure - paid at 100% of the fee schedule"
+            else:
+                code.mer_role = "secondary"
+                code.mer_explanation = (
+                    f"Multiple Endoscopy Rule: Secondary procedure paid at 50% because "
+                    f"{primary_code.cpt} ({primary_code.description}) is the higher-value primary procedure"
+                )
+
             procedures.append({
                 "cpt_code": code_data_map[code.cpt]["norm_cpt"],
                 "modifiers": code.modifiers,
                 "multiplier": multiplier
             })
             ordered_codes.append(code)
-            
+
         # Process Add-on Codes (Exempt from reduction)
         for code in addon_codes:
+            code.mer_role = "add_on"
+            code.mer_explanation = "Add-on code - exempt from Multiple Endoscopy Rule reduction, paid at 100%"
+
             procedures.append({
                 "cpt_code": code_data_map[code.cpt]["norm_cpt"],
                 "modifiers": code.modifiers,
-                "multiplier": 1.0 
+                "multiplier": 1.0
             })
             ordered_codes.append(code)
 
@@ -170,11 +420,25 @@ class EnhancedCPTCoder:
         code_summaries = []
         # Return in the calculated order (Main -> Add-ons)
         for c in ordered_codes:
+            rationale_parts = []
+            if c.groups:
+                rationale_parts.append(f"Detected via knowledge base groups: {', '.join(c.groups)}")
+            else:
+                rationale_parts.append("Detected via IP knowledge base patterns")
+            if c.mer_explanation:
+                rationale_parts.append(c.mer_explanation)
+            if code_data_map.get(c.cpt, {}).get("is_addon"):
+                rationale_parts.append("Add-on code exempt from Multiple Endoscopy Rule reductions")
+
             summary = {
                 "cpt": c.cpt,
+                "description": c.description,
                 "modifiers": c.modifiers,
                 "groups": c.groups,
-                "rvu_data": c.rvu_data
+                "rvu_data": c.rvu_data,
+                "mer_role": c.mer_role,
+                "mer_explanation": c.mer_explanation,
+                "rationale": rationale_parts,
             }
             code_summaries.append(summary)
 
@@ -224,8 +488,43 @@ class EnhancedCPTCoder:
             "estimated_payment": rvu_results["total_payment"],
             "locality": locality,
             "setting": setting,
+            "bundled_codes": bundling_decisions,  # Codes not billed due to bundling rules
             "llm_suggestions": llm_suggestions,
             "llm_disagreements": llm_disagreements,
         }
+
+        # Optional strict JSON output for LLM assistant mode
+        output_mode = procedure_data.get("output_mode") or procedure_data.get("mode")
+        if output_mode == "llm_assistant":
+            bundled_norm = {c.lstrip("+") for c in bundled_cpt_list}
+            excluded_or_bundled = []
+            for cpt in initial_cpts:
+                norm = cpt.lstrip("+")
+                if norm not in bundled_norm:
+                    info = self.ip_kb.get_cpt_info(cpt)
+                    excluded_or_bundled.append(
+                        {
+                            "cpt": norm,
+                            "description": info.description if info else f"CPT {norm}",
+                            "reason": "Bundled via knowledge base rules",
+                        }
+                    )
+
+            billed_codes_payload = []
+            for c in ordered_codes:
+                info = self.ip_kb.get_cpt_info(c.cpt)
+                billed_codes_payload.append(
+                    {
+                        "cpt": c.cpt.lstrip("+"),
+                        "description": info.description if info else f"CPT {c.cpt}",
+                        "rationale": f"Detected via groups: {', '.join(c.groups)}" if c.groups else "Detected via knowledge base",
+                    }
+                )
+
+            case_summary["llm_assistant_payload"] = {
+                "billed_codes": billed_codes_payload,
+                "excluded_or_bundled_codes": excluded_or_bundled,
+                "comments": "Knowledge-base driven CPT selection; modifiers not inferred in this mode.",
+            }
 
         return case_summary

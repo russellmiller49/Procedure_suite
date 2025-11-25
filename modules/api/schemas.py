@@ -18,6 +18,7 @@ class CoderRequest(BaseModel):
     explain: bool = False
     locality: str = "00"
     setting: str = "facility"
+    mode: str | None = None
 
 
 CoderResponse = CoderOutput
