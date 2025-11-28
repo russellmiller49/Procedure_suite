@@ -67,6 +67,25 @@ class KnowledgeMeta(BaseModel):
     sha256: str
 
 
+# QA Sandbox schemas
+class QARunRequest(BaseModel):
+    """Request schema for QA sandbox endpoint."""
+    note_text: str
+    modules_run: str = "all"  # "reporter", "coder", "registry", or "all"
+    procedure_type: str | None = None
+
+
+class QARunResponse(BaseModel):
+    """Response schema for QA sandbox endpoint."""
+    reporter_output: dict[str, Any] | None = None
+    coder_output: dict[str, Any] | None = None
+    registry_output: dict[str, Any] | None = None
+    reporter_version: str | None = None
+    coder_version: str | None = None
+    repo_branch: str | None = None
+    repo_commit_sha: str | None = None
+
+
 __all__ = [
     "CoderRequest",
     "CoderResponse",
@@ -77,4 +96,6 @@ __all__ = [
     "RenderRequest",
     "RenderResponse",
     "KnowledgeMeta",
+    "QARunRequest",
+    "QARunResponse",
 ]

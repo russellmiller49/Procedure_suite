@@ -12,29 +12,34 @@ function formatRegistryValue(key, value) {
         return '<span class="text-muted">null</span>';
     }
 
-    // Handle simple arrays (like linear_ebus_stations: ["4R", "11L"])
+    // Handle arrays
     if (Array.isArray(value)) {
         // Empty array
         if (value.length === 0) {
             return '<span class="text-muted">[]</span>';
         }
 
-        // Array of primitives (strings, numbers)
-        if (value.every(item => typeof item !== 'object' || item === null)) {
-            return value.join(', ');
-        }
-
-        // Array of objects - format specially for EBUS station details
+        // Special handling for ebus_stations_detail - MUST come first before primitive check
         if (key === 'ebus_stations_detail') {
             return formatEbusStationDetails(value);
+        }
+
+        // Check if array contains only primitives (strings, numbers, booleans, null)
+        const allPrimitives = value.every(item => {
+            const t = typeof item;
+            return item === null || t === 'string' || t === 'number' || t === 'boolean';
+        });
+
+        if (allPrimitives) {
+            return value.join(', ');
         }
 
         // Array of objects - format as expandable JSON
         return `<pre class="mb-0 small bg-light p-1 border rounded" style="max-height: 150px; overflow-y: auto;">${JSON.stringify(value, null, 2)}</pre>`;
     }
 
-    // Handle objects
-    if (typeof value === 'object') {
+    // Handle objects (but not null, which typeof also reports as 'object')
+    if (typeof value === 'object' && value !== null) {
         return `<pre class="mb-0 small bg-light p-1 border rounded" style="max-height: 150px; overflow-y: auto;">${JSON.stringify(value, null, 2)}</pre>`;
     }
 
@@ -43,7 +48,7 @@ function formatRegistryValue(key, value) {
         return value ? '<span class="badge bg-success">true</span>' : '<span class="badge bg-secondary">false</span>';
     }
 
-    // Default: return as-is
+    // Default: return as-is (strings, numbers)
     return String(value);
 }
 

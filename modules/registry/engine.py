@@ -178,13 +178,14 @@ def validate_evidence_spans(
             # Check if span text appears anywhere in the note (offset might be wrong but text is real)
             if span_text and span_text in note_text:
                 # Special handling for station evidence - station "7" alone is too ambiguous
-                # It could match dates, times, ages, etc. Require station context.
+                # It could match dates, times, ages, etc. Require explicit station context.
                 is_station_field = field in ("linear_ebus_stations", "ebus_stations_sampled", "ebus_stations_detail")
-                if is_station_field and span_text == "7":
-                    # For station 7, require explicit station context like "station 7" or "7:"
-                    station_7_pattern = r"(?:station\s*7\b|\b7\s*[-:]\s*(?:\d|subcarinal)?|subcarinal)"
-                    if not re.search(station_7_pattern, note_text, re.IGNORECASE):
-                        # Skip this span - "7" appears but not in station context
+                if is_station_field and span_text.strip() in ("7", "station 7"):
+                    # For station 7, require EXPLICIT "station 7" with sampling context
+                    # or "7:" followed by EBUS details (not just any "7" in the text)
+                    station_7_strict_pattern = r"(?:station\s+7\s*[:\-]|station\s*7\s+(?:was\s+)?(?:sampl|biops|needle|pass)|subcarinal\s+(?:lymph\s+)?node)"
+                    if not re.search(station_7_strict_pattern, note_text, re.IGNORECASE):
+                        # Skip this span - "7" appears but not in clear EBUS station context
                         continue
 
                 # Fix the offsets to where it actually appears
@@ -630,6 +631,12 @@ class RegistryEngine:
         # Pass procedure_families to gate EBUS-specific extractions
         self._apply_ebus_heuristics(merged_data, note_text, procedure_families)
         self._apply_pleural_heuristics(merged_data, note_text, procedure_families)
+
+        # Clear bronch_tbbx fields for EBUS-only cases
+        # EBUS-TBNA (transbronchial needle aspiration) is NOT the same as TBBx (transbronchial biopsy)
+        # For pure EBUS staging, bronch_num_tbbx and bronch_tbbx_tool should be null
+        self._apply_ebus_only_bronch_cleanup(merged_data, note_text, procedure_families)
+
         if station_list and not merged_data.get("linear_ebus_stations") and "EBUS" in procedure_families:
             merged_data["linear_ebus_stations"] = station_list
 
@@ -748,14 +755,18 @@ class RegistryEngine:
             # Build patterns that match the station in typical EBUS contexts
             # Be careful with station "7" which is just a number - require more context
             if station_upper == "7":
-                # Station 7 needs explicit "station 7" or "7:" or similar context
+                # Station 7 needs EXPLICIT "station 7" with sampling context
+                # This is more strict than before to prevent false positives from
+                # random "7" occurrences (times, dates, ages, etc.)
                 patterns = [
-                    rf"station\s*7\b",
-                    rf"\b7\s*[-:]\s*(?:subcarinal|aorto|paratracheal)?",
-                    rf"(?:subcarinal|station\s*7|Level\s*7)",
+                    rf"station\s+7\s*[:\-]",  # "station 7:" or "station 7-"
+                    rf"station\s*7\s+(?:was\s+)?(?:sampl|biops|needle|pass|aspirat)",  # "station 7 was sampled"
+                    rf"subcarinal\s+(?:lymph\s+)?node",  # "subcarinal node" (station 7 synonym)
+                    rf"(?:sampl|biops|needle|pass).{{0,30}}station\s*7\b",  # sampling context before station 7
                 ]
             else:
                 # For stations like 4R, 11L - more flexible matching
+                # These are alphanumeric and unlikely to match random text
                 patterns = [
                     rf"\b{re.escape(station_upper)}\b",
                     rf"station\s*{re.escape(station_upper)}",
@@ -1190,6 +1201,54 @@ class RegistryEngine:
                 data["disposition"] = "Floor Admission"
             elif "discharge" in lowered and "home" in lowered:
                 data["disposition"] = "Discharge Home"
+
+    def _apply_ebus_only_bronch_cleanup(
+        self, data: dict[str, Any], text: str, procedure_families: Set[str]
+    ) -> None:
+        """Clear bronch_tbbx fields for EBUS-only staging cases.
+
+        EBUS-TBNA (TransBronchial Needle Aspiration) is NOT the same as TBBx (TransBronchial Biopsy).
+        For pure EBUS staging cases without actual parenchymal/mucosal biopsy:
+        - bronch_num_tbbx and bronch_tbbx_tool should remain null
+        - All sampling detail belongs in EBUS-specific fields
+
+        This method clears any bronch_tbbx fields that may have been hallucinated
+        by the LLM confusing TBNA with TBBx.
+        """
+        # Only apply cleanup for EBUS-only cases
+        # If other biopsy procedures are present, keep bronch fields
+        biopsy_families = {"BIOPSY", "CRYO_BIOPSY", "CAO", "NAVIGATION"}
+
+        # Check if this is an EBUS-only case (no other biopsy procedures)
+        is_ebus_only = "EBUS" in procedure_families and not procedure_families.intersection(biopsy_families)
+
+        if not is_ebus_only:
+            return
+
+        # Additional text-based validation: check if there's explicit TBBx/forceps biopsy
+        # Even if procedure_families doesn't include BIOPSY, text might have it
+        lowered = text.lower()
+        has_actual_tbbx = any([
+            re.search(r"transbronchial\s+(?:biops|forceps)", lowered),
+            re.search(r"endobronchial\s+biops", lowered),
+            re.search(r"forceps\s+biops", lowered),
+            re.search(r"tbbx|tbb\b", lowered),
+            re.search(r"parenchymal\s+biops", lowered),
+            re.search(r"mucosal\s+biops", lowered),
+        ])
+
+        if has_actual_tbbx:
+            return
+
+        # This is a pure EBUS-TBNA case - clear bronch_tbbx fields
+        bronch_tbbx_fields = [
+            "bronch_num_tbbx",
+            "bronch_tbbx_tool",
+        ]
+
+        for field in bronch_tbbx_fields:
+            if field in data and data[field] is not None:
+                data[field] = None
 
     def _apply_pleural_heuristics(
         self, data: dict[str, Any], text: str, procedure_families: Set[str] | None = None

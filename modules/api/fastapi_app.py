@@ -28,6 +28,8 @@ from modules.api.schemas import (
     RenderResponse,
     VerifyRequest,
     VerifyResponse,
+    QARunRequest,
+    QARunResponse,
 )
 
 from modules.common.knowledge import knowledge_hash, knowledge_version
@@ -85,6 +87,7 @@ async def root(request: Request) -> Any:
             "registry": "/v1/registry/run",
             "report_verify": "/report/verify",
             "report_render": "/report/render",
+            "qa_run": "/qa/run",
         },
         "note": "Coder now uses EnhancedCPTCoder with RVU calculations and IP knowledge base bundling",
     }
@@ -309,6 +312,113 @@ def _serialize_evidence(evidence: dict[str, list[Span]] | None) -> dict[str, lis
 def _span_to_dict(span: Span) -> dict[str, Any]:
     data = asdict(span)
     return data
+
+
+# --- QA Sandbox Endpoint ---
+
+def _get_git_info() -> tuple[str | None, str | None]:
+    """Extract git branch and commit SHA for version tracking."""
+    import subprocess
+    try:
+        branch = subprocess.check_output(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+            stderr=subprocess.DEVNULL
+        ).decode().strip()
+        commit = subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"],
+            stderr=subprocess.DEVNULL
+        ).decode().strip()
+        return branch, commit
+    except Exception:
+        return None, None
+
+
+# Configuration for QA sandbox
+DEMO_MODE = os.getenv("DEMO_MODE", "false").lower() == "true"
+REPORTER_VERSION = os.getenv("REPORTER_VERSION", "v0.2.0")
+CODER_VERSION = os.getenv("CODER_VERSION", "v0.2.0")
+
+
+@app.post("/qa/run", response_model=QARunResponse)
+async def qa_run(payload: QARunRequest) -> QARunResponse:
+    """
+    QA sandbox endpoint: runs reporter, coder, and/or registry on input text.
+
+    This endpoint does NOT persist data - that is handled by the Next.js layer.
+    Returns outputs + version metadata for tracking.
+    """
+    from fastapi import HTTPException
+    from proc_report.engine import compose_report_from_text
+
+    note_text = payload.note_text
+    modules_run = payload.modules_run
+    procedure_type = payload.procedure_type
+
+    reporter_output = None
+    coder_output = None
+    registry_output = None
+    branch, commit = _get_git_info()
+
+    try:
+        # Run registry if requested
+        if modules_run in ("registry", "all"):
+            eng = RegistryEngine()
+            result = eng.run(note_text, explain=True)
+            if isinstance(result, tuple):
+                record, evidence = result
+            else:
+                record, evidence = result, getattr(result, 'evidence', {})
+
+            registry_output = {
+                "record": record.model_dump() if hasattr(record, 'model_dump') else dict(record),
+                "evidence": _serialize_evidence(evidence) if evidence else {},
+            }
+
+        # Run reporter if requested
+        if modules_run in ("reporter", "all"):
+            # Use compose_report_from_text for dictation-style input
+            hints = {}
+            if procedure_type:
+                hints["procedure_type"] = procedure_type
+
+            report, markdown = compose_report_from_text(note_text, hints)
+            reporter_output = {
+                "markdown": markdown,
+                "procedure_core": report.procedure_core.model_dump() if hasattr(report.procedure_core, "model_dump") else {},
+                "indication": report.indication,
+                "postop": report.postop,
+            }
+
+        # Run coder if requested
+        if modules_run in ("coder", "all"):
+            procedure_data = {
+                "note_text": note_text,
+                "locality": "00",  # Default locality
+                "setting": "facility",
+            }
+            if procedure_type:
+                procedure_data["procedure_type"] = procedure_type
+
+            coder_result = _enhanced_coder.code_procedure(procedure_data)
+            coder_output = {
+                "codes": coder_result.get("codes", []),
+                "total_work_rvu": coder_result.get("total_work_rvu"),
+                "estimated_payment": coder_result.get("estimated_payment"),
+                "bundled_codes": coder_result.get("bundled_codes", []),
+            }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    return QARunResponse(
+        reporter_output=reporter_output,
+        coder_output=coder_output,
+        registry_output=registry_output,
+        reporter_version=REPORTER_VERSION,
+        coder_version=CODER_VERSION,
+        repo_branch=branch,
+        repo_commit_sha=commit,
+    )
 
 
 __all__ = ["app"]
