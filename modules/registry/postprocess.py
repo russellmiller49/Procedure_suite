@@ -40,6 +40,9 @@ __all__ = [
     "normalize_airway_device_size",
     "normalize_nav_registration_method",
     "normalize_assistant_name_single",
+    "normalize_ventilation_mode",
+    "normalize_procedure_setting",
+    "normalize_bronch_location_lobe",
     "POSTPROCESSORS",
 ]
 
@@ -119,6 +122,8 @@ def normalize_airway_type(raw: Any) -> str | None:
 
     mapping = {
         "native": "Native",
+        "native airway": "Native",
+        "native airway with bite block": "Native",
         "natural": "Native",
         "natural airway": "Native",
         "spontaneous": "Native",
@@ -149,7 +154,7 @@ def normalize_airway_type(raw: Any) -> str | None:
         return "LMA"
     if "ett" in text or "endotracheal" in text or "et tube" in text:
         return "ETT"
-    if "native" in text or "natural airway" in text:
+    if "native" in text or "natural airway" in text or "bite block" in text:
         return "Native"
 
     return None
@@ -1083,6 +1088,172 @@ def normalize_ablation_modality(raw: Any) -> str | None:
     return None
 
 
+def normalize_ventilation_mode(raw: Any) -> str | None:
+    """Normalize ventilation mode to schema enum values.
+
+    Schema enum: ["Spontaneous", "Controlled Mechanical Ventilation", "Jet Ventilation"]
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"none", "n/a", "na", "null"}:
+        return None
+
+    mapping = {
+        # Controlled variants
+        "volume control": "Controlled Mechanical Ventilation",
+        "pressure control": "Controlled Mechanical Ventilation",
+        "controlled mechanical ventilation": "Controlled Mechanical Ventilation",
+        "controlled": "Controlled Mechanical Ventilation",
+        "mechanical ventilation": "Controlled Mechanical Ventilation",
+        "ippv": "Controlled Mechanical Ventilation",
+        "cmv": "Controlled Mechanical Ventilation",
+        # Spontaneous variants
+        "spontaneous": "Spontaneous",
+        "spontaneous ventilation": "Spontaneous",
+        "spontaneous ventilation with supplemental oxygen": "Spontaneous",
+        "spontaneous ventilation on supplemental oxygen": "Spontaneous",
+        "spontaneous ventilation with pressure support": "Spontaneous",
+        "pressure support": "Spontaneous",
+        "cpap": "Spontaneous",
+        # Jet variants
+        "jet ventilation": "Jet Ventilation",
+        "jet": "Jet Ventilation",
+        "hfjv": "Jet Ventilation",
+        "high frequency jet ventilation": "Jet Ventilation",
+    }
+
+    if text in mapping:
+        return mapping[text]
+
+    # Fuzzy matching
+    if "jet" in text:
+        return "Jet Ventilation"
+    if "spontaneous" in text or "pressure support" in text:
+        return "Spontaneous"
+    if "controlled" in text or "volume control" in text or "pressure control" in text or "mechanical" in text:
+        return "Controlled Mechanical Ventilation"
+
+    return None
+
+
+def normalize_procedure_setting(raw: Any) -> str | None:
+    """Normalize procedure setting to schema enum values.
+
+    Schema enum: ["Bronchoscopy Suite", "Operating Room", "ICU", "Bedside", "Office/Clinic"]
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"none", "n/a", "na", "null"}:
+        return None
+
+    mapping = {
+        "bronchoscopy suite": "Bronchoscopy Suite",
+        "bronchoscopy room": "Bronchoscopy Suite",
+        "bronch suite": "Bronchoscopy Suite",
+        "hybrid bronchoscopy suite": "Bronchoscopy Suite",
+        "procedure room": "Bronchoscopy Suite",
+        "endoscopy suite": "Bronchoscopy Suite",
+        "operating room": "Operating Room",
+        "or": "Operating Room",
+        "main or": "Operating Room",
+        "surgery": "Operating Room",
+        "icu": "ICU",
+        "intensive care unit": "ICU",
+        "micu": "ICU",
+        "sicu": "ICU",
+        "ccu": "ICU",
+        "bedside": "Bedside",
+        "at bedside": "Bedside",
+        "patient room": "Bedside",
+        "office/clinic": "Office/Clinic",
+        "office": "Office/Clinic",
+        "clinic": "Office/Clinic",
+        "outpatient clinic": "Office/Clinic",
+    }
+
+    if text in mapping:
+        return mapping[text]
+
+    # Fuzzy matching
+    if "bronchoscopy" in text or "bronch" in text or "endoscopy" in text:
+        return "Bronchoscopy Suite"
+    if "operating room" in text or text == "or":
+        return "Operating Room"
+    if "icu" in text or "intensive care" in text:
+        return "ICU"
+    if "bedside" in text or "patient room" in text:
+        return "Bedside"
+    if "office" in text or "clinic" in text:
+        return "Office/Clinic"
+
+    return None
+
+
+def normalize_bronch_location_lobe(raw: Any) -> str | None:
+    """Normalize bronchoscopy location lobe to schema enum values.
+
+    Schema enum: ["RUL", "RML", "RLL", "LUL", "LLL", "Central"]
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"none", "n/a", "na", "null"}:
+        return None
+
+    mapping = {
+        # Right upper lobe
+        "rul": "RUL",
+        "right upper lobe": "RUL",
+        "right upper": "RUL",
+        # Right middle lobe
+        "rml": "RML",
+        "right middle lobe": "RML",
+        "right middle": "RML",
+        # Right lower lobe
+        "rll": "RLL",
+        "right lower lobe": "RLL",
+        "right lower": "RLL",
+        # Left upper lobe
+        "lul": "LUL",
+        "left upper lobe": "LUL",
+        "left upper": "LUL",
+        # Left lower lobe
+        "lll": "LLL",
+        "left lower lobe": "LLL",
+        "left lower": "LLL",
+        # Central airways
+        "central": "Central",
+        "central airways": "Central",
+        "trachea": "Central",
+        "carina": "Central",
+        "mainstem": "Central",
+    }
+
+    if text in mapping:
+        return mapping[text]
+
+    # Fuzzy matching
+    if "right upper" in text or text == "rul":
+        return "RUL"
+    if "right middle" in text or text == "rml":
+        return "RML"
+    if "right lower" in text or text == "rll":
+        return "RLL"
+    if "left upper" in text or text == "lul":
+        return "LUL"
+    if "left lower" in text or text == "lll":
+        return "LLL"
+    if "central" in text or "trachea" in text or "carina" in text or "mainstem" in text:
+        return "Central"
+
+    return None
+
+
 def normalize_cpt_codes(raw: Any) -> List[int | str] | None:
     """Normalize CPT codes, handling comma-separated strings and converting to list of int/str."""
     if raw is None:
@@ -1186,4 +1357,8 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "assistant_names": normalize_assistant_names,
     # Also handle legacy field name migration
     "assistant_name": normalize_assistant_name_single,
+    # New normalizers for validation consistency
+    "ventilation_mode": normalize_ventilation_mode,
+    "procedure_setting": normalize_procedure_setting,
+    "bronch_location_lobe": normalize_bronch_location_lobe,
 }

@@ -1,0 +1,94 @@
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
+INFO     Sending request to Gemini model: gemini-2.5-flash (auth: API key,      
+         attempt 1/3)                                                           
