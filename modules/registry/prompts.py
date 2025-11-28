@@ -145,11 +145,44 @@ IMPORTANT: Do NOT populate this field for:
 Only populate when LINEAR/convex EBUS-TBNA of mediastinal/hilar nodes is documented.
 Return null/[] if no linear EBUS stations documented or if only radial EBUS was used.""".strip(),
     "nav_platform": """
-Navigation platform (Ion/Monarch/EMN) only when robotic or navigation is explicitly documented by name. Do not set for standard mediastinal EBUS staging without navigation. Leave null unless the note clearly names Ion/robotic/Monarch/navigation system.""".strip(),
+Extract the navigation/robotic platform used for the procedure.
+
+Look for these specific platforms:
+- "Ion" or "Ion robotic" → return "Ion robotic bronchoscopy"
+- "Monarch" or "Monarch robotic" → return "Monarch robotic bronchoscopy"
+- "SuperDimension" or "EMN" → return "EMN/SuperDimension"
+- "Robotic bronchoscopy" or "robotic-assisted" → return "Ion robotic bronchoscopy" (default for robotic)
+- "Robotic navigational bronchoscopy" → return "Ion robotic bronchoscopy"
+- "Navigation bronchoscopy" with navigation system → return the platform name
+
+Examples:
+- "Ion robotic-assisted bronchoscopy" → "Ion robotic bronchoscopy"
+- "Robotic navigational bronchoscopy" → "Ion robotic bronchoscopy"
+- "Monarch platform" → "Monarch robotic bronchoscopy"
+- "EMN-guided" → "EMN/SuperDimension"
+
+Null for:
+- Standard linear EBUS without navigation
+- Radial EBUS without robotic platform
+- Procedures with no mention of navigation/robotic systems.""".strip(),
     "nav_registration_method": """
 Only populate if robotic/navigation registration is clearly described. Leave null for non-navigation EBUS cases.""".strip(),
     "nav_registration_error_mm": """
-Registration error in mm; only set when robotic/navigation registration is described. Null for non-navigation EBUS cases.""".strip(),
+Extract the navigation/robotic registration error in millimeters.
+
+Look for these patterns:
+- "registration error X.X mm", "error X mm"
+- "CT-to-body registration (error X.X mm)"
+- "registration accuracy X mm"
+- Any numeric value near "registration" and "error" or "mm"
+
+Examples:
+- "CT-to-body registration (error 2.1 mm)" → return 2.1
+- "Registration error 3.0 mm" → return 3.0
+- "Registration accuracy within 2.7 mm" → return 2.7
+
+Return as float (e.g., 2.1, 3.0).
+Null if not a navigation/robotic procedure or registration error not documented.""".strip(),
     "nav_imaging_verification": """
 Imaging used to confirm tool-in-lesion (e.g., Cone Beam CT) only when navigation/robotic context exists. Null for routine EBUS without navigation.""".strip(),
     "nav_tool_in_lesion": """
@@ -365,6 +398,130 @@ Look for:
 False if single-lumen tube explicitly used for WLL. Null if not a WLL procedure or not documented.""".strip(),
     "molecular_testing_requested": """
 True if molecular/genetic testing was requested or planned. False if explicitly declined. Null if not mentioned.""".strip(),
+    # Pleural pressure fields
+    "pleural_opening_pressure_cmh2o": """
+Extract the pleural opening pressure in cm H2O. Look for:
+- "Opening pressure -8 cm H2O", "initial pressure -12"
+- "Pleural pressure at entry: -10 cm H2O"
+- May be negative (subatmospheric) for effusions
+Return as integer (can be negative). Null if not a pleural procedure or opening pressure not documented.""".strip(),
+    "pleural_opening_pressure_measured": """
+True if pleural opening pressure was measured during thoracentesis/thoracoscopy.
+Look for any mention of opening pressure, initial pressure, or manometry.
+False if explicitly stated pressure not measured. Null if not mentioned or not a pleural procedure.""".strip(),
+    # Bronchial Thermoplasty fields
+    "bt_lobe_treated": """
+Extract the lobe(s) treated during bronchial thermoplasty. Return the full lobe name:
+- "Right lower lobe" (not RLL)
+- "Right middle lobe" (not RML)
+- "Right upper lobe" (not RUL)
+- "Left upper lobe" (not LUL)
+- "Left lower lobe" (not LLL)
+- "Bilateral upper lobes" for bilateral sessions
+Include partial treatments (e.g., "Right lower lobe" even if partial/aborted).
+Null if not a bronchial thermoplasty procedure.""".strip(),
+    # Ablation fields
+    "ablation_margin_assessed": """
+True if post-ablation margin or zone assessment was performed. Look for:
+- "CBCT ground glass", "ablation zone confirmed", "margin assessed"
+- "Post-ablation imaging showed adequate margins"
+- Any assessment of the ablation zone after the procedure
+False if no margin assessment documented. Null if not an ablation procedure.""".strip(),
+    "ablation_max_temp_c": """
+Extract the maximum temperature reached during ablation in Celsius. Look for:
+- "Temperature reached 95°C", "max temp 105C", "peak temperature 85°C"
+- For RF ablation: typically 60-100°C
+- For microwave ablation: typically 100-180°C
+- For cryoablation: look for "freeze" cycles or "ice ball" - typical temperature is -40°C to -60°C
+  Even if specific temperature not stated, cryoablation freeze cycles imply ~-40°C
+Return as integer/float (can be negative for cryoablation). Null if not an ablation procedure or no temperature indication.""".strip(),
+    "ablation_modality": """
+Extract the ablation modality for PERIPHERAL LUNG NODULE/LESION ABLATION procedures only.
+Allowed values:
+- "Radiofrequency ablation" or "RFA" - for RF ablation of peripheral nodules
+- "Microwave ablation" or "MWA" - for microwave ablation of peripheral nodules
+- "Cryoablation" - for cryoablation of peripheral nodules (NOT endobronchial cryotherapy)
+
+IMPORTANT DISTINCTION:
+- "Cryoablation" applies ONLY to peripheral lung nodule ablation using cryoprobe for tumor destruction
+- Do NOT confuse with "cryotherapy" for endobronchial tumor debulking (CAO procedures)
+- Endobronchial cryotherapy/cryodebulking is NOT ablation_modality - leave null for those
+
+Null if:
+- Not an ablation procedure
+- Procedure is endobronchial cryotherapy/cryodebulking (CAO, not ablation)
+- Ablation modality not documented.""".strip(),
+    # Navigation/radial EBUS improvements
+    "nav_rebus_used": """
+IMPORTANT: Return True if ANY radial EBUS terminology appears in the note.
+
+Return True when ANY of these phrases appear (case-insensitive):
+- "Radial EBUS", "r-EBUS", "radial probe", "radial ultrasound", "radial EBUS-guided"
+- "Radial EBUS catheter", "Radial EBUS probe"
+- "Concentric" view (implies radial EBUS was used)
+- "Eccentric" view (implies radial EBUS was used)
+- "Concentric solid lesion pattern" or similar descriptions
+- "Guide sheath" with peripheral biopsy
+- For cryobiopsy/ILD: "radial probe", "parenchymal pattern", "absence of vessels"
+
+Radial EBUS is used for:
+1. Peripheral nodule/lesion localization
+2. Transbronchial cryobiopsy site selection for ILD
+3. Any peripheral bronchoscopy with ultrasound confirmation
+
+Return False only if explicitly stated "no radial EBUS" or "radial EBUS not used".
+Return Null only if the procedure is purely linear EBUS mediastinal staging with NO mention of radial probe/concentric/eccentric views.
+
+CRITICAL: If you see "Radial EBUS" anywhere in the note, return True.""".strip(),
+    "nav_rebus_view": """
+IMPORTANT: Extract the radial EBUS view whenever radial EBUS is mentioned.
+
+Look for these patterns and return them:
+1. "Concentric" patterns (probe centered in lesion):
+   - "Concentric view", "Concentric radial EBUS view", "Concentric solid lesion pattern"
+   - Return: "Concentric radial EBUS view of lesion" or as documented
+
+2. "Eccentric" patterns (probe adjacent to lesion):
+   - "Eccentric view", "Eccentric radial EBUS view"
+   - Return: "Eccentric radial EBUS view of lesion" or as documented
+
+3. For cryobiopsy/ILD procedures:
+   - "Parenchymal pattern", "absence of vessels", "vessel-free"
+   - Return: "Parenchymal target free of large vessels on radial EBUS" or as documented
+
+4. Other documented views:
+   - Return verbatim as documented
+
+CRITICAL: If the note mentions "Concentric" in context of radial EBUS or peripheral biopsy, extract it.
+Example: "Concentric solid lesion pattern obtained" → return "Concentric radial EBUS view of lesion"
+
+Null only if radial EBUS not performed OR no view/pattern description found.""".strip(),
+    # Linear EBUS stations - prevent hallucination
+    "linear_ebus_stations": """
+List of mediastinal/hilar lymph node stations sampled with LINEAR EBUS-TBNA.
+Use IASLC station names: 2R, 2L, 4R, 4L, 7, 10R, 10L, 11R, 11L, etc.
+
+CRITICAL RULES:
+1. ONLY populate when the note EXPLICITLY states that lymph node stations were SAMPLED with TBNA
+2. Look for phrases like "TBNA at stations", "sampled at 4R, 7", "needle biopsies of stations"
+
+MUST RETURN null/[] for:
+- Radial EBUS procedures (keyword: "Radial EBUS", "r-EBUS", "radial probe")
+- Transbronchial cryobiopsy for ILD
+- Peripheral nodule biopsies (even with robotic/navigation)
+- Any procedure where "Radial EBUS" is mentioned
+- Procedures that only mention "concentric" or "eccentric" views (these are radial EBUS)
+
+COMMON HALLUCINATION TO AVOID:
+- Do NOT add station "7" just because the procedure involved bronchoscopy
+- Do NOT add any stations for robotic/navigation peripheral biopsy cases
+- Do NOT add stations for cryobiopsy/ILD cases
+
+VERIFICATION: Before returning any stations, confirm the note contains:
+- "Linear EBUS" or "EBUS-TBNA" (not just "EBUS" or "Radial EBUS")
+- Explicit mention of lymph node station sampling with needle
+
+If unsure, return null/[] - it's better to miss stations than to hallucinate them.""".strip(),
 }
 
 

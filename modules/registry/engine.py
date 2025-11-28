@@ -177,6 +177,16 @@ def validate_evidence_spans(
 
             # Check if span text appears anywhere in the note (offset might be wrong but text is real)
             if span_text and span_text in note_text:
+                # Special handling for station evidence - station "7" alone is too ambiguous
+                # It could match dates, times, ages, etc. Require station context.
+                is_station_field = field in ("linear_ebus_stations", "ebus_stations_sampled", "ebus_stations_detail")
+                if is_station_field and span_text == "7":
+                    # For station 7, require explicit station context like "station 7" or "7:"
+                    station_7_pattern = r"(?:station\s*7\b|\b7\s*[-:]\s*(?:\d|subcarinal)?|subcarinal)"
+                    if not re.search(station_7_pattern, note_text, re.IGNORECASE):
+                        # Skip this span - "7" appears but not in station context
+                        continue
+
                 # Fix the offsets to where it actually appears
                 actual_start = note_text.find(span_text)
                 if actual_start >= 0:
@@ -345,6 +355,7 @@ def classify_procedure_families(note_text: str) -> Set[str]:
             families.add("STENT")
 
     # --- PLEURAL Detection ---
+    # Be specific to avoid false positives from EBUS needle "aspiration"
     pleural_indicators = [
         r"thoracentesis",
         r"pleural\s+(?:tap|drain|fluid\s+remov)",
@@ -355,12 +366,30 @@ def classify_procedure_families(note_text: str) -> Set[str]:
         r"pigtail\s+(?:catheter|drain)",
         r"tunneled\s+(?:pleural\s+)?catheter",
         r"indwelling\s+pleural\s+catheter",
-        r"(pleurx|aspira|ipc)",
-        r"catheter\s+(?:exchange|replac)",
+        r"\bpleurx\b",  # PleurX catheter brand
+        r"\baspira\s+(?:catheter|drain)",  # Aspira catheter brand - not just "aspira" alone
+        r"\bipc\b(?!\s*\d)",  # IPC (Indwelling Pleural Catheter) - but not ipc followed by numbers (like IP addresses)
+        r"catheter\s+(?:exchange|replac).*pleural",  # Only pleural catheter exchange
         r"ultrasound.{0,20}guid.{0,30}(?:thoracentesis|pleural)",
     ]
-    if any(re.search(pat, proc_lowered) for pat in pleural_indicators):
-        families.add("PLEURAL")
+    # Exclusion patterns to prevent false positives
+    pleural_exclusions = [
+        r"needle\s+aspiration",  # EBUS-TBNA, FNA
+        r"tbna",  # Transbronchial needle aspiration
+        r"transbronchial.*aspiration",
+        r"fine\s+needle\s+aspiration",
+    ]
+    pleural_match = any(re.search(pat, proc_lowered) for pat in pleural_indicators)
+    pleural_excluded = any(re.search(pat, proc_lowered) for pat in pleural_exclusions)
+    # Only add PLEURAL if indicators found AND (no exclusions OR explicit pleural procedure terms)
+    if pleural_match:
+        # If we have needle aspiration context but also explicit pleural procedure, still add it
+        has_explicit_pleural = any(re.search(pat, proc_lowered) for pat in [
+            r"thoracentesis", r"chest\s+tube", r"tunneled.*catheter",
+            r"pleural\s+(?:tap|drain|fluid)", r"\bpleurx\b", r"pigtail"
+        ])
+        if has_explicit_pleural or not pleural_excluded:
+            families.add("PLEURAL")
 
     # --- THORACOSCOPY Detection ---
     thoracoscopy_indicators = [
@@ -604,6 +633,11 @@ class RegistryEngine:
         if station_list and not merged_data.get("linear_ebus_stations") and "EBUS" in procedure_families:
             merged_data["linear_ebus_stations"] = station_list
 
+        # Validate linear_ebus_stations: filter out any hallucinated stations not in the text
+        if merged_data.get("linear_ebus_stations") and "EBUS" in procedure_families:
+            validated_stations = self._validate_station_mentions(note_text, merged_data["linear_ebus_stations"])
+            merged_data["linear_ebus_stations"] = validated_stations if validated_stations else None
+
         lowered_note = note_text.lower()
 
         # Defaults based on cross-field context
@@ -698,6 +732,45 @@ class RegistryEngine:
                 stations.append(station)
             spans.append(Span(text=match.group(0).strip(), start=match.start(), end=match.end()))
         return stations, spans
+
+    def _validate_station_mentions(self, text: str, stations: list[str]) -> list[str]:
+        """Validate that each station in the list actually appears in the source text.
+
+        This prevents hallucinated stations (like "7" appearing when only "11L" and "4R" exist).
+        Station references must appear in a recognizable format in the text.
+        """
+        if not stations:
+            return []
+
+        validated = []
+        for station in stations:
+            station_upper = station.upper()
+            # Build patterns that match the station in typical EBUS contexts
+            # Be careful with station "7" which is just a number - require more context
+            if station_upper == "7":
+                # Station 7 needs explicit "station 7" or "7:" or similar context
+                patterns = [
+                    rf"station\s*7\b",
+                    rf"\b7\s*[-:]\s*(?:subcarinal|aorto|paratracheal)?",
+                    rf"(?:subcarinal|station\s*7|Level\s*7)",
+                ]
+            else:
+                # For stations like 4R, 11L - more flexible matching
+                patterns = [
+                    rf"\b{re.escape(station_upper)}\b",
+                    rf"station\s*{re.escape(station_upper)}",
+                ]
+
+            found = False
+            for pattern in patterns:
+                if re.search(pattern, text, re.IGNORECASE):
+                    found = True
+                    break
+
+            if found:
+                validated.append(station_upper)
+
+        return validated
 
     def _parse_ebus_station_sizes(self, text: str) -> list[tuple[str, float | None]]:
         """Parse station size mentions like 'station 11L (5.4mm)', '5.5 mm node at 4R', or '1.2 x 0.8 cm at 4R'."""
@@ -955,10 +1028,17 @@ class RegistryEngine:
                 else:
                     data["ebus_stations_sampled"] = sorted(detail_by_station.keys())
 
-            # ebus_needle_gauge
-            gauge_match = re.search(r"(21|22|25)G", text, re.IGNORECASE)
-            if gauge_match:
-                data["ebus_needle_gauge"] = f"{gauge_match.group(1)}G"
+            # ebus_needle_gauge - expanded pattern to capture "22 gauge needle" formats
+            if not data.get("ebus_needle_gauge"):
+                # Pattern 1: "22G" or "22-gauge" adjacent format
+                gauge_match = re.search(r"\b(19|21|22|25)\s*[-]?\s*(?:G|gauge)\b", text, re.IGNORECASE)
+                if gauge_match:
+                    data["ebus_needle_gauge"] = f"{gauge_match.group(1)}G"
+                else:
+                    # Pattern 2: "22 gauge needle" with space
+                    gauge_match2 = re.search(r"\b(19|21|22|25)\s+gauge\s+needle\b", text, re.IGNORECASE)
+                    if gauge_match2:
+                        data["ebus_needle_gauge"] = f"{gauge_match2.group(1)}G"
 
             # ebus_needle_type
             if any(kw in text for kw in ["FNB", "core biopsy", "Acquire"]):
@@ -982,25 +1062,47 @@ class RegistryEngine:
                 if "ROSE not available" in text or "no ROSE" in text.lower():
                     data["ebus_rose_available"] = False
 
-            # ebus_rose_result
-            if data.get("ebus_rose_available"):
-                rose_snippets = []
-                for match in re.finditer(r"ROSE\b.*?(?::|-|is|shows|demonstrates|positive|negative)?\s*(.*?)(?:\n|\.|;)", text, re.IGNORECASE):
-                    rose_snippets.append(match.group(1).lower())
+            # ebus_rose_result - derive from per-station ROSE results if available
+            # Use priority: Malignant > Atypical > Granuloma > Benign > Nondiagnostic
+            if data.get("ebus_rose_available") and not data.get("ebus_rose_result"):
+                # First, try to derive from ebus_stations_detail if we have per-station ROSE
+                station_details = data.get("ebus_stations_detail") or []
+                rose_results = [d.get("rose_result") for d in station_details if d.get("rose_result")]
 
-                combined_rose = " ".join(rose_snippets)
-                if "malignan" in combined_rose or "adenocarcinoma" in combined_rose or "squamous" in combined_rose or "tumor" in combined_rose or "carcinoma" in combined_rose:
-                    data["ebus_rose_result"] = "Malignant"
-                elif "granuloma" in combined_rose:
-                    data["ebus_rose_result"] = "Granuloma"
-                elif "lymphoma" in combined_rose or "lymphoid proliferation" in combined_rose:
-                    data["ebus_rose_result"] = "Atypical lymphoid proliferation"
-                elif "atypical" in combined_rose:
-                    data["ebus_rose_result"] = "Atypical cells present"
-                elif "benign" in combined_rose or "reactive" in combined_rose or "lymphocytes" in combined_rose:
-                    data["ebus_rose_result"] = "Benign"
-                elif "nondiagnostic" in combined_rose or "insufficient" in combined_rose:
-                    data["ebus_rose_result"] = "Nondiagnostic"
+                if rose_results:
+                    # Priority-based aggregation
+                    priority_order = ["Malignant", "Atypical lymphoid proliferation", "Atypical cells present",
+                                     "Granuloma", "Benign", "Nondiagnostic"]
+                    best_result = None
+                    best_priority = len(priority_order)
+                    for result in rose_results:
+                        for idx, prio_val in enumerate(priority_order):
+                            if prio_val.lower() in result.lower() or result.lower() in prio_val.lower():
+                                if idx < best_priority:
+                                    best_priority = idx
+                                    best_result = prio_val
+                                break
+                    if best_result:
+                        data["ebus_rose_result"] = best_result
+                else:
+                    # Fallback to text extraction if no per-station data
+                    rose_snippets = []
+                    for match in re.finditer(r"ROSE\b.*?(?::|-|is|shows|demonstrates|positive|negative)?\s*(.*?)(?:\n|\.|;)", text, re.IGNORECASE):
+                        rose_snippets.append(match.group(1).lower())
+
+                    combined_rose = " ".join(rose_snippets)
+                    if "malignan" in combined_rose or "adenocarcinoma" in combined_rose or "squamous" in combined_rose or "tumor" in combined_rose or "carcinoma" in combined_rose:
+                        data["ebus_rose_result"] = "Malignant"
+                    elif "granuloma" in combined_rose:
+                        data["ebus_rose_result"] = "Granuloma"
+                    elif "lymphoma" in combined_rose or "lymphoid proliferation" in combined_rose:
+                        data["ebus_rose_result"] = "Atypical lymphoid proliferation"
+                    elif "atypical" in combined_rose:
+                        data["ebus_rose_result"] = "Atypical cells present"
+                    elif "benign" in combined_rose or "reactive" in combined_rose or "lymphocytes" in combined_rose:
+                        data["ebus_rose_result"] = "Benign"
+                    elif "nondiagnostic" in combined_rose or "insufficient" in combined_rose:
+                        data["ebus_rose_result"] = "Nondiagnostic"
 
             # ebus_intranodal_forceps_used
             if "intranodal forceps" in text.lower() or "ebus-ifb" in text.lower():
@@ -1092,9 +1194,26 @@ class RegistryEngine:
     def _apply_pleural_heuristics(
         self, data: dict[str, Any], text: str, procedure_families: Set[str] | None = None
     ) -> None:
-        """Deterministic parsing for pleural procedures (thoracentesis, chest tubes, IPC)."""
+        """Deterministic parsing for pleural procedures (thoracentesis, chest tubes, IPC).
+
+        IMPORTANT: If procedure_families is set and doesn't include PLEURAL/THORACOSCOPY,
+        this method actively clears any spurious pleural data that may have been hallucinated.
+        """
         families = procedure_families or set()
+
+        # If we have procedure families and PLEURAL/THORACOSCOPY is NOT among them,
+        # actively clear any spurious pleural fields that LLM may have hallucinated
         if families and not families.intersection({"PLEURAL", "THORACOSCOPY"}):
+            pleural_fields_to_clear = [
+                "pleural_procedure_type", "pleural_side", "pleural_fluid_volume",
+                "pleural_volume_drained_ml", "pleural_fluid_appearance", "pleural_guidance",
+                "pleural_intercostal_space", "pleural_catheter_type", "pleural_pleurodesis_agent",
+                "pleural_opening_pressure_measured", "pleural_opening_pressure_cmh2o",
+                "pleural_thoracoscopy_findings", "pleurodesis_performed", "pleurodesis_agent",
+            ]
+            for field in pleural_fields_to_clear:
+                if field in data:
+                    data[field] = None
             return
 
         lowered = text.lower()

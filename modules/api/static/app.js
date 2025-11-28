@@ -2,6 +2,126 @@
 let currentMode = 'coder';
 let lastResult = null;
 
+/**
+ * Format registry values for display, handling complex types like arrays and objects.
+ * Special handling for EBUS station details and other structured fields.
+ */
+function formatRegistryValue(key, value) {
+    // Handle null/undefined
+    if (value === null || value === undefined) {
+        return '<span class="text-muted">null</span>';
+    }
+
+    // Handle simple arrays (like linear_ebus_stations: ["4R", "11L"])
+    if (Array.isArray(value)) {
+        // Empty array
+        if (value.length === 0) {
+            return '<span class="text-muted">[]</span>';
+        }
+
+        // Array of primitives (strings, numbers)
+        if (value.every(item => typeof item !== 'object' || item === null)) {
+            return value.join(', ');
+        }
+
+        // Array of objects - format specially for EBUS station details
+        if (key === 'ebus_stations_detail') {
+            return formatEbusStationDetails(value);
+        }
+
+        // Array of objects - format as expandable JSON
+        return `<pre class="mb-0 small bg-light p-1 border rounded" style="max-height: 150px; overflow-y: auto;">${JSON.stringify(value, null, 2)}</pre>`;
+    }
+
+    // Handle objects
+    if (typeof value === 'object') {
+        return `<pre class="mb-0 small bg-light p-1 border rounded" style="max-height: 150px; overflow-y: auto;">${JSON.stringify(value, null, 2)}</pre>`;
+    }
+
+    // Handle booleans
+    if (typeof value === 'boolean') {
+        return value ? '<span class="badge bg-success">true</span>' : '<span class="badge bg-secondary">false</span>';
+    }
+
+    // Default: return as-is
+    return String(value);
+}
+
+/**
+ * Format EBUS station details array into a readable list format
+ * Example output:
+ *   - 11L: size 5.4 mm, ROSE: Nondiagnostic
+ *   - 4R: size 5.5 mm, ROSE: Benign
+ */
+function formatEbusStationDetails(stations) {
+    if (!stations || stations.length === 0) {
+        return '<span class="text-muted">[]</span>';
+    }
+
+    let html = '<ul class="list-unstyled mb-0" style="font-size: 0.9em;">';
+
+    stations.forEach(s => {
+        const station = s.station || '?';
+        let parts = [];
+
+        // Size
+        if (s.size_mm !== null && s.size_mm !== undefined) {
+            parts.push(`size ${s.size_mm} mm`);
+        }
+
+        // ROSE result
+        if (s.rose_result) {
+            parts.push(`ROSE: ${s.rose_result}`);
+        }
+
+        // Passes
+        if (s.passes !== null && s.passes !== undefined) {
+            parts.push(`${s.passes} passes`);
+        }
+
+        // Shape, margin, echogenicity if present
+        if (s.shape) parts.push(`shape: ${s.shape}`);
+        if (s.margin) parts.push(`margin: ${s.margin}`);
+        if (s.echogenicity) parts.push(`echo: ${s.echogenicity}`);
+
+        const details = parts.length > 0 ? parts.join(', ') : 'no details';
+        html += `<li><strong>${station}</strong>: ${details}</li>`;
+    });
+
+    html += '</ul>';
+    return html;
+}
+
+/**
+ * Derive a summary ROSE result from per-station details
+ * Returns "Mixed (11L: Nondiagnostic, 4R: Benign)" if results differ
+ */
+function deriveRoseSummary(stations, globalRose) {
+    if (!stations || stations.length === 0) {
+        return globalRose || '<span class="text-muted">null</span>';
+    }
+
+    const stationRose = stations
+        .filter(s => s.rose_result)
+        .map(s => ({ station: s.station, rose: s.rose_result }));
+
+    if (stationRose.length === 0) {
+        return globalRose || '<span class="text-muted">null</span>';
+    }
+
+    // Check if all ROSE results are the same
+    const uniqueRose = [...new Set(stationRose.map(s => s.rose))];
+
+    if (uniqueRose.length === 1) {
+        // All the same
+        return uniqueRose[0];
+    }
+
+    // Mixed results - show each station's result
+    const summary = stationRose.map(s => `${s.station}: ${s.rose}`).join(', ');
+    return `<span class="badge bg-warning text-dark">Mixed</span> (${summary})`;
+}
+
 function ensureReporterTemplates() {
     const sel = document.getElementById('reporter-template');
     if (!sel) return;
@@ -226,17 +346,31 @@ function showResultTab(tab) {
         // Let's try to display key-value pairs nicely
         let html = `<h4>Registry Record</h4>`;
         html += `<table class="table table-striped table-sm"><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>`;
-        
+
+        // Get station details for ROSE summary
+        const stationDetails = lastResult.ebus_stations_detail || [];
+
         for (const [key, value] of Object.entries(lastResult)) {
             if (key === 'evidence') continue; // Skip evidence in main table
-            html += `<tr><td><code>${key}</code></td><td>${value}</td></tr>`;
+
+            let displayValue;
+
+            // Special handling for ebus_rose_result to show mixed results
+            if (key === 'ebus_rose_result' && stationDetails.length > 0) {
+                displayValue = deriveRoseSummary(stationDetails, value);
+            } else {
+                // Format complex values (arrays, objects) as readable strings
+                displayValue = formatRegistryValue(key, value);
+            }
+
+            html += `<tr><td><code>${key}</code></td><td>${displayValue}</td></tr>`;
         }
         html += `</tbody></table>`;
 
         if (lastResult.evidence) {
             html += `<h5>Evidence</h5><pre>${JSON.stringify(lastResult.evidence, null, 2)}</pre>`;
         }
-        
+
         area.innerHTML = html;
 
     } else if (currentMode === 'reporter') {

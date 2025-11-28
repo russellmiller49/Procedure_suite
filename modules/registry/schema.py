@@ -77,7 +77,7 @@ EbusRoseResult = Literal[
 # restrictive. This avoids hard failures on newly observed real-world values.
 CUSTOM_FIELD_TYPES: dict[str, Any] = {
     "sedation_type": SedationType,
-    "nav_imaging_verification": NavImagingVerification,
+    "nav_imaging_verification": str,  # Allow free-form (CBCT, Cone Beam CT, etc.)
     "cao_tumor_location": CaoTumorLocation,
     "pleural_procedure_type": PleuralProcedureType,
     "pleural_fluid_appearance": PleuralFluidAppearance,
@@ -92,6 +92,17 @@ CUSTOM_FIELD_TYPES: dict[str, Any] = {
     "cao_interventions": list[dict],
     # Multiple biopsy sites (supplements bronch_location_lobe)
     "bronch_biopsy_sites": list[dict],
+    # Fields that need flexible types to avoid validation errors
+    "ablation_margin_assessed": bool,  # LLM returns boolean, not Literal enum
+    "bt_lobe_treated": str,  # Allow full lobe names ("Right lower lobe") not just abbreviations
+    "blvr_target_lobe": str,  # Allow full lobe names
+    "prior_therapy": str,  # Allow free-form therapy descriptions
+    "ablation_modality": str,  # Allow variations (Radiofrequency ablation, RFA, etc.)
+    "nav_rebus_view": str,  # Allow parenchymal pattern descriptions, not just Concentric/Eccentric
+    "cao_primary_modality": str,  # Allow combined modalities (e.g., "Mechanical Core, APC")
+    "ebus_scope_brand": str,  # Allow empty string or any brand name
+    "ablation_complication_immediate": str,  # Allow any complication (Bronchospasm, etc.)
+    "provider_role": str,  # Allow full role descriptions (e.g., "Attending interventional pulmonologist")
 }
 
 

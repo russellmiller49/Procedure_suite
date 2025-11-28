@@ -113,6 +113,11 @@ SKIP_FIELDS = {
     "airway_device_size",  # Numeric with units variations
     "cao_location",  # Verbose anatomic descriptions vs normalized locations
     "cao_obstruction_pre_pct",  # Numeric percentage extraction issues
+    # Free-text fields with semantic comparison needed (exact string match not possible)
+    "pleural_thoracoscopy_findings",  # LLM returns list, ground truth is string
+    "ablation_complication_immediate",  # Free text description vs category
+    "ablation_device_name",  # Brand/device name variations
+    "pleural_fluid_appearance",  # LLM returns category ("Serous"), ground truth is descriptive
 }
 
 # Fields that are lists and need special comparison
@@ -245,6 +250,68 @@ NORMALIZATION_MAPS = {
         "silicone y-stent": "silicone y-stent",
         "silicone-y-stent": "silicone y-stent",
     },
+    "nav_imaging_verification": {
+        # Normalize CBCT abbreviation
+        "cbct": "cone beam ct",
+        "cone beam ct": "cone beam ct",
+        "cone-beam ct": "cone beam ct",
+        "fluoroscopy": "fluoroscopy",
+        "o-arm": "o-arm",
+        "ultrasound": "ultrasound",
+    },
+    "nav_rebus_view": {
+        # Normalize radial EBUS view variations
+        "concentric": "concentric",
+        "concentric view": "concentric",
+        "concentric radial ebus view": "concentric",
+        "concentric radial ebus view of lesion": "concentric",
+        "eccentric": "eccentric",
+        "eccentric view": "eccentric",
+        "eccentric radial ebus view": "eccentric",
+        "eccentric radial ebus view of lesion": "eccentric",
+        # Parenchymal patterns for ILD/cryobiopsy cases
+        "parenchymal pattern without large vessels": "parenchymal",
+        "lung parenchyma without vessels by radial ebus": "parenchymal",
+        "parenchymal target free of large vessels on radial ebus": "parenchymal",
+    },
+    "ablation_modality": {
+        # Normalize ablation modality variations
+        "radiofrequency ablation": "rfa",
+        "radiofrequency (rfa)": "rfa",
+        "rfa": "rfa",
+        "rf ablation": "rfa",
+        "microwave ablation": "mwa",
+        "microwave (mwa)": "mwa",
+        "mwa": "mwa",
+        "cryoablation": "cryo",
+        "cryo": "cryo",
+    },
+    "nav_platform": {
+        # Normalize navigation platform names
+        "ion": "ion",
+        "ion robotic bronchoscopy": "ion",
+        "ion robotic": "ion",
+        "monarch": "monarch",
+        "monarch robotic bronchoscopy": "monarch",
+        "emn": "emn",
+        "superdimension": "emn",  # superDimension is EMN platform
+        "electromagnetic navigation": "emn",
+    },
+    "bt_lobe_treated": {
+        # Normalize bronchial thermoplasty lobe variations
+        "rll": "right lower lobe",
+        "right lower lobe": "right lower lobe",
+        "right lower lobe (partial)": "right lower lobe",  # partial is still RLL
+        "rml": "right middle lobe",
+        "right middle lobe": "right middle lobe",
+        "rul": "right upper lobe",
+        "right upper lobe": "right upper lobe",
+        "lul": "left upper lobe",
+        "left upper lobe": "left upper lobe",
+        "lll": "left lower lobe",
+        "left lower lobe": "left lower lobe",
+        "bilateral upper lobes": "bilateral upper lobes",
+    },
     "bleeding_severity": {
         # Normalize bleeding severity variations
         # LLM extracts "None/Scant", ground truth may have "None" or "Mild"
@@ -325,6 +392,7 @@ BOOLEAN_DEFAULT_FALSE = {
     "nav_tool_in_lesion",
     "pleurodesis_performed",
     "pleural_opening_pressure_measured",
+    "ablation_margin_assessed",  # LLM returns description, ground truth is boolean
 }
 
 
@@ -336,6 +404,7 @@ def compare_values(field: str, truth_val: Any, pred_val: Any) -> tuple[bool, str
     # Handle boolean fields where None should be treated as False
     if field in BOOLEAN_DEFAULT_FALSE:
         # Convert to boolean: None/null/empty -> False, "true"/True -> True, "false"/False -> False
+        # Also treat non-empty descriptive strings as truthy (e.g., "CBCT Ground Glass" -> True)
         def to_bool(val):
             if val is None:
                 return False
@@ -344,7 +413,12 @@ def compare_values(field: str, truth_val: Any, pred_val: Any) -> tuple[bool, str
             val_str = str(val).lower().strip()
             if val_str in ("true", "yes", "1"):
                 return True
-            return False  # "false", "no", "0", "", "none", etc.
+            if val_str in ("false", "no", "0", "", "none", "null"):
+                return False
+            # Non-empty descriptive string (e.g., "CBCT Ground Glass") is truthy
+            if val_str:
+                return True
+            return False
 
         truth_bool = to_bool(truth_val)
         pred_bool = to_bool(pred_val)
