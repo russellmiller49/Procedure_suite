@@ -50,7 +50,13 @@ from proc_report.inference import InferenceEngine
 from proc_report.validation import ValidationEngine
 from proc_autocode.coder import EnhancedCPTCoder
 
-app = FastAPI(title="Procedure Suite API", version="0.1.0")
+# Import ML Advisor router
+from modules.api.ml_advisor_router import router as ml_advisor_router
+
+app = FastAPI(title="Procedure Suite API", version="0.2.0")
+
+# Include ML Advisor router
+app.include_router(ml_advisor_router, prefix="/api/v1", tags=["ML Advisor"])
 
 # Initialize enhanced coder (singleton)
 # Enable LLM advisor if CODER_USE_LLM_ADVISOR env var is set
@@ -88,8 +94,17 @@ async def root(request: Request) -> Any:
             "report_verify": "/report/verify",
             "report_render": "/report/render",
             "qa_run": "/qa/run",
+            "ml_advisor": {
+                "health": "/api/v1/ml-advisor/health",
+                "status": "/api/v1/ml-advisor/status",
+                "code": "/api/v1/ml-advisor/code",
+                "code_with_advisor": "/api/v1/ml-advisor/code_with_advisor",
+                "suggest": "/api/v1/ml-advisor/suggest",
+                "traces": "/api/v1/ml-advisor/traces",
+                "metrics": "/api/v1/ml-advisor/metrics",
+            },
         },
-        "note": "Coder now uses EnhancedCPTCoder with RVU calculations and IP knowledge base bundling",
+        "note": "Coder now uses EnhancedCPTCoder with RVU calculations and IP knowledge base bundling. ML Advisor endpoints available at /api/v1/ml-advisor/*",
     }
 
 

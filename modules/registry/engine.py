@@ -8,7 +8,7 @@ from typing import Any, Dict, Set
 from modules.common.sectionizer import SectionizerService
 from modules.common.spans import Span
 from modules.registry.extractors.llm_detailed import LLMDetailedExtractor
-from modules.registry.postprocess import POSTPROCESSORS
+from modules.registry.postprocess import POSTPROCESSORS, apply_cross_field_consistency, derive_global_ebus_rose_result
 
 from .schema import RegistryRecord
 
@@ -708,6 +708,10 @@ class RegistryEngine:
         # This prevents phantom data (e.g., EBUS fields when no EBUS performed)
         merged_data = filter_inapplicable_fields(merged_data, procedure_families)
 
+        # Apply cross-field consistency checks
+        # This ensures related fields are consistent (e.g., pneumothorax_intervention null when pneumothorax=false)
+        merged_data = apply_cross_field_consistency(merged_data)
+
         record = RegistryRecord(**merged_data)
         normalized_evidence: dict[str, list[Span]] = {}
         if include_evidence:
@@ -1207,10 +1211,14 @@ class RegistryEngine:
     ) -> None:
         """Clear bronch_tbbx fields for EBUS-only staging cases.
 
-        EBUS-TBNA (TransBronchial Needle Aspiration) is NOT the same as TBBx (TransBronchial Biopsy).
-        For pure EBUS staging cases without actual parenchymal/mucosal biopsy:
-        - bronch_num_tbbx and bronch_tbbx_tool should remain null
-        - All sampling detail belongs in EBUS-specific fields
+        Per specification (§3 - Distinguishing EBUS vs bronchial biopsies):
+        - EBUS-TBNA (TransBronchial Needle Aspiration) is NOT the same as TBBx (TransBronchial Biopsy)
+        - bronch_*tbbx* fields are for parenchymal/mucosal transbronchial biopsy, not nodal TBNA
+        - For pure EBUS staging cases without actual parenchymal/mucosal biopsy:
+          - bronch_num_tbbx should be null
+          - bronch_tbbx_tool should be null
+          - bronch_guidance should be null (unless there's explicit guidance for a parenchymal target)
+        - EBUS nodal aspirates belong in EBUS fields, not the parenchymal TBBx fields
 
         This method clears any bronch_tbbx fields that may have been hallucinated
         by the LLM confusing TBNA with TBBx.
@@ -1240,6 +1248,14 @@ class RegistryEngine:
         if has_actual_tbbx:
             return
 
+        # Check for explicit parenchymal guidance (radial EBUS, fluoroscopy, EMN for lung nodule)
+        has_parenchymal_guidance = any([
+            re.search(r"radial\s+ebus\s+(?:guid|for|to)", lowered),
+            re.search(r"fluoroscopy\s+(?:guid|for|to)\s+(?:nodule|lesion|mass)", lowered),
+            re.search(r"emn\s+(?:guid|for|to)\s+(?:nodule|lesion|mass)", lowered),
+            re.search(r"(?:nodule|lesion|mass)\s+(?:in|within|at)\s+(?:the\s+)?(?:lung|lobe)", lowered),
+        ])
+
         # This is a pure EBUS-TBNA case - clear bronch_tbbx fields
         bronch_tbbx_fields = [
             "bronch_num_tbbx",
@@ -1249,6 +1265,13 @@ class RegistryEngine:
         for field in bronch_tbbx_fields:
             if field in data and data[field] is not None:
                 data[field] = None
+
+        # Also clear bronch_guidance unless there's explicit parenchymal guidance
+        # Per spec: bronch_guidance should be null unless there's explicit guidance for a parenchymal target
+        if not has_parenchymal_guidance:
+            if data.get("bronch_guidance") == "EBUS":
+                # "EBUS" as guidance is incorrect for pure EBUS staging - that's for nodal sampling
+                data["bronch_guidance"] = None
 
     def _apply_pleural_heuristics(
         self, data: dict[str, Any], text: str, procedure_families: Set[str] | None = None

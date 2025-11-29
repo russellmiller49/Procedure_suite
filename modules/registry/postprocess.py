@@ -6,6 +6,44 @@ from typing import Any, Callable, Dict, Optional, List
 import re
 from datetime import datetime
 
+
+# Valid EBUS lymph node stations - canonical format
+VALID_EBUS_STATIONS = frozenset({
+    "2R", "2L", "4R", "4L", "7", "10R", "10L", "11R", "11L",
+    # Also accept numeric-only for station 7
+})
+
+# Pattern to match valid station format
+STATION_PATTERN = re.compile(r"^(2R|2L|4R|4L|7|10R|10L|11R|11L)$", re.IGNORECASE)
+
+# Canonical ROSE result values
+ROSE_RESULT_CANONICAL = {
+    "malignant": "Malignant",
+    "benign": "Benign",
+    "nondiagnostic": "Nondiagnostic",
+    "non-diagnostic": "Nondiagnostic",
+    "non diagnostic": "Nondiagnostic",
+    "granuloma": "Granuloma",
+    "granulomatous": "Granuloma",
+    "atypical": "Atypical cells present",
+    "atypical cells": "Atypical cells present",
+    "atypical cells present": "Atypical cells present",
+    "atypical lymphoid": "Atypical lymphoid proliferation",
+    "atypical lymphoid proliferation": "Atypical lymphoid proliferation",
+    "insufficient": "Nondiagnostic",
+    "inadequate": "Nondiagnostic",
+}
+
+# ROSE result priority for deriving global result (higher = more significant)
+ROSE_RESULT_PRIORITY = {
+    "Malignant": 6,
+    "Atypical lymphoid proliferation": 5,
+    "Atypical cells present": 4,
+    "Granuloma": 3,
+    "Benign": 2,
+    "Nondiagnostic": 1,
+}
+
 __all__ = [
     "normalize_sedation_type",
     "normalize_airway_type",
@@ -22,6 +60,8 @@ __all__ = [
     "normalize_stent_location",
     "normalize_stent_deployment_method",
     "normalize_ebus_rose_result",
+    "normalize_ebus_station_rose_result",
+    "derive_global_ebus_rose_result",
     "normalize_ebus_needle_gauge",
     "normalize_ebus_needle_type",
     "normalize_ebus_stations_detail",
@@ -43,6 +83,14 @@ __all__ = [
     "normalize_ventilation_mode",
     "normalize_procedure_setting",
     "normalize_bronch_location_lobe",
+    "normalize_attending_name",
+    "normalize_provider_role",
+    "normalize_immediate_complications",
+    "normalize_radiographic_findings",
+    "validate_station_format",
+    "VALID_EBUS_STATIONS",
+    "ROSE_RESULT_CANONICAL",
+    "ROSE_RESULT_PRIORITY",
     "POSTPROCESSORS",
 ]
 
@@ -580,9 +628,124 @@ def normalize_stent_deployment_method(raw: Any) -> str | None:
     return None
 
 
-def normalize_ebus_rose_result(raw: Any) -> str | None:
-    # Per latest instructions, leave empty/None for now
+def validate_station_format(station: str) -> str | None:
+    """Validate and normalize a station name to canonical format.
+
+    Returns the canonical station name (uppercase) if valid, None otherwise.
+    Valid stations: 2R, 2L, 4R, 4L, 7, 10R, 10L, 11R, 11L
+    """
+    if not station:
+        return None
+    cleaned = station.strip().upper()
+    # Remove common prefixes
+    cleaned = re.sub(r"^(STATION|STN|NODE)[\s:]*", "", cleaned, flags=re.IGNORECASE).strip()
+    if STATION_PATTERN.match(cleaned):
+        return cleaned
     return None
+
+
+def normalize_ebus_station_rose_result(raw: Any) -> str | None:
+    """Normalize a per-station ROSE result to canonical form.
+
+    This normalizes individual station ROSE results (not the global result).
+    Returns canonical ROSE result string or None.
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"null", "none", "n/a", "na", ""}:
+        return None
+
+    # Check direct mapping
+    if text in ROSE_RESULT_CANONICAL:
+        return ROSE_RESULT_CANONICAL[text]
+
+    # Fuzzy matching
+    if "malignan" in text or "carcinoma" in text or "adenocarcinoma" in text:
+        return "Malignant"
+    if "granulom" in text:
+        return "Granuloma"
+    if "non" in text and "diagnostic" in text:
+        return "Nondiagnostic"
+    if "insufficient" in text or "inadequate" in text:
+        return "Nondiagnostic"
+    if "atypical" in text and "lymphoid" in text:
+        return "Atypical lymphoid proliferation"
+    if "atypical" in text:
+        return "Atypical cells present"
+    if "benign" in text or "reactive" in text or "lymphocyte" in text:
+        return "Benign"
+
+    return None
+
+
+def derive_global_ebus_rose_result(station_details: list[dict[str, Any]] | None) -> str | None:
+    """Derive a global EBUS ROSE result from per-station detail.
+
+    Rules (per specification):
+    - If all stations have the same result: return that result
+    - If any station is Malignant: return "Malignant"
+    - If mixture (e.g., benign + nondiagnostic): return "Mixed (station results)"
+    - If no station-level ROSE data: return None
+
+    Args:
+        station_details: List of station detail dicts with optional 'rose_result' key
+
+    Returns:
+        Derived global ROSE result or None
+    """
+    if not station_details:
+        return None
+
+    # Collect all non-null rose results
+    rose_by_station: list[tuple[str, str]] = []
+    for detail in station_details:
+        station = detail.get("station")
+        rose = detail.get("rose_result")
+        if station and rose:
+            rose_by_station.append((station, rose))
+
+    if not rose_by_station:
+        return None
+
+    # Get unique results
+    unique_results = set(r for _, r in rose_by_station)
+
+    if len(unique_results) == 1:
+        # All stations have the same result
+        return rose_by_station[0][1]
+
+    # Multiple different results - check for malignant (highest priority)
+    for _, result in rose_by_station:
+        if result and "malignant" in result.lower():
+            return "Malignant"
+
+    # Build mixed summary: "Mixed (11L Nondiagnostic; 4R Benign)"
+    parts = [f"{station} {result}" for station, result in rose_by_station]
+    return f"Mixed ({'; '.join(parts)})"
+
+
+def normalize_ebus_rose_result(raw: Any) -> str | None:
+    """Normalize global EBUS ROSE result.
+
+    NOTE: This normalizer should generally NOT be used for global ebus_rose_result
+    when per-station ROSE data is available. Use derive_global_ebus_rose_result instead.
+    This function normalizes the raw string value if one is provided directly.
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"null", "none", "n/a", "na", ""}:
+        return None
+
+    # If it looks like a derived "Mixed" result, preserve it
+    if text.startswith("mixed"):
+        return raw.strip() if isinstance(raw, str) else str(raw).strip()
+
+    # Otherwise normalize like a single result
+    return normalize_ebus_station_rose_result(raw)
 
 
 def normalize_ebus_needle_gauge(raw: Any) -> str | None:
@@ -641,7 +804,14 @@ def _normalize_morphology_value(text: str | None, mapping: dict[str, str]) -> st
 
 
 def normalize_ebus_stations_detail(raw: Any) -> list[dict[str, Any]] | None:
-    """Normalize station-level detail entries and pad morphology fields with nulls."""
+    """Normalize station-level detail entries and pad morphology fields with nulls.
+
+    Rules:
+    - Only include entries with valid station names (2R, 2L, 4R, 4L, 7, 10R, 10L, 11R, 11L)
+    - Normalize station names to uppercase canonical form
+    - Do not invent morphology data - leave as null if not explicitly in source
+    - Normalize ROSE results using normalize_ebus_station_rose_result
+    """
     if raw is None:
         return None
     entries: list[Any]
@@ -685,13 +855,24 @@ def normalize_ebus_stations_detail(raw: Any) -> list[dict[str, Any]] | None:
 
     for entry in entries:
         if isinstance(entry, dict):
-            station = entry.get("station")
+            # Validate station name - skip entries with invalid stations
+            raw_station = entry.get("station")
+            station = validate_station_format(str(raw_station)) if raw_station else None
+            if not station:
+                # Skip entries without valid station
+                continue
+
             size_mm = _parse_size_mm(entry.get("size_mm"))
             passes = entry.get("passes")
-            rose_result = normalize_ebus_rose_result(entry.get("rose_result"))
+
+            # Use the per-station ROSE normalizer
+            rose_result = normalize_ebus_station_rose_result(entry.get("rose_result"))
+
+            # Only normalize morphology if explicit text is provided - don't invent
             shape = _normalize_morphology_value(_coerce_to_text(entry.get("shape")), shape_map)
             margin = _normalize_morphology_value(_coerce_to_text(entry.get("margin")), margin_map)
             echogenicity = _normalize_morphology_value(_coerce_to_text(entry.get("echogenicity")), echo_map)
+
             chs_raw = entry.get("chs_present")
             if isinstance(chs_raw, str):
                 chs_lower = chs_raw.strip().lower()
@@ -708,9 +889,10 @@ def normalize_ebus_stations_detail(raw: Any) -> list[dict[str, Any]] | None:
             appearance = appearance.lower() if appearance else None
             if appearance not in appearance_allowed:
                 appearance = None
+
             normalized.append(
                 {
-                    "station": station if station is None else str(station),
+                    "station": station,  # Already validated and uppercase
                     "size_mm": size_mm,
                     "passes": passes if passes is None or isinstance(passes, int) else None,
                     "shape": shape,
@@ -724,7 +906,10 @@ def normalize_ebus_stations_detail(raw: Any) -> list[dict[str, Any]] | None:
         elif isinstance(entry, str):
             # Attempt minimal parsing from a string like "11L 5.4mm benign"
             station_match = re.search(r"(2r|2l|4r|4l|7|10r|10l|11r|11l)", entry, re.IGNORECASE)
-            station = station_match.group(1).upper() if station_match else None
+            if not station_match:
+                # Skip entries without valid station pattern
+                continue
+            station = station_match.group(1).upper()
             size_mm = _parse_size_mm(entry)
             normalized.append(
                 {
@@ -736,7 +921,7 @@ def normalize_ebus_stations_detail(raw: Any) -> list[dict[str, Any]] | None:
                     "echogenicity": None,
                     "chs_present": None,
                     "appearance_category": None,
-                    "rose_result": normalize_ebus_rose_result(entry),
+                    "rose_result": normalize_ebus_station_rose_result(entry),
                 }
             )
         else:
@@ -796,19 +981,22 @@ def normalize_anesthesia_agents(raw: Any) -> List[str] | None:
 
 
 def normalize_ebus_stations(raw: Any) -> List[str] | None:
-    """Normalize EBUS stations list, handling comma-separated strings."""
+    """Normalize EBUS stations list, handling comma-separated strings.
+
+    Only includes stations that match valid EBUS lymph node station patterns:
+    2R, 2L, 4R, 4L, 7, 10R, 10L, 11R, 11L
+
+    Invalid or unrecognized station names are filtered out.
+    """
     result = normalize_list_field(raw)
     if result is None:
         return None
-    # Clean and validate station format (e.g., "4R", "7", "11L")
+    # Clean and validate station format - only include valid stations
     normalized = []
     for station in result:
-        cleaned = station.strip().upper()
-        # Remove common prefixes/suffixes
-        cleaned = re.sub(r"^(STATION|STN|NODE)[\s:]*", "", cleaned, flags=re.IGNORECASE)
-        cleaned = cleaned.strip()
-        if cleaned:
-            normalized.append(cleaned)
+        validated = validate_station_format(station)
+        if validated and validated not in normalized:
+            normalized.append(validated)
     return normalized if normalized else None
 
 
@@ -1254,66 +1442,327 @@ def normalize_bronch_location_lobe(raw: Any) -> str | None:
     return None
 
 
-def normalize_cpt_codes(raw: Any) -> List[int | str] | None:
-    """Normalize CPT codes, handling comma-separated strings and converting to list of int/str."""
+def normalize_cpt_codes(raw: Any) -> List[str] | None:
+    """Normalize CPT codes to a list of string CPT code values only.
+
+    Per specification:
+    - Always returns array of strings containing only the CPT code itself
+    - Example: ["31652"] not ["31652 convex probe endobronchial..."]
+    - Extracts just the numeric code from longer descriptive strings
+    - Modifiers if present are kept as separate entries
+    """
     if raw is None:
         return None
-    
-    # If already a list, normalize items
+
+    # CPT code pattern: 5-digit number (may have optional modifier like -26)
+    cpt_pattern = re.compile(r"\b(\d{5})(?:-(\d{2}))?\b")
+
+    def extract_cpt_codes(text: str) -> List[str]:
+        """Extract CPT code(s) from a string, handling descriptive text."""
+        codes = []
+        # First try to extract CPT codes with pattern
+        for match in cpt_pattern.finditer(text):
+            code = match.group(1)
+            modifier = match.group(2)
+            if modifier:
+                codes.append(f"{code}-{modifier}")
+            else:
+                codes.append(code)
+        # If no pattern match but text is purely numeric (5 digits), use it
+        if not codes:
+            clean = text.strip()
+            if re.fullmatch(r"\d{5}", clean):
+                codes.append(clean)
+        return codes
+
+    normalized: List[str] = []
+
     if isinstance(raw, list):
-        normalized = []
         for item in raw:
             if item is None:
                 continue
-            # Try to convert to int if it's a numeric string
-            if isinstance(item, str):
-                item_clean = item.strip()
-                if not item_clean:
-                    continue
-                try:
-                    normalized.append(int(item_clean))
-                except ValueError:
-                    # Keep as string if it contains non-numeric characters (e.g., modifiers)
-                    normalized.append(item_clean)
-            elif isinstance(item, int):
-                normalized.append(item)
-            else:
-                # Try to convert other types
-                try:
-                    normalized.append(int(item))
-                except (ValueError, TypeError):
-                    normalized.append(str(item).strip())
-        return normalized if normalized else None
-    
-    # If it's a string, split by comma and process
-    if isinstance(raw, str):
+            item_str = str(item).strip()
+            if not item_str:
+                continue
+            codes = extract_cpt_codes(item_str)
+            for code in codes:
+                if code not in normalized:
+                    normalized.append(code)
+    elif isinstance(raw, str):
         if not raw.strip():
             return None
-        items = [item.strip() for item in raw.split(",") if item.strip()]
-        normalized = []
-        for item in items:
-            try:
-                normalized.append(int(item))
-            except ValueError:
-                # Keep as string if it contains non-numeric characters
-                normalized.append(item)
-        return normalized if normalized else None
-    
-    # Try to convert other types to string and split
-    try:
-        s = str(raw).strip()
-        if not s:
-            return None
-        items = [item.strip() for item in s.split(",") if item.strip()]
-        normalized = []
-        for item in items:
-            try:
-                normalized.append(int(item))
-            except ValueError:
-                normalized.append(item)
-        return normalized if normalized else None
-    except Exception:
+        # Handle comma-separated strings
+        for part in raw.split(","):
+            part = part.strip()
+            if not part:
+                continue
+            codes = extract_cpt_codes(part)
+            for code in codes:
+                if code not in normalized:
+                    normalized.append(code)
+    else:
+        # Try to convert other types
+        try:
+            s = str(raw).strip()
+            if s:
+                codes = extract_cpt_codes(s)
+                for code in codes:
+                    if code not in normalized:
+                        normalized.append(code)
+        except Exception:
+            pass
+
+    return normalized if normalized else None
+
+
+def normalize_attending_name(raw: Any) -> str | None:
+    """Normalize attending physician name, removing role/specialty from the name.
+
+    Per specification:
+    - attending_name should contain only the clinician's name and credentials
+    - Example: "Russell Miller MD" not "Russell Miller MD, Pulmonologist"
+    - Role/specialty should go in provider_role field instead
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
         return None
+    text = text_raw.strip()
+    if not text or text.lower() in {"none", "n/a", "na", "null", ""}:
+        return None
+
+    # Common roles/specialties to strip from the name
+    role_patterns = [
+        r",?\s*(?:Interventional\s+)?Pulmonologist\s*$",
+        r",?\s*(?:Interventional\s+)?Pulmonology\s*$",
+        r",?\s*Thoracic\s+Surgeon\s*$",
+        r",?\s*Thoracic\s+Surgery\s*$",
+        r",?\s*Pulmonary(?:/Critical\s+Care)?\s*$",
+        r",?\s*Critical\s+Care\s*$",
+        r",?\s*Fellow\s*$",
+        r",?\s*Attending\s*$",
+        r",?\s*Physician\s*$",
+        r",?\s*Surgeon\s*$",
+    ]
+
+    result = text
+    for pattern in role_patterns:
+        result = re.sub(pattern, "", result, flags=re.IGNORECASE).strip()
+
+    # Clean up any trailing commas or whitespace
+    result = result.rstrip(",").strip()
+
+    return result if result else None
+
+
+def normalize_provider_role(raw: Any) -> str | None:
+    """Normalize provider role/specialty to canonical form.
+
+    Common values: Pulmonologist, Interventional Pulmonologist, Thoracic Surgeon, Fellow
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"none", "n/a", "na", "null", ""}:
+        return None
+
+    mapping = {
+        "pulmonologist": "Pulmonologist",
+        "pulmonology": "Pulmonologist",
+        "interventional pulmonologist": "Interventional Pulmonologist",
+        "interventional pulmonology": "Interventional Pulmonologist",
+        "ip": "Interventional Pulmonologist",
+        "thoracic surgeon": "Thoracic Surgeon",
+        "thoracic surgery": "Thoracic Surgeon",
+        "fellow": "Fellow",
+        "pulmonary fellow": "Fellow",
+        "ip fellow": "Fellow",
+        "attending": "Attending",
+        "attending physician": "Attending",
+    }
+
+    if text in mapping:
+        return mapping[text]
+
+    # Fuzzy matching
+    if "interventional" in text and "pulmon" in text:
+        return "Interventional Pulmonologist"
+    if "pulmon" in text:
+        return "Pulmonologist"
+    if "thoracic" in text:
+        return "Thoracic Surgeon"
+    if "fellow" in text:
+        return "Fellow"
+
+    return text_raw.strip()  # Return original if no match
+
+
+def normalize_immediate_complications(raw: Any) -> str | None:
+    """Normalize immediate complications field to standardized vocabulary.
+
+    Per specification:
+    - Normalize variations like "No immediate complications" to "None"
+    - For complications that did occur, use concise standard terms
+    - Standardize vocabulary for consistency
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip()
+    if not text:
+        return None
+
+    lowered = text.lower()
+
+    # Normalize "no complications" variations to "None"
+    no_complication_patterns = [
+        r"^no\s+(?:immediate\s+)?complications?\.?$",
+        r"^none\s+(?:noted|observed|reported)?\.?$",
+        r"^no\s+(?:immediate\s+)?adverse\s+events?\.?$",
+        r"^nil\.?$",
+        r"^n/a\.?$",
+        r"^na\.?$",
+        r"^none\.?$",
+    ]
+    for pattern in no_complication_patterns:
+        if re.match(pattern, lowered):
+            return "None"
+
+    # Standard complication mappings
+    complication_mapping = {
+        "bleeding": "Bleeding",
+        "hemorrhage": "Bleeding",
+        "pneumothorax": "Pneumothorax",
+        "ptx": "Pneumothorax",
+        "hypoxia": "Hypoxia",
+        "hypoxemia": "Hypoxia",
+        "desaturation": "Hypoxia",
+        "respiratory failure": "Respiratory Failure",
+        "bronchospasm": "Bronchospasm",
+        "wheezing": "Bronchospasm",
+        "arrhythmia": "Arrhythmia",
+        "fever": "Fever",
+        "infection": "Infection",
+    }
+
+    # Check for specific complications
+    for key, value in complication_mapping.items():
+        if key in lowered:
+            return value
+
+    # If none of the above, return cleaned original
+    return text
+
+
+def normalize_radiographic_findings(raw: Any) -> str | None:
+    """Normalize radiographic findings, excluding non-imaging content.
+
+    Per specification:
+    - Only include actual radiographic/imaging descriptions (CT, PET, CXR findings)
+    - Exclude sampling criteria (e.g., "nodes >= 5mm were sampled")
+    - Exclude procedural details (needle passes, ROSE results, etc.)
+    - Return null if no imaging description is present
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip()
+    if not text or text.lower() in {"none", "n/a", "na", "null", ""}:
+        return None
+
+    lowered = text.lower()
+
+    # Patterns that indicate this is NOT a radiographic finding (should be excluded)
+    exclusion_patterns = [
+        r"sampling\s+criteria",
+        r"nodes?\s*(?:>=?|≥|greater\s+than)\s*\d+\s*mm\s+(?:were\s+)?sampled",
+        r"short\s+axis\s+(?:diameter\s+)?(?:criteria|threshold)",
+        r"(?:were\s+)?met\s+(?:for\s+)?sampling",
+        r"needle\s+pass",
+        r"rose\s+(?:result|showed|demonstrates)",
+        r"specimen\s+(?:sent|obtained)",
+        r"cytolog",
+        r"patholog",
+        r"biopsy\s+(?:result|showed)",
+    ]
+
+    for pattern in exclusion_patterns:
+        if re.search(pattern, lowered):
+            return None
+
+    # Patterns that indicate valid radiographic findings
+    valid_imaging_patterns = [
+        r"(?:ct|pet|cxr|x-ray|chest\s+x-ray|imaging|scan)",
+        r"(?:nodule|mass|lesion|opacity|consolidation)",
+        r"(?:hilar|mediastinal)\s+(?:adenopathy|lymphadenopathy)",
+        r"(?:suv|standardized\s+uptake)",
+        r"(?:avid|hypermetabolic)",
+        r"(?:effusion|collapse|atelectasis)",
+        r"(?:lobe|segment|upper|lower|middle)",
+    ]
+
+    has_imaging_content = any(re.search(pat, lowered) for pat in valid_imaging_patterns)
+
+    if has_imaging_content:
+        return text
+
+    # If no clear imaging content, return None rather than procedural text
+    return None
+
+
+def apply_cross_field_consistency(data: Dict[str, Any]) -> Dict[str, Any]:
+    """Apply cross-field consistency checks and corrections.
+
+    Per specification, ensures fields are consistent with each other:
+    - pneumothorax_intervention is null when pneumothorax=false
+    - bronch_tbbx_tool is null when bronch_num_tbbx is null/0
+    - ebus_stations_detail stations match ebus_stations_sampled
+    - etc.
+    """
+    result = dict(data)
+
+    # Pneumothorax consistency
+    if result.get("pneumothorax") is False:
+        result["pneumothorax_intervention"] = None
+
+    # Transbronchial biopsy consistency
+    num_tbbx = result.get("bronch_num_tbbx")
+    if num_tbbx is None or num_tbbx == 0:
+        result["bronch_tbbx_tool"] = None
+
+    # EBUS station consistency
+    # Ensure ebus_stations_sampled and ebus_stations_detail are consistent
+    station_detail = result.get("ebus_stations_detail") or []
+    stations_sampled = result.get("ebus_stations_sampled") or []
+
+    if station_detail:
+        # Get stations from detail
+        detail_stations = {d.get("station") for d in station_detail if d.get("station")}
+        # Merge with sampled
+        all_stations = set(stations_sampled) | detail_stations
+        if all_stations:
+            result["ebus_stations_sampled"] = sorted(all_stations)
+            # Also update linear_ebus_stations to match
+            result["linear_ebus_stations"] = sorted(all_stations)
+
+    # Derive global ROSE result from per-station data if available
+    if station_detail and not result.get("ebus_rose_result"):
+        derived_rose = derive_global_ebus_rose_result(station_detail)
+        if derived_rose:
+            result["ebus_rose_result"] = derived_rose
+
+    # Pleural consistency - if no pleural procedure, clear pleural fields
+    if not result.get("pleural_procedure_type"):
+        pleural_fields = [
+            "pleural_side", "pleural_volume_drained_ml", "pleural_fluid_appearance",
+            "pleural_guidance", "pleural_intercostal_space", "pleural_catheter_type",
+            "pleural_opening_pressure_measured", "pleural_opening_pressure_cmh2o",
+        ]
+        for field in pleural_fields:
+            if field in result:
+                result[field] = None
+
+    return result
 
 
 POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
@@ -1361,4 +1810,11 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "ventilation_mode": normalize_ventilation_mode,
     "procedure_setting": normalize_procedure_setting,
     "bronch_location_lobe": normalize_bronch_location_lobe,
+    # Provider and role normalization
+    "attending_name": normalize_attending_name,
+    "provider_role": normalize_provider_role,
+    # Complication and safety field normalization
+    "bronch_immediate_complications": normalize_immediate_complications,
+    # Radiographic findings - exclude non-imaging content
+    "radiographic_findings": normalize_radiographic_findings,
 }
