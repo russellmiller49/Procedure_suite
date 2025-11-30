@@ -1132,7 +1132,32 @@ def normalize_assistant_names(raw: Any) -> List[str] | None:
             name = str(item).strip()
             if name and name.lower() not in {"none", "n/a", "na", "null", ""}:
                 normalized.append(name)
-    return normalized if normalized else None
+        return normalized if normalized else None
+
+    # If it's a string, check for comma separation
+    if isinstance(raw, str):
+        text = raw.strip()
+        if not text or text.lower() in {"none", "n/a", "na", "null"}:
+            return None
+
+        # Check for common separators
+        if "," in text or ";" in text:
+            items = re.split(r"[,;]", text)
+            normalized = [item.strip() for item in items if item.strip()]
+            return normalized if normalized else None
+
+        # Single name
+        return [text]
+
+    # Try to convert other types
+    try:
+        text = str(raw).strip()
+        if text and text.lower() not in {"none", "n/a", "na", "null"}:
+            return [text]
+    except Exception:
+        pass
+
+    return None
 
 
 def normalize_assistant_name_single(raw: Any) -> str | None:
@@ -1160,31 +1185,6 @@ def normalize_nav_registration_method(raw: Any) -> str | None:
         candidate = text.strip().title()
         if candidate in {"Manual", "Automatic"}:
             return candidate
-    return None
-
-    # If it's a string, check for comma separation
-    if isinstance(raw, str):
-        text = raw.strip()
-        if not text or text.lower() in {"none", "n/a", "na", "null"}:
-            return None
-
-        # Check for common separators
-        if "," in text or ";" in text:
-            items = re.split(r"[,;]", text)
-            normalized = [item.strip() for item in items if item.strip()]
-            return normalized if normalized else None
-
-        # Single name
-        return [text]
-
-    # Try to convert other types
-    try:
-        text = str(raw).strip()
-        if text and text.lower() not in {"none", "n/a", "na", "null"}:
-            return [text]
-    except Exception:
-        pass
-
     return None
 
 
