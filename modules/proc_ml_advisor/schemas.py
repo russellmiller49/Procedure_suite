@@ -844,6 +844,20 @@ class CodingTrace(BaseModel):
         description="Whether human modified the codes",
     )
 
+    # Cross-module linking (for integrated feedback loop)
+    reporter_trace_id: Optional[str] = Field(
+        default=None,
+        description="Link to associated ReporterTrace for error attribution",
+    )
+    extraction_gaps: list[str] = Field(
+        default_factory=list,
+        description="Fields that were empty/uncertain from reporter extraction",
+    )
+    coding_limited_by_extraction: bool = Field(
+        default=False,
+        description="Whether coding was limited by extraction gaps",
+    )
+
     # Provenance
     source: str = Field(
         default="unknown",
@@ -852,6 +866,359 @@ class CodingTrace(BaseModel):
     pipeline_version: Optional[str] = Field(
         default=None,
         description="Version of the coding pipeline",
+    )
+
+
+# =============================================================================
+# REPORTER TRACE MODEL (Phase 2)
+# =============================================================================
+
+class ReporterTrace(BaseModel):
+    """
+    Trace for reporter module extractions.
+
+    Used to track extraction quality and link to downstream coding traces
+    for error attribution. Part of the integrated ML feedback loop.
+
+    The reporter transforms free-text procedure notes into structured reports.
+    Tracking extraction quality helps identify:
+    - Missing field extraction patterns
+    - Low confidence extractions that need review
+    - Extraction gaps that cause downstream coding errors
+    """
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "trace_id": "rpt-001",
+                "input_text": "EBUS performed with sampling of 4R, 7, and 11L...",
+                "extracted_fields": {"stations": ["4R", "7", "11L"], "bal_performed": True},
+                "extraction_confidence": {"stations": 0.95, "bal_performed": 0.88},
+                "field_completeness": 0.85,
+            }
+        },
+    )
+
+    # Identifiers
+    trace_id: str = Field(
+        default_factory=lambda: f"rpt-{uuid.uuid4().hex[:8]}",
+        description="Unique trace identifier for reporter",
+    )
+    timestamp: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc),
+        description="When this trace was created",
+    )
+    report_id: Optional[str] = Field(
+        default=None,
+        description="Associated report ID if available",
+    )
+
+    # Input
+    input_text: str = Field(
+        default="",
+        description="Original free-text procedure note",
+    )
+    input_source: Literal["free_text", "extractor_hints", "ehr_import", "qa_sandbox"] = Field(
+        default="free_text",
+        description="Source of the input text",
+    )
+    procedure_type_hint: Optional[str] = Field(
+        default=None,
+        description="Procedure type hint provided by user",
+    )
+
+    # Extraction output
+    extracted_fields: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Fields extracted from the free text",
+    )
+    extraction_confidence: dict[str, float] = Field(
+        default_factory=dict,
+        description="Confidence score per extracted field (0.0 to 1.0)",
+    )
+    extraction_model: Optional[str] = Field(
+        default=None,
+        description="Model used for extraction (e.g., 'gemini-1.5-pro')",
+    )
+    extraction_prompt_version: Optional[str] = Field(
+        default=None,
+        description="Version of the extraction prompt template",
+    )
+
+    # Quality metrics
+    field_completeness: float = Field(
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+        description="Percentage of required fields successfully extracted",
+    )
+    missing_required_fields: list[str] = Field(
+        default_factory=list,
+        description="Required fields that could not be extracted",
+    )
+    low_confidence_fields: list[str] = Field(
+        default_factory=list,
+        description="Fields extracted with low confidence (<0.7)",
+    )
+
+    # Downstream impact tracking (populated by coder)
+    coding_gaps_due_to_extraction: list[str] = Field(
+        default_factory=list,
+        description="Codes that couldn't be assigned due to extraction gaps",
+    )
+    linked_coding_trace_id: Optional[str] = Field(
+        default=None,
+        description="ID of the CodingTrace that used this extraction",
+    )
+
+    # Ground truth (from human review in QA)
+    corrected_fields: Optional[dict[str, Any]] = Field(
+        default=None,
+        description="Human-corrected field values",
+    )
+    human_reviewed: bool = Field(
+        default=False,
+        description="Whether a human has reviewed this extraction",
+    )
+
+    # Provenance
+    source: str = Field(
+        default="unknown",
+        description="Source of this extraction run",
+    )
+    pipeline_version: Optional[str] = Field(
+        default=None,
+        description="Version of the reporter pipeline",
+    )
+
+
+# =============================================================================
+# REGISTRY TRACE MODEL (Phase 3)
+# =============================================================================
+
+class RegistryTrace(BaseModel):
+    """
+    Trace for registry export operations.
+
+    Used to track data quality for registry submissions and link back
+    to upstream reporter/coder traces for error attribution.
+
+    The registry module transforms structured reports and codes into
+    registry-ready bundles for external submission.
+    """
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "trace_id": "reg-001",
+                "report_id": "rpt-12345",
+                "target_registry": "aabip",
+                "assigned_codes": ["31622", "31653"],
+                "field_completeness": 0.95,
+                "validation_passed": True,
+            }
+        },
+    )
+
+    # Identifiers
+    trace_id: str = Field(
+        default_factory=lambda: f"reg-{uuid.uuid4().hex[:8]}",
+        description="Unique trace identifier for registry",
+    )
+    timestamp: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc),
+        description="When this trace was created",
+    )
+    report_id: str = Field(
+        ...,
+        description="Associated report ID",
+    )
+
+    # Input
+    structured_report: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Structured report from reporter module",
+    )
+    assigned_codes: list[str] = Field(
+        default_factory=list,
+        description="CPT/HCPCS codes from coder module",
+    )
+    target_registry: Literal["aabip", "sts", "aquire", "internal", "custom"] = Field(
+        default="internal",
+        description="Target registry for export",
+    )
+
+    # Output
+    registry_bundle: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Final registry-formatted data bundle",
+    )
+    export_format: Literal["json", "csv", "hl7", "fhir", "custom"] = Field(
+        default="json",
+        description="Export format used",
+    )
+
+    # Validation
+    validation_passed: bool = Field(
+        default=True,
+        description="Whether pre-submission validation passed",
+    )
+    validation_errors: list[str] = Field(
+        default_factory=list,
+        description="Validation errors (hard failures)",
+    )
+    validation_warnings: list[str] = Field(
+        default_factory=list,
+        description="Validation warnings (soft issues)",
+    )
+    field_completeness: float = Field(
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+        description="Percentage of registry fields successfully populated",
+    )
+    missing_registry_fields: list[str] = Field(
+        default_factory=list,
+        description="Registry fields that couldn't be populated",
+    )
+
+    # Submission tracking
+    submission_status: Optional[Literal["pending", "submitted", "accepted", "rejected"]] = Field(
+        default=None,
+        description="Status of registry submission",
+    )
+    rejection_reasons: list[str] = Field(
+        default_factory=list,
+        description="Reasons for registry rejection (if rejected)",
+    )
+    submission_id: Optional[str] = Field(
+        default=None,
+        description="External submission/confirmation ID",
+    )
+
+    # Cross-module linking
+    reporter_trace_id: Optional[str] = Field(
+        default=None,
+        description="Link to associated ReporterTrace",
+    )
+    coding_trace_id: Optional[str] = Field(
+        default=None,
+        description="Link to associated CodingTrace",
+    )
+
+    # Provenance
+    source: str = Field(
+        default="unknown",
+        description="Source of this registry export",
+    )
+    pipeline_version: Optional[str] = Field(
+        default=None,
+        description="Version of the registry pipeline",
+    )
+
+
+# =============================================================================
+# UNIFIED TRACE MODEL (Phase 4 - Integrated Feedback Loop)
+# =============================================================================
+
+class UnifiedTrace(BaseModel):
+    """
+    Unified trace linking all three modules for error attribution.
+
+    This model connects reporter, coder, and registry traces for
+    end-to-end quality tracking and improvement routing.
+    """
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "unified_trace_id": "unified-001",
+                "reporter_trace_id": "rpt-001",
+                "coding_trace_id": "code-001",
+                "registry_trace_id": "reg-001",
+                "error_attribution": "reporter",
+                "root_cause": "Failed to extract EBUS stations from text",
+            }
+        },
+    )
+
+    # Identifiers
+    unified_trace_id: str = Field(
+        default_factory=lambda: f"unified-{uuid.uuid4().hex[:8]}",
+        description="Unique unified trace identifier",
+    )
+    timestamp: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc),
+        description="When this unified trace was created",
+    )
+
+    # Module trace links
+    reporter_trace_id: Optional[str] = Field(
+        default=None,
+        description="Link to ReporterTrace",
+    )
+    coding_trace_id: Optional[str] = Field(
+        default=None,
+        description="Link to CodingTrace",
+    )
+    registry_trace_id: Optional[str] = Field(
+        default=None,
+        description="Link to RegistryTrace",
+    )
+
+    # Error attribution
+    has_errors: bool = Field(
+        default=False,
+        description="Whether any errors were detected",
+    )
+    error_attribution: Optional[Literal["reporter", "coder", "registry", "unknown"]] = Field(
+        default=None,
+        description="Which module is responsible for the error",
+    )
+    root_cause: Optional[str] = Field(
+        default=None,
+        description="Description of the root cause",
+    )
+    improvement_recommendation: Optional[str] = Field(
+        default=None,
+        description="Recommended improvement action",
+    )
+
+    # Quality scores
+    overall_quality_score: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Combined quality score across all modules",
+    )
+    reporter_quality_score: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Reporter extraction quality score",
+    )
+    coder_quality_score: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Coder accuracy score",
+    )
+    registry_quality_score: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Registry completeness score",
+    )
+
+    # Human review
+    human_reviewed: bool = Field(
+        default=False,
+        description="Whether a human has reviewed this case",
+    )
+    human_feedback: Optional[str] = Field(
+        default=None,
+        description="Free-text feedback from human reviewer",
+    )
+    human_corrections: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Human-made corrections by module",
     )
 
 

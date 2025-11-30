@@ -50,8 +50,11 @@ from modules.proc_ml_advisor.schemas import (
     # Hybrid result models
     RuleEngineResult,
     HybridCodingResult,
-    # Coding trace model
+    # Trace models (all modules)
     CodingTrace,
+    ReporterTrace,
+    RegistryTrace,
+    UnifiedTrace,
     # API models
     CodeRequest,
     CodeResponse,
@@ -538,3 +541,226 @@ def create_code():
         return CodeWithConfidence(**defaults)
 
     return _create_code
+
+
+# =============================================================================
+# REPORTER TRACE FIXTURES
+# =============================================================================
+
+@pytest.fixture
+def reporter_trace_ebus() -> ReporterTrace:
+    """Complete reporter trace for EBUS extraction."""
+    return ReporterTrace(
+        trace_id="rpt-ebus-001",
+        report_id="rpt-12345",
+        input_text="EBUS performed with sampling of stations 4R, 7, and 11L. BAL in RML.",
+        input_source="qa_sandbox",
+        procedure_type_hint="ebus",
+        extracted_fields={
+            "stations": ["4R", "7", "11L"],
+            "bal_performed": True,
+            "bal_location": "RML",
+        },
+        extraction_confidence={
+            "stations": 0.95,
+            "bal_performed": 0.88,
+            "bal_location": 0.82,
+        },
+        extraction_model="gemini-1.5-pro",
+        extraction_prompt_version="v2.1",
+        field_completeness=0.85,
+        missing_required_fields=["sedation_time"],
+        low_confidence_fields=["bal_location"],
+        source="api.reporter",
+        pipeline_version="v5",
+    )
+
+
+@pytest.fixture
+def reporter_trace_incomplete() -> ReporterTrace:
+    """Reporter trace with extraction gaps."""
+    return ReporterTrace(
+        trace_id="rpt-incomplete-001",
+        input_text="Bronchoscopy performed. Samples obtained.",
+        input_source="free_text",
+        extracted_fields={
+            "procedure_type": "bronchoscopy",
+        },
+        extraction_confidence={
+            "procedure_type": 0.75,
+        },
+        field_completeness=0.25,
+        missing_required_fields=["stations", "biopsy_sites", "laterality"],
+        low_confidence_fields=["procedure_type"],
+        source="test",
+    )
+
+
+@pytest.fixture
+def create_reporter_trace():
+    """Factory fixture to create reporter traces with custom data."""
+    def _create_trace(**kwargs) -> ReporterTrace:
+        defaults = {
+            "input_text": "Test procedure note",
+            "extracted_fields": {"procedure_type": "bronchoscopy"},
+            "extraction_confidence": {"procedure_type": 0.90},
+            "source": "test",
+        }
+        defaults.update(kwargs)
+        return ReporterTrace(**defaults)
+
+    return _create_trace
+
+
+# =============================================================================
+# REGISTRY TRACE FIXTURES
+# =============================================================================
+
+@pytest.fixture
+def registry_trace_aabip() -> RegistryTrace:
+    """Complete registry trace for AABIP export."""
+    return RegistryTrace(
+        trace_id="reg-aabip-001",
+        report_id="rpt-12345",
+        structured_report={
+            "procedure_category": "ebus",
+            "stations": ["4R", "7", "11L"],
+        },
+        assigned_codes=["31622", "31653"],
+        target_registry="aabip",
+        registry_bundle={
+            "procedure_date": "2025-11-29",
+            "procedure_type": "EBUS-TBNA",
+            "nodes_sampled": 3,
+            "complications": "none",
+        },
+        export_format="json",
+        validation_passed=True,
+        validation_errors=[],
+        validation_warnings=["Consider adding sedation time"],
+        field_completeness=0.92,
+        missing_registry_fields=["sedation_minutes"],
+        reporter_trace_id="rpt-ebus-001",
+        coding_trace_id="trace-ebus-001",
+        source="api.registry",
+        pipeline_version="v5",
+    )
+
+
+@pytest.fixture
+def registry_trace_failed() -> RegistryTrace:
+    """Registry trace with validation failures."""
+    return RegistryTrace(
+        trace_id="reg-failed-001",
+        report_id="rpt-incomplete-001",
+        structured_report={"procedure_category": "bronchoscopy"},
+        assigned_codes=["31622"],
+        target_registry="aabip",
+        registry_bundle={},
+        validation_passed=False,
+        validation_errors=[
+            "Missing required field: procedure_date",
+            "Missing required field: nodes_sampled",
+        ],
+        field_completeness=0.35,
+        missing_registry_fields=["procedure_date", "nodes_sampled", "complications"],
+        source="test",
+    )
+
+
+@pytest.fixture
+def create_registry_trace():
+    """Factory fixture to create registry traces with custom data."""
+    def _create_trace(**kwargs) -> RegistryTrace:
+        defaults = {
+            "report_id": "rpt-test-001",
+            "structured_report": {"procedure_category": "bronchoscopy"},
+            "assigned_codes": ["31622"],
+            "target_registry": "internal",
+            "source": "test",
+        }
+        defaults.update(kwargs)
+        return RegistryTrace(**defaults)
+
+    return _create_trace
+
+
+# =============================================================================
+# UNIFIED TRACE FIXTURES
+# =============================================================================
+
+@pytest.fixture
+def unified_trace_success() -> UnifiedTrace:
+    """Unified trace for successful pipeline run."""
+    return UnifiedTrace(
+        unified_trace_id="unified-success-001",
+        reporter_trace_id="rpt-ebus-001",
+        coding_trace_id="trace-ebus-001",
+        registry_trace_id="reg-aabip-001",
+        has_errors=False,
+        error_attribution=None,
+        root_cause=None,
+        overall_quality_score=0.92,
+        reporter_quality_score=0.85,
+        coder_quality_score=0.95,
+        registry_quality_score=0.92,
+        human_reviewed=False,
+    )
+
+
+@pytest.fixture
+def unified_trace_reporter_error() -> UnifiedTrace:
+    """Unified trace with error attributed to reporter."""
+    return UnifiedTrace(
+        unified_trace_id="unified-err-rpt-001",
+        reporter_trace_id="rpt-incomplete-001",
+        coding_trace_id="trace-limited-001",
+        registry_trace_id="reg-failed-001",
+        has_errors=True,
+        error_attribution="reporter",
+        root_cause="Failed to extract EBUS stations from poorly formatted text",
+        improvement_recommendation="Enhance station extraction regex patterns",
+        overall_quality_score=0.45,
+        reporter_quality_score=0.25,
+        coder_quality_score=0.65,
+        registry_quality_score=0.35,
+        human_reviewed=True,
+        human_feedback="Source text was ambiguous about station numbers",
+        human_corrections={
+            "reporter": {"stations": ["4R", "7"]},
+        },
+    )
+
+
+@pytest.fixture
+def unified_trace_coder_error() -> UnifiedTrace:
+    """Unified trace with error attributed to coder."""
+    return UnifiedTrace(
+        unified_trace_id="unified-err-coder-001",
+        reporter_trace_id="rpt-ebus-001",
+        coding_trace_id="trace-wrong-001",
+        has_errors=True,
+        error_attribution="coder",
+        root_cause="Applied wrong MER logic for EBUS with BAL",
+        improvement_recommendation="Review MER rules for EBUS+BAL combination",
+        overall_quality_score=0.70,
+        reporter_quality_score=0.85,
+        coder_quality_score=0.50,
+        human_reviewed=True,
+        human_corrections={
+            "coder": {"final_codes": ["31622", "31653", "31625"]},
+        },
+    )
+
+
+@pytest.fixture
+def create_unified_trace():
+    """Factory fixture to create unified traces with custom data."""
+    def _create_trace(**kwargs) -> UnifiedTrace:
+        defaults = {
+            "has_errors": False,
+        }
+        defaults.update(kwargs)
+        return UnifiedTrace(**defaults)
+
+    return _create_trace

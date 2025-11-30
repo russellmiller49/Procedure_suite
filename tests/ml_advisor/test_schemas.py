@@ -40,8 +40,11 @@ from modules.proc_ml_advisor.schemas import (
     # Hybrid result models
     RuleEngineResult,
     HybridCodingResult,
-    # Coding trace model
+    # Trace models (all modules)
     CodingTrace,
+    ReporterTrace,
+    RegistryTrace,
+    UnifiedTrace,
     # API models
     CodeRequest,
     CodeResponse,
@@ -414,6 +417,338 @@ class TestCodingTrace:
         assert data["report_text"] == "Test"
         assert data["autocode_codes"] == ["31622"]
 
+    def test_cross_module_linking(self):
+        """CodingTrace should support cross-module linking fields."""
+        trace = CodingTrace(
+            report_text="Test with linking",
+            autocode_codes=["31622"],
+            reporter_trace_id="rpt-001",
+            extraction_gaps=["sedation_time", "laterality"],
+            coding_limited_by_extraction=True,
+            source="test",
+        )
+        assert trace.reporter_trace_id == "rpt-001"
+        assert trace.extraction_gaps == ["sedation_time", "laterality"]
+        assert trace.coding_limited_by_extraction is True
+
+
+# =============================================================================
+# REPORTER TRACE TESTS
+# =============================================================================
+
+class TestReporterTrace:
+    """Tests for ReporterTrace model."""
+
+    def test_basic_trace(self):
+        """Should create basic reporter trace."""
+        trace = ReporterTrace(
+            input_text="EBUS with stations 4R, 7",
+            extracted_fields={"stations": ["4R", "7"]},
+            source="test",
+        )
+        assert trace.input_text == "EBUS with stations 4R, 7"
+        assert trace.extracted_fields["stations"] == ["4R", "7"]
+        assert trace.trace_id.startswith("rpt-")
+
+    def test_auto_generated_fields(self):
+        """Trace ID and timestamp should auto-generate."""
+        trace = ReporterTrace(input_text="Test")
+        assert trace.trace_id.startswith("rpt-")
+        assert trace.timestamp is not None
+        assert isinstance(trace.timestamp, datetime)
+
+    def test_extraction_confidence(self):
+        """Should track confidence per extracted field."""
+        trace = ReporterTrace(
+            input_text="Test",
+            extracted_fields={
+                "stations": ["4R", "7"],
+                "bal_performed": True,
+            },
+            extraction_confidence={
+                "stations": 0.95,
+                "bal_performed": 0.72,
+            },
+        )
+        assert trace.extraction_confidence["stations"] == 0.95
+        assert trace.extraction_confidence["bal_performed"] == 0.72
+
+    def test_field_completeness_bounds(self):
+        """Field completeness must be between 0.0 and 1.0."""
+        ReporterTrace(input_text="Test", field_completeness=0.0)
+        ReporterTrace(input_text="Test", field_completeness=1.0)
+
+        with pytest.raises(ValidationError):
+            ReporterTrace(input_text="Test", field_completeness=1.5)
+
+        with pytest.raises(ValidationError):
+            ReporterTrace(input_text="Test", field_completeness=-0.1)
+
+    def test_input_source_literal(self):
+        """Input source must be one of allowed values."""
+        ReporterTrace(input_text="Test", input_source="free_text")
+        ReporterTrace(input_text="Test", input_source="qa_sandbox")
+        ReporterTrace(input_text="Test", input_source="ehr_import")
+
+        with pytest.raises(ValidationError):
+            ReporterTrace(input_text="Test", input_source="invalid")
+
+    def test_quality_tracking_fields(self):
+        """Should track missing and low confidence fields."""
+        trace = ReporterTrace(
+            input_text="Vague procedure description",
+            extracted_fields={"type": "bronchoscopy"},
+            extraction_confidence={"type": 0.55},
+            field_completeness=0.3,
+            missing_required_fields=["stations", "laterality"],
+            low_confidence_fields=["type"],
+        )
+        assert "stations" in trace.missing_required_fields
+        assert "type" in trace.low_confidence_fields
+        assert trace.field_completeness == 0.3
+
+    def test_downstream_impact_tracking(self):
+        """Should track downstream coding gaps."""
+        trace = ReporterTrace(
+            input_text="Test",
+            coding_gaps_due_to_extraction=["31653"],
+            linked_coding_trace_id="code-001",
+        )
+        assert "31653" in trace.coding_gaps_due_to_extraction
+        assert trace.linked_coding_trace_id == "code-001"
+
+    def test_human_review_tracking(self):
+        """Should track human corrections."""
+        trace = ReporterTrace(
+            input_text="Test",
+            extracted_fields={"stations": ["4R"]},
+            corrected_fields={"stations": ["4R", "7", "11L"]},
+            human_reviewed=True,
+        )
+        assert trace.human_reviewed is True
+        assert trace.corrected_fields["stations"] == ["4R", "7", "11L"]
+
+    def test_json_serialization(self):
+        """Should serialize to JSON for JSONL logging."""
+        trace = ReporterTrace(
+            input_text="Test procedure",
+            extracted_fields={"type": "ebus"},
+            source="test",
+        )
+        json_str = trace.model_dump_json()
+        data = json.loads(json_str)
+        assert data["input_text"] == "Test procedure"
+        assert data["extracted_fields"]["type"] == "ebus"
+
+
+# =============================================================================
+# REGISTRY TRACE TESTS
+# =============================================================================
+
+class TestRegistryTrace:
+    """Tests for RegistryTrace model."""
+
+    def test_basic_trace(self):
+        """Should create basic registry trace."""
+        trace = RegistryTrace(
+            report_id="rpt-001",
+            assigned_codes=["31622", "31653"],
+            target_registry="aabip",
+        )
+        assert trace.report_id == "rpt-001"
+        assert trace.assigned_codes == ["31622", "31653"]
+        assert trace.trace_id.startswith("reg-")
+
+    def test_auto_generated_fields(self):
+        """Trace ID and timestamp should auto-generate."""
+        trace = RegistryTrace(report_id="rpt-001")
+        assert trace.trace_id.startswith("reg-")
+        assert trace.timestamp is not None
+
+    def test_target_registry_literal(self):
+        """Target registry must be one of allowed values."""
+        RegistryTrace(report_id="rpt-001", target_registry="aabip")
+        RegistryTrace(report_id="rpt-001", target_registry="sts")
+        RegistryTrace(report_id="rpt-001", target_registry="aquire")
+        RegistryTrace(report_id="rpt-001", target_registry="internal")
+        RegistryTrace(report_id="rpt-001", target_registry="custom")
+
+        with pytest.raises(ValidationError):
+            RegistryTrace(report_id="rpt-001", target_registry="invalid")
+
+    def test_export_format_literal(self):
+        """Export format must be one of allowed values."""
+        RegistryTrace(report_id="rpt-001", export_format="json")
+        RegistryTrace(report_id="rpt-001", export_format="csv")
+        RegistryTrace(report_id="rpt-001", export_format="fhir")
+
+        with pytest.raises(ValidationError):
+            RegistryTrace(report_id="rpt-001", export_format="xml")
+
+    def test_validation_tracking(self):
+        """Should track validation errors and warnings."""
+        trace = RegistryTrace(
+            report_id="rpt-001",
+            validation_passed=False,
+            validation_errors=["Missing procedure_date", "Invalid CPT code"],
+            validation_warnings=["Consider adding sedation time"],
+        )
+        assert trace.validation_passed is False
+        assert len(trace.validation_errors) == 2
+        assert len(trace.validation_warnings) == 1
+
+    def test_field_completeness_bounds(self):
+        """Field completeness must be between 0.0 and 1.0."""
+        RegistryTrace(report_id="rpt-001", field_completeness=0.0)
+        RegistryTrace(report_id="rpt-001", field_completeness=1.0)
+
+        with pytest.raises(ValidationError):
+            RegistryTrace(report_id="rpt-001", field_completeness=1.5)
+
+    def test_submission_status_literal(self):
+        """Submission status must be one of allowed values."""
+        RegistryTrace(report_id="rpt-001", submission_status="pending")
+        RegistryTrace(report_id="rpt-001", submission_status="submitted")
+        RegistryTrace(report_id="rpt-001", submission_status="accepted")
+        RegistryTrace(report_id="rpt-001", submission_status="rejected")
+
+        with pytest.raises(ValidationError):
+            RegistryTrace(report_id="rpt-001", submission_status="invalid")
+
+    def test_cross_module_linking(self):
+        """Should support cross-module trace linking."""
+        trace = RegistryTrace(
+            report_id="rpt-001",
+            reporter_trace_id="rpt-trace-001",
+            coding_trace_id="code-trace-001",
+        )
+        assert trace.reporter_trace_id == "rpt-trace-001"
+        assert trace.coding_trace_id == "code-trace-001"
+
+    def test_json_serialization(self):
+        """Should serialize to JSON for JSONL logging."""
+        trace = RegistryTrace(
+            report_id="rpt-001",
+            assigned_codes=["31622"],
+            target_registry="aabip",
+            registry_bundle={"procedure_date": "2025-11-29"},
+        )
+        json_str = trace.model_dump_json()
+        data = json.loads(json_str)
+        assert data["report_id"] == "rpt-001"
+        assert data["registry_bundle"]["procedure_date"] == "2025-11-29"
+
+
+# =============================================================================
+# UNIFIED TRACE TESTS
+# =============================================================================
+
+class TestUnifiedTrace:
+    """Tests for UnifiedTrace model."""
+
+    def test_basic_trace(self):
+        """Should create basic unified trace."""
+        trace = UnifiedTrace()
+        assert trace.unified_trace_id.startswith("unified-")
+        assert trace.has_errors is False
+
+    def test_auto_generated_fields(self):
+        """Trace ID and timestamp should auto-generate."""
+        trace = UnifiedTrace()
+        assert trace.unified_trace_id.startswith("unified-")
+        assert trace.timestamp is not None
+
+    def test_module_trace_links(self):
+        """Should link to all three module traces."""
+        trace = UnifiedTrace(
+            reporter_trace_id="rpt-001",
+            coding_trace_id="code-001",
+            registry_trace_id="reg-001",
+        )
+        assert trace.reporter_trace_id == "rpt-001"
+        assert trace.coding_trace_id == "code-001"
+        assert trace.registry_trace_id == "reg-001"
+
+    def test_error_attribution_literal(self):
+        """Error attribution must be one of allowed values."""
+        UnifiedTrace(error_attribution="reporter")
+        UnifiedTrace(error_attribution="coder")
+        UnifiedTrace(error_attribution="registry")
+        UnifiedTrace(error_attribution="unknown")
+        UnifiedTrace(error_attribution=None)
+
+        with pytest.raises(ValidationError):
+            UnifiedTrace(error_attribution="invalid")
+
+    def test_quality_scores_bounds(self):
+        """Quality scores must be between 0.0 and 1.0."""
+        UnifiedTrace(overall_quality_score=0.0)
+        UnifiedTrace(overall_quality_score=1.0)
+        UnifiedTrace(reporter_quality_score=0.5)
+        UnifiedTrace(coder_quality_score=0.8)
+        UnifiedTrace(registry_quality_score=0.9)
+
+        with pytest.raises(ValidationError):
+            UnifiedTrace(overall_quality_score=1.5)
+
+        with pytest.raises(ValidationError):
+            UnifiedTrace(reporter_quality_score=-0.1)
+
+    def test_error_tracking(self):
+        """Should track errors with attribution and root cause."""
+        trace = UnifiedTrace(
+            has_errors=True,
+            error_attribution="reporter",
+            root_cause="Failed to extract station numbers",
+            improvement_recommendation="Improve regex patterns",
+        )
+        assert trace.has_errors is True
+        assert trace.error_attribution == "reporter"
+        assert "station" in trace.root_cause.lower()
+        assert trace.improvement_recommendation is not None
+
+    def test_human_review_tracking(self):
+        """Should track human review and corrections."""
+        trace = UnifiedTrace(
+            human_reviewed=True,
+            human_feedback="Station extraction was incorrect",
+            human_corrections={
+                "reporter": {"stations": ["4R", "7"]},
+                "coder": {"final_codes": ["31652"]},
+            },
+        )
+        assert trace.human_reviewed is True
+        assert trace.human_feedback is not None
+        assert "reporter" in trace.human_corrections
+        assert "coder" in trace.human_corrections
+
+    def test_full_quality_metrics(self):
+        """Should support all quality score fields."""
+        trace = UnifiedTrace(
+            overall_quality_score=0.85,
+            reporter_quality_score=0.80,
+            coder_quality_score=0.90,
+            registry_quality_score=0.88,
+        )
+        assert trace.overall_quality_score == 0.85
+        assert trace.reporter_quality_score == 0.80
+        assert trace.coder_quality_score == 0.90
+        assert trace.registry_quality_score == 0.88
+
+    def test_json_serialization(self):
+        """Should serialize to JSON for JSONL logging."""
+        trace = UnifiedTrace(
+            reporter_trace_id="rpt-001",
+            coding_trace_id="code-001",
+            has_errors=True,
+            error_attribution="reporter",
+        )
+        json_str = trace.model_dump_json()
+        data = json.loads(json_str)
+        assert data["reporter_trace_id"] == "rpt-001"
+        assert data["has_errors"] is True
+        assert data["error_attribution"] == "reporter"
+
 
 # =============================================================================
 # API MODEL TESTS
@@ -569,6 +904,148 @@ class TestModelIntegration:
             assert "trace_id" in data
             assert "timestamp" in data
             assert data["autocode_codes"] == ["31622"]
+
+    def test_cross_module_trace_workflow(self):
+        """Test complete cross-module trace linking workflow."""
+        # 1. Create reporter trace
+        reporter_trace = ReporterTrace(
+            trace_id="rpt-workflow-001",
+            input_text="EBUS with stations 4R, 7, 11L. BAL performed.",
+            extracted_fields={
+                "stations": ["4R", "7", "11L"],
+                "bal_performed": True,
+            },
+            extraction_confidence={
+                "stations": 0.95,
+                "bal_performed": 0.88,
+            },
+            field_completeness=0.85,
+            missing_required_fields=["sedation_time"],
+            source="test.workflow",
+        )
+
+        # 2. Create coding trace linked to reporter
+        coding_trace = CodingTrace(
+            trace_id="code-workflow-001",
+            report_text=reporter_trace.input_text,
+            autocode_codes=["31622", "31653"],
+            autocode_confidence={"31622": 0.95, "31653": 0.92},
+            advisor_candidate_codes=["31622", "31653", "31625"],
+            advisor_disagreements=["31625"],
+            reporter_trace_id=reporter_trace.trace_id,
+            extraction_gaps=reporter_trace.missing_required_fields,
+            coding_limited_by_extraction=False,
+            source="test.workflow",
+        )
+
+        # 3. Update reporter with coding trace link
+        # (In real implementation, would update the trace)
+        assert coding_trace.reporter_trace_id == reporter_trace.trace_id
+
+        # 4. Create registry trace linked to both
+        registry_trace = RegistryTrace(
+            trace_id="reg-workflow-001",
+            report_id="rpt-12345",
+            assigned_codes=coding_trace.autocode_codes,
+            target_registry="aabip",
+            registry_bundle={
+                "procedure_date": "2025-11-29",
+                "nodes_sampled": 3,
+            },
+            validation_passed=True,
+            field_completeness=0.92,
+            reporter_trace_id=reporter_trace.trace_id,
+            coding_trace_id=coding_trace.trace_id,
+            source="test.workflow",
+        )
+
+        # 5. Create unified trace linking all three
+        unified_trace = UnifiedTrace(
+            unified_trace_id="unified-workflow-001",
+            reporter_trace_id=reporter_trace.trace_id,
+            coding_trace_id=coding_trace.trace_id,
+            registry_trace_id=registry_trace.trace_id,
+            has_errors=False,
+            overall_quality_score=0.90,
+            reporter_quality_score=0.85,
+            coder_quality_score=0.95,
+            registry_quality_score=0.92,
+        )
+
+        # Verify complete chain
+        assert unified_trace.reporter_trace_id == reporter_trace.trace_id
+        assert unified_trace.coding_trace_id == coding_trace.trace_id
+        assert unified_trace.registry_trace_id == registry_trace.trace_id
+        assert registry_trace.reporter_trace_id == reporter_trace.trace_id
+        assert registry_trace.coding_trace_id == coding_trace.trace_id
+        assert coding_trace.reporter_trace_id == reporter_trace.trace_id
+
+        # All should serialize properly
+        for trace in [reporter_trace, coding_trace, registry_trace, unified_trace]:
+            json_str = trace.model_dump_json()
+            data = json.loads(json_str)
+            assert "trace_id" in data or "unified_trace_id" in data
+
+    def test_error_attribution_workflow(self):
+        """Test error attribution through cross-module traces."""
+        # Simulate reporter extraction failure
+        reporter_trace = ReporterTrace(
+            trace_id="rpt-err-001",
+            input_text="Procedure done. Samples taken.",
+            extracted_fields={"procedure_type": "bronchoscopy"},
+            extraction_confidence={"procedure_type": 0.55},
+            field_completeness=0.20,
+            missing_required_fields=["stations", "laterality", "biopsy_sites"],
+            low_confidence_fields=["procedure_type"],
+            source="test.error",
+        )
+
+        # Coding limited by extraction gaps
+        coding_trace = CodingTrace(
+            trace_id="code-err-001",
+            report_text=reporter_trace.input_text,
+            autocode_codes=["31622"],  # Only diagnostic bronch
+            reporter_trace_id=reporter_trace.trace_id,
+            extraction_gaps=reporter_trace.missing_required_fields,
+            coding_limited_by_extraction=True,
+            source="test.error",
+        )
+
+        # Registry validation fails
+        registry_trace = RegistryTrace(
+            trace_id="reg-err-001",
+            report_id="rpt-fail-001",
+            assigned_codes=coding_trace.autocode_codes,
+            target_registry="aabip",
+            validation_passed=False,
+            validation_errors=["Missing required field: nodes_sampled"],
+            field_completeness=0.30,
+            reporter_trace_id=reporter_trace.trace_id,
+            coding_trace_id=coding_trace.trace_id,
+            source="test.error",
+        )
+
+        # Unified trace attributes error to reporter
+        unified_trace = UnifiedTrace(
+            reporter_trace_id=reporter_trace.trace_id,
+            coding_trace_id=coding_trace.trace_id,
+            registry_trace_id=registry_trace.trace_id,
+            has_errors=True,
+            error_attribution="reporter",
+            root_cause="Failed to extract station information from vague text",
+            improvement_recommendation="Improve extraction prompts for ambiguous cases",
+            overall_quality_score=0.35,
+            reporter_quality_score=0.20,
+            coder_quality_score=0.60,
+            registry_quality_score=0.30,
+        )
+
+        # Verify error chain
+        assert unified_trace.has_errors is True
+        assert unified_trace.error_attribution == "reporter"
+        assert coding_trace.coding_limited_by_extraction is True
+        assert registry_trace.validation_passed is False
+        assert reporter_trace.field_completeness < 0.5
 
 
 if __name__ == "__main__":
