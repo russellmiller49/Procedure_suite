@@ -61,6 +61,7 @@ class EnhancedCPTCoder:
         """
         note_text = procedure_data.get("note_text") or procedure_data.get("findings", "") or ""
         text_lower = note_text.lower()
+        registry = procedure_data.get("registry") or procedure_data
 
         # Use IP KB to find groups and codes from text
         groups_from_text = self.ip_kb.groups_from_text(note_text)
@@ -102,7 +103,12 @@ class EnhancedCPTCoder:
 
         # ========== NAVIGATION (31627) - CONSERVATIVE ==========
         nav_ev = evidence.get("bronchoscopy_navigation", {})
-        if not (nav_ev.get("platform") and (nav_ev.get("concept") or nav_ev.get("direct"))):
+        nav_tool_in_lesion = bool(registry.get("nav_tool_in_lesion"))
+        nav_sampling_tools = registry.get("nav_sampling_tools") or []
+        nav_performed = nav_tool_in_lesion or bool(nav_sampling_tools)
+        if not nav_performed:
+            discard("31627")
+        elif not (nav_ev.get("platform") and (nav_ev.get("concept") or nav_ev.get("direct"))):
             discard("31627")
 
         # ========== STENT CODES - VERY CONSERVATIVE ==========
@@ -171,10 +177,34 @@ class EnhancedCPTCoder:
             # Ambiguous - default to insertion
             discard("32552")
 
+        # ========== PLEURAL DRAINAGE (32556/32557) - REQUIRE REGISTRY PLEURAL PROCEDURE ==========
+        pleural_type = registry.get("pleural_procedure_type")
+        pleural_catheter_type = registry.get("pleural_catheter_type")
+        pleural_ok = pleural_type == "Chest Tube" or bool(pleural_catheter_type)
+        if not pleural_ok:
+            discard("32556")
+            discard("32557")
+
         # ========== ADDITIONAL LOBE TBLB (+31632) - CONSERVATIVE ==========
         lobe_ev = evidence.get("bronchoscopy_biopsy_additional_lobe", {})
         if lobe_ev.get("lobe_count", 0) < 2 and not lobe_ev.get("explicit_multilobe"):
             discard("31632")
+
+        # ========== PARENCHYMAL TBBx (31628) - REQUIRE REGISTRY EVIDENCE ==========
+        has_parenchymal_tbbx = False
+        try:
+            num_tbbx = registry.get("bronch_num_tbbx")
+            has_parenchymal_tbbx = num_tbbx is not None and num_tbbx > 0
+        except Exception:
+            has_parenchymal_tbbx = False
+        if registry.get("bronch_tbbx_tool"):
+            has_parenchymal_tbbx = True
+        if registry.get("bronch_biopsy_sites"):
+            has_parenchymal_tbbx = True
+
+        if not has_parenchymal_tbbx:
+            discard("31628")
+            discard("+31632")
 
         # ========== LINEAR EBUS (31652/31653) - CONSERVATIVE ==========
         linear_ev = evidence.get("bronchoscopy_ebus_linear", {})
@@ -193,7 +223,8 @@ class EnhancedCPTCoder:
 
         # ========== RADIAL EBUS (+31654) - CONSERVATIVE ==========
         radial_ev = evidence.get("bronchoscopy_ebus_radial", {})
-        if not radial_ev.get("radial"):
+        radial_registry = bool(registry.get("nav_rebus_used") or registry.get("nav_rebus_view"))
+        if not (radial_ev.get("radial") and radial_registry and nav_performed):
             discard("31654")
 
         # ========== TUMOR DEBULKING (31640/31641) - ENSURE PROPER CODING ==========

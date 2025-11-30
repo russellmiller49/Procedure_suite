@@ -905,7 +905,7 @@ def normalize_ebus_stations_detail(raw: Any) -> list[dict[str, Any]] | None:
             )
         elif isinstance(entry, str):
             # Attempt minimal parsing from a string like "11L 5.4mm benign"
-            station_match = re.search(r"(2r|2l|4r|4l|7|10r|10l|11r|11l)", entry, re.IGNORECASE)
+            station_match = re.search(r"\b(2r|2l|4r|4l|7|10r|10l|11r|11l)\b", entry, re.IGNORECASE)
             if not station_match:
                 # Skip entries without valid station pattern
                 continue
@@ -1751,14 +1751,27 @@ def apply_cross_field_consistency(data: Dict[str, Any]) -> Dict[str, Any]:
         if derived_rose:
             result["ebus_rose_result"] = derived_rose
 
+    families = set(result.get("procedure_families") or [])
+
     # Pleural consistency - if no pleural procedure, clear pleural fields
-    if not result.get("pleural_procedure_type"):
+    if not result.get("pleural_procedure_type") and not ({"PLEURAL", "THORACOSCOPY"} & families):
         pleural_fields = [
             "pleural_side", "pleural_volume_drained_ml", "pleural_fluid_appearance",
             "pleural_guidance", "pleural_intercostal_space", "pleural_catheter_type",
             "pleural_opening_pressure_measured", "pleural_opening_pressure_cmh2o",
         ]
         for field in pleural_fields:
+            if field in result:
+                result[field] = None
+
+    # CAO/stent consistency - clear state if no CAO/STENT procedures this run
+    if "CAO" not in families:
+        for field in ["cao_location", "cao_primary_modality", "cao_tumor_location",
+                      "cao_obstruction_pre_pct", "cao_obstruction_post_pct", "cao_interventions"]:
+            if field in result:
+                result[field] = None
+    if not ({"STENT", "CAO"} & families):
+        for field in ["stent_type", "stent_location", "stent_size", "stent_action"]:
             if field in result:
                 result[field] = None
 

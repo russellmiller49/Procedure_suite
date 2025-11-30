@@ -67,11 +67,16 @@ function formatEbusStationDetails(stations) {
 
     stations.forEach(s => {
         const station = s.station || '?';
-        let parts = [];
+        const parts = [];
 
         // Size
         if (s.size_mm !== null && s.size_mm !== undefined) {
             parts.push(`size ${s.size_mm} mm`);
+        }
+
+        // Passes next for quick per-station review
+        if (s.passes !== null && s.passes !== undefined) {
+            parts.push(`${s.passes} passes`);
         }
 
         // ROSE result
@@ -79,17 +84,15 @@ function formatEbusStationDetails(stations) {
             parts.push(`ROSE: ${s.rose_result}`);
         }
 
-        // Passes
-        if (s.passes !== null && s.passes !== undefined) {
-            parts.push(`${s.passes} passes`);
-        }
-
-        // Shape, margin, echogenicity if present
+        // Morphology in consistent order
         if (s.shape) parts.push(`shape: ${s.shape}`);
         if (s.margin) parts.push(`margin: ${s.margin}`);
         if (s.echogenicity) parts.push(`echo: ${s.echogenicity}`);
+        if (s.chs_present !== null && s.chs_present !== undefined) {
+            parts.push(`CHS: ${s.chs_present ? "present" : "absent"}`);
+        }
 
-        const details = parts.length > 0 ? parts.join(', ') : 'no details';
+        const details = parts.length > 0 ? parts.join('; ') : 'no details';
         html += `<li><strong>${station}</strong>: ${details}</li>`;
     });
 

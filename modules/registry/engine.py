@@ -640,10 +640,23 @@ class RegistryEngine:
         if station_list and not merged_data.get("linear_ebus_stations") and "EBUS" in procedure_families:
             merged_data["linear_ebus_stations"] = station_list
 
-        # Validate linear_ebus_stations: filter out any hallucinated stations not in the text
-        if merged_data.get("linear_ebus_stations") and "EBUS" in procedure_families:
-            validated_stations = self._validate_station_mentions(note_text, merged_data["linear_ebus_stations"])
-            merged_data["linear_ebus_stations"] = validated_stations if validated_stations else None
+        # Validate EBUS station fields: filter out any hallucinated stations not in the text
+        if "EBUS" in procedure_families:
+            if merged_data.get("linear_ebus_stations"):
+                validated_stations = self._validate_station_mentions(note_text, merged_data["linear_ebus_stations"])
+                merged_data["linear_ebus_stations"] = validated_stations if validated_stations else None
+            if merged_data.get("ebus_stations_sampled"):
+                valid_sampled = self._validate_station_mentions(note_text, merged_data["ebus_stations_sampled"])
+                merged_data["ebus_stations_sampled"] = valid_sampled if valid_sampled else None
+            if merged_data.get("ebus_stations_detail"):
+                filtered_detail = []
+                for entry in merged_data.get("ebus_stations_detail") or []:
+                    station = entry.get("station")
+                    if not station:
+                        continue
+                    if self._validate_station_mentions(note_text, [station]):
+                        filtered_detail.append(entry)
+                merged_data["ebus_stations_detail"] = filtered_detail if filtered_detail else None
 
         lowered_note = note_text.lower()
 
@@ -734,7 +747,8 @@ class RegistryEngine:
 
     def _extract_linear_station_spans(self, text: str) -> tuple[list[str], list[Span]]:
         """Extract linear EBUS station mentions and their spans from raw text."""
-        pattern = r"(?mi)(?:station\s*)?(2R|2L|4R|4L|7|10R|10L|11R|11L)\s*[:\-]?"
+        # Require a boundary before the station number to avoid matching inside "12R" -> "2R"
+        pattern = r"(?mi)(?:station\s*)?(?<![0-9A-Za-z])(2R|2L|4R|4L|7|10R|10L|11R|11L)\b\s*[:\-]?"
         stations: list[str] = []
         spans: list[Span] = []
         for match in re.finditer(pattern, text):
@@ -852,7 +866,7 @@ class RegistryEngine:
         """Parse per-station needle pass counts from the narrative."""
         lowered = text.lower()
         station_passes: dict[str, int] = {}
-        station_pattern = r"(2r|2l|4r|4l|7|10r|10l|11r|11l)"
+        station_pattern = r"(?<!\d)(2r|2l|4r|4l|7|10r|10l|11r|11l)\b"
         word_to_int = {
             "one": 1,
             "two": 2,
@@ -998,7 +1012,7 @@ class RegistryEngine:
 
             # ebus_stations_sampled
             stations_found = set()
-            station_pattern = r"Station\s*(2R|2L|4R|4L|7|10R|10L|11R|11L)"
+            station_pattern = r"Station\s*(?<!\d)(2R|2L|4R|4L|7|10R|10L|11R|11L)\b"
             for match in re.finditer(station_pattern, text, re.IGNORECASE):
                 snippet = text[match.end():match.end()+100].lower()
                 if any(kw in snippet for kw in ["pass", "sample", "needle", "tbna", "aspirat"]):
