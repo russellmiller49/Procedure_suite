@@ -64,8 +64,12 @@ class CPTProcessor:
         self.add_on_requirements = self._build_add_on_requirements()
         self.bundling_rules = self.kb.get("bundling_rules", {})
         self.ncci_pairs = self.kb.get("ncci_pairs", [])
-        self.em_minor_codes = set(self.kb.get("bundling_rules", {}).get("em_same_day_minor_procedure", {}).get("procedure_examples", []))
-        self.em_major_codes = set(self.kb.get("bundling_rules", {}).get("em_global_period_thoracoscopy", {}).get("global_90_day_codes_family", []))
+        self.em_minor_codes = set(
+            self.kb.get("bundling_rules", {}).get("em_same_day_minor_procedure", {}).get("procedure_examples", [])
+        )
+        self.em_major_codes = set(
+            self.kb.get("bundling_rules", {}).get("em_global_period_thoracoscopy", {}).get("global_90_day_codes_family", [])
+        )
 
     def process_entry(self, entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> CPTProcessingResult:
         codes = self._normalize_codes(entry, entry_id, logger)
@@ -85,8 +89,6 @@ class CPTProcessor:
         entry["cpt_codes"] = self._rebuild_codes(codes)
         entry["calculated_total_rvu"] = self._calculate_total_rvu(codes)
         return CPTProcessingResult(codes=codes)
-
-    # ---- normalization helpers ----
 
     def _normalize_codes(self, entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> list[CPTCode]:
         raw_codes = entry.get("cpt_codes")
@@ -169,8 +171,6 @@ class CPTProcessor:
                 rendered.append(code.code)
         return rendered
 
-    # ---- rule enforcement ----
-
     def _flag_unknown_codes(self, codes: list[CPTCode], entry_id: str, logger: IssueLogger) -> None:
         for code in self._active_code_set(codes):
             if code not in self.known_codes:
@@ -179,7 +179,6 @@ class CPTProcessor:
                     issue_type="unknown_cpt",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="cpt_codes",
                     details={"code": code},
                 )
 
@@ -194,7 +193,6 @@ class CPTProcessor:
                     issue_type="add_on_without_primary",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="cpt_codes",
                     details={"add_on": add_on, "expected_primary": sorted(base_codes)},
                 )
 
@@ -241,7 +239,6 @@ class CPTProcessor:
                 issue_type="possible_stent_dilation_bundle",
                 severity="warn",
                 action="flagged_for_manual",
-                field="cpt_codes",
                 details={"rule": "stent_dilation_same_segment"},
             )
 
@@ -253,7 +250,6 @@ class CPTProcessor:
                 issue_type="31640_31641_same_session",
                 severity="warn",
                 action="flagged_for_manual",
-                field="cpt_codes",
                 details={"rule": "31640_vs_31641_same_site"},
             )
 
@@ -265,7 +261,6 @@ class CPTProcessor:
                 issue_type="radial_linear_overlap",
                 severity="warn",
                 action="flagged_for_manual",
-                field="cpt_codes",
                 details={"rule": "radial_linear_exclusive"},
             )
 
@@ -277,7 +272,6 @@ class CPTProcessor:
                     issue_type="chartis_with_blvr_same_session",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="cpt_codes",
                     details={"rule": "chartis_bundling"},
                 )
 
@@ -291,7 +285,6 @@ class CPTProcessor:
                     issue_type="possible_pleural_thoracoscopy_bundle",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="cpt_codes",
                     details={"rule": "pleural_drainage_vs_thoracoscopy"},
                 )
 
@@ -311,7 +304,7 @@ class CPTProcessor:
                     entry_id=entry_id,
                     logger=logger,
                     issue_type="ncci_unconditional_drop",
-                    details={"primary": primary, "old": secondary, "new": None},
+                    details={"primary": primary, "secondary": secondary},
                 )
                 continue
             secondary_obj = self._find_active_code(codes, secondary)
@@ -321,7 +314,6 @@ class CPTProcessor:
                     issue_type="ncci_with_modifier",
                     severity="info",
                     action="flagged_for_manual",
-                    field="cpt_codes",
                     details={"primary": primary, "secondary": secondary},
                 )
             else:
@@ -330,7 +322,6 @@ class CPTProcessor:
                     issue_type="ncci_conflict_no_modifier",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="cpt_codes",
                     details={"primary": primary, "secondary": secondary},
                 )
 
@@ -351,7 +342,7 @@ class CPTProcessor:
                         entry_id=entry_id,
                         logger=logger,
                         issue_type="sedation_incompatible_with_anesthesia",
-                        details={"sedation_type": sedation_type, "old": code, "new": None},
+                        details={"sedation_type": sedation_type, "code": code},
                     )
 
     def _enforce_em_rules(self, codes: list[CPTCode], entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> None:
@@ -369,7 +360,6 @@ class CPTProcessor:
                         issue_type="em_without_25_modifier",
                         severity="warn",
                         action="flagged_for_manual",
-                        field="cpt_codes",
                         details={"em_code": em_code, "procedures": sorted(minor_overlap)},
                     )
         major_overlap = active_codes & self.em_major_codes
@@ -382,11 +372,8 @@ class CPTProcessor:
                         issue_type="major_proc_em_without_57",
                         severity="warn",
                         action="flagged_for_manual",
-                        field="cpt_codes",
                         details={"em_code": em_code, "procedures": sorted(major_overlap)},
                     )
-
-    # ---- lower-level helpers ----
 
     def _drop_when_triggered(
         self,
@@ -410,7 +397,7 @@ class CPTProcessor:
                 entry_id=entry_id,
                 logger=logger,
                 issue_type="bundling_auto_drop",
-                details={"rule": rule_name, "reason": reason, "old": target, "new": None},
+                details={"rule": rule_name, "reason": reason, "dropped_code": target},
             )
 
     def _deactivate_code(
@@ -422,7 +409,6 @@ class CPTProcessor:
         logger: IssueLogger,
         issue_type: str,
         details: dict[str, Any],
-        field: str = "cpt_codes",
     ) -> None:
         removed = False
         for code in codes:
@@ -435,7 +421,6 @@ class CPTProcessor:
                 issue_type=issue_type,
                 severity="info",
                 action="auto_fixed",
-                field=field,
                 details=details,
             )
 
@@ -459,9 +444,9 @@ class CPTProcessor:
             metrics = rvus.get(code) or rvus_additional.get(code)
             if not isinstance(metrics, dict):
                 continue
-            work = float(metrics.get("work") or 0.0)
-            pe = float(metrics.get("pe") or 0.0)
-            mp = float(metrics.get("mp") or 0.0)
+            work = float(metrics.get("work", 0.0))
+            pe = float(metrics.get("pe", 0.0))
+            mp = float(metrics.get("mp", 0.0))
             total += work + pe + mp
         return round(total, 3)
 

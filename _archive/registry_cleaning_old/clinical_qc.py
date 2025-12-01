@@ -58,8 +58,7 @@ class ClinicalQCChecker:
                 issue_type="indication_too_vague",
                 severity="warn",
                 action="flagged_for_manual",
-                field="primary_indication",
-                details={"value": primary},
+                details={"primary_indication": primary},
             )
 
     def _check_imaging_details(
@@ -77,7 +76,6 @@ class ClinicalQCChecker:
                     issue_type="radiographic_findings_missing",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="radiographic_findings",
                     details="Imaging-driven procedure without radiographic findings",
                 )
 
@@ -96,7 +94,6 @@ class ClinicalQCChecker:
                     issue_type="ebus_details_missing",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="ebus_stations_sampled",
                     details="EBUS codes present without sampled stations",
                 )
         if active_codes & NAV_CODES:
@@ -106,7 +103,6 @@ class ClinicalQCChecker:
                     issue_type="nav_platform_missing",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="nav_platform",
                     details="Navigation add-on without nav_platform",
                 )
         if active_codes & STENT_CODES:
@@ -117,7 +113,6 @@ class ClinicalQCChecker:
                     issue_type="stent_details_missing",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="stent_details",
                     details={"missing_fields": missing},
                 )
         if active_codes & PLEURAL_CODES:
@@ -128,8 +123,7 @@ class ClinicalQCChecker:
                         issue_type=f"pleural_detail_missing_{label}",
                         severity="warn",
                         action="flagged_for_manual",
-                        field=field,
-                        details="Pleural detail missing",
+                        details={"field": field},
                     )
         if active_codes & BLVR_CODES:
             blvr_missing = [
@@ -143,7 +137,6 @@ class ClinicalQCChecker:
                     issue_type="blvr_details_missing",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="blvr_details",
                     details={"missing_fields": blvr_missing},
                 )
         ablation_flag = bool(active_codes & ABLATION_CODES) or bool(entry.get("ablation_peripheral_performed"))
@@ -155,7 +148,6 @@ class ClinicalQCChecker:
                     issue_type="ablation_detail_missing",
                     severity="warn",
                     action="flagged_for_manual",
-                    field="ablation_details",
                     details={"missing_fields": ablation_missing},
                 )
 
@@ -172,8 +164,7 @@ class ClinicalQCChecker:
                     issue_type="complication_field_missing",
                     severity="warn",
                     action="flagged_for_manual",
-                    field=field,
-                    details="Required complication field missing when status=Complete",
+                    details={"field": field},
                 )
 
     def _check_follow_up(self, entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> None:
@@ -183,7 +174,6 @@ class ClinicalQCChecker:
                 issue_type="follow_up_plan_missing",
                 severity="warn",
                 action="flagged_for_manual",
-                field="follow_up_plan",
                 details="Follow-up plan missing",
             )
 

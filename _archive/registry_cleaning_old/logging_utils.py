@@ -3,7 +3,6 @@ from __future__ import annotations
 import csv
 import json
 import re
-from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Literal
@@ -18,7 +17,6 @@ class IssueLogEntry:
     issue_type: str
     severity: Severity
     action: Action
-    field: str | None
     details: dict[str, Any] | str
 
 
@@ -40,22 +38,14 @@ class IssueLogger:
         severity: Severity,
         action: Action,
         details: dict[str, Any] | str,
-        field: str | None = None,
     ) -> None:
-        extracted_field = field
-        if extracted_field is None and isinstance(details, dict):
-            extracted_field = details.get("field")
-        cleaned_details = details
-        if isinstance(details, dict) and "field" in details:
-            cleaned_details = {k: v for k, v in details.items() if k != "field"}
         self._entries.append(
             IssueLogEntry(
                 entry_id=entry_id,
                 issue_type=issue_type,
                 severity=severity,
                 action=action,
-                field=extracted_field if extracted_field is not None else None,
-                details=cleaned_details,
+                details=details,
             )
         )
 
@@ -65,7 +55,7 @@ class IssueLogger:
     def write_csv(self, destination: str | Path) -> None:
         path = Path(destination)
         path.parent.mkdir(parents=True, exist_ok=True)
-        fieldnames = ["entry_id", "issue_type", "severity", "action", "field", "details"]
+        fieldnames = ["entry_id", "issue_type", "severity", "action", "details"]
         with path.open("w", newline="") as handle:
             writer = csv.DictWriter(handle, fieldnames=fieldnames)
             writer.writeheader()
@@ -76,7 +66,6 @@ class IssueLogger:
                         "issue_type": entry.issue_type,
                         "severity": entry.severity,
                         "action": entry.action,
-                        "field": entry.field or "",
                         "details": _serialize_details(entry.details),
                     }
                 )
@@ -90,24 +79,11 @@ class IssueLogger:
                 "issue_type": entry.issue_type,
                 "severity": entry.severity,
                 "action": entry.action,
-                "field": entry.field,
                 "details": entry.details,
             }
             for entry in self._entries
         ]
         path.write_text(json.dumps(payload, indent=2))
-
-    def summarize_by_action(self) -> dict[str, dict[str, int]]:
-        summary: dict[str, dict[str, int]] = {
-            "auto_fixed": defaultdict(int),
-            "flagged_for_manual": defaultdict(int),
-        }
-        for entry in self._entries:
-            summary[entry.action][entry.issue_type] += 1
-        return {key: dict(value) for key, value in summary.items()}
-
-    def error_entry_ids(self) -> set[str]:
-        return {entry.entry_id for entry in self._entries if entry.severity == "error"}
 
 
 def derive_entry_id(entry: dict[str, Any], index: int) -> str:

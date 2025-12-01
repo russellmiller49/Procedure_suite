@@ -1,32 +1,63 @@
-entry_id,issue_type,severity,action,details
-QA-001_2025-02-10_00000,unknown_field_removed,info,auto_fixed,"{""field"": ""unknown_field"", ""value"": ""should be moved""}"
-QA-001_2025-02-10_00000,integer_coerced,info,auto_fixed,"{""field"": ""patient_age"", ""new"": 64, ""old"": ""64""}"
-QA-001_2025-02-10_00000,integer_coerced,info,auto_fixed,"{""field"": ""asa_class"", ""new"": 3, ""old"": ""3""}"
-QA-001_2025-02-10_00000,array_wrapped,info,auto_fixed,"{""field"": ""follow_up_plan"", ""value"": """"}"
-QA-001_2025-02-10_00000,enum_normalized,info,auto_fixed,"{""field"": ""gender"", ""new"": ""M"", ""old"": ""Male""}"
-QA-001_2025-02-10_00000,bundling_auto_drop,info,auto_fixed,"{""dropped_code"": ""31622"", ""reason"": ""Diagnostic bronchoscopy (31622) is bundled when more extensive therapeutic or biopsy bronchoscopy procedures from the same family are performed by the same physician on the same date of service."", ""rule"": ""diagnostic_with_surgical""}"
-QA-001_2025-02-10_00000,disposition_missing,warn,flagged_for_manual,Disposition missing
-QA-001_2025-02-10_00000,radiographic_findings_missing,warn,flagged_for_manual,Imaging-driven procedure without radiographic findings
-QA-001_2025-02-10_00000,complication_field_missing,warn,flagged_for_manual,"{""field"": ""bleeding_severity""}"
-QA-001_2025-02-10_00000,complication_field_missing,warn,flagged_for_manual,"{""field"": ""pneumothorax""}"
-QA-001_2025-02-10_00000,complication_field_missing,warn,flagged_for_manual,"{""field"": ""hypoxia_respiratory_failure""}"
-QA-001_2025-02-10_00000,complication_field_missing,warn,flagged_for_manual,"{""field"": ""disposition""}"
-QA-001_2025-02-10_00000,follow_up_plan_missing,warn,flagged_for_manual,Follow-up plan missing
-QA-001_2025-02-10_00000,schema_validation_failure,error,flagged_for_manual,"{""message"": ""Additional properties are not allowed ('calculated_total_rvu' was unexpected)"", ""path"": ""root""}"
-QA-002_2025-01-05_00001,schema_validation_failure,error,flagged_for_manual,"{""message"": ""None is not one of ['Ultrasound', 'CT', 'Blind']"", ""path"": ""pleural_guidance""}"
-QA-002_2025-01-05_00001,schema_validation_failure,error,flagged_for_manual,"{""message"": ""None is not of type 'array'"", ""path"": ""follow_up_plan""}"
-QA-002_2025-01-05_00001,bundling_auto_drop,info,auto_fixed,"{""dropped_code"": ""71045"", ""reason"": ""Post-procedure chest x-rays performed solely to evaluate tube or fluid status after thoracentesis, IPC placement, or chest tube placement are generally bundled and not separately reportable."", ""rule"": ""pleural_post_procedure_imaging""}"
-QA-002_2025-01-05_00001,sedation_incompatible_with_anesthesia,info,auto_fixed,"{""code"": ""99152"", ""sedation_type"": ""General""}"
-QA-002_2025-01-05_00001,disposition_missing,warn,flagged_for_manual,Disposition missing
-QA-002_2025-01-05_00001,pleural_detail_missing_side,warn,flagged_for_manual,"{""field"": ""pleural_side""}"
-QA-002_2025-01-05_00001,pleural_detail_missing_guidance,warn,flagged_for_manual,"{""field"": ""pleural_guidance""}"
-QA-002_2025-01-05_00001,pleural_detail_missing_appearance,warn,flagged_for_manual,"{""field"": ""pleural_fluid_appearance""}"
-QA-002_2025-01-05_00001,pleural_detail_missing_volume,warn,flagged_for_manual,"{""field"": ""pleural_volume_drained_ml""}"
-QA-002_2025-01-05_00001,complication_field_missing,warn,flagged_for_manual,"{""field"": ""bleeding_severity""}"
-QA-002_2025-01-05_00001,complication_field_missing,warn,flagged_for_manual,"{""field"": ""pneumothorax""}"
-QA-002_2025-01-05_00001,complication_field_missing,warn,flagged_for_manual,"{""field"": ""hypoxia_respiratory_failure""}"
-QA-002_2025-01-05_00001,complication_field_missing,warn,flagged_for_manual,"{""field"": ""disposition""}"
-QA-002_2025-01-05_00001,follow_up_plan_missing,warn,flagged_for_manual,Follow-up plan missing
-QA-002_2025-01-05_00001,schema_validation_failure,error,flagged_for_manual,"{""message"": ""Additional properties are not allowed ('calculated_total_rvu' was unexpected)"", ""path"": ""root""}"
-QA-002_2025-01-05_00001,schema_validation_failure,error,flagged_for_manual,"{""message"": ""None is not one of ['Ultrasound', 'CT', 'Blind']"", ""path"": ""pleural_guidance""}"
-QA-002_2025-01-05_00001,schema_validation_failure,error,flagged_for_manual,"{""message"": ""None is not of type 'array'"", ""path"": ""follow_up_plan""}"
+entry_id,issue_type,severity,action,field,details
+MRN-001_2025-01-15_00000,integer_coerced,info,auto_fixed,patient_age,"{""new"": 65, ""old"": ""65""}"
+MRN-001_2025-01-15_00000,null_like_value_cleared,info,auto_fixed,bleeding_severity,"{""new"": null, ""old"": ""None""}"
+MRN-001_2025-01-15_00000,enum_normalized,info,auto_fixed,gender,"{""new"": ""M"", ""old"": ""Male""}"
+MRN-001_2025-01-15_00000,enum_normalized,info,auto_fixed,sedation_type,"{""new"": ""Moderate"", ""old"": ""moderate sedation""}"
+MRN-001_2025-01-15_00000,enum_normalized,info,auto_fixed,airway_type,"{""new"": ""Native"", ""old"": ""native""}"
+MRN-001_2025-01-15_00000,bundling_auto_drop,info,auto_fixed,cpt_codes,"{""new"": null, ""old"": ""31622"", ""reason"": ""Diagnostic bronchoscopy (31622) is bundled when more extensive therapeutic or biopsy bronchoscopy procedures from the same family are performed by the same physician on the same date of service."", ""rule"": ""diagnostic_with_surgical""}"
+MRN-001_2025-01-15_00000,radiographic_findings_missing,warn,flagged_for_manual,radiographic_findings,Imaging-driven procedure without radiographic findings
+MRN-001_2025-01-15_00000,complication_field_missing,warn,flagged_for_manual,bleeding_severity,Required complication field missing when status=Complete
+MRN-001_2025-01-15_00000,complication_field_missing,warn,flagged_for_manual,hypoxia_respiratory_failure,Required complication field missing when status=Complete
+MRN-002_2025-01-16_00001,radial_linear_overlap,warn,flagged_for_manual,cpt_codes,"{""rule"": ""radial_linear_exclusive""}"
+MRN-002_2025-01-16_00001,radiographic_findings_missing,warn,flagged_for_manual,radiographic_findings,Imaging-driven procedure without radiographic findings
+MRN-002_2025-01-16_00001,complication_field_missing,warn,flagged_for_manual,hypoxia_respiratory_failure,Required complication field missing when status=Complete
+MRN-002_2025-01-16_00001,follow_up_plan_missing,warn,flagged_for_manual,follow_up_plan,Follow-up plan missing
+MRN-003_2025-01-17_00002,null_like_value_cleared,info,auto_fixed,gender,"{""new"": null, ""old"": ""unknown""}"
+MRN-003_2025-01-17_00002,integer_coerced,info,auto_fixed,asa_class,"{""new"": 3, ""old"": ""3""}"
+MRN-003_2025-01-17_00002,enum_normalized,info,auto_fixed,sedation_type,"{""new"": ""Monitored Anesthesia Care"", ""old"": ""MAC""}"
+MRN-003_2025-01-17_00002,enum_normalized,info,auto_fixed,airway_type,"{""new"": ""Tracheostomy"", ""old"": ""trach""}"
+MRN-003_2025-01-17_00002,trainee_present_corrected,info,auto_fixed,trainee_present,"{""new"": true, ""old"": false}"
+MRN-003_2025-01-17_00002,disposition_missing,warn,flagged_for_manual,disposition,Disposition missing
+MRN-003_2025-01-17_00002,indication_too_vague,warn,flagged_for_manual,primary_indication,"{""value"": ""nodule""}"
+MRN-003_2025-01-17_00002,follow_up_plan_missing,warn,flagged_for_manual,follow_up_plan,Follow-up plan missing
+MRN-004_2025-01-18_00003,null_like_value_cleared,info,auto_fixed,bleeding_severity,"{""new"": null, ""old"": ""None""}"
+MRN-004_2025-01-18_00003,enum_normalized,info,auto_fixed,gender,"{""new"": ""M"", ""old"": ""m""}"
+MRN-004_2025-01-18_00003,pleural_detail_missing_appearance,warn,flagged_for_manual,pleural_fluid_appearance,Pleural detail missing
+MRN-004_2025-01-18_00003,complication_field_missing,warn,flagged_for_manual,bleeding_severity,Required complication field missing when status=Complete
+MRN-004_2025-01-18_00003,complication_field_missing,warn,flagged_for_manual,hypoxia_respiratory_failure,Required complication field missing when status=Complete
+MRN-004_2025-01-18_00003,follow_up_plan_missing,warn,flagged_for_manual,follow_up_plan,Follow-up plan missing
+MRN-005_2025-01-19_00004,enum_normalized,info,auto_fixed,gender,"{""new"": ""F"", ""old"": ""Female""}"
+MRN-005_2025-01-19_00004,possible_stent_dilation_bundle,warn,flagged_for_manual,cpt_codes,"{""rule"": ""stent_dilation_same_segment""}"
+MRN-005_2025-01-19_00004,ncci_conflict_no_modifier,warn,flagged_for_manual,cpt_codes,"{""primary"": ""31631"", ""secondary"": ""31630""}"
+MRN-005_2025-01-19_00004,sedation_incompatible_with_anesthesia,info,auto_fixed,cpt_codes,"{""new"": null, ""old"": ""99152"", ""sedation_type"": ""General""}"
+MRN-005_2025-01-19_00004,follow_up_plan_missing,warn,flagged_for_manual,follow_up_plan,Follow-up plan missing
+MRN-006_2025-01-20_00005,null_like_value_cleared,info,auto_fixed,bleeding_severity,"{""new"": null, ""old"": ""None""}"
+MRN-006_2025-01-20_00005,enum_normalized,info,auto_fixed,sedation_type,"{""new"": ""Moderate"", ""old"": ""moderate sedation""}"
+MRN-006_2025-01-20_00005,pleurodesis_flag_corrected,info,auto_fixed,pleurodesis_performed,"{""new"": true, ""old"": false}"
+MRN-006_2025-01-20_00005,pleural_detail_missing_guidance,warn,flagged_for_manual,pleural_guidance,Pleural detail missing
+MRN-006_2025-01-20_00005,pleural_detail_missing_appearance,warn,flagged_for_manual,pleural_fluid_appearance,Pleural detail missing
+MRN-006_2025-01-20_00005,pleural_detail_missing_volume,warn,flagged_for_manual,pleural_volume_drained_ml,Pleural detail missing
+MRN-006_2025-01-20_00005,complication_field_missing,warn,flagged_for_manual,bleeding_severity,Required complication field missing when status=Complete
+MRN-006_2025-01-20_00005,complication_field_missing,warn,flagged_for_manual,hypoxia_respiratory_failure,Required complication field missing when status=Complete
+MRN-007_2025-01-21_00006,null_like_value_cleared,info,auto_fixed,bleeding_severity,"{""new"": null, ""old"": ""None""}"
+MRN-007_2025-01-21_00006,array_wrapped,info,auto_fixed,pneumothorax_intervention,"{""new"": [""Observation""], ""old"": ""Observation""}"
+MRN-007_2025-01-21_00006,enum_normalized,info,auto_fixed,gender,"{""new"": ""F"", ""old"": ""f""}"
+MRN-007_2025-01-21_00006,complication_field_missing,warn,flagged_for_manual,bleeding_severity,Required complication field missing when status=Complete
+MRN-007_2025-01-21_00006,complication_field_missing,warn,flagged_for_manual,hypoxia_respiratory_failure,Required complication field missing when status=Complete
+MRN-007_2025-01-21_00006,follow_up_plan_missing,warn,flagged_for_manual,follow_up_plan,Follow-up plan missing
+MRN-008_2025-01-22_00007,unknown_field_removed,info,auto_fixed,extra_field_to_remove,"{""new"": null, ""old"": ""should go to evidence""}"
+MRN-008_2025-01-22_00007,unknown_field_removed,info,auto_fixed,unknown_column,"{""new"": null, ""old"": 123}"
+MRN-008_2025-01-22_00007,disposition_missing,warn,flagged_for_manual,disposition,Disposition missing
+MRN-008_2025-01-22_00007,follow_up_plan_missing,warn,flagged_for_manual,follow_up_plan,Follow-up plan missing
+MRN-009_2025-01-23_00008,null_like_value_cleared,info,auto_fixed,bleeding_severity,"{""new"": null, ""old"": ""None""}"
+MRN-009_2025-01-23_00008,sedation_incompatible_with_anesthesia,info,auto_fixed,cpt_codes,"{""new"": null, ""old"": ""99152"", ""sedation_type"": ""Monitored Anesthesia Care""}"
+MRN-009_2025-01-23_00008,complication_field_missing,warn,flagged_for_manual,bleeding_severity,Required complication field missing when status=Complete
+MRN-009_2025-01-23_00008,complication_field_missing,warn,flagged_for_manual,hypoxia_respiratory_failure,Required complication field missing when status=Complete
+MRN-010_2025-01-24_00009,null_like_value_cleared,info,auto_fixed,bleeding_severity,"{""new"": null, ""old"": ""None""}"
+MRN-010_2025-01-24_00009,enum_normalized,info,auto_fixed,gender,"{""new"": ""F"", ""old"": ""Woman""}"
+MRN-010_2025-01-24_00009,enum_normalized,info,auto_fixed,sedation_type,"{""new"": ""General"", ""old"": ""ga""}"
+MRN-010_2025-01-24_00009,enum_normalized,info,auto_fixed,airway_type,"{""new"": ""ETT"", ""old"": ""endotracheal""}"
+MRN-010_2025-01-24_00009,sedation_reversal_aligned,info,auto_fixed,sedation_reversal_given,"{""new"": true, ""old"": false}"
+MRN-010_2025-01-24_00009,radiographic_findings_missing,warn,flagged_for_manual,radiographic_findings,Imaging-driven procedure without radiographic findings
+MRN-010_2025-01-24_00009,complication_field_missing,warn,flagged_for_manual,bleeding_severity,Required complication field missing when status=Complete
+MRN-010_2025-01-24_00009,complication_field_missing,warn,flagged_for_manual,hypoxia_respiratory_failure,Required complication field missing when status=Complete

@@ -32,8 +32,7 @@ class ConsistencyChecker:
                 issue_type="trainee_present_corrected",
                 severity="info",
                 action="auto_fixed",
-                field="trainee_present",
-                details={"old": trainee_present, "new": True},
+                details="Set trainee_present=true based on fellow/assistant role",
             )
 
     def _sync_sedation_reversal(self, entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> None:
@@ -46,8 +45,7 @@ class ConsistencyChecker:
                 issue_type="sedation_reversal_aligned",
                 severity="info",
                 action="auto_fixed",
-                field="sedation_reversal_given",
-                details={"old": reversal_given, "new": True},
+                details="Set sedation_reversal_given=true because agent documented",
             )
         if reversal_given and not reversal_agent:
             logger.log(
@@ -55,7 +53,6 @@ class ConsistencyChecker:
                 issue_type="reversal_agent_missing",
                 severity="warn",
                 action="flagged_for_manual",
-                field="sedation_reversal_agent",
                 details="Reversal documented but agent missing",
             )
 
@@ -69,8 +66,7 @@ class ConsistencyChecker:
                 issue_type="pleurodesis_flag_corrected",
                 severity="info",
                 action="auto_fixed",
-                field="pleurodesis_performed",
-                details={"old": performed, "new": True},
+                details="pleurodesis_performed set true because agent recorded",
             )
         if performed and not agent:
             logger.log(
@@ -78,7 +74,6 @@ class ConsistencyChecker:
                 issue_type="pleurodesis_agent_missing",
                 severity="warn",
                 action="flagged_for_manual",
-                field="pleurodesis_agent",
                 details="Pleurodesis marked performed but agent missing",
             )
 
@@ -99,8 +94,7 @@ class ConsistencyChecker:
                 issue_type="pneumothorax_inferred",
                 severity="info",
                 action="auto_fixed",
-                field="pneumothorax",
-                details={"old": pneumothorax, "new": True, "intervention": intervention},
+                details={"intervention": intervention},
             )
         if pneumothorax and not inferred:
             logger.log(
@@ -108,7 +102,6 @@ class ConsistencyChecker:
                 issue_type="pneumothorax_intervention_missing",
                 severity="warn",
                 action="flagged_for_manual",
-                field="pneumothorax_intervention",
                 details="Pneumothorax recorded without intervention",
             )
 
@@ -124,7 +117,6 @@ class ConsistencyChecker:
                 issue_type="disposition_missing_after_complication",
                 severity="warn",
                 action="flagged_for_manual",
-                field="disposition",
                 details={"bleeding": bleeding, "hypoxia": hypoxia},
             )
         elif not disposition:
@@ -133,7 +125,6 @@ class ConsistencyChecker:
                 issue_type="disposition_missing",
                 severity="warn",
                 action="flagged_for_manual",
-                field="disposition",
                 details="Disposition missing",
             )
 

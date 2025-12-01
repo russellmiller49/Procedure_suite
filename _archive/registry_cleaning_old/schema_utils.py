@@ -84,7 +84,7 @@ class SchemaNormalizer:
         self._coerce_types(entry, entry_id, logger)
         self._canonicalize_enums(entry, entry_id, logger)
         self._apply_required_defaults(entry, entry_id, logger)
-        self.validate_entry(entry, entry_id, logger)
+        self._log_validation_errors(entry, entry_id, logger)
         return entry
 
     def validate_entry(self, entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> bool:
@@ -96,8 +96,7 @@ class SchemaNormalizer:
                 issue_type="schema_validation_failure",
                 severity="error",
                 action="flagged_for_manual",
-                field=path,
-                details={"message": error.message},
+                details={"path": path, "message": error.message},
             )
         return not errors
 
@@ -107,15 +106,13 @@ class SchemaNormalizer:
             entry["evidence"] = {}
             return
         if not isinstance(evidence, dict):
-            normalized = {"original_evidence": evidence}
-            entry["evidence"] = normalized
+            entry["evidence"] = {"original_evidence": evidence}
             logger.log(
                 entry_id=entry_id,
                 issue_type="evidence_normalized",
                 severity="info",
                 action="auto_fixed",
-                field="evidence",
-                details={"old": evidence, "new": normalized},
+                details="Converted evidence to an object for unknown-field storage",
             )
 
     def _remove_unknown_fields(self, entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> None:
@@ -131,8 +128,7 @@ class SchemaNormalizer:
                 issue_type="unknown_field_removed",
                 severity="info",
                 action="auto_fixed",
-                field=key,
-                details={"old": value, "new": None},
+                details={"field": key, "value": value},
             )
 
     def _coerce_types(self, entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> None:
@@ -155,8 +151,7 @@ class SchemaNormalizer:
                         issue_type="null_like_value_cleared",
                         severity="info",
                         action="auto_fixed",
-                        field=field,
-                        details={"old": value, "new": None},
+                        details={"field": field, "old": value},
                     )
                     continue
             if "boolean" in allowed_types and isinstance(value, str):
@@ -168,8 +163,7 @@ class SchemaNormalizer:
                         issue_type="boolean_coerced",
                         severity="info",
                         action="auto_fixed",
-                        field=field,
-                        details={"old": value, "new": normalized},
+                        details={"field": field, "old": value, "new": normalized},
                     )
                     continue
             if "integer" in allowed_types:
@@ -182,8 +176,7 @@ class SchemaNormalizer:
                             issue_type="integer_coerced",
                             severity="info",
                             action="auto_fixed",
-                            field=field,
-                            details={"old": value, "new": coerced},
+                            details={"field": field, "old": value, "new": coerced},
                         )
                     continue
             if "number" in allowed_types:
@@ -196,8 +189,7 @@ class SchemaNormalizer:
                             issue_type="number_coerced",
                             severity="info",
                             action="auto_fixed",
-                            field=field,
-                            details={"old": value, "new": coerced},
+                            details={"field": field, "old": value, "new": coerced},
                         )
                     continue
             if "array" in allowed_types and not isinstance(value, list):
@@ -207,8 +199,7 @@ class SchemaNormalizer:
                     issue_type="array_wrapped",
                     severity="info",
                     action="auto_fixed",
-                    field=field,
-                    details={"old": value, "new": [value]},
+                    details={"field": field, "value": value},
                 )
 
     def _canonicalize_enums(self, entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> None:
@@ -227,8 +218,7 @@ class SchemaNormalizer:
                         issue_type="enum_normalized",
                         severity="info",
                         action="auto_fixed",
-                        field=field,
-                        details={"old": value, "new": normalized},
+                        details={"field": field, "old": value, "new": normalized},
                     )
                 continue
             if self.nullable_fields.get(field, False):
@@ -238,8 +228,7 @@ class SchemaNormalizer:
                     issue_type="enum_invalid",
                     severity="warn",
                     action="flagged_for_manual",
-                    field=field,
-                    details={"old": value, "new": None},
+                    details={"field": field, "value": value},
                 )
             else:
                 logger.log(
@@ -247,8 +236,7 @@ class SchemaNormalizer:
                     issue_type="enum_invalid",
                     severity="error",
                     action="flagged_for_manual",
-                    field=field,
-                    details={"old": value, "new": None},
+                    details={"field": field, "value": value},
                 )
 
     def _apply_required_defaults(self, entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> None:
@@ -263,8 +251,7 @@ class SchemaNormalizer:
                     issue_type="required_default_applied",
                     severity="info",
                     action="auto_fixed",
-                    field=field,
-                    details={"old": None, "new": default},
+                    details={"field": field, "value": default},
                 )
             else:
                 logger.log(
@@ -272,9 +259,11 @@ class SchemaNormalizer:
                     issue_type="schema_missing_required",
                     severity="error",
                     action="flagged_for_manual",
-                    field=field,
-                    details={"message": "Required field missing"},
+                    details={"field": field},
                 )
+
+    def _log_validation_errors(self, entry: dict[str, Any], entry_id: str, logger: IssueLogger) -> None:
+        self.validate_entry(entry, entry_id, logger)
 
     def _normalize_enum(self, field: str, value: Any) -> str | None:
         allowed = self.enum_values.get(field)
@@ -283,8 +272,7 @@ class SchemaNormalizer:
         text = str(value).strip()
         if text in allowed:
             return text
-        # Filter out None values when building lowercase lookup
-        lower_lookup = {option.lower(): option for option in allowed if option is not None}
+        lower_lookup = {option.lower(): option for option in allowed}
         lower = text.lower()
         if lower in lower_lookup:
             return lower_lookup[lower]

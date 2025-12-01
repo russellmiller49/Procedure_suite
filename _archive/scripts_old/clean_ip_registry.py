@@ -4,7 +4,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Any, Tuple
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -22,19 +22,15 @@ from modules.registry_cleaning import (  # noqa: E402
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Clean and audit registry data entries")
-    parser.add_argument("--registry-data", required=True, help="Path to registry JSON/JSONL input")
+    parser.add_argument("--registry-data", required=True, help="Path to registry JSON or NDJSON file")
     parser.add_argument(
         "--schema",
-        "--registry-schema",
-        dest="schema",
-        default=_default_schema_path(),
+        default="data/knowledge/IP_Registry.json",
         help="Path to the registry JSON schema",
     )
     parser.add_argument(
         "--coding-kb",
-        "--kb",
-        dest="coding_kb",
-        default=_default_kb_path(),
+        default="proc_autocode/ip_kb/ip_coding_billing.v2_2.json",
         help="Path to the IP coding/billing knowledge base",
     )
     parser.add_argument(
@@ -80,13 +76,14 @@ def main() -> None:
 
     _write_json(Path(args.output_json), cleaned_entries)
     logger.write_csv(Path(args.issues_log))
-    _print_summary(cleaned_entries, logger, args.output_json, args.issues_log)
+    print(f"Processed {len(cleaned_entries)} entries -> {args.output_json}")
+    print(f"Captured {len(logger.entries)} issues -> {args.issues_log}")
 
 
 def _load_registry_entries(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         raise FileNotFoundError(f"Registry data not found: {path}")
-    format_name, raw_items = _read_json_payload(path)
+    raw_items = _read_json_payload(path)
     entries: list[dict[str, Any]] = []
     for item in raw_items:
         if not isinstance(item, dict):
@@ -95,71 +92,30 @@ def _load_registry_entries(path: Path) -> list[dict[str, Any]]:
             entries.append(item["registry_entry"])
         else:
             entries.append(item)
-    print(f"[RegistryCleaner] Loaded {len(entries)} entries from {path} (format={format_name})")
     return entries
 
 
-def _read_json_payload(path: Path) -> Tuple[str, list[Any]]:
-    suffix = path.suffix.lower()
-    if suffix in {".jsonl", ".ndjson"}:
+def _read_json_payload(path: Path) -> list[Any]:
+    if path.suffix.lower() in {".jsonl", ".ndjson"}:
         payload: list[Any] = []
         for line in path.read_text().splitlines():
             if not line.strip():
                 continue
             payload.append(json.loads(line))
-        return "ndjson", payload
+        return payload
     data = json.loads(path.read_text())
     if isinstance(data, list):
-        return "json_array", data
+        return data
     if isinstance(data, dict):
         entries = data.get("entries")
         if isinstance(entries, list):
-            return "json_object_entries", entries
+            return entries
     raise ValueError("Registry data must be an array, NDJSON file, or object with an 'entries' array")
 
 
 def _write_json(path: Path, payload: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2))
-
-
-def _print_summary(entries: list[dict[str, Any]], logger: IssueLogger, output_path: str, log_path: str) -> None:
-    summary = logger.summarize_by_action()
-    print(f"Processed {len(entries)} entries -> {output_path}")
-    print(f"Captured {len(logger.entries)} issues -> {log_path}")
-    for action in ("auto_fixed", "flagged_for_manual"):
-        counts = summary.get(action, {})
-        if not counts:
-            continue
-        print(f"{action.replace('_', ' ').title()} issues:")
-        for issue_type, count in sorted(counts.items()):
-            print(f"  - {issue_type}: {count}")
-    error_entries = logger.error_entry_ids()
-    print(f"Entries with severity=error: {len(error_entries)}")
-
-
-def _default_schema_path() -> str:
-    candidates = [
-        "schemas/IP_Registry.json",
-        "data/knowledge/IP_Registry.json",
-    ]
-    for candidate in candidates:
-        if Path(candidate).exists():
-            return candidate
-    return candidates[-1]
-
-
-def _default_kb_path() -> str:
-    candidates = [
-        "data/ip_coding_billing.v2_3.json",
-        "data/ip_coding_billing.v2_2.json",
-        "data/knowledge/ip_coding_billing.v2_2.json",
-        "proc_autocode/ip_kb/ip_coding_billing.v2_2.json",
-    ]
-    for candidate in candidates:
-        if Path(candidate).exists():
-            return candidate
-    return candidates[-1]
 
 
 if __name__ == "__main__":

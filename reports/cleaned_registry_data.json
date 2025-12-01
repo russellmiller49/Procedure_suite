@@ -1,47 +1,238 @@
 [
   {
-    "patient_mrn": "QA-001",
-    "procedure_date": "2025-02-10",
-    "provider_role": "Attending",
-    "attending_name": "Dr. House",
-    "patient_age": 64,
+    "patient_mrn": "MRN-001",
+    "procedure_date": "2025-01-15",
+    "attending_name": "Dr. Smith",
     "gender": "M",
+    "patient_age": 65,
     "asa_class": 3,
-    "primary_indication": "Left upper lobe nodule",
+    "primary_indication": "Suspected lung mass",
     "sedation_type": "Moderate",
     "airway_type": "Native",
-    "final_diagnosis_prelim": "Malignancy",
-    "data_entry_status": "Complete",
     "cpt_codes": [
       "31628"
     ],
-    "follow_up_plan": [
-      ""
-    ],
-    "evidence": {
-      "unknown_field": "should be moved"
-    },
+    "data_entry_status": "Complete",
+    "bleeding_severity": null,
+    "pneumothorax": false,
+    "disposition": "Home",
+    "follow_up_plan": "CT in 3 months",
+    "evidence": {},
     "calculated_total_rvu": 12.9
   },
   {
-    "patient_mrn": "QA-002",
-    "procedure_date": "2025-01-05",
-    "provider_role": "Attending",
-    "attending_name": "Dr. Strange",
-    "patient_age": 58,
+    "patient_mrn": "MRN-002",
+    "procedure_date": "2025-01-16",
+    "attending_name": "Dr. Jones",
     "gender": "F",
-    "asa_class": 3,
-    "primary_indication": "Pleural effusion",
+    "patient_age": 72,
+    "asa_class": 2,
+    "primary_indication": "Mediastinal staging",
     "sedation_type": "General",
     "airway_type": "ETT",
-    "final_diagnosis_prelim": "Other",
-    "data_entry_status": "Complete",
     "cpt_codes": [
-      "32554"
+      "31652",
+      "+31654",
+      "+31627"
     ],
-    "pleural_guidance": null,
-    "follow_up_plan": null,
+    "data_entry_status": "Complete",
+    "ebus_stations_sampled": [
+      "4R",
+      "7",
+      "11R"
+    ],
+    "nav_platform": "Ion",
+    "bleeding_severity": "Mild",
+    "pneumothorax": false,
+    "disposition": "Home",
     "evidence": {},
-    "calculated_total_rvu": 2.6
+    "calculated_total_rvu": 21.8
+  },
+  {
+    "patient_mrn": "MRN-003",
+    "procedure_date": "2025-01-17",
+    "attending_name": "Dr. Williams",
+    "gender": null,
+    "patient_age": 58,
+    "asa_class": 3,
+    "primary_indication": "nodule",
+    "sedation_type": "Monitored Anesthesia Care",
+    "airway_type": "Tracheostomy",
+    "cpt_codes": [
+      "31629",
+      "31624"
+    ],
+    "fellow_name": "Dr. Resident",
+    "data_entry_status": "Incomplete",
+    "trainee_present": true,
+    "evidence": {},
+    "calculated_total_rvu": 11.8
+  },
+  {
+    "patient_mrn": "MRN-004",
+    "procedure_date": "2025-01-18",
+    "attending_name": "Dr. Brown",
+    "gender": "M",
+    "patient_age": 45,
+    "asa_class": 1,
+    "primary_indication": "Pleural effusion workup",
+    "sedation_type": "Local",
+    "cpt_codes": [
+      "32555"
+    ],
+    "data_entry_status": "Complete",
+    "pleural_side": "Right",
+    "pleural_guidance": "Ultrasound",
+    "pleural_volume_drained_ml": 1200,
+    "bleeding_severity": null,
+    "pneumothorax": false,
+    "disposition": "Observation",
+    "evidence": {},
+    "calculated_total_rvu": 3.19
+  },
+  {
+    "patient_mrn": "MRN-005",
+    "procedure_date": "2025-01-19",
+    "attending_name": "Dr. Davis",
+    "gender": "F",
+    "patient_age": 68,
+    "asa_class": 4,
+    "primary_indication": "Airway stenosis management",
+    "sedation_type": "General",
+    "airway_type": "ETT",
+    "cpt_codes": [
+      "31631",
+      "31630"
+    ],
+    "data_entry_status": "Complete",
+    "stent_type": "Silicone",
+    "stent_diameter_mm": 14,
+    "stent_length_mm": 40,
+    "stent_location": "Trachea",
+    "bleeding_severity": "Moderate",
+    "pneumothorax": false,
+    "hypoxia_respiratory_failure": "Transient desaturation",
+    "disposition": "ICU",
+    "evidence": {},
+    "calculated_total_rvu": 27.0
+  },
+  {
+    "patient_mrn": "MRN-006",
+    "procedure_date": "2025-01-20",
+    "attending_name": "Dr. Miller",
+    "gender": "M",
+    "patient_age": 55,
+    "asa_class": 2,
+    "primary_indication": "Recurrent malignant effusion",
+    "sedation_type": "Moderate",
+    "cpt_codes": [
+      "32550"
+    ],
+    "data_entry_status": "Complete",
+    "pleural_side": "Left",
+    "pleurodesis_agent": "Talc",
+    "pleurodesis_performed": true,
+    "bleeding_severity": null,
+    "pneumothorax": false,
+    "disposition": "Home",
+    "follow_up_plan": "Clinic in 1 week",
+    "evidence": {},
+    "calculated_total_rvu": 3.92
+  },
+  {
+    "patient_mrn": "MRN-007",
+    "procedure_date": "2025-01-21",
+    "attending_name": "Dr. Wilson",
+    "gender": "F",
+    "patient_age": 61,
+    "asa_class": 3,
+    "primary_indication": "COPD BLVR evaluation",
+    "sedation_type": "General",
+    "airway_type": "ETT",
+    "cpt_codes": [
+      "31647",
+      "+31651"
+    ],
+    "data_entry_status": "Complete",
+    "blvr_target_lobe": "LUL",
+    "blvr_valve_type": "Zephyr",
+    "blvr_number_of_valves": 4,
+    "bleeding_severity": null,
+    "pneumothorax": true,
+    "pneumothorax_intervention": [
+      "Observation"
+    ],
+    "disposition": "Admitted",
+    "evidence": {},
+    "calculated_total_rvu": 37.7
+  },
+  {
+    "patient_mrn": "MRN-008",
+    "procedure_date": "2025-01-22",
+    "attending_name": "Dr. Taylor",
+    "patient_age": 70,
+    "asa_class": 2,
+    "primary_indication": "Hemoptysis workup",
+    "sedation_type": "Moderate",
+    "airway_type": "Native",
+    "cpt_codes": [
+      "31625",
+      "31624"
+    ],
+    "data_entry_status": "Incomplete",
+    "evidence": {
+      "extra_field_to_remove": "should go to evidence",
+      "unknown_column": 123
+    },
+    "calculated_total_rvu": 0.0
+  },
+  {
+    "patient_mrn": "MRN-009",
+    "procedure_date": "2025-01-23",
+    "attending_name": "Dr. Anderson",
+    "gender": "M",
+    "patient_age": 77,
+    "asa_class": 3,
+    "primary_indication": "Lung nodule biopsy",
+    "sedation_type": "Monitored Anesthesia Care",
+    "airway_type": "Native",
+    "cpt_codes": [
+      "31628",
+      "+31632",
+      "+31627"
+    ],
+    "data_entry_status": "Complete",
+    "nav_platform": "SuperDimension",
+    "radiographic_findings": "2.1cm RUL nodule",
+    "bleeding_severity": null,
+    "pneumothorax": false,
+    "disposition": "Home",
+    "follow_up_plan": "Path results in 5 days",
+    "evidence": {},
+    "calculated_total_rvu": 18.8
+  },
+  {
+    "patient_mrn": "MRN-010",
+    "procedure_date": "2025-01-24",
+    "attending_name": "Dr. Thomas",
+    "gender": "F",
+    "patient_age": 63,
+    "asa_class": 2,
+    "primary_indication": "Suspected ILD",
+    "sedation_type": "General",
+    "airway_type": "ETT",
+    "cpt_codes": [
+      "31628",
+      "31624"
+    ],
+    "data_entry_status": "Complete",
+    "sedation_reversal_agent": "Flumazenil",
+    "sedation_reversal_given": true,
+    "bleeding_severity": null,
+    "pneumothorax": false,
+    "disposition": "Home",
+    "follow_up_plan": "Pulm clinic 2 weeks",
+    "evidence": {},
+    "calculated_total_rvu": 12.9
   }
 ]
