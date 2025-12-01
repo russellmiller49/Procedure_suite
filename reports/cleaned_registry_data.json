@@ -1,0 +1,47 @@
+[
+  {
+    "patient_mrn": "QA-001",
+    "procedure_date": "2025-02-10",
+    "provider_role": "Attending",
+    "attending_name": "Dr. House",
+    "patient_age": 64,
+    "gender": "M",
+    "asa_class": 3,
+    "primary_indication": "Left upper lobe nodule",
+    "sedation_type": "Moderate",
+    "airway_type": "Native",
+    "final_diagnosis_prelim": "Malignancy",
+    "data_entry_status": "Complete",
+    "cpt_codes": [
+      "31628"
+    ],
+    "follow_up_plan": [
+      ""
+    ],
+    "evidence": {
+      "unknown_field": "should be moved"
+    },
+    "calculated_total_rvu": 12.9
+  },
+  {
+    "patient_mrn": "QA-002",
+    "procedure_date": "2025-01-05",
+    "provider_role": "Attending",
+    "attending_name": "Dr. Strange",
+    "patient_age": 58,
+    "gender": "F",
+    "asa_class": 3,
+    "primary_indication": "Pleural effusion",
+    "sedation_type": "General",
+    "airway_type": "ETT",
+    "final_diagnosis_prelim": "Other",
+    "data_entry_status": "Complete",
+    "cpt_codes": [
+      "32554"
+    ],
+    "pleural_guidance": null,
+    "follow_up_plan": null,
+    "evidence": {},
+    "calculated_total_rvu": 2.6
+  }
+]

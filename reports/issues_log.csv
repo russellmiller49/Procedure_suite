@@ -1,0 +1,32 @@
+entry_id,issue_type,severity,action,details
+QA-001_2025-02-10_00000,unknown_field_removed,info,auto_fixed,"{""field"": ""unknown_field"", ""value"": ""should be moved""}"
+QA-001_2025-02-10_00000,integer_coerced,info,auto_fixed,"{""field"": ""patient_age"", ""new"": 64, ""old"": ""64""}"
+QA-001_2025-02-10_00000,integer_coerced,info,auto_fixed,"{""field"": ""asa_class"", ""new"": 3, ""old"": ""3""}"
+QA-001_2025-02-10_00000,array_wrapped,info,auto_fixed,"{""field"": ""follow_up_plan"", ""value"": """"}"
+QA-001_2025-02-10_00000,enum_normalized,info,auto_fixed,"{""field"": ""gender"", ""new"": ""M"", ""old"": ""Male""}"
+QA-001_2025-02-10_00000,bundling_auto_drop,info,auto_fixed,"{""dropped_code"": ""31622"", ""reason"": ""Diagnostic bronchoscopy (31622) is bundled when more extensive therapeutic or biopsy bronchoscopy procedures from the same family are performed by the same physician on the same date of service."", ""rule"": ""diagnostic_with_surgical""}"
+QA-001_2025-02-10_00000,disposition_missing,warn,flagged_for_manual,Disposition missing
+QA-001_2025-02-10_00000,radiographic_findings_missing,warn,flagged_for_manual,Imaging-driven procedure without radiographic findings
+QA-001_2025-02-10_00000,complication_field_missing,warn,flagged_for_manual,"{""field"": ""bleeding_severity""}"
+QA-001_2025-02-10_00000,complication_field_missing,warn,flagged_for_manual,"{""field"": ""pneumothorax""}"
+QA-001_2025-02-10_00000,complication_field_missing,warn,flagged_for_manual,"{""field"": ""hypoxia_respiratory_failure""}"
+QA-001_2025-02-10_00000,complication_field_missing,warn,flagged_for_manual,"{""field"": ""disposition""}"
+QA-001_2025-02-10_00000,follow_up_plan_missing,warn,flagged_for_manual,Follow-up plan missing
+QA-001_2025-02-10_00000,schema_validation_failure,error,flagged_for_manual,"{""message"": ""Additional properties are not allowed ('calculated_total_rvu' was unexpected)"", ""path"": ""root""}"
+QA-002_2025-01-05_00001,schema_validation_failure,error,flagged_for_manual,"{""message"": ""None is not one of ['Ultrasound', 'CT', 'Blind']"", ""path"": ""pleural_guidance""}"
+QA-002_2025-01-05_00001,schema_validation_failure,error,flagged_for_manual,"{""message"": ""None is not of type 'array'"", ""path"": ""follow_up_plan""}"
+QA-002_2025-01-05_00001,bundling_auto_drop,info,auto_fixed,"{""dropped_code"": ""71045"", ""reason"": ""Post-procedure chest x-rays performed solely to evaluate tube or fluid status after thoracentesis, IPC placement, or chest tube placement are generally bundled and not separately reportable."", ""rule"": ""pleural_post_procedure_imaging""}"
+QA-002_2025-01-05_00001,sedation_incompatible_with_anesthesia,info,auto_fixed,"{""code"": ""99152"", ""sedation_type"": ""General""}"
+QA-002_2025-01-05_00001,disposition_missing,warn,flagged_for_manual,Disposition missing
+QA-002_2025-01-05_00001,pleural_detail_missing_side,warn,flagged_for_manual,"{""field"": ""pleural_side""}"
+QA-002_2025-01-05_00001,pleural_detail_missing_guidance,warn,flagged_for_manual,"{""field"": ""pleural_guidance""}"
+QA-002_2025-01-05_00001,pleural_detail_missing_appearance,warn,flagged_for_manual,"{""field"": ""pleural_fluid_appearance""}"
+QA-002_2025-01-05_00001,pleural_detail_missing_volume,warn,flagged_for_manual,"{""field"": ""pleural_volume_drained_ml""}"
+QA-002_2025-01-05_00001,complication_field_missing,warn,flagged_for_manual,"{""field"": ""bleeding_severity""}"
+QA-002_2025-01-05_00001,complication_field_missing,warn,flagged_for_manual,"{""field"": ""pneumothorax""}"
+QA-002_2025-01-05_00001,complication_field_missing,warn,flagged_for_manual,"{""field"": ""hypoxia_respiratory_failure""}"
+QA-002_2025-01-05_00001,complication_field_missing,warn,flagged_for_manual,"{""field"": ""disposition""}"
+QA-002_2025-01-05_00001,follow_up_plan_missing,warn,flagged_for_manual,Follow-up plan missing
+QA-002_2025-01-05_00001,schema_validation_failure,error,flagged_for_manual,"{""message"": ""Additional properties are not allowed ('calculated_total_rvu' was unexpected)"", ""path"": ""root""}"
+QA-002_2025-01-05_00001,schema_validation_failure,error,flagged_for_manual,"{""message"": ""None is not one of ['Ultrasound', 'CT', 'Blind']"", ""path"": ""pleural_guidance""}"
+QA-002_2025-01-05_00001,schema_validation_failure,error,flagged_for_manual,"{""message"": ""None is not of type 'array'"", ""path"": ""follow_up_plan""}"
