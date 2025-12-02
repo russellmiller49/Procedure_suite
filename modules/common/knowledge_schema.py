@@ -13,6 +13,15 @@ _RVU_ENTRY_SCHEMA = {
     "additionalProperties": False,
 }
 
+# Schema for underscore-prefixed metadata keys in RVU sections
+_METADATA_VALUE_SCHEMA = {
+    "anyOf": [
+        {"type": "string"},
+        {"type": "number"},
+        {"type": "array", "items": {"type": "string"}},
+    ]
+}
+
 _STRING_ARRAY_SCHEMA = {"type": "array", "items": {"type": "string"}}
 
 _BUNDLING_RULE_SCHEMA = {
@@ -66,13 +75,22 @@ KNOWLEDGE_SCHEMA = {
             "minProperties": 1,
             "patternProperties": {
                 r"^\+?\d{4,5}$": _RVU_ENTRY_SCHEMA,
+                r"^_": _METADATA_VALUE_SCHEMA,
             },
             "additionalProperties": False,
         },
         "add_on_codes": _STRING_ARRAY_SCHEMA,
         "synonyms": {
             "type": "object",
-            "additionalProperties": _STRING_ARRAY_SCHEMA,
+            "additionalProperties": {
+                "anyOf": [
+                    _STRING_ARRAY_SCHEMA,
+                    {
+                        "type": "object",
+                        "additionalProperties": _STRING_ARRAY_SCHEMA,
+                    },
+                ],
+            },
         },
         "stations": {
             "type": "object",

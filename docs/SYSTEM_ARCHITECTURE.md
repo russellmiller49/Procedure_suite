@@ -64,7 +64,7 @@ The Procedure Suite is a comprehensive system for:
 │  │         ▼                ▼                                │   │
 │  │  ┌─────────────────────────────────────────────────────┐ │   │
 │  │  │           Knowledge Base Layer                       │ │   │
-│  │  │  ip_coding_billing.v2_2.json  │  IP_Registry.json   │ │   │
+│  │  │  ip_coding_billing.v2_7.json  │  IP_Registry.json   │ │   │
 │  │  │  (CPT codes, RVUs, bundling)  │  (registry schema)  │ │   │
 │  │  └─────────────────────────────────────────────────────┘ │   │
 │  └──────────────────────────────────────────────────────────┘   │
@@ -120,7 +120,7 @@ Procedure_suite/
 │   ├── coder.py                     # EnhancedCPTCoder (USE THIS)
 │   ├── ip_kb/
 │   │   ├── ip_kb.py                 # IPCodingKnowledgeBase class
-│   │   ├── ip_coding_billing.v2_2.json  # Central knowledge base
+│   │   ├── ip_coding_billing.v2_7.json  # Central knowledge base
 │   │   └── canonical_rules.py       # Python bundling rules
 │   └── rvu/
 │       ├── rvu_calculator.py        # RVU + GPCI calculations
@@ -168,9 +168,9 @@ Procedure_suite/
 
 ## Knowledge Base Files
 
-### 1. ip_coding_billing.v2_2.json
+### 1. ip_coding_billing.v2_7.json
 
-**Location:** `proc_autocode/ip_kb/ip_coding_billing.v2_2.json`
+**Location:** `proc_autocode/ip_kb/ip_coding_billing.v2_7.json`
 
 **Purpose:** Central knowledge base for IP coding, billing, and bundling rules.
 
@@ -414,7 +414,7 @@ cd /Users/russellmiller/Projects/Procedure_suite
 conda run -n medparse-py311 python scripts/clean_ip_registry.py \
   --registry-data data/samples/my_registry_dump.jsonl \
   --schema schemas/IP_Registry.json \
-  --coding-kb proc_autocode/ip_kb/ip_coding_billing.v2_2.json \
+  --coding-kb proc_autocode/ip_kb/ip_coding_billing.v2_7.json \
   --output-json reports/cleaned_registry_data.json \
   --issues-log reports/issues_log.csv
 ```
@@ -780,7 +780,7 @@ make lint
 |---------|------|
 | Main FastAPI app | `modules/api/fastapi_app.py` |
 | CPT Coder | `proc_autocode/coder.py` |
-| Knowledge base | `proc_autocode/ip_kb/ip_coding_billing.v2_2.json` |
+| Knowledge base | `proc_autocode/ip_kb/ip_coding_billing.v2_7.json` |
 | Registry schema | `schemas/IP_Registry.json` |
 | Cleaning pipeline | `modules/registry_cleaning/*.py` |
 | Cleaning CLI | `scripts/clean_ip_registry.py` |

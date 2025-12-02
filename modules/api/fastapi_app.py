@@ -162,7 +162,8 @@ async def coder_run(req: CoderRequest, mode: str | None = None) -> CoderResponse
             confidence=0.9,
             context={
                 "groups": code_data.get("groups", []),
-                "rvu_data": rvu_data
+                "rvu_data": rvu_data,
+                "qa_flags": code_data.get("qa_flags", []),
             },
             mer_role=code_data.get("mer_role"),
             mer_explanation=code_data.get("mer_explanation"),
@@ -196,7 +197,7 @@ async def coder_run(req: CoderRequest, mode: str | None = None) -> CoderResponse
             ))
         
         financials = FinancialSummary(
-            conversion_factor=1.0,  # Default, could be calculated
+            conversion_factor=result.get("conversion_factor") or 0.0,
             locality=result.get("locality", "00"),
             per_code=per_code_billing,
             total_work_rvu=result.get("total_work_rvu", 0.0),
@@ -231,13 +232,15 @@ async def coder_run(req: CoderRequest, mode: str | None = None) -> CoderResponse
             rule=bundle.get("rule"),
         ))
 
+    qa_warnings = result.get("qa_warnings", [])
+
     return CoderOutput(
         codes=codes,
         intents=[],  # Enhanced coder doesn't provide intents
         mer_summary=None,  # Could be added later
         financials=financials,
         ncci_actions=ncci_actions,  # Bundling decisions with explanations
-        warnings=llm_disagreements,  # Include LLM disagreements in warnings
+        warnings=qa_warnings + llm_disagreements,
         version="0.2.0",  # Enhanced version
         llm_suggestions=llm_suggestions,
         llm_disagreements=llm_disagreements,

@@ -186,7 +186,7 @@ This includes:
 2. **When updating logic**:
    - Reflect the underlying coding rationale in comments and docstrings.
    - Keep rule logic in a central, testable component:
-     - IP Knowledge Base: `proc_autocode/ip_kb/ip_coding_billing.v2_2.json` (source of truth for codes and bundling)
+     - IP Knowledge Base: `data/knowledge/ip_coding_billing.v2_7.json` (source of truth for codes and bundling)
      - Knowledge Base Wrapper: `proc_autocode/ip_kb/ip_kb.py` (Python interface)
      - Enhanced Coder: `proc_autocode/coder.py` (main implementation)
      - Legacy rules: `proc_autocode/rules.py` and `modules/coder/engine.py` (deprecated)
@@ -213,7 +213,7 @@ This includes:
 ### Outputs
 
 - Updated enhanced coder (`proc_autocode/coder.py`, `proc_autocode/ip_kb/ip_kb.py`, `proc_autocode/rvu/`).
-- Updated IP knowledge base JSON (`proc_autocode/ip_kb/ip_coding_billing.v2_2.json`) if adding new codes or bundling rules.
+- Updated IP knowledge base JSON (`data/knowledge/ip_coding_billing.v2_7.json`) if adding new codes or bundling rules.
 - Expanded tests, including:
   - "Happy path" examples.
   - Edge cases (multiple procedures in same note, complex stents, redo procedures).

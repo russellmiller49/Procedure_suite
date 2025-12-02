@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export PSUITE_KNOWLEDGE_FILE="data/knowledge/ip_coding_billing.v2_2.json"
+export PSUITE_KNOWLEDGE_FILE="data/knowledge/ip_coding_billing.v2_7.json"
 # Enable LLM Advisor for dev server to verify reliability fixes
 export CODER_USE_LLM_ADVISOR=true
 

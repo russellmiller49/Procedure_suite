@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any, Literal
 
@@ -12,113 +13,75 @@ from modules.common.spans import Span
 
 _SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
 
-# Domain-specific enums that extend/override the JSON schema for validation.
-SedationType = Literal["Moderate", "Deep", "General", "Local", "Monitored Anesthesia Care"]
-NavImagingVerification = Literal["Fluoroscopy", "Cone Beam CT", "O-Arm", "Ultrasound", "None"]
-CaoTumorLocation = Literal[
-    "Trachea",
-    "RMS",
-    "LMS",
-    "Bronchus Intermedius",
-    "Lobar",
-    "RUL",
-    "RML",
-    "RLL",
-    "LUL",
-    "LLL",
-    "Mainstem",
-]
-PleuralProcedureType = Literal[
-    "Thoracentesis",
-    "Chest Tube",
-    "Chest Tube Removal",
-    "Tunneled Catheter",
-    "Tunneled Catheter Exchange",
-    "IPC Drainage",
-    "Medical Thoracoscopy",
-    "Chemical Pleurodesis",
-]
-PleuralFluidAppearance = Literal[
-    "Serous",
-    "Sanguinous",
-    "Purulent",
-    "Chylous",
-    "Serosanguinous",
-    "Turbid",
-    "Other",
-]
-StentType = Literal[
-    "Silicone-Dumon",
-    "Silicone-Y-Stent",
-    "Silicone Y-Stent",
-    "Hybrid",
-    "Metallic-Covered",
-    "Metallic-Uncovered",
-    "Other",
-]
-FinalDiagnosisPrelim = Literal[
-    "Malignancy",
-    "Granulomatous",
-    "Infectious",
-    "Non-diagnostic",
-    "Benign",
-    "Other",
-]
-EbusRoseResult = Literal[
-    "Malignant",
-    "Benign",
-    "Granuloma",
-    "Nondiagnostic",
-    "Atypical cells present",
-    "Atypical lymphoid proliferation",
-]
-
-# Field-level overrides to keep validation flexible even when the JSON schema is more
-# restrictive. This avoids hard failures on newly observed real-world values.
-CUSTOM_FIELD_TYPES: dict[str, Any] = {
-    "sedation_type": SedationType,
-    "nav_imaging_verification": str,  # Allow free-form (CBCT, Cone Beam CT, etc.)
-    "cao_tumor_location": CaoTumorLocation,
-    "pleural_procedure_type": PleuralProcedureType,
-    "pleural_fluid_appearance": PleuralFluidAppearance,
-    "stent_type": StentType,
-    "final_diagnosis_prelim": FinalDiagnosisPrelim,
-    "ebus_rose_result": EbusRoseResult,
-    # Allow modifiers/verification text alongside integers for CPT entries.
-    "cpt_codes": list[int | str],
-    # Support multiple assistants (changed from string to list)
-    "assistant_names": list[str],
-    # CAO multi-site interventions (supplements flat cao_* fields)
-    "cao_interventions": list[dict],
-    # Multiple biopsy sites (supplements bronch_location_lobe)
-    "bronch_biopsy_sites": list[dict],
-    # Fields that need flexible types to avoid validation errors
-    "ablation_margin_assessed": bool,  # LLM returns boolean, not Literal enum
-    "bt_lobe_treated": str,  # Allow full lobe names ("Right lower lobe") not just abbreviations
-    "blvr_target_lobe": str,  # Allow full lobe names
-    "prior_therapy": str,  # Allow free-form therapy descriptions
-    "ablation_modality": str,  # Allow variations (Radiofrequency ablation, RFA, etc.)
-    "nav_rebus_view": str,  # Allow parenchymal pattern descriptions, not just Concentric/Eccentric
-    "cao_primary_modality": str,  # Allow combined modalities (e.g., "Mechanical Core, APC")
-    "ebus_scope_brand": str,  # Allow empty string or any brand name
-    "ablation_complication_immediate": str,  # Allow any complication (Bronchospasm, etc.)
-    "provider_role": str,  # Allow full role descriptions (e.g., "Attending interventional pulmonologist")
+# Optional overrides for individual fields (identified via dotted paths).
+CUSTOM_FIELD_TYPES: dict[tuple[str, ...], Any] = {}
+_MODEL_CACHE: dict[tuple[str, ...], type[BaseModel]] = {}
+_COMPAT_ATTRIBUTE_PATHS: dict[str, tuple[str, ...]] = {
+    "sedation_type": ("sedation", "type"),
+    "sedation_start": ("sedation", "start_time"),
+    "sedation_stop": ("sedation", "end_time"),
+    "nav_platform": ("equipment", "navigation_platform"),
+    "nav_rebus_used": ("procedures_performed", "radial_ebus", "performed"),
+    "nav_rebus_view": ("procedures_performed", "radial_ebus", "probe_position"),
+    "nav_sampling_tools": ("procedures_performed", "navigational_bronchoscopy", "sampling_tools_used"),
+    "nav_tool_in_lesion": ("procedures_performed", "navigational_bronchoscopy", "tool_in_lesion_confirmed"),
+    "ebus_stations_sampled": ("procedures_performed", "linear_ebus", "stations_sampled"),
+    "linear_ebus_stations": ("procedures_performed", "linear_ebus", "stations_planned"),
+    "ebus_needle_gauge": ("procedures_performed", "linear_ebus", "needle_gauge"),
+    "ebus_needle_type": ("procedures_performed", "linear_ebus", "needle_type"),
+    "ebus_elastography_pattern": ("procedures_performed", "linear_ebus", "elastography_pattern"),
+    "ebus_photodocumentation_complete": ("procedures_performed", "linear_ebus", "photodocumentation_complete"),
+    "blvr_target_lobe": ("procedures_performed", "blvr", "target_lobe"),
+    "blvr_valve_type": ("procedures_performed", "blvr", "valve_type"),
+    "blvr_valve_count": ("procedures_performed", "blvr", "number_of_valves"),
+    "ebus_rose_result": ("specimens", "rose_result"),
+    "ebus_stations_detail": ("procedures_performed", "linear_ebus", "stations_detail"),
+    "ebus_elastography_used": ("procedures_performed", "linear_ebus", "elastography_used"),
+    # Stent-related compatibility paths
+    "stent_type": ("procedures_performed", "airway_stent", "stent_type"),
+    "stent_location": ("procedures_performed", "airway_stent", "location"),
+    "stent_action": ("procedures_performed", "airway_stent", "action"),
+    # Procedure setting
+    "airway_type": ("procedure_setting", "airway_type"),
+    # CAO-related legacy fields - mapped to thermal_ablation/mechanical_debulking where applicable
+    # Note: These are "best effort" mappings; CAO data in schema is spread across multiple procedure types
+    "cao_location": ("procedures_performed", "thermal_ablation", "location"),
+    "cao_primary_modality": ("procedures_performed", "thermal_ablation", "modality"),
+    "cao_tumor_location": ("procedures_performed", "mechanical_debulking", "location"),
+    "cao_obstruction_pre_pct": ("procedures_performed", "thermal_ablation", "pre_obstruction_pct"),
+    "cao_obstruction_post_pct": ("procedures_performed", "thermal_ablation", "post_obstruction_pct"),
+    # cao_interventions is a complex array; return None until proper transform is built
+    "cao_interventions": ("procedures_performed", "thermal_ablation", "interventions"),
 }
 
 
-def _json_type_to_py(prop: dict[str, Any]) -> Any:
-    """Map JSON schema type/enum to Python type."""
-    typ = prop.get("type")
+def _load_schema() -> dict[str, Any]:
+    if not _SCHEMA_PATH.exists():
+        raise FileNotFoundError(f"Registry schema not found at {_SCHEMA_PATH}")
+    return json.loads(_SCHEMA_PATH.read_text())
+
+
+def _pascal_case(parts: list[str]) -> str:
+    tokens = []
+    for part in parts:
+        tokens.extend(re.split(r"[^0-9A-Za-z]", part))
+    return "".join(token.capitalize() for token in tokens if token)
+
+
+def _schema_type(prop: dict[str, Any], path: tuple[str, ...]) -> Any:
+    override = CUSTOM_FIELD_TYPES.get(path)
+    if override:
+        return override
+
     enum = prop.get("enum")
     if enum:
-        return Literal[tuple(enum)]  # type: ignore[arg-type]
+        values = tuple(v for v in enum if v is not None)
+        if values:
+            return Literal[values]  # type: ignore[arg-type]
 
-    # Handle union types like ["string", "null"]
+    typ = prop.get("type")
     if isinstance(typ, list):
-        base_types = [t for t in typ if t != "null"]
-        if not base_types:
-            return Any
-        typ = base_types[0]
+        typ = next((t for t in typ if t != "null"), None)
 
     if typ == "string":
         return str
@@ -129,47 +92,59 @@ def _json_type_to_py(prop: dict[str, Any]) -> Any:
     if typ == "boolean":
         return bool
     if typ == "array":
-        items = prop.get("items", {}) or {}
-        item_type = _json_type_to_py(items)
+        items = prop.get("items") or {}
+        item_type = _schema_type(items, path + ("item",))
         return list[item_type]  # type: ignore[index]
-    if typ == "object":
-        return dict[str, Any]
+    if typ == "object" or prop.get("properties"):
+        return _build_submodel(path, prop)
     return Any
 
 
-def _build_registry_model() -> type[BaseModel]:
-    if not _SCHEMA_PATH.exists():
-        raise FileNotFoundError(f"Registry schema not found at {_SCHEMA_PATH}")
+def _build_submodel(path: tuple[str, ...], schema: dict[str, Any]) -> type[BaseModel]:
+    if path in _MODEL_CACHE:
+        return _MODEL_CACHE[path]
 
-    schema = json.loads(_SCHEMA_PATH.read_text())
-    properties: dict[str, dict[str, Any]] = schema.get("properties", {})
-    properties.setdefault("linear_ebus_stations", {"type": "array", "items": {"type": "string"}})
-
+    properties = schema.get("properties", {})
     field_defs: dict[str, tuple[Any, Any]] = {}
     for name, prop in properties.items():
-        py_type = CUSTOM_FIELD_TYPES.get(name) or _json_type_to_py(prop)
-        # Allow nulls by default
-        py_type = py_type | None  # type: ignore[operator]
-        default = None
-        field_defs[name] = (py_type, default)
+        field_type = _schema_type(prop, path + (name,))
+        field_defs[name] = (field_type | None, Field(default=None))  # type: ignore[operator]
 
-    # Append metadata
-    field_defs["evidence"] = (dict[str, list[Span]], Field(default_factory=dict))
-    field_defs["version"] = (str, "0.5.0")
-    field_defs["procedure_families"] = (list[str] | None, Field(default_factory=list))
-
-    # CAO multi-site interventions array
-    field_defs["cao_interventions"] = (list[dict] | None, Field(default_factory=list))
-    # Multiple biopsy sites array
-    field_defs["bronch_biopsy_sites"] = (list[dict] | None, Field(default_factory=list))
-
-    model_config = ConfigDict(extra="ignore")
-
-    return create_model(
-        "RegistryRecord",
-        __config__=model_config,
+    model_name = _pascal_case(list(path)) or "RegistrySubModel"
+    model = create_model(
+        model_name,
+        __config__=ConfigDict(extra="ignore"),
         **field_defs,  # type: ignore[arg-type]
     )
+    _MODEL_CACHE[path] = model
+    return model
+
+
+def _build_registry_model() -> type[BaseModel]:
+    schema = _load_schema()
+    base_model = _build_submodel(("RegistryRecord",), schema)
+
+    class RegistryRecord(base_model):  # type: ignore[misc,valid-type]
+        """Concrete registry record model with evidence fields."""
+
+        model_config = ConfigDict(extra="ignore")
+
+        evidence: dict[str, list[Span]] = Field(default_factory=dict)
+        version: str | None = None
+        procedure_families: list[str] = Field(default_factory=list)
+
+        def __getattr__(self, item: str) -> Any:
+            if item in _COMPAT_ATTRIBUTE_PATHS:
+                target = self
+                for attr in _COMPAT_ATTRIBUTE_PATHS[item]:
+                    if target is None:
+                        break
+                    target = getattr(target, attr, None)
+                return target
+            raise AttributeError(f"{type(self).__name__!s} has no attribute {item!s}")
+
+    RegistryRecord.__name__ = "RegistryRecord"
+    return RegistryRecord
 
 
 RegistryRecord = _build_registry_model()

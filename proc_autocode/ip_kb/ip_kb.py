@@ -2,11 +2,30 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Iterable
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Set
 import json
 import re
 
 from proc_autocode.ip_kb import canonical_rules
+
+
+@dataclass
+class CmsRvuInfo:
+    code: str
+    category: str
+    description: Optional[str]
+    work_rvu: Optional[float]
+    facility_pe_rvu: Optional[float]
+    nonfacility_pe_rvu: Optional[float]
+    mp_rvu: Optional[float]
+    total_facility_rvu: Optional[float]
+    total_nonfacility_rvu: Optional[float]
+    mpfs_facility_payment: Optional[float]
+    mpfs_nonfacility_payment: Optional[float]
+    global_days: Optional[str]
+    mult_proc_indicator: Optional[str]
+    status_code: Optional[str]
+    is_add_on: bool
 
 
 @dataclass
@@ -17,6 +36,7 @@ class CPTInfo:
     is_add_on: bool
     rvus: Optional[dict]
     fee_schedule: Optional[dict]
+    cms_rvu: Optional[CmsRvuInfo]
 
 
 class IPCodingKnowledgeBase:
@@ -27,19 +47,51 @@ class IPCodingKnowledgeBase:
     - ip_golden_knowledge_v2_2.json (golden coding rules)
     - data/synthetic_CPT_corrected.json (validated coding patterns)
 
-    The ip_coding_billing.v2_2.json is used for RVU lookups and code metadata.
+    The ip_coding_billing knowledge base (currently v2.7) is used for RVU lookups
+    and code metadata.
     """
 
-    def __init__(self, json_path: Path):
-        self.json_path = json_path
-        with open(json_path, "r") as f:
+    # Map internal group names to v2.7 code_lists keys for compatibility
+    # v2.6 flattened the code_lists structure; this mapping bridges the gap
+    GROUP_ALIAS_MAP: Dict[str, List[str]] = {
+        # Bronchoscopy mappings
+        "bronchoscopy_airway_dilation": ["bronchoscopy_therapeutic_dilation"],
+        "bronchoscopy_airway_stenosis": ["bronchoscopy_therapeutic_dilation", "bronchoscopy_therapeutic_airway_tumor"],
+        "bronchoscopy_bal": ["bronchoscopy_diagnostic"],  # BAL is part of diagnostic (31624)
+        "bronchoscopy_biopsy_parenchymal_additional": ["bronchoscopy_biopsy_parenchymal"],  # +31632 is in parenchymal
+        "bronchoscopy_ebus_linear_additional": ["bronchoscopy_ebus_linear"],  # 31653 is in linear
+        "bronchoscopy_stent_revision": ["bronchoscopy_therapeutic_stent"],  # 31638 is in stent
+        "bronchoscopy_therapeutic_aspiration": ["bronchoscopy_therapeutic_airway_tumor"],  # aspiration codes
+        # Thoracoscopy mappings (v2.7 consolidates site-specific biopsies into thoracoscopy_biopsy)
+        "thoracoscopy_diagnostic_only": ["thoracoscopy_diagnostic"],
+        "thoracoscopy_lung_biopsy": ["thoracoscopy_biopsy"],
+        "thoracoscopy_mediastinal_biopsy": ["thoracoscopy_biopsy"],
+        "thoracoscopy_pericardial_biopsy": ["thoracoscopy_biopsy"],
+        "thoracoscopy_pleural_biopsy": ["thoracoscopy_biopsy"],
+        "thoracoscopy_surgical_pleurodesis_decortication": ["thoracoscopy_surgical"],
+        # Pleural mappings
+        "pleural_pleurodesis": ["pleural_intrapleural_treatment"],
+        # PDT is not in v2.7 code_lists - need to handle separately or add
+        "pdt_endobronchial": [],  # No mapping available; would need KB update
+    }
+
+    def __init__(self, json_path: Path | str):
+        self.json_path = Path(json_path)
+        with open(self.json_path, "r") as f:
             self.raw = json.load(f)
 
+        self.metadata: Dict[str, Any] = self.raw.get("metadata", {})
         self.code_to_groups: Dict[str, Set[str]] = {}
         self.add_on_codes: Set[str] = set()
         self.cpt_rvus: Dict[str, dict] = self.raw.get("rvus", {})
         self.last_group_evidence: Dict[str, dict] = {}
+        self.cms_rvu_meta: Dict[str, Any] = {}
+        self.cms_rvus: Dict[str, CmsRvuInfo] = {}
+        self._fee_schedules: Dict[str, Dict[str, Any]] = {}
+
         self._build_indexes()
+        self._build_cms_rvu_table()
+        self._build_fee_schedule_index()
 
     def _normalize_code(self, code: str) -> str:
         return code.lstrip("+").strip()
@@ -88,6 +140,61 @@ class IPCodingKnowledgeBase:
                     c = self._normalize_code(code)
                     self.code_to_groups.setdefault(c, set()).add(group_name)
 
+    def _build_cms_rvu_table(self) -> None:
+        cms_rvus = self.raw.get("cms_rvus", {}) or {}
+        for key, section in cms_rvus.items():
+            if key.startswith("_"):
+                self.cms_rvu_meta[key] = section
+                continue
+            if not isinstance(section, Mapping):
+                continue
+            for code, payload in section.items():
+                if not isinstance(payload, Mapping):
+                    continue
+                normalized = self._normalize_code(code)
+                info = CmsRvuInfo(
+                    code=normalized,
+                    category=key,
+                    description=payload.get("description"),
+                    work_rvu=self._to_float(payload.get("work_rvu")),
+                    facility_pe_rvu=self._to_float(payload.get("facility_pe_rvu")),
+                    nonfacility_pe_rvu=self._to_float(payload.get("nonfacility_pe_rvu")),
+                    mp_rvu=self._to_float(payload.get("mp_rvu")),
+                    total_facility_rvu=self._to_float(payload.get("total_facility_rvu")),
+                    total_nonfacility_rvu=self._to_float(payload.get("total_nonfacility_rvu")),
+                    mpfs_facility_payment=self._to_float(payload.get("mpfs_facility_payment")),
+                    mpfs_nonfacility_payment=self._to_float(payload.get("mpfs_nonfacility_payment")),
+                    global_days=payload.get("global_days"),
+                    mult_proc_indicator=str(payload.get("mult_proc_indicator")) if payload.get("mult_proc_indicator") is not None else None,
+                    status_code=payload.get("status_code"),
+                    is_add_on=bool(payload.get("is_add_on") or normalized in self.add_on_codes),
+                )
+                self.cms_rvus[normalized] = info
+
+    def _build_fee_schedule_index(self) -> None:
+        for name, schedule in (self.raw.get("fee_schedules") or {}).items():
+            if not isinstance(schedule, Mapping):
+                continue
+            codes = schedule.get("codes", {})
+            normalized_codes: Dict[str, Dict[str, Any]] = {}
+            if isinstance(codes, Mapping):
+                for code, info in codes.items():
+                    if isinstance(info, Mapping):
+                        normalized_codes[self._normalize_code(code)] = dict(info)
+            self._fee_schedules[name] = {
+                "metadata": dict(schedule.get("metadata", {})),
+                "codes": normalized_codes,
+            }
+
+    @staticmethod
+    def _to_float(value: Any) -> Optional[float]:
+        if value is None:
+            return None
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return None
+
     # ---------- Public API ----------
 
     def all_relevant_cpt_codes(self) -> Set[str]:
@@ -101,8 +208,8 @@ class IPCodingKnowledgeBase:
             for code in codes_list:
                 codes.add(self._normalize_code(code))
 
-        # rvus
-        codes.update(self.raw.get("rvus", {}).keys())
+        # rvus (skip metadata keys starting with _)
+        codes.update(k for k in self.raw.get("rvus", {}).keys() if not k.startswith("_"))
 
         # rvus_additional
         codes.update(self.raw.get("rvus_additional", {}).keys())
@@ -130,7 +237,44 @@ class IPCodingKnowledgeBase:
             for _group, cpt_list in info.get("primary_cpt_eligible", {}).items():
                 codes.update(self._normalize_code(c) for c in cpt_list)
 
+        if self.cms_rvus:
+            codes.update(self.cms_rvus.keys())
+
         return codes
+
+    def get_cms_rvu(self, code: str) -> Optional[CmsRvuInfo]:
+        """
+        Return CMS RVU metadata for a code. Accepts codes with or without the leading '+'.
+        """
+        return self.cms_rvus.get(self._normalize_code(code))
+
+    def get_conversion_factor(self) -> Optional[float]:
+        cf = self.cms_rvu_meta.get("_conversion_factor")
+        if cf is None:
+            return None
+        try:
+            return float(cf)
+        except (TypeError, ValueError):
+            return None
+
+    def get_fee_schedule_entry(self, code: str, schedule_name: Optional[str] = None) -> Optional[Dict[str, Any]]:
+        """
+        Return a vendor fee schedule entry for the CPT.
+        If schedule_name is omitted, the first schedule containing the code is returned.
+        """
+        norm = self._normalize_code(code)
+        if schedule_name:
+            schedule = self._fee_schedules.get(schedule_name)
+            if not schedule:
+                return None
+            entry = schedule["codes"].get(norm)
+            return dict(entry) if entry else None
+
+        for schedule in self._fee_schedules.values():
+            entry = schedule["codes"].get(norm)
+            if entry:
+                return dict(entry)
+        return None
 
     def get_groups_for_code(self, code: str) -> List[str]:
         return sorted(self.code_to_groups.get(self._normalize_code(code), []))
@@ -152,16 +296,14 @@ class IPCodingKnowledgeBase:
             desc = pleural["thoracoscopy_cpt_map"][n]["description"]
 
         # 2) fee_schedules (airway/Noah/etc.)
-        fee_sched_info = None
-        for sched in self.raw.get("fee_schedules", {}).values():
-            codes = sched.get("codes", {})
-            for k, v in codes.items():
-                if self._normalize_code(k) == n:
-                    desc = desc or v.get("description")
-                    fee_sched_info = v
-                    break
+        fee_sched_info = self.get_fee_schedule_entry(n)
+        if fee_sched_info and not desc:
+            desc = fee_sched_info.get("description")
 
         rvus = self.raw.get("rvus", {}).get(n) or self.raw.get("rvus_additional", {}).get(n)
+        cms_rvu = self.get_cms_rvu(n)
+        if cms_rvu and not desc:
+            desc = cms_rvu.description
 
         return CPTInfo(
             code=n,
@@ -170,6 +312,7 @@ class IPCodingKnowledgeBase:
             is_add_on=self.is_add_on(n),
             rvus=rvus,
             fee_schedule=fee_sched_info,
+            cms_rvu=cms_rvu,
         )
 
     # ---- bundling helpers (using canonical rules) ----
@@ -684,7 +827,7 @@ class IPCodingKnowledgeBase:
         # Conservative: Only add if clear action verb present for insertion
         # For removal, ONLY detect explicit removal language
         if ipc_mentioned and ipc_insertion_action:
-            matched_groups.add("tunneled_pleural_catheter")
+            matched_groups.add("tunneled_pleural_catheter_placement")
         if ipc_mentioned and ipc_removal_action:
             matched_groups.add("tunneled_pleural_catheter_removal")
 
@@ -828,15 +971,26 @@ class IPCodingKnowledgeBase:
     def codes_for_groups(self, groups: Iterable[str]) -> Set[str]:
         """
         Return CPT codes for the provided groups, preserving '+' prefixes for add-ons.
+        Uses GROUP_ALIAS_MAP to translate internal group names to v2.7 code_lists keys.
         """
         codes: Set[str] = set()
         lists = self.raw.get("code_lists", {})
         for g in groups:
-            for code in lists.get(g, []):
-                if code.startswith("+"):
-                    codes.add(code)
-                else:
-                    codes.add(self._normalize_code(code))
+            # First try direct lookup
+            if g in lists:
+                for code in lists[g]:
+                    if code.startswith("+"):
+                        codes.add(code)
+                    else:
+                        codes.add(self._normalize_code(code))
+            # Then try alias mapping
+            elif g in self.GROUP_ALIAS_MAP:
+                for alias in self.GROUP_ALIAS_MAP[g]:
+                    for code in lists.get(alias, []):
+                        if code.startswith("+"):
+                            codes.add(code)
+                        else:
+                            codes.add(self._normalize_code(code))
         return codes
 
     def codes_from_text(self, note_text: str) -> Set[str]:

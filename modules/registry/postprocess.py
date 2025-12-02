@@ -16,32 +16,39 @@ VALID_EBUS_STATIONS = frozenset({
 # Pattern to match valid station format
 STATION_PATTERN = re.compile(r"^(2R|2L|4R|4L|7|10R|10L|11R|11L)$", re.IGNORECASE)
 
-# Canonical ROSE result values
+# Canonical ROSE result values (schema enum)
+# Schema enum: ["Adequate - malignant", "Adequate - benign lymphocytes",
+#               "Adequate - granulomas", "Adequate - other", "Inadequate", "Not performed"]
 ROSE_RESULT_CANONICAL = {
-    "malignant": "Malignant",
-    "benign": "Benign",
-    "nondiagnostic": "Nondiagnostic",
-    "non-diagnostic": "Nondiagnostic",
-    "non diagnostic": "Nondiagnostic",
-    "granuloma": "Granuloma",
-    "granulomatous": "Granuloma",
-    "atypical": "Atypical cells present",
-    "atypical cells": "Atypical cells present",
-    "atypical cells present": "Atypical cells present",
-    "atypical lymphoid": "Atypical lymphoid proliferation",
-    "atypical lymphoid proliferation": "Atypical lymphoid proliferation",
-    "insufficient": "Nondiagnostic",
-    "inadequate": "Nondiagnostic",
+    "malignant": "Adequate - malignant",
+    "adequate - malignant": "Adequate - malignant",
+    "benign": "Adequate - benign lymphocytes",
+    "adequate - benign lymphocytes": "Adequate - benign lymphocytes",
+    "nondiagnostic": "Inadequate",
+    "non-diagnostic": "Inadequate",
+    "non diagnostic": "Inadequate",
+    "inadequate": "Inadequate",
+    "insufficient": "Inadequate",
+    "granuloma": "Adequate - granulomas",
+    "granulomatous": "Adequate - granulomas",
+    "adequate - granulomas": "Adequate - granulomas",
+    "atypical": "Adequate - other",
+    "atypical cells": "Adequate - other",
+    "atypical cells present": "Adequate - other",
+    "atypical lymphoid": "Adequate - other",
+    "atypical lymphoid proliferation": "Adequate - other",
+    "adequate - other": "Adequate - other",
+    "not performed": "Not performed",
 }
 
 # ROSE result priority for deriving global result (higher = more significant)
 ROSE_RESULT_PRIORITY = {
-    "Malignant": 6,
-    "Atypical lymphoid proliferation": 5,
-    "Atypical cells present": 4,
-    "Granuloma": 3,
-    "Benign": 2,
-    "Nondiagnostic": 1,
+    "Adequate - malignant": 6,
+    "Adequate - other": 5,  # Covers atypical cases
+    "Adequate - granulomas": 4,
+    "Adequate - benign lymphocytes": 3,
+    "Inadequate": 2,
+    "Not performed": 1,
 }
 
 __all__ = [
@@ -87,6 +94,8 @@ __all__ = [
     "normalize_provider_role",
     "normalize_immediate_complications",
     "normalize_radiographic_findings",
+    "normalize_navigation_platform",
+    "normalize_valve_type",
     "validate_station_format",
     "VALID_EBUS_STATIONS",
     "ROSE_RESULT_CANONICAL",
@@ -105,6 +114,10 @@ def _coerce_to_text(raw: Any) -> str | None:
 
 
 def normalize_sedation_type(raw: Any) -> str | None:
+    """Normalize sedation type to schema enum values.
+
+    Schema enum: ["Moderate", "Deep", "General", "MAC", "Local Only", "Topical Only"]
+    """
     text_raw = _coerce_to_text(raw)
     if text_raw is None:
         return None
@@ -119,13 +132,16 @@ def normalize_sedation_type(raw: Any) -> str | None:
         "general": "General",
         "general anesthesia": "General",
         "ga": "General",
-        "local": "Local",
-        "local anesthesia": "Local",
-        "local only": "Local",
-        # Project convention: treat MAC as deep sedation when no explicit GA/ETT
-        "monitored anesthesia care": "Deep",
-        "mac": "Deep",
-        "mac anesthesia": "Deep",
+        "local": "Local Only",
+        "local anesthesia": "Local Only",
+        "local only": "Local Only",
+        "topical": "Topical Only",
+        "topical only": "Topical Only",
+        "topical anesthesia": "Topical Only",
+        # MAC is its own enum value in the schema
+        "monitored anesthesia care": "MAC",
+        "mac": "MAC",
+        "mac anesthesia": "MAC",
     }
 
     if text in mapping:
@@ -134,7 +150,7 @@ def normalize_sedation_type(raw: Any) -> str | None:
         if "general" in text and "anesth" in text:
             val = "General"
         elif "monitored anesthesia care" in text or " mac " in text or re.search(r"\bmac\b", text):
-            val = "Deep"
+            val = "MAC"
         elif "deep" in text and "sedat" in text:
             val = "Deep"
         elif "conscious" in text and "sedat" in text:
@@ -142,25 +158,31 @@ def normalize_sedation_type(raw: Any) -> str | None:
         elif "moderate" in text and "sedat" in text:
             val = "Moderate"
         elif "local" in text and "anesth" in text:
-            val = "Local"
-        elif "mac" in text or "monitored anesthesia care" in text:
-            # Convention: MAC → Deep when not otherwise specified
-            val = "Deep"
+            val = "Local Only"
+        elif "topical" in text:
+            val = "Topical Only"
         else:
             lowered_allowed = {
                 "moderate": "Moderate",
                 "deep": "Deep",
                 "general": "General",
-                "local": "Local",
-                "monitored anesthesia care": "Deep",
+                "mac": "MAC",
+                "local only": "Local Only",
+                "topical only": "Topical Only",
             }
             val = lowered_allowed.get(text, None)
 
-    allowed = {"Moderate", "Deep", "General", "Local", "Monitored Anesthesia Care"}
+    allowed = {"Moderate", "Deep", "General", "MAC", "Local Only", "Topical Only"}
     return val if val in allowed else None
 
 
 def normalize_airway_type(raw: Any) -> str | None:
+    """Normalize airway type to schema enum values.
+
+    Schema enum: ["Native", "ETT", "Tracheostomy", "LMA", "iGel"]
+    NOTE: "Rigid Bronchoscope" is NOT a valid airway_type in the schema.
+    Rigid bronchoscopy is a procedure type, not an airway management device.
+    """
     text_raw = _coerce_to_text(raw)
     if text_raw is None:
         return None
@@ -185,17 +207,17 @@ def normalize_airway_type(raw: Any) -> str | None:
         "trach": "Tracheostomy",
         "tracheostomy": "Tracheostomy",
         "tracheostomy tube": "Tracheostomy",
-        "rigid": "Rigid Bronchoscope",
-        "rigid bronchoscope": "Rigid Bronchoscope",
-        "rigid bronch": "Rigid Bronchoscope",
-        "rigid bronchoscopy": "Rigid Bronchoscope",
+        "igel": "iGel",
+        "i-gel": "iGel",
+        "i gel": "iGel",
     }
 
     if text in mapping:
         return mapping[text]
 
-    if "rigid" in text and "bronch" in text:
-        return "Rigid Bronchoscope"
+    # Fuzzy matching - order matters (more specific first)
+    if "igel" in text or "i-gel" in text or "i gel" in text:
+        return "iGel"
     if "trach" in text:
         return "Tracheostomy"
     if "lma" in text or "laryngeal mask" in text:
@@ -204,6 +226,12 @@ def normalize_airway_type(raw: Any) -> str | None:
         return "ETT"
     if "native" in text or "natural airway" in text or "bite block" in text:
         return "Native"
+
+    # Validate against allowed values
+    allowed = {"Native", "ETT", "Tracheostomy", "LMA", "iGel"}
+    title_cased = text.title()
+    if title_cased in allowed:
+        return title_cased
 
     return None
 
@@ -420,6 +448,13 @@ def normalize_procedure_date(raw: Any) -> str | None:
 
 
 def normalize_disposition(raw: Any) -> str | None:
+    """Normalize disposition to schema enum values.
+
+    Schema enum: ["Outpatient discharge", "Observation unit", "Floor admission",
+                  "ICU admission", "Already inpatient - return to floor",
+                  "Already inpatient - transfer to ICU", "Transfer to another facility",
+                  "OR", "Death"]
+    """
     text_raw = _coerce_to_text(raw)
     if text_raw is None:
         return None
@@ -428,21 +463,54 @@ def normalize_disposition(raw: Any) -> str | None:
         return None
 
     mapping_exact = {
-        "discharge home": "Discharge Home",
-        "home": "Discharge Home",
-        "pacu recovery": "PACU Recovery",
-        "pacu": "PACU Recovery",
-        "recovery": "PACU Recovery",
-        "floor admission": "Floor Admission",
-        "admit to floor": "Floor Admission",
-        "icu admission": "ICU Admission",
-        "admit to icu": "ICU Admission",
+        # Outpatient discharge
+        "discharge home": "Outpatient discharge",
+        "home": "Outpatient discharge",
+        "outpatient discharge": "Outpatient discharge",
+        "outpatient": "Outpatient discharge",
+        "discharged": "Outpatient discharge",
+        "pacu recovery": "Outpatient discharge",  # PACU then home = outpatient
+        "pacu": "Outpatient discharge",
+        "recovery": "Outpatient discharge",
+        # Observation unit
+        "observation unit": "Observation unit",
+        "observation": "Observation unit",
+        "obs": "Observation unit",
+        "23 hour obs": "Observation unit",
+        "23-hour observation": "Observation unit",
+        # Floor admission
+        "floor admission": "Floor admission",
+        "admit to floor": "Floor admission",
+        "floor": "Floor admission",
+        # ICU admission
+        "icu admission": "ICU admission",
+        "admit to icu": "ICU admission",
+        "icu": "ICU admission",
+        # Already inpatient - return to floor
+        "already inpatient - return to floor": "Already inpatient - return to floor",
+        "return to floor": "Already inpatient - return to floor",
+        "back to floor": "Already inpatient - return to floor",
+        # Already inpatient - transfer to ICU
+        "already inpatient - transfer to icu": "Already inpatient - transfer to ICU",
+        "transfer to icu": "Already inpatient - transfer to ICU",
+        # Transfer to another facility
+        "transfer to another facility": "Transfer to another facility",
+        "transfer": "Transfer to another facility",
+        "transferred": "Transfer to another facility",
+        # OR
+        "or": "OR",
+        "operating room": "OR",
+        "to or": "OR",
+        # Death
+        "death": "Death",
+        "expired": "Death",
+        "deceased": "Death",
     }
     if text in mapping_exact:
         return mapping_exact[text]
 
+    # ICU keywords (new admission or transfer)
     icu_keywords = [
-        "icu",
         "micu",
         "sicu",
         "cticu",
@@ -453,8 +521,15 @@ def normalize_disposition(raw: Any) -> str | None:
         "critical care",
     ]
     if any(k in text for k in icu_keywords):
-        return "ICU Admission"
+        if "already inpatient" in text or "transfer" in text:
+            return "Already inpatient - transfer to ICU"
+        return "ICU admission"
+    if "icu" in text:
+        if "already inpatient" in text or "transfer" in text:
+            return "Already inpatient - transfer to ICU"
+        return "ICU admission"
 
+    # Floor keywords
     floor_keywords = [
         "admit to floor",
         "to the floor",
@@ -469,27 +544,23 @@ def normalize_disposition(raw: Any) -> str | None:
         "admit to medicine",
         "admit to oncology",
         "admit to hospitalist",
-        "admit for observation",
-        "admitted for observation",
     ]
     if any(k in text for k in floor_keywords):
-        return "Floor Admission"
+        if "already inpatient" in text or "return" in text:
+            return "Already inpatient - return to floor"
+        return "Floor admission"
 
-    pacu_keywords = [
-        "to pacu",
-        "pacu",
-        "post-anesthesia care",
-        "post anesthesia care",
-        "recovery room",
-        "phase i recovery",
-        "postop recovery",
-        "short stay recovery",
-        "day surgery recovery",
-        "sds recovery",
+    # Observation keywords
+    obs_keywords = [
+        "admit for observation",
+        "admitted for observation",
+        "observation status",
+        "obs unit",
     ]
-    if any(k in text for k in pacu_keywords):
-        return "PACU Recovery"
+    if any(k in text for k in obs_keywords):
+        return "Observation unit"
 
+    # Home/outpatient discharge keywords
     home_keywords = [
         "discharge home",
         "discharged home",
@@ -504,9 +575,22 @@ def normalize_disposition(raw: Any) -> str | None:
         "ok to discharge",
         "same-day discharge",
         "same day discharge",
+        "to pacu",
+        "post-anesthesia care",
+        "post anesthesia care",
+        "recovery room",
+        "phase i recovery",
+        "postop recovery",
+        "short stay recovery",
+        "day surgery recovery",
+        "sds recovery",
     ]
     if any(k in text for k in home_keywords):
-        return "Discharge Home"
+        return "Outpatient discharge"
+
+    # Transfer keywords
+    if "transfer" in text and "icu" not in text:
+        return "Transfer to another facility"
 
     return None
 
@@ -647,8 +731,9 @@ def validate_station_format(station: str) -> str | None:
 def normalize_ebus_station_rose_result(raw: Any) -> str | None:
     """Normalize a per-station ROSE result to canonical form.
 
-    This normalizes individual station ROSE results (not the global result).
-    Returns canonical ROSE result string or None.
+    Schema enum: ["Adequate - malignant", "Adequate - benign lymphocytes",
+                  "Adequate - granulomas", "Adequate - other", "Inadequate",
+                  "Not performed"]
     """
     text_raw = _coerce_to_text(raw)
     if text_raw is None:
@@ -657,25 +742,65 @@ def normalize_ebus_station_rose_result(raw: Any) -> str | None:
     if not text or text in {"null", "none", "n/a", "na", ""}:
         return None
 
-    # Check direct mapping
-    if text in ROSE_RESULT_CANONICAL:
-        return ROSE_RESULT_CANONICAL[text]
+    # Direct mapping to schema enum values
+    mapping = {
+        # Adequate - malignant
+        "adequate - malignant": "Adequate - malignant",
+        "malignant": "Adequate - malignant",
+        "carcinoma": "Adequate - malignant",
+        "adenocarcinoma": "Adequate - malignant",
+        "squamous": "Adequate - malignant",
+        "small cell": "Adequate - malignant",
+        "positive for malignancy": "Adequate - malignant",
+        "suspicious for malignancy": "Adequate - malignant",
+        # Adequate - benign lymphocytes
+        "adequate - benign lymphocytes": "Adequate - benign lymphocytes",
+        "benign": "Adequate - benign lymphocytes",
+        "benign lymphocytes": "Adequate - benign lymphocytes",
+        "reactive lymphocytes": "Adequate - benign lymphocytes",
+        "lymphocytes": "Adequate - benign lymphocytes",
+        "reactive": "Adequate - benign lymphocytes",
+        # Adequate - granulomas
+        "adequate - granulomas": "Adequate - granulomas",
+        "granuloma": "Adequate - granulomas",
+        "granulomas": "Adequate - granulomas",
+        "granulomatous": "Adequate - granulomas",
+        # Adequate - other
+        "adequate - other": "Adequate - other",
+        "adequate": "Adequate - other",
+        "atypical": "Adequate - other",
+        "atypical cells": "Adequate - other",
+        "atypical cells present": "Adequate - other",
+        "atypical lymphoid proliferation": "Adequate - other",
+        # Inadequate
+        "inadequate": "Inadequate",
+        "nondiagnostic": "Inadequate",
+        "non-diagnostic": "Inadequate",
+        "insufficient": "Inadequate",
+        # Not performed
+        "not performed": "Not performed",
+        "not done": "Not performed",
+        "rose not available": "Not performed",
+    }
+
+    if text in mapping:
+        return mapping[text]
 
     # Fuzzy matching
-    if "malignan" in text or "carcinoma" in text or "adenocarcinoma" in text:
-        return "Malignant"
+    if "malignan" in text or "carcinoma" in text or "adenocarcinoma" in text or "positive for" in text:
+        return "Adequate - malignant"
     if "granulom" in text:
-        return "Granuloma"
+        return "Adequate - granulomas"
     if "non" in text and "diagnostic" in text:
-        return "Nondiagnostic"
+        return "Inadequate"
     if "insufficient" in text or "inadequate" in text:
-        return "Nondiagnostic"
-    if "atypical" in text and "lymphoid" in text:
-        return "Atypical lymphoid proliferation"
+        return "Inadequate"
+    if "not performed" in text or "not done" in text:
+        return "Not performed"
     if "atypical" in text:
-        return "Atypical cells present"
+        return "Adequate - other"
     if "benign" in text or "reactive" in text or "lymphocyte" in text:
-        return "Benign"
+        return "Adequate - benign lymphocytes"
 
     return None
 
@@ -748,11 +873,77 @@ def normalize_ebus_rose_result(raw: Any) -> str | None:
     return normalize_ebus_station_rose_result(raw)
 
 
-def normalize_ebus_needle_gauge(raw: Any) -> str | None:
+def normalize_ebus_needle_gauge(raw: Any) -> int | None:
+    """Normalize EBUS needle gauge to schema enum integer value.
+
+    Schema enum: [19, 21, 22, 25]
+    Handles strings like "22G", "22 gauge", or just "22".
+    """
+    if raw is None:
+        return None
+
+    # If already an int in valid range, return it
+    if isinstance(raw, int) and raw in {19, 21, 22, 25}:
+        return raw
+
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"none", "n/a", "na", "null", ""}:
+        return None
+
+    # Extract number from strings like "22G", "22 gauge", "22-gauge"
+    match = re.search(r"(\d+)", text)
+    if match:
+        gauge = int(match.group(1))
+        if gauge in {19, 21, 22, 25}:
+            return gauge
+
     return None
 
 
 def normalize_ebus_needle_type(raw: Any) -> str | None:
+    """Normalize EBUS needle type to schema enum values.
+
+    Schema enum: ["Standard FNA", "Core/ProCore", "Acquire"]
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"none", "n/a", "na", "null", ""}:
+        return None
+
+    mapping = {
+        # Standard FNA
+        "standard": "Standard FNA",
+        "standard fna": "Standard FNA",
+        "fna": "Standard FNA",
+        "fine needle": "Standard FNA",
+        "fine needle aspiration": "Standard FNA",
+        # Core/ProCore
+        "core": "Core/ProCore",
+        "procore": "Core/ProCore",
+        "core/procore": "Core/ProCore",
+        "pro-core": "Core/ProCore",
+        # Acquire
+        "acquire": "Acquire",
+    }
+
+    if text in mapping:
+        return mapping[text]
+
+    # Fuzzy matching
+    if "procore" in text or "pro-core" in text or "pro core" in text:
+        return "Core/ProCore"
+    if "core" in text:
+        return "Core/ProCore"
+    if "acquire" in text:
+        return "Acquire"
+    if "fna" in text or "fine needle" in text or "standard" in text:
+        return "Standard FNA"
+
     return None
 
 
@@ -1778,6 +1969,133 @@ def apply_cross_field_consistency(data: Dict[str, Any]) -> Dict[str, Any]:
     return result
 
 
+def normalize_navigation_platform(raw: Any) -> str | None:
+    """Normalize navigation platform to schema enum values.
+
+    Schema enum: ["Ion", "Monarch", "Galaxy", "superDimension", "ILLUMISITE",
+                  "SPiN", "LungVision", "ARCHIMEDES", "None"]
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"n/a", "na", "null", ""}:
+        return None
+    if text == "none":
+        return "None"
+
+    mapping = {
+        # Ion (Intuitive)
+        "ion": "Ion",
+        "ion intuitive": "Ion",
+        "intuitive ion": "Ion",
+        # Monarch (Ethicon/Auris)
+        "monarch": "Monarch",
+        "auris": "Monarch",
+        "ethicon monarch": "Monarch",
+        # Galaxy (Noah Medical)
+        "galaxy": "Galaxy",
+        "noah": "Galaxy",
+        "noah medical": "Galaxy",
+        # superDimension (Medtronic)
+        "superdimension": "superDimension",
+        "super dimension": "superDimension",
+        "sd": "superDimension",
+        "medtronic superdimension": "superDimension",
+        # EMN (electromagnetic navigation) - generic term, typically superDimension
+        "emn": "superDimension",
+        "electromagnetic navigation": "superDimension",
+        "electromagnetic": "superDimension",
+        # ILLUMISITE (Medtronic)
+        "illumisite": "ILLUMISITE",
+        "illuminsite": "ILLUMISITE",  # common typo
+        # SPiN (Veran)
+        "spin": "SPiN",
+        "veran": "SPiN",
+        "veran spin": "SPiN",
+        # LungVision (Body Vision)
+        "lungvision": "LungVision",
+        "lung vision": "LungVision",
+        "body vision": "LungVision",
+        "bodyvision": "LungVision",
+        # ARCHIMEDES (Broncus)
+        "archimedes": "ARCHIMEDES",
+        "broncus": "ARCHIMEDES",
+    }
+
+    if text in mapping:
+        return mapping[text]
+
+    # Fuzzy matching
+    if "ion" in text and "intuitive" in text:
+        return "Ion"
+    if "monarch" in text or "auris" in text:
+        return "Monarch"
+    if "galaxy" in text or "noah" in text:
+        return "Galaxy"
+    if "superdimension" in text or "super dimension" in text:
+        return "superDimension"
+    if "illumisite" in text:
+        return "ILLUMISITE"
+    if "spin" in text or "veran" in text:
+        return "SPiN"
+    if "lungvision" in text or "lung vision" in text or "body vision" in text:
+        return "LungVision"
+    if "archimedes" in text or "broncus" in text:
+        return "ARCHIMEDES"
+
+    # Check if it's already a valid enum value (case-insensitive)
+    allowed = {"Ion", "Monarch", "Galaxy", "superDimension", "ILLUMISITE",
+               "SPiN", "LungVision", "ARCHIMEDES", "None"}
+    for val in allowed:
+        if text == val.lower():
+            return val
+
+    return None
+
+
+def normalize_valve_type(raw: Any) -> str | None:
+    """Normalize BLVR valve type to schema enum values.
+
+    Schema enum: ["Zephyr (Pulmonx)", "Spiration (Olympus)"]
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"none", "n/a", "na", "null", ""}:
+        return None
+
+    mapping = {
+        # Zephyr (Pulmonx)
+        "zephyr": "Zephyr (Pulmonx)",
+        "zephyr (pulmonx)": "Zephyr (Pulmonx)",
+        "pulmonx": "Zephyr (Pulmonx)",
+        "pulmonx zephyr": "Zephyr (Pulmonx)",
+        "ebv": "Zephyr (Pulmonx)",  # Endobronchial Valve = Zephyr
+        "endobronchial valve": "Zephyr (Pulmonx)",
+        # Spiration (Olympus)
+        "spiration": "Spiration (Olympus)",
+        "spiration (olympus)": "Spiration (Olympus)",
+        "olympus": "Spiration (Olympus)",
+        "olympus spiration": "Spiration (Olympus)",
+        "svs": "Spiration (Olympus)",  # Spiration Valve System
+        "spiration valve": "Spiration (Olympus)",
+        "ibv": "Spiration (Olympus)",  # Intrabronchial Valve = Spiration
+    }
+
+    if text in mapping:
+        return mapping[text]
+
+    # Fuzzy matching
+    if "zephyr" in text or "pulmonx" in text:
+        return "Zephyr (Pulmonx)"
+    if "spiration" in text or "olympus" in text:
+        return "Spiration (Olympus)"
+
+    return None
+
+
 POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "sedation_type": normalize_sedation_type,
     "airway_type": normalize_airway_type,
@@ -1830,4 +2148,10 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "bronch_immediate_complications": normalize_immediate_complications,
     # Radiographic findings - exclude non-imaging content
     "radiographic_findings": normalize_radiographic_findings,
+    # Navigation platform - canonical internal values (both field names)
+    "navigation_platform": normalize_navigation_platform,
+    "nav_platform": normalize_navigation_platform,
+    # BLVR valve type - both field names for compatibility
+    "valve_type": normalize_valve_type,
+    "blvr_valve_type": normalize_valve_type,
 }

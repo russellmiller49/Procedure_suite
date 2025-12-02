@@ -162,3 +162,4 @@ export GEMINI_MODEL="gemini-2.0-flash"  # or any other Gemini model
 - **Registry Extractor**: `modules/registry/extractors/llm_detailed.py` - `LLMDetailedExtractor` class
 - **Test Configuration**: `tests/conftest.py`, `tests/api/conftest.py`
 
+

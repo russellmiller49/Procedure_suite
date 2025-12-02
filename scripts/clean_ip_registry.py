@@ -151,9 +151,11 @@ def _default_schema_path() -> str:
 
 def _default_kb_path() -> str:
     candidates = [
+        "data/knowledge/ip_coding_billing.v2_7.json",
         "data/ip_coding_billing.v2_3.json",
         "data/ip_coding_billing.v2_2.json",
         "data/knowledge/ip_coding_billing.v2_2.json",
+        "proc_autocode/ip_kb/ip_coding_billing.v2_7.json",
         "proc_autocode/ip_kb/ip_coding_billing.v2_2.json",
     ]
     for candidate in candidates:

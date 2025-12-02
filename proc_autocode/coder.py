@@ -1,9 +1,10 @@
 from __future__ import annotations
 from pathlib import Path
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Set
 import os
 
 from proc_autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
+from proc_autocode.ip_kb.terminology_utils import TerminologyNormalizer, QARuleChecker
 from proc_autocode.rvu.rvu_calculator import ProcedureRVUCalculator
 
 class CodeSuggestion:
@@ -21,17 +22,23 @@ class EnhancedCPTCoder:
         self.config = config or {}
         
         base_dir = Path(__file__).parent
+        repo_root = base_dir.parent
 
-        # RVU calculator
-        rvu_dir = base_dir / "rvu" / "data"
-        self.rvu_calc = ProcedureRVUCalculator(
-            rvu_file=rvu_dir / "rvu_ip_2025.csv",
-            gpci_file=rvu_dir / "gpci_2025.csv",
-        )
-
-        # IP coding knowledge base
-        kb_path = base_dir / "ip_kb" / "ip_coding_billing.v2_2.json"
+        kb_path = self._resolve_kb_path(repo_root)
         self.ip_kb = IPCodingKnowledgeBase(kb_path)
+        self.terminology = TerminologyNormalizer(self.ip_kb.raw)
+        self.qa_checker = QARuleChecker(self.ip_kb.raw)
+
+        anatomy = (self.ip_kb.raw.get("anatomy", {}) or {}).get("lobes", {}) or {}
+        self._lobe_terms = {key.strip().lower() for key in anatomy.keys()}
+
+        # RVU calculator (uses knowledge base RVUs + GPCI tables)
+        rvu_dir = base_dir / "rvu" / "data"
+        gpci_file = rvu_dir / "gpci_2025.csv"
+        self.rvu_calc = ProcedureRVUCalculator(
+            knowledge_base=self.ip_kb,
+            gpci_file=gpci_file if gpci_file.exists() else None,
+        )
         
         # LLM advisor (optional, for code suggestions)
         # Check env var if not explicitly set
@@ -49,7 +56,7 @@ class EnhancedCPTCoder:
                 logger = logging.getLogger(__name__)
                 logger.warning(f"Failed to initialize LLM advisor: {e}. Continuing without LLM suggestions.")
 
-    def _generate_codes(self, procedure_data: dict) -> list[CodeSuggestion]:
+    def _generate_codes(self, procedure_data: dict, term_hits: Optional[Dict[str, List[str]]] = None) -> list[CodeSuggestion]:
         """
         Generate candidate codes with CONSERVATIVE evidence-based filtering.
 
@@ -62,6 +69,9 @@ class EnhancedCPTCoder:
         note_text = procedure_data.get("note_text") or procedure_data.get("findings", "") or ""
         text_lower = note_text.lower()
         registry = procedure_data.get("registry") or procedure_data
+        term_hits = term_hits or self._extract_term_hits(note_text)
+        navigation_context = self._extract_navigation_registry(registry)
+        radial_context = self._extract_radial_registry(registry)
 
         # Use IP KB to find groups and codes from text
         groups_from_text = self.ip_kb.groups_from_text(note_text)
@@ -103,9 +113,14 @@ class EnhancedCPTCoder:
 
         # ========== NAVIGATION (31627) - CONSERVATIVE ==========
         nav_ev = evidence.get("bronchoscopy_navigation", {})
-        nav_tool_in_lesion = bool(registry.get("nav_tool_in_lesion"))
-        nav_sampling_tools = registry.get("nav_sampling_tools") or []
-        nav_performed = nav_tool_in_lesion or bool(nav_sampling_tools)
+        nav_tool_in_lesion = bool(navigation_context.get("tool_in_lesion"))
+        nav_sampling_tools = navigation_context.get("sampling_tools") or []
+        nav_performed = (
+            navigation_context.get("performed")
+            or nav_tool_in_lesion
+            or bool(nav_sampling_tools)
+            or "navigation" in term_hits.get("procedure_categories", [])
+        )
         if not nav_performed:
             discard("31627")
         elif not (nav_ev.get("platform") and (nav_ev.get("concept") or nav_ev.get("direct"))):
@@ -181,12 +196,19 @@ class EnhancedCPTCoder:
         pleural_type = registry.get("pleural_procedure_type")
         pleural_catheter_type = registry.get("pleural_catheter_type")
         pleural_ok = pleural_type == "Chest Tube" or bool(pleural_catheter_type)
+        pleural_ok = pleural_ok or bool(self._registry_get(registry, "pleural_procedures", "chest_tube", "performed"))
+        pleural_ok = pleural_ok or bool(self._registry_get(registry, "pleural_procedures", "ipc", "performed"))
         if not pleural_ok:
             discard("32556")
             discard("32557")
 
         # ========== ADDITIONAL LOBE TBLB (+31632) - CONSERVATIVE ==========
         lobe_ev = evidence.get("bronchoscopy_biopsy_additional_lobe", {})
+        normalized_lobes = self._extract_lobes_from_terms(term_hits)
+        if normalized_lobes:
+            lobe_ev.setdefault("normalized_terms", sorted(normalized_lobes))
+            if lobe_ev.get("lobe_count", 0) < len(normalized_lobes):
+                lobe_ev["lobe_count"] = len(normalized_lobes)
         if lobe_ev.get("lobe_count", 0) < 2 and not lobe_ev.get("explicit_multilobe"):
             discard("31632")
 
@@ -194,12 +216,39 @@ class EnhancedCPTCoder:
         has_parenchymal_tbbx = False
         try:
             num_tbbx = registry.get("bronch_num_tbbx")
-            has_parenchymal_tbbx = num_tbbx is not None and num_tbbx > 0
+            if num_tbbx is None:
+                num_tbbx = self._registry_get(
+                    registry,
+                    "procedures_performed",
+                    "transbronchial_biopsy",
+                    "number_of_samples",
+                )
+            if num_tbbx is not None:
+                has_parenchymal_tbbx = int(num_tbbx) > 0
         except Exception:
             has_parenchymal_tbbx = False
-        if registry.get("bronch_tbbx_tool"):
+        tbbx_tool = registry.get("bronch_tbbx_tool") or self._registry_get(
+            registry,
+            "procedures_performed",
+            "transbronchial_biopsy",
+            "forceps_type",
+        )
+        if not tbbx_tool:
+            tbbx_tool = self._registry_get(
+                registry,
+                "procedures_performed",
+                "transbronchial_cryobiopsy",
+                "cryoprobe_size_mm",
+            )
+        if tbbx_tool:
             has_parenchymal_tbbx = True
-        if registry.get("bronch_biopsy_sites"):
+        biopsy_sites = registry.get("bronch_biopsy_sites") or self._registry_get(
+            registry,
+            "procedures_performed",
+            "transbronchial_biopsy",
+            "locations",
+        )
+        if biopsy_sites:
             has_parenchymal_tbbx = True
 
         if not has_parenchymal_tbbx:
@@ -223,7 +272,12 @@ class EnhancedCPTCoder:
 
         # ========== RADIAL EBUS (+31654) - CONSERVATIVE ==========
         radial_ev = evidence.get("bronchoscopy_ebus_radial", {})
-        radial_registry = bool(registry.get("nav_rebus_used") or registry.get("nav_rebus_view"))
+        radial_registry = bool(
+            radial_context.get("performed")
+            or radial_context.get("visualization")
+            or registry.get("nav_rebus_used")
+            or registry.get("nav_rebus_view")
+        )
         if not (radial_ev.get("radial") and radial_registry and nav_performed):
             discard("31654")
 
@@ -341,8 +395,11 @@ class EnhancedCPTCoder:
         """
         Code a procedure, apply bundling, and calculate RVUs.
         """
+        note_text = procedure_data.get("note_text") or procedure_data.get("findings", "") or ""
+        term_hits = self._extract_term_hits(note_text)
+
         # 1) Generate candidate codes
-        codes: list[CodeSuggestion] = self._generate_codes(procedure_data)
+        codes: list[CodeSuggestion] = self._generate_codes(procedure_data, term_hits=term_hits)
         initial_cpts = [c.cpt for c in codes]
 
         # 2) Apply bundling rules from ip_coding_billing (with explanations)
@@ -355,6 +412,7 @@ class EnhancedCPTCoder:
         code_data_map = {}
         locality = procedure_data.get("locality", "00")
         setting = procedure_data.get("setting", "facility")
+        evidence = getattr(self.ip_kb, "last_group_evidence", {}) or {}
 
         for c in codes:
             c.groups = self.ip_kb.get_groups_for_code(c.cpt)
@@ -434,6 +492,16 @@ class EnhancedCPTCoder:
             })
             ordered_codes.append(code)
 
+        nav_evidence = evidence.get("bronchoscopy_navigation", {})
+        radial_evidence = evidence.get("bronchoscopy_ebus_radial", {})
+        documentation_context = self._build_documentation_context(
+            procedure_data,
+            term_hits,
+            nav_evidence,
+            radial_evidence,
+        )
+        qa_flags_map = self._evaluate_qa_flags(ordered_codes, documentation_context)
+
         rvu_results = self.rvu_calc.calculate_case_rvu(
             procedures=procedures,
             locality=locality,
@@ -461,6 +529,18 @@ class EnhancedCPTCoder:
             if code_data_map.get(c.cpt, {}).get("is_addon"):
                 rationale_parts.append("Add-on code exempt from Multiple Endoscopy Rule reductions")
 
+            qa_entries = qa_flags_map.get(c.cpt, [])
+            if qa_entries:
+                missing_labels = []
+                for entry in qa_entries:
+                    missing = ", ".join(entry.get("missing", []))
+                    label = entry.get("rule", "qa_rule")
+                    if missing:
+                        missing_labels.append(f"{label}: {missing}")
+                    else:
+                        missing_labels.append(f"{label}: {entry.get('description', 'documentation incomplete')}")
+                rationale_parts.append(f"QA review pending - {', '.join(missing_labels)}")
+
             summary = {
                 "cpt": c.cpt,
                 "description": c.description,
@@ -470,8 +550,15 @@ class EnhancedCPTCoder:
                 "mer_role": c.mer_role,
                 "mer_explanation": c.mer_explanation,
                 "rationale": rationale_parts,
+                "qa_flags": qa_entries,
             }
             code_summaries.append(summary)
+
+        qa_warnings = []
+        for summary in code_summaries:
+            for qa_entry in summary.get("qa_flags") or []:
+                missing = ", ".join(qa_entry.get("missing", [])) or qa_entry.get("description", "documentation incomplete")
+                qa_warnings.append(f"{summary['cpt']}: {qa_entry.get('rule', 'qa_rule')} - {missing}")
 
         # 7) Optional: Get LLM suggestions if enabled
         llm_suggestions = []
@@ -520,6 +607,9 @@ class EnhancedCPTCoder:
             "locality": locality,
             "setting": setting,
             "bundled_codes": bundling_decisions,  # Codes not billed due to bundling rules
+             "qa_warnings": qa_warnings,
+             "qa_flags": qa_flags_map,
+             "conversion_factor": rvu_results.get("conversion_factor"),
             "llm_suggestions": llm_suggestions,
             "llm_disagreements": llm_disagreements,
         }
@@ -559,3 +649,126 @@ class EnhancedCPTCoder:
             }
 
         return case_summary
+
+    def _resolve_kb_path(self, repo_root: Path) -> Path:
+        candidates = [
+            os.getenv("PSUITE_KNOWLEDGE_FILE"),
+            repo_root / "data" / "knowledge" / "ip_coding_billing.v2_7.json",
+            repo_root / "proc_autocode" / "ip_kb" / "ip_coding_billing.v2_7.json",
+            repo_root / "data" / "knowledge" / "ip_coding_billing.v2_2.json",
+            repo_root / "proc_autocode" / "ip_kb" / "ip_coding_billing.v2_2.json",
+        ]
+        for candidate in candidates:
+            if not candidate:
+                continue
+            path = Path(candidate)
+            if not path.is_absolute():
+                path = (repo_root / path).resolve()
+            if path.exists():
+                return path
+        raise FileNotFoundError("Cannot locate IP knowledge base; set PSUITE_KNOWLEDGE_FILE")
+
+    def _extract_term_hits(self, text: str) -> Dict[str, List[str]]:
+        if not text or not text.strip():
+            return {}
+        return self.terminology.extract_terms(
+            text,
+            categories=["procedure_categories", "anatomic_terms", "modifiers"],
+        )
+
+    def _registry_get(self, payload: Any, *path: str) -> Any:
+        current = payload
+        for key in path:
+            if not isinstance(current, dict):
+                return None
+            current = current.get(key)
+        return current
+
+    def _extract_navigation_registry(self, registry: dict) -> Dict[str, Any]:
+        nav_section = self._registry_get(registry, "procedures_performed", "navigational_bronchoscopy") or {}
+        sampling = nav_section.get("sampling_tools_used") or registry.get("nav_sampling_tools") or []
+        if isinstance(sampling, str):
+            sampling = [item.strip() for item in sampling.split(",") if item.strip()]
+        platform = registry.get("nav_platform") or self._registry_get(registry, "equipment", "navigation_platform")
+        performed = bool(
+            nav_section.get("performed")
+            or nav_section.get("tool_in_lesion_confirmed")
+            or registry.get("nav_tool_in_lesion")
+            or sampling
+        )
+        return {
+            "performed": performed,
+            "tool_in_lesion": bool(
+                nav_section.get("tool_in_lesion_confirmed")
+                or registry.get("nav_tool_in_lesion")
+            ),
+            "target_reached": bool(
+                nav_section.get("target_reached")
+                or registry.get("nav_tool_in_lesion")
+            ),
+            "sampling_tools": sampling,
+            "platform": platform,
+        }
+
+    def _extract_radial_registry(self, registry: dict) -> Dict[str, Any]:
+        radial_section = self._registry_get(registry, "procedures_performed", "radial_ebus") or {}
+        return {
+            "performed": bool(radial_section.get("performed") or registry.get("nav_rebus_used")),
+            "visualization": radial_section.get("probe_position") or registry.get("nav_rebus_view"),
+            "sampling": bool(
+                self._registry_get(registry, "procedures_performed", "transbronchial_biopsy", "number_of_samples")
+                or registry.get("bronch_num_tbbx")
+            ),
+        }
+
+    def _extract_lobes_from_terms(self, term_hits: Dict[str, List[str]]) -> Set[str]:
+        terms = term_hits.get("anatomic_terms") or []
+        return {term for term in terms if term.lower() in self._lobe_terms}
+
+    def _build_documentation_context(
+        self,
+        procedure_data: dict,
+        term_hits: Dict[str, List[str]],
+        nav_evidence: Dict[str, Any],
+        radial_evidence: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        registry = procedure_data.get("registry") or procedure_data
+        navigation_context = self._extract_navigation_registry(registry)
+        radial_context = self._extract_radial_registry(registry)
+
+        return {
+            "navigation_system_used": bool(
+                navigation_context.get("platform")
+                or nav_evidence.get("platform")
+                or "navigation" in term_hits.get("procedure_categories", [])
+            ),
+            "catheter_advanced_under_navigation_guidance": bool(navigation_context.get("tool_in_lesion")),
+            "target_lesion_identified": bool(
+                navigation_context.get("target_reached")
+                or nav_evidence.get("concept")
+                or nav_evidence.get("direct")
+            ),
+            "peripheral_lesion_targeted": bool(
+                radial_context.get("performed")
+                or navigation_context.get("target_reached")
+            ),
+            "radial_probe_visualization_documented": bool(
+                radial_context.get("visualization") or radial_evidence.get("radial")
+            ),
+            "sampling_performed": bool(
+                navigation_context.get("sampling_tools")
+                or radial_context.get("sampling")
+            ),
+        }
+
+    def _evaluate_qa_flags(
+        self,
+        codes: List[CodeSuggestion],
+        documentation: Dict[str, Any],
+    ) -> Dict[str, List[Dict[str, Any]]]:
+        qa_results: Dict[str, List[Dict[str, Any]]] = {}
+        for code in codes:
+            checks = self.qa_checker.evaluate_code(code.cpt, documentation)
+            if checks:
+                qa_results[code.cpt] = checks
+        return qa_results

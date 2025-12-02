@@ -9,6 +9,7 @@ from modules.common.sectionizer import SectionizerService
 from modules.common.spans import Span
 from modules.registry.extractors.llm_detailed import LLMDetailedExtractor
 from modules.registry.postprocess import POSTPROCESSORS, apply_cross_field_consistency, derive_global_ebus_rose_result
+from modules.registry.transform import build_nested_registry_payload
 
 from .schema import RegistryRecord
 
@@ -661,18 +662,24 @@ class RegistryEngine:
         lowered_note = note_text.lower()
 
         # Defaults based on cross-field context
+        # airway_type schema enum: ["Native", "ETT", "Tracheostomy", "LMA", "iGel"]
+        # NOTE: "Rigid Bronchoscope" is NOT an airway_type - it's a procedure type.
+        # For rigid bronchoscopy, airway is managed by the rigid scope itself.
         sedation_val = merged_data.get("sedation_type")
         airway_val = merged_data.get("airway_type")
         if airway_val in (None, "", []):
+            # Skip airway_type inference for rigid bronchoscopy - the rigid scope is the airway
             if re.search(r"rigid\s+bronch", lowered_note):
-                merged_data["airway_type"] = "Rigid Bronchoscope"
+                pass  # Leave airway_type as None for rigid bronchoscopy
+            elif re.search(r"\bi-?gel\b", lowered_note):
+                merged_data["airway_type"] = "iGel"
             elif re.search(r"\blma\b", lowered_note) or "laryngeal mask" in lowered_note:
                 merged_data["airway_type"] = "LMA"
             elif re.search(r"\btrach(?:eostomy| tube| stoma)?\b", lowered_note):
                 merged_data["airway_type"] = "Tracheostomy"
             elif re.search(r"\bett\b", lowered_note) or "endotracheal tube" in lowered_note or "intubated" in lowered_note:
                 merged_data["airway_type"] = "ETT"
-            elif sedation_val in ("Moderate", "Deep", "Monitored Anesthesia Care"):
+            elif sedation_val in ("Moderate", "Deep", "MAC"):
                 merged_data["airway_type"] = "Native"
 
         # If pleural procedure present but no guidance, default to Blind; otherwise null out accidental guidance
@@ -725,7 +732,8 @@ class RegistryEngine:
         # This ensures related fields are consistent (e.g., pneumothorax_intervention null when pneumothorax=false)
         merged_data = apply_cross_field_consistency(merged_data)
 
-        record = RegistryRecord(**merged_data)
+        nested_payload = build_nested_registry_payload(merged_data)
+        record = RegistryRecord(**nested_payload)
         normalized_evidence: dict[str, list[Span]] = {}
         if include_evidence:
             normalized_evidence = self._normalize_evidence(note_text, raw_llm_evidence)
@@ -979,12 +987,13 @@ class RegistryEngine:
         lowered = text.lower()
         is_ebus_procedure = procedure_families is None or "EBUS" in procedure_families
         if not data.get("nav_platform"):
+            # Use canonical schema values directly
             if re.search(r"\belectromagnetic navigation\b", lowered) or re.search(r"\bemn\b", lowered):
-                data["nav_platform"] = "emn"
+                data["nav_platform"] = "superDimension"
             elif re.search(r"\bion\b", lowered):
-                data["nav_platform"] = "ion"
+                data["nav_platform"] = "Ion"
             elif re.search(r"\bmonarch\b", lowered) or re.search(r"\bauris\b", lowered):
-                data["nav_platform"] = "monarch"
+                data["nav_platform"] = "Monarch"
 
         if data.get("nav_rebus_used") is None:
             if "radial ebus" in lowered or "rebus" in lowered:
@@ -1184,12 +1193,13 @@ class RegistryEngine:
                      data["sedation_reversal_agent"] = None
 
         # --- BLVR Heuristics (Basic) ---
+        # valve_type schema enum: ["Zephyr (Pulmonx)", "Spiration (Olympus)"]
         if "valve" in text.lower():
-            # Valve Type
-            if "Zephyr" in text:
-                data["blvr_valve_type"] = "Zephyr"
-            elif "Spiration" in text:
-                data["blvr_valve_type"] = "Spiration"
+            # Valve Type - use canonical schema values
+            if "Zephyr" in text or "Pulmonx" in text:
+                data["blvr_valve_type"] = "Zephyr (Pulmonx)"
+            elif "Spiration" in text or "Olympus" in text:
+                data["blvr_valve_type"] = "Spiration (Olympus)"
 
             # Target Lobe
             # Look for lobe mention near "valve" or "placed"

@@ -45,12 +45,13 @@ def test_registry_engine_populates_sedation_and_blvr_fields() -> None:
     Moderate sedation provided from 09:00 to 09:40.
     """
     record = RegistryEngine().run(note)
-    assert record.nav_platform is not None
-    assert record.nav_rebus_used is True
-    # Updated to match flattened schema
-    assert record.blvr_target_lobe == "LLL" or record.blvr_target_lobe == "LUL" # Note says LLL, but let's be safe if logic is fuzzy
-    assert record.blvr_valve_type == "Zephyr"
-    assert record.sedation_type == "Moderate"
+    assert record.procedures_performed.navigational_bronchoscopy is not None
+    assert record.procedures_performed.radial_ebus is not None
+    assert record.procedures_performed.blvr is not None
+    assert record.procedures_performed.blvr.target_lobe in {"LLL", "LUL"}
+    assert record.procedures_performed.blvr.valve_type == "Zephyr (Pulmonx)"
+    assert record.sedation is not None
+    assert record.sedation.type == "Moderate"
     # Start/stop times are not in the current schema
     # assert str(record.sedation_start) == "09:00:00"
     # assert str(record.sedation_stop) == "09:40:00"

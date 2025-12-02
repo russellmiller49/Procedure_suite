@@ -19,9 +19,20 @@ _NCCI_PATH = _ROOT / "configs" / "coding" / "ncci_edits.yaml"
 _PAYER_PATH = _ROOT / "configs" / "coding" / "payer_overrides.yaml"
 
 # Initialize singletons
-_KB_PATH = _ROOT / "proc_autocode" / "ip_kb" / "ip_coding_billing.v2_2.json"
+_KB_CANDIDATES = [
+    _ROOT / "data" / "knowledge" / "ip_coding_billing.v2_7.json",
+    _ROOT / "proc_autocode" / "ip_kb" / "ip_coding_billing.v2_7.json",
+    _ROOT / "data" / "knowledge" / "ip_coding_billing.v2_2.json",
+    _ROOT / "proc_autocode" / "ip_kb" / "ip_coding_billing.v2_2.json",
+]
+for _candidate in _KB_CANDIDATES:
+    if _candidate.exists():
+        _KB_PATH = _candidate
+        break
+else:
+    _KB_PATH = _KB_CANDIDATES[0]
+
 _RVU_DIR = _ROOT / "proc_autocode" / "rvu" / "data"
-_RVU_FILE = _RVU_DIR / "rvu_ip_2025.csv"
 _GPCI_FILE = _RVU_DIR / "gpci_2025.csv"
 
 _KB: Optional[IPCodingKnowledgeBase] = None
@@ -36,7 +47,8 @@ def _get_kb() -> IPCodingKnowledgeBase:
 def _get_rvu_calc() -> ProcedureRVUCalculator:
     global _RVU_CALC
     if _RVU_CALC is None:
-        _RVU_CALC = ProcedureRVUCalculator(_RVU_FILE, _GPCI_FILE)
+        gpci_path = _GPCI_FILE if _GPCI_FILE.exists() else None
+        _RVU_CALC = ProcedureRVUCalculator(_get_kb(), gpci_path)
     return _RVU_CALC
 
 

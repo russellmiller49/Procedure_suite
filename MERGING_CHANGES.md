@@ -96,7 +96,7 @@ If changes were made to both:
 
 2. **Determine if features need migration:**
    - New intent detection → May need to add to IP knowledge base
-   - New bundling rules → Add to `data/knowledge/ip_coding_billing.v2_2.json`
+   - New bundling rules → Add to `data/knowledge/ip_coding_billing.v2_7.json`
    - RVU calculations → Should already be in EnhancedCPTCoder
 
 3. **Migrate to EnhancedCPTCoder:**
@@ -167,4 +167,5 @@ If you're unsure about merging changes:
 ---
 
 **Remember**: Always work in `modules/api/fastapi_app.py`, never in `api/app.py`!
+
 
