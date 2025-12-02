@@ -457,6 +457,8 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
     This endpoint does NOT persist data - that is handled by the Next.js layer.
     Returns outputs + version metadata for tracking.
     """
+    import traceback
+
     from fastapi import HTTPException
 
     from proc_report.engine import compose_report_from_text
@@ -487,16 +489,20 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
                 }
             except ValueError as ve:
                 # Registry validation errors - provide detailed error message
+                tb = traceback.format_exc()
+                logging.error(f"Registry validation error: {ve}\n{tb}")
                 raise HTTPException(
                     status_code=422,
                     detail=f"Registry validation failed: {str(ve)}"
-                )
+                ) from ve
             except Exception as reg_err:
                 # Other registry errors (e.g., missing spaCy model)
+                tb = traceback.format_exc()
+                logging.error(f"Registry extraction error: {reg_err}\n{tb}")
                 raise HTTPException(
                     status_code=500,
                     detail=f"Registry extraction failed: {str(reg_err)}"
-                )
+                ) from reg_err
 
         # Run reporter if requested
         if modules_run in ("reporter", "all"):
@@ -580,8 +586,14 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
                             "issues": [i.model_dump() for i in issues] if issues else [],
                             "warnings": warnings,
                         }
-                    except Exception:
+                    except Exception as reg_fallback_err:
                         # If registry extraction fails, fall back to simple reporter
+                        # Log the error for debugging but continue with fallback
+                        fallback_tb = traceback.format_exc()
+                        logging.warning(
+                            f"Reporter auto-registry extraction failed, using simple reporter: "
+                            f"{reg_fallback_err}\n{fallback_tb}"
+                        )
                         from proc_report.engine import compose_report_from_text
 
                         hints = {}
@@ -599,10 +611,12 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
                         }
             except Exception as rep_err:
                 # Reporter errors (e.g., missing spaCy model)
+                tb = traceback.format_exc()
+                logging.error(f"Reporter extraction error: {rep_err}\n{tb}")
                 raise HTTPException(
                     status_code=500,
                     detail=f"Reporter extraction failed: {str(rep_err)}"
-                )
+                ) from rep_err
 
         # Run coder if requested
         if modules_run in ("coder", "all"):
@@ -622,8 +636,13 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
                 "bundled_codes": coder_result.get("bundled_codes", []),
             }
 
+    except HTTPException:
+        # Re-raise HTTP exceptions without wrapping
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        tb = traceback.format_exc()
+        logging.error(f"QA run unexpected error: {e}\n{tb}")
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
     return QARunResponse(
         reporter_output=reporter_output,
