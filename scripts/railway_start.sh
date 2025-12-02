@@ -18,6 +18,11 @@
 
 set -euo pipefail
 
+# Ensure Python can find the local packages (modules, proc_*, etc.)
+# Railway runs from /app with a virtual environment, but PYTHONPATH may not include /app
+export PYTHONPATH="${PYTHONPATH:-}:${PWD}"
+echo "[railway_start] PYTHONPATH=${PYTHONPATH}"
+
 echo "[railway_start] =============================================="
 echo "[railway_start] Starting Procedure Suite API"
 echo "[railway_start] =============================================="
