@@ -60,15 +60,36 @@ class OperativeShellInputs(BaseModel):
 
 
 class ProcedureInput(BaseModel):
+    """Input for a single procedure in the bundle.
+
+    IMPORTANT: Extraction rules for data fields:
+    1. NEVER guess or hallucinate values not present in source text
+    2. If a value is not explicitly stated, set it to null (not a default)
+    3. Add missing fields to bundle.acknowledged_omissions[proc_id]
+    4. sequence should reflect chronological order from source text
+    """
+
     model_config = ConfigDict(extra="ignore")
     proc_type: str
     schema_id: str
     proc_id: str | None = None
     data: SerializeAsAny[dict[str, Any] | BaseModel]
     cpt_candidates: List[str | int] = Field(default_factory=list)
+    # Chronological sequence from source text (1, 2, 3...)
+    sequence: int | None = Field(
+        default=None,
+        description="Chronological order from source dictation (1-based). Do not reorder by CPT or type.",
+    )
 
 
 class ProcedureBundle(BaseModel):
+    """Bundle containing all procedure data for report generation.
+
+    The `procedures` list contains core procedure data rendered via the macro system.
+    The `addons` list contains slugs for supplementary addon templates (rare events,
+    complications, transitional statements) rendered as a secondary snippet library.
+    """
+
     model_config = ConfigDict(extra="ignore")
     patient: PatientInfo
     encounter: EncounterInfo
@@ -85,6 +106,11 @@ class ProcedureBundle(BaseModel):
     specimens_text: str | None = None
     free_text_hint: str | None = None
     acknowledged_omissions: dict[str, list[str]] = Field(default_factory=dict)
+    # Addon slugs for supplementary templates (rare events, complications, etc.)
+    addons: list[str] = Field(
+        default_factory=list,
+        description="List of addon template slugs to render as supplementary content",
+    )
 
 
 class ProcedurePatch(BaseModel):

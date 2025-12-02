@@ -46,6 +46,15 @@ from proc_report.metadata import (
 from proc_report.inference import InferenceEngine, PatchResult
 from proc_report.validation import FieldConfig, ValidationEngine
 from proc_report.ip_addons import get_addon_body, get_addon_metadata, list_addon_slugs
+from proc_report.macro_engine import (
+    get_macro,
+    get_macro_metadata,
+    list_macros,
+    render_macro,
+    render_procedure_bundle as _render_bundle_macros,
+    get_base_utilities,
+    CATEGORY_MACROS,
+)
 
 _TEMPLATE_ROOT = Path(__file__).parent / "templates"
 _TEMPLATE_MAP = {
@@ -218,6 +227,10 @@ def _build_structured_env(template_root: Path) -> Environment:
     env.globals["get_addon_body"] = get_addon_body
     env.globals["get_addon_metadata"] = get_addon_metadata
     env.globals["list_addon_slugs"] = list_addon_slugs
+    # Add macro functions as globals
+    env.globals["get_macro"] = get_macro
+    env.globals["render_macro"] = render_macro
+    env.globals["list_macros"] = list_macros
     return env
 
 
@@ -1441,6 +1454,76 @@ def get_coder_view(bundle: ProcedureBundle) -> dict[str, Any]:
     }
 
 
+def render_procedure_bundle_combined(
+    bundle: Dict[str, Any],
+    use_macros_primary: bool = True,
+) -> str:
+    """Render a procedure report using the combined macro + addon system.
+
+    This function uses the macro system as the primary template engine for
+    core procedures, with addons serving as a secondary snippet library for
+    rare events and supplementary text.
+
+    Bundle format:
+    {
+        "patient": {...},
+        "encounter": {...},
+        "procedures": [
+            {"proc_type": "thoracentesis", "params": {...}},
+            {"proc_type": "linear_ebus_tbna", "params": {...}},
+        ],
+        "addons": ["ion_partial_registration", "cbct_spin_adjustment_1"],
+        "acknowledged_omissions": {...},
+        "free_text_hint": "..."
+    }
+
+    Args:
+        bundle: The procedure bundle dictionary
+        use_macros_primary: If True, use macro system as primary (default);
+                           if False, fall back to legacy synoptic templates
+
+    Returns:
+        The complete rendered report as markdown
+    """
+    if use_macros_primary:
+        return _render_bundle_macros(bundle)
+
+    # Fall back to legacy synoptic template rendering
+    sections = []
+
+    for proc in bundle.get("procedures", []):
+        proc_type = proc.get("proc_type")
+        params = proc.get("params", {})
+
+        # Try to map to legacy template
+        template_file = _TEMPLATE_MAP.get(proc_type)
+        if template_file:
+            try:
+                template = _ENV.get_template(template_file)
+                rendered = template.render(
+                    report=type("Report", (), {"addons": bundle.get("addons", [])})(),
+                    core=type("Core", (), params)(),
+                    targets=[],
+                    meta={},
+                )
+                sections.append(rendered)
+            except Exception as e:
+                sections.append(f"[Error rendering {proc_type}: {e}]")
+
+    # Render addons section
+    addons = bundle.get("addons", [])
+    if addons:
+        addon_texts = []
+        for slug in addons:
+            body = get_addon_body(slug)
+            if body:
+                addon_texts.append(f"- {body}")
+        if addon_texts:
+            sections.append("\n## Additional Procedures / Events\n" + "\n".join(addon_texts))
+
+    return "\n\n".join(sections)
+
+
 __all__ = [
     "compose_report_from_text",
     "compose_report_from_form",
@@ -1474,4 +1557,16 @@ __all__ = [
     "ReportMetadata",
     "ProcedureMetadata",
     "MissingFieldIssue",
+    # Macro system exports
+    "render_procedure_bundle_combined",
+    "get_macro",
+    "get_macro_metadata",
+    "list_macros",
+    "render_macro",
+    "get_base_utilities",
+    "CATEGORY_MACROS",
+    # Addon system exports
+    "get_addon_body",
+    "get_addon_metadata",
+    "list_addon_slugs",
 ]

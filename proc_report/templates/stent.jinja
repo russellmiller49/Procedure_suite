@@ -92,3 +92,12 @@
 {% endif %}
 {% endfor %}
 {% endif %}
+
+{% if report and report.acknowledged_omissions %}
+## Missing Details (not present in original dictation)
+{% for key, items in report.acknowledged_omissions.items() %}
+{% if items %}
+- **{{ key }}**: {{ items | join('; ') }}
+{% endif %}
+{% endfor %}
+{% endif %}
