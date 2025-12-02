@@ -6,6 +6,8 @@ pydantic>=2.6,<3
 jinja2>=3.1,<4
 spacy>=3.7,<4
 scispacy==0.5.4
+# spaCy language model required for umls_linker
+en-core-sci-sm @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
 medspacy>=1.0,<2
 scikit-learn>=1.7,<1.8
 pandas>=2.0,<3
@@ -24,4 +26,3 @@ pyyaml>=6.0,<7
 # API dependencies (required for FastAPI server)
 fastapi>=0.115
 uvicorn>=0.30
-

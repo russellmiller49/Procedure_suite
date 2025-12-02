@@ -10,6 +10,17 @@ def build_nested_registry_payload(data: dict[str, Any]) -> dict[str, Any]:
     payload = dict(data)
     families = {fam for fam in data.get("procedure_families") or []}
 
+    # Remove string-typed values for fields that should be nested dicts
+    # LLM sometimes returns these as narrative strings instead of structured data
+    nested_fields = [
+        "patient_demographics", "providers", "clinical_context", "sedation",
+        "procedure_setting", "equipment", "procedures_performed", "pleural_procedures",
+        "specimens", "complications", "outcomes", "billing", "metadata",
+    ]
+    for field in nested_fields:
+        if field in payload and isinstance(payload[field], str):
+            del payload[field]
+
     providers = _build_providers(data)
     if providers:
         payload["providers"] = providers
@@ -306,22 +317,88 @@ def _build_pleural_procedures(data: dict[str, Any]) -> dict[str, Any]:
 
 
 def _build_complications(data: dict[str, Any]) -> dict[str, Any]:
+    """Build nested complications structure per schema.
+
+    Schema expects:
+    - complication_list: list of Literal enum values
+    - bleeding: {occurred: bool, severity: str, intervention_required: list}
+    - pneumothorax: {occurred: bool, size: str, intervention: list}
+    - respiratory: {hypoxia_occurred: bool, lowest_spo2: int, ...}
+    """
     complications: dict[str, Any] = {}
+
+    # Build complication_list from bronch_immediate_complications
+    # Schema expects specific literals, not arbitrary strings
     comp_list = []
-    if data.get("bronch_immediate_complications"):
-        comp_list.append(data["bronch_immediate_complications"])
+    raw_comp = data.get("bronch_immediate_complications")
+    if raw_comp:
+        # Handle both list and string inputs
+        if isinstance(raw_comp, list):
+            for c in raw_comp:
+                if c and c not in ("None", "none", None):
+                    comp_list.append(c)
+        elif isinstance(raw_comp, str) and raw_comp not in ("None", "none", ""):
+            comp_list.append(raw_comp)
+
     if comp_list:
         complications["complication_list"] = comp_list
         complications["any_complication"] = True
-    if data.get("bleeding_severity"):
-        complications["bleeding"] = data.get("bleeding_severity")
-    if data.get("pneumothorax") is not None:
-        complications["pneumothorax"] = data.get("pneumothorax")
-        complications["pneumothorax_intervention"] = data.get("pneumothorax_intervention")
-    if data.get("hypoxia_respiratory_failure"):
-        complications["respiratory"] = data.get("hypoxia_respiratory_failure")
+
+    # Build bleeding substructure
+    bleeding_severity = data.get("bleeding_severity")
+    ebl_ml = data.get("ebl_ml")
+    if bleeding_severity or ebl_ml:
+        # Skip if value is "None" string
+        if bleeding_severity and bleeding_severity not in ("None", "none", "None/Scant"):
+            bleeding_dict: dict[str, Any] = {"occurred": True}
+            # Map severity to schema enum if needed
+            severity_mapping = {
+                "Mild": "Mild (<50mL)",
+                "Moderate": "Moderate (50-200mL)",
+                "Severe": "Severe (>200mL)",
+            }
+            if bleeding_severity in severity_mapping:
+                bleeding_dict["severity"] = severity_mapping[bleeding_severity]
+            elif bleeding_severity in severity_mapping.values():
+                bleeding_dict["severity"] = bleeding_severity
+            complications["bleeding"] = bleeding_dict
+        elif ebl_ml and isinstance(ebl_ml, (int, float)) and ebl_ml > 0:
+            complications["bleeding"] = {"occurred": True}
+
+    # Build pneumothorax substructure
+    pneumothorax_val = data.get("pneumothorax")
+    pneumothorax_intervention = data.get("pneumothorax_intervention")
+    if pneumothorax_val is not None:
+        # Handle bool, string, or dict input
+        if isinstance(pneumothorax_val, bool):
+            if pneumothorax_val:
+                pneumothorax_dict: dict[str, Any] = {"occurred": True}
+                if pneumothorax_intervention:
+                    if isinstance(pneumothorax_intervention, list):
+                        pneumothorax_dict["intervention"] = pneumothorax_intervention
+                    elif isinstance(pneumothorax_intervention, str):
+                        pneumothorax_dict["intervention"] = [pneumothorax_intervention]
+                complications["pneumothorax"] = pneumothorax_dict
+            # else: pneumothorax=False, don't add to complications
+        elif isinstance(pneumothorax_val, dict):
+            complications["pneumothorax"] = pneumothorax_val
+
+    # Build respiratory substructure
+    hypoxia_val = data.get("hypoxia_respiratory_failure")
+    if hypoxia_val:
+        # Skip if value is "None" string
+        if hypoxia_val not in ("None", "none", False):
+            if isinstance(hypoxia_val, dict):
+                complications["respiratory"] = hypoxia_val
+            elif isinstance(hypoxia_val, bool) and hypoxia_val:
+                complications["respiratory"] = {"hypoxia_occurred": True}
+            elif isinstance(hypoxia_val, str):
+                # String value - interpret as hypoxia occurred
+                complications["respiratory"] = {"hypoxia_occurred": True}
+
     if data.get("other_complication_details"):
         complications["other_complication_details"] = data.get("other_complication_details")
+
     return complications
 
 
