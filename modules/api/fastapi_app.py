@@ -10,7 +10,10 @@ See AI_ASSISTANT_GUIDE.md for details.
 
 from __future__ import annotations
 
+import logging
+import os
 from dataclasses import asdict
+from functools import lru_cache
 from typing import Any, List
 
 from fastapi import FastAPI, Request
@@ -18,40 +21,38 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
+# Import ML Advisor router
+from modules.api.ml_advisor_router import router as ml_advisor_router
 from modules.api.schemas import (
     CoderRequest,
     CoderResponse,
     KnowledgeMeta,
+    QARunRequest,
+    QARunResponse,
     RegistryRequest,
     RegistryResponse,
     RenderRequest,
     RenderResponse,
     VerifyRequest,
     VerifyResponse,
-    QARunRequest,
-    QARunResponse,
 )
-
+from modules.coder.schema import CodeDecision, CoderOutput
 from modules.common.knowledge import knowledge_hash, knowledge_version
 from modules.common.spans import Span
 from modules.registry.engine import RegistryEngine
-from modules.coder.schema import CodeDecision, CoderOutput
+from proc_autocode.coder import EnhancedCPTCoder
 from proc_report import MissingFieldIssue, ProcedureBundle
 from proc_report.engine import (
     ReporterEngine,
+    _load_procedure_order,
     apply_bundle_patch,
     apply_patch_result,
     build_procedure_bundle_from_extraction,
     default_schema_registry,
     default_template_registry,
-    _load_procedure_order,
 )
 from proc_report.inference import InferenceEngine
 from proc_report.validation import ValidationEngine
-from proc_autocode.coder import EnhancedCPTCoder
-
-# Import ML Advisor router
-from modules.api.ml_advisor_router import router as ml_advisor_router
 
 app = FastAPI(title="Procedure Suite API", version="0.2.0")
 
@@ -60,11 +61,102 @@ app.include_router(ml_advisor_router, prefix="/api/v1", tags=["ML Advisor"])
 
 # Initialize enhanced coder (singleton)
 # Enable LLM advisor if CODER_USE_LLM_ADVISOR env var is set
-import os
 use_llm_advisor = os.getenv("CODER_USE_LLM_ADVISOR", "").lower() in ("true", "1", "yes")
 _enhanced_coder = EnhancedCPTCoder(use_llm_advisor=use_llm_advisor)
 
-app.mount("/ui", StaticFiles(directory="modules/api/static", html=True), name="ui")
+# Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
+if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
+    app.mount("/ui", StaticFiles(directory="modules/api/static", html=True), name="ui")
+
+# Configure logging
+_logger = logging.getLogger(__name__)
+
+
+# ============================================================================
+# Heavy NLP model preloading
+# ============================================================================
+# These cached getters ensure heavy NLP models are loaded once and reused.
+# The startup hook below triggers initialization at app startup, not first request.
+# ============================================================================
+
+
+@lru_cache(maxsize=1)
+def get_spacy_model() -> Any:
+    """Return the spaCy/scispaCy model used for UMLS linking and NER.
+
+    The model is loaded once and cached. The model name is configurable via
+    the PROCSUITE_SPACY_MODEL environment variable (default: en_core_sci_sm).
+    """
+    try:
+        import spacy
+    except ImportError:
+        _logger.warning("spaCy not available - NLP features will be disabled")
+        return None
+
+    model_name = os.getenv("PROCSUITE_SPACY_MODEL", "en_core_sci_sm")
+    try:
+        _logger.info("Loading spaCy model: %s", model_name)
+        nlp = spacy.load(model_name)
+        _logger.info("spaCy model %s loaded successfully", model_name)
+        return nlp
+    except OSError:
+        _logger.warning(
+            "spaCy model '%s' not found. Install with: pip install %s",
+            model_name,
+            model_name.replace("_", "-"),
+        )
+        return None
+
+
+@lru_cache(maxsize=1)
+def get_sectionizer() -> Any:
+    """Return a cached SectionizerService instance.
+
+    The sectionizer uses medspaCy under the hood and is initialized once.
+    """
+    try:
+        from modules.common.sectionizer import SectionizerService
+
+        _logger.info("Initializing SectionizerService")
+        sectionizer = SectionizerService()
+        _logger.info("SectionizerService initialized successfully")
+        return sectionizer
+    except Exception as exc:
+        _logger.warning("Failed to initialize SectionizerService: %s", exc)
+        return None
+
+
+@app.on_event("startup")
+async def warm_heavy_resources() -> None:
+    """Preload heavy NLP models at startup to avoid cold-start latency.
+
+    This hook is called when the FastAPI app starts. Loading models here
+    ensures the first request doesn't incur a long delay waiting for
+    model initialization.
+    """
+    _logger.info("Warming up heavy NLP resources...")
+
+    # Load spaCy model (used by proc_nlp and modules.common.umls_linking)
+    nlp = get_spacy_model()
+    if nlp:
+        # Warm up the pipeline with a small text to ensure all components are ready
+        _ = nlp("Warmup text for pipeline initialization.")
+
+    # Initialize sectionizer (uses medspaCy)
+    _ = get_sectionizer()
+
+    # Also warm up the UMLS linker from proc_nlp if available
+    try:
+        from proc_nlp.umls_linker import _load_model
+
+        model_name = os.getenv("PROCSUITE_SPACY_MODEL", "en_core_sci_sm")
+        _logger.info("Warming up UMLS linker with model: %s", model_name)
+        _load_model(model_name)
+        _logger.info("UMLS linker warmed up successfully")
+    except Exception as exc:
+        _logger.warning("UMLS linker warmup skipped: %s", exc)
+
+    _logger.info("Heavy NLP resources warmed up successfully")
 
 
 class LocalityInfo(BaseModel):
@@ -366,6 +458,7 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
     Returns outputs + version metadata for tracking.
     """
     from fastapi import HTTPException
+
     from proc_report.engine import compose_report_from_text
 
     note_text = payload.note_text

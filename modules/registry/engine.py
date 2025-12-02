@@ -733,7 +733,12 @@ class RegistryEngine:
         merged_data = apply_cross_field_consistency(merged_data)
 
         nested_payload = build_nested_registry_payload(merged_data)
-        
+
+        # Apply normalization layer to clean up noisy LLM outputs before validation
+        from modules.api.normalization import normalize_registry_payload
+
+        nested_payload = normalize_registry_payload(nested_payload)
+
         # Attempt to create RegistryRecord with better error handling
         try:
             record = RegistryRecord(**nested_payload)
