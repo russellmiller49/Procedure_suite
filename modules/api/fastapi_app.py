@@ -133,7 +133,19 @@ async def warm_heavy_resources() -> None:
     This hook is called when the FastAPI app starts. Loading models here
     ensures the first request doesn't incur a long delay waiting for
     model initialization.
+
+    NOTE: If PROCSUITE_MODELS_WARMED=1 is set (by warm_models.py), we skip
+    loading here since the models are already in memory from the warmup script.
+    However, since warm_models.py runs in a separate process, the models aren't
+    actually shared. We disable this startup hook entirely when running on
+    Railway since warm_models.py handles it and the models are cached on disk.
     """
+    # Skip if running on Railway - warm_models.py already loaded models and
+    # they're cached on disk. Loading them again here would cause a timeout.
+    if os.getenv("RAILWAY_ENVIRONMENT"):
+        _logger.info("Running on Railway - skipping startup warmup (models cached by warm_models.py)")
+        return
+
     _logger.info("Warming up heavy NLP resources...")
 
     # Load spaCy model (used by proc_nlp and modules.common.umls_linking)
