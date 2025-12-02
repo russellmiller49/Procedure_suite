@@ -4,6 +4,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from modules.registry.postprocess import (
+    normalize_radial_ebus_probe_position,
+    normalize_bronchoscope_diameter,
+    normalize_complication_list,
+)
+
 
 def build_nested_registry_payload(data: dict[str, Any]) -> dict[str, Any]:
     """Return a copy of the flat registry payload with nested sections populated."""
@@ -175,7 +181,10 @@ def _build_equipment(data: dict[str, Any]) -> dict[str, Any]:
     if data.get("bronchoscope_type"):
         equipment["bronchoscope_type"] = data.get("bronchoscope_type")
     # Use normalized bronchoscope_outer_diameter_mm if available, otherwise airway_device_size
+    # Apply normalizer to handle string values like "12 mm"
     bronch_diameter = data.get("bronchoscope_outer_diameter_mm") or data.get("airway_device_size")
+    if bronch_diameter is not None:
+        bronch_diameter = normalize_bronchoscope_diameter(bronch_diameter)
     if bronch_diameter is not None:
         equipment["bronchoscope_outer_diameter_mm"] = bronch_diameter
     if data.get("nav_platform"):
@@ -217,7 +226,10 @@ def _build_procedures_performed(data: dict[str, Any], families: set[str]) -> dic
         if data.get("nav_rebus_used") is not None:
             radial["performed"] = bool(data.get("nav_rebus_used"))
         # Use radial_ebus_probe_position if available (normalized), otherwise nav_rebus_view
+        # Apply normalizer to handle fallback values like "Aerated lung on radial EBUS"
         probe_pos = data.get("radial_ebus_probe_position") or data.get("nav_rebus_view")
+        if probe_pos:
+            probe_pos = normalize_radial_ebus_probe_position(probe_pos)
         if probe_pos:
             radial["probe_position"] = probe_pos
         procedures["radial_ebus"] = radial
@@ -355,11 +367,16 @@ def _build_complications(data: dict[str, Any]) -> dict[str, Any]:
         if raw_comp:
             # Handle both list and string inputs
             if isinstance(raw_comp, list):
+                comp_list = []
                 for c in raw_comp:
                     if c and c not in ("None", "none", None):
                         comp_list.append(c)
             elif isinstance(raw_comp, str) and raw_comp not in ("None", "none", ""):
                 comp_list = [raw_comp]
+
+    # Apply normalizer to convert raw values like "Bleeding" to enum values like "Bleeding - Mild"
+    if comp_list:
+        comp_list = normalize_complication_list(comp_list)
 
     if comp_list:
         complications["complication_list"] = comp_list
