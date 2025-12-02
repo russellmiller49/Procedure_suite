@@ -1067,23 +1067,27 @@ class RegistryEngine:
                     data["ebus_stations_sampled"] = sorted(detail_by_station.keys())
 
             # ebus_needle_gauge - expanded pattern to capture "22 gauge needle" formats
+            # Schema enum: [19, 21, 22, 25] (integers, not strings)
             if not data.get("ebus_needle_gauge"):
                 # Pattern 1: "22G" or "22-gauge" adjacent format
                 gauge_match = re.search(r"\b(19|21|22|25)\s*[-]?\s*(?:G|gauge)\b", text, re.IGNORECASE)
                 if gauge_match:
-                    data["ebus_needle_gauge"] = f"{gauge_match.group(1)}G"
+                    data["ebus_needle_gauge"] = int(gauge_match.group(1))
                 else:
                     # Pattern 2: "22 gauge needle" with space
                     gauge_match2 = re.search(r"\b(19|21|22|25)\s+gauge\s+needle\b", text, re.IGNORECASE)
                     if gauge_match2:
-                        data["ebus_needle_gauge"] = f"{gauge_match2.group(1)}G"
+                        data["ebus_needle_gauge"] = int(gauge_match2.group(1))
 
             # ebus_needle_type
-            if any(kw in text for kw in ["FNB", "core biopsy", "Acquire"]):
-                data["ebus_needle_type"] = "FNB"
+            # Schema enum: ["Standard FNA", "Core/ProCore", "Acquire"]
+            if any(kw in text for kw in ["FNB", "core biopsy", "ProCore"]):
+                data["ebus_needle_type"] = "Core/ProCore"
+            elif "Acquire" in text:
+                data["ebus_needle_type"] = "Acquire"
             elif "needle" in text.lower() or "tbna" in text.lower():
-                if data.get("ebus_needle_type") not in ["FNB"]:
-                    data["ebus_needle_type"] = "Standard"
+                if data.get("ebus_needle_type") not in ["Core/ProCore", "Acquire"]:
+                    data["ebus_needle_type"] = "Standard FNA"
 
             # ebus_systematic_staging
             if re.search(r"Systematic.*(evaluation|staging|N3)", text, re.IGNORECASE):
@@ -1101,21 +1105,56 @@ class RegistryEngine:
                     data["ebus_rose_available"] = False
 
             # ebus_rose_result - derive from per-station ROSE results if available
-            # Use priority: Malignant > Atypical > Granuloma > Benign > Nondiagnostic
+            # Schema enum: ["Adequate - malignant", "Adequate - benign lymphocytes",
+            #               "Adequate - granulomas", "Adequate - other", "Inadequate", "Not performed"]
+            # Use priority: malignant > other (atypical) > granulomas > benign > inadequate
             if data.get("ebus_rose_available") and not data.get("ebus_rose_result"):
                 # First, try to derive from ebus_stations_detail if we have per-station ROSE
                 station_details = data.get("ebus_stations_detail") or []
                 rose_results = [d.get("rose_result") for d in station_details if d.get("rose_result")]
 
                 if rose_results:
-                    # Priority-based aggregation
-                    priority_order = ["Malignant", "Atypical lymphoid proliferation", "Atypical cells present",
-                                     "Granuloma", "Benign", "Nondiagnostic"]
+                    # Priority-based aggregation using schema enum values
+                    priority_order = [
+                        "Adequate - malignant",
+                        "Adequate - other",  # Covers atypical cases
+                        "Adequate - granulomas",
+                        "Adequate - benign lymphocytes",
+                        "Inadequate",
+                    ]
                     best_result = None
                     best_priority = len(priority_order)
                     for result in rose_results:
+                        result_lower = result.lower() if isinstance(result, str) else ""
+                        # Check each priority level
                         for idx, prio_val in enumerate(priority_order):
-                            if prio_val.lower() in result.lower() or result.lower() in prio_val.lower():
+                            if prio_val.lower() == result_lower or prio_val == result:
+                                if idx < best_priority:
+                                    best_priority = idx
+                                    best_result = prio_val
+                                break
+                            # Fuzzy match for legacy values
+                            elif "malignant" in result_lower and idx == 0:
+                                if idx < best_priority:
+                                    best_priority = idx
+                                    best_result = prio_val
+                                break
+                            elif ("atypical" in result_lower or "lymphoid" in result_lower) and idx == 1:
+                                if idx < best_priority:
+                                    best_priority = idx
+                                    best_result = prio_val
+                                break
+                            elif "granulom" in result_lower and idx == 2:
+                                if idx < best_priority:
+                                    best_priority = idx
+                                    best_result = prio_val
+                                break
+                            elif ("benign" in result_lower or "reactive" in result_lower) and idx == 3:
+                                if idx < best_priority:
+                                    best_priority = idx
+                                    best_result = prio_val
+                                break
+                            elif ("inadequate" in result_lower or "nondiagnostic" in result_lower or "insufficient" in result_lower) and idx == 4:
                                 if idx < best_priority:
                                     best_priority = idx
                                     best_result = prio_val
@@ -1130,17 +1169,15 @@ class RegistryEngine:
 
                     combined_rose = " ".join(rose_snippets)
                     if "malignan" in combined_rose or "adenocarcinoma" in combined_rose or "squamous" in combined_rose or "tumor" in combined_rose or "carcinoma" in combined_rose:
-                        data["ebus_rose_result"] = "Malignant"
+                        data["ebus_rose_result"] = "Adequate - malignant"
                     elif "granuloma" in combined_rose:
-                        data["ebus_rose_result"] = "Granuloma"
-                    elif "lymphoma" in combined_rose or "lymphoid proliferation" in combined_rose:
-                        data["ebus_rose_result"] = "Atypical lymphoid proliferation"
-                    elif "atypical" in combined_rose:
-                        data["ebus_rose_result"] = "Atypical cells present"
+                        data["ebus_rose_result"] = "Adequate - granulomas"
+                    elif "lymphoma" in combined_rose or "lymphoid proliferation" in combined_rose or "atypical" in combined_rose:
+                        data["ebus_rose_result"] = "Adequate - other"
                     elif "benign" in combined_rose or "reactive" in combined_rose or "lymphocytes" in combined_rose:
-                        data["ebus_rose_result"] = "Benign"
-                    elif "nondiagnostic" in combined_rose or "insufficient" in combined_rose:
-                        data["ebus_rose_result"] = "Nondiagnostic"
+                        data["ebus_rose_result"] = "Adequate - benign lymphocytes"
+                    elif "nondiagnostic" in combined_rose or "insufficient" in combined_rose or "inadequate" in combined_rose:
+                        data["ebus_rose_result"] = "Inadequate"
 
             # ebus_intranodal_forceps_used
             if "intranodal forceps" in text.lower() or "ebus-ifb" in text.lower():
