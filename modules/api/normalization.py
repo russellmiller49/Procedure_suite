@@ -152,6 +152,67 @@ PROBE_POSITION_MAP: dict[str, str] = {
     "near lesion": "Adjacent",
 }
 
+# Stent type mapping: LLM outputs -> canonical enum values
+# From IP_Registry.json: ["Silicone - Dumon", "Silicone - Hood", "Silicone - Novatech",
+#                         "SEMS - Uncovered", "SEMS - Covered", "SEMS - Partially covered",
+#                         "Hybrid", "Y-Stent", "Other", null]
+STENT_TYPE_MAP: dict[str, str] = {
+    # Y-Stent variations (LLM often combines silicone + y-stent)
+    "y-stent": "Y-Stent",
+    "y stent": "Y-Stent",
+    "ystent": "Y-Stent",
+    "silicone-y-stent": "Y-Stent",
+    "silicone y-stent": "Y-Stent",
+    "silicone y stent": "Y-Stent",
+    "dumon y-stent": "Y-Stent",
+    "dumon y stent": "Y-Stent",
+    # Silicone - Dumon variations
+    "silicone - dumon": "Silicone - Dumon",
+    "silicone-dumon": "Silicone - Dumon",
+    "silicone dumon": "Silicone - Dumon",
+    "dumon": "Silicone - Dumon",
+    "dumon stent": "Silicone - Dumon",
+    # Silicone - Hood variations
+    "silicone - hood": "Silicone - Hood",
+    "silicone-hood": "Silicone - Hood",
+    "silicone hood": "Silicone - Hood",
+    "hood": "Silicone - Hood",
+    "hood stent": "Silicone - Hood",
+    # Silicone - Novatech variations
+    "silicone - novatech": "Silicone - Novatech",
+    "silicone-novatech": "Silicone - Novatech",
+    "silicone novatech": "Silicone - Novatech",
+    "novatech": "Silicone - Novatech",
+    "novatech stent": "Silicone - Novatech",
+    # Generic silicone -> Dumon (most common)
+    "silicone": "Silicone - Dumon",
+    "silicone stent": "Silicone - Dumon",
+    # SEMS variations
+    "sems - uncovered": "SEMS - Uncovered",
+    "sems-uncovered": "SEMS - Uncovered",
+    "sems uncovered": "SEMS - Uncovered",
+    "uncovered sems": "SEMS - Uncovered",
+    "uncovered metal stent": "SEMS - Uncovered",
+    "sems - covered": "SEMS - Covered",
+    "sems-covered": "SEMS - Covered",
+    "sems covered": "SEMS - Covered",
+    "covered sems": "SEMS - Covered",
+    "covered metal stent": "SEMS - Covered",
+    "sems - partially covered": "SEMS - Partially covered",
+    "sems-partially covered": "SEMS - Partially covered",
+    "sems partially covered": "SEMS - Partially covered",
+    "partially covered sems": "SEMS - Partially covered",
+    "partially covered metal stent": "SEMS - Partially covered",
+    # Generic SEMS -> Uncovered (most common)
+    "sems": "SEMS - Uncovered",
+    "metal stent": "SEMS - Uncovered",
+    # Hybrid
+    "hybrid": "Hybrid",
+    "hybrid stent": "Hybrid",
+    # Other
+    "other": "Other",
+}
+
 
 def normalize_registry_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
     """Normalize noisy incoming registry payloads.
@@ -277,6 +338,45 @@ def normalize_registry_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
                         cryo_bx["forceps_type"] = "Cryoprobe"
                     else:
                         cryo_bx["forceps_type"] = "Cryoprobe"  # Default for cryobiopsy
+
+        # Normalize airway_stent.stent_type
+        airway_stent = procedures.get("airway_stent")
+        if isinstance(airway_stent, dict):
+            stent_type = airway_stent.get("stent_type")
+            if isinstance(stent_type, str):
+                text = stent_type.strip().lower()
+                airway_stent["stent_type"] = STENT_TYPE_MAP.get(text, stent_type)
+                # If still not valid, try to infer from keywords
+                valid_stent_types = (
+                    "Silicone - Dumon", "Silicone - Hood", "Silicone - Novatech",
+                    "SEMS - Uncovered", "SEMS - Covered", "SEMS - Partially covered",
+                    "Hybrid", "Y-Stent", "Other"
+                )
+                if airway_stent["stent_type"] not in valid_stent_types:
+                    # Check for Y-stent pattern (most specific first)
+                    if "y-stent" in text or "y stent" in text or "ystent" in text:
+                        airway_stent["stent_type"] = "Y-Stent"
+                    elif "sems" in text or "metal" in text:
+                        if "covered" in text and "uncovered" not in text:
+                            if "partial" in text:
+                                airway_stent["stent_type"] = "SEMS - Partially covered"
+                            else:
+                                airway_stent["stent_type"] = "SEMS - Covered"
+                        else:
+                            airway_stent["stent_type"] = "SEMS - Uncovered"
+                    elif "silicone" in text:
+                        if "dumon" in text:
+                            airway_stent["stent_type"] = "Silicone - Dumon"
+                        elif "hood" in text:
+                            airway_stent["stent_type"] = "Silicone - Hood"
+                        elif "novatech" in text:
+                            airway_stent["stent_type"] = "Silicone - Novatech"
+                        else:
+                            airway_stent["stent_type"] = "Silicone - Dumon"  # Default silicone
+                    elif "hybrid" in text:
+                        airway_stent["stent_type"] = "Hybrid"
+                    else:
+                        airway_stent["stent_type"] = "Other"
 
     # Normalize clinical_context.lesion_size_mm
     clinical_context = payload.get("clinical_context")

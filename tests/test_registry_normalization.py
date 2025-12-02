@@ -498,3 +498,109 @@ class TestSamplingToolsNormalization:
         assert "Needle" in tools
         assert "Forceps" in tools
         assert "Unknown Tool" not in tools
+
+
+class TestStentTypeNormalization:
+    """Test airway_stent.stent_type normalization."""
+
+    def test_silicone_y_stent_to_y_stent(self) -> None:
+        """Test that 'Silicone-Y-Stent' normalizes to 'Y-Stent'."""
+        payload = {
+            "procedures_performed": {
+                "airway_stent": {
+                    "performed": True,
+                    "stent_type": "Silicone-Y-Stent",
+                }
+            }
+        }
+        result = normalize_registry_payload(payload)
+        stent = result["procedures_performed"]["airway_stent"]
+        assert stent["stent_type"] == "Y-Stent"
+
+    def test_y_stent_variations(self) -> None:
+        """Test various Y-stent input formats."""
+        for variant in ["y-stent", "Y Stent", "ystent", "Silicone Y-Stent"]:
+            payload = {
+                "procedures_performed": {
+                    "airway_stent": {
+                        "performed": True,
+                        "stent_type": variant,
+                    }
+                }
+            }
+            result = normalize_registry_payload(payload)
+            assert result["procedures_performed"]["airway_stent"]["stent_type"] == "Y-Stent"
+
+    def test_silicone_dumon(self) -> None:
+        """Test silicone Dumon stent normalization."""
+        for variant in ["Silicone-Dumon", "silicone dumon", "Dumon", "dumon stent"]:
+            payload = {
+                "procedures_performed": {
+                    "airway_stent": {
+                        "performed": True,
+                        "stent_type": variant,
+                    }
+                }
+            }
+            result = normalize_registry_payload(payload)
+            assert result["procedures_performed"]["airway_stent"]["stent_type"] == "Silicone - Dumon"
+
+    def test_sems_uncovered(self) -> None:
+        """Test SEMS uncovered stent normalization."""
+        for variant in ["SEMS-Uncovered", "sems uncovered", "uncovered metal stent"]:
+            payload = {
+                "procedures_performed": {
+                    "airway_stent": {
+                        "performed": True,
+                        "stent_type": variant,
+                    }
+                }
+            }
+            result = normalize_registry_payload(payload)
+            assert result["procedures_performed"]["airway_stent"]["stent_type"] == "SEMS - Uncovered"
+
+    def test_sems_covered(self) -> None:
+        """Test SEMS covered stent normalization."""
+        for variant in ["SEMS-Covered", "sems covered", "covered metal stent"]:
+            payload = {
+                "procedures_performed": {
+                    "airway_stent": {
+                        "performed": True,
+                        "stent_type": variant,
+                    }
+                }
+            }
+            result = normalize_registry_payload(payload)
+            assert result["procedures_performed"]["airway_stent"]["stent_type"] == "SEMS - Covered"
+
+    def test_valid_stent_type_unchanged(self) -> None:
+        """Test that valid stent types are not modified."""
+        valid_types = [
+            "Silicone - Dumon", "Silicone - Hood", "Silicone - Novatech",
+            "SEMS - Uncovered", "SEMS - Covered", "SEMS - Partially covered",
+            "Hybrid", "Y-Stent", "Other"
+        ]
+        for stent_type in valid_types:
+            payload = {
+                "procedures_performed": {
+                    "airway_stent": {
+                        "performed": True,
+                        "stent_type": stent_type,
+                    }
+                }
+            }
+            result = normalize_registry_payload(payload)
+            assert result["procedures_performed"]["airway_stent"]["stent_type"] == stent_type
+
+    def test_unknown_defaults_to_other(self) -> None:
+        """Test that unknown stent types default to 'Other'."""
+        payload = {
+            "procedures_performed": {
+                "airway_stent": {
+                    "performed": True,
+                    "stent_type": "some unknown stent",
+                }
+            }
+        }
+        result = normalize_registry_payload(payload)
+        assert result["procedures_performed"]["airway_stent"]["stent_type"] == "Other"
