@@ -733,7 +733,25 @@ class RegistryEngine:
         merged_data = apply_cross_field_consistency(merged_data)
 
         nested_payload = build_nested_registry_payload(merged_data)
-        record = RegistryRecord(**nested_payload)
+        
+        # Attempt to create RegistryRecord with better error handling
+        try:
+            record = RegistryRecord(**nested_payload)
+        except Exception as e:
+            # Provide more helpful error message for Pydantic validation errors
+            from pydantic import ValidationError
+            if isinstance(e, ValidationError):
+                error_details = []
+                for err in e.errors():
+                    field_path = " -> ".join(str(loc) for loc in err.get("loc", []))
+                    error_msg = err.get("msg", "Validation error")
+                    input_value = err.get("input", "N/A")
+                    error_details.append(f"{field_path}: {error_msg} (got: {input_value})")
+                raise ValueError(
+                    f"Registry validation failed:\n" + "\n".join(error_details)
+                ) from e
+            raise
+        
         normalized_evidence: dict[str, list[Span]] = {}
         if include_evidence:
             normalized_evidence = self._normalize_evidence(note_text, raw_llm_evidence)

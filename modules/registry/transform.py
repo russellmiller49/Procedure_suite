@@ -88,6 +88,7 @@ def _build_providers(data: dict[str, Any]) -> dict[str, Any]:
     providers["attending_npi"] = data.get("attending_npi")
     providers["fellow_name"] = data.get("fellow_name")
     providers["assistant_name"] = (data.get("assistant_name") or (data.get("assistant_names") or [None])[0])
+    # Use normalized assistant_role if available
     providers["assistant_role"] = data.get("assistant_role")
     providers["trainee_present"] = data.get("trainee_present")
     providers["rose_present"] = data.get("ebus_rose_available")
@@ -173,8 +174,10 @@ def _build_equipment(data: dict[str, Any]) -> dict[str, Any]:
     # airway_type: Native, ETT, Tracheostomy, LMA, iGel (goes in procedure_setting)
     if data.get("bronchoscope_type"):
         equipment["bronchoscope_type"] = data.get("bronchoscope_type")
-    if data.get("airway_device_size"):
-        equipment["bronchoscope_outer_diameter_mm"] = data.get("airway_device_size")
+    # Use normalized bronchoscope_outer_diameter_mm if available, otherwise airway_device_size
+    bronch_diameter = data.get("bronchoscope_outer_diameter_mm") or data.get("airway_device_size")
+    if bronch_diameter is not None:
+        equipment["bronchoscope_outer_diameter_mm"] = bronch_diameter
     if data.get("nav_platform"):
         equipment["navigation_platform"] = data.get("nav_platform")
     if data.get("fluoro_time_min") is not None:
@@ -209,12 +212,14 @@ def _build_procedures_performed(data: dict[str, Any], families: set[str]) -> dic
             linear["stations_planned"] = data.get("linear_ebus_stations")
         procedures["linear_ebus"] = linear
 
-    if data.get("nav_rebus_used") is not None or data.get("nav_rebus_view"):
+    if data.get("nav_rebus_used") is not None or data.get("nav_rebus_view") or data.get("radial_ebus_probe_position"):
         radial: dict[str, Any] = {}
         if data.get("nav_rebus_used") is not None:
             radial["performed"] = bool(data.get("nav_rebus_used"))
-        if data.get("nav_rebus_view"):
-            radial["probe_position"] = data.get("nav_rebus_view")
+        # Use radial_ebus_probe_position if available (normalized), otherwise nav_rebus_view
+        probe_pos = data.get("radial_ebus_probe_position") or data.get("nav_rebus_view")
+        if probe_pos:
+            radial["probe_position"] = probe_pos
         procedures["radial_ebus"] = radial
 
     if "NAVIGATION" in families or data.get("nav_tool_in_lesion"):
@@ -238,7 +243,22 @@ def _build_procedures_performed(data: dict[str, Any], families: set[str]) -> dic
         if data.get("bronch_num_tbbx") is not None:
             tblb["number_of_samples"] = data.get("bronch_num_tbbx")
         if data.get("bronch_biopsy_sites"):
-            tblb["locations"] = data.get("bronch_biopsy_sites")
+            # Extract location strings from dict objects if needed
+            sites = data.get("bronch_biopsy_sites")
+            if isinstance(sites, list):
+                locations = []
+                for site in sites:
+                    if isinstance(site, dict):
+                        # Extract location from dict
+                        loc = site.get("location") or site.get("lobe")
+                        if loc:
+                            locations.append(str(loc))
+                    elif isinstance(site, str):
+                        locations.append(site)
+                if locations:
+                    tblb["locations"] = locations
+            elif isinstance(sites, str):
+                tblb["locations"] = [sites]
         if data.get("bronch_tbbx_tool"):
             tblb["forceps_type"] = data.get("bronch_tbbx_tool")
         procedures["transbronchial_biopsy"] = tblb
@@ -327,18 +347,19 @@ def _build_complications(data: dict[str, Any]) -> dict[str, Any]:
     """
     complications: dict[str, Any] = {}
 
-    # Build complication_list from bronch_immediate_complications
-    # Schema expects specific literals, not arbitrary strings
-    comp_list = []
-    raw_comp = data.get("bronch_immediate_complications")
-    if raw_comp:
-        # Handle both list and string inputs
-        if isinstance(raw_comp, list):
-            for c in raw_comp:
-                if c and c not in ("None", "none", None):
-                    comp_list.append(c)
-        elif isinstance(raw_comp, str) and raw_comp not in ("None", "none", ""):
-            comp_list.append(raw_comp)
+    # Build complication_list - use normalized complication_list if available
+    comp_list = data.get("complication_list")
+    if not comp_list:
+        # Fallback to bronch_immediate_complications
+        raw_comp = data.get("bronch_immediate_complications")
+        if raw_comp:
+            # Handle both list and string inputs
+            if isinstance(raw_comp, list):
+                for c in raw_comp:
+                    if c and c not in ("None", "none", None):
+                        comp_list.append(c)
+            elif isinstance(raw_comp, str) and raw_comp not in ("None", "none", ""):
+                comp_list = [raw_comp]
 
     if comp_list:
         complications["complication_list"] = comp_list

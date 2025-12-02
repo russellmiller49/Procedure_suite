@@ -380,32 +380,52 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
     try:
         # Run registry if requested
         if modules_run in ("registry", "all"):
-            eng = RegistryEngine()
-            result = eng.run(note_text, explain=True)
-            if isinstance(result, tuple):
-                record, evidence = result
-            else:
-                record, evidence = result, getattr(result, 'evidence', {})
+            try:
+                eng = RegistryEngine()
+                result = eng.run(note_text, explain=True)
+                if isinstance(result, tuple):
+                    record, evidence = result
+                else:
+                    record, evidence = result, getattr(result, 'evidence', {})
 
-            registry_output = {
-                "record": record.model_dump() if hasattr(record, 'model_dump') else dict(record),
-                "evidence": _serialize_evidence(evidence) if evidence else {},
-            }
+                registry_output = {
+                    "record": record.model_dump() if hasattr(record, 'model_dump') else dict(record),
+                    "evidence": _serialize_evidence(evidence) if evidence else {},
+                }
+            except ValueError as ve:
+                # Registry validation errors - provide detailed error message
+                raise HTTPException(
+                    status_code=422,
+                    detail=f"Registry validation failed: {str(ve)}"
+                )
+            except Exception as reg_err:
+                # Other registry errors (e.g., missing spaCy model)
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Registry extraction failed: {str(reg_err)}"
+                )
 
         # Run reporter if requested
         if modules_run in ("reporter", "all"):
-            # Use compose_report_from_text for dictation-style input
-            hints = {}
-            if procedure_type:
-                hints["procedure_type"] = procedure_type
+            try:
+                # Use compose_report_from_text for dictation-style input
+                hints = {}
+                if procedure_type:
+                    hints["procedure_type"] = procedure_type
 
-            report, markdown = compose_report_from_text(note_text, hints)
-            reporter_output = {
-                "markdown": markdown,
-                "procedure_core": report.procedure_core.model_dump() if hasattr(report.procedure_core, "model_dump") else {},
-                "indication": report.indication,
-                "postop": report.postop,
-            }
+                report, markdown = compose_report_from_text(note_text, hints)
+                reporter_output = {
+                    "markdown": markdown,
+                    "procedure_core": report.procedure_core.model_dump() if hasattr(report.procedure_core, "model_dump") else {},
+                    "indication": report.indication,
+                    "postop": report.postop,
+                }
+            except Exception as rep_err:
+                # Reporter errors (e.g., missing spaCy model)
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Reporter extraction failed: {str(rep_err)}"
+                )
 
         # Run coder if requested
         if modules_run in ("coder", "all"):

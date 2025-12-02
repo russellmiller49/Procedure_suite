@@ -120,6 +120,7 @@ class EnhancedCPTCoder:
             or nav_tool_in_lesion
             or bool(nav_sampling_tools)
             or "navigation" in term_hits.get("procedure_categories", [])
+            or "bronchoscopy_navigation" in groups_from_text  # Text evidence of navigation
         )
         if not nav_performed:
             discard("31627")
@@ -278,7 +279,9 @@ class EnhancedCPTCoder:
             or registry.get("nav_rebus_used")
             or registry.get("nav_rebus_view")
         )
-        if not (radial_ev.get("radial") and radial_registry and nav_performed):
+        # Allow radial EBUS if text evidence shows radial EBUS group or if registry confirms
+        radial_from_text = "bronchoscopy_ebus_radial" in groups_from_text and radial_ev.get("radial")
+        if not (radial_from_text or (radial_ev.get("radial") and radial_registry)):
             discard("31654")
 
         # ========== TUMOR DEBULKING (31640/31641) - ENSURE PROPER CODING ==========
@@ -312,6 +315,21 @@ class EnhancedCPTCoder:
                 else:
                     # Default to 31641 if unclear
                     discard("31640")
+
+        # ========== THERAPEUTIC ASPIRATION (31645/31646) - REQUIRE ASPIRATION EVIDENCE ==========
+        # 31645 = initial therapeutic aspiration
+        # 31646 = subsequent therapeutic aspiration (same session)
+        # Only bill when aspiration is explicitly documented
+        aspiration_terms = [
+            "therapeutic aspiration", "aspiration of secretions", "aspirate secretions",
+            "suction removal", "suctioning of blood", "aspiration of mucus",
+            "mucus plug aspiration", "aspirated clot", "clot aspiration",
+            "clearance of secretions", "removal of secretions"
+        ]
+        has_aspiration = any(t in text_lower for t in aspiration_terms)
+        if not has_aspiration:
+            discard("31645")
+            discard("31646")
 
         # ========== THORACOSCOPY - ONE CODE PER HEMITHORAX ==========
         # Per coding rules:

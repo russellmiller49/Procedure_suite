@@ -2096,6 +2096,221 @@ def normalize_valve_type(raw: Any) -> str | None:
     return None
 
 
+def normalize_assistant_role(raw: Any) -> str | None:
+    """Normalize assistant role to schema enum values.
+
+    Schema enum: ['RN', 'RT', 'Tech', 'Resident', 'PA', 'NP', 'Medical Student']
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"none", "n/a", "na", "null", ""}:
+        return None
+
+    mapping = {
+        "rn": "RN",
+        "registered nurse": "RN",
+        "nurse": "RN",
+        "rt": "RT",
+        "respiratory therapist": "RT",
+        "respiratory tech": "RT",
+        "tech": "Tech",
+        "technician": "Tech",
+        "resident": "Resident",
+        "res": "Resident",
+        "pa": "PA",
+        "physician assistant": "PA",
+        "physician's assistant": "PA",
+        "np": "NP",
+        "nurse practitioner": "NP",
+        "medical student": "Medical Student",
+        "med student": "Medical Student",
+        "student": "Medical Student",
+        "fellow": "Resident",  # Map fellow to Resident as closest match
+    }
+
+    if text in mapping:
+        return mapping[text]
+
+    # Fuzzy matching
+    if "fellow" in text:
+        return "Resident"
+    if "nurse" in text and "practitioner" in text:
+        return "NP"
+    if "nurse" in text:
+        return "RN"
+    if "respiratory" in text:
+        return "RT"
+    if "technician" in text or "tech" in text:
+        return "Tech"
+    if "resident" in text:
+        return "Resident"
+    if "physician assistant" in text or "pa" in text:
+        return "PA"
+    if "student" in text:
+        return "Medical Student"
+
+    return None
+
+
+def normalize_bronchoscope_diameter(raw: Any) -> float | None:
+    """Extract numeric value from bronchoscope diameter strings like '12 mm'.
+
+    Schema expects a float number.
+    """
+    if raw is None:
+        return None
+    
+    # If already a number, return it
+    if isinstance(raw, (int, float)):
+        return float(raw)
+    
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    
+    # Extract number from strings like "12 mm", "12mm", "12.5 mm"
+    match = re.search(r"(\d+(?:\.\d+)?)", str(text_raw))
+    if match:
+        try:
+            return float(match.group(1))
+        except ValueError:
+            pass
+    
+    return None
+
+
+def normalize_complication_list(raw: Any) -> List[str] | None:
+    """Normalize complication list to schema enum values.
+
+    Schema enum: ['Bleeding - Mild', 'Bleeding - Moderate', 'Bleeding - Severe',
+                  'Pneumothorax', 'Hypoxia', 'Respiratory failure', 'Hypotension',
+                  'Arrhythmia', 'Bronchospasm', 'Laryngospasm', 'Aspiration',
+                  'Infection', 'Air embolism', 'Cardiac arrest', 'Death', 'Other']
+    """
+    if raw is None:
+        return None
+    
+    # Convert to list if needed
+    if isinstance(raw, str):
+        # Split by comma or semicolon
+        items = re.split(r"[,;]", raw)
+    elif isinstance(raw, list):
+        items = raw
+    else:
+        items = [raw]
+    
+    normalized = []
+    for item in items:
+        if item is None:
+            continue
+        
+        text = str(item).strip().lower()
+        if not text or text in {"none", "n/a", "na", "null", ""}:
+            continue
+        
+        # Mapping for complications
+        mapping = {
+            "bleeding - mild": "Bleeding - Mild",
+            "mild bleeding": "Bleeding - Mild",
+            "bleeding - moderate": "Bleeding - Moderate",
+            "moderate bleeding": "Bleeding - Moderate",
+            "bleeding - severe": "Bleeding - Severe",
+            "severe bleeding": "Bleeding - Severe",
+            "bleeding": "Bleeding - Mild",  # Default to Mild if severity not specified
+            "pneumothorax": "Pneumothorax",
+            "ptx": "Pneumothorax",
+            "hypoxia": "Hypoxia",
+            "hypoxemia": "Hypoxia",
+            "respiratory failure": "Respiratory failure",
+            "respiratory distress": "Respiratory failure",
+            "hypotension": "Hypotension",
+            "arrhythmia": "Arrhythmia",
+            "bronchospasm": "Bronchospasm",
+            "laryngospasm": "Laryngospasm",
+            "aspiration": "Aspiration",
+            "infection": "Infection",
+            "air embolism": "Air embolism",
+            "cardiac arrest": "Cardiac arrest",
+            "death": "Death",
+            "other": "Other",
+        }
+        
+        if text in mapping:
+            normalized.append(mapping[text])
+        elif "bleeding" in text:
+            # Try to infer severity from context
+            if "mild" in text or "minor" in text:
+                normalized.append("Bleeding - Mild")
+            elif "severe" in text or "major" in text or "significant" in text:
+                normalized.append("Bleeding - Severe")
+            elif "moderate" in text:
+                normalized.append("Bleeding - Moderate")
+            else:
+                normalized.append("Bleeding - Mild")  # Default
+        elif "pneumothorax" in text or "ptx" in text:
+            normalized.append("Pneumothorax")
+        elif "hypoxia" in text or "hypoxemia" in text:
+            normalized.append("Hypoxia")
+        elif "respiratory failure" in text or "respiratory distress" in text:
+            normalized.append("Respiratory failure")
+        else:
+            # Try title case for other values
+            title = text.title()
+            allowed = [
+                "Pneumothorax", "Hypoxia", "Respiratory failure", "Hypotension",
+                "Arrhythmia", "Bronchospasm", "Laryngospasm", "Aspiration",
+                "Infection", "Air embolism", "Cardiac arrest", "Death", "Other"
+            ]
+            if title in allowed and title not in normalized:
+                normalized.append(title)
+    
+    return normalized if normalized else None
+
+
+def normalize_radial_ebus_probe_position(raw: Any) -> str | None:
+    """Normalize radial EBUS probe position to schema enum values.
+
+    Schema enum: ['Concentric', 'Eccentric', 'Adjacent', 'Not visualized']
+    """
+    text_raw = _coerce_to_text(raw)
+    if text_raw is None:
+        return None
+    text = text_raw.strip().lower()
+    if not text or text in {"none", "n/a", "na", "null", ""}:
+        return None
+    
+    # If it's a descriptive string that doesn't match, return None
+    # Common non-matching descriptions should be filtered out
+    if "aerated lung" in text or "lung" in text and "on" in text:
+        return None  # This is a description, not a position
+    
+    mapping = {
+        "concentric": "Concentric",
+        "eccentric": "Eccentric",
+        "adjacent": "Adjacent",
+        "not visualized": "Not visualized",
+        "not visualised": "Not visualized",
+        "not seen": "Not visualized",
+    }
+    
+    if text in mapping:
+        return mapping[text]
+    
+    # Fuzzy matching
+    if "concentric" in text:
+        return "Concentric"
+    if "eccentric" in text:
+        return "Eccentric"
+    if "adjacent" in text:
+        return "Adjacent"
+    if "not" in text and ("visual" in text or "seen" in text):
+        return "Not visualized"
+    
+    return None
+
+
 POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     "sedation_type": normalize_sedation_type,
     "airway_type": normalize_airway_type,
@@ -2154,4 +2369,13 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     # BLVR valve type - both field names for compatibility
     "valve_type": normalize_valve_type,
     "blvr_valve_type": normalize_valve_type,
+    # Assistant role normalization
+    "assistant_role": normalize_assistant_role,
+    # Bronchoscope diameter - extract number from string
+    "bronchoscope_outer_diameter_mm": normalize_bronchoscope_diameter,
+    # Complication list normalization
+    "complication_list": normalize_complication_list,
+    "complications": normalize_complication_list,
+    # Radial EBUS probe position
+    "radial_ebus_probe_position": normalize_radial_ebus_probe_position,
 }
