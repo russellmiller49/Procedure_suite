@@ -45,6 +45,7 @@ from proc_report.metadata import (
 )
 from proc_report.inference import InferenceEngine, PatchResult
 from proc_report.validation import FieldConfig, ValidationEngine
+from proc_report.ip_addons import get_addon_body, get_addon_metadata, list_addon_slugs
 
 _TEMPLATE_ROOT = Path(__file__).parent / "templates"
 _TEMPLATE_MAP = {
@@ -64,6 +65,11 @@ _ENV = Environment(
     trim_blocks=True,
     lstrip_blocks=True,
 )
+
+# Add addon functions as globals so templates can use them
+_ENV.globals["get_addon_body"] = get_addon_body
+_ENV.globals["get_addon_metadata"] = get_addon_metadata
+_ENV.globals["list_addon_slugs"] = list_addon_slugs
 
 
 def compose_report_from_text(text: str, hints: Dict[str, Any] | None = None) -> Tuple[ProcedureReport, str]:
@@ -208,6 +214,10 @@ def _build_structured_env(template_root: Path) -> Environment:
     env.filters["pronoun"] = _pronoun
     env.filters["fmt_ml"] = _fmt_ml
     env.filters["fmt_unit"] = _fmt_unit
+    # Add addon functions as globals
+    env.globals["get_addon_body"] = get_addon_body
+    env.globals["get_addon_metadata"] = get_addon_metadata
+    env.globals["list_addon_slugs"] = list_addon_slugs
     return env
 
 

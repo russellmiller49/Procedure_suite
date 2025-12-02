@@ -82,3 +82,13 @@
 ## Plan
 {{ plan }}
 {% endif %}
+
+{% if report and report.addons %}
+## Additional Procedures / Events
+{% for slug in report.addons %}
+{% set addon_text = get_addon_body(slug) %}
+{% if addon_text %}
+- {{ addon_text }}
+{% endif %}
+{% endfor %}
+{% endif %}
