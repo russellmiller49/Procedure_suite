@@ -501,18 +501,60 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
         # Run reporter if requested
         if modules_run in ("reporter", "all"):
             try:
-                # Use compose_report_from_text for dictation-style input
-                hints = {}
-                if procedure_type:
-                    hints["procedure_type"] = procedure_type
+                # If we have registry output, use structured reporter for rich output
+                if registry_output and registry_output.get("record"):
+                    # Build a ProcedureBundle from the registry extraction
+                    bundle = build_procedure_bundle_from_extraction(
+                        registry_output["record"]
+                    )
+                    # Run inference to enrich the bundle
+                    inference = InferenceEngine()
+                    inference_result = inference.infer_bundle(bundle)
+                    bundle = apply_patch_result(bundle, inference_result)
 
-                report, markdown = compose_report_from_text(note_text, hints)
-                reporter_output = {
-                    "markdown": markdown,
-                    "procedure_core": report.procedure_core.model_dump() if hasattr(report.procedure_core, "model_dump") else {},
-                    "indication": report.indication,
-                    "postop": report.postop,
-                }
+                    # Validate and get issues
+                    templates = default_template_registry()
+                    schemas = default_schema_registry()
+                    validator = ValidationEngine(templates, schemas)
+                    issues = validator.list_missing_critical_fields(bundle)
+                    warnings = validator.apply_warn_if_rules(bundle)
+
+                    # Use the structured ReporterEngine for detailed output
+                    engine = ReporterEngine(
+                        templates,
+                        schemas,
+                        procedure_order=_load_procedure_order(),
+                    )
+                    structured = engine.compose_report_with_metadata(
+                        bundle,
+                        strict=False,
+                        embed_metadata=False,
+                        validation_issues=issues,
+                        warnings=warnings,
+                    )
+                    reporter_output = {
+                        "markdown": structured.text,
+                        "bundle": bundle.model_dump() if hasattr(bundle, "model_dump") else {},
+                        "issues": [i.model_dump() for i in issues] if issues else [],
+                        "warnings": warnings,
+                    }
+                else:
+                    # Fallback to simple compose_report_from_text for dictation-only
+                    from proc_report.engine import compose_report_from_text
+
+                    hints = {}
+                    if procedure_type:
+                        hints["procedure_type"] = procedure_type
+
+                    report, markdown = compose_report_from_text(note_text, hints)
+                    proc_core = report.procedure_core
+                    core_dict = proc_core.model_dump() if hasattr(proc_core, "model_dump") else {}
+                    reporter_output = {
+                        "markdown": markdown,
+                        "procedure_core": core_dict,
+                        "indication": report.indication,
+                        "postop": report.postop,
+                    }
             except Exception as rep_err:
                 # Reporter errors (e.g., missing spaCy model)
                 raise HTTPException(
