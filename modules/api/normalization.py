@@ -210,7 +210,7 @@ def normalize_registry_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
                 text = probe_position.strip().lower()
                 radial_ebus["probe_position"] = PROBE_POSITION_MAP.get(text, probe_position)
 
-        # Normalize navigational_bronchoscopy.divergence_mm
+        # Normalize navigational_bronchoscopy fields
         nav_bronch = procedures.get("navigational_bronchoscopy")
         if isinstance(nav_bronch, dict):
             divergence = nav_bronch.get("divergence_mm")
@@ -218,6 +218,37 @@ def normalize_registry_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
                 nav_bronch["divergence_mm"] = _normalize_numeric_with_unit(
                     divergence, ["mm", "millimeters", "millimeter"]
                 )
+
+            # Normalize sampling_tools_used list
+            # Enum: ["Needle", "Forceps", "Brush", "Cryoprobe", "NeedleInNeedle"]
+            tools = nav_bronch.get("sampling_tools_used")
+            if isinstance(tools, list):
+                tool_map = {
+                    "needle": "Needle",
+                    "tbna needle": "Needle",
+                    "21g needle": "Needle",
+                    "22g needle": "Needle",
+                    "ion needle": "Needle",
+                    "forceps": "Forceps",
+                    "biopsy forceps": "Forceps",
+                    "standard forceps": "Forceps",
+                    "brush": "Brush",
+                    "bronchial brush": "Brush",
+                    "cryoprobe": "Cryoprobe",
+                    "cryo": "Cryoprobe",
+                    "cryobiopsy": "Cryoprobe",
+                    "needleinneedle": "NeedleInNeedle",
+                    "needle in needle": "NeedleInNeedle",
+                }
+                valid_tools = ("Needle", "Forceps", "Brush", "Cryoprobe", "NeedleInNeedle")
+                normalized_tools = []
+                for tool in tools:
+                    if isinstance(tool, str):
+                        normalized = tool_map.get(tool.strip().lower(), tool)
+                        # Only add if it's a valid enum value
+                        if normalized in valid_tools and normalized not in normalized_tools:
+                            normalized_tools.append(normalized)
+                nav_bronch["sampling_tools_used"] = normalized_tools
 
         # Normalize transbronchial_biopsy.forceps_type
         tbbx = procedures.get("transbronchial_biopsy")

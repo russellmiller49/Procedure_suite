@@ -1207,6 +1207,63 @@ def _procedures_from_adapters(
     return procedures
 
 
+def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
+    """Add flat compatibility fields that adapters expect from nested registry data.
+
+    The adapters expect flat field names like 'nav_rebus_used', 'bronch_num_tbbx',
+    but the RegistryRecord stores data in nested structures like
+    procedures_performed.radial_ebus.performed.
+
+    This function adds the flat aliases so adapters can find the data.
+    """
+    # Import here to avoid circular dependency
+    try:
+        from modules.registry.schema import _COMPAT_ATTRIBUTE_PATHS
+    except ImportError:
+        return raw
+
+    def _get_nested(d: dict, path: tuple[str, ...]) -> Any:
+        """Traverse nested dict by path tuple."""
+        current = d
+        for key in path:
+            if not isinstance(current, dict):
+                return None
+            current = current.get(key)
+            if current is None:
+                return None
+        return current
+
+    # Add all compatibility flat fields
+    for flat_name, nested_path in _COMPAT_ATTRIBUTE_PATHS.items():
+        if flat_name not in raw:
+            value = _get_nested(raw, nested_path)
+            if value is not None:
+                raw[flat_name] = value
+
+    # Add additional fields that adapters need but aren't in _COMPAT_ATTRIBUTE_PATHS
+    procs = raw.get("procedures_performed", {}) or {}
+
+    # bronch_num_tbbx from transbronchial_biopsy.number_of_samples
+    if "bronch_num_tbbx" not in raw:
+        tbbx = procs.get("transbronchial_biopsy", {}) or {}
+        if tbbx.get("number_of_samples"):
+            raw["bronch_num_tbbx"] = tbbx["number_of_samples"]
+
+    # bronch_tbbx_tool from transbronchial_biopsy.forceps_type
+    if "bronch_tbbx_tool" not in raw:
+        tbbx = procs.get("transbronchial_biopsy", {}) or {}
+        if tbbx.get("forceps_type"):
+            raw["bronch_tbbx_tool"] = tbbx["forceps_type"]
+
+    # ventilation_mode from procedure_setting or sedation
+    if "ventilation_mode" not in raw:
+        setting = raw.get("procedure_setting", {}) or {}
+        if setting.get("airway_type"):
+            raw["ventilation_mode"] = setting["airway_type"]
+
+    return raw
+
+
 def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
     """
     Convert a registry extraction payload (dict or RegistryRecord) into a ProcedureBundle.
@@ -1216,6 +1273,9 @@ def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
     dicts from tests or upstream extractors.
     """
     raw = extraction.model_dump() if hasattr(extraction, "model_dump") else deepcopy(extraction or {})
+
+    # Add flat compatibility fields that adapters expect
+    raw = _add_compat_flat_fields(raw)
 
     patient = _extract_patient(raw)
     encounter = _extract_encounter(raw)

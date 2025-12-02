@@ -447,3 +447,54 @@ class TestPathologyResultsNormalization:
         result = normalize_registry_payload(payload)
         assert isinstance(result["pathology_results"], dict)
         assert result["pathology_results"]["final_diagnosis"] is None
+
+
+class TestSamplingToolsNormalization:
+    """Test sampling_tools_used normalization for navigational_bronchoscopy."""
+
+    def test_biopsy_forceps_to_forceps(self) -> None:
+        """Test that 'Biopsy Forceps' normalizes to 'Forceps'."""
+        payload = {
+            "procedures_performed": {
+                "navigational_bronchoscopy": {
+                    "performed": True,
+                    "sampling_tools_used": ["Biopsy Forceps", "Needle"],
+                }
+            }
+        }
+        result = normalize_registry_payload(payload)
+        tools = result["procedures_performed"]["navigational_bronchoscopy"]["sampling_tools_used"]
+        assert "Forceps" in tools
+        assert "Needle" in tools
+        assert "Biopsy Forceps" not in tools
+
+    def test_cryoprobe_variations(self) -> None:
+        """Test cryoprobe variations normalize correctly."""
+        payload = {
+            "procedures_performed": {
+                "navigational_bronchoscopy": {
+                    "performed": True,
+                    "sampling_tools_used": ["cryo", "Cryobiopsy"],
+                }
+            }
+        }
+        result = normalize_registry_payload(payload)
+        tools = result["procedures_performed"]["navigational_bronchoscopy"]["sampling_tools_used"]
+        # Should dedupe to just one Cryoprobe
+        assert tools == ["Cryoprobe"]
+
+    def test_invalid_tools_filtered(self) -> None:
+        """Test that invalid tool names are filtered out."""
+        payload = {
+            "procedures_performed": {
+                "navigational_bronchoscopy": {
+                    "performed": True,
+                    "sampling_tools_used": ["Needle", "Unknown Tool", "Forceps"],
+                }
+            }
+        }
+        result = normalize_registry_payload(payload)
+        tools = result["procedures_performed"]["navigational_bronchoscopy"]["sampling_tools_used"]
+        assert "Needle" in tools
+        assert "Forceps" in tools
+        assert "Unknown Tool" not in tools
