@@ -539,22 +539,64 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
                         "warnings": warnings,
                     }
                 else:
-                    # Fallback to simple compose_report_from_text for dictation-only
-                    from proc_report.engine import compose_report_from_text
+                    # No registry data available - run registry extraction first
+                    # to get structured procedure data for rich report generation
+                    try:
+                        reg_eng = RegistryEngine()
+                        reg_result = reg_eng.run(note_text, explain=False)
+                        if isinstance(reg_result, tuple):
+                            reg_record, _ = reg_result
+                        else:
+                            reg_record = reg_result
+                        reg_dict = reg_record.model_dump() if hasattr(reg_record, "model_dump") else {}
 
-                    hints = {}
-                    if procedure_type:
-                        hints["procedure_type"] = procedure_type
+                        # Build bundle and generate structured report
+                        bundle = build_procedure_bundle_from_extraction(reg_dict)
+                        inference = InferenceEngine()
+                        inference_result = inference.infer_bundle(bundle)
+                        bundle = apply_patch_result(bundle, inference_result)
 
-                    report, markdown = compose_report_from_text(note_text, hints)
-                    proc_core = report.procedure_core
-                    core_dict = proc_core.model_dump() if hasattr(proc_core, "model_dump") else {}
-                    reporter_output = {
-                        "markdown": markdown,
-                        "procedure_core": core_dict,
-                        "indication": report.indication,
-                        "postop": report.postop,
-                    }
+                        templates = default_template_registry()
+                        schemas = default_schema_registry()
+                        validator = ValidationEngine(templates, schemas)
+                        issues = validator.list_missing_critical_fields(bundle)
+                        warnings = validator.apply_warn_if_rules(bundle)
+
+                        engine = ReporterEngine(
+                            templates,
+                            schemas,
+                            procedure_order=_load_procedure_order(),
+                        )
+                        structured = engine.compose_report_with_metadata(
+                            bundle,
+                            strict=False,
+                            embed_metadata=False,
+                            validation_issues=issues,
+                            warnings=warnings,
+                        )
+                        reporter_output = {
+                            "markdown": structured.text,
+                            "bundle": bundle.model_dump() if hasattr(bundle, "model_dump") else {},
+                            "issues": [i.model_dump() for i in issues] if issues else [],
+                            "warnings": warnings,
+                        }
+                    except Exception:
+                        # If registry extraction fails, fall back to simple reporter
+                        from proc_report.engine import compose_report_from_text
+
+                        hints = {}
+                        if procedure_type:
+                            hints["procedure_type"] = procedure_type
+
+                        report, markdown = compose_report_from_text(note_text, hints)
+                        proc_core = report.procedure_core
+                        core_dict = proc_core.model_dump() if hasattr(proc_core, "model_dump") else {}
+                        reporter_output = {
+                            "markdown": markdown,
+                            "procedure_core": core_dict,
+                            "indication": report.indication,
+                            "postop": report.postop,
+                        }
             except Exception as rep_err:
                 # Reporter errors (e.g., missing spaCy model)
                 raise HTTPException(
