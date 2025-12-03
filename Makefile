@@ -1,43 +1,36 @@
-.PHONY: install test unit contracts integration lint preflight api tests type
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train
 
-install:
-	python -m pip install -e .
+SETUP_STAMP := .setup.stamp
+VENV := .venv
 
-preflight:
-	python -c "import spacy, sklearn; print('spaCy OK:', spacy.__version__); print('sklearn OK:', __import__('sklearn').__version__)"
-	python scripts/preflight.py
-
-unit:
-	pytest -q tests/unit
-
-contracts:
-	pytest -q tests/contracts
-
-integration:
-	pytest -q tests/integration
-
-test: unit contracts integration
+setup:
+	@if [ -f $(SETUP_STAMP) ]; then echo "Setup already done"; exit 0; fi
+	python3 -m venv $(VENV)
+	$(VENV)/bin/pip install -r requirements.txt
+	touch $(SETUP_STAMP)
 
 lint:
-	ruff check .
+	$(VENV)/bin/ruff --cache-dir .ruff_cache .
 
-api:
-	scripts/devserver.sh
+typecheck:
+	$(VENV)/bin/mypy --cache-dir .mypy_cache .
 
-tests:
-	pytest -q
+test:
+	$(VENV)/bin/pytest
 
-type:
-	mypy modules
+validate-schemas:
+	$(VENV)/bin/python scripts/validate_jsonschema.py
+	$(VENV)/bin/python scripts/check_pydantic_models.py
 
-validate-registry:
-	python scripts/validate_registry.py
+validate-kb:
+	$(VENV)/bin/python scripts/run_cleaning_pipeline.py --validate-kb
 
-analyze-registry-errors:
-	python scripts/analyze_registry_errors.py
+autopatch:
+	$(VENV)/bin/python scripts/run_cleaning_pipeline.py --autopatch
 
-self-correct-registry:
-	python scripts/self_correct_registry.py --field $(FIELD)
+autocommit:
+	@git add .
+	@git commit -m "Autocommit: generated patches/reports" || true
 
-eval-synthetic-notes:
-	python proc_autocode/tools/eval_synthetic_notes.py --baseline analysis/synthetic_notes_eval_after_kb_update.txt
+codex-train: setup lint typecheck test validate-schemas validate-kb autopatch
+	@echo "Codex training pipeline complete"
