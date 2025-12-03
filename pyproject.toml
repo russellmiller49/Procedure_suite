@@ -92,6 +92,12 @@ extend-ignore = ["UP006", "UP035"]
 [tool.mypy]
 strict = true
 plugins = []
+exclude = [
+    "docs/",
+    "_archive/",
+    "procedure_suite_ml_implimentation/",
+]
+explicit_package_bases = true
 
 [[tool.mypy.overrides]]
 module = "modules.*"

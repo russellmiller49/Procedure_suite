@@ -667,5 +667,10 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
     )
 
 
+from modules.api.routes.procedure_codes import router as procedure_codes_router
+from modules.api.routes.metrics import router as metrics_router
+
+app.include_router(procedure_codes_router, prefix="/api/v1", tags=["procedure-codes"])
+app.include_router(metrics_router, tags=["metrics"])
+
 __all__ = ["app"]
-\nfrom modules.api.routes.procedure_codes import router as procedure_codes_router\napp.include_router(procedure_codes_router)

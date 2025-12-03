@@ -1,14 +1,58 @@
-from pydantic import BaseModel
-from typing import List
-from .envelope_models import EvidenceSpan
+"""Reasoning and provenance models for audit trails."""
+
+from datetime import datetime
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
+
+class EvidenceSpan(BaseModel):
+    """A span of text that provides evidence for a decision."""
+
+    source_id: str = ""  # "note", "path_report", "registry_form"
+    text: str = ""
+    start_char: Optional[int] = None
+    end_char: Optional[int] = None
+
+    # Aliases for compatibility
+    @property
+    def start(self) -> int:
+        return self.start_char or 0
+
+    @property
+    def end(self) -> int:
+        return self.end_char or 0
+
 
 class ReasoningFields(BaseModel):
-    trigger_phrases: List[str] = []
-    evidence_spans: List[EvidenceSpan] = []
+    """Full reasoning and provenance for a coding/extraction decision."""
+
+    # Evidence
+    trigger_phrases: List[str] = Field(default_factory=list)
+    evidence_spans: List[EvidenceSpan] = Field(default_factory=list)
+
+    # Rationale
     coding_rationale: str = ""
     bundling_rationale: str = ""
-    rule_paths: List[str] = []
+    explanation: str = ""
+
+    # Decision trace
+    rule_paths: List[str] = Field(default_factory=list)
+    confounders_checked: List[str] = Field(default_factory=list)
+    qa_flags: List[str] = Field(default_factory=list)
+
+    # Confidence
     confidence: float = 0.0
+
+    # Compliance notes
     mer_notes: str = ""
     ncci_notes: str = ""
-    confounders_checked: List[str] = []
+
+    # Provenance (filled by application/infra layers)
+    model_version: str = ""  # e.g. "gemini-1.5-pro-002"
+    kb_version: str = ""  # "ip_coding_billing.v2_7"
+    policy_version: str = ""  # "smart_hybrid_v2"
+    keyword_map_version: Optional[str] = None
+    registry_schema_version: Optional[str] = None
+    negation_detector_version: Optional[str] = None
+    timestamp: datetime = Field(default_factory=datetime.utcnow)

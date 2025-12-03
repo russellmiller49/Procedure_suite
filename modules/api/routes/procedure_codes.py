@@ -1,45 +1,887 @@
-from fastapi import APIRouter, HTTPException
-from typing import List
-from modules.proc_autocode.models import CodeSuggestion, FinalCode, ReviewAction
+"""Procedure codes API endpoints for the clinician review workflow.
+
+Phase 2-4 API Implementation per NEW_ARCHITECTURE.md Section 9:
+- POST /procedures/{id}/codes/suggest - Trigger rule+LLM pipeline
+- GET  /procedures/{id}/codes/suggest - Retrieve pending suggestions
+- POST /procedures/{id}/codes/review  - Submit ReviewAction for a suggestion
+- POST /procedures/{id}/codes/manual  - Add a manual code (bypasses AI)
+- GET  /procedures/{id}/codes/final   - Retrieve approved FinalCode[] for billing
+
+Phase 3-4 Registry Export:
+- POST /procedures/{id}/registry/export  - Export procedure to IP Registry
+- GET  /procedures/{id}/registry/preview - Preview registry entry before export
+
+This module ensures no code reaches billing without human review
+and persists reasoning for audit.
+"""
+
+from __future__ import annotations
+
+from datetime import datetime
+from typing import Any, Literal
+
+from fastapi import APIRouter, HTTPException, Depends, Query
+from pydantic import BaseModel, Field
+
+from observability.logging_config import get_logger
+from observability.timing import timed
+from proc_schemas.coding import CodeSuggestion, FinalCode, ReviewAction, CodingResult
+from proc_schemas.reasoning import ReasoningFields
+from modules.coder.application.coding_service import CodingService
+from modules.api.dependencies import get_coding_service, get_registry_service, get_procedure_store
+from modules.common.exceptions import CodingError, KnowledgeBaseError, RegistryError, PersistenceError
+from modules.registry.application.registry_service import RegistryService
+from modules.domain.procedure_store.repository import ProcedureStore
+from observability.coding_metrics import CodingMetrics
 
 router = APIRouter()
+logger = get_logger("procedure_codes_api")
 
-# In-memory stores for demonstration; in real implementation use DB or Supabase.
-procedure_code_suggestions: dict[str, List[CodeSuggestion]] = {}
-procedure_code_reviews: dict[str, List[ReviewAction]] = {}
-procedure_codes_final: dict[str, List[FinalCode]] = {}
 
-@router.post("/procedures/{proc_id}/codes/ai", response_model=List[CodeSuggestion])
-def run_ai_coder(proc_id: str):
-    """Trigger the AI coding pipeline for a procedure and store suggestions."""
-    # TODO: call your actual coding pipeline here
-    suggestions: List[CodeSuggestion] = []
-    procedure_code_suggestions[proc_id] = suggestions
-    return suggestions
+# ============================================================================
+# Request/Response Models
+# ============================================================================
 
-@router.get("/procedures/{proc_id}/codes/ai", response_model=List[CodeSuggestion])
-def get_ai_suggestions(proc_id: str):
-    """Retrieve AI code suggestions for a procedure."""
-    return procedure_code_suggestions.get(proc_id, [])
 
-@router.post("/procedures/{proc_id}/codes/review")
-def post_review(proc_id: str, reviews: List[ReviewAction]):
-    """Submit review actions and update final codes accordingly."""
-    procedure_code_reviews.setdefault(proc_id, []).extend(reviews)
-    finals: List[FinalCode] = []
-    for review in reviews:
-        if review.final_code:
-            procedure_codes_final.setdefault(proc_id, []).append(review.final_code)
-            finals.append(review.final_code)
-    return {"final_codes": finals}
+class SuggestCodesRequest(BaseModel):
+    """Request body for triggering code suggestions."""
 
-@router.post("/procedures/{proc_id}/codes/manual")
-def post_manual_code(proc_id: str, codes: List[FinalCode]):
-    """Add manual codes to the final codes list."""
-    procedure_codes_final.setdefault(proc_id, []).extend(codes)
-    return {"final_codes": codes}
+    report_text: str = Field(..., description="The procedure note text to analyze")
+    use_llm: bool = Field(True, description="Whether to use LLM advisor in addition to rules")
+    procedure_type: str = Field(
+        "unknown",
+        description="Procedure type classification (e.g., bronch_diagnostic, bronch_ebus, pleural, blvr)",
+    )
 
-@router.get("/procedures/{proc_id}/codes/final", response_model=List[FinalCode])
-def get_final_codes(proc_id: str):
-    """Retrieve clinician-approved final codes for a procedure."""
-    return procedure_codes_final.get(proc_id, [])
+
+class ReviewActionRequest(BaseModel):
+    """Request body for submitting a review action."""
+
+    suggestion_id: str = Field(..., description="ID of the CodeSuggestion being reviewed")
+    action: str = Field(..., description="Review action: 'accept', 'reject', or 'modify'")
+    reviewer_id: str = Field(..., description="ID of the clinician reviewer")
+    notes: str | None = Field(None, description="Optional notes about the decision")
+    modified_code: str | None = Field(None, description="Modified CPT code if action is 'modify'")
+    modified_description: str | None = Field(
+        None, description="Modified description if action is 'modify'"
+    )
+
+
+class ManualCodeRequest(BaseModel):
+    """Request body for adding a manual code."""
+
+    code: str = Field(..., description="CPT code to add manually")
+    description: str = Field("", description="Description of the code")
+    notes: str | None = Field(None, description="Reason for manual addition")
+    reviewer_id: str = Field(..., description="ID of the clinician adding the code")
+
+
+class SuggestCodesResponse(BaseModel):
+    """Response from code suggestion endpoint."""
+
+    procedure_id: str
+    suggestions: list[CodeSuggestion]
+    processing_time_ms: float
+    kb_version: str = ""
+    policy_version: str = ""
+    model_version: str = ""
+
+
+class ReviewActionResponse(BaseModel):
+    """Response from review action endpoint."""
+
+    suggestion_id: str
+    action: str
+    final_code: FinalCode | None
+    message: str
+
+
+class ManualCodeResponse(BaseModel):
+    """Response from manual code endpoint."""
+
+    final_code: FinalCode
+    message: str
+
+
+class RegistryExportRequest(BaseModel):
+    """Request body for registry export."""
+
+    procedure_metadata: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Procedure metadata (patient info, operator, facility, etc.)",
+    )
+    registry_version: str = Field(
+        "v2",
+        description="Target registry schema version (v2 or v3)",
+    )
+
+
+class RegistryExportResponse(BaseModel):
+    """Response from registry export endpoint."""
+
+    procedure_id: str
+    registry_id: str
+    schema_version: str
+    export_id: str
+    export_timestamp: datetime
+    status: Literal["success", "partial", "failed"]
+    bundle: dict[str, Any] = Field(
+        ..., description="The registry entry as JSON"
+    )
+    warnings: list[str] = Field(default_factory=list)
+
+
+class RegistryPreviewResponse(BaseModel):
+    """Response from registry preview endpoint."""
+
+    procedure_id: str
+    registry_id: str
+    schema_version: str
+    status: Literal["preview"]
+    bundle: dict[str, Any] = Field(
+        ..., description="The draft registry entry as JSON"
+    )
+    completeness_score: float = Field(
+        ..., description="Completeness score (0.0 to 1.0)"
+    )
+    missing_fields: list[str] = Field(default_factory=list)
+    suggested_values: dict[str, Any] = Field(default_factory=dict)
+    warnings: list[str] = Field(default_factory=list)
+
+
+# ============================================================================
+# API Endpoints
+# ============================================================================
+
+
+@router.post(
+    "/procedures/{proc_id}/codes/suggest",
+    response_model=SuggestCodesResponse,
+    summary="Trigger code suggestion pipeline",
+    description="Runs rule-based and optional LLM coding pipeline, persists suggestions.",
+)
+def suggest_codes(
+    proc_id: str,
+    request: SuggestCodesRequest,
+    coding_service: CodingService = Depends(get_coding_service),
+    store: ProcedureStore = Depends(get_procedure_store),
+) -> SuggestCodesResponse:
+    """Trigger rule+LLM pipeline, persist CodeSuggestion[].
+
+    This endpoint:
+    1. Runs the rule-based coding engine
+    2. Optionally runs the LLM advisor
+    3. Merges results using smart_hybrid policy
+    4. Validates evidence in the note text
+    5. Applies NCCI/MER compliance rules
+    6. Persists suggestions for review
+    7. Returns suggestions with reasoning/provenance
+    """
+    procedure_type = request.procedure_type
+
+    logger.info(
+        "Suggest codes requested",
+        extra={
+            "procedure_id": proc_id,
+            "use_llm": request.use_llm,
+            "procedure_type": procedure_type,
+        },
+    )
+
+    try:
+        with timed("api.suggest_codes") as timing:
+            # Run the full coding pipeline
+            result = coding_service.generate_result(
+                procedure_id=proc_id,
+                report_text=request.report_text,
+                use_llm=request.use_llm,
+                procedure_type=procedure_type,
+            )
+
+        # Persist the full result for metadata access
+        store.save_result(proc_id, result)
+
+        # Persist suggestions for review endpoints
+        store.save_suggestions(proc_id, result.suggestions)
+
+        # Record metrics with procedure_type segmentation
+        CodingMetrics.record_suggestions_generated(
+            num_suggestions=len(result.suggestions),
+            procedure_type=procedure_type,
+            used_llm=request.use_llm,
+        )
+        CodingMetrics.record_pipeline_latency(
+            latency_ms=result.processing_time_ms,
+            procedure_type=procedure_type,
+            used_llm=request.use_llm,
+        )
+        # Record LLM latency separately if LLM was used
+        if result.llm_latency_ms > 0:
+            CodingMetrics.record_llm_latency(
+                latency_ms=result.llm_latency_ms,
+                procedure_type=procedure_type,
+            )
+
+        logger.info(
+            "Code suggestions generated",
+            extra={
+                "procedure_id": proc_id,
+                "procedure_type": procedure_type,
+                "num_suggestions": len(result.suggestions),
+                "processing_time_ms": timing.elapsed_ms,
+                "llm_latency_ms": result.llm_latency_ms,
+                "kb_version": result.kb_version,
+                "policy_version": result.policy_version,
+                "model_version": result.model_version,
+            },
+        )
+
+        return SuggestCodesResponse(
+            procedure_id=proc_id,
+            suggestions=result.suggestions,
+            processing_time_ms=result.processing_time_ms,
+            kb_version=result.kb_version,
+            policy_version=result.policy_version,
+            model_version=result.model_version,
+        )
+
+    except KnowledgeBaseError as e:
+        logger.error(f"Knowledge base error: {e}", extra={"procedure_id": proc_id})
+        raise HTTPException(
+            status_code=500,
+            detail=f"Knowledge base error: {str(e)}",
+        )
+    except CodingError as e:
+        logger.error(f"Coding error: {e}", extra={"procedure_id": proc_id})
+        raise HTTPException(
+            status_code=500,
+            detail=f"Coding pipeline error: {str(e)}",
+        )
+    except PersistenceError as e:
+        logger.error(f"Persistence error: {e}", extra={"procedure_id": proc_id})
+        raise HTTPException(
+            status_code=500,
+            detail=f"Storage error: {str(e)}",
+        )
+    except Exception as e:
+        logger.exception(f"Unexpected error in suggest_codes: {e}", extra={"procedure_id": proc_id})
+        raise HTTPException(
+            status_code=500,
+            detail=f"Unexpected error: {str(e)}",
+        )
+
+
+@router.get(
+    "/procedures/{proc_id}/codes/suggest",
+    response_model=list[CodeSuggestion],
+    summary="Retrieve pending code suggestions",
+    description="Returns pending code suggestions with reasoning/evidence for review.",
+)
+def get_suggestions(
+    proc_id: str,
+    store: ProcedureStore = Depends(get_procedure_store),
+) -> list[CodeSuggestion]:
+    """Retrieve pending suggestions with reasoning/evidence.
+
+    Returns all CodeSuggestion objects that have not yet been reviewed
+    for the given procedure.
+    """
+    suggestions = store.get_suggestions(proc_id)
+
+    if not suggestions:
+        # Check if procedure exists at all
+        if not store.exists(proc_id):
+            raise HTTPException(
+                status_code=404,
+                detail=f"No suggestions found for procedure '{proc_id}'. Run POST /codes/suggest first.",
+            )
+
+    # Filter out suggestions that have already been reviewed
+    reviewed_ids = {r.suggestion_id for r in store.get_reviews(proc_id)}
+    pending = [s for s in suggestions if s.suggestion_id not in reviewed_ids]
+
+    return pending
+
+
+@router.post(
+    "/procedures/{proc_id}/codes/review",
+    response_model=ReviewActionResponse,
+    summary="Submit review action for a suggestion",
+    description="Clinician submits accept/reject/modify decision for a code suggestion.",
+)
+def review_suggestion(
+    proc_id: str,
+    request: ReviewActionRequest,
+    store: ProcedureStore = Depends(get_procedure_store),
+) -> ReviewActionResponse:
+    """Submit ReviewAction for a suggestion.
+
+    This endpoint:
+    1. Validates the suggestion exists
+    2. Creates a ReviewAction record
+    3. If accepted/modified, creates a FinalCode
+    4. Persists all records for audit
+
+    Args:
+        proc_id: Procedure identifier
+        request: Review action details
+        store: Injected ProcedureStore
+
+    Returns:
+        ReviewActionResponse with final code if accepted/modified
+
+    Raises:
+        HTTPException: If suggestion not found or invalid action
+    """
+    # Validate action
+    if request.action not in ("accept", "reject", "modify"):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid action '{request.action}'. Must be 'accept', 'reject', or 'modify'.",
+        )
+
+    # Find the suggestion
+    suggestions = store.get_suggestions(proc_id)
+    suggestion = next(
+        (s for s in suggestions if s.suggestion_id == request.suggestion_id),
+        None,
+    )
+
+    if not suggestion:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Suggestion '{request.suggestion_id}' not found for procedure '{proc_id}'.",
+        )
+
+    # Create the review action
+    review = ReviewAction(
+        suggestion_id=request.suggestion_id,
+        action=request.action,
+        reviewer_id=request.reviewer_id,
+        notes=request.notes,
+        modified_code=request.modified_code,
+        modified_description=request.modified_description,
+    )
+
+    # Create final code if accepted or modified
+    final_code: FinalCode | None = None
+    message = ""
+
+    if request.action == "accept":
+        final_code = FinalCode(
+            code=suggestion.code,
+            description=suggestion.description,
+            source=suggestion.source,
+            reasoning=suggestion.reasoning,
+            # Note: Not setting review here to avoid circular reference during serialization
+            procedure_id=proc_id,
+            suggestion_id=suggestion.suggestion_id,
+        )
+        message = f"Code {suggestion.code} accepted and added to final codes."
+
+    elif request.action == "modify":
+        if not request.modified_code:
+            raise HTTPException(
+                status_code=400,
+                detail="modified_code is required when action is 'modify'.",
+            )
+        final_code = FinalCode(
+            code=request.modified_code,
+            description=request.modified_description or suggestion.description,
+            source="manual",  # Modified codes are marked as manual
+            reasoning=suggestion.reasoning,
+            # Note: Not setting review here to avoid circular reference during serialization
+            procedure_id=proc_id,
+            suggestion_id=suggestion.suggestion_id,
+        )
+        message = f"Code modified from {suggestion.code} to {request.modified_code}."
+
+    else:  # reject
+        message = f"Code {suggestion.code} rejected."
+
+    # Note: We deliberately do not create circular references between review and final_code
+    # to avoid serialization issues. The relationship is maintained via suggestion_id.
+
+    # Persist review
+    store.add_review(proc_id, review)
+
+    # Persist final code if created
+    if final_code:
+        store.add_final_code(proc_id, final_code)
+        CodingMetrics.record_final_code_added(source=final_code.source)
+
+    # Record review metrics
+    CodingMetrics.record_review_action(
+        action=request.action,
+        source=suggestion.source,
+    )
+
+    logger.info(
+        "Review action completed",
+        extra={
+            "procedure_id": proc_id,
+            "suggestion_id": request.suggestion_id,
+            "action": request.action,
+            "reviewer_id": request.reviewer_id,
+        },
+    )
+
+    return ReviewActionResponse(
+        suggestion_id=request.suggestion_id,
+        action=request.action,
+        final_code=final_code,
+        message=message,
+    )
+
+
+@router.post(
+    "/procedures/{proc_id}/codes/manual",
+    response_model=ManualCodeResponse,
+    summary="Add a manual code",
+    description="Add a code manually (bypasses AI suggestion pipeline).",
+)
+def add_manual_code(
+    proc_id: str,
+    request: ManualCodeRequest,
+    store: ProcedureStore = Depends(get_procedure_store),
+) -> ManualCodeResponse:
+    """Add a manual code (bypasses AI).
+
+    This allows clinicians to add codes that weren't suggested by the
+    AI pipeline, for cases where the AI missed something or for
+    specific clinical scenarios.
+
+    Args:
+        proc_id: Procedure identifier
+        request: Manual code details
+        store: Injected ProcedureStore
+
+    Returns:
+        ManualCodeResponse with the created FinalCode
+    """
+    # Create a review action for audit trail
+    review = ReviewAction(
+        suggestion_id="",  # No suggestion for manual codes
+        action="accept",
+        reviewer_id=request.reviewer_id,
+        notes=request.notes or "Manually added code",
+    )
+
+    # Create reasoning for the manual code
+    reasoning = ReasoningFields(
+        rule_paths=["manual_addition"],
+        confidence=1.0,  # Manual codes are fully trusted
+    )
+
+    # Create the final code
+    # Note: Not setting review here to avoid circular reference during serialization
+    final_code = FinalCode(
+        code=request.code,
+        description=request.description,
+        source="manual",
+        reasoning=reasoning,
+        procedure_id=proc_id,
+        suggestion_id=None,
+    )
+
+    # Note: We deliberately do not create circular references between review and final_code
+
+    # Persist
+    store.add_review(proc_id, review)
+    store.add_final_code(proc_id, final_code)
+
+    # Record metrics
+    CodingMetrics.record_manual_code_added()
+    CodingMetrics.record_final_code_added(source="manual")
+
+    logger.info(
+        "Manual code added",
+        extra={
+            "procedure_id": proc_id,
+            "code": request.code,
+            "reviewer_id": request.reviewer_id,
+        },
+    )
+
+    return ManualCodeResponse(
+        final_code=final_code,
+        message=f"Manual code {request.code} added successfully.",
+    )
+
+
+@router.get(
+    "/procedures/{proc_id}/codes/final",
+    response_model=list[FinalCode],
+    summary="Retrieve final approved codes",
+    description="Returns all clinician-approved codes ready for billing/registry.",
+)
+def get_final_codes(
+    proc_id: str,
+    store: ProcedureStore = Depends(get_procedure_store),
+) -> list[FinalCode]:
+    """Retrieve approved FinalCode[] for billing/registry.
+
+    Returns only codes that have been explicitly approved by a clinician,
+    either through:
+    - Accepting an AI suggestion
+    - Modifying an AI suggestion
+    - Manually adding a code
+
+    These codes are safe to use for billing and registry export.
+    """
+    return store.get_final_codes(proc_id)
+
+
+@router.get(
+    "/procedures/{proc_id}/codes/reviews",
+    response_model=list[ReviewAction],
+    summary="Retrieve review history",
+    description="Returns all review actions for audit purposes.",
+)
+def get_review_history(
+    proc_id: str,
+    store: ProcedureStore = Depends(get_procedure_store),
+) -> list[ReviewAction]:
+    """Retrieve all review actions for audit trail.
+
+    This endpoint is useful for:
+    - Audit purposes
+    - Understanding rejection reasons
+    - Training data for improving AI suggestions
+    """
+    return store.get_reviews(proc_id)
+
+
+@router.get(
+    "/procedures/{proc_id}/codes/metrics",
+    summary="Get coding metrics for a procedure",
+    description="Returns metrics about suggestion acceptance, rejections, etc.",
+)
+def get_coding_metrics(
+    proc_id: str,
+    store: ProcedureStore = Depends(get_procedure_store),
+) -> dict[str, Any]:
+    """Get metrics for the coding workflow.
+
+    Returns:
+        - Total suggestions
+        - Accepted count
+        - Rejected count
+        - Modified count
+        - Manual additions count
+        - Acceptance rate
+        - Provenance info (kb_version, policy_version, model_version)
+    """
+    suggestions = store.get_suggestions(proc_id)
+    reviews = store.get_reviews(proc_id)
+    finals = store.get_final_codes(proc_id)
+    coding_result = store.get_result(proc_id)
+
+    # Count reviews of AI suggestions (not manual additions which have empty suggestion_id)
+    accepted = sum(1 for r in reviews if r.action == "accept" and r.suggestion_id)
+    rejected = sum(1 for r in reviews if r.action == "reject" and r.suggestion_id)
+    modified = sum(1 for r in reviews if r.action == "modify" and r.suggestion_id)
+    manual = sum(1 for f in finals if f.source == "manual" and not f.suggestion_id)
+
+    total_reviewed = accepted + rejected + modified
+    acceptance_rate = (accepted + modified) / total_reviewed if total_reviewed > 0 else 0.0
+
+    # Include provenance from the coding result
+    metrics: dict[str, Any] = {
+        "procedure_id": proc_id,
+        "total_suggestions": len(suggestions),
+        "total_reviews": total_reviewed,
+        "accepted": accepted,
+        "rejected": rejected,
+        "modified": modified,
+        "manual_additions": manual,
+        "final_codes_count": len(finals),
+        "acceptance_rate": round(acceptance_rate, 3),
+    }
+
+    if coding_result:
+        metrics["kb_version"] = coding_result.kb_version
+        metrics["policy_version"] = coding_result.policy_version
+        metrics["model_version"] = coding_result.model_version
+        metrics["processing_time_ms"] = coding_result.processing_time_ms
+
+    return metrics
+
+
+# ============================================================================
+# Registry Export Endpoints (Phase 3-4)
+# ============================================================================
+
+
+@router.post(
+    "/procedures/{proc_id}/registry/export",
+    response_model=RegistryExportResponse,
+    summary="Export procedure to registry",
+    description="Creates a registry entry from final codes and procedure metadata.",
+)
+def export_to_registry(
+    proc_id: str,
+    request: RegistryExportRequest,
+    registry_service: RegistryService = Depends(get_registry_service),
+    store: ProcedureStore = Depends(get_procedure_store),
+) -> RegistryExportResponse:
+    """Export procedure data to IP Registry.
+
+    This endpoint:
+    1. Retrieves final codes from ProcedureStore
+    2. Maps CPT codes to registry boolean flags
+    3. Merges procedure metadata from request or external source
+    4. Validates against the target registry schema
+    5. Persists the registry entry
+
+    Args:
+        proc_id: Procedure identifier
+        request: Export request with metadata and version
+        registry_service: Injected RegistryService
+        store: Injected ProcedureStore
+
+    Returns:
+        RegistryExportResponse with the registry entry
+
+    Raises:
+        HTTPException: 404 if no final codes, 500 on service error
+    """
+    logger.info(
+        "Registry export requested",
+        extra={
+            "procedure_id": proc_id,
+            "registry_version": request.registry_version,
+        },
+    )
+
+    # Get final codes for this procedure
+    final_codes = store.get_final_codes(proc_id)
+    if not final_codes:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No final codes found for procedure '{proc_id}'. "
+            "Complete the coding review workflow first.",
+        )
+
+    try:
+        with timed("api.registry_export") as timing:
+            result = registry_service.export_procedure(
+                procedure_id=proc_id,
+                final_codes=final_codes,
+                procedure_metadata=request.procedure_metadata,
+                version=request.registry_version,
+            )
+
+        # Persist the export
+        export_record = {
+            "registry_id": result.registry_id,
+            "schema_version": result.schema_version,
+            "export_id": result.export_id,
+            "export_timestamp": result.export_timestamp.isoformat(),
+            "status": result.status,
+            "bundle": result.entry.model_dump(mode="json"),
+            "warnings": result.warnings,
+        }
+        store.save_export(proc_id, export_record)
+
+        # Record metrics
+        CodingMetrics.record_registry_export(
+            status=result.status,
+            version=request.registry_version,
+            latency_ms=timing.elapsed_ms,
+        )
+
+        logger.info(
+            "Registry export completed",
+            extra={
+                "procedure_id": proc_id,
+                "export_id": result.export_id,
+                "status": result.status,
+                "num_warnings": len(result.warnings),
+                "processing_time_ms": timing.elapsed_ms,
+            },
+        )
+
+        return RegistryExportResponse(
+            procedure_id=proc_id,
+            registry_id=result.registry_id,
+            schema_version=result.schema_version,
+            export_id=result.export_id,
+            export_timestamp=result.export_timestamp,
+            status=result.status,
+            bundle=result.entry.model_dump(mode="json"),
+            warnings=result.warnings,
+        )
+
+    except RegistryError as e:
+        logger.error(f"Registry export error: {e}", extra={"procedure_id": proc_id})
+        raise HTTPException(
+            status_code=500,
+            detail=f"Registry export error: {str(e)}",
+        )
+    except PersistenceError as e:
+        logger.error(f"Persistence error: {e}", extra={"procedure_id": proc_id})
+        raise HTTPException(
+            status_code=500,
+            detail=f"Storage error: {str(e)}",
+        )
+    except Exception as e:
+        logger.exception(f"Unexpected error in registry export: {e}", extra={"procedure_id": proc_id})
+        raise HTTPException(
+            status_code=500,
+            detail=f"Unexpected error: {str(e)}",
+        )
+
+
+@router.get(
+    "/procedures/{proc_id}/registry/preview",
+    response_model=RegistryPreviewResponse,
+    summary="Preview registry entry",
+    description="Preview the registry entry without committing the export.",
+)
+def preview_registry_entry(
+    proc_id: str,
+    registry_version: str = Query("v2", description="Schema version (v2 or v3)"),
+    registry_service: RegistryService = Depends(get_registry_service),
+    store: ProcedureStore = Depends(get_procedure_store),
+) -> RegistryPreviewResponse:
+    """Preview registry entry before export.
+
+    Returns a draft registry entry with validation warnings.
+    Does NOT persist the entry.
+
+    This is useful for:
+    - Clinician review before finalizing export
+    - UI preview with editable fields
+    - QA checks for completeness
+
+    Args:
+        proc_id: Procedure identifier
+        registry_version: Target schema version
+        registry_service: Injected RegistryService
+        store: Injected ProcedureStore
+
+    Returns:
+        RegistryPreviewResponse with draft entry and completeness info
+    """
+    logger.info(
+        "Registry preview requested",
+        extra={
+            "procedure_id": proc_id,
+            "registry_version": registry_version,
+        },
+    )
+
+    # Get final codes (preview works even with no final codes)
+    final_codes = store.get_final_codes(proc_id)
+
+    try:
+        draft = registry_service.build_draft_entry(
+            procedure_id=proc_id,
+            final_codes=final_codes,
+            procedure_metadata={},  # Preview uses empty metadata
+            version=registry_version,
+        )
+
+        # Record completeness metric
+        CodingMetrics.record_registry_completeness(
+            score=draft.completeness_score,
+            version=registry_version,
+        )
+
+        logger.info(
+            "Registry preview generated",
+            extra={
+                "procedure_id": proc_id,
+                "completeness_score": draft.completeness_score,
+                "num_warnings": len(draft.warnings),
+                "num_missing_fields": len(draft.missing_fields),
+            },
+        )
+
+        return RegistryPreviewResponse(
+            procedure_id=proc_id,
+            registry_id="ip_registry",
+            schema_version=registry_version,
+            status="preview",
+            bundle=draft.entry.model_dump(mode="json"),
+            completeness_score=draft.completeness_score,
+            missing_fields=draft.missing_fields,
+            suggested_values=draft.suggested_values,
+            warnings=draft.warnings,
+        )
+
+    except RegistryError as e:
+        logger.error(f"Registry preview error: {e}", extra={"procedure_id": proc_id})
+        raise HTTPException(
+            status_code=500,
+            detail=f"Registry preview error: {str(e)}",
+        )
+    except Exception as e:
+        logger.exception(f"Unexpected error in registry preview: {e}", extra={"procedure_id": proc_id})
+        raise HTTPException(
+            status_code=500,
+            detail=f"Unexpected error: {str(e)}",
+        )
+
+
+@router.get(
+    "/procedures/{proc_id}/registry/export",
+    response_model=RegistryExportResponse,
+    summary="Get existing registry export",
+    description="Retrieve a previously exported registry entry.",
+)
+def get_registry_export(
+    proc_id: str,
+    store: ProcedureStore = Depends(get_procedure_store),
+) -> RegistryExportResponse:
+    """Retrieve a previously exported registry entry.
+
+    Args:
+        proc_id: Procedure identifier
+        store: Injected ProcedureStore
+
+    Returns:
+        RegistryExportResponse with the stored export
+
+    Raises:
+        HTTPException: 404 if no export exists for this procedure
+    """
+    export_record = store.get_export(proc_id)
+    if not export_record:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No registry export found for procedure '{proc_id}'. "
+            "Use POST /registry/export to create one.",
+        )
+
+    return RegistryExportResponse(
+        procedure_id=proc_id,
+        registry_id=export_record["registry_id"],
+        schema_version=export_record["schema_version"],
+        export_id=export_record["export_id"],
+        export_timestamp=datetime.fromisoformat(export_record["export_timestamp"]),
+        status=export_record["status"],
+        bundle=export_record["bundle"],
+        warnings=export_record.get("warnings", []),
+    )
+
+
+# ============================================================================
+# Store management (for testing)
+# ============================================================================
+
+
+def clear_procedure_stores(proc_id: str | None = None) -> None:
+    """Clear procedure stores for a procedure or all procedures.
+
+    This function accesses the global ProcedureStore singleton and clears data.
+    Primarily used for testing to ensure clean state between tests.
+
+    Args:
+        proc_id: If provided, clear only that procedure's data.
+                 If None, clear all data.
+    """
+    from modules.api.dependencies import get_procedure_store
+    store = get_procedure_store()
+    store.clear_all(proc_id)
