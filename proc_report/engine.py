@@ -666,6 +666,7 @@ class ReporterEngine:
             "preop_diagnosis_text": bundle.preop_diagnosis_text,
             "postop_diagnosis_text": bundle.postop_diagnosis_text,
             "impression_plan": bundle.impression_plan,
+            "acknowledged_omissions": bundle.acknowledged_omissions,
         }
         if extra_context:
             context.update(extra_context)

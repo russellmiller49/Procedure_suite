@@ -31,3 +31,12 @@ SPECIMEN(S): {{ specimens_text or "Not collected" }}
 
 IMPRESSION/PLAN:
 {{ impression_plan or "Pending" }}
+{% if acknowledged_omissions %}
+
+## Missing Details (not present in original dictation)
+{% for proc_id, items in acknowledged_omissions.items() %}
+{% if items %}
+- **{{ proc_id }}**: {{ items | join('; ') }}
+{% endif %}
+{% endfor %}
+{% endif %}

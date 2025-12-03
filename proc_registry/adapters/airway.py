@@ -94,13 +94,14 @@ class RoboticIonBronchoscopyAdapter(ExtractionAdapter):
 
     @classmethod
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
+        # Rule 1: Do NOT hallucinate vent values - only use if explicitly provided
         return {
             "navigation_plan_source": "pre-procedure CT" if source.get("nav_registration_method") else None,
             "vent_mode": source.get("ventilation_mode"),
-            "vent_rr": source.get("vent_rr") or 14,
-            "vent_tv_ml": source.get("vent_tv_ml") or 450,
-            "vent_peep_cm_h2o": source.get("vent_peep_cm_h2o") or 8,
-            "vent_fio2_pct": source.get("vent_fio2_pct") or 40,
+            "vent_rr": source.get("vent_rr"),  # No default - leave null if not stated
+            "vent_tv_ml": source.get("vent_tv_ml"),  # No default - leave null if not stated
+            "vent_peep_cm_h2o": source.get("vent_peep_cm_h2o"),  # No default - leave null if not stated
+            "vent_fio2_pct": source.get("vent_fio2_pct"),  # No default - leave null if not stated
             "vent_flow_rate": source.get("vent_flow_rate"),
             "vent_pmean_cm_h2o": source.get("vent_pmean_cm_h2o"),
             "cbct_performed": source.get("nav_imaging_verification") == "Cone Beam CT",
