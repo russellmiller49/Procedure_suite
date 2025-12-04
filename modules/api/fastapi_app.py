@@ -24,6 +24,7 @@ from pydantic import BaseModel
 
 # Import ML Advisor router
 from modules.api.ml_advisor_router import router as ml_advisor_router
+from modules.api.routes.phi import router as phi_router
 from modules.api.schemas import (
     CoderRequest,
     CoderResponse,
@@ -64,6 +65,8 @@ app = FastAPI(title="Procedure Suite API", version="0.3.0")
 
 # Include ML Advisor router
 app.include_router(ml_advisor_router, prefix="/api/v1", tags=["ML Advisor"])
+# Include PHI router
+app.include_router(phi_router)
 
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):

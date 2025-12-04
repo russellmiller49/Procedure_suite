@@ -1,0 +1,64 @@
+"""FastAPI dependencies for PHI service wiring.
+
+Demo-only wiring that uses the insecure demo encryption and stub scrubber.
+Production deployments should swap in KMS-backed encryption and a real scrubber.
+"""
+
+from __future__ import annotations
+
+import os
+from typing import Iterator
+
+from fastapi import Depends
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.pool import StaticPool
+
+from modules.phi import PHIService
+from modules.phi.adapters import DatabaseAuditLogger, InsecureDemoEncryptionAdapter, StubScrubber
+from modules.phi.db import Base
+
+
+def _default_db_url() -> str:
+    return os.getenv("PHI_DATABASE_URL") or os.getenv("DATABASE_URL", "sqlite:///./phi_demo.db")
+
+
+DATABASE_URL = _default_db_url()
+
+
+def _engine_kwargs(url: str) -> dict:
+    """Configure engine options for SQLite vs Postgres."""
+
+    kwargs: dict = {}
+    if url.startswith("sqlite"):
+        kwargs["connect_args"] = {"check_same_thread": False}
+        # In-memory SQLite needs StaticPool to share state across connections
+        if ":memory:" in url:
+            kwargs["poolclass"] = StaticPool
+    return kwargs
+
+
+engine = create_engine(DATABASE_URL, **_engine_kwargs(DATABASE_URL))
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
+def get_phi_session() -> Iterator[Session]:
+    """Provide a scoped SQLAlchemy session for PHI operations."""
+
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+def get_phi_service(db: Session = Depends(get_phi_session)) -> PHIService:
+    """Construct a PHIService with demo adapters (no raw PHI logging)."""
+
+    encryption = InsecureDemoEncryptionAdapter()
+    scrubber = StubScrubber()
+    audit_logger = DatabaseAuditLogger(db)
+    return PHIService(session=db, encryption=encryption, scrubber=scrubber, audit_logger=audit_logger)
+
+
+__all__ = ["get_phi_service", "get_phi_session", "engine", "SessionLocal"]

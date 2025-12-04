@@ -1,3 +1,3 @@
 # API Routes
 
-__all__ = ["procedure_codes"]
+__all__ = ["procedure_codes", "phi"]
