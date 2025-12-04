@@ -1,6 +1,27 @@
-"""End-to-end CPT coder pipeline."""
+"""DEPRECATED: Legacy end-to-end CPT coder pipeline.
 
+This module (CoderEngine) is deprecated in favor of the new hexagonal architecture.
+Use modules.coder.application.coding_service.CodingService instead.
+
+The new architecture provides:
+- Clean separation via ports/adapters (LLMAdvisorPort, KnowledgeBaseRepository)
+- Smart hybrid policy for rule+LLM merging
+- Full provenance tracking in CodeSuggestion objects
+- Proper NCCI/MER compliance validation
+
+This file is kept for backward compatibility with legacy tests but
+should NOT be imported in new code for production use.
+"""
 from __future__ import annotations
+
+import warnings
+
+# Emit deprecation warning when this module is imported
+warnings.warn(
+    "modules.coder.engine.CoderEngine is deprecated. Use modules.coder.application.coding_service.CodingService instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 from collections import defaultdict
 from dataclasses import asdict

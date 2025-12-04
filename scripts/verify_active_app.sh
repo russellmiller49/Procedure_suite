@@ -24,10 +24,10 @@ echo ""
 echo "2. Checking API version..."
 if curl -s http://localhost:8000/ > /dev/null 2>&1; then
     VERSION=$(curl -s http://localhost:8000/ | python3 -c "import sys, json; print(json.load(sys.stdin).get('version', 'unknown'))" 2>/dev/null)
-    if [ "$VERSION" = "0.2.0" ]; then
-        echo "   ✅ CORRECT: API version 0.2.0 (EnhancedCPTCoder)"
+    if [ "$VERSION" = "0.3.0" ]; then
+        echo "   ✅ CORRECT: API version 0.3.0 (CodingService hexagonal architecture)"
     else
-        echo "   ⚠️  API version: $VERSION"
+        echo "   ⚠️  API version: $VERSION (expected 0.3.0)"
     fi
 else
     echo "   ⚠️  Cannot connect to API (server may not be running)"
@@ -37,10 +37,14 @@ echo ""
 
 # Check which coder is imported
 echo "3. Checking coder implementation..."
-if grep -q "EnhancedCPTCoder" modules/api/fastapi_app.py; then
-    echo "   ✅ CORRECT: Using EnhancedCPTCoder"
+if grep -q "CodingService" modules/api/fastapi_app.py && grep -q "get_coding_service" modules/api/fastapi_app.py; then
+    echo "   ✅ CORRECT: Using CodingService (hexagonal architecture)"
 else
-    echo "   ❌ WRONG: Not using EnhancedCPTCoder"
+    echo "   ❌ WRONG: Not using CodingService"
+fi
+
+if grep -q "EnhancedCPTCoder" modules/api/fastapi_app.py; then
+    echo "   ❌ ERROR: Still importing legacy EnhancedCPTCoder"
 fi
 
 if grep -q "CoderEngine" modules/api/fastapi_app.py && ! grep -q "#.*CoderEngine" modules/api/fastapi_app.py; then

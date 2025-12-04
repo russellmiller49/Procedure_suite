@@ -1,11 +1,30 @@
+"""DEPRECATED: Legacy LLM coder module.
+
+This module is deprecated in favor of the new hexagonal architecture.
+Use modules.coder.adapters.llm.gemini_advisor.LLMAdvisorPort instead.
+
+The GeminiAdvisorAdapter in modules/coder/adapters/llm/ provides the
+canonical implementation for LLM-based code suggestions.
+
+This file is kept for backward compatibility with legacy tests but
+should NOT be imported in new code.
+"""
 from __future__ import annotations
 
 import json
 import re
+import warnings
 from typing import List
 
 from modules.common.llm import GeminiLLM
 from .schema import LLMCodeSuggestion
+
+# Emit deprecation warning when this module is imported
+warnings.warn(
+    "modules.coder.llm_coder is deprecated. Use modules.coder.adapters.llm.gemini_advisor instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 
 def safe_extract_json(text: str) -> dict:

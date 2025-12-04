@@ -74,103 +74,15 @@ _logger = logging.getLogger(__name__)
 
 
 # ============================================================================
-# Heavy NLP model preloading
+# Heavy NLP model preloading (delegated to modules.infra.nlp_warmup)
 # ============================================================================
-# These cached getters ensure heavy NLP models are loaded once and reused.
-# The startup hook below triggers initialization at app startup, not first request.
-# ============================================================================
-
-
-@lru_cache(maxsize=1)
-def get_spacy_model() -> Any:
-    """Return the spaCy/scispaCy model used for UMLS linking and NER.
-
-    The model is loaded once and cached. The model name is configurable via
-    the PROCSUITE_SPACY_MODEL environment variable (default: en_core_sci_sm).
-    """
-    try:
-        import spacy
-    except ImportError:
-        _logger.warning("spaCy not available - NLP features will be disabled")
-        return None
-
-    model_name = os.getenv("PROCSUITE_SPACY_MODEL", "en_core_sci_sm")
-    try:
-        _logger.info("Loading spaCy model: %s", model_name)
-        nlp = spacy.load(model_name)
-        _logger.info("spaCy model %s loaded successfully", model_name)
-        return nlp
-    except OSError:
-        _logger.warning(
-            "spaCy model '%s' not found. Install with: pip install %s",
-            model_name,
-            model_name.replace("_", "-"),
-        )
-        return None
-
-
-@lru_cache(maxsize=1)
-def get_sectionizer() -> Any:
-    """Return a cached SectionizerService instance.
-
-    The sectionizer uses medspaCy under the hood and is initialized once.
-    """
-    try:
-        from modules.common.sectionizer import SectionizerService
-
-        _logger.info("Initializing SectionizerService")
-        sectionizer = SectionizerService()
-        _logger.info("SectionizerService initialized successfully")
-        return sectionizer
-    except Exception as exc:
-        _logger.warning("Failed to initialize SectionizerService: %s", exc)
-        return None
-
-
-# Global flag to track NLP warmup status (useful for degraded mode)
-_nlp_warmup_successful: bool = False
-
-
-def _do_heavy_warmup() -> None:
-    """Perform the actual heavy NLP warmup (synchronous helper).
-
-    This is separated from the startup hook to allow easier testing
-    and to keep the try/except logic clean.
-    """
-    global _nlp_warmup_successful
-
-    _logger.info("Warming up heavy NLP resources...")
-
-    # Load spaCy model (used by proc_nlp and modules.common.umls_linking)
-    nlp = get_spacy_model()
-    if nlp:
-        # Warm up the pipeline with a small text to ensure all components are ready
-        _ = nlp("Warmup text for pipeline initialization.")
-
-    # Initialize sectionizer (uses medspaCy)
-    _ = get_sectionizer()
-
-    # Also warm up the UMLS linker from proc_nlp if available
-    try:
-        from proc_nlp.umls_linker import _load_model
-
-        model_name = os.getenv("PROCSUITE_SPACY_MODEL", "en_core_sci_sm")
-        _logger.info("Warming up UMLS linker with model: %s", model_name)
-        _load_model(model_name)
-        _logger.info("UMLS linker warmed up successfully")
-    except Exception as exc:
-        _logger.warning("UMLS linker warmup skipped: %s", exc)
-
-    _logger.info("Heavy NLP resources warmed up successfully")
-    _nlp_warmup_successful = True
-
-
-def is_nlp_warmed() -> bool:
-    """Check if NLP warmup completed successfully.
-
-    Useful for endpoints that want to return 503 if NLP is unavailable.
-    """
-    return _nlp_warmup_successful
+from modules.infra.nlp_warmup import (
+    should_skip_warmup,
+    warm_heavy_resources as _warm_heavy_resources,
+    is_nlp_warmed,
+    get_spacy_model,
+    get_sectionizer,
+)
 
 
 @app.on_event("startup")
@@ -184,25 +96,15 @@ async def warm_heavy_resources() -> None:
     Environment variables:
     - PROCSUITE_SKIP_WARMUP: Set to "1", "true", or "yes" to skip warmup entirely
     - RAILWAY_ENVIRONMENT: If set, skips warmup (Railway caches models separately)
-    - PROCSUITE_MODELS_WARMED: Legacy flag (informational only)
 
     On failure, the app will still start but NLP features may be degraded.
     """
-    # Check if warmup should be skipped via env var
-    skip_warmup = os.getenv("PROCSUITE_SKIP_WARMUP", "").lower() in ("1", "true", "yes")
-    if skip_warmup:
-        _logger.info("Skipping heavy NLP warmup because PROCSUITE_SKIP_WARMUP is set")
+    if should_skip_warmup():
+        _logger.info("Skipping heavy NLP warmup (disabled via environment)")
         return
 
-    # Skip if running on Railway - warm_models.py already loaded models and
-    # they're cached on disk. Loading them again here would cause a timeout.
-    if os.getenv("RAILWAY_ENVIRONMENT"):
-        _logger.info("Running on Railway - skipping startup warmup (models cached by warm_models.py)")
-        return
-
-    # Perform warmup with error handling - don't crash the app if warmup fails
     try:
-        _do_heavy_warmup()
+        await _warm_heavy_resources()
     except Exception as exc:
         _logger.error(
             "Heavy NLP warmup failed - starting API without NLP features. "

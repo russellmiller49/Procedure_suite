@@ -119,8 +119,9 @@ def mock_rule_engine(
     """
     Mock rule engine implementation.
 
-    In production, replace with:
-        from proc_autocode import run_coding_pipeline
+    In production, replace with the new hexagonal architecture:
+        from modules.coder.application.coding_service import CodingService
+        from modules.api.dependencies import get_coding_service
     """
     # Simulate rule-based coding
     codes = []
