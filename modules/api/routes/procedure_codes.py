@@ -416,6 +416,21 @@ def review_suggestion(
         source=suggestion.source,
     )
 
+    # Record LLM acceptance metrics for drift monitoring (only for AI suggestions)
+    if suggestion.source in ("llm", "hybrid", "rule"):
+        # Get procedure_type from stored result if available
+        coding_result = store.get_result(proc_id)
+        procedure_type = coding_result.procedure_type if coding_result else "unknown"
+
+        # Accepted = accept or modify (user kept the suggestion with possible changes)
+        accepted = 1 if request.action in ("accept", "modify") else 0
+        CodingMetrics.record_llm_acceptance(
+            accepted_count=accepted,
+            reviewed_count=1,
+            procedure_type=procedure_type,
+            source=suggestion.source,
+        )
+
     logger.info(
         "Review action completed",
         extra={

@@ -294,3 +294,131 @@ class TestCodingMetricsIntegration:
 
         # Check histogram
         assert "coder.pipeline_latency_ms" in data["histograms"]
+
+
+# ============================================================================
+# LLM Drift Metrics Tests
+# ============================================================================
+
+
+class TestLLMDriftEndpoint:
+    """Tests for GET /metrics/llm_drift endpoint."""
+
+    def test_llm_drift_disabled_backend(self, client):
+        """Test llm_drift endpoint when metrics disabled."""
+        with patch.dict(os.environ, {"METRICS_BACKEND": "null", "METRICS_ENABLED": "false"}, clear=False):
+            reset_metrics_client()
+            response = client.get("/metrics/llm_drift")
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["enabled"] is False
+
+    def test_llm_drift_empty_registry(self, client):
+        """Test llm_drift endpoint with no recorded metrics."""
+        with patch.dict(os.environ, {"METRICS_BACKEND": "registry"}, clear=False):
+            reset_metrics_client()
+            response = client.get("/metrics/llm_drift")
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["enabled"] is True
+        assert data["total_reviewed"] == 0
+        assert data["total_accepted"] == 0
+        assert data["overall_acceptance_rate"] == 0.0
+        assert data["by_procedure_type"] == []
+
+    def test_llm_drift_with_acceptance_data(self, client):
+        """Test llm_drift endpoint after recording acceptance metrics."""
+        from observability.coding_metrics import CodingMetrics
+
+        with patch.dict(os.environ, {"METRICS_BACKEND": "registry"}, clear=False):
+            reset_metrics_client()
+
+            # Simulate reviews: 3 accepted, 1 rejected for bronch_ebus
+            CodingMetrics.record_llm_acceptance(
+                accepted_count=3,
+                reviewed_count=4,
+                procedure_type="bronch_ebus",
+                source="hybrid",
+            )
+
+            # Another type: 1 accepted, 1 rejected for pleural
+            CodingMetrics.record_llm_acceptance(
+                accepted_count=1,
+                reviewed_count=2,
+                procedure_type="pleural",
+                source="llm",
+            )
+
+            response = client.get("/metrics/llm_drift")
+
+        assert response.status_code == 200
+        data = response.json()
+
+        assert data["enabled"] is True
+        assert data["total_reviewed"] == 6
+        assert data["total_accepted"] == 4
+        # 4/6 = 0.6667
+        assert 0.66 <= data["overall_acceptance_rate"] <= 0.67
+
+        # Check breakdown
+        assert len(data["by_procedure_type"]) == 2
+
+        # Find bronch_ebus entry
+        ebus_entry = next(
+            (d for d in data["by_procedure_type"] if d["procedure_type"] == "bronch_ebus"),
+            None,
+        )
+        assert ebus_entry is not None
+        assert ebus_entry["reviewed"] == 4
+        assert ebus_entry["accepted"] == 3
+        assert ebus_entry["acceptance_rate"] == 0.75
+
+    def test_llm_drift_manual_codes_not_counted(self, client):
+        """Test that manual codes don't affect LLM drift metrics."""
+        from observability.coding_metrics import CodingMetrics
+
+        with patch.dict(os.environ, {"METRICS_BACKEND": "registry"}, clear=False):
+            reset_metrics_client()
+
+            # Record some LLM acceptance
+            CodingMetrics.record_llm_acceptance(
+                accepted_count=2,
+                reviewed_count=3,
+                procedure_type="bronch_diagnostic",
+                source="llm",
+            )
+
+            # Manual code additions (these use record_manual_code_added, not record_llm_acceptance)
+            CodingMetrics.record_manual_code_added(procedure_type="bronch_diagnostic")
+            CodingMetrics.record_manual_code_added(procedure_type="bronch_diagnostic")
+
+            response = client.get("/metrics/llm_drift")
+
+        assert response.status_code == 200
+        data = response.json()
+
+        # Only the LLM acceptance should be counted
+        assert data["total_reviewed"] == 3
+        assert data["total_accepted"] == 2
+
+    def test_record_llm_acceptance_zero_reviewed(self, client):
+        """Test that record_llm_acceptance with 0 reviewed is a no-op."""
+        from observability.coding_metrics import CodingMetrics
+
+        with patch.dict(os.environ, {"METRICS_BACKEND": "registry"}, clear=False):
+            reset_metrics_client()
+
+            # This should be ignored
+            CodingMetrics.record_llm_acceptance(
+                accepted_count=0,
+                reviewed_count=0,
+                procedure_type="unknown",
+            )
+
+            response = client.get("/metrics/llm_drift")
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["total_reviewed"] == 0

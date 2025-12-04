@@ -154,3 +154,124 @@ def get_metrics_status() -> dict[str, Any]:
             status["histograms_count"] = len(client._histograms)
 
     return status
+
+
+@router.get(
+    "/metrics/llm_drift",
+    summary="LLM drift monitoring",
+    description="Get LLM suggestion acceptance metrics for drift detection.",
+)
+def get_llm_drift_metrics() -> dict[str, Any]:
+    """Get LLM drift monitoring metrics.
+
+    Returns aggregated acceptance metrics from the in-process registry,
+    useful for quick drift detection without querying Prometheus.
+
+    Response includes:
+    - Overall acceptance rate
+    - Acceptance breakdown by procedure_type
+    - Raw counts for reviewed and accepted suggestions
+
+    Note: This endpoint uses the in-process metrics registry.
+    For historical data, query Prometheus directly.
+    """
+    from observability.coding_metrics import CodingMetrics
+
+    if not _is_metrics_enabled():
+        return {
+            "error": "Metrics disabled",
+            "enabled": False,
+        }
+
+    client = get_metrics_client()
+
+    if not isinstance(client, RegistryMetricsClient):
+        return {
+            "enabled": True,
+            "backend": type(client).__name__,
+            "note": "LLM drift metrics only available with registry backend",
+            "by_procedure_type": {},
+        }
+
+    # Extract LLM acceptance metrics from the registry
+    json_data = client.export_json()
+    counters = json_data.get("counters", {})
+    gauges = json_data.get("gauges", {})
+
+    # Get the acceptance counters
+    reviewed_data = counters.get(CodingMetrics.LLM_SUGGESTIONS_REVIEWED, {})
+    accepted_data = counters.get(CodingMetrics.LLM_SUGGESTIONS_ACCEPTED, {})
+    acceptance_rate_data = gauges.get(CodingMetrics.ACCEPTANCE_RATE, {})
+
+    # Parse and aggregate by procedure_type
+    by_procedure_type: dict[str, dict[str, Any]] = {}
+
+    # Parse label strings to extract procedure_type
+    for labels_str, reviewed_count in reviewed_data.items():
+        proc_type = _extract_label(labels_str, "procedure_type") or "unknown"
+        source = _extract_label(labels_str, "source") or "unknown"
+
+        key = f"{proc_type}:{source}"
+        if key not in by_procedure_type:
+            by_procedure_type[key] = {
+                "procedure_type": proc_type,
+                "source": source,
+                "reviewed": 0,
+                "accepted": 0,
+                "acceptance_rate": 0.0,
+            }
+        by_procedure_type[key]["reviewed"] += reviewed_count
+
+    for labels_str, accepted_count in accepted_data.items():
+        proc_type = _extract_label(labels_str, "procedure_type") or "unknown"
+        source = _extract_label(labels_str, "source") or "unknown"
+
+        key = f"{proc_type}:{source}"
+        if key not in by_procedure_type:
+            by_procedure_type[key] = {
+                "procedure_type": proc_type,
+                "source": source,
+                "reviewed": 0,
+                "accepted": 0,
+                "acceptance_rate": 0.0,
+            }
+        by_procedure_type[key]["accepted"] += accepted_count
+
+    # Calculate acceptance rates
+    for key, data in by_procedure_type.items():
+        if data["reviewed"] > 0:
+            data["acceptance_rate"] = round(data["accepted"] / data["reviewed"], 4)
+
+    # Calculate overall totals
+    total_reviewed = sum(d["reviewed"] for d in by_procedure_type.values())
+    total_accepted = sum(d["accepted"] for d in by_procedure_type.values())
+    overall_rate = round(total_accepted / total_reviewed, 4) if total_reviewed > 0 else 0.0
+
+    return {
+        "enabled": True,
+        "backend": "registry",
+        "total_reviewed": total_reviewed,
+        "total_accepted": total_accepted,
+        "overall_acceptance_rate": overall_rate,
+        "by_procedure_type": list(by_procedure_type.values()),
+    }
+
+
+def _extract_label(labels_str: str, label_name: str) -> str | None:
+    """Extract a label value from a Prometheus label string.
+
+    Args:
+        labels_str: String like '{procedure_type="bronch_ebus",source="llm"}'
+        label_name: Name of the label to extract
+
+    Returns:
+        The label value or None if not found
+    """
+    if not labels_str:
+        return None
+
+    # Parse format: {key="value",key2="value2"}
+    import re
+    pattern = rf'{label_name}="([^"]*)"'
+    match = re.search(pattern, labels_str)
+    return match.group(1) if match else None

@@ -37,6 +37,10 @@ class CodingMetrics:
     ACCEPTANCE_RATE = "coder.acceptance_rate"
     COMPLETENESS_SCORE = "coder.registry.completeness_score"
 
+    # LLM drift monitoring metrics
+    LLM_SUGGESTIONS_REVIEWED = "coder.llm.suggestions_reviewed"
+    LLM_SUGGESTIONS_ACCEPTED = "coder.llm.suggestions_accepted"
+
     @staticmethod
     def record_suggestions_generated(
         num_suggestions: int,
@@ -209,3 +213,39 @@ class CodingMetrics:
         client = get_metrics_client()
         tags = {"version": version}
         client.observe(CodingMetrics.COMPLETENESS_SCORE, score, tags)
+
+    @staticmethod
+    def record_llm_acceptance(
+        accepted_count: int,
+        reviewed_count: int,
+        procedure_type: str = "unknown",
+        source: str = "llm",
+    ) -> None:
+        """Record LLM suggestion acceptance metrics for drift monitoring.
+
+        This tracks how many AI suggestions were reviewed and accepted,
+        enabling drift detection over time. Only counts suggestions from
+        AI sources (llm, hybrid, rule), not manual additions.
+
+        Args:
+            accepted_count: Number of suggestions accepted (or modified and accepted)
+            reviewed_count: Total suggestions reviewed (accepted + rejected + modified)
+            procedure_type: Type of procedure for segmentation
+            source: Source filter (llm, hybrid, rule, or 'ai' for all non-manual)
+        """
+        if reviewed_count <= 0:
+            return  # No-op if nothing was reviewed
+
+        client = get_metrics_client()
+        tags = {
+            "procedure_type": procedure_type,
+            "source": source,
+        }
+
+        # Record counts as counters for accurate rate calculation
+        client.incr(CodingMetrics.LLM_SUGGESTIONS_REVIEWED, tags, reviewed_count)
+        client.incr(CodingMetrics.LLM_SUGGESTIONS_ACCEPTED, tags, accepted_count)
+
+        # Also record the instantaneous acceptance rate as a gauge
+        acceptance_rate = accepted_count / reviewed_count
+        CodingMetrics.record_acceptance_rate(acceptance_rate, procedure_type)
