@@ -1,0 +1,183 @@
+"""Adapter to convert CodingService output to legacy CoderOutput format.
+
+This module provides backward compatibility for the /v1/coder/run endpoint
+by converting CodingResult/CodeSuggestion from the new hexagonal architecture
+to the legacy CoderOutput/CodeDecision format expected by existing clients.
+"""
+
+from __future__ import annotations
+
+from typing import Optional
+
+from proc_schemas.coding import CodingResult, CodeSuggestion
+from modules.coder.schema import (
+    CodeDecision,
+    CoderOutput,
+    BundleDecision,
+    FinancialSummary,
+    PerCodeBilling,
+    LLMCodeSuggestion,
+)
+from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
+
+
+def convert_suggestion_to_code_decision(
+    suggestion: CodeSuggestion,
+    kb_repo: Optional[KnowledgeBaseRepository] = None,
+) -> CodeDecision:
+    """Convert a CodeSuggestion to the legacy CodeDecision format.
+
+    Args:
+        suggestion: CodeSuggestion from CodingService
+        kb_repo: Optional KB repository for RVU lookups
+
+    Returns:
+        CodeDecision in the legacy format
+    """
+    # Build rationale from reasoning
+    rationale: list[str] = []
+    if suggestion.reasoning:
+        if suggestion.reasoning.rule_paths:
+            rationale.extend(suggestion.reasoning.rule_paths)
+        if suggestion.reasoning.trigger_phrases:
+            rationale.append(f"Triggered by: {', '.join(suggestion.reasoning.trigger_phrases)}")
+        if suggestion.reasoning.ncci_notes:
+            rationale.append(f"NCCI: {suggestion.reasoning.ncci_notes}")
+        if suggestion.reasoning.mer_notes:
+            rationale.append(f"MER: {suggestion.reasoning.mer_notes}")
+
+    if not rationale:
+        rationale = [f"Suggested by {suggestion.source} engine"]
+
+    # Build context dict
+    context: dict = {
+        "hybrid_decision": suggestion.hybrid_decision,
+        "review_flag": suggestion.review_flag,
+        "evidence_verified": suggestion.evidence_verified,
+    }
+
+    # Add RVU data if KB available
+    rvu_data: dict = {}
+    if kb_repo:
+        proc_info = kb_repo.get_procedure_info(suggestion.code)
+        if proc_info:
+            rvu_data = {
+                "work_rvu": proc_info.work_rvu,
+                "facility_pe_rvu": proc_info.facility_pe_rvu,
+                "malpractice_rvu": proc_info.malpractice_rvu,
+                "total_rvu": proc_info.total_facility_rvu,
+            }
+            context["rvu_data"] = rvu_data
+
+    return CodeDecision(
+        cpt=suggestion.code,
+        description=suggestion.description,
+        modifiers=[],  # Modifiers not tracked in CodeSuggestion
+        rationale=rationale,
+        confidence=suggestion.final_confidence,
+        context=context,
+        rule_trace=suggestion.reasoning.rule_paths if suggestion.reasoning else [],
+    )
+
+
+def convert_coding_result_to_coder_output(
+    result: CodingResult,
+    kb_repo: Optional[KnowledgeBaseRepository] = None,
+    locality: str = "00",
+    conversion_factor: float = 32.7442,  # 2025 Medicare conversion factor
+) -> CoderOutput:
+    """Convert a CodingResult to the legacy CoderOutput format.
+
+    Args:
+        result: CodingResult from CodingService.generate_result()
+        kb_repo: Optional KB repository for RVU lookups
+        locality: Geographic locality code for RVU calculations
+        conversion_factor: Medicare conversion factor
+
+    Returns:
+        CoderOutput in the legacy format for API compatibility
+    """
+    # Convert suggestions to CodeDecision objects
+    codes: list[CodeDecision] = []
+    for suggestion in result.suggestions:
+        code_decision = convert_suggestion_to_code_decision(suggestion, kb_repo)
+        codes.append(code_decision)
+
+    # Build NCCI actions from warning notes
+    ncci_actions: list[BundleDecision] = []
+    for note in result.ncci_notes:
+        # Parse NCCI notes into BundleDecision if possible
+        # Format is typically "Code X bundles with Code Y"
+        ncci_actions.append(BundleDecision(
+            pair=("", ""),  # Would need parsing from note
+            action="bundled",
+            reason=note,
+        ))
+
+    # Build financial summary if KB available
+    financials: Optional[FinancialSummary] = None
+    if kb_repo and codes:
+        per_code_billing: list[PerCodeBilling] = []
+        total_work_rvu = 0.0
+        total_facility_payment = 0.0
+
+        for code_decision in codes:
+            proc_info = kb_repo.get_procedure_info(code_decision.cpt)
+            if proc_info:
+                work_rvu = proc_info.work_rvu
+                total_rvu = proc_info.total_facility_rvu
+                payment = total_rvu * conversion_factor
+
+                total_work_rvu += work_rvu
+                total_facility_payment += payment
+
+                per_code_billing.append(PerCodeBilling(
+                    cpt_code=code_decision.cpt,
+                    description=code_decision.description,
+                    modifiers=code_decision.modifiers,
+                    work_rvu=work_rvu,
+                    total_facility_rvu=total_rvu,
+                    facility_payment=payment,
+                    allowed_facility_rvu=total_rvu,
+                    allowed_facility_payment=payment,
+                ))
+
+        if per_code_billing:
+            financials = FinancialSummary(
+                conversion_factor=conversion_factor,
+                locality=locality,
+                per_code=per_code_billing,
+                total_work_rvu=total_work_rvu,
+                total_facility_payment=total_facility_payment,
+                total_nonfacility_payment=0.0,
+            )
+
+    # Extract LLM suggestions (codes from LLM source)
+    llm_suggestions: list[LLMCodeSuggestion] = []
+    for suggestion in result.suggestions:
+        if suggestion.source in ("llm", "hybrid"):
+            rationale = ""
+            if suggestion.reasoning and suggestion.reasoning.rule_paths:
+                rationale = "; ".join(suggestion.reasoning.rule_paths)
+            llm_suggestions.append(LLMCodeSuggestion(
+                cpt=suggestion.code,
+                description=suggestion.description,
+                rationale=rationale,
+            ))
+
+    # Collect all warnings
+    warnings = list(result.warnings)
+    warnings.extend(result.ncci_notes)
+    warnings.extend(result.mer_notes)
+
+    return CoderOutput(
+        codes=codes,
+        intents=[],  # Intents not tracked in new architecture
+        mer_summary=None,
+        ncci_actions=ncci_actions,
+        warnings=warnings,
+        version=f"new_arch_{result.policy_version}",
+        financials=financials,
+        llm_suggestions=llm_suggestions,
+        llm_disagreements=[],  # Could extract from hybrid decisions
+    )

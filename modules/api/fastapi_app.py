@@ -2,7 +2,7 @@
 
 ⚠️ SOURCE OF TRUTH: This is the MAIN FastAPI application.
 - Running on port 8000 via scripts/devserver.sh
-- Uses EnhancedCPTCoder from proc_autocode/coder.py
+- Uses CodingService from modules/coder/application/coding_service.py (new hexagonal architecture)
 - DO NOT edit api/app.py - it's deprecated
 
 See AI_ASSISTANT_GUIDE.md for details.
@@ -12,11 +12,12 @@ from __future__ import annotations
 
 import logging
 import os
+import uuid
 from dataclasses import asdict
 from functools import lru_cache
 from typing import Any, List
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -40,7 +41,12 @@ from modules.coder.schema import CodeDecision, CoderOutput
 from modules.common.knowledge import knowledge_hash, knowledge_version
 from modules.common.spans import Span
 from modules.registry.engine import RegistryEngine
-from proc_autocode.coder import EnhancedCPTCoder
+
+# New architecture imports
+from modules.coder.application.coding_service import CodingService
+from modules.api.dependencies import get_coding_service
+from modules.api.coder_adapter import convert_coding_result_to_coder_output
+
 from proc_report import MissingFieldIssue, ProcedureBundle
 from proc_report.engine import (
     ReporterEngine,
@@ -54,15 +60,10 @@ from proc_report.engine import (
 from proc_report.inference import InferenceEngine
 from proc_report.validation import ValidationEngine
 
-app = FastAPI(title="Procedure Suite API", version="0.2.0")
+app = FastAPI(title="Procedure Suite API", version="0.3.0")
 
 # Include ML Advisor router
 app.include_router(ml_advisor_router, prefix="/api/v1", tags=["ML Advisor"])
-
-# Initialize enhanced coder (singleton)
-# Enable LLM advisor if CODER_USE_LLM_ADVISOR env var is set
-use_llm_advisor = os.getenv("CODER_USE_LLM_ADVISOR", "").lower() in ("true", "1", "yes")
-_enhanced_coder = EnhancedCPTCoder(use_llm_advisor=use_llm_advisor)
 
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
@@ -216,6 +217,39 @@ class LocalityInfo(BaseModel):
     name: str
 
 
+@lru_cache(maxsize=1)
+def _load_gpci_data() -> dict[str, str]:
+    """Load GPCI locality data from CSV file.
+
+    Returns a dict mapping locality codes to locality names.
+    """
+    import csv
+    from pathlib import Path
+
+    gpci_file = Path("data/RVU_files/gpci_2025.csv")
+    if not gpci_file.exists():
+        gpci_file = Path("proc_autocode/rvu/data/gpci_2025.csv")
+
+    localities: dict[str, str] = {}
+    if gpci_file.exists():
+        try:
+            with gpci_file.open() as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    code = row.get("mac_locality", row.get("locality_code", ""))
+                    name = row.get("locality_name", "")
+                    if code and name:
+                        localities[code] = name
+        except Exception as e:
+            _logger.warning(f"Failed to load GPCI data: {e}")
+
+    # Add default national locality if not present
+    if "00" not in localities:
+        localities["00"] = "National (Default)"
+
+    return localities
+
+
 @app.get("/")
 async def root(request: Request) -> Any:
     """Root endpoint with API information or redirect to UI."""
@@ -248,7 +282,7 @@ async def root(request: Request) -> Any:
                 "metrics": "/api/v1/ml-advisor/metrics",
             },
         },
-        "note": "Coder now uses EnhancedCPTCoder with RVU calculations and IP knowledge base bundling. ML Advisor endpoints available at /api/v1/ml-advisor/*",
+        "note": "Coder uses CodingService (hexagonal architecture) with smart hybrid policy. ML Advisor endpoints available at /api/v1/ml-advisor/*",
     }
 
 
@@ -265,131 +299,61 @@ async def knowledge() -> KnowledgeMeta:
 @app.get("/v1/coder/localities", response_model=List[LocalityInfo])
 async def coder_localities() -> List[LocalityInfo]:
     """List available geographic localities for RVU calculation."""
-    localities = []
-    for code, record in _enhanced_coder.rvu_calc.gpci_data.items():
-        localities.append(LocalityInfo(code=code, name=record.locality_name))
+    gpci_data = _load_gpci_data()
+    localities = [
+        LocalityInfo(code=code, name=name)
+        for code, name in gpci_data.items()
+    ]
     localities.sort(key=lambda x: x.name)
     return localities
 
 
 @app.post("/v1/coder/run", response_model=CoderResponse)
-async def coder_run(req: CoderRequest, mode: str | None = None) -> CoderResponse:
-    """Enhanced auto-coding with RVU calculations and bundling rules."""
-    procedure_data = {
-        "note_text": req.note,
-        "locality": req.locality,
-        "setting": req.setting,
-        "output_mode": mode or req.mode,
-    }
-    
-    # Use enhanced coder
-    result = _enhanced_coder.code_procedure(procedure_data)
-    
-    # Convert to CoderOutput format for API compatibility
-    codes = []
-    for code_data in result.get("codes", []):
-        cpt = code_data.get("cpt", "")
-        # Get description from the code_data (populated by enhanced coder)
-        description = code_data.get("description") or f"CPT {cpt}"
-        rvu_data = code_data.get("rvu_data") or {}
-        rationale_raw = code_data.get("rationale") or ["Detected via IP knowledge base"]
-        if isinstance(rationale_raw, list):
-            rationale_val = rationale_raw
-        else:
-            rationale_val = [str(rationale_raw)]
+async def coder_run(
+    req: CoderRequest,
+    mode: str | None = None,
+    coding_service: CodingService = Depends(get_coding_service),
+) -> CoderResponse:
+    """Auto-coding using CodingService (new hexagonal architecture).
 
-        codes.append(CodeDecision(
-            cpt=cpt,
-            description=description,
-            modifiers=code_data.get("modifiers", []),
-            rationale=rationale_val,
-            confidence=0.9,
-            context={
-                "groups": code_data.get("groups", []),
-                "rvu_data": rvu_data,
-                "qa_flags": code_data.get("qa_flags", []),
-            },
-            mer_role=code_data.get("mer_role"),
-            mer_explanation=code_data.get("mer_explanation"),
-            mer_allowed=rvu_data.get("payment") * rvu_data.get("multiplier", 1.0) if rvu_data else None,
-        ))
-    
-    # Build financials summary from enhanced coder result
-    financials = None
-    if result.get("total_work_rvu") is not None:
-        from modules.coder.schema import FinancialSummary, PerCodeBilling
-        
-        per_code_billing = []
-        for code_data in result.get("codes", []):
-            rvu_data = code_data.get("rvu_data") or {}
-            multiplier = rvu_data.get("multiplier", 1.0)
-            mer_role = code_data.get("mer_role")
-            payment = rvu_data.get("payment", 0.0)  # Note: key is "payment" not "payment_amount"
-            per_code_billing.append(PerCodeBilling(
-                cpt_code=code_data.get("cpt", ""),
-                description=code_data.get("description") or rvu_data.get("description", ""),
-                modifiers=code_data.get("modifiers", []),
-                work_rvu=rvu_data.get("work_rvu", 0.0),
-                total_facility_rvu=rvu_data.get("total_rvu", 0.0),
-                facility_payment=payment,
-                allowed_facility_rvu=rvu_data.get("work_rvu", 0.0) * multiplier,
-                allowed_facility_payment=payment * multiplier,
-                mer_role=mer_role,
-                mer_allowed=payment * multiplier if mer_role else None,
-                mer_reduction=(1.0 - multiplier) * payment if mer_role == "secondary" else None,
-                mp_rule=f"multiple_endoscopy_{mer_role}" if mer_role else None,
-            ))
-        
-        financials = FinancialSummary(
-            conversion_factor=result.get("conversion_factor") or 0.0,
-            locality=result.get("locality", "00"),
-            per_code=per_code_billing,
-            total_work_rvu=result.get("total_work_rvu", 0.0),
-            total_facility_payment=result.get("estimated_payment", 0.0),
-            total_nonfacility_payment=0.0,  # Enhanced coder currently only supports facility
-        )
-    
-    # Extract LLM suggestions and disagreements if available
-    llm_suggestions = []
-    llm_disagreements = []
-    if result.get("llm_suggestions"):
-        from modules.coder.schema import LLMCodeSuggestion
-        llm_suggestions = [
-            LLMCodeSuggestion(
-                cpt=s.get("cpt", ""),
-                description=s.get("description", ""),
-                rationale=s.get("rationale", ""),
-            )
-            for s in result.get("llm_suggestions", [])
-        ]
-    if result.get("llm_disagreements"):
-        llm_disagreements = result.get("llm_disagreements", [])
+    This endpoint uses CodingService with:
+    - Rule-based coding engine
+    - Optional LLM advisor (smart hybrid policy)
+    - NCCI/MER compliance validation
+    - Evidence verification in note text
 
-    # Convert bundling decisions to BundleDecision format
-    from modules.coder.schema import BundleDecision
-    ncci_actions = []
-    for bundle in result.get("bundled_codes", []):
-        ncci_actions.append(BundleDecision(
-            pair=(bundle.get("dominant_cpt", ""), bundle.get("bundled_cpt", "")),
-            action="bundled",
-            reason=bundle.get("reason", ""),
-            rule=bundle.get("rule"),
-        ))
+    Args:
+        req: CoderRequest with note text, locality, setting
+        mode: Optional output mode override
+        coding_service: Injected CodingService instance
 
-    qa_warnings = result.get("qa_warnings", [])
+    Returns:
+        CoderOutput with codes, financials, warnings
+    """
+    # Generate a procedure ID for this request
+    procedure_id = str(uuid.uuid4())
 
-    return CoderOutput(
-        codes=codes,
-        intents=[],  # Enhanced coder doesn't provide intents
-        mer_summary=None,  # Could be added later
-        financials=financials,
-        ncci_actions=ncci_actions,  # Bundling decisions with explanations
-        warnings=qa_warnings + llm_disagreements,
-        version="0.2.0",  # Enhanced version
-        llm_suggestions=llm_suggestions,
-        llm_disagreements=llm_disagreements,
-        llm_assistant_payload=result.get("llm_assistant_payload"),
+    # Determine if LLM should be used based on mode
+    use_llm = True
+    if mode == "rules_only" or req.mode == "rules_only":
+        use_llm = False
+
+    # Run the coding pipeline
+    result = coding_service.generate_result(
+        procedure_id=procedure_id,
+        report_text=req.note,
+        use_llm=use_llm,
+        procedure_type=None,  # Auto-detect
     )
+
+    # Convert to legacy CoderOutput format for backward compatibility
+    output = convert_coding_result_to_coder_output(
+        result=result,
+        kb_repo=coding_service.kb_repo,
+        locality=req.locality,
+    )
+
+    return output
 
 
 @app.post("/v1/registry/run", response_model=RegistryResponse)
@@ -672,20 +636,37 @@ async def qa_run(payload: QARunRequest) -> QARunResponse:
 
         # Run coder if requested
         if modules_run in ("coder", "all"):
-            procedure_data = {
-                "note_text": note_text,
-                "locality": "00",  # Default locality
-                "setting": "facility",
-            }
-            if procedure_type:
-                procedure_data["procedure_type"] = procedure_type
+            # Use CodingService from new hexagonal architecture
+            coding_service = get_coding_service()
+            procedure_id = str(uuid.uuid4())
 
-            coder_result = _enhanced_coder.code_procedure(procedure_data)
+            result = coding_service.generate_result(
+                procedure_id=procedure_id,
+                report_text=note_text,
+                use_llm=True,
+                procedure_type=procedure_type,
+            )
+
+            # Convert to output format expected by QA sandbox
             coder_output = {
-                "codes": coder_result.get("codes", []),
-                "total_work_rvu": coder_result.get("total_work_rvu"),
-                "estimated_payment": coder_result.get("estimated_payment"),
-                "bundled_codes": coder_result.get("bundled_codes", []),
+                "codes": [
+                    {
+                        "cpt": s.code,
+                        "description": s.description,
+                        "confidence": s.final_confidence,
+                        "source": s.source,
+                        "hybrid_decision": s.hybrid_decision,
+                        "review_flag": s.review_flag,
+                    }
+                    for s in result.suggestions
+                ],
+                "total_work_rvu": None,  # Would need RVU calculation service
+                "estimated_payment": None,
+                "bundled_codes": [],  # NCCI handled in CodingService
+                "kb_version": result.kb_version,
+                "policy_version": result.policy_version,
+                "model_version": result.model_version,
+                "processing_time_ms": result.processing_time_ms,
             }
 
     except HTTPException:
