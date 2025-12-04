@@ -18,6 +18,7 @@ and persists reasoning for audit.
 from __future__ import annotations
 
 from datetime import datetime
+import uuid
 from typing import Any, Literal
 
 from fastapi import APIRouter, HTTPException, Depends, Query
@@ -29,6 +30,8 @@ from proc_schemas.coding import CodeSuggestion, FinalCode, ReviewAction, CodingR
 from proc_schemas.reasoning import ReasoningFields
 from modules.coder.application.coding_service import CodingService
 from modules.api.dependencies import get_coding_service, get_registry_service, get_procedure_store
+from modules.api.phi_dependencies import get_phi_session
+from modules.coder.phi_gating import load_procedure_for_coding, is_phi_review_required
 from modules.common.exceptions import CodingError, KnowledgeBaseError, RegistryError, PersistenceError
 from modules.registry.application.registry_service import RegistryService
 from modules.domain.procedure_store.repository import ProcedureStore
@@ -165,6 +168,7 @@ def suggest_codes(
     request: SuggestCodesRequest,
     coding_service: CodingService = Depends(get_coding_service),
     store: ProcedureStore = Depends(get_procedure_store),
+    phi_db=Depends(get_phi_session),
 ) -> SuggestCodesResponse:
     """Trigger rule+LLM pipeline, persist CodeSuggestion[].
 
@@ -178,6 +182,33 @@ def suggest_codes(
     7. Returns suggestions with reasoning/provenance
     """
     procedure_type = request.procedure_type
+    require_review = is_phi_review_required()
+
+    report_text = request.report_text
+    try:
+        proc_uuid = uuid.UUID(proc_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid procedure_id format")
+
+    try:
+        proc = load_procedure_for_coding(phi_db, proc_uuid, require_review=require_review)
+    except PermissionError as exc:
+        logger.info(
+            "coding_phi_gated",
+            extra={"procedure_id": proc_id, "require_review": require_review, "reason": "not_reviewed"},
+        )
+        raise HTTPException(status_code=403, detail=str(exc))
+    except ValueError as exc:
+        logger.info(
+            "coding_phi_missing",
+            extra={"procedure_id": proc_id, "require_review": require_review},
+        )
+        raise HTTPException(status_code=404, detail=str(exc))
+
+    if proc is not None:
+        # Always prefer scrubbed text from reviewed procedure
+        report_text = proc.scrubbed_text
+        procedure_type = procedure_type or proc.document_type or "unknown"
 
     logger.info(
         "Suggest codes requested",
@@ -193,7 +224,7 @@ def suggest_codes(
             # Run the full coding pipeline
             result = coding_service.generate_result(
                 procedure_id=proc_id,
-                report_text=request.report_text,
+                report_text=report_text,
                 use_llm=request.use_llm,
                 procedure_type=procedure_type,
             )

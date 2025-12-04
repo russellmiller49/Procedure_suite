@@ -2,6 +2,7 @@
 
 from modules.phi.adapters.audit_logger_db import DatabaseAuditLogger
 from modules.phi.adapters.encryption_insecure_demo import InsecureDemoEncryptionAdapter
+from modules.phi.adapters.fernet_encryption import FernetEncryptionAdapter
 from modules.phi.adapters.scrubber_stub import StubScrubber
 
-__all__ = ["DatabaseAuditLogger", "InsecureDemoEncryptionAdapter", "StubScrubber"]
+__all__ = ["DatabaseAuditLogger", "InsecureDemoEncryptionAdapter", "FernetEncryptionAdapter", "StubScrubber"]

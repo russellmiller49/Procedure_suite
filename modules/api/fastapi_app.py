@@ -17,7 +17,7 @@ from dataclasses import asdict
 from functools import lru_cache
 from typing import Any, List
 
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -25,6 +25,9 @@ from pydantic import BaseModel
 # Import ML Advisor router
 from modules.api.ml_advisor_router import router as ml_advisor_router
 from modules.api.routes.phi import router as phi_router
+from modules.api.routes.procedure_codes import router as procedure_codes_router
+from modules.api.routes.metrics import router as metrics_router
+from modules.api.routes.phi_demo_cases import router as phi_demo_router
 from modules.api.schemas import (
     CoderRequest,
     CoderResponse,
@@ -47,6 +50,7 @@ from modules.registry.engine import RegistryEngine
 from modules.coder.application.coding_service import CodingService
 from modules.api.dependencies import get_coding_service
 from modules.api.coder_adapter import convert_coding_result_to_coder_output
+from modules.coder.phi_gating import is_phi_review_required
 
 from proc_report import MissingFieldIssue, ProcedureBundle
 from proc_report.engine import (
@@ -67,6 +71,12 @@ app = FastAPI(title="Procedure Suite API", version="0.3.0")
 app.include_router(ml_advisor_router, prefix="/api/v1", tags=["ML Advisor"])
 # Include PHI router
 app.include_router(phi_router)
+# Include procedure codes router
+app.include_router(procedure_codes_router, prefix="/api/v1", tags=["procedure-codes"])
+# Metrics router
+app.include_router(metrics_router, tags=["metrics"])
+# PHI demo cases router (non-PHI metadata)
+app.include_router(phi_demo_router)
 
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
@@ -235,8 +245,16 @@ async def coder_run(
     Returns:
         CoderOutput with codes, financials, warnings
     """
-    # Generate a procedure ID for this request
+    require_review = is_phi_review_required()
     procedure_id = str(uuid.uuid4())
+    report_text = req.note
+
+    # If PHI review is required, reject direct raw text coding
+    if require_review:
+        raise HTTPException(
+            status_code=400,
+            detail="Direct coding on raw text is disabled; submit via /v1/phi and review before coding.",
+        )
 
     # Determine if LLM should be used based on mode
     use_llm = True
@@ -246,7 +264,7 @@ async def coder_run(
     # Run the coding pipeline
     result = coding_service.generate_result(
         procedure_id=procedure_id,
-        report_text=req.note,
+        report_text=report_text,
         use_llm=use_llm,
         procedure_type=None,  # Auto-detect
     )

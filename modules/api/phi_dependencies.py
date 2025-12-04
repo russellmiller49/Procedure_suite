@@ -16,6 +16,7 @@ from sqlalchemy.pool import StaticPool
 
 from modules.phi import PHIService
 from modules.phi.adapters import DatabaseAuditLogger, InsecureDemoEncryptionAdapter, StubScrubber
+from modules.phi.adapters.fernet_encryption import FernetEncryptionAdapter
 from modules.phi.db import Base
 
 
@@ -52,10 +53,17 @@ def get_phi_session() -> Iterator[Session]:
         db.close()
 
 
-def get_phi_service(db: Session = Depends(get_phi_session)) -> PHIService:
-    """Construct a PHIService with demo adapters (no raw PHI logging)."""
+def _get_encryption_adapter():
+    mode = os.getenv("PHI_ENCRYPTION_MODE", "fernet").lower()
+    if mode == "demo":
+        return InsecureDemoEncryptionAdapter()
+    return FernetEncryptionAdapter()
 
-    encryption = InsecureDemoEncryptionAdapter()
+
+def get_phi_service(db: Session = Depends(get_phi_session)) -> PHIService:
+    """Construct a PHIService with configured adapters (no raw PHI logging)."""
+
+    encryption = _get_encryption_adapter()
     scrubber = StubScrubber()
     audit_logger = DatabaseAuditLogger(db)
     return PHIService(session=db, encryption=encryption, scrubber=scrubber, audit_logger=audit_logger)

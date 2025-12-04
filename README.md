@@ -41,6 +41,7 @@ This toolkit allows you to:
 | **`proc_autocode/`** | Enhanced CPT coding engine with Knowledge Base support. |
 | **`modules/registry/`** | LLM-based registry extraction pipeline. |
 | **`proc_report/`** | Template-based synoptic report generator. |
+| **`/ui/phi_demo.html`** | Synthetic PHI demo UI for scrubbing → vault → review → reidentify. |
 
 ## ⚠️ Note for AI Assistants
 

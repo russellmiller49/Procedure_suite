@@ -14,6 +14,7 @@ from fastapi.testclient import TestClient
 # Ensure warmup is skipped for tests and DB uses in-memory SQLite
 os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
 os.environ.setdefault("PHI_DATABASE_URL", "sqlite:///:memory:")
+os.environ.setdefault("PHI_ENCRYPTION_MODE", "demo")
 
 from modules.api.fastapi_app import app  # noqa: E402
 from modules.api.phi_dependencies import SessionLocal, engine  # noqa: E402

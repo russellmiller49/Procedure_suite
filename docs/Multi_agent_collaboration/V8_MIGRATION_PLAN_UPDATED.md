@@ -5,6 +5,27 @@ This document updates the original migration plan to incorporate the Human-in-th
 
 ---
 
+## Implementation snapshot (Phase 0.1–0.6)
+
+- PHI vault + review models/migrations are live (`PHIVault`, `ProcedureData`, `ScrubbingFeedback`, `AuditLog`).
+- PHIService provides preview, vault, reidentify, review fetch, and scrubbing feedback update.
+- /v1/phi API: preview, submit, status, procedure review, feedback, reidentify (raw text only on reidentify).
+- PHI review status: `ProcessingStatus.PHI_REVIEWED` is required for coding when `CODER_REQUIRE_PHI_REVIEW=true`.
+- Audit action: `SCRUBBING_FEEDBACK_APPLIED` records review events without raw PHI.
+- Coding PHI gating: `/api/v1/procedures/{id}/codes/suggest` enforces PHI review and uses only `ProcedureData.scrubbed_text`.
+- Encryption adapters:
+  - `PHI_ENCRYPTION_MODE=demo` → insecure demo adapter (synthetic data only).
+  - `PHI_ENCRYPTION_MODE=fernet` (default) → `FernetEncryptionAdapter` using `PHI_ENCRYPTION_KEY`.
+- Scrubber adapters: stub + Presidio scaffold (stubbed), ready to swap when Presidio is installed.
+
+Recommended env flags for the PHI demo
+- `CODER_REQUIRE_PHI_REVIEW=true` (forces reviewed status before coding)
+- `PHI_ENCRYPTION_MODE=fernet` and `PHI_ENCRYPTION_KEY=<fernet-key>` for closer-to-prod encryption
+- `PHI_DATABASE_URL` to point PHI tables to the desired Postgres/SQLite target
+- `PRESIDIO_NLP_MODEL` retained for future Presidio wiring
+
+The sections below remain the original migration narrative; implemented pieces above supersede earlier placeholders.
+
 ## Architecture Overview (Updated)
 
 ```

@@ -6,6 +6,8 @@ except for the reidentify endpoint (intended for PHI-safe UI only).
 
 from __future__ import annotations
 
+import logging
+import time
 import uuid
 from typing import List
 
@@ -19,6 +21,7 @@ from modules.phi.ports import ScrubResult
 from modules.phi.service import PHIService
 
 router = APIRouter(prefix="/v1/phi", tags=["phi"])
+logger = logging.getLogger("phi_api")
 
 
 class ScrubbedEntityModel(BaseModel):
@@ -111,10 +114,21 @@ def preview_scrub(
     payload: ScrubPreviewRequest,
     phi_service: PHIService = Depends(get_phi_service),
 ) -> ScrubPreviewResponse:
+    start = time.perf_counter()
     scrub_result = phi_service.preview(
         text=payload.text,
         document_type=payload.document_type,
         specialty=payload.specialty,
+    )
+    duration_ms = (time.perf_counter() - start) * 1000
+    logger.info(
+        "phi_preview",
+        extra={
+            "duration_ms": round(duration_ms, 2),
+            "entity_count": len(scrub_result.entities),
+            "document_type": payload.document_type,
+            "specialty": payload.specialty,
+        },
     )
     return ScrubPreviewResponse(scrubbed_text=scrub_result.scrubbed_text, entities=_to_entities(scrub_result))
 
@@ -124,6 +138,7 @@ def submit_phi(
     payload: SubmitRequest,
     phi_service: PHIService = Depends(get_phi_service),
 ) -> SubmitResponse:
+    start = time.perf_counter()
     scrub_result = phi_service.preview(
         text=payload.text,
         document_type=payload.document_type,
@@ -135,6 +150,17 @@ def submit_phi(
         submitted_by=payload.submitted_by,
         document_type=payload.document_type,
         specialty=payload.specialty,
+    )
+    duration_ms = (time.perf_counter() - start) * 1000
+    logger.info(
+        "phi_submit",
+        extra={
+            "duration_ms": round(duration_ms, 2),
+            "entity_count": len(scrub_result.entities),
+            "procedure_id": str(proc.id),
+            "document_type": payload.document_type,
+            "specialty": payload.specialty,
+        },
     )
     return SubmitResponse(
         procedure_id=str(proc.id),
@@ -214,6 +240,7 @@ def submit_scrubbing_feedback(
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid procedure_id") from exc
 
+    start = time.perf_counter()
     try:
         proc = phi_service.apply_scrubbing_feedback(
             procedure_data_id=proc_uuid,
@@ -226,6 +253,16 @@ def submit_scrubbing_feedback(
         )
     except ValueError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Procedure not found or missing PHI vault")
+    duration_ms = (time.perf_counter() - start) * 1000
+    logger.info(
+        "phi_feedback",
+        extra={
+            "duration_ms": round(duration_ms, 2),
+            "procedure_id": str(proc.id),
+            "entity_count": len(proc.entity_map or []),
+            "status": proc.status.value if hasattr(proc.status, "value") else str(proc.status),
+        },
+    )
 
     return ProcedureReviewResponse(
         procedure_id=str(proc.id),
@@ -249,6 +286,7 @@ def reidentify_phi(
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid procedure_id") from exc
 
+    start = time.perf_counter()
     try:
         plaintext = phi_service.reidentify(
             procedure_data_id=proc_uuid,
@@ -261,5 +299,14 @@ def reidentify_phi(
         )
     except ValueError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Procedure not found or missing PHI vault")
+    duration_ms = (time.perf_counter() - start) * 1000
+    logger.info(
+        "phi_reidentify",
+        extra={
+            "duration_ms": round(duration_ms, 2),
+            "procedure_id": payload.procedure_id,
+            "user_id": payload.user_id,
+        },
+    )
 
     return ReidentifyResponse(raw_text=plaintext)
