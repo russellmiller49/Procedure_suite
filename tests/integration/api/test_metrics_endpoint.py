@@ -67,6 +67,46 @@ class TestMetricsStatus:
         assert data["client_type"] == "RegistryMetricsClient"
         assert "counters_count" in data
 
+    def test_status_even_if_disabled(self, client):
+        """Test that /metrics/status works even when metrics are disabled.
+
+        Regression test: The metrics router should always be mounted,
+        and /metrics/status should return a valid response indicating
+        the disabled state (not a connection error or 404).
+        """
+        with patch.dict(
+            os.environ,
+            {"METRICS_BACKEND": "null", "METRICS_ENABLED": "false"},
+            clear=False,
+        ):
+            reset_metrics_client()
+            response = client.get("/metrics/status")
+
+        # Should return 200, not 404 or connection error
+        assert response.status_code == 200
+        data = response.json()
+        # Should indicate metrics are disabled
+        assert data["enabled"] is False
+        assert data["backend"] == "null"
+        assert data["client_type"] == "NullMetricsClient"
+
+    def test_status_without_metrics_backend_env_var(self, client):
+        """Test /metrics/status when METRICS_BACKEND is completely unset."""
+        # Remove METRICS_BACKEND from env (default to "null")
+        env_copy = os.environ.copy()
+        env_copy.pop("METRICS_BACKEND", None)
+        env_copy.pop("METRICS_ENABLED", None)
+
+        with patch.dict(os.environ, env_copy, clear=True):
+            reset_metrics_client()
+            response = client.get("/metrics/status")
+
+        assert response.status_code == 200
+        data = response.json()
+        # Default backend is "null"
+        assert data["backend"] == "null"
+        assert data["client_type"] == "NullMetricsClient"
+
 
 # ============================================================================
 # Prometheus Export Tests

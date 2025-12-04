@@ -119,3 +119,6 @@ Output:
 - **`reports/`**: Where output logs and validation summaries are saved.
 
 ```
+
+# Start the local server
+uvicorn modules.api.fastapi_app:app --reload --port 8000

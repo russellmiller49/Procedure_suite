@@ -7,31 +7,19 @@ scrape_configs:
   - job_name: "procedure_suite"
     static_configs:
       - targets:
-          # For local dev
           - "localhost:8000"
-          # For production, update:
-          # - "your-backend-host:8000"
     metrics_path: /metrics
     scheme: http
 
-  # Reporter service (if running separately)
-  - job_name: "procedure_suite_reporter"
-    static_configs:
-      - targets:
-          # For local dev
-          - "localhost:8002"
-          # For production, update:
-          # - "your-reporter-host:8002"
-    metrics_path: /metrics
-    scheme: http
-
-  # Coder service (if running separately)
-  - job_name: "procedure_suite_coder"
-    static_configs:
-      - targets:
-          # For local dev
-          - "localhost:8001"
-          # For production, update:
-          # - "your-coder-host:8001"
-    metrics_path: /metrics
-    scheme: http
+  # Uncomment these only if you later run separate services:
+  # - job_name: "procedure_suite_coder"
+  #   static_configs:
+  #     - targets: ["localhost:8001"]
+  #   metrics_path: /metrics
+  #   scheme: http
+  #
+  # - job_name: "procedure_suite_reporter"
+  #   static_configs:
+  #     - targets: ["localhost:8002"]
+  #   metrics_path: /metrics
+  #   scheme: http

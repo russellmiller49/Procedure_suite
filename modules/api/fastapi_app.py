@@ -126,25 +126,17 @@ def get_sectionizer() -> Any:
         return None
 
 
-@app.on_event("startup")
-async def warm_heavy_resources() -> None:
-    """Preload heavy NLP models at startup to avoid cold-start latency.
+# Global flag to track NLP warmup status (useful for degraded mode)
+_nlp_warmup_successful: bool = False
 
-    This hook is called when the FastAPI app starts. Loading models here
-    ensures the first request doesn't incur a long delay waiting for
-    model initialization.
 
-    NOTE: If PROCSUITE_MODELS_WARMED=1 is set (by warm_models.py), we skip
-    loading here since the models are already in memory from the warmup script.
-    However, since warm_models.py runs in a separate process, the models aren't
-    actually shared. We disable this startup hook entirely when running on
-    Railway since warm_models.py handles it and the models are cached on disk.
+def _do_heavy_warmup() -> None:
+    """Perform the actual heavy NLP warmup (synchronous helper).
+
+    This is separated from the startup hook to allow easier testing
+    and to keep the try/except logic clean.
     """
-    # Skip if running on Railway - warm_models.py already loaded models and
-    # they're cached on disk. Loading them again here would cause a timeout.
-    if os.getenv("RAILWAY_ENVIRONMENT"):
-        _logger.info("Running on Railway - skipping startup warmup (models cached by warm_models.py)")
-        return
+    global _nlp_warmup_successful
 
     _logger.info("Warming up heavy NLP resources...")
 
@@ -169,6 +161,54 @@ async def warm_heavy_resources() -> None:
         _logger.warning("UMLS linker warmup skipped: %s", exc)
 
     _logger.info("Heavy NLP resources warmed up successfully")
+    _nlp_warmup_successful = True
+
+
+def is_nlp_warmed() -> bool:
+    """Check if NLP warmup completed successfully.
+
+    Useful for endpoints that want to return 503 if NLP is unavailable.
+    """
+    return _nlp_warmup_successful
+
+
+@app.on_event("startup")
+async def warm_heavy_resources() -> None:
+    """Preload heavy NLP models at startup to avoid cold-start latency.
+
+    This hook is called when the FastAPI app starts. Loading models here
+    ensures the first request doesn't incur a long delay waiting for
+    model initialization.
+
+    Environment variables:
+    - PROCSUITE_SKIP_WARMUP: Set to "1", "true", or "yes" to skip warmup entirely
+    - RAILWAY_ENVIRONMENT: If set, skips warmup (Railway caches models separately)
+    - PROCSUITE_MODELS_WARMED: Legacy flag (informational only)
+
+    On failure, the app will still start but NLP features may be degraded.
+    """
+    # Check if warmup should be skipped via env var
+    skip_warmup = os.getenv("PROCSUITE_SKIP_WARMUP", "").lower() in ("1", "true", "yes")
+    if skip_warmup:
+        _logger.info("Skipping heavy NLP warmup because PROCSUITE_SKIP_WARMUP is set")
+        return
+
+    # Skip if running on Railway - warm_models.py already loaded models and
+    # they're cached on disk. Loading them again here would cause a timeout.
+    if os.getenv("RAILWAY_ENVIRONMENT"):
+        _logger.info("Running on Railway - skipping startup warmup (models cached by warm_models.py)")
+        return
+
+    # Perform warmup with error handling - don't crash the app if warmup fails
+    try:
+        _do_heavy_warmup()
+    except Exception as exc:
+        _logger.error(
+            "Heavy NLP warmup failed - starting API without NLP features. "
+            "Some endpoints may return errors or degraded results. Error: %s",
+            exc,
+            exc_info=True,
+        )
 
 
 class LocalityInfo(BaseModel):
