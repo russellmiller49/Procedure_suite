@@ -3,6 +3,7 @@ import os
 os.environ.setdefault("REGISTRY_USE_STUB_LLM", "1")
 os.environ.setdefault("GEMINI_OFFLINE", "1")
 os.environ.setdefault("DISABLE_STATIC_FILES", "1")
+os.environ.setdefault("PHI_SCRUBBER_MODE", "stub")
 
 import httpx
 import pytest_asyncio

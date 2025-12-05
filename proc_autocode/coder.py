@@ -6,6 +6,7 @@ import os
 from proc_autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
 from proc_autocode.ip_kb.terminology_utils import TerminologyNormalizer, QARuleChecker
 from proc_autocode.rvu.rvu_calculator import ProcedureRVUCalculator
+from modules.domain.coding_rules import CodingRulesEngine, EvidenceContext
 
 class CodeSuggestion:
     def __init__(self, cpt: str, modifiers: Optional[list[str]] = None):
@@ -56,6 +57,11 @@ class EnhancedCPTCoder:
                 logger = logging.getLogger(__name__)
                 logger.warning(f"Failed to initialize LLM advisor: {e}. Continuing without LLM suggestions.")
 
+        # Initialize CodingRulesEngine for delegated rule application
+        # Mode is controlled by CODING_RULES_MODE env var: "python" | "json" | "shadow"
+        self._rules_engine = CodingRulesEngine()
+        self._last_evidence_context: Optional[EvidenceContext] = None
+
     def _generate_codes(self, procedure_data: dict, term_hits: Optional[Dict[str, List[str]]] = None) -> list[CodeSuggestion]:
         """
         Generate candidate codes with CONSERVATIVE evidence-based filtering.
@@ -85,8 +91,12 @@ class EnhancedCPTCoder:
             if plus in candidates_from_text:
                 candidates_from_text.discard(plus)
 
-        # ========== OUT-OF-DOMAIN CODE FILTER ==========
-        # Only emit codes that exist in the IP knowledge base
+        # ========== RULE 1: OUT-OF-DOMAIN CODE FILTER ==========
+        # Rule ID: R001_OUT_OF_DOMAIN
+        # Description: Remove codes not in the IP knowledge base valid CPT set.
+        # Rationale: Only bill codes that exist in our clinical knowledge base.
+        # Codes affected: All candidate codes
+        # Evidence required: None (uses KB valid_cpts set)
         valid_cpts = self.ip_kb.all_relevant_cpt_codes()
         invalid_codes = set()
         for code in candidates_from_text:
@@ -96,8 +106,13 @@ class EnhancedCPTCoder:
         for code in invalid_codes:
             candidates_from_text.discard(code)
 
-        # ========== LINEAR vs RADIAL EBUS LOGIC ==========
-        # Upgrade standard TBNA to EBUS-TBNA only when linear/mediastinal EBUS is present
+        # ========== RULE 2: LINEAR vs RADIAL EBUS LOGIC ==========
+        # Rule ID: R002_EBUS_LINEAR_UPGRADE
+        # Description: Upgrade standard TBNA (31629) to EBUS-TBNA (31652) when linear EBUS is present.
+        #              Also upgrade +31633 to 31653 for additional stations.
+        # Rationale: Linear EBUS-TBNA is a more specific/higher-value code than conventional TBNA.
+        # Codes affected: 31629 -> 31652, +31633 -> 31653
+        # Evidence required: "bronchoscopy_ebus_linear" in groups_from_text
         if "bronchoscopy_ebus_linear" in groups_from_text:
             if "31629" in candidates_from_text:
                 candidates_from_text.discard("31629")
@@ -106,12 +121,23 @@ class EnhancedCPTCoder:
                 candidates_from_text.discard("+31633")
                 candidates_from_text.add("31653")
 
-        # Avoid linear EBUS codes in radial-only peripheral cases
+        # Rule ID: R002b_RADIAL_ONLY_EXCLUSION
+        # Description: In radial-only cases, exclude linear EBUS codes.
+        # Rationale: Linear EBUS (31652/31653) should not be billed for radial-only procedures.
+        # Codes affected: 31652, 31653 (removed)
+        # Evidence required: "bronchoscopy_ebus_radial" in groups AND "bronchoscopy_ebus_linear" NOT in groups
         if "bronchoscopy_ebus_radial" in groups_from_text and "bronchoscopy_ebus_linear" not in groups_from_text:
             discard("31652")
             discard("31653")
 
-        # ========== NAVIGATION (31627) - CONSERVATIVE ==========
+        # ========== RULE 3: NAVIGATION (31627) - CONSERVATIVE ==========
+        # Rule ID: R003_NAVIGATION_EVIDENCE
+        # Description: Navigation code requires BOTH platform evidence AND concept/direct evidence.
+        # Rationale: Navigation bronchoscopy (31627) is high-value and requires strong documentation:
+        #   1. Navigation system used (platform: ION, EMN, SuperDimension, etc.)
+        #   2. Target identification (concept) OR tool-in-lesion confirmation (direct)
+        # Codes affected: 31627 (removed if evidence insufficient)
+        # Evidence required: nav_performed AND (platform AND (concept OR direct))
         nav_ev = evidence.get("bronchoscopy_navigation", {})
         nav_tool_in_lesion = bool(navigation_context.get("tool_in_lesion"))
         nav_sampling_tools = navigation_context.get("sampling_tools") or []
@@ -127,8 +153,16 @@ class EnhancedCPTCoder:
         elif not (nav_ev.get("platform") and (nav_ev.get("concept") or nav_ev.get("direct"))):
             discard("31627")
 
-        # ========== STENT CODES - VERY CONSERVATIVE ==========
-        # Per requirements: stent codes require strong evidence
+        # ========== RULE 4: STENT CODES - VERY CONSERVATIVE (4-GATE) ==========
+        # Rule ID: R004_STENT_4GATE
+        # Description: Stent codes require ALL FOUR pieces of evidence (4-gate check):
+        #   1. stent_word: Literal "stent" mentioned in note
+        #   2. placement_action: Action verb (placed, deployed, inserted)
+        #   3. tracheal_location OR bronchial_location: Anatomic site
+        #   4. NOT stent_negated: No negation phrases ("no stent", "stent not placed")
+        # Rationale: Stent procedures are high-RVU; require strong positive evidence.
+        # Codes affected: 31631, 31636, 31637, 31638
+        # Evidence required: bronchoscopy_therapeutic_stent.(stent_word, placement_action, location, !negated)
         stent_ev = evidence.get("bronchoscopy_therapeutic_stent", {})
         has_stent_evidence = (
             stent_ev.get("stent_word") and
@@ -143,7 +177,8 @@ class EnhancedCPTCoder:
                 discard(code)
             discard("31637")
         else:
-            # Determine which stent code to use based on anatomic location
+            # Rule ID: R004b_STENT_LOCATION_SELECT
+            # Description: Select tracheal (31631) vs bronchial (31636) based on anatomic location.
             # Per CPT coding rules (from ip_golden_knowledge_v2_2.json):
             #   31631 = Tracheal stent (including carina)
             #   31636 = Bronchial stent (initial bronchus - mainstem or lobar)
@@ -165,15 +200,22 @@ class EnhancedCPTCoder:
                 discard("31631")
                 discard("31636")
 
-            # +31637 requires multiple separate bronchial stents (additional to 31636)
+            # Rule ID: R004c_STENT_MULTIPLE
+            # Description: +31637 requires multiple separate bronchial stents
             if not stent_ev.get("multiple_stents"):
                 discard("31637")
 
-            # 31638 (revision) requires pre-existing stent + revision action
+            # Rule ID: R004d_STENT_REVISION
+            # Description: 31638 (revision) requires pre-existing stent + revision action
             if not (stent_ev.get("revision_action") and stent_ev.get("has_preexisting")):
                 discard("31638")
 
-        # ========== BAL (31624) - CONSERVATIVE ==========
+        # ========== RULE 5: BAL (31624) - CONSERVATIVE ==========
+        # Rule ID: R005_BAL_EVIDENCE
+        # Description: Bronchoalveolar lavage requires explicit BAL documentation.
+        # Rationale: BAL (31624) should not be coded from incidental mentions or pleural procedures.
+        # Codes affected: 31624 (removed if evidence insufficient)
+        # Evidence required: bronchoscopy_bal.bal_explicit AND NOT bronchoscopy_bal.pleural_context
         bal_ev = evidence.get("bronchoscopy_bal", {})
         if not bal_ev.get("bal_explicit"):
             discard("31624")
@@ -181,19 +223,35 @@ class EnhancedCPTCoder:
         if bal_ev.get("pleural_context"):
             discard("31624")
 
-        # ========== IPC (32550/32552) - CONSERVATIVE ==========
+        # ========== RULE 6: IPC (32550/32552) - CONSERVATIVE ==========
+        # Rule ID: R006_IPC_INSERTION
+        # Description: Tunneled pleural catheter insertion (32550) requires IPC mention + insertion action.
+        # Codes affected: 32550 (removed if evidence insufficient)
+        # Evidence required: tunneled_pleural_catheter.(ipc_mentioned AND insertion_action)
         ipc_ev = evidence.get("tunneled_pleural_catheter", {})
         if not (ipc_ev.get("ipc_mentioned") and ipc_ev.get("insertion_action")):
             discard("32550")
-        # Never bill removal if there's no explicit removal action
+        # Rule ID: R006b_IPC_REMOVAL
+        # Description: IPC removal (32552) requires explicit removal action.
+        # Never bill removal if there's no explicit removal action.
         if not ipc_ev.get("removal_action"):
             discard("32552")
-        # Never bill both insertion and removal together
+        # Rule ID: R006c_IPC_MUTUAL_EXCLUSION
+        # Description: Cannot bill both insertion (32550) and removal (32552) together.
+        # When ambiguous (both mentioned), default to insertion.
         if ipc_ev.get("removal_action") and ipc_ev.get("insertion_action"):
-            # Ambiguous - default to insertion
             discard("32552")
 
-        # ========== PLEURAL DRAINAGE (32556/32557) - REQUIRE REGISTRY PLEURAL PROCEDURE ==========
+        # ========== RULE 7: PLEURAL DRAINAGE (32556/32557) - REGISTRY-GATED ==========
+        # Rule ID: R007_PLEURAL_REGISTRY
+        # Description: Pleural drainage codes require registry evidence of pleural procedure.
+        # Rationale: Prevents coding chest tube from incidental text mentions without registry data.
+        # Codes affected: 32556, 32557 (removed if registry evidence missing)
+        # Evidence required: ANY of:
+        #   - registry.pleural_procedure_type == "Chest Tube"
+        #   - registry.pleural_catheter_type present
+        #   - registry.pleural_procedures.chest_tube.performed
+        #   - registry.pleural_procedures.ipc.performed
         pleural_type = registry.get("pleural_procedure_type")
         pleural_catheter_type = registry.get("pleural_catheter_type")
         pleural_ok = pleural_type == "Chest Tube" or bool(pleural_catheter_type)
@@ -203,7 +261,12 @@ class EnhancedCPTCoder:
             discard("32556")
             discard("32557")
 
-        # ========== ADDITIONAL LOBE TBLB (+31632) - CONSERVATIVE ==========
+        # ========== RULE 8: ADDITIONAL LOBE TBLB (+31632) - CONSERVATIVE ==========
+        # Rule ID: R008_ADDITIONAL_LOBE
+        # Description: Additional lobe TBLB add-on code requires biopsy in 2+ distinct lobes.
+        # Rationale: +31632 is only billable when multiple lobes are sampled.
+        # Codes affected: 31632, +31632 (removed if lobe_count < 2)
+        # Evidence required: lobe_count >= 2 OR explicit_multilobe flag
         lobe_ev = evidence.get("bronchoscopy_biopsy_additional_lobe", {})
         normalized_lobes = self._extract_lobes_from_terms(term_hits)
         if normalized_lobes:
@@ -213,7 +276,17 @@ class EnhancedCPTCoder:
         if lobe_ev.get("lobe_count", 0) < 2 and not lobe_ev.get("explicit_multilobe"):
             discard("31632")
 
-        # ========== PARENCHYMAL TBBx (31628) - REQUIRE REGISTRY EVIDENCE ==========
+        # ========== RULE 9: PARENCHYMAL TBBx (31628) - REGISTRY-REQUIRED ==========
+        # Rule ID: R009_TBBX_REGISTRY
+        # Description: Transbronchial biopsy (31628) requires registry evidence of parenchymal biopsy.
+        # Rationale: TBNA alone does not qualify for 31628; need actual parenchymal sampling.
+        # Codes affected: 31628, +31632 (removed if no registry evidence)
+        # Evidence required: ANY of:
+        #   - registry.bronch_num_tbbx > 0
+        #   - registry.procedures_performed.transbronchial_biopsy.number_of_samples > 0
+        #   - registry.bronch_tbbx_tool present (Forceps, etc.)
+        #   - registry.procedures_performed.transbronchial_cryobiopsy.cryoprobe_size_mm present
+        #   - registry.bronch_biopsy_sites present
         has_parenchymal_tbbx = False
         try:
             num_tbbx = registry.get("bronch_num_tbbx")
@@ -256,7 +329,13 @@ class EnhancedCPTCoder:
             discard("31628")
             discard("+31632")
 
-        # ========== LINEAR EBUS (31652/31653) - CONSERVATIVE ==========
+        # ========== RULE 10: LINEAR EBUS STATION COUNTING (31652/31653) ==========
+        # Rule ID: R010_EBUS_STATION_COUNT
+        # Description: Select between 31652 (1-2 stations) and 31653 (3+ stations) based on station count.
+        # Rationale: CPT coding rules specify 31653 for 3 or more lymph node stations sampled.
+        # Codes affected: 31652 (1-2 stations), 31653 (3+ stations)
+        # Evidence required: bronchoscopy_ebus_linear.(ebus AND station_context)
+        #                    Then: station_count >= 3 -> 31653, else 31652
         linear_ev = evidence.get("bronchoscopy_ebus_linear", {})
         if not (linear_ev.get("ebus") and linear_ev.get("station_context")):
             discard("31652")
@@ -271,7 +350,12 @@ class EnhancedCPTCoder:
                 # Use 31652 for 1-2 stations
                 discard("31653")
 
-        # ========== RADIAL EBUS (+31654) - CONSERVATIVE ==========
+        # ========== RULE 11: RADIAL EBUS (+31654) - CONSERVATIVE ==========
+        # Rule ID: R011_RADIAL_EBUS
+        # Description: Radial EBUS add-on (+31654) requires text OR registry confirmation.
+        # Rationale: Radial EBUS is an add-on for peripheral lesion visualization.
+        # Codes affected: 31654, +31654 (removed if evidence insufficient)
+        # Evidence required: (group evidence AND radial flag) OR (radial flag AND registry confirmation)
         radial_ev = evidence.get("bronchoscopy_ebus_radial", {})
         radial_registry = bool(
             radial_context.get("performed")
@@ -284,10 +368,16 @@ class EnhancedCPTCoder:
         if not (radial_from_text or (radial_ev.get("radial") and radial_registry)):
             discard("31654")
 
-        # ========== TUMOR DEBULKING (31640/31641) - ENSURE PROPER CODING ==========
-        # 31640 = mechanical excision (snare, forceps)
-        # 31641 = ablative destruction (APC, laser, cryo)
-        # Per golden knowledge: when stent is placed, debulking to facilitate stent is bundled
+        # ========== RULE 12: TUMOR DEBULKING (31640/31641) ==========
+        # Rule ID: R012_DEBULKING
+        # Description: Select between mechanical excision (31640) and ablative destruction (31641).
+        #              Debulking is BUNDLED when stent is placed.
+        # Rationale:
+        #   - 31640 = mechanical excision (snare, forceps)
+        #   - 31641 = ablative destruction (APC, laser, cryo)
+        #   - Per golden knowledge: when stent is placed, debulking to facilitate stent is bundled
+        # Codes affected: 31640, 31641 (removed or selected based on technique)
+        # Evidence required: text_lower contains ablation_terms OR excision_terms
         ablation_terms = [
             "apc", "argon", "electrocautery", "cautery", "laser", "ablation",
             "cryotherapy", "cryoablation", "rfa", "radiofrequency"
@@ -299,11 +389,13 @@ class EnhancedCPTCoder:
         has_ablation = any(t in text_lower for t in ablation_terms)
         has_excision = any(t in text_lower for t in excision_terms)
 
+        # Rule ID: R012b_DEBULKING_STENT_BUNDLE
         # If stent is being placed, debulking is bundled - remove 31640/31641
         if has_stent_evidence:
             discard("31640")
             discard("31641")
         else:
+            # Rule ID: R012c_DEBULKING_TECHNIQUE_SELECT
             # Not stent placement - check for standalone debulking
             # Prefer 31641 for ablative, 31640 for mechanical
             if "31640" in candidates_from_text and "31641" in candidates_from_text:
@@ -316,10 +408,15 @@ class EnhancedCPTCoder:
                     # Default to 31641 if unclear
                     discard("31640")
 
-        # ========== THERAPEUTIC ASPIRATION (31645/31646) - REQUIRE ASPIRATION EVIDENCE ==========
-        # 31645 = initial therapeutic aspiration
-        # 31646 = subsequent therapeutic aspiration (same session)
-        # Only bill when aspiration is explicitly documented
+        # ========== RULE 13: THERAPEUTIC ASPIRATION (31645/31646) ==========
+        # Rule ID: R013_ASPIRATION
+        # Description: Therapeutic aspiration requires explicit aspiration documentation.
+        # Rationale:
+        #   - 31645 = initial therapeutic aspiration
+        #   - 31646 = subsequent therapeutic aspiration (same session)
+        #   - Routine suctioning does NOT qualify; must be explicit therapeutic intervention
+        # Codes affected: 31645, 31646 (removed if no explicit aspiration terms)
+        # Evidence required: text_lower contains aspiration_terms
         aspiration_terms = [
             "therapeutic aspiration", "aspiration of secretions", "aspirate secretions",
             "suction removal", "suctioning of blood", "aspiration of mucus",
@@ -331,19 +428,21 @@ class EnhancedCPTCoder:
             discard("31645")
             discard("31646")
 
-        # ========== THORACOSCOPY - ONE CODE PER HEMITHORAX ==========
-        # Per coding rules:
-        # - 32601: Diagnostic only (NO biopsy)
-        # - 32604: Pericardial with biopsy
-        # - 32606: Mediastinal with biopsy
-        # - 32609: Pleural with biopsy
-        # - 32602/32607/32608: Lung parenchyma
-        #
-        # RULES:
-        # 1. Only ONE thoracoscopy code per session
-        # 2. Biopsy codes trump diagnostic-only (32601)
-        # 3. Select based on anatomic site
-        # 4. Temporary drains are bundled into thoracoscopy
+        # ========== RULE 14: THORACOSCOPY SITE PRIORITY ==========
+        # Rule ID: R014_THORACOSCOPY
+        # Description: Select ONE thoracoscopy code per session based on anatomic site priority.
+        # Rationale: Per CPT coding rules, only ONE thoracoscopy code per hemithorax.
+        #   - 32601: Diagnostic only (NO biopsy)
+        #   - 32604: Pericardial with biopsy
+        #   - 32606: Mediastinal with biopsy
+        #   - 32609: Pleural with biopsy
+        #   - 32602/32607/32608: Lung parenchyma
+        # Codes affected: 32601, 32602, 32604, 32606, 32607, 32608, 32609
+        # Rules:
+        #   1. Only ONE thoracoscopy code per session
+        #   2. Biopsy codes trump diagnostic-only (32601)
+        #   3. Priority: pleural (32609) > pericardial (32604) > mediastinal (32606) > lung (32607) > diagnostic (32601)
+        #   4. Temporary drains are bundled into thoracoscopy
 
         thoracoscopy_ev = evidence.get("thoracoscopy", {})
         thoracoscopy_codes_present = candidates_from_text & {
@@ -353,12 +452,13 @@ class EnhancedCPTCoder:
         if thoracoscopy_codes_present:
             has_biopsy_code = bool(thoracoscopy_codes_present & {"32604", "32606", "32609", "32602", "32607", "32608"})
 
-            # Rule: If any biopsy code present, remove diagnostic-only (32601)
+            # Rule ID: R014b_BIOPSY_TRUMPS_DIAGNOSTIC
+            # If any biopsy code present, remove diagnostic-only (32601)
             if has_biopsy_code and "32601" in candidates_from_text:
                 discard("32601")
 
-            # Rule: Select ONE thoracoscopy code based on anatomic site priority
-            # Priority: pleural > pericardial > mediastinal > lung > diagnostic
+            # Rule ID: R014c_SITE_PRIORITY_SELECT
+            # Select ONE thoracoscopy code based on anatomic site priority
             remaining_thoracoscopy = candidates_from_text & {
                 "32601", "32604", "32606", "32609", "32607"
             }
@@ -397,7 +497,8 @@ class EnhancedCPTCoder:
                 for code in remaining_thoracoscopy - codes_to_keep:
                     discard(code)
 
-            # Rule: Temporary drains during thoracoscopy are bundled
+            # Rule ID: R014d_TEMP_DRAIN_BUNDLE
+            # Temporary drains during thoracoscopy are bundled
             if thoracoscopy_ev.get("temporary_drain_bundled", False):
                 # Remove pleural drainage codes that are temporary
                 for drain_code in ["32556", "32557"]:
@@ -406,6 +507,19 @@ class EnhancedCPTCoder:
         codes: list[CodeSuggestion] = []
         for cpt in sorted(candidates_from_text):
             codes.append(CodeSuggestion(cpt))
+
+        # Store the EvidenceContext for potential shadow mode / debugging
+        # This allows the rules engine to be invoked externally if needed
+        self._last_evidence_context = EvidenceContext.from_procedure_data(
+            groups_from_text=groups_from_text,
+            evidence=evidence,
+            registry=registry,
+            candidates_from_text={c.cpt for c in codes},
+            term_hits=term_hits,
+            navigation_context=navigation_context,
+            radial_context=radial_context,
+            note_text=note_text,
+        )
 
         return codes
 

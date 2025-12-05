@@ -7,6 +7,7 @@ Production deployments should swap in KMS-backed encryption and a real scrubber.
 from __future__ import annotations
 
 import os
+from functools import lru_cache
 from typing import Iterator
 
 from fastapi import Depends
@@ -15,7 +16,12 @@ from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from modules.phi import PHIService
-from modules.phi.adapters import DatabaseAuditLogger, InsecureDemoEncryptionAdapter, StubScrubber
+from modules.phi.adapters import (
+    DatabaseAuditLogger,
+    InsecureDemoEncryptionAdapter,
+    PresidioScrubber,
+    StubScrubber,
+)
 from modules.phi.adapters.fernet_encryption import FernetEncryptionAdapter
 from modules.phi.db import Base
 
@@ -60,11 +66,23 @@ def _get_encryption_adapter():
     return FernetEncryptionAdapter()
 
 
+@lru_cache()
+def _get_scrubber():
+    mode = os.getenv("PHI_SCRUBBER_MODE", "presidio").lower()
+    if mode == "stub":
+        return StubScrubber()
+    try:
+        return PresidioScrubber()
+    except Exception as exc:  # noqa: BLE001
+        # Fallback to stub if Presidio is unavailable (keeps tests/demo running)
+        return StubScrubber()
+
+
 def get_phi_service(db: Session = Depends(get_phi_session)) -> PHIService:
     """Construct a PHIService with configured adapters (no raw PHI logging)."""
 
     encryption = _get_encryption_adapter()
-    scrubber = StubScrubber()
+    scrubber = _get_scrubber()
     audit_logger = DatabaseAuditLogger(db)
     return PHIService(session=db, encryption=encryption, scrubber=scrubber, audit_logger=audit_logger)
 

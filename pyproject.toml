@@ -27,6 +27,8 @@ dependencies = [
   "httpx>=0.27,<1",
   "google-auth>=2.23,<3",
   "google-generativeai>=0.8,<1",
+  "cryptography>=46.0,<47",
+  "presidio-analyzer>=2.2,<3",
   "pyyaml>=6.0,<7",
 ]
 

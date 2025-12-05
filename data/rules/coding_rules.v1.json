@@ -1,0 +1,668 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "version": "1.0.0",
+    "domain": "Pulmonology",
+    "kb_version_min": "2.7",
+    "description": "Declarative coding rules for IP procedure code generation",
+    "created": "2024-12-05",
+    "phases": ["filter", "inference", "validation", "exclusion"]
+  },
+
+  "code_metadata": {
+    "31624": { "tags": ["bal", "bronchoscopy"], "description": "Bronchoscopy with BAL" },
+    "31627": { "tags": ["navigation", "bronchoscopy"], "description": "Navigation bronchoscopy" },
+    "31628": { "tags": ["tbbx", "biopsy", "bronchoscopy"], "description": "Transbronchial lung biopsy" },
+    "31629": { "tags": ["tbna", "bronchoscopy"], "description": "Conventional TBNA" },
+    "31631": { "tags": ["stent", "tracheal"], "description": "Tracheal stent placement" },
+    "31632": { "tags": ["tbbx", "addon", "biopsy"], "description": "Additional lobe TBLB (add-on)" },
+    "31636": { "tags": ["stent", "bronchial"], "description": "Bronchial stent placement" },
+    "31637": { "tags": ["stent", "bronchial", "addon"], "description": "Additional bronchial stent" },
+    "31638": { "tags": ["stent", "revision"], "description": "Stent revision/removal" },
+    "31640": { "tags": ["debulking", "mechanical"], "description": "Mechanical debulking" },
+    "31641": { "tags": ["debulking", "ablation"], "description": "Ablative tumor destruction" },
+    "31645": { "tags": ["aspiration", "therapeutic"], "description": "Initial therapeutic aspiration" },
+    "31646": { "tags": ["aspiration", "therapeutic", "addon"], "description": "Subsequent aspiration" },
+    "31652": { "tags": ["ebus", "linear", "tbna"], "description": "EBUS-TBNA 1-2 stations" },
+    "31653": { "tags": ["ebus", "linear", "tbna"], "description": "EBUS-TBNA 3+ stations" },
+    "31654": { "tags": ["ebus", "radial", "addon"], "description": "Radial EBUS (add-on)" },
+    "32550": { "tags": ["ipc", "insertion"], "description": "IPC insertion" },
+    "32552": { "tags": ["ipc", "removal"], "description": "IPC removal" },
+    "32556": { "tags": ["pleural", "drainage"], "description": "Pleural drainage, therapeutic" },
+    "32557": { "tags": ["pleural", "drainage", "catheter"], "description": "Pleural catheter insertion" },
+    "32601": { "tags": ["thoracoscopy", "diagnostic"], "description": "Thoracoscopy, diagnostic" },
+    "32604": { "tags": ["thoracoscopy", "pericardial", "biopsy"], "description": "Thoracoscopy, pericardial biopsy" },
+    "32606": { "tags": ["thoracoscopy", "mediastinal", "biopsy"], "description": "Thoracoscopy, mediastinal biopsy" },
+    "32607": { "tags": ["thoracoscopy", "lung", "biopsy"], "description": "Thoracoscopy, lung biopsy" },
+    "32608": { "tags": ["thoracoscopy", "lung", "wedge"], "description": "Thoracoscopy, lung wedge resection" },
+    "32609": { "tags": ["thoracoscopy", "pleural", "biopsy"], "description": "Thoracoscopy, pleural biopsy" }
+  },
+
+  "rules": [
+    {
+      "id": "R001_OUT_OF_DOMAIN",
+      "name": "Out-of-domain code filter",
+      "phase": "filter",
+      "priority": 100,
+      "enabled": true,
+      "description": "Remove codes not in the IP knowledge base valid CPT set",
+      "when": {
+        "not_in": [{"var": "code"}, {"var": "valid_cpts"}]
+      },
+      "then": {
+        "action": "remove_code",
+        "reason": "Code not in IP knowledge base valid CPT set"
+      }
+    },
+
+    {
+      "id": "R002_EBUS_LINEAR_UPGRADE",
+      "name": "Linear EBUS upgrades TBNA to EBUS-TBNA",
+      "phase": "inference",
+      "priority": 200,
+      "enabled": true,
+      "description": "When linear EBUS is present, upgrade 31629 to 31652 and +31633 to 31653",
+      "when": {
+        "and": [
+          {"has_group": "bronchoscopy_ebus_linear"},
+          {"or": [
+            {"has_candidate": "31629"},
+            {"has_candidate": "+31633"}
+          ]}
+        ]
+      },
+      "then": {
+        "actions": [
+          {"action": "remove_code", "code": "31629", "reason": "Upgraded to EBUS-TBNA"},
+          {"action": "add_code", "code": "31652"},
+          {"action": "remove_code", "code": "+31633", "reason": "Upgraded to 31653"},
+          {"action": "add_code", "code": "31653", "condition": {"was_candidate": "+31633"}}
+        ]
+      }
+    },
+
+    {
+      "id": "R002b_RADIAL_ONLY_EXCLUSION",
+      "name": "Radial-only excludes linear EBUS codes",
+      "phase": "exclusion",
+      "priority": 210,
+      "enabled": true,
+      "description": "In radial-only cases, exclude linear EBUS codes (31652/31653)",
+      "when": {
+        "and": [
+          {"has_group": "bronchoscopy_ebus_radial"},
+          {"not": {"has_group": "bronchoscopy_ebus_linear"}}
+        ]
+      },
+      "then": {
+        "actions": [
+          {"action": "remove_code", "code": "31652", "reason": "Radial-only case"},
+          {"action": "remove_code", "code": "31653", "reason": "Radial-only case"}
+        ]
+      }
+    },
+
+    {
+      "id": "R003_NAVIGATION_EVIDENCE",
+      "name": "Navigation requires platform + target evidence",
+      "phase": "validation",
+      "priority": 300,
+      "enabled": true,
+      "description": "Navigation (31627) requires navigation platform AND (concept OR direct) evidence",
+      "when": {
+        "and": [
+          {"has_candidate": "31627"},
+          {"not": {
+            "and": [
+              {"or": [
+                {"var": "navigation_context.performed"},
+                {"var": "navigation_context.tool_in_lesion"},
+                {"length_gt": [{"var": "navigation_context.sampling_tools"}, 0]},
+                {"in": ["navigation", {"var": "term_hits.procedure_categories"}]},
+                {"has_group": "bronchoscopy_navigation"}
+              ]},
+              {"var": "evidence.bronchoscopy_navigation.platform"},
+              {"or": [
+                {"var": "evidence.bronchoscopy_navigation.concept"},
+                {"var": "evidence.bronchoscopy_navigation.direct"}
+              ]}
+            ]
+          }}
+        ]
+      },
+      "then": {
+        "action": "remove_code",
+        "code": "31627",
+        "reason": "Navigation requires platform + concept/direct evidence"
+      }
+    },
+
+    {
+      "id": "R004_STENT_4GATE",
+      "name": "Stent requires 4-gate evidence",
+      "phase": "validation",
+      "priority": 400,
+      "enabled": true,
+      "description": "Stent codes require: stent_word + placement_action + location + NOT negated",
+      "when": {
+        "and": [
+          {"any_candidate": ["31631", "31636", "31637", "31638"]},
+          {"not": {
+            "and": [
+              {"var": "evidence.bronchoscopy_therapeutic_stent.stent_word"},
+              {"var": "evidence.bronchoscopy_therapeutic_stent.placement_action"},
+              {"or": [
+                {"var": "evidence.bronchoscopy_therapeutic_stent.tracheal_location"},
+                {"var": "evidence.bronchoscopy_therapeutic_stent.bronchial_location"}
+              ]},
+              {"not": {"var": "evidence.bronchoscopy_therapeutic_stent.stent_negated"}}
+            ]
+          }}
+        ]
+      },
+      "then": {
+        "actions": [
+          {"action": "remove_code", "code": "31631", "reason": "Stent requires 4-gate evidence"},
+          {"action": "remove_code", "code": "31636", "reason": "Stent requires 4-gate evidence"},
+          {"action": "remove_code", "code": "31637", "reason": "Stent requires 4-gate evidence"},
+          {"action": "remove_code", "code": "31638", "reason": "Stent requires 4-gate evidence"}
+        ]
+      }
+    },
+
+    {
+      "id": "R004b_STENT_LOCATION_SELECT",
+      "name": "Stent location selection (tracheal vs bronchial)",
+      "phase": "validation",
+      "priority": 410,
+      "enabled": true,
+      "description": "Select 31631 (tracheal) vs 31636 (bronchial) based on documented location",
+      "when": {
+        "and": [
+          {"any_candidate": ["31631", "31636"]},
+          {"var": "evidence.bronchoscopy_therapeutic_stent.stent_word"}
+        ]
+      },
+      "then": {
+        "conditional_actions": [
+          {
+            "if": {
+              "and": [
+                {"var": "evidence.bronchoscopy_therapeutic_stent.tracheal_location"},
+                {"not": {"var": "evidence.bronchoscopy_therapeutic_stent.bronchial_location"}}
+              ]
+            },
+            "then": {"action": "remove_code", "code": "31636", "reason": "Tracheal stent only"}
+          },
+          {
+            "if": {
+              "and": [
+                {"var": "evidence.bronchoscopy_therapeutic_stent.bronchial_location"},
+                {"not": {"var": "evidence.bronchoscopy_therapeutic_stent.tracheal_location"}}
+              ]
+            },
+            "then": {"action": "remove_code", "code": "31631", "reason": "Bronchial stent only"}
+          }
+        ]
+      }
+    },
+
+    {
+      "id": "R004c_STENT_MULTIPLE",
+      "name": "Multiple bronchial stents (+31637)",
+      "phase": "validation",
+      "priority": 420,
+      "enabled": true,
+      "description": "+31637 requires multiple separate bronchial stents",
+      "when": {
+        "and": [
+          {"has_candidate": "31637"},
+          {"not": {"var": "evidence.bronchoscopy_therapeutic_stent.multiple_stents"}}
+        ]
+      },
+      "then": {
+        "action": "remove_code",
+        "code": "31637",
+        "reason": "Multiple stents not documented"
+      }
+    },
+
+    {
+      "id": "R004d_STENT_REVISION",
+      "name": "Stent revision requires pre-existing + revision action",
+      "phase": "validation",
+      "priority": 430,
+      "enabled": true,
+      "description": "31638 requires pre-existing stent + revision action",
+      "when": {
+        "and": [
+          {"has_candidate": "31638"},
+          {"not": {
+            "and": [
+              {"var": "evidence.bronchoscopy_therapeutic_stent.revision_action"},
+              {"var": "evidence.bronchoscopy_therapeutic_stent.has_preexisting"}
+            ]
+          }}
+        ]
+      },
+      "then": {
+        "action": "remove_code",
+        "code": "31638",
+        "reason": "Stent revision requires pre-existing stent and revision action"
+      }
+    },
+
+    {
+      "id": "R005_BAL_EVIDENCE",
+      "name": "BAL requires explicit documentation",
+      "phase": "validation",
+      "priority": 500,
+      "enabled": true,
+      "description": "BAL (31624) requires explicit BAL and no pleural context",
+      "when": {
+        "and": [
+          {"has_candidate": "31624"},
+          {"or": [
+            {"not": {"var": "evidence.bronchoscopy_bal.bal_explicit"}},
+            {"var": "evidence.bronchoscopy_bal.pleural_context"}
+          ]}
+        ]
+      },
+      "then": {
+        "action": "remove_code",
+        "code": "31624",
+        "reason": "BAL requires explicit documentation without pleural context"
+      }
+    },
+
+    {
+      "id": "R006_IPC_INSERTION",
+      "name": "IPC insertion requires mention + action",
+      "phase": "validation",
+      "priority": 600,
+      "enabled": true,
+      "description": "IPC insertion (32550) requires IPC mentioned AND insertion action",
+      "when": {
+        "and": [
+          {"has_candidate": "32550"},
+          {"not": {
+            "and": [
+              {"var": "evidence.tunneled_pleural_catheter.ipc_mentioned"},
+              {"var": "evidence.tunneled_pleural_catheter.insertion_action"}
+            ]
+          }}
+        ]
+      },
+      "then": {
+        "action": "remove_code",
+        "code": "32550",
+        "reason": "IPC insertion requires IPC mention + insertion action"
+      }
+    },
+
+    {
+      "id": "R006b_IPC_REMOVAL",
+      "name": "IPC removal requires explicit action",
+      "phase": "validation",
+      "priority": 610,
+      "enabled": true,
+      "description": "IPC removal (32552) requires explicit removal action",
+      "when": {
+        "and": [
+          {"has_candidate": "32552"},
+          {"not": {"var": "evidence.tunneled_pleural_catheter.removal_action"}}
+        ]
+      },
+      "then": {
+        "action": "remove_code",
+        "code": "32552",
+        "reason": "IPC removal requires explicit removal action"
+      }
+    },
+
+    {
+      "id": "R006c_IPC_MUTUAL_EXCLUSION",
+      "name": "IPC insertion/removal mutual exclusion",
+      "phase": "exclusion",
+      "priority": 620,
+      "enabled": true,
+      "description": "Cannot bill both 32550 and 32552; prefer insertion when both present",
+      "when": {
+        "and": [
+          {"var": "evidence.tunneled_pleural_catheter.removal_action"},
+          {"var": "evidence.tunneled_pleural_catheter.insertion_action"}
+        ]
+      },
+      "then": {
+        "action": "remove_code",
+        "code": "32552",
+        "reason": "Insertion takes precedence over removal"
+      }
+    },
+
+    {
+      "id": "R007_PLEURAL_REGISTRY",
+      "name": "Pleural drainage requires registry evidence",
+      "phase": "validation",
+      "priority": 700,
+      "enabled": true,
+      "description": "Pleural drainage codes (32556/32557) require registry confirmation",
+      "when": {
+        "and": [
+          {"any_candidate": ["32556", "32557"]},
+          {"not": {
+            "or": [
+              {"eq": [{"var": "registry.pleural_procedure_type"}, "Chest Tube"]},
+              {"var": "registry.pleural_catheter_type"},
+              {"var": "registry.pleural_procedures.chest_tube.performed"},
+              {"var": "registry.pleural_procedures.ipc.performed"}
+            ]
+          }}
+        ]
+      },
+      "then": {
+        "actions": [
+          {"action": "remove_code", "code": "32556", "reason": "Pleural drainage requires registry evidence"},
+          {"action": "remove_code", "code": "32557", "reason": "Pleural drainage requires registry evidence"}
+        ]
+      }
+    },
+
+    {
+      "id": "R008_ADDITIONAL_LOBE",
+      "name": "Additional lobe TBLB requires 2+ lobes",
+      "phase": "validation",
+      "priority": 800,
+      "enabled": true,
+      "description": "+31632 requires biopsy in 2+ distinct lobes",
+      "when": {
+        "and": [
+          {"any_candidate": ["31632", "+31632"]},
+          {"not": {
+            "or": [
+              {"gte": [{"var": "evidence.bronchoscopy_biopsy_additional_lobe.lobe_count"}, 2]},
+              {"var": "evidence.bronchoscopy_biopsy_additional_lobe.explicit_multilobe"}
+            ]
+          }}
+        ]
+      },
+      "then": {
+        "action": "remove_code",
+        "code": "31632",
+        "reason": "Additional lobe requires 2+ distinct lobes sampled"
+      }
+    },
+
+    {
+      "id": "R009_TBBX_REGISTRY",
+      "name": "TBBx requires registry evidence",
+      "phase": "validation",
+      "priority": 900,
+      "enabled": true,
+      "description": "Transbronchial biopsy (31628) requires registry evidence of parenchymal sampling",
+      "when": {
+        "and": [
+          {"any_candidate": ["31628", "+31632"]},
+          {"not": {
+            "or": [
+              {"gt": [{"var": "registry.bronch_num_tbbx"}, 0]},
+              {"gt": [{"var": "registry.procedures_performed.transbronchial_biopsy.number_of_samples"}, 0]},
+              {"var": "registry.bronch_tbbx_tool"},
+              {"var": "registry.procedures_performed.transbronchial_biopsy.forceps_type"},
+              {"var": "registry.procedures_performed.transbronchial_cryobiopsy.cryoprobe_size_mm"},
+              {"var": "registry.bronch_biopsy_sites"},
+              {"var": "registry.procedures_performed.transbronchial_biopsy.locations"}
+            ]
+          }}
+        ]
+      },
+      "then": {
+        "actions": [
+          {"action": "remove_code", "code": "31628", "reason": "TBBx requires registry evidence"},
+          {"action": "remove_code", "code": "+31632", "reason": "TBBx add-on requires registry evidence"}
+        ]
+      }
+    },
+
+    {
+      "id": "R010_EBUS_STATION_COUNT",
+      "name": "EBUS station count determines 31652 vs 31653",
+      "phase": "validation",
+      "priority": 1000,
+      "enabled": true,
+      "description": "Select 31652 (1-2 stations) vs 31653 (3+ stations) based on station count",
+      "when": {
+        "and": [
+          {"any_candidate": ["31652", "31653"]},
+          {"var": "evidence.bronchoscopy_ebus_linear.ebus"},
+          {"var": "evidence.bronchoscopy_ebus_linear.station_context"}
+        ]
+      },
+      "then": {
+        "conditional_actions": [
+          {
+            "if": {"gte": [{"var": "evidence.bronchoscopy_ebus_linear.station_count"}, 3]},
+            "then": {"action": "remove_code", "code": "31652", "reason": "3+ stations -> use 31653"}
+          },
+          {
+            "if": {"lt": [{"var": "evidence.bronchoscopy_ebus_linear.station_count"}, 3]},
+            "then": {"action": "remove_code", "code": "31653", "reason": "1-2 stations -> use 31652"}
+          }
+        ]
+      }
+    },
+
+    {
+      "id": "R010b_EBUS_NO_STATION_CONTEXT",
+      "name": "EBUS codes require station context",
+      "phase": "validation",
+      "priority": 1010,
+      "enabled": true,
+      "description": "Remove EBUS codes if no station context evidence",
+      "when": {
+        "and": [
+          {"any_candidate": ["31652", "31653"]},
+          {"not": {
+            "and": [
+              {"var": "evidence.bronchoscopy_ebus_linear.ebus"},
+              {"var": "evidence.bronchoscopy_ebus_linear.station_context"}
+            ]
+          }}
+        ]
+      },
+      "then": {
+        "actions": [
+          {"action": "remove_code", "code": "31652", "reason": "EBUS requires station context"},
+          {"action": "remove_code", "code": "31653", "reason": "EBUS requires station context"}
+        ]
+      }
+    },
+
+    {
+      "id": "R011_RADIAL_EBUS",
+      "name": "Radial EBUS requires text or registry confirmation",
+      "phase": "validation",
+      "priority": 1100,
+      "enabled": true,
+      "description": "Radial EBUS (+31654) requires text evidence OR registry confirmation",
+      "when": {
+        "and": [
+          {"any_candidate": ["31654", "+31654"]},
+          {"not": {
+            "or": [
+              {"and": [
+                {"has_group": "bronchoscopy_ebus_radial"},
+                {"var": "evidence.bronchoscopy_ebus_radial.radial"}
+              ]},
+              {"and": [
+                {"var": "evidence.bronchoscopy_ebus_radial.radial"},
+                {"or": [
+                  {"var": "radial_context.performed"},
+                  {"var": "radial_context.visualization"},
+                  {"var": "registry.nav_rebus_used"},
+                  {"var": "registry.nav_rebus_view"}
+                ]}
+              ]}
+            ]
+          }}
+        ]
+      },
+      "then": {
+        "action": "remove_code",
+        "code": "31654",
+        "reason": "Radial EBUS requires text or registry confirmation"
+      }
+    },
+
+    {
+      "id": "R012_DEBULKING_STENT_BUNDLE",
+      "name": "Debulking bundled with stent placement",
+      "phase": "exclusion",
+      "priority": 1200,
+      "enabled": true,
+      "description": "When stent is placed, debulking (31640/31641) is bundled",
+      "when": {
+        "and": [
+          {"any_candidate": ["31640", "31641"]},
+          {"var": "_stent_evidence_present"}
+        ]
+      },
+      "then": {
+        "actions": [
+          {"action": "remove_code", "code": "31640", "reason": "Debulking bundled with stent"},
+          {"action": "remove_code", "code": "31641", "reason": "Debulking bundled with stent"}
+        ]
+      },
+      "notes": "_stent_evidence_present is computed from R004 4-gate check"
+    },
+
+    {
+      "id": "R012b_DEBULKING_TECHNIQUE_SELECT",
+      "name": "Select debulking technique (ablation vs mechanical)",
+      "phase": "exclusion",
+      "priority": 1210,
+      "enabled": true,
+      "description": "Select 31641 (ablation) vs 31640 (mechanical) based on technique terms",
+      "when": {
+        "and": [
+          {"has_candidate": "31640"},
+          {"has_candidate": "31641"},
+          {"not": {"var": "_stent_evidence_present"}}
+        ]
+      },
+      "then": {
+        "conditional_actions": [
+          {
+            "if": {"any_term": {"terms": ["apc", "argon", "electrocautery", "cautery", "laser", "ablation", "cryotherapy", "cryoablation", "rfa", "radiofrequency"], "in": "text_lower"}},
+            "then": {"action": "remove_code", "code": "31640", "reason": "Ablative technique -> use 31641"}
+          },
+          {
+            "if": {"any_term": {"terms": ["snare", "forceps excision", "mechanical debulking", "excision of tumor", "tumor excision", "debridement"], "in": "text_lower"}},
+            "then": {"action": "remove_code", "code": "31641", "reason": "Mechanical technique -> use 31640"}
+          },
+          {
+            "else": {"action": "remove_code", "code": "31640", "reason": "Default to 31641 when unclear"}
+          }
+        ]
+      }
+    },
+
+    {
+      "id": "R013_ASPIRATION",
+      "name": "Therapeutic aspiration requires explicit terms",
+      "phase": "validation",
+      "priority": 1300,
+      "enabled": true,
+      "description": "Aspiration codes (31645/31646) require explicit therapeutic aspiration documentation",
+      "when": {
+        "and": [
+          {"any_candidate": ["31645", "31646"]},
+          {"not": {
+            "any_term": {
+              "terms": [
+                "therapeutic aspiration", "aspiration of secretions", "aspirate secretions",
+                "suction removal", "suctioning of blood", "aspiration of mucus",
+                "mucus plug aspiration", "aspirated clot", "clot aspiration",
+                "clearance of secretions", "removal of secretions"
+              ],
+              "in": "text_lower"
+            }
+          }}
+        ]
+      },
+      "then": {
+        "actions": [
+          {"action": "remove_code", "code": "31645", "reason": "Aspiration requires explicit therapeutic terms"},
+          {"action": "remove_code", "code": "31646", "reason": "Aspiration requires explicit therapeutic terms"}
+        ]
+      }
+    },
+
+    {
+      "id": "R014_THORACOSCOPY_BIOPSY_TRUMPS",
+      "name": "Thoracoscopy biopsy codes trump diagnostic",
+      "phase": "exclusion",
+      "priority": 1400,
+      "enabled": true,
+      "description": "If any biopsy thoracoscopy code present, remove diagnostic-only (32601)",
+      "when": {
+        "and": [
+          {"has_candidate": "32601"},
+          {"any_candidate": ["32604", "32606", "32609", "32602", "32607", "32608"]}
+        ]
+      },
+      "then": {
+        "action": "remove_code",
+        "code": "32601",
+        "reason": "Biopsy code trumps diagnostic-only"
+      }
+    },
+
+    {
+      "id": "R014b_THORACOSCOPY_SITE_PRIORITY",
+      "name": "Thoracoscopy site priority selection",
+      "phase": "exclusion",
+      "priority": 1410,
+      "enabled": true,
+      "description": "Select ONE thoracoscopy code per session based on documented anatomic site",
+      "when": {
+        "count_gt": [{"candidates_matching": ["32601", "32604", "32606", "32607", "32609"]}, 1]
+      },
+      "then": {
+        "site_priority_select": {
+          "priority_order": [
+            {"site": "pleural_site", "code": "32609"},
+            {"site": "pericardial_site", "code": "32604"},
+            {"site": "mediastinal_site", "code": "32606"},
+            {"site": "lung_site", "code": "32607"},
+            {"site": "has_biopsy", "default_priority": ["32609", "32604", "32606", "32607"]},
+            {"fallback": "32601"}
+          ],
+          "evidence_path": "evidence.thoracoscopy"
+        }
+      },
+      "notes": "Only one thoracoscopy code should be billed per hemithorax"
+    },
+
+    {
+      "id": "R014c_THORACOSCOPY_TEMP_DRAIN_BUNDLE",
+      "name": "Temporary drains bundled with thoracoscopy",
+      "phase": "exclusion",
+      "priority": 1420,
+      "enabled": true,
+      "description": "Temporary pleural drains during thoracoscopy are bundled",
+      "when": {
+        "and": [
+          {"any_candidate": ["32601", "32604", "32606", "32607", "32608", "32609"]},
+          {"var": "evidence.thoracoscopy.temporary_drain_bundled"}
+        ]
+      },
+      "then": {
+        "actions": [
+          {"action": "remove_code", "code": "32556", "reason": "Temporary drain bundled with thoracoscopy"},
+          {"action": "remove_code", "code": "32557", "reason": "Temporary drain bundled with thoracoscopy"}
+        ]
+      }
+    }
+  ]
+}
