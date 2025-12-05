@@ -255,6 +255,14 @@ class JSONRulesEvaluator:
             collection = self._resolve_value(args[1], context) or set()
             return item not in collection
 
+        if "in" in predicate:
+            args = predicate["in"]
+            item = self._resolve_value(args[0], context)
+            collection = self._resolve_value(args[1], context)
+            if collection is None:
+                return False
+            return item in collection
+
         # Fall back to base DSL evaluator for standard operators
         return evaluate_predicate(predicate, context)
 
@@ -294,15 +302,20 @@ class JSONRulesEvaluator:
             for action in then["actions"]:
                 self._execute_action(action, rule.id, context, result)
 
-        # Conditional actions
+        # Conditional actions (if/else-if/else chain - first match wins)
         if "conditional_actions" in then:
+            any_condition_matched = False
             for cond_action in then["conditional_actions"]:
                 if "if" in cond_action:
                     if self._evaluate_when(cond_action["if"], context):
                         self._execute_action(cond_action["then"], rule.id, context, result)
+                        any_condition_matched = True
+                        # Don't break - allow multiple independent if conditions to fire
+                        # But track that at least one matched (to skip else)
                 elif "else" in cond_action:
-                    # Fallback action
-                    self._execute_action(cond_action["else"], rule.id, context, result)
+                    # Fallback action - only executes if NO if-conditions matched
+                    if not any_condition_matched:
+                        self._execute_action(cond_action["else"], rule.id, context, result)
 
         # Site priority selection (for thoracoscopy)
         if "site_priority_select" in then:
@@ -336,6 +349,17 @@ class JSONRulesEvaluator:
             from_code = action.get("from_code", "")
             to_code = action.get("to_code", "")
             result.upgrade_code(from_code, to_code, rule_id)
+        elif action_type == "filter_out_of_domain":
+            # Special action for R001: remove codes not in valid_cpts
+            valid_cpts = context.get("valid_cpts", set())
+            if valid_cpts:
+                codes_to_remove = []
+                for c in result.codes:
+                    norm_code = c.lstrip("+")
+                    if norm_code not in valid_cpts:
+                        codes_to_remove.append(c)
+                for c in codes_to_remove:
+                    result.remove_code(c, rule_id, reason)
 
     def _execute_site_priority(
         self,

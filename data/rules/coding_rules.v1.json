@@ -47,11 +47,27 @@
       "enabled": true,
       "description": "Remove codes not in the IP knowledge base valid CPT set",
       "when": {
-        "not_in": [{"var": "code"}, {"var": "valid_cpts"}]
+        "var": "valid_cpts"
       },
       "then": {
-        "action": "remove_code",
+        "action": "filter_out_of_domain",
         "reason": "Code not in IP knowledge base valid CPT set"
+      }
+    },
+
+    {
+      "id": "R002_EBUS_LINEAR_ADD",
+      "name": "Linear EBUS adds 31652",
+      "phase": "inference",
+      "priority": 195,
+      "enabled": true,
+      "description": "When linear EBUS group is present, always add 31652",
+      "when": {
+        "has_group": "bronchoscopy_ebus_linear"
+      },
+      "then": {
+        "action": "add_code",
+        "code": "31652"
       }
     },
 
@@ -74,7 +90,6 @@
       "then": {
         "actions": [
           {"action": "remove_code", "code": "31629", "reason": "Upgraded to EBUS-TBNA"},
-          {"action": "add_code", "code": "31652"},
           {"action": "remove_code", "code": "+31633", "reason": "Upgraded to 31653"},
           {"action": "add_code", "code": "31653", "condition": {"was_candidate": "+31633"}}
         ]

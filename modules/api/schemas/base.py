@@ -1,4 +1,4 @@
-"""Pydantic schemas for the FastAPI integration layer."""
+"""Base Pydantic schemas for the FastAPI integration layer."""
 
 from __future__ import annotations
 
@@ -67,35 +67,23 @@ class KnowledgeMeta(BaseModel):
     sha256: str
 
 
-# QA Sandbox schemas
 class QARunRequest(BaseModel):
     """Request schema for QA sandbox endpoint."""
+
     note_text: str
     modules_run: str = "all"  # "reporter", "coder", "registry", or "all"
     procedure_type: str | None = None
 
 
-class QARunResponse(BaseModel):
-    """Response schema for QA sandbox endpoint."""
-    reporter_output: dict[str, Any] | None = None
-    coder_output: dict[str, Any] | None = None
-    registry_output: dict[str, Any] | None = None
-    reporter_version: str | None = None
-    coder_version: str | None = None
-    repo_branch: str | None = None
-    repo_commit_sha: str | None = None
-
-
 __all__ = [
     "CoderRequest",
     "CoderResponse",
-    "RegistryRequest",
-    "RegistryResponse",
-    "VerifyRequest",
-    "VerifyResponse",
-    "RenderRequest",
-    "RenderResponse",
     "KnowledgeMeta",
     "QARunRequest",
-    "QARunResponse",
+    "RegistryRequest",
+    "RegistryResponse",
+    "RenderRequest",
+    "RenderResponse",
+    "VerifyRequest",
+    "VerifyResponse",
 ]

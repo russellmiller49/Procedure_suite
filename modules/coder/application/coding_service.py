@@ -25,6 +25,7 @@ from modules.coder.application.smart_hybrid_policy import (
     AdvisorResult,
 )
 from modules.coder.application.procedure_type_detector import detect_procedure_type
+from modules.phi.ports import PHIScrubberPort
 from proc_schemas.coding import CodeSuggestion, CodingResult
 from proc_schemas.reasoning import ReasoningFields
 from observability.timing import timed
@@ -57,6 +58,7 @@ class CodingService:
         rule_engine: RuleEngine,
         llm_advisor: Optional[LLMAdvisorPort],
         config: CoderSettings,
+        phi_scrubber: Optional[PHIScrubberPort] = None,
     ):
         self.kb_repo = kb_repo
         self.keyword_repo = keyword_repo
@@ -64,6 +66,7 @@ class CodingService:
         self.rule_engine = rule_engine
         self.llm_advisor = llm_advisor
         self.config = config
+        self.phi_scrubber = phi_scrubber
 
         # Initialize hybrid policy
         self.hybrid_policy = HybridPolicy(
@@ -72,6 +75,13 @@ class CodingService:
             negation_detector=negation_detector,
             config=config,
         )
+
+        # Log PHI scrubber status
+        if llm_advisor and not phi_scrubber:
+            logger.warning(
+                "LLM advisor enabled but no PHI scrubber configured. "
+                "Raw text may be sent to external LLM service."
+            )
 
     def generate_suggestions(
         self,
@@ -199,14 +209,34 @@ class CodingService:
     def _run_llm_advisor(self, report_text: str, use_llm: bool) -> tuple[AdvisorResult, float]:
         """Step 3: Run the LLM advisor.
 
+        PHI Guardrail: If a PHI scrubber is configured, the text is scrubbed
+        before being sent to the external LLM service. This prevents PHI
+        from being transmitted to third-party APIs.
+
         Returns:
             Tuple of (AdvisorResult, latency_ms)
         """
         if not use_llm or not self.llm_advisor:
             return AdvisorResult(codes=[], confidence={}), 0.0
 
+        # PHI Guardrail: Scrub text before sending to LLM
+        text_for_llm = report_text
+        if self.phi_scrubber:
+            try:
+                scrub_result = self.phi_scrubber.scrub(report_text)
+                text_for_llm = scrub_result.scrubbed_text
+                logger.debug(
+                    "PHI scrubbed before LLM call",
+                    extra={"entities_found": len(scrub_result.entities)},
+                )
+            except Exception as e:
+                logger.error(f"PHI scrubbing failed: {e}", exc_info=True)
+                # Fail safely: don't send potentially unscrubbed text to LLM
+                logger.warning("Skipping LLM advisor due to scrubbing failure")
+                return AdvisorResult(codes=[], confidence={}), 0.0
+
         with timed("coding_service.llm_advisor") as timing:
-            suggestions = self.llm_advisor.suggest_codes(report_text)
+            suggestions = self.llm_advisor.suggest_codes(text_for_llm)
 
         return AdvisorResult(
             codes=[s.code for s in suggestions],

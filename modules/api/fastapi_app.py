@@ -12,12 +12,14 @@ from __future__ import annotations
 
 import logging
 import os
+import subprocess
 import uuid
 from dataclasses import asdict
 from functools import lru_cache
 from typing import Any, List
 
 from fastapi import FastAPI, Request, Depends, HTTPException
+from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -32,19 +34,38 @@ from modules.api.routes.phi import router as phi_router
 from modules.api.routes.procedure_codes import router as procedure_codes_router
 from modules.api.routes.metrics import router as metrics_router
 from modules.api.routes.phi_demo_cases import router as phi_demo_router
+
+# All API schemas (base + QA pipeline)
 from modules.api.schemas import (
+    # Base schemas
     CoderRequest,
     CoderResponse,
     KnowledgeMeta,
     QARunRequest,
-    QARunResponse,
     RegistryRequest,
     RegistryResponse,
     RenderRequest,
     RenderResponse,
     VerifyRequest,
     VerifyResponse,
+    # QA pipeline schemas
+    CodeEntry,
+    CoderData,
+    ModuleResult,
+    ModuleStatus,
+    QARunResponse,
+    RegistryData,
+    ReporterData,
 )
+
+# QA Pipeline service
+from modules.api.services.qa_pipeline import (
+    ModuleOutcome,
+    QAPipelineResult,
+    QAPipelineService,
+)
+from modules.api.dependencies import get_coding_service, get_qa_pipeline_service
+
 from modules.coder.schema import CodeDecision, CoderOutput
 from modules.common.knowledge import knowledge_hash, knowledge_version
 from modules.common.spans import Span
@@ -52,7 +73,6 @@ from modules.registry.engine import RegistryEngine
 
 # New architecture imports
 from modules.coder.application.coding_service import CodingService
-from modules.api.dependencies import get_coding_service
 from modules.api.coder_adapter import convert_coding_result_to_coder_output
 from modules.coder.phi_gating import is_phi_review_required
 
@@ -356,7 +376,6 @@ def _span_to_dict(span: Span) -> dict[str, Any]:
 
 def _get_git_info() -> tuple[str | None, str | None]:
     """Extract git branch and commit SHA for version tracking."""
-    import subprocess
     try:
         branch = subprocess.check_output(
             ["git", "rev-parse", "--abbrev-ref", "HEAD"],
@@ -377,233 +396,168 @@ REPORTER_VERSION = os.getenv("REPORTER_VERSION", "v0.2.0")
 CODER_VERSION = os.getenv("CODER_VERSION", "v0.2.0")
 
 
+def _module_status_from_outcome(outcome: ModuleOutcome) -> ModuleStatus:
+    """Convert ModuleOutcome to ModuleStatus enum."""
+    if outcome.skipped:
+        return ModuleStatus.SKIPPED
+    if outcome.ok:
+        return ModuleStatus.SUCCESS
+    return ModuleStatus.ERROR
+
+
+def _qapipeline_result_to_response(
+    result: QAPipelineResult,
+    reporter_version: str,
+    coder_version: str,
+    repo_branch: str | None,
+    repo_commit_sha: str | None,
+) -> QARunResponse:
+    """Convert QAPipelineResult to QARunResponse.
+
+    Handles status aggregation and data transformation for each module.
+    """
+    # Build registry ModuleResult
+    registry_result: ModuleResult[RegistryData] | None = None
+    if not result.registry.skipped:
+        registry_data = None
+        if result.registry.ok and result.registry.data:
+            registry_data = RegistryData(
+                record=result.registry.data.get("record", {}),
+                evidence=result.registry.data.get("evidence", {}),
+            )
+        registry_result = ModuleResult[RegistryData](
+            status=_module_status_from_outcome(result.registry),
+            data=registry_data,
+            error_message=result.registry.error_message,
+            error_code=result.registry.error_code,
+        )
+
+    # Build reporter ModuleResult
+    reporter_result: ModuleResult[ReporterData] | None = None
+    if not result.reporter.skipped:
+        reporter_data = None
+        if result.reporter.ok and result.reporter.data:
+            data = result.reporter.data
+            reporter_data = ReporterData(
+                markdown=data.get("markdown"),
+                bundle=data.get("bundle"),
+                issues=data.get("issues", []),
+                warnings=data.get("warnings", []),
+                procedure_core=data.get("procedure_core"),
+                indication=data.get("indication"),
+                postop=data.get("postop"),
+                fallback_used=data.get("fallback_used", False),
+            )
+        reporter_result = ModuleResult[ReporterData](
+            status=_module_status_from_outcome(result.reporter),
+            data=reporter_data,
+            error_message=result.reporter.error_message,
+            error_code=result.reporter.error_code,
+        )
+
+    # Build coder ModuleResult
+    coder_result: ModuleResult[CoderData] | None = None
+    if not result.coder.skipped:
+        coder_data = None
+        if result.coder.ok and result.coder.data:
+            data = result.coder.data
+            codes = [
+                CodeEntry(
+                    cpt=c.get("cpt", ""),
+                    description=c.get("description"),
+                    confidence=c.get("confidence"),
+                    source=c.get("source"),
+                    hybrid_decision=c.get("hybrid_decision"),
+                    review_flag=c.get("review_flag", False),
+                )
+                for c in data.get("codes", [])
+            ]
+            coder_data = CoderData(
+                codes=codes,
+                total_work_rvu=data.get("total_work_rvu"),
+                estimated_payment=data.get("estimated_payment"),
+                bundled_codes=data.get("bundled_codes", []),
+                kb_version=data.get("kb_version"),
+                policy_version=data.get("policy_version"),
+                model_version=data.get("model_version"),
+                processing_time_ms=data.get("processing_time_ms"),
+            )
+        coder_result = ModuleResult[CoderData](
+            status=_module_status_from_outcome(result.coder),
+            data=coder_data,
+            error_message=result.coder.error_message,
+            error_code=result.coder.error_code,
+        )
+
+    # Compute overall status
+    active_results = []
+    if registry_result:
+        active_results.append(registry_result)
+    if reporter_result:
+        active_results.append(reporter_result)
+    if coder_result:
+        active_results.append(coder_result)
+
+    if not active_results:
+        overall_status = "completed"
+    else:
+        successes = sum(1 for r in active_results if r.status == ModuleStatus.SUCCESS)
+        failures = sum(1 for r in active_results if r.status == ModuleStatus.ERROR)
+
+        if failures == 0:
+            overall_status = "completed"
+        elif successes == 0:
+            overall_status = "failed"
+        else:
+            overall_status = "partial_success"
+
+    return QARunResponse(
+        overall_status=overall_status,
+        registry=registry_result,
+        reporter=reporter_result,
+        coder=coder_result,
+        reporter_version=reporter_version,
+        coder_version=coder_version,
+        repo_branch=repo_branch,
+        repo_commit_sha=repo_commit_sha,
+    )
+
+
 @app.post("/qa/run", response_model=QARunResponse)
-async def qa_run(payload: QARunRequest) -> QARunResponse:
+async def qa_run(
+    payload: QARunRequest,
+    qa_service: QAPipelineService = Depends(get_qa_pipeline_service),
+) -> QARunResponse:
     """
     QA sandbox endpoint: runs reporter, coder, and/or registry on input text.
 
     This endpoint does NOT persist data - that is handled by the Next.js layer.
-    Returns outputs + version metadata for tracking.
+    Returns structured outputs with per-module status + version metadata.
+
+    The pipeline runs synchronously in a thread pool to avoid blocking the
+    event loop during heavy NLP/ML processing.
+
+    Returns HTTP 200 for all cases (success, partial failure, full failure).
+    Check `overall_status` and individual module `status` fields for results.
     """
-    import traceback
-
-    from fastapi import HTTPException
-
-    from proc_report.engine import compose_report_from_text
-
-    note_text = payload.note_text
-    modules_run = payload.modules_run
-    procedure_type = payload.procedure_type
-
-    reporter_output = None
-    coder_output = None
-    registry_output = None
     branch, commit = _get_git_info()
 
-    try:
-        # Run registry if requested
-        if modules_run in ("registry", "all"):
-            try:
-                eng = RegistryEngine()
-                result = eng.run(note_text, explain=True)
-                if isinstance(result, tuple):
-                    record, evidence = result
-                else:
-                    record, evidence = result, getattr(result, 'evidence', {})
+    # Run pipeline in thread pool to avoid blocking event loop
+    result = await run_in_threadpool(
+        qa_service.run_pipeline,
+        text=payload.note_text,
+        modules=payload.modules_run,
+        procedure_type=payload.procedure_type,
+    )
 
-                registry_output = {
-                    "record": record.model_dump() if hasattr(record, 'model_dump') else dict(record),
-                    "evidence": _serialize_evidence(evidence) if evidence else {},
-                }
-            except ValueError as ve:
-                # Registry validation errors - provide detailed error message
-                tb = traceback.format_exc()
-                logging.error(f"Registry validation error: {ve}\n{tb}")
-                raise HTTPException(
-                    status_code=422,
-                    detail=f"Registry validation failed: {str(ve)}"
-                ) from ve
-            except Exception as reg_err:
-                # Other registry errors (e.g., missing spaCy model)
-                tb = traceback.format_exc()
-                logging.error(f"Registry extraction error: {reg_err}\n{tb}")
-                raise HTTPException(
-                    status_code=500,
-                    detail=f"Registry extraction failed: {str(reg_err)}"
-                ) from reg_err
-
-        # Run reporter if requested
-        if modules_run in ("reporter", "all"):
-            try:
-                # If we have registry output, use structured reporter for rich output
-                if registry_output and registry_output.get("record"):
-                    # Build a ProcedureBundle from the registry extraction
-                    bundle = build_procedure_bundle_from_extraction(
-                        registry_output["record"]
-                    )
-                    # Run inference to enrich the bundle
-                    inference = InferenceEngine()
-                    inference_result = inference.infer_bundle(bundle)
-                    bundle = apply_patch_result(bundle, inference_result)
-
-                    # Validate and get issues
-                    templates = default_template_registry()
-                    schemas = default_schema_registry()
-                    validator = ValidationEngine(templates, schemas)
-                    issues = validator.list_missing_critical_fields(bundle)
-                    warnings = validator.apply_warn_if_rules(bundle)
-
-                    # Use the structured ReporterEngine for detailed output
-                    engine = ReporterEngine(
-                        templates,
-                        schemas,
-                        procedure_order=_load_procedure_order(),
-                    )
-                    structured = engine.compose_report_with_metadata(
-                        bundle,
-                        strict=False,
-                        embed_metadata=False,
-                        validation_issues=issues,
-                        warnings=warnings,
-                    )
-                    reporter_output = {
-                        "markdown": structured.text,
-                        "bundle": bundle.model_dump() if hasattr(bundle, "model_dump") else {},
-                        "issues": [i.model_dump() for i in issues] if issues else [],
-                        "warnings": warnings,
-                    }
-                else:
-                    # No registry data available - run registry extraction first
-                    # to get structured procedure data for rich report generation
-                    try:
-                        reg_eng = RegistryEngine()
-                        reg_result = reg_eng.run(note_text, explain=False)
-                        if isinstance(reg_result, tuple):
-                            reg_record, _ = reg_result
-                        else:
-                            reg_record = reg_result
-                        reg_dict = reg_record.model_dump() if hasattr(reg_record, "model_dump") else {}
-
-                        # Build bundle and generate structured report
-                        bundle = build_procedure_bundle_from_extraction(reg_dict)
-                        inference = InferenceEngine()
-                        inference_result = inference.infer_bundle(bundle)
-                        bundle = apply_patch_result(bundle, inference_result)
-
-                        templates = default_template_registry()
-                        schemas = default_schema_registry()
-                        validator = ValidationEngine(templates, schemas)
-                        issues = validator.list_missing_critical_fields(bundle)
-                        warnings = validator.apply_warn_if_rules(bundle)
-
-                        engine = ReporterEngine(
-                            templates,
-                            schemas,
-                            procedure_order=_load_procedure_order(),
-                        )
-                        structured = engine.compose_report_with_metadata(
-                            bundle,
-                            strict=False,
-                            embed_metadata=False,
-                            validation_issues=issues,
-                            warnings=warnings,
-                        )
-                        reporter_output = {
-                            "markdown": structured.text,
-                            "bundle": bundle.model_dump() if hasattr(bundle, "model_dump") else {},
-                            "issues": [i.model_dump() for i in issues] if issues else [],
-                            "warnings": warnings,
-                        }
-                    except Exception as reg_fallback_err:
-                        # If registry extraction fails, fall back to simple reporter
-                        # Log the error for debugging but continue with fallback
-                        fallback_tb = traceback.format_exc()
-                        logging.warning(
-                            f"Reporter auto-registry extraction failed, using simple reporter: "
-                            f"{reg_fallback_err}\n{fallback_tb}"
-                        )
-                        from proc_report.engine import compose_report_from_text
-
-                        hints = {}
-                        if procedure_type:
-                            hints["procedure_type"] = procedure_type
-
-                        report, markdown = compose_report_from_text(note_text, hints)
-                        proc_core = report.procedure_core
-                        core_dict = proc_core.model_dump() if hasattr(proc_core, "model_dump") else {}
-                        reporter_output = {
-                            "markdown": markdown,
-                            "procedure_core": core_dict,
-                            "indication": report.indication,
-                            "postop": report.postop,
-                        }
-            except Exception as rep_err:
-                # Reporter errors (e.g., missing spaCy model)
-                tb = traceback.format_exc()
-                logging.error(f"Reporter extraction error: {rep_err}\n{tb}")
-                raise HTTPException(
-                    status_code=500,
-                    detail=f"Reporter extraction failed: {str(rep_err)}"
-                ) from rep_err
-
-        # Run coder if requested
-        if modules_run in ("coder", "all"):
-            # Use CodingService from new hexagonal architecture
-            coding_service = get_coding_service()
-            procedure_id = str(uuid.uuid4())
-
-            result = coding_service.generate_result(
-                procedure_id=procedure_id,
-                report_text=note_text,
-                use_llm=True,
-                procedure_type=procedure_type,
-            )
-
-            # Convert to output format expected by QA sandbox
-            coder_output = {
-                "codes": [
-                    {
-                        "cpt": s.code,
-                        "description": s.description,
-                        "confidence": s.final_confidence,
-                        "source": s.source,
-                        "hybrid_decision": s.hybrid_decision,
-                        "review_flag": s.review_flag,
-                    }
-                    for s in result.suggestions
-                ],
-                "total_work_rvu": None,  # Would need RVU calculation service
-                "estimated_payment": None,
-                "bundled_codes": [],  # NCCI handled in CodingService
-                "kb_version": result.kb_version,
-                "policy_version": result.policy_version,
-                "model_version": result.model_version,
-                "processing_time_ms": result.processing_time_ms,
-            }
-
-    except HTTPException:
-        # Re-raise HTTP exceptions without wrapping
-        raise
-    except Exception as e:
-        tb = traceback.format_exc()
-        logging.error(f"QA run unexpected error: {e}\n{tb}")
-        raise HTTPException(status_code=500, detail=str(e)) from e
-
-    return QARunResponse(
-        reporter_output=reporter_output,
-        coder_output=coder_output,
-        registry_output=registry_output,
+    # Convert to response format
+    return _qapipeline_result_to_response(
+        result=result,
         reporter_version=REPORTER_VERSION,
         coder_version=CODER_VERSION,
         repo_branch=branch,
         repo_commit_sha=commit,
     )
 
-
-from modules.api.routes.procedure_codes import router as procedure_codes_router
-from modules.api.routes.metrics import router as metrics_router
-
-app.include_router(procedure_codes_router, prefix="/api/v1", tags=["procedure-codes"])
-app.include_router(metrics_router, tags=["metrics"])
 
 __all__ = ["app"]

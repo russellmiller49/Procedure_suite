@@ -24,6 +24,22 @@ from modules.registry.application.registry_service import RegistryService
 from modules.registry.adapters.schema_registry import get_schema_registry
 from observability.logging_config import get_logger
 
+# QA Pipeline imports
+from modules.api.services.qa_pipeline import (
+    QAPipelineService,
+    ReportingStrategy,
+    SimpleReporterStrategy,
+)
+from modules.registry.engine import RegistryEngine
+from proc_report.engine import (
+    ReporterEngine,
+    _load_procedure_order,
+    default_schema_registry,
+    default_template_registry,
+)
+from proc_report.inference import InferenceEngine
+from proc_report.validation import ValidationEngine
+
 logger = get_logger("api_dependencies")
 
 # Global singleton for the procedure store (supports both memory and supabase backends)
@@ -73,9 +89,13 @@ def get_coding_service() -> CodingService:
     negation_detector = SimpleNegationDetector()
     logger.info(f"Negation detector version: {negation_detector.version}")
 
-    # 4. Rule engine
-    rule_engine = RuleEngine(kb_repo)
-    logger.info(f"Rule engine version: {rule_engine.version}")
+    # 4. Rule engine (with CodingRulesEngine mode from environment)
+    rules_mode = os.getenv("CODING_RULES_MODE", "python")
+    rule_engine = RuleEngine(kb_repo, rules_mode=rules_mode)
+    logger.info(
+        f"Rule engine version: {rule_engine.version}",
+        extra={"rules_mode": rules_mode},
+    )
 
     # 5. LLM advisor (conditionally enabled)
     llm_advisor: Optional[GeminiAdvisorAdapter | MockLLMAdvisor] = None
@@ -95,7 +115,17 @@ def get_coding_service() -> CodingService:
     else:
         logger.info("LLM advisor disabled (CODER_USE_LLM_ADVISOR not set)")
 
-    # 6. Build CodingService
+    # 6. PHI scrubber (optional, for LLM calls)
+    phi_scrubber = None
+    if use_llm:
+        try:
+            from modules.api.phi_dependencies import _get_scrubber
+            phi_scrubber = _get_scrubber()
+            logger.info("PHI scrubber configured for LLM calls")
+        except Exception as e:
+            logger.warning(f"Failed to initialize PHI scrubber: {e}")
+
+    # 7. Build CodingService
     service = CodingService(
         kb_repo=kb_repo,
         keyword_repo=keyword_repo,
@@ -103,6 +133,7 @@ def get_coding_service() -> CodingService:
         rule_engine=rule_engine,
         llm_advisor=llm_advisor,
         config=config,
+        phi_scrubber=phi_scrubber,
     )
 
     logger.info("CodingService initialized successfully")
@@ -214,3 +245,76 @@ def reset_procedure_store() -> None:
         _procedure_store.clear_all()
         _procedure_store = None
         logger.debug("ProcedureStore reset")
+
+
+@lru_cache(maxsize=1)
+def get_qa_pipeline_service() -> QAPipelineService:
+    """Create a fully wired QAPipelineService instance.
+
+    This factory:
+    - Instantiates RegistryEngine for procedure extraction
+    - Builds ReporterEngine with templates, schemas, and procedure order
+    - Creates InferenceEngine and ValidationEngine for report enrichment
+    - Creates SimpleReporterStrategy as fallback
+    - Builds ReportingStrategy with all engines
+    - Gets CodingService from get_coding_service()
+    - Returns a QAPipelineService with all dependencies wired
+
+    The instance is cached for reuse across requests.
+    """
+    logger.info("Initializing QAPipelineService")
+
+    # 1. Registry engine
+    registry_engine = RegistryEngine()
+    logger.debug("RegistryEngine initialized")
+
+    # 2. Reporter infrastructure
+    templates = default_template_registry()
+    schemas = default_schema_registry()
+    procedure_order = _load_procedure_order()
+
+    reporter_engine = ReporterEngine(
+        templates,
+        schemas,
+        procedure_order=procedure_order,
+    )
+    logger.debug("ReporterEngine initialized")
+
+    # 3. Inference and validation engines
+    inference_engine = InferenceEngine()
+    validation_engine = ValidationEngine(templates, schemas)
+    logger.debug("InferenceEngine and ValidationEngine initialized")
+
+    # 4. Simple reporter fallback
+    simple_strategy = SimpleReporterStrategy()
+
+    # 5. Reporting strategy
+    reporting_strategy = ReportingStrategy(
+        reporter_engine=reporter_engine,
+        inference_engine=inference_engine,
+        validation_engine=validation_engine,
+        registry_engine=registry_engine,
+        simple_strategy=simple_strategy,
+    )
+    logger.debug("ReportingStrategy initialized")
+
+    # 6. Coding service
+    coding_service = get_coding_service()
+
+    # 7. Build QAPipelineService
+    service = QAPipelineService(
+        registry_engine=registry_engine,
+        reporting_strategy=reporting_strategy,
+        coding_service=coding_service,
+    )
+
+    logger.info("QAPipelineService initialized successfully")
+    return service
+
+
+def reset_qa_pipeline_service_cache() -> None:
+    """Reset the cached QAPipelineService instance.
+
+    Useful for testing or when settings change.
+    """
+    get_qa_pipeline_service.cache_clear()
