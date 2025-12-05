@@ -17,6 +17,23 @@ This document updates the original migration plan to incorporate the Human-in-th
   - `PHI_ENCRYPTION_MODE=demo` → insecure demo adapter (synthetic data only).
   - `PHI_ENCRYPTION_MODE=fernet` (default) → `FernetEncryptionAdapter` using `PHI_ENCRYPTION_KEY`.
 - Scrubber adapters: stub + Presidio scaffold (stubbed), ready to swap when Presidio is installed.
+- Phase 1 cutover: CodingService is the sole backend coder; `/v1/coder/run` is a legacy shim (blocked when `CODER_REQUIRE_PHI_REVIEW=true`, non-PHI/synthetic only otherwise).
+- Primary coding path: `/v1/phi/submit` → review/feedback (`PHI_REVIEWED`) → `/api/v1/procedures/{id}/codes/suggest` (CodingService).
+- Phase 2: Legacy coding/LLM routes are marked non-PHI/synthetic-only; FastAPI does not call `EnhancedCPTCoder` directly; CodingService is the canonical coding orchestrator.
+- Phase 3: FastAPI remains a thin adapter over services; dependencies centralized in `modules/api/dependencies.py` and `modules/api/phi_dependencies.py`; warmup/infra stays in `modules/infra/*`.
+
+## PHI Regression Checklist (Phase 4)
+
+- Tests to run:
+  - `pytest tests/integration/test_phi_workflow_end_to_end.py tests/integration/test_phi_response_safety.py tests/integration/test_phi_logging_safety.py -q`
+  - plus core suites: `tests/phi/*`, `tests/api/test_phi_endpoints.py`, `tests/api/test_coding_phi_gating.py`, `tests/coding/test_phi_gating.py`
+- Expect:
+  - PHI appears only in `/v1/phi/reidentify` responses.
+  - No raw PHI fragments in submit/status/procedure/coding responses or logs.
+  - Coding gated when `CODER_REQUIRE_PHI_REVIEW=true` and uses `ProcedureData.scrubbed_text`.
+- Env for PHI flows:
+  - `CODER_REQUIRE_PHI_REVIEW=true`
+  - `PHI_ENCRYPTION_MODE=fernet` with `PHI_ENCRYPTION_KEY` set (demo may use `PHI_ENCRYPTION_MODE=demo` with synthetic data only).
 
 Recommended env flags for the PHI demo
 - `CODER_REQUIRE_PHI_REVIEW=true` (forces reviewed status before coding)

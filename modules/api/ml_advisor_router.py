@@ -8,6 +8,10 @@ This router provides endpoints for:
 - Coding trace retrieval
 - Health and status checks
 
+NOTE: This router is legacy/synthetic-only and not part of the PHI-gated coding
+flow. Production coding goes through CodingService (/api/v1/procedures/{id}/codes/suggest)
+using scrubbed text only.
+
 Integration:
     Add to your main FastAPI app:
 

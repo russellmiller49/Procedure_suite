@@ -48,4 +48,4 @@ This toolkit allows you to:
 **Please read [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) before making changes.**
 *   Always edit `modules/api/fastapi_app.py`.
 *   Never edit `api/app.py` (Deprecated).
-*   Use `EnhancedCPTCoder` from `proc_autocode/coder.py`.
+*   Use the `CodingService` entrypoints (`/api/v1/procedures/{id}/codes/suggest`) instead of direct coder calls.

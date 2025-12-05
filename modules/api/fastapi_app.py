@@ -22,6 +22,10 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
+# Coding entry points:
+# - Primary: /api/v1/procedures/{id}/codes/suggest (CodingService, PHI-gated)
+# - Legacy shim: /v1/coder/run (non-PHI/synthetic only; blocked when CODER_REQUIRE_PHI_REVIEW=true)
+
 # Import ML Advisor router
 from modules.api.ml_advisor_router import router as ml_advisor_router
 from modules.api.routes.phi import router as phi_router
@@ -229,22 +233,7 @@ async def coder_run(
     mode: str | None = None,
     coding_service: CodingService = Depends(get_coding_service),
 ) -> CoderResponse:
-    """Auto-coding using CodingService (new hexagonal architecture).
-
-    This endpoint uses CodingService with:
-    - Rule-based coding engine
-    - Optional LLM advisor (smart hybrid policy)
-    - NCCI/MER compliance validation
-    - Evidence verification in note text
-
-    Args:
-        req: CoderRequest with note text, locality, setting
-        mode: Optional output mode override
-        coding_service: Injected CodingService instance
-
-    Returns:
-        CoderOutput with codes, financials, warnings
-    """
+    """Legacy raw-text coder shim (non-PHI). Use PHI workflow + /api/v1/procedures/{id}/codes/suggest."""
     require_review = is_phi_review_required()
     procedure_id = str(uuid.uuid4())
     report_text = req.note

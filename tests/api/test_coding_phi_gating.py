@@ -25,6 +25,13 @@ from proc_schemas.coding import CodingResult  # noqa: E402
 class FakeCodingService:
     def __init__(self):
         self.last_report_text = None
+        class _KB:
+            version = "fake"
+            def get_procedure_info(self_inner, code):  # noqa: ANN001
+                return None
+            def get_all_codes(self_inner):  # noqa: ANN001
+                return []
+        self.kb_repo = _KB()
 
     def generate_result(self, procedure_id: str, report_text: str, use_llm: bool = True, procedure_type: str | None = None):
         self.last_report_text = report_text
@@ -108,3 +115,19 @@ def test_coder_run_blocked_when_review_required(client):
         json={"note": "Patient X synthetic note.", "allow_weak_sedation_docs": False},
     )
     assert resp.status_code == 400
+
+
+def test_coder_run_allowed_when_review_not_required(monkeypatch, client):
+    monkeypatch.setenv("CODER_REQUIRE_PHI_REVIEW", "false")
+    fake = FakeCodingService()
+    app.dependency_overrides[get_coding_service] = lambda: fake
+
+    try:
+        resp = client.post(
+            "/v1/coder/run",
+            json={"note": "Synthetic note text", "allow_weak_sedation_docs": False},
+        )
+        assert resp.status_code == 200
+        assert fake.last_report_text == "Synthetic note text"
+    finally:
+        app.dependency_overrides.pop(get_coding_service, None)
