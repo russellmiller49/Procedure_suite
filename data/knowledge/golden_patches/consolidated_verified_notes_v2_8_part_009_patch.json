@@ -1,0 +1,130 @@
+[
+{
+"op": "add",
+"path": "/0/registry_entry/billing",
+"value": {
+"cpt_codes": [
+{
+"code": "31653",
+"description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with endobronchial ultrasound (EBUS) guided transbronchial sampling of 3 or more mediastinal and/or hilar lymph node stations or structures",
+"modifier": null,
+"modifiers": null,
+"units": 1
+}
+],
+"icd10_codes": null,
+"total_rvu": 7.7,
+"work_rvu": 4.96,
+"practice_expense_rvu": 2.22,
+"malpractice_rvu": 0.52
+}
+},
+{
+"op": "add",
+"path": "/0/registry_entry/coding_support",
+"value": {
+"version": "1.0.0",
+"generated_at": "2025-12-06T00:00:00Z",
+"generator": "ip-coder-patch-gpt",
+"knowledge_base_version": "2.7",
+"coding_summary": {
+"primary_family": "EBUS_TBNA",
+"lines": [
+{
+"sequence": 1,
+"code": "31653",
+"modifier": null,
+"modifiers": null,
+"description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with endobronchial ultrasound (EBUS) guided transbronchial sampling of 3 or more mediastinal and/or hilar lymph node stations or structures",
+"is_primary": true,
+"is_add_on": false,
+"parent_code": null,
+"rvu_source": "ip_coding_billing.v2_7.cms_rvus.bronchoscopy.31653",
+"work_rvu": 4.96,
+"practice_expense_rvu": 2.22,
+"malpractice_rvu": 0.52,
+"total_facility_rvu": 7.7,
+"total_nonfacility_rvu": 37.54,
+"mpfs_facility_payment": 252.0,
+"mpfs_nonfacility_payment": 1229.0,
+"units": 1,
+"source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_airway.codes.31653",
+"note_spans": null
+}
+],
+"notes": "EBUS-TBNA staging case with 3+ mediastinal/hilar nodal stations sampled in a single session; no separate diagnostic bronchoscopy, ablation, or peripheral navigation service documented for this encounter."
+},
+"financial_analysis": {
+"calendar_year": "2025",
+"fee_schedule_name": "physician_2025_airway",
+"rvu_source": "cms_2025_final",
+"conversion_factor": 32.7442,
+"setting": "facility",
+"per_code": [
+{
+"code": "31653",
+"modifier": null,
+"units": 1,
+"work_rvu": 4.96,
+"practice_expense_rvu": 2.22,
+"malpractice_rvu": 0.52,
+"total_facility_rvu": 7.7,
+"total_nonfacility_rvu": 37.54,
+"mpfs_facility_payment": 252.0,
+"mpfs_nonfacility_payment": 1229.0,
+"estimated_facility_payment_adjusted": 252.0,
+"estimated_nonfacility_payment_adjusted": 1229.0,
+"mppr_policy_applied": false,
+"mppr_discount_factor": 1.0,
+"mppr_discount_reason": null,
+"note": "Single EBUS-TBNA professional service; assumes no modifier 26/TC split and no multiple procedure reduction."
+}
+],
+"totals": {
+"total_work_rvu": 4.96,
+"total_facility_rvu": 7.7,
+"total_nonfacility_rvu": 37.54,
+"estimated_facility_payment_unadjusted": 252.0,
+"estimated_nonfacility_payment_unadjusted": 1229.0,
+"estimated_facility_payment_after_mppr": 252.0,
+"estimated_nonfacility_payment_after_mppr": 1229.0
+},
+"mppr_assumptions": "No other billable bronchoscopic procedures by the same physician on the same date of service; MPPR not applied.",
+"notes": "Values based on 2025 CMS Physician Fee Schedule (national, non-geographically adjusted) as encoded in ip_coding_billing.v2_7 for code 31653."
+},
+"coding_rationale": {
+"per_code": [
+{
+"code": "31653",
+"summary": "Documentation supports EBUS-TBNA with sampling of 3 or more mediastinal/hilar lymph node stations in a single bronchoscopy session, meeting criteria for 31653. No separate diagnostic bronchoscopy, therapeutic airway intervention, or peripheral nodule navigation is described for this encounter.",
+"guideline_refs": [
+"AABIP/ACCP EBUS coding guidance for 31652 vs 31653 (3+ stations => 31653).",
+"ip_coding_billing.v2_7 EBUS policy for nodal station counting and bundling."
+],
+"risk_flags": []
+}
+]
+}
+}
+},
+{
+"op": "replace",
+"path": "/0/patch_metadata/patch_version",
+"value": "1.1.0"
+},
+{
+"op": "replace",
+"path": "/0/patch_metadata/patch_date",
+"value": "2025-12-06T00:00:00Z"
+},
+{
+"op": "add",
+"path": "/0/patch_metadata/changes/-",
+"value": "Added registry_entry.billing and registry_entry.coding_support (coding_review) for CPT 31653 using ip_coding_billing.v2_7 2025 facility RVUs and MPFS payments."
+},
+{
+"op": "add",
+"path": "/0/patch_metadata/warnings/-",
+"value": "This patch updates billing/coding_review only for this note in consolidated_verified_notes_v2_8_part_009.json; other notes in the file still require separate coding_support review."
+}
+]

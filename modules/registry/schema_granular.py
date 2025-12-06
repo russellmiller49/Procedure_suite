@@ -244,12 +244,12 @@ class AirwayStentProcedure(BaseModel):
 
 class EBUSStationDetail(BaseModel):
     """Per-station EBUS-TBNA data capturing morphology, sampling, and ROSE."""
-    
+
     model_config = ConfigDict(extra="ignore")
-    
+
     # Station identification
     station: str = Field(..., description="IASLC station (2R, 2L, 4R, 4L, 7, 10R, 10L, 11R, 11L, 12R, 12L)")
-    
+
     # Morphology
     short_axis_mm: float | None = Field(None, ge=0, description="Short-axis diameter in mm")
     long_axis_mm: float | None = Field(None, ge=0, description="Long-axis diameter in mm")
@@ -259,7 +259,7 @@ class EBUSStationDetail(BaseModel):
     chs_present: bool | None = Field(None, description="Central hilar structure present")
     necrosis_present: bool | None = None
     calcification_present: bool | None = None
-    
+
     # Elastography
     elastography_performed: bool | None = None
     elastography_score: int | None = Field(None, ge=1, le=5)
@@ -267,21 +267,21 @@ class EBUSStationDetail(BaseModel):
     elastography_pattern: Literal[
         "predominantly_blue", "blue_green", "green", "predominantly_green"
     ] | None = None
-    
+
     # Doppler
     doppler_performed: bool | None = None
     doppler_pattern: Literal["avascular", "hilar_vessel", "peripheral", "mixed"] | None = None
-    
+
     # Morphologic interpretation (separate from pathology)
     morphologic_impression: Literal["benign", "suspicious", "malignant", "indeterminate"] | None = None
-    
+
     # Sampling details
     sampled: bool = Field(True, description="Whether this station was actually sampled")
     needle_gauge: Literal[19, 21, 22, 25] | None = None
     needle_type: Literal["Standard FNA", "FNB/ProCore", "Acquire", "ViziShot Flex"] | None = None
     number_of_passes: int | None = Field(None, ge=0, le=10)
     intranodal_forceps_used: bool | None = None
-    
+
     # ROSE
     rose_performed: bool | None = None
     rose_result: Literal[
@@ -289,6 +289,111 @@ class EBUSStationDetail(BaseModel):
         "Atypical cells", "Granuloma", "Necrosis only", "Nondiagnostic", "Deferred"
     ] | None = None
     rose_adequacy: bool | None = None
+
+    @field_validator("needle_gauge", mode="before")
+    @classmethod
+    def normalize_needle_gauge(cls, v):
+        """Parse needle gauge from strings like '22G' or '22-gauge' to integer."""
+        if v is None:
+            return None
+        if isinstance(v, int):
+            if v in (19, 21, 22, 25):
+                return v
+            return None
+        s = str(v).upper().replace("G", "").replace("-GAUGE", "").replace("GAUGE", "").strip()
+        try:
+            gauge = int(s)
+            if gauge in (19, 21, 22, 25):
+                return gauge
+        except ValueError:
+            pass
+        return None  # Invalid gauge - let validation handle it
+
+    @field_validator("needle_type", mode="before")
+    @classmethod
+    def normalize_needle_type(cls, v):
+        """Map brand names like 'Olympus NA-201SX-4022' to standard categories."""
+        if v is None:
+            return None
+        s = str(v).lower()
+
+        # Map Olympus ViziShot variants
+        if any(x in s for x in ["vizishot", "na-u401sx", "na-401"]):
+            if "flex" in s:
+                return "ViziShot Flex"
+            return "Standard FNA"
+
+        # Map standard Olympus FNA needles
+        if any(x in s for x in ["na-201", "na-200", "olympus"]):
+            return "Standard FNA"
+
+        # Map FNB/ProCore needles (Cook, Medtronic)
+        if any(x in s for x in ["procore", "fnb", "core", "echotip"]):
+            return "FNB/ProCore"
+
+        # Map Acquire needles (Boston Scientific)
+        if any(x in s for x in ["acquire", "boston"]):
+            return "Acquire"
+
+        # Generic FNA terminology
+        if any(x in s for x in ["fna", "aspiration", "standard"]):
+            return "Standard FNA"
+
+        # Return original if it matches the enum
+        if v in ("Standard FNA", "FNB/ProCore", "Acquire", "ViziShot Flex"):
+            return v
+
+        return None  # Invalid - let validation handle it
+
+    @field_validator("rose_result", mode="before")
+    @classmethod
+    def normalize_rose_result(cls, v):
+        """Map descriptive results like 'POSITIVE - Squamous cell carcinoma' to enum values."""
+        if v is None:
+            return None
+
+        # If already a valid enum value, return as-is
+        valid_values = {
+            "Adequate lymphocytes", "Malignant", "Suspicious for malignancy",
+            "Atypical cells", "Granuloma", "Necrosis only", "Nondiagnostic", "Deferred"
+        }
+        if v in valid_values:
+            return v
+
+        s = str(v).lower()
+
+        # Map malignant findings
+        if any(x in s for x in ["malignant", "positive", "carcinoma", "adenocarcinoma",
+                                "squamous", "small cell", "nsclc", "sclc", "tumor", "cancer"]):
+            return "Malignant"
+
+        # Map suspicious findings
+        if any(x in s for x in ["suspicious", "atypical"]):
+            if "malignancy" in s:
+                return "Suspicious for malignancy"
+            return "Atypical cells"
+
+        # Map granulomatous findings
+        if any(x in s for x in ["granuloma", "sarcoid", "non-necrotizing", "nonnecrotizing"]):
+            return "Granuloma"
+
+        # Map necrosis
+        if "necrosis" in s and ("only" in s or "alone" in s):
+            return "Necrosis only"
+
+        # Map benign/lymphocyte findings
+        if any(x in s for x in ["lymphocyte", "reactive", "benign", "adequate"]):
+            return "Adequate lymphocytes"
+
+        # Map nondiagnostic
+        if any(x in s for x in ["nondiagnostic", "non-diagnostic", "inadequate", "insufficient"]):
+            return "Nondiagnostic"
+
+        # Map deferred
+        if any(x in s for x in ["deferred", "pending", "awaiting"]):
+            return "Deferred"
+
+        return None  # Invalid - let validation handle it
     
     # Specimen handling
     specimen_sent_for: list[str] | None = Field(default=None)
@@ -593,9 +698,9 @@ class ThoracoscopyFinding(BaseModel):
 
 class SpecimenCollected(BaseModel):
     """Specimen tracking with source linkage."""
-    
+
     model_config = ConfigDict(extra="ignore")
-    
+
     specimen_number: int = Field(..., ge=1)
     source_procedure: Literal[
         "EBUS-TBNA", "Navigation biopsy", "Endobronchial biopsy",
@@ -612,6 +717,70 @@ class SpecimenCollected(BaseModel):
     final_pathology_diagnosis: str | None = None
     molecular_markers: dict[str, Any] | None = Field(default=None)
     notes: str | None = None
+
+    @field_validator("source_procedure", mode="before")
+    @classmethod
+    def normalize_source_procedure(cls, v):
+        """Map descriptive procedure names to standard categories."""
+        if v is None:
+            return None
+
+        # If already a valid enum value, return as-is
+        valid_values = {
+            "EBUS-TBNA", "Navigation biopsy", "Endobronchial biopsy",
+            "Transbronchial biopsy", "Transbronchial cryobiopsy",
+            "BAL", "Bronchial wash", "Brushing", "Pleural biopsy", "Pleural fluid", "Other"
+        }
+        if v in valid_values:
+            return v
+
+        s = str(v).lower()
+
+        # Map EBUS variants
+        if any(x in s for x in ["ebus-tbna", "ebus tbna", "ebus", "tbna"]):
+            return "EBUS-TBNA"
+
+        # Map navigation variants
+        if any(x in s for x in ["navigation", "nav biopsy", "nav-guided", "enb", "robotic"]):
+            return "Navigation biopsy"
+
+        # Map endobronchial biopsy variants
+        if any(x in s for x in ["endobronchial", "ebx", "forceps biopsy"]):
+            return "Endobronchial biopsy"
+
+        # Map transbronchial biopsy variants
+        if any(x in s for x in ["transbronchial biopsy", "tbbx", "tblb"]):
+            return "Transbronchial biopsy"
+
+        # Map cryobiopsy variants
+        if any(x in s for x in ["cryobiopsy", "cryo biopsy", "cryo"]):
+            return "Transbronchial cryobiopsy"
+
+        # Map BAL variants
+        if any(x in s for x in ["bal", "bronchoalveolar", "lavage"]):
+            return "BAL"
+
+        # Map bronchial wash
+        if "wash" in s:
+            return "Bronchial wash"
+
+        # Map brushing
+        if "brush" in s:
+            return "Brushing"
+
+        # Map pleural biopsy
+        if "pleural biopsy" in s:
+            return "Pleural biopsy"
+
+        # Map pleural fluid/thoracentesis
+        if any(x in s for x in ["pleural fluid", "thoracentesis", "pleural tap"]):
+            return "Pleural fluid"
+
+        # Procedures that don't fit elsewhere
+        if any(x in s for x in ["therapeutic aspiration", "aspiration", "suctioning"]):
+            return "Other"
+
+        return "Other"  # Fallback for unrecognized procedures
 
 
 # =============================================================================

@@ -1,0 +1,67 @@
+[
+{
+"op": "add",
+"path": "/0/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"coding_system_version": "ip_coding_billing.v2_7",
+"source_note_citation": "Ion robotic navigational bronchoscopy operative report for Rodriguez, Antonio M. ",
+"knowledge_citations": [
+"IP coding & billing knowledge base v2.7 ",
+"Registry/schema definitions ",
+"Example patch template for consolidated notes ",
+"2025 MPFS total facility RVUs and facility payments for bronchoscopy codes (31624, 31627, 31628, 31654) derived from published 2025 bronchoscopy reimbursement tables and CMS 2025 conversion factor "
+],
+"per_code": [
+{
+"code": "31627",
+"description": "Bronchoscopy with computer-assisted, image-guided navigation (e.g., robotic navigation) for peripheral pulmonary lesion(s), add-on code.",
+"category": "airway_navigation_add_on",
+"units": 1,
+"facility_total_rvus_2025": 2.82,
+"facility_mpfs_payment_2025": 91.0,
+"bundling_or_modifier_notes": "Add-on to primary bronchoscopy with peripheral lesion sampling (e.g., 31628) when CT-based planning and real-time computer-assisted navigation are documented, as in this Ion robotic case with CT import, 3D planning, registration, and navigated catheter advancement. No separate navigation code is billed without a primary airway code."
+},
+{
+"code": "31654",
+"description": "Endobronchial ultrasound (EBUS) guided peripheral lesion sampling performed in conjunction with bronchoscopy and navigation, add-on code.",
+"category": "peripheral_ebus_add_on",
+"units": 1,
+"facility_total_rvus_2025": 1.96,
+"facility_mpfs_payment_2025": 63.0,
+"bundling_or_modifier_notes": "Add-on to primary bronchoscopy when peripheral EBUS imaging is used to guide sampling of a peripheral lesion reached via navigational bronchoscopy. In this note, radial EBUS is used to confirm a concentric echogenic pattern at the RLL target before biopsies, which supports 31654 in addition to 31627+31628. No separate mediastinal EBUS (31652/31653) is documented, so those codes are not added."
+},
+{
+"code": "31628",
+"description": "Bronchoscopy, rigid or flexible (including fluoroscopic guidance when performed), with transbronchial lung biopsy(ies) of single lobe.",
+"category": "transbronchial_lung_biopsy",
+"units": 1,
+"facility_total_rvus_2025": 5.15,
+"facility_mpfs_payment_2025": 167.0,
+"bundling_or_modifier_notes": "Supported by multiple transbronchial forceps biopsies of the RLL posterior segment lesion after navigation and radial EBUS confirmation. This is the primary diagnostic procedure for the peripheral nodule. Only one primary TBBx code is used for a single lobe even though multiple passes/specimens are obtained."
+},
+{
+"code": "31624",
+"description": "Diagnostic bronchoscopy, rigid or flexible (including fluoroscopic guidance when performed), with bronchial washings or bronchoalveolar lavage (BAL).",
+"category": "diagnostic_bronchoscopy_bal",
+"units": 1,
+"facility_total_rvus_2025": 3.94,
+"facility_mpfs_payment_2025": 127.0,
+"bundling_or_modifier_notes": "The operative report documents bronchoalveolar lavage from the RLL posterior segment with instillation and return volumes and specimens sent for cytology and cultures, which supports 31624 in addition to the biopsy and navigation codes. Diagnostic inspection plus BAL is distinct from the biopsy work and is reported separately per IP coding guidance. "
+}
+],
+"totals_2025_facility": {
+"total_facility_rvus": 13.87,
+"total_facility_mpfs_payment": 448.0,
+"computation_notes": "Total RVUs are the sum of individual 2025 facility RVUs (2.82 + 1.96 + 5.15 + 3.94 = 13.87). Expected 2025 Medicare facility payment is approximated as the sum of per-code 2025 national facility rates ($91 + $63 + $167 + $127 ≈ $448), which is consistent with applying the 2025 MPFS conversion factor of $32.3465 to the total facility RVUs. "
+},
+"rationale": [
+"Clinical summary: The note describes Ion robotic navigational bronchoscopy with CT import into a navigation platform, automatic registration (fiducial error 1.5 mm), navigated catheter advancement to a 2.6 cm RLL posterior segment nodule, radial EBUS confirmation of a concentric lesion, multiple transbronchial forceps biopsies, bronchial brushings, and BAL, all under general anesthesia with ETT. This supports a comprehensive navigation + peripheral EBUS + TBBx + BAL code set. ",
+"Code selection: 31627 is justified by detailed documentation of CT-based planning, 3D airway reconstruction, registration, and computer-assisted tool navigation to a peripheral lesion; 31654 is justified by the radial EBUS imaging used to confirm lesion position before sampling; 31628 is supported by multiple transbronchial biopsies of a single RLL lobe; 31624 is supported by the documented BAL with specific instill/return volumes and tests ordered. This aligns with the IP coding & billing v2.7 knowledge base for navigational bronchoscopy with peripheral lesion biopsy. ",
+"Bundling/modifier review: The combination 31627 + 31654 + 31628 + 31624 is allowed per interventional pulmonology coding guidance when a single session includes navigational bronchoscopy, peripheral EBUS confirmation, transbronchial biopsy, and BAL in the same lobe. No separate mediastinal EBUS codes (31652/31653) or additional biopsy codes are indicated. No modifier -59/-XS is required because all services are components of a single integrated navigational bronchoscopy encounter for one peripheral target. ",
+"Registry consistency: The registry_entry correctly reflects general anesthesia, ETT airway, Ion robotic platform, radial EBUS use, and peripheral sampling tools (forceps, brush), which are congruent with the chosen CPT set and support the RVU/payment mapping derived from the coding knowledge and bronchoscopy reimbursement tables. "
+]
+}
+}
+]

@@ -30,7 +30,7 @@ from modules.coder.application.smart_hybrid_policy import (
 from modules.coder.application.procedure_type_detector import detect_procedure_type
 from modules.coder.domain_rules import (
     apply_addon_family_rules,
-    apply_ebus_aspiration_bundles,
+    apply_all_ncci_bundles,
 )
 from modules.coder.sectionizer import (
     accordion_truncate,
@@ -323,16 +323,19 @@ class CodingService:
         # Refresh accepted codes after family conversions
         accepted_codes = self.hybrid_policy.get_accepted_codes(candidates)
 
-        # Step 6b: Apply EBUS-Aspiration bundling
-        # This removes aspiration codes (31645/31646) when EBUS codes are present
-        bundle_result = apply_ebus_aspiration_bundles(accepted_codes)
+        # Step 6b: Apply all NCCI bundling rules
+        # This removes:
+        # - Aspiration codes (31645/31646) when EBUS codes (31652/31653) are present
+        # - Thoracentesis codes (32554/32555) when IPC placement (32550) is present
+        # - Tumor excision (31640) when destruction (31641) is present
+        bundle_result = apply_all_ncci_bundles(accepted_codes)
         bundled_codes = set(bundle_result.removed_codes)
 
         ncci_warnings: list[str] = []
         for primary, removed, reason in bundle_result.bundle_reasons:
-            ncci_warnings.append(f"EBUS_BUNDLE: {removed} bundled into {primary} - {reason}")
+            ncci_warnings.append(f"NCCI_BUNDLE: {removed} bundled into {primary} - {reason}")
             logger.info(
-                "Applied EBUS-Aspiration bundle",
+                "Applied NCCI bundle",
                 extra={"primary": primary, "removed": removed, "reason": reason},
             )
 
@@ -340,7 +343,7 @@ class CodingService:
         for candidate in candidates:
             if candidate.code in bundled_codes:
                 candidate.decision = HybridDecision.REJECTED_HYBRID
-                candidate.flags.append(f"EBUS_BUNDLED: Code bundled into EBUS procedure")
+                candidate.flags.append(f"NCCI_BUNDLED: Code bundled into primary procedure")
 
         # Refresh accepted codes after bundling
         accepted_codes = self.hybrid_policy.get_accepted_codes(candidates)

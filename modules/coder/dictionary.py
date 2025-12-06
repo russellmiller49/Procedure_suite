@@ -53,10 +53,51 @@ class Lexicon:
 
 
 DEFAULT_SYNONYMS = {
-    "navigation_initiated": ["navigation successfully initiated"],
-    "radial_terms": ["radial ebus"],
+    # Navigation terms for +31627 detection
+    # Must include both explicit navigation system names and navigation actions
+    "navigation_initiated": [
+        "navigation successfully initiated",
+        "navigation initiated",
+        "electromagnetic navigation",
+        "ENB initiated",
+        "Ion system",
+        "Monarch system",
+        "robotic bronchoscopy initiated",
+        "navigation catheter advanced",
+    ],
+    "navigation_terms": [
+        "electromagnetic navigation",
+        "ENB",
+        "nav-guided",
+        "navigation bronchoscopy",
+        "Ion",
+        "Monarch",
+        "SPiN",
+        "ILLUMISITE",
+        "superDimension",
+        "inReach",
+        "robotic bronchoscopy",
+        "robotic-assisted",
+        "image-guided navigation",
+        "navigational bronchoscopy",
+    ],
+    # Radial EBUS terms for +31654 detection
+    # Must indicate peripheral lesion localization
+    "radial_terms": [
+        "radial ebus",
+        "R-EBUS",
+        "radial probe",
+        "radial ultrasound",
+        "miniprobe",
+        "mini-probe",
+        "concentric view",
+        "eccentric view",
+        "tool-in-lesion",
+        "radial EBUS verification",
+        "radial probe confirmation",
+    ],
     "linear_terms": ["ebus", "tbna", "transbronchial needle aspiration"],
-    "peripheral_terms": ["peripheral lesion", "ppl"],
+    "peripheral_terms": ["peripheral lesion", "ppl", "peripheral nodule", "peripheral target"],
     "tblb_terms": ["transbronchial lung biopsy", "tblb"],
     "tbna_terms": ["tbna", "transbronchial needle aspiration"],
     "valve_terms": ["valve"],
@@ -71,7 +112,7 @@ DEFAULT_SYNONYMS = {
     "anesthesia_terms": ["general anesthesia"],
     "bal_terms": ["bronchoalveolar lavage"],
     "thoracentesis_terms": ["thoracentesis"],
-    "thoracentesis_imaging_terms": ["images archived"],
+    "thoracentesis_imaging_terms": ["images archived", "ultrasound", "us-guided", "sonographic"],
     "destruction_terms": ["cryotherapy", "cryoablation", "laser", "argon plasma coagulation", "apc", "electrocautery", "destruction of lesion"],
 }
 

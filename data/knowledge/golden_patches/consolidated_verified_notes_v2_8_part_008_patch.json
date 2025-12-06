@@ -1,0 +1,297 @@
+[
+{
+"op": "replace",
+"path": "/2/cpt_codes/0",
+"value": 32555
+},
+{
+"op": "replace",
+"path": "/2/registry_entry/cpt_codes/0",
+"value": 32555
+},
+{
+"op": "replace",
+"path": "/2/cpt_validation_metadata/valid_codes/0",
+"value": "32555"
+},
+{
+"op": "replace",
+"path": "/3/registry_entry/patient_age",
+"value": 57
+},
+{
+"op": "replace",
+"path": "/3/registry_entry/airway_type",
+"value": "Native"
+},
+{
+"op": "replace",
+"path": "/4/registry_entry/airway_type",
+"value": "Native"
+},
+{
+"op": "replace",
+"path": "/7/registry_entry/gender",
+"value": "Male"
+},
+{
+"op": "add",
+"path": "/0/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_summary": [
+{
+"code": "32550",
+"description": "Insertion of indwelling tunneled pleural catheter with imaging guidance when performed",
+"units": 1,
+"modifiers": [],
+"primary": true,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "Indwelling tunneled pleural catheter (PleurX) was placed for recurrent malignant pleural effusion with catheter left in place after ultrasound-guided access and drainage.  "
+}
+],
+"rvus_and_payments_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null
+}
+}
+},
+{
+"op": "add",
+"path": "/1/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_summary": [
+{
+"code": "32550",
+"description": "Indwelling tunneled pleural catheter or chest drainage catheter placement for pleural effusion",
+"units": 1,
+"modifiers": [],
+"primary": true,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "Medical pleuroscopy with extensive pleural biopsy, talc pleurodesis, and chest tube drainage for malignant effusion is captured in this registry with 32550 to represent pleural catheter/chest tube placement with chemical pleurodesis.  "
+}
+],
+"rvus_and_payments_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null
+}
+}
+},
+{
+"op": "add",
+"path": "/2/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_summary": [
+{
+"code": "32555",
+"description": "Thoracentesis with imaging guidance for aspiration of pleural fluid",
+"units": 1,
+"modifiers": [],
+"primary": true,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "Ultrasound-guided diagnostic and therapeutic thoracentesis with temporary catheter, 1,200 mL of pleural fluid removed and no indwelling catheter left in place, matches 32555 (thoracentesis with imaging) rather than tunneled catheter insertion.  "
+}
+],
+"rvus_and_payments_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null
+}
+}
+},
+{
+"op": "add",
+"path": "/3/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_summary": [
+{
+"code": "31653",
+"description": "Bronchoscopy with endobronchial ultrasound (EBUS) and transbronchial needle aspiration of three or more mediastinal and/or hilar lymph node stations",
+"units": 1,
+"modifiers": [],
+"primary": true,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "EBUS-TBNA targeted mediastinal lymph node stations 2R, 4R, and 7 with multiple passes at each station, satisfying 3+ nodal stations for 31653.  "
+}
+],
+"rvus_and_payments_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null
+}
+}
+},
+{
+"op": "add",
+"path": "/4/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_summary": [
+{
+"code": "31653",
+"description": "Bronchoscopy with endobronchial ultrasound and sampling of three or more mediastinal/hilar lymph node stations",
+"units": 1,
+"modifiers": [],
+"primary": true,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "Clean EBUS report again documents sampling of mediastinal lymph node stations 2R, 4R, and 7 with multiple passes, appropriate for 31653.  "
+}
+],
+"rvus_and_payments_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null
+}
+}
+},
+{
+"op": "add",
+"path": "/5/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_summary": [
+{
+"code": "31635",
+"description": "Bronchoscopy, rigid or flexible, with removal of foreign body",
+"units": 1,
+"modifiers": [],
+"primary": true,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "Rigid bronchoscopy under general anesthesia with retrieval of a peanut from the right mainstem bronchus using forceps and suction is classic 31635 foreign body removal.  "
+}
+],
+"rvus_and_payments_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null
+}
+}
+},
+{
+"op": "add",
+"path": "/6/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_summary": [
+{
+"code": "32555",
+"description": "Thoracentesis with imaging guidance for diagnostic and/or therapeutic drainage",
+"units": 1,
+"modifiers": [],
+"primary": true,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "Ultrasound-guided thoracentesis for complicated parapneumonic effusion with catheter placement, drainage of 420 mL turbid fluid, and catheter removal at the end aligns with 32555.  "
+}
+],
+"rvus_and_payments_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null
+}
+}
+},
+{
+"op": "add",
+"path": "/7/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_summary": [
+{
+"code": "31653",
+"description": "Bronchoscopy with EBUS and sampling of three or more mediastinal and/or hilar lymph node stations",
+"units": 1,
+"modifiers": [],
+"primary": true,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "EBUS-TBNA performed for mediastinal staging with sampling of multiple nodal stations (e.g., 4R, 7, and 11R) supports 31653 as the primary code.  "
+},
+{
+"code": "31631",
+"description": "Bronchoscopy with placement of tracheal stent(s), including necessary dilation",
+"units": 1,
+"modifiers": [],
+"primary": false,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "Rigid bronchoscopy with dilation of subglottic stenosis and placement of a silicone airway stent corresponds to tracheal stent placement code 31631.  "
+},
+{
+"code": "31641",
+"description": "Bronchoscopy with destruction of tumor or relief of stenosis by nonexcisional methods",
+"units": 1,
+"modifiers": [],
+"primary": false,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "Therapeutic bronchoscopy used mechanical debulking and ablative techniques (e.g., APC/laser-type therapy) to relieve airway stenosis, fitting 31641 for nonexcisional tumor/stenosis destruction.  "
+}
+],
+"rvus_and_payments_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null
+}
+}
+},
+{
+"op": "add",
+"path": "/8/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_summary": [
+{
+"code": "32550",
+"description": "Indwelling tunneled pleural catheter or chest tube placement for malignant effusion",
+"units": 1,
+"modifiers": [],
+"primary": true,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "Medical pleuroscopy with pleural biopsies, talc pleurodesis and chest tube drainage for recurrent malignant effusion is represented in this registry with 32550 for tunneled/chronic pleural drainage.  "
+}
+],
+"rvus_and_payments_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null
+}
+}
+},
+{
+"op": "add",
+"path": "/9/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_summary": [
+{
+"code": "31653",
+"description": "Bronchoscopy with endobronchial ultrasound and sampling of three or more mediastinal/hilar lymph node stations",
+"units": 1,
+"modifiers": [],
+"primary": true,
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"rationale": "EBUS-TBNA performed with sampling of multiple nodal stations (2R, 4R, 7, 10R, 11R) for suspected lung cancer justifies 31653 for 3+ mediastinal/hilar nodes.  "
+}
+],
+"rvus_and_payments_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null
+}
+}
+}
+]

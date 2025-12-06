@@ -16,8 +16,16 @@ def _normalize_method(method: str | None) -> str:
 
 
 def _count_sampled_nodes(evidence: Iterable[EBUSNodeEvidence]) -> int:
-    """Count unique sampled stations (optionally grouped by method)."""
-    sampled_keys: set[Tuple[str, str]] = set()
+    """Count unique sampled stations.
+
+    IMPORTANT: This counts UNIQUE stations only, not unique (station, method) pairs.
+    Per CPT guidelines:
+    - 31652: 1-2 nodal stations sampled
+    - 31653: 3+ nodal stations sampled
+
+    Multiple passes or different needle types at the SAME station still count as ONE station.
+    """
+    sampled_stations: set[str] = set()
 
     for entry in evidence:
         if entry.action != "Sampling":
@@ -25,10 +33,10 @@ def _count_sampled_nodes(evidence: Iterable[EBUSNodeEvidence]) -> int:
         station = _normalize_station(entry.station)
         if not station:
             continue
-        method = _normalize_method(entry.method)
-        sampled_keys.add((station, method))
+        # Count unique stations only - method doesn't affect station count
+        sampled_stations.add(station)
 
-    return len(sampled_keys)
+    return len(sampled_stations)
 
 
 def ebus_nodes_to_candidates(evidence: Sequence[EBUSNodeEvidence]) -> list[CodeCandidate]:

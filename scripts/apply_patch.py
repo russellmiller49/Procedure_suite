@@ -1,9 +1,9 @@
 import json
 import jsonpatch
 
-ORIGINAL_PATH = "data/unpatched_goldens/consolidated_verified_notes_v2_8_part_004.json"
-PATCH_PATH = "data/knowledge/golden_patches/consolidated_verified_notes_v2_8_part_004_patch.json"
-OUTPUT_PATH = "data/knowledge/golden_extractions/consolidated_verified_notes_v2_8_part_004_patch.json"
+ORIGINAL_PATH = "data/unpatched_goldens/consolidated_verified_notes_v2_8_part_010.json"
+PATCH_PATH = "data/knowledge/golden_patches/consolidated_verified_notes_v2_8_part_010_patch.json"
+OUTPUT_PATH = "data/knowledge/golden_extractions/consolidated_verified_notes_v2_8_part_010.json"
 
 def main():
     # load original notes

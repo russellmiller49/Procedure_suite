@@ -31,6 +31,19 @@ EBUS_ASPIRATION_BUNDLES: Dict[Tuple[str, str], str] = {
     ("31653", "31646"): "Subsequent aspiration is bundled into EBUS-TBNA (3+ stations)",
 }
 
+# Thoracentesis bundling with tunneled pleural catheter (32550)
+# Per NCCI: thoracentesis is bundled into tunneled catheter placement
+THORACENTESIS_IPC_BUNDLES: Dict[Tuple[str, str], str] = {
+    ("32550", "32554"): "Thoracentesis without imaging bundled into tunneled pleural catheter placement",
+    ("32550", "32555"): "Thoracentesis with imaging bundled into tunneled pleural catheter placement",
+}
+
+# Tumor excision vs destruction - mutually exclusive for same lesion
+# 31640 (excision) bundled into 31641 (destruction) when same lesion
+TUMOR_BUNDLES: Dict[Tuple[str, str], str] = {
+    ("31641", "31640"): "Tumor excision (31640) bundled into destruction (31641) for same lesion",
+}
+
 
 @dataclass
 class FamilyConversionResult:
@@ -139,6 +152,127 @@ def apply_ebus_aspiration_bundles(codes: List[str]) -> BundlingResult:
         kept_codes=kept,
         removed_codes=removed,
         bundle_reasons=reasons,
+    )
+
+
+def apply_thoracentesis_ipc_bundles(codes: List[str]) -> BundlingResult:
+    """Apply Thoracentesis-IPC bundling rules.
+
+    When tunneled pleural catheter placement (32550) is present, thoracentesis
+    codes (32554/32555) should be bundled (removed) as the thoracentesis is
+    inherent to the IPC placement procedure.
+
+    Args:
+        codes: List of CPT code strings.
+
+    Returns:
+        BundlingResult with kept codes, removed codes, and reasons.
+    """
+    code_set = set(codes)
+    kept: List[str] = []
+    removed: List[str] = []
+    reasons: List[Tuple[str, str, str]] = []
+
+    for code in codes:
+        should_remove = False
+
+        for (primary, secondary), reason in THORACENTESIS_IPC_BUNDLES.items():
+            if code == secondary and primary in code_set:
+                should_remove = True
+                reasons.append((primary, code, reason))
+                break
+
+        if should_remove:
+            removed.append(code)
+        else:
+            kept.append(code)
+
+    return BundlingResult(
+        kept_codes=kept,
+        removed_codes=removed,
+        bundle_reasons=reasons,
+    )
+
+
+def apply_tumor_bundles(codes: List[str]) -> BundlingResult:
+    """Apply tumor excision/destruction bundling rules.
+
+    When tumor destruction (31641) is present, tumor excision (31640)
+    should be bundled (removed) for the same lesion as destruction
+    is the higher-value procedure.
+
+    Args:
+        codes: List of CPT code strings.
+
+    Returns:
+        BundlingResult with kept codes, removed codes, and reasons.
+    """
+    code_set = set(codes)
+    kept: List[str] = []
+    removed: List[str] = []
+    reasons: List[Tuple[str, str, str]] = []
+
+    for code in codes:
+        should_remove = False
+
+        for (primary, secondary), reason in TUMOR_BUNDLES.items():
+            if code == secondary and primary in code_set:
+                should_remove = True
+                reasons.append((primary, code, reason))
+                break
+
+        if should_remove:
+            removed.append(code)
+        else:
+            kept.append(code)
+
+    return BundlingResult(
+        kept_codes=kept,
+        removed_codes=removed,
+        bundle_reasons=reasons,
+    )
+
+
+def apply_all_ncci_bundles(codes: List[str]) -> BundlingResult:
+    """Apply all NCCI bundling rules in sequence.
+
+    This function applies:
+    1. EBUS-Aspiration bundles (31645/31646 into 31652/31653)
+    2. Thoracentesis-IPC bundles (32554/32555 into 32550)
+    3. Tumor excision/destruction bundles (31640 into 31641)
+
+    Args:
+        codes: List of CPT code strings.
+
+    Returns:
+        BundlingResult with kept codes, removed codes, and all reasons.
+    """
+    all_removed: List[str] = []
+    all_reasons: List[Tuple[str, str, str]] = []
+    current_codes = list(codes)
+
+    # Apply EBUS-Aspiration bundles
+    ebus_result = apply_ebus_aspiration_bundles(current_codes)
+    all_removed.extend(ebus_result.removed_codes)
+    all_reasons.extend(ebus_result.bundle_reasons)
+    current_codes = ebus_result.kept_codes
+
+    # Apply Thoracentesis-IPC bundles
+    thoracentesis_result = apply_thoracentesis_ipc_bundles(current_codes)
+    all_removed.extend(thoracentesis_result.removed_codes)
+    all_reasons.extend(thoracentesis_result.bundle_reasons)
+    current_codes = thoracentesis_result.kept_codes
+
+    # Apply Tumor bundles
+    tumor_result = apply_tumor_bundles(current_codes)
+    all_removed.extend(tumor_result.removed_codes)
+    all_reasons.extend(tumor_result.bundle_reasons)
+    current_codes = tumor_result.kept_codes
+
+    return BundlingResult(
+        kept_codes=current_codes,
+        removed_codes=all_removed,
+        bundle_reasons=all_reasons,
     )
 
 
