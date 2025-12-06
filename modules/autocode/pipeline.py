@@ -2,7 +2,7 @@
 from typing import List, Dict, Tuple
 from proc_schemas.envelope_models import CodeSuggestion
 from proc_schemas.reasoning import ReasoningFields
-from proc_autocode.evidence_validator import validate_evidence
+from modules.autocode.evidence_validator import validate_evidence
 
 
 def generate_candidates(report: Dict) -> Tuple[List[CodeSuggestion], float]:

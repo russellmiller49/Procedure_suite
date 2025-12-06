@@ -13,7 +13,8 @@ from typing import Any
 
 
 # Path to the parsed addon templates JSON
-_ADDONS_JSON_PATH = Path(__file__).resolve().parents[1] / "data" / "knowledge" / "ip_addon_templates_parsed.json"
+# Path is: modules/reporting/ip_addons.py -> reporting -> modules -> repo_root
+_ADDONS_JSON_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "ip_addon_templates_parsed.json"
 
 # Module-level cache
 _ADDONS_DATA: dict[str, Any] | None = None

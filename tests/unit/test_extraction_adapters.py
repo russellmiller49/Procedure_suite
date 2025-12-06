@@ -1,6 +1,6 @@
 import pytest
 
-from proc_registry.adapters.airway import (
+from modules.registry.legacy.adapters.airway import (
     BALAdapter,
     BLVRValvePlacementAdapter,
     BPFLocalizationAdapter,
@@ -20,7 +20,7 @@ from proc_registry.adapters.airway import (
     ToolInLesionConfirmationAdapter,
     WholeLungLavageAdapter,
 )
-from proc_registry.adapters.pleural import (
+from modules.registry.legacy.adapters.pleural import (
     ChestTubeAdapter,
     ParacentesisAdapter,
     PegExchangeAdapter,

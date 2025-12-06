@@ -68,7 +68,7 @@ class SimpleReporterStrategy:
         Returns:
             Dict with markdown, procedure_core, indication, postop
         """
-        from proc_report.engine import compose_report_from_text
+        from modules.reporting.engine import compose_report_from_text
 
         hints: dict[str, Any] = {}
         if procedure_type:
@@ -142,7 +142,7 @@ class ReportingStrategy:
             Dict with report data (markdown, bundle/issues/warnings or
             procedure_core/indication/postop for fallback)
         """
-        from proc_report.engine import (
+        from modules.reporting.engine import (
             apply_patch_result,
             build_procedure_bundle_from_extraction,
         )
@@ -191,7 +191,7 @@ class ReportingStrategy:
         Returns:
             Dict with markdown, bundle, issues, warnings
         """
-        from proc_report.engine import (
+        from modules.reporting.engine import (
             apply_patch_result,
             build_procedure_bundle_from_extraction,
         )

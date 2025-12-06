@@ -6,7 +6,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Set
 import json
 import re
 
-from proc_autocode.ip_kb import canonical_rules
+from modules.autocode.ip_kb import canonical_rules
 
 
 @dataclass
@@ -516,10 +516,24 @@ class IPCodingKnowledgeBase:
                 "electromagnetic navigation", "robotic bronchoscopy"
             ]
         )
+
+        # Navigation FAILURE/ABORT detection - these indicate nav was NOT successfully performed
+        nav_failure_patterns = [
+            "navigation aborted", "navigation failed", "aborted due to",
+            "unable to navigate", "navigation was unsuccessful",
+            "could not navigate", "mis-registration", "misregistration",
+            "navigation not performed", "navigation not completed",
+            "catheter not advanced to target", "not advanced to target",
+            "converted to conventional", "navigation unsuccessful"
+        ]
+        nav_aborted = any(f in text for f in nav_failure_patterns)
+
         evidence["bronchoscopy_navigation"] = {
-            "platform": nav_platform, "concept": nav_concept, "direct": nav_direct
+            "platform": nav_platform, "concept": nav_concept, "direct": nav_direct,
+            "aborted": nav_aborted
         }
-        if nav_platform and (nav_concept or nav_direct):
+        # Only add navigation group if NOT aborted/failed
+        if nav_platform and (nav_concept or nav_direct) and not nav_aborted:
             matched_groups.add("bronchoscopy_navigation")
 
         # ========== EBUS Detection ==========
@@ -836,6 +850,46 @@ class IPCodingKnowledgeBase:
         if thoracentesis_hit:
             matched_groups.add("thoracentesis")
 
+        # ========== PLEURAL DRAINAGE (32556/32557) - CHEST TUBE DETECTION ==========
+        # Per coding rules: Detect chest tube placement/insertion
+        # 32556: Pleural drainage, percutaneous, without imaging guidance
+        # 32557: Pleural drainage, percutaneous, with imaging guidance
+        chest_tube_terms = [
+            "chest tube", "thoracostomy tube", "pigtail catheter", "pigtail",
+            "percutaneous drainage", "pleural drainage", "tube thoracostomy",
+            "intercostal drain", "drain placed", "drain inserted"
+        ]
+        chest_tube_mentioned = any(t in text for t in chest_tube_terms)
+
+        # Action verbs for chest tube placement
+        chest_tube_actions = [
+            "tube placed", "tube was placed", "drain placed", "drain was placed",
+            "chest tube placed", "chest tube inserted", "tube inserted",
+            "thoracostomy performed", "drainage catheter placed", "pigtail placed",
+            "pigtail was placed", "pigtail catheter placed", "tube thoracostomy",
+            "placed a chest tube", "insertion of chest tube", "placed for pneumothorax",
+            "placed for effusion", "placed for drainage"
+        ]
+        chest_tube_action = any(a in text for a in chest_tube_actions)
+
+        # Context for pneumothorax or pleural effusion that might need drainage
+        drainage_context = any(
+            c in text for c in [
+                "pneumothorax", "pleural effusion", "hemothorax", "empyema",
+                "fluid collection", "air leak", "drainage of"
+            ]
+        )
+
+        evidence["pleural_drainage"] = {
+            "chest_tube_mentioned": chest_tube_mentioned,
+            "action": chest_tube_action,
+            "drainage_context": drainage_context,
+        }
+
+        # Add pleural drainage group if chest tube action detected
+        if chest_tube_mentioned and (chest_tube_action or drainage_context):
+            matched_groups.add("pleural_drainage")
+
         # Pleurodesis
         pleurodesis_hit = self._contains_any(text, canonical_rules.PLEURODESIS_SYNONYMS)
         if pleurodesis_hit:
@@ -892,26 +946,37 @@ class IPCodingKnowledgeBase:
             if pleurodesis_hit:
                 matched_groups.add("thoracoscopy_surgical_pleurodesis_decortication")
             else:
-                # Use anatomic-specific groups based on detected site
-                # These will be resolved to specific codes in coder.py
-                if pleural_site and has_biopsy:
-                    matched_groups.add("thoracoscopy_pleural_biopsy")
-                if pericardial_site and has_biopsy:
-                    matched_groups.add("thoracoscopy_pericardial_biopsy")
-                if mediastinal_site and has_biopsy:
-                    matched_groups.add("thoracoscopy_mediastinal_biopsy")
-                if lung_site and has_biopsy:
-                    matched_groups.add("thoracoscopy_lung_biopsy")
+                # SITE PRIORITY SELECTION - Only ONE thoracoscopy code per session
+                # Per coding guidelines, when multiple sites are examined, select based on priority:
+                # 1. Pericardial (32604) - highest RVU, most complex
+                # 2. Mediastinal (32606) - next highest
+                # 3. Lung (32607/32608) - parenchymal biopsies
+                # 4. Pleural (32609) - most common
+                # 5. Diagnostic only (32601) - no biopsy
+                #
+                # This ensures only ONE group is added, preventing multiple thoracoscopy codes
 
-                # If no specific biopsy site detected but thoracoscopy present
-                # Add the generic group (will be resolved to one code)
-                if thoracoscopy_hit and not (pleural_site or pericardial_site or mediastinal_site or lung_site):
-                    # Diagnostic only if no biopsy, otherwise generic biopsy
-                    if has_biopsy:
-                        # Default to pleural if biopsy is mentioned but no specific site
-                        matched_groups.add("thoracoscopy_pleural_biopsy")
+                selected_group = None
+
+                if has_biopsy:
+                    # Apply site priority - first match wins
+                    if pericardial_site:
+                        selected_group = "thoracoscopy_pericardial_biopsy"
+                    elif mediastinal_site:
+                        selected_group = "thoracoscopy_mediastinal_biopsy"
+                    elif lung_site:
+                        selected_group = "thoracoscopy_lung_biopsy"
+                    elif pleural_site:
+                        selected_group = "thoracoscopy_pleural_biopsy"
                     else:
-                        matched_groups.add("thoracoscopy_diagnostic_only")
+                        # Biopsy mentioned but no specific site - default to pleural
+                        selected_group = "thoracoscopy_pleural_biopsy"
+                else:
+                    # No biopsy - diagnostic only
+                    selected_group = "thoracoscopy_diagnostic_only"
+
+                if selected_group:
+                    matched_groups.add(selected_group)
 
         # ========== BAL (31624) - CONSERVATIVE DETECTION ==========
         # Per coding rules: Only emit 31624 when:
@@ -968,22 +1033,39 @@ class IPCodingKnowledgeBase:
         self.last_group_evidence = evidence
         return matched_groups
 
+    # Direct mapping for site-specific thoracoscopy groups to their single CPT code
+    # This ensures site priority is respected even when going through codes_for_groups
+    SITE_SPECIFIC_CODE_MAP: Dict[str, str] = {
+        "thoracoscopy_diagnostic_only": "32601",
+        "thoracoscopy_pleural_biopsy": "32609",
+        "thoracoscopy_pericardial_biopsy": "32604",
+        "thoracoscopy_mediastinal_biopsy": "32606",
+        "thoracoscopy_lung_biopsy": "32607",
+        "thoracoscopy_surgical_pleurodesis_decortication": "32650",
+    }
+
     def codes_for_groups(self, groups: Iterable[str]) -> Set[str]:
         """
         Return CPT codes for the provided groups, preserving '+' prefixes for add-ons.
         Uses GROUP_ALIAS_MAP to translate internal group names to v2.7 code_lists keys.
+
+        Site-specific thoracoscopy groups return ONLY their specific code to enforce
+        the "one thoracoscopy code per session" rule.
         """
         codes: Set[str] = set()
         lists = self.raw.get("code_lists", {})
         for g in groups:
-            # First try direct lookup
-            if g in lists:
+            # First check if it's a site-specific thoracoscopy group
+            if g in self.SITE_SPECIFIC_CODE_MAP:
+                codes.add(self.SITE_SPECIFIC_CODE_MAP[g])
+            # Then try direct lookup in code_lists
+            elif g in lists:
                 for code in lists[g]:
                     if code.startswith("+"):
                         codes.add(code)
                     else:
                         codes.add(self._normalize_code(code))
-            # Then try alias mapping
+            # Finally try alias mapping
             elif g in self.GROUP_ALIAS_MAP:
                 for alias in self.GROUP_ALIAS_MAP[g]:
                     for code in lists.get(alias, []):

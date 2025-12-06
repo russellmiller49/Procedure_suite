@@ -3,8 +3,12 @@
 These tests scan the active codebase (modules/api, modules/coder/application,
 modules/coder/adapters) to ensure no legacy imports are accidentally added.
 
-The legacy code in proc_autocode/ is preserved for reference but should NOT
-be imported from active modules.
+The legacy code has been migrated:
+- proc_autocode/ -> modules/autocode/
+- proc_report/ -> modules/reporting/
+- proc_registry/ -> modules/registry/legacy/
+
+Active code should use the new module paths.
 """
 
 import os
@@ -22,11 +26,19 @@ ACTIVE_DIRECTORIES = [
 
 # Legacy strings that should NOT appear in active code
 LEGACY_STRINGS = [
+    # Old proc_autocode imports - now at modules.autocode
     "from proc_autocode.coder import",
     "from proc_autocode import",
     "import proc_autocode.coder",
-    "EnhancedCPTCoder",
     "proc_autocode.ip_kb",
+    # Old proc_report imports - now at modules.reporting
+    "from proc_report import",
+    "from proc_report.engine import",
+    "import proc_report",
+    # Old proc_registry imports - now at modules.registry.legacy
+    "from proc_registry import",
+    "import proc_registry",
+    # Deprecated internal modules
     "from modules.coder.llm_coder import",  # Should use adapters/llm/gemini_advisor
     "from modules.coder.engine import",  # Should use application/coding_service
 ]
@@ -210,7 +222,8 @@ def test_kb_uses_domain_interfaces():
     legacy_kb_imports = [
         "from proc_autocode.ip_kb",
         "import proc_autocode.ip_kb",
-        "IPCodingKnowledgeBase",
+        "from modules.autocode.ip_kb",
+        "import modules.autocode.ip_kb",
     ]
 
     violations = []

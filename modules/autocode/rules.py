@@ -9,7 +9,8 @@ import yaml
 
 from proc_schemas.procedure_report import ProcedureReport
 
-_RULEBOOK_PATH = Path(__file__).resolve().parents[1] / "configs" / "coding" / "ip_cpt_map.yaml"
+# Path is: modules/autocode/rules.py -> autocode -> modules -> repo_root
+_RULEBOOK_PATH = Path(__file__).resolve().parents[2] / "configs" / "coding" / "ip_cpt_map.yaml"
 
 
 @dataclass

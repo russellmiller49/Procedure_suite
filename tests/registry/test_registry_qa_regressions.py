@@ -7,6 +7,39 @@ from modules.registry.engine import RegistryEngine
 from modules.registry.postprocess import VALID_EBUS_STATIONS
 
 
+def _get_linear_ebus_field(record, field_name):
+    """Safely access linear_ebus nested fields with null-safety."""
+    pp = record.procedures_performed
+    if pp is None:
+        return None
+    linear = pp.linear_ebus
+    if linear is None:
+        return None
+    return getattr(linear, field_name, None)
+
+
+def _get_airway_stent_field(record, field_name):
+    """Safely access airway_stent nested fields with null-safety."""
+    pp = record.procedures_performed
+    if pp is None:
+        return None
+    stent = pp.airway_stent
+    if stent is None:
+        return None
+    return getattr(stent, field_name, None)
+
+
+def _get_thermal_ablation_field(record, field_name):
+    """Safely access thermal_ablation nested fields with null-safety."""
+    pp = record.procedures_performed
+    if pp is None:
+        return None
+    ablation = pp.thermal_ablation
+    if ablation is None:
+        return None
+    return getattr(ablation, field_name, None)
+
+
 @pytest.fixture
 def engine():
     os.environ["REGISTRY_USE_STUB_LLM"] = "true"
@@ -38,9 +71,11 @@ def test_bal_and_single_station_ebus_no_hallucinated_station(engine):
 
     assert "EBUS" in record.procedure_families
     assert "BAL" in record.procedure_families
-    stations = set(record.linear_ebus_stations or [])
+    # Use nested path: procedures_performed.linear_ebus.stations_planned
+    stations = set(_get_linear_ebus_field(record, "stations_planned") or [])
     assert stations == {"4R"}
-    detail_stations = {d["station"] for d in (record.ebus_stations_detail or [])}
+    # Use nested path: procedures_performed.linear_ebus.stations_detail
+    detail_stations = {d["station"] for d in (_get_linear_ebus_field(record, "stations_detail") or [])}
     assert detail_stations == {"4R"}
     assert record.bronch_num_tbbx is None
     assert record.bronch_tbbx_tool is None
@@ -69,7 +104,10 @@ def test_stent_removal_with_multistation_ebus_keeps_valid_stations(engine):
 
     assert "STENT" in record.procedure_families
     assert "CAO" in record.procedure_families
-    stations = set((record.ebus_stations_sampled or []) + (record.linear_ebus_stations or []))
+    # Use nested paths: procedures_performed.linear_ebus.stations_sampled and stations_planned
+    stations_sampled = _get_linear_ebus_field(record, "stations_sampled") or []
+    stations_planned = _get_linear_ebus_field(record, "stations_planned") or []
+    stations = set(stations_sampled + stations_planned)
     assert stations  # should capture at least the explicitly sampled stations
     assert stations.issubset(VALID_EBUS_STATIONS)
     assert "2R" not in stations  # guard against 12R -> 2R clipping
@@ -86,7 +124,8 @@ def test_navigation_aborted_tbna_does_not_invent_station_seven(engine):
     )
 
     record = engine.run(note)
-    stations = set(record.linear_ebus_stations or [])
+    # Use nested path: procedures_performed.linear_ebus.stations_planned
+    stations = set(_get_linear_ebus_field(record, "stations_planned") or [])
     assert "7" not in stations
     assert stations.issubset(VALID_EBUS_STATIONS)
 
@@ -105,9 +144,10 @@ def test_y_stent_cao_case_does_not_add_ebus_stations(engine):
 
     assert "STENT" in record.procedure_families
     assert "CAO" in record.procedure_families
-    assert not record.linear_ebus_stations
-    assert not record.ebus_stations_sampled
-    assert not record.ebus_stations_detail
+    # Use nested paths: procedures_performed.linear_ebus.*
+    assert not _get_linear_ebus_field(record, "stations_planned")
+    assert not _get_linear_ebus_field(record, "stations_sampled")
+    assert not _get_linear_ebus_field(record, "stations_detail")
 
 
 def test_pleural_thoracoscopy_resets_airway_stent_state(engine):
@@ -123,6 +163,7 @@ def test_pleural_thoracoscopy_resets_airway_stent_state(engine):
     record = engine.run(note)
 
     assert "THORACOSCOPY" in record.procedure_families or "PLEURAL" in record.procedure_families
-    assert record.stent_type is None
-    assert record.stent_location is None
-    assert record.cao_location is None
+    # Use nested paths: procedures_performed.airway_stent.* and thermal_ablation.*
+    assert _get_airway_stent_field(record, "stent_type") is None
+    assert _get_airway_stent_field(record, "location") is None
+    assert _get_thermal_ablation_field(record, "location") is None

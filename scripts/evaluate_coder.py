@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from proc_autocode.coder import EnhancedCPTCoder
+from modules.autocode.coder import EnhancedCPTCoder
 
 
 def load_evaluation_data(csv_path: Path) -> List[Dict]:

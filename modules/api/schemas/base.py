@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 from modules.coder.schema import CoderOutput
 from modules.common.spans import Span
 from modules.registry.schema import RegistryRecord
-from proc_report import BundlePatch, MissingFieldIssue, ProcedureBundle
+from modules.reporting import BundlePatch, MissingFieldIssue, ProcedureBundle
 
 
 class CoderRequest(BaseModel):

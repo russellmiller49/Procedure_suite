@@ -30,12 +30,12 @@ from proc_schemas.clinical import (
     SedationInfo,
 )
 from proc_schemas.procedure_report import ProcedureReport, ProcedureCore, NLPTrace
-from proc_registry.adapters import AdapterRegistry
-import proc_registry.adapters.airway  # noqa: F401
-import proc_registry.adapters.pleural  # noqa: F401
+from modules.registry.legacy.adapters import AdapterRegistry
+import modules.registry.legacy.adapters.airway  # noqa: F401
+import modules.registry.legacy.adapters.pleural  # noqa: F401
 from proc_nlp.normalize_proc import normalize_dictation
 from proc_nlp.umls_linker import umls_link
-from proc_report.metadata import (
+from modules.reporting.metadata import (
     MissingFieldIssue,
     ProcedureAutocodeResult,
     ProcedureMetadata,
@@ -43,10 +43,10 @@ from proc_report.metadata import (
     StructuredReport,
     metadata_to_dict,
 )
-from proc_report.inference import InferenceEngine, PatchResult
-from proc_report.validation import FieldConfig, ValidationEngine
-from proc_report.ip_addons import get_addon_body, get_addon_metadata, list_addon_slugs
-from proc_report.macro_engine import (
+from modules.reporting.inference import InferenceEngine, PatchResult
+from modules.reporting.validation import FieldConfig, ValidationEngine
+from modules.reporting.ip_addons import get_addon_body, get_addon_metadata, list_addon_slugs
+from modules.reporting.macro_engine import (
     get_macro,
     get_macro_metadata,
     list_macros,
@@ -168,7 +168,8 @@ def _serialize_concept(concept: Any) -> Dict[str, Any]:
 
 # --- Structured reporter (template-driven) ---
 
-_CONFIG_TEMPLATE_ROOT = Path(__file__).resolve().parents[1] / "configs" / "report_templates"
+# Path is: modules/reporting/engine.py -> reporting -> modules -> repo_root
+_CONFIG_TEMPLATE_ROOT = Path(__file__).resolve().parents[2] / "configs" / "report_templates"
 _DEFAULT_ORDER_PATH = _CONFIG_TEMPLATE_ROOT / "procedure_order.json"
 
 
@@ -903,7 +904,7 @@ def _try_proc_autocode(bundle: ProcedureBundle) -> dict[str, Any] | None:
     if not note:
         return None
     try:
-        from proc_autocode.engine import autocode
+        from modules.autocode.engine import autocode
     except Exception:
         return None
     try:

@@ -19,6 +19,39 @@ from modules.registry.engine import (
 )
 
 
+def _get_linear_ebus_field(record, field_name):
+    """Safely access linear_ebus nested fields with null-safety."""
+    pp = record.procedures_performed
+    if pp is None:
+        return None
+    linear = pp.linear_ebus
+    if linear is None:
+        return None
+    return getattr(linear, field_name, None)
+
+
+def _get_thermal_ablation_field(record, field_name):
+    """Safely access thermal_ablation nested fields with null-safety."""
+    pp = record.procedures_performed
+    if pp is None:
+        return None
+    ablation = pp.thermal_ablation
+    if ablation is None:
+        return None
+    return getattr(ablation, field_name, None)
+
+
+def _get_mechanical_debulking_field(record, field_name):
+    """Safely access mechanical_debulking nested fields with null-safety."""
+    pp = record.procedures_performed
+    if pp is None:
+        return None
+    debulking = pp.mechanical_debulking
+    if debulking is None:
+        return None
+    return getattr(debulking, field_name, None)
+
+
 # Synthetic note based on Bruce Dosey CAO case structure
 # Multi-site CAO with different obstruction levels and modalities per site
 MULTI_SITE_CAO_NOTE = """
@@ -238,10 +271,13 @@ class TestNoEbusHallucinationInCao:
 
         # Should NOT have EBUS station data even though "station 7" is mentioned
         # (it's mentioned in context of CT, not as EBUS sampling)
-        assert not record.linear_ebus_stations or len(record.linear_ebus_stations) == 0, \
-            f"Should have no EBUS stations, got {record.linear_ebus_stations}"
-        assert not record.ebus_stations_sampled or len(record.ebus_stations_sampled) == 0, \
-            f"Should have no sampled stations, got {record.ebus_stations_sampled}"
+        # Use nested paths: procedures_performed.linear_ebus.*
+        stations_planned = _get_linear_ebus_field(record, "stations_planned")
+        stations_sampled = _get_linear_ebus_field(record, "stations_sampled")
+        assert not stations_planned or len(stations_planned) == 0, \
+            f"Should have no EBUS stations, got {stations_planned}"
+        assert not stations_sampled or len(stations_sampled) == 0, \
+            f"Should have no sampled stations, got {stations_sampled}"
 
     def test_ebus_stations_present_for_combined_procedure(self, engine):
         """Combined EBUS+CAO should have EBUS station data."""
@@ -349,31 +385,38 @@ class TestLegacyFieldPopulation:
 
         # Should have a primary modality from the CAO extraction
         # The note mentions cryotherapy
-        if record.cao_primary_modality:
-            assert record.cao_primary_modality in (
+        # Use nested path: procedures_performed.thermal_ablation.modality
+        modality = _get_thermal_ablation_field(record, "modality")
+        if modality:
+            assert modality in (
                 "Cryotherapy", "APC", "Electrocautery", "Laser", "Mechanical Core", "Other"
-            ), f"Unexpected modality: {record.cao_primary_modality}"
+            ), f"Unexpected modality: {modality}"
 
     def test_cao_tumor_location_populated(self, engine):
         """cao_tumor_location should be set from primary site."""
         record = engine.run(SINGLE_SITE_CAO)
 
         # The note mentions RUL
-        if record.cao_tumor_location:
-            assert record.cao_tumor_location in (
+        # Use nested path: procedures_performed.mechanical_debulking.location
+        location = _get_mechanical_debulking_field(record, "location")
+        if location:
+            assert location in (
                 "RUL", "RML", "RLL", "LUL", "LLL", "RMS", "LMS",
                 "Trachea", "Bronchus Intermedius", "Lobar", "Mainstem"
-            ), f"Unexpected location: {record.cao_tumor_location}"
+            ), f"Unexpected location: {location}"
 
     def test_obstruction_percentages_populated(self, engine):
         """Obstruction percentages should be set from primary site."""
         record = engine.run(SINGLE_SITE_CAO)
 
         # The note mentions 70% pre and ~40% post
-        if record.cao_obstruction_pre_pct is not None:
-            assert 0 <= record.cao_obstruction_pre_pct <= 100
-        if record.cao_obstruction_post_pct is not None:
-            assert 0 <= record.cao_obstruction_post_pct <= 100
+        # Use nested paths: procedures_performed.thermal_ablation.*
+        pre_pct = _get_thermal_ablation_field(record, "pre_obstruction_pct")
+        post_pct = _get_thermal_ablation_field(record, "post_obstruction_pct")
+        if pre_pct is not None:
+            assert 0 <= pre_pct <= 100
+        if post_pct is not None:
+            assert 0 <= post_pct <= 100
 
 
 class TestCaoInterventionsArray:
@@ -390,14 +433,15 @@ class TestCaoInterventionsArray:
         record = engine.run(MULTI_SITE_CAO_NOTE)
 
         # Should have cao_interventions array
-        assert hasattr(record, "cao_interventions"), "Record should have cao_interventions field"
+        # Use nested path: procedures_performed.thermal_ablation.interventions
+        interventions = _get_thermal_ablation_field(record, "interventions")
 
-        if record.cao_interventions:
-            assert isinstance(record.cao_interventions, list), "cao_interventions should be a list"
-            assert len(record.cao_interventions) > 0, "Should have at least one intervention"
+        if interventions:
+            assert isinstance(interventions, list), "cao_interventions should be a list"
+            assert len(interventions) > 0, "Should have at least one intervention"
 
             # Each intervention should have expected fields
-            for intervention in record.cao_interventions:
+            for intervention in interventions:
                 assert "location" in intervention, "Intervention should have location"
                 assert "modalities" in intervention, "Intervention should have modalities"
 
@@ -411,5 +455,7 @@ class TestCaoInterventionsArray:
         record = engine.run(note)
 
         # Should not have CAO interventions
-        if record.cao_interventions:
-            assert len(record.cao_interventions) == 0, "Non-CAO should have empty interventions"
+        # Use nested path: procedures_performed.thermal_ablation.interventions
+        interventions = _get_thermal_ablation_field(record, "interventions")
+        if interventions:
+            assert len(interventions) == 0, "Non-CAO should have empty interventions"

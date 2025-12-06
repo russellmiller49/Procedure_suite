@@ -11,7 +11,7 @@ Test patterns are derived from:
 - data/synthetic_CPT_corrected.json
 """
 import pytest
-from proc_autocode.coder import EnhancedCPTCoder
+from modules.autocode.coder import EnhancedCPTCoder
 
 
 @pytest.fixture

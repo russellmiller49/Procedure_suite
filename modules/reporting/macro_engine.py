@@ -351,13 +351,14 @@ def render_procedure_bundle(bundle: dict[str, Any], addon_getter: callable = Non
     # Get the addon body function
     if addon_getter is None:
         try:
-            from proc_report.ip_addons import get_addon_body
+            from modules.reporting.ip_addons import get_addon_body
             addon_getter = get_addon_body
         except ImportError:
             # Fall back to loading directly
             import json
             from pathlib import Path
-            _addons_path = Path(__file__).resolve().parents[1] / "data" / "knowledge" / "ip_addon_templates_parsed.json"
+            # Path is: modules/reporting/macro_engine.py -> reporting -> modules -> repo_root
+            _addons_path = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "ip_addon_templates_parsed.json"
             if _addons_path.exists():
                 _data = json.loads(_addons_path.read_text(encoding="utf-8"))
                 _by_slug = {t["slug"]: t["body"] for t in _data.get("templates", [])}

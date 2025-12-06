@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from proc_report import (
+from modules.reporting import (
     AnesthesiaInfo,
     EncounterInfo,
     PatientInfo,

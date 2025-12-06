@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from proc_report import build_procedure_bundle_from_extraction, get_coder_view
+from modules.reporting import build_procedure_bundle_from_extraction, get_coder_view
 
 
 def main() -> None:

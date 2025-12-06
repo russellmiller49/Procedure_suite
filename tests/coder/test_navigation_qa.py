@@ -1,6 +1,6 @@
 """Integration tests for QA advisories in coder output."""
 
-from proc_autocode.coder import EnhancedCPTCoder
+from modules.autocode.coder import EnhancedCPTCoder
 
 
 def test_navigation_missing_documentation_flags_qa_warning() -> None:

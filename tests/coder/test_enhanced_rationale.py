@@ -1,6 +1,6 @@
 import pytest
 
-from proc_autocode.coder import CodeSuggestion, EnhancedCPTCoder
+from modules.autocode.coder import CodeSuggestion, EnhancedCPTCoder
 
 
 def test_code_procedure_emits_rationale(monkeypatch):

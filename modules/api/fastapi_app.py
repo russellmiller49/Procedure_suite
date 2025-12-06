@@ -76,8 +76,8 @@ from modules.coder.application.coding_service import CodingService
 from modules.api.coder_adapter import convert_coding_result_to_coder_output
 from modules.coder.phi_gating import is_phi_review_required
 
-from proc_report import MissingFieldIssue, ProcedureBundle
-from proc_report.engine import (
+from modules.reporting import MissingFieldIssue, ProcedureBundle
+from modules.reporting.engine import (
     ReporterEngine,
     _load_procedure_order,
     apply_bundle_patch,
@@ -86,8 +86,8 @@ from proc_report.engine import (
     default_schema_registry,
     default_template_registry,
 )
-from proc_report.inference import InferenceEngine
-from proc_report.validation import ValidationEngine
+from modules.reporting.inference import InferenceEngine
+from modules.reporting.validation import ValidationEngine
 
 app = FastAPI(title="Procedure Suite API", version="0.3.0")
 

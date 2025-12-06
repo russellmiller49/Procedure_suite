@@ -22,7 +22,7 @@ Rule ID Reference:
 """
 
 import pytest
-from proc_autocode.coder import EnhancedCPTCoder
+from modules.autocode.coder import EnhancedCPTCoder
 
 
 @pytest.fixture(scope="module")
@@ -96,12 +96,9 @@ class TestNavigationEvidence:
     def test_navigation_aborted_drops_31627(self, coder):
         """R003: Aborted navigation should not produce 31627.
 
-        CURRENT BEHAVIOR: The KB currently DOES produce +31627 when navigation is mentioned
-        even with aborted context. This is a known issue - the rules engine should eventually
-        fix this by requiring stronger evidence.
-
-        TODO: After rules engine migration, update this test to verify aborted navigation
-        does NOT produce 31627.
+        When navigation is mentioned but explicitly aborted/failed, the navigation
+        code (+31627) should NOT be produced. This was fixed in the IP KB by detecting
+        failure patterns like "aborted", "mis-registration", "not advanced to target".
         """
         note = (
             "Electromagnetic navigation planned but aborted due to mis-registration. "
@@ -115,11 +112,9 @@ class TestNavigationEvidence:
         result = coder.code_procedure({"note_text": note, "registry": registry})
         codes = extract_codes(result)
 
-        # CURRENT BEHAVIOR: +31627 IS produced (this is a known issue)
-        # The rules engine migration should fix this
-        # For now, document current behavior as the test expectation
-        assert "+31627" in codes, \
-            "Current behavior: +31627 is produced even with aborted navigation (known issue)"
+        # Navigation aborted should NOT produce +31627
+        assert "+31627" not in codes, \
+            "Aborted navigation should not produce +31627"
 
 
 # =============================================================================

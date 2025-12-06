@@ -7,7 +7,7 @@ from typing import List, Tuple
 
 from proc_schemas.billing import BillingResult
 from proc_schemas.procedure_report import ProcedureReport
-from proc_report.engine import compose_report_from_text
+from modules.reporting.engine import compose_report_from_text
 
 from .engine import autocode
 

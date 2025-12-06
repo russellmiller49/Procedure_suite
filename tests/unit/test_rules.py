@@ -1,4 +1,4 @@
-from proc_autocode import rules
+from modules.autocode import rules
 from proc_schemas.procedure_report import ProcedureCore, ProcedureReport, TargetSpecimen
 
 

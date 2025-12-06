@@ -1,5 +1,5 @@
-from proc_autocode.engine import autocode
-from proc_report.engine import compose_report_from_text
+from modules.autocode.engine import autocode
+from modules.reporting.engine import compose_report_from_text
 
 
 def test_compose_and_code_roundtrip():

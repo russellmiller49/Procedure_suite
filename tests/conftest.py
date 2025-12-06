@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from proc_report import engine as report_engine
+from modules.reporting import engine as report_engine
 
 # Keep tests offline-friendly by default.
 os.environ.setdefault("REGISTRY_USE_STUB_LLM", "1")

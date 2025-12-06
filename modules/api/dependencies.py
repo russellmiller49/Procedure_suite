@@ -31,14 +31,14 @@ from modules.api.services.qa_pipeline import (
     SimpleReporterStrategy,
 )
 from modules.registry.engine import RegistryEngine
-from proc_report.engine import (
+from modules.reporting.engine import (
     ReporterEngine,
     _load_procedure_order,
     default_schema_registry,
     default_template_registry,
 )
-from proc_report.inference import InferenceEngine
-from proc_report.validation import ValidationEngine
+from modules.reporting.inference import InferenceEngine
+from modules.reporting.validation import ValidationEngine
 
 logger = get_logger("api_dependencies")
 

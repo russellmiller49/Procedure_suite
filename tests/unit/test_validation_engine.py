@@ -1,7 +1,7 @@
 from jinja2 import Environment
 
-from proc_report.engine import SchemaRegistry, TemplateMeta, TemplateRegistry
-from proc_report.validation import ConsistencyCheckConfig, FieldConfig, ValidationEngine, WarnIfConfig
+from modules.reporting.engine import SchemaRegistry, TemplateMeta, TemplateRegistry
+from modules.reporting.validation import ConsistencyCheckConfig, FieldConfig, ValidationEngine, WarnIfConfig
 from proc_schemas.clinical import pleural as pleural_schemas
 from proc_schemas.clinical.common import EncounterInfo, PatientInfo, ProcedureBundle, ProcedureInput
 

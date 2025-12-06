@@ -1,6 +1,6 @@
-from proc_autocode.engine import autocode
-from proc_registry.adapter import report_to_registry
-from proc_report.engine import compose_report_from_text
+from modules.autocode.engine import autocode
+from modules.registry.legacy.adapter import report_to_registry
+from modules.reporting.engine import compose_report_from_text
 
 
 def test_registry_bundle_contains_lineage():

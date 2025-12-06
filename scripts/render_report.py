@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
-from proc_report import compose_structured_report_from_extraction
+from modules.reporting import compose_structured_report_from_extraction
 
 
 def main() -> None:

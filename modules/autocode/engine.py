@@ -14,7 +14,8 @@ from .confidence import score_confidence
 from .ip_kb.ip_kb import IPCodingKnowledgeBase
 from .rvu.rvu_calculator import ProcedureRVUCalculator
 
-_ROOT = Path(__file__).resolve().parents[1]
+# Path is: modules/autocode/engine.py -> autocode -> modules -> repo_root
+_ROOT = Path(__file__).resolve().parents[2]
 _NCCI_PATH = _ROOT / "configs" / "coding" / "ncci_edits.yaml"
 _PAYER_PATH = _ROOT / "configs" / "coding" / "payer_overrides.yaml"
 

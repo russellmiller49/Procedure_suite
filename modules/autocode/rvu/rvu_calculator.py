@@ -9,7 +9,7 @@ from decimal import Decimal
 
 import pandas as pd
 
-from proc_autocode.ip_kb.ip_kb import IPCodingKnowledgeBase, CmsRvuInfo
+from modules.autocode.ip_kb.ip_kb import IPCodingKnowledgeBase, CmsRvuInfo
 from .rvu_parser import GPCIRecord
 
 

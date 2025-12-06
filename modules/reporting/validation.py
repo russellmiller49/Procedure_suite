@@ -4,10 +4,10 @@ from typing import Any, Literal, TYPE_CHECKING
 
 from pydantic import BaseModel, Field
 
-from proc_report.metadata import MissingFieldIssue
+from modules.reporting.metadata import MissingFieldIssue
 
 if TYPE_CHECKING:
-    from proc_report.engine import SchemaRegistry, TemplateMeta, TemplateRegistry
+    from modules.reporting.engine import SchemaRegistry, TemplateMeta, TemplateRegistry
     from proc_schemas.clinical.common import ProcedureBundle, ProcedureInput
 
 

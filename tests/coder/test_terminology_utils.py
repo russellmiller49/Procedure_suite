@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from proc_autocode.ip_kb.terminology_utils import QARuleChecker, TerminologyNormalizer
+from modules.autocode.ip_kb.terminology_utils import QARuleChecker, TerminologyNormalizer
 
 KNOWLEDGE_PATH = Path("data/knowledge/ip_coding_billing.v2_7.json")
 

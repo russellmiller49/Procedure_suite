@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from proc_report.engine import default_template_registry
+from modules.reporting.engine import default_template_registry
 
 
 def _write_template(dir_path: Path, body: str) -> None:

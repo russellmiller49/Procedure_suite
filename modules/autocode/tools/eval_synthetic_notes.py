@@ -9,11 +9,12 @@ from typing import Iterable, Set
 import pandas as pd
 
 
-ROOT = Path(__file__).resolve().parents[2]
+# Path is: modules/autocode/tools/eval_synthetic_notes.py -> tools -> autocode -> modules -> repo_root
+ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from proc_autocode.coder import EnhancedCPTCoder
+from modules.autocode.coder import EnhancedCPTCoder
 
 
 DEFAULT_OUTPUT = Path("analysis/synthetic_notes_eval.txt")

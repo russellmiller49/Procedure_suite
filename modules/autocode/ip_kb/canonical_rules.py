@@ -470,7 +470,9 @@ PDT_SYNONYMS: List[str] = [
 
 def load_canonical_patterns() -> List[Dict]:
     """Load the canonical synthetic_CPT_corrected.json patterns."""
-    patterns_path = Path(__file__).parent.parent.parent / "data" / "synthetic_CPT_corrected.json"
+    # Path is: modules/autocode/ip_kb -> modules/autocode -> modules -> repo_root
+    repo_root = Path(__file__).parent.parent.parent.parent
+    patterns_path = repo_root / "data" / "synthetic_CPT_corrected.json"
     if patterns_path.exists():
         with open(patterns_path, "r") as f:
             return json.load(f)
@@ -479,7 +481,9 @@ def load_canonical_patterns() -> List[Dict]:
 
 def load_golden_rules() -> Dict:
     """Load the golden ip_golden_knowledge_v2_2.json rules."""
-    rules_path = Path(__file__).parent.parent.parent / "ip_golden_knowledge_v2_2.json"
+    # Path is: modules/autocode/ip_kb -> modules/autocode -> modules -> repo_root
+    repo_root = Path(__file__).parent.parent.parent.parent
+    rules_path = repo_root / "ip_golden_knowledge_v2_2.json"
     if rules_path.exists():
         with open(rules_path, "r") as f:
             return json.load(f)

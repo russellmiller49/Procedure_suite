@@ -5,8 +5,8 @@ from typing import Optional, Iterable, Any, Dict
 import csv
 from decimal import Decimal
 
-from proc_autocode.rvu.rvu_parser import CMSRVUParser, RVURecord
-from proc_autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
+from modules.autocode.rvu.rvu_parser import CMSRVUParser, RVURecord
+from modules.autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
 
 
 def export_rvu_subset(
@@ -161,11 +161,12 @@ def _synthesize_record(cpt: str, kb: IPCodingKnowledgeBase) -> Optional[RVURecor
 
 if __name__ == "__main__":
     # Example CLI usage; adjust paths to your repo structure
-    base = Path(__file__).resolve().parents[2]  # repo root (project root)
+    # Path is: modules/autocode/rvu/build_ip_rvu_subset.py -> rvu -> autocode -> modules -> repo_root
+    base = Path(__file__).resolve().parents[3]  # repo root (project root)
     # We use sample_rvu_2025.csv as the "CMS file" since we don't have the full TXT
-    cms_file = base / "proc_autocode" / "rvu" / "data" / "sample_rvu_2025.csv"
+    cms_file = base / "modules" / "autocode" / "rvu" / "data" / "sample_rvu_2025.csv"
     ip_json = base / "data" / "knowledge" / "ip_coding_billing.v2_7.json"
-    out_csv = base / "proc_autocode" / "rvu" / "data" / "rvu_ip_2025.csv"
+    out_csv = base / "modules" / "autocode" / "rvu" / "data" / "rvu_ip_2025.csv"
 
     if not cms_file.exists():
         print(f"Error: CMS RVU file not found at {cms_file}")

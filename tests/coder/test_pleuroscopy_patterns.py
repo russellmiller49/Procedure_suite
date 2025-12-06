@@ -16,7 +16,7 @@ Per CPT coding rules from ip_golden_knowledge_v2_2.json:
 """
 
 import pytest
-from proc_autocode.coder import EnhancedCPTCoder
+from modules.autocode.coder import EnhancedCPTCoder
 
 
 @pytest.fixture(scope="module")

@@ -87,7 +87,7 @@ class RuleEngine:
         # This is the clinical knowledge base that detects procedures from text
         try:
             from pathlib import Path
-            from proc_autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
+            from modules.autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
 
             # Default KB path (same as config.kb_path default)
             default_kb_path = Path("data/knowledge/ip_coding_billing.v2_7.json")
@@ -221,16 +221,34 @@ class RuleEngine:
             "bronchoscopy_navigation": {"+31627"},
             "bronchoscopy_tbna": {"31629"},
             "bronchoscopy_tbbx": {"31628", "+31632"},  # Include add-on for multi-lobe
+            "bronchoscopy_biopsy_parenchymal": {"31628"},  # TBLB
+            "bronchoscopy_biopsy_parenchymal_additional": {"+31632"},  # Additional lobe
             "bronchoscopy_ebus_linear": {"31652", "31653"},  # R010 filters by station count
+            "bronchoscopy_ebus_linear_additional": {"31653"},  # 3+ stations
             "bronchoscopy_ebus_radial": {"+31654"},
             "bronchoscopy_therapeutic_stent": {"31631", "31636", "31637", "31638"},  # Include all stent codes
+            "bronchoscopy_stent_revision": {"31638"},  # Stent revision
             "bronchoscopy_therapeutic_debulking": {"31640", "31641"},
+            "bronchoscopy_airway_stenosis": {"31641"},  # Ablation/destruction
             "bronchoscopy_therapeutic_aspiration": {"31645", "31646"},
+            "bronchoscopy_airway_dilation": {"31630"},
             "bronchoscopy_dilation": {"31630"},
+            "bronchoscopy_foreign_body": {"31635"},
             "pleural_drainage": {"32556", "32557"},
+            "tunneled_pleural_catheter_placement": {"32550"},
+            "tunneled_pleural_catheter_removal": {"32552"},
             "ipc_insertion": {"32550"},
             "ipc_removal": {"32552"},
-            "thoracoscopy": {"32601", "32604", "32606", "32607", "32609"},  # Include all thoracoscopy codes
+            "thoracentesis": {"32554", "32555"},
+            # Thoracoscopy - site-specific groups map to single codes
+            "thoracoscopy_diagnostic_only": {"32601"},
+            "thoracoscopy_pleural_biopsy": {"32609"},
+            "thoracoscopy_pericardial_biopsy": {"32604"},
+            "thoracoscopy_mediastinal_biopsy": {"32606"},
+            "thoracoscopy_lung_biopsy": {"32607"},
+            "thoracoscopy_surgical_pleurodesis_decortication": {"32650"},
+            # Generic thoracoscopy (fallback)
+            "thoracoscopy": {"32601"},
         }
 
         for group in groups:
@@ -330,10 +348,29 @@ class RuleEngine:
             "bronchoscopy_bal": ["31624"],
             "bronchoscopy_navigation": ["31627"],
             "bronchoscopy_ebus_linear": ["31652", "31653"],
+            "bronchoscopy_ebus_linear_additional": ["31653"],
             "bronchoscopy_ebus_radial": ["31654"],
             "bronchoscopy_tbbx": ["31628", "31632"],
+            "bronchoscopy_biopsy_parenchymal": ["31628"],
+            "bronchoscopy_biopsy_parenchymal_additional": ["31632"],
             "bronchoscopy_therapeutic_stent": ["31631", "31636", "31637", "31638"],
+            "bronchoscopy_stent_revision": ["31638"],
             "bronchoscopy_therapeutic_debulking": ["31640", "31641"],
+            "bronchoscopy_airway_stenosis": ["31641"],
+            "bronchoscopy_therapeutic_aspiration": ["31645", "31646"],
+            "bronchoscopy_airway_dilation": ["31630"],
+            "bronchoscopy_dilation": ["31630"],
+            "bronchoscopy_foreign_body": ["31635"],
+            "pleural_drainage": ["32556", "32557"],
+            "tunneled_pleural_catheter_placement": ["32550"],
+            "tunneled_pleural_catheter_removal": ["32552"],
+            "thoracentesis": ["32554", "32555"],
+            "thoracoscopy_diagnostic_only": ["32601"],
+            "thoracoscopy_pleural_biopsy": ["32609"],
+            "thoracoscopy_pericardial_biopsy": ["32604"],
+            "thoracoscopy_mediastinal_biopsy": ["32606"],
+            "thoracoscopy_lung_biopsy": ["32607"],
+            "thoracoscopy_surgical_pleurodesis_decortication": ["32650"],
         }
 
         return code_base in group_code_relations.get(group, [])

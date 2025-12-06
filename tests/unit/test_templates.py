@@ -1,4 +1,4 @@
-from proc_report.engine import compose_report_from_text
+from modules.reporting.engine import compose_report_from_text
 
 
 def test_ebus_template_contains_sections():

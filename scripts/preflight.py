@@ -32,12 +32,12 @@ def check_rules_and_templates() -> None:
         yaml.safe_load(path.read_text())
     print("YAML configs parsed")
 
-    from proc_report.engine import compose_report_from_text
+    from modules.reporting.engine import compose_report_from_text
 
     text = "EBUS-TBNA of stations 7 and 4R; 3 FNA passes at each."
     report, note = compose_report_from_text(text, {"plan": "Recover in PACU"})
     assert "Targets & Specimens" in note
-    from proc_autocode.engine import autocode
+    from modules.autocode.engine import autocode
 
     billing = autocode(report)
     assert billing.codes, "Autocoder produced zero codes for smoke test"
