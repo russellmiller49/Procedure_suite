@@ -1,10 +1,22 @@
 #!/usr/bin/env python3
 """Simple test using requests to verify Gemini API key."""
 
+import os
 import requests
 import json
+from pathlib import Path
 
-api_key = "AIzaSyB3Vu98aOmYOxPLUrvHMxhPAknz78scNcs"
+# Load API key from .env file
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).parent / ".env", override=True)
+except ImportError:
+    pass
+
+api_key = os.getenv("GEMINI_API_KEY")
+if not api_key:
+    print("❌ GEMINI_API_KEY not set. Add it to .env file.")
+    exit(1)
 
 # First, try to list available models to verify the API key works
 print("Step 1: Checking available models...")
