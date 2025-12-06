@@ -1,0 +1,374 @@
+[
+  {
+    "note_text": "EMN-guided bronchoscopy with radial EBUS confirmation and transbronchial cryobiopsy of a peripheral RLL nodule using an Arndt blocker for hemostasis.",
+    "cpt_codes": [
+      31622,
+      31654
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158785"
+      },
+      "cpt_codes": [
+        31622,
+        31654
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.135757",
+      "changes": [
+        "Extracted CPT codes: [31622, 31654]"
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "EBUS-TBNA for lymphoma staging with sampling of stations 7, 4R, 10R, and 11R showing follicular lymphoma in all nodes.",
+    "cpt_codes": [
+      31629,
+      31653
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158790"
+      },
+      "cpt_codes": [
+        31629,
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.135921",
+      "changes": [
+        "Extracted CPT codes: [31629, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']"
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Flexible bronchoscopy with BAL in RUL, ENB navigation with radial EBUS confirmation to a lingular lesion, TBNA and forceps biopsies obtained under fluoroscopy.",
+    "cpt_codes": [
+      31629,
+      31624,
+      31622,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158796"
+      },
+      "cpt_codes": [
+        31629,
+        31624,
+        31622,
+        31654,
+        31627
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.136095",
+      "changes": [
+        "Extracted CPT codes: [31629, 31624, 31622, 31654, 31627]"
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Ultrasound-guided tunneled PleurX catheter placement for symptomatic recurrent right malignant pleural effusion in a patient with stage IV NSCLC, with 1.55 L drained.",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158802"
+      },
+      "cpt_codes": [
+        32550
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.136300",
+      "changes": [
+        "Extracted CPT codes: [32550]"
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "EBUS-TBNA with sampling of stations 7, 4R, 10L, and 11R for mediastinal and hilar lymphadenopathy concerning for lymphoma.",
+    "cpt_codes": [
+      31629,
+      31653
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158807"
+      },
+      "cpt_codes": [
+        31629,
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10L",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "11R",
+        "4R",
+        "7"
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.136477",
+      "changes": [
+        "Extracted CPT codes: [31629, 31653]",
+        "Extracted EBUS stations: ['10L', '11R', '4R', '7']"
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Ultrasound-guided therapeutic thoracentesis for right hepatic hydrothorax in a cirrhotic patient, draining 800 mL of clear yellow fluid.",
+    "cpt_codes": [
+      32554,
+      32555
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158812"
+      },
+      "cpt_codes": [
+        32554,
+        32555
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.136643",
+      "changes": [
+        "Extracted CPT codes: [32554, 32555]"
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Rigid bronchoscopy with electrocautery snare resection and APC ablation of multiple obstructing tracheal polyps causing severe endotracheal obstruction.",
+    "cpt_codes": [
+      31622,
+      31641
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158818"
+      },
+      "cpt_codes": [
+        31622,
+        31641
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Other"
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.136814",
+      "changes": [
+        "Extracted CPT codes: [31622, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Other"
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Ion robotic bronchoscopy with radial EBUS and transbronchial biopsies of a 2.8 cm RUL posterior segment nodule.",
+    "cpt_codes": [
+      31622,
+      31654,
+      31628,
+      31627
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158823"
+      },
+      "cpt_codes": [
+        31622,
+        31654,
+        31628,
+        31627
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.136973",
+      "changes": [
+        "Extracted CPT codes: [31622, 31654, 31628, 31627]"
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Ion robotic navigational bronchoscopy with radial EBUS and transbronchial biopsies of a PET-avid 2.3 cm RUL nodule.",
+    "cpt_codes": [
+      31622,
+      31654,
+      31628,
+      31627
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158827"
+      },
+      "cpt_codes": [
+        31622,
+        31654,
+        31628,
+        31627
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.137120",
+      "changes": [
+        "Extracted CPT codes: [31622, 31654, 31628, 31627]"
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Rigid bronchoscopy with mechanical debridement, cautery/APC, and placement of a 14x60 mm silicone Dumon stent in the left mainstem bronchus for critical tumor-related obstruction.",
+    "cpt_codes": [
+      31622
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158833"
+      },
+      "cpt_codes": [
+        31622
+      ],
+      "lesion_size_mm": 140.0
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.137315",
+      "changes": [
+        "Extracted CPT codes: [31622]",
+        "Extracted lesion_size_mm: 140.0"
+      ],
+      "warnings": []
+    }
+  }
+]
