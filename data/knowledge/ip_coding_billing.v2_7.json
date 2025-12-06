@@ -4052,7 +4052,152 @@
     "sedation_same_provider_policy": "When the same physician performs both the bronchoscopy/pleural procedure and provides moderate sedation, use 99151-99153 when allowed. If a different qualified professional provides sedation, use 99155-99157 as appropriate. Many facility and payer contracts bundle sedation, so payment policy should be confirmed locally.",
     "post_procedure_imaging_policy": "For thoracentesis, pleural drainage, and chest tube insertion (32554-32557, 32550, 32551), routine post-procedure chest radiography (e.g., 71045, 71046) performed to confirm tube position or exclude pneumothorax is considered integral to the procedure and is generally not separately reportable under NCCI policy.",
     "global_periods_pleural_vs_thoracoscopy": "Thoracentesis and pleural catheter procedures (32554-32557, 32560-32562, 32550-32552) typically have 0-day global periods. Thoracoscopy families differ: diagnostic/biopsy thoracoscopy (3260x series) is usually 0-day global while many thoracoscopic pleurodesis/decortication procedures (3265x series) are 90-day global. Post-op E/M within the global period is bundled when related to the surgery.",
-    "ipc_fluid_removal_follow_up": "After placement of a tunneled pleural catheter (32550), routine outpatient fluid drainage through the existing catheter is usually captured by appropriate E/M codes rather than repeat pleural drainage CPT codes; 32552 is reserved for surgical removal of the tunneled catheter with cuff, not for routine drainage or noncuffed catheter removal."
+    "ipc_fluid_removal_follow_up": "After placement of a tunneled pleural catheter (32550), routine outpatient fluid drainage through the existing catheter is usually captured by appropriate E/M codes rather than repeat pleural drainage CPT codes; 32552 is reserved for surgical removal of the tunneled catheter with cuff, not for routine drainage or noncuffed catheter removal.",
+    "31640_requires_excision": {
+      "codes": [
+        "31640"
+      ],
+      "requires_positive_terms": [
+        "mechanical debulking",
+        "tumor debulked",
+        "rigid coring",
+        "tumor resection",
+        "tumor excision",
+        "microdebrider",
+        "snare resection",
+        "tumor removed"
+      ],
+      "negative_terms": [
+        "radiofrequency ablation",
+        "rfa",
+        "microwave ablation",
+        "pdt",
+        "photodynamic therapy",
+        "cryotherapy",
+        "cryoablation"
+      ],
+      "description": "31640 should be supported only when the note documents true excision/debulking techniques. Pure ablation language without resection terms should default to 31641.",
+      "rationale": "Reduces false-positive 31640 coding when only ablation modalities are performed."
+    },
+    "stent_maintenance_31645": {
+      "codes": [
+        "31645"
+      ],
+      "positive_terms": [
+        "stent check",
+        "routine stent surveillance",
+        "cleaned mucus from stent",
+        "suctioned secretions",
+        "stent in good position",
+        "no revision required"
+      ],
+      "description": "Routine stent maintenance (cleaning/suctioning, visual inspection) without stent repositioning or exchange supports 31645.",
+      "rationale": "Distinguishes stent maintenance from revision/exchange work."
+    },
+    "stent_revision_31646_only_with_change": {
+      "codes": [
+        "31646"
+      ],
+      "requires_positive_terms": [
+        "stent repositioned",
+        "stent revised",
+        "stent exchanged",
+        "stent removed and replaced",
+        "stent upsized",
+        "stent downsized"
+      ],
+      "cleaning_only_terms": [
+        "cleaned mucus from stent",
+        "suctioned secretions",
+        "stent in good position",
+        "no revision required"
+      ],
+      "description": "Report 31646 only when the note documents actual stent manipulation (reposition/exchange). If the documentation only describes cleaning/suctioning with no change, suppress 31646/31641 and keep 31645.",
+      "rationale": "Ensures revision/exchange code is used only when the stent is adjusted or replaced."
+    },
+    "cryobiopsy_not_cryotherapy": {
+      "biopsy_code": "31628",
+      "ablation_code": "31635",
+      "biopsy_terms": [
+        "cryobiopsy",
+        "cryo biopsies",
+        "cryo samples",
+        "cryo forceps biopsies"
+      ],
+      "ablation_terms": [
+        "cryotherapy to lesion",
+        "cryospray",
+        "cryotherapy applied to tumor",
+        "cryotherapy ablation"
+      ],
+      "logic": "When cryo language is paired with biopsy/specimen wording, favor 31628. When cryo is described as therapeutic application to a lesion without specimen collection, favor 31635.",
+      "radial_link": "If cryobiopsy is performed with radial EBUS localization, ensure +31654 logic (radial_requires_tblb) fires to capture the add-on.",
+      "rationale": "Prevents coding cryotherapy ablation when the clinical intent was diagnostic cryobiopsy and vice versa."
+    },
+    "32550_requires_new_tunneled_catheter": {
+      "codes": [
+        "32550"
+      ],
+      "required_terms": [
+        "tunneled catheter",
+        "pleurx",
+        "aspira",
+        "dacron cuff",
+        "subcutaneous tunnel",
+        "tunneled tract",
+        "indwelling pleural catheter"
+      ],
+      "negative_terms": [
+        "consider pleurx",
+        "future tunneled catheter",
+        "if recurrence consider ipc",
+        "plan for pleurx"
+      ],
+      "description": "Include 32550 only when an indwelling tunneled catheter is actually inserted (tunnel creation, cuff placement). Planning language without actual placement should not trigger 32550.",
+      "rationale": "Reduces false-positive coding when tunneled catheter placement is only considered."
+    },
+    "pleurodesis_32560_without_new_catheter": {
+      "codes": [
+        "32560"
+      ],
+      "pleurodesis_terms": [
+        "talc slurry",
+        "talc poudrage",
+        "doxycycline slurry",
+        "chemical pleurodesis"
+      ],
+      "negative_codes": [
+        "32550"
+      ],
+      "description": "When pleurodesis is performed through an existing tube without placement of a new tunneled catheter, report 32560 only and suppress 32550.",
+      "rationale": "Avoids double-coding when a pleurodesis agent is instilled via existing drainage access."
+    },
+    "31634_hemorrhage_control": {
+      "codes": [
+        "31634"
+      ],
+      "positive_terms": [
+        "massive hemoptysis",
+        "active bleeding",
+        "brisk bleeding"
+      ],
+      "hemostatic_methods": [
+        "iced saline lavage",
+        "cold saline lavage",
+        "epinephrine instilled",
+        "epinephrine instillation",
+        "txa instillation",
+        "tranexamic acid",
+        "balloon tamponade",
+        "fogarty balloon"
+      ],
+      "suppressed_codes": [
+        "31654",
+        "31615"
+      ],
+      "description": "When the focus is hemoptysis control with hemostatic maneuvers (balloon occlusion, iced saline, epi/TXA instillation), add 31634. Drop 31654 or 31615 unless separate navigation or foreign body removal work is clearly documented.",
+      "rationale": "Ensures hemoptysis control work is captured while preventing double-counting with navigation or foreign body codes that were not truly performed."
+    }
   },
   "bundling_rules": {
     "diagnostic_with_surgical": {
@@ -4078,6 +4223,21 @@
       ],
       "description": "Diagnostic bronchoscopy (31622) is bundled when more extensive therapeutic or biopsy bronchoscopy procedures from the same family are performed by the same physician on the same date of service."
     },
+    "advanced_sampling_bundles_31622": {
+      "drop_codes": [
+        "31622"
+      ],
+      "trigger_codes": [
+        "31627",
+        "31628",
+        "31629",
+        "+31632",
+        "+31633",
+        "31652",
+        "+31654"
+      ],
+      "description": "When advanced biopsy/sampling techniques (navigation, TBLB, TBNA, EBUS) are performed, the diagnostic bronchoscopy (31622) component is bundled and should not be separately reported."
+    },
     "stent_dilation_same_segment": {
       "stent_codes": [
         "31631",
@@ -4096,6 +4256,32 @@
         "31641"
       ],
       "description": "When tumor excision (31640) and ablation/destruction (31641) occur in the same anatomic site, report only the higher-valued 31641. Use -59/-XS for distinct segments/lobes treated with different modalities."
+    },
+    "31641_resection_evidence_preference": {
+      "dominant": "31641",
+      "suppressed_codes": [
+        "31640"
+      ],
+      "requires_resection_terms": [
+        "mechanical debulking",
+        "tumor debulked",
+        "rigid coring",
+        "tumor resection",
+        "tumor excision",
+        "microdebrider",
+        "snare resection",
+        "tumor removed"
+      ],
+      "negative_terms": [
+        "radiofrequency ablation",
+        "rfa",
+        "microwave ablation",
+        "pdt",
+        "photodynamic therapy",
+        "cryotherapy",
+        "cryoablation"
+      ],
+      "description": "If 31641 (ablation) is supported and no strong resection/debulking language exists, suppress 31640. Only keep 31640 when explicit excision technique terms are documented."
     },
     "ebus_bundling": {
       "linear_codes": [
@@ -4157,6 +4343,22 @@
         "32654"
       ],
       "description": "CPT 32551 (tube thoracostomy) is a 'separate procedure' and is not separately reportable when performed through the same incision as an open or thoracoscopic thoracic procedure on the same side; it may be reported when contralateral or clearly unrelated."
+    },
+    "thoracoscopy_supersedes_pleural_drainage": {
+      "thoracoscopy_code": "32650",
+      "drop_codes": [
+        "32554",
+        "32555",
+        "32557",
+        "32560"
+      ],
+      "inclusion_terms": [
+        "medical thoracoscopy",
+        "pleuroscopy",
+        "rigid thoracoscope",
+        "thoracoscopic pleural biopsies"
+      ],
+      "description": "When therapeutic medical thoracoscopy (32650) with pleural biopsies is documented, prior pleural drainage codes (32554/32555/32557/32560) on the same side/session are bundled and should be dropped."
     },
     "pleural_post_procedure_imaging": {
       "pleural_codes": [
@@ -4243,6 +4445,23 @@
       "pleurodesis_code": "32560",
       "thoracoscopy_pleurodesis": "32650",
       "description": "Chemical pleurodesis agent instillation (32560) is bundled into thoracoscopic pleurodesis (32650) and is not separately reportable."
+    },
+    "pdt_single_code_31641": {
+      "primary_code": "31641",
+      "exclusive_codes": [
+        "31635",
+        "+31649",
+        "+31651",
+        "+31654"
+      ],
+      "pdt_terms": [
+        "photodynamic therapy",
+        "pdt",
+        "photofrin",
+        "light application",
+        "630 nm"
+      ],
+      "description": "When the note clearly documents photodynamic therapy without independent stent placement, cryotherapy, or debulking, report only 31641 for the bronchoscopic destruction work. Other therapeutic bronchoscopy codes should be suppressed unless separate, non-PDT interventions are explicitly documented."
     },
     "em_same_day_minor_procedure": {
       "em_code_families": [

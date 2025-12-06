@@ -162,7 +162,129 @@
       "patch_version": "1.0.0",
       "patch_date": "2025-12-02T02:00:47.991467",
       "changes": [],
-      "warnings": []
+      "warnings": [],
+      "coding_support_patched": true,
+      "coding_support_patch_version": "1.0.0"
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31641",
+            "modifier": null,
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31636",
+            "modifier": null,
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "32550",
+            "modifier": null,
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31641",
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "est_facility_payment": 275.0,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31636",
+            "work_rvu": 4.3,
+            "total_facility_rvu": 6.85,
+            "est_facility_payment": 224.0,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "32550",
+            "work_rvu": 3.92,
+            "total_facility_rvu": 5.88,
+            "est_facility_payment": 193.0,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 13.47,
+          "total_facility_rvu": 21.13,
+          "est_facility_payment": 692.0
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31641",
+          "31636",
+          "32550"
+        ],
+        "dropped_codes": [
+          "31640",
+          "31630",
+          "31622",
+          "31645",
+          "99152",
+          "99153"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "31640_vs_31641_same_site",
+            "description": "When excision (31640) and destruction (31641) are both performed at the same airway site, report only 31641.",
+            "primary_code": "31641",
+            "dropped_codes": [
+              "31640"
+            ]
+          },
+          {
+            "rule_id": "stent_dilation_same_segment",
+            "description": "Balloon dilation (31630) in the same bronchial segment as stent placement is considered integral to the stent service.",
+            "primary_code": "31636",
+            "dropped_codes": [
+              "31630"
+            ]
+          },
+          {
+            "rule_id": "diagnostic_with_surgical_bronch",
+            "description": "Diagnostic bronchoscopy is bundled into therapeutic bronchoscopy codes when performed in the same session.",
+            "primary_code": "31641",
+            "dropped_codes": [
+              "31622"
+            ]
+          },
+          {
+            "rule_id": "sedation_with_separate_anesthesia",
+            "description": "Moderate sedation codes 9915x are not billed when a separate anesthesia team provides general anesthesia.",
+            "primary_code": null,
+            "dropped_codes": [
+              "99152",
+              "99153"
+            ]
+          }
+        ],
+        "narrative": [
+          "31641 selected for tumor destruction and relief of stenosis in the right mainstem bronchus using electrocautery and APC; 31640 dropped per same-site excision vs destruction rule.",
+          "31636 selected for metallic stent placement in the right mainstem bronchus; 31630 dropped because dilation was performed only to facilitate stent deployment in the same segment.",
+          "32550 selected for tunneled pleural catheter placement (PleurX) in the right hemithorax for recurrent malignant effusion.",
+          "Diagnostic bronchoscopy and therapeutic aspiration were considered integral to the airway recanalization and not separately billed as 31622 or 31645.",
+          "No moderate sedation codes were assigned because the procedure was performed under general anesthesia by a separate anesthesia service."
+        ]
+      }
     }
   },
   {
@@ -327,7 +449,67 @@
         "Extracted ablation_max_temp_c: 8580",
         "Extracted ablation_duration_seconds: 1800"
       ],
-      "warnings": []
+      "warnings": [],
+      "coding_support_patched": true,
+      "coding_support_patch_version": "1.0.0"
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31624",
+            "modifier": null,
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31624",
+            "work_rvu": 2.63,
+            "total_facility_rvu": 4.24,
+            "est_facility_payment": 139.0,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 2.63,
+          "total_facility_rvu": 4.24,
+          "est_facility_payment": 139.0
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31624"
+        ],
+        "dropped_codes": [
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_components_included_in_31624",
+            "description": "Bronchoscopy with BAL (31624) includes the diagnostic inspection; 31622 is not billed separately.",
+            "primary_code": "31624",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative": [
+          "31624 selected for flexible bronchoscopy with bronchoalveolar lavage of a single lobe for nonresolving pneumonia.",
+          "No biopsy, stent, ablation, navigation, or pleural procedure was performed, so no additional bronchoscopic or pleural CPT codes are indicated.",
+          "31622 was not billed separately because the diagnostic inspection is inherent to 31624."
+        ]
+      }
     }
   },
   {
@@ -499,7 +681,67 @@
       "changes": [
         "Extracted EBUS stations: ['10R', '4R', '7']"
       ],
-      "warnings": []
+      "warnings": [],
+      "coding_support_patched": true,
+      "coding_support_patch_version": "1.0.0"
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31653",
+            "modifier": null,
+            "description": "Bronchoscopy; with EBUS for biopsy of 3 or more mediastinal and/or hilar lymph node stations",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31653",
+            "work_rvu": 4.96,
+            "total_facility_rvu": 7.7,
+            "est_facility_payment": 252.0,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 4.96,
+          "total_facility_rvu": 7.7,
+          "est_facility_payment": 252.0
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31653"
+        ],
+        "dropped_codes": [
+          "31652"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "ebus_node_count_3_plus",
+            "description": "When EBUS-TBNA samples three or more nodal stations, report 31653 rather than 31652.",
+            "primary_code": "31653",
+            "dropped_codes": [
+              "31652"
+            ]
+          }
+        ],
+        "narrative": [
+          "31653 selected for linear EBUS-TBNA of three or more mediastinal/hilar lymph node stations.",
+          "31652 was dropped because the number of sampled stations met the threshold for 31653.",
+          "Diagnostic bronchoscopy is inherent to the EBUS procedure and was not coded separately."
+        ]
+      }
     }
   },
   {
@@ -662,7 +904,67 @@
       "changes": [
         "Extracted ablation_duration_seconds: 300"
       ],
-      "warnings": []
+      "warnings": [],
+      "coding_support_patched": true,
+      "coding_support_patch_version": "1.0.0"
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31641",
+            "modifier": null,
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31641",
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "est_facility_payment": 275.0,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 5.25,
+          "total_facility_rvu": 8.4,
+          "est_facility_payment": 275.0
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31641"
+        ],
+        "dropped_codes": [
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "bronch_tumor_destruction_includes_diagnostic",
+            "description": "When bronchoscopic tumor destruction is performed, the diagnostic inspection is considered included.",
+            "primary_code": "31641",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative": [
+          "31641 selected for bronchoscopic destruction of a peripheral lung tumor using cryoablation.",
+          "No separate biopsy, navigation, or EBUS codes were billed based on the available documentation.",
+          "Diagnostic bronchoscopy (31622) was not coded separately because it is inherent to the therapeutic tumor destruction service."
+        ]
+      }
     }
   },
   {
@@ -847,7 +1149,141 @@
       "changes": [
         "Extracted EBUS stations: ['10R', '11R', '4R', '7']"
       ],
-      "warnings": []
+      "warnings": [],
+      "coding_support_patched": true,
+      "coding_support_patch_version": "1.0.0"
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31653",
+            "modifier": null,
+            "description": "Bronchoscopy; with EBUS for biopsy of 3 or more mediastinal and/or hilar lymph node stations",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31627",
+            "modifier": null,
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation",
+            "units": 1,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31654",
+            "modifier": null,
+            "description": "EBUS for peripheral lesion(s) during bronchoscopy (eg, radial EBUS)",
+            "units": 1,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31628",
+            "modifier": null,
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31653",
+            "work_rvu": 4.96,
+            "total_facility_rvu": 7.7,
+            "est_facility_payment": 252.0,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31627",
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "est_facility_payment": 101.0,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31654",
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "est_facility_payment": 69.0,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31628",
+            "work_rvu": 3.55,
+            "total_facility_rvu": 5.53,
+            "est_facility_payment": 181.0,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 12.18,
+          "total_facility_rvu": 18.41,
+          "est_facility_payment": 603.0
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31653",
+          "31627",
+          "31654",
+          "31628"
+        ],
+        "dropped_codes": [
+          "31652",
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "ebus_node_count_3_plus",
+            "description": "Three or more mediastinal/hilar lymph node stations sampled with EBUS-TBNA are reported with 31653.",
+            "primary_code": "31653",
+            "dropped_codes": [
+              "31652"
+            ]
+          },
+          {
+            "rule_id": "nav_add_on_for_peripheral_lesion",
+            "description": "Computer-assisted navigation (e.g., robotic or EMN) to a peripheral lung lesion is reported with 31627.",
+            "primary_code": "31627",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "radial_ebus_for_peripheral_lesion",
+            "description": "Radial EBUS used to localize a peripheral lesion during bronchoscopy is reported with 31654.",
+            "primary_code": "31654",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "tbbx_single_lobe",
+            "description": "Transbronchial lung biopsy of a single lobe is reported with 31628.",
+            "primary_code": "31628",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "diagnostic_with_surgical_bronch",
+            "description": "Diagnostic bronchoscopy is bundled into EBUS and therapeutic bronchoscopy codes when performed in the same session.",
+            "primary_code": "31653",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative": [
+          "31653 selected for linear EBUS-TBNA of three or more mediastinal/hilar lymph node stations.",
+          "31627 selected for computer-assisted navigation to a peripheral lung lesion using a robotic or EMN platform.",
+          "31654 selected for radial EBUS confirmation of the peripheral lesion prior to biopsy.",
+          "31628 selected for transbronchial lung biopsy of the targeted lobe.",
+          "31622 and 31652 were not billed because the diagnostic inspection and lower-level EBUS services are inherent to the higher-valued EBUS and peripheral lesion codes in this session."
+        ]
+      }
     }
   },
   {
@@ -1009,7 +1445,138 @@
       "patch_version": "1.0.0",
       "patch_date": "2025-12-02T02:00:47.995363",
       "changes": [],
-      "warnings": []
+      "warnings": [],
+      "coding_support_patched": true,
+      "coding_support_patch_version": "1.0.0"
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31627",
+            "modifier": null,
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation",
+            "units": 1,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31654",
+            "modifier": null,
+            "description": "EBUS for peripheral lesion(s) during bronchoscopy (eg, radial EBUS)",
+            "units": 1,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31628",
+            "modifier": null,
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31626",
+            "modifier": null,
+            "description": "Bronchoscopy; with placement of fiducial markers",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31627",
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "est_facility_payment": 101.0,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31654",
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "est_facility_payment": 69.0,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31628",
+            "work_rvu": 3.55,
+            "total_facility_rvu": 5.53,
+            "est_facility_payment": 181.0,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31626",
+            "work_rvu": 3.91,
+            "total_facility_rvu": 6.24,
+            "est_facility_payment": 204.0,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 11.13,
+          "total_facility_rvu": 16.95,
+          "est_facility_payment": 555.0
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31627",
+          "31654",
+          "31628",
+          "31626"
+        ],
+        "dropped_codes": [
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "nav_add_on_for_peripheral_lesion",
+            "description": "Computer-assisted navigation to a peripheral lung lesion is reported with 31627.",
+            "primary_code": "31627",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "radial_ebus_for_peripheral_lesion",
+            "description": "Radial EBUS used to confirm lesion location during peripheral bronchoscopy is reported with 31654.",
+            "primary_code": "31654",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "tbbx_single_lobe",
+            "description": "Transbronchial lung biopsy of a single lobe is reported with 31628.",
+            "primary_code": "31628",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "fiducial_marker_placement",
+            "description": "Placement of bronchoscopic fiducial markers for radiation therapy planning is reported with 31626.",
+            "primary_code": "31626",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "diagnostic_with_surgical_bronch",
+            "description": "Diagnostic bronchoscopy is bundled into therapeutic bronchoscopy and navigation codes when performed in the same session.",
+            "primary_code": "31627",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative": [
+          "31627 selected for computer-assisted navigation to a peripheral lung lesion.",
+          "31654 selected for radial EBUS confirmation of the peripheral lesion prior to biopsy.",
+          "31628 selected for transbronchial lung biopsy of the targeted lobe.",
+          "31626 selected for placement of fiducial markers to guide subsequent radiation therapy.",
+          "31622 was not billed separately because the diagnostic inspection is inherent to the navigational and therapeutic bronchoscopy services."
+        ]
+      }
     }
   },
   {
@@ -1198,7 +1765,139 @@
         "Extracted lesion_size_mm: 22.0",
         "Extracted EBUS stations: ['10L', '2L', '2R', '4L', '4R', '7']"
       ],
-      "warnings": []
+      "warnings": [],
+      "coding_support_patched": true,
+      "coding_support_patch_version": "1.0.0"
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31652",
+            "modifier": null,
+            "description": "Bronchoscopy; with EBUS for biopsy of one or two mediastinal and/or hilar lymph node stations",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31627",
+            "modifier": null,
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation",
+            "units": 1,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31654",
+            "modifier": null,
+            "description": "EBUS for peripheral lesion(s) during bronchoscopy (eg, radial EBUS)",
+            "units": 1,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31628",
+            "modifier": null,
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31652",
+            "work_rvu": 4.46,
+            "total_facility_rvu": 6.96,
+            "est_facility_payment": 228.0,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31627",
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "est_facility_payment": 101.0,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31654",
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "est_facility_payment": 69.0,
+            "is_add_on": true
+          },
+          {
+            "cpt_code": "31628",
+            "work_rvu": 3.55,
+            "total_facility_rvu": 5.53,
+            "est_facility_payment": 181.0,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 11.68,
+          "total_facility_rvu": 17.67,
+          "est_facility_payment": 579.0
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31652",
+          "31627",
+          "31654",
+          "31628"
+        ],
+        "dropped_codes": [
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "ebus_node_count_1_to_2",
+            "description": "EBUS-TBNA of one or two nodal stations is reported with 31652.",
+            "primary_code": "31652",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "nav_add_on_for_peripheral_lesion",
+            "description": "Computer-assisted navigation to a peripheral lung lesion is reported with 31627.",
+            "primary_code": "31627",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "radial_ebus_for_peripheral_lesion",
+            "description": "Radial EBUS used to localize a peripheral lesion during bronchoscopy is reported with 31654.",
+            "primary_code": "31654",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "tbbx_single_lobe",
+            "description": "Transbronchial lung biopsy of a single lobe is reported with 31628.",
+            "primary_code": "31628",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "diagnostic_with_surgical_bronch",
+            "description": "Diagnostic bronchoscopy is bundled into EBUS, navigation, and biopsy codes when performed in the same session.",
+            "primary_code": "31652",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative": [
+          "31652 selected for linear EBUS-TBNA of one to two mediastinal/hilar lymph node stations.",
+          "31627 selected for computer-assisted navigation to a peripheral lung lesion.",
+          "31654 selected for radial EBUS confirmation of the peripheral lesion prior to biopsy.",
+          "31628 selected for transbronchial lung biopsy of the targeted lobe.",
+          "31622 was not billed separately because the diagnostic inspection is inherent to the EBUS and therapeutic bronchoscopy services in this combined procedure.",
+          "This record is known to be a concatenated note, so the coding reflects only the Linh Nguyen portion of the documentation."
+        ]
+      }
     }
   },
   {
@@ -1386,7 +2085,76 @@
       "changes": [
         "Extracted EBUS stations: ['10L', '10R', '11L', '11R', '2L', '2R', '4L', '4R', '7']"
       ],
-      "warnings": []
+      "warnings": [],
+      "coding_support_patched": true,
+      "coding_support_patch_version": "1.0.0"
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31653",
+            "modifier": null,
+            "description": "Bronchoscopy; with EBUS for biopsy of 3 or more mediastinal and/or hilar lymph node stations",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31653",
+            "work_rvu": 4.96,
+            "total_facility_rvu": 7.7,
+            "est_facility_payment": 252.0,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 4.96,
+          "total_facility_rvu": 7.7,
+          "est_facility_payment": 252.0
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31653"
+        ],
+        "dropped_codes": [
+          "31652",
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "ebus_node_count_3_plus",
+            "description": "Sampling three or more nodal stations with EBUS-TBNA is reported with 31653.",
+            "primary_code": "31653",
+            "dropped_codes": [
+              "31652"
+            ]
+          },
+          {
+            "rule_id": "diagnostic_with_surgical_bronch",
+            "description": "Diagnostic bronchoscopy is bundled into EBUS codes when performed in the same session.",
+            "primary_code": "31653",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative": [
+          "31653 selected for EBUS-TBNA of three or more mediastinal/hilar lymph node stations for lung cancer staging.",
+          "31652 was not billed because the number of sampled stations met the threshold for 31653.",
+          "Diagnostic bronchoscopy (31622) was considered inherent to the EBUS procedure and not coded separately."
+        ]
+      }
     }
   },
   {
@@ -1574,7 +2342,77 @@
       "changes": [
         "Extracted EBUS stations: ['10L', '10R', '11L', '11R', '2L', '2R', '4L', '4R', '7']"
       ],
-      "warnings": []
+      "warnings": [],
+      "coding_support_patched": true,
+      "coding_support_patch_version": "1.0.0"
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31653",
+            "modifier": null,
+            "description": "Bronchoscopy; with EBUS for biopsy of 3 or more mediastinal and/or hilar lymph node stations",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31653",
+            "work_rvu": 4.96,
+            "total_facility_rvu": 7.7,
+            "est_facility_payment": 252.0,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 4.96,
+          "total_facility_rvu": 7.7,
+          "est_facility_payment": 252.0
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31653"
+        ],
+        "dropped_codes": [
+          "31652",
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "ebus_node_count_3_plus",
+            "description": "Sampling three or more nodal stations with EBUS-TBNA is reported with 31653.",
+            "primary_code": "31653",
+            "dropped_codes": [
+              "31652"
+            ]
+          },
+          {
+            "rule_id": "diagnostic_with_surgical_bronch",
+            "description": "Diagnostic bronchoscopy is bundled into EBUS codes when performed in the same session.",
+            "primary_code": "31653",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative": [
+          "31653 selected for EBUS-TBNA of three or more mediastinal/hilar lymph node stations for suspected sarcoidosis or malignancy.",
+          "31652 was not billed because the number of sampled stations met the threshold for 31653.",
+          "Diagnostic bronchoscopy (31622) was considered inherent to the EBUS procedure and not coded separately.",
+          "This entry represents a duplicate extraction of the same clinical case and should be treated accordingly during downstream analysis."
+        ]
+      }
     }
   },
   {
@@ -1734,7 +2572,78 @@
       "patch_version": "1.0.0",
       "patch_date": "2025-12-02T02:00:47.999875",
       "changes": [],
-      "warnings": []
+      "warnings": [],
+      "coding_support_patched": true,
+      "coding_support_patch_version": "1.0.0"
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "32555",
+            "modifier": null,
+            "description": "Thoracentesis, needle or catheter, diagnostic or therapeutic; with imaging guidance",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "32555",
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.19,
+            "est_facility_payment": 104.0,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 2.27,
+          "total_facility_rvu": 3.19,
+          "est_facility_payment": 104.0
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "32555"
+        ],
+        "dropped_codes": [
+          "32554",
+          "32556",
+          "32557"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "thoracentesis_with_imaging_guidance",
+            "description": "Thoracentesis with real-time imaging guidance is reported with 32555.",
+            "primary_code": "32555",
+            "dropped_codes": [
+              "32554"
+            ]
+          },
+          {
+            "rule_id": "no_chest_tube_or_indwelling_catheter",
+            "description": "Chest tube or indwelling pleural catheter codes are not billed when only a diagnostic thoracentesis is performed.",
+            "primary_code": "32555",
+            "dropped_codes": [
+              "32556",
+              "32557"
+            ]
+          }
+        ],
+        "narrative": [
+          "32555 selected for ultrasound-guided diagnostic thoracentesis of a unilateral pleural effusion.",
+          "32554 was not billed because imaging guidance was documented and supports use of 32555.",
+          "Chest tube and tunneled pleural catheter codes (32556, 32557) were not appropriate because no drainage catheter was placed and no pleurodesis was performed."
+        ]
+      }
     }
   }
 ]

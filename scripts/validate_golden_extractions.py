@@ -45,6 +45,7 @@ if os.getenv("GEMINI_API_KEY") and not os.getenv("GOOGLE_API_KEY"):
 
 from modules.api.dependencies import get_coding_service, reset_coding_service_cache
 from modules.registry.engine import RegistryEngine
+from modules.common.rvu_calc import RVUCalc
 from observability.logging_config import get_logger
 
 logger = get_logger("validate_golden")
@@ -77,6 +78,16 @@ class RegistryError:
 
 
 @dataclass
+class RVUError:
+    """Represents an RVU mismatch."""
+    field: str  # "total_rvu", "work_rvu", etc.
+    expected: float
+    actual: float
+    error_pct: float  # Percentage error
+    note_index: int = 0
+
+
+@dataclass
 class ValidationResult:
     """Results for a single note validation."""
     note_index: int
@@ -93,6 +104,12 @@ class ValidationResult:
     predicted_registry: dict = field(default_factory=dict)
     registry_errors: list[RegistryError] = field(default_factory=list)
     registry_field_accuracy: float = 0.0
+
+    # RVU results
+    expected_rvu: dict = field(default_factory=dict)  # {total_rvu, work_rvu, ...}
+    predicted_rvu: dict = field(default_factory=dict)
+    rvu_errors: list[RVUError] = field(default_factory=list)
+    rvu_exact_match: bool = False
 
     # Timing
     coder_latency_ms: float = 0.0
@@ -117,6 +134,14 @@ class AggregateMetrics:
     # Registry metrics
     registry_field_accuracy: float = 0.0
     per_field_accuracy: dict[str, float] = field(default_factory=dict)
+
+    # RVU metrics
+    rvu_total_mae: float = 0.0  # Mean Absolute Error for total RVU
+    rvu_work_mae: float = 0.0   # Mean Absolute Error for work RVU
+    rvu_total_mape: float = 0.0  # Mean Absolute Percentage Error for total RVU
+    rvu_work_mape: float = 0.0   # Mean Absolute Percentage Error for work RVU
+    rvu_exact_match_rate: float = 0.0  # Percentage with exact RVU match (within tolerance)
+    rvu_notes_evaluated: int = 0  # Number of notes with RVU data
 
     # Error patterns
     common_code_errors: list[tuple[str, int]] = field(default_factory=list)
@@ -158,6 +183,106 @@ def normalize_code(code: Any) -> str:
     """Normalize CPT code to string, stripping + prefix."""
     code_str = str(code).strip()
     return code_str.lstrip("+")
+
+
+# Global RVU calculator instance
+_rvu_calc: RVUCalc | None = None
+
+
+def get_rvu_calc() -> RVUCalc:
+    """Get or create the RVU calculator."""
+    global _rvu_calc
+    if _rvu_calc is None:
+        _rvu_calc = RVUCalc()
+    return _rvu_calc
+
+
+def extract_rvu_from_golden(entry: dict) -> dict:
+    """Extract expected RVU values from golden entry's billing data."""
+    registry = entry.get("registry_entry", {})
+    billing = registry.get("billing", {})
+
+    if not billing:
+        return {}
+
+    return {
+        "total_rvu": billing.get("total_rvu", 0.0),
+        "work_rvu": billing.get("work_rvu", 0.0),
+        "practice_expense_rvu": billing.get("practice_expense_rvu", 0.0),
+        "malpractice_rvu": billing.get("malpractice_rvu", 0.0),
+    }
+
+
+def calculate_rvu_from_codes(codes: list[str]) -> dict:
+    """Calculate RVU totals from a list of CPT codes."""
+    rvu_calc = get_rvu_calc()
+
+    total_rvu = 0.0
+    work_rvu = 0.0
+    pe_rvu = 0.0
+    mp_rvu = 0.0
+
+    for code in codes:
+        # Normalize the code (remove + prefix)
+        normalized = normalize_code(code)
+        record = rvu_calc.lookup(normalized)
+
+        if record:
+            work_rvu += record.work_rvu
+            total_rvu += record.total_facility_rvu
+            # Note: RVURecord doesn't split PE and MP separately
+            # We can estimate them as total - work for PE+MP combined
+            pe_mp = record.total_facility_rvu - record.work_rvu
+            pe_rvu += pe_mp * 0.8  # Rough estimate: PE is typically ~80% of non-work
+            mp_rvu += pe_mp * 0.2  # MP is typically ~20% of non-work
+
+    return {
+        "total_rvu": round(total_rvu, 2),
+        "work_rvu": round(work_rvu, 2),
+        "practice_expense_rvu": round(pe_rvu, 2),
+        "malpractice_rvu": round(mp_rvu, 2),
+    }
+
+
+def compare_rvu(expected: dict, predicted: dict, tolerance: float = 0.1) -> tuple[list[RVUError], bool]:
+    """Compare expected vs predicted RVU values.
+
+    Args:
+        expected: Expected RVU dict from golden
+        predicted: Predicted RVU dict from codes
+        tolerance: Tolerance for "exact match" (default 0.1 RVU)
+
+    Returns:
+        Tuple of (list of RVUError, whether it's an exact match within tolerance)
+    """
+    errors = []
+
+    if not expected:
+        return errors, True  # No expected RVU to compare
+
+    fields_to_check = ["total_rvu", "work_rvu"]
+    all_match = True
+
+    for field in fields_to_check:
+        exp_val = expected.get(field, 0.0)
+        pred_val = predicted.get(field, 0.0)
+
+        if exp_val == 0 and pred_val == 0:
+            continue
+
+        abs_error = abs(pred_val - exp_val)
+        pct_error = (abs_error / exp_val * 100) if exp_val > 0 else (100 if pred_val > 0 else 0)
+
+        if abs_error > tolerance:
+            all_match = False
+            errors.append(RVUError(
+                field=field,
+                expected=exp_val,
+                actual=pred_val,
+                error_pct=pct_error,
+            ))
+
+    return errors, all_match
 
 
 def load_golden_extractions(path: Path) -> list[dict]:
@@ -355,6 +480,14 @@ def validate_single_note(
         result.code_errors = compare_codes(result.expected_codes, result.predicted_codes)
         result.code_exact_match = len(result.code_errors) == 0
 
+        # Compare RVU values
+        result.expected_rvu = extract_rvu_from_golden(entry)
+        if result.expected_rvu:  # Only calculate if golden has RVU data
+            result.predicted_rvu = calculate_rvu_from_codes(result.predicted_codes)
+            result.rvu_errors, result.rvu_exact_match = compare_rvu(
+                result.expected_rvu, result.predicted_rvu
+            )
+
     except Exception as e:
         result.llm_error = f"Coder error: {str(e)}"
         logger.error(f"Coder failed on note {note_index}: {e}")
@@ -455,6 +588,37 @@ def compute_aggregate_metrics(results: list[ValidationResult]) -> AggregateMetri
     for field in field_total:
         metrics.per_field_accuracy[field] = field_correct[field] / field_total[field] if field_total[field] > 0 else 0.0
 
+    # RVU metrics
+    rvu_results = [r for r in results if r.expected_rvu]  # Only notes with RVU data
+    metrics.rvu_notes_evaluated = len(rvu_results)
+
+    if rvu_results:
+        # Calculate MAE and MAPE for total_rvu and work_rvu
+        total_rvu_errors = []
+        work_rvu_errors = []
+        total_rvu_pct_errors = []
+        work_rvu_pct_errors = []
+
+        for r in rvu_results:
+            exp_total = r.expected_rvu.get("total_rvu", 0.0)
+            pred_total = r.predicted_rvu.get("total_rvu", 0.0)
+            exp_work = r.expected_rvu.get("work_rvu", 0.0)
+            pred_work = r.predicted_rvu.get("work_rvu", 0.0)
+
+            total_rvu_errors.append(abs(pred_total - exp_total))
+            work_rvu_errors.append(abs(pred_work - exp_work))
+
+            if exp_total > 0:
+                total_rvu_pct_errors.append(abs(pred_total - exp_total) / exp_total * 100)
+            if exp_work > 0:
+                work_rvu_pct_errors.append(abs(pred_work - exp_work) / exp_work * 100)
+
+        metrics.rvu_total_mae = sum(total_rvu_errors) / len(total_rvu_errors) if total_rvu_errors else 0.0
+        metrics.rvu_work_mae = sum(work_rvu_errors) / len(work_rvu_errors) if work_rvu_errors else 0.0
+        metrics.rvu_total_mape = sum(total_rvu_pct_errors) / len(total_rvu_pct_errors) if total_rvu_pct_errors else 0.0
+        metrics.rvu_work_mape = sum(work_rvu_pct_errors) / len(work_rvu_pct_errors) if work_rvu_pct_errors else 0.0
+        metrics.rvu_exact_match_rate = sum(1 for r in rvu_results if r.rvu_exact_match) / len(rvu_results)
+
     # Common errors
     code_error_counts = defaultdict(int)
     field_error_counts = defaultdict(int)
@@ -529,6 +693,19 @@ def generate_improvement_recommendations(metrics: AggregateMetrics) -> list[str]
             "Review extraction prompts or add field-specific postprocessors."
         )
 
+    # RVU recommendations
+    if metrics.rvu_notes_evaluated > 0:
+        if metrics.rvu_exact_match_rate < 0.5:
+            recommendations.append(
+                f"💰 RVU exact match rate is low ({metrics.rvu_exact_match_rate:.1%}). "
+                "This correlates with code accuracy - fix code prediction to improve RVU accuracy."
+            )
+        if metrics.rvu_total_mape > 20:
+            recommendations.append(
+                f"💰 Total RVU MAPE is high ({metrics.rvu_total_mape:.1f}%). "
+                "Review commonly missed or extra codes that contribute high RVU values."
+            )
+
     # Common error patterns
     if metrics.common_code_errors:
         top_errors = metrics.common_code_errors[:3]
@@ -559,6 +736,14 @@ def print_summary(metrics: AggregateMetrics, recommendations: list[str]):
 
     print(f"\n📋 Registry Field Metrics:")
     print(f"    Overall Accuracy: {metrics.registry_field_accuracy:.1%}")
+
+    if metrics.rvu_notes_evaluated > 0:
+        print(f"\n💰 RVU Metrics ({metrics.rvu_notes_evaluated} notes with billing data):")
+        print(f"    Exact Match Rate: {metrics.rvu_exact_match_rate:.1%}")
+        print(f"    Total RVU MAE:    {metrics.rvu_total_mae:.2f} RVU")
+        print(f"    Work RVU MAE:     {metrics.rvu_work_mae:.2f} RVU")
+        print(f"    Total RVU MAPE:   {metrics.rvu_total_mape:.1f}%")
+        print(f"    Work RVU MAPE:    {metrics.rvu_work_mape:.1f}%")
 
     print(f"\n⏱️  Timing:")
     print(f"    Avg Coder Latency:    {metrics.avg_coder_latency_ms:.0f}ms")
@@ -611,6 +796,13 @@ def save_results(
                 {"field": e.field, "type": e.error_type, "expected": str(e.expected)[:200], "actual": str(e.actual)[:200]}
                 for e in r.registry_errors
             ],
+            "expected_rvu": r.expected_rvu,
+            "predicted_rvu": r.predicted_rvu,
+            "rvu_exact_match": r.rvu_exact_match,
+            "rvu_errors": [
+                {"field": e.field, "expected": e.expected, "actual": e.actual, "error_pct": e.error_pct}
+                for e in r.rvu_errors
+            ],
             "coder_latency_ms": r.coder_latency_ms,
             "registry_latency_ms": r.registry_latency_ms,
             "llm_error": r.llm_error,
@@ -634,6 +826,14 @@ def save_results(
         },
         "registry_metrics": {
             "field_accuracy": metrics.registry_field_accuracy,
+        },
+        "rvu_metrics": {
+            "notes_evaluated": metrics.rvu_notes_evaluated,
+            "exact_match_rate": metrics.rvu_exact_match_rate,
+            "total_rvu_mae": metrics.rvu_total_mae,
+            "work_rvu_mae": metrics.rvu_work_mae,
+            "total_rvu_mape": metrics.rvu_total_mape,
+            "work_rvu_mape": metrics.rvu_work_mape,
         },
         "per_code_metrics": metrics.per_code_metrics,
         "per_field_accuracy": metrics.per_field_accuracy,

@@ -7,19 +7,27 @@ import re
 from pathlib import Path
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, create_model
+from pydantic import BaseModel, ConfigDict, Field, create_model, field_serializer
 
 from modules.common.spans import Span
 from modules.registry.schema_granular import (
     EnhancedRegistryGranularData,
     validate_ebus_consistency,
     derive_aggregate_fields,
+    IPCProcedure,
+    ClinicalContext,
+    PatientDemographics,
+    AirwayStentProcedure,
 )
 
 _SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
 
 # Optional overrides for individual fields (identified via dotted paths).
 CUSTOM_FIELD_TYPES: dict[tuple[str, ...], Any] = {}
+CUSTOM_FIELD_TYPES[("RegistryRecord", "pleural_procedures", "ipc")] = IPCProcedure
+CUSTOM_FIELD_TYPES[("RegistryRecord", "clinical_context")] = ClinicalContext
+CUSTOM_FIELD_TYPES[("RegistryRecord", "patient_demographics")] = PatientDemographics
+CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "airway_stent")] = AirwayStentProcedure
 _MODEL_CACHE: dict[tuple[str, ...], type[BaseModel]] = {}
 
 
@@ -115,6 +123,12 @@ def _build_registry_model() -> type[BaseModel]:
 
         # Validation warnings from granular data consistency checks
         granular_validation_warnings: list[str] = Field(default_factory=list)
+
+        @field_serializer("procedure_setting")
+        @classmethod
+        def serialize_procedure_setting(cls, value):
+            """Temporarily suppress procedure_setting from serialized payloads."""
+            return None
 
     RegistryRecord.__name__ = "RegistryRecord"
     return RegistryRecord

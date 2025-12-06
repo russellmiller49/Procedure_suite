@@ -1,0 +1,343 @@
+[
+{
+"op": "add",
+"path": "/0/coding_review",
+"value": {
+"review_version": "1.0.0",
+"review_date": "2025-12-06",
+"reviewer": "IP_Coder_Patch_GPT",
+"cpt_summary": {
+"primary_code": "31641",
+"final_codes": ["31641", "31627", "31654"],
+"modifiers": [],
+"changes_made": false,
+"code_rationales": {
+"31641": "Flexible bronchoscopy with radiofrequency ablation of a right lower lobe malignant lesion is documented, including ablation cycles and post‑ablation inspection; this supports an endobronchial ablative therapy code.",
+"31627": "Electromagnetic/computer‑assisted navigation was used to reach a peripheral right lower lobe target prior to therapy, which supports a navigation bronchoscopy code.",
+"31654": "Radial EBUS was used to localize a peripheral parenchymal lesion before treatment, supporting an add‑on radial EBUS code for peripheral lesion work."
+},
+"coding_decision": "as_documented"
+},
+"rvu_summary_2025": {
+"facility_total_rvu": 12.2,
+"facility_total_payment": 878.4,
+"per_code": {
+"31641": {
+"facility_rvu": 7.42,
+"facility_payment": 534.24
+},
+"31627": {
+"facility_rvu": 2.82,
+"facility_payment": 203.04
+},
+"31654": {
+"facility_rvu": 1.96,
+"facility_payment": 141.12
+}
+},
+"rvu_source": "Facility RVUs and payments derived from FY25 Arizona Surgery RBRVS rate tables (facility column, conversion factor $72), used as a proxy for 2025 facility values."
+},
+"overall_assessment": "CPT selection of 31641 with 31627 and 31654 matches the documented navigated peripheral bronchoscopy with radial EBUS and radiofrequency ablation; no code changes recommended."
+}
+},
+{
+"op": "add",
+"path": "/1/coding_review",
+"value": {
+"review_version": "1.0.0",
+"review_date": "2025-12-06",
+"reviewer": "IP_Coder_Patch_GPT",
+"cpt_summary": {
+"primary_code": "32550",
+"final_codes": ["32550"],
+"modifiers": [],
+"changes_made": false,
+"code_rationales": {
+"32550": "Operative report describes ultrasound‑guided placement of a tunneled indwelling pleural catheter (PleurX) with subcutaneous tunneling and cuffed catheter left for outpatient drainage of malignant effusion, which aligns with tunneled pleural catheter insertion."
+},
+"coding_decision": "as_documented"
+},
+"rvu_summary_2025": {
+"facility_total_rvu": 6.02,
+"facility_total_payment": 433.44,
+"per_code": {
+"32550": {
+"facility_rvu": 6.02,
+"facility_payment": 433.44
+}
+},
+"rvu_source": "Facility RVUs and payments derived from FY25 Arizona Surgery RBRVS rate tables (facility column, conversion factor $72), used as a proxy for 2025 facility values."
+},
+"overall_assessment": "Single‑code assignment with 32550 appropriately captures tunneled pleural catheter placement for recurrent malignant effusion; registry pleural fields and CPT code are concordant."
+}
+},
+{
+"op": "add",
+"path": "/2/coding_review",
+"value": {
+"review_version": "1.0.0",
+"review_date": "2025-12-06",
+"reviewer": "IP_Coder_Patch_GPT",
+"cpt_summary": {
+"primary_code": "31627",
+"final_codes": ["31627", "31654", "31628", "31623"],
+"modifiers": [],
+"changes_made": false,
+"code_rationales": {
+"31627": "Case documents robotic navigational bronchoscopy (Ion platform) with CT‑based planning, registration and guided advancement to a peripheral left lower lobe nodule, supporting a navigation bronchoscopy code.",
+"31654": "Radial EBUS probe is used via the robotic catheter to obtain concentric images and confirm target position, which supports the add‑on radial EBUS code for peripheral lesion work.",
+"31628": "Transbronchial cryobiopsies of the target lung lesion are performed after navigation and radial EBUS confirmation, supporting a cryo‑based transbronchial lung biopsy code.",
+"31623": "Transbronchial brushing for cytology from the same lesion is clearly documented as an additional sampling maneuver, supporting a separate brushing code when allowed by payer policy."
+},
+"coding_decision": "as_documented"
+},
+"rvu_summary_2025": {
+"facility_total_rvu": 13.81,
+"facility_total_payment": 994.32,
+"per_code": {
+"31627": {
+"facility_rvu": 2.82,
+"facility_payment": 203.04
+},
+"31654": {
+"facility_rvu": 1.96,
+"facility_payment": 141.12
+},
+"31628": {
+"facility_rvu": 5.15,
+"facility_payment": 370.8
+},
+"31623": {
+"facility_rvu": 3.88,
+"facility_payment": 279.36
+}
+},
+"rvu_source": "Facility RVUs and payments derived from FY25 Arizona Surgery RBRVS rate tables (facility column, conversion factor $72), used as a proxy for 2025 facility values."
+},
+"overall_assessment": "Robotic navigational bronchoscopy with radial EBUS, cryobiopsy and brushing is fully supported by the operative narrative; the four‑code combination is consistent with the documented work and registry fields, so no CPT changes are made."
+}
+},
+{
+"op": "add",
+"path": "/3/coding_review",
+"value": {
+"review_version": "1.0.0",
+"review_date": "2025-12-06",
+"reviewer": "IP_Coder_Patch_GPT",
+"cpt_summary": {
+"primary_code": "32650",
+"final_codes": ["32650"],
+"modifiers": [],
+"changes_made": false,
+"code_rationales": {
+"32650": "Report describes thoracoscopic entry into the pleural space with pleural survey, targeted pleural biopsies and talc pleurodesis with chest tube placement for malignant effusion, which aligns with thoracoscopy with pleurodesis."
+},
+"coding_decision": "as_documented"
+},
+"rvu_summary_2025": {
+"facility_total_rvu": 19.98,
+"facility_total_payment": 1438.56,
+"per_code": {
+"32650": {
+"facility_rvu": 19.98,
+"facility_payment": 1438.56
+}
+},
+"rvu_source": "Facility RVUs and payments derived from FY25 Arizona Surgery RBRVS rate tables (facility column, conversion factor $72), used as a proxy for 2025 facility values."
+},
+"overall_assessment": "Single thoracoscopic code 32650 appropriately reflects medical thoracoscopy with pleurodesis and drainage; registry pleural fields (thoracoscopy, talc pleurodesis, chest tube) are internally consistent with the CPT choice."
+}
+},
+{
+"op": "add",
+"path": "/4/coding_review",
+"value": {
+"review_version": "1.0.0",
+"review_date": "2025-12-06",
+"reviewer": "IP_Coder_Patch_GPT",
+"cpt_summary": {
+"primary_code": "31630",
+"final_codes": ["31630"],
+"modifiers": [],
+"changes_made": false,
+"code_rationales": {
+"31630": "Note documents flexible bronchoscopy under general anesthesia with serial balloon dilations of post‑intubation tracheal stenosis (three inflations to a maximum of 12 mm) and no biopsies, which fits bronchoscopy with therapeutic balloon dilation."
+},
+"coding_decision": "as_documented"
+},
+"rvu_summary_2025": {
+"facility_total_rvu": 5.85,
+"facility_total_payment": 421.2,
+"per_code": {
+"31630": {
+"facility_rvu": 5.85,
+"facility_payment": 421.2
+}
+},
+"rvu_source": "Facility RVUs and payments derived from FY25 Arizona Surgery RBRVS rate tables (facility column, conversion factor $72), used as a proxy for 2025 facility values."
+},
+"overall_assessment": "The 31630 assignment for balloon dilation of tracheal stenosis is appropriate and matches the registry tracheal stenosis indication and lack of additional sampling codes."
+}
+},
+{
+"op": "add",
+"path": "/5/coding_review",
+"value": {
+"review_version": "1.0.0",
+"review_date": "2025-12-06",
+"reviewer": "IP_Coder_Patch_GPT",
+"cpt_summary": {
+"primary_code": "31641",
+"final_codes": ["31641"],
+"modifiers": [],
+"changes_made": false,
+"code_rationales": {
+"31641": "Photodynamic therapy light application is delivered endobronchially via bronchoscope to a left mainstem squamous cell carcinoma with specified wavelength, power and fluence, without additional biopsies, consistent with bronchoscopic endobronchial ablative therapy."
+},
+"coding_decision": "as_documented"
+},
+"rvu_summary_2025": {
+"facility_total_rvu": 7.42,
+"facility_total_payment": 534.24,
+"per_code": {
+"31641": {
+"facility_rvu": 7.42,
+"facility_payment": 534.24
+}
+},
+"rvu_source": "Facility RVUs and payments derived from FY25 Arizona Surgery RBRVS rate tables (facility column, conversion factor $72), used as a proxy for 2025 facility values."
+},
+"overall_assessment": "For a standalone PDT light session via bronchoscopy with no new sampling, 31641 alone is appropriate; registry ablation fields have been repurposed for PDT and remain consistent with this CPT choice."
+}
+},
+{
+"op": "add",
+"path": "/6/coding_review",
+"value": {
+"review_version": "1.0.0",
+"review_date": "2025-12-06",
+"reviewer": "IP_Coder_Patch_GPT",
+"cpt_summary": {
+"primary_code": "31645",
+"final_codes": ["31645"],
+"modifiers": [],
+"changes_made": false,
+"code_rationales": {
+"31645": "Procedure describes therapeutic bronchoscopy through a tracheostomy with detailed inspection of a left mainstem silicone stent, prolonged bronchial toilet of mucus plugging, and assessment of early granulation tissue, without valve or stent exchange; a single therapeutic bronchoscopy code is appropriate and 31645 is accepted per local coding guidance."
+},
+"coding_decision": "as_documented"
+},
+"rvu_summary_2025": {
+"facility_total_rvu": 4.33,
+"facility_total_payment": 311.76,
+"per_code": {
+"31645": {
+"facility_rvu": 4.33,
+"facility_payment": 311.76
+}
+},
+"rvu_source": "Facility RVUs and payments derived from FY25 Arizona Surgery RBRVS rate tables (facility column, conversion factor $72), used as a proxy for 2025 facility values."
+},
+"overall_assessment": "Documented work is a stent surveillance bronchoscopy with airway toilet under moderate sedation; the existing single CPT code remains reasonable and registry fields (moderate sedation, tracheostomy airway, malignancy) are aligned."
+}
+},
+{
+"op": "add",
+"path": "/7/coding_review",
+"value": {
+"review_version": "1.0.0",
+"review_date": "2025-12-06",
+"reviewer": "IP_Coder_Patch_GPT",
+"cpt_summary": {
+"primary_code": "31628",
+"final_codes": ["31628", "31654"],
+"modifiers": [],
+"changes_made": false,
+"code_rationales": {
+"31628": "Note describes multiple transbronchial cryobiopsies from the right lower lobe in a patient with ILD under general anesthesia, which supports a cryobiopsy‑specific transbronchial lung biopsy code.",
+"31654": "Radial EBUS is used to navigate to and confirm a peripheral target in the RLL while avoiding vessels, consistent with the add‑on radial EBUS code for peripheral lesion work."
+},
+"coding_decision": "as_documented"
+},
+"rvu_summary_2025": {
+"facility_total_rvu": 7.11,
+"facility_total_payment": 511.92,
+"per_code": {
+"31628": {
+"facility_rvu": 5.15,
+"facility_payment": 370.8
+},
+"31654": {
+"facility_rvu": 1.96,
+"facility_payment": 141.12
+}
+},
+"rvu_source": "Facility RVUs and payments derived from FY25 Arizona Surgery RBRVS rate tables (facility column, conversion factor $72), used as a proxy for 2025 facility values."
+},
+"overall_assessment": "For ILD evaluation with radial EBUS‑guided cryobiopsy, the combination of 31628 and 31654 is appropriate and consistent with registry entries; prior text‑coded 31632 in the note header is treated as outdated and not used."
+}
+},
+{
+"op": "add",
+"path": "/8/coding_review",
+"value": {
+"review_version": "1.0.0",
+"review_date": "2025-12-06",
+"reviewer": "IP_Coder_Patch_GPT",
+"cpt_summary": {
+"primary_code": "32560",
+"final_codes": ["32560"],
+"modifiers": [],
+"changes_made": false,
+"code_rationales": {
+"32560": "Clinical note describes talc slurry instillation via an existing chest tube at the ICU bedside to achieve pleurodesis for malignant effusion, without thoracoscopic access or new tube placement, which corresponds to chemical pleurodesis through an indwelling tube."
+},
+"coding_decision": "as_documented"
+},
+"rvu_summary_2025": {
+"facility_total_rvu": null,
+"facility_total_payment": null,
+"per_code": {
+"32560": {
+"facility_rvu": null,
+"facility_payment": null,
+"notes": "Unable to reliably retrieve 2025 facility RVU/payment for 32560 from publicly accessible RBRVS tables in this environment; please populate from internal ip_coding_billing.v2_7 or local Medicare fee schedule."
+}
+},
+"rvu_source": "Partial: 2025 facility values for 32560 were not found in the accessible Arizona/Medicare summary tables; RVU/payment fields are intentionally left null for manual completion."
+},
+"overall_assessment": "Registry entries (chemical pleurodesis via chest tube, ICU setting, local anesthesia/analgesia only) support the use of 32560; CPT appears appropriate and only the RVU/payment fields require external population."
+}
+},
+{
+"op": "add",
+"path": "/9/coding_review",
+"value": {
+"review_version": "1.0.0",
+"review_date": "2025-12-06",
+"reviewer": "IP_Coder_Patch_GPT",
+"cpt_summary": {
+"primary_code": "31634",
+"final_codes": ["31634"],
+"modifiers": [],
+"changes_made": false,
+"code_rationales": {
+"31634": "Emergency bedside bronchoscopy for massive hemoptysis is documented with repeated iced saline lavage, topical epinephrine, tranexamic instillation and Fogarty balloon tamponade at the left upper lobe/lingula until bleeding control, which aligns with bronchoscopy for control of hemorrhage."
+},
+"coding_decision": "as_documented"
+},
+"rvu_summary_2025": {
+"facility_total_rvu": 5.55,
+"facility_total_payment": 399.6,
+"per_code": {
+"31634": {
+"facility_rvu": 5.55,
+"facility_payment": 399.6
+}
+},
+"rvu_source": "Facility RVUs and payments derived from FY25 Arizona Surgery RBRVS rate tables (facility column, conversion factor $72), used as a proxy for 2025 facility values."
+},
+"overall_assessment": "The life‑threatening hemoptysis scenario with multiple hemostatic maneuvers and balloon tamponade is classic for 31634; registry complication and disposition fields (ICU, high‑acuity bleed) agree with this CPT choice."
+}
+}
+]

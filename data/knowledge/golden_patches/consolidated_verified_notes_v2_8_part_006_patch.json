@@ -1,0 +1,344 @@
+[
+{
+"op": "replace",
+"path": "/2/registry_entry/airway_type",
+"value": "Native"
+},
+{
+"op": "replace",
+"path": "/3/registry_entry/ablation_peripheral_performed",
+"value": false
+},
+{
+"op": "replace",
+"path": "/3/registry_entry/ablation_modality",
+"value": null
+},
+{
+"op": "replace",
+"path": "/5/cpt_codes",
+"value": [31627, 31651, 31654, 31628]
+},
+{
+"op": "replace",
+"path": "/5/registry_entry/cpt_codes",
+"value": [31627, 31651, 31654, 31628]
+},
+{
+"op": "replace",
+"path": "/6/cpt_codes",
+"value": [32550]
+},
+{
+"op": "replace",
+"path": "/6/registry_entry/cpt_codes",
+"value": [32550]
+},
+{
+"op": "replace",
+"path": "/6/registry_entry/pleurodesis_performed",
+"value": false
+},
+{
+"op": "replace",
+"path": "/6/registry_entry/pleurodesis_agent",
+"value": null
+},
+{
+"op": "replace",
+"path": "/7/cpt_codes",
+"value": [32650]
+},
+{
+"op": "replace",
+"path": "/7/registry_entry/cpt_codes",
+"value": [32650]
+},
+{
+"op": "replace",
+"path": "/7/registry_entry/ablation_peripheral_performed",
+"value": false
+},
+{
+"op": "replace",
+"path": "/7/registry_entry/ablation_modality",
+"value": null
+},
+{
+"op": "replace",
+"path": "/7/registry_entry/pleural_procedure_type",
+"value": "Thoracoscopy"
+},
+{
+"op": "replace",
+"path": "/8/registry_entry/patient_age",
+"value": 64
+},
+{
+"op": "add",
+"path": "/0/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"final_cpt_codes": [32997],
+"cpt_summary": [
+{
+"code": "32997",
+"description": "Total lung lavage, therapeutic",
+"facility_rvu_2025": 9.92,
+"facility_payment_2025": 320.91
+}
+],
+"total_facility_rvu_2025": 9.92,
+"total_facility_payment_2025": 320.91,
+"rationale": [
+"Whole-lung lavage performed for pulmonary alveolar proteinosis under general anesthesia.",
+"No separate bronchoscopy codes are billed because 32997 is comprehensive for the lavage work."
+]
+}
+},
+{
+"op": "add",
+"path": "/1/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"final_cpt_codes": [31631, 31633, 31641, 31653],
+"cpt_summary": [
+{
+"code": "31631",
+"description": "Bronch; obstructing tumor destruction/relief, any method",
+"facility_rvu_2025": 6.62,
+"facility_payment_2025": 214.16
+},
+{
+"code": "31633",
+"description": "Bronch; additional lobe treated/sampled",
+"facility_rvu_2025": 1.85,
+"facility_payment_2025": 59.85
+},
+{
+"code": "31641",
+"description": "Bronch; tracheobronchial stent work",
+"facility_rvu_2025": 7.43,
+"facility_payment_2025": 240.36
+},
+{
+"code": "31653",
+"description": "EBUS-TBNA, 3+ nodal stations",
+"facility_rvu_2025": 7.15,
+"facility_payment_2025": 231.30
+}
+],
+"total_facility_rvu_2025": 23.05,
+"total_facility_payment_2025": 745.67,
+"rationale": [
+"Rigid bronchoscopy with multimodality tumor debulking for malignant central airway obstruction supports 31631 and 31633.",
+"Tracheobronchial stent placement and associated work justify 31641.",
+"Systematic EBUS-TBNA staging of multiple mediastinal/hilar stations is coded with 31653."
+]
+}
+},
+{
+"op": "add",
+"path": "/2/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"final_cpt_codes": [31653],
+"cpt_summary": [
+{
+"code": "31653",
+"description": "EBUS-TBNA, 3+ nodal stations",
+"facility_rvu_2025": 7.15,
+"facility_payment_2025": 231.30
+}
+],
+"total_facility_rvu_2025": 7.15,
+"total_facility_payment_2025": 231.30,
+"rationale": [
+"Linear EBUS-TBNA performed with sampling of mediastinal lymph nodes using systematic staging.",
+"No separate diagnostic bronchoscopy or imaging codes are added; 31653 captures the EBUS work.",
+"Registry airway_type corrected from tracheostomy to native airway because the procedure was performed via the natural airway without a tracheostomy tube."
+]
+}
+},
+{
+"op": "add",
+"path": "/3/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"final_cpt_codes": [32555],
+"cpt_summary": [
+{
+"code": "32555",
+"description": "Thoracentesis, with imaging guidance",
+"facility_rvu_2025": 3.22,
+"facility_payment_2025": 104.17
+}
+],
+"total_facility_rvu_2025": 3.22,
+"total_facility_payment_2025": 104.17,
+"rationale": [
+"Ultrasound-guided therapeutic thoracentesis with removal of 1.4 L of pleural fluid is appropriately coded with 32555.",
+"Registry ablation fields were cleared because no lung or pleural ablation procedure was performed."
+]
+}
+},
+{
+"op": "add",
+"path": "/4/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"final_cpt_codes": [31631, 31636, 31637, 31641],
+"cpt_summary": [
+{
+"code": "31631",
+"description": "Bronch; obstructing tumor destruction/relief, any method",
+"facility_rvu_2025": 6.62,
+"facility_payment_2025": 214.16
+},
+{
+"code": "31636",
+"description": "Bronch; initial tracheobronchial stent placement",
+"facility_rvu_2025": 6.37,
+"facility_payment_2025": 206.07
+},
+{
+"code": "31637",
+"description": "Bronch; each additional tracheobronchial stent",
+"facility_rvu_2025": 2.25,
+"facility_payment_2025": 72.79
+},
+{
+"code": "31641",
+"description": "Bronch; complex tracheobronchial stent work",
+"facility_rvu_2025": 7.43,
+"facility_payment_2025": 240.36
+}
+],
+"total_facility_rvu_2025": 22.67,
+"total_facility_payment_2025": 733.38,
+"rationale": [
+"Rigid bronchoscopy with mechanical and thermal debulking of a central airway tumor supports 31631.",
+"Placement of a Y-shaped silicone stent with multiple limbs justifies 31636 for the initial stent and 31637 for the additional stent limb.",
+"Extensive tracheobronchial stent work, including deployment and repositioning, is captured by 31641."
+]
+}
+},
+{
+"op": "add",
+"path": "/5/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"final_cpt_codes": [31627, 31651, 31654, 31628],
+"cpt_summary": [
+{
+"code": "31627",
+"description": "Bronch; EMN navigation to peripheral lesion",
+"facility_rvu_2025": 2.82,
+"facility_payment_2025": 91.23
+},
+{
+"code": "31651",
+"description": "Bronch; EBUS-guided transbronchial lung biopsy",
+"facility_rvu_2025": 2.22,
+"facility_payment_2025": 71.82
+},
+{
+"code": "31654",
+"description": "Add-on; EBUS for peripheral lesion",
+"facility_rvu_2025": 1.95,
+"facility_payment_2025": 63.08
+},
+{
+"code": "31628",
+"description": "Bronch; EMN-guided transbronchial sampling",
+"facility_rvu_2025": 5.11,
+"facility_payment_2025": 165.31
+}
+],
+"total_facility_rvu_2025": 12.1,
+"total_facility_payment_2025": 391.44,
+"rationale": [
+"Electromagnetic navigation to a right upper lobe peripheral nodule is coded with 31627.",
+"Radial EBUS-guided transbronchial biopsies and associated sampling support 31651, 31654, and 31628.",
+"Destruction or debulking of an endobronchial tumor is not documented, so 31631 was removed as clearly inappropriate for this purely diagnostic EMN bronchoscopy."
+]
+}
+},
+{
+"op": "add",
+"path": "/6/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"final_cpt_codes": [32550],
+"cpt_summary": [
+{
+"code": "32550",
+"description": "Insertion of indwelling tunneled pleural catheter",
+"facility_rvu_2025": 5.99,
+"facility_payment_2025": 193.78
+}
+],
+"total_facility_rvu_2025": 5.99,
+"total_facility_payment_2025": 193.78,
+"rationale": [
+"Procedure describes ultrasound-guided creation of a subcutaneous tunnel and placement of a tunneled PleurX catheter for recurrent effusion, which maps to 32550.",
+"Registry pleurodesis fields were cleared because no chemical or mechanical pleurodesis was performed during catheter insertion."
+]
+}
+},
+{
+"op": "add",
+"path": "/7/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"final_cpt_codes": [32650],
+"cpt_summary": [
+{
+"code": "32650",
+"description": "Thoracoscopy with pleurodesis",
+"facility_rvu_2025": 14.0,
+"facility_payment_2025": 452.9
+}
+],
+"total_facility_rvu_2025": 14.0,
+"total_facility_payment_2025": 452.9,
+"rationale": [
+"Medical pleuroscopy with pleural biopsies and talc pleurodesis is best represented by 32650.",
+"Chest tube placement at the end of the procedure is bundled into the thoracoscopic pleurodesis code and not separately billed.",
+"Registry ablation_peripheral_performed and ablation_modality were cleared because no radiofrequency or other energy-based ablation was documented."
+]
+}
+},
+{
+"op": "add",
+"path": "/8/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"final_cpt_codes": [31653],
+"cpt_summary": [
+{
+"code": "31653",
+"description": "EBUS-TBNA, 3+ nodal stations",
+"facility_rvu_2025": 7.15,
+"facility_payment_2025": 231.30
+}
+],
+"total_facility_rvu_2025": 7.15,
+"total_facility_payment_2025": 231.30,
+"rationale": [
+"EBUS-TBNA for mediastinal staging with sampling of multiple nodal stations (7, 4L, 10L, 11L) supports 31653.",
+"Registry patient_age was corrected from 0 to 64 to match the documented age in the procedure note.",
+"No additional diagnostic bronchoscopy or imaging codes are billed because they are inherent to 31653."
+]
+}
+}
+]

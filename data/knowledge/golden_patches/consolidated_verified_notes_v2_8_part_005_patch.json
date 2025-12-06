@@ -1,0 +1,154 @@
+[
+{
+"op": "add",
+"path": "/0/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_codes": [],
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"notes": [
+"Automated coding review placeholder; CPT codes cloned from note.cpt_codes; facility RVUs and payments to be populated from ip_coding_billing.v2_7."
+]
+}
+},
+{
+"op": "copy",
+"from": "/0/cpt_codes",
+"path": "/0/coding_review/cpt_codes"
+},
+{
+"op": "add",
+"path": "/1/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_codes": [],
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"notes": [
+"Automated coding review placeholder; CPT codes cloned from note.cpt_codes; facility RVUs and payments to be populated from ip_coding_billing.v2_7."
+]
+}
+},
+{
+"op": "copy",
+"from": "/1/cpt_codes",
+"path": "/1/coding_review/cpt_codes"
+},
+{
+"op": "add",
+"path": "/2/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_codes": [],
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"notes": [
+"Automated coding review placeholder; CPT codes cloned from note.cpt_codes; facility RVUs and payments to be populated from ip_coding_billing.v2_7."
+]
+}
+},
+{
+"op": "copy",
+"from": "/2/cpt_codes",
+"path": "/2/coding_review/cpt_codes"
+},
+{
+"op": "add",
+"path": "/3/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_codes": [],
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"notes": [
+"Automated coding review placeholder; CPT codes cloned from note.cpt_codes; facility RVUs and payments to be populated from ip_coding_billing.v2_7."
+]
+}
+},
+{
+"op": "copy",
+"from": "/3/cpt_codes",
+"path": "/3/coding_review/cpt_codes"
+},
+{
+"op": "add",
+"path": "/4/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_codes": [],
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"notes": [
+"Automated coding review placeholder; CPT codes cloned from note.cpt_codes; facility RVUs and payments to be populated from ip_coding_billing.v2_7."
+]
+}
+},
+{
+"op": "copy",
+"from": "/4/cpt_codes",
+"path": "/4/coding_review/cpt_codes"
+},
+{
+"op": "add",
+"path": "/5/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_codes": [],
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"notes": [
+"Automated coding review placeholder; CPT codes cloned from note.cpt_codes; facility RVUs and payments to be populated from ip_coding_billing.v2_7."
+]
+}
+},
+{
+"op": "copy",
+"from": "/5/cpt_codes",
+"path": "/5/coding_review/cpt_codes"
+},
+{
+"op": "add",
+"path": "/6/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_codes": [],
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"notes": [
+"Automated coding review placeholder; CPT codes cloned from note.cpt_codes; facility RVUs and payments to be populated from ip_coding_billing.v2_7."
+]
+}
+},
+{
+"op": "copy",
+"from": "/6/cpt_codes",
+"path": "/6/coding_review/cpt_codes"
+},
+{
+"op": "add",
+"path": "/7/coding_review",
+"value": {
+"reviewer": "IP-Coder-Patch-GPT",
+"review_date": "2025-12-06",
+"cpt_codes": [],
+"facility_rvu_2025": null,
+"facility_payment_2025": null,
+"notes": [
+"Automated coding review placeholder; CPT codes cloned from note.cpt_codes; facility RVUs and payments to be populated from ip_coding_billing.v2_7."
+]
+}
+},
+{
+"op": "copy",
+"from": "/7/cpt_codes",
+"path": "/7/coding_review/cpt_codes"
+}
+]

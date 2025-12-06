@@ -55,9 +55,14 @@ class GeminiAdvisorAdapter(LLMAdvisorPort):
 Analyze the following procedure note and suggest appropriate CPT codes.
 
 IMPORTANT CONSTRAINTS:
-- Do NOT suggest 31640 (Excision) for simple biopsies or routine debridement. Only suggest if "tumor excision", "resection", or "debulking" is explicitly performed.
+- Suggest 31640 (tumor excision) ONLY when explicit resection/debulking language is present. Pure ablation terminology should map to 31641 instead.
+- Photodynamic therapy without independent stent/cryotherapy/debulking work → 31641 only; suppress 31635/31649/31651/31654 unless separate interventions are clearly described.
+- 31634 (hemorrhage control) should be added when massive/brisk hemoptysis is treated with iced saline, epinephrine/TXA instillation, balloon tamponade, etc.; drop navigation/foreign-body codes unless those tasks are explicitly performed.
+- 31654 (Radial EBUS) should only be suggested when targeting a peripheral lung lesion with radial probe localization.
+- 31645 vs 31646: routine stent cleaning/surveillance without reposition/exchange supports 31645. Only suggest 31646 when the stent is repositioned, exchanged, upsized/downsized, or removed/replaced.
 - Do NOT suggest 31622 (Diagnostic bronchoscopy) if any therapeutic/surgical bronchoscopy code (31625-31661) is applicable.
-- 31654 (Radial EBUS) should only be suggested when targeting a peripheral lung lesion.
+- 32550 (tunneled pleural catheter) requires documentation of tunnel creation, cuff placement, or brand names (PleurX/Aspira). Planning phrases such as "consider PleurX" do NOT qualify.
+- When talc/doxycycline pleurodesis is performed through an existing tube without new tunneled catheter placement, prefer 32560 and suppress 32550.
 
 For each code you suggest, provide:
 1. The CPT code

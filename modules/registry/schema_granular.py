@@ -12,6 +12,233 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 # =============================================================================
+# Pleural Procedure Overrides
+# =============================================================================
+
+class IPCProcedure(BaseModel):
+    """Structured model for indwelling pleural catheter actions."""
+
+    model_config = ConfigDict(extra="ignore")
+
+    performed: bool | None = None
+    action: Literal["Insertion", "Removal", "Fibrinolytic instillation"] | None = None
+    side: Literal["Right", "Left"] | None = None
+    catheter_brand: Literal["PleurX", "Aspira", "Rocket", "Other"] | None = None
+    indication: Literal[
+        "Malignant effusion",
+        "Recurrent benign effusion",
+        "Hepatic hydrothorax",
+        "Heart failure",
+        "Other",
+    ] | None = None
+    tunneled: bool | None = None
+
+    @field_validator("action", mode="before")
+    @classmethod
+    def normalize_ipc_action(cls, v):
+        """Map common IPC action synonyms into the constrained enum."""
+        if v is None:
+            return v
+        s = str(v).strip().lower()
+        if "tunneled" in s or "ipc" in s or "indwelling catheter" in s:
+            return "Insertion"
+        if "removal" in s or "removed" in s or "pull" in s:
+            return "Removal"
+        if "tpa" in s or "fibrinolytic" in s or "alteplase" in s:
+            return "Fibrinolytic instillation"
+        return v
+
+
+class ClinicalContext(BaseModel):
+    """Structured clinical context data with normalized bronchus sign."""
+
+    model_config = ConfigDict(extra="ignore")
+
+    asa_class: int | None = Field(
+        None,
+        ge=1,
+        le=6,
+        description="ASA physical status classification (1-6)",
+    )
+    primary_indication: str | None = Field(
+        None,
+        description="Primary indication for the procedure (free text)",
+    )
+    indication_category: Literal[
+        "Lung Cancer Diagnosis",
+        "Lung Cancer Staging",
+        "Lung Nodule Evaluation",
+        "Mediastinal Lymphadenopathy",
+        "Infection Workup",
+        "ILD Evaluation",
+        "Hemoptysis",
+        "Airway Obstruction",
+        "Pleural Effusion - Diagnostic",
+        "Pleural Effusion - Therapeutic",
+        "Pneumothorax Management",
+        "Empyema/Parapneumonic",
+        "BLVR Evaluation",
+        "BLVR Treatment",
+        "Foreign Body",
+        "Tracheobronchomalacia",
+        "Stricture/Stenosis",
+        "Fistula",
+        "Stent Management",
+        "Ablation",
+        "Other",
+    ] | None = None
+    radiographic_findings: str | None = Field(
+        None,
+        description="Relevant radiographic findings",
+    )
+    lesion_size_mm: float | None = Field(
+        None,
+        ge=0,
+        description="Target lesion size in mm",
+    )
+    lesion_location: str | None = Field(
+        None,
+        description="Anatomic location of target lesion",
+    )
+    pet_avidity: bool | None = Field(
+        None,
+        description="Whether lesion is PET avid",
+    )
+    suv_max: float | None = Field(
+        None,
+        ge=0,
+        description="Maximum SUV on PET if applicable",
+    )
+    bronchus_sign: Literal["Positive", "Negative", "Not assessed"] | None = None
+
+    @field_validator("bronchus_sign", mode="before")
+    @classmethod
+    def normalize_bronchus_sign(cls, v):
+        if v is None:
+            return "Not assessed"
+        if isinstance(v, bool):
+            return "Positive" if v else "Negative"
+
+        s = str(v).strip().lower()
+        if s in {"yes", "y", "present", "positive", "pos", "true", "1"}:
+            return "Positive"
+        if s in {"no", "n", "absent", "negative", "neg", "false", "0"}:
+            return "Negative"
+        if s in {"na", "n/a", "not assessed", "unknown", "indeterminate"}:
+            return "Not assessed"
+        return v
+
+
+class PatientDemographics(BaseModel):
+    """Demographics with normalized gender field."""
+
+    model_config = ConfigDict(extra="ignore")
+
+    age_years: int | None = Field(
+        None,
+        ge=0,
+        le=120,
+        description="Patient age in years",
+    )
+    gender: Literal["Male", "Female", "Other", "Unknown"] | None = None
+    height_cm: float | None = Field(
+        None,
+        ge=50,
+        le=250,
+        description="Patient height in cm",
+    )
+    weight_kg: float | None = Field(
+        None,
+        ge=20,
+        le=400,
+        description="Patient weight in kg",
+    )
+    bmi: float | None = Field(
+        None,
+        ge=10,
+        le=80,
+        description="Body mass index",
+    )
+    smoking_status: Literal["Never", "Former", "Current", "Unknown"] | None = None
+    pack_years: float | None = Field(
+        None,
+        ge=0,
+        description="Pack-years of smoking history",
+    )
+
+    @field_validator("gender", mode="before")
+    @classmethod
+    def normalize_gender(cls, v):
+        if v is None:
+            return None
+        s = str(v).strip().lower()
+        if s in {"m", "male"}:
+            return "Male"
+        if s in {"f", "female"}:
+            return "Female"
+        if s in {"other", "nonbinary", "non-binary", "nb"}:
+            return "Other"
+        if s in {"u", "unknown"}:
+            return "Unknown"
+        return v
+
+
+class AirwayStentProcedure(BaseModel):
+    """Structured airway stent data with location normalization."""
+
+    model_config = ConfigDict(extra="ignore")
+
+    performed: bool | None = None
+    action: Literal[
+        "Placement",
+        "Removal",
+        "Revision/Repositioning",
+        "Assessment only",
+    ] | None = None
+    stent_type: Literal[
+        "Silicone - Dumon",
+        "Silicone - Hood",
+        "Silicone - Novatech",
+        "SEMS - Uncovered",
+        "SEMS - Covered",
+        "SEMS - Partially covered",
+        "Hybrid",
+        "Y-Stent",
+        "Other",
+    ] | None = None
+    stent_brand: str | None = None
+    diameter_mm: float | None = Field(None, ge=6, le=25)
+    length_mm: float | None = Field(None, ge=10, le=100)
+    location: Literal[
+        "Trachea",
+        "Right mainstem",
+        "Left mainstem",
+        "Bronchus intermedius",
+        "Carina (Y)",
+        "Other",
+    ] | None = None
+    indication: Literal[
+        "Malignant obstruction",
+        "Benign stenosis",
+        "Tracheomalacia",
+        "Fistula",
+        "Post-dilation",
+        "Other",
+    ] | None = None
+    deployment_successful: bool | None = None
+
+    @field_validator("location", mode="before")
+    @classmethod
+    def normalize_stent_location(cls, v):
+        if v is None:
+            return v
+        s = str(v).strip().lower()
+        if s == "mainstem":
+            return "Other"
+        return v
+
+
+# =============================================================================
 # EBUS Per-Station Detail
 # =============================================================================
 
@@ -166,8 +393,10 @@ class CAOModalityApplication(BaseModel):
     modality: Literal[
         "APC", "Electrocautery - snare", "Electrocautery - knife", "Electrocautery - probe",
         "Cryotherapy - spray", "Cryotherapy - contact", "Cryoextraction",
-        "Laser - Nd:YAG", "Laser - CO2", "Laser - diode",
-        "Mechanical debulking", "Rigid coring", "Microdebrider", "Balloon dilation", "PDT"
+        "Laser - Nd:YAG", "Laser - CO2", "Laser - diode", "Laser",
+        "Mechanical debulking", "Rigid coring", "Microdebrider", "Balloon dilation",
+        "Balloon tamponade", "PDT", "Iced saline lavage", "Epinephrine instillation",
+        "Tranexamic acid instillation", "Suctioning"
     ]
     power_setting_watts: float | None = None
     apc_flow_rate_lpm: float | None = None
@@ -192,7 +421,7 @@ class CAOInterventionDetail(BaseModel):
         "Malignant - primary lung", "Malignant - metastatic", "Malignant - other",
         "Benign - post-intubation", "Benign - post-tracheostomy", "Benign - anastomotic",
         "Benign - inflammatory", "Benign - infectious", "Benign - granulation",
-        "Benign - web/stenosis", "Other"
+        "Benign - web/stenosis", "Benign - other", "Infectious", "Other"
     ] | None = None
     length_mm: float | None = Field(None, ge=0)
     
@@ -320,6 +549,42 @@ class ThoracoscopyFinding(BaseModel):
         "Benign appearing", "Malignant appearing", "Infectious appearing", "Indeterminate"
     ] | None = None
     notes: str | None = None
+
+    @field_validator("biopsy_tool", mode="before")
+    @classmethod
+    def normalize_thoracoscopy_biopsy_tool(cls, v):
+        if v is None:
+            return v
+        s = str(v).lower()
+        if "cryo" in s:
+            return "Cryoprobe"
+        if "flexible" in s:
+            return "Flexible forceps"
+        if "rigid" in s:
+            return "Rigid forceps"
+        if "biopsy forceps" in s:
+            return "Rigid forceps"
+        return v
+
+    @field_validator("location", mode="before")
+    @classmethod
+    def normalize_thoracoscopy_location(cls, v):
+        if v is None:
+            return v
+        s = str(v).lower()
+        if "pleural space" in s:
+            return "Parietal pleura - chest wall"
+        if "costophrenic" in s:
+            return "Costophrenic angle"
+        if "apex" in s:
+            return "Apex"
+        if "diaphragm" in s:
+            return "Parietal pleura - diaphragm"
+        if "mediastinum" in s:
+            return "Parietal pleura - mediastinum"
+        if "visceral" in s or "lung surface" in s:
+            return "Visceral pleura"
+        return v
 
 
 # =============================================================================
@@ -708,6 +973,10 @@ def derive_procedures_from_granular(
 
 
 __all__ = [
+    "IPCProcedure",
+    "ClinicalContext",
+    "PatientDemographics",
+    "AirwayStentProcedure",
     # Per-site models
     "EBUSStationDetail",
     "NavigationTarget",

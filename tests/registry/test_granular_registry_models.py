@@ -14,6 +14,10 @@ from typing import Any
 
 from modules.registry.schema_granular import (
     EnhancedRegistryGranularData,
+    IPCProcedure,
+    ClinicalContext,
+    PatientDemographics,
+    AirwayStentProcedure,
     EBUSStationDetail,
     NavigationTarget,
     CAOInterventionDetail,
@@ -34,6 +38,7 @@ from modules.registry.postprocess import process_granular_data
 
 class TestEBUSStationDetailModel:
     """Tests for EBUSStationDetail Pydantic model."""
+
 
     def test_minimal_creation(self):
         """Test creating station detail with only required field."""
@@ -99,6 +104,79 @@ class TestEBUSStationDetailModel:
         assert restored.morphologic_impression == station.morphologic_impression
 
 
+class TestIPCProcedureModel:
+    """Tests for IPCProcedure model and Registry integration."""
+
+    def test_action_normalization(self):
+        """LLM variants like 'tunneled catheter' normalize to enum values."""
+        ipc = IPCProcedure(action="Tunneled catheter placement")
+        assert ipc.action == "Insertion"
+
+    def test_registry_record_integration(self):
+        """RegistryRecord should leverage IPCProcedure normalization."""
+        record = RegistryRecord(
+            pleural_procedures={
+                "ipc": {
+                    "performed": True,
+                    "action": "Alteplase instillation",
+                }
+            }
+        )
+        assert record.pleural_procedures.ipc.action == "Fibrinolytic instillation"
+
+
+class TestClinicalContextModel:
+    """Tests for ClinicalContext overrides and integration."""
+
+    def test_bronchus_sign_boolean_normalization(self):
+        ctx = ClinicalContext(bronchus_sign=True)
+        assert ctx.bronchus_sign == "Positive"
+
+    def test_registry_record_integration(self):
+        record = RegistryRecord(clinical_context={"bronchus_sign": None})
+        assert record.clinical_context.bronchus_sign == "Not assessed"
+
+
+class TestPatientDemographicsModel:
+    """Tests for PatientDemographics overrides and integration."""
+
+    def test_gender_normalization(self):
+        patient = PatientDemographics(gender="m")
+        assert patient.gender == "Male"
+
+    def test_registry_record_integration(self):
+        record = RegistryRecord(patient_demographics={"gender": "nb"})
+        assert record.patient_demographics.gender == "Other"
+
+
+class TestAirwayStentModel:
+    """Tests for AirwayStentProcedure overrides and integration."""
+
+    def test_location_normalization(self):
+        stent = AirwayStentProcedure(location="Mainstem")
+        assert stent.location == "Other"
+
+    def test_registry_record_integration(self):
+        record = RegistryRecord(
+            procedures_performed={
+                "airway_stent": {
+                    "performed": True,
+                    "location": "Mainstem",
+                }
+            }
+        )
+        assert record.procedures_performed.airway_stent.location == "Other"
+
+
+class TestProcedureSettingSerialization:
+    """Ensure procedure_setting serializes to None for compatibility."""
+
+    def test_procedure_setting_serialized_to_none(self):
+        record = RegistryRecord(procedure_setting={"airway_type": "ETT"})
+        dumped = record.model_dump()
+        assert dumped.get("procedure_setting") is None
+
+
 class TestNavigationTargetModel:
     """Tests for NavigationTarget Pydantic model."""
 
@@ -149,6 +227,25 @@ class TestNavigationTargetModel:
         assert target.lesion_size_mm == 22.0
 
 
+class TestThoracoscopyFindingModel:
+    """Tests for thoracoscopy finding normalization."""
+
+    def test_biopsy_tool_normalization(self):
+        finding = ThoracoscopyFinding(
+            location="Parietal pleura - diaphragm",
+            finding_type="Nodules",
+            biopsy_tool="cryo forceps",
+        )
+        assert finding.biopsy_tool == "Cryoprobe"
+
+    def test_location_normalization(self):
+        finding = ThoracoscopyFinding(
+            location="left pleural space",
+            finding_type="Plaques",
+        )
+        assert finding.location == "Parietal pleura - chest wall"
+
+
 class TestCAOInterventionDetailModel:
     """Tests for CAO intervention detail model."""
 
@@ -185,6 +282,23 @@ class TestCAOInterventionDetailModel:
         assert intervention.pre_obstruction_pct == 80
         assert intervention.post_obstruction_pct == 20
         assert len(intervention.modalities_applied) == 2
+
+    def test_new_etiology_and_modalities(self):
+        """Ensure new etiology and modality literals are supported."""
+        intervention = CAOInterventionDetail(
+            location="RMS",
+            etiology="Infectious",
+            modalities_applied=[
+                CAOModalityApplication(modality="Iced saline lavage"),
+                CAOModalityApplication(modality="Epinephrine instillation"),
+                CAOModalityApplication(modality="Tranexamic acid instillation"),
+                CAOModalityApplication(modality="Balloon tamponade"),
+                CAOModalityApplication(modality="Laser"),
+                CAOModalityApplication(modality="Suctioning"),
+            ],
+        )
+        assert intervention.etiology == "Infectious"
+        assert len(intervention.modalities_applied) == 6
 
 
 class TestEnhancedRegistryGranularData:

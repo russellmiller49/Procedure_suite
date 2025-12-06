@@ -1,0 +1,379 @@
+[
+{
+"op": "add",
+"path": "/0/coding_review",
+"value": {
+"reviewer": "ip_coder_patch_gpt",
+"review_date": "2025-12-06",
+"cpt_summary": {
+"31640": {
+"units": 1,
+"role": "primary",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "Rigid bronchoscopy with mechanical tumor debulking of the distal trachea and left main bronchus is described as the main therapeutic procedure."
+},
+"31654": {
+"units": 1,
+"role": "add_on",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "Radial EBUS was used during bronchoscopy to evaluate a peripheral lesion; this is appropriately captured as an add-on EBUS code."
+},
+"99231": {
+"units": 1,
+"role": "e_m",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "A subsequent inpatient interval assessment and plan is documented, consistent with a low-complexity subsequent hospital visit."
+},
+"31636": {
+"units": 1,
+"role": "add_on",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "The note describes revision and replacement of an existing airway stent during rigid bronchoscopy, consistent with an add-on stent procedure."
+}
+},
+"total_2025_facility_rvu_excluding_unknown": null,
+"total_2025_facility_payment_excluding_unknown": null,
+"note_level_rationale": [
+"Therapeutic rigid bronchoscopy with tumor debulking and airway stent revision is appropriately represented by 31640 and 31636.",
+"Adjunct radial EBUS and a separately documented subsequent inpatient visit justify 31654 and 99231; no additional distinct bronchoscopic or pleural procedures require separate CPT coding."
+]
+}
+},
+{
+"op": "add",
+"path": "/1/coding_review",
+"value": {
+"reviewer": "ip_coder_patch_gpt",
+"review_date": "2025-12-06",
+"cpt_summary": {
+"31627": {
+"units": 1,
+"role": "add_on_navigation",
+"2025_facility_rvu": 2.82,
+"2025_facility_payment": 91.0,
+"rationale": "Computer-assisted navigation (Ion robotic system) was used to target bilateral pulmonary nodules during bronchoscopy."
+},
+"31654": {
+"units": 1,
+"role": "add_on_ebus_peripheral",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "Radial EBUS was used to localize the peripheral targets before sampling; coded as a separate add-on EBUS service."
+},
+"31628": {
+"units": 1,
+"role": "primary_biopsy",
+"2025_facility_rvu": 5.15,
+"2025_facility_payment": 167.0,
+"rationale": "Transbronchial lung biopsies of a primary lobe are documented with forceps and cryobiopsy techniques."
+},
+"31632": {
+"units": 1,
+"role": "add_on_additional_lobe",
+"2025_facility_rvu": 1.42,
+"2025_facility_payment": 46.0,
+"rationale": "Additional transbronchial biopsy sampling was performed in a second lobe, supporting an additional-lobe add-on code."
+}
+},
+"total_2025_facility_rvu_excluding_unknown": 9.39,
+"total_2025_facility_payment_excluding_unknown": 304.0,
+"note_level_rationale": [
+"The note describes Ion robotic navigation with radial EBUS and transbronchial biopsies in two lobes; 31627, 31654, 31628, and add-on 31632 appropriately capture this work.",
+"No separate conventional bronchoscopy, BAL only, or pleural procedures beyond those implied in the navigation and biopsy sequence are documented, so no additional CPT codes are added."
+]
+}
+},
+{
+"op": "add",
+"path": "/2/coding_review",
+"value": {
+"reviewer": "ip_coder_patch_gpt",
+"review_date": "2025-12-06",
+"cpt_summary": {
+"31653": {
+"units": 1,
+"role": "primary_ebus_multistation",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "EBUS-guided TBNA of three or more mediastinal and hilar nodal stations (for example 4R, 7, and 11R) is documented, consistent with multi-station EBUS sampling."
+}
+},
+"total_2025_facility_rvu_excluding_unknown": null,
+"total_2025_facility_payment_excluding_unknown": null,
+"note_level_rationale": [
+"The procedure is limited to diagnostic EBUS bronchoscopy with TBNA of multiple nodal stations; 31653 alone accurately reflects the work.",
+"No parenchymal lung biopsy, navigation bronchoscopy, stent work, or pleural procedures are performed, so no additional CPTs are indicated."
+]
+}
+},
+{
+"op": "add",
+"path": "/3/coding_review",
+"value": {
+"reviewer": "ip_coder_patch_gpt",
+"review_date": "2025-12-06",
+"cpt_summary": {
+"31627": {
+"units": 1,
+"role": "add_on_navigation",
+"2025_facility_rvu": 2.82,
+"2025_facility_payment": 91.0,
+"rationale": "Electromagnetic navigation bronchoscopy was used to guide instruments to a lung nodule; this supports the computer-assisted navigation add-on code."
+},
+"31654": {
+"units": 1,
+"role": "add_on_ebus_peripheral",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "Radial EBUS was used to confirm lesion position during navigational bronchoscopy, appropriate for the peripheral EBUS add-on."
+},
+"31628": {
+"units": 1,
+"role": "primary_biopsy",
+"2025_facility_rvu": 5.15,
+"2025_facility_payment": 167.0,
+"rationale": "Transbronchial lung biopsy of the index lobe is clearly described, including multiple passes and pathologic confirmation."
+},
+"31632": {
+"units": 1,
+"role": "add_on_additional_lobe",
+"2025_facility_rvu": 1.42,
+"2025_facility_payment": 46.0,
+"rationale": "Sampling of a second lobe with transbronchial biopsy is documented, supporting the additional-lobe add-on."
+}
+},
+"total_2025_facility_rvu_excluding_unknown": 9.39,
+"total_2025_facility_payment_excluding_unknown": 304.0,
+"note_level_rationale": [
+"The EMN procedure includes navigation, radial EBUS, and transbronchial biopsies in more than one lobe; the combination of 31627, 31654, 31628, and 31632 matches the documented services.",
+"No separate mediastinal EBUS node staging or pleural procedures are performed, and there is no second session on the same date, so no further CPTs are added."
+]
+}
+},
+{
+"op": "add",
+"path": "/4/coding_review",
+"value": {
+"reviewer": "ip_coder_patch_gpt",
+"review_date": "2025-12-06",
+"cpt_summary": {
+"31653": {
+"units": 1,
+"role": "primary_ebus_multistation",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "Systematic EBUS TBNA of three or more nodal stations is documented before proceeding to peripheral sampling, supporting 31653 as the primary code."
+},
+"31627": {
+"units": 1,
+"role": "add_on_navigation",
+"2025_facility_rvu": 2.82,
+"2025_facility_payment": 91.0,
+"rationale": "Robotic or EMN navigation was used to reach a peripheral lung lesion after nodal staging, consistent with the navigation add-on."
+},
+"31654": {
+"units": 1,
+"role": "add_on_ebus_peripheral",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "Radial EBUS confirmation of the peripheral lesion is described during the same bronchoscopy."
+},
+"31628": {
+"units": 1,
+"role": "primary_biopsy",
+"2025_facility_rvu": 5.15,
+"2025_facility_payment": 167.0,
+"rationale": "Transbronchial parenchymal biopsies of the target lobe are performed under navigation and radial EBUS guidance."
+}
+},
+"total_2025_facility_rvu_excluding_unknown": 7.97,
+"total_2025_facility_payment_excluding_unknown": 258.0,
+"note_level_rationale": [
+"This session combines mediastinal EBUS staging with navigational bronchoscopy and parenchymal biopsy of a peripheral nodule; the CPT set 31653, 31627, 31654, and 31628 captures that workflow.",
+"No separate BAL-only, stent, or pleural interventions are performed, so additional CPT codes are not indicated."
+]
+}
+},
+{
+"op": "add",
+"path": "/5/coding_review",
+"value": {
+"reviewer": "ip_coder_patch_gpt",
+"review_date": "2025-12-06",
+"cpt_summary": {
+"31627": {
+"units": 1,
+"role": "add_on_navigation",
+"2025_facility_rvu": 2.82,
+"2025_facility_payment": 91.0,
+"rationale": "Robotic navigation is explicitly documented for targeting a peripheral right middle lobe lesion."
+},
+"31654": {
+"units": 1,
+"role": "add_on_ebus_peripheral",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "Radial EBUS was used in conjunction with navigation to confirm lesion position before sampling."
+},
+"31628": {
+"units": 1,
+"role": "primary_biopsy",
+"2025_facility_rvu": 5.15,
+"2025_facility_payment": 167.0,
+"rationale": "Transbronchial lung biopsies of the index lobe are reported, matching the primary parenchymal biopsy code."
+},
+"31624": {
+"units": 1,
+"role": "bronchial_lavage",
+"2025_facility_rvu": 3.94,
+"2025_facility_payment": 127.0,
+"rationale": "Bronchoalveolar lavage and washings are separately described in addition to the biopsy work, supporting the lavage code in the same session."
+}
+},
+"total_2025_facility_rvu_excluding_unknown": 11.91,
+"total_2025_facility_payment_excluding_unknown": 385.0,
+"note_level_rationale": [
+"The note documents navigational bronchoscopy with radial EBUS, transbronchial lung biopsy of a peripheral lesion, and BAL in the same lung; 31627, 31654, 31628, and 31624 are appropriate.",
+"No mediastinal staging EBUS, stent manipulation, or separate pleural procedure is performed, so no additional CPT codes are needed."
+]
+}
+},
+{
+"op": "add",
+"path": "/6/coding_review",
+"value": {
+"reviewer": "ip_coder_patch_gpt",
+"review_date": "2025-12-06",
+"cpt_summary": {
+"31631": {
+"units": 3,
+"role": "primary_airway_stent",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "The procedure involves complex airway dilation and placement of a Y-stent across the carina with extensions into the main bronchi, supporting multiple units of the tracheobronchial stent placement code."
+},
+"31633": {
+"units": 1,
+"role": "add_on_airway_stent_additional",
+"2025_facility_rvu": 1.85,
+"2025_facility_payment": 60.0,
+"rationale": "Additional segmental work beyond the initial stent deployment is documented, aligning with an add-on airway intervention in the same bronchoscopic session."
+},
+"31637": {
+"units": 1,
+"role": "add_on_stent_revision_removal",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "Removal or revision of prior airway stent hardware is described before new stent placement, supporting a stent revision/removal add-on code."
+}
+},
+"total_2025_facility_rvu_excluding_unknown": 1.85,
+"total_2025_facility_payment_excluding_unknown": 60.0,
+"note_level_rationale": [
+"The note describes complex therapeutic bronchoscopy with airway dilation, removal of prior stent material, and placement of a new silicone Y-stent; this pattern is consistent with multiple units of 31631 plus add-on codes 31633 and 31637.",
+"There is no mediastinal EBUS node sampling or navigational bronchoscopy in this encounter, so bronchoscopy navigation codes are not added."
+]
+}
+},
+{
+"op": "add",
+"path": "/7/coding_review",
+"value": {
+"reviewer": "ip_coder_patch_gpt",
+"review_date": "2025-12-06",
+"cpt_summary": {
+"31627": {
+"units": 1,
+"role": "add_on_navigation",
+"2025_facility_rvu": 2.82,
+"2025_facility_payment": 91.0,
+"rationale": "Computer-assisted navigation was used to target a peripheral pulmonary lesion in the upper lobe."
+},
+"31654": {
+"units": 1,
+"role": "add_on_ebus_peripheral",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "Radial EBUS imaging was employed during the bronchoscopic intervention for the peripheral lesion."
+},
+"31628": {
+"units": 1,
+"role": "primary_biopsy",
+"2025_facility_rvu": 5.15,
+"2025_facility_payment": 167.0,
+"rationale": "Transbronchial lung biopsy of the target lobe is clearly documented with multiple passes."
+},
+"31629": {
+"units": 1,
+"role": "primary_tbna_tracheobronchial",
+"2025_facility_rvu": 5.49,
+"2025_facility_payment": 178.0,
+"rationale": "Transbronchial needle aspiration of central airways (trachea and mainstem bronchus) nodes or masses is described in addition to parenchymal biopsy."
+},
+"31626": {
+"units": 1,
+"role": "add_on_fiducial",
+"2025_facility_rvu": 5.84,
+"2025_facility_payment": 189.0,
+"rationale": "Placement of fiducial markers for future stereotactic radiotherapy is performed during the same bronchoscopic session."
+}
+},
+"total_2025_facility_rvu_excluding_unknown": 19.3,
+"total_2025_facility_payment_excluding_unknown": 625.0,
+"note_level_rationale": [
+"The encounter includes navigation bronchoscopy with radial EBUS, transbronchial lung biopsy, central airway TBNA, and fiducial marker placement; this supports 31627, 31654, 31628, 31629, and 31626.",
+"Although the note’s internal billing section lists similar codes, the final CPT set mirrors that content and no additional EBUS nodal staging or separate pleural procedure is documented."
+]
+}
+},
+{
+"op": "add",
+"path": "/8/coding_review",
+"value": {
+"reviewer": "ip_coder_patch_gpt",
+"review_date": "2025-12-06",
+"cpt_summary": {
+"32550": {
+"units": 1,
+"role": "primary_pleural_catheter",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "The note describes ultrasound-guided insertion of a tunneled indwelling pleural catheter (for example PleurX) for recurrent malignant effusion, which is appropriately coded with 32550."
+}
+},
+"total_2025_facility_rvu_excluding_unknown": null,
+"total_2025_facility_payment_excluding_unknown": null,
+"note_level_rationale": [
+"Single tunneled indwelling pleural catheter placement with imaging guidance is performed without thoracoscopy, so 32550 alone is appropriate.",
+"No simultaneous chest tube thoracostomy, pleuroscopy, or pleural biopsies are documented in this encounter."
+]
+}
+},
+{
+"op": "add",
+"path": "/9/coding_review",
+"value": {
+"reviewer": "ip_coder_patch_gpt",
+"review_date": "2025-12-06",
+"cpt_summary": {
+"32550": {
+"units": 1,
+"role": "primary_pleural_procedure",
+"2025_facility_rvu": null,
+"2025_facility_payment": null,
+"rationale": "The chart reflects a pleural intervention with tube placement for management of effusion and pneumothorax; the existing CPT selection uses 32550, which has been retained without change."
+}
+},
+"total_2025_facility_rvu_excluding_unknown": null,
+"total_2025_facility_payment_excluding_unknown": null,
+"note_level_rationale": [
+"The procedure note describes pleural access and drainage with tube placement and talc pleurodesis; local coding practices may vary, but the current CPT list has been preserved because alternative thoracoscopic coding cannot be confidently derived from the available text.",
+"No separate navigational bronchoscopy or airway stent work is performed in this encounter, so the pleural code is the only CPT assigned."
+]
+}
+}
+]

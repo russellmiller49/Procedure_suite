@@ -6,27 +6,38 @@ import json
 from pathlib import Path
 
 PROMPT_HEADER = """
-You are extracting a registry JSON from an interventional pulmonology procedure note.
+You are extracting a structured registry JSON from an interventional pulmonology procedure note.
 
-Return exactly one JSON object (no markdown) with keys:
-{
-  "patient_mrn": string or "",
-  "procedure_date": "YYYY-MM-DD" or "",
-  "asa_class": "1" | "2" | "3" | "4" | "5" | "",
-  "sedation_type": "moderate" | "deep" | "general" | "local" | "monitored anesthesia care" | "",
-  "airway_type": "native" | "ett" | "lma" | "tracheostomy" | "rigid bronchoscope" | "",
-  "pleural_procedure_type": "chest tube" | "tunneled catheter" | "thoracentesis" | "medical thoracoscopy" | "chemical pleurodesis" | "",
-  "pleural_guidance": "ultrasound" | "ct" | "blind" | "",
-  "final_diagnosis_prelim": "malignancy" | "infectious" | "granulomatous" | "non-diagnostic" | "other" | "",
-  "disposition": "discharge home" | "pacu recovery" | "icu admission" | "floor admission" | "",
-  "ebus_needle_gauge": "",
-  "ebus_rose_result": ""
-}
+Return exactly ONE JSON object (no markdown). Populate every field defined in the schema; omit nothing.
+
+REQUIRED CORE FIELDS (never drop them):
+- disposition
+- pneumothorax
+- sedation_type (allowed: General, Moderate, Local Only)
+- cpt_codes (mirror the final CPT list you infer—no placeholders)
+- pleurodesis_performed
+- pleurodesis_agent
+- bleeding_severity
+- primary_indication
+- asa_class
+- airway_type (allowed: ETT, LMA, Tracheostomy, Native, Rigid bronchoscope when explicitly used)
+- gender
+
+Do not leave these as null/empty if you can safely infer them from the header or procedure narrative. If the note truly lacks evidence, set the field explicitly to null rather than omitting it.
+
+Mapping reminders:
+- Sedation: "general anesthesia" or anesthesia team with airway control → "General"; "moderate/conscious sedation", midazolam/fentanyl without anesthesia team → "Moderate"; topical/local anesthetic only with no systemic sedatives → "Local Only".
+- Disposition: phrases like "discharged home same day" → "Outpatient discharge"; "PACU" / "recovery room" → "PACU recovery"; "admitted to ICU"/"remains in ICU" → "ICU admission"; other inpatient stays → "Floor admission".
+- Pleurodesis: if talc/doxycycline/etc. are instilled with intent to scar the pleura, set pleurodesis_performed=true and pleurodesis_agent to the exact method ("Talc Slurry", "Talc Poudrage", etc.).
+- CPT codes: the `cpt_codes` array must match the final CPT selection used for billing; include add-on codes where documented.
+
+Navigation / Cryobiopsy expectations:
+- For navigation/robotic or cryobiopsy cases, ALWAYS evaluate and populate `nav_rebus_used`, `nav_rebus_view`, `nav_sampling_tools`, `nav_imaging_verification`, `nav_cryobiopsy_for_nodule`, and `bronch_tbbx_tool`. Use allowed schema values (e.g., nav_imaging_verification ∈ {"Fluoroscopy","Cone-beam CT","Augmented fluoroscopy","None"}).
 
 General rules:
 - Use only information about the current procedure for the primary patient; ignore appended reports for other patients.
 - Prefer clearly labeled headers for MRN/ID and procedure date.
-- If no pleural procedure is present, pleural_procedure_type and pleural_guidance should be null/empty. If a pleural procedure is documented but no guidance is mentioned, pleural_guidance may default to "blind". Leave asa_class/sedation_type/airway_type empty when not documented rather than inferring from context alone; ebus_* stay "".
+- If no pleural procedure is present, pleural_procedure_type and pleural_guidance should be null/empty. When a pleural procedure is documented but no guidance is mentioned, pleural_guidance may default to "blind".
 """.strip()
 
 _SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
@@ -70,19 +81,22 @@ True if bronchus sign is documented as present/positive. False if explicitly abs
 Extract summary of relevant imaging findings. Include CT/PET findings, lymph node descriptions, mass characteristics. Keep concise. Null if not documented.""".strip(),
     # Sedation and airway fields with improved instructions
     "sedation_type": """
-Extract sedation/anesthesia level for the procedure. Allowed: Moderate, Deep, General, Local, Monitored Anesthesia Care (capitalize first letters).
-- "General" or "General anesthesia" when GA/intubation/ETT/rigid context is documented.
-- "Deep" or "Deep sedation" for propofol infusion with anesthesia team without intubation, or MAC without ETT.
-- "Moderate" for conscious sedation, midazolam/fentanyl without anesthesia team.
-- "Local" only when topical/local only with no systemic sedatives.
-- "Monitored Anesthesia Care" for explicit MAC documentation.
-Return null if not documented.""".strip(),
+Sedation/anesthesia level. Allowed values: "General", "Moderate", "Local Only".
+- Use "General" when general anesthesia, endotracheal/rigid bronchoscope anesthesia, or anesthesiologist-led deep sedation is documented.
+- Use "Moderate" for conscious/moderate sedation (benzodiazepine/opioid procedural sedation) without an anesthesia team.
+- Use "Local Only" when the note explicitly states topical/local anesthetic only and no systemic sedatives were administered.
+If undocumented, return null (do not omit the field).""".strip(),
     "pleural_guidance": """
 Imaging guidance for pleural procedures only (thoracentesis, chest tube/pigtail, tunneled pleural catheter, medical thoracoscopy/pleuroscopy, pleural drain/biopsy). Allowed: ultrasound, ct, blind; ""/null if no pleural procedure or guidance not documented. Ultrasound only when the pleural procedure is ultrasound-guided (ignore EBUS/radial/bronchial ultrasound). CT only when the pleural procedure is performed under CT/CT-fluoro (not just prior imaging). Blind when pleural procedure done without imaging or visualization only. If no pleural procedure exists in the note, leave this field blank.""".strip(),
     "pleural_procedure_type": """
 Type of pleural procedure performed (not bronchoscopic). Allowed: thoracentesis, chest tube, tunneled catheter, medical thoracoscopy, chemical pleurodesis (lower-case); null if no pleural procedure. Priority when multiple: chemical pleurodesis > medical thoracoscopy > (chest tube vs tunneled catheter) > thoracentesis. Chemical pleurodesis when a sclerosing agent is instilled. Medical thoracoscopy/pleuroscopy when explicitly described. Chest tube for any non-tunneled pleural drain/pigtail/intercostal drain. Tunneled catheter for long-term tunneled/IPC/PleurX/Aspira indwelling catheters. If the note only lists bronchoscopic procedures (EBUS/bronchoscopy) or pleural procedure cannot be determined, leave null.""".strip(),
     "disposition": """
-Immediate post-procedure disposition/destination. Allowed: discharge home, pacu recovery, floor admission, icu admission (lower-case); "" if not documented. Capture only the first destination after the procedure. Discharge home only when clearly stated (dc home/going home today). PACU recovery for PACU/recovery/Phase I. ICU admission for ICU/MICU/SICU/critical care destinations. Floor admission for non-ICU inpatient/telemetry/step-down/ward. If no clear plan is stated, leave blank.""".strip(),
+Immediate post-procedure destination. Allowed strings: "Outpatient discharge", "PACU recovery", "Floor admission", "ICU admission".
+- "Outpatient discharge": discharged home, recovery then home, ambulatory same-day statements.
+- "PACU recovery": remains in PACU/recovery unit for monitoring without clear admission plan.
+- "ICU admission": any ICU/MICU/SICU/critical care bed assignment.
+- "Floor admission": telemetry/step-down/ward admissions that are not ICU.
+If not documented, set null (do not omit).""".strip(),
     "procedure_date": """
 Procedure date (YYYY-MM-DD). Convert common formats (e.g., 8/23/2023, 05-07-25, March 5, 2025) into YYYY-MM-DD. Prefer labels: "DATE OF PROCEDURE", "PROCEDURE DATE", "Service Date", or header Date within the procedure note. Ignore follow-up/past dates or non-procedure dates. If multiple and unclear, leave "". "" if truly undocumented.""".strip(),
     "patient_mrn": """
@@ -184,13 +198,17 @@ Examples:
 Return as float (e.g., 2.1, 3.0).
 Null if not a navigation/robotic procedure or registration error not documented.""".strip(),
     "nav_imaging_verification": """
-Imaging used to confirm tool-in-lesion (e.g., Cone Beam CT) only when navigation/robotic context exists. Null for routine EBUS without navigation.""".strip(),
+Imaging used to confirm tool-in-lesion for navigation/robotic bronchoscopy. Allowed values: "Cone-beam CT", "Fluoroscopy", "Augmented fluoroscopy", "None".
+- Use "None" when note explicitly states no imaging confirmation or when confirmation relied solely on radial probe visualization.
+- Null for routine linear EBUS without navigation.""".strip(),
     "nav_tool_in_lesion": """
 True when tool-in-lesion confirmation is documented, either via:
 1. Navigation/robotic systems (Ion, Monarch, EMN) with cone-beam CT or fluoroscopy confirmation
 2. Radial EBUS showing concentric or eccentric view within the lesion
 3. Explicit statements like "tool within lesion", "probe confirmed in lesion"
 False if explicitly stated tool NOT in lesion. Null if not mentioned or not applicable.""".strip(),
+    "nav_cryobiopsy_for_nodule": """
+Boolean indicator that cryobiopsy was performed for a peripheral nodule/lesion under navigation guidance. True when the note links cryobiopsy to a navigated peripheral target; False if explicitly noted that no cryobiopsy was done; null when navigation was not performed or cryobiopsy is not mentioned.""".strip(),
     "nav_rebus_used": """
 True when radial EBUS (r-EBUS) was used for peripheral nodule/lesion localization. Look for:
 - "Radial EBUS", "r-EBUS", "radial probe", "radial ultrasound"
@@ -200,13 +218,15 @@ True when radial EBUS (r-EBUS) was used for peripheral nodule/lesion localizatio
 This field applies to peripheral lung lesion procedures, NOT to linear EBUS mediastinal staging.
 False if radial EBUS explicitly not used. Null if not mentioned or only linear EBUS was performed.""".strip(),
     "nav_rebus_view": """
-Extract the radial EBUS view/pattern when radial EBUS was used for peripheral lesion localization. Common values:
-- "Concentric" - probe centered within lesion (lesion surrounds probe circumferentially)
-- "Eccentric" - probe adjacent to lesion (lesion visible on one side)
-- Descriptive phrases like "Concentric radial EBUS view within lesion", "Eccentric view obtained"
-Return the view description as documented. Null if radial EBUS not performed or view not documented.""".strip(),
+Extract the radial EBUS view/pattern when radial EBUS was used for peripheral lesion localization. Allowed values: "Concentric", "Eccentric", "Adjacent", "Not visualized".
+- Map descriptive phrases to the closest allowed value (e.g., "within lesion" -> Concentric, "adjacent to lesion" -> Adjacent).
+- If radial EBUS was performed but the view is not described, default to "Not visualized".
+Return null only when radial EBUS was not used.""".strip(),
     "nav_sampling_tools": """
-Sampling tools used in navigation/robotic cases (forceps, needle, brush, cryoprobe). Leave null/[] for linear EBUS staging without navigation even if a generic needle is mentioned.""".strip(),
+Sampling tools used in navigation/robotic cases. Return an array using normalized tool names:
+- "Needle", "Forceps", "Brush", "Cryoprobe", "BAL", "Fine needle", etc. (capitalize first letter).
+- Include every tool explicitly documented for the navigation target.
+For non-navigation linear EBUS staging, leave null/[] even if standard TBNA needles are mentioned.""".strip(),
     "ebus_stations_detail": """
 Field: ebus_stations_detail (per-station EBUS node details)
 
@@ -669,12 +689,23 @@ Per-site CAO (Central Airway Obstruction) intervention data. Create ONE object p
 For each site, extract:
 - location: Trachea - proximal/mid/distal, Carina, RMS, LMS, BI, RUL, RML, RLL, LUL, LLL
 - obstruction_type: "Intraluminal", "Extrinsic", "Mixed"
-- etiology: Malignant - primary lung/metastatic/other, Benign - post-intubation/tracheostomy/anastomotic/inflammatory/granulation/web
+- etiology: Use only the allowed literal strings:
+  * "Malignant - primary lung", "Malignant - metastatic", "Malignant - other"
+  * "Benign - post-intubation", "Benign - post-tracheostomy", "Benign - anastomotic"
+  * "Benign - inflammatory", "Benign - infectious", "Benign - granulation", "Benign - web/stenosis", "Benign - other"
+  * "Infectious", "Other"
 - length_mm: Length of obstruction in mm
 - pre_obstruction_pct, post_obstruction_pct: Percent obstruction before/after treatment (0-100)
 - pre_diameter_mm, post_diameter_mm: Airway diameter before/after
 - modalities_applied: Array of objects with:
-  - modality: APC, Electrocautery - snare/knife/probe, Cryotherapy - spray/contact, Cryoextraction, Laser, etc.
+  - modality: EXACT string from the allowed list:
+    ["APC", "Electrocautery - snare", "Electrocautery - knife", "Electrocautery - probe",
+     "Cryotherapy - spray", "Cryotherapy - contact", "Cryoextraction",
+     "Laser - Nd:YAG", "Laser - CO2", "Laser - diode", "Laser",
+     "Mechanical debulking", "Rigid coring", "Microdebrider",
+     "Balloon dilation", "Balloon tamponade", "PDT",
+     "Iced saline lavage", "Epinephrine instillation",
+     "Tranexamic acid instillation", "Suctioning"]
   - power_setting_watts, balloon_diameter_mm, freeze_time_seconds, number_of_applications
 - hemostasis_required, hemostasis_methods: Bleeding control needed and methods used
 - stent_placed_at_site: true if stent deployed at this location
