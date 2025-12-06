@@ -2906,6 +2906,638 @@
         }
       }
     },
+    "coding_support": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "AI-assisted coding and financial support data for this registry entry. Contains Section 1–3 summaries (coding summary, financial analysis, coding rationale).",
+      "properties": {
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Version tag for the coding_support schema/logic (e.g., 'coding_support.v1')."
+        },
+        "generated_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time",
+          "description": "Timestamp when this coding_support payload was generated (ISO 8601)."
+        },
+        "generator": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Identifier of the model or system that generated this payload."
+        },
+        "knowledge_base_version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Version of the coding/RVU knowledge base used (e.g., 'ip_coding_billing.v2.7')."
+        },
+        "coding_summary": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Section 1 – Coding Summary: CPT lines and basic metadata.",
+          "properties": {
+            "primary_family": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Optional canonical procedure family key (e.g., 'bronchoscopy_therapeutic_airway_tumor')."
+            },
+            "lines": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "Ordered list of CPT lines shown in the Section 1 table.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "sequence": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1,
+                    "description": "1-based order of this line in the table."
+                  },
+                  "code": {
+                    "type": "string",
+                    "pattern": "^\\+?[0-9]{5}$",
+                    "description": "CPT code; '+' prefix indicates add-on codes (same regex as billing.cpt_codes)."
+                  },
+                  "modifier": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Single primary modifier applied to this line (e.g., '59', '26')."
+                  },
+                  "modifiers": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "All modifiers applied to this line, if multiple."
+                  },
+                  "description": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Human-readable CPT description (resolved from the coding/RVU knowledge base)."
+                  },
+                  "units": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1,
+                    "default": 1,
+                    "description": "Number of units reported for this code."
+                  },
+                  "role": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "primary",
+                      "add_on",
+                      "secondary",
+                      "bundled_only"
+                    ],
+                    "description": "Role of this code within the endoscopy family and claim."
+                  },
+                  "selection_status": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "candidate",
+                      "selected",
+                      "dropped"
+                    ],
+                    "description": "Whether the code is recommended to be billed after rules are applied."
+                  },
+                  "selection_reason": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Short explanation of why the code was selected, bundled, or dropped."
+                  },
+                  "family_key": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Optional key from ip_coding_billing.code_lists (e.g., 'bronchoscopy_navigation')."
+                  },
+                  "is_add_on": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "True if this code is an add-on (in add_on_codes or CMS status ZZZ)."
+                  },
+                  "source": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "model",
+                      "human",
+                      "merged"
+                    ],
+                    "description": "Origin of this line (model suggestion vs human edit)."
+                  },
+                  "note_spans": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "description": "Optional linkage back to spans in the source note.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "start": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "minimum": 0,
+                          "description": "Byte or character index where supporting text starts."
+                        },
+                        "end": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "minimum": 0,
+                          "description": "Byte or character index where supporting text ends."
+                        },
+                        "snippet": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "description": "Short excerpt of the supporting documentation."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "financial_analysis": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Section 2 – Financial Analysis using fee schedule/RVU tables.",
+          "properties": {
+            "calendar_year": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "description": "Calendar year of the fee schedule (e.g., 2025)."
+            },
+            "fee_schedule_name": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Internal fee schedule key (e.g., 'physician_2025_airway')."
+            },
+            "rvu_source": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Reference to the RVU source used (e.g., 'cms_rvus.bronchoscopy')."
+            },
+            "conversion_factor": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "description": "Medicare PFS conversion factor used for payment estimates."
+            },
+            "setting": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "facility",
+                "nonfacility",
+                "unknown"
+              ],
+              "description": "Professional billing setting."
+            },
+            "per_code": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "Per-code RVU and payment details populated from the coding/RVU knowledge base.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "pattern": "^\\+?[0-9]{5}$"
+                  },
+                  "units": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1,
+                    "default": 1
+                  },
+                  "work_rvu": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "Work RVU (per unit) for this code."
+                  },
+                  "total_facility_rvu": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "Total facility RVU (per unit) for this code."
+                  },
+                  "total_nonfacility_rvu": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "Total nonfacility RVU (per unit) for this code."
+                  },
+                  "mpfs_facility_payment": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "Estimated national MPFS payment for facility setting (per unit)."
+                  },
+                  "mpfs_nonfacility_payment": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "Estimated national MPFS payment for nonfacility setting (per unit)."
+                  },
+                  "apc": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Optional APC code used for hospital OPPS reference."
+                  },
+                  "opps_payment": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "OPPS payment amount (hospital outpatient), when available."
+                  },
+                  "asc_payment": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "ASC payment amount, when available."
+                  },
+                  "mppi": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "Multiple Procedure Payment Indicator, when present in the knowledge base."
+                  },
+                  "is_add_on": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "is_primary": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "True if this is the highest-valued endoscopy used as the primary for MPPR."
+                  },
+                  "rvu_source_path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Path into the knowledge base used to populate this row (e.g., 'fee_schedules.physician_2025_airway.codes.31641')."
+                  }
+                }
+              }
+            },
+            "totals": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "description": "Aggregate RVU and payment totals for the encounter.",
+              "properties": {
+                "total_work_rvu": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "total_facility_rvu": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "total_nonfacility_rvu": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "estimated_facility_payment_unadjusted": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "description": "Sum of per-code facility payments before multiple-procedure reductions."
+                },
+                "estimated_nonfacility_payment_unadjusted": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "estimated_facility_payment_after_mppr": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "description": "Optional estimate after applying multiple endoscopy / MPPR logic."
+                },
+                "estimated_nonfacility_payment_after_mppr": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "mppr_assumptions": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Narrative description of multiple endoscopy / MPPR assumptions."
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Free-text comments about interpretation of these financial values (e.g., 'values unadjusted for local geographic factor')."
+            }
+          }
+        },
+        "coding_rationale": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Section 3 – Coding rationale, bundling logic, and QA flags.",
+          "properties": {
+            "per_code": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "Narrative rationale per CPT code.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "pattern": "^\\+?[0-9]{5}$"
+                  },
+                  "summary": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Plain-language explanation of why this code was suggested, kept, bundled, or dropped."
+                  },
+                  "documentation_evidence": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "description": "Optional list of supporting documentation snippets.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "snippet": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "span": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "start": {
+                              "type": [
+                                "integer",
+                                "null"
+                              ],
+                              "minimum": 0
+                            },
+                            "end": {
+                              "type": [
+                                "integer",
+                                "null"
+                              ],
+                              "minimum": 0
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "rule_refs": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "description": "IDs of coding rules from the knowledge base that influenced this code (e.g., 'diagnostic_with_surgical', 'radial_requires_peripheral_sampling').",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "qa_flags": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "description": "Documentation QA flags specific to this code.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "severity": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "enum": [
+                            "info",
+                            "warning",
+                            "error"
+                          ]
+                        },
+                        "rule_id": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "description": "Optional QA rule ID from the knowledge base (e.g., 'radial_requires_peripheral_sampling')."
+                        },
+                        "message": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "description": "Human-readable QA message."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "rules_applied": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "Global list of bundling/QA rules applied when generating the coding summary.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "rule_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Key from ip_coding_billing.bundling_rules, qa_rules, or policies (e.g., 'diagnostic_with_surgical')."
+                  },
+                  "rule_type": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "bundling",
+                      "qa",
+                      "documentation",
+                      "local"
+                    ]
+                  },
+                  "description": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "codes_affected": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "outcome": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "kept",
+                      "dropped",
+                      "flagged",
+                      "informational"
+                    ],
+                    "description": "High-level effect this rule had on the code set."
+                  },
+                  "details": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Optional free-text explanation of how the rule was applied."
+                  }
+                }
+              }
+            },
+            "global_comments": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "High-level narrative bullets describing coding strategy, bundling, and key caveats (mirrors the prose in Section 3).",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
     "metadata": {
       "type": "object",
       "description": "Record metadata",

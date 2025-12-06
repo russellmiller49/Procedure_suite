@@ -47,6 +47,86 @@
         "These values are authoritative for payment estimation when conflicts exist with other sections."
       ],
       "codes": {
+        "31600": {
+          "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
+          "work_rvu": 5.56,
+          "total_facility_rvu": 8.97,
+          "total_nonfacility_rvu": 8.97,
+          "mpfs_facility_payment": 294,
+          "mpfs_nonfacility_payment": 294
+        },
+        "31601": {
+          "description": "Planned tracheostomy, stand-alone open airway creation, patient younger than 2 years",
+          "work_rvu": 8.0,
+          "total_facility_rvu": 13.03,
+          "total_nonfacility_rvu": 13.03,
+          "mpfs_facility_payment": 427,
+          "mpfs_nonfacility_payment": 427
+        },
+        "31603": {
+          "description": "Emergency tracheostomy with direct transtracheal incision",
+          "work_rvu": 6.0,
+          "total_facility_rvu": 9.37,
+          "total_nonfacility_rvu": 9.37,
+          "mpfs_facility_payment": 307,
+          "mpfs_nonfacility_payment": 307
+        },
+        "31605": {
+          "description": "Emergency tracheostomy via cricothyroid membrane incision",
+          "work_rvu": 6.45,
+          "total_facility_rvu": 9.73,
+          "total_nonfacility_rvu": 9.73,
+          "mpfs_facility_payment": 319,
+          "mpfs_nonfacility_payment": 319
+        },
+        "31610": {
+          "description": "Tracheostomy with fenestration and skin flaps (permanent stoma creation)",
+          "work_rvu": 12.0,
+          "total_facility_rvu": 28.42,
+          "total_nonfacility_rvu": 28.42,
+          "mpfs_facility_payment": 931,
+          "mpfs_nonfacility_payment": 931
+        },
+        "31611": {
+          "description": "Construction of tracheoesophageal fistula with insertion of alaryngeal speech prosthesis",
+          "work_rvu": 6.0,
+          "total_facility_rvu": 15.83,
+          "total_nonfacility_rvu": 15.83,
+          "mpfs_facility_payment": 518,
+          "mpfs_nonfacility_payment": 518
+        },
+        "31612": {
+          "description": "Percutaneous tracheal puncture with transtracheal aspiration and/or injection",
+          "work_rvu": 0.91,
+          "total_facility_rvu": 1.41,
+          "total_nonfacility_rvu": 2.7,
+          "mpfs_facility_payment": 46,
+          "mpfs_nonfacility_payment": 88
+        },
+        "31613": {
+          "description": "Tracheostoma revision, simple, without flap rotation",
+          "work_rvu": 4.71,
+          "total_facility_rvu": 12.91,
+          "total_nonfacility_rvu": 12.91,
+          "mpfs_facility_payment": 423,
+          "mpfs_nonfacility_payment": 423
+        },
+        "31614": {
+          "description": "Tracheostoma revision, complex, with local flap rotation",
+          "work_rvu": 8.63,
+          "total_facility_rvu": 22.18,
+          "total_nonfacility_rvu": 22.18,
+          "mpfs_facility_payment": 726,
+          "mpfs_nonfacility_payment": 726
+        },
+        "31615": {
+          "description": "Tracheobronchoscopy performed through an established tracheostomy",
+          "work_rvu": 1.84,
+          "total_facility_rvu": 3.28,
+          "total_nonfacility_rvu": 3.33,
+          "mpfs_facility_payment": 107,
+          "mpfs_nonfacility_payment": 109
+        },
         "31622": {
           "description": "Bronchoscopy; diagnostic, with cell washing",
           "work_rvu": 2.53,
@@ -570,6 +650,156 @@
       "Add-on codes have status='A' or global_days='ZZZ'."
     ],
     "bronchoscopy": {
+      "31600": {
+        "description": "Planned tracheostomy (separate procedure), age ≥ 2 years",
+        "work_rvu": 5.56,
+        "facility_pe_rvu": 2.38,
+        "nonfacility_pe_rvu": 2.38,
+        "mp_rvu": 1.03,
+        "total_facility_rvu": 8.97,
+        "total_nonfacility_rvu": 8.97,
+        "mpfs_facility_payment": 294,
+        "mpfs_nonfacility_payment": 294,
+        "global_days": "000",
+        "mult_proc_indicator": 2,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "31601": {
+        "description": "Planned tracheostomy (separate procedure), patient younger than 2 years",
+        "work_rvu": 8.0,
+        "facility_pe_rvu": 3.93,
+        "nonfacility_pe_rvu": 3.93,
+        "mp_rvu": 1.1,
+        "total_facility_rvu": 13.03,
+        "total_nonfacility_rvu": 13.03,
+        "mpfs_facility_payment": 427,
+        "mpfs_nonfacility_payment": 427,
+        "global_days": "000",
+        "mult_proc_indicator": 2,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "31603": {
+        "description": "Emergency tracheostomy with transtracheal incision",
+        "work_rvu": 6.0,
+        "facility_pe_rvu": 2.34,
+        "nonfacility_pe_rvu": 2.34,
+        "mp_rvu": 1.03,
+        "total_facility_rvu": 9.37,
+        "total_nonfacility_rvu": 9.37,
+        "mpfs_facility_payment": 307,
+        "mpfs_nonfacility_payment": 307,
+        "global_days": "000",
+        "mult_proc_indicator": 2,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "31605": {
+        "description": "Emergency tracheostomy through cricothyroid membrane",
+        "work_rvu": 6.45,
+        "facility_pe_rvu": 2.02,
+        "nonfacility_pe_rvu": 2.02,
+        "mp_rvu": 1.26,
+        "total_facility_rvu": 9.73,
+        "total_nonfacility_rvu": 9.73,
+        "mpfs_facility_payment": 319,
+        "mpfs_nonfacility_payment": 319,
+        "global_days": "000",
+        "mult_proc_indicator": 2,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "31610": {
+        "description": "Tracheostomy with fenestration and skin flaps",
+        "work_rvu": 12.0,
+        "facility_pe_rvu": 14.66,
+        "nonfacility_pe_rvu": 14.66,
+        "mp_rvu": 1.76,
+        "total_facility_rvu": 28.42,
+        "total_nonfacility_rvu": 28.42,
+        "mpfs_facility_payment": 931,
+        "mpfs_nonfacility_payment": 931,
+        "global_days": "090",
+        "mult_proc_indicator": 2,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "31611": {
+        "description": "Creation of tracheoesophageal fistula with speech prosthesis placement",
+        "work_rvu": 6.0,
+        "facility_pe_rvu": 9.01,
+        "nonfacility_pe_rvu": 9.01,
+        "mp_rvu": 0.82,
+        "total_facility_rvu": 15.83,
+        "total_nonfacility_rvu": 15.83,
+        "mpfs_facility_payment": 518,
+        "mpfs_nonfacility_payment": 518,
+        "global_days": "090",
+        "mult_proc_indicator": 2,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "31612": {
+        "description": "Percutaneous tracheal puncture with transtracheal aspiration and/or injection",
+        "work_rvu": 0.91,
+        "facility_pe_rvu": 0.36,
+        "nonfacility_pe_rvu": 1.65,
+        "mp_rvu": 0.14,
+        "total_facility_rvu": 1.41,
+        "total_nonfacility_rvu": 2.7,
+        "mpfs_facility_payment": 46,
+        "mpfs_nonfacility_payment": 88,
+        "global_days": "000",
+        "mult_proc_indicator": 2,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "31613": {
+        "description": "Tracheostoma revision, simple, without flap rotation",
+        "work_rvu": 4.71,
+        "facility_pe_rvu": 7.46,
+        "nonfacility_pe_rvu": 7.46,
+        "mp_rvu": 0.74,
+        "total_facility_rvu": 12.91,
+        "total_nonfacility_rvu": 12.91,
+        "mpfs_facility_payment": 423,
+        "mpfs_nonfacility_payment": 423,
+        "global_days": "090",
+        "mult_proc_indicator": 2,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "31614": {
+        "description": "Tracheostoma revision, complex, with flap rotation",
+        "work_rvu": 8.63,
+        "facility_pe_rvu": 12.26,
+        "nonfacility_pe_rvu": 12.26,
+        "mp_rvu": 1.29,
+        "total_facility_rvu": 22.18,
+        "total_nonfacility_rvu": 22.18,
+        "mpfs_facility_payment": 726,
+        "mpfs_nonfacility_payment": 726,
+        "global_days": "090",
+        "mult_proc_indicator": 2,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "31615": {
+        "description": "Tracheobronchoscopy through established tracheostomy incision",
+        "work_rvu": 1.84,
+        "facility_pe_rvu": 1.19,
+        "nonfacility_pe_rvu": 1.24,
+        "mp_rvu": 0.25,
+        "total_facility_rvu": 3.28,
+        "total_nonfacility_rvu": 3.33,
+        "mpfs_facility_payment": 107,
+        "mpfs_nonfacility_payment": 109,
+        "global_days": "000",
+        "mult_proc_indicator": 2,
+        "status_code": "A",
+        "is_add_on": false
+      },
       "31622": {
         "description": "Bronchoscopy dx w/wash",
         "work_rvu": 2.53,
@@ -1874,6 +2104,56 @@
   },
   "rvus": {
     "_notes": "Simplified reference RVUs for quick lookup. For authoritative payment values, use fee_schedules section.",
+    "31600": {
+      "work": 5.56,
+      "pe": 2.38,
+      "mp": 1.03
+    },
+    "31601": {
+      "work": 8.0,
+      "pe": 3.93,
+      "mp": 1.1
+    },
+    "31603": {
+      "work": 6.0,
+      "pe": 2.34,
+      "mp": 1.03
+    },
+    "31605": {
+      "work": 6.45,
+      "pe": 2.02,
+      "mp": 1.26
+    },
+    "31610": {
+      "work": 12.0,
+      "pe": 14.66,
+      "mp": 1.76
+    },
+    "31611": {
+      "work": 6.0,
+      "pe": 9.01,
+      "mp": 0.82
+    },
+    "31612": {
+      "work": 0.91,
+      "pe": 0.36,
+      "mp": 0.14
+    },
+    "31613": {
+      "work": 4.71,
+      "pe": 7.46,
+      "mp": 0.74
+    },
+    "31614": {
+      "work": 8.63,
+      "pe": 12.26,
+      "mp": 1.29
+    },
+    "31615": {
+      "work": 1.84,
+      "pe": 1.19,
+      "mp": 0.25
+    },
     "31622": {
       "work": 2.53,
       "pe": 1.37,
@@ -3132,6 +3412,17 @@
       "percutaneous lung biopsy",
       "ct-guided lung biopsy",
       "core needle biopsy of lung"
+    ],
+    "tracheostomy_terms": [
+      "tracheostomy",
+      "tracheotomy",
+      "trach",
+      "percutaneous tracheostomy",
+      "open tracheostomy",
+      "bedside trach",
+      "surgical airway",
+      "cricothyrotomy",
+      "cricothyroidotomy"
     ],
     "sedation_time_terms": [
       "minutes of sedation",

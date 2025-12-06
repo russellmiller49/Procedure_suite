@@ -10,7 +10,7 @@ from typing import Optional
 class CoderSettings(BaseSettings):
     """Settings for the CPT coding pipeline."""
 
-    model_version: str = "gemini-1.5-pro-002"
+    model_version: str = "gemini-2.5-flash"
     kb_path: str = "data/knowledge/ip_coding_billing.v2_7.json"
     kb_version: str = "v2_7"
     keyword_mapping_dir: str = "data/keyword_mappings"
@@ -27,7 +27,7 @@ class CoderSettings(BaseSettings):
 class ReporterSettings(BaseSettings):
     """Settings for the reporter pipeline."""
 
-    llm_model: str = "gemini-1.5-pro-002"
+    llm_model: str = "gemini-2.5-flash"
     max_retries: int = 3
     cache_strategy: str = "by_note_hash"
     fast_path_confidence_threshold: float = 0.95

@@ -1,6 +1,18 @@
 """Constants for the CPT coder module."""
 
 CPT_DESCRIPTIONS = {
+    # Tracheostomy codes
+    "31600": "Planned tracheostomy (age ≥ 2 years)",
+    "31601": "Planned tracheostomy (age < 2 years)",
+    "31603": "Emergency tracheostomy, transtracheal",
+    "31605": "Emergency cricothyrotomy",
+    "31610": "Tracheostomy with fenestration/skin flaps",
+    "31611": "Tracheoesophageal fistula with speech prosthesis",
+    "31612": "Percutaneous tracheal puncture",
+    "31613": "Tracheostoma revision, simple",
+    "31614": "Tracheostoma revision, complex with flap",
+    "31615": "Tracheobronchoscopy via tracheostomy",
+    # Bronchoscopy codes
     "31622": "Diagnostic bronchoscopy",
     "31627": "Navigational bronchoscopy (EMN)",
     "31628": "Transbronchial lung biopsy, single lobe",
