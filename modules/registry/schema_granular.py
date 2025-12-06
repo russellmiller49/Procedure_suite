@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 # =============================================================================
@@ -52,7 +52,7 @@ class EBUSStationDetail(BaseModel):
     sampled: bool = Field(True, description="Whether this station was actually sampled")
     needle_gauge: Literal[19, 21, 22, 25] | None = None
     needle_type: Literal["Standard FNA", "FNB/ProCore", "Acquire", "ViziShot Flex"] | None = None
-    number_of_passes: int | None = Field(None, ge=1, le=10)
+    number_of_passes: int | None = Field(None, ge=0, le=10)
     intranodal_forceps_used: bool | None = None
     
     # ROSE
@@ -115,9 +115,9 @@ class NavigationTarget(BaseModel):
     
     # Sampling
     sampling_tools_used: list[str] | None = Field(default=None)
-    number_of_forceps_biopsies: int | None = Field(None, ge=1)
-    number_of_needle_passes: int | None = Field(None, ge=1)
-    number_of_cryo_biopsies: int | None = Field(None, ge=1)
+    number_of_forceps_biopsies: int | None = Field(None, ge=0)
+    number_of_needle_passes: int | None = Field(None, ge=0)
+    number_of_cryo_biopsies: int | None = Field(None, ge=0)
     
     # ROSE
     rose_performed: bool | None = None
@@ -134,6 +134,24 @@ class NavigationTarget(BaseModel):
     final_pathology: str | None = None
     
     notes: str | None = None
+
+    @field_validator('bronchus_sign', mode='before')
+    @classmethod
+    def normalize_bronchus_sign(cls, v):
+        """Normalize bronchus sign values from LLM output."""
+        if v is True:
+            return "Positive"
+        if v is False:
+            return "Negative"
+        if isinstance(v, str):
+            v_lower = v.lower().strip()
+            if v_lower in ("pos", "positive", "+"):
+                return "Positive"
+            if v_lower in ("neg", "negative", "-"):
+                return "Negative"
+            if v_lower in ("not assessed", "n/a", "na", "unknown"):
+                return "Not assessed"
+        return v
 
 
 # =============================================================================
@@ -156,7 +174,7 @@ class CAOModalityApplication(BaseModel):
     balloon_diameter_mm: float | None = None
     balloon_pressure_atm: float | None = None
     freeze_time_seconds: int | None = None
-    number_of_applications: int | None = Field(None, ge=1)
+    number_of_applications: int | None = Field(None, ge=0)
     duration_seconds: int | None = None
 
 
@@ -173,7 +191,8 @@ class CAOInterventionDetail(BaseModel):
     etiology: Literal[
         "Malignant - primary lung", "Malignant - metastatic", "Malignant - other",
         "Benign - post-intubation", "Benign - post-tracheostomy", "Benign - anastomotic",
-        "Benign - inflammatory", "Benign - granulation", "Benign - web/stenosis", "Other"
+        "Benign - inflammatory", "Benign - infectious", "Benign - granulation",
+        "Benign - web/stenosis", "Other"
     ] | None = None
     length_mm: float | None = Field(None, ge=0)
     
@@ -257,8 +276,8 @@ class CryobiopsySite(BaseModel):
     
     # Biopsy details
     probe_size_mm: Literal[1.1, 1.7, 1.9, 2.4] | None = None
-    freeze_time_seconds: int | None = Field(None, ge=1, le=10)
-    number_of_biopsies: int | None = Field(None, ge=1)
+    freeze_time_seconds: int | None = Field(None, ge=0, le=10)
+    number_of_biopsies: int | None = Field(None, ge=0)
     specimen_size_mm: float | None = Field(None, ge=0)
     
     # Blocker use
@@ -295,7 +314,7 @@ class ThoracoscopyFinding(BaseModel):
     extent: Literal["Focal", "Multifocal", "Diffuse"] | None = None
     size_description: str | None = None
     biopsied: bool | None = None
-    number_of_biopsies: int | None = Field(None, ge=1)
+    number_of_biopsies: int | None = Field(None, ge=0)
     biopsy_tool: Literal["Rigid forceps", "Flexible forceps", "Cryoprobe"] | None = None
     impression: Literal[
         "Benign appearing", "Malignant appearing", "Infectious appearing", "Indeterminate"
@@ -320,7 +339,7 @@ class SpecimenCollected(BaseModel):
     ]
     source_location: str = Field(..., description="Anatomic location")
     collection_tool: str | None = None
-    specimen_count: int | None = Field(None, ge=1)
+    specimen_count: int | None = Field(None, ge=0)
     specimen_adequacy: Literal["Adequate", "Limited", "Inadequate", "Pending"] | None = None
     destinations: list[str] | None = Field(default=None)
     rose_performed: bool | None = None

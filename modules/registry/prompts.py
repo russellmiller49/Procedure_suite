@@ -635,8 +635,14 @@ For each target, extract:
 - tool_in_lesion_confirmed: true if TIL confirmed (CBCT, fluoro, etc.)
 - confirmation_method: "CBCT", "Augmented fluoroscopy", "Fluoroscopy", "Radial EBUS", "None"
 - sampling_tools_used: Array of tools (Forceps, Needle (21G), Brush, Cryoprobe, etc.)
-- number_of_forceps_biopsies, number_of_needle_passes, number_of_cryo_biopsies: Counts
+- number_of_forceps_biopsies: Count of forceps biopsies (use 0 if explicitly stated none taken, null if not documented)
+- number_of_needle_passes: Count of needle passes (use 0 if explicitly stated none taken, null if not documented)
+- number_of_cryo_biopsies: Count of cryo biopsies (use 0 if explicitly stated none taken, null if not documented)
 - rose_performed, rose_result: ROSE for this target
+
+IMPORTANT for Enum fields:
+- bronchus_sign: Use ONLY "Positive", "Negative", or "Not assessed" - do NOT use True/False
+- rebus_view: Use ONLY "Concentric", "Eccentric", "Adjacent", or "Not visualized"
 - immediate_complication: "None", "Bleeding - mild/moderate/severe", "Pneumothorax"
 - final_pathology: Final path result if documented
 

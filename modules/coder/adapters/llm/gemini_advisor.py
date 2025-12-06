@@ -54,6 +54,11 @@ class GeminiAdvisorAdapter(LLMAdvisorPort):
     PROMPT_TEMPLATE = '''You are a medical coding expert specializing in Interventional Pulmonology procedures.
 Analyze the following procedure note and suggest appropriate CPT codes.
 
+IMPORTANT CONSTRAINTS:
+- Do NOT suggest 31640 (Excision) for simple biopsies or routine debridement. Only suggest if "tumor excision", "resection", or "debulking" is explicitly performed.
+- Do NOT suggest 31622 (Diagnostic bronchoscopy) if any therapeutic/surgical bronchoscopy code (31625-31661) is applicable.
+- 31654 (Radial EBUS) should only be suggested when targeting a peripheral lung lesion.
+
 For each code you suggest, provide:
 1. The CPT code
 2. Your confidence (0.0-1.0) that this code applies

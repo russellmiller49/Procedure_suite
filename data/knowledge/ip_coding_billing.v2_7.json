@@ -4062,6 +4062,7 @@
       "therapeutic_codes": [
         "31625",
         "31626",
+        "31627",
         "31628",
         "+31632",
         "31629",
@@ -4105,6 +4106,16 @@
         "+31654"
       ],
       "description": "Avoid double-counting linear and radial EBUS for the same nodal station set or peripheral lesion unless clearly distinct and separately documented sites are sampled."
+    },
+    "radial_requires_tblb": {
+      "enabled": true,
+      "radial_codes": ["+31654"],
+      "tblb_codes": ["31628", "+31632"],
+      "description": "Radial EBUS add-on (+31654) requires TBLB (31628/+31632) or documented peripheral lesion target."
+    },
+    "radial_linear_exclusive": {
+      "enabled": true,
+      "description": "Radial EBUS is generally not reported with linear EBUS unless targeting distinct peripheral lesion."
     },
     "tbna_with_ebus_tbna": {
       "conventional_tbna": [
