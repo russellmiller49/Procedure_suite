@@ -298,6 +298,49 @@ It is valid for a node to be appearance_category: "benign" with rose_result: "Ma
 Example minimal output when only size and ROSE are described:
 {"station": "11L", "size_mm": 5.4, "shape": null, "margin": null, "echogenicity": null, "chs_present": null, "appearance_category": null, "rose_result": "Nondiagnostic"}
 {"station": "4R", "size_mm": 5.5, "shape": null, "margin": null, "echogenicity": null, "chs_present": null, "appearance_category": null, "rose_result": "Benign"}""".strip(),
+    # ==========================================================================
+    # PROCEDURE CLASSIFICATION - CRITICAL DISTINCTIONS
+    # ==========================================================================
+
+    "transbronchial_biopsy": """
+TRANSBRONCHIAL LUNG BIOPSY (TBBx/TBLB) - Tissue sampling from lung PARENCHYMA.
+ONLY set performed=true when the note explicitly describes:
+- "Transbronchial biopsy", "TBBx", "TBLB", or "transbronchial lung biopsy"
+- Forceps biopsy of lung tissue (not airways)
+- Sampling from lung lobes/segments (RUL, RML, RLL, LUL, LLL + specific segments)
+
+DO NOT confuse with:
+- Therapeutic aspiration (cleaning out secretions/mucus from airways)
+- EBUS-TBNA (needle aspiration of lymph nodes)
+- Endobronchial biopsy (sampling from visible airway lesions)
+
+Locations must be PARENCHYMAL (lung tissue), not airways:
+- Valid: "RLL posterior basal", "LUL superior segment", "RUL"
+- Invalid (airways): "Trachea", "RMS", "LMS", "Carina", "Bronchus Intermedius"
+
+Return null if only therapeutic aspiration or EBUS-TBNA was performed.""".strip(),
+
+    "therapeutic_aspiration": """
+THERAPEUTIC ASPIRATION - Suctioning/removal of secretions, mucus, or blood from AIRWAYS.
+Set performed=true when the note describes:
+- "Therapeutic aspiration", "aspiration of secretions/mucus/blood"
+- "Suctioning" or "cleaning out" airways
+- Removal of mucus plugs
+
+Locations are AIRWAYS, not lung parenchyma:
+- Trachea, RMS (Right Mainstem), LMS (Left Mainstem), Carina
+- Bronchus Intermedius (BI), lobar carinas (RC1, RC2, LC1, LC2)
+
+Material types: "Mucus plug", "Blood/clot", "Purulent secretions", "Other"
+
+DO NOT confuse with transbronchial biopsy (tissue sampling from lung parenchyma).""".strip(),
+
+    "outcomes": """
+Procedure outcomes and disposition.
+- procedure_completed: true if the note indicates successful completion (e.g., "procedure completed", "patient tolerated well", "extubated", "transported to recovery")
+- complications: "None" if explicitly stated "no complications" or "no immediate complications". Set to specific complication type if documented.
+- disposition: Where patient went after procedure (Outpatient discharge, PACU recovery, Floor admission, ICU admission)""".strip(),
+
     "bronch_indication": """
 Brief indication for bronchoscopy (e.g., ILD workup). Use null if not documented.""".strip(),
     "bronch_location_lobe": """
@@ -522,6 +565,203 @@ VERIFICATION: Before returning any stations, confirm the note contains:
 - Explicit mention of lymph node station sampling with needle
 
 If unsure, return null/[] - it's better to miss stations than to hallucinate them.""".strip(),
+
+    # ============================================================================
+    # GRANULAR PER-SITE DATA EXTRACTION INSTRUCTIONS
+    # ============================================================================
+    # These fields capture detailed per-site/per-node data for research and QI.
+    # When populating, create one array element per site/station/target.
+    # ============================================================================
+
+    "granular_data": """
+Optional container for granular per-site registry data. This is an object containing arrays for detailed per-site data. Populate when detailed per-site information is documented.
+
+Structure:
+{
+  "linear_ebus_stations_detail": [...],
+  "navigation_targets": [...],
+  "cao_interventions_detail": [...],
+  "blvr_valve_placements": [...],
+  "blvr_chartis_measurements": [...],
+  "cryobiopsy_sites": [...],
+  "thoracoscopy_findings_detail": [...],
+  "specimens_collected": [...]
+}
+
+Return null if no granular data is documented. Only populate sub-arrays that have data.""".strip(),
+
+    "granular_data.linear_ebus_stations_detail": """
+Per-station EBUS-TBNA data. Create ONE object per lymph node station that was sampled OR described with morphology.
+
+For each station, extract:
+- station: Use IASLC naming (2R, 2L, 4R, 4L, 7, 10R, 10L, 11R, 11L, 12R, 12L)
+- short_axis_mm: Convert "0.54 cm" → 5.4, "5mm" → 5. For "1.2 x 0.8 cm" use shorter: 8
+- shape: Map "oval/elliptical/elongated" → "oval", "round/spherical" → "round", "lobulated/asymmetric" → "irregular"
+- margin: Map "well-defined/distinct/sharp" → "distinct", "ill-defined/blurred" → "indistinct"
+- echogenicity: "homogeneous" for uniform/homogeneous, "heterogeneous" for mixed/non-uniform
+- chs_present: true if "CHS present/preserved", false if "absent CHS/no CHS"
+- necrosis_present: true if "necrosis/coagulation necrosis sign" documented
+- morphologic_impression: Based on EBUS features ONLY (not ROSE/path):
+  - "benign" if: oval + CHS present + <10mm + homogeneous
+  - "malignant" if: round + CHS absent + ≥10mm + heterogeneous
+  - "suspicious" if: some but not all malignant features
+  - "indeterminate" if: mixed features or cannot determine
+  - null if: morphology not described
+- sampled: true if station was biopsied, false if only visualized
+- number_of_passes: Extract exact number if stated (e.g., "3 passes" → 3)
+- rose_result: ROSE finding for THIS station specifically (e.g., "Adequate lymphocytes", "Malignant")
+- needle_gauge: 19, 21, 22, or 25 if documented
+- needle_type: "Standard FNA", "FNB/ProCore", "Acquire", "ViziShot Flex"
+- specimen_sent_for: Array of destinations (Cytology, Cell block, Molecular/NGS, etc.)
+
+Return empty array [] if no linear EBUS performed or this is radial EBUS only.""".strip(),
+
+    "granular_data.navigation_targets": """
+Per-target data for navigation/robotic bronchoscopy. Create ONE object per target lesion.
+
+For each target, extract:
+- target_number: Sequential number (1, 2, 3...)
+- target_location_text: Full anatomic description (e.g., "RUL apical segment")
+- target_lobe: RUL, RML, RLL, LUL, LLL, or Lingula
+- target_segment: Segment name if documented
+- lesion_size_mm: Lesion size in mm (convert cm to mm)
+- distance_from_pleura_mm: Distance from pleura if documented
+- bronchus_sign: "Positive", "Negative", or "Not assessed"
+- ct_characteristics: "Solid", "Part-solid", "Ground-glass", "Cavitary", "Calcified"
+- pet_suv_max: SUV max value as float
+- navigation_successful: true if target was reached, false if aborted
+- rebus_used: true if radial EBUS used for this target
+- rebus_view: MUST be EXACTLY one of these values: "Concentric", "Eccentric", "Adjacent", "Not visualized" (do NOT use descriptive phrases like "Concentric radial EBUS view of lesion" - use ONLY the single-word enum value)
+- tool_in_lesion_confirmed: true if TIL confirmed (CBCT, fluoro, etc.)
+- confirmation_method: "CBCT", "Augmented fluoroscopy", "Fluoroscopy", "Radial EBUS", "None"
+- sampling_tools_used: Array of tools (Forceps, Needle (21G), Brush, Cryoprobe, etc.)
+- number_of_forceps_biopsies, number_of_needle_passes, number_of_cryo_biopsies: Counts
+- rose_performed, rose_result: ROSE for this target
+- immediate_complication: "None", "Bleeding - mild/moderate/severe", "Pneumothorax"
+- final_pathology: Final path result if documented
+
+EXAMPLE OUTPUT:
+{
+  "target_number": 1,
+  "target_location_text": "RUL posterior segment",
+  "target_lobe": "RUL",
+  "lesion_size_mm": 22,
+  "rebus_used": true,
+  "rebus_view": "Concentric",
+  "tool_in_lesion_confirmed": true,
+  "confirmation_method": "CBCT",
+  "sampling_tools_used": ["Forceps", "Needle"],
+  "number_of_forceps_biopsies": 5,
+  "immediate_complication": "None"
+}
+
+Return empty array [] if no navigation/robotic bronchoscopy.""".strip(),
+
+    "granular_data.cao_interventions_detail": """
+Per-site CAO (Central Airway Obstruction) intervention data. Create ONE object per treatment site.
+
+For each site, extract:
+- location: Trachea - proximal/mid/distal, Carina, RMS, LMS, BI, RUL, RML, RLL, LUL, LLL
+- obstruction_type: "Intraluminal", "Extrinsic", "Mixed"
+- etiology: Malignant - primary lung/metastatic/other, Benign - post-intubation/tracheostomy/anastomotic/inflammatory/granulation/web
+- length_mm: Length of obstruction in mm
+- pre_obstruction_pct, post_obstruction_pct: Percent obstruction before/after treatment (0-100)
+- pre_diameter_mm, post_diameter_mm: Airway diameter before/after
+- modalities_applied: Array of objects with:
+  - modality: APC, Electrocautery - snare/knife/probe, Cryotherapy - spray/contact, Cryoextraction, Laser, etc.
+  - power_setting_watts, balloon_diameter_mm, freeze_time_seconds, number_of_applications
+- hemostasis_required, hemostasis_methods: Bleeding control needed and methods used
+- stent_placed_at_site: true if stent deployed at this location
+
+Return empty array [] if no CAO procedure.""".strip(),
+
+    "granular_data.blvr_valve_placements": """
+Per-valve placement data for BLVR. Create ONE object per valve placed.
+
+For each valve, extract:
+- valve_number: Sequential number (1, 2, 3...)
+- target_lobe: RUL, RML, RLL, LUL, LLL, Lingula
+- segment: Specific segment (e.g., "LB1+2", "LB6", "apical")
+- airway_diameter_mm: Measured airway diameter
+- valve_size: Size as string (e.g., "4.0", "4.0-LP", "5.5", "6.0", "7.0")
+- valve_type: "Zephyr (Pulmonx)" or "Spiration (Olympus)"
+- deployment_method: "Standard" or "Retroflexed"
+- deployment_successful: true/false
+- seal_confirmed: true if visual confirmation of seal
+- repositioned: true if valve required repositioning
+
+Return empty array [] if no BLVR valve placement.""".strip(),
+
+    "granular_data.blvr_chartis_measurements": """
+Chartis collateral ventilation measurements for BLVR. Create ONE object per lobe/segment assessed.
+
+For each measurement:
+- lobe_assessed: RUL, RML, RLL, LUL, LLL, Lingula
+- segment_assessed: Specific segment if documented
+- measurement_duration_seconds: Duration of measurement
+- adequate_seal: true if adequate seal obtained
+- cv_result: "CV Negative", "CV Positive", "Indeterminate", "Low flow", "No seal", "Aborted"
+- flow_pattern_description: Free text description of flow pattern
+
+Return empty array [] if no Chartis performed.""".strip(),
+
+    "granular_data.cryobiopsy_sites": """
+Per-site transbronchial cryobiopsy data. Create ONE object per biopsy site.
+
+For each site:
+- site_number: Sequential number (1, 2, 3...)
+- lobe: RUL, RML, RLL, LUL, LLL, Lingula
+- segment: Segment name if documented
+- distance_from_pleura: ">2cm", "1-2cm", "<1cm", or "Not documented"
+- probe_size_mm: 1.1, 1.7, 1.9, or 2.4
+- freeze_time_seconds: Duration of freeze (typically 3-7 seconds)
+- number_of_biopsies: Count of biopsies from this site
+- specimen_size_mm: Approximate specimen size
+- blocker_used: true if Fogarty/balloon blocker used
+- blocker_type: "Fogarty", "Arndt", "Cohen", "Cryoprobe sheath"
+- bleeding_severity: "None/Scant", "Mild", "Moderate", "Severe"
+- bleeding_controlled_with: Method of hemostasis if needed
+- pneumothorax_after_site: true if PTX occurred after this site
+
+Return empty array [] if no transbronchial cryobiopsy.""".strip(),
+
+    "granular_data.thoracoscopy_findings_detail": """
+Per-location thoracoscopy/pleuroscopy findings. Create ONE object per distinct finding/location.
+
+For each finding:
+- location: Parietal pleura - chest wall/diaphragm/mediastinum, Visceral pleura, Lung parenchyma, etc.
+- finding_type: Normal, Nodules, Plaques, Studding, Mass, Adhesions - filmy/dense, Inflammation, etc.
+- extent: "Focal", "Multifocal", "Diffuse"
+- size_description: Size in text form
+- biopsied: true if biopsies taken from this site
+- number_of_biopsies: Count
+- biopsy_tool: "Rigid forceps", "Flexible forceps", "Cryoprobe"
+- impression: "Benign appearing", "Malignant appearing", "Infectious appearing", "Indeterminate"
+
+Return empty array [] if no thoracoscopy/pleuroscopy.""".strip(),
+
+    "granular_data.specimens_collected": """
+Unified specimen tracking with source linkage. Create ONE object per specimen/specimen jar.
+
+For each specimen:
+- specimen_number: Sequential number
+- source_procedure: EBUS-TBNA, Navigation biopsy, Endobronchial biopsy, Transbronchial biopsy, Transbronchial cryobiopsy, BAL, Bronchial wash, Brushing, Pleural biopsy, Pleural fluid
+- source_location: REQUIRED - Anatomic location of specimen origin (e.g., "4R", "RUL apical", "Left pleura"). Use the source_procedure as the location if specific location is not documented (e.g., "BAL", "Bronchial wash"). NEVER leave null.
+- collection_tool: Tool used (e.g., "22G FNA", "Forceps", "1.9mm cryoprobe")
+- specimen_count: Number of specimens in this jar/container
+- specimen_adequacy: "Adequate", "Limited", "Inadequate", "Pending"
+- destinations: Array of test types (Histology, Cytology, Cell block, Flow cytometry, Molecular/NGS, Culture, etc.)
+- rose_performed, rose_result: ROSE for this specimen
+- final_pathology_diagnosis: Final path result
+
+EXAMPLE OUTPUT:
+[
+  {"specimen_number": 1, "source_procedure": "EBUS-TBNA", "source_location": "4R", "collection_tool": "22G FNA", "specimen_count": 3, "destinations": ["Cytology", "Cell block"]},
+  {"specimen_number": 2, "source_procedure": "Navigation biopsy", "source_location": "RUL apical", "collection_tool": "Forceps", "specimen_count": 5, "destinations": ["Histology", "Molecular/NGS"]},
+  {"specimen_number": 3, "source_procedure": "BAL", "source_location": "BAL", "destinations": ["Culture", "Cytology"]}
+]
+
+Return empty array [] if no specimens documented.""".strip(),
 }
 
 

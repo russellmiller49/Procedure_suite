@@ -10,11 +10,15 @@ const api = {
         if (!resp.ok) throw new Error("Preview failed");
         return resp.json();
     },
-    async submit(text, submitted_by = "demo_physician", document_type = null, specialty = null) {
+    async submit(text, submitted_by = "demo_physician", document_type = null, specialty = null, confirmed_entities = null) {
+        const payload = { text, submitted_by, document_type, specialty };
+        if (confirmed_entities) {
+            payload.confirmed_entities = confirmed_entities;
+        }
         const resp = await fetch("/v1/phi/submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text, submitted_by, document_type, specialty }),
+            body: JSON.stringify(payload),
         });
         if (!resp.ok) throw new Error("Submit failed");
         return resp.json();
@@ -89,19 +93,116 @@ function setStatus(text, cls = "bg-secondary") {
     el.className = `badge ${cls}`;
 }
 
+let entityEditModal;
+
 function renderPreview(result) {
     const preview = $("scrubbed-preview");
     preview.textContent = result.scrubbed_text;
     preview.classList.remove("text-muted");
     const list = $("entity-list");
     list.innerHTML = "";
-    (result.entities || []).forEach((ent) => {
+    (result.entities || []).forEach((ent, idx) => {
         const badge = document.createElement("span");
-        badge.className = "badge bg-info text-dark entity-badge";
-        badge.textContent = `${ent.entity_type} → ${ent.placeholder}`;
+        badge.className = "badge bg-info text-dark entity-badge d-inline-flex align-items-center";
+        
+        const span = document.createElement("span");
+        span.textContent = `${ent.entity_type} → ${ent.placeholder}`;
+        badge.appendChild(span);
+
+        // Add edit button (pencil)
+        const editBtn = document.createElement("i");
+        editBtn.className = "bi bi-pencil-square ms-2";
+        editBtn.style.cursor = "pointer";
+        editBtn.onclick = () => openEditModal(idx);
+        badge.appendChild(editBtn);
+
+        // Add close button (x)
+        const closeBtn = document.createElement("i");
+        closeBtn.className = "bi bi-x ms-2";
+        closeBtn.style.cursor = "pointer";
+        closeBtn.onclick = () => removeEntity(idx);
+        badge.appendChild(closeBtn);
+
         list.appendChild(badge);
     });
     $("preview-meta").textContent = `${(result.entities || []).length} entities`;
+}
+
+function openEditModal(index) {
+    const ent = state.entities[index];
+    if (!ent) return;
+    
+    $("edit-entity-index").value = index;
+    $("edit-entity-type").value = ent.entity_type;
+    $("edit-entity-placeholder").value = ent.placeholder;
+    
+    if (!entityEditModal) {
+        entityEditModal = new bootstrap.Modal($("entityEditModal"));
+    }
+    entityEditModal.show();
+}
+
+function saveEntity() {
+    const index = parseInt($("edit-entity-index").value);
+    const type = $("edit-entity-type").value;
+    const placeholder = $("edit-entity-placeholder").value;
+    
+    if (state.entities[index]) {
+        state.entities[index].entity_type = type;
+        state.entities[index].placeholder = placeholder;
+        
+        // Re-generate preview text locally
+        const rawText = $("note-input").value || "";
+        const updatedScrubbedText = generateScrubbedText(rawText, state.entities);
+        state.scrubbedText = updatedScrubbedText;
+        
+        // Re-render
+        renderPreview({
+            scrubbed_text: updatedScrubbedText,
+            entities: state.entities
+        });
+    }
+    
+    if (entityEditModal) {
+        entityEditModal.hide();
+    }
+}
+
+function removeEntity(index) {
+    // Remove entity at index
+    state.entities.splice(index, 1);
+    
+    // Re-generate preview text locally
+    const rawText = $("note-input").value || "";
+    const updatedScrubbedText = generateScrubbedText(rawText, state.entities);
+    
+    state.scrubbedText = updatedScrubbedText;
+    
+    // Re-render
+    renderPreview({
+        scrubbed_text: updatedScrubbedText,
+        entities: state.entities
+    });
+}
+
+function generateScrubbedText(text, entities) {
+    // Client-side implementation of scrub_with_manual_entities
+    // 1. Sort entities by start desc
+    const sorted = [...entities].sort((a, b) => b.original_start - a.original_start);
+    
+    let chars = text.split("");
+    
+    sorted.forEach(ent => {
+        const start = ent.original_start;
+        const end = ent.original_end;
+        if (start < 0 || end > chars.length) return;
+        
+        const placeholder = ent.placeholder || `[${ent.entity_type}]`;
+        // Replace
+        chars.splice(start, end - start, ...placeholder.split(""));
+    });
+    
+    return chars.join("");
 }
 
 function renderStatus(status, procedureId) {
@@ -171,7 +272,8 @@ async function handleSubmit() {
     }
     setStatus("Submitting...", "bg-info text-dark");
     try {
-        const res = await api.submit(text, "demo_physician");
+        // Pass current state.entities as confirmed_entities to support manual overrides
+        const res = await api.submit(text, "demo_physician", null, null, state.entities);
         state.procedureId = res.procedure_id;
         renderStatus(res.status, res.procedure_id);
         $("btn-refresh-status").disabled = false;
@@ -272,6 +374,7 @@ function init() {
     $("btn-mark-reviewed").onclick = handleReview;
     $("btn-reidentify").onclick = handleReidentify;
     $("btn-create-case").onclick = createCase;
+    $("btn-save-entity").onclick = saveEntity;
     loadCases();
 }
 

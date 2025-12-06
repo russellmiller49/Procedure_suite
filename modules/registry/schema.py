@@ -10,6 +10,11 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, create_model
 
 from modules.common.spans import Span
+from modules.registry.schema_granular import (
+    EnhancedRegistryGranularData,
+    validate_ebus_consistency,
+    derive_aggregate_fields,
+)
 
 _SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
 
@@ -88,13 +93,28 @@ def _build_registry_model() -> type[BaseModel]:
     base_model = _build_submodel(("RegistryRecord",), schema)
 
     class RegistryRecord(base_model):  # type: ignore[misc,valid-type]
-        """Concrete registry record model with evidence fields."""
+        """Concrete registry record model with evidence fields.
+
+        Includes optional granular per-site data for research/QI.
+        When granular_data is present, aggregate fields can be derived automatically
+        using derive_aggregate_fields() for backward compatibility.
+        """
 
         model_config = ConfigDict(extra="ignore")
 
         evidence: dict[str, list[Span]] = Field(default_factory=dict)
         version: str | None = None
         procedure_families: list[str] = Field(default_factory=list)
+
+        # Granular per-site data (EBUS stations, navigation targets, CAO sites, etc.)
+        granular_data: EnhancedRegistryGranularData | None = Field(
+            default=None,
+            description="Optional granular per-site registry data for research/QI. "
+                        "Complements existing aggregate fields for backward compatibility."
+        )
+
+        # Validation warnings from granular data consistency checks
+        granular_validation_warnings: list[str] = Field(default_factory=list)
 
     RegistryRecord.__name__ = "RegistryRecord"
     return RegistryRecord
@@ -158,4 +178,8 @@ __all__ = [
     "AspirationEvent",
     "CaoIntervention",
     "BiopsySite",
+    # Granular data exports
+    "EnhancedRegistryGranularData",
+    "validate_ebus_consistency",
+    "derive_aggregate_fields",
 ]

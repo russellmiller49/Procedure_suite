@@ -3,20 +3,318 @@ let currentMode = 'coder';
 let lastResult = null;
 
 /**
+ * Convert snake_case to Title Case for display
+ */
+function toTitleCase(str) {
+    return str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+/**
+ * Format a boolean value as a badge
+ */
+function formatBool(val) {
+    if (val === null || val === undefined) return '';
+    return val ? '<span class="badge bg-success">Yes</span>' : '<span class="badge bg-secondary">No</span>';
+}
+
+/**
+ * Extract non-null fields from an object and format as readable list
+ */
+function formatObjectFields(obj, fieldLabels = {}) {
+    if (!obj || typeof obj !== 'object') return '<span class="text-muted">—</span>';
+
+    const parts = [];
+    for (const [key, value] of Object.entries(obj)) {
+        if (value === null || value === undefined) continue;
+
+        const label = fieldLabels[key] || toTitleCase(key);
+
+        if (typeof value === 'boolean') {
+            if (value) parts.push(`<strong>${label}</strong>`);
+        } else if (Array.isArray(value)) {
+            if (value.length > 0) {
+                parts.push(`<strong>${label}:</strong> ${value.join(', ')}`);
+            }
+        } else if (typeof value === 'object') {
+            // Nested object - recursively format
+            const nested = formatObjectFields(value);
+            if (nested !== '<span class="text-muted">—</span>') {
+                parts.push(`<strong>${label}:</strong> ${nested}`);
+            }
+        } else {
+            parts.push(`<strong>${label}:</strong> ${value}`);
+        }
+    }
+
+    if (parts.length === 0) return '<span class="text-muted">—</span>';
+    return parts.join(' · ');
+}
+
+/**
+ * Format providers object for human-readable display
+ */
+function formatProviders(providers) {
+    if (!providers) return '<span class="text-muted">—</span>';
+
+    const parts = [];
+    if (providers.attending_name) {
+        let attending = `<strong>Attending:</strong> ${providers.attending_name}`;
+        if (providers.attending_npi) attending += ` (NPI: ${providers.attending_npi})`;
+        parts.push(attending);
+    }
+    if (providers.fellow_name) {
+        let fellow = `<strong>Fellow:</strong> ${providers.fellow_name}`;
+        if (providers.fellow_pgy_level) fellow += ` (PGY-${providers.fellow_pgy_level})`;
+        parts.push(fellow);
+    }
+    if (providers.assistant_name) {
+        let assistant = `<strong>Assistant:</strong> ${providers.assistant_name}`;
+        if (providers.assistant_role) assistant += ` (${providers.assistant_role})`;
+        parts.push(assistant);
+    }
+    if (providers.trainee_present) parts.push('Trainee present');
+    if (providers.rose_present) parts.push('ROSE present');
+
+    if (parts.length === 0) return '<span class="text-muted">—</span>';
+    return parts.join('<br>');
+}
+
+/**
+ * Format clinical_context object for human-readable display
+ */
+function formatClinicalContext(ctx) {
+    if (!ctx) return '<span class="text-muted">—</span>';
+
+    const parts = [];
+    if (ctx.asa_class) parts.push(`<strong>ASA:</strong> ${ctx.asa_class}`);
+    if (ctx.primary_indication) parts.push(`<strong>Indication:</strong> ${ctx.primary_indication}`);
+    if (ctx.indication_category) parts.push(`<strong>Category:</strong> ${ctx.indication_category}`);
+    if (ctx.lesion_location) parts.push(`<strong>Location:</strong> ${ctx.lesion_location}`);
+    if (ctx.lesion_size_mm) parts.push(`<strong>Size:</strong> ${ctx.lesion_size_mm} mm`);
+    if (ctx.radiographic_findings) parts.push(`<strong>Imaging:</strong> ${ctx.radiographic_findings}`);
+    if (ctx.pet_avidity) parts.push(`<strong>PET:</strong> ${ctx.pet_avidity}`);
+    if (ctx.suv_max) parts.push(`<strong>SUV max:</strong> ${ctx.suv_max}`);
+    if (ctx.bronchus_sign !== null && ctx.bronchus_sign !== undefined) {
+        parts.push(`<strong>Bronchus sign:</strong> ${ctx.bronchus_sign ? 'Yes' : 'No'}`);
+    }
+
+    if (parts.length === 0) return '<span class="text-muted">—</span>';
+    return parts.join(' · ');
+}
+
+/**
+ * Format sedation object for human-readable display
+ */
+function formatSedation(sed) {
+    if (!sed) return '<span class="text-muted">—</span>';
+
+    const parts = [];
+    if (sed.type) parts.push(`<strong>Type:</strong> ${sed.type}`);
+    if (sed.anesthesia_provider) parts.push(`<strong>Provider:</strong> ${sed.anesthesia_provider}`);
+    if (sed.agents_used && sed.agents_used.length) parts.push(`<strong>Agents:</strong> ${sed.agents_used.join(', ')}`);
+    if (sed.paralytic_used) parts.push('Paralytic used');
+    if (sed.reversal_given) {
+        let rev = 'Reversal given';
+        if (sed.reversal_agent) rev += ` (${sed.reversal_agent})`;
+        parts.push(rev);
+    }
+    if (sed.intraservice_minutes) parts.push(`<strong>Duration:</strong> ${sed.intraservice_minutes} min`);
+
+    if (parts.length === 0) return '<span class="text-muted">—</span>';
+    return parts.join(' · ');
+}
+
+/**
+ * Format equipment object for human-readable display
+ */
+function formatEquipment(eq) {
+    if (!eq) return '<span class="text-muted">—</span>';
+
+    const parts = [];
+    if (eq.bronchoscope_type) parts.push(`<strong>Scope:</strong> ${eq.bronchoscope_type}`);
+    if (eq.bronchoscope_model) parts.push(`(${eq.bronchoscope_model})`);
+    if (eq.bronchoscope_outer_diameter_mm) parts.push(`${eq.bronchoscope_outer_diameter_mm} mm OD`);
+    if (eq.fluoroscopy_used) {
+        let fluoro = 'Fluoroscopy';
+        if (eq.fluoroscopy_time_seconds) fluoro += ` (${eq.fluoroscopy_time_seconds}s)`;
+        parts.push(fluoro);
+    }
+    if (eq.navigation_platform) parts.push(`<strong>Navigation:</strong> ${eq.navigation_platform}`);
+    if (eq.cbct_used) parts.push('CBCT');
+    if (eq.augmented_fluoroscopy) parts.push('Augmented fluoroscopy');
+
+    if (parts.length === 0) return '<span class="text-muted">—</span>';
+    return parts.join(' · ');
+}
+
+/**
+ * Format a single procedure sub-object (e.g., airway_stent, transbronchial_biopsy)
+ */
+function formatProcedureDetail(proc, procName) {
+    if (!proc || typeof proc !== 'object') return null;
+    if (proc.performed === false) return null;
+
+    const parts = [];
+
+    // Common fields
+    if (proc.locations && proc.locations.length) parts.push(`locations: ${proc.locations.join(', ')}`);
+    if (proc.location) parts.push(`location: ${proc.location}`);
+    if (proc.number_of_samples) parts.push(`${proc.number_of_samples} samples`);
+    if (proc.stent_type) parts.push(`type: ${proc.stent_type}`);
+    if (proc.stent_brand) parts.push(`brand: ${proc.stent_brand}`);
+    if (proc.diameter_mm) parts.push(`${proc.diameter_mm} mm`);
+    if (proc.length_mm) parts.push(`${proc.length_mm} mm length`);
+    if (proc.forceps_type) parts.push(`forceps: ${proc.forceps_type}`);
+    if (proc.cryoprobe_size_mm) parts.push(`cryo: ${proc.cryoprobe_size_mm} mm`);
+    if (proc.action) parts.push(`action: ${proc.action}`);
+    if (proc.indication) parts.push(`indication: ${proc.indication}`);
+    if (proc.deployment_successful !== null && proc.deployment_successful !== undefined) {
+        parts.push(proc.deployment_successful ? 'successful' : 'unsuccessful');
+    }
+
+    const detail = parts.length > 0 ? ` (${parts.join(', ')})` : '';
+    return `<strong>${toTitleCase(procName)}</strong>${detail}`;
+}
+
+/**
+ * Format procedures_performed object for human-readable display
+ */
+function formatProceduresPerformed(procs) {
+    if (!procs) return '<span class="text-muted">—</span>';
+
+    const items = [];
+
+    // Simple boolean procedures
+    const simpleProcs = [
+        'diagnostic_bronchoscopy', 'bal', 'bronchial_wash', 'brushings',
+        'endobronchial_biopsy', 'tbna_conventional', 'linear_ebus', 'radial_ebus',
+        'navigational_bronchoscopy', 'therapeutic_aspiration', 'foreign_body_removal',
+        'cryotherapy', 'photodynamic_therapy', 'brachytherapy_catheter',
+        'bronchial_thermoplasty', 'whole_lung_lavage', 'rigid_bronchoscopy'
+    ];
+
+    for (const proc of simpleProcs) {
+        if (procs[proc] === true) {
+            items.push(`<strong>${toTitleCase(proc)}</strong>`);
+        }
+    }
+
+    // Complex procedures with sub-objects
+    const complexProcs = [
+        'transbronchial_biopsy', 'transbronchial_cryobiopsy', 'airway_dilation',
+        'airway_stent', 'thermal_ablation', 'mechanical_debulking', 'blvr', 'peripheral_ablation'
+    ];
+
+    for (const proc of complexProcs) {
+        if (procs[proc] && typeof procs[proc] === 'object') {
+            const formatted = formatProcedureDetail(procs[proc], proc);
+            if (formatted) items.push(formatted);
+        }
+    }
+
+    if (items.length === 0) return '<span class="text-muted">—</span>';
+    return '<ul class="list-unstyled mb-0" style="font-size: 0.9em;">' +
+           items.map(i => `<li>${i}</li>`).join('') + '</ul>';
+}
+
+/**
+ * Format complications object for human-readable display
+ */
+function formatComplications(comp) {
+    if (!comp) return '<span class="text-muted">—</span>';
+
+    if (comp.any_complication === false) {
+        return '<span class="badge bg-success">None</span>';
+    }
+
+    const parts = [];
+
+    if (comp.complication_list && comp.complication_list.length) {
+        parts.push(`<strong>Complications:</strong> ${comp.complication_list.join(', ')}`);
+    }
+
+    if (comp.bleeding) {
+        let bleed = 'Bleeding';
+        if (typeof comp.bleeding === 'object') {
+            if (comp.bleeding.severity) bleed += ` (${comp.bleeding.severity})`;
+        }
+        parts.push(bleed);
+    }
+
+    if (comp.pneumothorax) {
+        let ptx = 'Pneumothorax';
+        if (typeof comp.pneumothorax === 'object') {
+            if (comp.pneumothorax.chest_tube_required) ptx += ' (chest tube)';
+        }
+        parts.push(ptx);
+    }
+
+    if (comp.respiratory) {
+        const resp = comp.respiratory;
+        const respParts = [];
+        if (resp.hypoxia_occurred) {
+            let hyp = 'Hypoxia';
+            if (resp.lowest_spo2) hyp += ` (SpO2 ${resp.lowest_spo2}%)`;
+            respParts.push(hyp);
+        }
+        if (resp.intubation_required) respParts.push('Intubation required');
+        if (resp.respiratory_failure) respParts.push('Respiratory failure');
+        if (respParts.length) parts.push(respParts.join(', '));
+    }
+
+    if (comp.other_complication_details) {
+        parts.push(`Other: ${comp.other_complication_details}`);
+    }
+
+    if (parts.length === 0 && comp.any_complication) {
+        return '<span class="badge bg-warning text-dark">Yes (details unknown)</span>';
+    }
+
+    if (parts.length === 0) return '<span class="text-muted">—</span>';
+    return parts.join('<br>');
+}
+
+/**
+ * Format outcomes object for human-readable display
+ */
+function formatOutcomes(out) {
+    if (!out) return '<span class="text-muted">—</span>';
+
+    const parts = [];
+
+    if (out.procedure_completed !== null && out.procedure_completed !== undefined) {
+        parts.push(out.procedure_completed ?
+            '<span class="badge bg-success">Completed</span>' :
+            '<span class="badge bg-warning text-dark">Incomplete</span>');
+    }
+    if (out.procedure_aborted_reason) parts.push(`Aborted: ${out.procedure_aborted_reason}`);
+    if (out.preliminary_diagnosis) parts.push(`<strong>Dx:</strong> ${out.preliminary_diagnosis}`);
+    if (out.preliminary_staging) parts.push(`<strong>Stage:</strong> ${out.preliminary_staging}`);
+    if (out.disposition) parts.push(`<strong>Disposition:</strong> ${out.disposition}`);
+    if (out.follow_up_plan_text) parts.push(`<strong>Follow-up:</strong> ${out.follow_up_plan_text}`);
+    if (out.follow_up_actions && out.follow_up_actions.length) {
+        parts.push(`<strong>Actions:</strong> ${out.follow_up_actions.join(', ')}`);
+    }
+
+    if (parts.length === 0) return '<span class="text-muted">—</span>';
+    return parts.join(' · ');
+}
+
+/**
  * Format registry values for display, handling complex types like arrays and objects.
  * Special handling for EBUS station details and other structured fields.
  */
 function formatRegistryValue(key, value) {
     // Handle null/undefined
     if (value === null || value === undefined) {
-        return '<span class="text-muted">null</span>';
+        return '<span class="text-muted">—</span>';
     }
 
     // Handle arrays
     if (Array.isArray(value)) {
         // Empty array
         if (value.length === 0) {
-            return '<span class="text-muted">[]</span>';
+            return '<span class="text-muted">—</span>';
         }
 
         // Special handling for ebus_stations_detail - MUST come first before primitive check
@@ -34,18 +332,47 @@ function formatRegistryValue(key, value) {
             return value.join(', ');
         }
 
-        // Array of objects - format as expandable JSON
-        return `<pre class="mb-0 small bg-light p-1 border rounded" style="max-height: 150px; overflow-y: auto;">${JSON.stringify(value, null, 2)}</pre>`;
+        // Array of objects - format as expandable list
+        return '<ul class="list-unstyled mb-0 small">' +
+               value.map(v => `<li>${formatObjectFields(v)}</li>`).join('') + '</ul>';
     }
 
-    // Handle objects (but not null, which typeof also reports as 'object')
+    // Handle objects with specialized formatters based on key
     if (typeof value === 'object' && value !== null) {
-        return `<pre class="mb-0 small bg-light p-1 border rounded" style="max-height: 150px; overflow-y: auto;">${JSON.stringify(value, null, 2)}</pre>`;
+        switch (key) {
+            case 'providers':
+                return formatProviders(value);
+            case 'clinical_context':
+                return formatClinicalContext(value);
+            case 'sedation':
+                return formatSedation(value);
+            case 'equipment':
+                return formatEquipment(value);
+            case 'procedures_performed':
+                return formatProceduresPerformed(value);
+            case 'complications':
+                return formatComplications(value);
+            case 'outcomes':
+                return formatOutcomes(value);
+            case 'granular_data':
+                return formatGranularData(value);
+            case 'patient_demographics':
+            case 'procedure_setting':
+            case 'pleural_procedures':
+            case 'specimens':
+            case 'pathology_results':
+            case 'billing':
+            case 'metadata':
+                return formatObjectFields(value);
+            default:
+                // Unknown object - use generic formatter
+                return formatObjectFields(value);
+        }
     }
 
     // Handle booleans
     if (typeof value === 'boolean') {
-        return value ? '<span class="badge bg-success">true</span>' : '<span class="badge bg-secondary">false</span>';
+        return value ? '<span class="badge bg-success">Yes</span>' : '<span class="badge bg-secondary">No</span>';
     }
 
     // Default: return as-is (strings, numbers)
@@ -128,6 +455,835 @@ function deriveRoseSummary(stations, globalRose) {
     // Mixed results - show each station's result
     const summary = stationRose.map(s => `${s.station}: ${s.rose}`).join(', ');
     return `<span class="badge bg-warning text-dark">Mixed</span> (${summary})`;
+}
+
+// ============================================================================
+// GRANULAR DATA FORMATTERS
+// ============================================================================
+
+/**
+ * Format the granular_data container with all per-site arrays
+ */
+function formatGranularData(data) {
+    if (!data || typeof data !== 'object') {
+        return '<span class="text-muted">—</span>';
+    }
+
+    const sections = [];
+
+    // EBUS Stations Detail
+    if (data.linear_ebus_stations_detail && data.linear_ebus_stations_detail.length > 0) {
+        sections.push({
+            title: '🔬 EBUS Stations',
+            icon: 'bi-bullseye',
+            color: 'primary',
+            content: formatGranularEbusStations(data.linear_ebus_stations_detail)
+        });
+    }
+
+    // Navigation Targets
+    if (data.navigation_targets && data.navigation_targets.length > 0) {
+        sections.push({
+            title: '🎯 Navigation Targets',
+            icon: 'bi-geo-alt',
+            color: 'success',
+            content: formatGranularNavTargets(data.navigation_targets)
+        });
+    }
+
+    // CAO Interventions
+    if (data.cao_interventions_detail && data.cao_interventions_detail.length > 0) {
+        sections.push({
+            title: '⚡ CAO Interventions',
+            icon: 'bi-lightning',
+            color: 'danger',
+            content: formatGranularCAO(data.cao_interventions_detail)
+        });
+    }
+
+    // BLVR Valves
+    if (data.blvr_valve_placements && data.blvr_valve_placements.length > 0) {
+        sections.push({
+            title: '🫁 BLVR Valves',
+            icon: 'bi-plug',
+            color: 'info',
+            content: formatGranularBLVRValves(data.blvr_valve_placements)
+        });
+    }
+
+    // Chartis Measurements
+    if (data.blvr_chartis_measurements && data.blvr_chartis_measurements.length > 0) {
+        sections.push({
+            title: '📊 Chartis Measurements',
+            icon: 'bi-graph-up',
+            color: 'info',
+            content: formatGranularChartis(data.blvr_chartis_measurements)
+        });
+    }
+
+    // Cryobiopsy Sites
+    if (data.cryobiopsy_sites && data.cryobiopsy_sites.length > 0) {
+        sections.push({
+            title: '❄️ Cryobiopsy Sites',
+            icon: 'bi-snow',
+            color: 'primary',
+            content: formatGranularCryobiopsy(data.cryobiopsy_sites)
+        });
+    }
+
+    // Thoracoscopy Findings
+    if (data.thoracoscopy_findings_detail && data.thoracoscopy_findings_detail.length > 0) {
+        sections.push({
+            title: '👁️ Thoracoscopy Findings',
+            icon: 'bi-eye',
+            color: 'warning',
+            content: formatGranularThoracoscopy(data.thoracoscopy_findings_detail)
+        });
+    }
+
+    // Specimens Collected
+    if (data.specimens_collected && data.specimens_collected.length > 0) {
+        sections.push({
+            title: '🧪 Specimens Collected',
+            icon: 'bi-cup',
+            color: 'secondary',
+            content: formatGranularSpecimens(data.specimens_collected)
+        });
+    }
+
+    if (sections.length === 0) {
+        return '<span class="text-muted">No granular data</span>';
+    }
+
+    // Build accordion-style display
+    let html = '<div class="granular-data-container">';
+    sections.forEach((section, idx) => {
+        html += `
+            <div class="card mb-2 border-${section.color}">
+                <div class="card-header py-1 px-2 bg-${section.color} bg-opacity-10">
+                    <strong class="text-${section.color}">${section.title}</strong>
+                </div>
+                <div class="card-body py-2 px-2" style="font-size: 0.85em;">
+                    ${section.content}
+                </div>
+            </div>
+        `;
+    });
+    html += '</div>';
+
+    return html;
+}
+
+/**
+ * Format granular EBUS station details
+ */
+function formatGranularEbusStations(stations) {
+    if (!stations || stations.length === 0) return '<span class="text-muted">—</span>';
+
+    let html = '<div class="table-responsive"><table class="table table-sm table-bordered mb-0" style="font-size: 0.9em;">';
+    html += `<thead class="table-light">
+        <tr>
+            <th>Station</th>
+            <th>Size</th>
+            <th>Morphology</th>
+            <th>Impression</th>
+            <th>Passes</th>
+            <th>ROSE</th>
+        </tr>
+    </thead><tbody>`;
+
+    stations.forEach(s => {
+        const station = s.station || '?';
+        const size = s.short_axis_mm ? `${s.short_axis_mm} mm` : '—';
+
+        // Build morphology summary
+        const morphParts = [];
+        if (s.shape) morphParts.push(s.shape);
+        if (s.echogenicity) morphParts.push(s.echogenicity);
+        if (s.chs_present !== null && s.chs_present !== undefined) {
+            morphParts.push(s.chs_present ? 'CHS+' : 'CHS−');
+        }
+        if (s.necrosis_present) morphParts.push('necrosis');
+        const morphology = morphParts.length > 0 ? morphParts.join(', ') : '—';
+
+        // Impression badge
+        let impressionBadge = '—';
+        if (s.morphologic_impression) {
+            const colors = {
+                'benign': 'success',
+                'suspicious': 'warning',
+                'malignant': 'danger',
+                'indeterminate': 'secondary'
+            };
+            const color = colors[s.morphologic_impression] || 'secondary';
+            impressionBadge = `<span class="badge bg-${color}">${s.morphologic_impression}</span>`;
+        }
+
+        const passes = s.number_of_passes || '—';
+
+        // ROSE result
+        let roseBadge = '—';
+        if (s.rose_result) {
+            const roseColors = {
+                'Malignant': 'danger',
+                'Suspicious for malignancy': 'warning',
+                'Adequate lymphocytes': 'success',
+                'Granuloma': 'info',
+                'Nondiagnostic': 'secondary'
+            };
+            const rColor = roseColors[s.rose_result] || 'light';
+            roseBadge = `<span class="badge bg-${rColor}">${s.rose_result}</span>`;
+        }
+
+        html += `<tr>
+            <td><strong>${station}</strong>${s.sampled === false ? ' <small class="text-muted">(not sampled)</small>' : ''}</td>
+            <td>${size}</td>
+            <td>${morphology}</td>
+            <td>${impressionBadge}</td>
+            <td>${passes}</td>
+            <td>${roseBadge}</td>
+        </tr>`;
+    });
+
+    html += '</tbody></table></div>';
+    return html;
+}
+
+/**
+ * Format granular navigation targets
+ */
+function formatGranularNavTargets(targets) {
+    if (!targets || targets.length === 0) return '<span class="text-muted">—</span>';
+
+    let html = '<div class="table-responsive"><table class="table table-sm table-bordered mb-0" style="font-size: 0.9em;">';
+    html += `<thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Location</th>
+            <th>Size</th>
+            <th>rEBUS</th>
+            <th>TIL</th>
+            <th>Samples</th>
+            <th>ROSE</th>
+        </tr>
+    </thead><tbody>`;
+
+    targets.forEach(t => {
+        const num = t.target_number || '?';
+        const loc = t.target_location_text || t.target_lobe || '—';
+        const size = t.lesion_size_mm ? `${t.lesion_size_mm} mm` : '—';
+
+        // rEBUS view
+        let rebusView = '—';
+        if (t.rebus_used && t.rebus_view) {
+            const viewColors = {
+                'Concentric': 'success',
+                'Eccentric': 'warning',
+                'Adjacent': 'info',
+                'Not visualized': 'secondary'
+            };
+            rebusView = `<span class="badge bg-${viewColors[t.rebus_view] || 'light'}">${t.rebus_view}</span>`;
+        } else if (t.rebus_used === false) {
+            rebusView = '<span class="text-muted">not used</span>';
+        }
+
+        // TIL confirmation
+        let tilBadge = '—';
+        if (t.tool_in_lesion_confirmed !== null && t.tool_in_lesion_confirmed !== undefined) {
+            if (t.tool_in_lesion_confirmed) {
+                const method = t.confirmation_method ? ` (${t.confirmation_method})` : '';
+                tilBadge = `<span class="badge bg-success">✓ TIL${method}</span>`;
+            } else {
+                tilBadge = `<span class="badge bg-warning text-dark">✗ No TIL</span>`;
+            }
+        }
+
+        // Sampling tools
+        const samples = [];
+        if (t.number_of_forceps_biopsies) samples.push(`${t.number_of_forceps_biopsies} forceps`);
+        if (t.number_of_needle_passes) samples.push(`${t.number_of_needle_passes} needle`);
+        if (t.number_of_cryo_biopsies) samples.push(`${t.number_of_cryo_biopsies} cryo`);
+        const sampleStr = samples.length > 0 ? samples.join(', ') : '—';
+
+        // ROSE
+        const rose = t.rose_result || '—';
+
+        html += `<tr>
+            <td><strong>${num}</strong></td>
+            <td>${loc}</td>
+            <td>${size}</td>
+            <td>${rebusView}</td>
+            <td>${tilBadge}</td>
+            <td>${sampleStr}</td>
+            <td>${rose}</td>
+        </tr>`;
+    });
+
+    html += '</tbody></table></div>';
+    return html;
+}
+
+/**
+ * Format granular CAO interventions
+ */
+function formatGranularCAO(interventions) {
+    if (!interventions || interventions.length === 0) return '<span class="text-muted">—</span>';
+
+    let html = '<ul class="list-unstyled mb-0">';
+
+    interventions.forEach(i => {
+        const location = i.location || '?';
+        const parts = [];
+
+        if (i.obstruction_type) parts.push(i.obstruction_type);
+        if (i.etiology) parts.push(i.etiology);
+
+        // Obstruction change
+        if (i.pre_obstruction_pct !== null && i.post_obstruction_pct !== null) {
+            const improvement = i.pre_obstruction_pct - i.post_obstruction_pct;
+            parts.push(`<span class="badge bg-success">${i.pre_obstruction_pct}% → ${i.post_obstruction_pct}%</span> (−${improvement}%)`);
+        }
+
+        // Modalities
+        if (i.modalities_applied && i.modalities_applied.length > 0) {
+            const mods = i.modalities_applied.map(m => {
+                let modStr = m.modality;
+                if (m.power_setting_watts) modStr += ` ${m.power_setting_watts}W`;
+                if (m.number_of_applications) modStr += ` ×${m.number_of_applications}`;
+                return modStr;
+            }).join(', ');
+            parts.push(`<strong>Modalities:</strong> ${mods}`);
+        }
+
+        // Hemostasis
+        if (i.hemostasis_required) {
+            const methods = i.hemostasis_methods ? i.hemostasis_methods.join(', ') : 'methods unknown';
+            parts.push(`<span class="badge bg-warning text-dark">Hemostasis: ${methods}</span>`);
+        }
+
+        // Stent
+        if (i.stent_placed_at_site) {
+            parts.push('<span class="badge bg-info">Stent placed</span>');
+        }
+
+        const details = parts.length > 0 ? '<br>' + parts.join('<br>') : '';
+        html += `<li class="mb-2"><strong class="text-danger">${location}</strong>${details}</li>`;
+    });
+
+    html += '</ul>';
+    return html;
+}
+
+/**
+ * Format granular BLVR valve placements
+ */
+function formatGranularBLVRValves(valves) {
+    if (!valves || valves.length === 0) return '<span class="text-muted">—</span>';
+
+    let html = '<div class="table-responsive"><table class="table table-sm table-bordered mb-0" style="font-size: 0.9em;">';
+    html += `<thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Lobe</th>
+            <th>Segment</th>
+            <th>Size</th>
+            <th>Type</th>
+            <th>Status</th>
+        </tr>
+    </thead><tbody>`;
+
+    valves.forEach(v => {
+        const num = v.valve_number || '?';
+        const lobe = v.target_lobe || '—';
+        const segment = v.segment || '—';
+        const size = v.valve_size || '—';
+        const type = v.valve_type ? v.valve_type.replace(/\s*\([^)]*\)/, '') : '—'; // Remove brand in parens
+
+        let status = '—';
+        if (v.deployment_successful === true) {
+            status = '<span class="badge bg-success">✓ Deployed</span>';
+            if (v.seal_confirmed) status += ' <small class="text-success">sealed</small>';
+            if (v.repositioned) status += ' <small class="text-warning">(repositioned)</small>';
+        } else if (v.deployment_successful === false) {
+            status = '<span class="badge bg-danger">✗ Failed</span>';
+        }
+
+        html += `<tr>
+            <td>${num}</td>
+            <td><strong>${lobe}</strong></td>
+            <td>${segment}</td>
+            <td>${size}</td>
+            <td>${type}</td>
+            <td>${status}</td>
+        </tr>`;
+    });
+
+    html += '</tbody></table></div>';
+    return html;
+}
+
+/**
+ * Format granular Chartis measurements
+ */
+function formatGranularChartis(measurements) {
+    if (!measurements || measurements.length === 0) return '<span class="text-muted">—</span>';
+
+    let html = '<ul class="list-unstyled mb-0">';
+
+    measurements.forEach(m => {
+        const lobe = m.lobe_assessed || '?';
+        const segment = m.segment_assessed ? ` (${m.segment_assessed})` : '';
+
+        let resultBadge = '—';
+        if (m.cv_result) {
+            const colors = {
+                'CV Negative': 'success',
+                'CV Positive': 'danger',
+                'Indeterminate': 'warning',
+                'Low flow': 'warning',
+                'No seal': 'secondary',
+                'Aborted': 'secondary'
+            };
+            resultBadge = `<span class="badge bg-${colors[m.cv_result] || 'light'}">${m.cv_result}</span>`;
+        }
+
+        const duration = m.measurement_duration_seconds ? ` · ${m.measurement_duration_seconds}s` : '';
+        const seal = m.adequate_seal === true ? ' · seal ✓' : (m.adequate_seal === false ? ' · no seal' : '');
+
+        html += `<li><strong>${lobe}</strong>${segment}: ${resultBadge}${duration}${seal}</li>`;
+    });
+
+    html += '</ul>';
+    return html;
+}
+
+/**
+ * Format granular cryobiopsy sites
+ */
+function formatGranularCryobiopsy(sites) {
+    if (!sites || sites.length === 0) return '<span class="text-muted">—</span>';
+
+    let html = '<div class="table-responsive"><table class="table table-sm table-bordered mb-0" style="font-size: 0.9em;">';
+    html += `<thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Location</th>
+            <th>Probe</th>
+            <th>Freeze</th>
+            <th>Biopsies</th>
+            <th>Bleeding</th>
+        </tr>
+    </thead><tbody>`;
+
+    sites.forEach(s => {
+        const num = s.site_number || '?';
+        const loc = s.lobe + (s.segment ? ` ${s.segment}` : '');
+        const probe = s.probe_size_mm ? `${s.probe_size_mm}mm` : '—';
+        const freeze = s.freeze_time_seconds ? `${s.freeze_time_seconds}s` : '—';
+        const biopsies = s.number_of_biopsies || '—';
+
+        let bleeding = '—';
+        if (s.bleeding_severity) {
+            const colors = {
+                'None/Scant': 'success',
+                'Mild': 'info',
+                'Moderate': 'warning',
+                'Severe': 'danger'
+            };
+            bleeding = `<span class="badge bg-${colors[s.bleeding_severity] || 'light'}">${s.bleeding_severity}</span>`;
+        }
+
+        html += `<tr>
+            <td>${num}</td>
+            <td><strong>${loc}</strong></td>
+            <td>${probe}</td>
+            <td>${freeze}</td>
+            <td>${biopsies}</td>
+            <td>${bleeding}</td>
+        </tr>`;
+    });
+
+    html += '</tbody></table></div>';
+    return html;
+}
+
+/**
+ * Format granular thoracoscopy findings
+ */
+function formatGranularThoracoscopy(findings) {
+    if (!findings || findings.length === 0) return '<span class="text-muted">—</span>';
+
+    let html = '<ul class="list-unstyled mb-0">';
+
+    findings.forEach(f => {
+        const location = f.location || '?';
+        const finding = f.finding_type || '—';
+        const extent = f.extent ? ` (${f.extent})` : '';
+
+        let impressionBadge = '';
+        if (f.impression) {
+            const colors = {
+                'Benign appearing': 'success',
+                'Malignant appearing': 'danger',
+                'Infectious appearing': 'warning',
+                'Indeterminate': 'secondary'
+            };
+            impressionBadge = ` <span class="badge bg-${colors[f.impression] || 'light'}">${f.impression}</span>`;
+        }
+
+        let biopsy = '';
+        if (f.biopsied) {
+            const count = f.number_of_biopsies ? `${f.number_of_biopsies}×` : '';
+            const tool = f.biopsy_tool ? ` ${f.biopsy_tool}` : '';
+            biopsy = ` · <small class="text-info">${count}biopsied${tool}</small>`;
+        }
+
+        html += `<li><strong>${location}</strong>: ${finding}${extent}${impressionBadge}${biopsy}</li>`;
+    });
+
+    html += '</ul>';
+    return html;
+}
+
+/**
+ * Format granular specimens collected
+ */
+function formatGranularSpecimens(specimens) {
+    if (!specimens || specimens.length === 0) return '<span class="text-muted">—</span>';
+
+    let html = '<div class="table-responsive"><table class="table table-sm table-bordered mb-0" style="font-size: 0.9em;">';
+    html += `<thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Source</th>
+            <th>Location</th>
+            <th>Tool</th>
+            <th>Destinations</th>
+            <th>ROSE</th>
+        </tr>
+    </thead><tbody>`;
+
+    specimens.forEach(s => {
+        const num = s.specimen_number || '?';
+        const source = s.source_procedure || '—';
+        const location = s.source_location || '—';
+        const tool = s.collection_tool || '—';
+
+        let destinations = '—';
+        if (s.destinations && s.destinations.length > 0) {
+            destinations = s.destinations.map(d => {
+                // Abbreviate long names
+                const abbrev = {
+                    'Histology/Surgical pathology': 'Histo',
+                    'Molecular/NGS': 'NGS',
+                    'Flow cytometry': 'Flow',
+                    'Cell block': 'CB',
+                    'Bacterial culture': 'Bact',
+                    'AFB culture': 'AFB',
+                    'Fungal culture': 'Fungal'
+                };
+                return abbrev[d] || d;
+            }).join(', ');
+        }
+
+        let rose = '—';
+        if (s.rose_result) {
+            rose = s.rose_result;
+        }
+
+        html += `<tr>
+            <td>${num}</td>
+            <td>${source}</td>
+            <td><strong>${location}</strong></td>
+            <td>${tool}</td>
+            <td><small>${destinations}</small></td>
+            <td>${rose}</td>
+        </tr>`;
+    });
+
+    html += '</tbody></table></div>';
+    return html;
+}
+
+// ============================================================================
+// END GRANULAR DATA FORMATTERS
+// ============================================================================
+
+function getPreferredFieldValue(field) {
+    if (
+        field &&
+        typeof field === "object" &&
+        !Array.isArray(field) &&
+        ("clean" in field || "raw" in field)
+    ) {
+        return field.clean ?? field.raw;
+    }
+    return field;
+}
+
+function buildScopeSummary(equipment) {
+    const equip = getPreferredFieldValue(equipment);
+    if (!equip || typeof equip !== "object") return null;
+
+    const parts = [];
+
+    const formatMillimeters = (value) => {
+        const preferred = getPreferredFieldValue(value);
+        if (preferred === null || preferred === undefined) {
+            return null;
+        }
+        if (typeof preferred === "number" && !Number.isNaN(preferred)) {
+            return `${preferred} mm`;
+        }
+        if (typeof preferred === "string") {
+            const trimmed = preferred.trim();
+            if (!trimmed) return null;
+            if (/\bmm\b/i.test(trimmed)) {
+                return trimmed.replace(/\s+/g, " ").trim();
+            }
+            return `${trimmed} mm`;
+        }
+        return `${preferred} mm`;
+    };
+
+    const buildRigidLabel = (diameter) => {
+        const od = formatMillimeters(diameter);
+        if (!od) return "Rigid bronchoscope";
+        const lower = od.toLowerCase();
+        if (lower.includes("od")) {
+            return `Rigid bronchoscope – ${od}`;
+        }
+        return `Rigid bronchoscope – ${od} OD`;
+    };
+
+    const buildFlexibleLabel = (channel, diameter) => {
+        const chan = formatMillimeters(channel);
+        if (chan) {
+            const lowerChan = chan.toLowerCase();
+            if (lowerChan.includes("channel")) {
+                return `Flexible bronchoscope – ${chan}`;
+            }
+            return `Flexible bronchoscope – ${chan} working channel`;
+        }
+        const od = formatMillimeters(diameter);
+        if (!od) return "Flexible bronchoscope";
+        const lower = od.toLowerCase();
+        if (lower.includes("od")) {
+            return `Flexible bronchoscope – ${od}`;
+        }
+        return `Flexible bronchoscope – ${od} OD`;
+    };
+
+    const pushRigidScopes = (scopes) => {
+        if (!Array.isArray(scopes)) return;
+        scopes.forEach(scope => {
+            const entry = getPreferredFieldValue(scope) || scope || {};
+            parts.push(
+                buildRigidLabel(
+                    entry.outer_diameter_mm ??
+                    entry.bronchoscope_outer_diameter_mm ??
+                    entry.od_mm
+                )
+            );
+        });
+    };
+
+    const pushFlexibleScopes = (scopes) => {
+        if (!Array.isArray(scopes)) return;
+        scopes.forEach(scope => {
+            const entry = getPreferredFieldValue(scope) || scope || {};
+            parts.push(
+                buildFlexibleLabel(
+                    entry.working_channel_mm ??
+                    entry.bronchoscope_working_channel_mm ??
+                    entry.working_channel_size_mm,
+                    entry.outer_diameter_mm ??
+                    entry.bronchoscope_outer_diameter_mm ??
+                    entry.od_mm
+                )
+            );
+        });
+    };
+
+    pushRigidScopes(getPreferredFieldValue(equip.rigid_bronchoscopes));
+    pushFlexibleScopes(getPreferredFieldValue(equip.flexible_bronchoscopes));
+
+    if (!parts.length) {
+        const typeValue = getPreferredFieldValue(equip.bronchoscope_type);
+        const typeString = typeof typeValue === "string" ? typeValue.toLowerCase() : "";
+        const workingChannelValue =
+            equip.bronchoscope_working_channel_mm ??
+            equip.working_channel_mm ??
+            equip.scope_working_channel_mm;
+        const odValue = equip.bronchoscope_outer_diameter_mm ??
+            equip.scope_outer_diameter_mm ??
+            equip.outer_diameter_mm;
+
+        const hasChannel = !!formatMillimeters(workingChannelValue);
+        const hasOd = !!formatMillimeters(odValue);
+        const typeIndicatesRigid = !!typeString && typeString.includes("rigid");
+        const flexibleKeywords = ["flex", "diagnostic", "therapeutic", "ultra", "ebus", "single", "robotic"];
+        const typeIndicatesFlexible = !!typeString && flexibleKeywords.some(keyword => typeString.includes(keyword));
+
+        if (typeIndicatesRigid || (!typeString && hasOd && !hasChannel)) {
+            parts.push(buildRigidLabel(odValue));
+        }
+
+        const shouldAddFlexible = typeIndicatesFlexible || hasChannel || (!parts.length && typeString && !typeIndicatesRigid);
+        if (shouldAddFlexible) {
+            parts.push(buildFlexibleLabel(workingChannelValue, odValue));
+        }
+    }
+
+    if (!parts.length) return null;
+    return parts.join("; ");
+}
+
+function buildRegistryDisplayRows(payload) {
+    const rawRecord = payload?.record || payload?.raw_record || payload || {};
+    const cleanRecord = payload?.clean_record || payload?.reviewed_record || null;
+    const rec = cleanRecord || rawRecord || {};
+
+    const rows = [];
+
+    const normalizeDisplayValue = (value) => {
+        const preferred = getPreferredFieldValue(value);
+        if (preferred === null || preferred === undefined) {
+            return null;
+        }
+        if (typeof preferred === "string") {
+            const trimmed = preferred.trim();
+            return trimmed.length ? trimmed : null;
+        }
+        if (Array.isArray(preferred)) {
+            const normalizedArray = preferred
+                .map(item => (typeof item === "string" ? item.trim() : item))
+                .filter(item => {
+                    if (item === null || item === undefined) return false;
+                    if (typeof item === "string") return item.length > 0;
+                    return true;
+                });
+            if (!normalizedArray.length) {
+                return null;
+            }
+            return normalizedArray.join(", ");
+        }
+        return preferred;
+    };
+
+    const addRow = (field, value) => {
+        const normalized = normalizeDisplayValue(value);
+        if (normalized === null || normalized === undefined) {
+            return;
+        }
+        rows.push({
+            field,
+            value: typeof normalized === "string" ? normalized : String(normalized),
+        });
+    };
+
+    const isAffirmative = (value) => {
+        const preferred = getPreferredFieldValue(value);
+        if (preferred === null || preferred === undefined) {
+            return false;
+        }
+        if (typeof preferred === "boolean") {
+            return preferred;
+        }
+        if (typeof preferred === "number") {
+            return preferred !== 0;
+        }
+        if (typeof preferred === "string") {
+            const normalized = preferred.trim().toLowerCase();
+            if (!normalized) {
+                return false;
+            }
+            if (["yes", "true", "y", "1"].includes(normalized)) {
+                return true;
+            }
+            return normalized.startsWith("yes") || normalized.startsWith("true");
+        }
+        return false;
+    };
+
+    addRow("MRN", rec.patient_mrn);
+    addRow("Procedure date", rec.procedure_date);
+
+    const providers = getPreferredFieldValue(rec.providers) || {};
+    addRow("Attending", providers.attending_name);
+    addRow("Fellow", providers.fellow_name);
+    const assistantName = normalizeDisplayValue(providers.assistant_name);
+    if (assistantName) {
+        const assistantRole = normalizeDisplayValue(providers.assistant_role);
+        const roleSuffix = assistantRole ? ` (${assistantRole})` : "";
+        rows.push({ field: "Assistant", value: assistantName + roleSuffix });
+    }
+
+    const ctx = getPreferredFieldValue(rec.clinical_context) || {};
+    addRow("Primary indication", ctx.primary_indication);
+    addRow("Lesion location", ctx.lesion_location);
+
+    const sed = getPreferredFieldValue(rec.sedation) || {};
+    addRow("Sedation type", sed.type);
+    addRow("Sedation intraservice (min)", sed.intraservice_minutes);
+
+    const equip = getPreferredFieldValue(rec.equipment) || {};
+    const scopeSummary = buildScopeSummary(equip);
+    if (scopeSummary) {
+        rows.push({ field: "Bronchoscope(s)", value: scopeSummary });
+    }
+    addRow("Navigation platform", equip.navigation_platform);
+
+    const proc = getPreferredFieldValue(rec.procedures_performed) || {};
+    const tbbx = getPreferredFieldValue(proc.transbronchial_biopsy) || {};
+    if (isAffirmative(tbbx.performed)) {
+        const locations = getPreferredFieldValue(tbbx.locations);
+        let locsText = "";
+        if (Array.isArray(locations) && locations.length) {
+            locsText = locations.join(", ");
+        } else if (typeof locations === "string" && locations.trim()) {
+            locsText = locations.trim();
+        }
+        rows.push({
+            field: "Transbronchial biopsy",
+            value: locsText ? `Yes (${locsText})` : "Yes",
+        });
+    }
+    const stent = getPreferredFieldValue(proc.airway_stent) || {};
+    if (isAffirmative(stent.performed)) {
+        const parts = [];
+        const stentType = normalizeDisplayValue(stent.stent_type);
+        const stentLocation = normalizeDisplayValue(stent.location);
+        if (stentType) parts.push(stentType);
+        if (stentLocation) parts.push(`at ${stentLocation}`);
+        rows.push({
+            field: "Airway stent",
+            value: parts.length ? parts.join(" ") : "Yes",
+        });
+    }
+
+    const comp = getPreferredFieldValue(rec.complications) || {};
+    if (isAffirmative(comp.any_complication)) {
+        rows.push({ field: "Any complication", value: "Yes" });
+    }
+    const compList = getPreferredFieldValue(comp.complication_list);
+    if (Array.isArray(compList) && compList.length) {
+        rows.push({
+            field: "Complications",
+            value: compList.join(", "),
+        });
+    }
+    const resp = getPreferredFieldValue(comp.respiratory) || {};
+    if (isAffirmative(resp.hypoxia_occurred)) {
+        rows.push({ field: "Respiratory complication", value: "Hypoxia" });
+    }
+
+    const out = getPreferredFieldValue(rec.outcomes) || {};
+    addRow("Disposition", out.disposition);
+
+    addRow("Procedure families", rec.procedure_families);
+
+    return rows;
 }
 
 function ensureReporterTemplates() {
@@ -349,37 +1505,59 @@ function showResultTab(tab) {
         area.innerHTML = html;
 
     } else if (currentMode === 'registry') {
-        // Registry formatting
-        // It returns a flat dict usually representing the registry columns + evidence
-        // Let's try to display key-value pairs nicely
-        let html = `<h4>Registry Record</h4>`;
-        html += `<table class="table table-striped table-sm"><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>`;
+        // Replace the generic Object.entries + JSON.stringify behavior with a curated view model.
+        const rows = buildRegistryDisplayRows(lastResult || {});
+        const isCleanRecord = !!(lastResult?.clean_record || lastResult?.reviewed_record);
 
-        // Get station details for ROSE summary
-        const stationDetails = lastResult.ebus_stations_detail || [];
+        let html = `
+            <div class="d-flex align-items-center justify-content-between flex-wrap mb-3">
+                <h4 id="registry-header-label" class="mb-0"></h4>
+            </div>
+            <table class="table table-striped table-sm mb-0">
+                <thead><tr><th>Field</th><th>Value</th></tr></thead>
+                <tbody id="registry-table-body"></tbody>
+            </table>
+        `;
 
-        for (const [key, value] of Object.entries(lastResult)) {
-            if (key === 'evidence') continue; // Skip evidence in main table
-
-            let displayValue;
-
-            // Special handling for ebus_rose_result to show mixed results
-            if (key === 'ebus_rose_result' && stationDetails.length > 0) {
-                displayValue = deriveRoseSummary(stationDetails, value);
-            } else {
-                // Format complex values (arrays, objects) as readable strings
-                displayValue = formatRegistryValue(key, value);
-            }
-
-            html += `<tr><td><code>${key}</code></td><td>${displayValue}</td></tr>`;
-        }
-        html += `</tbody></table>`;
-
-        if (lastResult.evidence) {
-            html += `<h5>Evidence</h5><pre>${JSON.stringify(lastResult.evidence, null, 2)}</pre>`;
+        if (lastResult?.evidence) {
+            html += `<h5 class="mt-4">Evidence</h5><pre>${JSON.stringify(lastResult.evidence, null, 2)}</pre>`;
         }
 
         area.innerHTML = html;
+
+        const headerLabel = document.getElementById('registry-header-label');
+        if (headerLabel) {
+            headerLabel.textContent = isCleanRecord ?
+                'Registry Record (formatted, human-reviewed)' :
+                'Registry Record (formatted)';
+        }
+
+        const tbody = document.getElementById('registry-table-body');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        if (!rows.length) {
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 2;
+            td.textContent = 'No registry fields available for display.';
+            tr.appendChild(td);
+            tbody.appendChild(tr);
+        } else {
+            rows.forEach(row => {
+                const tr = document.createElement('tr');
+
+                const tdField = document.createElement('td');
+                tdField.textContent = row.field;
+
+                const tdValue = document.createElement('td');
+                tdValue.textContent = row.value;
+
+                tr.appendChild(tdField);
+                tr.appendChild(tdValue);
+                tbody.appendChild(tr);
+            });
+        }
 
     } else if (currentMode === 'reporter') {
         const { extraction, verify, render } = lastResult || {};

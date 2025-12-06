@@ -20,8 +20,8 @@ from modules.common.logger import get_logger
 logger = get_logger("common.llm")
 
 # Load environment variables from a .env file if present so GEMINI_* keys are available locally.
-# override=True ensures .env values take precedence over shell environment variables
-load_dotenv(override=True)
+# Do not override existing environment variables so CI/test settings win over local defaults.
+load_dotenv(override=False)
 
 
 class LLMInterface(Protocol):

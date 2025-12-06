@@ -220,11 +220,15 @@ class LLMDetailedExtractor:
 
         prompt = self._build_extraction_prompt(text, schema)
 
+        # Build Gemini response_schema from Pydantic model for structured output
+        # This helps the LLM adhere to enum constraints at the API level
+        response_schema = self._build_gemini_schema(schema)
+
         for attempt_num in range(self.config.max_retries + 1):
             start_time = time.perf_counter()
 
             try:
-                response = self.llm.generate(prompt)
+                response = self.llm.generate(prompt, response_schema=response_schema)
                 elapsed_ms = (time.perf_counter() - start_time) * 1000
 
                 # Clean and parse response
@@ -321,6 +325,108 @@ class LLMDetailedExtractor:
         response = re.sub(r"```$", "", response)
         return response.strip()
 
+    def _build_gemini_schema(self, schema: Type[BaseModel]) -> dict | None:
+        """Build Gemini-compatible response_schema from Pydantic model.
+
+        Gemini's structured output feature enforces schema constraints at the API level,
+        improving consistency for enum fields, required fields, and type constraints.
+
+        Returns:
+            A dict suitable for Gemini's response_schema parameter, or None if unavailable.
+        """
+        try:
+            json_schema = schema.model_json_schema()
+
+            # Gemini expects a specific format - convert from JSON Schema
+            # The schema should have 'type', 'properties', etc.
+            gemini_schema = self._convert_json_schema_to_gemini(json_schema)
+            return gemini_schema
+        except Exception as e:
+            logger.warning(f"Failed to build Gemini schema, falling back to prompt-only: {e}")
+            return None
+
+    def _convert_json_schema_to_gemini(self, json_schema: dict) -> dict:
+        """Convert JSON Schema to Gemini's response_schema format.
+
+        Gemini uses a subset of JSON Schema. This method handles:
+        - Type mappings
+        - Enum constraints
+        - Nested objects and arrays
+        - $defs/definitions resolution
+        """
+        defs = json_schema.get("$defs", json_schema.get("definitions", {}))
+
+        def resolve_ref(schema_part: dict) -> dict:
+            """Resolve $ref references."""
+            if "$ref" in schema_part:
+                ref_path = schema_part["$ref"]
+                # Handle "#/$defs/ModelName" or "#/definitions/ModelName"
+                if ref_path.startswith("#/$defs/"):
+                    ref_name = ref_path.split("/")[-1]
+                    return resolve_ref(defs.get(ref_name, {}))
+                elif ref_path.startswith("#/definitions/"):
+                    ref_name = ref_path.split("/")[-1]
+                    return resolve_ref(defs.get(ref_name, {}))
+            return schema_part
+
+        def convert_property(prop: dict) -> dict:
+            """Convert a single property to Gemini format."""
+            prop = resolve_ref(prop)
+
+            # Handle anyOf/oneOf (used for Optional types)
+            if "anyOf" in prop:
+                # Find the non-null type
+                for option in prop["anyOf"]:
+                    if option.get("type") != "null":
+                        return convert_property(option)
+                return {"type": "STRING", "nullable": True}
+
+            prop_type = prop.get("type", "string")
+            result: dict = {}
+
+            if prop_type == "string":
+                result["type"] = "STRING"
+                if "enum" in prop:
+                    result["enum"] = prop["enum"]
+            elif prop_type == "integer":
+                result["type"] = "INTEGER"
+            elif prop_type == "number":
+                result["type"] = "NUMBER"
+            elif prop_type == "boolean":
+                result["type"] = "BOOLEAN"
+            elif prop_type == "array":
+                result["type"] = "ARRAY"
+                if "items" in prop:
+                    result["items"] = convert_property(prop["items"])
+            elif prop_type == "object":
+                result["type"] = "OBJECT"
+                if "properties" in prop:
+                    result["properties"] = {
+                        k: convert_property(v)
+                        for k, v in prop["properties"].items()
+                    }
+            else:
+                result["type"] = "STRING"
+
+            if prop.get("description"):
+                result["description"] = prop["description"]
+
+            return result
+
+        # Convert the root schema
+        gemini_schema = {
+            "type": "OBJECT",
+            "properties": {}
+        }
+
+        for prop_name, prop_def in json_schema.get("properties", {}).items():
+            gemini_schema["properties"][prop_name] = convert_property(prop_def)
+
+        if "required" in json_schema:
+            gemini_schema["required"] = json_schema["required"]
+
+        return gemini_schema
+
     def _build_extraction_prompt(self, text: str, schema: Type[BaseModel]) -> str:
         """Build the extraction prompt with schema information."""
         schema_json = schema.model_json_schema()
@@ -343,13 +449,51 @@ JSON Output:"""
         previous_response: str,
         error_message: str,
     ) -> str:
-        """Build a correction prompt after a failed attempt."""
+        """Build a correction prompt after a failed attempt with specific guidance."""
+        # Parse the error to provide targeted guidance
+        guidance = self._get_error_guidance(error_message)
+
         return f"""{original_prompt}
 
-Your previous response had an error:
+VALIDATION ERROR - Your previous response failed validation:
 {error_message}
 
-Previous response:
-{previous_response[:1000]}
+{guidance}
 
-Please fix the error and return valid JSON:"""
+Previous response (truncated):
+{previous_response[:800]}
+
+IMPORTANT: Return ONLY the corrected JSON with the exact enum values from the schema. Do not add explanatory text."""
+
+    def _get_error_guidance(self, error_message: str) -> str:
+        """Generate specific guidance based on the error type."""
+        guidance_parts = []
+
+        # Check for common enum/literal errors
+        if "literal_error" in error_message.lower() or "input should be" in error_message.lower():
+            guidance_parts.append(
+                "ENUM ERROR: You used an invalid value. Use ONLY the exact values listed in the schema. "
+                "For example, 'rebus_view' must be exactly one of: \"Concentric\", \"Eccentric\", \"Adjacent\", \"Not visualized\" - "
+                "NOT descriptive phrases like 'Concentric radial EBUS view of lesion'."
+            )
+
+        # Check for null/required field errors
+        if "string_type" in error_message.lower() and "none" in error_message.lower():
+            guidance_parts.append(
+                "REQUIRED FIELD ERROR: A required string field was null. "
+                "Fields like 'source_location' must have a value - use the procedure type or 'Unknown' if not documented."
+            )
+
+        # Check for type errors
+        if "type_error" in error_message.lower():
+            guidance_parts.append(
+                "TYPE ERROR: A field has the wrong type. Check that numbers are not quoted as strings, "
+                "booleans are true/false not \"true\"/\"false\", and arrays use [] not strings."
+            )
+
+        if not guidance_parts:
+            guidance_parts.append(
+                "Review the schema carefully and ensure all values match the expected types and enums exactly."
+            )
+
+        return "\n".join(guidance_parts)

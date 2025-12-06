@@ -47,6 +47,7 @@ class SubmitRequest(BaseModel):
     submitted_by: str = Field(..., description="User identifier submitting PHI")
     document_type: str | None = None
     specialty: str | None = None
+    confirmed_entities: List[ScrubbedEntityModel] | None = None
 
 
 class SubmitResponse(BaseModel):
@@ -139,11 +140,23 @@ def submit_phi(
     phi_service: PHIService = Depends(get_phi_service),
 ) -> SubmitResponse:
     start = time.perf_counter()
-    scrub_result = phi_service.preview(
-        text=payload.text,
-        document_type=payload.document_type,
-        specialty=payload.specialty,
-    )
+    if payload.confirmed_entities is not None:
+        # Manual override: trust the provided entities completely
+        manual_entities = [entity.model_dump() for entity in payload.confirmed_entities]
+        scrub_result = phi_service.scrub_with_manual_entities(
+            text=payload.text,
+            entities=manual_entities,
+        )
+        manual_override = True
+    else:
+        # Auto-scrub logic
+        scrub_result = phi_service.preview(
+            text=payload.text,
+            document_type=payload.document_type,
+            specialty=payload.specialty,
+        )
+        manual_override = False
+
     proc = phi_service.vault_phi(
         raw_text=payload.text,
         scrub_result=scrub_result,
@@ -160,6 +173,7 @@ def submit_phi(
             "procedure_id": str(proc.id),
             "document_type": payload.document_type,
             "specialty": payload.specialty,
+            "manual_override": manual_override,
         },
     )
     return SubmitResponse(

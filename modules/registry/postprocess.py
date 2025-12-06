@@ -5,6 +5,9 @@ from __future__ import annotations
 from typing import Any, Callable, Dict, Optional, List
 import re
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # Valid EBUS lymph node stations - canonical format
@@ -101,6 +104,8 @@ __all__ = [
     "ROSE_RESULT_CANONICAL",
     "ROSE_RESULT_PRIORITY",
     "POSTPROCESSORS",
+    # Granular data processing
+    "process_granular_data",
 ]
 
 
@@ -2309,6 +2314,85 @@ def normalize_radial_ebus_probe_position(raw: Any) -> str | None:
         return "Not visualized"
     
     return None
+
+
+def process_granular_data(data: Dict[str, Any]) -> Dict[str, Any]:
+    """Process granular per-site registry data and derive aggregate fields.
+
+    This function:
+    1. Validates EBUS consistency between granular detail and sampled stations
+    2. Derives aggregate fields from granular arrays when present
+    3. Merges derived values into aggregate fields if not already set
+
+    Returns:
+        Updated data dict with derived aggregate fields and validation warnings
+    """
+    from modules.registry.schema_granular import (
+        EnhancedRegistryGranularData,
+        validate_ebus_consistency,
+        derive_aggregate_fields,
+    )
+
+    result = dict(data)
+    granular_data = result.get("granular_data")
+
+    if granular_data is None:
+        return result
+
+    # Parse granular_data if it's a dict (from JSON) rather than already a model
+    if isinstance(granular_data, dict):
+        try:
+            granular = EnhancedRegistryGranularData(**granular_data)
+        except Exception as e:
+            logger.warning(f"Failed to parse granular_data: {e}")
+            result["granular_validation_warnings"] = [f"Failed to parse granular_data: {str(e)}"]
+            return result
+    else:
+        granular = granular_data
+
+    warnings: List[str] = []
+
+    # Validate EBUS consistency if we have both detail and sampled stations
+    stations_sampled = result.get("ebus_stations_sampled") or result.get("linear_ebus_stations")
+    if granular.linear_ebus_stations_detail and stations_sampled:
+        consistency_errors = validate_ebus_consistency(
+            granular.linear_ebus_stations_detail,
+            stations_sampled
+        )
+        if consistency_errors:
+            warnings.extend(consistency_errors)
+            logger.warning(f"EBUS consistency issues: {consistency_errors}")
+
+    # Derive aggregate fields from granular data
+    derived = derive_aggregate_fields(granular)
+
+    # Merge derived values into aggregate fields if not already set
+    field_mapping = {
+        "linear_ebus_stations": ["linear_ebus_stations", "ebus_stations_sampled"],
+        "ebus_total_passes": ["ebus_total_passes"],
+        "ebus_rose_result": ["ebus_rose_result"],
+        "nav_targets_count": ["nav_targets_count"],
+        "nav_til_confirmed_count": ["nav_til_confirmed_count"],
+        "blvr_number_of_valves": ["blvr_number_of_valves"],
+        "blvr_target_lobe": ["blvr_target_lobe"],
+        "cryo_specimens_count": ["cryo_specimens_count"],
+    }
+
+    for derived_key, target_fields in field_mapping.items():
+        derived_value = derived.get(derived_key)
+        if derived_value is not None:
+            for target_field in target_fields:
+                current_value = result.get(target_field)
+                # Only set if current value is None, empty list, or empty dict
+                if current_value in (None, [], {}):
+                    result[target_field] = derived_value
+
+    # Store validation warnings
+    if warnings:
+        existing_warnings = result.get("granular_validation_warnings", [])
+        result["granular_validation_warnings"] = existing_warnings + warnings
+
+    return result
 
 
 POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {

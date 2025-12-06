@@ -1,12 +1,22 @@
 from __future__ import annotations
 from pathlib import Path
-from typing import Optional, List, Dict, Any, Set
+from typing import Optional, List, Dict, Any, Set, Sequence
 import os
 
 from modules.autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
 from modules.autocode.ip_kb.terminology_utils import TerminologyNormalizer, QARuleChecker
 from modules.autocode.rvu.rvu_calculator import ProcedureRVUCalculator
-from modules.domain.coding_rules import CodingRulesEngine, EvidenceContext
+from modules.coder.rules_engine import CodingRulesEngine as PipelineRulesEngine
+from modules.coder.types import CodeCandidate, EBUSNodeEvidence, PeripheralLesionEvidence
+from modules.coder.ebus_rules import ebus_nodes_to_candidates
+from modules.coder.ebus_extractor import EBUSEvidenceExtractor
+from modules.coder.peripheral_rules import peripheral_lesions_to_candidates
+from modules.coder.peripheral_extractor import PeripheralLesionExtractor
+from modules.coder.ncci import NCCI_BUNDLED_REASON_PREFIX
+from modules.domain.coding_rules import (
+    CodingRulesEngine as DomainCodingRulesEngine,
+    EvidenceContext,
+)
 
 class CodeSuggestion:
     def __init__(self, cpt: str, modifiers: Optional[list[str]] = None):
@@ -19,7 +29,14 @@ class CodeSuggestion:
         self.mer_explanation = None
 
 class EnhancedCPTCoder:
-    def __init__(self, config: Optional[Dict] = None, use_llm_advisor: Optional[bool] = None):
+    def __init__(
+        self,
+        config: Optional[Dict] = None,
+        use_llm_advisor: Optional[bool] = None,
+        rules_engine: PipelineRulesEngine | None = None,
+        ebus_extractor: EBUSEvidenceExtractor | None = None,
+        peripheral_extractor: PeripheralLesionExtractor | None = None,
+    ):
         self.config = config or {}
         
         base_dir = Path(__file__).parent
@@ -58,48 +75,41 @@ class EnhancedCPTCoder:
                 logger = logging.getLogger(__name__)
                 logger.warning(f"Failed to initialize LLM advisor: {e}. Continuing without LLM suggestions.")
 
-        # Initialize CodingRulesEngine for delegated rule application
-        # Mode is controlled by CODING_RULES_MODE env var: "python" | "json" | "shadow"
-        self._rules_engine = CodingRulesEngine()
+        # Initialize CodingRulesEngines:
+        # - _domain_rules_engine handles legacy evidence-to-code logic
+        # - _rules_engine is the new pass-through layer for future deterministic rules
+        self._domain_rules_engine = DomainCodingRulesEngine()
+        self._rules_engine = rules_engine or PipelineRulesEngine()
         self._last_evidence_context: Optional[EvidenceContext] = None
+        self._ebus_tuple_mode = os.getenv("CODING_EBUS_TUPLE_MODE", "").lower() in ("true", "1", "yes")
+        self._ebus_extractor = ebus_extractor if self._ebus_tuple_mode else None
+        self._peripheral_tuple_mode = os.getenv("CODING_PERIPHERAL_TUPLE_MODE", "").lower() in ("true", "1", "yes")
+        self._peripheral_extractor = peripheral_extractor if self._peripheral_tuple_mode else None
 
-    def _generate_codes(self, procedure_data: dict, term_hits: Optional[Dict[str, List[str]]] = None) -> list[CodeSuggestion]:
-        """
-        Generate candidate codes with CONSERVATIVE evidence-based filtering.
-
-        CODING PRINCIPLES:
-        1. High-value codes require STRONG positive evidence in the procedure note body
-        2. Indications, history, and boilerplate text do NOT count as procedure evidence
-        3. When ambiguous, prefer NOT billing (precision over recall for high-RVU codes)
-        4. Only emit codes present in the IP golden knowledge base
-        """
-        note_text = procedure_data.get("note_text") or procedure_data.get("findings", "") or ""
-        text_lower = note_text.lower()
-        registry = procedure_data.get("registry") or procedure_data
-        term_hits = term_hits or self._extract_term_hits(note_text)
+    def _collect_initial_candidates(
+        self,
+        note_text: str,
+        registry: Dict[str, Any],
+        term_hits: Dict[str, List[str]],
+    ) -> list[CodeCandidate]:
+        """Collect initial candidates using the IP KB and legacy rule engine."""
         navigation_context = self._extract_navigation_registry(registry)
         radial_context = self._extract_radial_registry(registry)
 
-        # Use IP KB to find groups and codes from text
         groups_from_text = self.ip_kb.groups_from_text(note_text)
         evidence = getattr(self.ip_kb, "last_group_evidence", {}) or {}
         candidates_from_text = self.ip_kb.codes_for_groups(groups_from_text)
 
-        # Snapshot initial candidates before rule application
         _initial_candidates = set(candidates_from_text)
 
-        # Enrich evidence with lobe extraction from term_hits (for R008)
-        # This must happen BEFORE EvidenceContext creation so the engine has the same data
         lobe_ev = evidence.get("bronchoscopy_biopsy_additional_lobe", {})
         normalized_lobes = self._extract_lobes_from_terms(term_hits)
         if normalized_lobes:
             lobe_ev.setdefault("normalized_terms", sorted(normalized_lobes))
             if lobe_ev.get("lobe_count", 0) < len(normalized_lobes):
                 lobe_ev["lobe_count"] = len(normalized_lobes)
-            # Ensure the enriched evidence is in the dict (in case it was empty)
             evidence["bronchoscopy_biopsy_additional_lobe"] = lobe_ev
 
-        # Build EvidenceContext BEFORE rule application
         context = EvidenceContext.from_procedure_data(
             groups_from_text=groups_from_text,
             evidence=evidence,
@@ -111,17 +121,83 @@ class EnhancedCPTCoder:
             note_text=note_text,
         )
 
-        # Apply rules via CodingRulesEngine
         valid_cpts = self.ip_kb.all_relevant_cpt_codes()
-        rules_result = self._rules_engine.apply_rules(context, valid_cpts)
-
-        # Convert to CodeSuggestion list
-        codes: list[CodeSuggestion] = [CodeSuggestion(cpt) for cpt in sorted(rules_result.codes)]
-
-        # Store the EvidenceContext for debugging/external use
+        rules_result = self._domain_rules_engine.apply_rules(context, valid_cpts)
         self._last_evidence_context = context
 
-        return codes
+        return [CodeCandidate(code=cpt) for cpt in sorted(rules_result.codes)]
+
+    def _apply_rules(
+        self,
+        candidates: list[CodeCandidate],
+        note_text: str,
+    ) -> list[CodeCandidate]:
+        """Apply deterministic rules (currently a no-op placeholder)."""
+        return self._rules_engine.apply(candidates, note_text)
+
+    def _collect_ebus_candidates(self, note_text: str) -> list[CodeCandidate]:
+        """Use LLM-extracted EBUS evidence to produce additional candidates."""
+        if not self._ebus_tuple_mode:
+            return []
+        if self._ebus_extractor is None:
+            self._ebus_extractor = EBUSEvidenceExtractor()
+        evidence: list[EBUSNodeEvidence] = self._ebus_extractor.extract(note_text) or []
+        return ebus_nodes_to_candidates(evidence)
+
+    def _collect_peripheral_candidates(self, note_text: str) -> list[CodeCandidate]:
+        """Use LLM-extracted peripheral lesion evidence for add-on codes."""
+        if not self._peripheral_tuple_mode:
+            return []
+        if self._peripheral_extractor is None:
+            self._peripheral_extractor = PeripheralLesionExtractor()
+        evidence: list[PeripheralLesionEvidence] = self._peripheral_extractor.extract(note_text) or []
+        return peripheral_lesions_to_candidates(evidence)
+
+    def _select_final_codes(self, candidates: list[CodeCandidate]) -> list[CodeSuggestion]:
+        """Convert candidates to CodeSuggestion objects with stable ordering."""
+        filtered_codes = {
+            candidate.code
+            for candidate in candidates
+            if NCCI_BUNDLED_REASON_PREFIX not in (candidate.reason or "")
+        }
+        ordered_codes = sorted(filtered_codes)
+        return [CodeSuggestion(code) for code in ordered_codes]
+
+    def _generate_codes(
+        self,
+        procedure_data: dict,
+        term_hits: Optional[Dict[str, List[str]]] = None,
+        extra_candidates: Sequence[CodeCandidate] | None = None,
+    ) -> list[CodeSuggestion]:
+        """
+        Generate candidate codes with CONSERVATIVE evidence-based filtering.
+
+        CODING PRINCIPLES:
+        1. High-value codes require STRONG positive evidence in the procedure note body
+        2. Indications, history, and boilerplate text do NOT count as procedure evidence
+        3. When ambiguous, prefer NOT billing (precision over recall for high-RVU codes)
+        4. Only emit codes present in the IP golden knowledge base
+        """
+        note_text = procedure_data.get("note_text") or procedure_data.get("findings", "") or ""
+        registry = procedure_data.get("registry") or procedure_data
+        term_hits = term_hits or self._extract_term_hits(note_text)
+
+        candidate_pool = self._collect_initial_candidates(
+            note_text=note_text,
+            registry=registry,
+            term_hits=term_hits,
+        )
+        if extra_candidates:
+            candidate_pool.extend(list(extra_candidates))
+        ebus_candidates = self._collect_ebus_candidates(note_text)
+        if ebus_candidates:
+            candidate_pool.extend(ebus_candidates)
+        peripheral_candidates = self._collect_peripheral_candidates(note_text)
+        if peripheral_candidates:
+            candidate_pool.extend(peripheral_candidates)
+
+        ruled_candidates = self._apply_rules(candidate_pool, note_text)
+        return self._select_final_codes(ruled_candidates)
 
     def code_procedure(self, procedure_data: dict) -> Dict[str, Any]:
         """

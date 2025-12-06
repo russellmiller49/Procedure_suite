@@ -16,6 +16,7 @@ import subprocess
 import uuid
 from dataclasses import asdict
 from functools import lru_cache
+from pathlib import Path
 from typing import Any, List
 
 from fastapi import FastAPI, Request, Depends, HTTPException
@@ -104,7 +105,9 @@ app.include_router(phi_demo_router)
 
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
-    app.mount("/ui", StaticFiles(directory="modules/api/static", html=True), name="ui")
+    # Use absolute path to static directory relative to this file
+    static_dir = Path(__file__).parent / "static"
+    app.mount("/ui", StaticFiles(directory=str(static_dir), html=True), name="ui")
 
 # Configure logging
 _logger = logging.getLogger(__name__)

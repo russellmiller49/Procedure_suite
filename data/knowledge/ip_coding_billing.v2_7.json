@@ -4074,6 +4074,30 @@
       "reason": "EBUS-TBNA (3+ stations) and conventional TBNA targeting the same nodal stations are bundled. Use -59/-XS only for distinct nodal groups sampled with different techniques."
     },
     {
+      "primary": "31652",
+      "secondary": "31645",
+      "modifier_allowed": false,
+      "reason": "Therapeutic aspiration is bundled into EBUS-TBNA (1-2 stations). Aspiration performed during EBUS is inherent to the procedure and not separately reportable."
+    },
+    {
+      "primary": "31652",
+      "secondary": "31646",
+      "modifier_allowed": false,
+      "reason": "Subsequent therapeutic aspiration is bundled into EBUS-TBNA (1-2 stations). Aspiration performed during EBUS is inherent to the procedure."
+    },
+    {
+      "primary": "31653",
+      "secondary": "31645",
+      "modifier_allowed": false,
+      "reason": "Therapeutic aspiration is bundled into EBUS-TBNA (3+ stations). Aspiration performed during EBUS is inherent to the procedure and not separately reportable."
+    },
+    {
+      "primary": "31653",
+      "secondary": "31646",
+      "modifier_allowed": false,
+      "reason": "Subsequent therapeutic aspiration is bundled into EBUS-TBNA (3+ stations). Aspiration performed during EBUS is inherent to the procedure."
+    },
+    {
       "primary": "31628",
       "secondary": "31629",
       "modifier_allowed": true,

@@ -220,12 +220,54 @@ def _detect_linear(
     station_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
     lexical: Lexicon,
 ) -> list[DetectedIntent]:
+    """Detect EBUS-TBNA stations that were actually SAMPLED (not just inspected).
+
+    This function distinguishes between stations that were merely visualized/inspected
+    versus those that were actively sampled (biopsy, FNA, needle aspiration).
+
+    Key distinction:
+        - "Sites Inspected: 4R, 7, 11L" -> These are NOT counted as sampled
+        - "Sampled station 7 and 11L with TBNA" -> These ARE counted as sampled
+    """
+    # Sampling keywords - indicate actual tissue/fluid collection
+    sampling_keywords = (
+        "sampl",        # sampled, sampling
+        "biops",        # biopsy, biopsied
+        "fna",          # fine needle aspiration
+        "needle aspir", # needle aspiration
+        "tbna",         # transbronchial needle aspiration
+        "pass",         # passes (e.g., "3 passes")
+        "aspirat",      # aspirate, aspirated
+        "cytology",     # cytology obtained
+        "specimen",     # specimen obtained
+        "rose",         # ROSE (rapid on-site evaluation)
+        "adequate",     # adequate sample
+    )
+
+    # Inspection-only keywords - negate sampling if present WITHOUT sampling keywords
+    inspection_only_keywords = (
+        "inspect",      # inspected, inspection
+        "assess",       # assessed, assessment
+        "visualiz",     # visualized, visualizing
+        "normal appear", # normal appearing
+        "unremarkable", # unremarkable
+        "no mass",      # no mass
+        "no lesion",    # no lesion
+        "not sampl",    # not sampled
+        "no sampl",     # no sampling
+        "without sampl", # without sampling
+        "sites inspect", # "Sites Inspected:" header
+        "lymph nodes inspect", # "Lymph Nodes Inspected:"
+    )
+
     intents: list[DetectedIntent] = []
     for station, patterns in station_patterns.items():
         for pattern in patterns:
             for match in pattern.finditer(text):
                 span = _sentence_span(sentences, text, sections, match.start(), match.end())
                 sentence_lower = span.text.lower()
+
+                # Must have station/node context
                 context_present = (
                     "station" in sentence_lower
                     or "stations" in sentence_lower
@@ -235,13 +277,30 @@ def _detect_linear(
                 )
                 if not context_present:
                     continue
+
+                # Check for sampling context vs inspection-only context
+                has_sampling = any(kw in sentence_lower for kw in sampling_keywords)
+                has_inspection_only = any(kw in sentence_lower for kw in inspection_only_keywords)
+
+                # If inspection-only keywords present WITHOUT sampling keywords, skip this station
+                if has_inspection_only and not has_sampling:
+                    continue
+
+                # Require explicit sampling context for high confidence
+                # Without sampling context, reduce confidence significantly
+                confidence = 0.85 if has_sampling else 0.4
+
                 intents.append(
                     DetectedIntent(
                         intent="linear_ebus_station",
                         value=station,
-                        payload={"station": station},
+                        payload={
+                            "station": station,
+                            "sampled": has_sampling,
+                            "inspection_only": has_inspection_only and not has_sampling,
+                        },
                         evidence=[span],
-                        confidence=0.85,
+                        confidence=confidence,
                     )
                 )
     return intents

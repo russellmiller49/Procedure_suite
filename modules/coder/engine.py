@@ -293,17 +293,55 @@ class CoderEngine:
     def _build_linear_codes(
         self, grouped: Dict[str, list[DetectedIntent]]
     ) -> list[CodeDecision]:
+        """Build EBUS-TBNA codes based on SAMPLED stations only.
+
+        Important: This counts only stations with documented sampling (biopsy, FNA, etc.)
+        and excludes stations that were merely inspected/assessed.
+
+        Code selection:
+            - 31652: 1-2 nodal stations sampled
+            - 31653: 3+ nodal stations sampled
+        """
         station_intents = grouped.get("linear_ebus_station", [])
         if not station_intents:
             return []
-        stations = self._unique_values(station_intents)
-        cpt = "31653" if len(stations) >= 3 else "31652"
+
+        # Filter to only sampled stations (exclude inspection-only)
+        # An intent is considered "sampled" if:
+        # 1. payload.sampled is True, OR
+        # 2. confidence >= 0.7 (high confidence implies sampling)
+        sampled_intents = [
+            intent for intent in station_intents
+            if (intent.payload or {}).get("sampled", False)
+            or (intent.confidence or 0) >= 0.7
+        ]
+
+        if not sampled_intents:
+            # No sampled stations found - check if we should warn
+            inspected_only = [
+                intent for intent in station_intents
+                if (intent.payload or {}).get("inspection_only", False)
+            ]
+            if inspected_only:
+                logger.warning(
+                    f"EBUS stations detected but all were inspection-only (no sampling): "
+                    f"{[i.value for i in inspected_only]}"
+                )
+            return []
+
+        # Count unique sampled stations
+        sampled_stations = self._unique_values(sampled_intents)
+        cpt = "31653" if len(sampled_stations) >= 3 else "31652"
+
         return [
             self._create_decision(
                 cpt=cpt,
-                rationale=f"Linear EBUS-TBNA sampled {len(stations)} station(s)",
-                evidence=self._collect_intent_evidence(station_intents),
-                context={"stations": stations},
+                rationale=f"Linear EBUS-TBNA sampled {len(sampled_stations)} station(s): {', '.join(sampled_stations)}",
+                evidence=self._collect_intent_evidence(sampled_intents),
+                context={
+                    "stations": sampled_stations,
+                    "sampled_count": len(sampled_stations),
+                },
                 rule="linear_ebus_station_count",
                 confidence=0.88,
             )

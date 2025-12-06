@@ -109,6 +109,11 @@ Return ONLY the JSON array, no other text.
 
         return self._client
 
+    # Maximum text size to send to LLM (in characters)
+    # Gemini Pro 1.5 supports ~128K tokens, but we limit to avoid excessive costs
+    # and ensure reasonable response times. 32K chars ~= 8K tokens is a safe limit.
+    MAX_TEXT_SIZE = 32000
+
     def suggest_codes(self, report_text: str) -> list[LLMCodeSuggestion]:
         """Get code suggestions from Gemini.
 
@@ -122,11 +127,12 @@ Return ONLY the JSON array, no other text.
         if client is None:
             return []
 
-        # Build prompt
+        # Build prompt with smart text handling
         allowed_codes_str = ", ".join(sorted(self.allowed_codes)[:50])  # Limit for prompt size
+        processed_text = self._prepare_text_for_llm(report_text)
         prompt = self.PROMPT_TEMPLATE.format(
             allowed_codes=allowed_codes_str,
-            report_text=report_text[:8000],  # Limit text size
+            report_text=processed_text,
         )
 
         try:
@@ -140,6 +146,60 @@ Return ONLY the JSON array, no other text.
         except Exception as e:
             logger.error(f"Gemini API call failed: {e}")
             return []
+
+    def _prepare_text_for_llm(self, text: str) -> str:
+        """Prepare text for LLM processing with smart truncation.
+
+        If text exceeds MAX_TEXT_SIZE, this method preserves the most important
+        parts of the procedure note (beginning and end) while indicating that
+        content was truncated from the middle.
+
+        This prevents the common issue of losing middle sections in long notes
+        while still staying within token limits.
+
+        Args:
+            text: Raw procedure note text.
+
+        Returns:
+            Processed text that fits within size limits.
+        """
+        if len(text) <= self.MAX_TEXT_SIZE:
+            return text
+
+        # For long texts, preserve beginning and end
+        # Procedure notes typically have:
+        # - Beginning: Indication, patient info, procedure start
+        # - Middle: Detailed procedure steps (may be lengthy)
+        # - End: Findings summary, specimens, complications, disposition
+
+        # Allocate 40% to beginning, 40% to end, leaving room for truncation marker
+        begin_size = int(self.MAX_TEXT_SIZE * 0.4)
+        end_size = int(self.MAX_TEXT_SIZE * 0.4)
+
+        begin_text = text[:begin_size]
+        end_text = text[-end_size:]
+
+        # Find natural break points (sentence boundaries)
+        begin_break = begin_text.rfind('. ')
+        if begin_break > begin_size * 0.8:  # Only use if we keep >80% of allocated space
+            begin_text = begin_text[:begin_break + 1]
+
+        end_break = end_text.find('. ')
+        if end_break > 0 and end_break < end_size * 0.2:  # Only use if near start
+            end_text = end_text[end_break + 2:]
+
+        truncated_chars = len(text) - len(begin_text) - len(end_text)
+        truncation_marker = (
+            f"\n\n[... {truncated_chars} characters of detailed procedure content omitted "
+            f"due to length. Key procedures may be in this section. ...]\n\n"
+        )
+
+        logger.warning(
+            f"Text truncated for LLM: {len(text)} chars -> {len(begin_text) + len(end_text)} chars "
+            f"({truncated_chars} chars removed from middle)"
+        )
+
+        return begin_text + truncation_marker + end_text
 
     def _parse_response(self, response_text: str) -> list[LLMCodeSuggestion]:
         """Parse the JSON response from the LLM.

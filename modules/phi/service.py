@@ -50,6 +50,53 @@ class PHIService:
 
         return self._scrubber.scrub(text, document_type=document_type, specialty=specialty)
 
+    def scrub_with_manual_entities(self, *, text: str, entities: list[dict]) -> ScrubResult:
+        """Generate scrubbed text based strictly on provided entities (ignoring auto-scrubber).
+
+        Requirements:
+        - Sort entities by original_start descending to prevent index shifting.
+        - Generate placeholders if not provided.
+        """
+        # Convert dicts to ScrubbedEntity objects if needed, but we really just need to iterate
+        # We will perform the replacement manually here to avoid re-triggering the auto-scrubber.
+
+        sorted_entities = sorted(entities, key=lambda x: x["original_start"], reverse=True)
+        
+        scrubbed_text = list(text)
+        final_entities = []
+
+        for idx, entity in enumerate(sorted_entities):
+            start = entity["original_start"]
+            end = entity["original_end"]
+            
+            # Ensure we don't go out of bounds (basic safety)
+            if start < 0 or end > len(text):
+                continue
+            
+            placeholder = entity.get("placeholder")
+            if not placeholder:
+                entity_type = entity.get("entity_type", "UNKNOWN")
+                placeholder = f"<{entity_type}_{len(sorted_entities) - idx}>"
+            
+            # Replace text
+            scrubbed_text[start:end] = list(placeholder)
+            
+            # Store the entity record (using ScrubbedEntity or dict structure)
+            final_entities.append(ScrubbedEntity(
+                placeholder=placeholder,
+                entity_type=entity.get("entity_type", "UNKNOWN"),
+                original_start=start,
+                original_end=end
+            ))
+
+        # Reconstruct string
+        result_text = "".join(scrubbed_text)
+        
+        # Re-sort entities by start ascending for the result
+        final_entities.sort(key=lambda x: x["original_start"])
+
+        return ScrubResult(scrubbed_text=result_text, entities=final_entities)
+
     def vault_phi(
         self,
         *,

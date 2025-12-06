@@ -11,6 +11,8 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
+import os
+
 from config.settings import CoderSettings
 from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
 from modules.domain.coding_rules import apply_ncci_edits, apply_mer_rules
@@ -20,11 +22,21 @@ from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDe
 from modules.coder.adapters.llm.gemini_advisor import LLMAdvisorPort
 from modules.coder.application.smart_hybrid_policy import (
     HybridPolicy,
+    HybridCandidate,
     HybridDecision,
     RuleResult,
     AdvisorResult,
 )
 from modules.coder.application.procedure_type_detector import detect_procedure_type
+from modules.coder.domain_rules import (
+    apply_addon_family_rules,
+    apply_ebus_aspiration_bundles,
+)
+from modules.coder.sectionizer import (
+    accordion_truncate,
+    sectionizer_enabled,
+    max_llm_input_tokens,
+)
 from modules.phi.ports import PHIScrubberPort
 from proc_schemas.coding import CodeSuggestion, CodingResult
 from proc_schemas.reasoning import ReasoningFields
@@ -100,6 +112,23 @@ class CodingService:
             Tuple of (List of CodeSuggestion objects, LLM latency in ms).
         """
         llm_latency_ms = 0.0
+
+        # Log input text size for debugging truncation issues
+        text_length = len(report_text)
+        logger.info(
+            "Starting coding pipeline",
+            extra={
+                "procedure_id": procedure_id,
+                "text_length_chars": text_length,
+                "use_llm": use_llm,
+            },
+        )
+        if text_length > 20000:
+            logger.warning(
+                f"Large procedure note detected ({text_length} chars). "
+                "Potential for truncation in LLM processing.",
+                extra={"procedure_id": procedure_id, "text_length_chars": text_length},
+            )
 
         with timed("coding_service.generate_suggestions") as timing:
             # Step 1: Rule-based coding
@@ -235,6 +264,8 @@ class CodingService:
                 logger.warning("Skipping LLM advisor due to scrubbing failure")
                 return AdvisorResult(codes=[], confidence={}), 0.0
 
+        text_for_llm = self._prepare_llm_context(text_for_llm)
+
         with timed("coding_service.llm_advisor") as timing:
             suggestions = self.llm_advisor.suggest_codes(text_for_llm)
 
@@ -261,26 +292,76 @@ class CodingService:
 
     def _apply_compliance_rules(
         self,
-        candidates: list,
-    ) -> tuple[list, list[str], list[str]]:
-        """Step 6: Apply NCCI and MER compliance rules."""
+        candidates: list[HybridCandidate],
+    ) -> tuple[list[HybridCandidate], list[str], list[str]]:
+        """Step 6: Apply domain rules and NCCI/MER compliance rules.
+
+        This applies rules in the following order:
+        1. Add-on family consistency (e.g., 31636 -> +31637 when 31631 present)
+        2. EBUS-Aspiration bundling (31645/31646 bundled into 31652/31653)
+        3. NCCI edits from knowledge base
+        4. MER (Multiple Endoscopy Rule) reductions
+        """
         # Get accepted codes for compliance checking
         accepted_codes = self.hybrid_policy.get_accepted_codes(candidates)
 
-        # Apply NCCI edits
-        ncci_result = apply_ncci_edits(accepted_codes, self.kb_repo)
-        ncci_warnings = ncci_result.warnings
+        # Step 6a: Apply add-on family rules (hierarchy fix)
+        # This ensures codes like 31636 become +31637 when 31631 is present
+        family_result = apply_addon_family_rules(accepted_codes)
+        for original, converted, reason in family_result.conversions:
+            # Update the candidate code
+            for candidate in candidates:
+                if candidate.code == original:
+                    candidate.code = converted
+                    candidate.flags.append(f"FAMILY_CONVERSION: {reason}")
+                    logger.info(
+                        "Applied family conversion",
+                        extra={"original": original, "converted": converted, "reason": reason},
+                    )
+                    break  # Only convert first occurrence per conversion
 
-        # Apply MER rules
+        # Refresh accepted codes after family conversions
+        accepted_codes = self.hybrid_policy.get_accepted_codes(candidates)
+
+        # Step 6b: Apply EBUS-Aspiration bundling
+        # This removes aspiration codes (31645/31646) when EBUS codes are present
+        bundle_result = apply_ebus_aspiration_bundles(accepted_codes)
+        bundled_codes = set(bundle_result.removed_codes)
+
+        ncci_warnings: list[str] = []
+        for primary, removed, reason in bundle_result.bundle_reasons:
+            ncci_warnings.append(f"EBUS_BUNDLE: {removed} bundled into {primary} - {reason}")
+            logger.info(
+                "Applied EBUS-Aspiration bundle",
+                extra={"primary": primary, "removed": removed, "reason": reason},
+            )
+
+        # Mark bundled candidates as rejected
+        for candidate in candidates:
+            if candidate.code in bundled_codes:
+                candidate.decision = HybridDecision.REJECTED_HYBRID
+                candidate.flags.append(f"EBUS_BUNDLED: Code bundled into EBUS procedure")
+
+        # Refresh accepted codes after bundling
+        accepted_codes = self.hybrid_policy.get_accepted_codes(candidates)
+
+        # Step 6c: Apply NCCI edits from knowledge base
+        ncci_result = apply_ncci_edits(accepted_codes, self.kb_repo)
+        ncci_warnings.extend(ncci_result.warnings)
+
+        # Step 6d: Apply MER rules
         mer_result = apply_mer_rules(ncci_result.kept_codes, self.kb_repo)
         mer_warnings = mer_result.warnings
 
         # Filter candidates based on compliance results
         final_codes = set(mer_result.kept_codes)
-        filtered_candidates = []
+        filtered_candidates: list[HybridCandidate] = []
 
         for candidate in candidates:
             if candidate.code in final_codes:
+                filtered_candidates.append(candidate)
+            elif candidate.code in bundled_codes:
+                # Already marked as rejected above
                 filtered_candidates.append(candidate)
             elif candidate.code in ncci_result.removed_codes:
                 # Update the candidate to show it was removed by NCCI
@@ -390,3 +471,10 @@ class CodingService:
             suggestions.append(suggestion)
 
         return suggestions
+    def _prepare_llm_context(self, scrubbed_text: str) -> str:
+        if not scrubbed_text:
+            return scrubbed_text
+        if not sectionizer_enabled():
+            return scrubbed_text
+        tokens = max_llm_input_tokens()
+        return accordion_truncate(scrubbed_text, tokens)

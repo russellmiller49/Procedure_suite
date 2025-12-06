@@ -434,6 +434,158 @@ def normalize_registry_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
             "rose_result": pathology_text if "rose" in pathology_text.lower() else None,
         }
 
+    # Normalize granular_data fields
+    granular_data = payload.get("granular_data")
+    if isinstance(granular_data, dict):
+        # Normalize navigation_targets[].rebus_view to schema enum values
+        # Schema enum: ["Concentric", "Eccentric", "Adjacent", "Not visualized"]
+        nav_targets = granular_data.get("navigation_targets")
+        if isinstance(nav_targets, list):
+            for target in nav_targets:
+                if isinstance(target, dict):
+                    rebus_view = target.get("rebus_view")
+                    if isinstance(rebus_view, str):
+                        text = rebus_view.strip().lower()
+                        # Use existing PROBE_POSITION_MAP or fuzzy match
+                        normalized = PROBE_POSITION_MAP.get(text)
+                        if normalized is None:
+                            # Fuzzy matching for descriptive text
+                            if "concentric" in text:
+                                normalized = "Concentric"
+                            elif "eccentric" in text:
+                                normalized = "Eccentric"
+                            elif "adjacent" in text:
+                                normalized = "Adjacent"
+                            elif "not" in text and ("visual" in text or "seen" in text):
+                                normalized = "Not visualized"
+                        if normalized:
+                            target["rebus_view"] = normalized
+                        else:
+                            # Invalid value - set to None to let schema handle it
+                            target["rebus_view"] = None
+
+        # Normalize specimens_collected[].source_location - handle null values
+        specimens = granular_data.get("specimens_collected")
+        if isinstance(specimens, list):
+            for specimen in specimens:
+                if isinstance(specimen, dict):
+                    source_loc = specimen.get("source_location")
+                    # source_location is required - provide default if null
+                    if source_loc is None or (isinstance(source_loc, str) and not source_loc.strip()):
+                        # Try to derive from source_procedure if available
+                        source_proc = specimen.get("source_procedure", "")
+                        specimen["source_location"] = source_proc if source_proc else "Unknown"
+
+    # ==========================================================================
+    # Derive procedures_performed fields from granular_data
+    # ==========================================================================
+    # This ensures granular data is reflected in top-level procedure fields
+    granular_data = payload.get("granular_data")
+    if granular_data:
+        from modules.registry.schema_granular import derive_procedures_from_granular
+
+        existing_procedures = payload.get("procedures_performed") or {}
+        updated_procedures, derivation_warnings = derive_procedures_from_granular(
+            granular_data, existing_procedures
+        )
+        payload["procedures_performed"] = updated_procedures
+
+        # Add derivation warnings to granular_validation_warnings
+        if derivation_warnings:
+            existing_warnings = payload.get("granular_validation_warnings", [])
+            if existing_warnings is None:
+                existing_warnings = []
+            payload["granular_validation_warnings"] = existing_warnings + derivation_warnings
+
+    # ==========================================================================
+    # Fix therapeutic_aspiration vs transbronchial_biopsy misclassification
+    # ==========================================================================
+    # Therapeutic aspiration involves airways (Trachea, RMS, LMS, Carina, etc.)
+    # Transbronchial biopsy involves lung parenchyma (lobes/segments)
+    procedures = payload.get("procedures_performed") or {}
+    tbbx = procedures.get("transbronchial_biopsy")
+    if tbbx and tbbx.get("performed"):
+        tbbx_locations = tbbx.get("locations", []) or []
+
+        # Definite airway locations that indicate aspiration, not biopsy
+        airway_patterns = {
+            "trachea", "rms", "lms", "bi", "bronchus intermedius",
+            "carina", "mainstem", "rc1", "rc2", "lc1", "lc2",
+            "right mainstem", "left mainstem",
+        }
+
+        # Lobar/segmental patterns indicate parenchymal biopsy
+        parenchymal_patterns = {
+            "posterior", "anterior", "lateral", "medial", "basal",
+            "apical", "superior", "inferior", "segment", "lb", "rb",
+        }
+
+        # Pure lobe names without segment info are ambiguous
+        # They're considered airways if they're in a list of mostly airways
+        pure_lobe_names = {"rul", "rml", "rll", "lul", "lll", "lingula"}
+
+        # Check if locations are airways vs parenchymal
+        airway_locs = []
+        parenchymal_locs = []
+        ambiguous_locs = []  # Could be airways (carinas) or parenchyma
+
+        for loc in tbbx_locations:
+            loc_lower = loc.lower().strip()
+
+            # Check for definite airway patterns
+            is_definite_airway = any(pattern in loc_lower for pattern in airway_patterns)
+
+            # Check for parenchymal patterns (segments)
+            is_parenchymal = any(seg in loc_lower for seg in parenchymal_patterns)
+
+            # Check if it's just a pure lobe name
+            is_pure_lobe = loc_lower in pure_lobe_names
+
+            if is_definite_airway and not is_parenchymal:
+                airway_locs.append(loc)
+            elif is_parenchymal:
+                parenchymal_locs.append(loc)
+            elif is_pure_lobe:
+                ambiguous_locs.append(loc)
+            else:
+                # Unknown - treat as parenchymal to be safe
+                parenchymal_locs.append(loc)
+
+        # If we have definite airways and ambiguous lobes but NO parenchymal segments,
+        # this is likely therapeutic aspiration (e.g., "RMS, LMS, BI, RUL carina, RML carina")
+        if airway_locs and not parenchymal_locs:
+            # Ambiguous lobe names in context of airways are likely carinas
+            airway_locs.extend(ambiguous_locs)
+
+            # Move to therapeutic_aspiration
+            therapeutic = procedures.get("therapeutic_aspiration") or {}
+            if not therapeutic.get("performed"):
+                therapeutic["performed"] = True
+                therapeutic["material"] = "Mucus plug"  # Default
+                therapeutic["location"] = ", ".join(airway_locs[:3])
+                procedures["therapeutic_aspiration"] = therapeutic
+
+            # Clear incorrect transbronchial_biopsy
+            tbbx["performed"] = False
+            tbbx["locations"] = None
+            procedures["transbronchial_biopsy"] = tbbx
+
+        # If we have parenchymal locations, keep TBBx with those
+        elif parenchymal_locs:
+            tbbx["locations"] = parenchymal_locs + ambiguous_locs
+
+    payload["procedures_performed"] = procedures
+
+    # ==========================================================================
+    # Derive outcomes from note content
+    # ==========================================================================
+    # Check for procedure completion and complications based on common phrases
+    outcomes = payload.get("outcomes") or {}
+    if outcomes.get("procedure_completed") is None:
+        # Look for indicators in the note that procedure was completed
+        # This is a fallback - ideally the LLM sets this
+        pass  # Will be handled by LLM or explicit derivation
+
     return payload
 
 
