@@ -1,0 +1,2102 @@
+[
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion.\nPatient: Daniel Carter, 68-year-old male with metastatic lung adenocarcinoma and recurrent left pleural effusion.\nAnesthesia: General anesthesia with double-lumen endotracheal tube.\nIndication: Symptomatic, rapidly recurrent left malignant pleural effusion after multiple prior therapeutic thoracenteses.\nProcedure details: Under ultrasound guidance, the left 6th intercostal space in the midaxillary line was selected. Approximately 1.8 L of serosanguinous pleural fluid was drained through a trocar. A semi-rigid thoracoscope was introduced. Diffuse parietal pleural studding and nodularity were seen, with trapped lung but near-complete re-expansion after drainage. Multiple parietal pleural biopsies were obtained. A talc slurry (4 g in 50 mL normal saline) was distributed evenly over the parietal pleura while rotating the patient. A 24 Fr chest tube was left in place and connected to \u221220 cmH2O suction.\nComplications: None; transient hypotension responsive to fluids.\nEstimated blood loss: 25 mL.\nDisposition: Admitted to floor with chest tube to suction.\nPlan: Daily chest radiographs, monitor drainage; remove chest tube when output <150 mL/day and lung fully expanded; oncology follow-up once pathology finalized.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32650-001",
+      "procedure_date": "2025-02-03",
+      "institution_name": "Synthetic Regional Thoracic Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 68,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "Apixaban for atrial fibrillation",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Recurrent symptomatic left malignant pleural effusion from lung adenocarcinoma",
+      "radiographic_findings": "Large left pleural effusion with compressive atelectasis of the left lower lobe",
+      "lesion_size_mm": null,
+      "lesion_location": "Diffuse parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Three prior therapeutic thoracenteses in the past 6 weeks",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "37 Fr left-sided DLT",
+      "ventilation_mode": "Single-lung ventilation, then two-lung ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -14,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 1800,
+      "pleural_thoracoscopy_findings": "Diffuse parietal pleural nodularity and studding consistent with malignant pleural involvement",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc slurry",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and immunohistochemistry",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 25,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Suspected malignant pleural effusion; pleural biopsies pending",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Daily CXRs; remove chest tube once drainage low and lung expanded; oncology clinic within 1\u20132 weeks",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Elena Morris",
+        "fellow_name": "Dr. Amir Shah",
+        "assistant_name": "Taylor Brooks, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with mechanical pleurodesis for mesothelioma.\nPatient: Maria Lopez, 73-year-old female with biopsy-proven epithelioid malignant pleural mesothelioma and recurrent right effusion.\nAnesthesia: General anesthesia with single-lumen ETT and bronchial blocker.\nIndication: Progressive dyspnea from large recurrent right malignant pleural effusion despite prior thoracenteses.\nProcedure details: Right lateral decubitus positioning. The 5th intercostal space at the midaxillary line was opened with a 2 cm incision. Entry into the pleural space resulted in immediate drainage of 1.2 L of serous fluid. A rigid thoracoscope was used to inspect the pleural cavity, revealing circumferential parietal pleural thickening and tumor implants. Mechanical pleurodesis was performed using a gauze pad and thoracoscopic scratcher across the parietal pleura, followed by instillation of 500 mg doxycycline in 50 mL saline as adjunct sclerosing agent. A 28 Fr chest tube was secured in the posterior axillary line.\nComplications: Mild oozing from pleural surfaces controlled with cautery; no hemodynamic instability.\nEstimated blood loss: 40 mL.\nDisposition: Admitted to thoracic surgery floor with chest tube to suction.\nPlan: Maintain suction at \u221220 cmH2O; remove chest tube when drainage <150 mL/day and CXR stable; oncology follow-up for systemic therapy.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32650-002",
+      "procedure_date": "2025-02-19",
+      "institution_name": "Synthetic Cancer Institute",
+      "procedure_setting": "Operating room",
+      "patient_age": 73,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Recurrent right malignant pleural effusion due to epithelioid mesothelioma",
+      "radiographic_findings": "Large right pleural effusion with circumferential pleural thickening",
+      "lesion_size_mm": null,
+      "lesion_location": "Circumferential parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Systemic pemetrexed/platinum; serial therapeutic thoracenteses",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "8.0 ETT with bronchial blocker",
+      "ventilation_mode": "Volume control with one-lung ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "5th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -10,
+      "pleural_fluid_appearance": "Straw-colored",
+      "pleural_volume_drained_ml": 1200,
+      "pleural_thoracoscopy_findings": "Diffuse parietal pleural thickening and tumor implants consistent with mesothelioma",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Mechanical pleurodesis plus doxycycline",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Additional pleural biopsies submitted for histology and biomarkers",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 40,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Known malignant pleural mesothelioma with successful pleurodesis",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Daily drainage monitoring; early ambulation and incentive spirometry; oncology clinic in 2 weeks",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Victor Lin",
+        "fellow_name": "Dr. Priya Desai",
+        "assistant_name": "Morgan Ellis, RN",
+        "assistant_role": "Circulating nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:01:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for recurrent breast cancer\u2013related malignant pleural effusion.\nPatient: Hannah Nguyen, 61-year-old female with metastatic ER+/HER2\u2212 breast carcinoma and symptomatic right pleural effusion.\nAnesthesia: Monitored anesthesia care with propofol infusion and supplemental oxygen via face mask.\nIndication: Dyspnea on exertion and orthopnea from recurrent right pleural effusion despite three thoracenteses.\nProcedure details: After ultrasound localization, the right 7th intercostal space in the posterior axillary line was infiltrated with lidocaine and bupivacaine. A single-port semi-rigid medical thoracoscope was introduced after trocar insertion. Approximately 1.4 L of serous fluid was drained. The parietal pleura showed patchy nodularity over the diaphragmatic and posterior pleura. Biopsies were obtained from representative nodules. A talc slurry (4 g in 100 mL saline) was instilled and distributed with patient rotation. A 20 Fr chest tube was secured.\nComplications: None.\nEstimated blood loss: 15 mL.\nDisposition: Admitted overnight for monitoring and chest tube management.\nPlan: Transition chest tube to water seal once air leak resolves; remove when drainage <150 mL/day; resume systemic therapy per oncology.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32650-003",
+      "procedure_date": "2025-03-01",
+      "institution_name": "Synthetic Women\u2019s Cancer Center",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 61,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "Aspirin 81 mg daily",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Recurrent right malignant pleural effusion from metastatic breast cancer",
+      "radiographic_findings": "Moderate to large right pleural effusion with right lower lobe compressive atelectasis",
+      "lesion_size_mm": null,
+      "lesion_location": "Posterior and diaphragmatic parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Multiple therapeutic thoracenteses; systemic endocrine therapy and CDK4/6 inhibitor",
+      "sedation_type": "MAC",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous ventilation with supplemental oxygen",
+      "anesthesia_agents": "Propofol infusion, fentanyl, local lidocaine/bupivacaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "7th posterior axillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -11,
+      "pleural_fluid_appearance": "Serous",
+      "pleural_volume_drained_ml": 1400,
+      "pleural_thoracoscopy_findings": "Patchy diaphragmatic and posterior pleural nodularity consistent with metastatic disease",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc slurry",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and receptor status confirmation as needed",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 15,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Recurrent malignant pleural effusion with successful talc pleurodesis",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Daily CXR until lung expansion stable; chest tube removal once drainage low; oncology follow-up within 1\u20132 weeks",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Lauren Kim",
+        "fellow_name": "Dr. Joshua Reed",
+        "assistant_name": "Avery Hill, RN",
+        "assistant_role": "Bedside nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:02:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for hepatic hydrothorax.\nPatient: Samuel Ortiz, 59-year-old male with decompensated cirrhosis and refractory right hepatic hydrothorax.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: Dyspnea and frequent hospitalizations for large right transudative pleural effusion despite sodium restriction and diuretics.\nProcedure details: Ultrasound localization identified a large free-flowing right effusion. A 2 cm incision was made in the right 6th intercostal space, midaxillary line. After trocar insertion, 2.1 L of clear, straw-colored fluid was drained. Thoracoscopic inspection showed smooth parietal pleura without nodularity. No suspicious lesions were biopsied. Mechanical abrasion pleurodesis was performed using a thoracoscopic pad; 4 g of sterile talc in 100 mL saline was then distributed evenly. A 24 Fr chest tube was placed posteriorly.\nComplications: Transient hypotension corrected with albumin bolus; no bleeding.\nEstimated blood loss: 10 mL.\nDisposition: Admitted to step-down unit for close monitoring of hemodynamics and chest tube output.\nPlan: Albumin replacement for large volume drainage; chest tube to suction initially, then water seal; hepatology consultation regarding TIPS.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32650-004",
+      "procedure_date": "2025-03-11",
+      "institution_name": "Synthetic Liver and Lung Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 59,
+      "gender": "Male",
+      "asa_class": 4,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Refractory right hepatic hydrothorax with dyspnea",
+      "radiographic_findings": "Massive right pleural effusion with near-complete right lower lobe collapse; cirrhotic liver morphology on prior imaging",
+      "lesion_size_mm": null,
+      "lesion_location": "No focal pleural lesions",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Maximal diuretics and multiple therapeutic thoracenteses",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "8.0 ETT",
+      "ventilation_mode": "Volume control ventilation",
+      "anesthesia_agents": "Etomidate, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -9,
+      "pleural_fluid_appearance": "Clear, straw-colored",
+      "pleural_volume_drained_ml": 2100,
+      "pleural_thoracoscopy_findings": "Smooth, glistening pleura without nodularity or plaque",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc slurry plus mechanical abrasion",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": 10,
+      "bleeding_severity": "None",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Refractory hepatic hydrothorax treated with thoracoscopic talc pleurodesis",
+      "molecular_testing_requested": false,
+      "disposition": "Step-down unit admission",
+      "follow_up_plan": "Monitor daily weights and chest tube output; hepatology to evaluate for TIPS; outpatient follow-up within 4 weeks",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Naveen Iyer",
+        "fellow_name": "Dr. Chloe Ramirez",
+        "assistant_name": "Jordan Fox, RN",
+        "assistant_role": "Scrub nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:03:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for recurrent spontaneous pneumothorax.\nPatient: Liam Johnson, 27-year-old male with recurrent primary left spontaneous pneumothorax.\nAnesthesia: General anesthesia with left lung isolation using a double-lumen ETT.\nIndication: Third episode of left spontaneous pneumothorax with persistent air leak after chest tube drainage.\nProcedure details: The patient was positioned in right lateral decubitus. Entry into the left pleural space at the 5th intercostal space yielded a small amount of serosanguinous fluid and air. Thoracoscopic inspection revealed several apical blebs and normal visceral pleura elsewhere. The apical blebs were stapled with an endoscopic stapler by the thoracic surgery team (documented separately). Medical thoracoscopy team performed mechanical pleurodesis along the apical and parietal pleura using gauze pads, followed by insufflation of 4 g sterile talc as dry powder. A 24 Fr chest tube was left at the apex.\nComplications: Brief intraoperative desaturation to 88% during lung isolation, resolved with recruitment maneuvers.\nEstimated blood loss: 20 mL.\nDisposition: Admitted to floor with chest tube to suction.\nPlan: Daily CXRs; chest tube removal when no air leak and lung fully expanded on water seal; smoking cessation counseling.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32650-005",
+      "procedure_date": "2025-01-29",
+      "institution_name": "Synthetic Thoracic Surgery and IP Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 27,
+      "gender": "Male",
+      "asa_class": 2,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Recurrent left primary spontaneous pneumothorax with persistent air leak",
+      "radiographic_findings": "Moderate left apical pneumothorax with chest tube in situ; CT with apical blebs",
+      "lesion_size_mm": null,
+      "lesion_location": "Apical visceral pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Two prior hospitalizations with chest tube drainage alone",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "35 Fr left-sided DLT",
+      "ventilation_mode": "Single-lung ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "5th midaxillary",
+      "pleural_opening_pressure_measured": false,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": "Minimal serosanguinous fluid",
+      "pleural_volume_drained_ml": 150,
+      "pleural_thoracoscopy_findings": "Apical blebs and otherwise healthy pleura; no diffuse disease",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Mechanical abrasion plus talc poudrage",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": 20,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Recurrent primary left spontaneous pneumothorax treated with thoracoscopic pleurodesis",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Clinic visit in 2\u20134 weeks; reinforce smoking cessation; advise against high-altitude travel until cleared",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Rachel Owens",
+        "fellow_name": "Dr. Jonah Lee",
+        "assistant_name": "Casey Young, RN",
+        "assistant_role": "Circulator",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:04:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility). Stapling by Thoracic Surgery reported separately."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for loculated malignant pleural effusion.\nPatient: Olivia Brown, 65-year-old female with metastatic ovarian carcinoma and loculated left pleural effusion.\nAnesthesia: Moderate sedation with midazolam and fentanyl; supplemental oxygen via nasal cannula.\nIndication: Progressive dyspnea from loculated malignant pleural effusion not adequately drained by prior thoracentesis.\nProcedure details: Bedside ultrasound showed multiple septations and loculations along the lateral left chest. A 2 cm incision was made at the 6th intercostal space, midaxillary line. Trocar insertion yielded 900 mL of serous fluid from the largest locule. A semi-rigid thoracoscope was advanced; adhesions were bluntly lysed to break down septations. Multiple parietal pleural biopsies were taken from nodular areas. After near-complete drainage, 4 g talc in 50 mL saline was instilled and distributed under direct visualization. A 20 Fr chest tube was placed and secured.\nComplications: Mild pleuritic pain controlled with IV opioids; no hypotension or hypoxia.\nEstimated blood loss: 30 mL.\nDisposition: Admitted to oncology floor with chest tube to suction.\nPlan: Transition to water seal on postoperative day 1; remove tube when drainage low; continue systemic chemotherapy per oncology.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32650-006",
+      "procedure_date": "2025-04-02",
+      "institution_name": "Synthetic Comprehensive Cancer Center",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 65,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "Prophylactic low molecular weight heparin",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Loculated left malignant pleural effusion causing dyspnea",
+      "radiographic_findings": "Loculated left pleural effusion with multiple septations on ultrasound and CT",
+      "lesion_size_mm": null,
+      "lesion_location": "Lateral parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Prior thoracentesis with incomplete drainage; ongoing systemic chemotherapy",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous ventilation",
+      "anesthesia_agents": "Midazolam, fentanyl, local lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -8,
+      "pleural_fluid_appearance": "Serous, slightly turbid",
+      "pleural_volume_drained_ml": 900,
+      "pleural_thoracoscopy_findings": "Multiple adhesions and nodular pleural implants consistent with metastatic disease",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc slurry",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and cytology",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 30,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Malignant pleural effusion with successful talc pleurodesis",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Monitor chest tube output; remove when drainage low and lung expanded; follow up with oncology in 1\u20132 weeks",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Aisha Patel",
+        "fellow_name": "Dr. Michael Yang",
+        "assistant_name": "Riley Scott, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:05:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion in non\u2013small cell lung cancer.\nPatient: Ethan Miller, 72-year-old male with stage IV squamous cell carcinoma and recurrent left pleural effusion.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: Worsening dyspnea and orthopnea due to recurrent malignant pleural effusion despite prior chest tube drainage.\nProcedure details: Left 6th intercostal space was selected under ultrasound guidance. Trocar entry produced a gush of serosanguinous fluid; 1.6 L was drained. Thoracoscopy showed nodular parietal and diaphragmatic pleura. Multiple biopsies were taken. After drainage, 4 g talc in 50 mL saline was instilled and spread evenly. A 24 Fr chest tube was secured.\nComplications: None.\nEstimated blood loss: 20 mL.\nDisposition: Admitted to oncology floor with chest tube to suction.\nPlan: Daily CXR and drainage monitoring; remove chest tube when output <150 mL/day; palliative care consult.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32650-007",
+      "procedure_date": "2025-04-15",
+      "institution_name": "Synthetic VA Cancer Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 72,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "Clopidogrel for coronary stent",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Recurrent left malignant pleural effusion from squamous cell lung carcinoma",
+      "radiographic_findings": "Large left pleural effusion with mediastinal shift and compressive atelectasis",
+      "lesion_size_mm": null,
+      "lesion_location": "Diaphragmatic and parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Concurrent chemoradiation and prior chest tube drainage",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "8.0 ETT",
+      "ventilation_mode": "Volume control",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -13,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 1600,
+      "pleural_thoracoscopy_findings": "Diffusely nodular parietal and diaphragmatic pleura consistent with malignant involvement",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc slurry",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and PD-L1 testing if needed",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 20,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Malignant pleural effusion secondary to squamous cell lung carcinoma with successful talc pleurodesis",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Palliative care and oncology follow-up; chest tube removal once drainage low and CXR stable",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Henry Lawson",
+        "fellow_name": "Dr. Sara Ahmed",
+        "assistant_name": "Jamie Cook, RN",
+        "assistant_role": "Scrub nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:06:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion from renal cell carcinoma.\nPatient: Noah Allen, 63-year-old male with metastatic clear cell renal carcinoma and left pleural effusion.\nAnesthesia: Moderate sedation with midazolam and fentanyl; local anesthetic at port site.\nIndication: Symptomatic recurrent left pleural effusion with prior positive cytology for renal cell carcinoma.\nProcedure details: Ultrasound identified a large free-flowing effusion. A 2 cm incision at the 6th intercostal space allowed entry with a semi-rigid thoracoscope. 1.3 L of hemorrhagic fluid drained. Numerous hemorrhagic pleural implants were seen. Biopsies were obtained for confirmation. Talc slurry (4 g in 50 mL saline) was instilled with even distribution. A 20 Fr chest tube was secured.\nComplications: None.\nEstimated blood loss: 35 mL.\nDisposition: Admitted overnight for chest tube management.\nPlan: Daily CXR; remove chest tube once drainage low; outpatient oncology follow-up in 1 week.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32650-008",
+      "procedure_date": "2025-05-06",
+      "institution_name": "Synthetic Academic Medical Center",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 63,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Recurrent left malignant pleural effusion due to metastatic renal cell carcinoma",
+      "radiographic_findings": "Moderate to large left pleural effusion; no large parenchymal masses",
+      "lesion_size_mm": null,
+      "lesion_location": "Diffuse parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Targeted systemic therapy; previous thoracentesis with positive cytology",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous ventilation",
+      "anesthesia_agents": "Midazolam, fentanyl, local lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -12,
+      "pleural_fluid_appearance": "Hemorrhagic",
+      "pleural_volume_drained_ml": 1300,
+      "pleural_thoracoscopy_findings": "Diffuse hemorrhagic pleural implants consistent with metastatic renal cell carcinoma",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc slurry",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 35,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Malignant pleural effusion secondary to metastatic renal cell carcinoma with successful pleurodesis",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Oncology visit in 1 week; chest tube removal when drainage low and lung expanded",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Julia Sanders",
+        "fellow_name": "Dr. Omar Chen",
+        "assistant_name": "Leslie Park, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:07:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion in mesothelioma (contralateral side).\nPatient: James Cooper, 70-year-old male with biphasic malignant pleural mesothelioma and new left pleural effusion after prior right-sided pleurodesis.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: Increasing dyspnea due to new contralateral effusion in a patient not eligible for further systemic therapy.\nProcedure details: Ultrasound confirmed a large left effusion. Trocar entry at the 6th intercostal space allowed drainage of 1.5 L of serous fluid. Thoracoscopy showed nodular parietal pleura; no diaphragmatic defects. Biopsies were obtained. Talc slurry (4 g in 50 mL saline) was instilled evenly. A 24 Fr chest tube was placed.\nComplications: None.\nEstimated blood loss: 30 mL.\nDisposition: Admitted overnight to thoracic ward.\nPlan: Monitor chest tube output; palliative care support; outpatient follow-up in 1\u20132 weeks.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32650-009",
+      "procedure_date": "2025-05-21",
+      "institution_name": "Synthetic Mesothelioma Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 70,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "Low-dose aspirin",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "New contralateral malignant pleural effusion in mesothelioma",
+      "radiographic_findings": "Large left pleural effusion with compressive atelectasis; prior right talc pleurodesis changes",
+      "lesion_size_mm": null,
+      "lesion_location": "Diffuse parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Right-sided talc pleurodesis; prior systemic chemotherapy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "8.0 ETT",
+      "ventilation_mode": "Volume control",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -10,
+      "pleural_fluid_appearance": "Serous",
+      "pleural_volume_drained_ml": 1500,
+      "pleural_thoracoscopy_findings": "Diffuse nodular pleural involvement consistent with mesothelioma",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc slurry",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 30,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Malignant pleural effusion from mesothelioma with successful contralateral talc pleurodesis",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Palliative care and thoracic surgery follow-up; chest tube removal when drainage low",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Marcus Hill",
+        "fellow_name": "Dr. Emily Rivera",
+        "assistant_name": "Shawn Lee, RN",
+        "assistant_role": "Scrub nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:08:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion in lung adenocarcinoma (bilateral disease, unilateral treatment).\nPatient: Ava Thompson, 67-year-old female with metastatic lung adenocarcinoma and bilateral pleural effusions, left greater than right.\nAnesthesia: Moderate sedation with midazolam and fentanyl; supplemental oxygen via nasal cannula.\nIndication: Symptomatic left-dominant malignant pleural effusion causing orthopnea.\nProcedure details: Ultrasound-guided entry at the left 7th intercostal space allowed drainage of 1.7 L serosanguinous fluid. Thoracoscopy revealed diffuse parietal pleural implants. Biopsies were obtained. Talc slurry (4 g in 50 mL saline) was instilled and distributed. A 20 Fr chest tube was secured.\nComplications: None.\nEstimated blood loss: 25 mL.\nDisposition: Admitted to oncology floor.\nPlan: Monitor drainage and respiratory status; consider right-sided tunneled pleural catheter if contralateral effusion becomes symptomatic.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32650-010",
+      "procedure_date": "2025-06-01",
+      "institution_name": "Synthetic Lung Cancer Center",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 67,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "Rivaroxaban for atrial fibrillation",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Left-predominant malignant pleural effusion from metastatic lung adenocarcinoma",
+      "radiographic_findings": "Bilateral pleural effusions, larger on the left, with left lower lobe compressive atelectasis",
+      "lesion_size_mm": null,
+      "lesion_location": "Diffuse parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Systemic immunotherapy; multiple prior thoracenteses",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous ventilation",
+      "anesthesia_agents": "Midazolam, fentanyl, local lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "7th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -15,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 1700,
+      "pleural_thoracoscopy_findings": "Diffuse parietal pleural implants with scattered diaphragmatic involvement",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc slurry",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 25,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Malignant pleural effusion due to metastatic lung adenocarcinoma with successful talc pleurodesis",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Daily CXR; reassess contralateral effusion; outpatient follow-up with IP and oncology in 2 weeks",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Sophia Grant",
+        "fellow_name": "Dr. Leo Carter",
+        "assistant_name": "Parker Diaz, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:09:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for undiagnosed exudative pleural effusion.\nPatient: Grace Wilson, 58-year-old female with persistent left exudative pleural effusion of unclear etiology.\nAnesthesia: Moderate sedation with midazolam and fentanyl; local lidocaine at port site.\nIndication: Recurrent left exudative pleural effusion with negative cytology on two prior thoracenteses; concern for malignancy versus tuberculosis.\nProcedure details: Ultrasound guidance identified a moderate free-flowing left pleural effusion. A single-port semi-rigid thoracoscope was introduced at the 6th intercostal space. Approximately 1.1 L of cloudy, straw-colored fluid was drained. Thoracoscopic inspection revealed diffuse granular parietal pleural thickening with scattered small nodules and fibrin strands. Multiple biopsies (10 samples) were taken from abnormal parietal pleura and diaphragmatic pleura. No chemical or mechanical pleurodesis was performed. A 20 Fr chest tube was placed to water seal.\nComplications: None.\nEstimated blood loss: 20 mL.\nDisposition: Admitted overnight for observation and chest tube management.\nPlan: Send pleural fluid and tissue for cytology, AFB smear/culture, fungal culture, and histopathology; chest tube removal when drainage low and no air leak; follow-up in IP clinic in 1 week.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32609-001",
+      "procedure_date": "2025-02-07",
+      "institution_name": "Synthetic University Hospital",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 58,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "Warfarin for mechanical mitral valve",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Undiagnosed recurrent left exudative pleural effusion suspicious for malignancy or TB",
+      "radiographic_findings": "Moderate left pleural effusion with pleural thickening on CT",
+      "lesion_size_mm": null,
+      "lesion_location": "Diffuse parietal and diaphragmatic pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Two diagnostic/therapeutic thoracenteses with negative cytology",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous ventilation with nasal oxygen",
+      "anesthesia_agents": "Midazolam, fentanyl, local lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -10,
+      "pleural_fluid_appearance": "Cloudy, straw-colored exudate",
+      "pleural_volume_drained_ml": 1100,
+      "pleural_thoracoscopy_findings": "Diffuse granular pleural thickening and small nodules without obvious bulky tumor",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology, AFB, fungal stains and cultures",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 20,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Undiagnosed exudative pleural effusion; pleural biopsies pending",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Await histopathology and microbiology; IP clinic follow-up in 7\u201310 days",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Daniel Ross",
+        "fellow_name": "Dr. Nina Shah",
+        "assistant_name": "Alex Morgan, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:10:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with biopsy of pleura",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32609; total_work_rvu=11.25, total_rvu=16.88 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for suspected pleural mesothelioma.\nPatient: Ryan Brooks, 69-year-old male with occupational asbestos exposure and right pleural thickening with effusion.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: Progressive right pleural thickening and moderate effusion seen on CT; need tissue diagnosis.\nProcedure details: Right 5th intercostal space, midaxillary line, was chosen under ultrasound. After trocar placement, 900 mL of serous fluid was drained. Thoracoscopy revealed diffuse nodular and plaque-like thickening of the parietal pleura, especially over the diaphragmatic and posterior chest wall. Multiple large biopsies (12 samples) were obtained with rigid forceps from representative areas. No pleurodesis was performed due to diagnostic intent and uncertain staging plan. A 24 Fr chest tube was placed to water seal.\nComplications: Mild oozing at biopsy sites controlled with cautery and topical epinephrine.\nEstimated blood loss: 50 mL.\nDisposition: Admitted to thoracic surgery floor.\nPlan: Send specimens for histology and BAP1/MTAP staining; PET/CT and multidisciplinary tumor board discussion after diagnosis.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32609-002",
+      "procedure_date": "2025-03-04",
+      "institution_name": "Synthetic Mesothelioma Referral Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 69,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "Aspirin 81 mg daily",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Suspected malignant pleural mesothelioma with right pleural thickening and effusion",
+      "radiographic_findings": "Circumferential right pleural thickening with moderate effusion on CT",
+      "lesion_size_mm": null,
+      "lesion_location": "Posterior and diaphragmatic parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "None beyond diagnostic thoracentesis",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "8.0 ETT",
+      "ventilation_mode": "Volume control ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "5th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -7,
+      "pleural_fluid_appearance": "Clear serous",
+      "pleural_volume_drained_ml": 900,
+      "pleural_thoracoscopy_findings": "Diffuse nodular parietal pleural thickening concerning for mesothelioma",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology, immunohistochemistry including BAP1/MTAP",
+      "bronch_immediate_complications": "Mild oozing controlled with cautery and topical epinephrine",
+      "ebl_ml": 50,
+      "bleeding_severity": "Mild (<100mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Pleural nodularity highly suspicious for mesothelioma; final pathology pending",
+      "molecular_testing_requested": true,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Obtain PET/CT after histologic confirmation; tumor board discussion within 2 weeks",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Olivia Stone",
+        "fellow_name": "Dr. Kai Rodriguez",
+        "assistant_name": "Jordan Adams, RN",
+        "assistant_role": "Circulating nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:11:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with biopsy of pleura",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32609; total_work_rvu=11.25, total_rvu=16.88 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for suspected rheumatoid pleuritis.\nPatient: Isabella Martinez, 54-year-old female with longstanding seropositive rheumatoid arthritis and recurrent right exudative pleural effusion.\nAnesthesia: Moderate sedation with midazolam and fentanyl.\nIndication: Recurrent right pleural effusion with low pleural glucose and high LDH; need tissue diagnosis to distinguish rheumatoid pleuritis from malignancy.\nProcedure details: Ultrasound confirmed a moderate right effusion without loculations. A semi-rigid thoracoscope was introduced at the 6th intercostal space. 900 mL of cloudy, yellow fluid was removed. Parietal pleura appeared diffusely inflamed with small whitish nodules; no bulky tumor. Multiple biopsies (8 samples) were obtained from parietal and diaphragmatic pleura. No pleurodesis performed. A 16 Fr chest tube was left in place.\nComplications: None.\nEstimated blood loss: 10 mL.\nDisposition: Observed overnight on rheumatology ward.\nPlan: Send pleural tissue for histology and microbiology; adjust RA therapy pending results.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32609-003",
+      "procedure_date": "2025-03-25",
+      "institution_name": "Synthetic Rheumatology and Lung Center",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 54,
+      "gender": "Female",
+      "asa_class": 2,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Recurrent right exudative pleural effusion in rheumatoid arthritis with low pleural glucose",
+      "radiographic_findings": "Moderate right pleural effusion; no discrete lung mass",
+      "lesion_size_mm": null,
+      "lesion_location": "Diffuse parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "RA disease-modifying therapy; prior diagnostic thoracentesis",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous ventilation",
+      "anesthesia_agents": "Midazolam, fentanyl, local lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -6,
+      "pleural_fluid_appearance": "Cloudy yellow exudate",
+      "pleural_volume_drained_ml": 900,
+      "pleural_thoracoscopy_findings": "Diffuse erythematous pleura with fine whitish nodules; no obvious malignancy",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and culture",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 10,
+      "bleeding_severity": "None",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Exudative pleural effusion likely secondary to rheumatoid pleuritis; pathology pending",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Rheumatology follow-up; adjust disease-modifying therapy after biopsy results",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Kevin Liu",
+        "fellow_name": "Dr. Maya Torres",
+        "assistant_name": "Taylor Green, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:12:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with biopsy of pleura",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32609; total_work_rvu=11.25, total_rvu=16.88 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for suspected tuberculous pleuritis.\nPatient: Ahmed Ali, 46-year-old male with recent travel to high TB-prevalence region and unilateral left pleural effusion.\nAnesthesia: Moderate sedation with midazolam and fentanyl.\nIndication: Subacute fever, weight loss, and left exudative lymphocyte-predominant pleural effusion with elevated ADA level; need diagnostic confirmation.\nProcedure details: Ultrasound-demonstrated moderate left pleural effusion. A single-port thoracoscope was introduced at the 5th intercostal space. 800 mL of straw-colored fluid was drained. Parietal pleura displayed diffuse whitish nodules and fibrinous adhesions. Multiple biopsies were obtained from costal and diaphragmatic pleura. No pleurodesis was performed. A 16 Fr chest tube was placed under water seal.\nComplications: None.\nEstimated blood loss: 15 mL.\nDisposition: Admitted to infectious diseases ward.\nPlan: Send pleural tissue for histology, AFB smear and culture, Xpert MTB/RIF, and mycobacterial PCR; initiate empiric anti-tuberculous therapy if pathology supportive.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32609-004",
+      "procedure_date": "2025-02-28",
+      "institution_name": "Synthetic Infectious Disease and Lung Center",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 46,
+      "gender": "Male",
+      "asa_class": 2,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Suspected tuberculous pleuritis with unilateral effusion and high ADA",
+      "radiographic_findings": "Moderate left pleural effusion with adjacent pleural thickening",
+      "lesion_size_mm": null,
+      "lesion_location": "Diffuse parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Diagnostic thoracentesis with high ADA and lymphocytic exudate",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous",
+      "anesthesia_agents": "Midazolam, fentanyl, local lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "5th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -8,
+      "pleural_fluid_appearance": "Straw-colored exudate",
+      "pleural_volume_drained_ml": 800,
+      "pleural_thoracoscopy_findings": "Diffuse small whitish nodules and fibrinous adhesions consistent with TB pleuritis",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology, AFB smear/culture, PCR",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 15,
+      "bleeding_severity": "None",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Findings suggestive of tuberculous pleuritis; confirmatory microbiology pending",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Start empiric TB therapy if pathology consistent; infectious diseases follow-up",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Hannah Cole",
+        "fellow_name": "Dr. Amir Malik",
+        "assistant_name": "Riley Bennett, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:13:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with biopsy of pleura",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32609; total_work_rvu=11.25, total_rvu=16.88 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for suspected pleural carcinomatosis from gastric cancer.\nPatient: Mei Chen, 62-year-old female with metastatic gastric adenocarcinoma and new right pleural effusion.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: Progressive dyspnea and right pleural effusion with equivocal cytology; need definitive pleural tissue diagnosis to guide therapy.\nProcedure details: A semi-rigid thoracoscope was introduced via the right 6th intercostal space. 1.0 L of serous fluid was drained. Multiple small nodules and plaques were seen over the diaphragmatic and basal parietal pleura. Representative biopsies (10 samples) were obtained. No pleurodesis was performed due to uncertainty about future systemic therapy plan and potential need for intraperitoneal chemotherapy. A 20 Fr chest tube was placed.\nComplications: None.\nEstimated blood loss: 25 mL.\nDisposition: Admitted to oncology ward.\nPlan: Send biopsies for histology and HER2 testing; tumor board discussion after pathology available.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32609-005",
+      "procedure_date": "2025-04-09",
+      "institution_name": "Synthetic GI Oncology Center",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 62,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Right pleural effusion in metastatic gastric adenocarcinoma with equivocal cytology",
+      "radiographic_findings": "Moderate right pleural effusion without dominant lung mass; known peritoneal carcinomatosis",
+      "lesion_size_mm": null,
+      "lesion_location": "Basal and diaphragmatic pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Systemic chemotherapy for gastric adenocarcinoma",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "7.5 ETT",
+      "ventilation_mode": "Volume control",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -9,
+      "pleural_fluid_appearance": "Serous",
+      "pleural_volume_drained_ml": 1000,
+      "pleural_thoracoscopy_findings": "Multiple small nodules and plaques over diaphragmatic and basal parietal pleura",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and HER2 testing",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 25,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Suspected pleural carcinomatosis; pathology pending",
+      "molecular_testing_requested": true,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Tumor board review after pathology; adjust systemic therapy accordingly",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Benjamin Park",
+        "fellow_name": "Dr. Lila Gomez",
+        "assistant_name": "Casey Hall, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:14:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with biopsy of pleura",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32609; total_work_rvu=11.25, total_rvu=16.88 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for suspected drug-induced pleuritis.\nPatient: Zoe Ramirez, 39-year-old female with recent initiation of amiodarone therapy and new bilateral pleural effusions, right greater than left.\nAnesthesia: Moderate sedation with midazolam and fentanyl.\nIndication: Right-predominant exudative pleural effusion with eosinophilia; need pleural tissue to distinguish drug toxicity from autoimmune or malignant causes.\nProcedure details: Ultrasound demonstrated a moderate right effusion. A semi-rigid thoracoscope was advanced via the 6th intercostal space. 700 mL of serous fluid was removed. Parietal pleura appeared mildly thickened with scattered petechial hemorrhages but no distinct nodules. Multiple biopsies (6 samples) were obtained. No pleurodesis was performed. A 16 Fr chest tube was left in situ.\nComplications: None.\nEstimated blood loss: 10 mL.\nDisposition: Observed overnight.\nPlan: Send pleural tissue for histology and immunofluorescence; cardiology to consider discontinuing amiodarone depending on results.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32609-006",
+      "procedure_date": "2025-04-23",
+      "institution_name": "Synthetic Cardio-Pulmonary Center",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 39,
+      "gender": "Female",
+      "asa_class": 2,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Right-predominant exudative pleural effusion with eosinophilia after amiodarone initiation",
+      "radiographic_findings": "Bilateral pleural effusions, larger on the right, without lung mass",
+      "lesion_size_mm": null,
+      "lesion_location": "Diffuse parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Therapeutic thoracentesis with eosinophilic exudate",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous",
+      "anesthesia_agents": "Midazolam, fentanyl, local lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -5,
+      "pleural_fluid_appearance": "Serous exudate with mild turbidity",
+      "pleural_volume_drained_ml": 700,
+      "pleural_thoracoscopy_findings": "Mild pleural thickening and petechial hemorrhages without focal nodules",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and immunofluorescence",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 10,
+      "bleeding_severity": "None",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Suspected drug-induced pleuritis; definitive diagnosis pending histology",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Cardiology and pulmonology follow-up; adjust antiarrhythmic regimen based on biopsy",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Marcus Allen",
+        "fellow_name": "Dr. Priyanka Rao",
+        "assistant_name": "Morgan Blake, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:15:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with biopsy of pleura",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32609; total_work_rvu=11.25, total_rvu=16.88 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for suspected malignant pleural effusion in lymphoma.\nPatient: Connor Davis, 48-year-old male with diffuse large B-cell lymphoma and new left pleural effusion.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: New unilateral pleural effusion in a patient with lymphoma; need pleural tissue to differentiate reactive effusion from direct pleural involvement.\nProcedure details: Left 6th intercostal space was accessed under ultrasound guidance. 1.2 L of serous fluid was evacuated. Parietal pleura appeared mildly thickened with scattered pale nodules. Multiple biopsies (10 samples) were taken and submitted for histology, flow cytometry, and cytogenetics. No pleurodesis was performed. A 20 Fr chest tube was positioned posteriorly.\nComplications: None.\nEstimated blood loss: 20 mL.\nDisposition: Admitted to hematology ward.\nPlan: Await pathology and flow cytometry; adjust lymphoma regimen as indicated.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32609-007",
+      "procedure_date": "2025-05-02",
+      "institution_name": "Synthetic Hematologic Malignancy Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 48,
+      "gender": "Male",
+      "asa_class": 2,
+      "anticoag_status": "Enoxaparin prophylaxis",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Left pleural effusion in patient with diffuse large B-cell lymphoma",
+      "radiographic_findings": "Moderate left pleural effusion; mediastinal lymphadenopathy",
+      "lesion_size_mm": null,
+      "lesion_location": "Diffuse parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Systemic chemotherapy for lymphoma",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "8.0 ETT",
+      "ventilation_mode": "Volume control",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -11,
+      "pleural_fluid_appearance": "Serous exudate",
+      "pleural_volume_drained_ml": 1200,
+      "pleural_thoracoscopy_findings": "Mildly thickened parietal pleura with scattered small nodules",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology, flow cytometry, and cytogenetics",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 20,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Pleural thickening suspicious for lymphoma involvement; final pathology pending",
+      "molecular_testing_requested": true,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Hematology follow-up; adjust chemotherapy regimen based on pleural involvement",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Rachel Nguyen",
+        "fellow_name": "Dr. Omar Patel",
+        "assistant_name": "Sydney Price, RN",
+        "assistant_role": "Scrub nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:16:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with biopsy of pleura",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32609; total_work_rvu=11.25, total_rvu=16.88 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for unilateral transudative-appearing effusion in heart failure.\nPatient: William Scott, 74-year-old male with heart failure with reduced ejection fraction and large right pleural effusion that appears transudative by Light\u2019s criteria but has atypical cytology.\nAnesthesia: Moderate sedation with midazolam and fentanyl.\nIndication: Atypical cells noted on pleural cytology in otherwise transudative-appearing effusion; need pleural biopsy to exclude malignancy.\nProcedure details: Ultrasound-guided entry at the right 7th intercostal space. 1.5 L of clear, straw-colored fluid was drained. Thoracoscopy revealed smooth glistening pleura without nodules. Multiple random biopsies (6 samples) of parietal pleura were obtained. No pleurodesis performed. A 20 Fr chest tube was left in place on water seal.\nComplications: None.\nEstimated blood loss: 15 mL.\nDisposition: Admitted to cardiology floor.\nPlan: Await pathology; adjust diuretic therapy for heart failure; consider repeat cytology if effusion recurs.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32609-008",
+      "procedure_date": "2025-05-18",
+      "institution_name": "Synthetic Heart-Lung Institute",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 74,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "Apixaban for atrial fibrillation",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Large right pleural effusion in heart failure with atypical cytology",
+      "radiographic_findings": "Large right pleural effusion with cardiomegaly",
+      "lesion_size_mm": null,
+      "lesion_location": "No focal pleural lesions",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Aggressive diuresis with persistent effusion; diagnostic thoracentesis",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous",
+      "anesthesia_agents": "Midazolam, fentanyl, local lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "7th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -4,
+      "pleural_fluid_appearance": "Clear straw-colored transudate",
+      "pleural_volume_drained_ml": 1500,
+      "pleural_thoracoscopy_findings": "Smooth pleura without nodules or plaques",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Random pleural biopsies for histology and cytology correlation",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 15,
+      "bleeding_severity": "None",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Pleural surfaces grossly benign; pathology pending to exclude malignancy",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Cardiology follow-up; repeat imaging to assess recurrence; consider pleurodesis only if malignant and recurrent",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Lauren White",
+        "fellow_name": "Dr. Ian Brooks",
+        "assistant_name": "Harper James, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:17:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with biopsy of pleura",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32609; total_work_rvu=11.25, total_rvu=16.88 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for suspected pleural sarcoidosis.\nPatient: Natalie Perez, 44-year-old female with pulmonary sarcoidosis and new right exudative pleural effusion.\nAnesthesia: Moderate sedation with midazolam and fentanyl.\nIndication: Persistent right pleural effusion in patient with sarcoidosis; need pleural histology to distinguish sarcoid pleuritis from malignancy.\nProcedure details: Ultrasound demonstrated a small-to-moderate right free-flowing effusion. A semi-rigid thoracoscope was introduced at the 5th intercostal space. 600 mL of clear, yellow exudate was drained. Parietal pleura showed fine nodularity along the ribs. Multiple biopsies (8 samples) were obtained. No pleurodesis was done. A 16 Fr chest tube was left to drain.\nComplications: None.\nEstimated blood loss: 10 mL.\nDisposition: Observed overnight on pulmonary ward.\nPlan: Send pleural tissue for histology and special stains; adjust sarcoidosis therapy pending results.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32609-009",
+      "procedure_date": "2025-06-07",
+      "institution_name": "Synthetic Interstitial Lung Disease Center",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 44,
+      "gender": "Female",
+      "asa_class": 2,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Right exudative pleural effusion in sarcoidosis",
+      "radiographic_findings": "Right pleural effusion with upper-lobe predominant parenchymal changes consistent with sarcoidosis",
+      "lesion_size_mm": null,
+      "lesion_location": "Costal parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Systemic steroids for pulmonary sarcoidosis",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous",
+      "anesthesia_agents": "Midazolam, fentanyl, local lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "5th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -6,
+      "pleural_fluid_appearance": "Clear yellow exudate",
+      "pleural_volume_drained_ml": 600,
+      "pleural_thoracoscopy_findings": "Fine nodularity of the parietal pleura suggestive of granulomatous disease",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and special stains for granulomatous inflammation",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 10,
+      "bleeding_severity": "None",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Pleural nodularity likely due to sarcoidosis; histologic confirmation pending",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Pulmonology follow-up; adjust steroid or immunosuppressive regimen after pathology",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Jacob Martinez",
+        "fellow_name": "Dr. Sarah Lee",
+        "assistant_name": "Quinn Foster, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:18:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with biopsy of pleura",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32609; total_work_rvu=11.25, total_rvu=16.88 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for suspected pleural metastases from colorectal cancer.\nPatient: Jason Wright, 63-year-old male with metastatic colorectal adenocarcinoma and new left pleural effusion.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: New symptomatic unilateral pleural effusion in metastatic colorectal cancer; need pleural histology to guide prognosis and treatment.\nProcedure details: Ultrasound-guided access at the left 6th intercostal space allowed insertion of a semi-rigid thoracoscope. 1.0 L of straw-colored fluid was drained. Parietal pleura showed scattered small nodules and subtle plaques. Multiple biopsies (8 samples) were taken. No pleurodesis performed because systemic therapy options are being reconsidered. A 20 Fr chest tube was placed.\nComplications: None.\nEstimated blood loss: 20 mL.\nDisposition: Admitted overnight on oncology ward.\nPlan: Pleural biopsies for histology and KRAS/NRAS status if malignant; discuss at tumor board for treatment planning.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP32609-010",
+      "procedure_date": "2025-06-20",
+      "institution_name": "Synthetic Colorectal Cancer Center",
+      "procedure_setting": "Procedure suite",
+      "patient_age": 63,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "Clopidogrel for coronary stent",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "New left pleural effusion in metastatic colorectal carcinoma",
+      "radiographic_findings": "Moderate left pleural effusion; liver metastases present",
+      "lesion_size_mm": null,
+      "lesion_location": "Posterior and diaphragmatic parietal pleura",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Multiple lines of systemic chemotherapy for colorectal cancer",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "8.0 ETT",
+      "ventilation_mode": "Volume control",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -9,
+      "pleural_fluid_appearance": "Straw-colored exudate",
+      "pleural_volume_drained_ml": 1000,
+      "pleural_thoracoscopy_findings": "Scattered small nodules and plaques over parietal pleura",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and molecular testing if malignant",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 20,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Pleural metastases suspected; pathology pending",
+      "molecular_testing_requested": true,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Tumor board review; adjust systemic regimen depending on pleural involvement and molecular testing",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "Dr. Emily Johnson",
+        "fellow_name": "Dr. Noah Kim",
+        "assistant_name": "Reese Walker, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "2.8",
+        "generated_at": "2025-12-07T00:19:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with biopsy of pleura",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:08",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32609; total_work_rvu=11.25, total_rvu=16.88 (facility)."
+      ],
+      "warnings": []
+    }
+  }
+]

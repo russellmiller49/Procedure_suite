@@ -19,6 +19,42 @@ GOLDEN_DIR = Path("data/knowledge/golden_extractions")
 
 EDGE_SOURCE_NAME = "synthetic_edge_case_notes_with_registry.jsonl"
 
+# Registry procedure fields for ML prediction
+PROCEDURE_FIELDS = [
+    "diagnostic_bronchoscopy",
+    "bal",
+    "bronchial_wash",
+    "brushings",
+    "endobronchial_biopsy",
+    "tbna_conventional",
+    "linear_ebus",
+    "radial_ebus",
+    "navigational_bronchoscopy",
+    "transbronchial_biopsy",
+    "transbronchial_cryobiopsy",
+    "therapeutic_aspiration",
+    "foreign_body_removal",
+    "airway_dilation",
+    "airway_stent",
+    "thermal_ablation",
+    "cryotherapy",
+    "blvr",
+    "peripheral_ablation",
+    "bronchial_thermoplasty",
+    "whole_lung_lavage",
+    "rigid_bronchoscopy",
+]
+
+PLEURAL_FIELDS = [
+    "thoracentesis",
+    "chest_tube",
+    "ipc",
+    "medical_thoracoscopy",
+    "pleurodesis",
+    "pleural_biopsy",
+    "fibrinolytic_therapy",
+]
+
 # Valid IP pulmonology CPT codes
 VALID_IP_CODES = {
     # Bronchoscopy codes (316xx)

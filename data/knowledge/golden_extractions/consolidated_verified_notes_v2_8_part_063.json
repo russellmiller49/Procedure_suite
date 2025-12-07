@@ -1,0 +1,1609 @@
+[
+  {
+    "note_id": "RAB001",
+    "note_text": "PATIENT: Case 01, 62-year-old male. MRN: RAB-0001. INDICATION FOR OPERATION: 62-year-old former smoker with a 1.8 cm left lower lobe lateral basal segment pulmonary nodule (SUV 3.5) with bronchus sign present, referred for diagnostic robotic navigational bronchoscopy. PREOPERATIVE DIAGNOSIS: Left lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same, malignancy suspected. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with endotracheal intubation, a timeout was performed and standard ASA monitoring was used. A CT-based navigation plan was loaded to the Ion platform and automatic complete registration was achieved with low fiducial error. The robotic catheter was advanced to the LLL lateral basal segment; radial EBUS showed a concentric heterogeneous 18 mm lesion without major vessels. Cone\u2011beam CT confirmed tool-in-lesion. Multiple forceps biopsies and brushings were obtained through the extended working channel with minimal bleeding. Final airway inspection showed no active hemorrhage or airway compromise. The patient tolerated the procedure well without immediate complications; post-procedure CXR showed no pneumothorax.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0001",
+      "procedure_date": "2025-01-14",
+      "patient_age": 62,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Former smoker with solitary 1.8 cm FDG-avid LLL lateral basal segment pulmonary nodule with bronchus sign present, evaluation for malignancy.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected; pathology pending",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31623
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<10 mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 5,
+      "fluoro_time_min": 4.0,
+      "radiation_dap_gycm2": 2.3,
+      "procedure_duration_min": 80,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": "Automatic complete registration",
+      "nav_registration_error_mm": 3.5,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "CBCT",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "brush",
+        "catheter aspiration"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 18,
+      "lesion_location": "LLL lateral basal segment (LB9)",
+      "pet_suv_max": 3.5,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Review pathology in 3\u20135 days",
+        "If benign, repeat CT chest in 3\u20136 months",
+        "If malignant, present at multidisciplinary tumor board"
+      ],
+      "providers": {
+        "attending_name": "Dr. Alice Nguyen",
+        "fellow_name": "Dr. Brian Lee",
+        "assistant_name": "Kelly Ramos, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 3.96,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB002",
+    "note_text": "PATIENT: Case 02, 74-year-old female. MRN: RAB-0002. INDICATION FOR OPERATION: 74-year-old woman with enlarging 2.2 cm posterior segment right upper lobe nodule, intensely FDG-avid on PET (SUV 8.1) with bronchus sign present, referred for robotic biopsy. PREOPERATIVE DIAGNOSIS: Right upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same, likely primary lung cancer. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia and ETT, complete automatic registration was achieved. The robotic catheter was advanced to the RUL posterior segment; radial EBUS demonstrated an eccentric 22 mm lesion with heterogeneous internal echoes and no large vessels. CBCT confirmed the sampling catheter within the lesion. Six forceps biopsies and two brushings were obtained; mild oozing was controlled with iced saline. Final bronchoscopic survey showed hemostasis and patent segmental bronchi. The patient was extubated in the procedure room and recovered without immediate complications.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0002",
+      "procedure_date": "2025-02-03",
+      "patient_age": 74,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Enlarging intensely FDG-avid 2.2 cm RUL posterior segment pulmonary nodule concerning for primary lung malignancy.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31623
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (10\u201320 mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 15,
+      "fluoro_time_min": 5.5,
+      "radiation_dap_gycm2": 3.1,
+      "procedure_duration_min": 90,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": "Automatic complete registration",
+      "nav_registration_error_mm": 3.0,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_imaging_verification": "CBCT",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 22,
+      "lesion_location": "RUL posterior segment (RB2)",
+      "pet_suv_max": 8.1,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Expedited review of histology and molecular markers",
+        "Staging workup completion with brain MRI if malignant",
+        "Discuss at tumor board for definitive therapy"
+      ],
+      "providers": {
+        "attending_name": "Dr. Maya Ortiz",
+        "fellow_name": "Dr. Daniel Cho",
+        "assistant_name": "Sarah Patel, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 3.96,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB003",
+    "note_text": "PATIENT: Case 03, 59-year-old female. MRN: RAB-0003. INDICATION FOR OPERATION: 59-year-old never smoker with incidentally detected 1.2 cm right middle lobe lateral segment nodule, mildly FDG-avid (SUV 2.1), undergoing robotic biopsy for tissue diagnosis. PREOPERATIVE DIAGNOSIS: Right middle lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same, low to intermediate suspicion lesion. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628). After induction of general anesthesia and ETT placement, a CT-based plan was loaded and complete automatic registration performed. The Ion catheter was advanced to the RML lateral segment; radial EBUS demonstrated an adjacent 12 mm lesion with intact surrounding lung and no major vessel. Augmented fluoroscopy was used to refine catheter position and confirm tool-in-lesion. Five forceps biopsies were obtained with minimal bleeding and good specimen volume. No brushing or BAL was performed. Final survey showed no endobronchial abnormality beyond the biopsy site and no active hemorrhage. The patient tolerated the procedure well and was discharged after routine observation.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0003",
+      "procedure_date": "2025-01-22",
+      "patient_age": 59,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Incidentally detected mildly FDG-avid 1.2 cm RML lateral segment nodule in low-risk patient, tissue diagnosis requested.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Indeterminate; rule out adenocarcinoma in situ versus benign nodule",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None to trace",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 5,
+      "fluoro_time_min": 3.2,
+      "radiation_dap_gycm2": 1.6,
+      "procedure_duration_min": 65,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": "Automatic complete registration",
+      "nav_registration_error_mm": 3.2,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "Augmented fluoroscopy",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 12,
+      "lesion_location": "RML lateral segment (RB4)",
+      "pet_suv_max": 2.1,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Await histology",
+        "If benign and concordant, CT surveillance at 12 months",
+        "If atypical or malignant, consider segmentectomy or SBRT"
+      ],
+      "providers": {
+        "attending_name": "Dr. Javier Ramos",
+        "fellow_name": "Dr. Claire Li",
+        "assistant_name": "Thomas Green, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 10.71,
+        "work_rvu": 7.22,
+        "practice_expense_rvu": 2.71,
+        "malpractice_rvu": 0.78
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB004",
+    "note_text": "PATIENT: Case 04, 67-year-old male. MRN: RAB-0004. INDICATION FOR OPERATION: 67-year-old ex-smoker with 9 mm apicoposterior left upper lobe nodule (SUV 2.8) and mildly enlarged mediastinal nodes, referred for robotic biopsy plus transbronchial needle aspiration. PREOPERATIVE DIAGNOSIS: Left upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same; associated peribronchial soft tissue. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial needle aspiration (CPT 31629). After general anesthesia and ETT placement, the CT-based plan was loaded and complete automatic registration achieved. The robotic catheter was advanced to the apicoposterior LUL; radial EBUS showed a small concentric 9 mm lesion. Forceps biopsies were taken, followed by TBNA passes into peribronchial tissue along the same trajectory. No CBCT was used due to small size and stable alignment. Mild oozing occurred and resolved with iced saline; no endobronchial obstruction was seen. The patient tolerated the procedure without immediate complications.",
+    "cpt_codes": [
+      31629,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0004",
+      "procedure_date": "2025-03-05",
+      "patient_age": 67,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Small apicoposterior LUL nodule with PET uptake and suspicious peribronchial soft tissue; need for parenchymal and peribronchial sampling.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Indeterminate pulmonary nodule with peribronchial soft tissue; pathology pending",
+      "cpt_codes": [
+        31629,
+        31627,
+        31654
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<20 mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 15,
+      "fluoro_time_min": 4.1,
+      "radiation_dap_gycm2": 0.0,
+      "procedure_duration_min": 70,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": "Automatic complete registration",
+      "nav_registration_error_mm": 2.9,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "needle"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 9,
+      "lesion_location": "LUL apicoposterior segment",
+      "pet_suv_max": 2.8,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Review combined forceps and TBNA pathology",
+        "If benign, consider repeat CT at 6\u201312 months",
+        "If malignant, incorporate into staging and treatment planning"
+      ],
+      "providers": {
+        "attending_name": "Dr. Priya Shah",
+        "fellow_name": "Dr. Omar Fields",
+        "assistant_name": "Lynn Carter, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 11.07,
+        "work_rvu": 7.42,
+        "practice_expense_rvu": 2.85,
+        "malpractice_rvu": 0.8
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Dropped 31628 (TBLB) as bundled/mutually exclusive with 31629 (TBNA) at same site",
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB005",
+    "note_text": "PATIENT: Case 05, 71-year-old male. MRN: RAB-0005. INDICATION FOR OPERATION: 71-year-old man with 2.5 cm superior segment right lower lobe nodule in the setting of fibrotic interstitial lung disease, undergoing robotic-assisted cryobiopsy to establish diagnosis and evaluate for malignancy. PREOPERATIVE DIAGNOSIS: Right lower lobe pulmonary nodule in ILD. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial cryobiopsy (CPT 31632), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, CT-based plan was loaded and automatic complete registration achieved. The Ion catheter was advanced to the RLL superior segment; radial EBUS revealed a heterogeneous 25 mm lesion without major vessels. An endobronchial blocker was positioned proximally. Two cryobiopsy samples were obtained using a 1.7 mm cryoprobe through the extended working channel with brief freeze times, followed by one cytology brushing. There was moderate but self-limited bleeding controlled by balloon tamponade and iced saline. No radiographic evidence of pneumothorax was seen. The patient remained stable and was admitted overnight for observation.",
+    "cpt_codes": [
+      31628,
+      31623,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0005",
+      "procedure_date": "2025-02-18",
+      "patient_age": 71,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Right lower lobe superior segment nodule in fibrotic ILD, requiring tissue diagnosis with cryobiopsy.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Indeterminate fibrotic nodule; pathology pending for malignancy versus organizing pneumonia versus scar",
+      "cpt_codes": [
+        31628,
+        31623,
+        31627,
+        31654
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Moderate but controlled",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 30,
+      "fluoro_time_min": 6.0,
+      "radiation_dap_gycm2": 3.8,
+      "procedure_duration_min": 95,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": "Automatic complete registration",
+      "nav_registration_error_mm": 3.6,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "CBCT",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "cryoprobe",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": true,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 25,
+      "lesion_location": "RLL superior segment",
+      "pet_suv_max": 3.0,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Monitor overnight for delayed bleeding or pneumothorax",
+        "Review cryobiopsy histology and ILD multidisciplinary conference",
+        "Adjust antifibrotic or oncologic management based on results"
+      ],
+      "providers": {
+        "attending_name": "Dr. Helen Park",
+        "fellow_name": "Dr. Samir Patel",
+        "assistant_name": "Mark Evans, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 3.96,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Corrected 31632 (add-on) to 31628 (primary) for single lobe cryobiopsy",
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB006",
+    "note_text": "PATIENT: Case 06, 64-year-old female. MRN: RAB-0006. INDICATION FOR OPERATION: 64-year-old woman with solitary 1.5 cm basilar segment left lower lobe nodule, PET SUV 4.0, selected for partial Ion registration to optimize efficiency. PREOPERATIVE DIAGNOSIS: Left lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system with partial registration strategy (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). After general anesthesia and ETT placement, partial registration limited to the left-sided tracheobronchial tree was performed with automatic methods, yielding low fiducial error. The catheter was advanced along the planned pathway to the basilar LLL; radial EBUS showed an eccentric 15 mm lesion near the pleura. Augmented fluoroscopy was used for tool-in-lesion confirmation. Four forceps biopsies and one brushing were obtained with minimal bleeding. There were no immediate complications and the patient recovered uneventfully in the PACU.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0006",
+      "procedure_date": "2025-01-30",
+      "patient_age": 64,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Solitary FDG-avid basilar LLL nodule; diagnostic robotic bronchoscopy with partial registration strategy.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected; peripheral adenocarcinoma versus metastatic lesion",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31623
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None to trace",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 5,
+      "fluoro_time_min": 3.5,
+      "radiation_dap_gycm2": 1.9,
+      "procedure_duration_min": 60,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": "Partial ipsilateral registration",
+      "nav_registration_error_mm": 3.0,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_imaging_verification": "Augmented fluoroscopy",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 15,
+      "lesion_location": "LLL basilar segment",
+      "pet_suv_max": 4.0,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Review pathology and molecular results",
+        "If malignant, refer to thoracic surgery and medical oncology",
+        "If benign, CT surveillance at 6\u201312 months"
+      ],
+      "providers": {
+        "attending_name": "Dr. Robert King",
+        "fellow_name": "Dr. Emily Chen",
+        "assistant_name": "Jordan White, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 3.96,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB007",
+    "note_text": "PATIENT: Case 07, 58-year-old male. MRN: RAB-0007. INDICATION FOR OPERATION: 58-year-old man with 1.9 cm apical segment right upper lobe nodule; CT suggests bronchus sign and minimal motion artifact, undergoing Ion robotic biopsy. PREOPERATIVE DIAGNOSIS: Right upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Automatic registration was performed but registration drift was noted mid-case, likely due to atelectasis and PEEP changes. Re-registration with additional tertiary landmarks was performed with improved alignment. The catheter was advanced to the RUL apical segment; radial EBUS demonstrated a concentric 19 mm lesion. CBCT confirmed catheter tip within the lesion. Multiple forceps biopsies and brushings were obtained, with mild self-limited bleeding. Final inspection showed no active bleeding and widely patent airways. The patient tolerated the procedure well and was discharged home the same day.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0007",
+      "procedure_date": "2025-02-11",
+      "patient_age": 58,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Apical RUL nodule with bronchus sign; robotic navigational bronchoscopy for diagnosis.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected; pathology pending",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31623
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<15 mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 10,
+      "fluoro_time_min": 5.0,
+      "radiation_dap_gycm2": 2.7,
+      "procedure_duration_min": 85,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": "Automatic with re-registration after drift",
+      "nav_registration_error_mm": 4.5,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "CBCT",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 19,
+      "lesion_location": "RUL apical segment",
+      "pet_suv_max": 5.0,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Review pathology and molecular testing",
+        "If malignant, stage and consider surgical resection",
+        "If benign but discordant, consider repeat biopsy or surgery"
+      ],
+      "providers": {
+        "attending_name": "Dr. Nina Alvarez",
+        "fellow_name": "Dr. Lucas Grant",
+        "assistant_name": "Patricia Young, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 3.96,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB008",
+    "note_text": "PATIENT: Case 08, 63-year-old male. MRN: RAB-0008. INDICATION FOR OPERATION: 63-year-old former smoker with a 1.4 cm basilar right lower lobe nodule (SUV 3.0) referred for robotic biopsy using the Monarch platform. PREOPERATIVE DIAGNOSIS: Right lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, a CT-based navigation plan was loaded and airway registration completed. The robotic catheter and sheath were advanced to the basilar RLL under navigation guidance. Radial EBUS demonstrated a concentric 14 mm lesion with no large vessel signal. CBCT confirmed appropriate catheter position within the nodule. Five forceps biopsies and one brushing were obtained through the working channel. Hemostasis was confirmed endoscopically and by stable ventilatory parameters. The patient tolerated the procedure well without immediate complications.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0008",
+      "procedure_date": "2025-03-01",
+      "patient_age": 63,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Basilar RLL nodule in former smoker; robotic Monarch bronchoscopy for diagnosis.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Suspicious for malignancy; pathology pending",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31623
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None to trace",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 5,
+      "fluoro_time_min": 4.2,
+      "radiation_dap_gycm2": 2.0,
+      "procedure_duration_min": 75,
+      "nav_platform": "Monarch robotic bronchoscopy",
+      "nav_registration_method": "Monarch airway registration",
+      "nav_registration_error_mm": 3.1,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "CBCT",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 14,
+      "lesion_location": "RLL basilar segment",
+      "pet_suv_max": 3.0,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Review pathology and molecular markers",
+        "If malignant, stage and present at tumor board",
+        "If benign, surveillance CT at 6\u201312 months"
+      ],
+      "providers": {
+        "attending_name": "Dr. Gabriel Flores",
+        "fellow_name": "Dr. Rachel Kim",
+        "assistant_name": "Steven Miller, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 3.96,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB009",
+    "note_text": "PATIENT: Case 09, 52-year-old female. MRN: RAB-0009. INDICATION FOR OPERATION: 52-year-old never smoker with a 1.0 cm lingular pulmonary nodule, noncalcified and mildly FDG-avid, referred for Monarch robotic biopsy. PREOPERATIVE DIAGNOSIS: Lingular pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628). With the patient under general anesthesia and ETT, CT-based plan was loaded and airway registration completed. The robotic catheter and sheath were advanced along the planned path to the lingular segment. Radial EBUS demonstrated an adjacent 10 mm lesion immediately subpleural. Augmented fluoroscopy without CBCT was used to refine position, confirming tool-in-lesion. Four forceps biopsies were obtained with minimal bleeding. No brushing or BAL was performed. The patient tolerated the procedure well and was discharged after routine recovery.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0009",
+      "procedure_date": "2025-02-07",
+      "patient_age": 52,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Small subpleural lingular nodule with low-intermediate PET uptake in low-risk patient; robotic biopsy for diagnosis.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Indeterminate; pathology pending to rule out adenocarcinoma in situ",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None to trace",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 3,
+      "fluoro_time_min": 2.8,
+      "radiation_dap_gycm2": 1.2,
+      "procedure_duration_min": 55,
+      "nav_platform": "Monarch robotic bronchoscopy",
+      "nav_registration_method": "Monarch airway registration",
+      "nav_registration_error_mm": 3.4,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "Augmented fluoroscopy",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 10,
+      "lesion_location": "Lingular segment",
+      "pet_suv_max": 2.2,
+      "pet_avid": true,
+      "bronchus_sign_present": false,
+      "follow_up_plan": [
+        "Review pathology in clinic",
+        "If benign and concordant, CT chest at 12 months",
+        "If atypical or malignant, consider segmentectomy"
+      ],
+      "providers": {
+        "attending_name": "Dr. Olivia Becker",
+        "fellow_name": "Dr. Ian Lopez",
+        "assistant_name": "Michelle Ross, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 10.71,
+        "work_rvu": 7.22,
+        "practice_expense_rvu": 2.71,
+        "malpractice_rvu": 0.78
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB010",
+    "note_text": "PATIENT: Case 10, 69-year-old male. MRN: RAB-0010. INDICATION FOR OPERATION: 69-year-old ex-smoker with 3.0 cm central right upper lobe mass causing mild cough and weight loss, undergoing Monarch robotic bronchoscopy with BAL and biopsy. PREOPERATIVE DIAGNOSIS: Right upper lobe mass. POSTOPERATIVE DIAGNOSIS: Same, highly suspicious for malignancy. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), bronchoalveolar lavage (CPT 31624). Following general anesthesia and airway stabilization, CT-based plan was loaded and registration completed. The robotic catheter was directed to the central RUL target; radial EBUS showed an eccentric mass signal. Forceps biopsies were obtained followed by BAL in the involved segment. CBCT was used to confirm tool position along the dominant portion of the lesion. Bleeding was minimal and controlled with suction. The patient tolerated the procedure without immediate complications.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0010",
+      "procedure_date": "2025-03-10",
+      "patient_age": 69,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Central RUL mass with systemic symptoms; bronchoscopic diagnosis and BAL requested.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31624
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<15 mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 10,
+      "fluoro_time_min": 5.8,
+      "radiation_dap_gycm2": 2.9,
+      "procedure_duration_min": 80,
+      "nav_platform": "Monarch robotic bronchoscopy",
+      "nav_registration_method": "Monarch airway registration",
+      "nav_registration_error_mm": 2.7,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_imaging_verification": "CBCT",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "BAL"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 30,
+      "lesion_location": "Central RUL",
+      "pet_suv_max": 9.0,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Confirm malignancy and subtype on histology",
+        "Complete staging including brain imaging and PET if not already done",
+        "Discuss at tumor board for chemoradiation versus surgery"
+      ],
+      "providers": {
+        "attending_name": "Dr. Victor Huang",
+        "fellow_name": "Dr. Lauren Diaz",
+        "assistant_name": "Eric Thomas, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy w/bal",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.95,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 4.02,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB011",
+    "note_text": "PATIENT: Case 11, 61-year-old female. MRN: RAB-0011. INDICATION FOR OPERATION: 61-year-old woman with two closely clustered nodules in the lateral basal left lower lobe measuring 1.1 and 1.4 cm, undergoing Ion robotic biopsy with partial registration. PREOPERATIVE DIAGNOSIS: Multiple left lower lobe pulmonary nodules. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). After general anesthesia and ETT, a partial ipsilateral registration (left tree) was performed. Navigation was directed to the dominant 1.4 cm nodule; radial EBUS showed a concentric lesion. Augmented fluoroscopy confirmed tool-in-lesion. Multiple forceps biopsies and a single brushing were obtained; the smaller adjacent nodule was sampled along the same trajectory with additional forceps passes. Bleeding was minimal and there were no complications.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0011",
+      "procedure_date": "2025-01-19",
+      "patient_age": 61,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Clustered peripheral LLL nodules; robotic biopsy of dominant and satellite lesions.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Indeterminate multifocal nodules; pathology pending",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31623
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None to trace",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 5,
+      "fluoro_time_min": 4.6,
+      "radiation_dap_gycm2": 2.5,
+      "procedure_duration_min": 85,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": "Partial ipsilateral registration",
+      "nav_registration_error_mm": 3.3,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "Augmented fluoroscopy",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 14,
+      "lesion_location": "LLL lateral basal region cluster",
+      "pet_suv_max": 3.6,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Review pathology for both dominant and satellite nodules",
+        "If malignant, assess for multifocal disease and plan therapy",
+        "If benign, CT surveillance per nodule guidelines"
+      ],
+      "providers": {
+        "attending_name": "Dr. Hannah Morgan",
+        "fellow_name": "Dr. Peter Shah",
+        "assistant_name": "Anita Gomez, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 3.96,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB012",
+    "note_text": "PATIENT: Case 12, 56-year-old male. MRN: RAB-0012. INDICATION FOR OPERATION: 56-year-old man with a 1.3 cm posterior segment right lower lobe ground-glass predominant nodule, PET-negative, undergoing Ion robotic biopsy to rule out early adenocarcinoma. PREOPERATIVE DIAGNOSIS: Right lower lobe ground-glass nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628). After general anesthesia and ETT placement, CT-based navigation was planned and automatic registration was successful. The catheter was advanced to the posterior RLL; radial EBUS showed a faint adjacent halo consistent with ground-glass density. Augmented fluoroscopy and respiratory-gated breath-hold were used to optimize alignment. Four forceps biopsies were obtained with minimal bleeding. No brushing or BAL performed. The patient tolerated the procedure well with no immediate complications.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0012",
+      "procedure_date": "2025-02-02",
+      "patient_age": 56,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Small posterior RLL ground-glass nodule; early adenocarcinoma versus atypical adenomatous hyperplasia.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Indeterminate ground-glass lesion; pathology pending",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None to trace",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 3,
+      "fluoro_time_min": 3.0,
+      "radiation_dap_gycm2": 1.4,
+      "procedure_duration_min": 60,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": "Automatic complete registration",
+      "nav_registration_error_mm": 3.8,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "Augmented fluoroscopy",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 13,
+      "lesion_location": "RLL posterior segment",
+      "pet_suv_max": 1.0,
+      "pet_avid": false,
+      "bronchus_sign_present": false,
+      "follow_up_plan": [
+        "Compare histology with imaging findings",
+        "If nondiagnostic, consider repeat biopsy or surgical wedge resection",
+        "If benign and concordant, CT surveillance per ground-glass nodule guidelines"
+      ],
+      "providers": {
+        "attending_name": "Dr. Jason Wu",
+        "fellow_name": "Dr. Karen Fox",
+        "assistant_name": "Donna Hayes, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 10.71,
+        "work_rvu": 7.22,
+        "practice_expense_rvu": 2.71,
+        "malpractice_rvu": 0.78
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB013",
+    "note_text": "PATIENT: Case 13, 73-year-old female. MRN: RAB-0013. INDICATION FOR OPERATION: 73-year-old woman with COPD and 2.0 cm right middle lobe medial segment nodule, PET SUV 5.5, undergoing Monarch robotic biopsy. PREOPERATIVE DIAGNOSIS: Right middle lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, CT-based plan was loaded and airway registration completed. The robotic catheter was advanced to the medial RML; radial EBUS revealed an eccentric 20 mm lesion. CBCT demonstrated catheter tip across the most solid portion of the nodule. Multiple forceps biopsies and one brushing were obtained without significant bleeding. The patient was extubated and returned to baseline oxygen requirement.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0013",
+      "procedure_date": "2025-03-03",
+      "patient_age": 73,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "COPD patient with PET-avid medial RML nodule; robotic biopsy for diagnosis.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected; pathology pending",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31623
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None to trace",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 5,
+      "fluoro_time_min": 4.3,
+      "radiation_dap_gycm2": 2.2,
+      "procedure_duration_min": 70,
+      "nav_platform": "Monarch robotic bronchoscopy",
+      "nav_registration_method": "Monarch airway registration",
+      "nav_registration_error_mm": 3.0,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_imaging_verification": "CBCT",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 20,
+      "lesion_location": "RML medial segment",
+      "pet_suv_max": 5.5,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Review histology and PD-L1/molecular markers",
+        "Stage and discuss at tumor board",
+        "Tailor therapy considering underlying COPD"
+      ],
+      "providers": {
+        "attending_name": "Dr. Sofia Marin",
+        "fellow_name": "Dr. Thomas Reed",
+        "assistant_name": "Brian Cole, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 3.96,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB014",
+    "note_text": "PATIENT: Case 14, 65-year-old male. MRN: RAB-0014. INDICATION FOR OPERATION: 65-year-old man with 1.6 cm left upper lobe anterior segment nodule, PET SUV 3.9, referred for Ion robotic biopsy. PREOPERATIVE DIAGNOSIS: Left upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). After induction of general anesthesia and ETT placement, CT-based navigation plan was loaded and complete automatic registration achieved. The catheter was advanced to the anterior LUL; radial EBUS showed a concentric 16 mm lesion. CBCT confirmed tool-in-lesion without pleural transgression. Forceps biopsies and a single brushing were obtained, with minimal oozing that resolved spontaneously. The procedure was completed without complications.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0014",
+      "procedure_date": "2025-01-27",
+      "patient_age": 65,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Anterior LUL nodule with intermediate PET uptake; robotic Ion biopsy.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected; pathology pending",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31623
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None to trace",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 5,
+      "fluoro_time_min": 3.9,
+      "radiation_dap_gycm2": 2.1,
+      "procedure_duration_min": 70,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": "Automatic complete registration",
+      "nav_registration_error_mm": 3.2,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "CBCT",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 16,
+      "lesion_location": "LUL anterior segment",
+      "pet_suv_max": 3.9,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Review histology and molecular testing",
+        "Stage and discuss at multidisciplinary tumor board if malignant",
+        "Plan surgical or ablative therapy as appropriate"
+      ],
+      "providers": {
+        "attending_name": "Dr. Malcolm Stone",
+        "fellow_name": "Dr. Jenny Park",
+        "assistant_name": "Carmen Rivera, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 3.96,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_id": "RAB015",
+    "note_text": "PATIENT: Case 15, 60-year-old female. MRN: RAB-0015. INDICATION FOR OPERATION: 60-year-old woman with 1.7 cm left lower lobe superior segment nodule and mild hilar adenopathy, undergoing Monarch robotic bronchoscopy for parenchymal sampling. PREOPERATIVE DIAGNOSIS: Left lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, CT-based plan was loaded and registration completed. The robotic catheter and sheath were advanced to the LLL superior segment; radial EBUS showed an eccentric 17 mm lesion. Augmented fluoroscopy was used to refine alignment, and CBCT was not required. Several forceps biopsies and a brushing were obtained; bleeding was minimal. The patient remained hemodynamically stable and was discharged after observation.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "RAB-0015",
+      "procedure_date": "2025-02-20",
+      "patient_age": 60,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "LLL superior segment nodule with mild hilar adenopathy; robotic Monarch biopsy.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Indeterminate lesion; pathology pending",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31623
+      ],
+      "institution_name": null,
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None to trace",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "ebl_ml": 4,
+      "fluoro_time_min": 3.7,
+      "radiation_dap_gycm2": 1.8,
+      "procedure_duration_min": 65,
+      "nav_platform": "Monarch robotic bronchoscopy",
+      "nav_registration_method": "Monarch airway registration",
+      "nav_registration_error_mm": 3.5,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_imaging_verification": "Augmented fluoroscopy",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "procedure_setting": "Bronchoscopy suite",
+      "lesion_size_mm": 17,
+      "lesion_location": "LLL superior segment",
+      "pet_suv_max": 4.2,
+      "pet_avid": true,
+      "bronchus_sign_present": true,
+      "follow_up_plan": [
+        "Review tissue diagnosis and correlate with hilar node imaging",
+        "If malignant, complete nodal staging with linear EBUS or PET-directed strategy",
+        "Plan surgery or systemic therapy as indicated"
+      ],
+      "providers": {
+        "attending_name": "Dr. Elise Turner",
+        "fellow_name": "Dr. Michael Zhu",
+        "assistant_name": "Olivia Scott, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-07T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronch w/lung bx 1 lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.85,
+        "practice_expense_rvu": 3.96,
+        "malpractice_rvu": 1.08
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T06:33:00",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  }
+]
