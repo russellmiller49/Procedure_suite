@@ -142,6 +142,47 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.153126"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641",
+            "31627",
+            "31654"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31641": "Bronchoscopy with radiofrequency ablation (RFA) of a right lower lobe lesion; 31641 covers destruction of tumor.",
+            "31627": "Electromagnetic navigation (ENB) used to reach the target; appropriate add-on.",
+            "31654": "Radial EBUS used for peripheral lesion confirmation; appropriate add-on."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 13.58,
+          "facility_total_payment": 439,
+          "per_code": {
+            "31641": {
+              "facility_rvu": 8.4,
+              "facility_payment": 272
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Codes align with the documented RFA procedure using navigation and ultrasound guidance."
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -162,7 +203,8 @@
       "changes": [
         "Extracted lesion_size_mm: 22.0",
         "Extracted ablation_max_temp_c: 105",
-        "Extracted ablation_duration_seconds: 600"
+        "Extracted ablation_duration_seconds: 600",
+        "Added coding_review block."
       ],
       "warnings": []
     },
@@ -347,6 +389,35 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.153422"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of indwelling tunneled pleural catheter (PleurX) with cuff is the primary procedure."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded for tunneled pleural catheter placement."
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -368,7 +439,8 @@
       "changes": [
         "Set sedation_type to 'Local Only' based on local lidocaine only (no IV sedatives documented)",
         "Set molecular_testing_requested to False (no molecular/NGS testing documented)",
-        "Cleared nav_sampling_tools for tunneled pleural catheter placement (no navigation used)"
+        "Cleared nav_sampling_tools for tunneled pleural catheter placement (no navigation used)",
+        "Added coding_review block."
       ],
       "warnings": []
     },
@@ -550,6 +622,53 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.153620"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31628",
+          "final_codes": [
+            "31627",
+            "31654",
+            "31628",
+            "31623"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31627": "Robotic navigation (Ion) to peripheral target.",
+            "31654": "Radial EBUS confirmation of peripheral lesion.",
+            "31628": "Transbronchial biopsies (x6) of the lesion.",
+            "31623": "Transbronchial brushings (x2) performed as a distinct sampling method."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 14.89,
+          "facility_total_payment": 481,
+          "per_code": {
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Comprehensive coding for robotic bronchoscopy with multiple sampling modalities is supported."
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -572,7 +691,8 @@
       "patch_version": "1.1.0",
       "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "Extracted lesion_size_mm: 18.0"
+        "Extracted lesion_size_mm: 18.0",
+        "Added coding_review block."
       ],
       "warnings": []
     },
@@ -760,6 +880,35 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.153778"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32650",
+          "final_codes": [
+            "32650"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32650": "Thoracoscopy with pleurodesis (talc) is the defining therapeutic service; diagnostic inspection and biopsies (3260x) are bundled."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.0,
+          "facility_total_payment": 485,
+          "per_code": {
+            "32650": {
+              "facility_rvu": 15.0,
+              "facility_payment": 485
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Appropriately bundled; 32650 captures the full scope of the thoracoscopic procedure."
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -780,7 +929,8 @@
       "patch_date": "2025-12-06T00:00:00",
       "changes": [
         "Set molecular_testing_requested to False (no molecular/NGS orders described)",
-        "Cleared nav_sampling_tools for medical thoracoscopy (no bronchoscopic navigation)"
+        "Cleared nav_sampling_tools for medical thoracoscopy (no bronchoscopic navigation)",
+        "Added coding_review block."
       ],
       "warnings": []
     },
@@ -956,6 +1106,35 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.153793"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31630",
+          "final_codes": [
+            "31630"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31630": "Bronchoscopy with tracheal balloon dilation for stenosis."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.27,
+          "facility_total_payment": 203,
+          "per_code": {
+            "31630": {
+              "facility_rvu": 6.27,
+              "facility_payment": 203
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded for therapeutic dilation."
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -974,7 +1153,8 @@
       "changes": [
         "Set airway_type to 'ETT' (general anesthesia with endotracheal tube, no tracheostomy documented)",
         "Updated primary_indication to reflect documented post-intubation tracheal stenosis",
-        "Set molecular_testing_requested to False (no oncologic molecular testing described)"
+        "Set molecular_testing_requested to False (no oncologic molecular testing described)",
+        "Added coding_review block."
       ],
       "warnings": []
     },
@@ -1019,7 +1199,7 @@
       "patient_age": 71,
       "gender": "Female",
       "asa_class": 3,
-      "primary_indication": "Endobronchial squamous cell carcinoma, left mainstem bronchus, early stage (T1aN0M0), PDT light application session",
+      "primary_indication": "Endobronchial squamous cell carcinoma, left mainstem bronchus, early stage (T1aN0M0), patient declined surgery",
       "sedation_type": "General",
       "airway_type": "ETT",
       "final_diagnosis_prelim": "Malignancy",
@@ -1059,8 +1239,8 @@
       "bt_lobe_treated": null,
       "bt_activation_count": null,
       "follow_up_plan": [
-        "Debridement bronchoscopy planned in 2 days",
-        "Bronchoscopic surveillance at 1, 3, 6, and 12 months post-treatment"
+        "Scheduled debridement bronchoscopy: October 14, 2024 (48 hours post-light)",
+        "Monitor for post-PDT complications"
       ],
       "nav_platform": null,
       "nav_registration_method": null,
@@ -1153,8 +1333,37 @@
           "performed": true,
           "photosensitizer": "Porfimer sodium (Photofrin)",
           "location": "Left mainstem bronchus",
-          "energy_delivered_joules": null
+          "energy_delivered_joules": 500.0
         }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31641": "Photodynamic therapy (PDT) light application constitutes destruction of tumor; 31641 is the appropriate code for endobronchial destruction."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272,
+          "per_code": {
+            "31641": {
+              "facility_rvu": 8.4,
+              "facility_payment": 272
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Coding is correct for the PDT session. Note concatenation issue addressed in registry fields."
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1181,9 +1390,12 @@
         "Replaced follow_up_plan with PDT-specific follow-up (removed EBV removal follow-up)",
         "Set molecular_testing_requested to False for PDT light session (no new biopsies)",
         "Set providers.attending_name to 'Raymond Chen' per PDT report header",
-        "Cleared nav_sampling_tools (no navigation documented for PDT)"
+        "Cleared nav_sampling_tools (no navigation documented for PDT)",
+        "Corrected registry fields affected by note concatenation and added coding_review."
       ],
-      "warnings": []
+      "warnings": [
+        "POTENTIAL_CONCATENATION: Note contains text from a second patient (Michael Torres); extracted data corrected to reflect primary patient (Margaret Anderson)."
+      ]
     },
     "coding_review": {
       "review_version": "1.0.0",
@@ -1350,6 +1562,35 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.153832"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31645",
+          "final_codes": [
+            "31645"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31645": "Therapeutic aspiration/toilet of the tracheobronchial tree for secretion management and stent inspection."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.47,
+          "facility_total_payment": 145,
+          "per_code": {
+            "31645": {
+              "facility_rvu": 4.47,
+              "facility_payment": 145
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Code matches the therapeutic nature of the stent clean-out."
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1367,7 +1608,8 @@
       "patch_date": "2025-12-06T00:00:00",
       "changes": [
         "Corrected patient_age to 58 (note header '58 yo female')",
-        "Set molecular_testing_requested to False (no biopsies/molecular testing)"
+        "Set molecular_testing_requested to False (no biopsies/molecular testing)",
+        "Added coding_review block."
       ],
       "warnings": []
     },
@@ -1543,6 +1785,41 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.153952"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31628",
+          "final_codes": [
+            "31628",
+            "31654"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31628": "Transbronchial lung biopsy (cryobiopsy technique) of a single lobe.",
+            "31654": "Radial EBUS used for peripheral guidance."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247,
+          "per_code": {
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded for ILD cryobiopsy with radial EBUS guidance."
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1561,7 +1838,8 @@
       "patch_date": "2025-12-06T00:00:00",
       "changes": [
         "Set molecular_testing_requested to False for ILD cryobiopsy (no molecular panel documented)",
-        "Set nav_cryobiopsy_for_nodule to False (procedure for ILD diffuse disease, not a focal nodule)"
+        "Set nav_cryobiopsy_for_nodule to False (procedure for ILD diffuse disease, not a focal nodule)",
+        "Added coding_review block."
       ],
       "warnings": []
     },

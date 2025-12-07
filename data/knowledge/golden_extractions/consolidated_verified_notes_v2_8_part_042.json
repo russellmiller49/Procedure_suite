@@ -35,44 +35,25 @@
       ]
     },
     "coding_review": {
-      "section_1_cpt_summary": {
-        "final_cpt_codes": [
-          "31622"
-        ],
-        "dropped_cpt_codes": [],
-        "primary_family": "bronchoscopy_diagnostic",
-        "other_families": [],
-        "comment": "Documentation supports at least a diagnostic flexible bronchoscopy; EBUS teaching objectives are described but without specific nodal sampling details."
-      },
-      "section_2_financial_2025": {
-        "calendar_year": 2025,
-        "fee_schedule_name": "physician_2025_airway",
-        "code_lines": [
-          {
-            "code": "31622",
-            "description": "Diagnostic bronchoscopy with airway inspection/washing",
-            "is_add_on": false,
-            "total_facility_rvu_2025": 4.2,
-            "mpfs_facility_payment_2025": 138
-          }
-        ],
-        "totals": {
-          "total_facility_rvu_2025": 4.2,
-          "total_facility_payment_2025": 138,
-          "note": "Totals are simple sums of line-level facility RVUs and payments without multiple-procedure adjustments."
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31622
+      ],
+      "cpt_summary": [
+        {
+          "code": "31622",
+          "description": "Diagnostic bronchoscopy",
+          "facility_rvu_2025": 4.2,
+          "facility_payment_2025": 136.0
         }
-      },
-      "section_3_rationale": {
-        "overall_assessment": "Conservative coding; treat this as a diagnostic bronchoscopy because the note lacks discrete EBUS-TBNA station and pass documentation.",
-        "per_code": {
-          "31622": "Moderate-sedation bronchoscopy is documented, but there are no specific biopsies or nodal stations; 31622 is the minimal supported service."
-        },
-        "documentation_gaps": [
-          "Procedure date is not documented separately from DOB; registry procedure_date has been cleared.",
-          "No explicit airway findings, nodal stations, or sample counts, so EBUS-TBNA codes cannot be supported.",
-          "Sedation start/stop times and an independent observer are not documented; no moderate-sedation CPTs are added."
-        ]
-      }
+      ],
+      "total_facility_rvu_2025": 4.2,
+      "total_facility_payment_2025": 136.0,
+      "rationale": [
+        "Teaching case documentation lists objectives but lacks specific procedure findings or sampling details.",
+        "31622 is the minimal supportable code for a flexible bronchoscopy."
+      ]
     }
   },
   {
@@ -126,57 +107,32 @@
       "warnings": []
     },
     "coding_review": {
-      "section_1_cpt_summary": {
-        "final_cpt_codes": [
-          "31653",
-          "31625"
-        ],
-        "dropped_cpt_codes": [
-          "31622",
-          "31629"
-        ],
-        "primary_family": "bronchoscopy_ebus_linear",
-        "other_families": [
-          "bronchoscopy_biopsy_endobronchial"
-        ],
-        "comment": "EBUS-TBNA of three mediastinal/hilar nodes plus endobronchial tumor biopsy; redundant diagnostic and conventional TBNA codes are removed per bundling rules."
-      },
-      "section_2_financial_2025": {
-        "calendar_year": 2025,
-        "fee_schedule_name": "physician_2025_airway",
-        "code_lines": [
-          {
-            "code": "31653",
-            "description": "Bronchoscopy with EBUS-TBNA of three or more nodal stations",
-            "is_add_on": false,
-            "total_facility_rvu_2025": 7.7,
-            "mpfs_facility_payment_2025": 252
-          },
-          {
-            "code": "31625",
-            "description": "Bronchoscopy with endobronchial biopsy of one or more sites",
-            "is_add_on": false,
-            "total_facility_rvu_2025": 4.93,
-            "mpfs_facility_payment_2025": 161
-          }
-        ],
-        "totals": {
-          "total_facility_rvu_2025": 12.63,
-          "total_facility_payment_2025": 413,
-          "note": "Simple sum of facility RVUs and payments from the 2025 physician fee schedule; multiple-procedure discounting is not applied here."
-        }
-      },
-      "section_3_rationale": {
-        "overall_assessment": "After bundling clean-up, 31653 plus 31625 accurately reflect the documented EBUS staging and tumor biopsy.",
-        "per_code": {
-          "31653": "Systematic EBUS-TBNA of stations 4R, 7, and 10R with ROSE and PET correlation meets criteria for 31653 (three or more nodal stations).",
-          "31625": "Primary RUL endobronchial mass biopsied with multiple forceps samples supports use of 31625 for endobronchial biopsy."
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653,
+        31625
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
         },
-        "documentation_gaps": [
-          "This is a telephone summary note; the full procedure report is referenced but not present for review.",
-          "Sedation details lack intraservice time and independent observer documentation, so no moderate-sedation codes are added."
-        ]
-      }
+        {
+          "code": "31625",
+          "description": "Bronchoscopy with endobronchial biopsy",
+          "facility_rvu_2025": 4.93,
+          "facility_payment_2025": 160.0
+        }
+      ],
+      "total_facility_rvu_2025": 12.63,
+      "total_facility_payment_2025": 409.0,
+      "rationale": [
+        "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653.",
+        "Endobronchial biopsy of the RUL mass supports 31625."
+      ]
     }
   },
   {
@@ -223,55 +179,33 @@
       "warnings": []
     },
     "coding_review": {
-      "section_1_cpt_summary": {
-        "final_cpt_codes": [
-          "31653"
-        ],
-        "dropped_cpt_codes": [
-          "31622",
-          "31629",
-          "31652"
-        ],
-        "primary_family": "bronchoscopy_ebus_linear",
-        "other_families": [],
-        "comment": "Systematic EBUS-TBNA of three nodal stations; single comprehensive EBUS code 31653 is most appropriate."
-      },
-      "section_2_financial_2025": {
-        "calendar_year": 2025,
-        "fee_schedule_name": "physician_2025_airway",
-        "code_lines": [
-          {
-            "code": "31653",
-            "description": "Bronchoscopy with EBUS-TBNA of three or more nodal stations",
-            "is_add_on": false,
-            "total_facility_rvu_2025": 7.7,
-            "mpfs_facility_payment_2025": 252
-          }
-        ],
-        "totals": {
-          "total_facility_rvu_2025": 7.7,
-          "total_facility_payment_2025": 252,
-          "note": "Facility RVU and payment reflect the 2025 national Medicare physician fee schedule."
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
         }
-      },
-      "section_3_rationale": {
-        "overall_assessment": "EBUS-TBNA at 4R, 7, and 10R with systematic N3\u2192N2\u2192N1 evaluation supports 31653 alone.",
-        "per_code": {
-          "31653": "Three distinct EBUS-TBNA nodal stations (4R, 7, 10R) with documented sizes, passes, and ROSE findings meet criteria for 31653."
-        },
-        "documentation_gaps": [
-          "Registry EBUS station list was corrected from only ['4R'] to ['4R','7','10R'].",
-          "Sedation timing is not documented, so no separate moderate-sedation CPT is assigned."
-        ]
-      }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "Systematic EBUS-TBNA of stations 4R, 7, and 10R supports 31653."
+      ]
     }
   },
   {
     "note_text": "Name: Paul Anderson / MRN: XL-9284-P / Date of Birth: 11/22/1961\n\nIndication \u2192 RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)\n\nDeep sedation: Propofol infusion 50-75 mcg/kg/min\nRamsay 4, airway maintained with LMA\nMonitoring: Continuous BP via arterial line, SpO2, ETCO2\n\nTechnology: Cone beam CT integrated with EM navigation system\n\nProcedure:\n1. Initial CBCT acquired for registration\n2. EM navigation tracking deployed\n3. Target: RUL posterior segment nodule\n4. Guide sheath advanced under EM + fluoroscopic guidance\n5. Radial EBUS: Concentric pattern confirmed \u2713\n6. Sampling completed\n7. CBCT repeated to confirm sheath position and check for pneumothorax\n\nFluoroscopy metrics:\n- Time: 4.8 minutes\n- DAP: 178 cGy*cm\u00b2 (including CBCT)\n\nSamples:\n- Needle aspiration \u00d72\n- Forceps biopsy \u00d74\n- Brush cytology \u00d72\n\nTool-in-lesion: CONFIRMED\nLocalization success: YES\nProtocol adherent: YES\n\nPost-procedure CBCT: No pneumothorax identified\n\nNo complications. Patient recovered smoothly, discharged after 2 hours.",
     "cpt_codes": [
-      31654,
-      31623,
-      31627
+      31629,
+      31628,
+      31627,
+      31654
     ],
     "registry_entry": {
       "procedure_date": null,
@@ -280,9 +214,10 @@
         "generated_at": "2025-12-01T15:40:50.164823"
       },
       "cpt_codes": [
-        31654,
-        31623,
-        31627
+        31629,
+        31628,
+        31627,
+        31654
       ],
       "lesion_size_mm": 19.0,
       "patient_mrn": "XL9284P"
@@ -308,64 +243,46 @@
       ]
     },
     "coding_review": {
-      "section_1_cpt_summary": {
-        "final_cpt_codes": [
-          "31654",
-          "31623",
-          "31627"
-        ],
-        "dropped_cpt_codes": [],
-        "primary_family": "bronchoscopy_navigation",
-        "other_families": [
-          "bronchoscopy_biopsy_endobronchial",
-          "bronchoscopy_ebus_radial"
-        ],
-        "comment": "Navigational bronchoscopy with radial EBUS confirmation and transbronchial sampling of a peripheral RUL nodule; existing CPT set is appropriate."
-      },
-      "section_2_financial_2025": {
-        "calendar_year": 2025,
-        "fee_schedule_name": "physician_2025_airway",
-        "code_lines": [
-          {
-            "code": "31654",
-            "description": "Radial EBUS for peripheral lesion (add-on)",
-            "is_add_on": true,
-            "total_facility_rvu_2025": 2.11,
-            "mpfs_facility_payment_2025": 69
-          },
-          {
-            "code": "31623",
-            "description": "Bronchoscopy with transbronchial sampling using brushing/biopsy",
-            "is_add_on": false,
-            "total_facility_rvu_2025": 4.18,
-            "mpfs_facility_payment_2025": 137
-          },
-          {
-            "code": "31627",
-            "description": "Computer-assisted or image-guided navigational bronchoscopy (add-on)",
-            "is_add_on": true,
-            "total_facility_rvu_2025": 3.07,
-            "mpfs_facility_payment_2025": 101
-          }
-        ],
-        "totals": {
-          "total_facility_rvu_2025": 9.36,
-          "total_facility_payment_2025": 307,
-          "note": "Totals are simple sums of each CPT line from 2025 fee schedule values."
-        }
-      },
-      "section_3_rationale": {
-        "overall_assessment": "Combination of navigation add-on, radial EBUS, and transbronchial sampling matches the documented workflow for a peripheral lung nodule.",
-        "per_code": {
-          "31623": "Needle aspirates, four forceps biopsies, and brush cytology from the RUL nodule represent transbronchial sampling captured by 31623.",
-          "31654": "Radial EBUS is explicitly documented with a concentric tool-in-lesion pattern confirming peripheral lesion location, supporting 31654 as an add-on.",
-          "31627": "EM navigation with cone-beam CT guidance is clearly described, justifying add-on navigation code 31627."
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31629,
+        31628,
+        31627,
+        31654
+      ],
+      "cpt_summary": [
+        {
+          "code": "31629",
+          "description": "Bronchoscopy with TBNA",
+          "facility_rvu_2025": 5.89,
+          "facility_payment_2025": 191.0
         },
-        "documentation_gaps": [
-          "Procedure date is not documented separate from DOB; registry procedure_date is set to null.",
-          "No moderate-sedation CPT is added because deep-sedation start/stop times and supervising provider details are not given."
-        ]
-      }
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy",
+          "facility_rvu_2025": 5.53,
+          "facility_payment_2025": 179.0
+        },
+        {
+          "code": "31627",
+          "description": "Navigational bronchoscopy (add-on)",
+          "facility_rvu_2025": 3.07,
+          "facility_payment_2025": 99.0
+        },
+        {
+          "code": "31654",
+          "description": "Peripheral EBUS (add-on)",
+          "facility_rvu_2025": 2.11,
+          "facility_payment_2025": 68.0
+        }
+      ],
+      "total_facility_rvu_2025": 16.6,
+      "total_facility_payment_2025": 537.0,
+      "rationale": [
+        "Replaced 31623 (brush) with 31628 (TBLB) and 31629 (TBNA) as the note explicitly documents 'Needle aspirate x2' and 'Forceps biopsy x4' of the peripheral nodule.",
+        "Retained 31627 (Nav) and 31654 (Radial EBUS) for the localization work."
+      ]
     }
   },
   {
@@ -407,63 +324,24 @@
       "warnings": []
     },
     "coding_review": {
-      "section_1_cpt_summary": {
-        "final_cpt_codes": [
-          "31654",
-          "31623",
-          "31627"
-        ],
-        "dropped_cpt_codes": [],
-        "primary_family": "bronchoscopy_navigation",
-        "other_families": [
-          "bronchoscopy_biopsy_endobronchial",
-          "bronchoscopy_ebus_radial"
-        ],
-        "comment": "Navigational bronchoscopy with radial EBUS confirmation and transbronchial sampling of a 16mm LLL nodule; CPT set is consistent with the documented procedure."
-      },
-      "section_2_financial_2025": {
-        "calendar_year": 2025,
-        "fee_schedule_name": "physician_2025_airway",
-        "code_lines": [
-          {
-            "code": "31654",
-            "description": "Radial EBUS for peripheral lesion (add-on)",
-            "is_add_on": true,
-            "total_facility_rvu_2025": 2.11,
-            "mpfs_facility_payment_2025": 69
-          },
-          {
-            "code": "31623",
-            "description": "Bronchoscopy with transbronchial sampling using brushing/biopsy",
-            "is_add_on": false,
-            "total_facility_rvu_2025": 4.18,
-            "mpfs_facility_payment_2025": 137
-          },
-          {
-            "code": "31627",
-            "description": "Computer-assisted or image-guided navigational bronchoscopy (add-on)",
-            "is_add_on": true,
-            "total_facility_rvu_2025": 3.07,
-            "mpfs_facility_payment_2025": 101
-          }
-        ],
-        "totals": {
-          "total_facility_rvu_2025": 9.36,
-          "total_facility_payment_2025": 307,
-          "note": "Totals mirror the RUL navigation case and are simple sums of 2025 fee schedule values."
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
         }
-      },
-      "section_3_rationale": {
-        "overall_assessment": "For this peripheral LLL nodule, the combination of navigation add-on, radial EBUS, and transbronchial sampling remains appropriate.",
-        "per_code": {
-          "31623": "Needle aspirates, forceps biopsies, and brushings of the LLL lesion support use of 31623 as the primary transbronchial sampling code.",
-          "31654": "Radial EBUS is used to confirm a concentric tool-in-lesion pattern in the peripheral LLL nodule, supporting 31654.",
-          "31627": "Computer-assisted EM navigation integrated with cone-beam CT is described, supporting 31627 as the navigation add-on."
-        },
-        "documentation_gaps": [
-          "Sedation details are provided but without explicit intraservice time tracking, so no sedation CPTs are added."
-        ]
-      }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "EBUS-TBNA of 5 stations (2R, 4R, 4L, 7, 10R) supports 31653."
+      ]
     }
   },
   {
@@ -517,46 +395,24 @@
       ]
     },
     "coding_review": {
-      "section_1_cpt_summary": {
-        "final_cpt_codes": [
-          "31653"
-        ],
-        "dropped_cpt_codes": [
-          "31629"
-        ],
-        "primary_family": "bronchoscopy_ebus_linear",
-        "other_families": [],
-        "comment": "Extensive multi-station EBUS-TBNA staging; conventional TBNA code 31629 is removed as redundant with 31653."
-      },
-      "section_2_financial_2025": {
-        "calendar_year": 2025,
-        "fee_schedule_name": "physician_2025_airway",
-        "code_lines": [
-          {
-            "code": "31653",
-            "description": "Bronchoscopy with EBUS-TBNA of three or more nodal stations",
-            "is_add_on": false,
-            "total_facility_rvu_2025": 7.7,
-            "mpfs_facility_payment_2025": 252
-          }
-        ],
-        "totals": {
-          "total_facility_rvu_2025": 7.7,
-          "total_facility_payment_2025": 252,
-          "note": "Represents the 2025 Medicare national facility values for this EBUS staging procedure."
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
         }
-      },
-      "section_3_rationale": {
-        "overall_assessment": "Systematic EBUS-TBNA of multiple mediastinal and hilar nodes is best represented by 31653 alone.",
-        "per_code": {
-          "31653": "Stations 2R, 4R, 4L, 7, and 10R are sampled with EBUS-TBNA and ROSE, clearly qualifying as three or more nodal stations for 31653."
-        },
-        "documentation_gaps": [
-          "Conventional (non-EBUS) TBNA is not described, so 31629 is dropped.",
-          "Procedure date is not documented separate from DOB; registry procedure_date is set to null.",
-          "Sedation start/stop times and independent observer are not documented; no sedation CPTs added."
-        ]
-      }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "EBUS-TBNA of 4 stations (4R, 4L, 7, 11R) supports 31653."
+      ]
     }
   },
   {
@@ -607,45 +463,24 @@
       "warnings": []
     },
     "coding_review": {
-      "section_1_cpt_summary": {
-        "final_cpt_codes": [
-          "31653"
-        ],
-        "dropped_cpt_codes": [
-          "31629"
-        ],
-        "primary_family": "bronchoscopy_ebus_linear",
-        "other_families": [],
-        "comment": "EBUS-TBNA of four nodal stations for sarcoidosis versus lymphoma workup; 31653 alone is appropriate."
-      },
-      "section_2_financial_2025": {
-        "calendar_year": 2025,
-        "fee_schedule_name": "physician_2025_airway",
-        "code_lines": [
-          {
-            "code": "31653",
-            "description": "Bronchoscopy with EBUS-TBNA of three or more nodal stations",
-            "is_add_on": false,
-            "total_facility_rvu_2025": 7.7,
-            "mpfs_facility_payment_2025": 252
-          }
-        ],
-        "totals": {
-          "total_facility_rvu_2025": 7.7,
-          "total_facility_payment_2025": 252,
-          "note": "Single-line EBUS staging using 2025 facility RVU and payment values."
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
         }
-      },
-      "section_3_rationale": {
-        "overall_assessment": "Sampling of 4R, 4L, 7, and 11R with EBUS-TBNA is fully captured by 31653; 31629 is not separately reportable.",
-        "per_code": {
-          "31653": "Four nodal stations (4R, 4L, 7, 11R) are sampled under EBUS guidance, meeting the threshold for 31653."
-        },
-        "documentation_gaps": [
-          "No conventional, non-EBUS TBNA is described; 31629 is removed as redundant.",
-          "Moderate-sedation details lack explicit timing, so no separate sedation CPTs are coded."
-        ]
-      }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "EBUS-TBNA of 3 stations (4R, 7, 11R) supports 31653."
+      ]
     }
   },
   {

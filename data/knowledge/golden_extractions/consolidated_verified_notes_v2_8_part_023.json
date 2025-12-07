@@ -11,7 +11,21 @@
       },
       "cpt_codes": [
         32650
-      ]
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "32650"
+        ],
+        "facility_rvu_2025": 15.0,
+        "facility_payment_2025": 485,
+        "notes": [
+          "Procedure: Medical thoracoscopy with talc pleurodesis.",
+          "Code 32650 includes the surgical thoracoscopy and pleurodesis.",
+          "Diagnostic inspection and biopsies are typically bundled into the surgical code 32650."
+        ]
+      }
     },
     "source_file": "synthetic_CPT_corrected.json",
     "cpt_verification_errors": [],
@@ -22,10 +36,11 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.132148",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
       "changes": [
-        "Extracted CPT codes: [32560, 32551, 32601, 32650]"
+        "Verified CPT 32650.",
+        "Added coding_review."
       ],
       "warnings": []
     },
@@ -81,7 +96,21 @@
       },
       "cpt_codes": [
         31630
-      ]
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31630"
+        ],
+        "facility_rvu_2025": 6.27,
+        "facility_payment_2025": 203,
+        "notes": [
+          "Procedure: Bronchoscopic tracheal dilation.",
+          "Code 31630 covers dilation of the trachea/bronchi.",
+          "Diagnostic bronchoscopy (31622) is bundled."
+        ]
+      }
     },
     "source_file": "synthetic_CPT_corrected.json",
     "cpt_verification_errors": [],
@@ -92,10 +121,11 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.132294",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
       "changes": [
-        "Extracted CPT codes: [31622, 31630]"
+        "Verified CPT 31630.",
+        "Added coding_review."
       ],
       "warnings": []
     },
@@ -143,7 +173,21 @@
       },
       "cpt_codes": [
         31641
-      ]
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31641"
+        ],
+        "facility_rvu_2025": 8.4,
+        "facility_payment_2025": 272,
+        "notes": [
+          "Procedure: Photodynamic therapy (light application).",
+          "Code 31641 captures tumor destruction/therapy by any method (including PDT).",
+          "Only one unit of 31641 is reported per session regardless of the number of sites treated with PDT."
+        ]
+      }
     },
     "source_file": "synthetic_CPT_corrected.json",
     "cpt_verification_errors": [],
@@ -154,9 +198,12 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.132466",
-      "changes": [],
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31641.",
+        "Added coding_review."
+      ],
       "warnings": []
     },
     "coding_review": {
@@ -198,7 +245,21 @@
       },
       "cpt_codes": [
         31648
-      ]
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31648"
+        ],
+        "facility_rvu_2025": 6.44,
+        "facility_payment_2025": 208,
+        "notes": [
+          "Procedure: Removal of endobronchial valves.",
+          "Code 31648 covers removal of valves from the initial lobe (RUL).",
+          "Even though 3 valves were removed, they are from the same lobe, so 31648 x1 is appropriate."
+        ]
+      }
     },
     "source_file": "synthetic_CPT_corrected.json",
     "cpt_verification_errors": [],
@@ -209,10 +270,11 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.132631",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
       "changes": [
-        "Extracted CPT codes: [31622, 31647]"
+        "Verified CPT 31648.",
+        "Added coding_review."
       ],
       "warnings": []
     },
@@ -255,7 +317,7 @@
   {
     "note_text": "Flexible bronchoscopy via tracheostomy for Dumon stent surveillance with extensive suctioning and clearance of thick secretions from the left mainstem stent lumen.",
     "cpt_codes": [
-      31622
+      31645
     ],
     "registry_entry": {
       "providers": {},
@@ -263,8 +325,21 @@
         "generated_at": "2025-12-01T15:40:50.158694"
       },
       "cpt_codes": [
-        31622
-      ]
+        31645
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31645"
+        ],
+        "facility_rvu_2025": 4.47,
+        "facility_payment_2025": 145,
+        "notes": [
+          "Procedure: Stent surveillance with extensive suctioning.",
+          "Changed 31622 (Diagnostic) to 31645 (Therapeutic aspiration) because 'extensive suctioning and clearance of thick secretions' supports therapeutic work beyond simple inspection."
+        ]
+      }
     },
     "source_file": "synthetic_CPT_corrected.json",
     "cpt_verification_errors": [],
@@ -275,10 +350,11 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.132803",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
       "changes": [
-        "Extracted CPT codes: [31622]"
+        "Upgraded CPT from 31622 to 31645 based on 'extensive suctioning'.",
+        "Added coding_review."
       ],
       "warnings": []
     },
@@ -323,7 +399,23 @@
       "cpt_codes": [
         31628,
         31654
-      ]
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31628",
+          "+31654"
+        ],
+        "facility_rvu_2025": 7.64,
+        "facility_payment_2025": 247,
+        "notes": [
+          "Procedure: Transbronchial cryobiopsy with Radial EBUS.",
+          "Code 31628 (TBLB) captures the parenchymal biopsy.",
+          "Code +31654 captures the Radial EBUS guidance.",
+          "Arndt blocker use is bundled."
+        ]
+      }
     },
     "source_file": "synthetic_CPT_corrected.json",
     "cpt_verification_errors": [],
@@ -334,10 +426,11 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.132977",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
       "changes": [
-        "Extracted CPT codes: [31622, 31654]"
+        "Verified CPTs 31628, 31654.",
+        "Added coding_review."
       ],
       "warnings": []
     },
@@ -394,7 +487,20 @@
       },
       "cpt_codes": [
         32560
-      ]
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "32560"
+        ],
+        "facility_rvu_2025": 2.31,
+        "facility_payment_2025": 75,
+        "notes": [
+          "Procedure: Bedside chemical pleurodesis via existing tube.",
+          "Code 32560 accurately describes instillation of a pleurodesis agent via chest tube."
+        ]
+      }
     },
     "source_file": "synthetic_CPT_corrected.json",
     "cpt_verification_errors": [],
@@ -405,10 +511,11 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.133139",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
       "changes": [
-        "Extracted CPT codes: [32560, 32551]"
+        "Verified CPT 32560.",
+        "Added coding_review."
       ],
       "warnings": []
     },
@@ -447,7 +554,7 @@
   {
     "note_text": "Emergency bedside bronchoscopy for massive hemoptysis localizing bleeding to the left upper lobe and lingula with iced saline, topical epinephrine, tranexamic acid, and Fogarty balloon tamponade.",
     "cpt_codes": [
-      31622
+      31634
     ],
     "registry_entry": {
       "providers": {},
@@ -455,8 +562,22 @@
         "generated_at": "2025-12-01T15:40:50.158712"
       },
       "cpt_codes": [
-        31622
-      ]
+        31634
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31634"
+        ],
+        "facility_rvu_2025": 5.63,
+        "facility_payment_2025": 182,
+        "notes": [
+          "Procedure: Hemoptysis control with balloon tamponade.",
+          "Changed 31622 to 31634. While 31634 is often for Chartis, its definition 'balloon occlusion... and documentation' applies to balloon tamponade for hemorrhage control.",
+          "31634 is the specific code for balloon occlusion."
+        ]
+      }
     },
     "source_file": "synthetic_CPT_corrected.json",
     "cpt_verification_errors": [],
@@ -467,10 +588,11 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.133336",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
       "changes": [
-        "Extracted CPT codes: [31622]"
+        "Replaced 31622 with 31634 (Balloon Occlusion) for hemoptysis tamponade.",
+        "Added coding_review."
       ],
       "warnings": []
     },
@@ -504,7 +626,8 @@
   {
     "note_text": "Complex hybrid-OR case with rigid bronchoscopy for right mainstem tumor debulking, balloon dilation, metallic stent placement, extensive suctioning of post-obstructive secretions, pericardial window by CT surgery, and right PleurX catheter placement.",
     "cpt_codes": [
-      31631,
+      31636,
+      31641,
       32550
     ],
     "registry_entry": {
@@ -513,9 +636,28 @@
         "generated_at": "2025-12-01T15:40:50.158719"
       },
       "cpt_codes": [
-        31631,
+        31636,
+        31641,
         32550
-      ]
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31636",
+          "31641",
+          "32550"
+        ],
+        "facility_rvu_2025": 21.13,
+        "facility_payment_2025": 684,
+        "notes": [
+          "Procedure: Rigid bronchoscopy with tumor debulking, stent (RMS), and IPC.",
+          "31636: Bronchial Stent (Right Mainstem is bronchial, not tracheal 31631).",
+          "31641: Tumor debulking/destruction.",
+          "32550: PleurX catheter.",
+          "Replaced 31631 (Tracheal) with 31636 (Bronchial) + 31641."
+        ]
+      }
     },
     "source_file": "synthetic_CPT_corrected.json",
     "cpt_verification_errors": [],
@@ -526,10 +668,13 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.133580",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
       "changes": [
-        "Extracted CPT codes: [31622, 32550, 31631, 31630]"
+        "Corrected Stent code 31631 -> 31636 (Mainstem is bronchial).",
+        "Added 31641 for debulking.",
+        "Verified 32550.",
+        "Added coding_review."
       ],
       "warnings": []
     },
@@ -590,7 +735,21 @@
       },
       "cpt_codes": [
         31624
-      ]
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31624"
+        ],
+        "facility_rvu_2025": 4.24,
+        "facility_payment_2025": 137,
+        "notes": [
+          "Procedure: Diagnostic BAL.",
+          "Code 31624 covers bronchoscopy with BAL.",
+          "31622 is bundled."
+        ]
+      }
     },
     "source_file": "synthetic_CPT_corrected.json",
     "cpt_verification_errors": [],
@@ -601,10 +760,11 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.133730",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
       "changes": [
-        "Extracted CPT codes: [31622, 31624]"
+        "Verified CPT 31624.",
+        "Added coding_review."
       ],
       "warnings": []
     },

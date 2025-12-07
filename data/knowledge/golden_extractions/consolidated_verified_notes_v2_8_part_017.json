@@ -140,6 +140,26 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.158074"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA performed on 3 stations (4R, 7, 11R) with systematic approach."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -319,6 +339,26 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158086"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "Linear EBUS-TBNA of stations 2R, 4R, and 7 (3 stations) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -497,6 +537,26 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158102"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "Linear EBUS-TBNA of stations 4R, 7, and 10R (3 stations) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -672,6 +732,26 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158175"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "Linear EBUS with TBNA/forceps biopsy of stations 4R, 7, and 11L (3 stations) supports 31653. Intranodal forceps are considered part of the sampling."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -720,7 +800,8 @@
   {
     "note_text": "Bronchoscopy Procedure Note\nProcedure: Radial EBUS-guided biopsy of right middle lobe nodule (no navigation)\nPatient: Janice Moore, 71-year-old female with 15 mm RML nodule not amenable to CT-guided biopsy.\nSedation: Moderate sedation (midazolam and fentanyl), native airway.\nProcedure summary:\n- Diagnostic bronchoscopy performed; central airways normal.\n- Radial EBUS catheter advanced through guide sheath into RML lateral segment based on fluoroscopy and CT roadmap.\n- Concentric solid lesion pattern obtained.\n- Four transbronchial forceps biopsies and two brushings performed through guide sheath.\nROSE: Suspicious for malignancy.\nComplications: Minimal bleeding. No pneumothorax on immediate CXR.\nDisposition: Discharged home after observation.",
     "cpt_codes": [
-      31628
+      "31628",
+      "31654"
     ],
     "registry_entry": {
       "note_text": "Bronchoscopy Procedure Note\nProcedure: Radial EBUS-guided biopsy of right middle lobe nodule (no navigation)\nPatient: Janice Moore, 71-year-old female with 15 mm RML nodule not amenable to CT-guided biopsy.\nSedation: Moderate sedation (midazolam and fentanyl), native airway.\nProcedure summary:\n- Diagnostic bronchoscopy performed; central airways normal.\n- Radial EBUS catheter advanced through guide sheath into RML lateral segment based on fluoroscopy and CT roadmap.\n- Concentric solid lesion pattern obtained.\n- Four transbronchial forceps biopsies and two brushings performed through guide sheath.\nROSE: Suspicious for malignancy.\nComplications: Minimal bleeding. No pneumothorax on immediate CXR.\nDisposition: Discharged home after observation.",
@@ -832,7 +913,8 @@
       "disposition": "Outpatient discharge",
       "follow_up_plan": "Lung nodule clinic appointment in 7\u201310 days to review results",
       "cpt_codes": [
-        31628
+        31628,
+        "31654"
       ],
       "evidence": null,
       "providers": {
@@ -846,6 +928,36 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158191"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Radial EBUS-guided TBLB of RML nodule."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS was used to visualize the peripheral lesion (concentric view) for biopsy guidance."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -896,9 +1008,9 @@
   {
     "note_text": "Robotic Bronchoscopy / EBUS Note\nProcedures:\n1. Ion robotic-assisted bronchoscopy\n2. Radial EBUS and cone-beam CT\n3. Transbronchial cryobiopsy and forceps biopsy of LUL nodule\nPatient: Olivia Carter, 59-year-old female with 20 mm left upper lobe nodule and normal mediastinal imaging.\nAnesthesia: General anesthesia with 8.0 ETT; pressure control ventilation.\nDetails: Robotic catheter navigated to apicoposterior segment of LUL using CT-to-body registration (error 2.1 mm). Concentric radial EBUS view obtained. Cone-beam CT confirmed tool-in-lesion. Three cryobiopsies (1.1 mm cryoprobe) and three standard forceps biopsies performed.\nROSE from cryobiopsy: Malignant epithelial cells, favor adenocarcinoma.\nComplications: Mild bleeding, controlled with wedging. No pneumothorax on immediate cone-beam CT.\nDisposition: Extubated and discharged from PACU after uneventful recovery.",
     "cpt_codes": [
-      31627,
-      31645,
-      31628
+      "31628",
+      "31627",
+      "31654"
     ],
     "registry_entry": {
       "note_text": "Robotic Bronchoscopy / EBUS Note\nProcedures:\n1. Ion robotic-assisted bronchoscopy\n2. Radial EBUS and cone-beam CT\n3. Transbronchial cryobiopsy and forceps biopsy of LUL nodule\nPatient: Olivia Carter, 59-year-old female with 20 mm left upper lobe nodule and normal mediastinal imaging.\nAnesthesia: General anesthesia with 8.0 ETT; pressure control ventilation.\nDetails: Robotic catheter navigated to apicoposterior segment of LUL using CT-to-body registration (error 2.1 mm). Concentric radial EBUS view obtained. Cone-beam CT confirmed tool-in-lesion. Three cryobiopsies (1.1 mm cryoprobe) and three standard forceps biopsies performed.\nROSE from cryobiopsy: Malignant epithelial cells, favor adenocarcinoma.\nComplications: Mild bleeding, controlled with wedging. No pneumothorax on immediate cone-beam CT.\nDisposition: Extubated and discharged from PACU after uneventful recovery.",
@@ -1010,9 +1122,9 @@
       "disposition": "Outpatient discharge",
       "follow_up_plan": "Lung cancer clinic visit in 1 week for staging and treatment planning",
       "cpt_codes": [
-        31627,
-        31645,
-        31628
+        "31628",
+        "31627",
+        "31654"
       ],
       "evidence": null,
       "providers": {
@@ -1026,6 +1138,46 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158201"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Transbronchial biopsies (cryo and forceps) of LUL nodule."
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 3.07,
+            "facility_payment_2025": 99,
+            "rationale": "Ion robotic navigation used to reach target."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS confirmation of lesion."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 10.71,
+          "facility_total_payment": 346
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1089,8 +1241,9 @@
   {
     "note_text": "Interventional Pulmonology Procedure Note\nProcedures: Electromagnetic navigational bronchoscopy (superDimension) with radial EBUS and transbronchial biopsies of left lower lobe nodule.\nPatient: Daniel Rivera, 65-year-old male with 14 mm LLL peripheral nodule with faint PET uptake.\nSedation: Moderate sedation with midazolam and fentanyl.\nHighlights:\n- EMN plan created from thin-cut CT; registration error 4.6 mm via anatomical landmarks.\n- Radial EBUS showed eccentric view.\n- Fluoroscopy confirmed position at lesion; no cone-beam CT available.\n- Five forceps biopsies, two brushings and one mini-BAL obtained.\nROSE: Nondiagnostic, bronchial cells only.\nComplications: None. No pneumothorax on postprocedure CXR.\nDisposition: Discharged home with plan for repeat evaluation vs CT-guided biopsy.",
     "cpt_codes": [
-      31627,
-      31628
+      "31627",
+      "31628",
+      "31654"
     ],
     "registry_entry": {
       "note_text": "Interventional Pulmonology Procedure Note\nProcedures: Electromagnetic navigational bronchoscopy (superDimension) with radial EBUS and transbronchial biopsies of left lower lobe nodule.\nPatient: Daniel Rivera, 65-year-old male with 14 mm LLL peripheral nodule with faint PET uptake.\nSedation: Moderate sedation with midazolam and fentanyl.\nHighlights:\n- EMN plan created from thin-cut CT; registration error 4.6 mm via anatomical landmarks.\n- Radial EBUS showed eccentric view.\n- Fluoroscopy confirmed position at lesion; no cone-beam CT available.\n- Five forceps biopsies, two brushings and one mini-BAL obtained.\nROSE: Nondiagnostic, bronchial cells only.\nComplications: None. No pneumothorax on postprocedure CXR.\nDisposition: Discharged home with plan for repeat evaluation vs CT-guided biopsy.",
@@ -1203,7 +1356,8 @@
       "follow_up_plan": "Lung nodule clinic in 2 weeks to review options",
       "cpt_codes": [
         31627,
-        31628
+        31628,
+        "31654"
       ],
       "evidence": null,
       "providers": {
@@ -1217,6 +1371,46 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158213"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Transbronchial biopsies of LLL nodule."
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 3.07,
+            "facility_payment_2025": 99,
+            "rationale": "EMN (superDimension) used to reach target."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used to visualize eccentric view of lesion."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 10.71,
+          "facility_total_payment": 346
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1397,6 +1591,26 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158227"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_summary": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of silicone tracheal stent; includes dilation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1568,6 +1782,26 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158237"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_summary": [
+          {
+            "code": "31630",
+            "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 6.27,
+            "facility_payment_2025": 203,
+            "rationale": "Rigid and balloon dilation of benign bronchial stenosis."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 6.27,
+          "facility_total_payment": 203
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1613,9 +1847,8 @@
   {
     "note_text": "Central Airway Stenting Note\nProcedures:\n1. Rigid bronchoscopy with tumor debulking\n2. Y-shaped silicone stent placement\nPatient: Raymond Scott, 69-year-old male with squamous cell carcinoma of the carina causing severe central airway obstruction.\nAnesthesia: General anesthesia with rigid bronchoscope and intermittent jet ventilation.\nFindings: Bulky endobronchial tumor involving distal trachea and extending into both mainstem bronchi causing ~80% obstruction.\nInterventions: Mechanical debulking with rigid barrel and forceps followed by argon plasma coagulation. A custom 14 x 60/40 mm silicone Y stent was deployed with the main limb in distal trachea and branches in right and left main bronchi.\nComplications: Brief desaturation during stent deployment, resolved with recruitment.\nDisposition: Remained intubated postprocedure and transferred to ICU.",
     "cpt_codes": [
-      31641,
-      31636,
-      31631
+      "31641",
+      "31631"
     ],
     "registry_entry": {
       "note_text": "Central Airway Stenting Note\nProcedures:\n1. Rigid bronchoscopy with tumor debulking\n2. Y-shaped silicone stent placement\nPatient: Raymond Scott, 69-year-old male with squamous cell carcinoma of the carina causing severe central airway obstruction.\nAnesthesia: General anesthesia with rigid bronchoscope and intermittent jet ventilation.\nFindings: Bulky endobronchial tumor involving distal trachea and extending into both mainstem bronchi causing ~80% obstruction.\nInterventions: Mechanical debulking with rigid barrel and forceps followed by argon plasma coagulation. A custom 14 x 60/40 mm silicone Y stent was deployed with the main limb in distal trachea and branches in right and left main bronchi.\nComplications: Brief desaturation during stent deployment, resolved with recruitment.\nDisposition: Remained intubated postprocedure and transferred to ICU.",
@@ -1727,9 +1960,8 @@
       "disposition": "ICU admission",
       "follow_up_plan": "ICU monitoring and oncology follow-up for palliative systemic therapy",
       "cpt_codes": [
-        31641,
-        31636,
-        31631
+        "31641",
+        "31631"
       ],
       "evidence": null,
       "providers": {
@@ -1743,6 +1975,36 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158246"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and APC debulking of tumor."
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of Y-stent involving trachea (and bronchi). Single appliance coded as tracheal stent."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.55,
+          "facility_total_payment": 503
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",

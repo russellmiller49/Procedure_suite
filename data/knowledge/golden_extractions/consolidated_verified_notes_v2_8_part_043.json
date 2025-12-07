@@ -169,30 +169,40 @@
     "coding_review": {
       "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-07",
-      "ip_coding_knowledge_version": "2.7",
-      "coder_confidence": "high",
-      "note_summary": "Flexible bronchoscopy under general anesthesia with endobronchial forceps biopsies and brushings of a right mainstem mass; no BAL, TBNA, EBUS, or therapeutic debulking performed.",
-      "cpt_summary": [
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Flexible bronchoscopy for hemoptysis (SYNB001)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "31625",
+          "description": "Bronchoscopy with bronchial or endobronchial biopsy(s)",
+          "category": "bronchoscopy_biopsy_endobronchial",
           "units": 1,
-          "role": "endobronchial_biopsy",
-          "facility_rvu_2025": 4.93,
-          "estimated_facility_payment_2025": 161
+          "facility_total_rvus_2025": 4.93,
+          "facility_mpfs_payment_2025": 160.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by endobronchial forceps biopsies of right mainstem tumor."
         },
         {
           "code": "31623",
+          "description": "Bronchoscopy with brushing or protected brushings",
+          "category": "bronchoscopy_diagnostic",
           "units": 1,
-          "role": "bronchial_brushings",
-          "facility_rvu_2025": 4.18,
-          "estimated_facility_payment_2025": 137
+          "facility_total_rvus_2025": 4.18,
+          "facility_mpfs_payment_2025": 135.0,
+          "bundling_or_modifier_notes": "Secondary code. Supported by protected brushings. May be bundled by some payers if performed on the same lesion without a modifier, but separately listed in CPT."
         }
       ],
-      "total_facility_rvu_2025": 9.11,
-      "estimated_total_facility_payment_2025": 298,
-      "comments": [
-        "CPT selection of 31625 and 31623 is supported by the documented endobronchial biopsies and protected brushings, with no separate diagnostic bronchoscopy billed.",
-        "RVUs and payments are aligned with the 2025 airway fee schedule in ip_coding_billing.v2_7."
+      "totals_2025_facility": {
+        "total_facility_rvus": 9.11,
+        "total_facility_mpfs_payment": 295.0,
+        "computation_notes": "Sum of 31625 and 31623."
+      },
+      "rationale": [
+        "Bronchoscopy with endobronchial biopsy (31625) and protected specimen brushings (31623) performed on a right mainstem mass.",
+        "Diagnostic bronchoscopy (31622) is bundled into the therapeutic codes."
       ]
     }
   },
@@ -347,23 +357,31 @@
     "coding_review": {
       "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-07",
-      "ip_coding_knowledge_version": "2.7",
-      "coder_confidence": "high",
-      "note_summary": "Moderate-sedation flexible bronchoscopy through the native airway with successful endobronchial foreign body removal and no additional sampling.",
-      "cpt_summary": [
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Foreign body removal bronchoscopy (SYNB002)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "31635",
+          "description": "Bronchoscopy with removal of foreign body",
+          "category": "bronchoscopy_foreign_body",
           "units": 1,
-          "role": "foreign_body_removal",
-          "facility_rvu_2025": 5.54,
-          "estimated_facility_payment_2025": 181
+          "facility_total_rvus_2025": 5.54,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by removal of hard organic foreign body."
         }
       ],
-      "total_facility_rvu_2025": 5.54,
-      "estimated_total_facility_payment_2025": 181,
-      "comments": [
-        "31635 appropriately captures the entire foreign body removal service.",
-        "No diagnostic code is billed separately because the bronchoscopy was primarily therapeutic."
+      "totals_2025_facility": {
+        "total_facility_rvus": 5.54,
+        "total_facility_mpfs_payment": 179.0,
+        "computation_notes": "Single code 31635."
+      },
+      "rationale": [
+        "Procedure was dedicated foreign body removal (31635).",
+        "No other therapeutic or diagnostic interventions were performed."
       ]
     }
   },
@@ -520,23 +538,31 @@
     "coding_review": {
       "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-07",
-      "ip_coding_knowledge_version": "2.7",
-      "coder_confidence": "high",
-      "note_summary": "Linear EBUS under general anesthesia with three needle passes from a single 4R node; no additional nodal stations or parenchymal sites sampled.",
-      "cpt_summary": [
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Linear EBUS 1-2 stations (SYNB003)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "31652",
+          "description": "Bronchoscopy with EBUS sampling, 1-2 nodal stations",
+          "category": "bronchoscopy_ebus_linear",
           "units": 1,
-          "role": "linear_ebus_1_2_stations",
-          "facility_rvu_2025": 6.96,
-          "estimated_facility_payment_2025": 228
+          "facility_total_rvus_2025": 6.96,
+          "facility_mpfs_payment_2025": 225.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of a single station (4R)."
         }
       ],
-      "total_facility_rvu_2025": 6.96,
-      "estimated_total_facility_payment_2025": 228,
-      "comments": [
-        "Single-station EBUS sampling supports 31652 rather than 31653.",
-        "No additional sampling or navigation codes are justified by the documentation."
+      "totals_2025_facility": {
+        "total_facility_rvus": 6.96,
+        "total_facility_mpfs_payment": 225.0,
+        "computation_notes": "Single code 31652."
+      },
+      "rationale": [
+        "Linear EBUS with sampling of one nodal station (4R) maps to 31652.",
+        "No other stations sampled."
       ]
     }
   },
@@ -719,30 +745,40 @@
     "coding_review": {
       "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-07",
-      "ip_coding_knowledge_version": "2.7",
-      "coder_confidence": "high",
-      "note_summary": "General-anesthesia linear EBUS with multi-station mediastinal and hilar staging plus BAL; no radial EBUS or navigation performed.",
-      "cpt_summary": [
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Linear EBUS 3+ stations + BAL (SYNB004)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+          "category": "bronchoscopy_ebus_linear",
           "units": 1,
-          "role": "linear_ebus_3plus_stations",
-          "facility_rvu_2025": 7.7,
-          "estimated_facility_payment_2025": 252
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of 4R, 7, and 11R."
         },
         {
           "code": "31624",
+          "description": "Bronchoscopy with bronchoalveolar lavage",
+          "category": "bronchoscopy_diagnostic",
           "units": 1,
-          "role": "bronchoalveolar_lavage",
-          "facility_rvu_2025": 4.24,
-          "estimated_facility_payment_2025": 139
+          "facility_total_rvus_2025": 4.24,
+          "facility_mpfs_payment_2025": 137.0,
+          "bundling_or_modifier_notes": "Separately payable. Supported by RLL BAL performed for microbiology."
         }
       ],
-      "total_facility_rvu_2025": 11.94,
-      "estimated_total_facility_payment_2025": 391,
-      "comments": [
-        "Three nodal stations sampled with EBUS justify 31653.",
-        "BAL is separately coded as 31624 and not considered inherent to EBUS staging in this context."
+      "totals_2025_facility": {
+        "total_facility_rvus": 11.94,
+        "total_facility_mpfs_payment": 386.0,
+        "computation_notes": "Sum of 31653 and 31624."
+      },
+      "rationale": [
+        "EBUS-TBNA of 3 stations supports 31653.",
+        "Separate BAL (31624) is documented and billable in addition to EBUS."
       ]
     }
   },
@@ -924,30 +960,40 @@
     "coding_review": {
       "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-07",
-      "ip_coding_knowledge_version": "2.7",
-      "coder_confidence": "high",
-      "note_summary": "Rigid and flexible bronchoscopy for malignant central airway obstruction with therapeutic aspiration and covered right mainstem stent placement.",
-      "cpt_summary": [
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Airway stent placement (SYNB005)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "31636",
+          "description": "Bronchoscopy with placement of bronchial stent(s), initial bronchus",
+          "category": "bronchoscopy_therapeutic_stent",
           "units": 1,
-          "role": "bronchial_stent_placement_initial_bronchus",
-          "facility_rvu_2025": 6.85,
-          "estimated_facility_payment_2025": 224
+          "facility_total_rvus_2025": 6.85,
+          "facility_mpfs_payment_2025": 222.0,
+          "bundling_or_modifier_notes": "Primary code. Placement of covered stent in right mainstem. Includes dilation (31630)."
         },
         {
           "code": "31645",
+          "description": "Bronchoscopy with therapeutic aspiration of tracheobronchial tree, initial",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
           "units": 1,
-          "role": "therapeutic_aspiration",
-          "facility_rvu_2025": 4.47,
-          "estimated_facility_payment_2025": 146
+          "facility_total_rvus_2025": 4.47,
+          "facility_mpfs_payment_2025": 145.0,
+          "bundling_or_modifier_notes": "Secondary code. Supported by clearance of copious purulent secretions."
         }
       ],
-      "total_facility_rvu_2025": 11.32,
-      "estimated_total_facility_payment_2025": 370,
-      "comments": [
-        "Stent placement and therapeutic aspiration are separately reportable in this malignant CAO case.",
-        "Diagnostic bronchoscopy and balloon dilation are bundled into the stent service per bundling guidance."
+      "totals_2025_facility": {
+        "total_facility_rvus": 11.32,
+        "total_facility_mpfs_payment": 367.0,
+        "computation_notes": "Sum of 31636 and 31645."
+      },
+      "rationale": [
+        "Bronchial stent placement (31636) for malignant obstruction.",
+        "Therapeutic aspiration (31645) for purulent secretions is distinct and separately billable."
       ]
     }
   },
@@ -1102,23 +1148,31 @@
     "coding_review": {
       "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-07",
-      "ip_coding_knowledge_version": "2.7",
-      "coder_confidence": "high",
-      "note_summary": "General-anesthesia BLVR procedure with Zephyr valve placement limited to the right upper lobe; no Chartis or additional lobes treated.",
-      "cpt_summary": [
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "BLVR valve placement (SYNB006)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "31647",
+          "description": "Bronchoscopy with endobronchial valve placement, initial bronchus",
+          "category": "bronchoscopic_blvr_valve_placement",
           "units": 1,
-          "role": "blvr_valve_placement_initial_lobe",
-          "facility_rvu_2025": 12.05,
-          "estimated_facility_payment_2025": 395
+          "facility_total_rvus_2025": 12.05,
+          "facility_mpfs_payment_2025": 390.0,
+          "bundling_or_modifier_notes": "Primary code. Placement of 4 valves in RUL (single lobe)."
         }
       ],
-      "total_facility_rvu_2025": 12.05,
-      "estimated_total_facility_payment_2025": 395,
-      "comments": [
-        "Single-lobe BLVR with endobronchial valves is accurately captured by 31647 alone.",
-        "No add-on lobe code is warranted based on the documentation."
+      "totals_2025_facility": {
+        "total_facility_rvus": 12.05,
+        "total_facility_mpfs_payment": 390.0,
+        "computation_notes": "Single code 31647."
+      },
+      "rationale": [
+        "BLVR with valves placed in a single lobe (RUL) maps to 31647.",
+        "No additional lobes treated, so +31651 is not applicable."
       ]
     }
   },
@@ -1290,30 +1344,40 @@
     "coding_review": {
       "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-07",
-      "ip_coding_knowledge_version": "2.7",
-      "coder_confidence": "high",
-      "note_summary": "General-anesthesia bronchoscopy with removal of four Zephyr valves from the right upper lobe and extensive therapeutic aspiration for post-BLVR pneumonia.",
-      "cpt_summary": [
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "BLVR valve removal (SYNB007)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "31648",
+          "description": "Bronchoscopy with removal of endobronchial valve(s), initial bronchus",
+          "category": "bronchoscopic_blvr_valve_removal",
           "units": 1,
-          "role": "blvr_valve_removal",
-          "facility_rvu_2025": 6.44,
-          "estimated_facility_payment_2025": 211
+          "facility_total_rvus_2025": 6.44,
+          "facility_mpfs_payment_2025": 208.0,
+          "bundling_or_modifier_notes": "Primary code. Removal of 4 valves from RUL."
         },
         {
           "code": "31645",
+          "description": "Bronchoscopy with therapeutic aspiration of tracheobronchial tree, initial",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
           "units": 1,
-          "role": "therapeutic_aspiration",
-          "facility_rvu_2025": 4.47,
-          "estimated_facility_payment_2025": 146
+          "facility_total_rvus_2025": 4.47,
+          "facility_mpfs_payment_2025": 145.0,
+          "bundling_or_modifier_notes": "Secondary code. Aspiration of thick purulent secretions (post-obstructive)."
         }
       ],
-      "total_facility_rvu_2025": 10.91,
-      "estimated_total_facility_payment_2025": 357,
-      "comments": [
-        "Valve removal and therapeutic aspiration are separately reportable services in this BLVR complication context.",
-        "No add-on BLVR placement or Chartis codes are appropriate."
+      "totals_2025_facility": {
+        "total_facility_rvus": 10.91,
+        "total_facility_mpfs_payment": 353.0,
+        "computation_notes": "Sum of 31648 and 31645."
+      },
+      "rationale": [
+        "Removal of valves from one lobe (31648).",
+        "Therapeutic aspiration of secretions (31645) is distinct and significant."
       ]
     }
   },
@@ -1468,23 +1532,30 @@
     "coding_review": {
       "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-07",
-      "ip_coding_knowledge_version": "2.7",
-      "coder_confidence": "high",
-      "note_summary": "Bedside thoracentesis with removal of 1.5 L of serous right pleural fluid using needle and catheter, without separately reportable imaging guidance.",
-      "cpt_summary": [
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Thoracentesis without guidance code (SYNB008)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "32554",
+          "description": "Thoracentesis, needle or catheter, aspiration of the pleural space; without imaging guidance",
+          "category": "thoracentesis",
           "units": 1,
-          "role": "thoracentesis_without_imaging",
-          "facility_rvu_2025": 2.6,
-          "estimated_facility_payment_2025": 85
+          "facility_total_rvus_2025": 2.6,
+          "facility_mpfs_payment_2025": 84.0,
+          "bundling_or_modifier_notes": "Primary code. Selected because documentation states 'No ultrasound guidance code... was performed' despite US use for marking."
         }
       ],
-      "total_facility_rvu_2025": 2.6,
-      "estimated_total_facility_payment_2025": 85,
-      "comments": [
-        "Documentation supports a single thoracentesis service without add-on imaging code.",
-        "Routine confirmatory imaging is considered part of the global service."
+      "totals_2025_facility": {
+        "total_facility_rvus": 2.6,
+        "total_facility_mpfs_payment": 84.0,
+        "computation_notes": "Single code 32554."
+      },
+      "rationale": [
+        "Thoracentesis performed. While US was used for marking, the note explicitly excludes billing for US guidance, supporting 32554."
       ]
     }
   },
@@ -1656,30 +1727,40 @@
     "coding_review": {
       "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-07",
-      "ip_coding_knowledge_version": "2.7",
-      "coder_confidence": "high",
-      "note_summary": "Moderate-sedation placement of tunneled indwelling pleural catheter for complicated parapneumonic effusion with same-session first-dose tPA/DNase.",
-      "cpt_summary": [
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "IPC placement with fibrinolytics (SYNB009)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "32550",
+          "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+          "category": "tunneled_pleural_catheter_placement",
           "units": 1,
-          "role": "tunneled_pleural_catheter_placement",
-          "facility_rvu_2025": 5.88,
-          "estimated_facility_payment_2025": 193
+          "facility_total_rvus_2025": 5.88,
+          "facility_mpfs_payment_2025": 190.0,
+          "bundling_or_modifier_notes": "Primary code."
         },
         {
           "code": "32561",
+          "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+          "category": "pleural_intrapleural_treatment",
           "units": 1,
-          "role": "intrapleural_fibrinolytic_first_day",
-          "facility_rvu_2025": 2.09,
-          "estimated_facility_payment_2025": 68
+          "facility_total_rvus_2025": 2.09,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Secondary code. Supported by tPA/DNase instillation."
         }
       ],
-      "total_facility_rvu_2025": 7.97,
-      "estimated_total_facility_payment_2025": 261,
-      "comments": [
-        "Combined tunneled catheter placement and first-day fibrinolytic instillation are appropriately captured by 32550 and 32561.",
-        "A separate thoracentesis code would be duplicative and is dropped per pleural bundling guidance."
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.97,
+        "total_facility_mpfs_payment": 258.0,
+        "computation_notes": "Sum of 32550 and 32561."
+      },
+      "rationale": [
+        "Placement of IPC (32550).",
+        "Concurrent first-day fibrinolytic instillation (32561)."
       ]
     }
   },
@@ -1849,30 +1930,40 @@
     "coding_review": {
       "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-07",
-      "ip_coding_knowledge_version": "2.7",
-      "coder_confidence": "high",
-      "note_summary": "CT-guided core needle biopsy of a peripheral RLL lung nodule complicated by pneumothorax requiring tube thoracostomy.",
-      "cpt_summary": [
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "CT-guided biopsy and chest tube (SYNB010)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "32408",
+          "description": "Core needle biopsy, lung or mediastinum, percutaneous, including imaging guidance",
+          "category": "ttna_percutaneous_lung_biopsy",
           "units": 1,
-          "role": "percutaneous_lung_biopsy_core",
-          "facility_rvu_2025": 4.75,
-          "estimated_facility_payment_2025": 156
+          "facility_total_rvus_2025": 4.75,
+          "facility_mpfs_payment_2025": 154.0,
+          "bundling_or_modifier_notes": "Primary biopsy code."
         },
         {
           "code": "32551",
+          "description": "Tube thoracostomy, includes connection to drainage system, when performed (separate procedure)",
+          "category": "tube_thoracostomy",
           "units": 1,
-          "role": "tube_thoracostomy_for_pneumothorax",
-          "facility_rvu_2025": 4.56,
-          "estimated_facility_payment_2025": 149
+          "facility_total_rvus_2025": 4.56,
+          "facility_mpfs_payment_2025": 148.0,
+          "bundling_or_modifier_notes": "Secondary code. Supported by chest tube placement for pneumothorax."
         }
       ],
-      "total_facility_rvu_2025": 9.31,
-      "estimated_total_facility_payment_2025": 305,
-      "comments": [
-        "Separate reporting of lung biopsy and tube thoracostomy is appropriate for a complication-driven chest tube.",
-        "No thoracentesis or thoracoscopy codes are indicated based on the narrative."
+      "totals_2025_facility": {
+        "total_facility_rvus": 9.31,
+        "total_facility_mpfs_payment": 302.0,
+        "computation_notes": "Sum of 32408 and 32551."
+      },
+      "rationale": [
+        "Percutaneous core biopsy (32408).",
+        "Complication (pneumothorax) required separate tube thoracostomy (32551), which is separately billable."
       ]
     }
   }

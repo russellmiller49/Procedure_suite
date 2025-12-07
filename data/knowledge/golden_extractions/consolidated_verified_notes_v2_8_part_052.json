@@ -47,35 +47,43 @@
       }
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "is_edge_case": true,
-      "cpt_summary": {
-        "32551": {
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Pleural intervention conversion for James Howlett.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI Policy Manual Chapter 5"
+      ],
+      "per_code": [
+        {
+          "code": "32551",
+          "description": "Tube thoracostomy, includes connection to drainage system, when performed (separate procedure)",
+          "category": "tube_thoracostomy",
           "units": 1,
-          "role": "primary",
-          "work_rvu_2025": 3.56,
-          "total_facility_rvu_2025": 5.47,
-          "mpfs_facility_payment_2025": 197.64,
-          "rationale": "Tube thoracostomy. The initial thoracentesis (32555) is bundled because it was performed at the same site/session and converted to the chest tube."
+          "facility_total_rvus_2025": 4.56,
+          "facility_mpfs_payment_2025": 148.0,
+          "bundling_or_modifier_notes": "Primary service. Covers the definitive drainage. Diagnostic thoracentesis (32555) performed at the same site/session to confirm fluid before tube placement is bundled."
         },
-        "32561": {
+        {
+          "code": "32561",
+          "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+          "category": "pleural_intrapleural_treatment",
           "units": 1,
-          "role": "primary",
-          "work_rvu_2025": 3.02,
-          "total_facility_rvu_2025": 4.87,
-          "mpfs_facility_payment_2025": 175.92,
-          "rationale": "Instillation of fibrinolytic agent (tPA/DNase) via chest tube, initial day."
-        },
-        "32555": {
-          "units": 0,
-          "role": "bundled",
-          "work_rvu_2025": 1.6,
-          "total_facility_rvu_2025": 2.58,
-          "mpfs_facility_payment_2025": 93.19,
-          "rationale": "Diagnostic tap bundled into the definitive tube placement (32551) at the same site."
+          "facility_total_rvus_2025": 2.09,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Separately payable for instillation of tPA/DNase."
         }
-      }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 6.65,
+        "total_facility_mpfs_payment": 216.0,
+        "computation_notes": "Sum of 32551 and 32561."
+      },
+      "rationale": [
+        "Procedure began as diagnostic thoracentesis but converted to tube thoracostomy at the same site due to frank pus. Only the more extensive procedure (32551) is reported.",
+        "Fibrinolytic instillation (32561) is separately reported."
+      ]
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
     "patch_metadata": {
@@ -138,35 +146,44 @@
       }
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "is_edge_case": true,
-      "cpt_summary": {
-        "31641": {
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Emergency rigid bronchoscopy for Logan Roy.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with destruction of tumor or relief of stenosis by any method",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
           "units": 1,
-          "role": "primary",
-          "work_rvu_2025": 3.43,
-          "total_facility_rvu_2025": 5.98,
-          "mpfs_facility_payment_2025": 215.73,
-          "rationale": "Bronchoscopy with destruction of tumor (APC) for hemostasis/relief of obstruction."
+          "facility_total_rvus_2025": 8.4,
+          "facility_mpfs_payment_2025": 272.0,
+          "bundling_or_modifier_notes": "Primary therapeutic code. Supported by APC destruction of tumor at RUL orifice to control bleeding."
         },
-        "31645": {
+        {
+          "code": "31645",
+          "description": "Bronchoscopy with therapeutic aspiration of tracheobronchial tree, initial",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
           "units": 1,
-          "role": "primary",
-          "work_rvu_2025": 3.01,
-          "total_facility_rvu_2025": 5.11,
-          "mpfs_facility_payment_2025": 184.31,
-          "rationale": "Therapeutic aspiration of tracheobronchial tree (clearing 400cc blood/clot from contralateral lung/trachea). Allowed with 31641 if significant/distinct work, though NCCI edits exist (modifier 59/XS often required if sites distinct). Here, aspiration was global/contralateral to the tumor site."
-        },
-        "31634": {
-          "units": 0,
-          "role": "not_billed",
-          "work_rvu_2025": 2.21,
-          "total_facility_rvu_2025": 3.66,
-          "mpfs_facility_payment_2025": 132.08,
-          "rationale": "Balloon tamponade for hemostasis. While 31634 describes balloon occlusion, it is often reserved for Chartis or assessment. In hemorrhage context, usually bundled into E/M or critical care, or the primary therapeutic code."
+          "facility_total_rvus_2025": 4.47,
+          "facility_mpfs_payment_2025": 145.0,
+          "bundling_or_modifier_notes": "Supported by aspiration of 400cc blood/clot from trachea and left mainstem (distinct work from the RUL tumor destruction)."
         }
-      }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 12.87,
+        "total_facility_mpfs_payment": 417.0,
+        "computation_notes": "Sum of 31641 and 31645."
+      },
+      "rationale": [
+        "APC applied to tumor bed maps to 31641.",
+        "Clearance of massive hemoptysis clots from non-target airways supports 31645.",
+        "Balloon tamponade is generally considered part of the hemorrhage control effort or critical care service and does not have a specific separate add-on code in this context."
+      ]
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
     "patch_metadata": {
@@ -265,51 +282,70 @@
       }
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "is_edge_case": true,
-      "cpt_summary": {
-        "31652": {
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Mixed modality staging and treatment for Wade Wilson.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI Policy Manual Chapter 5"
+      ],
+      "per_code": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with destruction of tumor or relief of stenosis by any method",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
           "units": 1,
-          "role": "primary",
-          "work_rvu_2025": 3.29,
-          "total_facility_rvu_2025": 4.91,
-          "mpfs_facility_payment_2025": 177.51,
-          "rationale": "EBUS-TBNA 1-2 stations (7, 4R)."
+          "facility_total_rvus_2025": 8.4,
+          "facility_mpfs_payment_2025": 272.0,
+          "bundling_or_modifier_notes": "High-value primary. Resection of RMB tumor."
         },
-        "31627": {
+        {
+          "code": "31652",
+          "description": "Bronchoscopy with EBUS sampling, 1-2 nodal stations",
+          "category": "bronchoscopy_ebus_linear",
           "units": 1,
-          "role": "add_on",
-          "work_rvu_2025": 1.9,
-          "total_facility_rvu_2025": 2.92,
-          "mpfs_facility_payment_2025": 105.9,
-          "rationale": "Navigation to LUL."
+          "facility_total_rvus_2025": 6.96,
+          "facility_mpfs_payment_2025": 225.0,
+          "bundling_or_modifier_notes": "EBUS-TBNA of 7 and 4R."
         },
-        "31654": {
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe",
+          "category": "bronchoscopy_biopsy_parenchymal",
           "units": 1,
-          "role": "add_on",
-          "work_rvu_2025": 1.94,
-          "total_facility_rvu_2025": 2.57,
-          "mpfs_facility_payment_2025": 92.62,
-          "rationale": "Radial EBUS for LUL lesion."
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Cryobiopsy of LUL nodule (distinct from RMB tumor)."
         },
-        "31628": {
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on)",
+          "category": "bronchoscopy_navigation",
           "units": 1,
-          "role": "primary",
-          "work_rvu_2025": 3.18,
-          "total_facility_rvu_2025": 5.35,
-          "mpfs_facility_payment_2025": 193.1,
-          "rationale": "Transbronchial biopsy (Cryo technique for nodule maps to 31628)."
+          "facility_total_rvus_2025": 3.07,
+          "facility_mpfs_payment_2025": 99.0,
+          "bundling_or_modifier_notes": "Navigation to LUL nodule."
         },
-        "31641": {
+        {
+          "code": "31654",
+          "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention (add-on)",
+          "category": "bronchoscopy_ebus_radial",
           "units": 1,
-          "role": "primary",
-          "work_rvu_2025": 3.43,
-          "total_facility_rvu_2025": 5.98,
-          "mpfs_facility_payment_2025": 215.73,
-          "rationale": "Destruction of tumor (RMB). Distinct site from LUL biopsy. Requires modifier 59/XS."
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Radial EBUS for LUL nodule."
         }
-      }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 26.07,
+        "total_facility_mpfs_payment": 843.0,
+        "computation_notes": "Sum of all codes."
+      },
+      "rationale": [
+        "Complex case involving three distinct targets: Mediastinum (31652), LUL peripheral nodule (31628+31627+31654), and RMB central tumor (31641).",
+        "Modifier -59 or -XS would be required on 31628 and 31652 to distinguish from 31641."
+      ]
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
     "patch_metadata": {
@@ -373,35 +409,33 @@
       }
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "is_edge_case": true,
-      "cpt_summary": {
-        "31638": {
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Stent exchange note for Dr. F. N. Stein.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
+        {
+          "code": "31638",
+          "description": "Bronchoscopy with revision of tracheal or bronchial stent",
+          "category": "bronchoscopy_therapeutic_stent",
           "units": 1,
-          "role": "primary",
-          "work_rvu_2025": 3.84,
-          "total_facility_rvu_2025": 6.95,
-          "mpfs_facility_payment_2025": 250.58,
-          "rationale": "Bronchoscopy with revision of tracheal stent. This code is comprehensive for removing an existing stent and replacing it (or adjusting it) in the same session. The destruction of granulation tissue to facilitate the exchange is bundled."
-        },
-        "31641": {
-          "units": 0,
-          "role": "bundled",
-          "work_rvu_2025": 3.43,
-          "total_facility_rvu_2025": 5.98,
-          "mpfs_facility_payment_2025": 215.73,
-          "rationale": "Destruction of tumor/granulation tissue at the stent site is bundled into the revision code 31638."
-        },
-        "31631": {
-          "units": 0,
-          "role": "bundled",
-          "work_rvu_2025": 4.01,
-          "total_facility_rvu_2025": 7.59,
-          "mpfs_facility_payment_2025": 273.7,
-          "rationale": "Stent placement is bundled into the revision code when an old stent is removed and replaced."
+          "facility_total_rvus_2025": 7.76,
+          "facility_mpfs_payment_2025": 251.0,
+          "bundling_or_modifier_notes": "Primary code. Covers the removal of the old stent, destruction of granulation tissue at the site, and placement of the new stent."
         }
-      }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.76,
+        "total_facility_mpfs_payment": 251.0,
+        "computation_notes": "Single code 31638."
+      },
+      "rationale": [
+        "Code 31638 (Revision) is comprehensive for stent exchange.",
+        "Separate coding of 31641 (destruction) or 31631 (placement) is incorrect when performed at the same site during a revision."
+      ]
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
     "patch_metadata": {
@@ -480,35 +514,52 @@
       }
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "is_edge_case": true,
-      "cpt_summary": {
-        "31641": {
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Cryo-Ablation vs Biopsy note.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI Policy Manual Chapter 5"
+      ],
+      "per_code": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with destruction of tumor or relief of stenosis by any method",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
           "units": 1,
-          "role": "primary",
-          "work_rvu_2025": 3.43,
-          "total_facility_rvu_2025": 5.98,
-          "mpfs_facility_payment_2025": 215.73,
-          "rationale": "Bronchoscopy with destruction of tumor (Cryo-ablation/debulking) in RLL. Note distinguishes this from biopsy by stating tissue was discarded/known diagnosis."
+          "facility_total_rvus_2025": 8.4,
+          "facility_mpfs_payment_2025": 272.0,
+          "bundling_or_modifier_notes": "Primary. RLL mass ablation (tissue discarded/debulking)."
         },
-        "31628": {
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe",
+          "category": "bronchoscopy_biopsy_parenchymal",
           "units": 1,
-          "role": "primary",
-          "work_rvu_2025": 3.18,
-          "total_facility_rvu_2025": 5.35,
-          "mpfs_facility_payment_2025": 193.1,
-          "rationale": "Transbronchial lung biopsy (LUL). Distinct site and intent (diagnostic) from the RLL ablation."
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Distinct service. LUL peripheral nodule biopsy."
         },
-        "31654": {
+        {
+          "code": "31654",
+          "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention (add-on)",
+          "category": "bronchoscopy_ebus_radial",
           "units": 1,
-          "role": "add_on",
-          "work_rvu_2025": 1.94,
-          "total_facility_rvu_2025": 2.57,
-          "mpfs_facility_payment_2025": 92.62,
-          "rationale": "Radial EBUS for LUL nodule localization."
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Add-on for LUL nodule localization."
         }
-      }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 16.04,
+        "total_facility_mpfs_payment": 519.0,
+        "computation_notes": "Sum of all codes."
+      },
+      "rationale": [
+        "Documentation clearly distinguishes therapeutic destruction (31641) in RLL from diagnostic biopsy (31628) in LUL.",
+        "Use of cryoprobe for destruction supports 31641. Use of cryoprobe for biopsy supports 31628 (as per standard practice, though 31628 is technically 'forceps', payer policies generally accept cryoprobe biopsy under TBLB)."
+      ]
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
     "patch_metadata": {

@@ -87,6 +87,26 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-06T10:00:00"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-07",
+        "cpt_summary": [
+          {
+            "code": "31652",
+            "description": "Bronchoscopy with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 6.96,
+            "facility_payment_2025": 225,
+            "rationale": "Linear EBUS-TBNA of two stations (4R, 7) supports 31652."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 6.96,
+          "facility_total_payment": 225
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry_edge_cases.jsonl",
@@ -249,6 +269,36 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-06T10:00:00"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-07",
+        "cpt_summary": [
+          {
+            "code": "31652",
+            "description": "Bronchoscopy with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 6.96,
+            "facility_payment_2025": 225,
+            "rationale": "Linear EBUS of one station (7) supports 31652."
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy with transbronchial lung biopsy, single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Transbronchial lung biopsy of RML nodule supports 31628."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 12.49,
+          "facility_total_payment": 404
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry_edge_cases.jsonl",
@@ -426,6 +476,26 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-06T10:00:00"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-07",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "Linear EBUS sampling of 4 stations (2R, 4R, 4L, 7) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry_edge_cases.jsonl",
@@ -592,6 +662,56 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-06T10:00:00"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-07",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "Linear EBUS of 3 stations (4R, 7, 10R) supports 31653."
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy with transbronchial lung biopsy, single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Transbronchial biopsies of RLL nodule."
+          },
+          {
+            "code": "31627",
+            "description": "Bronchoscopy with computer-assisted, image-guided navigation",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 3.07,
+            "facility_payment_2025": 99,
+            "rationale": "Robotic navigation used to reach RLL nodule."
+          },
+          {
+            "code": "31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used to confirm peripheral lesion."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 18.41,
+          "facility_total_payment": 595
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry_edge_cases.jsonl",
@@ -718,10 +838,10 @@
   {
     "note_text": "Patient: Cho, David || MRN: 700005\nDate: 06/11/2025\nLocation: City Hospital Endoscopy Center\nAttending bronchoscopist: Laura Kim, MD\n\nINDICATION: Peripheral LUL nodule (1.5 cm, PET-avid) referred for bronchoscopic biopsy and fiducial placement for planned stereotactic body radiation therapy.\n\nPROCEDURE: NAVIGATIONAL BRONCHOSCOPY WITH RADIAL EBUS, TRANSBRONCHIAL LUNG BIOPSY, AND FIDUCIAL PLACEMENT\n- General anesthesia; patient intubated with ETT.\n- Electromagnetic navigation (Illumisite system) used to register pre-procedure CT; registration error 3 mm.\n- Navigated to target in apicoposterior segment of LUL.\n- Radial EBUS miniprobe advanced:\n  * Eccentric view confirming adjacency to the lesion.\n- Transbronchial lung biopsies x4 from LUL apicoposterior segment.\n- No BAL performed.\n- Through the extended working channel, three gold fiducial markers were deployed around the lesion under fluoroscopic guidance.\n- No mediastinal staging performed.\n- No immediate complications.\n\nPLAN: Same-day discharge after observation; radiation oncology to proceed with planning using fiducial markers.\n",
     "cpt_codes": [
-      31627,
-      31654,
-      31628,
-      31626
+      "31626",
+      "31628",
+      "31627",
+      "31654"
     ],
     "registry_entry": {
       "patient_mrn": "700005",
@@ -734,10 +854,10 @@
       "airway_type": "ETT",
       "final_diagnosis_prelim": "Lung Nodule Evaluation",
       "cpt_codes": [
-        31627,
-        31654,
-        31628,
-        31626
+        "31626",
+        "31628",
+        "31627",
+        "31654"
       ],
       "evidence": {
         "procedure_date": "PROCEDURE DATE: 2025-06-11",
@@ -809,6 +929,56 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-06T10:00:00"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-07",
+        "cpt_summary": [
+          {
+            "code": "31626",
+            "description": "Bronchoscopy; with placement of fiducial markers",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 6.24,
+            "facility_payment_2025": 202,
+            "rationale": "Placement of fiducial markers for SBRT planning."
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy with transbronchial lung biopsy, single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Transbronchial biopsies of LUL nodule."
+          },
+          {
+            "code": "31627",
+            "description": "Bronchoscopy with computer-assisted, image-guided navigation",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 3.07,
+            "facility_payment_2025": 99,
+            "rationale": "Electromagnetic navigation used."
+          },
+          {
+            "code": "31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS confirmation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 16.95,
+          "facility_total_payment": 548
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry_edge_cases.jsonl",
@@ -1020,6 +1190,26 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-06T10:00:00"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-07",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Photodynamic therapy light application for tumor destruction."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry_edge_cases.jsonl",
@@ -1182,6 +1372,36 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-06T10:00:00"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-07",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and cryotherapy debulking of tumor."
+          },
+          {
+            "code": "31636",
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 6.85,
+            "facility_payment_2025": 222,
+            "rationale": "Placement of bronchial stent in left mainstem."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.25,
+          "facility_total_payment": 494
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry_edge_cases.jsonl",
@@ -1363,6 +1583,46 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-06T10:00:00"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-07",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Tumor debulking with APC."
+          },
+          {
+            "code": "31636",
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 6.85,
+            "facility_payment_2025": 222,
+            "rationale": "Placement of bronchial stent in right mainstem."
+          },
+          {
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 5.88,
+            "facility_payment_2025": 190,
+            "rationale": "Placement of tunneled pleural catheter (PleurX)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 21.13,
+          "facility_total_payment": 684
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry_edge_cases.jsonl",
@@ -1557,6 +1817,26 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-06T10:00:00"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-07",
+        "cpt_summary": [
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 4.24,
+            "facility_payment_2025": 137,
+            "rationale": "Diagnostic BAL performed."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 4.24,
+          "facility_total_payment": 137
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry_edge_cases.jsonl",
@@ -1717,6 +1997,26 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-06T10:00:00"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-07",
+        "cpt_summary": [
+          {
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.88,
+            "facility_payment_2025": 190,
+            "rationale": "Ultrasound-guided insertion of tunneled pleural catheter (PleurX)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry_edge_cases.jsonl",

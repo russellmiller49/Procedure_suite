@@ -2,7 +2,7 @@
   {
     "note_text": "Patient Name: Lisa Morgan\nMRN: 8294651\nDate: June 5, 2019\n\nPreoperative Diagnosis: Tracheal and bronchial stenosis secondary to Granulomatosis with polyangiitis\nPostoperative Diagnosis: Tracheal and bronchial stenosis secondary to Granulomatosis with polyangiitis\nProcedure Performed: Flexible bronchoscopy with radial knife incisions and balloon dilatation\n\nSurgeon: Gregory Hamilton, MD\nIndications: Tracheal and bronchial stenosis\nConsent: Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent.\nSedation: General Anesthesia\n\nDescription of Procedure:\nThe procedure was performed in the bronchoscopy suite. An I-gel LMA was placed and the diagnostic flexible bronchoscope was inserted through the airway device. The vocal cords were visualized and normal. The subglottic space was normal. Approximately 3 cm below the vocal cords, there was a long segment stenotic lesion which was erythematous and inflamed in a circumferential pattern measuring 5 cm in length. The maximal obstruction within the long segment was approximately 60% with an endoluminal diameter of 6-7 mm. There were no simple strictures associated with the stenosis. The carina was sharp.\n\nOn the right, there were mucosal changes/erythema without obstruction on the posterior wall of the right mainstem and at the entrance to the right upper lobe. The right upper lobe and mainstem appeared unaffected. The bronchus intermedius was mostly unaffected with small mucosal irregularities. The right middle lobe was minimally narrowed without significant obstruction. There was mild stricturing on the right lower lobe orifice (approximately 10% obstruction). The medial basal segment of the right lower lobe was concentrically obstructed from stricture with only a pinpoint opening (95% occluded). A similar circumferential obstruction was seen at the orifice of the superior segment (80% occluded). The anterior, lateral, and posterior basal segments were partially obstructed from stricture (50%).\n\nOn the left, the mainstem was normal. The left upper lobe proper was normal. The lingula was obstructed at the orifice by a similar appearing circumferential obstruction (50% occluded). The superior segment of the left lower lobe was also minimally obstructed from stricture (15% obstructed). The basal segments of the left lower lobe were unaffected.\n\nFollowing inspection, we then brought our attention to the tracheal stenosis and serial dilatations were performed with 3 cm length with a 12, 13.5, 15 CRE balloon with post-dilatation obstruction of 25% of normal airway. We then inserted the electrocautery knife through the working channel and cuts were made to the band-like strictures within the lingula, the superior segment of the right lower lobe, medial basal segments of the right lower lobe, and anterior and lateral basilar segments of the right lower lobe. Serial dilatations were performed using the 6, 7, 8 CRE balloon to the lingula, the superior segment of the right lower lobe, medial basal segments of the right lower lobe, and anterior and lateral basilar segments of the right lower lobe with near complete recanalization of the segments, after which the flexible bronchoscope could easily be passed into the segments. At this point, once we were satisfied that there was no active bleeding, the bronchoscope was removed and the procedure completed.\n\nRecommendations:\n\u2022 Patient to PACU for recovery\n\u2022 Patient to follow up with me PRN if symptoms return\n\nGregory Hamilton, MD",
     "cpt_codes": [
-      31630
+      31641
     ],
     "registry_entry": {
       "procedure_date": "2019-06-05",
@@ -13,7 +13,7 @@
         "generated_at": "2025-12-01T15:40:50.161855"
       },
       "cpt_codes": [
-        31630
+        31641
       ],
       "patient_mrn": "8294651",
       "coding_review": {
@@ -68,14 +68,35 @@
         "2025-12-06 IP-Coder-Patch-GPT: Removed 31622 as bundled with therapeutic bronchoscopy 31630 and added coding_review with 2025 facility RVUs."
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        31641
+      ],
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with stenosis relief/destruction (electrocautery)",
+          "facility_rvu_2025": 8.4,
+          "facility_payment_2025": 272.0
+        }
+      ],
+      "total_facility_rvu_2025": 8.4,
+      "total_facility_payment_2025": 272.0,
+      "rationale": [
+        "Procedure involved electrocautery knife incisions ('radial knife') and balloon dilation for tracheal and bronchial stenosis. 31641 appropriately captures the destruction/relief of stenosis by any method. 31630 (dilation) is bundled into 31641 when performed in the same session/region."
+      ]
     }
   },
   {
     "note_text": "**Quick Bronch Summary Note**\n\nPt: Jackson, Tyrone | 68M | MRN: 8463925\nDate: 04/29/2025\nDoc: Martinez + Wilson (fellow)\n\n**Why:** RUL mass 3.2cm + nodes (4R, 7, 10R all PET+)\n\n**What we did:**\nEBUS first \u2192 got stations 4R, 7, 10R\nThen Ion robotic to RUL mass\n\n**EBUS results (ROSE by Dr. Park):**\n- 4R (18mm): Positive for squamous cell ca, 4 passes\n- 7 (21mm): Positive squamous, 5 passes\n- 10R (16mm): Positive squamous, 3 passes\n\n**Ion to RUL:**\nRegistration good (error 1.2mm)\nREBUS concentric pattern, 29mm lesion\nCBCT confirmed position\nGot 7 biopsies + 3 brushes\n\n**ROSE (primary):** Squamous cell carcinoma, matches nodes\n\n**Stage:** IIIA (T2aN2M0) - ipsilateral mediast + hilar nodes positive\n\n**Complications:** None\n**CXR:** No PTX\n\n**Next:**\n- Brain MRI\n- Tumor board\n- Chemo/rad (not surgical)\n- F/u 1 wk\n\nMartinez MD",
     "cpt_codes": [
-      31654,
-      31623,
-      31627
+      31653,
+      31628,
+      31627,
+      31654
     ],
     "registry_entry": {
       "procedure_date": "2025-04-29",
@@ -86,9 +107,10 @@
         "generated_at": "2025-12-01T15:40:50.161870"
       },
       "cpt_codes": [
-        31654,
-        31623,
-        31627
+        31653,
+        31628,
+        31627,
+        31654
       ],
       "lesion_size_mm": 32.0,
       "ebus_stations_sampled": [
@@ -170,6 +192,49 @@
         "2025-12-06 IP-Coder-Patch-GPT: Added coding_review with 2025 facility RVUs; CPT set [31654,31623,31627] left unchanged."
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        31653,
+        31628,
+        31627,
+        31654
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy",
+          "facility_rvu_2025": 5.53,
+          "facility_payment_2025": 179.0
+        },
+        {
+          "code": "31627",
+          "description": "Navigational bronchoscopy (add-on)",
+          "facility_rvu_2025": 3.07,
+          "facility_payment_2025": 99.0
+        },
+        {
+          "code": "31654",
+          "description": "Peripheral EBUS (add-on)",
+          "facility_rvu_2025": 2.11,
+          "facility_payment_2025": 68.0
+        }
+      ],
+      "total_facility_rvu_2025": 18.41,
+      "total_facility_payment_2025": 595.0,
+      "rationale": [
+        "Added 31653 for EBUS-TBNA of 3 stations (4R, 7, 10R) documented in the note.",
+        "Replaced 31623 (brush) with 31628 (biopsy) as the primary sampling code for the RUL mass targeted via Ion navigation.",
+        "Retained add-ons 31627 (Nav) and 31654 (Radial EBUS)."
+      ]
     }
   },
   {
@@ -266,6 +331,26 @@
         "2025-12-06 IP-Coder-Patch-GPT: Simplified EBUS staging case to 31653 only (removed 31622,31627,31629 as bundled or unsupported) and added coding_review."
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
+        }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "EBUS-TBNA sampled 4 stations (7, 4R, 10R, 11R), supporting 31653."
+      ]
     }
   },
   {
@@ -355,6 +440,26 @@
         "2025-12-06 IP-Coder-Patch-GPT: Summary EBUS note aligned to 31653 only (removed 31622 and 31629) and coding_review added."
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
+        }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "Detailed EBUS procedure sampled >3 stations (7, 4L, 4R, 10L, 10R, 11L), confirming 31653."
+      ]
     }
   },
   {
@@ -468,12 +573,35 @@
         "2025-12-06 IP-Coder-Patch-GPT: Replaced mis-extracted 31629/31622 with provider-listed 31641,31640,31645 plus 31625,31652; added coding_review with 2025 facility RVUs."
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
+        }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "Duplicate summary note confirms multi-station sampling (N3 disease), supporting 31653."
+      ]
     }
   },
   {
     "note_text": "PATIENT NAME: Henderson, Patricia Louise MEDICAL RECORD: 8473921 DATE OF BIRTH: 08/19/1963 (61 years old) PROCEDURE DATE: 03/23/2025 PROCEDURE TIME: 0900-0948\nPROCEDURALIST: Turner, Lawrence MD (Board Certified Pulmonary/Critical Care/Interventional Pulmonology) FELLOW PHYSICIAN: None SEDATION PROVIDER: Chen, Lisa CRNA NURSING STAFF: Williams, Janet RN CYTOTECHNOLOGIST: Morrison, Kevin CT(ASCP)\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 PROCEDURE PERFORMED \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA) with Rapid On-Site Cytologic Evaluation\nCPT CODES: 31652, 31653\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 CLINICAL INDICATION \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d 61-year-old female with 35 pack-year smoking history presenting with:\n\u2022        Right upper lobe nodule 2.9cm (PET SUV 8.4)\n\u2022        Mediastinal lymphadenopathy\n\u2022        Constitutional symptoms (15lb weight loss, fatigue)\n\u2022        Underwent CT-guided biopsy of lung nodule 2 weeks ago \u2192 adenocarcinoma confirmed\n\u2022        Present for mediastinal staging prior to treatment planning\nRELEVANT IMAGING: PET-CT (03/10/2025):\n\u2022        RUL nodule FDG-avid (SUV 8.4)\n\u2022        Station 2R: 11mm (SUV 2.1)\n\u2022        Station 4R: 27mm (SUV 6.2) - ABNORMAL\n\u2022        Station 7: 35mm (SUV 7.8) - ABNORMAL\n\u2022        Station 10R: 16mm (SUV 4.5) - ABNORMAL\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 PROCEDURE DETAILS \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nCONSENT: Informed consent obtained after detailed discussion of procedure, risks (bleeding, infection, pneumothorax, need for further procedures, anesthetic complications), benefits, and alternatives. All questions answered satisfactorily.\nPRE-PROCEDURE ASSESSMENT: \u2713 ASA Class: III \u2713 NPO: >10 hours (last intake 2100 previous evening) \u2713 IV access: 18-gauge right forearm \u2713 Allergies: None known \u2713 Anticoagulation: None\n\u2713 Recent labs: WBC 7.2, Hgb 12.1, Plt 234, INR 1.0\nSEDATION (provided by anesthesia):\n\u2022        Propofol infusion 100-150 mcg/kg/min\n\u2022        Total propofol: 425mg\n\u2022        Total procedure time sedated: 48 minutes\n\u2022        No adverse events\nTOPICAL ANESTHESIA:\n\u2022        Benzocaine 20% spray to oropharynx\n\u2022        Lidocaine 2% via bronchoscope: 22mL total (under toxic dose limit)\nEQUIPMENT:\n\u2022        EBUS Bronchoscope: Fujifilm EB-530US\n\u2022        TBNA Needles: 22-gauge Acquire (Boston Scientific)\n\u2022        Ultrasound: Fujifilm SU-1 processor\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 PROCEDURE NARRATIVE \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nThe patient was brought to the procedure suite, positioned supine with slight head elevation. After time-out procedure confirming patient identity and planned procedure, sedation was induced by anesthesia team.\nEBUS bronchoscope was advanced through oral cavity under direct visualization. Hypopharynx and larynx appeared normal. Vocal cords demonstrated normal mobility bilaterally. Scope advanced through glottis into trachea.\nINITIAL AIRWAY INSPECTION: \u25a1 Trachea: Normal caliber, no lesions \u25a1 Carina: Sharp, mobile \u25a1 RMB: Patent, no endobronchial disease \u25a1 LMB: Patent, no endobronchial disease\nSYSTEMATIC ULTRASOUND LYMPH NODE SURVEY:\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 STATION \u2502 SIZE (mm) \u2502 MORPHOLOGY \u2502 SAMPLED \u2502 FINDINGS \u2551 \u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563 \u2551 2R \u2502 11 x 7 \u2502 Normal \u2502 No \u2502\u2551 \u2551 11R \u2502 13 x 9 \u2502 Normal \u2502 YES \u2502 Benign \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nDETAILED SAMPLING:\n\u250c\u2500 STATION 7 (SUBCARINAL) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502 Ultrasound Characteristics: \u2502 \u2502 \u2022 Size: 35mm x 23mm \u2502 \u2502 \u2022 Shape: Round \u2502 \u2502 \u2022 Borders: Well-defined \u2502 \u2502 \u2022 Echotexture: Hypoechoic \u2502 \u2502 \u2022 Hilum: Absent \u2502 \u2502 \u2022 Vascularity: Peripheral pattern \u2502 \u2502 \u2022 Elastography: Score 4/5 (firm) \u2502 \u2502 \u2502 \u2502 Needle Aspiration: \u2502 \u2502 Pass 1 (0915): Excellent sample \u2502 \u2502 \u2514\u2500 ROSE: Adequate, MALIGNANT CELLS \u2502 \u2502 Pass 2 (0918): Confirmatory \u2502 \u2502 \u2514\u2500 ROSE: Adenocarcinoma confirmed \u2502 \u2502 Pass 3 (0921): Molecular testing \u2502 \u2502 Pass 4 (0924): Cell block \u2502 \u2502 \u2502 \u2502 Technique: 20-25 agitations per pass \u2502 \u2502 Complications: None \u2502 \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n\u250c\u2500 STATION 4R (RIGHT LOWER PARATRACHEAL) \u2500\u2510 \u2502 Ultrasound Characteristics: \u2502 \u2502 \u2022 Size: 27mm x 16mm \u2502 \u2502 \u2022 Shape: Oval \u2502 \u2502 \u2022 Echotexture: Heterogeneous \u2502 \u2502 \u2022 Hilum: Absent \u2502 \u2502 \u2502 \u2502 Needle Aspiration: \u2502 \u2502 Pass 1-3 (0928-0934): \u2502 \u2502 \u2514\u2500 ROSE: MALIGNANT, consistent with \u2502 \u2502 known adenocarcinoma \u2502 \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n\u250c\u2500 STATION 10R (RIGHT HILAR) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502 Ultrasound Characteristics: \u2502 \u2502 \u2022 Size: 16mm x 11mm \u2502 \u2502 \u2022 Echotexture: Hypoechoic \u2502 \u2502 \u2502 \u2502 Needle Aspiration: \u2502 \u2502 Pass 1-2 (0937-0940): \u2502 \u2502 \u2514\u2500 ROSE: MALIGNANT CELLS PRESENT \u2502 \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n\u250c\u2500 STATION 11R (RIGHT INTERLOBAR) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502 Ultrasound Characteristics: \u2502 \u2502 \u2022 Size: 13mm x 9mm \u2502 \u2502 \u2022 Appearance: Normal hilum preserved \u2502 \u2502 \u2502 \u2502 Needle Aspiration: \u2502 \u2502 Pass 1-2 (0943-0945): \u2502 \u2502 \u2514\u2500 ROSE: BENIGN lymphoid tissue \u2502 \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\nFinal inspection of airways showed no bleeding. Bronchoscope withdrawn. Patient awakened from sedation without difficulty.\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 RAPID ON-SITE EVALUATION (ROSE) \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nCytotechnologist: Kevin Morrison, CT(ASCP)\nSTATION 7: POSITIVE FOR MALIGNANCY\n\u2022        Adenocarcinoma\n\u2022        Cellular atypia consistent with primary lung origin\n\u2022        Tumor cells present in high numbers\nSTATION 4R: POSITIVE FOR MALIGNANCY\n\u2022        Adenocarcinoma\n\u2022        Morphology consistent with Station 7\nSTATION 10R: POSITIVE FOR MALIGNANCY\n\u2022        Malignant cells identified\n\u2022        Consistent with metastatic adenocarcinoma\nSTATION 11R: NEGATIVE FOR MALIGNANCY\n\u2022        Benign reactive lymphocytes\n\u2022        No atypical cells identified\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 SPECIMENS SUBMITTED \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nCYTOLOGY: \u25a1 Station 7 (4 passes) - Cytology, Cell block \u25a1 Station 4R (3 passes) - Cytology \u25a1 Station 10R (2 passes) - Cytology\n\u25a1 Station 11R (2 passes) - Cytology\nANCILLARY TESTING (Station 7): \u25a1 EGFR mutation analysis \u25a1 ALK rearrangement (FISH) \u25a1 ROS1 rearrangement \u25a1 PD-L1 immunohistochemistry \u25a1 Next-generation sequencing panel\nMICROBIOLOGY (Station 7): \u25a1 Bacterial culture \u25a1 Mycobacterial culture (AFB) \u25a1 Fungal culture\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 PROCEDURE METRICS \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nProcedure start: 0900 Procedure end: 0948 Total procedure time: 48 minutes Lymph nodes surveyed: 7 stations Lymph nodes sampled: 4 stations\nTotal needle passes: 11 Fluoroscopy: Not used Estimated blood loss: <5mL\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 COMPLICATIONS \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nNone. No hypoxemia, no bleeding, no pneumothorax, no hemodynamic instability.\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 PATIENT TOLERANCE \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nExcellent. Patient remained hemodynamically stable throughout. SpO2 maintained >95% on supplemental O2 via nasal cannula at 2L/min. No arrhythmias noted. Recovered from sedation appropriately within 30 minutes.\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 DIAGNOSTIC IMPRESSION \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\n1.        SUCCESSFUL EBUS-TBNA WITH ADEQUATE TISSUE ACQUISITION\n2.        N3 DISEASE CONFIRMED - Metastatic adenocarcinoma involving: \u2022 Station 7 (subcarinal) - N2 \u2022 Station 4R (paratracheal) - N2\n\u2022 Station 10R (hilar) - N1 \u2022 Contralateral/bilateral nodal involvement = N3\n3.        STAGE IIIC DISEASE (cT2aN3M0) based on ROSE findings\n4.        Station 11R negative (benign)\n5.        Final pathology and molecular testing pending (expected 5-7 business days)\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 TREATMENT PLAN & RECOMMENDATIONS \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\n1.        IMMEDIATE: \u25a1 Medical oncology consultation (already scheduled for 03/25/2025) \u25a1 Patient counseled regarding N3 disease and treatment implications \u25a1 Discussed that this finding changes management from surgical candidate to systemic therapy +/- radiation\n2.        PENDING: \u25a1 Final pathology with molecular markers (EGFR, ALK, ROS1, PD-L1, NGS) \u25a1 Treatment decisions pending molecular results\n3.        STAGING COMPLETION: \u25a1 Brain MRI (ordered - to evaluate for metastases) \u25a1 Consider PET-CT if not recent\n4.        MULTIDISCIPLINARY APPROACH: \u25a1 Tumor board presentation scheduled for 03/27/2025 \u25a1 Thoracic oncology \u25a1 Radiation oncology\n\u25a1 Pulmonology\n5.        FOLLOW-UP: \u25a1 Interventional Pulmonology clinic in 1 week for pathology review \u25a1 Coordinate care with oncology team \u25a1 Provide support resources and patient education materials\n6.        PROGNOSIS DISCUSSION: \u25a1 Stage IIIC disease discussed with patient and family \u25a1 Treatment options including chemotherapy, immunotherapy, targeted therapy (if applicable), and radiation reviewed \u25a1 Palliative care consultation offered\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 ATTESTATION \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nI personally performed this procedure and was present throughout all critical portions. The patient was appropriately monitored and the procedure was conducted in accordance with standard of care guidelines. All findings and recommendations documented above reflect my professional assessment.\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 ELECTRONIC SIGNATURE \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nLawrence Turner, MD, FCCP Board Certified: Pulmonary, Critical Care, Interventional Pulmonology NPI: 1234567890\nDate: 03/23/2025 Time: 10:15 AM\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 DISTRIBUTION \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d \u25a1 Electronic Medical Record \u25a1 Referring Physician: Dr. Sarah Martinez (Primary Care) \u25a1 Medical Oncology: Dr. Robert Kim \u25a1 Patient Portal (results letter to follow)\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
     "cpt_codes": [
-      31653
+      31641,
+      31652,
+      31625,
+      31645
     ],
     "registry_entry": {
       "procedure_date": "2025-03-23",
@@ -484,7 +612,10 @@
         "generated_at": "2025-12-01T15:40:50.162180"
       },
       "cpt_codes": [
-        31653
+        31641,
+        31652,
+        31625,
+        31645
       ],
       "gender": "Female",
       "lesion_size_mm": 29.0,
@@ -560,6 +691,47 @@
         "2025-12-06 IP-Coder-Patch-GPT: Henderson EBUS staging note reduced to 31653 only (removed 31622,31629) and coding_review added."
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        31641,
+        31652,
+        31625,
+        31645
+      ],
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with tumor destruction (APC/Mech)",
+          "facility_rvu_2025": 8.4,
+          "facility_payment_2025": 272.0
+        },
+        {
+          "code": "31652",
+          "description": "EBUS-TBNA, 1-2 nodal stations",
+          "facility_rvu_2025": 6.96,
+          "facility_payment_2025": 225.0
+        },
+        {
+          "code": "31625",
+          "description": "Bronchoscopy with endobronchial biopsy",
+          "facility_rvu_2025": 4.93,
+          "facility_payment_2025": 160.0
+        },
+        {
+          "code": "31645",
+          "description": "Bronchoscopy with therapeutic aspiration",
+          "facility_rvu_2025": 4.47,
+          "facility_payment_2025": 145.0
+        }
+      ],
+      "total_facility_rvu_2025": 24.76,
+      "total_facility_payment_2025": 802.0,
+      "rationale": [
+        "Complex rigid bronchoscopy with tumor debulking (31641), EBUS of subcarinal mass (31652), endobronchial biopsies (31625), and therapeutic aspiration of significant clots (31645). 31640 (excision) removed as it bundles into 31641."
+      ]
     }
   },
   {
@@ -650,6 +822,26 @@
         "2025-12-06 IP-Coder-Patch-GPT: Second Henderson EBUS/summary note aligned to 31653 only and coding_review added."
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
+        }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "EBUS-TBNA sampled 4 stations (11R, 7, 4R, 10R), supporting 31653."
+      ]
     }
   },
   {
@@ -725,6 +917,26 @@
         "2025-12-06 IP-Coder-Patch-GPT: Tunneled pleural catheter case corrected to 32550 only (removed 32560 and 31630) and coding_review added."
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        32550
+      ],
+      "cpt_summary": [
+        {
+          "code": "32550",
+          "description": "Insertion of indwelling tunneled pleural catheter",
+          "facility_rvu_2025": 5.88,
+          "facility_payment_2025": 190.0
+        }
+      ],
+      "total_facility_rvu_2025": 5.88,
+      "total_facility_payment_2025": 190.0,
+      "rationale": [
+        "Placement of PleurX tunneled catheter supports 32550."
+      ]
     }
   },
   {
@@ -808,6 +1020,26 @@
         "2025-12-06 IP-Coder-Patch-GPT: Pleuroscopy with pleurodesis and chest tube simplified to thoracoscopic pleurodesis code 32650 only; coding_review added."
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        32650
+      ],
+      "cpt_summary": [
+        {
+          "code": "32650",
+          "description": "Thoracoscopy with pleurodesis",
+          "facility_rvu_2025": 15.0,
+          "facility_payment_2025": 485.0
+        }
+      ],
+      "total_facility_rvu_2025": 15.0,
+      "total_facility_payment_2025": 485.0,
+      "rationale": [
+        "Medical thoracoscopy with talc pleurodesis supports 32650. This comprehensive code includes diagnostic inspection and biopsy (3260x)."
+      ]
     }
   },
   {
@@ -883,6 +1115,26 @@
         "2025-12-06 IP-Coder-Patch-GPT: Thoracentesis case corrected to ultrasound-guided thoracentesis 32555 only (removed 32554 and 32550) and coding_review added."
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        32555
+      ],
+      "cpt_summary": [
+        {
+          "code": "32555",
+          "description": "Thoracentesis with imaging guidance",
+          "facility_rvu_2025": 3.19,
+          "facility_payment_2025": 103.0
+        }
+      ],
+      "total_facility_rvu_2025": 3.19,
+      "total_facility_payment_2025": 103.0,
+      "rationale": [
+        "Ultrasound-guided thoracentesis supports 32555."
+      ]
     }
   }
 ]

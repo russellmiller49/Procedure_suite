@@ -79,23 +79,46 @@
           {
             "code": "31638",
             "description": "Bronchoscopy with revision of tracheal/bronchial stent",
-            "modifier": null,
-            "modifiers": null,
             "units": 1
           },
           {
             "code": "31641",
-            "description": "Bronchoscopy with tumor destruction/relief of stenosis",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Bronchoscopy with destruction of tumor or relief of stenosis",
             "units": 1
           }
         ],
-        "icd10_codes": null,
         "total_rvu": 16.16,
         "work_rvu": 10.13,
         "practice_expense_rvu": 4.96,
         "malpractice_rvu": 1.07
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "final_cpt_codes": [
+          31638,
+          31641
+        ],
+        "cpt_summary": [
+          {
+            "code": "31638",
+            "description": "Bronchoscopy with revision of tracheal/bronchial stent",
+            "facility_rvu_2025": 7.76,
+            "facility_payment_2025": 251.0
+          },
+          {
+            "code": "31641",
+            "description": "Bronchoscopy with destruction of tumor or relief of stenosis",
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272.0
+          }
+        ],
+        "total_facility_rvu_2025": 16.16,
+        "total_facility_payment_2025": 523.0,
+        "rationale": [
+          "Complex airway intervention involving removal of a migrated stent (31638) and separate laser destruction/coring of tumor regrowth (31641).",
+          "Both codes are supported as distinct therapeutic maneuvers."
+        ]
       }
     },
     "coding_review": {
@@ -207,24 +230,48 @@
         "cpt_codes": [
           {
             "code": "31653",
-            "description": "EBUS-TBNA, 3 or more nodal stations",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Bronchoscopy with EBUS-TBNA 3+ stations",
             "units": 1
           },
           {
             "code": "+31627",
-            "description": "Add-on: electromagnetic navigation to peripheral lesion",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Bronchoscopy with computer-assisted navigation",
             "units": 1
           }
         ],
-        "icd10_codes": null,
         "total_rvu": 10.77,
         "work_rvu": 7.23,
         "practice_expense_rvu": 2.77,
         "malpractice_rvu": 0.77
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "final_cpt_codes": [
+          31653,
+          31627
+        ],
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "EBUS-TBNA, 3+ nodal stations",
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249.0
+          },
+          {
+            "code": "31627",
+            "description": "Navigational bronchoscopy (add-on)",
+            "facility_rvu_2025": 3.07,
+            "facility_payment_2025": 99.0
+          }
+        ],
+        "total_facility_rvu_2025": 10.77,
+        "total_facility_payment_2025": 348.0,
+        "rationale": [
+          "EBUS-TBNA of 3 stations (7, 4R, 4L) supports 31653.",
+          "Navigational bronchoscopy (31627) is billable for the work of registration and catheter advancement, even though the biopsy was aborted.",
+          "Biopsy (31628) and Radial EBUS (31654) are omitted as the target was not localized or sampled."
+        ]
       }
     },
     "coding_review": {
@@ -324,17 +371,35 @@
         "cpt_codes": [
           {
             "code": "32557",
-            "description": "Percutaneous pleural drainage with indwelling catheter and imaging guidance",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
             "units": 1
           }
         ],
-        "icd10_codes": null,
         "total_rvu": 4.5,
         "work_rvu": 3.12,
         "practice_expense_rvu": 1.04,
         "malpractice_rvu": 0.34
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "final_cpt_codes": [
+          32557
+        ],
+        "cpt_summary": [
+          {
+            "code": "32557",
+            "description": "Pleural drainage with indwelling catheter and imaging",
+            "facility_rvu_2025": 4.5,
+            "facility_payment_2025": 146.0
+          }
+        ],
+        "total_facility_rvu_2025": 4.5,
+        "total_facility_payment_2025": 146.0,
+        "rationale": [
+          "Placement of pigtail catheter with ultrasound guidance supports 32557.",
+          "Initial failed thoracentesis attempt is bundled into the successful drainage procedure."
+        ]
       }
     },
     "coding_review": {
@@ -417,45 +482,71 @@
         "cpt_codes": [
           {
             "code": "31623",
-            "description": "Bronchoscopy with brushing/protected brushing",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Bronchoscopy with brushing",
             "units": 1
           },
           {
             "code": "31624",
             "description": "Bronchoscopy with bronchoalveolar lavage",
-            "modifier": null,
-            "modifiers": null,
             "units": 1
           },
           {
             "code": "99152",
-            "description": "Moderate sedation by same physician, initial 15 min (age 5+)",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Moderate sedation initial 15 min",
             "units": 1
           },
           {
             "code": "+99153",
-            "description": "Add-on moderate sedation, each additional 15 min",
-            "modifier": null,
-            "modifiers": null,
-            "units": 1
-          },
-          {
-            "code": "+99153",
-            "description": "Add-on moderate sedation, each additional 15 min",
-            "modifier": null,
-            "modifiers": null,
-            "units": 1
+            "description": "Moderate sedation each additional 15 min",
+            "units": 2
           }
         ],
-        "icd10_codes": null,
         "total_rvu": 9.49,
         "work_rvu": 5.51,
         "practice_expense_rvu": 3.3,
         "malpractice_rvu": 0.68
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "final_cpt_codes": [
+          31623,
+          31624,
+          99152,
+          99153
+        ],
+        "cpt_summary": [
+          {
+            "code": "31623",
+            "description": "Bronchoscopy with brushing",
+            "facility_rvu_2025": 4.18,
+            "facility_payment_2025": 135.0
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy with BAL",
+            "facility_rvu_2025": 4.24,
+            "facility_payment_2025": 137.0
+          },
+          {
+            "code": "99152",
+            "description": "Moderate sedation (initial 15m)",
+            "facility_rvu_2025": 0.37,
+            "facility_payment_2025": 12.0
+          },
+          {
+            "code": "99153",
+            "description": "Moderate sedation (addl 15m) x2",
+            "facility_rvu_2025": 0.7,
+            "facility_payment_2025": 22.0
+          }
+        ],
+        "total_facility_rvu_2025": 9.49,
+        "total_facility_payment_2025": 306.0,
+        "rationale": [
+          "Bronchoscopy with brush (31623) and BAL (31624).",
+          "Moderate sedation 48 mins: 99152 (15m) + 99153 x2 (30m) covers 45 mins; remaining 3 mins dropped."
+        ]
       }
     },
     "coding_review": {
@@ -581,24 +672,47 @@
         "cpt_codes": [
           {
             "code": "31628",
-            "description": "Transbronchial lung biopsy, single lobe",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe",
             "units": 1
           },
           {
             "code": "+31654",
-            "description": "Add-on radial EBUS for peripheral lesion(s)",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Bronchoscopy with EBUS for peripheral lesion(s)",
             "units": 1
           }
         ],
-        "icd10_codes": null,
         "total_rvu": 7.64,
         "work_rvu": 4.95,
         "practice_expense_rvu": 2.16,
         "malpractice_rvu": 0.53
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "final_cpt_codes": [
+          31628,
+          31654
+        ],
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy with transbronchial lung biopsy",
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179.0
+          },
+          {
+            "code": "31654",
+            "description": "Peripheral EBUS (add-on)",
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68.0
+          }
+        ],
+        "total_facility_rvu_2025": 7.64,
+        "total_facility_payment_2025": 247.0,
+        "rationale": [
+          "Transbronchial cryobiopsy of lung parenchyma (single lobe) is coded as 31628.",
+          "Radial EBUS (31654) used for guidance/vessel avoidance."
+        ]
       }
     },
     "coding_review": {

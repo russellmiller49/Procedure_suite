@@ -77,33 +77,26 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "review_date": "2025-12-07",
       "reviewer": "IP-Coder-Patch-GPT",
-      "cpt_summary": {
-        "primary_code": "31624",
-        "final_codes": [
-          "31624"
-        ],
-        "modifiers": [],
-        "changes_made": false,
-        "code_rationales": {
-          "31624": "Flexible bronchoscopy with bronchoalveolar lavage in a single lobe; no biopsies, brushings, navigation, EBUS, or therapeutic maneuvers documented."
-        },
-        "coding_decision": "as_documented"
-      },
-      "rvu_summary_2025": {
-        "facility_rvus_by_code": {
-          "31624": {
-            "total_rvu": 3.94,
-            "medicare_payment": 127.0
-          }
-        },
-        "total_facility_rvu": 3.94,
-        "total_medicare_payment": 127.0,
-        "notes": "Facility RVUs and payment reflect 2025 MPFS national facility rates (non-geographically adjusted); no other billable bronchoscopic procedures are present."
-      },
-      "overall_assessment": "CPT 31624 alone appropriately captures bronchoscopy with BAL; no additional bronchoscopic codes are supported by the documentation."
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Flexible bronchoscopy with bronchoalveolar lavage (BAL) for pneumonia. No biopsy or other intervention.",
+      "cpt_summary": [
+        {
+          "code": "31624",
+          "units": 1,
+          "role": "bronchoscopy_bal",
+          "facility_rvu_2025": 4.24,
+          "estimated_facility_payment_2025": 137.0
+        }
+      ],
+      "total_facility_rvu_2025": 4.24,
+      "estimated_total_facility_payment_2025": 137.0,
+      "comments": [
+        "31624 is the correct code for BAL.",
+        "Diagnostic bronchoscopy (31622) is bundled."
+      ]
     }
   },
   {
@@ -183,33 +176,26 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "review_date": "2025-12-07",
       "reviewer": "IP-Coder-Patch-GPT",
-      "cpt_summary": {
-        "primary_code": "31645",
-        "final_codes": [
-          "31645"
-        ],
-        "modifiers": [],
-        "changes_made": false,
-        "code_rationales": {
-          "31645": "Bronchoscopy focused on therapeutic aspiration of mucus plugging with re-expansion of atelectatic lung; no BAL, biopsies, brushings, or valve placement described."
-        },
-        "coding_decision": "as_documented"
-      },
-      "rvu_summary_2025": {
-        "facility_rvus_by_code": {
-          "31645": {
-            "total_rvu": null,
-            "medicare_payment": null
-          }
-        },
-        "total_facility_rvu": null,
-        "total_medicare_payment": null,
-        "notes": "Exact 2025 facility RVU and payment values for 31645 are not available in this environment; fields are left null for downstream population from the master RVU table."
-      },
-      "overall_assessment": "CPT 31645 appropriately reflects therapeutic bronchoscopic aspiration for mucus plugging; no separate diagnostic or BAL codes should be added."
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Therapeutic aspiration of secretions for lobar collapse/mucus plugging.",
+      "cpt_summary": [
+        {
+          "code": "31645",
+          "units": 1,
+          "role": "therapeutic_aspiration_initial",
+          "facility_rvu_2025": 4.47,
+          "estimated_facility_payment_2025": 145.0
+        }
+      ],
+      "total_facility_rvu_2025": 4.47,
+      "estimated_total_facility_payment_2025": 145.0,
+      "comments": [
+        "31645 covers initial therapeutic aspiration.",
+        "No other procedures performed."
+      ]
     }
   },
   {
@@ -293,33 +279,25 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "review_date": "2025-12-07",
       "reviewer": "IP-Coder-Patch-GPT",
-      "cpt_summary": {
-        "primary_code": "31635",
-        "final_codes": [
-          "31635"
-        ],
-        "modifiers": [],
-        "changes_made": false,
-        "code_rationales": {
-          "31635": "Rigid bronchoscopy with removal of a peanut foreign body from the right mainstem bronchus; no BAL, biopsy, or valve placement is documented."
-        },
-        "coding_decision": "as_documented"
-      },
-      "rvu_summary_2025": {
-        "facility_rvus_by_code": {
-          "31635": {
-            "total_rvu": null,
-            "medicare_payment": null
-          }
-        },
-        "total_facility_rvu": null,
-        "total_medicare_payment": null,
-        "notes": "2025 facility RVU and payment values for 31635 are not available to this assistant; they should be filled from the shared RVU reference."
-      },
-      "overall_assessment": "CPT 31635 correctly represents rigid bronchoscopy with foreign body removal; additional bronchoscopic codes are not supported."
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Rigid bronchoscopy with removal of foreign body (peanut).",
+      "cpt_summary": [
+        {
+          "code": "31635",
+          "units": 1,
+          "role": "foreign_body_removal",
+          "facility_rvu_2025": 5.54,
+          "estimated_facility_payment_2025": 179.0
+        }
+      ],
+      "total_facility_rvu_2025": 5.54,
+      "estimated_total_facility_payment_2025": 179.0,
+      "comments": [
+        "31635 correctly describes foreign body removal."
+      ]
     }
   },
   {
@@ -401,40 +379,33 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "review_date": "2025-12-07",
       "reviewer": "IP-Coder-Patch-GPT",
-      "cpt_summary": {
-        "primary_code": "31652",
-        "final_codes": [
-          "31652"
-        ],
-        "modifiers": [],
-        "changes_made": false,
-        "code_rationales": {
-          "31652": "Linear EBUS-TBNA sampling of two mediastinal nodal stations (4R and 7) without peripheral EBUS, navigation, or additional interventions; this matches single EBUS-TBNA code 31652."
-        },
-        "coding_decision": "as_documented"
-      },
-      "rvu_summary_2025": {
-        "facility_rvus_by_code": {
-          "31652": {
-            "total_rvu": null,
-            "medicare_payment": null
-          }
-        },
-        "total_facility_rvu": null,
-        "total_medicare_payment": null,
-        "notes": "RVU and payment details for 31652 should be populated from the centralized 2025 facility RVU reference."
-      },
-      "overall_assessment": "CPT 31652 alone appropriately captures mediastinal EBUS-TBNA of two nodal stations; no add-on or peripheral EBUS codes are indicated."
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "EBUS-TBNA of 2 stations (4R, 7).",
+      "cpt_summary": [
+        {
+          "code": "31652",
+          "units": 1,
+          "role": "ebus_1_2_stations",
+          "facility_rvu_2025": 6.96,
+          "estimated_facility_payment_2025": 225.0
+        }
+      ],
+      "total_facility_rvu_2025": 6.96,
+      "estimated_total_facility_payment_2025": 225.0,
+      "comments": [
+        "Sampling of 1-2 nodal stations maps to 31652."
+      ]
     }
   },
   {
     "note_text": "PATIENT: Evelyn Martin   MRN: BRN00127   DOB: 08/06/1952\nDATE: 06/03/2025   LOCATION: Hybrid bronchoscopy suite\nPROCEDURE: Ion robotic navigation bronchoscopy with radial EBUS and transbronchial lung biopsy of right upper lobe (RUL) nodule\nINDICATION: 72-year-old female with a 1.5 cm spiculated RUL pulmonary nodule, PET-avid, no enlarged mediastinal nodes.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal intubation.\n\nPROCEDURE SUMMARY (checklist style):\n- Navigation platform: Ion robotic bronchoscopy\n- Guidance: Pre-procedure CT loaded; virtual plan created to RUL apical segment nodule.\n- Robotic scope advanced to target per navigational plan.\n- Radial EBUS probe used: Concentric solid lesion pattern obtained.\n- Imaging confirmation: Cone beam CT showed tool-in-lesion.\n- Sampling tools: Transbronchial forceps biopsies (6 passes), brushings (2 passes), BAL (60 mL instilled, 30 mL return).\n- No EBUS mediastinal staging performed.\n\nNo immediate complications. Fluoroscopy showed no pneumothorax. Minimal bleeding controlled with cold saline.\n\nPLAN:\nObserve in PACU then home same day. Arrange oncology and surgical consultations pending pathology.",
     "cpt_codes": [
       31628,
-      31654
+      31654,
+      31627
     ],
     "registry_entry": {
       "patient_mrn": "BRN00127",
@@ -448,7 +419,8 @@
       "final_diagnosis_prelim": "RUL nodule; ROSE suspicious for non-small cell lung carcinoma.",
       "cpt_codes": [
         31628,
-        31654
+        31654,
+        31627
       ],
       "institution_name": "Synthetic University Hospital",
       "disposition": "Outpatient discharge",
@@ -515,40 +487,41 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "review_date": "2025-12-07",
       "reviewer": "IP-Coder-Patch-GPT",
-      "cpt_summary": {
-        "primary_code": "31628",
-        "final_codes": [
-          "31628",
-          "31654"
-        ],
-        "modifiers": [],
-        "changes_made": true,
-        "code_rationales": {
-          "31628": "Ion robotic navigation with radial EBUS and transbronchial lung biopsies of a single right upper lobe (RUL) nodule is appropriately captured by 31628 (biopsy, single lobe).",
-          "31654": "Radial EBUS guidance for a peripheral pulmonary lesion justifies the EBUS add-on code 31654 in conjunction with 31628.",
-          "31627": "Removed: 31627 describes additional-lobe transbronchial biopsies; documentation shows sampling confined to the RUL only, with no additional lobes biopsied."
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Robotic navigation (Ion) with radial EBUS and transbronchial biopsy of RUL nodule.",
+      "cpt_summary": [
+        {
+          "code": "31628",
+          "units": 1,
+          "role": "transbronchial_biopsy_parenchymal",
+          "facility_rvu_2025": 5.53,
+          "estimated_facility_payment_2025": 179.0
         },
-        "coding_decision": "modified_from_source"
-      },
-      "rvu_summary_2025": {
-        "facility_rvus_by_code": {
-          "31628": {
-            "total_rvu": 5.15,
-            "medicare_payment": 167.0
-          },
-          "31654": {
-            "total_rvu": null,
-            "medicare_payment": null
-          }
+        {
+          "code": "31627",
+          "units": 1,
+          "role": "navigation_add_on",
+          "facility_rvu_2025": 3.07,
+          "estimated_facility_payment_2025": 99.0
         },
-        "total_facility_rvu": null,
-        "total_medicare_payment": null,
-        "notes": "2025 facility RVU/payment values are known for 31628 and included here; add-on code 31654 is left null for downstream RVU population, so totals are not computed."
-      },
-      "overall_assessment": "CPT selection updated to 31628 + 31654 for single-lobe navigational bronchoscopy with radial EBUS-guided transbronchial biopsy; add-on biopsy code 31627 was removed as no second lobe was sampled."
+        {
+          "code": "31654",
+          "units": 1,
+          "role": "radial_ebus_add_on",
+          "facility_rvu_2025": 2.11,
+          "estimated_facility_payment_2025": 68.0
+        }
+      ],
+      "total_facility_rvu_2025": 10.71,
+      "estimated_total_facility_payment_2025": 346.0,
+      "comments": [
+        "Added 31627 for electromagnetic/robotic navigation documentation.",
+        "31628 is the primary code for parenchymal biopsy.",
+        "31654 covers the radial EBUS component."
+      ]
     }
   },
   {
@@ -628,33 +601,25 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "review_date": "2025-12-07",
       "reviewer": "IP-Coder-Patch-GPT",
-      "cpt_summary": {
-        "primary_code": "31634",
-        "final_codes": [
-          "31634"
-        ],
-        "modifiers": [],
-        "changes_made": false,
-        "code_rationales": {
-          "31634": "Bronchoscopy with Chartis balloon occlusion assessment of collateral ventilation only; no valves, biopsies, BAL, or navigation performed, so 31634 alone is appropriate."
-        },
-        "coding_decision": "as_documented"
-      },
-      "rvu_summary_2025": {
-        "facility_rvus_by_code": {
-          "31634": {
-            "total_rvu": null,
-            "medicare_payment": null
-          }
-        },
-        "total_facility_rvu": null,
-        "total_medicare_payment": null,
-        "notes": "2025 facility RVU/payment values for 31634 to be supplied from the shared RVU reference."
-      },
-      "overall_assessment": "CPT 31634 correctly captures a pure Chartis collateral-ventilation assessment with no valve placement or additional bronchoscopic interventions."
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Bronchoscopic Chartis assessment only. No valve placement.",
+      "cpt_summary": [
+        {
+          "code": "31634",
+          "units": 1,
+          "role": "chartis_assessment",
+          "facility_rvu_2025": 5.63,
+          "estimated_facility_payment_2025": 182.0
+        }
+      ],
+      "total_facility_rvu_2025": 5.63,
+      "estimated_total_facility_payment_2025": 182.0,
+      "comments": [
+        "31634 is correct for balloon occlusion assessment without concurrent valve placement."
+      ]
     }
   },
   {
@@ -737,34 +702,26 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "review_date": "2025-12-07",
       "reviewer": "IP-Coder-Patch-GPT",
-      "cpt_summary": {
-        "primary_code": "31647",
-        "final_codes": [
-          "31647"
-        ],
-        "modifiers": [],
-        "changes_made": true,
-        "code_rationales": {
-          "31647": "Endobronchial valve placement is confined to the left upper lobe; multiple valves in a single lobe are encompassed by 31647.",
-          "31651": "Removed: 31651 is an add-on for each additional treated lobe, not for additional valves within the same lobe; no second lobe is treated in this case."
-        },
-        "coding_decision": "modified_from_source"
-      },
-      "rvu_summary_2025": {
-        "facility_rvus_by_code": {
-          "31647": {
-            "total_rvu": null,
-            "medicare_payment": null
-          }
-        },
-        "total_facility_rvu": null,
-        "total_medicare_payment": null,
-        "notes": "Exact 2025 facility RVU/payment values for BLVR codes should be filled from the authoritative RVU table."
-      },
-      "overall_assessment": "Coding revised to 31647 alone for left upper lobe BLVR; add-on code 31651 is inappropriate because only one lobe is treated."
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "BLVR with 3 Zephyr valves placed in the LUL. Single lobe treated.",
+      "cpt_summary": [
+        {
+          "code": "31647",
+          "units": 1,
+          "role": "blvr_initial_lobe",
+          "facility_rvu_2025": 12.05,
+          "estimated_facility_payment_2025": 390.0
+        }
+      ],
+      "total_facility_rvu_2025": 12.05,
+      "estimated_total_facility_payment_2025": 390.0,
+      "comments": [
+        "31647 covers valve placement in the initial lobe regardless of the number of valves.",
+        "31651 is only for additional *lobes*, not additional valves/segments in the same lobe."
+      ]
     }
   },
   {
@@ -844,33 +801,25 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "review_date": "2025-12-07",
       "reviewer": "IP-Coder-Patch-GPT",
-      "cpt_summary": {
-        "primary_code": "32550",
-        "final_codes": [
-          "32550"
-        ],
-        "modifiers": [],
-        "changes_made": false,
-        "code_rationales": {
-          "32550": "Single tunneled pleural catheter insertion with subcutaneous tunnel and ultrasound guidance, without talc or other pleurodesis, aligns with 32550."
-        },
-        "coding_decision": "as_documented"
-      },
-      "rvu_summary_2025": {
-        "facility_rvus_by_code": {
-          "32550": {
-            "total_rvu": null,
-            "medicare_payment": null
-          }
-        },
-        "total_facility_rvu": null,
-        "total_medicare_payment": null,
-        "notes": "32550 RVU/payment values for 2025 should be sourced from the shared facility RVU schedule."
-      },
-      "overall_assessment": "CPT 32550 alone correctly captures tunneled pleural catheter placement; no additional thoracentesis or pleurodesis codes are indicated."
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Placement of tunneled pleural catheter (TPC/IPC).",
+      "cpt_summary": [
+        {
+          "code": "32550",
+          "units": 1,
+          "role": "ipc_placement",
+          "facility_rvu_2025": 5.88,
+          "estimated_facility_payment_2025": 190.0
+        }
+      ],
+      "total_facility_rvu_2025": 5.88,
+      "estimated_total_facility_payment_2025": 190.0,
+      "comments": [
+        "32550 includes tunneling and cuff placement."
+      ]
     }
   },
   {
@@ -950,33 +899,25 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "review_date": "2025-12-07",
       "reviewer": "IP-Coder-Patch-GPT",
-      "cpt_summary": {
-        "primary_code": "32555",
-        "final_codes": [
-          "32555"
-        ],
-        "modifiers": [],
-        "changes_made": false,
-        "code_rationales": {
-          "32555": "Ultrasound-guided therapeutic thoracentesis with catheter removal at the end of the case, and no tunneling or chest tube placement, is appropriately coded with 32555."
-        },
-        "coding_decision": "as_documented"
-      },
-      "rvu_summary_2025": {
-        "facility_rvus_by_code": {
-          "32555": {
-            "total_rvu": null,
-            "medicare_payment": null
-          }
-        },
-        "total_facility_rvu": null,
-        "total_medicare_payment": null,
-        "notes": "2025 facility RVU/payment data for 32555 should be populated from the centralized RVU tables."
-      },
-      "overall_assessment": "CPT 32555 accurately reflects a single ultrasound-guided thoracentesis without tunneled catheter or pleurodesis."
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Ultrasound-guided thoracentesis.",
+      "cpt_summary": [
+        {
+          "code": "32555",
+          "units": 1,
+          "role": "thoracentesis_with_imaging",
+          "facility_rvu_2025": 3.19,
+          "estimated_facility_payment_2025": 103.0
+        }
+      ],
+      "total_facility_rvu_2025": 3.19,
+      "estimated_total_facility_payment_2025": 103.0,
+      "comments": [
+        "32555 is correct for thoracentesis with imaging guidance."
+      ]
     }
   },
   {
@@ -1056,33 +997,25 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "review_date": "2025-12-07",
       "reviewer": "IP-Coder-Patch-GPT",
-      "cpt_summary": {
-        "primary_code": "32650",
-        "final_codes": [
-          "32650"
-        ],
-        "modifiers": [],
-        "changes_made": false,
-        "code_rationales": {
-          "32650": "Medical thoracoscopy with pleural biopsies and talc poudrage pleurodesis in the same session is correctly captured by 32650."
-        },
-        "coding_decision": "as_documented"
-      },
-      "rvu_summary_2025": {
-        "facility_rvus_by_code": {
-          "32650": {
-            "total_rvu": null,
-            "medicare_payment": null
-          }
-        },
-        "total_facility_rvu": null,
-        "total_medicare_payment": null,
-        "notes": "Facility RVU and payment for 32650 in 2025 should be drawn from the shared RVU dataset; placeholders are left null here."
-      },
-      "overall_assessment": "CPT 32650 accurately reflects thoracoscopy with biopsy and talc pleurodesis; no separate thoracentesis or chest tube codes are warranted."
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Medical thoracoscopy with biopsy and talc pleurodesis.",
+      "cpt_summary": [
+        {
+          "code": "32650",
+          "units": 1,
+          "role": "thoracoscopy_pleurodesis",
+          "facility_rvu_2025": 15.0,
+          "estimated_facility_payment_2025": 485.0
+        }
+      ],
+      "total_facility_rvu_2025": 15.0,
+      "estimated_total_facility_payment_2025": 485.0,
+      "comments": [
+        "32650 (thoracoscopy with pleurodesis) typically bundles 32601/32604 (diagnostic/biopsy) when performed in the same session on the same side."
+      ]
     }
   }
 ]

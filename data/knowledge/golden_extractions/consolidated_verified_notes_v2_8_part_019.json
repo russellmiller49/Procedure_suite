@@ -130,6 +130,36 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158329"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06T22:48:00",
+        "cpt_summary": {
+          "primary_code": "31624",
+          "final_codes": [
+            "31624",
+            "31628"
+          ],
+          "code_rationales": {
+            "31624": "Bronchoscopy with BAL (Right middle lobe).",
+            "31628": "Transbronchial lung biopsy (Right lower lobe). Different lobe from BAL, generally separately reportable."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 9.77,
+          "facility_total_payment": 316.55,
+          "per_code": {
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137.38
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179.17
+            }
+          }
+        },
+        "overall_assessment": "Codes 31624 and 31628 are supported by the documentation of BAL and TBLB in separate lobes."
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -148,7 +178,8 @@
       "patch_date": "2025-12-02T02:00:48.123421",
       "changes": [
         "Fixed disposition: Outpatient discharge",
-        "Fixed ASA class: II -> 3 (defaulted)"
+        "Fixed ASA class: II -> 3 (defaulted)",
+        "Added coding_review block."
       ],
       "warnings": []
     },
@@ -306,6 +337,30 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158335"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06T22:48:00",
+        "cpt_summary": {
+          "primary_code": "31624",
+          "final_codes": [
+            "31624"
+          ],
+          "code_rationales": {
+            "31624": "Bronchoscopy with BAL. Documentation mentions 'BAL performed'. Mucus plug removal in this context is often part of the bronchial toilet/lavage or bundled."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.24,
+          "facility_total_payment": 137.38,
+          "per_code": {
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137.38
+            }
+          }
+        },
+        "overall_assessment": "31624 is appropriate for bronchoscopy with BAL."
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -323,7 +378,8 @@
       "patch_date": "2025-12-02T02:00:48.123554",
       "changes": [
         "Fixed disposition: ICU admission",
-        "Fixed ASA class: IV -> 3 (defaulted)"
+        "Fixed ASA class: IV -> 3 (defaulted)",
+        "Added coding_review block."
       ],
       "warnings": []
     },
@@ -348,8 +404,8 @@
   {
     "note_text": "Transbronchial Cryobiopsy Note\nProcedure: Bronchoscopic cryobiopsy for fibrotic ILD\nPatient: Jennifer Adams, 56-year-old female with progressive fibrotic interstitial lung disease of unclear etiology.\nAnesthesia: General anesthesia with 8.5 ETT.\nDetails: Bronchoscope advanced to left lower lobe basal segments. Radial EBUS used to identify parenchymal sites distant from large vessels. Three cryobiopsies obtained using 1.9 mm cryoprobe and one standard forceps biopsy. Bronchial blocker placed prophylactically.\nComplications: Mild bleeding controlled with blocker inflation and iced saline; no pneumothorax on postprocedure CXR.\nDisposition: Admitted overnight to monitored bed.",
     "cpt_codes": [
-      31645,
-      31628
+      31628,
+      31654
     ],
     "registry_entry": {
       "note_text": "Transbronchial Cryobiopsy Note\nProcedure: Bronchoscopic cryobiopsy for fibrotic ILD\nPatient: Jennifer Adams, 56-year-old female with progressive fibrotic interstitial lung disease of unclear etiology.\nAnesthesia: General anesthesia with 8.5 ETT.\nDetails: Bronchoscope advanced to left lower lobe basal segments. Radial EBUS used to identify parenchymal sites distant from large vessels. Three cryobiopsies obtained using 1.9 mm cryoprobe and one standard forceps biopsy. Bronchial blocker placed prophylactically.\nComplications: Mild bleeding controlled with blocker inflation and iced saline; no pneumothorax on postprocedure CXR.\nDisposition: Admitted overnight to monitored bed.",
@@ -461,8 +517,8 @@
       "disposition": "Floor admission",
       "follow_up_plan": "ILD clinic visit after pathology and multidisciplinary review",
       "cpt_codes": [
-        31645,
-        31628
+        31628,
+        31654
       ],
       "evidence": null,
       "providers": {
@@ -476,6 +532,37 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158344"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06T22:48:00",
+        "cpt_summary": {
+          "primary_code": "31628",
+          "final_codes": [
+            "31628",
+            "31654"
+          ],
+          "code_rationales": {
+            "31628": "Transbronchial lung biopsy (includes cryobiopsy).",
+            "31654": "Radial EBUS used for peripheral lesion guidance (add-on).",
+            "removed_31645": "Therapeutic aspiration (31645) removed; no specific therapeutic aspiration documented beyond biopsy bleeding management."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247.53,
+          "per_code": {
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179.17
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68.36
+            }
+          }
+        },
+        "overall_assessment": "Replaced 31645 with 31654 (Radial EBUS) as documented. 31628 covers the biopsy."
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -494,7 +581,8 @@
       "patch_date": "2025-12-02T02:00:48.123725",
       "changes": [
         "Fixed disposition: Floor admission",
-        "Fixed ASA class: III -> 3 (defaulted)"
+        "Fixed ASA class: III -> 3 (defaulted)",
+        "Corrected CPTs: Removed 31645, added 31654 (REBUS). Added coding_review."
       ],
       "warnings": []
     },
@@ -526,8 +614,9 @@
   {
     "note_text": "Robotic Bronchoscopic Radiofrequency Ablation Note\nProcedure: Robotic navigational bronchoscopy with RF ablation of RLL metastasis\nPatient: Kevin White, 63-year-old male with oligometastatic colorectal cancer and 10 mm RLL nodule.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Ion robotic system used to access RLL lateral basal segment. CT-to-body registration error 2.0 mm. Radial EBUS confirmed solid lesion, cone-beam CT verified tool-in-lesion.\nAblation: RF ablation catheter advanced; ablation performed at 40 W for 480 seconds, peak temperature 85\u00b0C. Postablation CBCT showed ablation zone with ~5 mm margin.\nComplications: Small perilesional hemorrhage, hemodynamically stable.\nDisposition: Admitted overnight to telemetry.",
     "cpt_codes": [
+      31641,
       31627,
-      31641
+      31654
     ],
     "registry_entry": {
       "note_text": "Robotic Bronchoscopic Radiofrequency Ablation Note\nProcedure: Robotic navigational bronchoscopy with RF ablation of RLL metastasis\nPatient: Kevin White, 63-year-old male with oligometastatic colorectal cancer and 10 mm RLL nodule.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Ion robotic system used to access RLL lateral basal segment. CT-to-body registration error 2.0 mm. Radial EBUS confirmed solid lesion, cone-beam CT verified tool-in-lesion.\nAblation: RF ablation catheter advanced; ablation performed at 40 W for 480 seconds, peak temperature 85\u00b0C. Postablation CBCT showed ablation zone with ~5 mm margin.\nComplications: Small perilesional hemorrhage, hemodynamically stable.\nDisposition: Admitted overnight to telemetry.",
@@ -639,8 +728,9 @@
       "disposition": "Floor admission",
       "follow_up_plan": "CT chest in 3 months to assess ablation zone",
       "cpt_codes": [
+        31641,
         31627,
-        31641
+        31654
       ],
       "evidence": null,
       "providers": {
@@ -654,6 +744,42 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158351"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06T22:48:00",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641",
+            "31627",
+            "31654"
+          ],
+          "code_rationales": {
+            "31641": "Bronchoscopy with destruction of tumor (RFA).",
+            "31627": "Navigational bronchoscopy (add-on).",
+            "31654": "Radial EBUS guidance (add-on)."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 13.58,
+          "facility_total_payment": 439.99,
+          "per_code": {
+            "31641": {
+              "facility_rvu": 8.4,
+              "facility_payment": 272.16
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99.47
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68.36
+            }
+          }
+        },
+        "overall_assessment": "Added 31654 for documented Radial EBUS use."
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -672,7 +798,8 @@
       "patch_date": "2025-12-02T02:00:48.123860",
       "changes": [
         "Fixed disposition: Floor admission",
-        "Fixed ASA class: III -> 3 (defaulted)"
+        "Fixed ASA class: III -> 3 (defaulted)",
+        "Added 31654 (REBUS). Added coding_review."
       ],
       "warnings": []
     },
@@ -706,6 +833,7 @@
     "cpt_codes": [
       31641,
       31627,
+      31654,
       32557
     ],
     "registry_entry": {
@@ -820,6 +948,7 @@
       "cpt_codes": [
         31641,
         31627,
+        31654,
         32557
       ],
       "evidence": null,
@@ -834,6 +963,48 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158359"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06T22:48:00",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641",
+            "31627",
+            "31654",
+            "32557"
+          ],
+          "code_rationales": {
+            "31641": "Bronchoscopy with destruction of tumor (MWA).",
+            "31627": "Navigational bronchoscopy (add-on).",
+            "31654": "Radial EBUS guidance (add-on).",
+            "32557": "Pleural drainage with insertion of indwelling catheter (pigtail) with imaging guidance (Fluoro/CXR)."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 18.08,
+          "facility_total_payment": 585.79,
+          "per_code": {
+            "31641": {
+              "facility_rvu": 8.4,
+              "facility_payment": 272.16
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99.47
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68.36
+            },
+            "32557": {
+              "facility_rvu": 4.5,
+              "facility_payment": 145.8
+            }
+          }
+        },
+        "overall_assessment": "Added 31654 (REBUS). Confirmed 32557 for guided chest tube placement."
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -853,7 +1024,8 @@
       "patch_date": "2025-12-02T02:00:48.123996",
       "changes": [
         "Fixed disposition: Floor admission",
-        "Fixed ASA class: III -> 3 (defaulted)"
+        "Fixed ASA class: III -> 3 (defaulted)",
+        "Added 31654 (REBUS). Added coding_review."
       ],
       "warnings": []
     },
@@ -893,7 +1065,8 @@
     "note_text": "Bronchoscopic Cryoablation Note\nProcedure: Robotic navigational bronchoscopy with cryoablation of subpleural RUL lesion\nPatient: Brian Edwards, 71-year-old male with small peripheral NSCLC and severe COPD.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Monarch robotic system used to reach 12 mm RUL apical segment lesion. Radial EBUS confirmed lesion; CBCT demonstrated tip within lesion.\nAblation: 2.4 mm cryoprobe advanced through working channel; two freeze\u2013thaw cycles of 360 seconds each performed. Ice ball seen on CBCT encompassing lesion with ~4\u20135 mm margin.\nComplications: Mild transient hemoptysis; no pneumothorax on immediate imaging.\nDisposition: Admitted overnight for observation.",
     "cpt_codes": [
       31641,
-      31627
+      31627,
+      31654
     ],
     "registry_entry": {
       "note_text": "Bronchoscopic Cryoablation Note\nProcedure: Robotic navigational bronchoscopy with cryoablation of subpleural RUL lesion\nPatient: Brian Edwards, 71-year-old male with small peripheral NSCLC and severe COPD.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Monarch robotic system used to reach 12 mm RUL apical segment lesion. Radial EBUS confirmed lesion; CBCT demonstrated tip within lesion.\nAblation: 2.4 mm cryoprobe advanced through working channel; two freeze\u2013thaw cycles of 360 seconds each performed. Ice ball seen on CBCT encompassing lesion with ~4\u20135 mm margin.\nComplications: Mild transient hemoptysis; no pneumothorax on immediate imaging.\nDisposition: Admitted overnight for observation.",
@@ -1006,7 +1179,8 @@
       "follow_up_plan": "CT chest at 3 and 6 months to assess ablation zone; oncology follow-up",
       "cpt_codes": [
         31641,
-        31627
+        31627,
+        31654
       ],
       "evidence": null,
       "providers": {
@@ -1020,6 +1194,42 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158366"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06T22:48:00",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641",
+            "31627",
+            "31654"
+          ],
+          "code_rationales": {
+            "31641": "Bronchoscopy with destruction of tumor (Cryoablation).",
+            "31627": "Navigational bronchoscopy (add-on).",
+            "31654": "Radial EBUS guidance (add-on)."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 13.58,
+          "facility_total_payment": 439.99,
+          "per_code": {
+            "31641": {
+              "facility_rvu": 8.4,
+              "facility_payment": 272.16
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99.47
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68.36
+            }
+          }
+        },
+        "overall_assessment": "Added 31654 for documented Radial EBUS use."
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1038,7 +1248,8 @@
       "patch_date": "2025-12-02T02:00:48.124189",
       "changes": [
         "Fixed disposition: Floor admission",
-        "Fixed ASA class: III -> 3 (defaulted)"
+        "Fixed ASA class: III -> 3 (defaulted)",
+        "Added 31654 (REBUS). Added coding_review."
       ],
       "warnings": []
     },
@@ -1070,7 +1281,6 @@
   {
     "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Flexible bronchoscopy with linear EBUS-TBNA\nPatient: James Carter, 64-year-old male with a right upper lobe mass and PET-avid mediastinal adenopathy.\nIndication: Mediastinal staging prior to possible surgical resection.\nSetting: Bronchoscopy suite at Naval Medical Center Atlantic. General anesthesia with endotracheal intubation (8.0 mm), volume control ventilation.\nBronchoscopic findings: Normal vocal cords and central airways without endobronchial tumor. No endobronchial obstruction.\nEBUS procedure: Olympus BF-UC180F scope introduced via ETT. Systematic survey performed. Enlarged nodes visualized at stations 4R, 7, and 11R. Three passes obtained from each station using a 21G Olympus Vizishot needle. ROSE showed malignant cells at 4R concerning for non-small cell lung cancer; stations 7 and 11R showed benign lymphocytes.\nElastography used, demonstrating heterogeneous (blue-predominant) pattern at 4R and homogeneous green pattern at 7 and 11R. No intranodal forceps biopsies were performed.\nComplications: Minimal bleeding at puncture sites controlled with suction; estimated blood loss 5 mL. No hypoxia, pneumothorax, or hemodynamic instability.\nDisposition: Patient extubated in the procedure room, observed in PACU, then discharged home the same day with routine postbronchoscopy instructions. Plan for follow-up visit in 1 week to review final pathology and complete staging.",
     "cpt_codes": [
-      31652,
       31653
     ],
     "registry_entry": {
@@ -1187,7 +1397,6 @@
       "disposition": "Outpatient discharge",
       "follow_up_plan": "Clinic follow-up in 1 week to review final pathology and complete staging workup",
       "cpt_codes": [
-        31652,
         31653
       ],
       "evidence": null,
@@ -1202,6 +1411,30 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158373"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06T22:48:00",
+        "cpt_summary": {
+          "primary_code": "31653",
+          "final_codes": [
+            "31653"
+          ],
+          "code_rationales": {
+            "31653": "EBUS-TBNA of 3 or more stations (4R, 7, 11R sampled). 31652 is mutually exclusive."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249.48,
+          "per_code": {
+            "31653": {
+              "facility_rvu": 7.7,
+              "facility_payment": 249.48
+            }
+          }
+        },
+        "overall_assessment": "Corrected EBUS coding to 31653 (3+ stations) only."
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1220,7 +1453,8 @@
       "patch_date": "2025-12-02T02:00:48.124277",
       "changes": [
         "Fixed disposition: Outpatient discharge",
-        "Fixed ASA class: III -> 3 (defaulted)"
+        "Fixed ASA class: III -> 3 (defaulted)",
+        "Corrected EBUS codes (removed 31652). Added coding_review."
       ],
       "warnings": []
     },
@@ -1252,7 +1486,6 @@
   {
     "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Flexible bronchoscopy with linear EBUS-TBNA under monitored anesthesia care\nPatient: Maria Hernandez, 58-year-old female with biopsy-proven left upper lobe adenocarcinoma and PET-avid mediastinal lymphadenopathy.\nIndication: Mediastinal and hilar staging prior to definitive therapy.\nSetting: Naval Medical Center Atlantic bronchoscopy suite. Monitored anesthesia care using propofol infusion and fentanyl. Laryngeal mask airway (size 4) with spontaneous ventilation on supplemental oxygen.\nBronchoscopy: Normal upper airway. No visible endobronchial tumor. Mild extrinsic impression at the left mainstem bronchus.\nEBUS: Fujifilm EB-530US scope used. Systematic survey completed. Lymph nodes at stations 4L, 7, and 11L identified. A 22G needle was used for TBNA. Four passes were obtained from 7 and 11L, three from 4L. ROSE available and demonstrated abundant lymphocytes in all samples without definite malignant cells.\nElastography not used due to operator preference. No intranodal forceps biopsies performed.\nComplications: None. Hemodynamics stable. Estimated blood loss <5 mL.\nDisposition: Patient recovered uneventfully and was discharged home after 2 hours of observation with standard postprocedure instructions.",
     "cpt_codes": [
-      31652,
       31653
     ],
     "registry_entry": {
@@ -1369,7 +1602,6 @@
       "disposition": "Outpatient discharge",
       "follow_up_plan": "Oncology and thoracic surgery follow-up to finalize treatment plan after final EBUS cytology",
       "cpt_codes": [
-        31652,
         31653
       ],
       "evidence": null,
@@ -1384,6 +1616,30 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158383"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06T22:48:00",
+        "cpt_summary": {
+          "primary_code": "31653",
+          "final_codes": [
+            "31653"
+          ],
+          "code_rationales": {
+            "31653": "EBUS-TBNA of 3 or more stations (4L, 7, 11L sampled)."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249.48,
+          "per_code": {
+            "31653": {
+              "facility_rvu": 7.7,
+              "facility_payment": 249.48
+            }
+          }
+        },
+        "overall_assessment": "Corrected EBUS coding to 31653 only."
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1402,7 +1658,8 @@
       "patch_date": "2025-12-02T02:00:48.124362",
       "changes": [
         "Fixed disposition: Outpatient discharge",
-        "Fixed ASA class: III -> 3 (defaulted)"
+        "Fixed ASA class: III -> 3 (defaulted)",
+        "Corrected EBUS codes (removed 31652). Added coding_review."
       ],
       "warnings": []
     },
@@ -1434,7 +1691,6 @@
   {
     "note_text": "Interventional Pulmonology Procedure Note\nProcedures performed: (1) Flexible bronchoscopy with airway inspection, (2) Linear EBUS-TBNA of mediastinal and hilar nodes.\nPatient: Robert Lee, 71-year-old male with suspected recurrent small cell lung cancer and new mediastinal adenopathy after chemoradiation.\nAnesthesia: General anesthesia, endotracheal tube 8.5 mm, pressure control ventilation.\nBronchoscopic findings: Mild radiation-related mucosal changes. No discrete endobronchial mass. Carina sharp.\nEBUS: Olympus BF-UC180F scope. Systematic nodal evaluation. Stations 2R, 4R, 7, and 10R identified. Nodes at 4R and 7 were enlarged. A 21G Vizishot needle was used. Three passes per station at 4R and 7, two passes at 2R and 10R. ROSE showed malignant cells at 7 consistent with small cell carcinoma; other stations with lymphocytes.\nElastography not available on this system. No intranodal forceps biopsies performed.\nComplications: None. EBL 10 mL.\nPlan: Await final cytology. Given evidence of nodal recurrence, patient will be referred to medical oncology.\nDisposition: Extubated in OR, transported to PACU in stable condition and later admitted to oncology ward.",
     "cpt_codes": [
-      31652,
       31653
     ],
     "registry_entry": {
@@ -1552,7 +1808,6 @@
       "disposition": "Floor admission",
       "follow_up_plan": "Oncology follow-up for systemic therapy planning",
       "cpt_codes": [
-        31652,
         31653
       ],
       "evidence": null,
@@ -1567,6 +1822,30 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158393"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06T22:48:00",
+        "cpt_summary": {
+          "primary_code": "31653",
+          "final_codes": [
+            "31653"
+          ],
+          "code_rationales": {
+            "31653": "EBUS-TBNA of 3 or more stations (2R, 4R, 7, 10R sampled)."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249.48,
+          "per_code": {
+            "31653": {
+              "facility_rvu": 7.7,
+              "facility_payment": 249.48
+            }
+          }
+        },
+        "overall_assessment": "Corrected EBUS coding to 31653 only."
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1585,7 +1864,8 @@
       "patch_date": "2025-12-02T02:00:48.124443",
       "changes": [
         "Fixed disposition: Floor admission",
-        "Fixed ASA class: III -> 3 (defaulted)"
+        "Fixed ASA class: III -> 3 (defaulted)",
+        "Corrected EBUS codes (removed 31652). Added coding_review."
       ],
       "warnings": []
     },
@@ -1617,9 +1897,10 @@
   {
     "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Robotic-assisted navigational bronchoscopy with radial EBUS and transbronchial biopsies of a right lower lobe nodule.\nPatient: Patricia Nguyen, 67-year-old female, former smoker, with 18 mm RLL peripheral pulmonary nodule and positive PET.\nAnesthesia: General anesthesia with 8.0 mm ETT, volume control ventilation.\nNavigation: Ion robotic bronchoscopy platform used. CT-to-body surface registration successful with registration error ~3 mm. Planned pathway to superior segment RLL nodule generated.\nRadial EBUS: Concentric solid lesion pattern obtained at target.\nSampling: Tool-in-lesion confirmed by cone-beam CT. Six transbronchial forceps biopsies, two brushings, and one 21G needle aspiration performed. No cryobiopsy.\nComplications: Mild self-limited bleeding controlled with wedging and cold saline. No pneumothorax on immediate fluoroscopy.\nEstimated blood loss: 10 mL.\nDisposition: Extubated in procedure room and discharged from PACU after uneventful recovery.",
     "cpt_codes": [
-      31626,
+      31629,
+      31628,
       31627,
-      31628
+      31654
     ],
     "registry_entry": {
       "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Robotic-assisted navigational bronchoscopy with radial EBUS and transbronchial biopsies of a right lower lobe nodule.\nPatient: Patricia Nguyen, 67-year-old female, former smoker, with 18 mm RLL peripheral pulmonary nodule and positive PET.\nAnesthesia: General anesthesia with 8.0 mm ETT, volume control ventilation.\nNavigation: Ion robotic bronchoscopy platform used. CT-to-body surface registration successful with registration error ~3 mm. Planned pathway to superior segment RLL nodule generated.\nRadial EBUS: Concentric solid lesion pattern obtained at target.\nSampling: Tool-in-lesion confirmed by cone-beam CT. Six transbronchial forceps biopsies, two brushings, and one 21G needle aspiration performed. No cryobiopsy.\nComplications: Mild self-limited bleeding controlled with wedging and cold saline. No pneumothorax on immediate fluoroscopy.\nEstimated blood loss: 10 mL.\nDisposition: Extubated in procedure room and discharged from PACU after uneventful recovery.",
@@ -1731,9 +2012,10 @@
       "disposition": "Outpatient discharge",
       "follow_up_plan": "Clinic follow-up in 1 week to review final pathology and staging",
       "cpt_codes": [
-        31626,
+        31629,
+        31628,
         31627,
-        31628
+        31654
       ],
       "evidence": null,
       "providers": {
@@ -1747,6 +2029,49 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158445"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06T22:48:00",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31628",
+            "31627",
+            "31654"
+          ],
+          "code_rationales": {
+            "31629": "Transbronchial needle aspiration (TBNA) of RLL nodule.",
+            "31628": "Transbronchial lung biopsy (TBLB) of RLL nodule.",
+            "31627": "Navigational bronchoscopy (add-on).",
+            "31654": "Radial EBUS guidance (add-on).",
+            "removed_31626": "Removed 31626 (Fiducials) as no fiducial placement was documented."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 16.6,
+          "facility_total_payment": 537.84,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 190.83
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179.17
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99.47
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68.36
+            }
+          }
+        },
+        "overall_assessment": "Replaced 31626 with 31629 (TBNA). Added 31654 (Radial EBUS)."
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1767,7 +2092,8 @@
       "changes": [
         "Extracted ablation_modality: Cryoablation",
         "Fixed disposition: Outpatient discharge",
-        "Fixed ASA class: III -> 3 (defaulted)"
+        "Fixed ASA class: III -> 3 (defaulted)",
+        "Corrected CPTs (31626->31629). Added 31654. Added coding_review."
       ],
       "warnings": []
     },

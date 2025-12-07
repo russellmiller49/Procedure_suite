@@ -159,38 +159,39 @@
       "warnings": []
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "cpt_summary": {
-        "31641": {
-          "units": 1,
-          "role": "primary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Rigid and flexible bronchoscopy with extensive mechanical and cryoprobe debulking of granulation tissue causing lobar obstruction in the right middle and right lower lobe."
+      "final_cpt_codes": [
+        31641,
+        31636,
+        31637
+      ],
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "description": "Bronch; obstructing tumor destruction/relief, any method",
+          "facility_rvu_2025": 7.43,
+          "facility_payment_2025": 240.36
         },
-        "31636": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Initial placement of a fully covered self-expanding metallic stent in the right lower lobe bronchus."
+        {
+          "code": "31636",
+          "description": "Bronch; initial tracheobronchial stent placement",
+          "facility_rvu_2025": 6.37,
+          "facility_payment_2025": 206.07
         },
-        "31637": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Additional fully covered self-expanding metallic stent placed in the right middle lobe bronchus (second treated bronchus)."
+        {
+          "code": "31637",
+          "description": "Bronch; each additional tracheobronchial stent",
+          "facility_rvu_2025": 2.25,
+          "facility_payment_2025": 72.79
         }
-      },
-      "bundling_notes": "31636 (initial bronchial stent) and 31637 (each additional bronchus) are appropriately reported with 31641 for tumor/stenosis debulking. No E/M service is billed and no EBUS or navigation codes are present, so NCCI conflicts are minimal.",
-      "validation_notes": [
-        "Original codes (31633, 31631, 31637) did not match the documented services; no stent removal occurred and the primary service was debulking with stent placement.",
-        "Registry airway_type updated from ETT to Rigid to reflect ventilating rigid bronchoscope use.",
-        "False foreign body (fb_*) and navigation fields cleared; this case represents CAO with stenting rather than foreign body removal or navigational bronchoscopy.",
-        "Lesion_size_mm and molecular_testing_requested corrected (no tumor size or molecular sampling documented).",
-        "Stent_type and stent_location populated from the operative description."
+      ],
+      "total_facility_rvu_2025": 16.05,
+      "total_facility_payment_2025": 519.22,
+      "rationale": [
+        "Rigid bronchoscopy with extensive mechanical and cryoprobe debulking of granulation tissue causing lobar obstruction supports 31641.",
+        "Placement of a metallic stent in the right lower lobe supports 31636.",
+        "Placement of an additional metallic stent in the right middle lobe supports the add-on code 31637."
       ]
     }
   },
@@ -354,29 +355,31 @@
       "warnings": []
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "cpt_summary": {
-        "31641": {
-          "units": 1,
-          "role": "primary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Rigid bronchoscopy with extensive cryodebulking and cryotherapy of obstructive granulation tissue involving the left lower lobe bronchial tree."
+      "final_cpt_codes": [
+        31641,
+        31631
+      ],
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "description": "Bronch; obstructing tumor destruction/relief, any method",
+          "facility_rvu_2025": 7.43,
+          "facility_payment_2025": 240.36
         },
-        "31631": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Removal of the left mainstem bronchial stent using rigid bronchoscopy and flexible bronchoscope assistance."
+        {
+          "code": "31631",
+          "description": "Bronch; tracheal/bronchial stent placement",
+          "facility_rvu_2025": 6.62,
+          "facility_payment_2025": 214.16
         }
-      },
-      "bundling_notes": "31641 (tumor/stenosis destruction by any method) is the primary CAO code. 31631 for stent removal is appropriately reported in addition to 31641 when both services are performed in the same session.",
-      "validation_notes": [
-        "Removed 31654 (peripheral EBUS) and 99231 (subsequent hospital E/M) because no EBUS or separate E/M service is documented in this operative note.",
-        "Registry airway_type corrected from ETT to Rigid to reflect the use of ventilating rigid bronchoscopy after LMA.",
-        "Navigation-related registry fields cleared; the procedure does not involve electromagnetically guided navigation or peripheral EBUS mapping."
+      ],
+      "total_facility_rvu_2025": 14.05,
+      "total_facility_payment_2025": 454.52,
+      "rationale": [
+        "Rigid bronchoscopy with extensive cryodebulking of obstructive granulation tissue supports 31641.",
+        "Removal of the left mainstem bronchial stent is coded with 31631 (often used for removal/revision or initial placement, here serving as the most appropriate code for complex stent work/removal)."
       ]
     }
   },
@@ -547,23 +550,23 @@
       ]
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "cpt_summary": {
-        "31653": {
-          "units": 1,
-          "role": "primary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "EBUS-TBNA with systematic mediastinal/hilar staging and sampling of three nodal stations (4R, 7, 11R) with ROSE and molecular sampling."
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.15,
+          "facility_payment_2025": 231.3
         }
-      },
-      "bundling_notes": "Single EBUS-TBNA staging code 31653 (3 or more nodal stations) is appropriate; no additional bronchoscopy biopsy or navigation codes are documented.",
-      "validation_notes": [
-        "Registry procedure_date cleared because the DOB was incorrectly parsed as the procedure date.",
-        "Final diagnosis prelim updated to Malignancy given ROSE-positive nodes and molecular samples collected.",
-        "Bleeding severity set to None because no bleeding or hemostatic interventions are described.",
-        "EBUS ROSE and availability fields updated to reflect documented ROSE-positive nodes and adequacy."
+      ],
+      "total_facility_rvu_2025": 7.15,
+      "total_facility_payment_2025": 231.3,
+      "rationale": [
+        "EBUS-TBNA with systematic mediastinal/hilar staging and sampling of three nodal stations (4R, 7, 11R) with ROSE supports 31653."
       ]
     }
   },
@@ -724,23 +727,23 @@
       "warnings": []
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "cpt_summary": {
-        "31641": {
-          "units": 1,
-          "role": "primary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Bronchoscopic destruction of a malignant peripheral lung tumor using an investigational pulsed field ablation catheter delivered through a bronchoscope."
+      "final_cpt_codes": [
+        31641
+      ],
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "description": "Bronch; obstructing tumor destruction/relief, any method",
+          "facility_rvu_2025": 7.43,
+          "facility_payment_2025": 240.36
         }
-      },
-      "bundling_notes": "This is an investigational bronchoscopic ablation case. 31641 is used as the closest existing code for bronchoscopic tumor destruction; payers may instead require an unlisted lung procedure code depending on local guidance.",
-      "validation_notes": [
-        "Primary indication clarified as bronchoscopic ablation of a known LUL squamous cell carcinoma.",
-        "Ablation modality corrected from Radiofrequency to Pulsed field ablation (non-thermal electroporation).",
-        "Navigation fields updated to reflect ENB use with radial EBUS confirmation and approximate lesion size of 1.9 cm.",
-        "Patient age recalculated from DOB (1967-05-19) and procedure date (2025-11-18)."
+      ],
+      "total_facility_rvu_2025": 7.43,
+      "total_facility_payment_2025": 240.36,
+      "rationale": [
+        "Bronchoscopic destruction of a malignant peripheral lung tumor using an investigational pulsed field ablation catheter is coded with 31641 as the primary destruction service."
       ]
     }
   },
@@ -903,30 +906,31 @@
       "warnings": []
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "cpt_summary": {
-        "31625": {
-          "units": 1,
-          "role": "primary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Flexible bronchoscopy with multiple endobronchial forceps biopsies of an exophytic right middle lobe tumor."
+      "final_cpt_codes": [
+        31625,
+        31624
+      ],
+      "cpt_summary": [
+        {
+          "code": "31625",
+          "description": "Bronch; bronchial/endobronchial biopsy(s)",
+          "facility_rvu_2025": 4.67,
+          "facility_payment_2025": 151.13
         },
-        "31624": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Bronchial lavage from the right middle lobe for cytology."
+        {
+          "code": "31624",
+          "description": "Bronch; bronchoalveolar lavage",
+          "facility_rvu_2025": 4.02,
+          "facility_payment_2025": 130.08
         }
-      },
-      "bundling_notes": "31624 (BAL) is appropriately reported in addition to 31625 (endobronchial biopsies) when both sampling techniques are performed in the same session.",
-      "validation_notes": [
-        "Removed EBUS and ablation-related codes (31652, 31653) which are not supported by the narrative; no EBUS or ablation is performed.",
-        "Registry airway_type corrected from Tracheostomy to Native; this is an awake bronch via natural airway.",
-        "Ablation and navigation registry fields cleared; this is a purely diagnostic bronch with biopsies and lavage.",
-        "MRN normalized to PL4829Q and primary indication cleaned to a concise description."
+      ],
+      "total_facility_rvu_2025": 8.69,
+      "total_facility_payment_2025": 281.21,
+      "rationale": [
+        "Flexible bronchoscopy with multiple endobronchial forceps biopsies of an exophytic tumor supports 31625.",
+        "Bronchial lavage from the right middle lobe for cytology supports 31624."
       ]
     }
   },
@@ -1093,28 +1097,31 @@
       ]
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "cpt_summary": {
-        "31641": {
-          "units": 1,
-          "role": "primary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Therapeutic bronchoscopy with electrocautery and APC debulking of central airway tumor causing RML obstruction and massive hemoptysis."
+      "final_cpt_codes": [
+        31641,
+        31636
+      ],
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "description": "Bronch; obstructing tumor destruction/relief, any method",
+          "facility_rvu_2025": 7.43,
+          "facility_payment_2025": 240.36
         },
-        "31636": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Placement of a 14\u00d740 mm silicone bronchial stent after tumor debulking to maintain airway patency."
+        {
+          "code": "31636",
+          "description": "Bronch; initial tracheobronchial stent placement",
+          "facility_rvu_2025": 6.37,
+          "facility_payment_2025": 206.07
         }
-      },
-      "bundling_notes": "31636 (stent placement) is appropriately reported in addition to 31641 for CAO debulking and stenting of the same airway. No E/M is billed from this intraoperative document.",
-      "validation_notes": [
-        "Removed 31654 (peripheral EBUS) and 99231 (E/M) since the case is strictly a therapeutic central airway bronchoscopy without EBUS and without a distinct evaluation/management service.",
-        "Primary indication updated to explicitly capture CAO with massive hemoptysis requiring ICU transfer, aligning registry and coding."
+      ],
+      "total_facility_rvu_2025": 13.8,
+      "total_facility_payment_2025": 446.43,
+      "rationale": [
+        "Therapeutic bronchoscopy with debulking of central airway tumor supports 31641.",
+        "Placement of a silicone bronchial stent supports 31636."
       ]
     }
   },
@@ -1286,37 +1293,39 @@
       ]
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "cpt_summary": {
-        "31627": {
-          "units": 1,
-          "role": "primary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Electromagnetic navigation bronchoscopy (EMN) used for attempted localization of an LLL peripheral nodule, even though tool-in-lesion confirmation was not achieved."
+      "final_cpt_codes": [
+        31627,
+        31628,
+        31654
+      ],
+      "cpt_summary": [
+        {
+          "code": "31627",
+          "description": "Bronch; EMN navigation to peripheral lesion",
+          "facility_rvu_2025": 2.82,
+          "facility_payment_2025": 91.23
         },
-        "31628": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Transbronchial lung biopsy (TBLB) from the suspected target region (three forceps biopsies) despite failed localization."
+        {
+          "code": "31628",
+          "description": "Bronch; transbronchial lung biopsy(s), single lobe",
+          "facility_rvu_2025": 5.11,
+          "facility_payment_2025": 165.31
         },
-        "31654": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Radial EBUS for peripheral lesion evaluation during bronchoscopy; probe deployed repeatedly without concentric pattern, but still used as part of the localization attempt."
+        {
+          "code": "31654",
+          "description": "Add-on; EBUS for peripheral lesion",
+          "facility_rvu_2025": 1.95,
+          "facility_payment_2025": 63.08
         }
-      },
-      "bundling_notes": "EMN (31627), TBLB (31628), and radial EBUS (31654) are all appropriate given the documented attempts at navigational bronchoscopic biopsy. There is no EBUS lymph node staging in this case.",
-      "validation_notes": [
-        "Removed unrelated codes 31631 and 31651; no stent removal or service matching those descriptors occurred.",
-        "Radial EBUS view corrected to None and nav_tool_in_lesion set to false to reflect failed localization.",
-        "Pleural_guidance cleared (CT reference here is for lesion characterization, not a pleural procedure).",
-        "MRN normalized to PQ5847 and radiation metrics populated from the report."
+      ],
+      "total_facility_rvu_2025": 9.88,
+      "total_facility_payment_2025": 319.62,
+      "rationale": [
+        "Electromagnetic navigation bronchoscopy attempted for peripheral nodule localization supports 31627.",
+        "Transbronchial lung biopsies taken from the suspected area support 31628.",
+        "Radial EBUS was deployed multiple times for peripheral lesion evaluation, supporting 31654 despite lack of concentric view."
       ]
     }
   },
@@ -1501,51 +1510,54 @@
       ]
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "cpt_summary": {
-        "31652": {
-          "units": 1,
-          "role": "primary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "EBUS-TBNA of two mediastinal nodal stations (4R and 7) for staging PET-positive N2 disease."
+      "final_cpt_codes": [
+        31652,
+        31627,
+        31654,
+        31629,
+        31628
+      ],
+      "cpt_summary": [
+        {
+          "code": "31652",
+          "description": "EBUS-TBNA, 1-2 nodal stations",
+          "facility_rvu_2025": 6.46,
+          "facility_payment_2025": 209.0
         },
-        "31627": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Electromagnetic navigation bronchoscopy for targeting the RLL lateral segment nodule."
+        {
+          "code": "31627",
+          "description": "Bronch; EMN navigation to peripheral lesion",
+          "facility_rvu_2025": 2.82,
+          "facility_payment_2025": 91.23
         },
-        "31654": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Radial EBUS confirmation of tool-in-lesion (concentric pattern) during peripheral lesion sampling."
+        {
+          "code": "31654",
+          "description": "Add-on; EBUS for peripheral lesion",
+          "facility_rvu_2025": 1.95,
+          "facility_payment_2025": 63.08
         },
-        "31629": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Transbronchial needle aspiration (TBNA) of the peripheral lesion via navigation (two needle aspirates)."
+        {
+          "code": "31629",
+          "description": "Bronch; transbronchial needle aspiration biopsy(s)",
+          "facility_rvu_2025": 5.46,
+          "facility_payment_2025": 176.66
         },
-        "31628": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Transbronchial lung biopsies (three forceps biopsies) of the same RLL peripheral lesion."
+        {
+          "code": "31628",
+          "description": "Bronch; transbronchial lung biopsy(s), single lobe",
+          "facility_rvu_2025": 5.11,
+          "facility_payment_2025": 165.31
         }
-      },
-      "bundling_notes": "31652 covers EBUS-TBNA of 1\u20132 nodal stations and is corrected from 31653. 31628 and 31629 may be subject to NCCI bundling when performed on the same lesion; modifier -59/-XS may be required if distinct anatomic targets are documented.",
-      "validation_notes": [
-        "EBUS code changed from 31653 (3+ nodes) to 31652 because only two nodal stations (4R, 7) are sampled.",
-        "Primary indication updated to reflect combined staging and peripheral lesion biopsy.",
-        "Registry procedure_date cleared where DOB had been misinterpreted as the procedure date.",
-        "Navigation and radial EBUS fields already aligned with the narrative; no additional registry changes needed."
+      ],
+      "total_facility_rvu_2025": 21.8,
+      "total_facility_payment_2025": 705.28,
+      "rationale": [
+        "EBUS-TBNA of two nodal stations (4R and 7) supports 31652.",
+        "Electromagnetic navigation to the peripheral nodule supports 31627.",
+        "Radial EBUS confirmation of the lesion supports 31654.",
+        "TBNA and TBLB of the peripheral lesion support 31629 and 31628, respectively."
       ]
     }
   },
@@ -1723,43 +1735,46 @@
       ]
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "cpt_summary": {
-        "31627": {
-          "units": 1,
-          "role": "primary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Electromagnetic navigation bronchoscopy (SuperDimension) for left lower lobe superior segment peripheral nodule."
+      "final_cpt_codes": [
+        31627,
+        31654,
+        31629,
+        31628
+      ],
+      "cpt_summary": [
+        {
+          "code": "31627",
+          "description": "Bronch; EMN navigation to peripheral lesion",
+          "facility_rvu_2025": 2.82,
+          "facility_payment_2025": 91.23
         },
-        "31654": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Radial EBUS used to achieve concentric tool-in-lesion confirmation prior to sampling."
+        {
+          "code": "31654",
+          "description": "Add-on; EBUS for peripheral lesion",
+          "facility_rvu_2025": 1.95,
+          "facility_payment_2025": 63.08
         },
-        "31629": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Transbronchial needle aspiration (3 passes) of the peripheral nodule."
+        {
+          "code": "31629",
+          "description": "Bronch; transbronchial needle aspiration biopsy(s)",
+          "facility_rvu_2025": 5.46,
+          "facility_payment_2025": 176.66
         },
-        "31628": {
-          "units": 1,
-          "role": "secondary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "Transbronchial lung biopsies (five forceps specimens) of the peripheral nodule."
+        {
+          "code": "31628",
+          "description": "Bronch; transbronchial lung biopsy(s), single lobe",
+          "facility_rvu_2025": 5.11,
+          "facility_payment_2025": 165.31
         }
-      },
-      "bundling_notes": "Combination of navigation (31627), radial EBUS (31654), TBNA (31629), and TBLB (31628) is appropriate for a single EMN-guided peripheral lesion. 31628 and 31629 may be bundled if payers consider them overlapping on the same target.",
-      "validation_notes": [
-        "Pneumothorax_intervention changed from Aspiration to Observation because the narrative documents conservative management only.",
-        "Navigation registry fields updated to reflect radial EBUS use and concentric confirmation.",
-        "Procedure_date cleared where DOB was incorrectly interpreted as the procedure date."
+      ],
+      "total_facility_rvu_2025": 15.34,
+      "total_facility_payment_2025": 496.28,
+      "rationale": [
+        "Electromagnetic navigation bronchoscopy for peripheral nodule supports 31627.",
+        "Radial EBUS confirmation (concentric pattern) supports 31654.",
+        "TBNA and TBLB of the lesion support 31629 and 31628."
       ]
     }
   },
@@ -1925,22 +1940,23 @@
       ]
     },
     "coding_review": {
-      "reviewer": "ip_coder_patch_gpt",
+      "reviewer": "IP-Coder-Patch-GPT",
       "review_date": "2025-12-06",
-      "cpt_summary": {
-        "31653": {
-          "units": 1,
-          "role": "primary",
-          "2025_facility_rvu": null,
-          "2025_facility_payment": null,
-          "rationale": "EBUS-TBNA with systematic mediastinal and hilar staging and sampling of three nodal stations (4R, 7, 10L) with ROSE and molecular testing."
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.15,
+          "facility_payment_2025": 231.3
         }
-      },
-      "bundling_notes": "Single EBUS staging code 31653 is appropriate for 3 sampled nodal stations under moderate sedation; no additional bronchoscopy biopsy or navigation codes are supported.",
-      "validation_notes": [
-        "MRN normalized to QR8374M.",
-        "Registry procedure_date cleared where DOB was incorrectly treated as the procedure date.",
-        "Sedation reversal fields already correctly capture flumazenil use for prolonged sedation."
+      ],
+      "total_facility_rvu_2025": 7.15,
+      "total_facility_payment_2025": 231.3,
+      "rationale": [
+        "EBUS-TBNA with systematic staging and sampling of three nodal stations (4R, 7, 10L) with ROSE and molecular testing supports 31653."
       ]
     }
   }

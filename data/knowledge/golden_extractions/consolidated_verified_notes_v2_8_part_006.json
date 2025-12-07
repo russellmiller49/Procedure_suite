@@ -615,7 +615,6 @@
       "bleeding_severity": "Mild",
       "pneumothorax": false,
       "pneumothorax_intervention": null,
-      "ablation_peripheral_performed": false,
       "ablation_modality": null,
       "pleural_procedure_type": "Thoracentesis",
       "pleural_guidance": "Ultrasound",
@@ -721,7 +720,8 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.155182"
-      }
+      },
+      "ablation_peripheral_performed": false
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
     "cpt_verification_errors": [],
@@ -1758,7 +1758,7 @@
     "registry_entry": {
       "patient_mrn": "7729384",
       "procedure_date": "2025-04-12",
-      "patient_age": 0,
+      "patient_age": 64,
       "gender": "Female",
       "asa_class": 3,
       "primary_indication": "Patient is a 64-year-old Hispanic female with recently diagnosed left lower lobe adenocarcinoma (biopsy-proven). Presented today for mediastinal staging via EBUS-TBNA. CT chest shows multiple enlarged mediastinal lymph nodes. PET avid nodes at stations 4L, 7, and 10L. PRE-PROCEDURE: \u2022\tInformed conse",
@@ -1931,6 +1931,27 @@
         "Extracted EBUS stations: ['10L', '10R', '11L', '2L', '2R', '4L', '4R', '7']"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.15,
+          "facility_payment_2025": 231.3
+        }
+      ],
+      "total_facility_rvu_2025": 7.15,
+      "total_facility_payment_2025": 231.3,
+      "rationale": [
+        "This note is a duplicate of the previous EBUS case; 31653 remains appropriate for multi-station mediastinal staging.",
+        "Registry fields updated to match the clinical data (age 64, specific EBUS stations, lesion size)."
+      ]
     }
   }
 ]

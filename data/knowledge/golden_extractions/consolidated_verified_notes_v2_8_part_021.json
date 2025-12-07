@@ -206,6 +206,63 @@
         "Added coding_support (coding review) with 2025 facility RVU/payment framework for CPT 32997."
       ],
       "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "generator": "ip_coding_review.gpt-5.1",
+      "knowledge_base_version": "ip_coding_billing.v2_7",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "32997",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Therapeutic whole lung lavage, unilateral",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Left-lung whole lung lavage with large-volume saline under general anesthesia; no additional thoracic procedures documented.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 + operative note documentation",
+            "note_spans": [
+              "Whole lung lavage (left lung) with 6.0 L instilled and 4.8 L returned under general anesthesia."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_7 (no 32997 entry in fee_schedules)",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32997",
+            "description": "Therapeutic whole lung lavage, unilateral",
+            "work_rvu": null,
+            "facility_rvu": null,
+            "nonfacility_rvu": null,
+            "facility_payment": null,
+            "nonfacility_payment": null,
+            "notes": "RVU/payment values for 32997 are not present in ip_coding_billing.v2_7; populate from current CMS PFS if needed.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": null,
+        "total_facility_rvu": null,
+        "total_nonfacility_rvu": null,
+        "estimated_professional_payment": null,
+        "notes": "Financial totals for 32997 left null because the code is not represented in the 2025 airway/pleural fee schedule sections."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Operative report describes whole lung lavage for pulmonary alveolar proteinosis with intubation, lung isolation, and repeated saline instillation and drainage.",
+          "No chest tube, thoracoscopy, pleurodesis, or tunneled pleural catheter placement is documented, so no additional pleural CPT codes are selected."
+        ]
+      }
     }
   },
   {
@@ -320,7 +377,7 @@
       "ablation_complication_immediate": null,
       "final_diagnosis_prelim": "Foreign body aspiration with complete removal",
       "molecular_testing_requested": false,
-      "disposition": null,
+      "disposition": "Floor admission",
       "follow_up_plan": "Outpatient follow-up with pediatric pulmonology in 2 to 4 weeks",
       "cpt_codes": [
         31635
@@ -410,11 +467,68 @@
       "patch_version": "1.0.0",
       "patch_date": "2025-12-02T02:00:48.126135",
       "changes": [
-        "Fixed disposition: None",
+        "Fixed disposition: Floor admission",
         "Fixed ASA class: II -> 3 (defaulted)",
         "Added coding_support (coding review) with 2025 facility RVUs/payments for CPT 31635."
       ],
       "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "generator": "ip_coding_review.gpt-5.1",
+      "knowledge_base_version": "ip_coding_billing.v2_7",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "31635",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Bronchoscopy, rigid or flexible, with removal of foreign body",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Rigid bronchoscopy with peanut removal from right middle lobe; no biopsies, lavage, or other bronchoscopic interventions documented.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 physician_2025_airway + note documentation",
+            "note_spans": [
+              "Rigid bronchoscopy with foreign body removal for peanut aspiration and right middle lobe collapse."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_airway",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "31635",
+            "description": "Bronchoscopy, rigid or flexible, with removal of foreign body",
+            "work_rvu": 3.42,
+            "facility_rvu": 5.54,
+            "nonfacility_rvu": 9.15,
+            "facility_payment": 181,
+            "nonfacility_payment": 300,
+            "notes": "2025 national facility and office rates for 31635 from airway fee schedule.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_nonfacility_rvu": 9.15,
+        "estimated_professional_payment": 181,
+        "notes": "Totals reflect one unit of 31635 only; no bundled or additional bronchoscopic services billed."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Rigid bronchoscopy with foreign body retrieval from the right middle lobe matches the intent of 31635 without additional therapeutic components.",
+          "No airway ablation, stent placement, EBUS, or diagnostic sampling is reported, so no other bronchoscopic CPT codes are selected."
+        ]
+      }
     }
   },
   {
@@ -624,6 +738,63 @@
         "Added coding_support (coding review) with 2025 facility RVUs/payments for CPT 31635."
       ],
       "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "generator": "ip_coding_review.gpt-5.1",
+      "knowledge_base_version": "ip_coding_billing.v2_7",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "31635",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Bronchoscopy, rigid or flexible, with removal of foreign body",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Rigid bronchoscopy with removal of plastic toy from left mainstem bronchus; no additional therapeutic bronchoscopy services documented.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 physician_2025_airway + note documentation",
+            "note_spans": [
+              "Rigid bronchoscopy with foreign body removal for suspected aspiration of small plastic toy and unilateral wheeze."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_airway",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "31635",
+            "description": "Bronchoscopy, rigid or flexible, with removal of foreign body",
+            "work_rvu": 3.42,
+            "facility_rvu": 5.54,
+            "nonfacility_rvu": 9.15,
+            "facility_payment": 181,
+            "nonfacility_payment": 300,
+            "notes": "Same RVU and payment profile as other 31635 foreign body cases.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_nonfacility_rvu": 9.15,
+        "estimated_professional_payment": 181,
+        "notes": "Single 31635 reported for rigid bronchoscopic foreign body removal; global period is 0 days."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Documentation shows rigid bronchoscopy with successful removal of a plastic toy from the airway, which is appropriately captured by 31635.",
+          "No concurrent bronchoscopy-based biopsies, lavage, or airway tumor debulking are described, so only 31635 is selected."
+        ]
+      }
     }
   },
   {
@@ -834,6 +1005,63 @@
         "Added coding_support (coding review) with 2025 facility RVUs/payments for CPT 31635."
       ],
       "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "generator": "ip_coding_review.gpt-5.1",
+      "knowledge_base_version": "ip_coding_billing.v2_7",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "31635",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Bronchoscopy, rigid or flexible, with removal of foreign body",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Flexible bronchoscopy with fluoroscopic guidance used to remove metallic dental crown from the right lower lobe bronchus.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 physician_2025_airway + note documentation",
+            "note_spans": [
+              "Flexible bronchoscopy with removal of dental crown from right lower lobe bronchus under fluoroscopic guidance."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_airway",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "31635",
+            "description": "Bronchoscopy, rigid or flexible, with removal of foreign body",
+            "work_rvu": 3.42,
+            "facility_rvu": 5.54,
+            "nonfacility_rvu": 9.15,
+            "facility_payment": 181,
+            "nonfacility_payment": 300,
+            "notes": "Foreign body removal bronchoscopy with fluoroscopic confirmation; standard 31635 facility values applied.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_nonfacility_rvu": 9.15,
+        "estimated_professional_payment": 181,
+        "notes": "Totals reflect a single 31635; no additional bronchoscopic CPT codes are modeled."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Case describes flexible bronchoscopy with fluoroscopically guided retrieval of a metallic dental crown from the right lower lobe, consistent with 31635.",
+          "Although fluoroscopy is used, this is inherent to the 31635 service and does not generate a separate imaging CPT code."
+        ]
+      }
     }
   },
   {
@@ -1043,6 +1271,63 @@
         "Added coding_support (coding review) with 2025 facility RVUs/payments for CPT 31660."
       ],
       "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "generator": "ip_coding_review.gpt-5.1",
+      "knowledge_base_version": "ip_coding_billing.v2_7",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "31660",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Bronchial thermoplasty performed in the right lower lobe only for severe asthma (session 1).",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 physician_2025_airway + note documentation",
+            "note_spans": [
+              "Bronchial thermoplasty session 1 treating right lower lobe with 52 activations and good airway control."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_airway",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "31660",
+            "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+            "work_rvu": 4.0,
+            "facility_rvu": 5.97,
+            "nonfacility_rvu": 0.0,
+            "facility_payment": 195,
+            "nonfacility_payment": null,
+            "notes": "Thermoplasty single-lobe session, using airway fee schedule for 2025.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 4.0,
+        "total_facility_rvu": 5.97,
+        "total_nonfacility_rvu": 0.0,
+        "estimated_professional_payment": 195,
+        "notes": "Single thermoplasty lobe coded with 31660; no additional lobar thermoplasty CPT reported for this session."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Procedure describes bronchial thermoplasty confined to the right lower lobe, which is appropriately captured by a single unit of 31660.",
+          "No additional lobes, EBUS, or separate diagnostic bronchoscopy services are documented, so only 31660 is billed."
+        ]
+      }
     }
   },
   {
@@ -1252,6 +1537,63 @@
         "Added coding_support (coding review) with 2025 facility RVUs/payments for CPT 31660."
       ],
       "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "generator": "ip_coding_review.gpt-5.1",
+      "knowledge_base_version": "ip_coding_billing.v2_7",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "31660",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Second bronchial thermoplasty session limited to the left lower lobe with documented BT catheter activations.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 physician_2025_airway + note documentation",
+            "note_spans": [
+              "Bronchial thermoplasty session 2 treating left lower lobe with 48 activations and monitored anesthesia care."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_airway",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "31660",
+            "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+            "work_rvu": 4.0,
+            "facility_rvu": 5.97,
+            "nonfacility_rvu": 0.0,
+            "facility_payment": 195,
+            "nonfacility_payment": null,
+            "notes": "Same 2025 airway thermoplasty values as session 1 for single-lobe treatment.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 4.0,
+        "total_facility_rvu": 5.97,
+        "total_nonfacility_rvu": 0.0,
+        "estimated_professional_payment": 195,
+        "notes": "Session 2 thermoplasty codes only 31660 as a single-lobe treatment; prior RLL session is separate encounter."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "The note describes bronchial thermoplasty in the left lower lobe only, with MAC anesthesia and no other bronchoscopic procedures.",
+          "Using 31660 once for this single-lobe thermoplasty session is consistent with CPT and internal thermoplasty coding guidance."
+        ]
+      }
     }
   },
   {
@@ -1461,6 +1803,63 @@
         "Added coding_support (coding review) for thermoplasty session 3; left existing 31660 coding unchanged but documented 31661 as a consideration in rationale."
       ],
       "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "generator": "ip_coding_review.gpt-5.1",
+      "knowledge_base_version": "ip_coding_billing.v2_7",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "31660",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Third bronchial thermoplasty session described as treating bilateral upper lobes within a single encounter.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 physician_2025_airway + note documentation",
+            "note_spans": [
+              "Bronchial thermoplasty session 3 treating bilateral upper lobes with 60 total activations."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_airway",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "31660",
+            "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+            "work_rvu": 4.0,
+            "facility_rvu": 5.97,
+            "nonfacility_rvu": 0.0,
+            "facility_payment": 195,
+            "nonfacility_payment": null,
+            "notes": "Modeling reflects the code actually present (31660); potential add-on 31661 is discussed in rationale, not included in totals.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 4.0,
+        "total_facility_rvu": 5.97,
+        "total_nonfacility_rvu": 0.0,
+        "estimated_professional_payment": 195,
+        "notes": "Totals are based on the billed 31660 only; 31661 is not added automatically because payer and institutional policies vary."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Documentation states bronchial thermoplasty was performed in both upper lobes with a single anesthetic and airway episode.",
+          "Some coding guidance supports adding 31661 for additional treated lobes, but this patch leaves the original 31660-only coding unchanged and flags 31661 as a consideration."
+        ]
+      }
     }
   },
   {
@@ -1670,6 +2069,63 @@
         "Added coding_support (coding review) with 2025 facility RVUs/payments for CPT 32609."
       ],
       "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "generator": "ip_coding_review.gpt-5.1",
+      "knowledge_base_version": "ip_coding_billing.v2_7",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "32609",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Thoracoscopy, surgical; with pleurodesis, including pleural biopsies when performed",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Medical thoracoscopy with pleural biopsies and talc pleurodesis for malignant effusion; chest tube placed for drainage.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 physician_2025_pleural + note documentation",
+            "note_spans": [
+              "Medical thoracoscopy with pleural biopsies and talc pleurodesis for recurrent right malignant pleural effusion."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_pleural",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with pleurodesis, including pleural biopsies when performed",
+            "work_rvu": 11.25,
+            "facility_rvu": 16.88,
+            "nonfacility_rvu": 0.0,
+            "facility_payment": 553,
+            "nonfacility_payment": null,
+            "notes": "Pleural thoracoscopy with talc pleurodesis and biopsies modeled as single primary pleural code.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 11.25,
+        "total_facility_rvu": 16.88,
+        "total_nonfacility_rvu": 0.0,
+        "estimated_professional_payment": 553,
+        "notes": "No additional thoracentesis or biopsy CPT codes modeled, because 32609 includes drainage and pleural biopsies when performed."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Operative description includes thoracoscopy, pleural biopsies, and talc pleurodesis with indwelling chest tube, matching the bundled service described by 32609.",
+          "A separate thoracentesis code would be inappropriate because fluid drainage is inherent to the thoracoscopic pleurodesis procedure."
+        ]
+      }
     }
   },
   {
@@ -1880,6 +2336,63 @@
         "Added coding_support (coding review) with 2025 facility RVUs/payments for CPT 32555."
       ],
       "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "generator": "ip_coding_review.gpt-5.1",
+      "knowledge_base_version": "ip_coding_billing.v2_7",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "32555",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Thoracentesis with imaging guidance, diagnostic or therapeutic",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Ultrasound-guided therapeutic thoracentesis with approximately 900 mL removed and specimens sent for studies.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 physician_2025_pleural + note documentation",
+            "note_spans": [
+              "Ultrasound-guided therapeutic thoracentesis performed with removal of 900 mL of pleural fluid."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_pleural",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32555",
+            "description": "Thoracentesis with imaging guidance, diagnostic or therapeutic",
+            "work_rvu": 2.27,
+            "facility_rvu": 3.19,
+            "nonfacility_rvu": 3.48,
+            "facility_payment": 104,
+            "nonfacility_payment": 114,
+            "notes": "Standard ultrasound-guided thoracentesis values for 2025 MPFS.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 2.27,
+        "total_facility_rvu": 3.19,
+        "total_nonfacility_rvu": 3.48,
+        "estimated_professional_payment": 104,
+        "notes": "No chest tube insertion, pleurodesis, or thoracoscopy is documented; modeling reflects a stand-alone 32555 service."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Procedure note documents ultrasound-guided thoracentesis with therapeutic fluid removal and diagnostic testing, matching CPT 32555.",
+          "There is no indwelling tunneled catheter or thoracoscopy, so 32550 or 32609 are not supported for this encounter."
+        ]
+      }
     }
   },
   {
@@ -2119,6 +2632,90 @@
         "Added coding_support (coding review) with 2025 facility RVUs/payments for CPT 32609 and 32550."
       ],
       "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "generator": "ip_coding_review.gpt-5.1",
+      "knowledge_base_version": "ip_coding_billing.v2_7",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "32609",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Thoracoscopy, surgical; with pleurodesis, including pleural biopsies when performed",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Medical thoracoscopy with pleural biopsies and talc pleurodesis for malignant pleural effusion.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 physician_2025_pleural + note documentation",
+            "note_spans": [
+              "Medical thoracoscopy with pleural biopsies, talc pleurodesis, and tunneled pleural catheter placement."
+            ]
+          },
+          {
+            "code": "32550",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "units": 1,
+            "role": "supporting",
+            "selection_status": "selected",
+            "selection_reason": "Separate indwelling tunneled pleural catheter with cuff placed at thoracoscopy for ongoing outpatient drainage.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_7 physician_2025_pleural + note documentation",
+            "note_spans": [
+              "Placement of tunneled pleural catheter with cuff for long-term drainage after thoracoscopy."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_pleural",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy, surgical; with pleurodesis, including pleural biopsies when performed",
+            "work_rvu": 11.25,
+            "facility_rvu": 16.88,
+            "nonfacility_rvu": 0.0,
+            "facility_payment": 553,
+            "nonfacility_payment": null,
+            "notes": "Primary pleural thoracoscopy with biopsy and talc pleurodesis.",
+            "is_add_on": false
+          },
+          {
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "work_rvu": 3.92,
+            "facility_rvu": 5.88,
+            "nonfacility_rvu": 0.0,
+            "facility_payment": 193,
+            "nonfacility_payment": null,
+            "notes": "Tunneled pleural catheter placement performed in same session as thoracoscopy.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 15.17,
+        "total_facility_rvu": 22.76,
+        "total_nonfacility_rvu": 0.0,
+        "estimated_professional_payment": 746,
+        "notes": "Totals reflect combined 32609 and 32550; ip_coding_billing NCCI guidance does not bundle tunneled catheter placement into thoracoscopic pleurodesis."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Operative note documents thoracoscopy with pleural biopsies and talc pleurodesis plus placement of a tunneled pleural catheter for ongoing drainage.",
+          "Tunneled pleural catheter insertion (32550) is separately reportable when performed with thoracoscopy and is not bundled into 32609 under current NCCI logic."
+        ]
+      }
     }
   }
 ]

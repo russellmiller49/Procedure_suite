@@ -5,7 +5,7 @@ SHELL := /bin/bash
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
 SETUP_STAMP := .setup.stamp
 PYTHON := python
-KB_PATH := data/knowledge/ip_coding_billing.v2_7.json
+KB_PATH := data/knowledge/ip_coding_billing_v2_8.json
 SCHEMA_PATH := data/knowledge/IP_Registry.json
 NOTES_PATH := data/knowledge/synthetic_notes_with_registry2.json
 

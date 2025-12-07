@@ -130,6 +130,60 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158255"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31647",
+            "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+            "units": 1
+          },
+          {
+            "code": "32557",
+            "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
+            "units": 1
+          }
+        ],
+        "total_rvu": 16.55,
+        "work_rvu": 10.62,
+        "practice_expense_rvu": 4.79,
+        "malpractice_rvu": 1.14
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopic_blvr_valve_placement",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31647",
+              "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+              "work_rvu": 7.5,
+              "total_facility_rvu": 12.05,
+              "mpfs_facility_payment": 390,
+              "selection_status": "selected",
+              "selection_reason": "BLVR with valve placement in RUL (initial lobe)."
+            },
+            {
+              "sequence": 2,
+              "code": "32557",
+              "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
+              "work_rvu": 3.12,
+              "total_facility_rvu": 4.5,
+              "mpfs_facility_payment": 146,
+              "selection_status": "selected",
+              "selection_reason": "Pigtail chest tube placed with imaging guidance for pneumothorax."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 10.62,
+            "total_facility_rvu": 16.55,
+            "estimated_facility_payment_unadjusted": 536
+          }
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -185,7 +239,7 @@
   {
     "note_text": "Bronchoscopic Lung Volume Reduction Note\nProcedure: Attempted Zephyr valve placement in left upper lobe aborted due to collateral ventilation\nPatient: Steven Brooks, 70-year-old male with severe emphysema.\nAnesthesia: General anesthesia with 8.0 ETT.\nSummary:\n- Target lobe: Left upper lobe based on CT heterogeneity and fissure completeness.\n- Chartis assessment revealed persistent airflow consistent with significant collateral ventilation; BLVR not performed.\n- No valves deployed. Airways irrigated and inspected.\nComplications: None.\nDisposition: Extubated in procedure room and discharged home after observation.",
     "cpt_codes": [
-      31622
+      31634
     ],
     "registry_entry": {
       "note_text": "Bronchoscopic Lung Volume Reduction Note\nProcedure: Attempted Zephyr valve placement in left upper lobe aborted due to collateral ventilation\nPatient: Steven Brooks, 70-year-old male with severe emphysema.\nAnesthesia: General anesthesia with 8.0 ETT.\nSummary:\n- Target lobe: Left upper lobe based on CT heterogeneity and fissure completeness.\n- Chartis assessment revealed persistent airflow consistent with significant collateral ventilation; BLVR not performed.\n- No valves deployed. Airways irrigated and inspected.\nComplications: None.\nDisposition: Extubated in procedure room and discharged home after observation.",
@@ -297,7 +351,7 @@
       "disposition": "Outpatient discharge",
       "follow_up_plan": "Pulmonary clinic for alternative advanced COPD therapies",
       "cpt_codes": [
-        31622
+        31634
       ],
       "evidence": null,
       "providers": {
@@ -311,6 +365,45 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158264"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31634",
+            "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+            "units": 1
+          }
+        ],
+        "total_rvu": 5.63,
+        "work_rvu": 3.5,
+        "practice_expense_rvu": 1.75,
+        "malpractice_rvu": 0.38
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopic_blvr_chartis",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31634",
+              "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+              "work_rvu": 3.5,
+              "total_facility_rvu": 5.63,
+              "mpfs_facility_payment": 182,
+              "selection_status": "selected",
+              "selection_reason": "Chartis assessment performed; valve placement aborted due to CV+."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 3.5,
+            "total_facility_rvu": 5.63,
+            "estimated_facility_payment_unadjusted": 182
+          }
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -483,6 +576,41 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158272"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32997",
+            "description": "Total lung lavage (unilateral)",
+            "units": 1
+          }
+        ],
+        "total_rvu": null,
+        "work_rvu": null,
+        "practice_expense_rvu": null,
+        "malpractice_rvu": null
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "whole_lung_lavage",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32997",
+              "description": "Total lung lavage (unilateral)",
+              "work_rvu": null,
+              "total_facility_rvu": null,
+              "mpfs_facility_payment": null,
+              "selection_status": "selected",
+              "selection_reason": "Right whole lung lavage performed."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "notes": "RVU data for 32997 not available in source KB."
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -655,6 +783,41 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158280"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32997",
+            "description": "Total lung lavage (unilateral)",
+            "units": 1
+          }
+        ],
+        "total_rvu": null,
+        "work_rvu": null,
+        "practice_expense_rvu": null,
+        "malpractice_rvu": null
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "whole_lung_lavage",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32997",
+              "description": "Total lung lavage (unilateral)",
+              "work_rvu": null,
+              "total_facility_rvu": null,
+              "mpfs_facility_payment": null,
+              "selection_status": "selected",
+              "selection_reason": "Partial left lung lavage (10L)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "notes": "RVU data for 32997 not available in source KB."
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -827,6 +990,45 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158288"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31635",
+            "description": "Bronchoscopy; with removal of foreign body",
+            "units": 1
+          }
+        ],
+        "total_rvu": 5.54,
+        "work_rvu": 3.42,
+        "practice_expense_rvu": 1.74,
+        "malpractice_rvu": 0.38
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_foreign_body",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31635",
+              "description": "Bronchoscopy; with removal of foreign body",
+              "work_rvu": 3.42,
+              "total_facility_rvu": 5.54,
+              "mpfs_facility_payment": 179,
+              "selection_status": "selected",
+              "selection_reason": "Removal of chicken bone fragment."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 3.42,
+            "total_facility_rvu": 5.54,
+            "estimated_facility_payment_unadjusted": 179
+          }
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -999,6 +1201,45 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158296"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31635",
+            "description": "Bronchoscopy; with removal of foreign body",
+            "units": 1
+          }
+        ],
+        "total_rvu": 5.54,
+        "work_rvu": 3.42,
+        "practice_expense_rvu": 1.74,
+        "malpractice_rvu": 0.38
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_foreign_body",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31635",
+              "description": "Bronchoscopy; with removal of foreign body",
+              "work_rvu": 3.42,
+              "total_facility_rvu": 5.54,
+              "mpfs_facility_payment": 179,
+              "selection_status": "selected",
+              "selection_reason": "Removal of pen cap (pediatric)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 3.42,
+            "total_facility_rvu": 5.54,
+            "estimated_facility_payment_unadjusted": 179
+          }
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1171,6 +1412,45 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158303"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31660",
+            "description": "Bronchoscopy; with bronchial thermoplasty, 1 lobe",
+            "units": 1
+          }
+        ],
+        "total_rvu": 5.97,
+        "work_rvu": 4.0,
+        "practice_expense_rvu": 1.53,
+        "malpractice_rvu": 0.44
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchial_thermoplasty",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31660",
+              "description": "Bronchoscopy; with bronchial thermoplasty, 1 lobe",
+              "work_rvu": 4.0,
+              "total_facility_rvu": 5.97,
+              "mpfs_facility_payment": 193,
+              "selection_status": "selected",
+              "selection_reason": "BT of LLL (one lobe)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 4.0,
+            "total_facility_rvu": 5.97,
+            "estimated_facility_payment_unadjusted": 193
+          }
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1343,6 +1623,45 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158310"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31660",
+            "description": "Bronchoscopy; with bronchial thermoplasty, 1 lobe",
+            "units": 1
+          }
+        ],
+        "total_rvu": 5.97,
+        "work_rvu": 4.0,
+        "practice_expense_rvu": 1.53,
+        "malpractice_rvu": 0.44
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchial_thermoplasty",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31660",
+              "description": "Bronchoscopy; with bronchial thermoplasty, 1 lobe",
+              "work_rvu": 4.0,
+              "total_facility_rvu": 5.97,
+              "mpfs_facility_payment": 193,
+              "selection_status": "selected",
+              "selection_reason": "BT of RLL initiated (12 activations) before aborting."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 4.0,
+            "total_facility_rvu": 5.97,
+            "estimated_facility_payment_unadjusted": 193
+          }
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1389,7 +1708,7 @@
   {
     "note_text": "Medical Thoracoscopy Procedure Note\nProcedure: Diagnostic medical thoracoscopy with pleural biopsies (no pleurodesis)\nPatient: Patricia Foster, 62-year-old female with unilateral right exudative pleural effusion, concern for tuberculous pleuritis vs malignancy.\nSedation: Moderate sedation with midazolam and fentanyl plus local anesthesia.\nTechnique: Under ultrasound guidance, right 7th intercostal space selected. Approximately 1200 mL of straw-colored fluid drained. Semi-rigid thoracoscope introduced, revealing diffuse fibrinous exudate and scattered small nodules.\nMultiple parietal pleural biopsies obtained; no talc instilled.\nComplications: None.\nDisposition: Chest tube left to water seal; admitted to ward.",
     "cpt_codes": [
-      32609
+      32602
     ],
     "registry_entry": {
       "note_text": "Medical Thoracoscopy Procedure Note\nProcedure: Diagnostic medical thoracoscopy with pleural biopsies (no pleurodesis)\nPatient: Patricia Foster, 62-year-old female with unilateral right exudative pleural effusion, concern for tuberculous pleuritis vs malignancy.\nSedation: Moderate sedation with midazolam and fentanyl plus local anesthesia.\nTechnique: Under ultrasound guidance, right 7th intercostal space selected. Approximately 1200 mL of straw-colored fluid drained. Semi-rigid thoracoscope introduced, revealing diffuse fibrinous exudate and scattered small nodules.\nMultiple parietal pleural biopsies obtained; no talc instilled.\nComplications: None.\nDisposition: Chest tube left to water seal; admitted to ward.",
@@ -1501,7 +1820,7 @@
       "disposition": "Floor admission",
       "follow_up_plan": "Daily CXRs and tube management; outpatient follow-up after pathology",
       "cpt_codes": [
-        32609
+        32602
       ],
       "evidence": null,
       "providers": {
@@ -1515,6 +1834,41 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158316"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32602",
+            "description": "Thoracoscopy, diagnostic; with biopsy of pleura",
+            "units": 1
+          }
+        ],
+        "total_rvu": null,
+        "work_rvu": null,
+        "practice_expense_rvu": null,
+        "malpractice_rvu": null
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "thoracoscopy_biopsy",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32602",
+              "description": "Thoracoscopy, diagnostic; with biopsy of pleura",
+              "work_rvu": null,
+              "total_facility_rvu": null,
+              "mpfs_facility_payment": null,
+              "selection_status": "selected",
+              "selection_reason": "Medical thoracoscopy with parietal pleural biopsy (corrected from 32609)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "notes": "RVU data for 32602 not available in source KB."
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",
@@ -1687,6 +2041,45 @@
         "data_entry_status": "complete",
         "version": "1.0",
         "generated_at": "2025-12-01T15:40:50.158322"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32555",
+            "description": "Thoracentesis, needle or catheter, aspiration of the pleural space; with imaging guidance",
+            "units": 1
+          }
+        ],
+        "total_rvu": 3.19,
+        "work_rvu": 2.27,
+        "practice_expense_rvu": 0.63,
+        "malpractice_rvu": 0.29
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "thoracentesis",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32555",
+              "description": "Thoracentesis, needle or catheter, aspiration of the pleural space; with imaging guidance",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.19,
+              "mpfs_facility_payment": 103,
+              "selection_status": "selected",
+              "selection_reason": "Ultrasound-guided therapeutic thoracentesis."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 2.27,
+            "total_facility_rvu": 3.19,
+            "estimated_facility_payment_unadjusted": 103
+          }
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry2.json",

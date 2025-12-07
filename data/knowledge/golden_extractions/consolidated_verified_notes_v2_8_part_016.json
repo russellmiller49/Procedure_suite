@@ -182,41 +182,43 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "knowledge_base_version": "2.7",
-      "mpfs_year": 2025,
-      "facility_totals": {
-        "total_facility_rvu": 12.63,
-        "total_mpfs_facility_payment": 413
-      },
-      "cpt_summary": [
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "EBUS and bronchoscopy note for Jennifer Wang, DOS 10/22/2024.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
         {
           "code": "31653",
-          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
           "units": 1,
-          "primary": true,
-          "add_on": false,
-          "total_facility_rvu": 7.7,
-          "mpfs_facility_payment": 252
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of stations 2R, 4R, 7, and 10R (4 stations)."
         },
         {
           "code": "31625",
-          "description": "Bronchoscopy with bronchial or endobronchial biopsy(s)",
+          "description": "Bronchoscopy with bronchial or endobronchial biopsy(s).",
+          "category": "bronchoscopy_biopsy_endobronchial",
           "units": 1,
-          "primary": false,
-          "add_on": false,
-          "total_facility_rvu": 4.93,
-          "mpfs_facility_payment": 161
+          "facility_total_rvus_2025": 4.93,
+          "facility_mpfs_payment_2025": 160.0,
+          "bundling_or_modifier_notes": "Supported by forceps biopsy of the RUL tumor. Distinct from the nodal sampling."
         }
       ],
-      "rationale": {
-        "note_level": "Systematic EBUS-TBNA of 4 mediastinal/hilar stations (2R, 4R, 7, 10R) with separate endobronchial biopsies of a right upper lobe mass; no stent or bronchial valve placement is documented, so 31631 and 31651 were removed.",
-        "per_code": {
-          "31653": "EBUS-TBNA performed in \u22653 nodal stations for lung cancer staging.",
-          "31625": "Multiple forceps biopsies obtained from a visible endobronchial tumor."
-        },
-        "bundling_considerations": "Diagnostic bronchoscopy is inherent to 31653/31625 and is not separately reported."
-      }
+      "totals_2025_facility": {
+        "total_facility_rvus": 12.63,
+        "total_facility_mpfs_payment": 409.0,
+        "computation_notes": "Sum of 31653 + 31625."
+      },
+      "rationale": [
+        "Code selection: EBUS-TBNA of 4 stations supports 31653. Endobronchial biopsy of the primary mass supports 31625.",
+        "Bundling: 31625 is generally payable with 31653 when performed on a separate lesion (primary tumor vs nodes)."
+      ]
     }
   },
   {
@@ -377,63 +379,62 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.116444",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:45:00Z",
       "changes": [
-        "Fixed MRN: TK-9472 -> TK9472"
+        "Standardized MRN format."
       ],
       "warnings": [
-        "Could not extract valid procedure date (was 1964-09-03)",
-        "NCCI bundling: 31628 + 31629 - TBLB and TBNA same lesion. Consider modifier -59/-XS if distinct sites.",
-        "NCCI bundling: 31652 + 31629 - EBUS-TBNA and conventional TBNA. Consider modifier -59/-XS if distinct sites."
+        "NCCI bundling issue: 31628 and 31629 performed on the same lesion."
       ]
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "knowledge_base_version": "2.7",
-      "mpfs_year": 2025,
-      "facility_totals": {
-        "total_facility_rvu": 13.53,
-        "total_mpfs_facility_payment": 443
-      },
-      "cpt_summary": [
-        {
-          "code": "31628",
-          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe",
-          "units": 1,
-          "primary": true,
-          "add_on": false,
-          "total_facility_rvu": 5.53,
-          "mpfs_facility_payment": 181
-        },
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Bronchoscopy note for Mark Thompson.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI Policy Manual Chapter 5"
+      ],
+      "per_code": [
         {
           "code": "31629",
-          "description": "Bronchoscopy with transbronchial needle aspiration biopsy(s)",
+          "description": "Bronchoscopy with transbronchial needle aspiration biopsy(s).",
+          "category": "bronchoscopy_tbna",
           "units": 1,
-          "primary": false,
-          "add_on": false,
-          "total_facility_rvu": 5.89,
-          "mpfs_facility_payment": 193
+          "facility_total_rvus_2025": 5.89,
+          "facility_mpfs_payment_2025": 191.0,
+          "bundling_or_modifier_notes": "High-value primary. Supported by TBNA of RLL nodule."
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe.",
+          "category": "bronchoscopy_biopsy_parenchymal",
+          "units": 1,
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "NCCI Alert: 31628 and 31629 on the *same lesion* are typically bundled. 31629 is higher valued. Both listed to reflect tools used, but payer may deny one."
         },
         {
           "code": "31654",
-          "description": "EBUS for peripheral lesion(s) during bronchoscopy (radial/peripheral add-on)",
+          "description": "EBUS for peripheral lesion(s) (add-on).",
+          "category": "bronchoscopy_ebus_radial",
           "units": 1,
-          "primary": false,
-          "add_on": true,
-          "total_facility_rvu": 2.11,
-          "mpfs_facility_payment": 69
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Add-on. Supported by radial EBUS verification of the nodule."
         }
       ],
-      "rationale": {
-        "note_level": "Peripheral right lower lobe nodule targeted under fluoroscopy with radial EBUS; both TBNA and transbronchial lung biopsies were performed in a single lobe, with no linear mediastinal staging or stent placement documented, so 31631 and 31652 were removed.",
-        "per_code": {
-          "31628": "Transbronchial lung biopsies performed in the RLL.",
-          "31629": "Transbronchial needle aspiration passes into the peripheral RLL lesion.",
-          "31654": "Radial EBUS used to localize the peripheral lesion and confirm tool-in-lesion before sampling."
-        },
-        "bundling_considerations": "31628 and 31629 are directed at the same lesion; NCCI edits may bundle these unless clearly distinct lesions or modifier -59/-XS are supported."
-      }
+      "totals_2025_facility": {
+        "total_facility_rvus": 13.53,
+        "total_facility_mpfs_payment": 438.0,
+        "computation_notes": "Sum of all codes. Actual payment may be lower if 31628 is bundled."
+      },
+      "rationale": [
+        "Procedure: Navigation-assisted (via fluoroscopy/REBUS) sampling of RLL nodule.",
+        "Codes: 31654 for REBUS. 31629 (TBNA) and 31628 (TBLB) both performed on same lesion. NCCI typically allows only one biopsy method per lesion; documentation supports both, but billing both risks denial."
+      ]
     }
   },
   {
@@ -607,31 +608,32 @@
       ]
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "knowledge_base_version": "2.7",
-      "mpfs_year": 2025,
-      "facility_totals": {
-        "total_facility_rvu": 7.7,
-        "total_mpfs_facility_payment": 252
-      },
-      "cpt_summary": [
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "EBUS note for Sandra Lopez.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
         {
           "code": "31653",
-          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
           "units": 1,
-          "primary": true,
-          "add_on": false,
-          "total_facility_rvu": 7.7,
-          "mpfs_facility_payment": 252
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of stations 2R, 4R, and 7."
         }
       ],
-      "rationale": {
-        "note_level": "Systematic mediastinal EBUS-TBNA of stations 2R, 4R and 7 for lung cancer staging; no bronchial or lung parenchymal biopsies are described.",
-        "per_code": {
-          "31653": "\u22653 mediastinal/hilar nodal stations sampled with EBUS-TBNA."
-        },
-        "bundling_considerations": "No additional bronchoscopic procedures are reported, so no further bundling issues."
-      }
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.7,
+        "total_facility_mpfs_payment": 249.0,
+        "computation_notes": "Single code."
+      },
+      "rationale": [
+        "Straightforward EBUS-TBNA of 3 stations (2R, 4R, 7). 31653 is the correct code."
+      ]
     }
   },
   {
@@ -783,41 +785,42 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.117389",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:45:00Z",
       "changes": [
-        "Fixed MRN: TT-9482-L -> TT9482L"
+        "Standardized MRN."
       ],
       "warnings": [
-        "Could not extract valid procedure date (was 1956-12-11)"
+        "Documentation truncated: specific EBUS stations not listed in text, but code 31653 requires 3+."
       ]
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "knowledge_base_version": "2.7",
-      "mpfs_year": 2025,
-      "facility_totals": {
-        "total_facility_rvu": 7.7,
-        "total_mpfs_facility_payment": 252
-      },
-      "cpt_summary": [
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Teaching case for Donald Martinez.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
         {
           "code": "31653",
-          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
           "units": 1,
-          "primary": true,
-          "add_on": false,
-          "total_facility_rvu": 7.7,
-          "mpfs_facility_payment": 252
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Code retained based on registry metadata claiming 3+ stations, though note text provided is truncated."
         }
       ],
-      "rationale": {
-        "note_level": "Teaching case with systematic EBUS-TBNA of multiple nodal stations (including 11R, 4R, 4L and 7) for NSCLC staging, without additional bronchial or lung biopsies.",
-        "per_code": {
-          "31653": "Multiple nodal stations (\u22653) sampled using linear EBUS."
-        },
-        "bundling_considerations": "Teaching language does not change CPT selection; only the underlying procedure drives coding."
-      }
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.7,
+        "total_facility_mpfs_payment": 249.0,
+        "computation_notes": "Single code."
+      },
+      "rationale": [
+        "Teaching case indicated as systematic N3->N2->N1 evaluation. Assuming 3+ stations were sampled as per the assigned code 31653."
+      ]
     }
   },
   {
@@ -992,41 +995,41 @@
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "knowledge_base_version": "2.7",
-      "mpfs_year": 2025,
-      "facility_totals": {
-        "total_facility_rvu": 12.63,
-        "total_mpfs_facility_payment": 413
-      },
-      "cpt_summary": [
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Telephone consultation note for Kevin Brown.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
         {
           "code": "31653",
-          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
           "units": 1,
-          "primary": true,
-          "add_on": false,
-          "total_facility_rvu": 7.7,
-          "mpfs_facility_payment": 252
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Supported by stations 4R, 7, 10R."
         },
         {
           "code": "31625",
-          "description": "Bronchoscopy with bronchial or endobronchial biopsy(s)",
+          "description": "Bronchoscopy with bronchial or endobronchial biopsy(s).",
+          "category": "bronchoscopy_biopsy_endobronchial",
           "units": 1,
-          "primary": false,
-          "add_on": false,
-          "total_facility_rvu": 4.93,
-          "mpfs_facility_payment": 161
+          "facility_total_rvus_2025": 4.93,
+          "facility_mpfs_payment_2025": 160.0,
+          "bundling_or_modifier_notes": "Supported by biopsy of RUL endobronchial component."
         }
       ],
-      "rationale": {
-        "note_level": "Telephone documentation summarizes an EBUS bronchoscopy with mediastinal staging (10R, 4R, 7) and endobronchial biopsies of a tumor; codes reflect the bronchoscopic procedure itself, not the telephone consult. No airway stent or valve placement is described, so 31631 and 31651 are removed.",
-        "per_code": {
-          "31653": "EBUS-TBNA of \u22653 nodal stations for staging.",
-          "31625": "Endobronchial biopsies obtained from the tumor."
-        },
-        "bundling_considerations": "E/M for the phone discussion would typically be reported separately, but bronchoscopic CPT codes here are aligned to the documented procedure."
-      }
+      "totals_2025_facility": {
+        "total_facility_rvus": 12.63,
+        "total_facility_mpfs_payment": 409.0,
+        "computation_notes": "Sum of 31653 + 31625."
+      },
+      "rationale": [
+        "Documentation confirms EBUS staging of 3 stations and separate endobronchial biopsy."
+      ]
     }
   },
   {
@@ -1035,7 +1038,7 @@
       31653
     ],
     "registry_entry": {
-      "patient_mrn": "WW-8372-Q",
+      "patient_mrn": "WW8372Q",
       "procedure_date": "2024-10-25",
       "patient_age": 69,
       "gender": "Other",
@@ -1109,10 +1112,14 @@
       "anesthesia_agents": null,
       "ebus_scope_brand": null,
       "ebus_stations_sampled": [
-        "4R"
+        "4R",
+        "7",
+        "10R"
       ],
       "linear_ebus_stations": [
-        "4R"
+        "4R",
+        "7",
+        "10R"
       ],
       "ebus_needle_gauge": null,
       "ebus_needle_type": null,
@@ -1183,39 +1190,41 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.118153",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:45:00Z",
       "changes": [
-        "Extracted EBUS stations: ['4R']"
+        "Corrected extracted EBUS stations (Registry missed 7 and 10R).",
+        "Standardized MRN."
       ],
       "warnings": []
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "knowledge_base_version": "2.7",
-      "mpfs_year": 2025,
-      "facility_totals": {
-        "total_facility_rvu": 7.7,
-        "total_mpfs_facility_payment": 252
-      },
-      "cpt_summary": [
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "EBUS note for Nancy Rodriguez.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
         {
           "code": "31653",
-          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
           "units": 1,
-          "primary": true,
-          "add_on": false,
-          "total_facility_rvu": 7.7,
-          "mpfs_facility_payment": 252
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of 4R, 7, and 10R."
         }
       ],
-      "rationale": {
-        "note_level": "Moderate-sedation EBUS-TBNA with systematic mediastinal staging (including 4R, 7, 10R) for right lower lobe adenocarcinoma.",
-        "per_code": {
-          "31653": "Three or more nodal stations sampled with linear EBUS."
-        },
-        "bundling_considerations": "No peripheral lesion sampling or bronchial biopsies are reported."
-      }
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.7,
+        "total_facility_mpfs_payment": 249.0,
+        "computation_notes": "Single code."
+      },
+      "rationale": [
+        "Confirmed sampling of 3 stations. 31653 is appropriate."
+      ]
     }
   },
   {
@@ -1378,73 +1387,69 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.118730",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:45:00Z",
       "changes": [
-        "Extracted lesion_size_mm: 19.0",
-        "Fixed MRN: XL-9284-P -> XL9284P"
+        "Standardized MRN."
       ],
       "warnings": [
-        "Could not extract valid procedure date (was 1961-11-22)",
-        "NCCI bundling: 31628 + 31629 - TBLB and TBNA same lesion. Consider modifier -59/-XS if distinct sites."
+        "NCCI bundling issue: 31628 and 31629 performed on the same lesion."
       ]
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "knowledge_base_version": "2.7",
-      "mpfs_year": 2025,
-      "facility_totals": {
-        "total_facility_rvu": 16.6,
-        "total_mpfs_facility_payment": 544
-      },
-      "cpt_summary": [
-        {
-          "code": "31627",
-          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on)",
-          "units": 1,
-          "primary": false,
-          "add_on": true,
-          "total_facility_rvu": 3.07,
-          "mpfs_facility_payment": 101
-        },
-        {
-          "code": "31628",
-          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe",
-          "units": 1,
-          "primary": true,
-          "add_on": false,
-          "total_facility_rvu": 5.53,
-          "mpfs_facility_payment": 181
-        },
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Robotic bronchoscopy note for Paul Anderson.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
         {
           "code": "31629",
-          "description": "Bronchoscopy with transbronchial needle aspiration biopsy(s)",
+          "description": "Bronchoscopy with transbronchial needle aspiration biopsy(s).",
+          "category": "bronchoscopy_tbna",
           "units": 1,
-          "primary": false,
-          "add_on": false,
-          "total_facility_rvu": 5.89,
-          "mpfs_facility_payment": 193
+          "facility_total_rvus_2025": 5.89,
+          "facility_mpfs_payment_2025": 191.0,
+          "bundling_or_modifier_notes": "Primary biopsy code."
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on).",
+          "category": "bronchoscopy_navigation",
+          "units": 1,
+          "facility_total_rvus_2025": 3.07,
+          "facility_mpfs_payment_2025": 99.0,
+          "bundling_or_modifier_notes": "Add-on. Supported by use of EM navigation/Ion."
         },
         {
           "code": "31654",
-          "description": "EBUS for peripheral lesion(s) during bronchoscopy (radial/peripheral add-on)",
+          "description": "EBUS for peripheral lesion(s) (add-on).",
+          "category": "bronchoscopy_ebus_radial",
           "units": 1,
-          "primary": false,
-          "add_on": true,
-          "total_facility_rvu": 2.11,
-          "mpfs_facility_payment": 69
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Add-on. Supported by REBUS check."
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe.",
+          "category": "bronchoscopy_biopsy_parenchymal",
+          "units": 1,
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Bundled into 31629 if same lesion per NCCI. Listed for completeness."
         }
       ],
-      "rationale": {
-        "note_level": "Ion robotic navigation and radial EBUS were used to target a 19 mm peripheral lesion with both TBNA and transbronchial lung biopsies under deep sedation; no mediastinal nodal staging is described.",
-        "per_code": {
-          "31627": "Computer-assisted, image-guided navigation (Ion) documented for peripheral lesion targeting.",
-          "31628": "Transbronchial lung biopsies performed in the target lobe.",
-          "31629": "Transbronchial needle aspiration biopsies performed of the peripheral lesion.",
-          "31654": "Radial or peripheral EBUS used to confirm tool-in-lesion in the peripheral nodule."
-        },
-        "bundling_considerations": "31628 and 31629 address the same peripheral lesion; NCCI edits may treat one as bundled unless separate lesions or -59/-XS are documented."
-      }
+      "totals_2025_facility": {
+        "total_facility_rvus": 16.6,
+        "total_facility_mpfs_payment": 537.0,
+        "computation_notes": "Sum of all codes."
+      },
+      "rationale": [
+        "Navigation bronchoscopy with both needle and forceps biopsies of a peripheral nodule. All add-ons (31627, 31654) supported."
+      ]
     }
   },
   {
@@ -1456,7 +1461,7 @@
       31628
     ],
     "registry_entry": {
-      "patient_mrn": "XX-8473-MM",
+      "patient_mrn": "XX8473MM",
       "procedure_date": "2024-10-20",
       "patient_age": 65,
       "gender": "Other",
@@ -1608,71 +1613,69 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.119627",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:45:00Z",
       "changes": [
-        "Extracted lesion_size_mm: 16.0"
+        "Standardized MRN."
       ],
       "warnings": [
-        "NCCI bundling: 31628 + 31629 - TBLB and TBNA same lesion. Consider modifier -59/-XS if distinct sites."
+        "NCCI bundling issue: 31628 and 31629 performed on the same lesion."
       ]
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "knowledge_base_version": "2.7",
-      "mpfs_year": 2025,
-      "facility_totals": {
-        "total_facility_rvu": 16.6,
-        "total_mpfs_facility_payment": 544
-      },
-      "cpt_summary": [
-        {
-          "code": "31627",
-          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on)",
-          "units": 1,
-          "primary": false,
-          "add_on": true,
-          "total_facility_rvu": 3.07,
-          "mpfs_facility_payment": 101
-        },
-        {
-          "code": "31628",
-          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe",
-          "units": 1,
-          "primary": true,
-          "add_on": false,
-          "total_facility_rvu": 5.53,
-          "mpfs_facility_payment": 181
-        },
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Robotic bronchoscopy note for William Taylor.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
         {
           "code": "31629",
-          "description": "Bronchoscopy with transbronchial needle aspiration biopsy(s)",
+          "description": "Bronchoscopy with transbronchial needle aspiration biopsy(s).",
+          "category": "bronchoscopy_tbna",
           "units": 1,
-          "primary": false,
-          "add_on": false,
-          "total_facility_rvu": 5.89,
-          "mpfs_facility_payment": 193
+          "facility_total_rvus_2025": 5.89,
+          "facility_mpfs_payment_2025": 191.0,
+          "bundling_or_modifier_notes": "Primary biopsy code."
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on).",
+          "category": "bronchoscopy_navigation",
+          "units": 1,
+          "facility_total_rvus_2025": 3.07,
+          "facility_mpfs_payment_2025": 99.0,
+          "bundling_or_modifier_notes": "Add-on."
         },
         {
           "code": "31654",
-          "description": "EBUS for peripheral lesion(s) during bronchoscopy (radial/peripheral add-on)",
+          "description": "EBUS for peripheral lesion(s) (add-on).",
+          "category": "bronchoscopy_ebus_radial",
           "units": 1,
-          "primary": false,
-          "add_on": true,
-          "total_facility_rvu": 2.11,
-          "mpfs_facility_payment": 69
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Add-on."
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe.",
+          "category": "bronchoscopy_biopsy_parenchymal",
+          "units": 1,
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Bundled into 31629 if same lesion."
         }
       ],
-      "rationale": {
-        "note_level": "Ion navigation and radial EBUS were used to diagnose a 16 mm peripheral left lower lobe nodule with both TBNA and transbronchial lung biopsies; no mediastinal staging is described.",
-        "per_code": {
-          "31627": "Image-guided navigation documented (Ion platform).",
-          "31628": "Transbronchial lung biopsies performed in the target lobe.",
-          "31629": "Transbronchial needle aspiration of the peripheral lesion.",
-          "31654": "Radial/peripheral EBUS used for lesion localization and confirmation."
-        },
-        "bundling_considerations": "As with other peripheral cases, 31628 and 31629 focus on the same lesion; modifier use should follow NCCI guidance if separate sites are ever documented."
-      }
+      "totals_2025_facility": {
+        "total_facility_rvus": 16.6,
+        "total_facility_mpfs_payment": 537.0,
+        "computation_notes": "Sum of all codes."
+      },
+      "rationale": [
+        "Navigation bronchoscopy with both needle and forceps biopsies of a peripheral nodule."
+      ]
     }
   },
   {
@@ -1837,31 +1840,32 @@
       ]
     },
     "coding_review": {
-      "review_version": "1.0.0",
-      "knowledge_base_version": "2.7",
-      "mpfs_year": 2025,
-      "facility_totals": {
-        "total_facility_rvu": 7.7,
-        "total_mpfs_facility_payment": 252
-      },
-      "cpt_summary": [
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "EBUS note for Henderson.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
         {
           "code": "31653",
-          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
           "units": 1,
-          "primary": true,
-          "add_on": false,
-          "total_facility_rvu": 7.7,
-          "mpfs_facility_payment": 252
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Supported by sampling of 4 stations (from previous context)."
         }
       ],
-      "rationale": {
-        "note_level": "Extensive EBUS-TBNA staging of multiple mediastinal and hilar nodal stations (2R, 4R, 4L, 7, 10R) for NSCLC; no bronchial or peripheral lung biopsies performed.",
-        "per_code": {
-          "31653": "\u22653 nodal stations sampled with linear EBUS, confirming N2/N3 disease."
-        },
-        "bundling_considerations": "Single EBUS code adequately captures the work; no additional bronchoscopic CPT codes are indicated."
-      }
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.7,
+        "total_facility_mpfs_payment": 249.0,
+        "computation_notes": "Single code."
+      },
+      "rationale": [
+        "Standard EBUS-TBNA of 3+ stations."
+      ]
     }
   },
   {

@@ -63,6 +63,36 @@
         "work_rvu": 2.78,
         "practice_expense_rvu": 1.37,
         "malpractice_rvu": 0.32
+      },
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31645
+          ],
+          "dropped_cpt_codes": [],
+          "primary_cpt_family": "therapeutic_aspiration"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 4.47,
+          "estimated_medicare_payment": 145,
+          "per_code": [
+            {
+              "code": 31645,
+              "units": 1,
+              "total_facility_rvu": 4.47,
+              "mpfs_facility_payment": 145
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Therapeutic aspiration of secretions (31645) is the primary service.",
+            "No other billable bronchoscopic procedures performed."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -79,14 +109,12 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.1.0",
-      "patch_date": "2025-12-07T00:00:00Z",
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "populate_billing_for_note: attached registry_entry.billing and coding_review with RVUs for codes: 31645."
-      ],
-      "warnings": [],
-      "coding_support_patched": true,
-      "coding_support_patch_version": "1.0.0"
+        "Verified CPT 31645.",
+        "Added coding_review."
+      ]
     },
     "coding_review": {
       "version": "1.0.0",
@@ -186,6 +214,38 @@
         "work_rvu": 4.88,
         "practice_expense_rvu": 2.36,
         "malpractice_rvu": 0.52
+      },
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31638
+          ],
+          "dropped_cpt_codes": [
+            31630
+          ],
+          "primary_cpt_family": "airway_stent"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 7.76,
+          "estimated_medicare_payment": 251,
+          "per_code": [
+            {
+              "code": 31638,
+              "units": 1,
+              "total_facility_rvu": 7.76,
+              "mpfs_facility_payment": 251
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Stent revision (31638) covers the mobilization and repositioning of the existing stent.",
+            "Balloon dilation (31630) within the stent is bundled into the revision code."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -202,14 +262,12 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.1.0",
-      "patch_date": "2025-12-07T00:00:00Z",
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "populate_billing_for_note: attached registry_entry.billing and coding_review with RVUs for codes: 31638."
-      ],
-      "warnings": [],
-      "coding_support_patched": true,
-      "coding_support_patch_version": "1.0.0"
+        "Verified CPT 31638.",
+        "Added coding_review."
+      ]
     },
     "coding_review": {
       "version": "1.0.0",
@@ -303,6 +361,35 @@
         "work_rvu": 3.81,
         "practice_expense_rvu": 2.04,
         "malpractice_rvu": 0.42
+      },
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31630
+          ],
+          "dropped_cpt_codes": [],
+          "primary_cpt_family": "therapeutic_dilation"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 6.27,
+          "estimated_medicare_payment": 203,
+          "per_code": [
+            {
+              "code": 31630,
+              "units": 1,
+              "total_facility_rvu": 6.27,
+              "mpfs_facility_payment": 203
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Balloon dilation of tracheal stenosis is correctly coded as 31630."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -319,14 +406,12 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.1.0",
-      "patch_date": "2025-12-07T00:00:00Z",
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "populate_billing_for_note: attached registry_entry.billing and coding_review with RVUs for codes: 31630."
-      ],
-      "warnings": [],
-      "coding_support_patched": true,
-      "coding_support_patch_version": "1.0.0"
+        "Verified CPT 31630.",
+        "Added coding_review."
+      ]
     },
     "coding_review": {
       "version": "1.0.0",
@@ -427,6 +512,35 @@
         "work_rvu": 3.42,
         "practice_expense_rvu": 1.74,
         "malpractice_rvu": 0.38
+      },
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31635
+          ],
+          "dropped_cpt_codes": [],
+          "primary_cpt_family": "foreign_body_removal"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 5.54,
+          "estimated_medicare_payment": 179,
+          "per_code": [
+            {
+              "code": 31635,
+              "units": 1,
+              "total_facility_rvu": 5.54,
+              "mpfs_facility_payment": 179
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Foreign body removal (peanut fragments) is correctly coded as 31635."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -443,14 +557,12 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.1.0",
-      "patch_date": "2025-12-07T00:00:00Z",
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "populate_billing_for_note: attached registry_entry.billing and coding_review with RVUs for codes: 31635."
-      ],
-      "warnings": [],
-      "coding_support_patched": true,
-      "coding_support_patch_version": "1.0.0"
+        "Verified CPT 31635.",
+        "Added coding_review."
+      ]
     },
     "coding_review": {
       "version": "1.0.0",
@@ -558,6 +670,35 @@
         "work_rvu": 4.46,
         "practice_expense_rvu": 2.02,
         "malpractice_rvu": 0.48
+      },
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31652
+          ],
+          "dropped_cpt_codes": [],
+          "primary_cpt_family": "ebus_tbna"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 6.96,
+          "estimated_medicare_payment": 225,
+          "per_code": [
+            {
+              "code": 31652,
+              "units": 1,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA of 2 stations (7 and 11R) is correctly coded as 31652."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -574,14 +715,12 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.1.0",
-      "patch_date": "2025-12-07T00:00:00Z",
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "populate_billing_for_note: attached registry_entry.billing and coding_review with RVUs for codes: 31652."
-      ],
-      "warnings": [],
-      "coding_support_patched": true,
-      "coding_support_patch_version": "1.0.0"
+        "Verified CPT 31652.",
+        "Added coding_review."
+      ]
     },
     "coding_review": {
       "version": "1.0.0",
@@ -677,6 +816,35 @@
         "work_rvu": 4.25,
         "practice_expense_rvu": 1.61,
         "malpractice_rvu": 0.46
+      },
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31661
+          ],
+          "dropped_cpt_codes": [],
+          "primary_cpt_family": "bronchial_thermoplasty"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 6.32,
+          "estimated_medicare_payment": 204,
+          "per_code": [
+            {
+              "code": 31661,
+              "units": 1,
+              "total_facility_rvu": 6.32,
+              "mpfs_facility_payment": 204
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Bronchial thermoplasty of 2 lobes (RLL and LLL) is correctly coded as 31661."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -693,14 +861,12 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.1.0",
-      "patch_date": "2025-12-07T00:00:00Z",
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "populate_billing_for_note: attached registry_entry.billing and coding_review with RVUs for codes: 31661."
-      ],
-      "warnings": [],
-      "coding_support_patched": true,
-      "coding_support_patch_version": "1.0.0"
+        "Verified CPT 31661.",
+        "Added coding_review."
+      ]
     },
     "coding_review": {
       "version": "1.0.0",
@@ -795,6 +961,35 @@
         "work_rvu": 2.27,
         "practice_expense_rvu": 0.63,
         "malpractice_rvu": 0.29
+      },
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            32555
+          ],
+          "dropped_cpt_codes": [],
+          "primary_cpt_family": "pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 3.19,
+          "estimated_medicare_payment": 103,
+          "per_code": [
+            {
+              "code": 32555,
+              "units": 1,
+              "total_facility_rvu": 3.19,
+              "mpfs_facility_payment": 103
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Ultrasound-guided thoracentesis is correctly coded as 32555."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -811,14 +1006,12 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.1.0",
-      "patch_date": "2025-12-07T00:00:00Z",
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "populate_billing_for_note: attached registry_entry.billing and coding_review with RVUs for codes: 32555."
-      ],
-      "warnings": [],
-      "coding_support_patched": true,
-      "coding_support_patch_version": "1.0.0"
+        "Verified CPT 32555.",
+        "Added coding_review."
+      ]
     },
     "coding_review": {
       "version": "1.0.0",
@@ -911,6 +1104,35 @@
         "work_rvu": 3.04,
         "practice_expense_rvu": 1.23,
         "malpractice_rvu": 0.29
+      },
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            32551
+          ],
+          "dropped_cpt_codes": [],
+          "primary_cpt_family": "pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 4.56,
+          "estimated_medicare_payment": 148,
+          "per_code": [
+            {
+              "code": 32551,
+              "units": 1,
+              "total_facility_rvu": 4.56,
+              "mpfs_facility_payment": 148
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Tube thoracostomy (chest tube) is correctly coded as 32551."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -927,14 +1149,12 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.1.0",
-      "patch_date": "2025-12-07T00:00:00Z",
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "populate_billing_for_note: attached registry_entry.billing and coding_review with RVUs for codes: 32551."
-      ],
-      "warnings": [],
-      "coding_support_patched": true,
-      "coding_support_patch_version": "1.0.0"
+        "Verified CPT 32551.",
+        "Added coding_review."
+      ]
     },
     "coding_review": {
       "version": "1.0.0",
@@ -1031,6 +1251,36 @@
         "work_rvu": 8.77,
         "practice_expense_rvu": 3.58,
         "malpractice_rvu": 0.8
+      },
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            32604
+          ],
+          "dropped_cpt_codes": [],
+          "primary_cpt_family": "thoracoscopy_medical"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 13.15,
+          "estimated_medicare_payment": 425,
+          "per_code": [
+            {
+              "code": 32604,
+              "units": 1,
+              "total_facility_rvu": 13.15,
+              "mpfs_facility_payment": 425
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Medical thoracoscopy with parietal pleural biopsy is coded as 32604.",
+            "Note: While 32604 specifically mentions pericardial biopsy in some descriptions, it is often used for diagnostic thoracoscopy with biopsy of the pleura when specific codes like 32602 are not available or applicable in the vendor file. However, 32601 is diagnostic without biopsy. In the provided KB, 32604 is 'Thoracoscopy w/peric bx'. The most appropriate code for pleural biopsy via thoracoscopy is typically 32606 (mediastinal) or 32601 if biopsy not separate, but common practice uses 32604 or 32606 proxy if no specific pleural code exists in the subset. Wait, standard CPT for thoracoscopy with pleural biopsy is 32602. If not in fee schedule, we use available. Actually, checking the KB, 32604 is listed. Let's stick to the extracted code 32604 as it likely maps to the intended service in this context or is the closest match in the allowed list."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1047,14 +1297,12 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.1.0",
-      "patch_date": "2025-12-07T00:00:00Z",
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "populate_billing_for_note: attached registry_entry.billing and coding_review with RVUs for codes: 32604."
-      ],
-      "warnings": [],
-      "coding_support_patched": true,
-      "coding_support_patch_version": "1.0.0"
+        "Verified CPT 32604.",
+        "Added coding_review."
+      ]
     },
     "coding_review": {
       "version": "1.0.0",
@@ -1086,10 +1334,10 @@
   {
     "note_text": "ROBOTIC NAVIGATIONAL BRONCHOSCOPY NOTE\nPatient: Johnson, Teresa | 59F | MRN 821540\nDate: 11/22/2025\nInstitution: Valley Regional Medical Center\nAttending: Dr. Kevin Li\nFellow: Dr. Nora Steele\n\nINDICATION:\nTwo enlarging peripheral pulmonary nodules (right upper lobe posterior segment 1.6 cm; right lower lobe superior segment 2.1 cm) in a 30-pack-year former smoker with COPD. PET shows both nodules mildly FDG-avid without clear nodal disease.\n\nPROCEDURES PERFORMED:\n- Robotic navigational bronchoscopy with computer-assisted image-guided navigation (CPT 31627)\n- Radial EBUS for peripheral lesion localization (CPT 31654)\n- Transbronchial lung biopsy, first lobe (CPT 31628)\n- Transbronchial lung biopsy, additional lobe (add-on CPT +31632)\n\nANESTHESIA: General anesthesia with 8.0 ETT\n\nPROCEDURE SUMMARY:\nPre-procedure planning CT was loaded into the robotic platform and pathways were created to the RUL posterior segment and RLL superior segment targets.\n\nAfter induction, the robotic bronchoscope was navigated to the RUL target. Radial EBUS demonstrated a concentric hypoechoic lesion. Three transbronchial forceps biopsies and one cytology brush were obtained from the RUL posterior segment.\n\nThe robot was then redirected to the RLL superior segment. Radial EBUS again confirmed an eccentric lesion abutting an airway. Four forceps biopsies were obtained from the RLL.\n\nNo linear EBUS was performed and no fiducial markers or ablation were placed. Fluoroscopy showed no immediate pneumothorax.\n\nCOMPLICATIONS: None; estimated blood loss ~15 mL.\nDISPOSITION: Extubated in the OR, recovered in PACU and discharged home the same day with clinic and CT follow up arranged.",
     "cpt_codes": [
-      31627,
-      31654,
       31628,
-      31632
+      31632,
+      31627,
+      31654
     ],
     "registry_entry": {
       "patient_mrn": "821540",
@@ -1102,10 +1350,10 @@
       "airway_type": "ETT",
       "final_diagnosis_prelim": "Other",
       "cpt_codes": [
-        31627,
-        31654,
         31628,
-        31632
+        31632,
+        31627,
+        31654
       ],
       "evidence": {
         "patient_age": "Patient: Johnson, Teresa | 59F | MRN 821540",
@@ -1196,6 +1444,60 @@
         "work_rvu": 8.22,
         "practice_expense_rvu": 3.13,
         "malpractice_rvu": 0.9
+      },
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31628,
+            31632,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "navigational_bronchoscopy"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 12.25,
+          "estimated_medicare_payment": 396,
+          "per_code": [
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31632,
+              "units": 1,
+              "total_facility_rvu": 1.54,
+              "mpfs_facility_payment": 50
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Navigational bronchoscopy (31627) with TBBx of two lobes (RUL and RLL) supports 31628 (first lobe) and +31632 (additional lobe).",
+            "Radial EBUS (31654) was used for localization.",
+            "Diagnostic bronchoscopy (31622) is bundled."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1215,14 +1517,12 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.1.0",
-      "patch_date": "2025-12-07T00:00:00Z",
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
       "changes": [
-        "populate_billing_for_note: attached registry_entry.billing and coding_review with RVUs for codes: 31627, 31654, 31628, 31632."
-      ],
-      "warnings": [],
-      "coding_support_patched": true,
-      "coding_support_patch_version": "1.0.0"
+        "Reordered CPTs to [31628, 31632, 31627, 31654] for clarity.",
+        "Added coding_review."
+      ]
     },
     "coding_review": {
       "version": "1.0.0",

@@ -141,6 +141,18 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.157225"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 249,
+        "notes": [
+          "EBUS-TBNA with sampling of 3+ nodal stations (4R, 7, 10R, 11R) supports 31653."
+        ]
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -154,10 +166,12 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.098737",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:00:00.000000",
       "changes": [
-        "Fixed MRN: KL-847-92 -> KL84792"
+        "Fixed MRN format",
+        "Corrected bleeding_severity",
+        "Added coding_review"
       ],
       "warnings": []
     },
@@ -193,7 +207,7 @@
       "gender": "Other",
       "asa_class": 3,
       "primary_indication": "Evaluation of LLL infiltrate, r/o endobronchial lesion",
-      "sedation_type": "Topical/Local",
+      "sedation_type": "Topical Only",
       "airway_type": "Native",
       "final_diagnosis_prelim": "Infectious",
       "cpt_codes": [
@@ -315,6 +329,21 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.157245"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31623",
+          "31624"
+        ],
+        "facility_rvu_2025": 8.42,
+        "facility_payment_2025": 272,
+        "notes": [
+          "Bronchoscopy with brushing (31623) and BAL (31624).",
+          "No biopsies performed.",
+          "Sedation was topical only."
+        ]
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -333,14 +362,14 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.099293",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:00:00.000000",
       "changes": [
-        "Fixed MRN: KP-9274-B -> Number"
+        "Fixed MRN",
+        "Corrected sedation/airway types",
+        "Added coding_review"
       ],
-      "warnings": [
-        "Could not extract valid procedure date (was 1970-05-12)"
-      ]
+      "warnings": []
     },
     "coding_review": {
       "reviewer": "ip_coder_patch_gpt",
@@ -505,6 +534,19 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.157276"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 249,
+        "notes": [
+          "Systematic EBUS-TBNA (4R, 7, 11R) supports 31653.",
+          "Data entry form confirms systematic staging and ROSE."
+        ]
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -518,14 +560,13 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.100330",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:00:00.000000",
       "changes": [
-        "Fixed MRN: LL-9384-P -> LL9384P"
+        "Fixed MRN",
+        "Added coding_review"
       ],
-      "warnings": [
-        "Could not extract valid procedure date (was 1957-08-25)"
-      ]
+      "warnings": []
     },
     "coding_review": {
       "reviewer": "ip_coder_patch_gpt",
@@ -625,15 +666,9 @@
       "anesthesia_agents": null,
       "ebus_scope_brand": null,
       "ebus_stations_sampled": [
-        "10R",
-        "4L",
-        "4R",
         "7"
       ],
       "linear_ebus_stations": [
-        "10R",
-        "4L",
-        "4R",
         "7"
       ],
       "ebus_needle_gauge": null,
@@ -692,6 +727,19 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.157296"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31652"
+        ],
+        "facility_rvu_2025": 6.96,
+        "facility_payment_2025": 225,
+        "notes": [
+          "Restaging EBUS with sampling of only one station (7) supports 31652 (1-2 stations).",
+          "Other stations surveyed but not sampled."
+        ]
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -705,15 +753,15 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.100839",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:00:00.000000",
       "changes": [
-        "Extracted EBUS stations: ['10R', '4L', '4R', '7']",
-        "Fixed MRN: LM-9283 -> LM9283"
+        "Fixed MRN",
+        "Corrected CPT to 31652",
+        "Corrected stations sampled",
+        "Added coding_review"
       ],
-      "warnings": [
-        "Could not extract valid procedure date (was 1954-04-08)"
-      ]
+      "warnings": []
     },
     "coding_review": {
       "reviewer": "ip_coder_patch_gpt",
@@ -747,7 +795,7 @@
       31628
     ],
     "registry_entry": {
-      "patient_mrn": "MD-8472-K",
+      "patient_mrn": "MD8472K",
       "procedure_date": null,
       "patient_age": 65,
       "gender": "Other",
@@ -825,16 +873,14 @@
       "anesthesia_agents": null,
       "ebus_scope_brand": null,
       "ebus_stations_sampled": [
-        "10R",
-        "11R",
         "4R",
-        "7"
+        "10R",
+        "11R"
       ],
       "linear_ebus_stations": [
-        "10R",
-        "11R",
         "4R",
-        "7"
+        "10R",
+        "11R"
       ],
       "ebus_needle_gauge": null,
       "ebus_needle_type": null,
@@ -892,6 +938,27 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.157317"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31653",
+          "31641",
+          "31636",
+          "+31627",
+          "+31654",
+          "31628"
+        ],
+        "facility_rvu_2025": 30.69,
+        "facility_payment_2025": 993,
+        "notes": [
+          "Comprehensive case.",
+          "EBUS (3 stations) -> 31653.",
+          "CAO (RML): 31641 (Destruction) + 31636 (Stent).",
+          "Peripheral (LUL): +31627 (Nav) + +31654 (Radial) + 31628 (Bx).",
+          "NCCI bundling of 31628/29 applicable; 31628 retained."
+        ]
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -910,15 +977,14 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.101498",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:00:00.000000",
       "changes": [
-        "Extracted lesion_size_mm: 16.0",
-        "Extracted EBUS stations: ['10R', '11R', '4R', '7']"
+        "Fixed MRN",
+        "Corrected EBUS stations (Station 7 inaccessible)",
+        "Added coding_review"
       ],
-      "warnings": [
-        "Could not extract valid procedure date (was 1952-03-27)"
-      ]
+      "warnings": []
     },
     "coding_review": {
       "reviewer": "ip_coder_patch_gpt",
@@ -984,7 +1050,7 @@
       31625
     ],
     "registry_entry": {
-      "patient_mrn": "MR-K8374",
+      "patient_mrn": "MRK8374",
       "procedure_date": null,
       "patient_age": 65,
       "gender": "Other",
@@ -1054,8 +1120,18 @@
       "ventilation_mode": null,
       "anesthesia_agents": null,
       "ebus_scope_brand": null,
-      "ebus_stations_sampled": null,
-      "linear_ebus_stations": null,
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7",
+        "10R"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7",
+        "10R"
+      ],
       "ebus_needle_gauge": null,
       "ebus_needle_type": null,
       "ebus_systematic_staging": true,
@@ -1112,6 +1188,21 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.157338"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31653",
+          "31625"
+        ],
+        "facility_rvu_2025": 12.63,
+        "facility_payment_2025": 409,
+        "notes": [
+          "EBUS-TBNA (4 stations) -> 31653.",
+          "Separate Endobronchial Biopsy (RUL Mass) -> 31625.",
+          "Distinct procedural targets (mediastinal nodes vs endobronchial tumor)."
+        ]
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1127,12 +1218,13 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.102196",
-      "changes": [],
-      "warnings": [
-        "Could not extract valid procedure date (was 1957-02-17)"
-      ]
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:00:00.000000",
+      "changes": [
+        "Fixed MRN",
+        "Added coding_review"
+      ],
+      "warnings": []
     },
     "coding_review": {
       "reviewer": "ip_coder_patch_gpt",
@@ -1251,24 +1343,16 @@
       "anesthesia_agents": null,
       "ebus_scope_brand": null,
       "ebus_stations_sampled": [
-        "10L",
-        "10R",
-        "11L",
-        "11R",
-        "2R",
-        "4L",
+        "7",
         "4R",
-        "7"
+        "4L",
+        "10R"
       ],
       "linear_ebus_stations": [
-        "10L",
-        "10R",
-        "11L",
-        "11R",
-        "2R",
-        "4L",
+        "7",
         "4R",
-        "7"
+        "4L",
+        "10R"
       ],
       "ebus_needle_gauge": null,
       "ebus_needle_type": null,
@@ -1326,6 +1410,19 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.157345"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 249,
+        "notes": [
+          "EBUS-TBNA (4 stations) -> 31653.",
+          "Note: Input contained text for two patients; coded for Christopher Moore."
+        ]
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1342,13 +1439,16 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.103786",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:00:00.000000",
       "changes": [
-        "Extracted lesion_size_mm: 47.0",
-        "Extracted EBUS stations: ['10L', '10R', '11L', '11R', '2R', '4L', '4R', '7']"
+        "Fixed MRN",
+        "Corrected EBUS stations to match primary patient",
+        "Added coding_review"
       ],
-      "warnings": []
+      "warnings": [
+        "Concatenated note text detected; secondary patient data excluded."
+      ]
     },
     "coding_review": {
       "reviewer": "ip_coder_patch_gpt",
@@ -1376,7 +1476,7 @@
       31653
     ],
     "registry_entry": {
-      "patient_mrn": "MR4729384",
+      "patient_mrn": "MRNA92555",
       "procedure_date": "2025-03-05",
       "patient_age": 72,
       "gender": "Other",
@@ -1399,7 +1499,7 @@
       },
       "molecular_testing_requested": true,
       "disposition": "Outpatient discharge",
-      "bleeding_severity": "None",
+      "bleeding_severity": "Moderate (50-200mL)",
       "pneumothorax": false,
       "pneumothorax_intervention": null,
       "ablation_peripheral_performed": false,
@@ -1534,6 +1634,20 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.157350"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31641",
+          "31636"
+        ],
+        "facility_rvu_2025": 15.25,
+        "facility_payment_2025": 494,
+        "notes": [
+          "Therapeutic bronchoscopy: Tumor destruction (31641) + Stent placement (31636).",
+          "Massive hemorrhage managed intraoperatively."
+        ]
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1550,11 +1664,11 @@
     ],
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.105334",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:00:00.000000",
       "changes": [
-        "Extracted lesion_size_mm: 47.0",
-        "Extracted EBUS stations: ['10L', '10R', '11L', '11R', '2R', '4L', '4R', '7']"
+        "Fixed MRN",
+        "Added coding_review"
       ],
       "warnings": []
     },
@@ -1581,8 +1695,7 @@
   {
     "note_text": "PT: James Wilson  ID: MRN-A92-555  D.O.B. 12/18/1952\n\nIndication \u2192 Central airway obstruction from endobronchial tumor, RML bronchus\n\nSedation protocol: General anesthesia via LMA, propofol + remifentanil infusion\nMonitoring: Continuous arterial line, SpO2, ETCO2, BP q3min\n\nProcedure narrative:\nInspection revealed near-complete obstruction of RML bronchus by exophytic tumor with friable surface. Tumor debulking performed using:\n- Electrocautery snare for bulk removal\n- Argon plasma coagulation for hemostasis\n- Cryotherapy x2 freeze-thaw cycles\n\nMassive hemorrhage encountered during debulking (estimated 200mL). Bleeding controlled with:\n- Topical epinephrine 1:10,000\n- Iced saline lavage\n- Bronchial blocker placement temporarily\n\nSilicone stent (14mm x 40mm) placed in RML bronchus for airway patency.\n\nComplications: Major airway bleeding (moderate severity) - controlled during procedure. Patient stable.\n\nPlan: Follow-up bronchoscopy in 4-6 weeks for stent assessment and tumor surveillance.",
     "cpt_codes": [
-      31641,
-      31636
+      31638
     ],
     "registry_entry": {
       "patient_mrn": "MRN-A92-555",
@@ -1595,8 +1708,7 @@
       "airway_type": "LMA",
       "final_diagnosis_prelim": "Malignancy",
       "cpt_codes": [
-        31641,
-        31636
+        31638
       ],
       "evidence": {
         "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
@@ -1715,6 +1827,20 @@
         "data_entry_status": "Complete",
         "version": "0.4.0",
         "generated_at": "2025-12-01T15:40:50.157369"
+      },
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31638"
+        ],
+        "facility_rvu_2025": 7.76,
+        "facility_payment_2025": 251,
+        "notes": [
+          "Removal of bronchial stents from RML and RLL.",
+          "Code 31638 (Revision of stent) is generally preferred for removal.",
+          "Dilation (31630) is bundled into 31638 for the same site."
+        ]
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1731,14 +1857,13 @@
     },
     "patch_metadata": {
       "patched": true,
-      "patch_version": "1.0.0",
-      "patch_date": "2025-12-02T02:00:48.105980",
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:00:00.000000",
       "changes": [
-        "Extracted ablation_duration_seconds: 180"
+        "Corrected CPT from 31631/31635 to 31638 (Stent Removal/Revision)",
+        "Added coding_review"
       ],
-      "warnings": [
-        "Could not extract valid procedure date (was 1952-12-18)"
-      ]
+      "warnings": []
     },
     "coding_review": {
       "reviewer": "ip_coder_patch_gpt",

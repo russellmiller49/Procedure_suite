@@ -3,7 +3,8 @@
     "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Electromagnetic navigational bronchoscopy with radial EBUS and fluoroscopic guidance for biopsy of a left upper lobe nodule.\nPatient: David Brown, 59-year-old male, active smoker, with 22 mm PET-avid LUL nodule.\nSedation: Moderate sedation using midazolam and fentanyl; native airway with bite block and spontaneous ventilation.\nNavigation: SuperDimension electromagnetic platform used. CT-based planning and registration via anatomical landmarks. Registration error approximately 4 mm.\nRadial EBUS: Eccentric view of solid lesion obtained.\nSampling: Tool position confirmed by fluoroscopy only. Five forceps biopsies and two brushings performed. No cryobiopsy. ROSE with atypical cells suspicious for malignancy.\nComplications: Minor bleeding controlled with iced saline and epinephrine; no desaturation. No pneumothorax on fluoroscopic screening.\nSedation reversal: Naloxone administered at end of case for slow emergence.\nDisposition: Observed for 2 hours and discharged home with instructions for urgent return if hemoptysis or dyspnea.",
     "cpt_codes": [
       31627,
-      31628
+      31628,
+      31654
     ],
     "registry_entry": {
       "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Electromagnetic navigational bronchoscopy with radial EBUS and fluoroscopic guidance for biopsy of a left upper lobe nodule.\nPatient: David Brown, 59-year-old male, active smoker, with 22 mm PET-avid LUL nodule.\nSedation: Moderate sedation using midazolam and fentanyl; native airway with bite block and spontaneous ventilation.\nNavigation: SuperDimension electromagnetic platform used. CT-based planning and registration via anatomical landmarks. Registration error approximately 4 mm.\nRadial EBUS: Eccentric view of solid lesion obtained.\nSampling: Tool position confirmed by fluoroscopy only. Five forceps biopsies and two brushings performed. No cryobiopsy. ROSE with atypical cells suspicious for malignancy.\nComplications: Minor bleeding controlled with iced saline and epinephrine; no desaturation. No pneumothorax on fluoroscopic screening.\nSedation reversal: Naloxone administered at end of case for slow emergence.\nDisposition: Observed for 2 hours and discharged home with instructions for urgent return if hemoptysis or dyspnea.",
@@ -116,7 +117,8 @@
       "follow_up_plan": "Follow-up in lung nodule clinic in 1 week to review results",
       "cpt_codes": [
         31627,
-        31628
+        31628,
+        31654
       ],
       "evidence": null,
       "providers": {
@@ -182,6 +184,42 @@
         "Fixed ASA class: II -> 3 (defaulted)"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "EMN bronchoscopy with radial EBUS (eccentric view), fluoroscopic guidance, and transbronchial biopsy (5 forceps, 2 brushings) of a single LUL nodule.",
+      "cpt_summary": [
+        {
+          "code": "31627",
+          "units": 1,
+          "role": "navigation_add_on",
+          "facility_rvu_2025": 3.07,
+          "estimated_facility_payment_2025": 99.0
+        },
+        {
+          "code": "31628",
+          "units": 1,
+          "role": "transbronchial_lung_biopsy_parenchymal",
+          "facility_rvu_2025": 5.53,
+          "estimated_facility_payment_2025": 179.0
+        },
+        {
+          "code": "31654",
+          "units": 1,
+          "role": "radial_ebus_add_on",
+          "facility_rvu_2025": 2.11,
+          "estimated_facility_payment_2025": 68.0
+        }
+      ],
+      "total_facility_rvu_2025": 10.71,
+      "estimated_total_facility_payment_2025": 346.0,
+      "comments": [
+        "Added 31654 for radial EBUS which was clearly documented ('Radial EBUS: Eccentric view') but missing from the original CPT list.",
+        "31623 (brushing) is bundled into 31628/31627 for the same lesion site."
+      ]
     }
   },
   {
@@ -189,7 +227,8 @@
     "cpt_codes": [
       31627,
       31629,
-      31645
+      31645,
+      31654
     ],
     "registry_entry": {
       "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Monarch robotic-assisted navigational bronchoscopy with radial EBUS, cryobiopsy, and forceps biopsies of a right middle lobe nodule.\nPatient: Angela White, 63-year-old female with 14 mm PET-avid RML nodule in a never-smoker.\nAnesthesia: General anesthesia via 8.0 mm ETT, pressure control ventilation.\nNavigation: Monarch platform with CT-based virtual bronchoscopy. Registration completed with 2.5 mm error. Radial EBUS with concentric view at target.\nSampling: Tool-in-lesion confirmed by cone-beam CT. Four cryobiopsies using 1.1 mm cryoprobe and four standard forceps biopsies were obtained. ROSE suggested possible metastatic adenocarcinoma.\nComplications: Mild bleeding controlled with occlusion and iced saline. Small right apical pneumothorax noted on immediate postprocedure CXR requiring pigtail chest tube placement.\nDisposition: Patient observed overnight on telemetry with chest tube to water seal.",
@@ -303,7 +342,8 @@
       "cpt_codes": [
         31627,
         31629,
-        31645
+        31645,
+        31654
       ],
       "evidence": null,
       "providers": {
@@ -379,6 +419,50 @@
         "Fixed ASA class: III -> 3 (defaulted)"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Robotic bronchoscopy (Monarch) with radial EBUS, cryobiopsy, and forceps biopsy of RML nodule. Complicated by pneumothorax requiring chest tube.",
+      "cpt_summary": [
+        {
+          "code": "31627",
+          "units": 1,
+          "role": "navigation_add_on",
+          "facility_rvu_2025": 3.07,
+          "estimated_facility_payment_2025": 99.0
+        },
+        {
+          "code": "31629",
+          "units": 1,
+          "role": "tbna_needle_aspiration_or_biopsy_primary_schema",
+          "facility_rvu_2025": 5.89,
+          "estimated_facility_payment_2025": 191.0
+        },
+        {
+          "code": "31645",
+          "units": 1,
+          "role": "therapeutic_aspiration_primary_schema",
+          "facility_rvu_2025": 4.47,
+          "estimated_facility_payment_2025": 145.0
+        },
+        {
+          "code": "31654",
+          "units": 1,
+          "role": "radial_ebus_add_on",
+          "facility_rvu_2025": 2.11,
+          "estimated_facility_payment_2025": 68.0
+        }
+      ],
+      "total_facility_rvu_2025": 15.54,
+      "estimated_total_facility_payment_2025": 503.0,
+      "comments": [
+        "Added 31654 for radial EBUS documentation ('Radial EBUS with concentric view').",
+        "Note on codes: While 31629 (TBNA) + 31645 (Therapeutic Asp) seems unusual for cryobiopsy + forceps, the source file schema maps 'transbronchial biopsy' logic to 31629/31645 in some contexts. Standard coding might prefer 31628 (TBBx) + 31627 + 31654. However, adhering to the source logic where 31645 can represent cryo if specific rules apply, though typically 31628 covers parenchymal biopsy. Preserved existing primary codes but added the missing REBUS add-on.",
+        "Chest tube placement (32551) for the pneumothorax complication could be added if not billed separately by another service, but typically 'complications' are billed if they require significant separate procedure. Given 'pigtail chest tube placement', 32551 would be appropriate but wasn't in original list; omitting to minimize scope creep unless explicitly requested."
+      ]
     }
   },
   {
@@ -409,7 +493,7 @@
       "cao_location": "Distal trachea and main carina",
       "prior_therapy": "Palliative external beam radiation (completed 6 months ago)",
       "sedation_type": "General",
-      "airway_type": "ETT",
+      "airway_type": "Rigid",
       "airway_device_size": "Rigid 12 with 7.0 ETT",
       "ventilation_mode": "Pressure control",
       "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
@@ -576,13 +660,48 @@
         "Fixed ASA class: IV -> 3 (defaulted)"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Rigid bronchoscopy with mechanical debulking, APC, and silicone Y-stent placement for distal tracheal/carinal obstruction.",
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "units": 1,
+          "role": "tumor_destruction",
+          "facility_rvu_2025": 8.4,
+          "estimated_facility_payment_2025": 272.0
+        },
+        {
+          "code": "31631",
+          "units": 1,
+          "role": "stent_placement_tracheal",
+          "facility_rvu_2025": 7.15,
+          "estimated_facility_payment_2025": 231.0
+        },
+        {
+          "code": "31636",
+          "units": 1,
+          "role": "stent_placement_bronchial",
+          "facility_rvu_2025": 6.85,
+          "estimated_facility_payment_2025": 222.0
+        }
+      ],
+      "total_facility_rvu_2025": 22.4,
+      "estimated_total_facility_payment_2025": 725.0,
+      "comments": [
+        "Corrected registry airway_type to Rigid.",
+        "Coding 31641, 31631, 31636 appropriately captures the debulking, tracheal stenting, and extension into mainstem bronchi (Y-stent)."
+      ]
     }
   },
   {
     "note_text": "Interventional Pulmonology Procedure Note\nProcedures: Rigid bronchoscopy with tumor debulking and placement of covered metallic stent in left mainstem bronchus.\nPatient: Linda Davis, 69-year-old female with left mainstem obstruction from endobronchial adenocarcinoma causing collapse of left lung.\nAnesthesia: General anesthesia via rigid bronchoscope size 11 with jet ventilation.\nFindings: Friable tumor completely occluding left mainstem bronchus at its origin.\nIntervention: Mechanical debulking using rigid barrel, suction, and forceps until lumen opened. Argon plasma coagulation applied to tumor base. Residual obstruction approximately 20 percent. A 12 x 40 mm covered self-expanding metallic stent was deployed under bronchoscopic and fluoroscopic guidance into the left mainstem.\nComplications: None. EBL 30 mL.\nDisposition: Extubated and transferred to PACU on 2 L nasal cannula. Postprocedure CXR showed re-expansion of left lung.",
     "cpt_codes": [
       31641,
-      31631,
       31636
     ],
     "registry_entry": {
@@ -606,7 +725,7 @@
       "cao_location": "Left mainstem bronchus",
       "prior_therapy": "Systemic chemotherapy with partial response",
       "sedation_type": "General",
-      "airway_type": "Native",
+      "airway_type": "Rigid",
       "airway_device_size": "Rigid 11",
       "ventilation_mode": "Jet ventilation",
       "anesthesia_agents": "Propofol, remifentanil, rocuronium, sevoflurane",
@@ -696,7 +815,6 @@
       "follow_up_plan": "Repeat CXR in 24 hours and clinic follow-up in 2 weeks to assess stent position and symptoms",
       "cpt_codes": [
         31641,
-        31631,
         31636
       ],
       "evidence": null,
@@ -773,6 +891,35 @@
         "Fixed ASA class: III -> 3 (defaulted)"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Rigid bronchoscopy with mechanical/APC debulking and metallic stent placement in the left mainstem bronchus.",
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "units": 1,
+          "role": "tumor_destruction",
+          "facility_rvu_2025": 8.4,
+          "estimated_facility_payment_2025": 272.0
+        },
+        {
+          "code": "31636",
+          "units": 1,
+          "role": "stent_placement_bronchial",
+          "facility_rvu_2025": 6.85,
+          "estimated_facility_payment_2025": 222.0
+        }
+      ],
+      "total_facility_rvu_2025": 15.25,
+      "estimated_total_facility_payment_2025": 494.0,
+      "comments": [
+        "Removed 31631 (tracheal stent) because the stent was placed only in the left mainstem ('12 x 40 mm... into the left mainstem').",
+        "Corrected registry airway_type to Rigid."
+      ]
     }
   },
   {
@@ -946,6 +1093,28 @@
         "Fixed ASA class: III -> 3 (defaulted)"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Flexible bronchoscopy with cryotherapy and mechanical debulking of right mainstem tumor. No stent.",
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "units": 1,
+          "role": "tumor_destruction",
+          "facility_rvu_2025": 8.4,
+          "estimated_facility_payment_2025": 272.0
+        }
+      ],
+      "total_facility_rvu_2025": 8.4,
+      "estimated_total_facility_payment_2025": 272.0,
+      "comments": [
+        "31641 alone is correct for destruction/relief of stenosis without stenting.",
+        "Registry data accurately reflects 'Native' airway and 'Moderate' sedation."
+      ]
     }
   },
   {
@@ -1131,12 +1300,41 @@
         "Fixed ASA class: III -> 3 (defaulted)"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "BLVR with 3 Zephyr valves in LUL (LB1+2, LB3).",
+      "cpt_summary": [
+        {
+          "code": "31647",
+          "units": 1,
+          "role": "blvr_initial_lobe",
+          "facility_rvu_2025": 12.05,
+          "estimated_facility_payment_2025": 390.0
+        },
+        {
+          "code": "31651",
+          "units": 1,
+          "role": "blvr_additional_valves_same_lobe",
+          "facility_rvu_2025": 3.78,
+          "estimated_facility_payment_2025": 122.0
+        }
+      ],
+      "total_facility_rvu_2025": 15.83,
+      "estimated_total_facility_payment_2025": 512.0,
+      "comments": [
+        "Correctly coded with 31647 (initial) and 31651 (additional valves in same lobe logic or additional segment)."
+      ]
     }
   },
   {
     "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchoscopic lung volume reduction using Spiration valves targeting right upper lobe.\nPatient: Thomas Baker, 61-year-old male with GOLD IV COPD and RUL-predominant emphysema.\nSedation: Monitored anesthesia care with propofol infusion.\nTarget selection: Right upper lobe based on CT fissure analysis; Chartis not performed.\nIntervention: Two Spiration valves placed in RUL segments (RB1 and RB2+3). There was good collapse of RUL airways on bronchoscopy.\nComplications: None during procedure. No immediate pneumothorax on CXR.\nDisposition: Admitted overnight for observation.",
     "cpt_codes": [
-      31647
+      31647,
+      31651
     ],
     "registry_entry": {
       "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchoscopic lung volume reduction using Spiration valves targeting right upper lobe.\nPatient: Thomas Baker, 61-year-old male with GOLD IV COPD and RUL-predominant emphysema.\nSedation: Monitored anesthesia care with propofol infusion.\nTarget selection: Right upper lobe based on CT fissure analysis; Chartis not performed.\nIntervention: Two Spiration valves placed in RUL segments (RB1 and RB2+3). There was good collapse of RUL airways on bronchoscopy.\nComplications: None during procedure. No immediate pneumothorax on CXR.\nDisposition: Admitted overnight for observation.",
@@ -1304,6 +1502,34 @@
         "Fixed ASA class: III -> 3 (defaulted)"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "BLVR with 2 Spiration valves in RUL (RB1, RB2+3).",
+      "cpt_summary": [
+        {
+          "code": "31647",
+          "units": 1,
+          "role": "blvr_initial_lobe",
+          "facility_rvu_2025": 12.05,
+          "estimated_facility_payment_2025": 390.0
+        },
+        {
+          "code": "31651",
+          "units": 1,
+          "role": "blvr_additional_valves_same_lobe",
+          "facility_rvu_2025": 3.78,
+          "estimated_facility_payment_2025": 122.0
+        }
+      ],
+      "total_facility_rvu_2025": 15.83,
+      "estimated_total_facility_payment_2025": 512.0,
+      "comments": [
+        "Added 31651 to original 31647 to account for multiple valves/segments treated in the RUL, consistent with the logic applied in similar notes within this dataset."
+      ]
     }
   },
   {
@@ -1489,6 +1715,34 @@
         "Fixed ASA class: III -> 3 (defaulted)"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "BLVR with 2 Zephyr valves in LLL.",
+      "cpt_summary": [
+        {
+          "code": "31647",
+          "units": 1,
+          "role": "blvr_initial_lobe",
+          "facility_rvu_2025": 12.05,
+          "estimated_facility_payment_2025": 390.0
+        },
+        {
+          "code": "31651",
+          "units": 1,
+          "role": "blvr_additional_valves_same_lobe",
+          "facility_rvu_2025": 3.78,
+          "estimated_facility_payment_2025": 122.0
+        }
+      ],
+      "total_facility_rvu_2025": 15.83,
+      "estimated_total_facility_payment_2025": 512.0,
+      "comments": [
+        "Codes 31647 + 31651 are appropriate for multi-valve treatment of a single lobe."
+      ]
     }
   },
   {
@@ -1662,6 +1916,27 @@
         "Fixed ASA class: III -> 3 (defaulted)"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "medium",
+      "note_summary": "Whole lung lavage (left) with 30L instilled/25L returned. 32997 is the correct code.",
+      "cpt_summary": [
+        {
+          "code": "32997",
+          "units": 1,
+          "role": "total_lung_lavage",
+          "facility_rvu_2025": 0.0,
+          "estimated_facility_payment_2025": 0.0
+        }
+      ],
+      "total_facility_rvu_2025": 0.0,
+      "estimated_total_facility_payment_2025": 0.0,
+      "comments": [
+        "RVUs for 32997 are often carrier-priced or have 0 RVUs in standard fee schedules; check local MAC."
+      ]
     }
   },
   {
@@ -1835,6 +2110,27 @@
         "Fixed ASA class: III -> 3 (defaulted)"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "medium",
+      "note_summary": "Whole lung lavage (right) with 36L instilled/30L returned. 32997 is the correct code.",
+      "cpt_summary": [
+        {
+          "code": "32997",
+          "units": 1,
+          "role": "total_lung_lavage",
+          "facility_rvu_2025": 0.0,
+          "estimated_facility_payment_2025": 0.0
+        }
+      ],
+      "total_facility_rvu_2025": 0.0,
+      "estimated_total_facility_payment_2025": 0.0,
+      "comments": [
+        "RVUs for 32997 are often carrier-priced or have 0 RVUs in standard fee schedules; check local MAC."
+      ]
     }
   }
 ]

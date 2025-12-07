@@ -70,29 +70,21 @@
           {
             "code": "31653",
             "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
-            "modifier": null,
-            "modifiers": null,
-            "units": 1
-          },
-          {
-            "code": "+31627",
-            "description": "Bronchoscopy; with navigation guidance for lung or mediastinal lesion(s) (e.g., electromagnetic) (add-on)",
-            "modifier": null,
-            "modifiers": null,
-            "units": 1
-          },
-          {
-            "code": "+31654",
-            "description": "Bronchoscopy with EBUS for peripheral lesion(s) (add-on)",
-            "modifier": null,
-            "modifiers": null,
             "units": 1
           },
           {
             "code": "31628",
             "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
-            "modifier": null,
-            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
             "units": 1
           }
         ],
@@ -101,6 +93,135 @@
         "work_rvu": 12.18,
         "practice_expense_rvu": 4.93,
         "malpractice_rvu": 1.3
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T12:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31653",
+              "description": "Bronchoscopy with EBUS-TBNA, 3 or more nodal stations",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Linear EBUS sampling of stations 7, 4R, 4L",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "31628",
+              "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Transbronchial biopsy of LUL nodule",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 3,
+              "code": "+31627",
+              "description": "Bronchoscopy with computer-assisted, image-guided navigation",
+              "role": "add_on",
+              "selection_status": "selected",
+              "selection_reason": "Electromagnetic navigation to peripheral lesion",
+              "units": 1,
+              "is_add_on": true
+            },
+            {
+              "sequence": 4,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s)",
+              "role": "add_on",
+              "selection_status": "selected",
+              "selection_reason": "Radial EBUS confirmation of peripheral lesion",
+              "units": 1,
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.7442,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31653",
+              "units": 1,
+              "work_rvu": 4.96,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment_2025": 252,
+              "is_primary": true
+            },
+            {
+              "code": "31628",
+              "units": 1,
+              "work_rvu": 3.55,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment_2025": 181,
+              "is_primary": true
+            },
+            {
+              "code": "+31627",
+              "units": 1,
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment_2025": 101,
+              "is_add_on": true
+            },
+            {
+              "code": "+31654",
+              "units": 1,
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment_2025": 69,
+              "is_add_on": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 12.18,
+            "total_facility_rvu": 18.41,
+            "estimated_facility_payment_unadjusted": 603
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31653",
+              "summary": "Appropriate for EBUS-TBNA of 3 mediastinal stations (7, 4R, 4L).",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "31628",
+              "summary": "Primary code for transbronchial biopsy of the peripheral nodule.",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "+31627",
+              "summary": "Add-on for navigation required to reach the peripheral target.",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "+31654",
+              "summary": "Add-on for radial probe EBUS confirmation of the peripheral target.",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Diagnostic bronchoscopy (31622) is bundled.",
+            "Brushing (31623) is bundled/secondary to the biopsy in the same lobe."
+          ]
+        }
       }
     },
     "coding_review": {
@@ -235,8 +356,6 @@
           {
             "code": "32557",
             "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
-            "modifier": null,
-            "modifiers": null,
             "units": 1
           }
         ],
@@ -245,6 +364,62 @@
         "work_rvu": 3.12,
         "practice_expense_rvu": 1.04,
         "malpractice_rvu": 0.34
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T12:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "pleural_drainage",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32557",
+              "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Ultrasound-guided insertion of 14Fr pigtail catheter for drainage",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus.pleural",
+          "conversion_factor": 32.7442,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32557",
+              "units": 1,
+              "work_rvu": 3.12,
+              "total_facility_rvu": 4.5,
+              "mpfs_facility_payment_2025": 147,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 3.12,
+            "total_facility_rvu": 4.5,
+            "estimated_facility_payment_unadjusted": 147
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32557",
+              "summary": "Placement of a small-bore (14Fr) pigtail catheter using Seldinger technique and US guidance supports 32557 over 32551 (tube thoracostomy).",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Imaging guidance is inherent to 32557."
+          ]
+        }
       }
     },
     "coding_review": {
@@ -347,16 +522,12 @@
         "cpt_codes": [
           {
             "code": "31641",
-            "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with destruction of tumor(s) or relief of stenosis by any method other than excision",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
             "units": 1
           },
           {
             "code": "31631",
-            "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with tracheal stent placement",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
             "units": 1
           }
         ],
@@ -365,6 +536,86 @@
         "work_rvu": 9.61,
         "practice_expense_rvu": 4.91,
         "malpractice_rvu": 1.03
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T12:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Laser destruction and mechanical debulking of tracheal tumor",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "31631",
+              "description": "Bronchoscopy; with placement of tracheal stent(s)",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Placement of silicone tracheal stent",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.7442,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "units": 1,
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment_2025": 275,
+              "is_primary": true
+            },
+            {
+              "code": "31631",
+              "units": 1,
+              "work_rvu": 4.36,
+              "total_facility_rvu": 7.15,
+              "mpfs_facility_payment_2025": 234,
+              "is_primary": false
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 9.61,
+            "total_facility_rvu": 15.55,
+            "estimated_facility_payment_unadjusted": 509
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Extensive tumor destruction with Nd:YAG laser performed prior to stenting.",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "31631",
+              "summary": "Placement of tracheal stent to maintain airway patency.",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Multiple endoscopy rule applies (highest valued code 31641 paid 100%, 31631 reduced)."
+          ]
+        }
       }
     },
     "coding_review": {
@@ -473,9 +724,7 @@
         "cpt_codes": [
           {
             "code": "32650",
-            "description": "Thoracoscopy, surgical; with pleurodesis (e.g., mechanical or chemical)",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Thoracoscopy, surgical; with pleurodesis",
             "units": 1
           }
         ],
@@ -484,6 +733,65 @@
         "work_rvu": 10.0,
         "practice_expense_rvu": 4.09,
         "malpractice_rvu": 0.91
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T12:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "thoracoscopy",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32650",
+              "description": "Thoracoscopy, surgical; with pleurodesis (e.g., mechanical or chemical)",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Medical thoracoscopy with talc poudrage pleurodesis",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus.pleural",
+          "conversion_factor": 32.7442,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32650",
+              "units": 1,
+              "work_rvu": 10.0,
+              "total_facility_rvu": 15.0,
+              "mpfs_facility_payment_2025": 491,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 10.0,
+            "total_facility_rvu": 15.0,
+            "estimated_facility_payment_unadjusted": 491
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32650",
+              "summary": "Surgical thoracoscopy with pleurodesis (talc poudrage). Includes biopsy and chest tube placement.",
+              "rule_refs": [
+                "thoracoscopy_biopsy_with_resection"
+              ],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Biopsies (3260x) are bundled into therapeutic thoracoscopy with pleurodesis (32650).",
+            "Tube thoracostomy (32551) is bundled."
+          ]
+        }
       }
     },
     "coding_review": {
@@ -578,9 +886,7 @@
         "cpt_codes": [
           {
             "code": "31660",
-            "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with bronchial thermoplasty, 1 lobe",
-            "modifier": null,
-            "modifiers": null,
+            "description": "Bronchoscopy; with bronchial thermoplasty, 1 lobe",
             "units": 1
           }
         ],
@@ -589,6 +895,62 @@
         "work_rvu": 4.0,
         "practice_expense_rvu": 1.53,
         "malpractice_rvu": 0.44
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T12:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchial_thermoplasty",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31660",
+              "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with bronchial thermoplasty, 1 lobe",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Bronchial thermoplasty of RLL (1 lobe)",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.7442,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31660",
+              "units": 1,
+              "work_rvu": 4.0,
+              "total_facility_rvu": 5.97,
+              "mpfs_facility_payment_2025": 195,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.0,
+            "total_facility_rvu": 5.97,
+            "estimated_facility_payment_unadjusted": 195
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31660",
+              "summary": "Appropriate code for initial thermoplasty session treating a single lobe.",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Includes diagnostic bronchoscopy."
+          ]
+        }
       }
     },
     "coding_review": {

@@ -173,6 +173,116 @@
         "work_rvu": 7.22,
         "practice_expense_rvu": 2.71,
         "malpractice_rvu": 0.78
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T22:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_biopsy_parenchymal",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31628",
+              "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Primary diagnostic maneuver (cryobiopsy of RLL nodule)",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "role": "add_on",
+              "selection_status": "selected",
+              "selection_reason": "Navigation to target documented (SuperDimension)",
+              "units": 1,
+              "is_add_on": true
+            },
+            {
+              "sequence": 3,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "role": "add_on",
+              "selection_status": "selected",
+              "selection_reason": "Radial EBUS confirmation documented",
+              "units": 1,
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31628",
+              "units": 1,
+              "work_rvu": 3.55,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179,
+              "is_primary": true
+            },
+            {
+              "code": "+31627",
+              "units": 1,
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99,
+              "is_add_on": true
+            },
+            {
+              "code": "+31654",
+              "units": 1,
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68,
+              "is_add_on": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 7.22,
+            "total_facility_rvu": 10.71,
+            "estimated_facility_payment_unadjusted": 346,
+            "notes": "Values are 2025 National Unadjusted Medicare rates."
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31628",
+              "summary": "Supported by transbronchial cryobiopsy of RLL nodule.",
+              "rule_refs": [
+                "cryobiopsy_not_cryotherapy"
+              ],
+              "qa_flags": []
+            },
+            {
+              "code": "+31627",
+              "summary": "Navigation (SuperDimension) used to reach target.",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "+31654",
+              "summary": "Radial EBUS used to verify lesion location.",
+              "rule_refs": [
+                "radial_requires_tblb"
+              ],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Procedure coded as Navigational Bronchoscopy with Radial EBUS and TBLB (Cryobiopsy).",
+            "Note: Text mentions 'CPT 31632' in header but procedure describes single lobe; 31628 is the correct primary code."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -361,6 +471,62 @@
         "work_rvu": 4.96,
         "practice_expense_rvu": 2.22,
         "malpractice_rvu": 0.52
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T22:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31653",
+              "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "EBUS-TBNA of 4 stations (7, 4R, 10R, 11R)",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31653",
+              "units": 1,
+              "work_rvu": 4.96,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.96,
+            "total_facility_rvu": 7.7,
+            "estimated_facility_payment_unadjusted": 249
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31653",
+              "summary": "Supported by sampling of >2 stations (7, 4R, 10R, 11R).",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Standard EBUS-TBNA staging procedure."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -544,6 +710,62 @@
         "work_rvu": 4.96,
         "practice_expense_rvu": 2.22,
         "malpractice_rvu": 0.52
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T22:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31653",
+              "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "EBUS-TBNA of 4 stations (7, 4R, 10R, 11R)",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31653",
+              "units": 1,
+              "work_rvu": 4.96,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.96,
+            "total_facility_rvu": 7.7,
+            "estimated_facility_payment_unadjusted": 249
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31653",
+              "summary": "Supported by sampling of >2 stations.",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Duplicate content of previous note (Andrew T Lewis), processed identically."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -754,6 +976,151 @@
         "work_rvu": 13.6,
         "practice_expense_rvu": 5.76,
         "malpractice_rvu": 1.48
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T22:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_navigation",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31629",
+              "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "TBNA of lingular lesion",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "31628",
+              "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Forceps biopsy of lingular lesion",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 3,
+              "code": "31624",
+              "description": "Bronchoscopy; with bronchoalveolar lavage",
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "BAL of RUL posterior segment",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 4,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "role": "add_on",
+              "selection_status": "selected",
+              "selection_reason": "Navigation (SuperDimension) used",
+              "units": 1,
+              "is_add_on": true
+            },
+            {
+              "sequence": 5,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "role": "add_on",
+              "selection_status": "selected",
+              "selection_reason": "Radial EBUS confirmation",
+              "units": 1,
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31629",
+              "units": 1,
+              "work_rvu": 3.75,
+              "total_facility_rvu": 5.89,
+              "mpfs_facility_payment": 191,
+              "is_primary": true
+            },
+            {
+              "code": "31628",
+              "units": 1,
+              "work_rvu": 3.55,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179,
+              "is_primary": false
+            },
+            {
+              "code": "31624",
+              "units": 1,
+              "work_rvu": 2.63,
+              "total_facility_rvu": 4.24,
+              "mpfs_facility_payment": 137,
+              "is_primary": false
+            },
+            {
+              "code": "+31627",
+              "units": 1,
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99,
+              "is_add_on": true
+            },
+            {
+              "code": "+31654",
+              "units": 1,
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68,
+              "is_add_on": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 13.6,
+            "total_facility_rvu": 20.84,
+            "estimated_facility_payment_unadjusted": 674
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31629",
+              "summary": "TBNA of lingular lesion.",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "31628",
+              "summary": "Forceps biopsy of lingular lesion.",
+              "rule_refs": [],
+              "qa_flags": [
+                {
+                  "severity": "warning",
+                  "message": "NCCI bundling alert: 31628 and 31629 on the same lesion are typically bundled. Review payer policy."
+                }
+              ]
+            },
+            {
+              "code": "31624",
+              "summary": "BAL of RUL posterior segment (distinct site from biopsy).",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Extensive sampling with Nav/REBUS. NCCI edits may flag concurrent TBNA/TBLB on same lesion."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -937,6 +1304,64 @@
         "work_rvu": 3.92,
         "practice_expense_rvu": 1.6,
         "malpractice_rvu": 0.36
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T22:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "tunneled_pleural_catheter_placement",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32550",
+              "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "PleurX catheter insertion",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus.pleural",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32550",
+              "units": 1,
+              "work_rvu": 3.92,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 3.92,
+            "total_facility_rvu": 5.88,
+            "estimated_facility_payment_unadjusted": 190
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32550",
+              "summary": "Tunneled PleurX catheter insertion.",
+              "rule_refs": [
+                "32550_requires_new_tunneled_catheter"
+              ],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Ultrasound guidance (76942) documented but not included in input codes; consider adding if payer allows separate reporting with 32550."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1125,6 +1550,62 @@
         "work_rvu": 4.96,
         "practice_expense_rvu": 2.22,
         "malpractice_rvu": 0.52
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T22:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31653",
+              "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "EBUS-TBNA of 4 stations (7, 4R, 10L, 11R)",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31653",
+              "units": 1,
+              "work_rvu": 4.96,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.96,
+            "total_facility_rvu": 7.7,
+            "estimated_facility_payment_unadjusted": 249
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31653",
+              "summary": "Supported by sampling of >2 stations.",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Straightforward EBUS staging (4 stations)."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1318,6 +1799,62 @@
         "work_rvu": 4.96,
         "practice_expense_rvu": 2.22,
         "malpractice_rvu": 0.52
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T22:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "thoracentesis",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32555",
+              "description": "Thoracentesis, needle or catheter, aspiration of the pleural space; with imaging guidance",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Ultrasound-guided thoracentesis",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus.pleural",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32555",
+              "units": 1,
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.19,
+              "mpfs_facility_payment": 103,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 2.27,
+            "total_facility_rvu": 3.19,
+            "estimated_facility_payment_unadjusted": 103
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32555",
+              "summary": "Documentation supports US guidance (32555).",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Standard therapeutic thoracentesis."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1499,6 +2036,64 @@
         "work_rvu": 2.27,
         "practice_expense_rvu": 0.63,
         "malpractice_rvu": 0.29
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T22:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Tumor destruction (snare/APC) and debulking",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "units": 1,
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_facility_payment_unadjusted": 272
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Primary therapeutic maneuver for tumor destruction.",
+              "rule_refs": [
+                "31640_vs_31641_same_site"
+              ],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Combined use of snare and APC coded as 31641 per hierarchy."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",
@@ -1669,6 +2264,127 @@
         "work_rvu": 5.25,
         "practice_expense_rvu": 2.6,
         "malpractice_rvu": 0.55
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T22:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_navigation",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31629",
+              "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Needle aspiration of RUL target",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "31628",
+              "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Forceps/Brush biopsy of RUL target",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 3,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "role": "add_on",
+              "selection_status": "selected",
+              "selection_reason": "Robotic navigation (Ion)",
+              "units": 1,
+              "is_add_on": true
+            },
+            {
+              "sequence": 4,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "role": "add_on",
+              "selection_status": "selected",
+              "selection_reason": "Radial EBUS confirmation",
+              "units": 1,
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31629",
+              "units": 1,
+              "work_rvu": 3.75,
+              "total_facility_rvu": 5.89,
+              "mpfs_facility_payment": 191,
+              "is_primary": true
+            },
+            {
+              "code": "31628",
+              "units": 1,
+              "work_rvu": 3.55,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179,
+              "is_primary": false
+            },
+            {
+              "code": "+31627",
+              "units": 1,
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99,
+              "is_add_on": true
+            },
+            {
+              "code": "+31654",
+              "units": 1,
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68,
+              "is_add_on": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 10.97,
+            "total_facility_rvu": 16.6,
+            "estimated_facility_payment_unadjusted": 537
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31629",
+              "summary": "Primary sampling code.",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "31628",
+              "summary": "Additional sampling method (forceps/brush).",
+              "rule_refs": [],
+              "qa_flags": [
+                {
+                  "severity": "warning",
+                  "message": "NCCI bundling alert: 31628/31629 same site."
+                }
+              ]
+            }
+          ],
+          "global_comments": [
+            "Note text contains concatenated records (Thompson + Martinez); billing extracted based on Thompson's procedure logic."
+          ]
+        }
       }
     },
     "source_file": "synthetic_notes_with_registry.jsonl",

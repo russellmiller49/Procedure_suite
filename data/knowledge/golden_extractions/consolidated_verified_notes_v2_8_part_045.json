@@ -107,6 +107,54 @@
         "data_entry_status": "Complete",
         "version": "0.5.0-edgecases",
         "generated_at": "2025-12-06T00:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS for biopsy of 1 or 2 mediastinal and/or hilar lymph node stations",
+            "units": 1
+          }
+        ],
+        "total_rvu": 6.96,
+        "work_rvu": 4.46,
+        "practice_expense_rvu": 2.02,
+        "malpractice_rvu": 0.48
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31652",
+              "description": "Bronchoscopy; with EBUS for biopsy of 1 or 2 mediastinal and/or hilar lymph node stations",
+              "work_rvu": 4.46,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225,
+              "selection_status": "selected",
+              "selection_reason": "EBUS-TBNA of 2 stations (4R, 7). Station 10R visualized but not sampled."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 4.46,
+            "total_facility_rvu": 6.96,
+            "estimated_facility_payment_unadjusted": 225
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31652",
+              "summary": "Correctly codes for EBUS sampling of 1-2 nodal stations. Documentation confirms sampling of 4R and 7 only."
+            }
+          ]
+        }
       }
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
@@ -340,6 +388,54 @@
         "data_entry_status": "Complete",
         "version": "0.5.0-edgecases",
         "generated_at": "2025-12-06T00:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS for biopsy of 3 or more mediastinal and/or hilar lymph node stations",
+            "units": 1
+          }
+        ],
+        "total_rvu": 7.7,
+        "work_rvu": 4.96,
+        "practice_expense_rvu": 2.22,
+        "malpractice_rvu": 0.52
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31653",
+              "description": "Bronchoscopy; with EBUS for biopsy of 3 or more mediastinal and/or hilar lymph node stations",
+              "work_rvu": 4.96,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249,
+              "selection_status": "selected",
+              "selection_reason": "EBUS-TBNA of 3 stations (11R, 4R, 7)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 4.96,
+            "total_facility_rvu": 7.7,
+            "estimated_facility_payment_unadjusted": 249
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31653",
+              "summary": "Sampling of 3 nodal stations supports 31653. Radial EBUS code 31654 is not billed as the probe was used inside a lymph node, not for a peripheral lesion."
+            }
+          ]
+        }
       }
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
@@ -590,6 +686,111 @@
         "data_entry_status": "Complete",
         "version": "0.5.0-edgecases",
         "generated_at": "2025-12-06T00:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1
+          },
+          {
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS for biopsy of 1 or 2 mediastinal and/or hilar lymph node stations",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1
+          }
+        ],
+        "total_rvu": 17.67,
+        "work_rvu": 11.68,
+        "practice_expense_rvu": 4.73,
+        "malpractice_rvu": 1.26
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_navigation",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31628",
+              "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+              "work_rvu": 3.55,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179,
+              "selection_status": "selected",
+              "selection_reason": "TBLB of LLL nodule."
+            },
+            {
+              "sequence": 2,
+              "code": "31652",
+              "description": "Bronchoscopy; with EBUS for biopsy of 1 or 2 mediastinal and/or hilar lymph node stations",
+              "work_rvu": 4.46,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225,
+              "selection_status": "selected",
+              "selection_reason": "EBUS-TBNA of 2 stations (11L, 7)."
+            },
+            {
+              "sequence": 3,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99,
+              "selection_status": "selected",
+              "selection_reason": "Robotic (Ion) navigation used."
+            },
+            {
+              "sequence": 4,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68,
+              "selection_status": "selected",
+              "selection_reason": "Radial EBUS used for peripheral target verification."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 11.68,
+            "total_facility_rvu": 17.67,
+            "estimated_facility_payment_unadjusted": 571
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31628",
+              "summary": "Primary diagnostic biopsy code for LLL lesion."
+            },
+            {
+              "code": "31652",
+              "summary": "Separate EBUS staging of 2 stations (11L, 7)."
+            },
+            {
+              "code": "+31627",
+              "summary": "Add-on for navigation."
+            },
+            {
+              "code": "+31654",
+              "summary": "Add-on for radial EBUS."
+            }
+          ]
+        }
       }
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
@@ -890,6 +1091,54 @@
         "data_entry_status": "Complete",
         "version": "0.5.0-edgecases",
         "generated_at": "2025-12-06T00:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1
+          }
+        ],
+        "total_rvu": 4.24,
+        "work_rvu": 2.63,
+        "practice_expense_rvu": 1.31,
+        "malpractice_rvu": 0.3
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_diagnostic",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31624",
+              "description": "Bronchoscopy; with bronchoalveolar lavage",
+              "work_rvu": 2.63,
+              "total_facility_rvu": 4.24,
+              "mpfs_facility_payment": 137,
+              "selection_status": "selected",
+              "selection_reason": "BAL performed; EBUS attempt aborted with no sampling."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 2.63,
+            "total_facility_rvu": 4.24,
+            "estimated_facility_payment_unadjusted": 137
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31624",
+              "summary": "EBUS was aborted without entering the airway; only BAL was successfully completed."
+            }
+          ]
+        }
       }
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
@@ -1127,6 +1376,54 @@
         "data_entry_status": "Complete",
         "version": "0.5.0-edgecases",
         "generated_at": "2025-12-06T00:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31645",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+            "units": 1
+          }
+        ],
+        "total_rvu": 4.47,
+        "work_rvu": 2.78,
+        "practice_expense_rvu": 1.37,
+        "malpractice_rvu": 0.32
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31645",
+              "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+              "work_rvu": 2.78,
+              "total_facility_rvu": 4.47,
+              "mpfs_facility_payment": 145,
+              "selection_status": "selected",
+              "selection_reason": "Aggressive suctioning/toilet of stent lumen (stent check). No repositioning or dilation."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 2.78,
+            "total_facility_rvu": 4.47,
+            "estimated_facility_payment_unadjusted": 145
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31645",
+              "summary": "Supports therapeutic aspiration/toilet. 31631/31630 not billed as stent was not placed or dilated."
+            }
+          ]
+        }
       }
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
@@ -1243,7 +1540,7 @@
   {
     "note_text": "Patient: Alvarez, Maria | 63F | MRN 8801006\nDate of Procedure: 11/29/2024\nAttending: David Chen, MD\n\nPRE-OP DIAGNOSIS:\nMalignant right mainstem bronchus obstruction from squamous cell carcinoma\n\nPOST-OP DIAGNOSIS:\nSame, status post rigid bronchoscopy with metallic stent placement\n\nPROCEDURES PERFORMED:\nRigid bronchoscopy with airway tumor debulking and balloon dilation, followed by right mainstem metallic stent placement\n\nANESTHESIA:\nGeneral anesthesia with rigid bronchoscopy (anesthesia team)\n\nDESCRIPTION:\nUnder general anesthesia, rigid bronchoscope introduced. A friable obstructing tumor was debulked with suction and forceps to\ncreate a working channel. No separate excision code is being considered for this case.\n\nA CRE balloon was then advanced to the right mainstem stenosis and inflated sequentially (10, 12, and 14 mm) across the same\nsegment that would receive the stent. After dilation improved luminal caliber, a covered metallic stent (14 mm x 50 mm) was\ndeployed in the right mainstem bronchus under bronchoscopic and fluoroscopic guidance. Post-deployment balloon dilation of the\nstent was performed to ensure apposition to the airway wall.\n\nAll dilation occurred in the exact segment receiving the stent; no separate lobar or segmental dilation was performed outside\nthe stented region.\n\nStent position and patency were confirmed. No additional therapeutic bronchoscopy procedures were performed.\n\nCOMPLICATIONS:\nNone.\n\nDISPOSITION:\nRemained intubated briefly then extubated in OR and transferred to ICU.\n\nCPT (requested): 31631, 31630",
     "cpt_codes": [
-      31631
+      31636
     ],
     "registry_entry": {
       "patient_mrn": "8801006",
@@ -1256,7 +1553,7 @@
       "airway_type": "ETT",
       "final_diagnosis_prelim": "Malignancy",
       "cpt_codes": [
-        31631
+        31636
       ],
       "evidence": {
         "patient_age": "Header lists 63F.",
@@ -1355,6 +1652,54 @@
         "data_entry_status": "Complete",
         "version": "0.5.0-edgecases",
         "generated_at": "2025-12-06T00:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31636",
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "units": 1
+          }
+        ],
+        "total_rvu": 6.85,
+        "work_rvu": 4.3,
+        "practice_expense_rvu": 2.1,
+        "malpractice_rvu": 0.45
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_stent",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31636",
+              "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+              "work_rvu": 4.3,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222,
+              "selection_status": "selected",
+              "selection_reason": "Metallic stent placed in right mainstem bronchus."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 4.3,
+            "total_facility_rvu": 6.85,
+            "estimated_facility_payment_unadjusted": 222
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31636",
+              "summary": "Placement of bronchial stent (RMS). 31630 (dilation) is bundled as it occurred in the same segment."
+            }
+          ]
+        }
       }
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
@@ -1570,6 +1915,54 @@
         "data_entry_status": "Complete",
         "version": "0.5.0-edgecases",
         "generated_at": "2025-12-06T00:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1
+          }
+        ],
+        "total_rvu": 8.4,
+        "work_rvu": 5.25,
+        "practice_expense_rvu": 2.6,
+        "malpractice_rvu": 0.55
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272,
+              "selection_status": "selected",
+              "selection_reason": "Tumor destruction via cryotherapy and APC."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_facility_payment_unadjusted": 272
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Cryotherapy and APC destruction supports 31641. No mechanical excision performed (excludes 31640)."
+            }
+          ]
+        }
       }
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
@@ -1790,6 +2183,54 @@
         "data_entry_status": "Complete",
         "version": "0.5.0-edgecases",
         "generated_at": "2025-12-06T00:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31634",
+            "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+            "units": 1
+          }
+        ],
+        "total_rvu": 5.63,
+        "work_rvu": 3.5,
+        "practice_expense_rvu": 1.75,
+        "malpractice_rvu": 0.38
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31634",
+              "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+              "work_rvu": 3.5,
+              "total_facility_rvu": 5.63,
+              "mpfs_facility_payment": 182,
+              "selection_status": "selected",
+              "selection_reason": "Emergent control of hemorrhage (hemoptysis) without other procedures."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 3.5,
+            "total_facility_rvu": 5.63,
+            "estimated_facility_payment_unadjusted": 182
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31634",
+              "summary": "Primary intent was hemorrhage control. Diagnostic bronchoscopy 31622 is bundled."
+            }
+          ]
+        }
       }
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
@@ -2011,6 +2452,54 @@
         "data_entry_status": "Complete",
         "version": "0.5.0-edgecases",
         "generated_at": "2025-12-06T00:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32560",
+            "description": "Instillation, via chest tube/catheter, agent for pleurodesis",
+            "units": 1
+          }
+        ],
+        "total_rvu": 2.31,
+        "work_rvu": 1.54,
+        "practice_expense_rvu": 0.63,
+        "malpractice_rvu": 0.14
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "coding_summary": {
+          "primary_family": "pleural_intrapleural_treatment",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32560",
+              "description": "Instillation, via chest tube/catheter, agent for pleurodesis",
+              "work_rvu": 1.54,
+              "total_facility_rvu": 2.31,
+              "mpfs_facility_payment": 75,
+              "selection_status": "selected",
+              "selection_reason": "Talc slurry instilled via existing tunneled catheter."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 1.54,
+            "total_facility_rvu": 2.31,
+            "estimated_facility_payment_unadjusted": 75
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32560",
+              "summary": "Chemical pleurodesis without new catheter placement (existing IPC used)."
+            }
+          ]
+        }
       }
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
@@ -2218,6 +2707,54 @@
         "data_entry_status": "Complete",
         "version": "0.5.0-edgecases",
         "generated_at": "2025-12-06T00:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32555",
+            "description": "Thoracentesis, needle or catheter, aspiration of the pleural space; with imaging guidance",
+            "units": 1
+          }
+        ],
+        "total_rvu": 3.19,
+        "work_rvu": 2.27,
+        "practice_expense_rvu": 0.63,
+        "malpractice_rvu": 0.29
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "coding_summary": {
+          "primary_family": "thoracentesis",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32555",
+              "description": "Thoracentesis, needle or catheter, aspiration of the pleural space; with imaging guidance",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.19,
+              "mpfs_facility_payment": 103,
+              "selection_status": "selected",
+              "selection_reason": "Ultrasound-guided therapeutic thoracentesis."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 2.27,
+            "total_facility_rvu": 3.19,
+            "estimated_facility_payment_unadjusted": 103
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32555",
+              "summary": "Diagnostic/therapeutic thoracentesis with imaging guidance."
+            }
+          ]
+        }
       }
     },
     "source_file": "synthetic_edge_case_notes_with_registry.jsonl",

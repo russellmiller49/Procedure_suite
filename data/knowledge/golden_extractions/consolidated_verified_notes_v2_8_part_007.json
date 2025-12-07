@@ -398,12 +398,53 @@
       "warnings": [
         "NCCI bundling: 31647 + 31634 - BLVR valve and Chartis same lobe. Consider modifier -59/-XS if distinct sites."
       ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Endobronchial Valve Placement operative report for William Harris.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI Policy Manual Chapter 5 (Respiratory)",
+        "2025 MPFS facility RVUs and payment rates"
+      ],
+      "per_code": [
+        {
+          "code": "31647",
+          "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, with endobronchial valve placement, initial lobe.",
+          "category": "bronchoscopic_blvr_valve_placement",
+          "units": 1,
+          "facility_total_rvus_2025": 12.05,
+          "facility_mpfs_payment_2025": 390.0,
+          "bundling_or_modifier_notes": "Primary service. Supported by placement of 3 Zephyr valves in the LUL (initial lobe). Includes sizing and deployment."
+        },
+        {
+          "code": "31634",
+          "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, with balloon occlusion, assessment of air leak (Chartis), airway sizing, and documentation.",
+          "category": "bronchoscopic_blvr_chartis",
+          "units": 1,
+          "facility_total_rvus_2025": 5.63,
+          "facility_mpfs_payment_2025": 182.0,
+          "bundling_or_modifier_notes": "Chartis assessment of the LUL was performed in the same session as valve placement in the LUL. Per NCCI and payer policies, 31634 is typically bundled into 31647 when performed on the same lobe. Status: Bundled/Supportive."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 12.05,
+        "total_facility_mpfs_payment": 390.0,
+        "computation_notes": "Total assumes 31634 is bundled. Payment reflects 31647 only."
+      },
+      "rationale": [
+        "Clinical summary: 68M with severe emphysema underwent Chartis assessment of LUL (CV Negative) followed by placement of 3 Zephyr valves in the LUL.",
+        "Code selection: 31647 is the correct code for valve placement in a single lobe (LUL). 31634 captures the Chartis assessment but is bundled when the target lobe is immediately treated.",
+        "Bundling: No valves were placed in other lobes, so +31651 is not applicable. No valves were removed, so 31648 is not applicable."
+      ]
     }
   },
   {
     "note_text": "Patient Name: Lisa Morgan\nMRN: 8294651\nDate: June 5, 2019\n\nPreoperative Diagnosis: Tracheal and bronchial stenosis secondary to Granulomatosis with polyangiitis\nPostoperative Diagnosis: Tracheal and bronchial stenosis secondary to Granulomatosis with polyangiitis\nProcedure Performed: Flexible bronchoscopy with radial knife incisions and balloon dilatation\n\nSurgeon: Gregory Hamilton, MD\nIndications: Tracheal and bronchial stenosis\nConsent: Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent.\nSedation: General Anesthesia\n\nDescription of Procedure:\nThe procedure was performed in the bronchoscopy suite. An I-gel LMA was placed and the diagnostic flexible bronchoscope was inserted through the airway device. The vocal cords were visualized and normal. The subglottic space was normal. Approximately 3 cm below the vocal cords, there was a long segment stenotic lesion which was erythematous and inflamed in a circumferential pattern measuring 5 cm in length. The maximal obstruction within the long segment was approximately 60% with an endoluminal diameter of 6-7 mm. There were no simple strictures associated with the stenosis. The carina was sharp.\n\nOn the right, there were mucosal changes/erythema without obstruction on the posterior wall of the right mainstem and at the entrance to the right upper lobe. The right upper lobe and mainstem appeared unaffected. The bronchus intermedius was mostly unaffected with small mucosal irregularities. The right middle lobe was minimally narrowed without significant obstruction. There was mild stricturing on the right lower lobe orifice (approximately 10% obstruction). The medial basal segment of the right lower lobe was concentrically obstructed from stricture with only a pinpoint opening (95% occluded). A similar circumferential obstruction was seen at the orifice of the superior segment (80% occluded). The anterior, lateral, and posterior basal segments were partially obstructed from stricture (50%).\n\nOn the left, the mainstem was normal. The left upper lobe proper was normal. The lingula was obstructed at the orifice by a similar appearing circumferential obstruction (50% occluded). The superior segment of the left lower lobe was also minimally obstructed from stricture (15% obstructed). The basal segments of the left lower lobe were unaffected.\n\nFollowing inspection, we then brought our attention to the tracheal stenosis and serial dilatations were performed with 3 cm length with a 12, 13.5, 15 CRE balloon with post-dilatation obstruction of 25% of normal airway. We then inserted the electrocautery knife through the working channel and cuts were made to the band-like strictures within the lingula, the superior segment of the right lower lobe, medial basal segments of the right lower lobe, and anterior and lateral basilar segments of the right lower lobe. Serial dilatations were performed using the 6, 7, 8 CRE balloon to the lingula, the superior segment of the right lower lobe, medial basal segments of the right lower lobe, and anterior and lateral basilar segments of the right lower lobe with near complete recanalization of the segments, after which the flexible bronchoscope could easily be passed into the segments. At this point, once we were satisfied that there was no active bleeding, the bronchoscope was removed and the procedure completed.\n\nRecommendations:\n\u2022 Patient to PACU for recovery\n\u2022 Patient to follow up with me PRN if symptoms return\n\nGregory Hamilton, MD",
     "cpt_codes": [
-      31630
+      31641
     ],
     "registry_entry": {
       "patient_mrn": "8294651",
@@ -552,6 +593,37 @@
       "patch_date": "2025-12-02T02:00:48.039175",
       "changes": [],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Flexible bronchoscopy with radial knife incisions and balloon dilatation for Lisa Morgan.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI bundling rules: 31630 bundled into 31641"
+      ],
+      "per_code": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, with destruction of tumor or relief of stenosis by any method other than excision (e.g., laser, cryotherapy, electrosurgery).",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
+          "units": 1,
+          "facility_total_rvus_2025": 8.4,
+          "facility_mpfs_payment_2025": 272.0,
+          "bundling_or_modifier_notes": "Replaces 31630. Supported by use of electrocautery knife ('cuts were made to the band-like strictures') to relieve complex stenosis. Dilation (31630) performed in the same segments is bundled."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 8.4,
+        "total_facility_mpfs_payment": 272.0,
+        "computation_notes": "Includes 31641."
+      },
+      "rationale": [
+        "Clinical summary: Procedure involved electrocautery knife incisions and balloon dilation for complex tracheal and bronchial stenosis.",
+        "Code correction: The original code 31630 (dilation) is insufficient because 'radial knife incisions' with electrocautery constitute destruction/relief of stenosis (31641).",
+        "Bundling: 31641 includes the work of dilation when performed on the same lesions to facilitate the relief of stenosis."
+      ]
     }
   },
   {
@@ -730,6 +802,63 @@
         "Extracted EBUS stations: ['10R', '4R', '7']"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Ion robotic bronchoscopy note for Jackson, Tyrone.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of stations 4R, 7, and 10R (3 stations)."
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on).",
+          "category": "bronchoscopy_navigation",
+          "units": 1,
+          "facility_total_rvus_2025": 3.07,
+          "facility_mpfs_payment_2025": 99.0,
+          "bundling_or_modifier_notes": "Add-on. Supported by use of Ion robotic platform with registration and navigation to RUL mass."
+        },
+        {
+          "code": "31654",
+          "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention (add-on).",
+          "category": "bronchoscopy_ebus_radial",
+          "units": 1,
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Add-on. Supported by REBUS visualization (concentric pattern) of the RUL mass."
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe.",
+          "category": "bronchoscopy_biopsy_parenchymal",
+          "units": 1,
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Supported by 7 biopsies of the RUL mass. 31628 is compatible with 31653/31627/31654."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 18.41,
+        "total_facility_mpfs_payment": 595.0,
+        "computation_notes": "Sum of 31653, 31627, 31654, 31628."
+      },
+      "rationale": [
+        "Clinical summary: Ion robotic bronchoscopy for 3.2cm RUL mass and staging. EBUS-TBNA of 3 stations (4R, 7, 10R). Navigation and radial EBUS used for RUL mass biopsies.",
+        "Code selection: Code set [31653, 31627, 31654, 31628] accurately reflects the maximal scope of the procedure."
+      ]
     }
   },
   {
@@ -738,8 +867,8 @@
       31653
     ],
     "registry_entry": {
-      "patient_mrn": "8463927",
-      "procedure_date": "2025-03-08",
+      "patient_mrn": "5729384",
+      "procedure_date": "2025-04-08",
       "patient_age": 80,
       "gender": "Female",
       "asa_class": 3,
@@ -1105,7 +1234,7 @@
       "invalid_codes": []
     },
     "data_quality_flags": [
-      "POTENTIAL_CONCATENATION: Found 2 patient headers"
+      "CONCATENATED_NOTE: Note contains header for 'Mills, Robert E' (03/08/2025) but body for 'Russell, Dorothy Mae' (04/08/2025). Extracted data corrected to match the detailed body (Russell)."
     ],
     "patch_metadata": {
       "patched": true,
@@ -1116,12 +1245,43 @@
         "Extracted EBUS stations: ['10L', '10R', '11L', '11R', '4L', '4R', '7']"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "EBUS-TBNA report for Russell, Dorothy Mae (concatenated note body).",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of 6 stations (7, 4L, 4R, 10L, 10R, 11L) documented in the 'Russell' portion of the note."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.7,
+        "total_facility_mpfs_payment": 249.0,
+        "computation_notes": "Single code 31653."
+      },
+      "rationale": [
+        "Data Quality: The note contains a header for 'Mills' but the detailed procedure describes 'Russell'. The coding review is based on the detailed 'Russell' note which documents EBUS-TBNA of 6 stations.",
+        "Code selection: Sampling of 3+ stations maps to 31653. No peripheral lesion sampling or other interventions documented in the detailed section."
+      ]
     }
   },
   {
     "note_text": "PT: Mills, Robert E | MR 8463927 | 03/08/2025\nMD: Franklin, Sarah\nProc: EBUS with needle biopsies\nWhy: Right lung cancer, check if spread to lymph nodes\nConsent: Yes\nDrugs for sedation: Versed + Fentanyl + Propofol\nWhat we saw with ultrasound:\n\u2022\tBig node under airway split (station 7): 31mm\n\u2022\tNode on right neck area (station 4R): 24mm\n\u2022\tNode at right lung entrance (station 10R): 16mm\n\u2022\tSmall node inside right lung (station 11R): 13mm\nWhat we did: Stuck needle in nodes to get samples\nStation 7: 4 times Doctor looked right away = CANCER CELLS (adenocarcinoma)\nStation 4R: 3 times\nQuick look = CANCER\nStation 10R: 2 times Quick look = CANCER\nStation 11R: 2 times Quick look = Normal node\nWhat this means: Cancer in 3 different lymph node spots = N2 disease = Stage 3\nNo problems\nPlan:\n\u2022\tSee cancer doctor\n\u2022\tMore tests\n\u2022\tDecide treatment\nDr. S. Franklin 3/8/2025\n________________________________________\n\nINTERVENTIONAL PULMONOLOGY PROCEDURAL DOCUMENTATION\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nDEMOGRAPHICS: NAME: Russell, Dorothy Mae MRN: 5729384 DOB: 06/14/1944 (Age 80) SEX: Female PROCEDURE DATE: 04/08/2025 LOCATION: Bronchoscopy Suite, 4th Floor\nCLINICAL TEAM: ATTENDING: Montgomery, Richard MD FELLOW: Lee, Christina MD CRNA: Johnson, Mark CRNA RN: Peters, Emily RN, BSN RT: Thompson, David RRT CYTOLOGY: Baker, Linda MD\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nPROCEDURE: Endobronchial Ultrasound with Transbronchial Needle Aspiration (EBUS-TBNA)\nINDICATION: 80-year-old female, 20 pack-year smoking history (quit 30 years ago), presenting with:\n\u2022\tLeft lower lobe mass 4.2cm on CT\n\u2022\tExtensive mediastinal and hilar lymphadenopathy\n\u2022\tWeight loss 18 lbs over 2 months\n\u2022\tNo previous cancer history\n\u2022\tPET-CT shows multiple FDG-avid lymph nodes (SUV up to 9.2)\nDiagnostic question: Tissue diagnosis and staging if malignancy confirmed\nRELEVANT HISTORY: PMH: COPD (moderate), hypertension, osteoarthritis, GERD PSH: Cholecystectomy (1998), Total hip replacement right (2018) MEDICATIONS: Advair, albuterol, amlodipine, omeprazole ALLERGIES: Sulfa drugs (rash) SOCIAL: Former smoker, no alcohol, lives independently\nPHYSICAL EXAM: Vitals: BP 138/82, HR 76, RR 16, SpO2 94% on RA, Temp 98.2\u00b0F General: Alert, cooperative, no acute distress Lungs: Decreased breath sounds left base, otherwise clear CV: Regular rate and rhythm\nLABS (04/07/2025): WBC 6.8, Hgb 11.9, Platelets 245K, INR 1.0 Creatinine 0.9, eGFR >60\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nPRE-PROCEDURE:\nCONSENT: Written informed consent obtained after thorough discussion of:\n\u2022\tNature and purpose of EBUS-TBNA\n\u2022\tRisks: bleeding, infection, pneumothorax (<1%), vocal cord injury, tooth damage, adverse reaction to sedation, failure to obtain diagnosis, need for additional procedures\n\u2022\tBenefits: Tissue diagnosis, staging information, minimally invasive\n\u2022\tAlternatives: CT-guided biopsy, surgical biopsy, empiric treatment\n\u2022\tPatient's questions answered, demonstrated understanding\nASA CLASSIFICATION: III\nNPO STATUS: Confirmed NPO since midnight (>10 hours)\nIV ACCESS: 20-gauge left forearm, patent\nMONITORING PLAN:\n\u2022\tContinuous pulse oximetry\n\u2022\tCapnography\n\u2022\tBlood pressure q3 minutes\n\u2022\tContinuous ECG\n\u2022\tDedicated monitoring nurse\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nMEDICATIONS ADMINISTERED:\nTIME | MEDICATION | DOSE | ROUTE | INDICATION 0815 | Glycopyrrolate | 0.2mg | IV | Reduce secretions 0825 | Midazolam | 2mg | IV | Anxiolysis 0827 | Fentanyl | 75mcg | IV | Analgesia/sedation 0830 | Propofol infusion | Start | IV | Deep sedation | (50-125 mcg/kg/min) | | | 0912 | Propofol | Stop | IV | End of procedure\nTOTAL PROPOFOL: 380mg\nTOPICAL ANESTHESIA:\n\u2022\tBenzocaine 20% spray to oropharynx (4 applications)\n\u2022\tLidocaine 2% instilled via bronchoscope: 20mL total\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEQUIPMENT: BRONCHOSCOPE: Olympus BF-UC180F (Linear EBUS scope) ULTRASOUND: Olympus EU-ME2 Premier Plus TBNA NEEDLES: 22-gauge Olympus NA-201SX-4022 RAPID ONSITE EVALUATION: Available (Dr. Baker present)\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nPROCEDURE DETAILS:\nTIMEOUT: Performed at 0830\n\u2022\tPatient identity confirmed: Dorothy Mae Russell, MRN 5729384, DOB 06/14/1944\n\u2022\tProcedure confirmed: EBUS-TBNA for LLL mass and mediastinal adenopathy\n\u2022\tSite confirmed: Mediastinal lymph nodes\n\u2022\tAllergies confirmed: Sulfa drugs\n\u2022\tConsent confirmed: Yes, in chart\n\u2022\tTeam introductions completed\n\u2022\tEquipment checked\nPROCEDURE START: 0832 PROCEDURE END: 0912 TOTAL TIME: 40 minutes\nSEDATION SUMMARY: Patient achieved moderate-to-deep sedation level. Remained hemodynamically stable throughout procedure. SpO2 maintained 91-95% on 4L O2 via nasal cannula. No episodes of hypotension or arrhythmia. Responded appropriately to verbal stimuli. Total sedation time: 47 minutes. Recovered well.\nPROCEDURE NARRATIVE:\nAfter adequate sedation achieved and timeout completed, EBUS bronchoscope introduced via oropharynx under direct visualization.\nUPPER AIRWAY INSPECTION:\n\u2022\tOropharynx: Normal\n\u2022\tEpiglottis: Normal\n\u2022\tVocal cords: Symmetric, mobile, no masses\n\u2022\tSubglottis: Patent\nTRACHEOBRONCHIAL TREE:\n\u2022\tTrachea: Normal caliber, no masses, mild mucosal edema\n\u2022\tCarina: Sharp, mobile\n\u2022\tRight mainstem: Patent\n\u2022\tLeft mainstem: Patent\n\u2022\tSegmental airways: All visualized segments patent\n\u2022\tNo endobronchial masses visualized\nSYSTEMATIC MEDIASTINAL ULTRASOUND SURVEY:\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 STATION \u2502 SIZE \u2502 MORPHOLOGY \u2502 SAMPLED \u2502 ROSE \u2551 \u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563 \u2551 2R \u2502 9x6mm \u2502 Normal hilum \u2502 No \u2502",
     "cpt_codes": [
-      31653
+      31641,
+      31652
     ],
     "registry_entry": {
       "patient_mrn": "8463927",
@@ -1293,6 +1453,46 @@
         "Extracted EBUS stations: ['10R', '11R', '4R', '7']"
       ],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Rigid bronchoscopy with tumor debulking for Sarah Martinez.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI bundling: 31640 bundled into 31641; 31645 bundled into surgical bronchoscopy"
+      ],
+      "per_code": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, with destruction of tumor or relief of stenosis by any method.",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
+          "units": 1,
+          "facility_total_rvus_2025": 8.4,
+          "facility_mpfs_payment_2025": 272.0,
+          "bundling_or_modifier_notes": "Primary therapeutic code. Supported by APC and mechanical debulking of tumor in right and left mainstems. Bundles 31640 (excision) and 31645 (aspiration) performed at same site."
+        },
+        {
+          "code": "31652",
+          "description": "Bronchoscopy with EBUS sampling, 1-2 nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 6.96,
+          "facility_mpfs_payment_2025": 225.0,
+          "bundling_or_modifier_notes": "Supported by EBUS-TBNA of 'subcarinal mass' (1 station). This is distinct from the endobronchial debulking and separately payable."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 15.36,
+        "total_facility_mpfs_payment": 497.0,
+        "computation_notes": "Sum of 31641 and 31652."
+      },
+      "rationale": [
+        "Correction: Removed 31631 (Stent) and 31651 (Valves) as these were not performed (hallucinated in original CPT list). Removed 31640 and 31645 as bundled into 31641.",
+        "Code selection: Procedure was rigid bronchoscopy with APC/mechanical debulking (31641) and EBUS-TBNA of subcarinal station (31652).",
+        "Bundling: 31625 (biopsy) is also bundled into the therapeutic debulking of the same lesion."
+      ]
     }
   },
   {
@@ -1460,6 +1660,36 @@
       "patch_date": "2025-12-02T02:00:48.042713",
       "changes": [],
       "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "EBUS-TBNA procedure note for Henderson, Patricia Louise.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of stations 7, 4R, 10R, 11R (4 stations)."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.7,
+        "total_facility_mpfs_payment": 249.0,
+        "computation_notes": "Single code 31653."
+      },
+      "rationale": [
+        "Clinical summary: EBUS-TBNA performed for mediastinal staging. Samples obtained from 4R, 7, 10R, and 11R.",
+        "Code selection: 31653 is the correct code for EBUS-TBNA of 3 or more stations."
+      ]
     }
   },
   {
