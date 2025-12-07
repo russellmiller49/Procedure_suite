@@ -110,10 +110,23 @@ class CoderOutput(BaseModel):
 
     # NEW
     financials: FinancialSummary | None = None
-    
+
     # LLM Advisor
     llm_suggestions: list[LLMCodeSuggestion] = Field(default_factory=list)
     llm_disagreements: list[str] = Field(default_factory=list)
 
     # Optional strict JSON payload for LLM assistant clients
     llm_assistant_payload: dict[str, Any] | None = None
+
+    # ML-first hybrid pipeline metadata
+    hybrid_metadata: dict[str, Any] | None = Field(
+        default=None,
+        description=(
+            "Metadata from ML-first hybrid pipeline (SmartHybridOrchestrator). "
+            "Includes difficulty classification, source (fastpath vs fallback), "
+            "LLM usage, and ML candidate codes."
+        ),
+    )
+
+    # Legacy alias for explanation text
+    explanation: str | None = None

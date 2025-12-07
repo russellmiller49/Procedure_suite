@@ -16,6 +16,7 @@ dependencies = [
   "sqlalchemy>=2.0,<3",
   "alembic>=1.13,<2",
   "scikit-learn>=1.7,<1.8",
+  "scikit-multilearn>=0.2.0,<1",
   "pandas>=2.0,<3",
   "psycopg[binary,pool]>=3.2,<4",
   "python-dotenv>=1.0,<2",

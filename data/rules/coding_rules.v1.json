@@ -9,18 +9,28 @@
     "phases": ["filter", "inference", "validation", "exclusion"]
   },
 
+  "hybrid_policy": {
+    "ml_first": true,
+    "rules_veto_enabled": true,
+    "llm_fallback_enabled": true,
+    "rare_code_llm_only_threshold": 10,
+    "allowed_auto_ml_codes": ["31622", "31627", "31628", "31654", "32554", "32555", "32550"],
+    "_comment": "ML = primary coder, RulesEngine = hard veto, LLM = gray/low confidence fallback"
+  },
+
   "code_metadata": {
     "31624": { "tags": ["bal", "bronchoscopy"], "description": "Bronchoscopy with BAL" },
     "31627": { "tags": ["navigation", "bronchoscopy"], "description": "Navigation bronchoscopy" },
     "31628": { "tags": ["tbbx", "biopsy", "bronchoscopy"], "description": "Transbronchial lung biopsy" },
-    "31629": { "tags": ["tbna", "bronchoscopy"], "description": "Conventional TBNA" },
+    "31629": { "tags": ["tbna", "bronchoscopy"], "description": "Conventional TBNA", "allow_auto_ml": false, "requires_removal_evidence": true },
     "31631": { "tags": ["stent", "tracheal"], "description": "Tracheal stent placement" },
     "31632": { "tags": ["tbbx", "addon", "biopsy"], "description": "Additional lobe TBLB (add-on)" },
+    "31634": { "tags": ["balloon", "occlusion"], "description": "Balloon occlusion", "allow_auto_ml": false, "llm_only": true },
     "31636": { "tags": ["stent", "bronchial"], "description": "Bronchial stent placement" },
     "31637": { "tags": ["stent", "bronchial", "addon"], "description": "Additional bronchial stent" },
     "31638": { "tags": ["stent", "revision"], "description": "Stent revision/removal" },
     "31640": { "tags": ["debulking", "mechanical"], "description": "Mechanical debulking" },
-    "31641": { "tags": ["debulking", "ablation"], "description": "Ablative tumor destruction" },
+    "31641": { "tags": ["debulking", "ablation"], "description": "Ablative tumor destruction", "allow_auto_ml": true, "requires_navigation_for_addons": ["31627", "31654"] },
     "31645": { "tags": ["aspiration", "therapeutic"], "description": "Initial therapeutic aspiration" },
     "31646": { "tags": ["aspiration", "therapeutic", "addon"], "description": "Subsequent aspiration" },
     "31652": { "tags": ["ebus", "linear", "tbna"], "description": "EBUS-TBNA 1-2 stations" },

@@ -1,0 +1,677 @@
+[
+  {
+    "op": "replace",
+    "path": "/0/cpt_codes",
+    "value": [
+      31652
+    ],
+    "cpt_codes": [
+      31652
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31652"
+        ],
+        "facility_rvu_2025": 6.96,
+        "facility_payment_2025": 225,
+        "notes": [
+          "EBUS-TBNA with sampling of 2 stations (4R, 7) supports 31652 (1-2 stations).",
+          "Code 31653 requires 3+ stations."
+        ]
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Initialized registry_entry.",
+        "Corrected CPT to [31652]."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/0/registry_entry/cpt_codes",
+    "value": [
+      31652
+    ],
+    "cpt_codes": [
+      32555
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "32555"
+        ],
+        "facility_rvu_2025": 3.19,
+        "facility_payment_2025": 103,
+        "notes": [
+          "Thoracentesis with ultrasound guidance supports 32555.",
+          "Removed 32554 (without imaging)."
+        ]
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Initialized registry_entry.",
+        "Set CPT to 32555."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "add",
+    "path": "/0/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "31652"
+      ],
+      "facility_rvu_2025": 6.96,
+      "facility_payment_2025": 225,
+      "notes": [
+        "EBUS-TBNA with sampling of 2 stations (4R, 7) supports 31652 (1-2 stations).",
+        "Code 31653 requires 3+ stations.",
+        "Intranodal forceps biopsy is generally bundled into the EBUS-TBNA sampling code."
+      ]
+    },
+    "cpt_codes": [
+      31631,
+      31641
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31631",
+          "31641"
+        ],
+        "facility_rvu_2025": 15.55,
+        "facility_payment_2025": 503,
+        "notes": [
+          "Tracheal/Carinal Y-stent placement (31631).",
+          "Tumor debulking (31641).",
+          "Dropped bundled 31622."
+        ]
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Initialized registry_entry.",
+        "Added 31641, removed 31622."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/0/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected CPT from [31652, 31653] to [31652] based on 2 stations sampled.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "cpt_codes": [
+      31628,
+      31624,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31628",
+          "31624",
+          "+31627",
+          "+31654"
+        ],
+        "facility_rvu_2025": 14.95,
+        "facility_payment_2025": 483,
+        "notes": [
+          "EMN Bronchoscopy (+31627) with Radial EBUS (+31654).",
+          "Transbronchial biopsies (31628) and BAL (31624).",
+          "Removed 31623."
+        ]
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Initialized registry_entry.",
+        "Set correct nav/biopsy codes."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/1/cpt_codes",
+    "value": [
+      32555
+    ],
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "32550"
+        ],
+        "facility_rvu_2025": 5.88,
+        "facility_payment_2025": 190,
+        "notes": [
+          "Placement of tunneled pleural catheter (PleurX) 32550."
+        ]
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Initialized registry_entry.",
+        "Verified 32550."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/1/registry_entry/cpt_codes",
+    "value": [
+      32555
+    ],
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "32650"
+        ],
+        "facility_rvu_2025": 15.0,
+        "facility_payment_2025": 485,
+        "notes": [
+          "Medical thoracoscopy with talc pleurodesis supports 32650.",
+          "Consolidated component codes 32601/32560."
+        ]
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Initialized registry_entry.",
+        "Consolidated into 32650."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "add",
+    "path": "/1/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "32555"
+      ],
+      "facility_rvu_2025": 3.19,
+      "facility_payment_2025": 103,
+      "notes": [
+        "Thoracentesis with ultrasound guidance supports 32555.",
+        "Removed 32554 (without imaging) as they are mutually exclusive."
+      ]
+    },
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 249,
+        "notes": [
+          "EBUS-TBNA of 4 stations (2R, 4L, 7, 10L) supports 31653."
+        ]
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Initialized registry_entry.",
+        "Verified 31653."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/1/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed conflicting code 32554.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "cpt_codes": [
+      31628,
+      31623,
+      31624,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31628",
+          "31623",
+          "31624",
+          "+31627",
+          "+31654"
+        ],
+        "facility_rvu_2025": 19.13,
+        "facility_payment_2025": 620,
+        "notes": [
+          "Navigational bronchoscopy (Ion + REBUS) for nodule biopsy.",
+          "Removed incorrect BLVR code 31647."
+        ]
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Initialized registry_entry.",
+        "Replaced BLVR with Nav/Bx codes."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/2/cpt_codes",
+    "value": [
+      31631,
+      31641
+    ],
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "2025-12-06",
+        "cpt_codes": [
+          "31647"
+        ],
+        "facility_rvu_2025": 12.05,
+        "facility_payment_2025": 390,
+        "notes": [
+          "BLVR valve placement (initial lobe) 31647.",
+          "Chartis (31634) and Diagnostic Bronch (31622) bundled."
+        ]
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Initialized registry_entry.",
+        "Removed bundled 31622/31634."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/2/registry_entry/cpt_codes",
+    "value": [
+      31631,
+      31641
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/2/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "31631",
+        "31641"
+      ],
+      "facility_rvu_2025": 15.55,
+      "facility_payment_2025": 503,
+      "notes": [
+        "Tracheal/Carinal Y-stent placement supports 31631.",
+        "Tumor debulking (APC/Cryo) supports 31641.",
+        "31622 (Diagnostic) is bundled."
+      ]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/2/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Added 31641 for debulking.",
+        "Removed bundled 31622.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/3/cpt_codes",
+    "value": [
+      31628,
+      31624,
+      31627,
+      31654
+    ]
+  },
+  {
+    "op": "replace",
+    "path": "/3/registry_entry/cpt_codes",
+    "value": [
+      31628,
+      31624,
+      31627,
+      31654
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/3/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "31628",
+        "31624",
+        "+31627",
+        "+31654"
+      ],
+      "facility_rvu_2025": 14.95,
+      "facility_payment_2025": 483,
+      "notes": [
+        "EMN Bronchoscopy (+31627) with Radial EBUS (+31654).",
+        "Transbronchial biopsies (31628) and BAL (31624).",
+        "Removed 31623 (Brush) as bundled with biopsy."
+      ]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/3/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed bundled 31623.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "add",
+    "path": "/4/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "32550"
+      ],
+      "facility_rvu_2025": 5.88,
+      "facility_payment_2025": 190,
+      "notes": [
+        "Placement of tunneled pleural catheter (PleurX) 32550.",
+        "Includes ultrasound guidance and initial drainage."
+      ]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/4/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 32550.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/5/cpt_codes",
+    "value": [
+      32650
+    ]
+  },
+  {
+    "op": "replace",
+    "path": "/5/registry_entry/cpt_codes",
+    "value": [
+      32650
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/5/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "32650"
+      ],
+      "facility_rvu_2025": 15.0,
+      "facility_payment_2025": 485,
+      "notes": [
+        "Medical thoracoscopy with talc pleurodesis supports 32650.",
+        "32601 (Diagnostic) and 32560 (Talc via tube) are bundled into 32650."
+      ]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/5/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Consolidated 32601/32551/32560 into 32650.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "add",
+    "path": "/6/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "31653"
+      ],
+      "facility_rvu_2025": 7.7,
+      "facility_payment_2025": 249,
+      "notes": [
+        "EBUS-TBNA of 4 stations (2R, 4L, 7, 10L) supports 31653."
+      ]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/6/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/7/cpt_codes",
+    "value": [
+      31628,
+      31623,
+      31624,
+      31627,
+      31654
+    ]
+  },
+  {
+    "op": "replace",
+    "path": "/7/registry_entry/cpt_codes",
+    "value": [
+      31628,
+      31623,
+      31624,
+      31627,
+      31654
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/7/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "31628",
+        "31623",
+        "31624",
+        "+31627",
+        "+31654"
+      ],
+      "facility_rvu_2025": 19.13,
+      "facility_payment_2025": 620,
+      "notes": [
+        "Navigational bronchoscopy (Ion + REBUS) for nodule biopsy.",
+        "Codes: 31628 (Bx), 31623 (Brush), 31624 (BAL), +31627 (Nav), +31654 (REBUS).",
+        "Removed 31647 (BLVR) which was incorrect."
+      ]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/7/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed incorrect BLVR code 31647.",
+        "Added correct biopsy/nav codes.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/8/cpt_codes",
+    "value": [
+      31647
+    ]
+  },
+  {
+    "op": "replace",
+    "path": "/8/registry_entry/cpt_codes",
+    "value": [
+      31647
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/8/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "31647"
+      ],
+      "facility_rvu_2025": 12.05,
+      "facility_payment_2025": 390,
+      "notes": [
+        "BLVR valve placement (initial lobe) 31647.",
+        "Chartis (31634) is bundled when done in same lobe/session.",
+        "Diagnostic bronchoscopy (31622) is bundled."
+      ]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/8/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed bundled 31622 and 31634.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    }
+  }
+]

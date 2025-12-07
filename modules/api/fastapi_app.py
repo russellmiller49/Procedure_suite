@@ -41,6 +41,7 @@ from modules.api.schemas import (
     # Base schemas
     CoderRequest,
     CoderResponse,
+    HybridPipelineMetadata,
     KnowledgeMeta,
     QARunRequest,
     RegistryRequest,
@@ -268,6 +269,10 @@ async def coder_run(
             detail="Direct coding on raw text is disabled; submit via /v1/phi and review before coding.",
         )
 
+    # Check if ML-first hybrid pipeline is requested
+    if req.use_ml_first:
+        return await _run_ml_first_pipeline(report_text, req.locality, coding_service)
+
     # Determine if LLM should be used based on mode
     use_llm = True
     if mode == "rules_only" or req.mode == "rules_only":
@@ -289,6 +294,80 @@ async def coder_run(
     )
 
     return output
+
+
+async def _run_ml_first_pipeline(
+    report_text: str,
+    locality: str,
+    coding_service: CodingService,
+) -> CoderResponse:
+    """
+    Run the ML-first hybrid pipeline (SmartHybridOrchestrator).
+
+    Uses ternary classification (HIGH_CONF/GRAY_ZONE/LOW_CONF) to decide
+    whether to use ML+Rules fast path or LLM fallback.
+
+    Args:
+        report_text: The procedure note text
+        locality: Geographic locality for RVU calculations
+        coding_service: CodingService for KB access and RVU calculation
+
+    Returns:
+        CoderResponse with codes and hybrid pipeline metadata
+    """
+    from modules.coder.application.smart_hybrid_policy import build_hybrid_orchestrator
+
+    # Build orchestrator with default components
+    orchestrator = build_hybrid_orchestrator()
+
+    # Run the hybrid pipeline
+    result = orchestrator.get_codes(report_text)
+
+    # Build code decisions from orchestrator result
+    from modules.coder.schema import CodeDecision
+
+    code_decisions = []
+    for cpt in result.codes:
+        desc = coding_service.kb_repo.get_description(cpt) or ""
+        code_decisions.append(
+            CodeDecision(
+                cpt=cpt,
+                description=desc,
+                confidence=1.0,  # Hybrid pipeline doesn't return per-code confidence
+                modifiers=[],
+                rationale=f"Source: {result.source}",
+            )
+        )
+
+    # Calculate RVU/financials if we have codes
+    financials = None
+    if code_decisions:
+        from modules.coder.application.rvu_service import RVUCalculationService
+        rvu_service = RVUCalculationService(coding_service.kb_repo)
+        financials = rvu_service.calculate_financials(
+            [cd.code for cd in code_decisions],
+            locality=locality,
+        )
+
+    # Build hybrid pipeline metadata
+    hybrid_metadata = HybridPipelineMetadata(
+        difficulty=result.metadata.get("ml_difficulty", ""),
+        source=result.source,
+        llm_used=result.metadata.get("llm_called", False),
+        ml_candidates=result.metadata.get("ml_candidates", []),
+        fallback_reason=result.metadata.get("reason_for_fallback"),
+        rules_error=result.metadata.get("rules_error"),
+    )
+
+    # Build response
+    from modules.coder.schema import CoderOutput
+    return CoderOutput(
+        codes=code_decisions,
+        financials=financials,
+        warnings=[],
+        explanation=None,
+        hybrid_metadata=hybrid_metadata.model_dump(),
+    )
 
 
 @app.post("/v1/registry/run", response_model=RegistryResponse)

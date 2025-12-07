@@ -1,0 +1,288 @@
+[
+  {
+    "op": "replace",
+    "path": "/0/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "32552"
+      ],
+      "facility_rvu_2025": 3.8,
+      "facility_payment_2025": 123,
+      "notes": [
+        "Removal of indwelling tunneled pleural catheter (32552) is the correct code.",
+        "Procedure performed under local anesthesia.",
+        "No imaging guidance or other pleural procedures documented."
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "cpt_codes": [
+        "32552"
+      ],
+      "facility_rvu_2025": 3.8,
+      "facility_payment_2025": 123,
+      "notes": [
+        "Removal of indwelling tunneled pleural catheter (32552) is the correct code.",
+        "Procedure performed under local anesthesia.",
+        "No imaging guidance or other pleural procedures documented."
+      ]
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T12:00:00Z",
+      "changes": [
+        "Verified CPT 32552.",
+        "Updated coding_review with 2025 KB values."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/0/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 32552.",
+        "Updated coding_review with 2025 KB values."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "cpt_codes": [
+        "31635"
+      ],
+      "facility_rvu_2025": 5.54,
+      "facility_payment_2025": 179,
+      "notes": [
+        "Bronchoscopy with foreign body removal (31635).",
+        "Includes suctioning and airway inspection.",
+        "Rigid bronchoscopy technique used."
+      ]
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T12:00:00Z",
+      "changes": [
+        "Verified CPT 31635.",
+        "Updated coding_review with 2025 KB values."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/1/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "31635"
+      ],
+      "facility_rvu_2025": 5.54,
+      "facility_payment_2025": 179,
+      "notes": [
+        "Bronchoscopy with foreign body removal (31635).",
+        "Includes suctioning and airway inspection.",
+        "Rigid bronchoscopy technique used."
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "cpt_codes": [
+        "31661"
+      ],
+      "facility_rvu_2025": 6.32,
+      "facility_payment_2025": 204,
+      "notes": [
+        "Bronchial thermoplasty treating 2 lobes (RUL and LUL) supports 31661.",
+        "Code 31660 is for 1 lobe."
+      ]
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T12:00:00Z",
+      "changes": [
+        "Verified CPT 31661.",
+        "Updated coding_review with 2025 KB values."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/1/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31635.",
+        "Updated coding_review with 2025 KB values."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "cpt_codes": [
+        "31647"
+      ],
+      "facility_rvu_2025": 12.05,
+      "facility_payment_2025": 390,
+      "notes": [
+        "BLVR valve placement in initial lobe (LUL) supports 31647.",
+        "Chartis (31634) is bundled when performed in the same lobe/session.",
+        "No additional lobes treated."
+      ]
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T12:00:00Z",
+      "changes": [
+        "Verified CPT 31647.",
+        "Updated coding_review with 2025 KB values."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/2/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "31661"
+      ],
+      "facility_rvu_2025": 6.32,
+      "facility_payment_2025": 204,
+      "notes": [
+        "Bronchial thermoplasty treating 2 lobes (RUL and LUL) supports 31661.",
+        "Code 31660 is for 1 lobe."
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "cpt_codes": [
+        "31652",
+        "+31654",
+        "31628",
+        "31623"
+      ],
+      "facility_rvu_2025": 18.78,
+      "facility_payment_2025": 607,
+      "notes": [
+        "Linear EBUS (2 stations) -> 31652.",
+        "Radial EBUS (Peripheral) -> +31654.",
+        "Transbronchial Biopsy -> 31628.",
+        "Bronchial Brush -> 31623."
+      ]
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T12:00:00Z",
+      "changes": [
+        "Verified CPTs 31652, 31654, 31628, 31623.",
+        "Updated coding_review with 2025 KB values."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/2/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31661.",
+        "Updated coding_review with 2025 KB values."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/3/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "31647"
+      ],
+      "facility_rvu_2025": 12.05,
+      "facility_payment_2025": 390,
+      "notes": [
+        "BLVR valve placement in initial lobe (LUL) supports 31647.",
+        "Chartis (31634) is bundled when performed in the same lobe/session.",
+        "No additional lobes treated."
+      ]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/3/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31647.",
+        "Updated coding_review with 2025 KB values."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/4/registry_entry/coding_review",
+    "value": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "cpt_codes": [
+        "31652",
+        "+31654",
+        "31628",
+        "31623"
+      ],
+      "facility_rvu_2025": 18.78,
+      "facility_payment_2025": 607,
+      "notes": [
+        "Linear EBUS (2 stations) -> 31652.",
+        "Radial EBUS (Peripheral) -> +31654.",
+        "Transbronchial Biopsy -> 31628.",
+        "Bronchial Brush -> 31623 (Note: often bundled with biopsy by payer policy, but distinct CPT)."
+      ]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/4/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPTs 31652, 31654, 31628, 31623.",
+        "Updated coding_review with 2025 KB values."
+      ],
+      "warnings": []
+    }
+  }
+]

@@ -1377,7 +1377,8 @@ async function run() {
                 explain: document.getElementById('coder-explain').checked,
                 allow_weak_sedation_docs: document.getElementById('coder-weak-sedation').checked,
                 locality: document.getElementById('coder-locality').value || '00',
-                setting: document.getElementById('coder-setting').value || 'facility'
+                setting: document.getElementById('coder-setting').value || 'facility',
+                use_ml_first: document.getElementById('coder-ml-first').checked
             };
         } else if (currentMode === 'registry') {
             url = '/v1/registry/run';
@@ -1430,6 +1431,38 @@ function showResultTab(tab) {
     if (currentMode === 'coder') {
         // Coder formatting
         let html = `<h4>Billing Codes</h4>`;
+
+        // Display hybrid pipeline metadata if available
+        if (lastResult.hybrid_metadata) {
+            const meta = lastResult.hybrid_metadata;
+            const difficultyBadge = {
+                'high_confidence': 'bg-success',
+                'gray_zone': 'bg-warning text-dark',
+                'low_confidence': 'bg-danger'
+            }[meta.difficulty] || 'bg-secondary';
+            const sourceBadge = meta.source === 'ml_rules_fastpath' ? 'bg-success' : 'bg-info';
+            const llmBadge = meta.llm_used ? 'bg-warning text-dark' : 'bg-success';
+
+            html += `<div class="alert alert-light border mb-3">
+                <h6 class="mb-2"><strong>ML-First Pipeline Metadata</strong></h6>
+                <div class="d-flex flex-wrap gap-2 mb-2">
+                    <span class="badge ${difficultyBadge}">Difficulty: ${meta.difficulty || 'unknown'}</span>
+                    <span class="badge ${sourceBadge}">Source: ${meta.source || 'unknown'}</span>
+                    <span class="badge ${llmBadge}">LLM Used: ${meta.llm_used ? 'Yes' : 'No'}</span>
+                </div>`;
+
+            if (meta.ml_candidates && meta.ml_candidates.length > 0) {
+                html += `<div class="small text-muted mb-1"><strong>ML Candidates:</strong> ${meta.ml_candidates.join(', ')}</div>`;
+            }
+            if (meta.fallback_reason) {
+                html += `<div class="small text-muted mb-1"><strong>Fallback Reason:</strong> ${meta.fallback_reason}</div>`;
+            }
+            if (meta.rules_error) {
+                html += `<div class="small text-danger"><strong>Rules Error:</strong> ${meta.rules_error}</div>`;
+            }
+            html += `</div>`;
+        }
+
         if (lastResult.codes && lastResult.codes.length > 0) {
              html += `<ul class="list-group mb-3">`;
              lastResult.codes.forEach(code => {

@@ -124,6 +124,40 @@ Return ONLY the JSON array, no other text.
     # and ensure reasonable response times. 32K chars ~= 8K tokens is a safe limit.
     MAX_TEXT_SIZE = 32000
 
+    # Context-aware prompt template for ML-first hybrid policy
+    CONTEXT_PROMPT_TEMPLATE = '''You are the final judge for CPT code assignment in an ML-assisted coding pipeline.
+
+The ML model predicted the following CPT codes with these confidence scores:
+{ml_predictions}
+
+ML Classification: {difficulty}
+Reason for LLM Review: {reason_for_fallback}
+
+Given the full procedure note below, evaluate whether you agree with the ML suggestions.
+If not, explain briefly and provide the corrected list of CPT codes.
+
+IMPORTANT CONSTRAINTS:
+- Suggest 31640 (tumor excision) ONLY when explicit resection/debulking language is present.
+- 31654 (Radial EBUS) should only be suggested when targeting a peripheral lung lesion.
+- Do NOT suggest 31622 (Diagnostic bronchoscopy) if any therapeutic code applies.
+- 32550 (tunneled pleural catheter) requires documentation of tunnel creation or brand names.
+
+Only suggest codes from this allowed list: {allowed_codes}
+
+Return your response as a JSON array of objects with keys: code, confidence, rationale
+
+Example format:
+[
+  {{"code": "31628", "confidence": 0.95, "rationale": "Transbronchial biopsy clearly documented"}},
+  {{"code": "31652", "confidence": 0.85, "rationale": "EBUS-TBNA of 2 stations mentioned"}}
+]
+
+Procedure Note:
+{report_text}
+
+Return ONLY the JSON array, no other text.
+'''
+
     def suggest_codes(self, report_text: str) -> list[LLMCodeSuggestion]:
         """Get code suggestions from Gemini.
 
@@ -155,6 +189,61 @@ Return ONLY the JSON array, no other text.
 
         except Exception as e:
             logger.error(f"Gemini API call failed: {e}")
+            return []
+
+    def suggest_with_context(
+        self,
+        report_text: str,
+        context: dict,
+    ) -> list[LLMCodeSuggestion]:
+        """Get code suggestions with ML context for hybrid pipeline.
+
+        This method is used when the LLM acts as the final judge after
+        ML has provided initial predictions.
+
+        Args:
+            report_text: The procedure note text to analyze.
+            context: Dict containing:
+                - ml_suggestion: List of ML-suggested codes
+                - difficulty: ML case difficulty classification
+                - reason_for_fallback: Why LLM was invoked
+                - ml_predictions: List of {cpt, prob} dicts
+
+        Returns:
+            List of code suggestions with confidences.
+        """
+        client = self._get_client()
+        if client is None:
+            return []
+
+        # Format ML predictions for the prompt
+        ml_preds = context.get("ml_predictions", [])
+        ml_pred_str = "\n".join(
+            f"  - {p['cpt']}: {p['prob']:.2f}" for p in ml_preds[:10]
+        ) or "  (none)"
+
+        difficulty = context.get("difficulty", "unknown")
+        reason = context.get("reason_for_fallback", "unknown")
+
+        allowed_codes_str = ", ".join(sorted(self.allowed_codes)[:50])
+        processed_text = self._prepare_text_for_llm(report_text)
+
+        prompt = self.CONTEXT_PROMPT_TEMPLATE.format(
+            ml_predictions=ml_pred_str,
+            difficulty=difficulty,
+            reason_for_fallback=reason,
+            allowed_codes=allowed_codes_str,
+            report_text=processed_text,
+        )
+
+        try:
+            response = client.generate_content(prompt)  # type: ignore
+            response_text = response.text
+            suggestions = self._parse_response(response_text)
+            return suggestions
+
+        except Exception as e:
+            logger.error(f"Gemini API call with context failed: {e}")
             return []
 
     def _prepare_text_for_llm(self, text: str) -> str:
@@ -277,6 +366,8 @@ class MockLLMAdvisor(LLMAdvisorPort):
 
     def __init__(self, suggestions: list[LLMCodeSuggestion] | None = None):
         self._suggestions = suggestions or []
+        self._context_suggestions: list[LLMCodeSuggestion] | None = None
+        self._last_context: dict | None = None
 
     @property
     def version(self) -> str:
@@ -285,6 +376,26 @@ class MockLLMAdvisor(LLMAdvisorPort):
     def suggest_codes(self, report_text: str) -> list[LLMCodeSuggestion]:
         return self._suggestions
 
+    def suggest_with_context(
+        self, report_text: str, context: dict
+    ) -> list[LLMCodeSuggestion]:
+        """Mock context-aware suggestion for hybrid pipeline testing."""
+        self._last_context = context
+        if self._context_suggestions is not None:
+            return self._context_suggestions
+        return self._suggestions
+
     def set_suggestions(self, suggestions: list[LLMCodeSuggestion]) -> None:
         """Set the suggestions to return."""
         self._suggestions = suggestions
+
+    def set_context_suggestions(
+        self, suggestions: list[LLMCodeSuggestion] | None
+    ) -> None:
+        """Set suggestions specifically for context-aware calls."""
+        self._context_suggestions = suggestions
+
+    @property
+    def last_context(self) -> dict | None:
+        """Get the last context passed to suggest_with_context."""
+        return self._last_context

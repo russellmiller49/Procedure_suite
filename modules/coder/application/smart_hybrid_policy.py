@@ -2,6 +2,10 @@
 
 This module implements the core logic for combining deterministic rule-based
 coding with LLM suggestions in a safe, explainable way.
+
+Includes:
+- HybridPolicy: Legacy merger for rule-based + LLM advisor codes
+- SmartHybridOrchestrator: ML-first ternary classification (HIGH_CONF/GRAY_ZONE/LOW_CONF)
 """
 
 from __future__ import annotations
@@ -9,12 +13,15 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set
 
 from config.settings import CoderSettings
+from modules.common.logger import get_logger
 from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
 from modules.coder.adapters.nlp.keyword_mapping_loader import KeywordMappingRepository
 from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDetector
+
+logger = get_logger("smart_hybrid_policy")
 
 
 class HybridDecision(str, Enum):
@@ -313,3 +320,328 @@ class HybridPolicy:
             for c in candidates
             if c.decision == HybridDecision.HUMAN_REVIEW_REQUIRED
         ]
+
+
+# -----------------------------------------------------------------------------
+# ML-First Smart Hybrid Orchestrator
+# -----------------------------------------------------------------------------
+
+
+@dataclass
+class OrchestratorResult:
+    """Result from the SmartHybridOrchestrator.
+
+    Attributes:
+        codes: Final list of validated CPT codes
+        source: Where the final codes came from (ml_rules_fastpath, hybrid_llm_fallback)
+        metadata: Additional context about the decision process
+    """
+
+    codes: List[str]
+    source: str
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+
+class SmartHybridOrchestrator:
+    """ML-first hybrid orchestrator with ternary case difficulty classification.
+
+    This implements the ML → Rules → LLM flow:
+
+    1. ML predicts codes and classifies case difficulty (HIGH_CONF/GRAY_ZONE/LOW_CONF)
+    2. Rules engine validates ML output, may veto impossible combinations
+    3. Decision gate:
+       - HIGH_CONF + rules OK → return codes via fast path (no LLM)
+       - GRAY_ZONE or rules conflict → LLM as final judge (ML provides hints)
+       - LOW_CONF → LLM as primary coder (ML opinion is weak context)
+
+    Key difference from union approach: Once LLM is invoked, its output is treated
+    as the candidate truth. We do NOT union ML and LLM codes.
+    """
+
+    def __init__(
+        self,
+        ml_predictor: Any,  # MLCoderPredictor
+        rules_engine: Any,  # CodingRulesEngine
+        llm_advisor: Any,  # LLMAdvisorPort
+    ):
+        """
+        Initialize the orchestrator.
+
+        Args:
+            ml_predictor: MLCoderPredictor instance for ML predictions
+            rules_engine: CodingRulesEngine instance for validation/veto
+            llm_advisor: LLMAdvisorPort instance for LLM fallback
+        """
+        self._ml = ml_predictor
+        self._rules = rules_engine
+        self._llm = llm_advisor
+
+    def get_codes(self, note_text: str) -> OrchestratorResult:
+        """
+        Get CPT codes using ML-first hybrid approach.
+
+        Args:
+            note_text: The procedure note text to code
+
+        Returns:
+            OrchestratorResult with final codes and metadata
+        """
+        # 1. ML Prediction + difficulty classification
+        ml_result = self._ml.classify_case(note_text)
+        difficulty = ml_result.difficulty.value
+
+        # Get ML candidates (codes above lower threshold)
+        ml_candidates = [
+            p.cpt for p in ml_result.high_conf
+        ] + [
+            p.cpt for p in ml_result.gray_zone
+        ]
+
+        # Build predictions dict for metadata
+        preds = [{"cpt": p.cpt, "prob": p.prob} for p in ml_result.predictions]
+
+        logger.info(
+            "ML classification: difficulty=%s, high_conf=%d, gray_zone=%d, candidates=%s",
+            difficulty,
+            len(ml_result.high_conf),
+            len(ml_result.gray_zone),
+            ml_candidates,
+        )
+
+        # 2. Try rules validation on ML candidates
+        rules_cleaned_ml: List[str] = []
+        rules_error: Optional[str] = None
+        rules_error_type: Optional[str] = None
+
+        if ml_candidates:
+            try:
+                rules_cleaned_ml = self._rules.validate(
+                    ml_candidates, note_text, strict=True
+                )
+            except Exception as e:
+                # RuleViolationError or other validation error
+                rules_error = str(e)
+                rules_error_type = type(e).__name__
+                rules_cleaned_ml = []
+                logger.warning(
+                    "Rules validation failed: error_type=%s, message=%s",
+                    rules_error_type,
+                    rules_error,
+                )
+
+        # 3. Decision gate
+        from modules.ml_coder.thresholds import CaseDifficulty
+
+        if difficulty == CaseDifficulty.HIGH_CONF.value and rules_cleaned_ml:
+            # Fast path: ML + Rules agree, no LLM needed
+            self._emit_telemetry(
+                difficulty=difficulty,
+                source="ml_rules_fastpath",
+                llm_used=False,
+                rules_error=rules_error,
+                rules_error_type=rules_error_type,
+                ml_candidates_count=len(ml_candidates),
+                final_codes_count=len(rules_cleaned_ml),
+            )
+            return OrchestratorResult(
+                codes=rules_cleaned_ml,
+                source="ml_rules_fastpath",
+                metadata={
+                    "ml_difficulty": difficulty,
+                    "ml_candidates": ml_candidates,
+                    "ml_predictions": preds,
+                    "rules_error": rules_error,
+                    "rules_error_type": rules_error_type,
+                    "llm_called": False,
+                },
+            )
+
+        # 4. LLM fallback — LLM is the final judge
+        reason_for_fallback = "low_confidence"
+        if difficulty == CaseDifficulty.GRAY_ZONE.value:
+            reason_for_fallback = "gray_zone"
+        if rules_error:
+            reason_for_fallback = f"rule_conflict: {rules_error}"
+
+        logger.info(
+            "LLM fallback triggered: reason=%s",
+            reason_for_fallback,
+        )
+
+        # Build context for LLM
+        llm_context = {
+            "ml_suggestion": ml_candidates,
+            "difficulty": difficulty,
+            "reason_for_fallback": reason_for_fallback,
+            "ml_predictions": preds[:10],  # Top 10 predictions as context
+        }
+
+        llm_codes = self._call_llm_with_context(note_text, llm_context)
+
+        # 5. Final safety check – rules veto LLM output if needed
+        # Use non-strict validation to clean rather than reject
+        final_codes = self._rules.validate(llm_codes, note_text, strict=False)
+
+        # Track if rules modified LLM output
+        rules_modified_llm = set(llm_codes) != set(final_codes)
+
+        self._emit_telemetry(
+            difficulty=difficulty,
+            source="hybrid_llm_fallback",
+            llm_used=True,
+            rules_error=rules_error,
+            rules_error_type=rules_error_type,
+            ml_candidates_count=len(ml_candidates),
+            final_codes_count=len(final_codes),
+            llm_raw_count=len(llm_codes),
+            rules_modified_llm=rules_modified_llm,
+            fallback_reason=reason_for_fallback,
+        )
+
+        return OrchestratorResult(
+            codes=final_codes,
+            source="hybrid_llm_fallback",
+            metadata={
+                "ml_difficulty": difficulty,
+                "ml_candidates": ml_candidates,
+                "ml_predictions": preds,
+                "rules_error": rules_error,
+                "rules_error_type": rules_error_type,
+                "llm_called": True,
+                "llm_raw_codes": llm_codes,
+                "reason_for_fallback": reason_for_fallback,
+                "rules_modified_llm": rules_modified_llm,
+            },
+        )
+
+    def _call_llm_with_context(
+        self, note_text: str, context: Dict[str, Any]
+    ) -> List[str]:
+        """
+        Call the LLM advisor with ML context.
+
+        The LLM is given ML predictions as hints but is the final judge.
+
+        Args:
+            note_text: The procedure note text
+            context: Dict with ML predictions, difficulty, and fallback reason
+
+        Returns:
+            List of CPT codes from LLM
+        """
+        # Check if advisor supports context-aware suggestions
+        if hasattr(self._llm, "suggest_with_context"):
+            suggestions = self._llm.suggest_with_context(note_text, context)
+        else:
+            # Fall back to standard suggest_codes
+            suggestions = self._llm.suggest_codes(note_text)
+
+        # Extract codes from suggestions
+        codes = []
+        for s in suggestions:
+            if hasattr(s, "code"):
+                codes.append(s.code)
+            elif isinstance(s, dict) and "code" in s:
+                codes.append(s["code"])
+            elif isinstance(s, str):
+                codes.append(s)
+
+        return codes
+
+    def _emit_telemetry(
+        self,
+        difficulty: str,
+        source: str,
+        llm_used: bool,
+        rules_error: Optional[str],
+        rules_error_type: Optional[str],
+        ml_candidates_count: int,
+        final_codes_count: int,
+        llm_raw_count: int = 0,
+        rules_modified_llm: bool = False,
+        fallback_reason: Optional[str] = None,
+    ) -> None:
+        """
+        Emit structured telemetry for monitoring and debugging.
+
+        This logs a single structured record with all key metrics from the
+        orchestration decision. Can be easily parsed by log aggregators.
+
+        Args:
+            difficulty: Case difficulty classification (high_confidence/gray_zone/low_confidence)
+            source: Decision source (ml_rules_fastpath or hybrid_llm_fallback)
+            llm_used: Whether LLM was called
+            rules_error: Error message if rules validation failed
+            rules_error_type: Exception type name if rules failed
+            ml_candidates_count: Number of ML candidate codes
+            final_codes_count: Number of final output codes
+            llm_raw_count: Number of codes returned by LLM (before rules)
+            rules_modified_llm: Whether rules modified LLM output
+            fallback_reason: Why LLM fallback was triggered
+        """
+        telemetry = {
+            "event": "hybrid_orchestrator_decision",
+            "difficulty": difficulty,
+            "source": source,
+            "llm_used": llm_used,
+            "ml_candidates_count": ml_candidates_count,
+            "final_codes_count": final_codes_count,
+        }
+
+        if llm_used:
+            telemetry["llm_raw_count"] = llm_raw_count
+            telemetry["rules_modified_llm"] = rules_modified_llm
+            telemetry["fallback_reason"] = fallback_reason
+
+        if rules_error:
+            telemetry["rules_error"] = rules_error
+            telemetry["rules_error_type"] = rules_error_type
+
+        logger.info(
+            "Orchestrator decision: source=%s, difficulty=%s, llm_used=%s, "
+            "ml_candidates=%d, final_codes=%d%s%s",
+            source,
+            difficulty,
+            llm_used,
+            ml_candidates_count,
+            final_codes_count,
+            f", rules_error_type={rules_error_type}" if rules_error_type else "",
+            f", fallback_reason={fallback_reason}" if fallback_reason else "",
+            extra={"telemetry": telemetry},
+        )
+
+
+def build_hybrid_orchestrator(
+    ml_predictor: Any = None,
+    rules_engine: Any = None,
+    llm_advisor: Any = None,
+) -> SmartHybridOrchestrator:
+    """
+    Factory function to build a SmartHybridOrchestrator with default components.
+
+    Args:
+        ml_predictor: Optional MLCoderPredictor (creates default if None)
+        rules_engine: Optional CodingRulesEngine (creates default if None)
+        llm_advisor: Optional LLMAdvisorPort (creates default if None)
+
+    Returns:
+        Configured SmartHybridOrchestrator instance
+    """
+    if ml_predictor is None:
+        from modules.ml_coder.predictor import MLCoderPredictor
+        ml_predictor = MLCoderPredictor()
+
+    if rules_engine is None:
+        from modules.coder.rules_engine import CodingRulesEngine
+        rules_engine = CodingRulesEngine()
+
+    if llm_advisor is None:
+        from modules.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter
+        from modules.ml_coder.data_prep import VALID_IP_CODES
+        llm_advisor = GeminiAdvisorAdapter(allowed_codes=list(VALID_IP_CODES))
+
+    return SmartHybridOrchestrator(
+        ml_predictor=ml_predictor,
+        rules_engine=rules_engine,
+        llm_advisor=llm_advisor,
+    )

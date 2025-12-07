@@ -2,6 +2,55 @@
 
 This guide explains how to use the Procedure Suite tools for generating reports, coding procedures, and validating registry data.
 
+---
+
+## How the System Works (Plain Language)
+
+The Procedure Suite is an intelligent medical coding assistant that reads procedure notes and suggests appropriate CPT billing codes. Here's how it works in simple terms:
+
+### The Three Brains
+
+1. **Machine Learning (ML) Model**: A trained neural network that has learned from thousands of procedure notes. It quickly predicts which CPT codes are likely correct and assigns a confidence score to each prediction.
+
+2. **Rules Engine**: A set of explicit business rules that encode medical billing knowledge, such as:
+   - "You can't bill these two codes together" (bundling rules)
+   - "This code requires specific documentation" (validation rules)
+   - "If procedure X was done, code Y is required" (inference rules)
+
+3. **LLM Advisor**: A large language model (like GPT/Gemini) that can read and understand procedure notes in natural language. It acts as a "second opinion" when the ML model is uncertain.
+
+### The ML-First Hybrid Pipeline (NEW)
+
+The system uses a smart decision-making process called the **SmartHybridOrchestrator**:
+
+```
+Note Text → ML Predicts → Classify Difficulty → Decision Gate → Final Codes
+                              ↓
+            HIGH_CONF: ML + Rules (fast path, no LLM)
+            GRAY_ZONE: LLM as judge (ML provides hints)
+            LOW_CONF:  LLM as primary coder
+```
+
+**Step-by-step:**
+
+1. **ML Prediction**: The ML model reads the note and predicts CPT codes with confidence scores.
+
+2. **Difficulty Classification**: Based on confidence scores, the case is classified:
+   - **HIGH_CONF** (High Confidence): ML is very sure about the codes
+   - **GRAY_ZONE**: ML sees multiple possibilities, needs help
+   - **LOW_CONF** (Low Confidence): ML is unsure, note may be unusual
+
+3. **Decision Gate**:
+   - If HIGH_CONF and rules pass → Use ML codes directly (fast, cheap, no LLM call)
+   - If GRAY_ZONE or rules fail → Ask LLM to make the final decision
+   - If LOW_CONF → Let LLM be the primary coder
+
+4. **Rules Validation**: Final codes always pass through rules engine for safety checks
+
+This approach is **faster** (43% of cases skip LLM entirely) and **more accurate** (ML catches patterns, LLM handles edge cases).
+
+---
+
 ## 🚀 Quick Start: The Dev Server
 
 The easiest way to interact with the system is the development server, which provides a web UI and API documentation.
@@ -11,7 +60,7 @@ The easiest way to interact with the system is the development server, which pro
 ```
 *Starts the server on port 8000.*
 
-- **Web UI**: [http://localhost:8000/static/index.html](http://localhost:8000/static/index.html) (Note: path may vary based on static setup)
+- **Web UI**: [http://localhost:8000/ui/](http://localhost:8000/ui/)
 - **API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
@@ -118,7 +167,172 @@ Output:
 - **`schemas/IP_Registry.json`**: The "Law". Defines the valid structure for registry data.
 - **`reports/`**: Where output logs and validation summaries are saved.
 
+---
+
+## 🖥️ Using the Web UI (Unicorn Frontend)
+
+The Web UI provides a simple interface for coding procedure notes.
+
+### Basic Usage
+
+1. **Start the server**: `./scripts/devserver.sh`
+2. **Open the UI**: Navigate to [http://localhost:8000/ui/](http://localhost:8000/ui/)
+3. **Select "Coder" tab** (default)
+4. **Paste your procedure note** into the text area
+5. **Configure options**:
+   - **Use ML-First Pipeline** (recommended): Enables the smart hybrid pipeline
+   - **Locality**: Geographic code for RVU calculations (default: 00 = National)
+   - **Setting**: Facility or Non-Facility pricing
+6. **Click "Run Processing"**
+
+### Understanding the Results
+
+When using the ML-First Pipeline, you'll see:
+
+- **Pipeline Metadata** (colored badges):
+  - **Difficulty**: green (high_confidence), yellow (gray_zone), red (low_confidence)
+  - **Source**: green (ml_rules_fastpath) means no LLM was used, blue (hybrid_llm_fallback) means LLM was consulted
+  - **LLM Used**: green (No) or yellow (Yes)
+
+- **Billing Codes**: The final CPT codes with descriptions
+
+- **RVU & Payment**: Work RVUs and estimated Medicare payment
+
+---
+
+## ➕ Adding New Training Cases
+
+To improve the ML model's accuracy, you can add new training cases. Here's how:
+
+### Step 1: Prepare Your Data
+
+Create a JSONL file with your cases. Each line should be a JSON object with:
+
+```json
+{
+  "note": "Your procedure note text here...",
+  "cpt_codes": ["31622", "31628"],
+  "dataset": "my_new_cases"
+}
 ```
 
-# Start the local server
-uvicorn modules.api.fastapi_app:app --reload --port 8000
+**Required fields:**
+- `note`: The full procedure note text
+- `cpt_codes`: List of correct CPT codes for this note
+
+**Optional fields:**
+- `dataset`: A label for grouping (e.g., "bronchoscopy", "pleural")
+- `procedure_type`: The type of procedure (auto-detected if not provided)
+
+### Step 2: Add Cases to Training Data
+
+Place your JSONL file in the training data directory:
+
+```bash
+# Copy your cases to the training data folder
+cp my_new_cases.jsonl data/training/
+```
+
+### Step 3: Validate Your Cases
+
+Before training, validate that your cases are properly formatted:
+
+```bash
+python scripts/validate_training_data.py data/training/my_new_cases.jsonl
+```
+
+### Step 4: Retrain the Model (Optional)
+
+If you have enough new cases (50+), you can retrain the ML model:
+
+```bash
+# Run the training pipeline
+python scripts/train_ml_coder.py --include data/training/my_new_cases.jsonl
+```
+
+### Tips for Good Training Data
+
+1. **Diverse examples**: Include various procedure types and complexity levels
+2. **Accurate labels**: Double-check the CPT codes are correct
+3. **Representative notes**: Use real-world note formats and writing styles
+4. **Edge cases**: Include tricky cases where coding is non-obvious
+5. **Clean text**: Remove any PHI (patient identifying information)
+
+---
+
+## 🔍 Reviewing Errors
+
+When the system makes mistakes, you can review them to improve future performance.
+
+### Run the Error Review Script
+
+```bash
+# Review all errors
+python scripts/review_llm_fallback_errors.py --mode all
+
+# Review only fast path errors (ML+Rules mistakes)
+python scripts/review_llm_fallback_errors.py --mode fastpath
+
+# Review only LLM fallback errors
+python scripts/review_llm_fallback_errors.py --mode llm_fallback
+```
+
+This generates a markdown report in `data/eval_results/` with:
+- Error patterns and common mistakes
+- Per-case review with recommendations
+- Codes that were incorrectly predicted or missed
+
+### Using Error Analysis to Improve the System
+
+1. **False Positives** (codes predicted but shouldn't be):
+   - May need to add negative rules to the rules engine
+   - May need more training examples without these codes
+
+2. **False Negatives** (codes missed):
+   - May need to add new keyword patterns
+   - May need more training examples with these codes
+
+3. **ML was correct but LLM overrode it**:
+   - Consider adjusting confidence thresholds
+   - May need to improve LLM prompt constraints
+
+---
+
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading at startup | `false` |
+| `CODER_REQUIRE_PHI_REVIEW` | Require PHI review before coding | `false` |
+| `DEMO_MODE` | Enable demo mode (synthetic data only) | `false` |
+
+### Adjusting ML Thresholds
+
+The ML model's confidence thresholds can be tuned in `modules/ml_coder/thresholds.py`:
+
+```python
+# High confidence threshold (codes above this are HIGH_CONF)
+HIGH_CONF_THRESHOLD = 0.80
+
+# Gray zone lower bound (codes between this and HIGH_CONF are GRAY_ZONE)
+GRAY_ZONE_THRESHOLD = 0.45
+
+# Codes below GRAY_ZONE_THRESHOLD are LOW_CONF
+```
+
+Higher thresholds = more cases go to LLM (safer but slower)
+Lower thresholds = more cases use fast path (faster but may miss edge cases)
+
+---
+
+## 📞 Getting Help
+
+- **API Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Technical Issues**: Check the logs in `logs/` directory
+- **Questions**: Open an issue on the repository
+
+---
+
+*Last updated: December 2025*

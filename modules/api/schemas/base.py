@@ -19,6 +19,35 @@ class CoderRequest(BaseModel):
     locality: str = "00"
     setting: str = "facility"
     mode: str | None = None
+    use_ml_first: bool = Field(
+        default=False,
+        description=(
+            "If True, use ML-first hybrid pipeline (SmartHybridOrchestrator) "
+            "with ternary classification (HIGH_CONF/GRAY_ZONE/LOW_CONF). "
+            "If False, use legacy rule+LLM union merge."
+        ),
+    )
+
+
+class HybridPipelineMetadata(BaseModel):
+    """Metadata from the ML-first hybrid pipeline."""
+
+    difficulty: str = Field(
+        "", description="ML case difficulty: high_confidence, gray_zone, or low_confidence"
+    )
+    source: str = Field(
+        "", description="Decision source: ml_rules_fastpath or hybrid_llm_fallback"
+    )
+    llm_used: bool = Field(False, description="Whether LLM was called for this case")
+    ml_candidates: list[str] = Field(
+        default_factory=list, description="CPT codes suggested by ML model"
+    )
+    fallback_reason: str | None = Field(
+        None, description="Why LLM fallback was triggered (if applicable)"
+    )
+    rules_error: str | None = Field(
+        None, description="Rules validation error message (if any)"
+    )
 
 
 CoderResponse = CoderOutput
@@ -78,6 +107,7 @@ class QARunRequest(BaseModel):
 __all__ = [
     "CoderRequest",
     "CoderResponse",
+    "HybridPipelineMetadata",
     "KnowledgeMeta",
     "QARunRequest",
     "RegistryRequest",

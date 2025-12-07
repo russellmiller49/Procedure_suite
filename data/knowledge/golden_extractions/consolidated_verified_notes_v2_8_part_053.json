@@ -1,0 +1,697 @@
+[
+  {
+    "note_id": "poor_01",
+    "note_text": "pt: E Okafor 65F, MRN 2034958, came in w bad SOB, big R main brnch tumer + fluid on R chest. plan was airway clean out + pleur cath, nothing fancy in note. genral anes by gas team, 8.0 ETT in, I did flex/rigid bronch. lots of junk + endobronch mass almost full block in RMS. used scope + tools, scraped + APC, probly 80-90% open after. old metal stent looked bent in, pulled/adjusted, new SEMS put in same area, post view ok. tons of thick clots/mucus suctioned, no real big bleed, just ooz, cold salin once. then turned pt a bit, US on R side, big effusn. cut down 5th space mid ax, tunneled cath (pleurx type) in, suturd, hooked to vac. straw colored fluid out about 1200. no obvious air leak. post: small apical pneumo R on CXR, stable, no chest tube. pt to stepdown. dictated fast, see monitor for times.",
+    "cpt_codes": [
+      31641,
+      31636,
+      31645,
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNPOOR001",
+      "procedure_date": "2025-01-10",
+      "patient_age": 65,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Central malignant obstruction of the right mainstem bronchus with recurrent right pleural effusion and dyspnea.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31641,
+        31636,
+        31645,
+        32550
+      ],
+      "bleeding_severity": "Mild",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Observation only",
+      "bronch_indication": "Therapeutic debulking of right mainstem tumor with stent revision and airway toileting.",
+      "bronch_location_lobe": "Right mainstem",
+      "bronch_location_segment": null,
+      "ebus_performed": false,
+      "ebus_indication": null,
+      "ebus_primary_targets": [],
+      "ebus_total_passes": 0,
+      "thoracentesis_performed": false,
+      "thoracentesis_indication": null,
+      "ipc_performed": true,
+      "ipc_side": "Right",
+      "ipc_indication": "Recurrent symptomatic malignant right pleural effusion.",
+      "pleural_procedure_type": "Tunneled Catheter",
+      "pleural_guidance": "Ultrasound",
+      "disposition": "Stepdown",
+      "evidence": {}
+    },
+    "coding_review": {
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "review_date": "2025-12-07",
+      "coder": "Golden_note_fixer",
+      "cpt_summary_2025": {
+        "codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "is_add_on": false,
+            "facility_rvu": 8.4,
+            "mpfs_facility_payment": 272
+          },
+          {
+            "code": "31636",
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "is_add_on": false,
+            "facility_rvu": 6.85,
+            "mpfs_facility_payment": 222
+          },
+          {
+            "code": "31645",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+            "is_add_on": false,
+            "facility_rvu": 4.47,
+            "mpfs_facility_payment": 145
+          },
+          {
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "is_add_on": false,
+            "facility_rvu": 5.88,
+            "mpfs_facility_payment": 190
+          }
+        ],
+        "total_facility_rvu": 25.6,
+        "total_mpfs_facility_payment": 829
+      },
+      "rationale": "Complex airway and pleural intervention. 31641 supported by APC/debulking of right mainstem tumor. 31636 supported by placement of new SEMS (removal of old stent incidental to new placement or revision). 31645 supported by therapeutic aspiration of clots/mucus distinct from the debulking. 32550 supported by ultrasound-guided placement of PleurX catheter for malignant effusion."
+    }
+  },
+  {
+    "note_id": "poor_02",
+    "note_text": "Bronch note (quick + sloppy): pt old lady 82 y/o came in w pna not geting better. no intub, on NC O2 whole time. consnt in chart. mod sed only, fent + versed by RN, I was in room about 25min (not timing perfect). scope thru mouth, cords ok, trachea ok, no masses seen. lot of thick yellow junk esp LLL. did BAL left lower, squirt about 100cc NS, got back maybe 70-80cc cloudy goo. sent stuff for cx, AFB, fung, viral, etc. no bx, no stent, no ebus, nothing fancy. pt coughed some, sats drop low 90s, bumped O2, fine after. CXR after, no pnx, lungs look same more or less. done, back to floor.",
+    "cpt_codes": [
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNPOOR002",
+      "procedure_date": "2025-01-11",
+      "patient_age": 82,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Nonresolving pneumonia with persistent infiltrate requiring diagnostic bronchoscopy.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31624
+      ],
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Diagnostic bronchoscopy with bronchoalveolar lavage for pneumonia.",
+      "bronch_location_lobe": "Left lower lobe",
+      "bronch_location_segment": "LLL",
+      "ebus_performed": false,
+      "ebus_indication": null,
+      "ebus_primary_targets": [],
+      "ebus_total_passes": 0,
+      "thoracentesis_performed": false,
+      "thoracentesis_indication": null,
+      "ipc_performed": false,
+      "ipc_side": null,
+      "ipc_indication": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "disposition": "Floor",
+      "evidence": {}
+    },
+    "coding_review": {
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "review_date": "2025-12-07",
+      "coder": "Golden_note_fixer",
+      "cpt_summary_2025": {
+        "codes": [
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "is_add_on": false,
+            "facility_rvu": 4.24,
+            "mpfs_facility_payment": 137
+          }
+        ],
+        "total_facility_rvu": 4.24,
+        "total_mpfs_facility_payment": 137
+      },
+      "rationale": "Diagnostic bronchoscopy with BAL (31624) in the LLL. No biopsy, EBUS, or other interventions performed."
+    }
+  },
+  {
+    "note_id": "poor_03",
+    "note_text": "EBUS bronc quick sumry: 58yo F, med nodes on CT, question lung ca. came NPO, IV in, consnt already done in clinic. no GA, just twilight type sed, fent/versed pushes by anesthesia nurse, pt breathing on own, nasal O2 3L, airway native, no tube. scope in via mouth, brief look, no obvious endobronch lesion. swapped to EBUS scope. sampled 4R (big round node around 2cm) x3 passes, station 7 x3, 11L x2. used doplar to check, no big vessel hit. on-site ROSE said lymphs plus malignant cells at 4R. no nav robot, no radial probe, no transbronchial lung bx, no BAL. tiny bleed but stop with ice saline and suction. pt went to PACU stable, sats mid 90s, plan follow up path and oncology.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNPOOR003",
+      "procedure_date": "2025-01-12",
+      "patient_age": 58,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Mediastinal lymphadenopathy on CT concerning for lung cancer requiring EBUS staging.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31653
+      ],
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Endobronchial ultrasound with transbronchial needle aspiration for mediastinal staging.",
+      "bronch_location_lobe": "Mediastinal nodes",
+      "bronch_location_segment": null,
+      "ebus_performed": true,
+      "ebus_indication": "Staging of suspected lung cancer.",
+      "ebus_primary_targets": [
+        "4R",
+        "7",
+        "11L"
+      ],
+      "ebus_total_passes": 8,
+      "thoracentesis_performed": false,
+      "thoracentesis_indication": null,
+      "ipc_performed": false,
+      "ipc_side": null,
+      "ipc_indication": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "disposition": "PACU",
+      "evidence": {}
+    },
+    "coding_review": {
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "review_date": "2025-12-07",
+      "coder": "Golden_note_fixer",
+      "cpt_summary_2025": {
+        "codes": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS-guided sampling of 3 or more lymph node stations",
+            "is_add_on": false,
+            "facility_rvu": 7.7,
+            "mpfs_facility_payment": 249
+          }
+        ],
+        "total_facility_rvu": 7.7,
+        "total_mpfs_facility_payment": 249
+      },
+      "rationale": "Linear EBUS-TBNA of 3 distinct nodal stations (4R, 7, 11L) supports 31653. No peripheral sampling or other add-ons documented."
+    }
+  },
+  {
+    "note_id": "poor_04",
+    "note_text": "short op note - tumor debulk: pt Rosa M, hx lung ca w nasty endobronchial chunk L main, very SOB walking even to bathroom. in OR, gen anes, 8.5 ETT. I did flex then rigid scope. big friable tumer almost closing LM lumen. used APC and forceps and some cryo pull to open lumen maybe 80 percent. some blood, but not huge, cold saline and epi helped. no stent placed, no biopsy (already dx from prior), no nav, no ebus, no BAL. post bronch CXR ok, no ptx seen. pt to ICU for obs overnight because COPD and O2 needs.",
+    "cpt_codes": [
+      31641
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNPOOR004",
+      "procedure_date": "2025-01-13",
+      "patient_age": 61,
+      "gender": "Female",
+      "asa_class": 4,
+      "primary_indication": "Symptomatic malignant obstruction of the left mainstem bronchus.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31641
+      ],
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Therapeutic debulking of left mainstem endobronchial tumor.",
+      "bronch_location_lobe": "Left mainstem",
+      "bronch_location_segment": null,
+      "ebus_performed": false,
+      "ebus_indication": null,
+      "ebus_primary_targets": [],
+      "ebus_total_passes": 0,
+      "thoracentesis_performed": false,
+      "thoracentesis_indication": null,
+      "ipc_performed": false,
+      "ipc_side": null,
+      "ipc_indication": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "disposition": "ICU",
+      "evidence": {}
+    },
+    "coding_review": {
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "review_date": "2025-12-07",
+      "coder": "Golden_note_fixer",
+      "cpt_summary_2025": {
+        "codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "is_add_on": false,
+            "facility_rvu": 8.4,
+            "mpfs_facility_payment": 272
+          }
+        ],
+        "total_facility_rvu": 8.4,
+        "total_mpfs_facility_payment": 272
+      },
+      "rationale": "Rigid/flexible bronchoscopy with tumor destruction (APC, forceps, cryo) in the left mainstem supports 31641. No stent placed."
+    }
+  },
+  {
+    "note_id": "poor_05",
+    "note_text": "robot bronch case (kinda long, writing quick and messy): pt mid 70s M w spiculated RUL nodule 1.8cm and PET hot mediast nodes. under GA, 8.0 ETT by gas. quick white light look, nothing in trachea or mainstem. then linear EBUS first and sampled 4R and 7, about 3 passes each. doplar ok, ROSE at 4R suspicious or malig, 7 just lymphs. after that switched to nav platform (Monarch style), computer navgation from CT used to drive out to periph RUL target. radial EBUS probe in guide sheath showed concentric lesion, left sheath parked at spot. thru sheath did multiple TBBx (around 5 pieces) from lesion with forceps. no cryo, no needle ablation, no stents. mild bleeding but cleared with suction and cold saline, hemodyn stable. no complications, pt extubated in OR and went to PACU ok.",
+    "cpt_codes": [
+      31652,
+      31627,
+      31654,
+      31628
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNPOOR005",
+      "procedure_date": "2025-01-14",
+      "patient_age": 75,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Right upper lobe pulmonary nodule with PET-avid mediastinal lymph nodes.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31652,
+        31627,
+        31654,
+        31628
+      ],
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Linear EBUS mediastinal staging followed by navigational bronchoscopy with radial EBUS-guided transbronchial biopsy of right upper lobe nodule.",
+      "bronch_location_lobe": "Right upper lobe",
+      "bronch_location_segment": "Apical",
+      "ebus_performed": true,
+      "ebus_indication": "Nodal staging for suspected lung cancer.",
+      "ebus_primary_targets": [
+        "4R",
+        "7"
+      ],
+      "ebus_total_passes": 6,
+      "thoracentesis_performed": false,
+      "thoracentesis_indication": null,
+      "ipc_performed": false,
+      "ipc_side": null,
+      "ipc_indication": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "disposition": "PACU",
+      "evidence": {}
+    },
+    "coding_review": {
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "review_date": "2025-12-07",
+      "coder": "Golden_note_fixer",
+      "cpt_summary_2025": {
+        "codes": [
+          {
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "is_add_on": false,
+            "facility_rvu": 6.96,
+            "mpfs_facility_payment": 225
+          },
+          {
+            "code": "31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "is_add_on": true,
+            "facility_rvu": 3.07,
+            "mpfs_facility_payment": 99
+          },
+          {
+            "code": "31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "is_add_on": true,
+            "facility_rvu": 2.11,
+            "mpfs_facility_payment": 68
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "is_add_on": false,
+            "facility_rvu": 5.53,
+            "mpfs_facility_payment": 179
+          }
+        ],
+        "total_facility_rvu": 17.67,
+        "total_mpfs_facility_payment": 571
+      },
+      "rationale": "Combined EBUS and Navigational Bronchoscopy. 31652 for 2 mediastinal stations (4R, 7). 31628 for TBBx of RUL nodule. +31627 for computer-assisted navigation. +31654 for radial EBUS localization of the peripheral lesion."
+    }
+  },
+  {
+    "note_id": "poor_06",
+    "note_text": "Bronch note - nav case w fid markr (sorry spelling): pt Marcus T 69 y/o M w RLL spiculr nodule about 2.4cm, plan SBRT but need path and fiducials. no GA, just mod sed (fent and versed) by RN under my sup, nasal canula O2, airway native, no tube. used EM nav system (superD type) w pre loaded CT, drove scope to RLL basilar seg. radial e bus probe showed eccent view of lesion in airway, left guide sheath parked there. thru sheath did several TBBx (4 bites) w forceps. then loaded fiducial needle and dropped 2 gold markrs just distal to lesion under fluoro, looked ok, not in pleura. small oozing bleed, cleared with suction and iced saline. no linear EBUS, no BAL, no stent, no ablation. pt woke up chatty, sats fine, CXR after showed no pneumo.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31626
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNPOOR006",
+      "procedure_date": "2025-01-15",
+      "patient_age": 69,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Right lower lobe peripheral pulmonary nodule planned for SBRT.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31626
+      ],
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Electromagnetic navigational bronchoscopy with radial EBUS-guided transbronchial biopsy and fiducial marker placement.",
+      "bronch_location_lobe": "Right lower lobe",
+      "bronch_location_segment": "Basilar",
+      "ebus_performed": false,
+      "ebus_indication": null,
+      "ebus_primary_targets": [],
+      "ebus_total_passes": 0,
+      "thoracentesis_performed": false,
+      "thoracentesis_indication": null,
+      "ipc_performed": false,
+      "ipc_side": null,
+      "ipc_indication": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "disposition": "PACU",
+      "evidence": {}
+    },
+    "coding_review": {
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "review_date": "2025-12-07",
+      "coder": "Golden_note_fixer",
+      "cpt_summary_2025": {
+        "codes": [
+          {
+            "code": "31626",
+            "description": "Bronchoscopy; with placement of fiducial markers",
+            "is_add_on": false,
+            "facility_rvu": 6.24,
+            "mpfs_facility_payment": 202
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "is_add_on": false,
+            "facility_rvu": 5.53,
+            "mpfs_facility_payment": 179
+          },
+          {
+            "code": "31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "is_add_on": true,
+            "facility_rvu": 3.07,
+            "mpfs_facility_payment": 99
+          },
+          {
+            "code": "31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "is_add_on": true,
+            "facility_rvu": 2.11,
+            "mpfs_facility_payment": 68
+          }
+        ],
+        "total_facility_rvu": 16.95,
+        "total_mpfs_facility_payment": 548
+      },
+      "rationale": "Navigational bronchoscopy with multiple interventions in RLL. 31626 (fiducials) and 31628 (TBBx) are primary codes; highest valued (31626) drives payment, others subject to multiple endoscopy reduction. +31627 for navigation and +31654 for radial EBUS verification."
+    }
+  },
+  {
+    "note_id": "poor_07",
+    "note_text": "robot nav bronch (simple, half baked note): pt 62M w periph LLL lesion around 1.3cm, hard spot to reach on regular bronch. anesthesia did deep sed, pt basically out, intubated with small ETT for airway control, chart says deep not full GA. vent running low settings. Ion robot used, CT path loaded, scope advanced to LLL target per navgation. no linear EBUS, no radial probe used, system relies on imaging. at target we did 6 transbronchial biopsys with forceps through working channel. no BAL, no needle, no cryo, no stent. very minor bleeding, suction only, no obvious pneumo on fluoro. pt to PACU stable, on 2L NC by time of sign out.",
+    "cpt_codes": [
+      31627,
+      31628
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNPOOR007",
+      "procedure_date": "2025-01-16",
+      "patient_age": 62,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Left lower lobe peripheral pulmonary nodule.",
+      "sedation_type": "Deep",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Indeterminate nodule",
+      "cpt_codes": [
+        31627,
+        31628
+      ],
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Computer-assisted navigational bronchoscopy with transbronchial biopsy of left lower lobe lesion.",
+      "bronch_location_lobe": "Left lower lobe",
+      "bronch_location_segment": "Peripheral",
+      "ebus_performed": false,
+      "ebus_indication": null,
+      "ebus_primary_targets": [],
+      "ebus_total_passes": 0,
+      "thoracentesis_performed": false,
+      "thoracentesis_indication": null,
+      "ipc_performed": false,
+      "ipc_side": null,
+      "ipc_indication": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "disposition": "PACU",
+      "evidence": {}
+    },
+    "coding_review": {
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "review_date": "2025-12-07",
+      "coder": "Golden_note_fixer",
+      "cpt_summary_2025": {
+        "codes": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "is_add_on": false,
+            "facility_rvu": 5.53,
+            "mpfs_facility_payment": 179
+          },
+          {
+            "code": "31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "is_add_on": true,
+            "facility_rvu": 3.07,
+            "mpfs_facility_payment": 99
+          }
+        ],
+        "total_facility_rvu": 8.6,
+        "total_mpfs_facility_payment": 278
+      },
+      "rationale": "Robotic (Ion) navigational bronchoscopy (+31627) with transbronchial biopsy (31628). No radial EBUS reported ('no radial probe used')."
+    }
+  },
+  {
+    "note_id": "poor_08",
+    "note_text": "EBUS thru trach (rough dictation): pt Juan C R, long term trach for COPD, now big mediast nodes on CT, need staging for suspected lung cancer. in OR, gen anes via existing cuffed trach. I put EBUS scope right thru trach, quick look in trachea and main bronchi, no endobronch mass. using linear EBUS, sampled 4R, 4L, 7 and 11R nodes, multiple passes two to three each. doplar check ok each time. ROSE from 4R said cancer, others mostly lympy cells. no radial probe, no robot nav, no periph lung bx, no BAL, nothing pleural. pt back to ICU on vent same settings as pre op, stable.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNPOOR008",
+      "procedure_date": "2025-01-17",
+      "patient_age": 67,
+      "gender": "Male",
+      "asa_class": 4,
+      "primary_indication": "COPD patient with chronic tracheostomy and mediastinal lymphadenopathy concerning for lung cancer.",
+      "sedation_type": "General",
+      "airway_type": "Tracheostomy",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31653
+      ],
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "EBUS-TBNA via tracheostomy for mediastinal nodal staging.",
+      "bronch_location_lobe": "Mediastinal nodes",
+      "bronch_location_segment": null,
+      "ebus_performed": true,
+      "ebus_indication": "Staging of suspected lung cancer.",
+      "ebus_primary_targets": [
+        "4R",
+        "4L",
+        "7",
+        "11R"
+      ],
+      "ebus_total_passes": 10,
+      "thoracentesis_performed": false,
+      "thoracentesis_indication": null,
+      "ipc_performed": false,
+      "ipc_side": null,
+      "ipc_indication": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "disposition": "ICU",
+      "evidence": {}
+    },
+    "coding_review": {
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "review_date": "2025-12-07",
+      "coder": "Golden_note_fixer",
+      "cpt_summary_2025": {
+        "codes": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS-guided sampling of 3 or more lymph node stations",
+            "is_add_on": false,
+            "facility_rvu": 7.7,
+            "mpfs_facility_payment": 249
+          }
+        ],
+        "total_facility_rvu": 7.7,
+        "total_mpfs_facility_payment": 249
+      },
+      "rationale": "EBUS-TBNA via tracheostomy sampling 4 stations (4R, 4L, 7, 11R) supports 31653."
+    }
+  },
+  {
+    "note_id": "poor_09",
+    "note_text": "EBUS for sarc vs other (note messy): pt Michelle B, 54F, chronic trach. CT shows bulky 2L and 4R nodes, no clear lung mass. case in bronch suite, GA via trach again. standard bronch scope first, airway pretty clean, some granln tissue at stoma but left alone. switched to linear EBUS, scanned mediastinum and took TBNA from 11L and 7 only, three passes each. no ROSE avail, slides sent to path. no nav robot, no radial EBUS, no lung TBBx, no BAL, no thoracentesis. pt woke up slow but ok, went back to floor on baseline O2.",
+    "cpt_codes": [
+      31652
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNPOOR009",
+      "procedure_date": "2025-01-18",
+      "patient_age": 54,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Chronic tracheostomy patient with bilateral hilar and mediastinal lymphadenopathy, sarcoid versus other granulomatous disease.",
+      "sedation_type": "General",
+      "airway_type": "Tracheostomy",
+      "final_diagnosis_prelim": "Granulomatous disease",
+      "cpt_codes": [
+        31652
+      ],
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "EBUS-TBNA via tracheostomy for diagnostic sampling of mediastinal nodes.",
+      "bronch_location_lobe": "Mediastinal nodes",
+      "bronch_location_segment": null,
+      "ebus_performed": true,
+      "ebus_indication": "Evaluation of mediastinal lymphadenopathy for sarcoidosis versus malignancy.",
+      "ebus_primary_targets": [
+        "11L",
+        "7"
+      ],
+      "ebus_total_passes": 6,
+      "thoracentesis_performed": false,
+      "thoracentesis_indication": null,
+      "ipc_performed": false,
+      "ipc_side": null,
+      "ipc_indication": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "disposition": "Floor",
+      "evidence": {}
+    },
+    "coding_review": {
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "review_date": "2025-12-07",
+      "coder": "Golden_note_fixer",
+      "cpt_summary_2025": {
+        "codes": [
+          {
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "is_add_on": false,
+            "facility_rvu": 6.96,
+            "mpfs_facility_payment": 225
+          }
+        ],
+        "total_facility_rvu": 6.96,
+        "total_mpfs_facility_payment": 225
+      },
+      "rationale": "EBUS-TBNA sampling of 2 stations (11L, 7) supports 31652."
+    }
+  },
+  {
+    "note_id": "poor_10",
+    "note_text": "Thoracentasis bedside note (scribbled): 60 yo guy, L lung mass w big L effusn, very dyspnic just talking. did consent verbal and paper. pt on NC 2L. no GA, just local lido plus tiny amnt fentanyl, not full sed, kinda light mod sed. sat on edge of bed leaning fwd. US chest: big free fluid left posterior. picked spot mid scap line 8th space. cleaned skin w chlorhex, numbed skin and pleura, pt says stingy. cath needle in, nice straw or amber fluid. hooked to bottle, drained about 1500 cc, no blood, no pus. stopped when pt cough more and pressure drop on manom, not recorded great. post US showed only small resid effusn, no pnx. band aid on. spec sent for labs including cell ct, protien, LDH and cyto.",
+    "cpt_codes": [
+      32555
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNPOOR010",
+      "procedure_date": "2025-01-19",
+      "patient_age": 60,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Large symptomatic left pleural effusion in patient with known left lung mass.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant effusion",
+      "cpt_codes": [
+        32555
+      ],
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "ebus_performed": false,
+      "ebus_indication": null,
+      "ebus_primary_targets": [],
+      "ebus_total_passes": 0,
+      "thoracentesis_performed": true,
+      "thoracentesis_indication": "Diagnostic and therapeutic drainage of large left pleural effusion.",
+      "ipc_performed": false,
+      "ipc_side": null,
+      "ipc_indication": null,
+      "pleural_procedure_type": "Thoracentesis",
+      "pleural_guidance": "Ultrasound",
+      "disposition": "Floor",
+      "evidence": {}
+    },
+    "coding_review": {
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "review_date": "2025-12-07",
+      "coder": "Golden_note_fixer",
+      "cpt_summary_2025": {
+        "codes": [
+          {
+            "code": "32555",
+            "description": "Thoracentesis, needle or catheter, aspiration of the pleural space; with imaging guidance",
+            "is_add_on": false,
+            "facility_rvu": 3.19,
+            "mpfs_facility_payment": 103
+          }
+        ],
+        "total_facility_rvu": 3.19,
+        "total_mpfs_facility_payment": 103
+      },
+      "rationale": "Ultrasound-guided thoracentesis (32555) with drainage of 1500cc."
+    }
+  }
+]

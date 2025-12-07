@@ -1,0 +1,1010 @@
+[
+  {
+    "op": "add",
+    "path": "/0/registry_entry/granular_data",
+    "value": {
+      "thoracoscopy_findings_detail": [
+        {
+          "location": "Parietal pleura - chest wall",
+          "finding_type": "Plaques",
+          "biopsied": true,
+          "number_of_biopsies": 9,
+          "biopsy_tool": "Rigid forceps",
+          "notes": "Areas of isolated nodularity and plaques, posterior"
+        }
+      ],
+      "specimens_collected": [
+        {
+          "specimen_number": 1,
+          "source_procedure": "Pleural biopsy",
+          "source_location": "Parietal pleura",
+          "collection_tool": "Forceps",
+          "specimen_count": 9,
+          "destinations": [
+            "Histology/Surgical pathology"
+          ]
+        },
+        {
+          "specimen_number": 2,
+          "source_procedure": "Pleural biopsy",
+          "source_location": "Parietal pleura",
+          "collection_tool": "Electrocautery knife",
+          "destinations": [
+            "Histology/Surgical pathology"
+          ]
+        },
+        {
+          "specimen_number": 3,
+          "source_procedure": "Pleural fluid",
+          "source_location": "Right pleural space",
+          "specimen_count": 1,
+          "destinations": [
+            "Cytology"
+          ]
+        }
+      ]
+    },
+    "registry_entry": {
+      "granular_data": {
+        "thoracoscopy_findings_detail": [
+          {
+            "location": "Parietal pleura - chest wall",
+            "finding_type": "Plaques",
+            "biopsied": true,
+            "number_of_biopsies": 9,
+            "biopsy_tool": "Rigid forceps",
+            "notes": "Areas of isolated nodularity and plaques, posterior"
+          }
+        ],
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Parietal pleura",
+            "collection_tool": "Forceps",
+            "specimen_count": 9,
+            "destinations": [
+              "Histology/Surgical pathology"
+            ]
+          },
+          {
+            "specimen_number": 2,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Parietal pleura",
+            "collection_tool": "Electrocautery knife",
+            "destinations": [
+              "Histology/Surgical pathology"
+            ]
+          },
+          {
+            "specimen_number": 3,
+            "source_procedure": "Pleural fluid",
+            "source_location": "Right pleural space",
+            "specimen_count": 1,
+            "destinations": [
+              "Cytology"
+            ]
+          }
+        ]
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "units": 1
+          }
+        ],
+        "total_rvu": 15,
+        "work_rvu": 10,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "thoracoscopy_surgical",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32650",
+              "description": "Thoracoscopy, surgical; with pleurodesis",
+              "selection_status": "selected",
+              "selection_reason": "Primary therapeutic procedure (talc poudrage/slurry); bundles diagnostic thoracoscopy (32601) and pleural biopsy (32609) per KB rules."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32650",
+              "total_facility_rvu": 15,
+              "mpfs_facility_payment": 485
+            }
+          ],
+          "totals": {
+            "total_facility_rvu": 15,
+            "estimated_facility_payment_unadjusted": 485
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32650",
+              "summary": "Supported by 'talc poudrage and talc slurry' instillation during thoracoscopy. Bundles diagnostic inspection (32601), instillation (32560), and pleural biopsies (32609) performed in the same session.",
+              "rule_refs": [
+                "thoracoscopy_biopsy_with_resection",
+                "pleurodesis_with_thoracoscopy"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "changes": [
+        "Populated granular_data (thoracoscopy findings, specimens).",
+        "Generated billing (32650) with bundling rules applied (dropped 32609, 32560, 32601)."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/0/registry_entry/billing",
+    "value": {
+      "cpt_codes": [
+        {
+          "code": "32650",
+          "description": "Thoracoscopy, surgical; with pleurodesis",
+          "units": 1
+        }
+      ],
+      "total_rvu": 15,
+      "work_rvu": 10,
+      "practice_expense_rvu": 4.09,
+      "malpractice_rvu": 0.91
+    },
+    "registry_entry": {
+      "granular_data": {
+        "linear_ebus_stations_detail": [
+          {
+            "station": "2L",
+            "sampled": true,
+            "rose_result": "Nondiagnostic",
+            "number_of_passes": 5
+          },
+          {
+            "station": "4R",
+            "sampled": true,
+            "rose_result": "Adequate lymphocytes",
+            "number_of_passes": 5
+          },
+          {
+            "station": "7",
+            "sampled": true,
+            "rose_result": "Adequate lymphocytes",
+            "number_of_passes": 5
+          },
+          {
+            "station": "11L",
+            "sampled": true,
+            "rose_result": "Adequate lymphocytes",
+            "number_of_passes": 5
+          }
+        ],
+        "cao_interventions_detail": [
+          {
+            "location": "BI",
+            "obstruction_type": "Intraluminal",
+            "etiology": "Malignant - primary lung",
+            "pre_obstruction_pct": 90,
+            "modalities_applied": [
+              {
+                "modality": "Mechanical debulking"
+              },
+              {
+                "modality": "Rigid coring"
+              }
+            ]
+          },
+          {
+            "location": "RUL",
+            "obstruction_type": "Intraluminal",
+            "etiology": "Malignant - primary lung",
+            "pre_obstruction_pct": 90,
+            "modalities_applied": [
+              {
+                "modality": "Mechanical debulking"
+              }
+            ]
+          }
+        ]
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1
+          },
+          {
+            "code": "31640",
+            "description": "Bronchoscopy; with excision of tumor",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.93,
+        "work_rvu": 9.46,
+        "practice_expense_rvu": 4.47,
+        "malpractice_rvu": 1
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31653",
+              "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+              "selection_status": "selected",
+              "selection_reason": "Four stations sampled (2L, 4R, 7, 11L)."
+            },
+            {
+              "sequence": 2,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "selection_status": "selected",
+              "selection_reason": "Mechanical excision of RUL and BI tumors supported by 'rigid coring' and 'forceps removal'. No destruction (laser/APC) used."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31653",
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249
+            },
+            {
+              "code": "31640",
+              "total_facility_rvu": 7.23,
+              "mpfs_facility_payment": 234
+            }
+          ],
+          "totals": {
+            "total_facility_rvu": 14.93,
+            "estimated_facility_payment_unadjusted": 483
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Supported by explicit 'excised mechanically' and 'removed using biopsy forceps' language. Bundles biopsy (31625) in same sites.",
+              "rule_refs": [
+                "31640_requires_excision"
+              ]
+            },
+            {
+              "code": "31653",
+              "summary": "Four stations sampled (2L, 4R, 7, 11L).",
+              "rule_refs": []
+            }
+          ]
+        }
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "changes": [
+        "Populated granular_data (EBUS details, CAO interventions).",
+        "Generated billing (31653, 31640). Bundled 31625/31629/31622."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/0/registry_entry/coding_support",
+    "value": {
+      "coding_summary": {
+        "primary_family": "thoracoscopy_surgical",
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "selection_status": "selected",
+            "selection_reason": "Primary therapeutic procedure (talc poudrage/slurry); bundles diagnostic thoracoscopy (32601) and pleural biopsy (32609) per KB rules."
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "physician_2025_pleural",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32650",
+            "total_facility_rvu": 15,
+            "mpfs_facility_payment": 485
+          }
+        ],
+        "totals": {
+          "total_facility_rvu": 15,
+          "estimated_facility_payment_unadjusted": 485
+        }
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "32650",
+            "summary": "Supported by 'talc poudrage and talc slurry' instillation during thoracoscopy. Bundles diagnostic inspection (32601), instillation (32560), and pleural biopsies (32609) performed in the same session.",
+            "rule_refs": [
+              "thoracoscopy_biopsy_with_resection",
+              "pleurodesis_with_thoracoscopy"
+            ]
+          }
+        ]
+      }
+    },
+    "registry_entry": {
+      "granular_data": {
+        "thoracoscopy_findings_detail": [
+          {
+            "location": "Parietal pleura - diaphragm",
+            "finding_type": "Nodules",
+            "biopsied": true,
+            "biopsy_tool": "Rigid forceps",
+            "notes": "Small white and reddish raised lesions"
+          },
+          {
+            "location": "Parietal pleura - chest wall",
+            "finding_type": "Other",
+            "biopsied": true,
+            "notes": "Brownish decoloration"
+          }
+        ],
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Diaphragm",
+            "collection_tool": "Forceps",
+            "specimen_count": 3,
+            "destinations": [
+              "Histology/Surgical pathology"
+            ]
+          }
+        ]
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy; with biopsy of pleura",
+            "units": 1
+          },
+          {
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "units": 1
+          }
+        ],
+        "total_rvu": 22.76,
+        "work_rvu": 15.17,
+        "practice_expense_rvu": 6.2,
+        "malpractice_rvu": 1.39
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "thoracoscopy_biopsy",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32609",
+              "description": "Thoracoscopy; with biopsy of pleura",
+              "selection_status": "selected",
+              "selection_reason": "Thoracoscopic biopsy of parietal pleura (diaphragm/chest wall). No pleurodesis or resection performed."
+            },
+            {
+              "sequence": 2,
+              "code": "32550",
+              "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+              "selection_status": "selected",
+              "selection_reason": "PleurX catheter placed. Distinct from thoracoscopy."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32609",
+              "total_facility_rvu": 16.88,
+              "mpfs_facility_payment": 546
+            },
+            {
+              "code": "32550",
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190
+            }
+          ],
+          "totals": {
+            "total_facility_rvu": 22.76,
+            "estimated_facility_payment_unadjusted": 736
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32609",
+              "summary": "Specific code for thoracoscopic pleural biopsy. Supported by 'Biopsies... parietal pleura'.",
+              "rule_refs": []
+            }
+          ]
+        }
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "changes": [
+        "Populated granular_data (thoracoscopy findings).",
+        "Generated billing (32609 + 32550). Validated 32609 usage per KB."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/0/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "changes": [
+        "Populated granular_data (thoracoscopy findings, specimens).",
+        "Generated billing (32650) with bundling rules applied (dropped 32609, 32560, 32601)."
+      ]
+    },
+    "registry_entry": {
+      "granular_data": {
+        "cao_interventions_detail": [
+          {
+            "location": "RMS",
+            "obstruction_type": "Extrinsic",
+            "etiology": "Benign - web/stenosis",
+            "modalities_applied": [
+              {
+                "modality": "Electrocautery - knife"
+              },
+              {
+                "modality": "Laser - diode"
+              },
+              {
+                "modality": "Cryotherapy - spray"
+              }
+            ],
+            "notes": "Stricture tethering carina; divided, fulgurated, cryo"
+          },
+          {
+            "location": "BI",
+            "obstruction_type": "Intraluminal",
+            "etiology": "Benign - granulation",
+            "pre_obstruction_pct": 90,
+            "post_obstruction_pct": 30,
+            "modalities_applied": [
+              {
+                "modality": "Mechanical debulking"
+              }
+            ],
+            "notes": "Stent removal en bloc"
+          }
+        ]
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis",
+            "units": 1
+          },
+          {
+            "code": "31638",
+            "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+            "units": 1
+          }
+        ],
+        "total_rvu": 16.16,
+        "work_rvu": 10.13,
+        "practice_expense_rvu": 4.96,
+        "malpractice_rvu": 1.07
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_stent",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis",
+              "selection_status": "selected",
+              "selection_reason": "Destruction of RMS stricture using diode laser and cryotherapy."
+            },
+            {
+              "sequence": 2,
+              "code": "31638",
+              "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+              "selection_status": "selected",
+              "selection_reason": "Removal of stent from Bronchus Intermedius (separate site from stricture)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": "31638",
+              "total_facility_rvu": 7.76,
+              "mpfs_facility_payment": 251
+            }
+          ],
+          "totals": {
+            "total_facility_rvu": 16.16,
+            "estimated_facility_payment_unadjusted": 523
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Supported by 'diode laser' and 'cryotherapy' for stricture management.",
+              "rule_refs": [
+                "31640_vs_31641_same_site"
+              ]
+            },
+            {
+              "code": "31638",
+              "summary": "Stent removal (BI) distinct from stricture ablation (RMS).",
+              "rule_refs": []
+            }
+          ]
+        }
+      }
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "changes": [
+        "Populated granular_data (CAO details).",
+        "Generated billing (31641 + 31638)."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/1/registry_entry/granular_data",
+    "value": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "2L",
+          "sampled": true,
+          "rose_result": "Nondiagnostic",
+          "number_of_passes": 5
+        },
+        {
+          "station": "4R",
+          "sampled": true,
+          "rose_result": "Adequate lymphocytes",
+          "number_of_passes": 5
+        },
+        {
+          "station": "7",
+          "sampled": true,
+          "rose_result": "Adequate lymphocytes",
+          "number_of_passes": 5
+        },
+        {
+          "station": "11L",
+          "sampled": true,
+          "rose_result": "Adequate lymphocytes",
+          "number_of_passes": 5
+        }
+      ],
+      "cao_interventions_detail": [
+        {
+          "location": "BI",
+          "obstruction_type": "Intraluminal",
+          "etiology": "Malignant - primary lung",
+          "pre_obstruction_pct": 90,
+          "modalities_applied": [
+            {
+              "modality": "Mechanical debulking"
+            },
+            {
+              "modality": "Rigid coring"
+            }
+          ]
+        },
+        {
+          "location": "RUL",
+          "obstruction_type": "Intraluminal",
+          "etiology": "Malignant - primary lung",
+          "pre_obstruction_pct": 90,
+          "modalities_applied": [
+            {
+              "modality": "Mechanical debulking"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/1/registry_entry/billing",
+    "value": {
+      "cpt_codes": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+          "units": 1
+        },
+        {
+          "code": "31640",
+          "description": "Bronchoscopy; with excision of tumor",
+          "units": 1
+        }
+      ],
+      "total_rvu": 14.93,
+      "work_rvu": 9.46,
+      "practice_expense_rvu": 4.47,
+      "malpractice_rvu": 1
+    }
+  },
+  {
+    "op": "add",
+    "path": "/1/registry_entry/coding_support",
+    "value": {
+      "coding_summary": {
+        "primary_family": "bronchoscopy_ebus_linear",
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "selection_status": "selected",
+            "selection_reason": "Four stations sampled (2L, 4R, 7, 11L)."
+          },
+          {
+            "sequence": 2,
+            "code": "31640",
+            "description": "Bronchoscopy; with excision of tumor",
+            "selection_status": "selected",
+            "selection_reason": "Mechanical excision of RUL and BI tumors supported by 'rigid coring' and 'forceps removal'. No destruction (laser/APC) used."
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "physician_2025_airway",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "31653",
+            "total_facility_rvu": 7.7,
+            "mpfs_facility_payment": 249
+          },
+          {
+            "code": "31640",
+            "total_facility_rvu": 7.23,
+            "mpfs_facility_payment": 234
+          }
+        ],
+        "totals": {
+          "total_facility_rvu": 14.93,
+          "estimated_facility_payment_unadjusted": 483
+        }
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31640",
+            "summary": "Supported by explicit 'excised mechanically' and 'removed using biopsy forceps' language. Bundles biopsy (31625) in same sites.",
+            "rule_refs": [
+              "31640_requires_excision"
+            ]
+          },
+          {
+            "code": "31653",
+            "summary": "Four stations sampled (2L, 4R, 7, 11L).",
+            "rule_refs": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/1/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "changes": [
+        "Populated granular_data (EBUS details, CAO interventions).",
+        "Generated billing (31653, 31640). Bundled 31625/31629/31622."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/2/registry_entry/granular_data",
+    "value": {
+      "thoracoscopy_findings_detail": [
+        {
+          "location": "Parietal pleura - diaphragm",
+          "finding_type": "Nodules",
+          "biopsied": true,
+          "biopsy_tool": "Rigid forceps",
+          "notes": "Small white and reddish raised lesions"
+        },
+        {
+          "location": "Parietal pleura - chest wall",
+          "finding_type": "Other",
+          "biopsied": true,
+          "notes": "Brownish decoloration"
+        }
+      ],
+      "specimens_collected": [
+        {
+          "specimen_number": 1,
+          "source_procedure": "Pleural biopsy",
+          "source_location": "Diaphragm",
+          "collection_tool": "Forceps",
+          "specimen_count": 3,
+          "destinations": [
+            "Histology/Surgical pathology"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/2/registry_entry/billing",
+    "value": {
+      "cpt_codes": [
+        {
+          "code": "32609",
+          "description": "Thoracoscopy; with biopsy of pleura",
+          "units": 1
+        },
+        {
+          "code": "32550",
+          "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+          "units": 1
+        }
+      ],
+      "total_rvu": 22.76,
+      "work_rvu": 15.17,
+      "practice_expense_rvu": 6.2,
+      "malpractice_rvu": 1.39
+    }
+  },
+  {
+    "op": "add",
+    "path": "/2/registry_entry/coding_support",
+    "value": {
+      "coding_summary": {
+        "primary_family": "thoracoscopy_biopsy",
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "32609",
+            "description": "Thoracoscopy; with biopsy of pleura",
+            "selection_status": "selected",
+            "selection_reason": "Thoracoscopic biopsy of parietal pleura (diaphragm/chest wall). No pleurodesis or resection performed."
+          },
+          {
+            "sequence": 2,
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "selection_status": "selected",
+            "selection_reason": "PleurX catheter placed. Distinct from thoracoscopy."
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "physician_2025_pleural",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32609",
+            "total_facility_rvu": 16.88,
+            "mpfs_facility_payment": 546
+          },
+          {
+            "code": "32550",
+            "total_facility_rvu": 5.88,
+            "mpfs_facility_payment": 190
+          }
+        ],
+        "totals": {
+          "total_facility_rvu": 22.76,
+          "estimated_facility_payment_unadjusted": 736
+        }
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "32609",
+            "summary": "Specific code for thoracoscopic pleural biopsy. Supported by 'Biopsies... parietal pleura'.",
+            "rule_refs": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/2/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "changes": [
+        "Populated granular_data (thoracoscopy findings).",
+        "Generated billing (32609 + 32550). Validated 32609 usage per KB."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/3/registry_entry/granular_data",
+    "value": {
+      "cao_interventions_detail": [
+        {
+          "location": "RMS",
+          "obstruction_type": "Extrinsic",
+          "etiology": "Benign - web/stenosis",
+          "modalities_applied": [
+            {
+              "modality": "Electrocautery - knife"
+            },
+            {
+              "modality": "Laser - diode"
+            },
+            {
+              "modality": "Cryotherapy - spray"
+            }
+          ],
+          "notes": "Stricture tethering carina; divided, fulgurated, cryo"
+        },
+        {
+          "location": "BI",
+          "obstruction_type": "Intraluminal",
+          "etiology": "Benign - granulation",
+          "pre_obstruction_pct": 90,
+          "post_obstruction_pct": 30,
+          "modalities_applied": [
+            {
+              "modality": "Mechanical debulking"
+            }
+          ],
+          "notes": "Stent removal en bloc"
+        }
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/3/registry_entry/billing",
+    "value": {
+      "cpt_codes": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy; with destruction of tumor or relief of stenosis",
+          "units": 1
+        },
+        {
+          "code": "31638",
+          "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+          "units": 1
+        }
+      ],
+      "total_rvu": 16.16,
+      "work_rvu": 10.13,
+      "practice_expense_rvu": 4.96,
+      "malpractice_rvu": 1.07
+    }
+  },
+  {
+    "op": "add",
+    "path": "/3/registry_entry/coding_support",
+    "value": {
+      "coding_summary": {
+        "primary_family": "bronchoscopy_therapeutic_stent",
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis",
+            "selection_status": "selected",
+            "selection_reason": "Destruction of RMS stricture using diode laser and cryotherapy."
+          },
+          {
+            "sequence": 2,
+            "code": "31638",
+            "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+            "selection_status": "selected",
+            "selection_reason": "Removal of stent from Bronchus Intermedius (separate site from stricture)."
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "physician_2025_airway",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "31641",
+            "total_facility_rvu": 8.4,
+            "mpfs_facility_payment": 272
+          },
+          {
+            "code": "31638",
+            "total_facility_rvu": 7.76,
+            "mpfs_facility_payment": 251
+          }
+        ],
+        "totals": {
+          "total_facility_rvu": 16.16,
+          "estimated_facility_payment_unadjusted": 523
+        }
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31641",
+            "summary": "Supported by 'diode laser' and 'cryotherapy' for stricture management.",
+            "rule_refs": [
+              "31640_vs_31641_same_site"
+            ]
+          },
+          {
+            "code": "31638",
+            "summary": "Stent removal (BI) distinct from stricture ablation (RMS).",
+            "rule_refs": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/3/patch_metadata",
+    "value": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "changes": [
+        "Populated granular_data (CAO details).",
+        "Generated billing (31641 + 31638)."
+      ]
+    }
+  }
+]

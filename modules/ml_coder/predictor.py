@@ -1,15 +1,23 @@
-"""Prediction service that wraps the trained CPT classifier."""
+"""Prediction service that wraps the trained CPT classifier.
+
+Includes:
+- MLCoderService: Simple prediction service (legacy)
+- MLCoderPredictor: Ternary case difficulty classification (HIGH_CONF/GRAY_ZONE/LOW_CONF)
+"""
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List
+from typing import Any
 
 import joblib
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MultiLabelBinarizer
 
 from modules.common.logger import get_logger
+from modules.ml_coder.thresholds import CaseDifficulty, Thresholds, load_thresholds
+from modules.ml_coder.training import MLB_PATH, PIPELINE_PATH
 
 logger = get_logger("ml_coder.predictor")
 
@@ -79,4 +87,192 @@ class MLCoderService:
         return results
 
 
-__all__ = ["MLCoderService"]
+@dataclass
+class CodePrediction:
+    """Single CPT code prediction with probability."""
+
+    cpt: str
+    prob: float
+
+    def to_dict(self) -> dict[str, Any]:
+        return {"cpt": self.cpt, "prob": self.prob}
+
+
+@dataclass
+class CaseClassification:
+    """
+    Full case classification result.
+
+    Attributes:
+        predictions: All predictions sorted by probability (descending)
+        high_conf: Predictions above upper threshold
+        gray_zone: Predictions between lower and upper thresholds
+        difficulty: Overall case difficulty classification
+    """
+
+    predictions: list[CodePrediction]
+    high_conf: list[CodePrediction]
+    gray_zone: list[CodePrediction]
+    difficulty: CaseDifficulty
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "predictions": [p.to_dict() for p in self.predictions],
+            "high_conf": [p.to_dict() for p in self.high_conf],
+            "gray_zone": [p.to_dict() for p in self.gray_zone],
+            "difficulty": self.difficulty.value,
+        }
+
+
+class MLCoderPredictor:
+    """
+    ML-based CPT code predictor with ternary case difficulty classification.
+
+    Classification policy:
+    - HIGH_CONF: At least one prediction above upper threshold.
+      → Handled by ML+Rules pipeline only.
+    - GRAY_ZONE: No high-conf predictions, but at least one above lower threshold.
+      → ML suggestions go to LLM as hints; LLM is final judge.
+    - LOW_CONF: All predictions below lower threshold.
+      → LLM acts as primary coder; ML opinion is weak context only.
+    """
+
+    def __init__(
+        self,
+        model_path: str | Path | None = None,
+        mlb_path: str | Path | None = None,
+        thresholds: Thresholds | None = None,
+        thresholds_path: str | Path | None = None,
+    ):
+        """
+        Initialize the predictor.
+
+        Args:
+            model_path: Path to trained pipeline pickle (default: PIPELINE_PATH)
+            mlb_path: Path to MultiLabelBinarizer pickle (default: MLB_PATH)
+            thresholds: Pre-loaded Thresholds object
+            thresholds_path: Path to thresholds JSON (if thresholds not provided)
+        """
+        model_path = Path(model_path) if model_path else PIPELINE_PATH
+        mlb_path = Path(mlb_path) if mlb_path else MLB_PATH
+
+        logger.info("Loading model from %s", model_path)
+        self._pipeline = joblib.load(model_path)
+        self._mlb = joblib.load(mlb_path)
+        self._labels: list[str] = list(self._mlb.classes_)
+
+        if thresholds:
+            self._thresholds = thresholds
+        else:
+            self._thresholds = load_thresholds(thresholds_path)
+
+        logger.info(
+            "Predictor initialized with %d labels, upper=%.2f, lower=%.2f",
+            len(self._labels),
+            self._thresholds.upper,
+            self._thresholds.lower,
+        )
+
+    @property
+    def labels(self) -> list[str]:
+        """Return list of CPT codes the model can predict."""
+        return self._labels.copy()
+
+    @property
+    def thresholds(self) -> Thresholds:
+        """Return the thresholds configuration."""
+        return self._thresholds
+
+    def predict_proba(self, note_text: str) -> list[CodePrediction]:
+        """
+        Get probability predictions for all codes.
+
+        Args:
+            note_text: Clinical note text
+
+        Returns:
+            List of CodePrediction objects sorted by probability (descending)
+        """
+        proba = self._pipeline.predict_proba([note_text])[0]  # shape: (n_labels,)
+
+        predictions = []
+        for cpt, p in zip(self._labels, proba):
+            predictions.append(CodePrediction(cpt=cpt, prob=float(p)))
+
+        predictions.sort(key=lambda x: x.prob, reverse=True)
+        return predictions
+
+    def predict(self, note_text: str, threshold: float = 0.5) -> list[str]:
+        """
+        Get predicted CPT codes above threshold.
+
+        Args:
+            note_text: Clinical note text
+            threshold: Probability threshold for positive prediction
+
+        Returns:
+            List of predicted CPT codes
+        """
+        proba = self._pipeline.predict_proba([note_text])[0]
+        return [cpt for cpt, p in zip(self._labels, proba) if p >= threshold]
+
+    def classify_case(self, note_text: str) -> CaseClassification:
+        """
+        Classify a case into HIGH_CONF, GRAY_ZONE, or LOW_CONF.
+
+        This is the main entry point for the hybrid ML/LLM pipeline.
+
+        Args:
+            note_text: Clinical note text
+
+        Returns:
+            CaseClassification with predictions and difficulty level
+        """
+        predictions = self.predict_proba(note_text)
+
+        high_conf: list[CodePrediction] = []
+        gray_zone: list[CodePrediction] = []
+
+        for pred in predictions:
+            upper = self._thresholds.upper_for(pred.cpt)
+            lower = self._thresholds.lower_for(pred.cpt)
+
+            if pred.prob >= upper:
+                high_conf.append(pred)
+            elif pred.prob >= lower:
+                gray_zone.append(pred)
+
+        # Determine overall difficulty
+        if high_conf:
+            difficulty = CaseDifficulty.HIGH_CONF
+        elif gray_zone:
+            difficulty = CaseDifficulty.GRAY_ZONE
+        else:
+            difficulty = CaseDifficulty.LOW_CONF
+
+        return CaseClassification(
+            predictions=predictions,
+            high_conf=high_conf,
+            gray_zone=gray_zone,
+            difficulty=difficulty,
+        )
+
+    def classify_batch(self, note_texts: list[str]) -> list[CaseClassification]:
+        """
+        Classify multiple cases.
+
+        Args:
+            note_texts: List of clinical note texts
+
+        Returns:
+            List of CaseClassification objects
+        """
+        return [self.classify_case(text) for text in note_texts]
+
+
+__all__ = [
+    "MLCoderService",
+    "MLCoderPredictor",
+    "CodePrediction",
+    "CaseClassification",
+]
