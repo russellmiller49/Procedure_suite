@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, create_model, field_serializer
+from pydantic import BaseModel, ConfigDict, Field, create_model, field_serializer, model_validator
 
 from modules.common.spans import Span
 from modules.registry.schema_granular import (
@@ -130,8 +130,50 @@ def _build_registry_model() -> type[BaseModel]:
             """Temporarily suppress procedure_setting from serialized payloads."""
             return None
 
+        @model_validator(mode="before")
+        @classmethod
+        def hoist_granular_arrays(cls, values: Any):
+            """Ensure legacy flat granular arrays get nested under granular_data."""
+            if not isinstance(values, dict):
+                return values
+
+            granular = values.get("granular_data")
+            if granular is None:
+                granular_dict: dict[str, Any] = {}
+            elif isinstance(granular, BaseModel):
+                granular_dict = granular.model_dump()
+            elif isinstance(granular, dict):
+                granular_dict = dict(granular)
+            else:
+                # Unsupported type (e.g., list) - leave values untouched
+                return values
+
+            moved = False
+            for field in GRANULAR_ARRAY_FIELDS:
+                if field in values and values[field] is not None:
+                    granular_dict.setdefault(field, values.pop(field))
+                    moved = True
+
+            if moved or granular_dict:
+                values["granular_data"] = granular_dict
+            else:
+                values.pop("granular_data", None)
+            return values
+
     RegistryRecord.__name__ = "RegistryRecord"
     return RegistryRecord
+
+
+GRANULAR_ARRAY_FIELDS = (
+    "linear_ebus_stations_detail",
+    "navigation_targets",
+    "cao_interventions_detail",
+    "blvr_valve_placements",
+    "blvr_chartis_measurements",
+    "cryobiopsy_sites",
+    "thoracoscopy_findings_detail",
+    "specimens_collected",
+)
 
 
 RegistryRecord = _build_registry_model()

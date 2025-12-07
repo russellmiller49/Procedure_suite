@@ -114,7 +114,7 @@ After running the updater, your JSON will have a new `cms_rvus` section. As of D
 {
   "cms_rvus": {
     "_source": "CMS 2025 PFS Final Rule",
-    "_conversion_factor": 32.7442,
+    "_conversion_factor": 32.3562,
     "_updated_on": "2025-01-15",
     "_notes": [...],
     
@@ -166,7 +166,7 @@ Payment = Total RVU × Conversion Factor × GPCI adjustments
 
 Where:
 - Total RVU = Work RVU + PE RVU + MP RVU
-- 2025 Conversion Factor = $32.7442
+- 2025 Conversion Factor = $32.3562
 - GPCI = Geographic Practice Cost Index (varies by locality)
 ```
 

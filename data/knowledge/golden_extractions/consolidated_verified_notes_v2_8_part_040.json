@@ -1,0 +1,1063 @@
+[
+  {
+    "note_text": "Pt Name: Thomas Jackson\nMRN: LM-9283\nDate of Birth: 04/08/1954\n\nHistory: Initial EBUS 4 months ago showed N2 disease (station 7). Now post-chemo, restaging requested.\n\nCONSCIOUS SEDATION: Midazolam 2mg, Fentanyl 50mcg - patient calm, Ramsay 2\nBP checked q10min, continuous SpO2 monitoring\n\nEBUS RESTAGING:\nPreviously positive station 7 reassessed:\n- Station 7: Now 8mm (prior 18mm), 4 passes obtained\n- ROSE: Negative for malignant cells, shows anthracotic pigmented macrophages\n- PET now negative at this station\n- Adequate sampling achieved\n\nAdditional stations surveyed for complete restaging:\n- Station 4R: 6mm, benign appearance, not sampled (previously negative)\n- Station 4L: No discrete nodes visualized\n- Station 10R: Small 5mm node, not sampled\n\nPhotodocumentation completed.\n\nNo complications during or after procedure.\n\nINTERPRETATION: Excellent response to chemotherapy with downstaging of previously malignant N2 station. Adequate negative sampling obtained for surgical planning.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": null,
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164161"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "LM9283",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA, 3 or more mediastinal or hilar lymph node stations",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 7.7,
+        "work_rvu": 4.96,
+        "practice_expense_rvu": 2.22,
+        "malpractice_rvu": 0.52
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.477283",
+      "changes": [
+        "Extracted CPT codes: [31653]",
+        "Extracted EBUS stations: ['10R', '4L', '4R', '7']",
+        "Fixed MRN:  -> LM9283"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1954-04-08)"
+      ]
+    },
+    "coding_review": {
+      "cpt_summary": {
+        "documented_cpt_codes": [
+          31653
+        ],
+        "final_cpt_codes": [
+          31653
+        ],
+        "changes": [
+          "No CPT changes; 31653 appropriately captures multi station linear EBUS-TBNA.",
+          "Registry procedure_date was a mis-extracted date of birth and has been set to null."
+        ]
+      },
+      "facility_rvu_2025": {
+        "per_code": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA, 3 or more mediastinal or hilar lymph node stations",
+            "facility_rvu_2025": 7.7,
+            "mpfs_facility_payment_2025": 252
+          }
+        ],
+        "total_facility_rvu_2025": 7.7,
+        "total_mpfs_facility_payment_2025": 252
+      },
+      "rationale": "Restaging linear EBUS-TBNA with four nodal stations sampled and no additional biopsy techniques documented, so 31653 alone is appropriate. Procedure date in the registry is set to null because the prior value matched the date of birth rather than a true service date."
+    }
+  },
+  {
+    "note_text": "PT: RICHARD BROWN | ID#: MD-8472-K | DOB: 03/27/1952\n\nMULTIFACETED CASE: Bulky mediastinal disease + RML stenosis + LUL peripheral nodule\n\nGENERAL ANESTHESIA: ETT, propofol/remi infusion, Ramsay 6\nA-line monitoring, BP continuous\n\nPHASE 1 - STAGING EBUS:\nAttempted systematic evaluation - challenging due to bulky disease\n- Station 4R: 28mm conglomerate mass, 5 passes, ROSE + malignant, PET+, molecular sent\n- Station 7: Unable to access (compressed by tumor)\n- Station 10R: 11mm, 3 passes, ROSE + malignant, PET+\n- Station 11R: Difficult anatomy, 2 passes obtained, ROSE adequate\nPhotodoc limited by distorted anatomy\n\nPHASE 2 - ENDOBRONCHIAL DISEASE:\nRML bronchus has exophytic tumor causing 80% stenosis\nBiopsy \u00d76 forceps - confirmed same malignancy\nArgon plasma coagulation applied for debulking\n12mm \u00d7 30mm metallic stent placed for symptom relief\n\nPHASE 3 - NAVIGATION FOR LUL NODULE:\nEM navigation performed\nLUL apical-posterior nodule 16mm targeted\nTool-in-lesion confirmed radial EBUS\nFluoro: 5.2 min, DAP: 201 cGy*cm\u00b2\nSampling: needle \u00d72, biopsy \u00d73\n\nCOMPLICATIONS:\n- Moderate bleeding from endobronchial tumor biopsy site (controlled with epi + APC)\n- Transient hypoxia to 85% during stent deployment (resolved with ventilator adjustment)\n\nProcedure duration: 98 minutes\n\nPatient recovered well, extubated, ICU observation overnight.",
+    "cpt_codes": [
+      31653,
+      31631,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": null,
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164178"
+      },
+      "cpt_codes": [
+        31653,
+        31631,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 16.0,
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA, 3 or more mediastinal or hilar lymph node stations",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy with tracheobronchial stent placement",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Radial EBUS for peripheral pulmonary lesion, add-on",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy with computer-assisted or electromagnetic navigation, add-on",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 20.03,
+        "work_rvu": 12.99,
+        "practice_expense_rvu": 5.64,
+        "malpractice_rvu": 1.4
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.478506",
+      "changes": [
+        "Extracted CPT codes: [31631, 31654, 31627]",
+        "Extracted lesion_size_mm: 16.0",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1952-03-27)"
+      ]
+    },
+    "coding_review": {
+      "cpt_summary": {
+        "documented_cpt_codes": [
+          31631,
+          31654,
+          31627
+        ],
+        "final_cpt_codes": [
+          31653,
+          31631,
+          31654,
+          31627
+        ],
+        "changes": [
+          "Added 31653 for multi station linear EBUS-TBNA of nodes 10R, 11R, 4R, and 7 described in the staging phase.",
+          "Retained 31631 for metallic stent placement, add-on 31654 for radial EBUS of the peripheral nodule, and add-on 31627 for navigational bronchoscopy.",
+          "Registry procedure_date was a mis-extracted date of birth and has been set to null."
+        ]
+      },
+      "facility_rvu_2025": {
+        "per_code": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA, 3 or more mediastinal or hilar lymph node stations",
+            "facility_rvu_2025": 7.7,
+            "mpfs_facility_payment_2025": 252
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy with tracheobronchial stent placement",
+            "facility_rvu_2025": 7.15,
+            "mpfs_facility_payment_2025": 234
+          },
+          {
+            "code": "31654",
+            "description": "Radial EBUS for peripheral pulmonary lesion, add-on",
+            "facility_rvu_2025": 2.11,
+            "mpfs_facility_payment_2025": 69
+          },
+          {
+            "code": "31627",
+            "description": "Bronchoscopy with computer-assisted or electromagnetic navigation, add-on",
+            "facility_rvu_2025": 3.07,
+            "mpfs_facility_payment_2025": 101
+          }
+        ],
+        "total_facility_rvu_2025": 20.03,
+        "total_mpfs_facility_payment_2025": 656
+      },
+      "rationale": "This case includes multi station linear EBUS-TBNA, endobronchial tumor therapy with stent placement, and navigational bronchoscopy with radial EBUS for a peripheral nodule. The addition of 31653 aligns with the documented nodal EBUS sampling, while 31631, add-on 31654, and add-on 31627 appropriately capture the stent and peripheral lesion work. Diagnostic bronchoscopy 31622 is not separately reported under bundling rules."
+    }
+  },
+  {
+    "note_text": "NAME: PATRICIA ANDERSON / ID#: MR-K8374 / D.O.B: 02/17/1957\n\nINDICATION: RUL endobronchial lesion causing post-obstructive pneumonia + mediastinal LAD\n\nANESTHESIA: General via ETT, maintained on sevoflurane + fentanyl, Ramsay 6\nArterial line placed, continuous BP/SpO2/ETCO2 monitoring\n\nPART A - STAGING EBUS:\nSystematic evaluation N3\u2192N2\u2192N1\n- 2R (8mm): 3 passes, ROSE negative for malignancy\n- 4R (13mm): 4 passes, ROSE positive malignant, PET+, molecular sent\n- 7 (9mm): 3 passes, ROSE negative\n- 10R (7mm): 3 passes, ROSE adequate\nPhotodoc of all accessible stations completed \u2713\n\nPART B - TUMOR BIOPSY:\nRUL endobronchial mass causing 70% luminal narrowing\nMultiple forceps biopsies obtained \u00d76\nBrush cytology \u00d72\nModerate bleeding controlled with epi 1:20,000 + iced saline\n\nCOMPLICATIONS: Transient hypoxia to 88% during tumor manipulation, resolved with increased FiO2 and suctioning. Moderate bleeding as noted, controlled intraprocedurally.\n\nPLAN: Awaiting path for treatment planning. May need repeat bronch for stent if airway compromise worsens.",
+    "cpt_codes": [
+      31623,
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": null,
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164193"
+      },
+      "cpt_codes": [
+        31623,
+        31653
+      ],
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31623",
+            "description": "Bronchoscopy with bronchial biopsy",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA, 3 or more mediastinal or hilar lymph node stations",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 11.88,
+        "work_rvu": 7.59,
+        "practice_expense_rvu": 3.47,
+        "malpractice_rvu": 0.82
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.479735",
+      "changes": [
+        "Extracted CPT codes: [31623]"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1957-02-17)"
+      ]
+    },
+    "coding_review": {
+      "cpt_summary": {
+        "documented_cpt_codes": [
+          31623
+        ],
+        "final_cpt_codes": [
+          31623,
+          31653
+        ],
+        "changes": [
+          "Added 31653 for linear EBUS-TBNA of multiple mediastinal and hilar lymph node stations described in the staging section.",
+          "Retained 31623 for the RUL endobronchial tumor biopsies.",
+          "Registry procedure_date was extracted as the date of birth and is set to null."
+        ]
+      },
+      "facility_rvu_2025": {
+        "per_code": [
+          {
+            "code": "31623",
+            "description": "Bronchoscopy with bronchial biopsy",
+            "facility_rvu_2025": 4.18,
+            "mpfs_facility_payment_2025": 137
+          },
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA, 3 or more mediastinal or hilar lymph node stations",
+            "facility_rvu_2025": 7.7,
+            "mpfs_facility_payment_2025": 252
+          }
+        ],
+        "total_facility_rvu_2025": 11.88,
+        "total_mpfs_facility_payment_2025": 389
+      },
+      "rationale": "The note documents systematic linear EBUS-TBNA of several nodal stations followed by separate endobronchial tumor biopsies in the right upper lobe. Both the biopsy code 31623 and EBUS code 31653 are supported, and the previously stored procedure date mirrored the date of birth, so it has been cleared."
+    }
+  },
+  {
+    "note_text": "Patient: Moore, Christopher | ID: MR4729384 | Age: 72 | M Service Date: 03/05/2025 | Start Time: 0745 Physician: Dr. Patel, Anjali (Attending) | Dr. Kim, Susan (Fellow)\nEndobronchial Ultrasound Bronchoscopy\nIndication: Small cell lung cancer staging, enlarged mediastinal lymph nodes on imaging\nPre-op diagnosis: Small cell lung cancer, clinical stage Post-op diagnosis: Pending final pathology\nAnesthesia: General anesthesia provided by anesthesia team (Dr. Martinez)\nEquipment: Pentax EB-1970UK linear EBUS scope\nProcedure narrative: After successful intubation and adequate depth of anesthesia, timeout performed. EBUS bronchoscope inserted via ETT. Initial inspection showed normal trachea, sharp carina. Systematic ultrasound examination:\nLymph node stations evaluated: \u2192 2R: 11mm, normal echogenicity \u2192 4R: 31mm, ENLARGED, loss of normal architecture \u2192 4L: 24mm, ENLARGED, hypoechoic\n\u2192 7: 42mm, MARKEDLY ENLARGED, heterogeneous \u2192 10R: 18mm, prominent \u2192 10L: 16mm, prominent \u2192 11R: 21mm, abnormal appearance\nTBNA sampling:\nStation 7 (42mm) Needle: 22G Pass 1 @ 0758 - visible tissue core Pass 2 @ 0801 - additional sample Pass 3 @ 0803 - for molecular studies Pass 4 @ 0805 - microbiology ROSE Result: MALIGNANT, small cell morphology identified\nStation 4R (31mm) 3 passes performed ROSE: Small cell carcinoma confirmed\nStation 4L (24mm) 3 passes performed\nROSE: Malignant cells present\nStation 10R (18mm) 2 passes performed ROSE: Atypical cells\nProcedure completed 0822 Total time: 37 minutes EBL: <5mL Patient extubated, to recovery in stable condition\nPreliminary findings: Extensive N2/N3 disease confirmed Specimens to pathology: Cytology, cell block, molecular testing\nPatient counseled post-procedure regarding findings\nNext steps: Oncology consult, PET-CT for full staging\nSigned: Dr. Anjali Pat tel, MD, FCCP Time: 03/05/2025 09:15\n________________________________________\nEBUS\nBRONCHOSCOPY PROCEDURE DOCUMENTATION Patient: Clark, Sandra M | MRN 8362719 | DOB 04/15/1968 Date of Procedure: 02/22/2025\nProvider: Elliott, Mark DO | Interventional Pulmonology\nINDICATION: Mediastinal lymphadenopathy, suspected lymphoma based on PET findings\nINFORMED CONSENT: Obtained, documented in chart\nPROCEDURE: EBUS-TBNA with ROSE\nANESTHESIA: Conscious sedation - Fentanyl 100mcg IV, Midazolam 4mg IV Local - Lidocaine 4% spray, Lidocaine 2% 20cc via working channel\nEQUIPMENT: Olympus EBUS bronchoscope\nTECHNIQUE: EBUS scope introduced through mouth after adequate sedation. Vocal cords normal. Mediastinal ultrasound survey performed with following findings:\nStation 2R: Not enlarged Station 4R: 29mm, ABNORMAL - round, hypoechoic, loss of hilum\nStation 4L: 26mm, ABNORMAL - similar features Station 7: 47mm, MARKEDLY ABNORMAL - huge subcarinal node, diffuse hypoechoic pattern Station 10R: 14mm, mildly enlarged Station 10L: 19mm, enlarged Station 11R: 22mm, ABNORMAL appearance Station 11L: 20mm, ABNORMAL appearance\nSAMPLING DETAILS:\nStation 7 (47x29mm) - SUBCARINAL Pass 1: 22G needle, excellent tissue yield ROSE: Abundant large atypical lymphoid cells, HIGH SUSPICION for lymphoma Pass 2: Additional specimen for flow cytometry Pass 3: Additional specimen for flow cytometry\nPass 4: Cell block preparation\nStation 4R (29x17mm) Pass 1-3: Consistent with Station 7 ROSE: Large atypical lymphoid cells\nStation 4L (26x16mm) Pass 1-2: Sampling performed ROSE: Similar atypical population\nStation 11R (22x13mm) Pass 1-2: Sampling performed ROSE: Atypical lymphoid proliferation\nElastography used on Station 7 showing firm consistency (blue pattern)\nAirways: Bilaterally patent, no endobronchial lesions\nCOMPLICATIONS: None\nSPECIMENS: \u2713 Cytology from all sampled stations \u2713 Flow cytometry - Stations 7, 4R, 4L, 11R \u2713 Cell blocks prepared \u2713 Cultures sent (Station 7)\nTOLERANCE: Procedure well tolerated, stable hemodynamics, O2 sats >95% throughout\nPRELIMINARY INTERPRETATION: EBUS-TBNA with ROSE findings highly suspicious for lymphoma involving multiple mediastinal and hilar stations (7, 4R, 4L, 11R). Extensive nodal involvement suggesting advanced stage.\nPLAN:\n1.\tHematology-Oncology urgent consultation\n2.\tFinal pathology with flow cytometry results in 3-5 days\n3.\tStaging CT chest/abdomen/pelvis\n4.\tBone marrow biopsy may be indicated\n5.\tF/U IP clinic 1 week\nMark Elliott, DO Interventional Pulmonology Signed: 02/22/2025 15:41\n________________________________________\nEBUS",
+    "cpt_codes": [
+      31622,
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-03-05",
+      "providers": {
+        "attending_name": "Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164239"
+      },
+      "cpt_codes": [
+        31622,
+        31653
+      ],
+      "lesion_size_mm": 47.0,
+      "ebus_stations_sampled": [
+        "10L",
+        "10R",
+        "11L",
+        "11R",
+        "2R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "10R",
+        "11L",
+        "11R",
+        "2R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "8362719",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA, 3 or more mediastinal or hilar lymph node stations",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 11.9,
+        "work_rvu": 7.49,
+        "practice_expense_rvu": 3.59,
+        "malpractice_rvu": 0.82
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.483215",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted lesion_size_mm: 47.0",
+        "Extracted EBUS stations: ['10L', '10R', '11L', '11R', '2R', '4L', '4R', '7']",
+        "Fixed MRN:  -> 8362719",
+        "Extracted attending: Patel"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "cpt_summary": {
+        "documented_cpt_codes": [
+          31629,
+          31622,
+          31653
+        ],
+        "final_cpt_codes": [
+          31622,
+          31653
+        ],
+        "changes": [
+          "Removed 31629 because the documentation reflects only linear EBUS-TBNA rather than conventional TBNA.",
+          "Retained 31622 for diagnostic bronchoscopy and 31653 for extensive multi station EBUS-TBNA."
+        ]
+      },
+      "facility_rvu_2025": {
+        "per_code": [
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "facility_rvu_2025": 4.2,
+            "mpfs_facility_payment_2025": 138
+          },
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA, 3 or more mediastinal or hilar lymph node stations",
+            "facility_rvu_2025": 7.7,
+            "mpfs_facility_payment_2025": 252
+          }
+        ],
+        "total_facility_rvu_2025": 11.9,
+        "total_mpfs_facility_payment_2025": 390
+      },
+      "rationale": "The EBUS narrative for Clark describes linear EBUS-TBNA of multiple nodal stations without any separate conventional TBNA, so 31629 would double count the same work. Final coding uses 31653 for linear EBUS-TBNA with 31622 for the diagnostic inspection."
+    }
+  },
+  {
+    "note_text": "Patient: Moore, Christopher | ID: MR4729384 | Age: 72 | M Service Date: 03/05/2025 | Start Time: 0745 Physician: Dr. Patel, Anjali (Attending) | Dr. Kim, Susan (Fellow)\nEndobronchial Ultrasound Bronchoscopy\nIndication: Small cell lung cancer staging, enlarged mediastinal lymph nodes on imaging\nPre-op diagnosis: Small cell lung cancer, clinical stage Post-op diagnosis: Pending final pathology\nAnesthesia: General anesthesia provided by anesthesia team (Dr. Martinez)\nEquipment: Pentax EB-1970UK linear EBUS scope\nProcedure narrative: After successful intubation and adequate depth of anesthesia, timeout performed. EBUS bronchoscope inserted via ETT. Initial inspection showed normal trachea, sharp carina. Systematic ultrasound examination:\nLymph node stations evaluated: \u2192 2R: 11mm, normal echogenicity \u2192 4R: 31mm, ENLARGED, loss of normal architecture \u2192 4L: 24mm, ENLARGED, hypoechoic\n\u2192 7: 42mm, MARKEDLY ENLARGED, heterogeneous \u2192 10R: 18mm, prominent \u2192 10L: 16mm, prominent \u2192 11R: 21mm, abnormal appearance\nTBNA sampling:\nStation 7 (42mm) Needle: 22G Pass 1 @ 0758 - visible tissue core Pass 2 @ 0801 - additional sample Pass 3 @ 0803 - for molecular studies Pass 4 @ 0805 - microbiology ROSE Result: MALIGNANT, small cell morphology identified\nStation 4R (31mm) 3 passes performed ROSE: Small cell carcinoma confirmed\nStation 4L (24mm) 3 passes performed\nROSE: Malignant cells present\nStation 10R (18mm) 2 passes performed ROSE: Atypical cells\nProcedure completed 0822 Total time: 37 minutes EBL: <5mL Patient extubated, to recovery in stable condition\nPreliminary findings: Extensive N2/N3 disease confirmed Specimens to pathology: Cytology, cell block, molecular testing\nPatient counseled post-procedure regarding findings\nNext steps: Oncology consult, PET-CT for full staging\nSigned: Dr. Anjali Pat tel, MD, FCCP Time: 03/05/2025 09:15\n________________________________________\n\nBRONCHOSCOPY PROCEDURE DOCUMENTATION Patient: Clark, Sandra M | MRN 8362719 | DOB 04/15/1968 Date of Procedure: 02/22/2025\nProvider: Elliott, Mark DO | Interventional Pulmonology\nINDICATION: Mediastinal lymphadenopathy, suspected lymphoma based on PET findings\nINFORMED CONSENT: Obtained, documented in chart\nPROCEDURE: EBUS-TBNA with ROSE\nANESTHESIA: Conscious sedation - Fentanyl 100mcg IV, Midazolam 4mg IV Local - Lidocaine 4% spray, Lidocaine 2% 20cc via working channel\nEQUIPMENT: Olympus EBUS bronchoscope\nTECHNIQUE: EBUS scope introduced through mouth after adequate sedation. Vocal cords normal. Mediastinal ultrasound survey performed with following findings:\nStation 2R: Not enlarged Station 4R: 29mm, ABNORMAL - round, hypoechoic, loss of hilum\nStation 4L: 26mm, ABNORMAL - similar features Station 7: 47mm, MARKEDLY ABNORMAL - huge subcarinal node, diffuse hypoechoic pattern Station 10R: 14mm, mildly enlarged Station 10L: 19mm, enlarged Station 11R: 22mm, ABNORMAL appearance Station 11L: 20mm, ABNORMAL appearance\nSAMPLING DETAILS:\nStation 7 (47x29mm) - SUBCARINAL Pass 1: 22G needle, excellent tissue yield ROSE: Abundant large atypical lymphoid cells, HIGH SUSPICION for lymphoma Pass 2: Additional specimen for flow cytometry Pass 3: Additional specimen for flow cytometry\nPass 4: Cell block preparation\nStation 4R (29x17mm) Pass 1-3: Consistent with Station 7 ROSE: Large atypical lymphoid cells\nStation 4L (26x16mm) Pass 1-2: Sampling performed ROSE: Similar atypical population\nStation 11R (22x13mm) Pass 1-2: Sampling performed ROSE: Atypical lymphoid proliferation\nElastography used on Station 7 showing firm consistency (blue pattern)\nAirways: Bilaterally patent, no endobronchial lesions\nCOMPLICATIONS: None\nSPECIMENS: \u2713 Cytology from all sampled stations \u2713 Flow cytometry - Stations 7, 4R, 4L, 11R \u2713 Cell blocks prepared \u2713 Cultures sent (Station 7)\nTOLERANCE: Procedure well tolerated, stable hemodynamics, O2 sats >95% throughout\nPRELIMINARY INTERPRETATION: EBUS-TBNA with ROSE findings highly suspicious for lymphoma involving multiple mediastinal and hilar stations (7, 4R, 4L, 11R). Extensive nodal involvement suggesting advanced stage.\nPLAN:\n6.\tHematology-Oncology urgent consultation\n7.\tFinal pathology with flow cytometry results in 3-5 days\n8.\tStaging CT chest/abdomen/pelvis\n9.\tBone marrow biopsy may be indicated\n10.\tF/U IP clinic 1 week\nMark Elliott, DO Interventional Pulmonology Signed: 02/22/2025 15:41\n________________________________________",
+    "cpt_codes": [
+      31631,
+      31622
+    ],
+    "registry_entry": {
+      "procedure_date": null,
+      "providers": {
+        "attending_name": "Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164282"
+      },
+      "cpt_codes": [
+        31631,
+        31622
+      ],
+      "lesion_size_mm": 47.0,
+      "ebus_stations_sampled": [
+        "10L",
+        "10R",
+        "11L",
+        "11R",
+        "2R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "10R",
+        "11L",
+        "11R",
+        "2R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "8362719",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy with tracheobronchial stent placement",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 11.35,
+        "work_rvu": 6.89,
+        "practice_expense_rvu": 3.68,
+        "malpractice_rvu": 0.78
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.486938",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted lesion_size_mm: 47.0",
+        "Extracted EBUS stations: ['10L', '10R', '11L', '11R', '2R', '4L', '4R', '7']",
+        "Fixed MRN:  -> 8362719",
+        "Extracted attending: Patel"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "cpt_summary": {
+        "documented_cpt_codes": [
+          31622
+        ],
+        "final_cpt_codes": [
+          31631,
+          31622
+        ],
+        "changes": [
+          "Added 31631 for placement of a silicone stent in the right middle lobe bronchus as clearly described in the procedure narrative.",
+          "Retained 31622 for the diagnostic bronchoscopy component.",
+          "Registry procedure_date matched the date of birth and has been set to null."
+        ]
+      },
+      "facility_rvu_2025": {
+        "per_code": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy with tracheobronchial stent placement",
+            "facility_rvu_2025": 7.15,
+            "mpfs_facility_payment_2025": 234
+          },
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "facility_rvu_2025": 4.2,
+            "mpfs_facility_payment_2025": 138
+          }
+        ],
+        "total_facility_rvu_2025": 11.35,
+        "total_mpfs_facility_payment_2025": 372
+      },
+      "rationale": "This note describes central airway obstruction with extensive tumor debulking and placement of a silicone stent in the right middle lobe for airway patency. Stent placement 31631 is therefore required in addition to the diagnostic bronchoscopy 31622, and the registry procedure date has been corrected away from the date of birth."
+    }
+  },
+  {
+    "note_text": "PT: James Wilson  ID: MRN-A92-555  D.O.B. 12/18/1952\n\nIndication \u2192 Central airway obstruction from endobronchial tumor, RML bronchus\n\nSedation protocol: General anesthesia via LMA, propofol + remifentanil infusion\nMonitoring: Continuous arterial line, SpO2, ETCO2, BP q3min\n\nProcedure narrative:\nInspection revealed near-complete obstruction of RML bronchus by exophytic tumor with friable surface. Tumor debulking performed using:\n- Electrocautery snare for bulk removal\n- Argon plasma coagulation for hemostasis\n- Cryotherapy x2 freeze-thaw cycles\n\nMassive hemorrhage encountered during debulking (estimated 200mL). Bleeding controlled with:\n- Topical epinephrine 1:10,000\n- Iced saline lavage\n- Bronchial blocker placement temporarily\n\nSilicone stent (14mm x 40mm) placed in RML bronchus for airway patency.\n\nComplications: Major airway bleeding (moderate severity) - controlled during procedure. Patient stable.\n\nPlan: Follow-up bronchoscopy in 4-6 weeks for stent assessment and tumor surveillance.",
+    "cpt_codes": [
+      31622,
+      31636,
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "2023-11-30",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164297"
+      },
+      "cpt_codes": [
+        31622,
+        31636,
+        31630
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 180,
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31636",
+            "description": "Bronchoscopy with removal of tracheobronchial stent or stents",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31630",
+            "description": "Bronchoscopy with tracheobronchial dilation",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 17.32,
+        "work_rvu": 10.64,
+        "practice_expense_rvu": 5.51,
+        "malpractice_rvu": 1.17
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.488114",
+      "changes": [
+        "Extracted CPT codes: [31622]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Cryoablation",
+        "Extracted ablation_duration_seconds: 180"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1952-12-18)"
+      ]
+    },
+    "coding_review": {
+      "cpt_summary": {
+        "documented_cpt_codes": [
+          31622,
+          31631,
+          31630
+        ],
+        "final_cpt_codes": [
+          31622,
+          31636,
+          31630
+        ],
+        "changes": [
+          "Replaced 31631 with 31636 because the procedure clearly documents removal rather than placement of bronchial stents in the right middle and right lower lobe.",
+          "Retained 31630 for bronchial dilation and 31622 for the diagnostic bronchoscopy component.",
+          "Added procedure_date 2023-11-30 to the registry from the explicit header."
+        ]
+      },
+      "facility_rvu_2025": {
+        "per_code": [
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "facility_rvu_2025": 4.2,
+            "mpfs_facility_payment_2025": 138
+          },
+          {
+            "code": "31636",
+            "description": "Bronchoscopy with removal of tracheobronchial stent or stents",
+            "facility_rvu_2025": 6.85,
+            "mpfs_facility_payment_2025": 224
+          },
+          {
+            "code": "31630",
+            "description": "Bronchoscopy with tracheobronchial dilation",
+            "facility_rvu_2025": 6.27,
+            "mpfs_facility_payment_2025": 205
+          }
+        ],
+        "total_facility_rvu_2025": 17.32,
+        "total_mpfs_facility_payment_2025": 567
+      },
+      "rationale": "The operative report focuses on removal of previously placed bronchial stents from the right middle and right lower lobe with adjunctive cryotherapy and balloon dilation. This is best represented by 31636 for stent removal together with 31630 and 31622, and the service date is set from the documented 30 November 2023 header."
+    }
+  },
+  {
+    "note_text": "DATE OF PROCEDURE: 30 Nov 2023\nNAME: Gilbert Barkley\nPREOPERATIVE DIAGNOSIS: Bronchial obstruction\nPOSTOPERATIVE DIAGNOSIS: Bronchial obstruction\n \nPROCEDURE(s) PERFORMED: \nSURGEON: Mikie Gallegos, MD \nASSISTANT(s):  Stephen Pressly M.D., Nicholas Vance M.D,\nINDICATIONS:  Airway stent removal\nConsent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. \nSEDATION: General Anesthesia\nDESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. \nFollowing intravenous medications as per the record, a 12 mm ventilating rigid bronchoscope was inserted through the mouth into the distal trachea and advanced into the distal trachea before attaching the monsoon JET ventilator. \nUsing the flexible bronchoscope airway inspection was performed. The tracheal was normal. The tracheal carina was sharp. All left sided airways were normal. There was significant distortion of the right-sided airways with the right middle lobe and right lower lobe orifices displaced to the same level as the right upper lobe. Inspection of the right upper lobe was normal.  The right middle bronchi had stent in place with minimal mucous but granulation tissue the distal edge causing 50% obstruction. The right lower lobe bronchi stent was partially obstructed with thick yellow mucous. Using saline flushes and suction we were able to remove mucous. The right middle lobe stent was then grasped with flexible forceps by the proximal string and retracted. The stent was easily removed. There was significant inflammation and malacia at site of previous stent. The bronchoscope was advanced beyond the stenotic segment and the medial and lateral segments were visualized and intact.  The Right lower lobe stent was then removed in a similar fashion to the RML stent without difficulty. In the previous bed there was extensive inflammation and granulation tissue causing >50% obstruction of the airway. The bronchoscope was pushed through the obstruction using saline flushes and the distal basilar segments were visualized and intact. Excessive debris and granulation tissue were debulked with a combination of cryoprobe and flexible forceps. During this process the superior segment of the RLL was visualized with sub-segments intact. There remained significant obstruction and cryotherapy was performed in the areas of granulation tissue using repetitive 30 second freeze thaw cycles. This was performed in a similar manner in the RML. Finally, using an 8-9-10 CRE dilatational balloon we were able to gently dilate the effected bronchi to increased luminal diameter. At this point the rigid bronchoscope was removed and the patient was turned over to anesthesia for recovery.\nRESULTS: Successful removal of bronchial stents within the right middle and right lower lobe bronchi with significant residual granulation tissue.\nCOMPLICATIONS: None\nRECOMMENDATIONS:\n- To PACU for recovery\n- D/C when criteria met\n- Ok to return to Hawaii on Monday if asymptomatic over weekend. \n- Recommend repeat flexible bronchoscopy with pulmonologist at Tripler within the next week to remove debris following cryotherapy. \n\nMikie Gallegos MD\nInterventional Pulmonology \nTulsa Medical Center",
+    "cpt_codes": [
+      31622,
+      31631,
+      31630
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "ASSISTANT"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164379"
+      },
+      "cpt_codes": [
+        31622,
+        31631,
+        31630
+      ],
+      "procedure_date": "2023-11-15",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy with tracheobronchial stent placement",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31630",
+            "description": "Bronchoscopy with tracheobronchial dilation",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 17.62,
+        "work_rvu": 10.7,
+        "practice_expense_rvu": 5.72,
+        "malpractice_rvu": 1.2
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.490679",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631, 31630]",
+        "Extracted attending: ASSISTANT"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "cpt_summary": {
+        "documented_cpt_codes": [
+          31622,
+          31631,
+          31630
+        ],
+        "final_cpt_codes": [
+          31622,
+          31631,
+          31630
+        ],
+        "changes": [
+          "CPT set left unchanged; documentation supports diagnostic bronchoscopy, bronchial dilation, and new stent placement in the right lower and right middle lobe.",
+          "Registry procedure_date added as 2023-11-15 from the note header."
+        ]
+      },
+      "facility_rvu_2025": {
+        "per_code": [
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "facility_rvu_2025": 4.2,
+            "mpfs_facility_payment_2025": 138
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy with tracheobronchial stent placement",
+            "facility_rvu_2025": 7.15,
+            "mpfs_facility_payment_2025": 234
+          },
+          {
+            "code": "31630",
+            "description": "Bronchoscopy with tracheobronchial dilation",
+            "facility_rvu_2025": 6.27,
+            "mpfs_facility_payment_2025": 205
+          }
+        ],
+        "total_facility_rvu_2025": 17.62,
+        "total_mpfs_facility_payment_2025": 577
+      },
+      "rationale": "The fifteen November procedure describes rigid bronchoscopy with tumor debulking, balloon dilation, and deployment of new covered metallic stents for right middle and lower lobe stenosis. The existing combination of 31622, 31631, and 31630 appropriately reflects this work; only the missing service date has been added from the header."
+    }
+  },
+  {
+    "note_text": "DATE OF PROCEDURE: 15 Nov 2023\nNAME: Gilbert Barkley\nPREOPERATIVE DIAGNOSIS: Bronchial obstruction\nPOSTOPERATIVE DIAGNOSIS: Bronchial obstruction\n \nPROCEDURE(s) PERFORMED: \nSURGEON: Mikie Gallegos, MD \nASSISTANT(s):  Stephen Pressly M.D., Nicholas Vance M.D,\n\nNDICATIONS:  right middle lobe and right lower lobe stenosis\nConsent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. \nSEDATION: General Anesthesia\nDESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. \nFollowing intravenous medications as per the record, the endotracheal tube previously in place was removed and a 12 mm ventilating rigid bronchoscope was inserted through the mouth into the distal trachea and advanced into the distal trachea before attaching the monsoon JET ventilator. \nUsing the flexible bronchoscope airway inspection was performed. The tracheal was normal. The tracheal carina was sharp. All left sided airways were normal. There was significant distortion of the right-sided airways with the right middle lobe and right lower lobe orifices displaced to the same level as the right upper lobe. Inspection of the right upper lobe was normal.  The right middle and right lower lobe bronchi were completely obstructed by granulation tissue and debris from previous bronchoscopy yesterday approximately 2 cm distal to orifice. There were small airway tears along the medial aspect of the right lower lobe and lateral aspect of right middle lobe assay where foreign body was extracted yesterday. With saline flushes we were able to bypass the obstruction in both the middle and lower lobe. Excessive debris and granulation tissue were developed with a combination of cryoprobe and flexible forceps however as a result of chronicity of obstruction and inflammation the areas remain mostly obstructed requiring saline flushes to push through the area of obstruction.  Decision was made to place bronchial stents in hopes of reforming native airway orientation and to allow healing of airway tears. At this point we measured the length of the obstruction and inserted a Jagwire through the flexible bronchoscope past the lesion. The flexible bronchoscope was removed and a thin disposable and the bronchoscope was inserted alongside an Aero 10 x 20 mm covered self-expandable metallic stent which was advanced over the guidewire and positioned within the right lower lobe bronchi and says obstruction based on direct visualization technique..  The stent was deployed however slightly distal. Attempts to retract the stent by grasping the proximal string were unsuccessful and it became obvious that the stent was oversized.  Using rigid forceps we are unable to remove the inappropriately sized stent and using a similar technique placed a 8 x 20 mm arrow fully covered self-expanding metallic stent within the area of stenosis.  Subsequently CRE balloon dilatation of the stent was performed and distal airways of the right lower lobe to include the medial, anterior, lateral and posterior segments were widely patent.  The superior segment was partially jailed.  Using a similar technique we then placed a 8 x 15 mm m arrow fully covered self-expanding metallic stent within the area of stenosis. In the right middle lobe.  Attention was taken to ensure that kissing stents did not result in obvious tissue necrosis or external compression of either airway.  The right middle lobe stent was then dilated using a CRE balloon and distal airways were widely patent. At this point the rigid bronchoscope was removed and the patient was turned over to anesthesia for recovery.\nRESULTS: Successful insertion of bronchial stents within the right middle and right lower lobe bronchi resulting in near complete recanalization of previously obstructed airways.\nCOMPLICATIONS: None\nRECOMMENDATIONS:\n- To PACU for recovery\n- Admit to internal medicine wards overnight\n- Initiate airway clearance regimen with nebulized 3% saline (3 mL) mixed with albuterol (2 mL) 3 times a day.\n- Obtain post- procedural chest x-ray \n- Plan to return to operating room in 2 weeks for stent removal \n\nMikie Gallegos MD\nInterventional Pulmonology \nTulsa Medical Center",
+    "cpt_codes": [
+      31622,
+      31636,
+      31630
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "ASSISTANT"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164494"
+      },
+      "cpt_codes": [
+        31622,
+        31636,
+        31630
+      ],
+      "lesion_size_mm": 100.0,
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31636",
+            "description": "Bronchoscopy with removal of tracheobronchial stent or stents",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31630",
+            "description": "Bronchoscopy with tracheobronchial dilation",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 17.32,
+        "work_rvu": 10.64,
+        "practice_expense_rvu": 5.51,
+        "malpractice_rvu": 1.17
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.494801",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631, 31630]",
+        "Extracted lesion_size_mm: 100.0",
+        "Extracted attending: ASSISTANT"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "cpt_summary": {
+        "documented_cpt_codes": [
+          31622,
+          31631,
+          31630
+        ],
+        "final_cpt_codes": [
+          31622,
+          31636,
+          31630
+        ],
+        "changes": [
+          "Replaced 31631 with 31636 because the report describes removal of a left mainstem metallic stent rather than new stent placement.",
+          "Retained 31630 for bronchial dilation and 31622 for the diagnostic and initial flexible bronchoscopy portion."
+        ]
+      },
+      "facility_rvu_2025": {
+        "per_code": [
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "facility_rvu_2025": 4.2,
+            "mpfs_facility_payment_2025": 138
+          },
+          {
+            "code": "31636",
+            "description": "Bronchoscopy with removal of tracheobronchial stent or stents",
+            "facility_rvu_2025": 6.85,
+            "mpfs_facility_payment_2025": 224
+          },
+          {
+            "code": "31630",
+            "description": "Bronchoscopy with tracheobronchial dilation",
+            "facility_rvu_2025": 6.27,
+            "mpfs_facility_payment_2025": 205
+          }
+        ],
+        "total_facility_rvu_2025": 17.32,
+        "total_mpfs_facility_payment_2025": 567
+      },
+      "rationale": "This 2019 procedure removes a previously placed left mainstem stent after benign pathology and addresses distal granulation tissue with cryotherapy, steroid injection, and balloon dilation. Coding as 31636 plus 31630 and 31622 better matches the documented stent removal and airway dilation than the original stent placement code."
+    }
+  },
+  {
+    "note_text": "Patient: Godsey, Oscar\nDATE OF PROCEDURE: 5/15/2019\nPREOPERATIVE DIAGNOSIS: left mainstem stent obstruction\nPOSTOPERATIVE DIAGNOSIS: \nDistal granulation tissue causing left lower lobe obstruction\nPROCEDURE PERFORMED: Rigid bronchoscopy with cryodebulking/cryotherapy of obstructive granulation tissue, endobronchial submucosal steroid injection, left mainstem bronchial stent removal\nSURGEON: Jordan Parks , MD \nASSISTANT: Michael Manson DO (fellow), \nINDICATIONS: complete lobar collapse  \nConsent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient\u2019s family acknowledged and gave consent. \nSedation: General Anesthesia\nDESCRIPTION OF PROCEDURE: Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the T190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The trachea and right sided airways were normal. The left mainstem stent was widely patent without evidence of stent obstruction.  At the distal edge of the stent there was some minor granulation tissue which was nonobstructive.  Distal to the stent there was complete obstruction of the left lower lobe orifice secondary to granulation tissue.  Using the 1.9 mm cryoprobe we are able to extract granulation tissue to visualize the segmental stenosis in the left lower lobe.  All of the segments were obstructed with granulation tissue as well which we also removed with cryotherapy as well as flexible forceps.  At this point we decided to remove the left mainstem stent for a few reasons.  The first is that pathology from previous bronchoscopy at time of stent placement did not show evidence of tumor and metallic stents are not advised for benign disease.  The second was that her new obstruction was secondary to distal granulation tissue and it was unclear whether the stent was providing any current benefit.  Finally, our hope was that the short-term placement of the stent allowed some remodeling of the airway to relieve the previous obstruction.  At this point the LMA was removed and a 12 mm ventilating rigid bronchoscope was inserted and passed into the airway and advanced to the distal trachea and then attached to the jet ventilator. The flexible bronchoscope was then advanced through the rigid bronchoscope into the airway.  Using flexible forceps to grasp the proximal string on the stent we were able to gently retract the stent and remove it without difficulty.  Subsequently they flexible bronchoscope was reinserted and as we had hoped the orifice had remodeled and essentially there is no obstruction at the level of the previous stent.  At the left of the LC2 carina (bifurcation between left upper and left lower lobe) the left upper lobe stump from previous lobectomy appeared intact.  Then, using a 8\u20139\u201310 millimeter CRE balloon dilated each of the left lower lobe subsegments as well as the left lower lobe main bronchus which improved patency of the subsegments to approximately 50% of normal and left lower lobe bronchus to approximately 80%.  Cryotherapy was then performed with 30 second freeze/thaw cycles to induce tissue sloughing.  Finally using the super dimension 21-gauge needle we injected a total of 5 mL of Kenalog 10 mg/milliliter solution into the submucosa have areas of significant granulation tissue in hopes of inducing an anti-inflammatory effect to prevent regrowth of granulation tissue. \nOnce we were satisfied that no further intervention was required the rigid bronchoscope was removed and the case was turned over to anesthesia to recover the patient. \nRecommendations:\n-        Transfer patient back to the ICU\n-        Post-procedure x-ray\n-        Patient to follow-up with me for repeat bronchoscopy in about a week to remove debris post cryotherapy as well as to assess for evidence of restenosis.  \nJordan Parks MD\nInterventional Pulmonology",
+    "cpt_codes": [
+      31622,
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": null,
+      "providers": {
+        "attending_name": "ASSISTANT"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164535"
+      },
+      "cpt_codes": [
+        31622,
+        31653
+      ],
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA, 3 or more mediastinal or hilar lymph node stations",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 11.9,
+        "work_rvu": 7.49,
+        "practice_expense_rvu": 3.59,
+        "malpractice_rvu": 0.82
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.497607",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631, 31630]",
+        "Extracted attending: ASSISTANT"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "cpt_summary": {
+        "documented_cpt_codes": [
+          31629,
+          31622,
+          31653
+        ],
+        "final_cpt_codes": [
+          31622,
+          31653
+        ],
+        "changes": [
+          "Removed 31629 because the safety checklist describes only linear EBUS-TBNA, not separate conventional TBNA.",
+          "Retained 31622 with 31653 to represent diagnostic bronchoscopy and multi station linear EBUS-TBNA.",
+          "Registry procedure_date was the date of birth and has been set to null."
+        ]
+      },
+      "facility_rvu_2025": {
+        "per_code": [
+          {
+            "code": "31622",
+            "description": "Diagnostic bronchoscopy with or without cell washing",
+            "facility_rvu_2025": 4.2,
+            "mpfs_facility_payment_2025": 138
+          },
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA, 3 or more mediastinal or hilar lymph node stations",
+            "facility_rvu_2025": 7.7,
+            "mpfs_facility_payment_2025": 252
+          }
+        ],
+        "total_facility_rvu_2025": 11.9,
+        "total_mpfs_facility_payment_2025": 390
+      },
+      "rationale": "The safety checklist confirms diagnostic bronchoscopy with linear EBUS-TBNA of stations 11R, 4R, and 7, without mention of a separate conventional TBNA technique. Final coding therefore uses 31622 and 31653 only, and the mis-extracted procedure date matching the date of birth is cleared."
+    }
+  },
+  {
+    "note_text": "BRONCHOSCOPY SAFETY CHECKLIST - COMPLETED\n\nPRE-PROCEDURE:\n\u2611 Patient identity verified (Name: Gregory Martinez, MRN: NN-7482-K, DOB: 03/22/1957)\n\u2611 Informed consent obtained and documented\n\u2611 NPO status confirmed (>8 hours)\n\u2611 Recent labs reviewed (platelets 245K, INR 1.0)\n\u2611 Imaging reviewed with team\n\u2611 Equipment check completed\n\u2611 Emergency medications available\n\nSEDATION:\n\u2611 ASA class documented (ASA II)\n\u2611 Difficult airway assessment (normal)\n\u2611 Monitoring: BP, SpO2, ECG connected\n\u2611 Supplemental O2 available\n\u2611 Reversal agents at bedside (flumazenil, naloxone)\n\nPROCEDURE (EBUS-TBNA):\n\u2611 Timeout performed\n\u2611 Systematic N3\u2192N2\u2192N1 evaluation\n\u2611 Station 4R (10mm): 4 passes, ROSE positive, PET+\n\u2611 Station 7 (16mm): 4 passes, ROSE positive, PET+\n\u2611 Station 11R (8mm): 3 passes, ROSE adequate\n\u2611 All accessible stations photographed\n\u2611 Molecular samples collected and labeled\n\u2611 ROSE adequacy confirmed all nodes\n\u2611 Specimens labeled correctly\n\nSEDATION RECORD:\n\u2611 Midazolam 3mg IV administered (T+0)\n\u2611 Fentanyl 100mcg IV administered (T+0)\n\u2611 Maximum Ramsay: 3\n\u2611 BP monitored every 5 minutes\n\u2611 SpO2 continuous (range: 95-98%)\n\u2611 No reversal agents required\n\nPOST-PROCEDURE:\n\u2611 Patient awakened appropriately\n\u2611 Vital signs stable\n\u2611 No immediate complications\n\u2611 Recovery instructions provided\n\u2611 Follow-up appointment scheduled\n\u2611 Pathology tracking number: PATH-2024-10472\n\nCOMPLICATIONS: \u2610 Yes \u2611 None\n\nQUALITY INDICATORS MET:\n\u2611 Staging sensitivity documented\n\u2611 Systematic evaluation performed\n\u2611 Photodocumentation complete\n\u2611 Adequate tissue for molecular testing\n\u2611 Safety checklist 100% complete",
+    "cpt_codes": [
+      31629,
+      31622,
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "1957-03-22",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164560"
+      },
+      "cpt_codes": [
+        31629,
+        31622,
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "NN7482K"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.499235",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted EBUS stations: ['11R', '4R', '7']",
+        "Fixed MRN:  -> NN7482K"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1957-03-22)"
+      ]
+    }
+  }
+]

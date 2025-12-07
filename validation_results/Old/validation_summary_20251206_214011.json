@@ -1,0 +1,450 @@
+{
+  "timestamp": "20251206_214011",
+  "total_notes": 5,
+  "successful_notes": 5,
+  "code_metrics": {
+    "precision": 0.2916666666666667,
+    "recall": 0.6363636363636364,
+    "f1": 0.4,
+    "exact_match_rate": 0.2
+  },
+  "registry_metrics": {
+    "field_accuracy": 0.6820987654320988
+  },
+  "rvu_metrics": {
+    "notes_evaluated": 0,
+    "exact_match_rate": 0.0,
+    "total_rvu_mae": 0.0,
+    "work_rvu_mae": 0.0,
+    "total_rvu_mape": 0.0,
+    "work_rvu_mape": 0.0
+  },
+  "per_code_metrics": {
+    "31631": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 1,
+      "fn": 0
+    },
+    "32550": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "tp": 1,
+      "fp": 1,
+      "fn": 0
+    },
+    "32554": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 1,
+      "fn": 0
+    },
+    "31641": {
+      "precision": 0.6666666666666666,
+      "recall": 1.0,
+      "f1": 0.8,
+      "tp": 2,
+      "fp": 1,
+      "fn": 0
+    },
+    "31636": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    },
+    "32555": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 1,
+      "fn": 0
+    },
+    "31630": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 2,
+      "fn": 0
+    },
+    "31645": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "tp": 1,
+      "fp": 1,
+      "fn": 0
+    },
+    "31646": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 2,
+      "fn": 0
+    },
+    "31640": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 2,
+      "fn": 0
+    },
+    "31634": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 1,
+      "fn": 0
+    },
+    "31624": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "31615": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 1,
+      "fn": 0
+    },
+    "31638": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 1,
+      "fn": 0
+    },
+    "31653": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 2,
+      "fp": 0,
+      "fn": 0
+    },
+    "31652": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 2,
+      "fn": 0
+    },
+    "31654": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    },
+    "31628": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    },
+    "31627": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    }
+  },
+  "per_field_accuracy": {
+    "ablation_peripheral_performed": 0.0,
+    "providers": 0.0,
+    "pleural_guidance": 0.6666666666666666,
+    "pneumothorax": 0.0,
+    "bleeding_severity": 0.0,
+    "cpt_codes": 0.0,
+    "disposition": 0.0,
+    "sedation_type": 0.0,
+    "pleural_procedure_type": 0.6666666666666666,
+    "pneumothorax_intervention": 0.42857142857142855,
+    "asa_class": 0.0,
+    "gender": 0.0,
+    "primary_indication": 0.0,
+    "airway_type": 0.0,
+    "molecular_testing_requested": 0.0,
+    "final_diagnosis_prelim": 0.0,
+    "pleurodesis_performed": 0.0,
+    "patient_age": 0.0,
+    "pleural_intercostal_space": 1.0,
+    "linear_ebus_stations": 0.42857142857142855,
+    "ablation_device_name": 1.0,
+    "bronch_indication": 1.0,
+    "nav_registration_method": 0.6666666666666666,
+    "pleural_opening_pressure_measured": 1.0,
+    "pleural_fluid_appearance": 1.0,
+    "bronch_specimen_tests": 1.0,
+    "radiographic_findings": 1.0,
+    "pet_avid": 1.0,
+    "ablation_margin_assessed": 1.0,
+    "ebus_stations_detail": 1.0,
+    "pleural_side": 1.0,
+    "bronch_location_segment": 1.0,
+    "ebus_needle_gauge": 1.0,
+    "procedure_date": 0.42857142857142855,
+    "ebus_systematic_staging": 1.0,
+    "stent_deployment_method": 1.0,
+    "sedation_reversal_given": 1.0,
+    "bronch_tbbx_tool": 0.6666666666666666,
+    "airway_device_size": 1.0,
+    "ebl_ml": 1.0,
+    "stent_type": 1.0,
+    "stent_diameter_mm": 1.0,
+    "blvr_chartis_result": 1.0,
+    "blvr_number_of_valves": 1.0,
+    "pet_suv_max": 1.0,
+    "cao_location": 1.0,
+    "anticoag_status": 1.0,
+    "cao_obstruction_pre_pct": 1.0,
+    "bronch_immediate_complications": 1.0,
+    "ventilation_mode": 1.0,
+    "nav_rebus_used": 0.6666666666666666,
+    "nav_registration_error_mm": 1.0,
+    "procedure_setting": 1.0,
+    "blvr_cv_assessment_method": 1.0,
+    "bt_activation_count": 1.0,
+    "sedation_reversal_agent": 1.0,
+    "nav_platform": 0.6666666666666666,
+    "lesion_location": 1.0,
+    "nav_imaging_verification": 0.25,
+    "pleurodesis_agent": 1.0,
+    "lesion_size_mm": 1.0,
+    "bronch_location_lobe": 1.0,
+    "nav_tool_in_lesion": 1.0,
+    "pleural_volume_drained_ml": 1.0,
+    "stent_location": 1.0,
+    "fb_object_type": 1.0,
+    "ebus_stations_sampled": 0.42857142857142855,
+    "fb_removal_success": 1.0,
+    "bt_lobe_treated": 1.0,
+    "blvr_valve_type": 1.0,
+    "ebus_photodocumentation_complete": 1.0,
+    "patient_mrn": 0.6666666666666666,
+    "ablation_power_watts": 1.0,
+    "ablation_max_temp_c": 1.0,
+    "ebus_intranodal_forceps_used": 1.0,
+    "institution_name": 1.0,
+    "ebus_rose_available": 1.0,
+    "cao_primary_modality": 1.0,
+    "ebus_needle_type": 1.0,
+    "anticoag_held_preprocedure": 1.0,
+    "cao_obstruction_post_pct": 1.0,
+    "wll_volume_returned_l": 1.0,
+    "cao_tumor_location": 1.0,
+    "bronch_num_tbbx": 1.0,
+    "fluoro_time_min": 1.0,
+    "fb_tool_used": 1.0,
+    "nav_sampling_tools": 0.25,
+    "radiation_dap_gycm2": 1.0,
+    "prior_therapy": 1.0,
+    "wll_dlt_used": 1.0,
+    "ebus_scope_brand": 1.0,
+    "ablation_duration_seconds": 0.6666666666666666,
+    "blvr_target_lobe": 1.0,
+    "bronch_guidance": 1.0,
+    "nav_cryobiopsy_for_nodule": 1.0,
+    "ablation_modality": 0.6666666666666666,
+    "ebus_rose_result": 1.0,
+    "pleural_thoracoscopy_findings": 1.0,
+    "anesthesia_agents": 1.0,
+    "hypoxia_respiratory_failure": 1.0,
+    "bronchus_sign_present": 1.0,
+    "stent_length_mm": 1.0,
+    "nav_rebus_view": 0.6666666666666666,
+    "wll_volume_instilled_l": 1.0,
+    "pleural_opening_pressure_cmh2o": 1.0,
+    "follow_up_plan": 0.1111111111111111,
+    "ablation_complication_immediate": 1.0,
+    "ebus_elastography_used": 1.0,
+    "ebus_elastography_pattern": 1.0
+  },
+  "common_code_errors": [
+    [
+      "extra:31630",
+      2
+    ],
+    [
+      "extra:31646",
+      2
+    ],
+    [
+      "extra:31640",
+      2
+    ],
+    [
+      "extra:31652",
+      2
+    ],
+    [
+      "missing:31636",
+      1
+    ],
+    [
+      "extra:31631",
+      1
+    ],
+    [
+      "extra:32554",
+      1
+    ],
+    [
+      "extra:32555",
+      1
+    ],
+    [
+      "extra:31634",
+      1
+    ],
+    [
+      "extra:32550",
+      1
+    ],
+    [
+      "extra:31641",
+      1
+    ],
+    [
+      "extra:31615",
+      1
+    ],
+    [
+      "extra:31645",
+      1
+    ],
+    [
+      "extra:31638",
+      1
+    ],
+    [
+      "missing:31654",
+      1
+    ],
+    [
+      "missing:31627",
+      1
+    ],
+    [
+      "missing:31628",
+      1
+    ]
+  ],
+  "common_field_errors": [
+    [
+      "missing:ablation_peripheral_performed",
+      5
+    ],
+    [
+      "wrong_value:providers",
+      5
+    ],
+    [
+      "missing:pneumothorax",
+      5
+    ],
+    [
+      "missing:bleeding_severity",
+      5
+    ],
+    [
+      "missing:cpt_codes",
+      5
+    ],
+    [
+      "missing:disposition",
+      5
+    ],
+    [
+      "missing:sedation_type",
+      5
+    ],
+    [
+      "missing:asa_class",
+      5
+    ],
+    [
+      "missing:gender",
+      5
+    ],
+    [
+      "missing:primary_indication",
+      5
+    ],
+    [
+      "missing:airway_type",
+      5
+    ],
+    [
+      "missing:molecular_testing_requested",
+      5
+    ],
+    [
+      "missing:final_diagnosis_prelim",
+      5
+    ],
+    [
+      "missing:pleurodesis_performed",
+      5
+    ],
+    [
+      "missing:patient_age",
+      5
+    ],
+    [
+      "missing:follow_up_plan",
+      4
+    ],
+    [
+      "missing:nav_imaging_verification",
+      3
+    ],
+    [
+      "missing:nav_sampling_tools",
+      3
+    ],
+    [
+      "missing:pneumothorax_intervention",
+      2
+    ],
+    [
+      "missing:procedure_date",
+      2
+    ]
+  ],
+  "timing": {
+    "avg_coder_latency_ms": 17337.59989159953,
+    "avg_registry_latency_ms": 33531.173101199965
+  },
+  "recommendations": [
+    "\u26a0\ufe0f Code Recall is low (63.6%). Consider adding more keyword mappings or relaxing detection thresholds.",
+    "\u26a0\ufe0f Code Precision is low (29.2%). Consider tightening evidence requirements or adding negation patterns.",
+    "\ud83c\udfaf Codes with low precision (often extra): 31630(0%), 31646(0%), 31640(0%), 31652(0%). Add negative evidence patterns or stricter context requirements.",
+    "\ud83d\udccb Registry fields with low accuracy: ablation_peripheral_performed(0%), providers(0%), pneumothorax(0%), bleeding_severity(0%), cpt_codes(0%). Review extraction prompts or add field-specific postprocessors.",
+    "\ud83d\udd04 Most common code errors: extra:31630(2x); extra:31646(2x); extra:31640(2x)"
+  ]
+}

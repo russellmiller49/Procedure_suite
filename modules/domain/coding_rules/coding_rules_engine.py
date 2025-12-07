@@ -23,6 +23,10 @@ Rule ID Reference:
 - R012: Tumor debulking
 - R013: Therapeutic aspiration
 - R014: Thoracoscopy site priority
+- R015: Navigation priority (suppress redundant bronch codes when nav bundle present)
+- R016: CAO bundle rules (suppress stray debulking codes with stent combo)
+- R017: Thoracoscopy vs pleural tube (suppress chest tube codes when 32650 present)
+- R018: EBUS mutual exclusion (never keep both 31652 AND 31653)
 """
 
 from __future__ import annotations
@@ -372,6 +376,146 @@ class CodingRulesEngine:
             if thoracoscopy_ev.get("temporary_drain_bundled", False):
                 for drain_code in ["32556", "32557"]:
                     discard(drain_code, "R014d_TEMP_DRAIN_BUNDLE", "Bundled with thoracoscopy")
+
+        # ========== RULE 15: NAVIGATION PRIORITY ==========
+        # When nav bundle (31627/31654) is present for peripheral lesion work,
+        # suppress redundant generic bronch codes (31622/31623/31624) for same lesion
+        nav_bundle_present = (
+            "31627" in result.codes
+            and ("31654" in result.codes or "+31654" in result.codes)
+        )
+        nav_platform = nav_ev.get("platform") or registry.get("nav_platform")
+        nav_is_peripheral = (
+            "peripheral" in text_lower
+            or "nodule" in text_lower
+            or "lung lesion" in text_lower
+            or registry.get("nav_lesion_type") == "peripheral"
+        )
+
+        if nav_bundle_present and nav_platform and nav_is_peripheral:
+            # When doing nav-guided peripheral biopsy, generic bronch codes are bundled
+            for redundant_code in ["31622", "31623", "31624"]:
+                if redundant_code in result.codes:
+                    discard(
+                        redundant_code,
+                        "R015_NAV_PRIORITY",
+                        "Bundled with nav peripheral procedure (31627/31654)"
+                    )
+
+        # Additionally: When nav (31627) is present with radial EBUS for lesion
+        # confirmation only (not nodal staging), suppress 31652
+        has_nav_31627 = "31627" in result.codes
+        has_radial_31654 = "31654" in result.codes or "+31654" in result.codes
+        has_linear_31652 = "31652" in result.codes
+        has_linear_31653 = "31653" in result.codes
+
+        # Check if this is ONLY radial for lesion confirmation (not nodal staging)
+        linear_ebus_stations = registry.get("linear_ebus_stations") or []
+        ebus_stations_sampled = registry.get("ebus_stations_sampled") or []
+        has_nodal_staging = len(linear_ebus_stations) > 0 or len(ebus_stations_sampled) > 0
+
+        if has_nav_31627 and has_radial_31654 and has_linear_31652 and not has_nodal_staging:
+            # Radial EBUS for lesion confirmation with nav - 31652 not appropriate
+            discard(
+                "31652",
+                "R015b_NAV_RADIAL_LESION_ONLY",
+                "Radial EBUS for lesion confirmation (not staging) - use 31654"
+            )
+
+        # ========== RULE 16: CAO BUNDLE RULES ==========
+        # For combined CAO + stent procedures, suppress stray debulking codes
+        # that don't correspond to documented extra procedures
+        cao_core_present = (
+            "31641" in result.codes  # Ablation
+            or "31640" in result.codes  # Mechanical excision
+        )
+        has_stent_placement = (
+            "31631" in result.codes  # Tracheal stent
+            or "31636" in result.codes  # Bronchial stent
+        )
+
+        if cao_core_present and has_stent_placement:
+            # CAO with stent bundle - check for documented extras
+            # If we have 31641 (ablation) with stent, don't also code 31640
+            if "31641" in result.codes and "31640" in result.codes:
+                discard(
+                    "31640",
+                    "R016_CAO_BUNDLE",
+                    "Mechanical excision bundled with ablation in CAO+stent"
+                )
+
+            # Check for documented dilation beyond stent placement
+            dilation_documented = (
+                "balloon dilation" in text_lower
+                or "bronchial dilation" in text_lower
+                or "dilated the" in text_lower
+            )
+            if not dilation_documented and "31630" in result.codes:
+                discard(
+                    "31630",
+                    "R016b_CAO_DILATION_BUNDLE",
+                    "Dilation bundled with stent placement (not separately documented)"
+                )
+
+            # Check for documented therapeutic aspiration beyond CAO
+            aspiration_separately_documented = (
+                "therapeutic aspiration" in text_lower
+                and "following" not in text_lower  # "aspiration following debulking" = bundled
+            )
+            if not aspiration_separately_documented and "31646" in result.codes:
+                discard(
+                    "31646",
+                    "R016c_CAO_ASPIRATION_BUNDLE",
+                    "Aspiration bundled with CAO (not separately documented)"
+                )
+
+        # ========== RULE 17: THORACOSCOPY vs PLEURAL TUBE ==========
+        # When 32650 (thoracoscopic pleurodesis) is present with thoracoscopy
+        # narrative, suppress chest tube/pleurodesis combinations
+        thoracoscopy_pleurodesis = "32650" in result.codes
+        has_thoracoscopy_narrative = (
+            "thoracoscopy" in text_lower
+            or "thoracoscopic" in text_lower
+            or "medical pleuroscopy" in text_lower
+        )
+
+        if thoracoscopy_pleurodesis and has_thoracoscopy_narrative:
+            # Suppress chest tube and separate pleurodesis codes
+            for bundled_code in ["32554", "32555", "32556", "32557", "32560"]:
+                if bundled_code in result.codes:
+                    discard(
+                        bundled_code,
+                        "R017_THORACOSCOPY_PLEURAL_BUNDLE",
+                        "Bundled with thoracoscopic pleurodesis (32650)"
+                    )
+
+        # ========== RULE 18: EBUS MUTUAL EXCLUSION ==========
+        # Never keep both 31652 (1-2 stations) AND 31653 (3+ stations)
+        # This is a safety net - station count should determine which one
+        if "31652" in result.codes and "31653" in result.codes:
+            station_count = linear_ev.get("station_count", 0)
+            if station_count >= 3:
+                # Clear evidence of 3+ stations - keep 31653
+                discard(
+                    "31652",
+                    "R018_EBUS_MUTUAL_EXCLUSION",
+                    "Cannot bill both 31652 and 31653 - keep 31653 for 3+ stations"
+                )
+            elif station_count > 0:
+                # Positive station count < 3 - keep 31652
+                discard(
+                    "31653",
+                    "R018_EBUS_MUTUAL_EXCLUSION",
+                    "Cannot bill both 31652 and 31653 - keep 31652 for 1-2 stations"
+                )
+            else:
+                # station_count == 0: No station count evidence
+                # Default to keeping 31653 (more likely if both were generated)
+                discard(
+                    "31652",
+                    "R018_EBUS_MUTUAL_EXCLUSION",
+                    "Cannot bill both - defaulting to 31653 (no station count evidence)"
+                )
 
         return result
 

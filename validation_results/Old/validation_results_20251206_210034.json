@@ -1,0 +1,1777 @@
+[
+  {
+    "note_index": 0,
+    "expected_codes": [
+      "31641",
+      "31636",
+      "31645",
+      "32550"
+    ],
+    "predicted_codes": [
+      "31630",
+      "31631",
+      "31640",
+      "31641",
+      "31645",
+      "31646",
+      "32550",
+      "32554",
+      "32555"
+    ],
+    "code_exact_match": false,
+    "code_errors": [
+      {
+        "code": "31636",
+        "type": "missing",
+        "expected": "31636",
+        "actual": null
+      },
+      {
+        "code": "32555",
+        "type": "extra",
+        "expected": null,
+        "actual": "32555"
+      },
+      {
+        "code": "31631",
+        "type": "extra",
+        "expected": null,
+        "actual": "31631"
+      },
+      {
+        "code": "32554",
+        "type": "extra",
+        "expected": null,
+        "actual": "32554"
+      },
+      {
+        "code": "31646",
+        "type": "extra",
+        "expected": null,
+        "actual": "31646"
+      },
+      {
+        "code": "31630",
+        "type": "extra",
+        "expected": null,
+        "actual": "31630"
+      },
+      {
+        "code": "31640",
+        "type": "extra",
+        "expected": null,
+        "actual": "31640"
+      }
+    ],
+    "registry_field_accuracy": 0.1,
+    "registry_errors": [
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Malignancy",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': 'David Kim', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'David Kim, MD', 'attending_npi': None, 'fellow_name': 'Rachel Foster, MD', 'fellow_pgy_level': None, 'assistant_name': 'Patricia Martinez', 'assistant_role': None, 'trainee_present"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "ETT",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "Not specified",
+        "actual": "None"
+      },
+      {
+        "field": "pleural_procedure_type",
+        "type": "missing",
+        "expected": "Tunneled Catheter",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "Outpatient discharge",
+        "actual": "None"
+      },
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild",
+        "actual": "None"
+      },
+      {
+        "field": "pleural_guidance",
+        "type": "missing",
+        "expected": "Blind",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Female",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "65",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "General",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[31641, 31636, 31645, 32550]",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax_intervention",
+        "type": "missing",
+        "expected": "Aspiration",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 15430.721505000292,
+    "registry_latency_ms": 33820.977340000354,
+    "llm_error": null
+  },
+  {
+    "note_index": 1,
+    "expected_codes": [
+      "31624"
+    ],
+    "predicted_codes": [
+      "31630",
+      "31631",
+      "31634",
+      "31640",
+      "31641",
+      "31645",
+      "31646",
+      "32550"
+    ],
+    "code_exact_match": false,
+    "code_errors": [
+      {
+        "code": "31624",
+        "type": "missing",
+        "expected": "31624",
+        "actual": null
+      },
+      {
+        "code": "31645",
+        "type": "extra",
+        "expected": null,
+        "actual": "31645"
+      },
+      {
+        "code": "31631",
+        "type": "extra",
+        "expected": null,
+        "actual": "31631"
+      },
+      {
+        "code": "31646",
+        "type": "extra",
+        "expected": null,
+        "actual": "31646"
+      },
+      {
+        "code": "31641",
+        "type": "extra",
+        "expected": null,
+        "actual": "31641"
+      },
+      {
+        "code": "31634",
+        "type": "extra",
+        "expected": null,
+        "actual": "31634"
+      },
+      {
+        "code": "32550",
+        "type": "extra",
+        "expected": null,
+        "actual": "32550"
+      },
+      {
+        "code": "31630",
+        "type": "extra",
+        "expected": null,
+        "actual": "31630"
+      },
+      {
+        "code": "31640",
+        "type": "extra",
+        "expected": null,
+        "actual": "31640"
+      }
+    ],
+    "registry_field_accuracy": 0.05263157894736842,
+    "registry_errors": [
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Non-malignant (pneumonia / infection)",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_imaging_verification",
+        "type": "missing",
+        "expected": "Fluoroscopy",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': 'STATEMENT', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'David Kim, MD', 'attending_npi': None, 'fellow_name': 'Dr. Foster', 'fellow_pgy_level': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': True, 'rose_present"
+      },
+      {
+        "field": "follow_up_plan",
+        "type": "missing",
+        "expected": "['Dr. Smith', 'Follow-up in IP clinic at 2 weeks with chest X-ray', 'Plan: Continue abx, f/u cultures, repeat CXR 48h']",
+        "actual": "None"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "Native",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "Nose/pharynx ok Cords move normal Trachea normal R side all patent no lesions L side all patent no lesions Diffuse thick yellow secretions throughout both lungs BAL done LLL 100cc in 80cc out Sputum c",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "Outpatient discharge",
+        "actual": "None"
+      },
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "patient_mrn",
+        "type": "missing",
+        "expected": "2145069",
+        "actual": "None"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Female",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "82",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "Moderate",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[31624]",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 14132.553479000308,
+    "registry_latency_ms": 33902.23953500026,
+    "llm_error": null
+  },
+  {
+    "note_index": 2,
+    "expected_codes": [
+      "31653"
+    ],
+    "predicted_codes": [
+      "31652",
+      "31653"
+    ],
+    "code_exact_match": false,
+    "code_errors": [
+      {
+        "code": "31652",
+        "type": "extra",
+        "expected": null,
+        "actual": "31652"
+      }
+    ],
+    "registry_field_accuracy": 0.047619047619047616,
+    "registry_errors": [
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Malignancy",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': 'Chen', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'Dr. James Chen', 'attending_npi': None, 'fellow_name': 'Dr. Emily Rogers, Fellow', 'fellow_pgy_level': None, 'assistant_name': 'Karen Thompson', 'assistant_role': 'RN', 'trainee_pr"
+      },
+      {
+        "field": "follow_up_plan",
+        "type": "missing",
+        "expected": "['IMPRESSION/PLAN: Ms. Martinez is a 58-year-old female with newly diagnosed lung adenocarcinoma. EBUS-TBNA confirms N2 and N3 nodal involvement (Stage IIIB). Results will be discussed at multidiscipl",
+        "actual": "None"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "Native",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "Ms. Martinez is a 58-year-old female who presents with mediastinal lymphadenopathy discovered on staging CT for newly diagnosed right upper lobe mass. PET-CT shows FDG-avid nodes in stations 4R, 7, an",
+        "actual": "None"
+      },
+      {
+        "field": "linear_ebus_stations",
+        "type": "missing",
+        "expected": "['10R', '4R', '7']",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "Outpatient discharge",
+        "actual": "None"
+      },
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "ebus_stations_sampled",
+        "type": "missing",
+        "expected": "['10R', '4R', '7']",
+        "actual": "None"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Female",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "procedure_date",
+        "type": "missing",
+        "expected": "2025-01-01",
+        "actual": "None"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "58",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_sampling_tools",
+        "type": "missing",
+        "expected": "['needle']",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "Moderate",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[31653]",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 11249.420514000121,
+    "registry_latency_ms": 25170.120716999918,
+    "llm_error": null
+  },
+  {
+    "note_index": 3,
+    "expected_codes": [
+      "31641"
+    ],
+    "predicted_codes": [
+      "31627",
+      "31641"
+    ],
+    "code_exact_match": false,
+    "code_errors": [
+      {
+        "code": "31627",
+        "type": "extra",
+        "expected": null,
+        "actual": "31627"
+      }
+    ],
+    "registry_field_accuracy": 0.08695652173913043,
+    "registry_errors": [
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Malignancy",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "nav_imaging_verification",
+        "type": "missing",
+        "expected": "Fluoroscopy",
+        "actual": "None"
+      },
+      {
+        "field": "bronch_tbbx_tool",
+        "type": "missing",
+        "expected": "Cryoprobe",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': 'James Patterson', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'Dr. James Patterson, MD', 'attending_npi': None, 'fellow_name': None, 'fellow_pgy_level': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None, 'rose_prese"
+      },
+      {
+        "field": "follow_up_plan",
+        "type": "missing",
+        "expected": "['PLAN: Observation, CXR at 4 hours, discharge if stable, CT chest in 4 weeks, f/u clinic 1 week.']",
+        "actual": "None"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "ETT",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "Not specified",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "Outpatient discharge",
+        "actual": "None"
+      },
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_modality",
+        "type": "missing",
+        "expected": "Cryoablation",
+        "actual": "None"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Female",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_duration_seconds",
+        "type": "missing",
+        "expected": "300",
+        "actual": "None"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "63",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_sampling_tools",
+        "type": "missing",
+        "expected": "['cryoprobe']",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "General",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[31641]",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 9362.641738000093,
+    "registry_latency_ms": 34105.70179300066,
+    "llm_error": null
+  },
+  {
+    "note_index": 4,
+    "expected_codes": [
+      "31653",
+      "31627",
+      "31654",
+      "31628"
+    ],
+    "predicted_codes": [
+      "31623",
+      "31624",
+      "31628",
+      "31652",
+      "31653"
+    ],
+    "code_exact_match": false,
+    "code_errors": [
+      {
+        "code": "31627",
+        "type": "missing",
+        "expected": "31627",
+        "actual": null
+      },
+      {
+        "code": "31654",
+        "type": "missing",
+        "expected": "31654",
+        "actual": null
+      },
+      {
+        "code": "31652",
+        "type": "extra",
+        "expected": null,
+        "actual": "31652"
+      },
+      {
+        "code": "31624",
+        "type": "extra",
+        "expected": null,
+        "actual": "31624"
+      },
+      {
+        "code": "31623",
+        "type": "extra",
+        "expected": null,
+        "actual": "31623"
+      }
+    ],
+    "registry_field_accuracy": 0.07407407407407407,
+    "registry_errors": [
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Malignancy",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_registration_method",
+        "type": "missing",
+        "expected": "Automatic",
+        "actual": "None"
+      },
+      {
+        "field": "nav_imaging_verification",
+        "type": "missing",
+        "expected": "Cone Beam CT",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': 'Nicholas Foster', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'Dr. Nicholas Foster, MD, FCCP', 'attending_npi': None, 'fellow_name': 'Dr. Amy Chen, MD', 'fellow_pgy_level': None, 'assistant_name': 'RN Jessica Thompson', 'assistant_role': 'RN',"
+      },
+      {
+        "field": "follow_up_plan",
+        "type": "missing",
+        "expected": "['9. Follow-up in IP clinic in 1 week with full pathology results']",
+        "actual": "None"
+      },
+      {
+        "field": "nav_platform",
+        "type": "missing",
+        "expected": "Ion robotic bronchoscopy",
+        "actual": "None"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "ETT",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "Not specified",
+        "actual": "None"
+      },
+      {
+        "field": "linear_ebus_stations",
+        "type": "missing",
+        "expected": "['10R', '11R', '4R', '7']",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "ICU admission",
+        "actual": "None"
+      },
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "ebus_stations_sampled",
+        "type": "missing",
+        "expected": "['10R', '11R', '4R', '7']",
+        "actual": "None"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Female",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "55",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_sampling_tools",
+        "type": "missing",
+        "expected": "['needle', 'brush']",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "General",
+        "actual": "None"
+      },
+      {
+        "field": "nav_rebus_used",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[31653, 31627, 31654, 31628]",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax_intervention",
+        "type": "missing",
+        "expected": "Aspiration",
+        "actual": "None"
+      },
+      {
+        "field": "nav_rebus_view",
+        "type": "missing",
+        "expected": "Concentric",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 19503.24887899933,
+    "registry_latency_ms": 53755.0632880002,
+    "llm_error": null
+  },
+  {
+    "note_index": 5,
+    "expected_codes": [
+      "31627",
+      "31654",
+      "31628",
+      "31626"
+    ],
+    "predicted_codes": [
+      "31627",
+      "31654",
+      "31626",
+      "31628"
+    ],
+    "code_exact_match": true,
+    "code_errors": [],
+    "registry_field_accuracy": 0.1,
+    "registry_errors": [
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Other",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': 'Unknown', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'David Wong, MD', 'attending_npi': None, 'fellow_name': 'Sarah Mitchell, MD', 'fellow_pgy_level': None, 'assistant_name': 'Jennifer Adams', 'assistant_role': 'RN', 'trainee_present'"
+      },
+      {
+        "field": "nav_platform",
+        "type": "missing",
+        "expected": "Ion robotic bronchoscopy",
+        "actual": "None"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "Native",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "Not specified",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "Outpatient discharge",
+        "actual": "None"
+      },
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Other",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "69",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "Moderate",
+        "actual": "None"
+      },
+      {
+        "field": "nav_rebus_used",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[31627, 31654, 31628, 31626]",
+        "actual": "None"
+      },
+      {
+        "field": "nav_rebus_view",
+        "type": "missing",
+        "expected": "None",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 7575.9606540004825,
+    "registry_latency_ms": 28120.046078000087,
+    "llm_error": null
+  },
+  {
+    "note_index": 6,
+    "expected_codes": [
+      "31652",
+      "31628"
+    ],
+    "predicted_codes": [
+      "31623",
+      "31625",
+      "31629",
+      "31634",
+      "31652",
+      "31653",
+      "31661"
+    ],
+    "code_exact_match": false,
+    "code_errors": [
+      {
+        "code": "31628",
+        "type": "missing",
+        "expected": "31628",
+        "actual": null
+      },
+      {
+        "code": "31653",
+        "type": "extra",
+        "expected": null,
+        "actual": "31653"
+      },
+      {
+        "code": "31623",
+        "type": "extra",
+        "expected": null,
+        "actual": "31623"
+      },
+      {
+        "code": "31625",
+        "type": "extra",
+        "expected": null,
+        "actual": "31625"
+      },
+      {
+        "code": "31661",
+        "type": "extra",
+        "expected": null,
+        "actual": "31661"
+      },
+      {
+        "code": "31634",
+        "type": "extra",
+        "expected": null,
+        "actual": "31634"
+      },
+      {
+        "code": "31629",
+        "type": "extra",
+        "expected": null,
+        "actual": "31629"
+      }
+    ],
+    "registry_field_accuracy": 0.0,
+    "registry_errors": [
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Malignancy",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_imaging_verification",
+        "type": "missing",
+        "expected": "Cone Beam CT",
+        "actual": "None"
+      },
+      {
+        "field": "bronch_tbbx_tool",
+        "type": "missing",
+        "expected": "Cryoprobe",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': '** Dr. Patricia Lee', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'Dr. Jennifer Walsh', 'attending_npi': None, 'fellow_name': 'Dr. Christopher Brown', 'fellow_pgy_level': None, 'assistant_name': 'Dr. Amanda Stevens', 'assistant_role': None, 'train"
+      },
+      {
+        "field": "follow_up_plan",
+        "type": "missing",
+        "expected": "['- F/u IP clinic 1 week', '- F/u CXR in AM', '**Follow-up:**']",
+        "actual": "None"
+      },
+      {
+        "field": "nav_platform",
+        "type": "missing",
+        "expected": "Ion robotic bronchoscopy",
+        "actual": "None"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "ETT",
+        "actual": "None"
+      },
+      {
+        "field": "institution_name",
+        "type": "missing",
+        "expected": "Sacred Heart Medical Center",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "** - RML nodule 2.2cm (increased from 1.6cm over 6 months) - Mediastinal lymphadenopathy: Station 4R 2.0cm, Station 7 1.6cm - Never-smoker - PET: RML nodule SUV 5.2, Station 4R SUV 4.1, Station 7 SUV ",
+        "actual": "None"
+      },
+      {
+        "field": "linear_ebus_stations",
+        "type": "missing",
+        "expected": "['10L', '2L', '2R', '4L', '4R', '7']",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "Outpatient discharge",
+        "actual": "None"
+      },
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "patient_mrn",
+        "type": "wrong_value",
+        "expected": "2938475",
+        "actual": "5738291"
+      },
+      {
+        "field": "ebus_stations_sampled",
+        "type": "missing",
+        "expected": "['10L', '2L', '2R', '4L', '4R', '7']",
+        "actual": "None"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild (<50mL)",
+        "actual": "None"
+      },
+      {
+        "field": "pleural_guidance",
+        "type": "missing",
+        "expected": "CT",
+        "actual": "None"
+      },
+      {
+        "field": "lesion_size_mm",
+        "type": "missing",
+        "expected": "22.0",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Female",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "procedure_date",
+        "type": "wrong_value",
+        "expected": "2025-05-07",
+        "actual": "2025-06-03"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "74",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_cryobiopsy_for_nodule",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "nav_sampling_tools",
+        "type": "missing",
+        "expected": "['forceps', 'needle', 'brush', 'cryoprobe']",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "Deep",
+        "actual": "None"
+      },
+      {
+        "field": "nav_rebus_used",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[31652, 31628]",
+        "actual": "None"
+      },
+      {
+        "field": "nav_rebus_view",
+        "type": "missing",
+        "expected": "Concentric",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 27400.53375000025,
+    "registry_latency_ms": 45747.04761399971,
+    "llm_error": null
+  },
+  {
+    "note_index": 7,
+    "expected_codes": [
+      "31653"
+    ],
+    "predicted_codes": [
+      "31652",
+      "31653"
+    ],
+    "code_exact_match": false,
+    "code_errors": [
+      {
+        "code": "31652",
+        "type": "extra",
+        "expected": null,
+        "actual": "31652"
+      }
+    ],
+    "registry_field_accuracy": 0.0,
+    "registry_errors": [
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Malignancy",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_imaging_verification",
+        "type": "missing",
+        "expected": "Fluoroscopy",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': 'Chang', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'Chang, Margaret MD, FCCP', 'attending_npi': None, 'fellow_name': 'Stevens, Brian MD', 'fellow_pgy_level': None, 'assistant_name': 'Thompson', 'assistant_role': None, 'trainee_prese"
+      },
+      {
+        "field": "follow_up_plan",
+        "type": "missing",
+        "expected": "['FOLLOW-UP PLAN', '2.\\tPulmonology clinic follow-up in 2 weeks to review final results and discuss management']",
+        "actual": "None"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "Tracheostomy",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "Lisinopril, atorvastatin, albuterol PRN Held: None (not on anticoagulation) ALLERGIES: Penicillin (rash) PRE-PROCEDURE ASSESSMENT \u2022\tASA Classification: II \u2022\tNPO status: Verified >8 hours \u2022\tIV access: ",
+        "actual": "None"
+      },
+      {
+        "field": "linear_ebus_stations",
+        "type": "missing",
+        "expected": "['10L', '10R', '11L', '11R', '2L', '2R', '4L', '4R', '7']",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "Outpatient discharge",
+        "actual": "None"
+      },
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "patient_mrn",
+        "type": "wrong_value",
+        "expected": "2947385",
+        "actual": "7483920"
+      },
+      {
+        "field": "ebus_stations_sampled",
+        "type": "missing",
+        "expected": "['10L', '10R', '11L', '11R', '2L', '2R', '4L', '4R', '7']",
+        "actual": "None"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild (<50mL)",
+        "actual": "None"
+      },
+      {
+        "field": "pleural_guidance",
+        "type": "missing",
+        "expected": "Ultrasound",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Male",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "procedure_date",
+        "type": "wrong_value",
+        "expected": "2025-03-19",
+        "actual": "2025-04-01"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "59",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_sampling_tools",
+        "type": "missing",
+        "expected": "['needle']",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "General",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[31653]",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax_intervention",
+        "type": "missing",
+        "expected": "Aspiration",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 21760.38885000071,
+    "registry_latency_ms": 39671.8621200007,
+    "llm_error": null
+  },
+  {
+    "note_index": 8,
+    "expected_codes": [
+      "31653"
+    ],
+    "predicted_codes": [
+      "31652",
+      "31653"
+    ],
+    "code_exact_match": false,
+    "code_errors": [
+      {
+        "code": "31652",
+        "type": "extra",
+        "expected": null,
+        "actual": "31652"
+      }
+    ],
+    "registry_field_accuracy": 0.0,
+    "registry_errors": [
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Malignancy",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_imaging_verification",
+        "type": "missing",
+        "expected": "Fluoroscopy",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': 'Chang', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'Margaret Chang, MD, FCCP', 'attending_npi': None, 'fellow_name': 'Brian Stevens, MD', 'fellow_pgy_level': None, 'assistant_name': 'Lisa Thompson', 'assistant_role': 'RN', 'trainee_"
+      },
+      {
+        "field": "follow_up_plan",
+        "type": "missing",
+        "expected": "['FOLLOW-UP PLAN', '3.\\tPulmonology clinic follow-up in 2 weeks to review final results and discuss management']",
+        "actual": "None"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "Tracheostomy",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "Lisinopril, atorvastatin, albuterol PRN Held: None (not on anticoagulation) ALLERGIES: Penicillin (rash) PRE-PROCEDURE ASSESSMENT \u2022\tASA Classification: II \u2022\tNPO status: Verified >8 hours \u2022\tIV access: ",
+        "actual": "None"
+      },
+      {
+        "field": "linear_ebus_stations",
+        "type": "missing",
+        "expected": "['10L', '10R', '11L', '11R', '2L', '2R', '4L', '4R', '7']",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "Outpatient discharge",
+        "actual": "None"
+      },
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "patient_mrn",
+        "type": "wrong_value",
+        "expected": "2947385",
+        "actual": "7483920"
+      },
+      {
+        "field": "ebus_stations_sampled",
+        "type": "missing",
+        "expected": "['10L', '10R', '11L', '11R', '2L', '2R', '4L', '4R', '7']",
+        "actual": "None"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild (<50mL)",
+        "actual": "None"
+      },
+      {
+        "field": "pleural_guidance",
+        "type": "missing",
+        "expected": "Ultrasound",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Male",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "procedure_date",
+        "type": "wrong_value",
+        "expected": "2025-03-19",
+        "actual": "2025-04-01"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "59",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "nav_sampling_tools",
+        "type": "missing",
+        "expected": "['needle']",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "General",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[31653]",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax_intervention",
+        "type": "missing",
+        "expected": "Aspiration",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 27781.979230000616,
+    "registry_latency_ms": 49460.15706900016,
+    "llm_error": null
+  },
+  {
+    "note_index": 9,
+    "expected_codes": [
+      "32555"
+    ],
+    "predicted_codes": [
+      "32554",
+      "32555",
+      "32556"
+    ],
+    "code_exact_match": false,
+    "code_errors": [
+      {
+        "code": "32554",
+        "type": "extra",
+        "expected": null,
+        "actual": "32554"
+      },
+      {
+        "code": "32556",
+        "type": "extra",
+        "expected": null,
+        "actual": "32556"
+      }
+    ],
+    "registry_field_accuracy": 0.09090909090909091,
+    "registry_errors": [
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Malignancy",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': '** Dr. Emily Morrison', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'Dr. Emily Morrison, MD', 'attending_npi': None, 'fellow_name': 'Dr. Jason Park, MD', 'fellow_pgy_level': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': Tr"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "Native",
+        "actual": "None"
+      },
+      {
+        "field": "institution_name",
+        "type": "missing",
+        "expected": "** St. Mary's Teaching Hospital, Chicago, IL",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "** 60-year-old male with newly diagnosed left upper lobe mass and moderate left-sided pleural effusion. Thoracentesis for diagnostic workup and staging.",
+        "actual": "None"
+      },
+      {
+        "field": "pleural_procedure_type",
+        "type": "missing",
+        "expected": "Thoracentesis",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "Outpatient discharge",
+        "actual": "None"
+      },
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild",
+        "actual": "None"
+      },
+      {
+        "field": "pleural_guidance",
+        "type": "missing",
+        "expected": "Ultrasound",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Male",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "60",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_agent",
+        "type": "missing",
+        "expected": "Other",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "nav_sampling_tools",
+        "type": "missing",
+        "expected": "['needle']",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "Moderate",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[32555]",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 12464.192100999753,
+    "registry_latency_ms": 25372.0578880002,
+    "llm_error": null
+  }
+]

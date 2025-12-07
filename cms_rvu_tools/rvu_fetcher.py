@@ -129,7 +129,7 @@ class RVURecord:
     mult_proc_indicator: int = 0
     status_code: str = ""
     pctc_indicator: int = 0
-    conversion_factor: float = 32.7442  # 2025 CF
+    conversion_factor: float = 32.3562  # CY 2025 CF
     
     @property
     def nonfac_payment(self) -> Optional[float]:
@@ -550,7 +550,7 @@ def update_knowledge_base(
     report = IntegrationReport(
         cms_source_year=source_info.get("year", ""),
         cms_source_file=source_info.get("filename", ""),
-        conversion_factor=32.7442  # 2025 CF
+        conversion_factor=32.3562  # CY 2025 CF
     )
     
     # Load existing data

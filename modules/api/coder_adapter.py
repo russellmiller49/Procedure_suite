@@ -84,7 +84,7 @@ def convert_coding_result_to_coder_output(
     result: CodingResult,
     kb_repo: Optional[KnowledgeBaseRepository] = None,
     locality: str = "00",
-    conversion_factor: float = 32.7442,  # 2025 Medicare conversion factor
+    conversion_factor: float = 32.3562,  # CY 2025 Medicare conversion factor
 ) -> CoderOutput:
     """Convert a CodingResult to the legacy CoderOutput format.
 

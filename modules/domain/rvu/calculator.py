@@ -27,8 +27,8 @@ class RVUCalculator:
     Uses the CMS conversion factor to convert RVUs to dollar amounts.
     """
 
-    # 2025 CMS Conversion Factor
-    DEFAULT_CONVERSION_FACTOR = 32.7442
+    # CY 2025 CMS Conversion Factor from final rule
+    DEFAULT_CONVERSION_FACTOR = 32.3562
 
     def __init__(
         self,

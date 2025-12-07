@@ -109,7 +109,7 @@ class RVUData:
     global_days: str = ""
     mult_proc: int = 0
     status: str = ""
-    conversion_factor: float = 32.7442
+    conversion_factor: float = 32.3562
     
     @property
     def fac_payment(self) -> Optional[int]:
@@ -176,7 +176,7 @@ def find_column(headers: List[str], field: str) -> Optional[int]:
     return None
 
 
-def load_rvu_csv(csv_path: str, conversion_factor: float = 32.7442, 
+def load_rvu_csv(csv_path: str, conversion_factor: float = 32.3562,
                  code_filter: Optional[Set[str]] = None) -> Dict[str, RVUData]:
     """Load RVU data from a CSV file."""
     if code_filter is None:
@@ -288,7 +288,7 @@ def update_json_with_rvus(
         data["cms_rvus"] = {
             "_metadata": {
                 "source": source,
-                "conversion_factor": 32.7442,
+                "conversion_factor": 32.3562,
                 "retrieved": datetime.now().strftime("%Y-%m-%d")
             }
         }
@@ -487,8 +487,8 @@ def main():
     update_parser.add_argument("--input", "-i", required=True, help="Input IP coding JSON file")
     update_parser.add_argument("--rvu-csv", "-r", required=True, help="CSV file with RVU data")
     update_parser.add_argument("--output", "-o", help="Output JSON file (default: input_updated.json)")
-    update_parser.add_argument("--cf", type=float, default=32.7442, 
-                              help="Medicare conversion factor. Default: 32.7442 (CY 2025 national unadjusted). "
+    update_parser.add_argument("--cf", type=float, default=32.3562,
+                              help="Medicare conversion factor. Default: 32.3562 (CY 2025 national unadjusted). "
                                    "This is the CF from the CMS Physician Fee Schedule Final Rule. "
                                    "For locality-adjusted values, use your MAC's GPCI-adjusted CF.")
     update_parser.add_argument("--source", "-s", default="CMS PFS", help="Source description for metadata")

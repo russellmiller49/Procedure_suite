@@ -163,6 +163,45 @@ class EnhancedCPTCoder:
         ordered_codes = sorted(filtered_codes)
         return [CodeSuggestion(code) for code in ordered_codes]
 
+    def _apply_domain_rules_final(
+        self,
+        candidates: list[CodeCandidate],
+        note_text: str,
+        registry: Dict[str, Any],
+        term_hits: Dict[str, List[str]],
+    ) -> list[CodeCandidate]:
+        """Apply domain rules (R015-R018) to the final candidate pool.
+
+        This runs AFTER all candidates are collected (initial + EBUS + peripheral)
+        to ensure rules like EBUS mutual exclusion work correctly.
+        """
+        navigation_context = self._extract_navigation_registry(registry)
+        radial_context = self._extract_radial_registry(registry)
+
+        groups_from_text = self.ip_kb.groups_from_text(note_text)
+        evidence = getattr(self.ip_kb, "last_group_evidence", {}) or {}
+
+        # Build context with ALL candidates
+        all_candidate_codes = {c.code for c in candidates}
+
+        context = EvidenceContext.from_procedure_data(
+            groups_from_text=groups_from_text,
+            evidence=evidence,
+            registry=registry,
+            candidates_from_text=all_candidate_codes,
+            term_hits=term_hits,
+            navigation_context=navigation_context,
+            radial_context=radial_context,
+            note_text=note_text,
+        )
+
+        valid_cpts = self.ip_kb.all_relevant_cpt_codes()
+        rules_result = self._domain_rules_engine.apply_rules(context, valid_cpts)
+
+        # Filter candidates based on domain rules result
+        allowed_codes = rules_result.codes
+        return [c for c in candidates if c.code in allowed_codes]
+
     def _generate_codes(
         self,
         procedure_data: dict,
@@ -195,6 +234,12 @@ class EnhancedCPTCoder:
         peripheral_candidates = self._collect_peripheral_candidates(note_text)
         if peripheral_candidates:
             candidate_pool.extend(peripheral_candidates)
+
+        # Apply domain rules (R015-R018) on the COMBINED candidate pool
+        # This ensures EBUS mutual exclusion and other rules work correctly
+        candidate_pool = self._apply_domain_rules_final(
+            candidate_pool, note_text, registry, term_hits
+        )
 
         ruled_candidates = self._apply_rules(candidate_pool, note_text)
         return self._select_final_codes(ruled_candidates)

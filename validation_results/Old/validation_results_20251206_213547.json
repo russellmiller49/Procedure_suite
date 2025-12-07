@@ -1,0 +1,132 @@
+[
+  {
+    "note_index": 0,
+    "expected_codes": [
+      "31641",
+      "31636",
+      "31645",
+      "32550"
+    ],
+    "predicted_codes": [],
+    "code_exact_match": false,
+    "code_errors": [],
+    "registry_field_accuracy": 0.1,
+    "registry_errors": [
+      {
+        "field": "molecular_testing_requested",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "pleural_procedure_type",
+        "type": "missing",
+        "expected": "Tunneled Catheter",
+        "actual": "None"
+      },
+      {
+        "field": "asa_class",
+        "type": "missing",
+        "expected": "3",
+        "actual": "None"
+      },
+      {
+        "field": "primary_indication",
+        "type": "missing",
+        "expected": "Not specified",
+        "actual": "None"
+      },
+      {
+        "field": "cpt_codes",
+        "type": "missing",
+        "expected": "[31641, 31636, 31645, 32550]",
+        "actual": "None"
+      },
+      {
+        "field": "disposition",
+        "type": "missing",
+        "expected": "Outpatient discharge",
+        "actual": "None"
+      },
+      {
+        "field": "ablation_peripheral_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "final_diagnosis_prelim",
+        "type": "missing",
+        "expected": "Malignancy",
+        "actual": "None"
+      },
+      {
+        "field": "airway_type",
+        "type": "missing",
+        "expected": "ETT",
+        "actual": "None"
+      },
+      {
+        "field": "sedation_type",
+        "type": "missing",
+        "expected": "General",
+        "actual": "None"
+      },
+      {
+        "field": "pleural_guidance",
+        "type": "missing",
+        "expected": "Blind",
+        "actual": "None"
+      },
+      {
+        "field": "gender",
+        "type": "missing",
+        "expected": "Female",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax_intervention",
+        "type": "missing",
+        "expected": "Aspiration",
+        "actual": "None"
+      },
+      {
+        "field": "pneumothorax",
+        "type": "missing",
+        "expected": "True",
+        "actual": "None"
+      },
+      {
+        "field": "pleurodesis_performed",
+        "type": "missing",
+        "expected": "False",
+        "actual": "None"
+      },
+      {
+        "field": "patient_age",
+        "type": "missing",
+        "expected": "65",
+        "actual": "None"
+      },
+      {
+        "field": "providers",
+        "type": "wrong_value",
+        "expected": "{'attending_name': 'David Kim', 'fellow_name': None, 'assistant_name': None, 'assistant_role': None, 'trainee_present': None}",
+        "actual": "{'attending_name': 'David Kim, MD', 'attending_npi': None, 'fellow_name': 'Rachel Foster, MD', 'fellow_pgy_level': None, 'assistant_name': 'Patricia Martinez', 'assistant_role': 'RN', 'trainee_present"
+      },
+      {
+        "field": "bleeding_severity",
+        "type": "missing",
+        "expected": "Mild",
+        "actual": "None"
+      }
+    ],
+    "expected_rvu": {},
+    "predicted_rvu": {},
+    "rvu_exact_match": false,
+    "rvu_errors": [],
+    "coder_latency_ms": 0.0,
+    "registry_latency_ms": 37040.27567199955,
+    "llm_error": "Coder error: unsupported operand type(s) for -: 'list' and 'set'"
+  }
+]

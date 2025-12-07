@@ -196,7 +196,7 @@
           "calendar_year": "2025",
           "fee_schedule_name": "physician_2025_airway",
           "rvu_source": "cms_2025_final",
-          "conversion_factor": 32.7442,
+          "conversion_factor": 32.3562,
           "setting": "facility",
           "per_code": [
             {

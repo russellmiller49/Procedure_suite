@@ -51,7 +51,7 @@ from observability.logging_config import get_logger
 logger = get_logger("validate_golden")
 
 # Default paths
-GOLDEN_EXTRACTIONS_PATH = ROOT / "data" / "knowledge" / "golden_extractions" / "consolidated_verified_notes_v2_8_part_001.json"
+GOLDEN_EXTRACTIONS_PATH = ROOT / "data" / "knowledge" / "golden_extractions" / "consolidated_verified_notes_v2_8_part_002.json"
 OUTPUT_DIR = ROOT / "validation_results"
 
 

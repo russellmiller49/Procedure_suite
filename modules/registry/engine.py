@@ -10,6 +10,8 @@ from modules.common.spans import Span
 from modules.registry.extractors.llm_detailed import LLMDetailedExtractor
 from modules.registry.postprocess import POSTPROCESSORS, apply_cross_field_consistency, derive_global_ebus_rose_result
 from modules.registry.transform import build_nested_registry_payload
+from modules.registry.deterministic_extractors import run_deterministic_extractors
+from modules.registry.normalization import normalize_registry_enums
 
 from .schema import RegistryRecord
 
@@ -592,6 +594,11 @@ class RegistryEngine:
         evidence: Dict[str, list[Span]] = {}
         seed_data: Dict[str, Any] = {}
 
+        # Run deterministic extractors FIRST to seed commonly missed fields
+        # These provide reliable extraction for demographics, ASA, sedation, etc.
+        deterministic_data = run_deterministic_extractors(note_text)
+        seed_data.update(deterministic_data)
+
         # Classify procedure families FIRST - this gates downstream extraction
         procedure_families = classify_procedure_families(note_text)
         seed_data["procedure_families"] = list(procedure_families)
@@ -733,6 +740,10 @@ class RegistryEngine:
         merged_data = apply_cross_field_consistency(merged_data)
 
         nested_payload = build_nested_registry_payload(merged_data)
+
+        # Apply enum normalization layer (gender, bronchus_sign, sedation, etc.)
+        # This runs BEFORE API normalization to handle common LLM output variations
+        nested_payload = normalize_registry_enums(nested_payload)
 
         # Apply normalization layer to clean up noisy LLM outputs before validation
         from modules.api.normalization import normalize_registry_payload
