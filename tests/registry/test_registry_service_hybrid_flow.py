@@ -356,6 +356,10 @@ class TestRegistryServiceHybridFlow:
             registry_engine=stub_engine,
         )
 
+        # Disable ML hybrid audit for this test (we're testing CPT merge logic only)
+        service._registry_ml_predictor = None
+        service._ml_predictor_init_attempted = True
+
         # Act
         result = service.extract_fields("Transbronchial biopsy obtained")
 
@@ -545,3 +549,271 @@ class TestRegistryServiceWithRealEngine:
         assert result.record is not None
         # Check that extraction worked (record is valid RegistryRecord)
         assert isinstance(result.record, RegistryRecord)
+
+
+# ============================================================================
+# ML Hybrid Audit Tests
+# ============================================================================
+
+
+class StubRegistryPredictor:
+    """Stub predictor for testing ML hybrid audit behavior.
+
+    Returns pre-configured predictions to test different scenarios.
+    """
+
+    def __init__(
+        self,
+        positive_fields: list[str],
+        probabilities: dict[str, float] | None = None,
+    ):
+        """Initialize with fields that should be predicted as positive.
+
+        Args:
+            positive_fields: List of field names to predict as positive.
+            probabilities: Optional dict of field -> probability. Defaults to 0.9.
+        """
+        self._positive_fields = set(positive_fields)
+        self._probabilities = probabilities or {}
+        self.available = True
+
+    @property
+    def labels(self) -> list[str]:
+        """Return list of labels for logging."""
+        return list(self._positive_fields)
+
+    def classify_case(self, note_text: str) -> RegistryCaseClassification:
+        """Return pre-configured predictions."""
+        predictions = []
+        for field in self._positive_fields:
+            prob = self._probabilities.get(field, 0.9)
+            predictions.append(
+                RegistryFieldPrediction(
+                    field=field,
+                    probability=prob,
+                    threshold=0.5,
+                    is_positive=True,
+                )
+            )
+
+        return RegistryCaseClassification(
+            note_text=note_text,
+            predictions=predictions,
+            positive_fields=list(self._positive_fields),
+            difficulty="HIGH_CONF" if self._positive_fields else "LOW_CONF",
+        )
+
+
+class TestMLHybridAudit:
+    """Tests for ML hybrid audit behavior in RegistryService.
+
+    Tests the three scenarios:
+    - Scenario A: CPT True, ML True → Match, no warning
+    - Scenario B: CPT True, ML False → CPT primary, no warning
+    - Scenario C: CPT False, ML True → Audit warning, manual review
+    """
+
+    def test_scenario_c_ml_detected_not_in_cpt_triggers_audit_warning(self) -> None:
+        """When ML detects a procedure that CPT missed, audit warning should trigger."""
+        # Arrange: orchestrator returns no codes for linear_ebus
+        fake_orchestrator = MagicMock()
+        fake_orchestrator.get_codes.return_value = make_fake_hybrid_result(
+            codes=["31622"],  # Only diagnostic bronch, no EBUS code
+            difficulty="high_confidence",
+        )
+
+        # Stub engine returns basic record
+        preset_record = RegistryRecord(procedure_type="bronchoscopy")
+        stub_engine = StubRegistryEngine(preset_record=preset_record)
+
+        service = RegistryService(
+            hybrid_orchestrator=fake_orchestrator,
+            registry_engine=stub_engine,
+        )
+
+        # Inject stub predictor that thinks linear_ebus was performed
+        service._registry_ml_predictor = StubRegistryPredictor(
+            positive_fields=["linear_ebus"],
+            probabilities={"linear_ebus": 0.85},
+        )
+        service._ml_predictor_init_attempted = True
+
+        # Act
+        result = service.extract_fields(
+            "EBUS was performed but coder missed it - ML should catch this"
+        )
+
+        # Assert: Audit warning should be present
+        assert result.needs_manual_review is True
+        assert len(result.audit_warnings) > 0
+        assert any("linear_ebus" in w for w in result.audit_warnings)
+        assert any("0.85" in w for w in result.audit_warnings)
+
+    def test_scenario_a_cpt_and_ml_match_no_warning(self) -> None:
+        """When CPT and ML both detect procedure, no audit warning needed."""
+        # Arrange: orchestrator returns EBUS code
+        fake_orchestrator = MagicMock()
+        fake_orchestrator.get_codes.return_value = make_fake_hybrid_result(
+            codes=["31652"],  # EBUS 1-2 stations
+            difficulty="high_confidence",
+        )
+
+        # Stub engine returns record with linear_ebus set
+        preset_record = RegistryRecord(
+            procedure_type="bronchoscopy",
+            procedures_performed={"linear_ebus": {"performed": True}},
+        )
+        stub_engine = StubRegistryEngine(preset_record=preset_record)
+
+        service = RegistryService(
+            hybrid_orchestrator=fake_orchestrator,
+            registry_engine=stub_engine,
+        )
+
+        # Inject stub predictor that also thinks linear_ebus was performed
+        service._registry_ml_predictor = StubRegistryPredictor(
+            positive_fields=["linear_ebus"],
+        )
+        service._ml_predictor_init_attempted = True
+
+        # Act
+        result = service.extract_fields("EBUS-TBNA with stations 4R and 7")
+
+        # Assert: No audit warnings because CPT and ML agree
+        assert result.audit_warnings == []
+        # No manual review needed for high_conf with matching results
+        assert result.needs_manual_review is False
+
+    def test_scenario_b_cpt_positive_ml_negative_no_warning(self) -> None:
+        """When CPT detects but ML doesn't, CPT is primary truth - no warning."""
+        # Arrange: orchestrator returns EBUS code
+        fake_orchestrator = MagicMock()
+        fake_orchestrator.get_codes.return_value = make_fake_hybrid_result(
+            codes=["31652"],  # EBUS 1-2 stations
+            difficulty="high_confidence",
+        )
+
+        # Stub engine returns record with linear_ebus set
+        preset_record = RegistryRecord(
+            procedure_type="bronchoscopy",
+            procedures_performed={"linear_ebus": {"performed": True}},
+        )
+        stub_engine = StubRegistryEngine(preset_record=preset_record)
+
+        service = RegistryService(
+            hybrid_orchestrator=fake_orchestrator,
+            registry_engine=stub_engine,
+        )
+
+        # Inject stub predictor that does NOT detect linear_ebus
+        service._registry_ml_predictor = StubRegistryPredictor(
+            positive_fields=[],  # ML doesn't detect anything
+        )
+        service._ml_predictor_init_attempted = True
+
+        # Act
+        result = service.extract_fields("EBUS performed - ML missed it")
+
+        # Assert: No audit warnings because CPT is primary truth
+        assert result.audit_warnings == []
+        # CPT value should still be set in the record
+        assert result.record.procedures_performed.linear_ebus.performed is True
+
+    def test_multiple_ml_detected_procedures_trigger_multiple_warnings(self) -> None:
+        """When ML detects multiple procedures CPT missed, all should be warned."""
+        # Arrange: orchestrator returns no procedure codes
+        fake_orchestrator = MagicMock()
+        fake_orchestrator.get_codes.return_value = make_fake_hybrid_result(
+            codes=["31622"],  # Only diagnostic bronch
+            difficulty="high_confidence",
+        )
+
+        preset_record = RegistryRecord(procedure_type="bronchoscopy")
+        stub_engine = StubRegistryEngine(preset_record=preset_record)
+
+        service = RegistryService(
+            hybrid_orchestrator=fake_orchestrator,
+            registry_engine=stub_engine,
+        )
+
+        # Inject stub predictor that detects multiple procedures
+        service._registry_ml_predictor = StubRegistryPredictor(
+            positive_fields=["linear_ebus", "navigational_bronchoscopy", "transbronchial_biopsy"],
+            probabilities={
+                "linear_ebus": 0.92,
+                "navigational_bronchoscopy": 0.87,
+                "transbronchial_biopsy": 0.78,
+            },
+        )
+        service._ml_predictor_init_attempted = True
+
+        # Act
+        result = service.extract_fields("Complex procedure - ML detected multiple")
+
+        # Assert: Multiple audit warnings
+        assert result.needs_manual_review is True
+        assert len(result.audit_warnings) == 3
+        assert any("linear_ebus" in w for w in result.audit_warnings)
+        assert any("navigational_bronchoscopy" in w for w in result.audit_warnings)
+        assert any("transbronchial_biopsy" in w for w in result.audit_warnings)
+
+    def test_ml_predictor_unavailable_no_audit(self) -> None:
+        """When ML predictor is unavailable, audit should be skipped gracefully."""
+        fake_orchestrator = MagicMock()
+        fake_orchestrator.get_codes.return_value = make_fake_hybrid_result(
+            codes=["31652"],
+            difficulty="high_confidence",
+        )
+
+        preset_record = RegistryRecord(
+            procedure_type="bronchoscopy",
+            procedures_performed={"linear_ebus": {"performed": True}},
+        )
+        stub_engine = StubRegistryEngine(preset_record=preset_record)
+
+        service = RegistryService(
+            hybrid_orchestrator=fake_orchestrator,
+            registry_engine=stub_engine,
+        )
+
+        # Simulate unavailable predictor
+        service._registry_ml_predictor = None
+        service._ml_predictor_init_attempted = True
+
+        # Act
+        result = service.extract_fields("EBUS procedure")
+
+        # Assert: No audit warnings, no crash
+        assert result.audit_warnings == []
+        assert result.needs_manual_review is False
+
+    def test_audit_warnings_included_in_result_dataclass(self) -> None:
+        """Verify audit_warnings field is properly populated in result."""
+        fake_orchestrator = MagicMock()
+        fake_orchestrator.get_codes.return_value = make_fake_hybrid_result(
+            codes=["31622"],
+            difficulty="high_confidence",
+        )
+
+        preset_record = RegistryRecord(procedure_type="bronchoscopy")
+        stub_engine = StubRegistryEngine(preset_record=preset_record)
+
+        service = RegistryService(
+            hybrid_orchestrator=fake_orchestrator,
+            registry_engine=stub_engine,
+        )
+
+        service._registry_ml_predictor = StubRegistryPredictor(
+            positive_fields=["blvr"],
+            probabilities={"blvr": 0.95},
+        )
+        service._ml_predictor_init_attempted = True
+
+        result = service.extract_fields("Valve procedure")
+
+        # Assert: audit_warnings is a list with expected content
+        assert isinstance(result.audit_warnings, list)
+        assert len(result.audit_warnings) == 1
+        assert "blvr" in result.audit_warnings[0]
+        assert "0.95" in result.audit_warnings[0]
+        assert "Please review" in result.audit_warnings[0]

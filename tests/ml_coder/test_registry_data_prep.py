@@ -317,3 +317,273 @@ class TestFilterRareRegistryLabels:
             REGISTRY_TARGET_FIELDS[10],
         ]
         assert kept == expected_order
+
+
+class TestSharedV2BooleansModule:
+    """Tests for the shared V2 booleans module (modules/registry/v2_booleans.py).
+
+    Ensures the canonical source of truth for V2 -> V3 boolean mapping
+    matches the data_prep wrapper.
+    """
+
+    def test_shared_module_import(self):
+        """Verify shared module can be imported."""
+        from modules.registry.v2_booleans import (
+            PROCEDURE_BOOLEAN_FIELDS,
+            extract_v2_booleans,
+        )
+
+        assert len(PROCEDURE_BOOLEAN_FIELDS) == 29
+        assert PROCEDURE_BOOLEAN_FIELDS == list(REGISTRY_TARGET_FIELDS)
+
+    def test_shared_module_matches_wrapper(self):
+        """Shared module should produce identical results to wrapper."""
+        from modules.registry.v2_booleans import extract_v2_booleans
+
+        # Test with a complex entry
+        entry = {
+            "pleural_procedure_type": "Medical Thoracoscopy",
+            "pleurodesis_performed": True,
+            "linear_ebus_stations": ["7", "4R", "11R"],
+            "nav_platform": "Ion",
+            "ablation_peripheral_performed": True,
+        }
+
+        shared_result = extract_v2_booleans(entry)
+        wrapper_result = _extract_registry_booleans(entry)
+
+        assert shared_result == wrapper_result
+
+    def test_shared_module_empty_entry(self):
+        """Shared module should handle empty entries correctly."""
+        from modules.registry.v2_booleans import extract_v2_booleans
+
+        result = extract_v2_booleans({})
+
+        assert all(v == 0 for v in result.values())
+        assert set(result.keys()) == set(REGISTRY_TARGET_FIELDS)
+
+
+class TestV2BooleansCPTConsistency:
+    """Consistency tests comparing V2 boolean extraction with CPT-derived flags.
+
+    These tests verify that when a V2 registry entry contains fields that
+    indicate a procedure was performed, the resulting boolean flags are
+    consistent with what the CPT registry mapping would produce for the
+    corresponding CPT codes.
+
+    This ensures ML training labels stay consistent with the production
+    registry semantics derived from CPT codes.
+    """
+
+    def test_linear_ebus_consistency_with_cpt(self):
+        """V2 linear EBUS fields should produce flags consistent with CPT 31652/31653.
+
+        When V2 entry has linear_ebus_stations, the resulting linear_ebus flag
+        should match what CPT mapping would produce for EBUS codes.
+        """
+        from modules.registry.application.cpt_registry_mapping import (
+            aggregate_registry_fields,
+        )
+
+        # V2 entry indicating linear EBUS was performed
+        v2_entry = {"linear_ebus_stations": ["4R", "7", "11R"]}
+        v2_flags = _extract_registry_booleans(v2_entry)
+
+        # CPT mapping for EBUS-TBNA 3+ stations
+        cpt_fields = aggregate_registry_fields(["31653"])
+
+        # Both should indicate linear EBUS was performed
+        assert v2_flags["linear_ebus"] == 1, "V2 should set linear_ebus flag"
+
+        cpt_linear_ebus = cpt_fields.get("procedures_performed", {}).get("linear_ebus", {})
+        assert cpt_linear_ebus.get("performed") is True, "CPT should set linear_ebus.performed"
+
+    def test_thoracentesis_consistency_with_cpt(self):
+        """V2 thoracentesis should produce flags consistent with CPT 32554/32555.
+
+        When V2 entry has pleural_procedure_type="Thoracentesis", the resulting
+        flag should match CPT mapping semantics.
+        """
+        from modules.registry.application.cpt_registry_mapping import (
+            aggregate_registry_fields,
+        )
+
+        # V2 entry indicating thoracentesis
+        v2_entry = {"pleural_procedure_type": "Thoracentesis"}
+        v2_flags = _extract_registry_booleans(v2_entry)
+
+        # CPT mapping for diagnostic thoracentesis with imaging
+        cpt_fields = aggregate_registry_fields(["32555"])
+
+        # Both should indicate thoracentesis was performed
+        assert v2_flags["thoracentesis"] == 1, "V2 should set thoracentesis flag"
+
+        cpt_thora = cpt_fields.get("pleural_procedures", {}).get("thoracentesis", {})
+        assert cpt_thora.get("performed") is True, "CPT should set thoracentesis.performed"
+
+    def test_pleurodesis_consistency_with_cpt(self):
+        """V2 pleurodesis_performed should produce flags consistent with CPT 32560/32650."""
+        from modules.registry.application.cpt_registry_mapping import (
+            aggregate_registry_fields,
+        )
+
+        # V2 entry indicating pleurodesis
+        v2_entry = {"pleurodesis_performed": True}
+        v2_flags = _extract_registry_booleans(v2_entry)
+
+        # CPT mapping for pleurodesis
+        cpt_fields = aggregate_registry_fields(["32560"])
+
+        # Both should indicate pleurodesis was performed
+        assert v2_flags["pleurodesis"] == 1, "V2 should set pleurodesis flag"
+
+        cpt_pleurodesis = cpt_fields.get("pleural_procedures", {}).get("pleurodesis", {})
+        assert cpt_pleurodesis.get("performed") is True, "CPT should set pleurodesis.performed"
+
+    def test_blvr_consistency_with_cpt(self):
+        """V2 BLVR fields should produce flags consistent with CPT 31647/31648."""
+        from modules.registry.application.cpt_registry_mapping import (
+            aggregate_registry_fields,
+        )
+
+        # V2 entry indicating BLVR
+        v2_entry = {"blvr_number_of_valves": 4, "blvr_target_lobe": "LUL"}
+        v2_flags = _extract_registry_booleans(v2_entry)
+
+        # CPT mapping for BLVR valve placement
+        cpt_fields = aggregate_registry_fields(["31647"])
+
+        # Both should indicate BLVR was performed
+        assert v2_flags["blvr"] == 1, "V2 should set blvr flag"
+
+        cpt_blvr = cpt_fields.get("procedures_performed", {}).get("blvr", {})
+        assert cpt_blvr.get("performed") is True, "CPT should set blvr.performed"
+
+    def test_navigational_bronchoscopy_consistency_with_cpt(self):
+        """V2 nav_platform should produce flags consistent with CPT 31627."""
+        from modules.registry.application.cpt_registry_mapping import (
+            aggregate_registry_fields,
+        )
+
+        # V2 entry indicating navigational bronchoscopy
+        v2_entry = {"nav_platform": "Ion robotic bronchoscopy"}
+        v2_flags = _extract_registry_booleans(v2_entry)
+
+        # CPT mapping for navigation bronchoscopy
+        cpt_fields = aggregate_registry_fields(["31627"])
+
+        # Both should indicate navigational bronchoscopy
+        assert v2_flags["navigational_bronchoscopy"] == 1
+
+        cpt_nav = cpt_fields.get("procedures_performed", {}).get("navigational_bronchoscopy", {})
+        assert cpt_nav.get("performed") is True
+
+    def test_chest_tube_consistency_with_cpt(self):
+        """V2 chest tube should produce flags consistent with CPT 32551."""
+        from modules.registry.application.cpt_registry_mapping import (
+            aggregate_registry_fields,
+        )
+
+        # V2 entry indicating chest tube placement
+        v2_entry = {"pleural_procedure_type": "Chest Tube"}
+        v2_flags = _extract_registry_booleans(v2_entry)
+
+        # CPT mapping for tube thoracostomy
+        cpt_fields = aggregate_registry_fields(["32551"])
+
+        # Both should indicate chest tube was performed
+        assert v2_flags["chest_tube"] == 1
+
+        cpt_tube = cpt_fields.get("pleural_procedures", {}).get("chest_tube", {})
+        assert cpt_tube.get("performed") is True
+
+    def test_medical_thoracoscopy_consistency_with_cpt(self):
+        """V2 medical thoracoscopy should produce flags consistent with CPT 32601."""
+        from modules.registry.application.cpt_registry_mapping import (
+            aggregate_registry_fields,
+        )
+
+        # V2 entry indicating medical thoracoscopy
+        v2_entry = {"pleural_procedure_type": "Medical Thoracoscopy"}
+        v2_flags = _extract_registry_booleans(v2_entry)
+
+        # CPT mapping for pleuroscopy
+        cpt_fields = aggregate_registry_fields(["32601"])
+
+        # Both should indicate medical thoracoscopy
+        assert v2_flags["medical_thoracoscopy"] == 1
+
+        cpt_thora = cpt_fields.get("pleural_procedures", {}).get("medical_thoracoscopy", {})
+        assert cpt_thora.get("performed") is True
+
+
+class TestRegistryTargetFieldsSchemaAlignment:
+    """Tests verifying REGISTRY_TARGET_FIELDS aligns with IP_Registry.json schema.
+
+    These tests ensure the ML target fields correspond to actual procedure
+    boolean fields in the registry schema.
+    """
+
+    def test_field_count_is_29(self):
+        """REGISTRY_TARGET_FIELDS should have exactly 29 procedure flags."""
+        assert len(REGISTRY_TARGET_FIELDS) == 29
+
+    def test_bronchoscopy_procedures_present(self):
+        """All expected bronchoscopy procedures should be present."""
+        expected_bronch = [
+            "diagnostic_bronchoscopy",
+            "bal",
+            "bronchial_wash",
+            "brushings",
+            "endobronchial_biopsy",
+            "tbna_conventional",
+            "linear_ebus",
+            "radial_ebus",
+            "navigational_bronchoscopy",
+            "transbronchial_biopsy",
+            "transbronchial_cryobiopsy",
+            "therapeutic_aspiration",
+            "foreign_body_removal",
+            "airway_dilation",
+            "airway_stent",
+            "thermal_ablation",
+            "cryotherapy",
+            "blvr",
+            "peripheral_ablation",
+            "bronchial_thermoplasty",
+            "whole_lung_lavage",
+            "rigid_bronchoscopy",
+        ]
+        for field in expected_bronch:
+            assert field in REGISTRY_TARGET_FIELDS, f"Missing bronch field: {field}"
+
+    def test_pleural_procedures_present(self):
+        """All expected pleural procedures should be present."""
+        expected_pleural = [
+            "thoracentesis",
+            "chest_tube",
+            "ipc",
+            "medical_thoracoscopy",
+            "pleurodesis",
+            "pleural_biopsy",
+            "fibrinolytic_therapy",
+        ]
+        for field in expected_pleural:
+            assert field in REGISTRY_TARGET_FIELDS, f"Missing pleural field: {field}"
+
+    def test_no_non_procedure_fields(self):
+        """REGISTRY_TARGET_FIELDS should not contain demographics or outcome fields."""
+        non_procedure_fields = [
+            "patient_mrn",
+            "procedure_date",
+            "gender",
+            "age",
+            "asa_class",
+            "disposition",
+            "bleeding_severity",
+            "pneumothorax",
+            "complications",
+        ]
+        for field in non_procedure_fields:
+            assert field not in REGISTRY_TARGET_FIELDS, f"Non-procedure field present: {field}"
