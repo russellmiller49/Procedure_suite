@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import logging
 import os
+from contextlib import asynccontextmanager
 
 # Load .env file early so API keys are available
 from dotenv import load_dotenv
@@ -21,11 +22,11 @@ import uuid
 from dataclasses import asdict
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, List
+from typing import Any, AsyncIterator, List
 
 from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.concurrency import run_in_threadpool
-from fastapi.responses import RedirectResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -73,6 +74,7 @@ from modules.api.services.qa_pipeline import (
 )
 from modules.api.dependencies import get_coding_service, get_qa_pipeline_service
 
+from config.settings import CoderSettings
 from modules.coder.schema import CodeDecision, CoderOutput
 from modules.common.knowledge import knowledge_hash, knowledge_version
 from modules.common.spans import Span
@@ -96,7 +98,60 @@ from modules.reporting.engine import (
 from modules.reporting.inference import InferenceEngine
 from modules.reporting.validation import ValidationEngine
 
-app = FastAPI(title="Procedure Suite API", version="0.3.0")
+
+# ============================================================================
+# Application Lifespan Context Manager
+# ============================================================================
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    """Application lifespan with resource management.
+
+    This replaces the deprecated @app.on_event("startup") pattern.
+
+    Startup:
+    - Preloads heavy NLP models to avoid cold-start latency
+    - Gracefully handles warmup failures (app still starts)
+
+    Shutdown:
+    - Placeholder for cleanup if needed in the future
+
+    Environment variables:
+    - PROCSUITE_SKIP_WARMUP: Set to "1", "true", or "yes" to skip warmup entirely
+    - RAILWAY_ENVIRONMENT: If set, skips warmup (Railway caches models separately)
+    """
+    # Import here to avoid circular import at module load time
+    from modules.infra.nlp_warmup import (
+        should_skip_warmup as _should_skip_warmup,
+        warm_heavy_resources as _warm_heavy_resources_fn,
+    )
+
+    # Startup phase
+    if _should_skip_warmup():
+        logging.getLogger(__name__).info(
+            "Skipping heavy NLP warmup (disabled via environment)"
+        )
+    else:
+        try:
+            await _warm_heavy_resources_fn()
+        except Exception as exc:
+            logging.getLogger(__name__).error(
+                "Heavy NLP warmup failed - starting API without NLP features. "
+                "Some endpoints may return errors or degraded results. Error: %s",
+                exc,
+                exc_info=True,
+            )
+
+    yield  # Application runs
+
+    # Shutdown phase (cleanup if needed)
+    # Currently no cleanup required
+
+
+app = FastAPI(
+    title="Procedure Suite API",
+    version="0.3.0",
+    lifespan=lifespan,
+)
 
 # Include ML Advisor router
 app.include_router(ml_advisor_router, prefix="/api/v1", tags=["ML Advisor"])
@@ -133,33 +188,8 @@ from modules.infra.nlp_warmup import (
 )
 
 
-@app.on_event("startup")
-async def warm_heavy_resources() -> None:
-    """Preload heavy NLP models at startup to avoid cold-start latency.
-
-    This hook is called when the FastAPI app starts. Loading models here
-    ensures the first request doesn't incur a long delay waiting for
-    model initialization.
-
-    Environment variables:
-    - PROCSUITE_SKIP_WARMUP: Set to "1", "true", or "yes" to skip warmup entirely
-    - RAILWAY_ENVIRONMENT: If set, skips warmup (Railway caches models separately)
-
-    On failure, the app will still start but NLP features may be degraded.
-    """
-    if should_skip_warmup():
-        _logger.info("Skipping heavy NLP warmup (disabled via environment)")
-        return
-
-    try:
-        await _warm_heavy_resources()
-    except Exception as exc:
-        _logger.error(
-            "Heavy NLP warmup failed - starting API without NLP features. "
-            "Some endpoints may return errors or degraded results. Error: %s",
-            exc,
-            exc_info=True,
-        )
+# NOTE: The lifespan context manager is defined above app creation.
+# See lifespan() function for startup/shutdown logic.
 
 
 class LocalityInfo(BaseModel):
@@ -240,6 +270,27 @@ async def root(request: Request) -> Any:
 @app.get("/health")
 async def health() -> dict[str, bool]:
     return {"ok": True}
+
+
+@app.get("/health/nlp")
+async def nlp_health() -> JSONResponse:
+    """Check NLP model readiness.
+
+    Returns 200 OK if NLP models are loaded and ready.
+    Returns 503 Service Unavailable if NLP features are degraded.
+
+    This endpoint can be used by load balancers to route requests
+    to instances with fully warmed NLP models.
+    """
+    if is_nlp_warmed():
+        return JSONResponse(
+            status_code=200,
+            content={"status": "ok", "nlp_ready": True},
+        )
+    return JSONResponse(
+        status_code=503,
+        content={"status": "degraded", "nlp_ready": False},
+    )
 
 
 @app.get("/knowledge", response_model=KnowledgeMeta)
@@ -356,7 +407,7 @@ async def _run_ml_first_pipeline(
         per_code_billing: list[PerCodeBilling] = []
         total_work_rvu = 0.0
         total_facility_payment = 0.0
-        conversion_factor = 33.8872  # CY2024 Medicare conversion factor
+        conversion_factor = CoderSettings().cms_conversion_factor
 
         for cd in code_decisions:
             proc_info = coding_service.kb_repo.get_procedure_info(cd.cpt)

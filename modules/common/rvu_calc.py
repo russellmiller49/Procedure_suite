@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal
 
+from config.settings import CoderSettings
 from .knowledge import get_rvu
 
 Setting = Literal["facility", "nonfacility"]
@@ -17,8 +18,9 @@ class RVURecord:
 
 
 class RVUCalc:
-    def __init__(self, conversion_factor: float = 32.35): # Using 32.35 as per 2025 default, was 28.35 in prompt example but 32.35 in CSV
-        self.cf = conversion_factor
+    def __init__(self, conversion_factor: float | None = None):
+        # Use centralized setting from CoderSettings (configurable via env var)
+        self.cf = conversion_factor or CoderSettings().cms_conversion_factor
 
     def lookup(self, cpt_code: str) -> RVURecord | None:
         rec = get_rvu(cpt_code)

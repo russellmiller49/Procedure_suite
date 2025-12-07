@@ -1,0 +1,23 @@
+[
+  "diagnostic_bronchoscopy",
+  "brushings",
+  "tbna_conventional",
+  "linear_ebus",
+  "radial_ebus",
+  "navigational_bronchoscopy",
+  "transbronchial_biopsy",
+  "transbronchial_cryobiopsy",
+  "foreign_body_removal",
+  "airway_stent",
+  "thermal_ablation",
+  "blvr",
+  "peripheral_ablation",
+  "bronchial_thermoplasty",
+  "whole_lung_lavage",
+  "rigid_bronchoscopy",
+  "thoracentesis",
+  "chest_tube",
+  "ipc",
+  "medical_thoracoscopy",
+  "pleurodesis"
+]

@@ -19,6 +19,11 @@ from typing import Any
 
 from modules.coder.application.smart_hybrid_policy import HybridCoderResult
 from modules.ml_coder.thresholds import CaseDifficulty
+from modules.ml_coder.registry_predictor import (
+    RegistryMLPredictor,
+    RegistryFieldPrediction,
+    RegistryCaseClassification,
+)
 from modules.registry.application.registry_service import RegistryService
 from modules.registry.application.cpt_registry_mapping import aggregate_registry_fields
 from modules.registry.engine import RegistryEngine

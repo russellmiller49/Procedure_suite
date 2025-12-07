@@ -26,6 +26,10 @@ from modules.registry.application.cpt_registry_mapping import (
     aggregate_registry_fields,
     aggregate_registry_hints,
 )
+from modules.registry.application.registry_builder import (
+    RegistryBuilderProtocol,
+    get_builder,
+)
 from modules.registry.engine import RegistryEngine
 from modules.registry.schema import RegistryRecord
 from modules.registry.schema_granular import derive_procedures_from_granular
@@ -46,6 +50,7 @@ from modules.coder.application.smart_hybrid_policy import (
     SmartHybridOrchestrator,
     HybridCoderResult,
 )
+from modules.ml_coder.registry_predictor import RegistryMLPredictor
 
 
 @dataclass
@@ -82,6 +87,7 @@ class RegistryExtractionResult:
     - Registry fields mapped from CPT codes
     - Extracted fields from RegistryEngine
     - Validation results and manual review flags
+    - ML audit results comparing CPT-derived flags with ML predictions
 
     Attributes:
         record: The extracted RegistryRecord.
@@ -92,6 +98,7 @@ class RegistryExtractionResult:
         warnings: Non-blocking warnings about the extraction.
         needs_manual_review: Whether this case requires human review.
         validation_errors: List of validation errors found during reconciliation.
+        audit_warnings: ML vs CPT discrepancy warnings requiring human review.
     """
 
     record: RegistryRecord
@@ -102,6 +109,7 @@ class RegistryExtractionResult:
     warnings: list[str] = field(default_factory=list)
     needs_manual_review: bool = False
     validation_errors: list[str] = field(default_factory=list)
+    audit_warnings: list[str] = field(default_factory=list)
 
 
 class RegistryService:
@@ -135,6 +143,8 @@ class RegistryService:
         self.default_version = default_version
         self.hybrid_orchestrator = hybrid_orchestrator
         self._registry_engine = registry_engine
+        self._registry_ml_predictor: RegistryMLPredictor | None = None
+        self._ml_predictor_init_attempted: bool = False
 
     @property
     def registry_engine(self) -> RegistryEngine:
@@ -142,6 +152,37 @@ class RegistryService:
         if self._registry_engine is None:
             self._registry_engine = RegistryEngine()
         return self._registry_engine
+
+    def _get_registry_ml_predictor(self) -> RegistryMLPredictor | None:
+        """Get registry ML predictor with lazy initialization.
+
+        Returns the predictor if available, or None if artifacts are missing.
+        Logs once on initialization failure to avoid log spam.
+        """
+        if self._ml_predictor_init_attempted:
+            return self._registry_ml_predictor
+
+        self._ml_predictor_init_attempted = True
+        try:
+            self._registry_ml_predictor = RegistryMLPredictor()
+            if not self._registry_ml_predictor.available:
+                logger.warning(
+                    "RegistryMLPredictor initialized but not available "
+                    "(model artifacts missing). ML hybrid audit disabled."
+                )
+                self._registry_ml_predictor = None
+            else:
+                logger.info(
+                    "RegistryMLPredictor initialized with %d labels",
+                    len(self._registry_ml_predictor.labels),
+                )
+        except Exception:
+            logger.exception(
+                "Failed to initialize RegistryMLPredictor; ML hybrid audit disabled."
+            )
+            self._registry_ml_predictor = None
+
+        return self._registry_ml_predictor
 
     def build_draft_entry(
         self,
@@ -179,31 +220,21 @@ class RegistryService:
         registry_fields = aggregate_registry_fields(cpt_codes, version)
         hints = aggregate_registry_hints(cpt_codes)
 
-        # Build patient info
-        patient_info = self._build_patient_info(metadata, version, missing_fields)
+        # Get the appropriate builder for this version
+        builder = get_builder(version)
 
-        # Build procedure info
-        procedure_info = self._build_procedure_info(
-            procedure_id, metadata, version, missing_fields
+        # Build patient and procedure info using the builder
+        patient_info = builder.build_patient(metadata, missing_fields)
+        procedure_info = builder.build_procedure(procedure_id, metadata, missing_fields)
+
+        # Build the registry entry using the builder
+        entry = builder.build_entry(
+            procedure_id=procedure_id,
+            patient=patient_info,
+            procedure=procedure_info,
+            registry_fields=registry_fields,
+            metadata=metadata,
         )
-
-        # Build the registry entry based on version
-        if version == "v3":
-            entry = self._build_v3_entry(
-                procedure_id=procedure_id,
-                patient=patient_info,
-                procedure=procedure_info,
-                registry_fields=registry_fields,
-                metadata=metadata,
-            )
-        else:
-            entry = self._build_v2_entry(
-                procedure_id=procedure_id,
-                patient=patient_info,
-                procedure=procedure_info,
-                registry_fields=registry_fields,
-                metadata=metadata,
-            )
 
         # Validate and generate warnings
         validation_warnings = self._validate_entry(entry, version)
@@ -293,189 +324,10 @@ class RegistryService:
             warnings=draft.warnings,
         )
 
-    def _build_patient_info(
-        self,
-        metadata: dict[str, Any],
-        version: str,
-        missing_fields: list[str],
-    ) -> PatientInfoV2 | PatientInfoV3:
-        """Build PatientInfo from metadata."""
-        patient_data = metadata.get("patient", {})
-
-        patient_id = patient_data.get("patient_id", "")
-        mrn = patient_data.get("mrn", "")
-        age = patient_data.get("age")
-        sex = patient_data.get("sex")
-
-        if not patient_id and not mrn:
-            missing_fields.append("patient.patient_id or patient.mrn")
-
-        # For v3, use PatientInfoV3 with additional fields
-        if version == "v3":
-            bmi = patient_data.get("bmi")
-            smoking_status = patient_data.get("smoking_status")
-            return PatientInfoV3(
-                patient_id=patient_id,
-                mrn=mrn,
-                age=age,
-                sex=sex,
-                bmi=bmi,
-                smoking_status=smoking_status,
-            )
-        else:
-            return PatientInfoV2(
-                patient_id=patient_id,
-                mrn=mrn,
-                age=age,
-                sex=sex,
-            )
-
-    def _build_procedure_info(
-        self,
-        procedure_id: str,
-        metadata: dict[str, Any],
-        version: str,
-        missing_fields: list[str],
-    ) -> ProcedureInfoV2 | ProcedureInfoV3:
-        """Build ProcedureInfo from metadata."""
-        proc_data = metadata.get("procedure", {})
-
-        procedure_date = proc_data.get("procedure_date")
-        if isinstance(procedure_date, str):
-            try:
-                procedure_date = date.fromisoformat(procedure_date)
-            except ValueError:
-                procedure_date = None
-
-        if not procedure_date:
-            missing_fields.append("procedure.procedure_date")
-
-        procedure_type = proc_data.get("procedure_type", "")
-        indication = proc_data.get("indication", "")
-        urgency = proc_data.get("urgency", "routine")
-
-        if not indication:
-            missing_fields.append("procedure.indication")
-
-        # For v3, use ProcedureInfoV3 with additional fields
-        if version == "v3":
-            operator = proc_data.get("operator", "")
-            facility = proc_data.get("facility", "")
-            return ProcedureInfoV3(
-                procedure_id=procedure_id,
-                procedure_date=procedure_date,
-                procedure_type=procedure_type,
-                indication=indication,
-                urgency=urgency,
-                operator=operator,
-                facility=facility,
-            )
-        else:
-            return ProcedureInfoV2(
-                procedure_id=procedure_id,
-                procedure_date=procedure_date,
-                procedure_type=procedure_type,
-                indication=indication,
-                urgency=urgency,
-            )
-
-    def _build_v2_entry(
-        self,
-        procedure_id: str,
-        patient: PatientInfoV2,
-        procedure: ProcedureInfoV2,
-        registry_fields: dict[str, Any],
-        metadata: dict[str, Any],
-    ) -> IPRegistryV2:
-        """Build an IPRegistryV2 entry."""
-        # Start with base entry
-        entry_data: dict[str, Any] = {
-            "patient": patient,
-            "procedure": procedure,
-        }
-
-        # Apply registry fields from CPT mappings
-        entry_data.update(registry_fields)
-
-        # Apply any direct overrides from metadata
-        for key in [
-            "sedation",
-            "ebus_stations",
-            "tblb_sites",
-            "bal_sites",
-            "navigation_system",
-            "stents",
-            "findings",
-            "complications",
-            "disposition",
-            "impression",
-            "recommendations",
-        ]:
-            if key in metadata:
-                entry_data[key] = metadata[key]
-
-        # Handle any_complications flag
-        complications = metadata.get("complications", [])
-        if complications:
-            entry_data["any_complications"] = True
-
-        return IPRegistryV2(**entry_data)
-
-    def _build_v3_entry(
-        self,
-        procedure_id: str,
-        patient: PatientInfoV3,
-        procedure: ProcedureInfoV3,
-        registry_fields: dict[str, Any],
-        metadata: dict[str, Any],
-    ) -> IPRegistryV3:
-        """Build an IPRegistryV3 entry."""
-        entry_data: dict[str, Any] = {
-            "patient": patient,
-            "procedure": procedure,
-        }
-
-        # Apply registry fields from CPT mappings
-        entry_data.update(registry_fields)
-
-        # Apply v3-specific fields from metadata
-        v3_fields = [
-            "sedation",
-            "events",
-            "ebus_stations",
-            "ebus_station_count",
-            "tblb_sites",
-            "tblb_technique",
-            "navigation_target_reached",
-            "radial_ebus_findings",
-            "bal_sites",
-            "bal_volume_ml",
-            "bal_return_ml",
-            "dilation_sites",
-            "dilation_technique",
-            "stents",
-            "ablation_sites",
-            "blvr_chartis_performed",
-            "blvr_cv_result",
-            "findings",
-            "complications",
-            "outcome",
-            "disposition",
-            "length_of_stay_hours",
-            "impression",
-            "recommendations",
-        ]
-
-        for key in v3_fields:
-            if key in metadata:
-                entry_data[key] = metadata[key]
-
-        # Handle any_complications flag
-        complications = metadata.get("complications", [])
-        if complications:
-            entry_data["any_complications"] = True
-
-        return IPRegistryV3(**entry_data)
+    # NOTE: _build_patient_info, _build_procedure_info, _build_v2_entry, and
+    # _build_v3_entry have been refactored into the registry_builder module
+    # using the Strategy Pattern. See registry_builder.py for V2RegistryBuilder
+    # and V3RegistryBuilder.
 
     def _validate_entry(
         self,
@@ -631,7 +483,7 @@ class RegistryService:
         # 4. Merge CPT-driven fields into the extraction result
         merged_record = self._merge_cpt_fields_into_record(record, mapped_fields)
 
-        # 5. Validate and finalize
+        # 5. Validate and finalize (includes ML hybrid audit)
         final_result = self._validate_and_finalize(
             RegistryExtractionResult(
                 record=merged_record,
@@ -642,6 +494,7 @@ class RegistryService:
                 warnings=[],
             ),
             coder_result=coder_result,
+            note_text=note_text,
         )
 
         return final_result
@@ -750,17 +603,23 @@ class RegistryService:
         result: RegistryExtractionResult,
         *,
         coder_result: HybridCoderResult,
+        note_text: str = "",
     ) -> RegistryExtractionResult:
         """Central validation and finalization logic.
 
         Compare CPT-driven signals (coder_result.codes) with registry fields and
-        set validation flags accordingly. Marks cases for manual review when:
+        set validation flags accordingly. Also performs ML hybrid audit to detect
+        procedures that ML predicted but CPT-derived flags did not capture.
+
+        Marks cases for manual review when:
         - CPT codes don't match extracted registry fields
         - Case difficulty is LOW_CONF or GRAY_ZONE
+        - ML predictor detects procedures not captured by CPT pathway
 
         Args:
             result: The extraction result to validate.
             coder_result: The original hybrid coder result for cross-validation.
+            note_text: Original procedure note text for ML prediction.
 
         Returns:
             Validated and finalized RegistryExtractionResult with validation flags.
@@ -771,6 +630,7 @@ class RegistryService:
         record = result.record
         validation_errors: list[str] = list(result.validation_errors)
         warnings = list(result.warnings)
+        audit_warnings: list[str] = list(result.audit_warnings)
         needs_manual_review = result.needs_manual_review
 
         # Get nested procedure objects (may be None)
@@ -967,6 +827,65 @@ class RegistryService:
             needs_manual_review = True
 
         # -------------------------------------------------------------------------
+        # 4. ML Hybrid Audit: Compare ML predictions with CPT-derived flags
+        # -------------------------------------------------------------------------
+        # This is an audit overlay that cross-checks ML predictions against
+        # CPT-derived flags to catch procedures the CPT pathway may have missed.
+
+        ml_predictor = self._get_registry_ml_predictor()
+        if ml_predictor is not None and note_text:
+            ml_case = ml_predictor.classify_case(note_text)
+
+            # Build CPT-derived flags dict from mapped_fields
+            # The mapped_fields has structure like:
+            # {"procedures_performed": {"linear_ebus": {"performed": True}, ...}}
+            cpt_flags: dict[str, bool] = {}
+            proc_map = result.mapped_fields.get("procedures_performed") or {}
+            for proc_name, proc_values in proc_map.items():
+                if isinstance(proc_values, dict) and proc_values.get("performed"):
+                    cpt_flags[proc_name] = True
+
+            pleural_map = result.mapped_fields.get("pleural_procedures") or {}
+            for proc_name, proc_values in pleural_map.items():
+                if isinstance(proc_values, dict) and proc_values.get("performed"):
+                    cpt_flags[proc_name] = True
+
+            # Build ML flags dict
+            ml_flags: dict[str, bool] = {}
+            for pred in ml_case.predictions:
+                ml_flags[pred.field] = pred.is_positive
+
+            # Compare flags and generate audit warnings
+            # Scenario C: ML detected a procedure that CPT pathway did not
+            for field_name, ml_positive in ml_flags.items():
+                cpt_positive = cpt_flags.get(field_name, False)
+
+                if ml_positive and not cpt_positive:
+                    # ML detected a procedure the CPT pathway did not capture
+                    # Find the probability for context
+                    prob = next(
+                        (p.probability for p in ml_case.predictions if p.field == field_name),
+                        0.0,
+                    )
+                    audit_warnings.append(
+                        f"ML detected procedure '{field_name}' with high confidence "
+                        f"(prob={prob:.2f}), but no corresponding CPT-derived flag was set. "
+                        f"Please review."
+                    )
+                    needs_manual_review = True
+
+            # Log ML audit summary
+            ml_detected_count = sum(1 for f, v in ml_flags.items() if v and not cpt_flags.get(f, False))
+            if ml_detected_count > 0:
+                logger.info(
+                    "ml_hybrid_audit_discrepancy",
+                    extra={
+                        "ml_detected_not_in_cpt": ml_detected_count,
+                        "audit_warnings": audit_warnings,
+                    },
+                )
+
+        # -------------------------------------------------------------------------
         # Telemetry: Log validation outcome for monitoring
         # -------------------------------------------------------------------------
         logger.info(
@@ -977,12 +896,13 @@ class RegistryService:
                 "needs_manual_review": needs_manual_review,
                 "validation_error_count": len(validation_errors),
                 "warning_count": len(warnings),
+                "audit_warning_count": len(audit_warnings),
                 "cpt_code_count": len(codes),
             },
         )
 
         # -------------------------------------------------------------------------
-        # 4. Return Updated Result
+        # 5. Return Updated Result
         # -------------------------------------------------------------------------
         return RegistryExtractionResult(
             record=record,  # Use potentially updated record from granular derivation
@@ -993,6 +913,7 @@ class RegistryService:
             warnings=warnings,
             needs_manual_review=needs_manual_review,
             validation_errors=validation_errors,
+            audit_warnings=audit_warnings,
         )
 
 

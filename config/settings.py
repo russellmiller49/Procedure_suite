@@ -21,6 +21,11 @@ class CoderSettings(BaseSettings):
     rule_confidence_low_threshold: float = 0.6
     context_window_chars: int = 200
 
+    # CMS conversion factor (updated annually by CMS)
+    # CY 2025 Medicare Physician Fee Schedule Conversion Factor
+    # Override via CODER_CMS_CONVERSION_FACTOR environment variable
+    cms_conversion_factor: float = 32.3562
+
     model_config = {"env_prefix": "CODER_"}
 
 

@@ -57,7 +57,8 @@ class RegistryExtractRequest(BaseModel):
 class RegistryExtractResponse(BaseModel):
     """Response from registry field extraction.
 
-    Contains extracted registry record, CPT codes, and validation metadata.
+    Contains extracted registry record, CPT codes, validation metadata,
+    and ML hybrid audit results.
     """
 
     record: dict[str, Any] = Field(
@@ -86,11 +87,22 @@ class RegistryExtractResponse(BaseModel):
     )
     needs_manual_review: bool = Field(
         default=False,
-        description="Whether this case requires human review",
+        description=(
+            "True when ML registry predictions conflict with CPT-derived fields "
+            "or other validation issues require human review"
+        ),
     )
     validation_errors: list[str] = Field(
         default_factory=list,
         description="Validation errors found during CPT-registry reconciliation",
+    )
+    audit_warnings: list[str] = Field(
+        default_factory=list,
+        description=(
+            "List of human-readable warnings describing ML vs CPT discrepancies. "
+            "These indicate procedures the ML model detected with high confidence "
+            "that were not captured by the CPT-derived flags."
+        ),
     )
 
     @classmethod
@@ -112,6 +124,7 @@ class RegistryExtractResponse(BaseModel):
             warnings=result.warnings,
             needs_manual_review=result.needs_manual_review,
             validation_errors=result.validation_errors,
+            audit_warnings=result.audit_warnings,
         )
 
 

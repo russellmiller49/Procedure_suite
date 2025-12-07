@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+from config.settings import CoderSettings
 from proc_schemas.coding import CodingResult, CodeSuggestion
 from modules.coder.schema import (
     CodeDecision,
@@ -84,7 +85,7 @@ def convert_coding_result_to_coder_output(
     result: CodingResult,
     kb_repo: Optional[KnowledgeBaseRepository] = None,
     locality: str = "00",
-    conversion_factor: float = 32.3562,  # CY 2025 Medicare conversion factor
+    conversion_factor: float | None = None,
 ) -> CoderOutput:
     """Convert a CodingResult to the legacy CoderOutput format.
 
@@ -92,11 +93,15 @@ def convert_coding_result_to_coder_output(
         result: CodingResult from CodingService.generate_result()
         kb_repo: Optional KB repository for RVU lookups
         locality: Geographic locality code for RVU calculations
-        conversion_factor: Medicare conversion factor
+        conversion_factor: Medicare conversion factor (uses CODER_CMS_CONVERSION_FACTOR if None)
 
     Returns:
         CoderOutput in the legacy format for API compatibility
     """
+    # Use centralized setting if no explicit override provided
+    if conversion_factor is None:
+        conversion_factor = CoderSettings().cms_conversion_factor
+
     # Convert suggestions to CodeDecision objects
     codes: list[CodeDecision] = []
     for suggestion in result.suggestions:

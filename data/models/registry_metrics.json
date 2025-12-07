@@ -1,0 +1,184 @@
+{
+  "n_samples": 93,
+  "n_labels": 21,
+  "macro": {
+    "precision": 0.6992061456396206,
+    "recall": 0.8185755695154191,
+    "f1": 0.735824229011083
+  },
+  "micro": {
+    "precision": 0.7669491525423728,
+    "recall": 0.8190045248868778,
+    "f1": 0.7921225382932167
+  },
+  "per_label": {
+    "diagnostic_bronchoscopy": {
+      "precision": 0.8333333333333334,
+      "recall": 0.7894736842105263,
+      "f1": 0.8108108108108109,
+      "support": 57,
+      "predictions": 54,
+      "threshold": 0.55
+    },
+    "brushings": {
+      "precision": 0.47368421052631576,
+      "recall": 0.75,
+      "f1": 0.5806451612903226,
+      "support": 12,
+      "predictions": 19,
+      "threshold": 0.2
+    },
+    "tbna_conventional": {
+      "precision": 0.9,
+      "recall": 0.6428571428571429,
+      "f1": 0.75,
+      "support": 14,
+      "predictions": 10,
+      "threshold": 0.6
+    },
+    "linear_ebus": {
+      "precision": 1.0,
+      "recall": 0.7777777777777778,
+      "f1": 0.875,
+      "support": 9,
+      "predictions": 7,
+      "threshold": 0.65
+    },
+    "radial_ebus": {
+      "precision": 0.8,
+      "recall": 0.9523809523809523,
+      "f1": 0.8695652173913043,
+      "support": 21,
+      "predictions": 25,
+      "threshold": 0.25
+    },
+    "navigational_bronchoscopy": {
+      "precision": 0.84,
+      "recall": 1.0,
+      "f1": 0.9130434782608695,
+      "support": 21,
+      "predictions": 25,
+      "threshold": 0.25
+    },
+    "transbronchial_biopsy": {
+      "precision": 0.6956521739130435,
+      "recall": 0.7272727272727273,
+      "f1": 0.7111111111111111,
+      "support": 22,
+      "predictions": 23,
+      "threshold": 0.35
+    },
+    "transbronchial_cryobiopsy": {
+      "precision": 0.5714285714285714,
+      "recall": 1.0,
+      "f1": 0.7272727272727273,
+      "support": 4,
+      "predictions": 7,
+      "threshold": 0.1
+    },
+    "foreign_body_removal": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 2,
+      "predictions": 2,
+      "threshold": 0.1
+    },
+    "airway_stent": {
+      "precision": 1.0,
+      "recall": 0.8571428571428571,
+      "f1": 0.9230769230769231,
+      "support": 7,
+      "predictions": 6,
+      "threshold": 0.55
+    },
+    "thermal_ablation": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 2,
+      "predictions": 0,
+      "threshold": 0.5
+    },
+    "blvr": {
+      "precision": 0.4,
+      "recall": 1.0,
+      "f1": 0.5714285714285714,
+      "support": 2,
+      "predictions": 5,
+      "threshold": 0.1
+    },
+    "peripheral_ablation": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "support": 3,
+      "predictions": 6,
+      "threshold": 0.2
+    },
+    "bronchial_thermoplasty": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 1,
+      "predictions": 1,
+      "threshold": 0.1
+    },
+    "whole_lung_lavage": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 1,
+      "predictions": 1,
+      "threshold": 0.1
+    },
+    "rigid_bronchoscopy": {
+      "precision": 1.0,
+      "recall": 0.9090909090909091,
+      "f1": 0.9523809523809523,
+      "support": 11,
+      "predictions": 10,
+      "threshold": 0.45000000000000007
+    },
+    "thoracentesis": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "support": 1,
+      "predictions": 2,
+      "threshold": 0.2
+    },
+    "chest_tube": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 5,
+      "predictions": 0,
+      "threshold": 0.45000000000000007
+    },
+    "ipc": {
+      "precision": 0.7,
+      "recall": 1.0,
+      "f1": 0.8235294117647058,
+      "support": 7,
+      "predictions": 10,
+      "threshold": 0.1
+    },
+    "medical_thoracoscopy": {
+      "precision": 0.7692307692307693,
+      "recall": 0.9090909090909091,
+      "f1": 0.8333333333333334,
+      "support": 11,
+      "predictions": 13,
+      "threshold": 0.15000000000000002
+    },
+    "pleurodesis": {
+      "precision": 0.7,
+      "recall": 0.875,
+      "f1": 0.7777777777777778,
+      "support": 8,
+      "predictions": 10,
+      "threshold": 0.25
+    }
+  }
+}

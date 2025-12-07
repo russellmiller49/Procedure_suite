@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from config.settings import CoderSettings
 from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
 
 
@@ -25,10 +26,8 @@ class RVUCalculator:
     """Calculator for RVU-based payments.
 
     Uses the CMS conversion factor to convert RVUs to dollar amounts.
+    The conversion factor is configurable via CODER_CMS_CONVERSION_FACTOR env var.
     """
-
-    # CY 2025 CMS Conversion Factor from final rule
-    DEFAULT_CONVERSION_FACTOR = 32.3562
 
     def __init__(
         self,
@@ -36,7 +35,8 @@ class RVUCalculator:
         conversion_factor: float | None = None,
     ):
         self.kb_repo = kb_repo
-        self.conversion_factor = conversion_factor or self.DEFAULT_CONVERSION_FACTOR
+        # Use centralized setting if no explicit override provided
+        self.conversion_factor = conversion_factor or CoderSettings().cms_conversion_factor
 
     def calculate(self, code: str) -> RVUResult | None:
         """Calculate RVU-based payments for a code.

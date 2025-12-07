@@ -1,0 +1,23 @@
+{
+  "diagnostic_bronchoscopy": 0.55,
+  "brushings": 0.2,
+  "tbna_conventional": 0.6,
+  "linear_ebus": 0.65,
+  "radial_ebus": 0.25,
+  "navigational_bronchoscopy": 0.25,
+  "transbronchial_biopsy": 0.35,
+  "transbronchial_cryobiopsy": 0.1,
+  "foreign_body_removal": 0.1,
+  "airway_stent": 0.55,
+  "thermal_ablation": 0.5,
+  "blvr": 0.1,
+  "peripheral_ablation": 0.2,
+  "bronchial_thermoplasty": 0.1,
+  "whole_lung_lavage": 0.1,
+  "rigid_bronchoscopy": 0.45000000000000007,
+  "thoracentesis": 0.2,
+  "chest_tube": 0.45000000000000007,
+  "ipc": 0.1,
+  "medical_thoracoscopy": 0.15000000000000002,
+  "pleurodesis": 0.25
+}

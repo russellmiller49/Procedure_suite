@@ -20,6 +20,7 @@ from modules.domain.coding_rules.rule_engine import RuleEngine
 from modules.coder.adapters.nlp.keyword_mapping_loader import KeywordMappingRepository
 from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDetector
 from modules.coder.adapters.llm.gemini_advisor import LLMAdvisorPort
+from modules.coder.adapters.ml_ranker import MLRankerPort, MLRankingResult
 from modules.coder.application.smart_hybrid_policy import (
     HybridPolicy,
     HybridCandidate,
@@ -71,6 +72,7 @@ class CodingService:
         llm_advisor: Optional[LLMAdvisorPort],
         config: CoderSettings,
         phi_scrubber: Optional[PHIScrubberPort] = None,
+        ml_ranker: Optional[MLRankerPort] = None,
     ):
         self.kb_repo = kb_repo
         self.keyword_repo = keyword_repo
@@ -79,6 +81,7 @@ class CodingService:
         self.llm_advisor = llm_advisor
         self.config = config
         self.phi_scrubber = phi_scrubber
+        self.ml_ranker = ml_ranker
 
         # Initialize hybrid policy
         self.hybrid_policy = HybridPolicy(
@@ -94,6 +97,12 @@ class CodingService:
                 "LLM advisor enabled but no PHI scrubber configured. "
                 "Raw text may be sent to external LLM service."
             )
+
+        # Log ML ranker status
+        if ml_ranker and ml_ranker.available:
+            logger.info("ML ranker enabled: %s", ml_ranker.version)
+        elif ml_ranker:
+            logger.warning("ML ranker provided but not available (models not loaded)")
 
     def generate_suggestions(
         self,
@@ -134,8 +143,8 @@ class CodingService:
             # Step 1: Rule-based coding
             rule_result = self._run_rule_engine(report_text)
 
-            # Step 2: Optional ML ranking (not implemented yet)
-            # ml_result = self._run_ml_ranker(rule_result)
+            # Step 2: Optional ML ranking
+            ml_result = self._run_ml_ranker(report_text, rule_result)
 
             # Step 3: LLM advisor (track latency separately)
             advisor_result, llm_latency_ms = self._run_llm_advisor(report_text, use_llm)
@@ -234,6 +243,65 @@ class CodingService:
             codes=result.codes,
             confidence=result.confidence,
         )
+
+    def _run_ml_ranker(
+        self,
+        report_text: str,
+        rule_result: RuleResult,
+    ) -> Optional[MLRankingResult]:
+        """Step 2: Run the ML ranker to get confidence scores.
+
+        If an ML ranker is configured, this augments rule-based codes with
+        ML-derived confidence scores. High-confidence ML predictions may
+        also be added if not already present from rules.
+
+        Args:
+            report_text: The procedure note text.
+            rule_result: Result from the rule engine (Step 1).
+
+        Returns:
+            MLRankingResult with predictions and confidence scores,
+            or None if ML ranker is not available.
+        """
+        if not self.ml_ranker or not self.ml_ranker.available:
+            return None
+
+        with timed("coding_service.ml_ranker"):
+            ml_result = self.ml_ranker.rank_codes(
+                note_text=report_text,
+                candidate_codes=None,  # Score all known codes
+            )
+
+        # Log ML ranking results
+        logger.info(
+            "ML ranking complete",
+            extra={
+                "difficulty": ml_result.difficulty,
+                "high_conf_count": len(ml_result.high_conf_codes),
+                "gray_zone_count": len(ml_result.gray_zone_codes),
+                "total_predictions": len(ml_result.predictions),
+            },
+        )
+
+        # Augment rule result confidence with ML scores
+        for code in rule_result.codes:
+            if code in ml_result.confidence_map:
+                ml_conf = ml_result.confidence_map[code]
+                rule_conf = rule_result.confidence.get(code, 0.0)
+                # Boost confidence if ML agrees, average otherwise
+                if ml_conf > 0.5:
+                    rule_result.confidence[code] = max(rule_conf, ml_conf * 0.9)
+                logger.debug(
+                    "ML augmented rule confidence",
+                    extra={
+                        "code": code,
+                        "rule_conf": rule_conf,
+                        "ml_conf": ml_conf,
+                        "final_conf": rule_result.confidence[code],
+                    },
+                )
+
+        return ml_result
 
     def _run_llm_advisor(self, report_text: str, use_llm: bool) -> tuple[AdvisorResult, float]:
         """Step 3: Run the LLM advisor.

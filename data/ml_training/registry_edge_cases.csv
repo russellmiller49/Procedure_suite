@@ -1,4 +1,4 @@
-note_text,verified_cpt_codes,source_file,patient_mrn,procedure_date,is_edge_case
+note_text,diagnostic_bronchoscopy,brushings,tbna_conventional,linear_ebus,radial_ebus,navigational_bronchoscopy,transbronchial_biopsy,transbronchial_cryobiopsy,foreign_body_removal,airway_stent,thermal_ablation,blvr,peripheral_ablation,bronchial_thermoplasty,whole_lung_lavage,rigid_bronchoscopy,thoracentesis,chest_tube,ipc,medical_thoracoscopy,pleurodesis
 "Patient: Sanders, Lucille | 59F | MRN 8801001
 Date of Procedure: 11/14/2024
 Attending: Brian Cho, MD
@@ -49,7 +49,7 @@ None. No significant bleeding or hypoxia.
 DISPOSITION:
 Extubated in procedure room and transferred to PACU in stable condition.
 
-CPT (requested by operator): 31622, 31652",31652,synthetic_edge_case_notes_with_registry.jsonl,8801001,2024-11-14,True
+CPT (requested by operator): 31622, 31652",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Patient: Ruiz, Omar | 64M | MRN 8801002
 Date of Procedure: 11/18/2024
 Attending: Sarah Lin, MD
@@ -91,7 +91,7 @@ None. Patient remained hemodynamically stable, minimal bleeding.
 DISPOSITION:
 Extubated in procedure room, transferred to PACU.
 
-CPT (requested): 31622, 31653, 31654",31653,synthetic_edge_case_notes_with_registry.jsonl,8801002,2024-11-18,True
+CPT (requested): 31622, 31653, 31654",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Patient: Nguyen, Tina | 50F | MRN 8801003
 Date of Procedure: 11/21/2024
 Attending: Michael Hart, MD
@@ -138,7 +138,7 @@ None. No hypoxia, bleeding, or pneumothorax noted intra-procedure.
 DISPOSITION:
 Extubated in OR and monitored in PACU before same-day discharge.
 
-CPT (requested): 31627, 31654, 31628, 31652","31627,31628,31652,31654",synthetic_edge_case_notes_with_registry.jsonl,8801003,2024-11-21,True
+CPT (requested): 31627, 31654, 31628, 31652",1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Patient: Fowler, Justin | 71M | MRN 8801004
 Date of Procedure: 11/23/2024
 Attending: Priya Desai, MD
@@ -177,7 +177,7 @@ Brief desaturation during attempted EBUS entry, resolved with oxygen and scope r
 DISPOSITION:
 Observed in step-down unit for 2 hours and discharged home the same day.
 
-CPT (requested by operator): 31652",31624,synthetic_edge_case_notes_with_registry.jsonl,8801004,2024-11-23,True
+CPT (requested by operator): 31652",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Patient: Brooks, Henry | 67M | MRN 8801005
 Date of Procedure: 11/26/2024
 Attending: Laura Kim, MD
@@ -216,7 +216,7 @@ Minimal mucosal oozing controlled with cold saline. No desaturation.
 DISPOSITION:
 Recovered uneventfully and discharged home.
 
-CPT (requested): 31645",31645,synthetic_edge_case_notes_with_registry.jsonl,8801005,2024-11-26,True
+CPT (requested): 31645",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Patient: Alvarez, Maria | 63F | MRN 8801006
 Date of Procedure: 11/29/2024
 Attending: David Chen, MD
@@ -253,7 +253,7 @@ None.
 DISPOSITION:
 Remained intubated briefly then extubated in OR and transferred to ICU.
 
-CPT (requested): 31631, 31630",31631,synthetic_edge_case_notes_with_registry.jsonl,8801006,2024-11-29,True
+CPT (requested): 31631, 31630",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Patient: Gomez, Alicia | 74F | MRN 8801007
 Date of Procedure: 12/02/2024
 Attending: Robert Hayes, MD
@@ -290,7 +290,7 @@ Mild oozing controlled with APC; no hypoxia.
 DISPOSITION:
 Extubated in OR and transferred to PACU.
 
-CPT (requested): 31641, 31640",31641,synthetic_edge_case_notes_with_registry.jsonl,8801007,2024-12-02,True
+CPT (requested): 31641, 31640",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "EMERGENCY BRONCHOSCOPY – HEMOPTYSIS
 Patient: Lee, Marcus | 62M | MRN 8801008
 Date: 12/03/2024 01:10 AM
@@ -329,7 +329,7 @@ None beyond initial hemorrhage.
 DISPOSITION:
 Remain intubated in ICU, plan for IR bronchial artery embolization later this morning.
 
-CPT (requested): 31634, 31622",31634,synthetic_edge_case_notes_with_registry.jsonl,8801008,2024-12-03,True
+CPT (requested): 31634, 31622",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Patient: Smith, Carolyn | 69F | MRN 8801009
 Date of Procedure: 12/04/2024
 Attending: Jason Moore, MD
@@ -364,7 +364,7 @@ None. No respiratory distress.
 DISPOSITION:
 Returned to oncology ward for observation.
 
-CPT (requested): 32560, 32550",32560,synthetic_edge_case_notes_with_registry.jsonl,8801009,2024-12-04,True
+CPT (requested): 32560, 32550",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1
 "Patient: Patel, Rohan | 58M | MRN 8801010
 Date of Procedure: 12/05/2024
 Attending: Emily Rogers, MD
@@ -401,7 +401,7 @@ Mild chest discomfort and cough; no pneumothorax.
 DISPOSITION:
 Observed for 2 hours and discharged home.
 
-CPT (requested): 32555",32555,synthetic_edge_case_notes_with_registry.jsonl,8801010,2024-12-05,True
+CPT (requested): 32555",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
 "PROCEDURE NOTE: PLEURAL INTERVENTION CONVERSION
 
 **Patient:** James Howlett (MRN: 991823)
@@ -424,7 +424,7 @@ Ultrasound identified a loculated fluid collection. Local anesthesia (20cc Lidoc
 3. **Fibrinolytics:** Given loculations seen on US, 10mg tPA and 5mg DNase were instilled through the new chest tube at the end of the case. Tube clamped.
 
 **Complications:** None.
-**Disposition:** Admitted for empyema management.","32551,32561",synthetic_edge_case_notes_with_registry.jsonl,991823,2025-10-31,True
+**Disposition:** Admitted for empyema management.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
 "**BRONCHOSCOPY SUITE - PROCEDURE NOTE**
 
 **Patient:** Logan Roy | **DOB:** 10/14/1948
@@ -448,7 +448,7 @@ Active pulsatile bleeding identified from RUL orifice. Tumor invasion noted at R
 
 **Outcome:** Hemostasis achieved. Extubated in OR once stable.
 
-**Impression:** Massive hemoptysis secondary to tumor erosion. Controlled with APC and Tamponade.","31641,31645",synthetic_edge_case_notes_with_registry.jsonl,Unknown,2025-11-05,True
+**Impression:** Massive hemoptysis secondary to tumor erosion. Controlled with APC and Tamponade.",1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
 "PROCEDURE: Mixed Modality Staging and Treatment
 DATE: 06/06/2025
 PATIENT: Wade Wilson (MRN: Deadpool)
@@ -471,7 +471,7 @@ Upon withdrawal, a large polypoid lesion was seen in the Right Mainstem Bronchus
 - Mediastinal Staging
 - RMB Tumor Resection (Unplanned)
 
-No complications.","31627,31628,31641,31652,31654",synthetic_edge_case_notes_with_registry.jsonl,Deadpool,2025-06-06,True
+No complications.",1,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Operative Note: Complex Stent Exchange
 Date: 02/02/2025
 Dr. F. N. Stein
@@ -485,7 +485,7 @@ Procedure:
 3. **Treatment:** APC and Cryotherapy applied to the granulomas to clean the airway base.
 4. **Replacement:** A NEW 14x40mm silicone stent was deployed in the same position.
 
-EBL: 10cc.",31638,synthetic_edge_case_notes_with_registry.jsonl,Unknown,2025-02-02,True
+EBL: 10cc.",1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0
 "Procedure: Cryo-Ablation vs Biopsy
 Date: 09/09/2025
 
@@ -501,7 +501,7 @@ Cryobiopsy performed x 2. **Sent to pathology.**
 
 **Codes:**
 31641 (RLL Ablation)
-31628 (LUL Biopsy)","31628,31641,31654",synthetic_edge_case_notes_with_registry.jsonl,Unknown,2025-09-09,True
+31628 (LUL Biopsy)",1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "OPERATIVE REPORT: COMPLEX AIRWAY INTERVENTION
 
 Patient: Octavia Butler (MRN: 772194)
@@ -523,7 +523,7 @@ Balloon dilation (CRE balloon, 12mm) was performed at the stenotic segment to 14
 Once patency improved to >90%, a new 16x50mm Dumon silicone stent was loaded and deployed covering the mid-to-distal trachea. Position confirmed with flexible scope. RUL patent. Stent stable.
 
 **EBL:** 50cc.
-**Complications:** Minor hemorrhage controlled with cold saline and laser.","31631,31638,31640,31641",synthetic_edge_case_notes_with_registry.jsonl,772194,2025-12-12,True
+**Complications:** Minor hemorrhage controlled with cold saline and laser.",1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0
 "PROCEDURE: Electromagnetic Navigation Bronchoscopy & EBUS
 PATIENT: Leo Spaceman | MRN: 991283
 DATE: 01/20/2025
@@ -543,7 +543,7 @@ Despite multiple attempts and catheter adjustments, the target could not be succ
 **Decision:** 
 Biopsy of the peripheral nodule was ABORTED due to lack of confirmation. No samples taken from RUL.
 
-**Procedure concluded.**","31627,31628,31653,31654",synthetic_edge_case_notes_with_registry.jsonl,991283,2025-01-20,True
+**Procedure concluded.**",1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "**Procedure Note: Pleural Intervention**
 **Date:** 07/04/2025
 **Patient:** G. Washington (MRN: 1776)
@@ -558,7 +558,7 @@ Attempted thoracentesis with 18G needle - no fluid returned (Dry Tap). Repositio
 Successfully accessed pleural space with 18G needle. Guide wire passed. Dilated tract. 8Fr Pigtail catheter placed. 
 Drained 1400cc clear yellow fluid. 
 
-**Plan:** Leave pigtail in place for drainage. Send fluid for culture/cyto.",32557,synthetic_edge_case_notes_with_registry.jsonl,1776,2025-07-04,True
+**Plan:** Leave pigtail in place for drainage. Send fluid for culture/cyto.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
 "Bronchoscopy Sedation Note
 Patient: M. Scott
 Date: 02/14/2025
@@ -574,7 +574,7 @@ Observer: RN P. Beesly (Dedicated monitor)
 Medications: Fentanyl 100mcg, Versed 4mg.
 Vitals stable. No hypoxia.
 
-Procedure findings: RML infiltrate. Mucous plug suctioned. BAL obtained. Brush obtained.","31623,31624",synthetic_edge_case_notes_with_registry.jsonl,Unknown,2025-02-14,True
+Procedure findings: RML infiltrate. Mucous plug suctioned. BAL obtained. Brush obtained.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "PROCEDURE: Transbronchial Cryobiopsy for ILD
 DATE: 10/31/2025
 PATIENT: Bruce Wayne (MRN: 10001)
@@ -591,4 +591,4 @@ Specimen: Large lung chunk (10mm) obtained.
 Repeated in RLL Lateral Basal segment x 1.
 
 Total 2 biopsies. Fluoroscopy used.
-No pneumothorax on post-op ultrasound.","31628,31632,31654",synthetic_edge_case_notes_with_registry.jsonl,10001,2025-10-31,True
+No pneumothorax on post-op ultrasound.",1,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
