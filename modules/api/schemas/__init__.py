@@ -7,6 +7,7 @@ This package contains all Pydantic schemas for the FastAPI integration layer.
 from modules.api.schemas.base import (
     CoderRequest,
     CoderResponse,
+    HybridPipelineMetadata,
     KnowledgeMeta,
     QARunRequest,
     RegistryRequest,
@@ -32,6 +33,7 @@ __all__ = [
     # Base schemas
     "CoderRequest",
     "CoderResponse",
+    "HybridPipelineMetadata",
     "KnowledgeMeta",
     "QARunRequest",
     "RegistryRequest",

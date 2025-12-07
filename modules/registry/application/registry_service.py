@@ -17,6 +17,7 @@ from typing import Any, Literal
 from pydantic import BaseModel, ValidationError
 
 from modules.common.exceptions import RegistryError
+from modules.common.logger import get_logger
 from modules.registry.adapters.schema_registry import (
     RegistrySchemaRegistry,
     get_schema_registry,
@@ -25,6 +26,10 @@ from modules.registry.application.cpt_registry_mapping import (
     aggregate_registry_fields,
     aggregate_registry_hints,
 )
+from modules.registry.engine import RegistryEngine
+from modules.registry.schema import RegistryRecord
+
+logger = get_logger("registry_service")
 from proc_schemas.coding import FinalCode, CodingResult
 from proc_schemas.registry.ip_v2 import (
     IPRegistryV2,
@@ -35,6 +40,10 @@ from proc_schemas.registry.ip_v3 import (
     IPRegistryV3,
     PatientInfo as PatientInfoV3,
     ProcedureInfo as ProcedureInfoV3,
+)
+from modules.coder.application.smart_hybrid_policy import (
+    SmartHybridOrchestrator,
+    HybridCoderResult,
 )
 
 
@@ -63,6 +72,37 @@ class RegistryExportResult:
     warnings: list[str] = field(default_factory=list)
 
 
+@dataclass
+class RegistryExtractionResult:
+    """Result from hybrid-first registry field extraction.
+
+    Combines:
+    - CPT codes from SmartHybridOrchestrator
+    - Registry fields mapped from CPT codes
+    - Extracted fields from RegistryEngine
+    - Validation results and manual review flags
+
+    Attributes:
+        record: The extracted RegistryRecord.
+        cpt_codes: CPT codes from the hybrid coder.
+        coder_difficulty: Case difficulty (HIGH_CONF/GRAY_ZONE/LOW_CONF).
+        coder_source: Where codes came from (ml_rules_fastpath/hybrid_llm_fallback).
+        mapped_fields: Registry fields derived from CPT mapping.
+        warnings: Non-blocking warnings about the extraction.
+        needs_manual_review: Whether this case requires human review.
+        validation_errors: List of validation errors found during reconciliation.
+    """
+
+    record: RegistryRecord
+    cpt_codes: list[str]
+    coder_difficulty: str
+    coder_source: str
+    mapped_fields: dict[str, Any]
+    warnings: list[str] = field(default_factory=list)
+    needs_manual_review: bool = False
+    validation_errors: list[str] = field(default_factory=list)
+
+
 class RegistryService:
     """Application service for registry export operations.
 
@@ -79,15 +119,28 @@ class RegistryService:
         self,
         schema_registry: RegistrySchemaRegistry | None = None,
         default_version: str = "v2",
+        hybrid_orchestrator: SmartHybridOrchestrator | None = None,
+        registry_engine: RegistryEngine | None = None,
     ):
         """Initialize RegistryService.
 
         Args:
             schema_registry: Registry for versioned schemas. Uses default if None.
             default_version: Default schema version to use if not specified.
+            hybrid_orchestrator: Optional SmartHybridOrchestrator for ML-first coding.
+            registry_engine: Optional RegistryEngine for field extraction. Lazy-init if None.
         """
         self.schema_registry = schema_registry or get_schema_registry()
         self.default_version = default_version
+        self.hybrid_orchestrator = hybrid_orchestrator
+        self._registry_engine = registry_engine
+
+    @property
+    def registry_engine(self) -> RegistryEngine:
+        """Lazy initialization of RegistryEngine."""
+        if self._registry_engine is None:
+            self._registry_engine = RegistryEngine()
+        return self._registry_engine
 
     def build_draft_entry(
         self,
@@ -512,6 +565,328 @@ class RegistryService:
             suggestions["navigation_system"] = "Consider specifying navigation system"
 
         return suggestions
+
+    # -------------------------------------------------------------------------
+    # Hybrid-First Registry Extraction
+    # -------------------------------------------------------------------------
+
+    def extract_fields(self, note_text: str) -> RegistryExtractionResult:
+        """Extract registry fields using hybrid-first flow.
+
+        This method orchestrates:
+        1. Run hybrid coder to get CPT codes and difficulty classification
+        2. Map CPT codes to registry boolean flags
+        3. Run RegistryEngine extractor with coder context as hints
+        4. Merge CPT-driven fields into the extraction result
+        5. Validate and finalize the result
+
+        Args:
+            note_text: The procedure note text.
+
+        Returns:
+            RegistryExtractionResult with extracted record and metadata.
+        """
+        # Legacy fallback: if no hybrid orchestrator is injected, run extractor only
+        if self.hybrid_orchestrator is None:
+            logger.info("No hybrid_orchestrator configured, running extractor-only mode")
+            record = self.registry_engine.run(note_text, context=None)
+            if isinstance(record, tuple):
+                record = record[0]  # Unpack if evidence included
+            return RegistryExtractionResult(
+                record=record,
+                cpt_codes=[],
+                coder_difficulty="unknown",
+                coder_source="extractor_only",
+                mapped_fields={},
+                warnings=["No hybrid orchestrator configured - CPT codes not extracted"],
+            )
+
+        # 1. Run Hybrid Coder
+        logger.debug("Running hybrid coder for registry extraction")
+        coder_result: HybridCoderResult = self.hybrid_orchestrator.get_codes(note_text)
+
+        # 2. Map Codes to Registry Fields
+        mapped_fields = aggregate_registry_fields(
+            coder_result.codes, version=self.default_version
+        )
+        logger.debug(
+            "Mapped %d CPT codes to registry fields",
+            len(coder_result.codes),
+            extra={"cpt_codes": coder_result.codes, "mapped_fields": list(mapped_fields.keys())},
+        )
+
+        # 3. Run Extractor with Coder Hints
+        extraction_context = {
+            "verified_cpt_codes": coder_result.codes,
+            "coder_difficulty": coder_result.difficulty.value,
+            "hybrid_source": coder_result.source,
+            "ml_metadata": coder_result.metadata.get("ml_result"),
+        }
+
+        record = self.registry_engine.run(note_text, context=extraction_context)
+        if isinstance(record, tuple):
+            record = record[0]  # Unpack if evidence included
+
+        # 4. Merge CPT-driven fields into the extraction result
+        merged_record = self._merge_cpt_fields_into_record(record, mapped_fields)
+
+        # 5. Validate and finalize
+        final_result = self._validate_and_finalize(
+            RegistryExtractionResult(
+                record=merged_record,
+                cpt_codes=coder_result.codes,
+                coder_difficulty=coder_result.difficulty.value,
+                coder_source=coder_result.source,
+                mapped_fields=mapped_fields,
+                warnings=[],
+            ),
+            coder_result=coder_result,
+        )
+
+        return final_result
+
+    def _merge_cpt_fields_into_record(
+        self,
+        record: RegistryRecord,
+        mapped_fields: dict[str, Any],
+    ) -> RegistryRecord:
+        """Apply CPT-based mapped fields onto the registry record.
+
+        This is conservative: only overwrite fields that are currently unset/False,
+        unless there's a strong reason to prefer CPT over text extraction.
+
+        Args:
+            record: The extracted RegistryRecord from RegistryEngine.
+            mapped_fields: Dict of field names to values from CPT mapping.
+
+        Returns:
+            Updated RegistryRecord with merged fields.
+        """
+        # Create a copy of the record data to modify
+        record_data = record.model_dump()
+
+        for field_name, cpt_value in mapped_fields.items():
+            current_value = record_data.get(field_name)
+
+            # Only overwrite if current value is falsy (None, False, empty)
+            if current_value in (None, False, "", [], {}):
+                record_data[field_name] = cpt_value
+                logger.debug(
+                    "Merged CPT field %s=%s (was %s)",
+                    field_name,
+                    cpt_value,
+                    current_value,
+                )
+            elif isinstance(cpt_value, bool) and cpt_value is True:
+                # For boolean flags, CPT evidence is strong - prefer True
+                if current_value is False:
+                    record_data[field_name] = True
+                    logger.debug(
+                        "Overrode %s to True based on CPT evidence",
+                        field_name,
+                    )
+
+        # Reconstruct the record
+        return RegistryRecord(**record_data)
+
+    def _validate_and_finalize(
+        self,
+        result: RegistryExtractionResult,
+        *,
+        coder_result: HybridCoderResult,
+    ) -> RegistryExtractionResult:
+        """Central validation and finalization logic.
+
+        Compare CPT-driven signals (coder_result.codes) with registry fields and
+        set validation flags accordingly. Marks cases for manual review when:
+        - CPT codes don't match extracted registry fields
+        - Case difficulty is LOW_CONF or GRAY_ZONE
+
+        Args:
+            result: The extraction result to validate.
+            coder_result: The original hybrid coder result for cross-validation.
+
+        Returns:
+            Validated and finalized RegistryExtractionResult with validation flags.
+        """
+        from modules.ml_coder.thresholds import CaseDifficulty
+
+        codes = set(result.cpt_codes)
+        record = result.record
+        validation_errors: list[str] = list(result.validation_errors)
+        warnings = list(result.warnings)
+        needs_manual_review = result.needs_manual_review
+
+        # Get nested procedure objects (may be None)
+        procedures = getattr(record, "procedures_performed", None)
+        pleural = getattr(record, "pleural_procedures", None)
+
+        # Helper to safely check if a nested procedure is present
+        def _proc_is_set(obj, attr: str) -> bool:
+            if obj is None:
+                return False
+            sub_obj = getattr(obj, attr, None)
+            if sub_obj is None:
+                return False
+            # For nested Pydantic models, check if 'performed' field exists and is True
+            if hasattr(sub_obj, "performed"):
+                return bool(getattr(sub_obj, "performed", False))
+            # Otherwise, just check if the object is truthy
+            return bool(sub_obj)
+
+        # -------------------------------------------------------------------------
+        # CPT-to-Registry Field Consistency Checks
+        # -------------------------------------------------------------------------
+
+        # Linear EBUS: 31652 (1-2 stations), 31653 (3+ stations)
+        if "31652" in codes or "31653" in codes:
+            if not _proc_is_set(procedures, "linear_ebus"):
+                validation_errors.append(
+                    f"CPT {'31652' if '31652' in codes else '31653'} present "
+                    "but procedures_performed.linear_ebus is not marked."
+                )
+            # Check station count hint
+            if procedures and getattr(procedures, "linear_ebus", None):
+                ebus_obj = procedures.linear_ebus
+                stations = getattr(ebus_obj, "stations_sampled", None)
+                if "31653" in codes and stations:
+                    # 31653 implies 3+ stations
+                    try:
+                        station_count = len(stations) if isinstance(stations, list) else int(stations)
+                        if station_count < 3:
+                            warnings.append(
+                                f"CPT 31653 implies 3+ EBUS stations, but only {station_count} recorded."
+                            )
+                    except (ValueError, TypeError):
+                        pass
+
+        # Radial EBUS: 31620
+        if "31620" in codes:
+            if not _proc_is_set(procedures, "radial_ebus"):
+                validation_errors.append(
+                    "CPT 31620 present but procedures_performed.radial_ebus is not marked."
+                )
+
+        # BAL: 31624, 31625
+        if "31624" in codes or "31625" in codes:
+            if not _proc_is_set(procedures, "bal"):
+                validation_errors.append(
+                    "CPT 31624/31625 present but procedures_performed.bal is not marked."
+                )
+
+        # Transbronchial biopsy: 31628, 31629
+        if "31628" in codes or "31629" in codes:
+            if not _proc_is_set(procedures, "transbronchial_biopsy"):
+                validation_errors.append(
+                    "CPT 31628/31629 present but procedures_performed.transbronchial_biopsy is not marked."
+                )
+
+        # Navigation: 31627
+        if "31627" in codes:
+            if not _proc_is_set(procedures, "navigational_bronchoscopy"):
+                validation_errors.append(
+                    "CPT 31627 present but procedures_performed.navigational_bronchoscopy is not marked."
+                )
+
+        # Stent: 31636, 31637
+        if "31636" in codes or "31637" in codes:
+            if not _proc_is_set(procedures, "airway_stent"):
+                validation_errors.append(
+                    "CPT 31636/31637 present but procedures_performed.airway_stent is not marked."
+                )
+
+        # Dilation: 31630, 31631
+        if "31630" in codes or "31631" in codes:
+            if not _proc_is_set(procedures, "airway_dilation"):
+                validation_errors.append(
+                    "CPT 31630/31631 present but procedures_performed.airway_dilation is not marked."
+                )
+
+        # BLVR (valve): 31647, 31648, 31649
+        blvr_codes = {"31647", "31648", "31649"}
+        if blvr_codes & codes:
+            if not _proc_is_set(procedures, "blvr"):
+                validation_errors.append(
+                    "CPT 31647/31648/31649 present but procedures_performed.blvr is not marked."
+                )
+
+        # Thermoplasty: 31660, 31661
+        if "31660" in codes or "31661" in codes:
+            if not _proc_is_set(procedures, "bronchial_thermoplasty"):
+                validation_errors.append(
+                    "CPT 31660/31661 present but procedures_performed.bronchial_thermoplasty is not marked."
+                )
+
+        # Rigid bronchoscopy: 31641
+        if "31641" in codes:
+            if not _proc_is_set(procedures, "rigid_bronchoscopy"):
+                # Only warn, as 31641 can also be thermal ablation
+                warnings.append(
+                    "CPT 31641 present - verify rigid_bronchoscopy or thermal ablation is marked."
+                )
+
+        # Tube thoracostomy: 32551
+        if "32551" in codes:
+            if not _proc_is_set(pleural, "chest_tube"):
+                validation_errors.append(
+                    "CPT 32551 present but pleural_procedures.chest_tube is not marked."
+                )
+
+        # Thoracentesis: 32554, 32555, 32556, 32557
+        thoracentesis_codes = {"32554", "32555", "32556", "32557"}
+        if thoracentesis_codes & codes:
+            if not _proc_is_set(pleural, "thoracentesis") and not _proc_is_set(pleural, "chest_tube"):
+                validation_errors.append(
+                    "Thoracentesis CPT codes present but no pleural procedure marked."
+                )
+
+        # Medical thoracoscopy / pleuroscopy: 32601
+        if "32601" in codes:
+            if not _proc_is_set(pleural, "medical_thoracoscopy"):
+                validation_errors.append(
+                    "CPT 32601 present but pleural_procedures.medical_thoracoscopy is not marked."
+                )
+
+        # Pleurodesis: 32560, 32650
+        if "32560" in codes or "32650" in codes:
+            if not _proc_is_set(pleural, "pleurodesis"):
+                validation_errors.append(
+                    "CPT 32560/32650 present but pleural_procedures.pleurodesis is not marked."
+                )
+
+        # -------------------------------------------------------------------------
+        # Difficulty-based Manual Review Flags
+        # -------------------------------------------------------------------------
+
+        # Low-confidence cases: always require manual review
+        if coder_result.difficulty == CaseDifficulty.LOW_CONF:
+            needs_manual_review = True
+            if not validation_errors:
+                validation_errors.append(
+                    "Hybrid coder marked this case as LOW_CONF; manual review required."
+                )
+
+        # Gray zone cases: also require manual review
+        if coder_result.difficulty == CaseDifficulty.GRAY_ZONE:
+            needs_manual_review = True
+
+        # Any validation errors trigger manual review
+        if validation_errors and not needs_manual_review:
+            needs_manual_review = True
+
+        # -------------------------------------------------------------------------
+        # Return Updated Result
+        # -------------------------------------------------------------------------
+        return RegistryExtractionResult(
+            record=result.record,
+            cpt_codes=result.cpt_codes,
+            coder_difficulty=result.coder_difficulty,
+            coder_source=result.coder_source,
+            mapped_fields=result.mapped_fields,
+            warnings=warnings,
+            needs_manual_review=needs_manual_review,
+            validation_errors=validation_errors,
+        )
 
 
 # Factory function for DI

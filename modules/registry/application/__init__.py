@@ -4,6 +4,7 @@ from modules.registry.application.registry_service import (
     RegistryService,
     RegistryDraftResult,
     RegistryExportResult,
+    RegistryExtractionResult,
     get_registry_service,
 )
 from modules.registry.application.cpt_registry_mapping import (
@@ -19,6 +20,7 @@ __all__ = [
     "RegistryService",
     "RegistryDraftResult",
     "RegistryExportResult",
+    "RegistryExtractionResult",
     "get_registry_service",
     "CPT_TO_REGISTRY_MAPPING",
     "RegistryFieldMapping",

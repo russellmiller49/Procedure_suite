@@ -22,6 +22,10 @@ from modules.coder.adapters.persistence.inmemory_procedure_store import (
 )
 from modules.registry.application.registry_service import RegistryService
 from modules.registry.adapters.schema_registry import get_schema_registry
+from modules.coder.application.smart_hybrid_policy import (
+    SmartHybridOrchestrator,
+    build_hybrid_orchestrator,
+)
 from observability.logging_config import get_logger
 
 # QA Pipeline imports
@@ -102,7 +106,7 @@ def get_coding_service() -> CodingService:
     use_llm = os.getenv("CODER_USE_LLM_ADVISOR", "").lower() in ("true", "1", "yes")
 
     if use_llm:
-        api_key = os.getenv("GOOGLE_API_KEY", "")
+        api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY", "")
         if api_key:
             llm_advisor = GeminiAdvisorAdapter(
                 model_name=config.model_version,
@@ -156,6 +160,7 @@ def get_registry_service() -> RegistryService:
     This factory:
     - Uses the default RegistrySchemaRegistry for schema access
     - Configures default version from environment (REGISTRY_DEFAULT_VERSION)
+    - Builds SmartHybridOrchestrator for ML-first coding
     - Returns a cached instance for reuse across requests
     """
     import os
@@ -163,9 +168,14 @@ def get_registry_service() -> RegistryService:
     default_version = os.getenv("REGISTRY_DEFAULT_VERSION", "v2")
     schema_registry = get_schema_registry()
 
+    # Build hybrid orchestrator for ML-first coding
+    hybrid_orchestrator = build_hybrid_orchestrator()
+    logger.info("SmartHybridOrchestrator built for RegistryService")
+
     service = RegistryService(
         schema_registry=schema_registry,
         default_version=default_version,
+        hybrid_orchestrator=hybrid_orchestrator,
     )
 
     logger.info(

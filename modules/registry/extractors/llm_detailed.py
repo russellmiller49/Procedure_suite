@@ -122,8 +122,27 @@ class LLMDetailedExtractor:
     def version(self) -> str:
         return self.VERSION
 
-    def extract(self, text: str, sections: list[Section]) -> SlotResult:
-        """Extract registry data from text (legacy interface)."""
+    def extract(
+        self,
+        text: str,
+        sections: list[Section],
+        context: dict[str, Any] | None = None,
+    ) -> SlotResult:
+        """Extract registry data from text.
+
+        Args:
+            text: The procedure note text.
+            sections: Pre-parsed sections.
+            context: Optional extraction context with hints from hybrid coder:
+                - verified_cpt_codes: List of CPT codes from hybrid coder
+                - coder_difficulty: Case difficulty classification
+                - hybrid_source: Source of codes (ml_rules_fastpath, hybrid_llm_fallback)
+
+        Returns:
+            SlotResult with extracted data.
+        """
+        context = context or {}
+
         # Filter relevant sections to reduce context window and noise
         relevant_text = self._filter_relevant_text(text, sections)
 

@@ -12,6 +12,10 @@ from __future__ import annotations
 
 import logging
 import os
+
+# Load .env file early so API keys are available
+from dotenv import load_dotenv
+load_dotenv(override=True)
 import subprocess
 import uuid
 from dataclasses import asdict
@@ -328,7 +332,8 @@ async def _run_ml_first_pipeline(
 
     code_decisions = []
     for cpt in result.codes:
-        desc = coding_service.kb_repo.get_description(cpt) or ""
+        proc_info = coding_service.kb_repo.get_procedure_info(cpt)
+        desc = proc_info.description if proc_info else ""
         code_decisions.append(
             CodeDecision(
                 cpt=cpt,
@@ -342,16 +347,47 @@ async def _run_ml_first_pipeline(
     # Calculate RVU/financials if we have codes
     financials = None
     if code_decisions:
-        from modules.coder.application.rvu_service import RVUCalculationService
-        rvu_service = RVUCalculationService(coding_service.kb_repo)
-        financials = rvu_service.calculate_financials(
-            [cd.code for cd in code_decisions],
-            locality=locality,
-        )
+        from modules.coder.schema import FinancialSummary, PerCodeBilling
+
+        per_code_billing: list[PerCodeBilling] = []
+        total_work_rvu = 0.0
+        total_facility_payment = 0.0
+        conversion_factor = 33.8872  # CY2024 Medicare conversion factor
+
+        for cd in code_decisions:
+            proc_info = coding_service.kb_repo.get_procedure_info(cd.cpt)
+            if proc_info:
+                work_rvu = proc_info.work_rvu
+                total_rvu = proc_info.total_facility_rvu
+                payment = total_rvu * conversion_factor
+
+                total_work_rvu += work_rvu
+                total_facility_payment += payment
+
+                per_code_billing.append(PerCodeBilling(
+                    cpt_code=cd.cpt,
+                    description=cd.description,
+                    modifiers=cd.modifiers,
+                    work_rvu=work_rvu,
+                    total_facility_rvu=total_rvu,
+                    facility_payment=payment,
+                    allowed_facility_rvu=total_rvu,
+                    allowed_facility_payment=payment,
+                ))
+
+        if per_code_billing:
+            financials = FinancialSummary(
+                conversion_factor=conversion_factor,
+                locality=locality,
+                per_code=per_code_billing,
+                total_work_rvu=total_work_rvu,
+                total_facility_payment=total_facility_payment,
+                total_nonfacility_payment=0.0,
+            )
 
     # Build hybrid pipeline metadata
     hybrid_metadata = HybridPipelineMetadata(
-        difficulty=result.metadata.get("ml_difficulty", ""),
+        difficulty=result.difficulty.value,  # Use top-level difficulty attribute
         source=result.source,
         llm_used=result.metadata.get("llm_called", False),
         ml_candidates=result.metadata.get("ml_candidates", []),

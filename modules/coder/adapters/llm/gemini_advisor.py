@@ -8,6 +8,13 @@ from __future__ import annotations
 import json
 import os
 import re
+
+# Ensure .env is loaded before reading API keys
+from pathlib import Path
+from dotenv import load_dotenv
+# Find and load the .env file from project root
+_env_path = Path(__file__).resolve().parents[4] / ".env"
+load_dotenv(_env_path, override=True)
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Optional
@@ -87,13 +94,13 @@ Return ONLY the JSON array, no other text.
 
     def __init__(
         self,
-        model_name: str = "gemini-1.5-pro-002",
+        model_name: str = "gemini-2.5-flash",
         allowed_codes: list[str] | None = None,
         api_key: str | None = None,
     ):
         self.model_name = model_name
         self.allowed_codes = set(allowed_codes) if allowed_codes else set()
-        self.api_key = api_key or os.environ.get("GOOGLE_API_KEY", "")
+        self.api_key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY", "")
         self._client: Optional[object] = None
 
     @property

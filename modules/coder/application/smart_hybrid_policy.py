@@ -20,6 +20,7 @@ from modules.common.logger import get_logger
 from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
 from modules.coder.adapters.nlp.keyword_mapping_loader import KeywordMappingRepository
 from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDetector
+from modules.ml_coder.thresholds import CaseDifficulty
 
 logger = get_logger("smart_hybrid_policy")
 
@@ -328,18 +329,24 @@ class HybridPolicy:
 
 
 @dataclass
-class OrchestratorResult:
+class HybridCoderResult:
     """Result from the SmartHybridOrchestrator.
 
     Attributes:
         codes: Final list of validated CPT codes
         source: Where the final codes came from (ml_rules_fastpath, hybrid_llm_fallback)
+        difficulty: ML case difficulty classification (HIGH_CONF/GRAY_ZONE/LOW_CONF)
         metadata: Additional context about the decision process
     """
 
     codes: List[str]
     source: str
+    difficulty: CaseDifficulty
     metadata: Dict[str, Any] = field(default_factory=dict)
+
+
+# Backwards compatibility alias
+OrchestratorResult = HybridCoderResult
 
 
 class SmartHybridOrchestrator:
@@ -376,7 +383,7 @@ class SmartHybridOrchestrator:
         self._rules = rules_engine
         self._llm = llm_advisor
 
-    def get_codes(self, note_text: str) -> OrchestratorResult:
+    def get_codes(self, note_text: str) -> HybridCoderResult:
         """
         Get CPT codes using ML-first hybrid approach.
 
@@ -384,7 +391,7 @@ class SmartHybridOrchestrator:
             note_text: The procedure note text to code
 
         Returns:
-            OrchestratorResult with final codes and metadata
+            HybridCoderResult with final codes, difficulty classification, and metadata
         """
         # 1. ML Prediction + difficulty classification
         ml_result = self._ml.classify_case(note_text)
@@ -430,8 +437,6 @@ class SmartHybridOrchestrator:
                 )
 
         # 3. Decision gate
-        from modules.ml_coder.thresholds import CaseDifficulty
-
         if difficulty == CaseDifficulty.HIGH_CONF.value and rules_cleaned_ml:
             # Fast path: ML + Rules agree, no LLM needed
             self._emit_telemetry(
@@ -443,9 +448,10 @@ class SmartHybridOrchestrator:
                 ml_candidates_count=len(ml_candidates),
                 final_codes_count=len(rules_cleaned_ml),
             )
-            return OrchestratorResult(
+            return HybridCoderResult(
                 codes=rules_cleaned_ml,
                 source="ml_rules_fastpath",
+                difficulty=ml_result.difficulty,
                 metadata={
                     "ml_difficulty": difficulty,
                     "ml_candidates": ml_candidates,
@@ -498,9 +504,10 @@ class SmartHybridOrchestrator:
             fallback_reason=reason_for_fallback,
         )
 
-        return OrchestratorResult(
+        return HybridCoderResult(
             codes=final_codes,
             source="hybrid_llm_fallback",
+            difficulty=ml_result.difficulty,
             metadata={
                 "ml_difficulty": difficulty,
                 "ml_candidates": ml_candidates,

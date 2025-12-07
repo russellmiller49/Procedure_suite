@@ -588,7 +588,11 @@ class RegistryEngine:
 
     def run(
         self,
-        note_text: str, *, explain: bool = False, include_evidence: bool = True
+        note_text: str,
+        *,
+        explain: bool = False,
+        include_evidence: bool = True,
+        context: dict[str, Any] | None = None,
     ) -> RegistryRecord | tuple[RegistryRecord, dict[str, list[Span]]]:
         sections = self.sectionizer.sectionize(note_text)
         evidence: Dict[str, list[Span]] = {}
@@ -618,7 +622,7 @@ class RegistryEngine:
                     Span(text=mrn_match.group(0).strip(), start=mrn_match.start(), end=mrn_match.end())
                 )
 
-        llm_result = self.llm_extractor.extract(note_text, sections)
+        llm_result = self.llm_extractor.extract(note_text, sections, context=context)
         llm_data_raw = llm_result.value or {}
         llm_data = llm_data_raw if isinstance(llm_data_raw, dict) else {}
 
