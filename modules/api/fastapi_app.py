@@ -39,6 +39,7 @@ from modules.api.routes.phi import router as phi_router
 from modules.api.routes.procedure_codes import router as procedure_codes_router
 from modules.api.routes.metrics import router as metrics_router
 from modules.api.routes.phi_demo_cases import router as phi_demo_router
+from modules.api.routes_registry import router as registry_extract_router
 
 # All API schemas (base + QA pipeline)
 from modules.api.schemas import (
@@ -107,6 +108,8 @@ app.include_router(procedure_codes_router, prefix="/api/v1", tags=["procedure-co
 app.include_router(metrics_router, tags=["metrics"])
 # PHI demo cases router (non-PHI metadata)
 app.include_router(phi_demo_router)
+# Registry extraction router (hybrid-first pipeline)
+app.include_router(registry_extract_router, tags=["registry"])
 
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
@@ -228,6 +231,7 @@ async def root(request: Request) -> Any:
                 "traces": "/api/v1/ml-advisor/traces",
                 "metrics": "/api/v1/ml-advisor/metrics",
             },
+            "registry_extract": "/api/registry/extract",
         },
         "note": "Coder uses CodingService (hexagonal architecture) with smart hybrid policy. ML Advisor endpoints available at /api/v1/ml-advisor/*",
     }

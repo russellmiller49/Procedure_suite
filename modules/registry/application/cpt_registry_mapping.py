@@ -220,7 +220,170 @@ def aggregate_registry_fields(
     codes: list[str],
     version: str = "v2",
 ) -> dict[str, Any]:
-    """Aggregate registry fields from multiple CPT codes.
+    """Aggregate registry fields from multiple CPT codes (NESTED structure).
+
+    Returns a nested dict matching the RegistryRecord schema with detailed
+    fields derived from CPT code families:
+    {
+        "procedures_performed": {
+            "linear_ebus": {"performed": True, "station_count_bucket": "3+"},
+            "bal": {"performed": True},
+            "blvr": {"performed": True, "procedure_type": "Valve placement"},
+        },
+        "pleural_procedures": {
+            "thoracentesis": {"performed": True, "guidance": "Ultrasound", "indication": "Diagnostic"},
+            "chest_tube": {"performed": True, "action": "Insertion"},
+        }
+    }
+
+    This mapper is deliberately conservative: only sets performed/high-level fields
+    derivable from CPT alone; lets the LLM fill in detailed fields (locations, side,
+    segments) from the note.
+
+    Args:
+        codes: List of CPT codes
+        version: Registry schema version
+
+    Returns:
+        Nested dict of registry fields matching schema structure.
+    """
+    code_set = set(str(c) for c in codes)
+    procedures: dict[str, dict[str, Any]] = {}
+    pleural: dict[str, dict[str, Any]] = {}
+
+    # --- BRONCHOSCOPY PROCEDURES ---
+
+    # Linear EBUS-TBNA: 31652 (1-2 stations), 31653 (3+ stations)
+    if code_set & {"31652", "31653"}:
+        linear = {"performed": True}
+        # Station count bucket derivable from CPT code
+        if "31653" in code_set:
+            linear["station_count_bucket"] = "3+"
+        elif "31652" in code_set:
+            linear["station_count_bucket"] = "1-2"
+        procedures["linear_ebus"] = linear
+
+    # Radial EBUS: 31620
+    if "31620" in code_set:
+        procedures["radial_ebus"] = {"performed": True}
+
+    # BAL: 31624 (single lobe), 31625 (each additional lobe)
+    if code_set & {"31624", "31625"}:
+        procedures["bal"] = {"performed": True}
+
+    # Transbronchial lung biopsy (non-nav): 31628, 31629 (with fluoro)
+    if code_set & {"31628", "31629"}:
+        tblb = {"performed": True}
+        # 31629 indicates fluoroscopy guidance
+        if "31629" in code_set:
+            tblb["fluoroscopy_used"] = True
+        procedures["transbronchial_biopsy"] = tblb
+
+    # Navigation bronchoscopy: 31627
+    if "31627" in code_set:
+        procedures["navigational_bronchoscopy"] = {"performed": True}
+
+    # Airway stent: 31636 (initial placement), 31637 (each additional)
+    if code_set & {"31636", "31637"}:
+        stent = {"performed": True}
+        # Can't determine placement vs removal from CPT alone; leave action null
+        procedures["airway_stent"] = stent
+
+    # Airway dilation: 31630 (balloon), 31631 (each additional)
+    if code_set & {"31630", "31631"}:
+        dilation = {"performed": True}
+        dilation["technique"] = "Balloon"  # 31630/31631 are balloon dilation codes
+        procedures["airway_dilation"] = dilation
+
+    # BLVR valve: 31647 (initial), 31648 (each additional), 31649 (removal)
+    blvr_codes = {"31647", "31648", "31649"}
+    if blvr_codes & code_set:
+        blvr = {"performed": True}
+        # CPT family is valve-based BLVR
+        if "31649" in code_set:
+            blvr["procedure_type"] = "Valve removal"
+        else:
+            blvr["procedure_type"] = "Valve placement"
+        procedures["blvr"] = blvr
+
+    # Bronchial thermoplasty: 31660 (initial lobe), 31661 (additional lobes)
+    if code_set & {"31660", "31661"}:
+        procedures["bronchial_thermoplasty"] = {"performed": True}
+
+    # Rigid bronchoscopy: 31641
+    if "31641" in code_set:
+        procedures["rigid_bronchoscopy"] = {"performed": True}
+
+    # Diagnostic bronchoscopy: 31622
+    if "31622" in code_set:
+        procedures["diagnostic_bronchoscopy"] = {"performed": True}
+
+    # Bronchial brushings: 31623
+    if "31623" in code_set:
+        procedures["brushings"] = {"performed": True}
+
+    # --- PLEURAL PROCEDURES ---
+
+    # Thoracentesis CPT codes:
+    # 32554 - Thoracentesis, diagnostic, without imaging guidance
+    # 32555 - Thoracentesis, diagnostic, with imaging guidance
+    # 32556 - Thoracentesis, therapeutic, with insertion of indwelling catheter, without imaging
+    # 32557 - Thoracentesis, therapeutic, with insertion of indwelling catheter, with imaging
+    thoracentesis_codes = {"32554", "32555", "32556", "32557"}
+    if thoracentesis_codes & code_set:
+        thora: dict[str, Any] = {"performed": True}
+
+        # Imaging guidance (US vs landmark) from code family
+        if code_set & {"32555", "32557"}:
+            thora["guidance"] = "Ultrasound"
+        elif code_set & {"32554", "32556"}:
+            thora["guidance"] = "None/Landmark"
+
+        # Indication (diagnostic vs therapeutic vs both)
+        has_dx = bool(code_set & {"32554", "32555"})
+        has_tx = bool(code_set & {"32556", "32557"})
+        if has_dx and has_tx:
+            thora["indication"] = "Both"
+        elif has_tx:
+            thora["indication"] = "Therapeutic"
+        elif has_dx:
+            thora["indication"] = "Diagnostic"
+
+        pleural["thoracentesis"] = thora
+
+    # Chest tube / tube thoracostomy: 32551
+    if "32551" in code_set:
+        tube = {"performed": True, "action": "Insertion"}
+        pleural["chest_tube"] = tube
+
+    # Medical thoracoscopy / pleuroscopy: 32601
+    if "32601" in code_set:
+        pleural["medical_thoracoscopy"] = {"performed": True}
+
+    # Pleurodesis: 32560 (instillation), 32650 (chemical via thoracoscopy)
+    if code_set & {"32560", "32650"}:
+        pleurodesis = {"performed": True}
+        if "32650" in code_set:
+            pleurodesis["technique"] = "Thoracoscopic"
+        elif "32560" in code_set:
+            pleurodesis["technique"] = "Instillation"
+        pleural["pleurodesis"] = pleurodesis
+
+    # Build result with only non-empty sections
+    result: dict[str, Any] = {}
+    if procedures:
+        result["procedures_performed"] = procedures
+    if pleural:
+        result["pleural_procedures"] = pleural
+
+    return result
+
+
+def aggregate_registry_fields_flat(
+    codes: list[str],
+    version: str = "v2",
+) -> dict[str, Any]:
+    """Aggregate registry fields from multiple CPT codes (FLAT structure - legacy).
 
     Combines fields from multiple codes, with later codes overwriting
     earlier ones for the same field. Boolean fields use OR semantics.
@@ -230,7 +393,7 @@ def aggregate_registry_fields(
         version: Registry schema version
 
     Returns:
-        Aggregated dict of registry fields.
+        Flat dict of registry fields (legacy format).
     """
     result: dict[str, Any] = {}
 

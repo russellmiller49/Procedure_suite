@@ -146,7 +146,8 @@ class LLMDetailedExtractor:
         # Filter relevant sections to reduce context window and noise
         relevant_text = self._filter_relevant_text(text, sections)
 
-        prompt = build_registry_prompt(relevant_text)
+        # Pass context to prompt builder for CPT code guidance
+        prompt = build_registry_prompt(relevant_text, context=context)
 
         try:
             response = self.llm.generate(prompt)

@@ -13,6 +13,7 @@ from modules.registry.application.cpt_registry_mapping import (
     get_registry_fields_for_code,
     get_registry_hints_for_code,
     aggregate_registry_fields,
+    aggregate_registry_fields_flat,
     aggregate_registry_hints,
 )
 
@@ -27,5 +28,6 @@ __all__ = [
     "get_registry_fields_for_code",
     "get_registry_hints_for_code",
     "aggregate_registry_fields",
+    "aggregate_registry_fields_flat",
     "aggregate_registry_hints",
 ]

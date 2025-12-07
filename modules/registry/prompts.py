@@ -848,9 +848,48 @@ def _load_registry_prompt() -> str:
     return _PROMPT_CACHE
 
 
-def build_registry_prompt(note_text: str) -> str:
+def build_registry_prompt(note_text: str, context: dict | None = None) -> str:
+    """Build the registry extraction prompt with optional CPT context.
+
+    Args:
+        note_text: The procedure note text to extract from.
+        context: Optional extraction context with hints from hybrid coder:
+            - verified_cpt_codes: List of CPT codes from hybrid coder
+            - coder_difficulty: Case difficulty classification (HIGH_CONF/GRAY_ZONE/LOW_CONF)
+            - hybrid_source: Source of codes (ml_rules_fastpath, hybrid_llm_fallback)
+
+    Returns:
+        Complete prompt string for the LLM.
+    """
+    context = context or {}
     prompt_text = _load_registry_prompt()
-    return f"{prompt_text}\n\nProcedure Note:\n{note_text}\nJSON:"
+
+    # Build verified CPT section if codes are provided
+    verified_section = ""
+    verified_codes = context.get("verified_cpt_codes") or []
+    if verified_codes:
+        coder_difficulty = context.get("coder_difficulty") or "unknown"
+        hybrid_source = context.get("hybrid_source") or "unknown"
+        codes_str = ", ".join(sorted(set(str(c) for c in verified_codes)))
+
+        verified_section = (
+            "\n--- CPT CODE GUIDANCE ---\n"
+            f"The automated coding system has identified the following CPT codes as "
+            f"most likely for this note (difficulty={coder_difficulty}, source={hybrid_source}): {codes_str}.\n\n"
+            "Use these as PRIMARY GUIDANCE when determining which registry fields to set:\n"
+            "- 31652/31653 (EBUS-TBNA) → set EBUS-related fields\n"
+            "- 31624/31625 (BAL) → set BAL-related fields\n"
+            "- 31628/31629 (Transbronchial biopsy) → set TBBx fields\n"
+            "- 31627 (Navigation) → set navigation fields\n"
+            "- 31636/31637 (Stent) → set stent fields\n"
+            "- 32555/32556/32557 (Thoracentesis) → set pleural fields\n"
+            "- 31647/31648/31649 (BLVR valves) → set BLVR fields\n\n"
+            "Do NOT infer procedures that contradict these codes. If the note clearly "
+            "contradicts a suggested code, you may explain this and omit that procedure.\n"
+            "--- END CPT CODE GUIDANCE ---\n\n"
+        )
+
+    return f"{verified_section}{prompt_text}\n\nProcedure Note:\n{note_text}\nJSON:"
 
 
 __all__ = ["build_registry_prompt", "FIELD_INSTRUCTIONS"]

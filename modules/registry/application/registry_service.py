@@ -28,6 +28,7 @@ from modules.registry.application.cpt_registry_mapping import (
 )
 from modules.registry.engine import RegistryEngine
 from modules.registry.schema import RegistryRecord
+from modules.registry.schema_granular import derive_procedures_from_granular
 
 logger = get_logger("registry_service")
 from proc_schemas.coding import FinalCode, CodingResult
@@ -652,39 +653,94 @@ class RegistryService:
     ) -> RegistryRecord:
         """Apply CPT-based mapped fields onto the registry record.
 
+        Handles the NESTED structure from aggregate_registry_fields:
+        {
+            "procedures_performed": {
+                "linear_ebus": {"performed": True},
+                "bal": {"performed": True},
+            },
+            "pleural_procedures": {
+                "thoracentesis": {"performed": True},
+            }
+        }
+
         This is conservative: only overwrite fields that are currently unset/False,
         unless there's a strong reason to prefer CPT over text extraction.
 
         Args:
             record: The extracted RegistryRecord from RegistryEngine.
-            mapped_fields: Dict of field names to values from CPT mapping.
+            mapped_fields: Nested dict of fields from CPT mapping.
 
         Returns:
             Updated RegistryRecord with merged fields.
         """
-        # Create a copy of the record data to modify
         record_data = record.model_dump()
 
-        for field_name, cpt_value in mapped_fields.items():
-            current_value = record_data.get(field_name)
+        # Handle procedures_performed section
+        proc_map = mapped_fields.get("procedures_performed") or {}
+        if proc_map:
+            current_procs = record_data.get("procedures_performed") or {}
+            for proc_name, proc_values in proc_map.items():
+                current_proc = current_procs.get(proc_name) or {}
 
-            # Only overwrite if current value is falsy (None, False, empty)
-            if current_value in (None, False, "", [], {}):
-                record_data[field_name] = cpt_value
-                logger.debug(
-                    "Merged CPT field %s=%s (was %s)",
-                    field_name,
-                    cpt_value,
-                    current_value,
-                )
-            elif isinstance(cpt_value, bool) and cpt_value is True:
-                # For boolean flags, CPT evidence is strong - prefer True
-                if current_value is False:
-                    record_data[field_name] = True
-                    logger.debug(
-                        "Overrode %s to True based on CPT evidence",
-                        field_name,
-                    )
+                # Merge each field in the procedure
+                for field_name, cpt_value in proc_values.items():
+                    current_val = current_proc.get(field_name)
+
+                    # Only overwrite if current is falsy
+                    if current_val in (None, False, "", [], {}):
+                        current_proc[field_name] = cpt_value
+                        logger.debug(
+                            "Merged CPT field procedures_performed.%s.%s=%s (was %s)",
+                            proc_name,
+                            field_name,
+                            cpt_value,
+                            current_val,
+                        )
+                    elif isinstance(cpt_value, bool) and cpt_value is True:
+                        # For boolean flags, CPT evidence is strong
+                        if current_val is False:
+                            current_proc[field_name] = True
+                            logger.debug(
+                                "Overrode procedures_performed.%s.%s to True based on CPT",
+                                proc_name,
+                                field_name,
+                            )
+
+                current_procs[proc_name] = current_proc
+            record_data["procedures_performed"] = current_procs
+
+        # Handle pleural_procedures section
+        pleural_map = mapped_fields.get("pleural_procedures") or {}
+        if pleural_map:
+            current_pleural = record_data.get("pleural_procedures") or {}
+            for proc_name, proc_values in pleural_map.items():
+                current_proc = current_pleural.get(proc_name) or {}
+
+                # Merge each field in the procedure
+                for field_name, cpt_value in proc_values.items():
+                    current_val = current_proc.get(field_name)
+
+                    if current_val in (None, False, "", [], {}):
+                        current_proc[field_name] = cpt_value
+                        logger.debug(
+                            "Merged CPT field pleural_procedures.%s.%s=%s (was %s)",
+                            proc_name,
+                            field_name,
+                            cpt_value,
+                            current_val,
+                        )
+                    elif isinstance(cpt_value, bool) and cpt_value is True:
+                        if current_val is False:
+                            current_proc[field_name] = True
+                            logger.debug(
+                                "Overrode pleural_procedures.%s.%s to True based on CPT",
+                                proc_name,
+                                field_name,
+                            )
+
+                current_pleural[proc_name] = current_proc
+            record_data["pleural_procedures"] = current_pleural
 
         # Reconstruct the record
         return RegistryRecord(**record_data)
@@ -735,7 +791,38 @@ class RegistryService:
             return bool(sub_obj)
 
         # -------------------------------------------------------------------------
-        # CPT-to-Registry Field Consistency Checks
+        # 1. Derive aggregate procedure flags from granular_data if present
+        # -------------------------------------------------------------------------
+        granular = None
+        if record.granular_data is not None:
+            granular = record.granular_data.model_dump()
+
+        existing_procedures = None
+        if record.procedures_performed is not None:
+            existing_procedures = record.procedures_performed.model_dump()
+
+        if granular is not None:
+            updated_procs, granular_warnings = derive_procedures_from_granular(
+                granular_data=granular,
+                existing_procedures=existing_procedures,
+            )
+            # Re-apply to record via reconstruction
+            record_data = record.model_dump()
+            if updated_procs:
+                record_data["procedures_performed"] = updated_procs
+            # Append warnings to both record + result
+            record_data.setdefault("granular_validation_warnings", [])
+            record_data["granular_validation_warnings"].extend(granular_warnings)
+            validation_errors.extend(granular_warnings)
+            # Reconstruct record with updated procedures
+            record = RegistryRecord(**record_data)
+
+        # Re-fetch procedures/pleural after potential update
+        procedures = getattr(record, "procedures_performed", None)
+        pleural = getattr(record, "pleural_procedures", None)
+
+        # -------------------------------------------------------------------------
+        # 2. CPT-to-Registry Field Consistency Checks
         # -------------------------------------------------------------------------
 
         # Linear EBUS: 31652 (1-2 stations), 31653 (3+ stations)
@@ -855,7 +942,7 @@ class RegistryService:
                 )
 
         # -------------------------------------------------------------------------
-        # Difficulty-based Manual Review Flags
+        # 3. Difficulty-based Manual Review Flags
         # -------------------------------------------------------------------------
 
         # Low-confidence cases: always require manual review
@@ -874,11 +961,31 @@ class RegistryService:
         if validation_errors and not needs_manual_review:
             needs_manual_review = True
 
+        # Granular validation warnings also trigger manual review
+        granular_warnings_on_record = getattr(record, "granular_validation_warnings", [])
+        if granular_warnings_on_record and not needs_manual_review:
+            needs_manual_review = True
+
         # -------------------------------------------------------------------------
-        # Return Updated Result
+        # Telemetry: Log validation outcome for monitoring
+        # -------------------------------------------------------------------------
+        logger.info(
+            "registry_validation_complete",
+            extra={
+                "coder_difficulty": coder_result.difficulty.value,
+                "coder_source": coder_result.source,
+                "needs_manual_review": needs_manual_review,
+                "validation_error_count": len(validation_errors),
+                "warning_count": len(warnings),
+                "cpt_code_count": len(codes),
+            },
+        )
+
+        # -------------------------------------------------------------------------
+        # 4. Return Updated Result
         # -------------------------------------------------------------------------
         return RegistryExtractionResult(
-            record=result.record,
+            record=record,  # Use potentially updated record from granular derivation
             cpt_codes=result.cpt_codes,
             coder_difficulty=result.coder_difficulty,
             coder_source=result.coder_source,
