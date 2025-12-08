@@ -2,20 +2,22 @@
 
 **Automated CPT Coding, Registry Extraction, and Synoptic Reporting for Interventional Pulmonology.**
 
-This toolkit allows you to:
-1.  **Predict CPT Codes**: Analyze procedure notes to automatically generate billing codes with RVU calculations.
-2.  **Extract Registry Data**: Use LLMs to extract structured clinical data (EBUS stations, complications, demographics) into a validated schema.
+This toolkit enables:
+1.  **Predict CPT Codes**: Analyze procedure notes using ML + LLM hybrid pipeline to generate billing codes with RVU calculations.
+2.  **Extract Registry Data**: Use deterministic extractors and LLMs to extract structured clinical data (EBUS stations, complications, demographics) into a validated schema.
 3.  **Generate Reports**: Create standardized, human-readable procedure reports from structured data.
 
-## 📚 Documentation
+## Documentation
 
 - **[Installation & Setup](docs/INSTALLATION.md)**: Setup guide for Python, spaCy models, and API keys.
 - **[User Guide](docs/USER_GUIDE.md)**: How to use the CLI tools and API endpoints.
 - **[Development Guide](docs/DEVELOPMENT.md)**: **CRITICAL** for contributors and AI Agents. Defines the system architecture and coding standards.
-- **[Architecture](docs/ARCHITECTURE.md)**: System design and module breakdown.
+- **[Architecture](docs/ARCHITECTURE.md)**: System design, module breakdown, and data flow.
+- **[Agents](docs/AGENTS.md)**: Multi-agent pipeline documentation for Parser, Summarizer, and Structurer.
+- **[Registry API](docs/Registry_API.md)**: Registry extraction service API documentation.
 - **[CPT Reference](docs/REFERENCES.md)**: List of supported codes.
 
-## ⚡ Quick Start
+## Quick Start
 
 1.  **Install**:
     ```bash
@@ -33,19 +35,116 @@ This toolkit allows you to:
     ./scripts/devserver.sh
     ```
 
-## 🏗️ Key Modules
+## Key Modules
 
 | Module | Description |
 |--------|-------------|
-| **`modules/api/fastapi_app.py`** | The main FastAPI backend. |
-| **`proc_autocode/`** | Enhanced CPT coding engine with Knowledge Base support. |
-| **`modules/registry/`** | LLM-based registry extraction pipeline. |
-| **`proc_report/`** | Template-based synoptic report generator. |
-| **`/ui/phi_demo.html`** | Synthetic PHI demo UI for scrubbing → vault → review → reidentify. |
+| **`modules/api/fastapi_app.py`** | Main FastAPI backend |
+| **`modules/coder/`** | CPT coding engine with CodingService (8-step pipeline) |
+| **`modules/ml_coder/`** | ML-based code predictor and training pipeline |
+| **`modules/registry/`** | Registry extraction with RegistryService and RegistryEngine |
+| **`modules/agents/`** | 3-agent pipeline: Parser → Summarizer → Structurer |
+| **`modules/reporter/`** | Template-based synoptic report generator |
+| **`/ui/phi_demo.html`** | Synthetic PHI demo UI for scrubbing → vault → review → reidentify |
 
-## ⚠️ Note for AI Assistants
+## System Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         Procedure Note                               │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                    FastAPI Layer (modules/api/)                      │
+│  • /v1/coder/run - CPT coding endpoint                              │
+│  • /v1/registry/run - Registry extraction endpoint                  │
+│  • /v1/report/render - Report generation endpoint                   │
+└─────────────────────────────────────────────────────────────────────┘
+         │                        │                        │
+         ▼                        ▼                        ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  CodingService  │    │ RegistryService │    │    Reporter     │
+│  (8-step pipe)  │    │ (Hybrid-first)  │    │ (Jinja temps)   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                        │
+         ▼                        ▼
+┌─────────────────┐    ┌─────────────────┐
+│ SmartHybrid     │    │ RegistryEngine  │
+│ Orchestrator    │    │ (LLM Extract)   │
+│ ML→Rules→LLM    │    │                 │
+└─────────────────┘    └─────────────────┘
+```
+
+### ML-First Hybrid Pipeline (CodingService)
+
+The coding system uses a **SmartHybridOrchestrator** that prioritizes ML predictions:
+
+1. **ML Prediction** → Predict CPT codes with confidence scores
+2. **Difficulty Classification** → HIGH_CONF / GRAY_ZONE / LOW_CONF
+3. **Decision Gate**:
+   - HIGH_CONF + rules pass → Use ML codes directly (fast path, no LLM)
+   - GRAY_ZONE or rules fail → LLM as judge
+   - LOW_CONF → LLM as primary coder
+4. **Rules Validation** → NCCI/MER compliance checks
+5. **Final Codes** → CodeSuggestion objects for review
+
+### Hybrid-First Registry Extraction (RegistryService)
+
+Registry extraction follows a hybrid approach:
+
+1. **CPT Coding** → Get codes from SmartHybridOrchestrator
+2. **CPT Mapping** → Map CPT codes to registry boolean flags
+3. **LLM Extraction** → Extract additional fields via RegistryEngine
+4. **Reconciliation** → Merge CPT-derived and LLM-extracted fields
+5. **Validation** → Validate against IP_Registry.json schema
+
+## Data & Schemas
+
+| File | Purpose |
+|------|---------|
+| `data/knowledge/ip_coding_billing.v2_7.json` | CPT codes, RVUs, bundling rules |
+| `data/knowledge/IP_Registry.json` | Registry schema definition |
+| `data/knowledge/golden_extractions/` | Training data for ML models |
+| `schemas/IP_Registry.json` | JSON Schema for validation |
+
+## Testing
+
+```bash
+# Run all tests
+make test
+
+# Run specific test suites
+pytest tests/coder/ -v          # Coder tests
+pytest tests/registry/ -v       # Registry tests
+pytest tests/ml_coder/ -v       # ML coder tests
+
+# Validate registry extraction
+make validate-registry
+
+# Run preflight checks
+make preflight
+```
+
+## Note for AI Assistants
 
 **Please read [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) before making changes.**
-*   Always edit `modules/api/fastapi_app.py`.
-*   Never edit `api/app.py` (Deprecated).
-*   Use the `CodingService` entrypoints (`/api/v1/procedures/{id}/codes/suggest`) instead of direct coder calls.
+
+- Always edit `modules/api/fastapi_app.py` (not `api/app.py` - deprecated)
+- Use `CodingService` from `modules/coder/application/coding_service.py`
+- Use `RegistryService` from `modules/registry/application/registry_service.py`
+- Knowledge base is at `data/knowledge/ip_coding_billing.v2_7.json`
+- Run `make test` before committing
+
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `GEMINI_API_KEY` | API key for Gemini LLM | Required for LLM features |
+| `GEMINI_OFFLINE` | Disable LLM calls (use stubs) | `1` |
+| `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry tests | `1` |
+| `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading at startup | `false` |
+
+---
+
+*Last updated: December 2025*

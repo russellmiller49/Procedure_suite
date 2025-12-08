@@ -1,3 +1,6 @@
 {
-    "chatgpt.openOnStartup": true
+    "chatgpt.openOnStartup": true,
+    "claudeCode.allowDangerouslySkipPermissions": true,
+    "claudeCode.environmentVariables": [],
+    "claudeCode.thinkingBudgetTokens": 50000
 }
