@@ -35,7 +35,9 @@ from modules.coder.reconciliation.reconciler import (
 from modules.coder.reconciliation.pipeline import (
     ExtractionFirstPipeline,
     PipelineResult,
+    RegistryMLAdapter,
     run_extraction_first_pipeline,
+    run_with_ml_validation,
 )
 
 __all__ = [
@@ -45,5 +47,7 @@ __all__ = [
     "reconcile_codes",
     "ExtractionFirstPipeline",
     "PipelineResult",
+    "RegistryMLAdapter",
     "run_extraction_first_pipeline",
+    "run_with_ml_validation",
 ]

@@ -295,9 +295,124 @@ def run_extraction_first_pipeline(
     return pipeline.run(note_text, ml_predictor)
 
 
+class RegistryMLAdapter:
+    """Adapter to use RegistryMLPredictor as CPT predictor for reconciliation.
+
+    This adapter wraps the RegistryMLPredictor (which predicts procedure fields)
+    and converts its predictions to CPT codes using the RegistryBasedCoder.
+    """
+
+    def __init__(self) -> None:
+        """Initialize the adapter with RegistryMLPredictor and coder."""
+        try:
+            from modules.ml_coder.registry_predictor import RegistryMLPredictor
+            self._registry_predictor = RegistryMLPredictor()
+            self._coder = RegistryBasedCoder()
+            self.available = self._registry_predictor.available
+        except Exception as e:
+            logger.warning(f"RegistryMLAdapter not available: {e}")
+            self._registry_predictor = None
+            self._coder = None
+            self.available = False
+
+    def predict(self, note_text: str) -> list[str]:
+        """Predict CPT codes via Registry ML → CPT derivation.
+
+        Args:
+            note_text: Procedure note text
+
+        Returns:
+            List of predicted CPT codes
+        """
+        if not self.available:
+            return []
+
+        # Get registry field predictions
+        classification = self._registry_predictor.classify_case(note_text)
+        positive_fields = classification.positive_fields
+
+        # Convert to ClinicalActions-like structure for CPT derivation
+        from modules.registry.ml import ClinicalActions, EBUSActions, NavigationActions
+        from modules.registry.ml import BiopsyActions, BALActions, PleuralActions
+        from modules.registry.ml import CAOActions, StentActions, BLVRActions, BrushingsActions
+
+        # Map ML predictions to ClinicalActions
+        actions = ClinicalActions(
+            ebus=EBUSActions(
+                performed="linear_ebus" in positive_fields,
+                stations=["4R", "7", "11L"] if "linear_ebus" in positive_fields else [],
+            ),
+            navigation=NavigationActions(
+                performed="navigational_bronchoscopy" in positive_fields,
+                radial_ebus_used="radial_ebus" in positive_fields,
+            ),
+            biopsy=BiopsyActions(
+                transbronchial_performed="transbronchial_biopsy" in positive_fields,
+                cryobiopsy_performed="transbronchial_cryobiopsy" in positive_fields,
+            ),
+            bal=BALActions(performed="diagnostic_bronchoscopy" in positive_fields),
+            brushings=BrushingsActions(performed="brushings" in positive_fields),
+            pleural=PleuralActions(
+                thoracentesis_performed="thoracentesis" in positive_fields,
+                chest_tube_performed="chest_tube" in positive_fields,
+                ipc_performed="ipc" in positive_fields,
+                thoracoscopy_performed="medical_thoracoscopy" in positive_fields,
+                pleurodesis_performed="pleurodesis" in positive_fields,
+            ),
+            cao=CAOActions(
+                thermal_ablation_performed="thermal_ablation" in positive_fields,
+            ),
+            stent=StentActions(performed="airway_stent" in positive_fields),
+            blvr=BLVRActions(performed="blvr" in positive_fields),
+            rigid_bronchoscopy="rigid_bronchoscopy" in positive_fields,
+        )
+
+        # Derive CPT codes from the ML-predicted actions
+        derivation = self._coder.derive_codes(actions)
+        return [c.code for c in derivation.codes]
+
+    def predict_proba(self, note_text: str) -> list[tuple[str, float]]:
+        """Predict CPT codes with confidence scores.
+
+        Args:
+            note_text: Procedure note text
+
+        Returns:
+            List of (code, confidence) tuples
+        """
+        codes = self.predict(note_text)
+        # Use a default confidence since we're deriving from field predictions
+        return [(code, 0.75) for code in codes]
+
+
+def run_with_ml_validation(note_text: str) -> PipelineResult:
+    """Run extraction-first pipeline with RegistryMLPredictor validation.
+
+    This is the recommended way to run the double-check architecture:
+    - Path A (Extraction): ActionPredictor → RegistryBasedCoder → CPT codes
+    - Path B (ML Validation): RegistryMLPredictor → RegistryBasedCoder → CPT codes
+    - Reconciliation: Compare paths and recommend action
+
+    Args:
+        note_text: Procedure note text
+
+    Returns:
+        PipelineResult with reconciliation between extraction and ML paths
+    """
+    ml_adapter = RegistryMLAdapter()
+
+    if not ml_adapter.available:
+        logger.warning("RegistryMLPredictor not available, running without ML validation")
+        return run_extraction_first_pipeline(note_text)
+
+    return run_extraction_first_pipeline(note_text, ml_predictor=ml_adapter)
+
+
 __all__ = [
     "ExtractionFirstPipeline",
     "PipelineResult",
     "MLPredictorProtocol",
+    "RegistryMLAdapter",
     "run_extraction_first_pipeline",
+    "run_with_ml_validation",
 ]

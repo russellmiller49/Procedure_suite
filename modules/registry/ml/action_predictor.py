@@ -155,6 +155,41 @@ FOREIGN_BODY_PATTERNS = [
     re.compile(r"aspiration\s+of\s+(?:foreign|object)", re.IGNORECASE),
 ]
 
+# Transbronchial biopsy patterns (supplements TBLBExtractor which requires lobe)
+# NOTE: Be careful not to match endobronchial biopsy or EBUS-TBNA
+TRANSBRONCHIAL_BIOPSY_PATTERNS = [
+    re.compile(r"transbronchial\s+(?:lung\s+)?biops(?:y|ies)", re.IGNORECASE),
+    re.compile(r"\bTBLB\b", re.IGNORECASE),
+    re.compile(r"\bTBBx?\b", re.IGNORECASE),  # TBB or TBBx
+    # Forceps biopsy in context of lung/lobe suggests transbronchial
+    re.compile(r"(?:forceps|transbronchial)\s+biops(?:y|ies)\s+(?:of|from|at)\s+(?:the\s+)?(?:RUL|RML|RLL|LUL|LLL|lingula|upper|middle|lower|lung|peripheral)", re.IGNORECASE),
+    # Specific patterns for parenchymal/lung biopsy
+    re.compile(r"(?:lung|parenchymal|peripheral\s+lung)\s+biops(?:y|ies)", re.IGNORECASE),
+    re.compile(r"biops(?:y|ies)\s+(?:of|from|at)\s+(?:the\s+)?(?:RUL|RML|RLL|LUL|LLL|lingula)", re.IGNORECASE),
+    # Biopsy under fluoroscopic guidance (common for TBLB)
+    re.compile(r"(?:fluoroscop(?:y|ic)|fluoro)\s+(?:guided\s+)?biops(?:y|ies)", re.IGNORECASE),
+    re.compile(r"biops(?:y|ies)\s+(?:under|with)\s+(?:fluoroscop(?:y|ic)|fluoro)", re.IGNORECASE),
+    # "tissue biopsy" from lung context
+    re.compile(r"(?:tissue|lung\s+tissue)\s+biops(?:y|ies)(?:\s+(?:was|were))?\s+(?:performed|obtained|taken)", re.IGNORECASE),
+    # Forceps biopsies (specific tool for TBLB, not needle)
+    re.compile(r"forceps\s+biops(?:y|ies)", re.IGNORECASE),
+]
+
+# Endobronchial biopsy patterns - DISTINCT from transbronchial
+ENDOBRONCHIAL_BIOPSY_PATTERNS = [
+    re.compile(r"endobronchial\s+biops(?:y|ies)", re.IGNORECASE),
+    re.compile(r"\bEBBx?\b"),  # EBB or EBBx
+    re.compile(r"biops(?:y|ies)\s+(?:of|from)\s+(?:the\s+)?(?:mass|tumor|lesion|mucosa|airway)", re.IGNORECASE),
+]
+
+# Conventional TBNA patterns (non-EBUS guided needle aspiration)
+CONVENTIONAL_TBNA_PATTERNS = [
+    re.compile(r"(?:conventional|blind)\s+TBNA", re.IGNORECASE),
+    re.compile(r"transbronchial\s+needle\s+aspiration", re.IGNORECASE),
+    re.compile(r"\bTBNA\b(?!\s*-?\s*EBUS)", re.IGNORECASE),  # TBNA not followed by EBUS
+    re.compile(r"Wang\s+needle", re.IGNORECASE),  # Wang needle is conventional TBNA
+]
+
 # Cryobiopsy patterns
 CRYOBIOPSY_PATTERNS = [
     re.compile(r"cryo(?:biopsy|biopsies)", re.IGNORECASE),
@@ -174,6 +209,42 @@ THORACOSCOPY_PATTERNS = [
     re.compile(r"(?:medical\s+)?thoracoscopy", re.IGNORECASE),
     re.compile(r"pleuroscopy", re.IGNORECASE),
 ]
+
+# Radial EBUS patterns (distinct from linear EBUS)
+RADIAL_EBUS_PATTERNS = [
+    re.compile(r"radial\s+(?:probe\s+)?(?:endobronchial\s+ultrasound|EBUS)", re.IGNORECASE),
+    re.compile(r"r-?EBUS\b", re.IGNORECASE),
+    re.compile(r"radial\s+probe", re.IGNORECASE),
+    re.compile(r"miniprobe", re.IGNORECASE),
+    re.compile(r"UM-S20-17S", re.IGNORECASE),  # Olympus radial probe model
+]
+
+# Rigid bronchoscopy patterns
+RIGID_BRONCH_PATTERNS = [
+    re.compile(r"rigid\s+bronchoscop(?:y|e)", re.IGNORECASE),
+    re.compile(r"rigid\s+scope", re.IGNORECASE),
+    re.compile(r"under\s+general\s+anesthesia.*bronchoscop", re.IGNORECASE),
+]
+
+# =============================================================================
+# Negation Handling Patterns
+# =============================================================================
+
+# Negation patterns that indicate procedure was NOT performed
+NEGATION_PREFIX_PATTERN = re.compile(
+    r"(?:not?\s+|without\s+|no\s+|denied\s+|declined\s+|deferred\s+)"
+    r"(?:\w+\s+){0,3}",  # Allow up to 3 words between negation and procedure
+    re.IGNORECASE,
+)
+
+NEGATION_SUFFIX_PATTERNS = [
+    re.compile(r"(?:was|were)\s+not\s+(?:performed|done|obtained|attempted)", re.IGNORECASE),
+    re.compile(r"not\s+(?:performed|done|obtained|attempted)", re.IGNORECASE),
+    re.compile(r"(?:was|were)\s+(?:deferred|declined|avoided)", re.IGNORECASE),
+]
+
+# Context window for checking negation (characters before/after match)
+NEGATION_WINDOW = 50
 
 # Complication patterns (inline since ComplicationsExtractor has broken import)
 COMPLICATION_PATTERNS = {
@@ -358,9 +429,24 @@ class ActionPredictor:
             text, sections, DILATION_PATTERNS, "dilation"
         )
 
+        # Transbronchial biopsy (supplements slot extractor)
+        results["tbb"] = self._extract_with_patterns(
+            text, sections, TRANSBRONCHIAL_BIOPSY_PATTERNS, "transbronchial_biopsy"
+        )
+
+        # Conventional TBNA (non-EBUS guided)
+        results["conventional_tbna"] = self._extract_with_patterns(
+            text, sections, CONVENTIONAL_TBNA_PATTERNS, "conventional_tbna"
+        )
+
         # Cryobiopsy
         results["cryobiopsy"] = self._extract_with_patterns(
             text, sections, CRYOBIOPSY_PATTERNS, "cryobiopsy"
+        )
+
+        # Endobronchial biopsy (distinct from transbronchial)
+        results["endobronchial_biopsy"] = self._extract_with_patterns(
+            text, sections, ENDOBRONCHIAL_BIOPSY_PATTERNS, "endobronchial_biopsy"
         )
 
         # IPC
@@ -388,6 +474,16 @@ class ActionPredictor:
             text, sections, ROBOTIC_PATTERNS, "robotic"
         )
 
+        # Radial EBUS (distinct from linear EBUS)
+        results["radial_ebus"] = self._extract_with_patterns(
+            text, sections, RADIAL_EBUS_PATTERNS, "radial_ebus"
+        )
+
+        # Rigid bronchoscopy
+        results["rigid_bronch"] = self._extract_with_patterns(
+            text, sections, RIGID_BRONCH_PATTERNS, "rigid_bronch"
+        )
+
         # Complications (using inline patterns)
         results["complications"] = self._extract_complications(text, sections)
 
@@ -399,13 +495,30 @@ class ActionPredictor:
         sections: Sequence[Section],
         patterns: list[re.Pattern],
         label: str,
+        check_negation: bool = True,
     ) -> SlotResult:
-        """Extract using a list of regex patterns."""
+        """Extract using a list of regex patterns with optional negation checking.
+
+        Args:
+            text: Full note text
+            sections: Parsed sections
+            patterns: List of regex patterns to match
+            label: Label for logging
+            check_negation: Whether to filter out negated matches
+
+        Returns:
+            SlotResult with found=True only if non-negated matches exist
+        """
         evidence: list[Span] = []
         found = False
 
         for pattern in patterns:
             for match in pattern.finditer(text):
+                # Check for negation if enabled
+                if check_negation and self._is_negated(text, match.start(), match.end()):
+                    logger.debug(f"Negated match for {label}: '{match.group(0)}'")
+                    continue
+
                 found = True
                 evidence.append(
                     Span(
@@ -417,6 +530,39 @@ class ActionPredictor:
                 )
 
         return SlotResult(found, evidence, 0.8 if found else 0.0)
+
+    def _is_negated(self, text: str, match_start: int, match_end: int) -> bool:
+        """Check if a match is negated by surrounding context.
+
+        Args:
+            text: Full text
+            match_start: Start position of the match
+            match_end: End position of the match
+
+        Returns:
+            True if the match appears to be negated
+        """
+        # Get context window before the match
+        context_start = max(0, match_start - NEGATION_WINDOW)
+        prefix_context = text[context_start:match_start].lower()
+
+        # Check for negation prefix (e.g., "no EBUS", "not performed")
+        if NEGATION_PREFIX_PATTERN.search(prefix_context):
+            # Make sure negation is close to the match (within window)
+            neg_match = NEGATION_PREFIX_PATTERN.search(prefix_context)
+            if neg_match and (len(prefix_context) - neg_match.end()) < 20:
+                return True
+
+        # Get context window after the match
+        context_end = min(len(text), match_end + NEGATION_WINDOW)
+        suffix_context = text[match_end:context_end].lower()
+
+        # Check for negation suffix (e.g., "was not performed")
+        for pattern in NEGATION_SUFFIX_PATTERNS:
+            if pattern.search(suffix_context):
+                return True
+
+        return False
 
     def _extract_navigation_platform(
         self, text: str, sections: Sequence[Section]
@@ -523,6 +669,7 @@ class ActionPredictor:
         nav_value = nav_result.value if nav_result else {}
         robotic_result = regex_results.get("robotic")
         cbct_result = regex_results.get("cbct")
+        radial_ebus_result = regex_results.get("radial_ebus")
 
         if isinstance(nav_value, dict):
             nav_platform = nav_value.get("platform")
@@ -531,11 +678,14 @@ class ActionPredictor:
             nav_platform = None
             nav_performed = navigation
 
+        # Radial EBUS can be detected via slot extractor OR regex pattern
+        radial_detected = radial or bool(radial_ebus_result and radial_ebus_result.value)
+
         nav_actions = NavigationActions(
             performed=nav_performed,
             platform=nav_platform,
             is_robotic=bool(robotic_result and robotic_result.value),
-            radial_ebus_used=radial,
+            radial_ebus_used=radial_detected,
             cone_beam_ct_used=bool(cbct_result and cbct_result.value),
         )
         if nav_result and nav_result.evidence:
@@ -546,15 +696,26 @@ class ActionPredictor:
                 source="deterministic",
             )
 
-        # Biopsy (TBLB)
+        # Biopsy (TBLB from slot extractor + regex patterns)
         tblb_result = slot_results.get("tblb")
         tblb_lobes = tblb_result.value if tblb_result and tblb_result.value else []
+        tbb_regex_result = regex_results.get("tbb")
         cryobiopsy_result = regex_results.get("cryobiopsy")
+        conventional_tbna_result = regex_results.get("conventional_tbna")
+        endobronchial_biopsy_result = regex_results.get("endobronchial_biopsy")
+
+        # TBB detected if slot extractor found lobes OR regex patterns matched
+        tbb_detected = len(tblb_lobes) > 0 or bool(tbb_regex_result and tbb_regex_result.value)
+
+        # Endobronchial biopsy is distinct from transbronchial
+        ebb_detected = bool(endobronchial_biopsy_result and endobronchial_biopsy_result.value)
 
         biopsy_actions = BiopsyActions(
-            transbronchial_performed=len(tblb_lobes) > 0,
+            transbronchial_performed=tbb_detected,
             transbronchial_sites=tblb_lobes if isinstance(tblb_lobes, list) else [],
             cryobiopsy_performed=bool(cryobiopsy_result and cryobiopsy_result.value),
+            tbna_conventional_performed=bool(conventional_tbna_result and conventional_tbna_result.value),
+            endobronchial_performed=ebb_detected,
         )
         if tblb_result and tblb_result.evidence:
             field_extractions["biopsy.transbronchial_sites"] = ActionResult(
@@ -706,6 +867,10 @@ class ActionPredictor:
             if sedation_type in ("MAC", "moderate", "general", "topical"):
                 sedation_actions.sedation_type = sedation_type
 
+        # Rigid bronchoscopy detection
+        rigid_bronch_result = regex_results.get("rigid_bronch")
+        is_rigid_bronch = bool(rigid_bronch_result and rigid_bronch_result.value)
+
         return ClinicalActions(
             ebus=ebus_actions,
             biopsy=biopsy_actions,
@@ -720,6 +885,7 @@ class ActionPredictor:
             therapeutic=therapeutic_actions,
             complications=complication_actions,
             sedation=sedation_actions,
+            rigid_bronchoscopy=is_rigid_bronch,
         )
 
     def _is_bronchoscopy(self, actions: ClinicalActions) -> bool:

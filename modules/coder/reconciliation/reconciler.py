@@ -265,11 +265,12 @@ class CodeReconciler:
         for code in prediction_only:
             conf = confidences.get(code)
             severity = self._assess_severity(code, "prediction", confidences)
+            conf_str = f"{conf:.2f}" if conf is not None else "N/A"
             discrepancies.append(
                 CodeDiscrepancy(
                     code=code,
                     source="prediction",
-                    reason=f"ML predicted {code} (conf={conf:.2f if conf else 'N/A'}) but extraction did not derive it",
+                    reason=f"ML predicted {code} (conf={conf_str}) but extraction did not derive it",
                     confidence=conf,
                     severity=severity,
                 )
