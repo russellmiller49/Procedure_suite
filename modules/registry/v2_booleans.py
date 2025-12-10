@@ -59,18 +59,19 @@ PROCEDURE_BOOLEAN_FIELDS: List[str] = [
 
 
 def extract_v2_booleans(entry: Dict[str, Any]) -> Dict[str, int]:
-    """Extract procedure boolean flags from a V2 Golden Extraction registry entry.
+    """Extract procedure boolean flags from a V2 or V3 Golden Extraction registry entry.
 
-    This function maps V2-style registry fields (e.g., `pleural_procedure_type`,
-    `linear_ebus_stations`, `pleurodesis_performed`) to a flat dict of 0/1 flags
-    for each procedure in PROCEDURE_BOOLEAN_FIELDS.
+    This function maps registry fields to a flat dict of 0/1 flags for each
+    procedure in PROCEDURE_BOOLEAN_FIELDS. It handles both:
+    - V2-style flat fields (e.g., `pleural_procedure_type`, `linear_ebus_stations`)
+    - V3-style nested fields (e.g., `procedures_performed.endobronchial_biopsy.performed`)
 
-    The mapping rules encode domain knowledge about how V2 registry entries
+    The mapping rules encode domain knowledge about how registry entries
     indicate procedure presence. This is the canonical source of truth for
-    translating V2 semantics to V3-style boolean flags.
+    translating registry semantics to boolean flags.
 
     Args:
-        entry: A V2 registry entry dict (typically from `registry_entry` in
+        entry: A registry entry dict (typically from `registry_entry` in
                Golden Extraction JSON files).
 
     Returns:
@@ -89,6 +90,41 @@ def extract_v2_booleans(entry: Dict[str, Any]) -> Dict[str, int]:
     """
     flags: Dict[str, int] = {name: 0 for name in PROCEDURE_BOOLEAN_FIELDS}
 
+    # =========================================================================
+    # V3 NESTED FORMAT DETECTION
+    # =========================================================================
+    # Check for V3-style nested procedures_performed structure
+    procedures_performed = entry.get("procedures_performed") or {}
+    pleural_procedures = entry.get("pleural_procedures") or {}
+
+    if procedures_performed or pleural_procedures:
+        # V3 format: extract from nested structure
+        for proc_name in PROCEDURE_BOOLEAN_FIELDS:
+            # Check procedures_performed.<proc_name>.performed
+            proc_obj = procedures_performed.get(proc_name, {})
+            if isinstance(proc_obj, dict) and proc_obj.get("performed") is True:
+                flags[proc_name] = 1
+
+            # Check pleural_procedures.<proc_name>.performed
+            pleural_obj = pleural_procedures.get(proc_name, {})
+            if isinstance(pleural_obj, dict) and pleural_obj.get("performed") is True:
+                flags[proc_name] = 1
+
+        # Set diagnostic_bronchoscopy if any bronch procedure was performed
+        bronch_procs = [k for k in PROCEDURE_BOOLEAN_FIELDS if k not in [
+            "thoracentesis", "chest_tube", "ipc", "medical_thoracoscopy",
+            "pleurodesis", "pleural_biopsy", "fibrinolytic_therapy", "diagnostic_bronchoscopy"
+        ]]
+        if any(flags[p] for p in bronch_procs):
+            flags["diagnostic_bronchoscopy"] = 1
+
+        # If V3 format found anything, return early (skip V2 logic)
+        if any(flags.values()):
+            return flags
+
+    # =========================================================================
+    # V2 FLAT FORMAT (fallback)
+    # =========================================================================
     # Helper to safely get values
     def _get(key: str, default=None):
         return entry.get(key, default)

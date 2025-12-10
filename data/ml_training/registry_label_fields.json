@@ -19,5 +19,7 @@
   "chest_tube",
   "ipc",
   "medical_thoracoscopy",
-  "pleurodesis"
+  "pleurodesis",
+  "bal",
+  "therapeutic_aspiration"
 ]

@@ -47,50 +47,265 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 - Negation is explicit: `performed: false` in structured data
 - The existing ML becomes a "safety net" for double-checking
 
-### Implementation Phases
+---
 
-#### Phase 1: Promote Registry ML (IN PROGRESS)
-- Train models to predict atomic clinical actions, NOT CPT codes
-- Target fields: `is_biopsy`, `is_navigational`, `is_robotic`, `ebus_performed`, etc.
-- These are easier to learn than CPT bundling rules
-- Location: `modules/registry/ml/` (create if needed)
+## 🚀 Implementation Roadmap
 
-#### Phase 2: Create Registry-Based Coder (NEXT)
-- Create adapter that derives CPT codes from RegistryRecord
-- Replace probabilistic prediction with deterministic calculation
-- Location: `modules/coder/adapters/registry_coder.py` (create)
+### Phase 1: Data Augmentation & Prep (Local)
 
-**Conceptual Implementation:**
+**Goal**: Turn ~160 "Golden" notes into a robust training set of 2,000–5,000 examples, fixing class imbalance.
+
+**Tasks:**
+
+1. **Run Augmentation Agent** (`scripts/augment_registry_data.py`)
+   - Generate 10-20 variations for every rare case (e.g., `blvr`, `thermal_ablation`, `cryotherapy`)
+   - Target: Every label has at least 50+ positive examples
+   
+2. **Finalize Data Splits** (`modules/ml_coder/data_prep.py`)
+   - Generate `registry_train.csv` and `registry_test.csv`
+   - **Critical**: Ensure "Edge Cases" are in the Test Set to verify the model generalizes, not memorizes
+
+**Checklist:**
+- [ ] Run `augment_registry_data.py` 
+- [ ] Verify rare classes have 50+ examples each
+- [ ] Generate train/test splits
+- [ ] Confirm edge cases are in test set
+
+---
+
+### Phase 2: RoBERTa Student Training (Local - Fast Track)
+
+**Goal**: Train a high-performance deep learning model without a teacher. This will likely be sufficient.
+
+**Hardware/Environment:**
+- **GPU**: RTX 4070 Ti (local)
+- **Framework**: PyTorch with CUDA 11.8/12.1
+- **Mixed Precision**: `fp16=True`
+
+**Model Selection:**
+- **Primary**: `pminervini/RoBERTa-base-PM-M3-Voc-hf` (PubMed/MIMIC vocabulary)
+- **Alternative**: Distill-Align checkpoint with clinical vocabulary
+
+**Training Script** (`scripts/train_roberta.py`):
+
 ```python
-def derive_codes_from_registry(record: RegistryRecord) -> list[str]:
+# Key configuration
+model_name = "pminervini/RoBERTa-base-PM-M3-Voc-hf"
+loss_function = BCEWithLogitsLoss(pos_weight=calculated_weights)
+batch_size = 16  # or 32 depending on VRAM
+fp16 = True
+
+# CRITICAL: Calculate pos_weight for each label based on training data
+# If "Stent" is rare (e.g., 5% positive), weight it ~19x higher
+pos_weight = (num_negative / num_positive) for each label
+```
+
+**Success Criteria:**
+- Macro F1 Score > 0.90 on `registry_test.csv`
+- F1 > 0.85 on rare classes (BLVR, thermal ablation, cryotherapy)
+- **If criteria met → SKIP Phase 3, proceed to Phase 4**
+
+**Checklist:**
+- [ ] Configure PyTorch with CUDA
+- [ ] Implement `scripts/train_roberta.py`
+- [ ] Calculate `pos_weight` for class imbalance
+- [ ] Train model with fp16 mixed precision
+- [ ] Evaluate Macro F1 on test set
+- [ ] Evaluate F1 on rare classes specifically
+
+---
+
+### Phase 3: Teacher-Student Distillation (Cloud - CONDITIONAL)
+
+> **Only execute if Phase 2 fails (Macro F1 < 0.85)**
+
+**Goal**: Use a larger model to "teach" the smaller model through knowledge distillation.
+
+**Steps:**
+
+1. **Rent Cloud GPU** (~1 hour)
+   - Options: Lambda Labs, AWS (A10G), RunPod
+   - Target: NVIDIA A10G or A100
+
+2. **Train Teacher Model**
+   - Model: `RoBERTa-large-PM-M3-Voc` (larger variant)
+   - Fine-tune on augmented training data
+
+3. **Generate Soft Labels**
+   - Run trained Teacher on Training Data
+   - Save output logits: `teacher_logits.pt`
+
+4. **Retrain Student (Local)**
+   - Return to RTX 4070 Ti
+   - Loss function: `0.5 * GroundTruthLoss + 0.5 * TeacherDistillationLoss`
+
+**Checklist:**
+- [ ] Spin up cloud GPU (if needed)
+- [ ] Train teacher model
+- [ ] Export soft labels to `teacher_logits.pt`
+- [ ] Retrain student with distillation loss
+
+---
+
+### Phase 4: Rules Engine (Deterministic Logic)
+
+**Goal**: Derive CPT codes from Registry flags deterministically—no ML guessing for the final coding step.
+
+**Location**: `data/rules/coding_rules.py`
+
+**Implementation Pattern:**
+
+```python
+# data/rules/coding_rules.py
+
+def rule_31652(registry: dict) -> bool:
+    """EBUS-TBNA, 1-2 stations."""
+    return (
+        registry.get("linear_ebus", False) and 
+        1 <= registry.get("stations_sampled", 0) <= 2
+    )
+
+def rule_31653(registry: dict) -> bool:
+    """EBUS-TBNA, 3+ stations."""
+    return (
+        registry.get("linear_ebus", False) and 
+        registry.get("stations_sampled", 0) >= 3
+    )
+
+def rule_31625(registry: dict) -> bool:
+    """Bronchoscopy with transbronchial biopsy."""
+    return registry.get("transbronchial_biopsy", False)
+
+def rule_31627(registry: dict) -> bool:
+    """Navigation add-on (requires primary procedure)."""
+    return registry.get("navigation_used", False)
+
+def derive_all_codes(registry: dict) -> list[str]:
+    """Master function to derive all applicable CPT codes."""
     codes = []
     
-    # Deterministic EBUS Logic
-    if record.procedures.ebus.performed:
-        stations = len(record.procedures.ebus.stations)
-        if stations >= 3:
-            codes.append("31653")
-        elif stations >= 1:
-            codes.append("31652")
+    # EBUS (mutually exclusive)
+    if rule_31653(registry):
+        codes.append("31653")
+    elif rule_31652(registry):
+        codes.append("31652")
     
-    # Deterministic Biopsy Logic
-    if record.procedures.transbronchial_biopsy.performed:
+    # Biopsies
+    if rule_31625(registry):
         codes.append("31625")
     
-    # Navigation add-on
-    if record.procedures.navigation.performed:
-        codes.append("31627")  # Add-on code
+    # Add-ons (only if primary exists)
+    if codes and rule_31627(registry):
+        codes.append("31627")
     
     return codes
 ```
 
-#### Phase 3: Double-Check Architecture (FUTURE)
-- Run both paths in parallel:
-  - **Path A (Extraction)**: Registry Extraction → Calculate CPTs
-  - **Path B (Prediction)**: Legacy `cpt_classifier.pkl` → Predict CPTs
-- Reconciliation logic:
-  - If Path A and Path B match → Auto-code
-  - If Path A says "No Biopsy" but Path B predicts "31625" → Flag for Review
+**Validation Process:**
+1. Run all 5,000+ Golden Notes through the rules engine
+2. Compare `Engine_CPT` vs. `Verified_CPT`
+3. **Fix rules until 100% match on verified cases**
+
+**Checklist:**
+- [ ] Create `data/rules/coding_rules.py`
+- [ ] Implement all CPT rule functions
+- [ ] Create unit tests for each rule
+- [ ] Validate against Golden Notes (target: 100% match)
+- [ ] Document edge cases and exceptions
+
+---
+
+### Phase 5: Optimization & Deployment (Railway)
+
+**Goal**: Deploy an optimized, cost-effective inference system on Railway Pro plan.
+
+#### 5.1 Model Quantization (Local)
+
+**Process:**
+1. Convert trained PyTorch model (`.pt`) to **ONNX format**
+2. Apply **INT8 quantization**
+
+**Results:**
+- Model size: ~350MB → ~80MB
+- Inference speed: ~3x faster
+- RAM usage: <500MB
+
+**Script** (`scripts/quantize_to_onnx.py`):
+
+```python
+import torch
+import onnx
+from onnxruntime.quantization import quantize_dynamic, QuantType
+
+# Export to ONNX
+torch.onnx.export(model, dummy_input, "registry_model.onnx")
+
+# INT8 Quantization
+quantize_dynamic(
+    "registry_model.onnx",
+    "registry_model_int8.onnx",
+    weight_type=QuantType.QUInt8
+)
+```
+
+#### 5.2 ONNX Inference Service
+
+**Location**: `modules/registry/inference_onnx.py`
+
+```python
+# modules/registry/inference_onnx.py
+import onnxruntime as ort
+import numpy as np
+
+class ONNXRegistryPredictor:
+    """Lightweight ONNX-based registry prediction."""
+    
+    def __init__(self, model_path: str = "models/registry_model_int8.onnx"):
+        self.session = ort.InferenceSession(
+            model_path,
+            providers=['CPUExecutionProvider']
+        )
+    
+    def predict(self, text: str) -> dict:
+        """Run inference on procedure note text."""
+        # Tokenize and run inference
+        inputs = self._preprocess(text)
+        outputs = self.session.run(None, inputs)
+        return self._postprocess(outputs)
+```
+
+#### 5.3 Railway Deployment
+
+**Benefits of INT8 Model:**
+- RAM usage: <500MB (leaves room for app + overhead)
+- No GPU required (CPU inference sufficient)
+- Avoids Railway overage charges
+- Response time: <100ms typical
+
+**Checklist:**
+- [ ] Export model to ONNX format
+- [ ] Apply INT8 quantization
+- [ ] Verify quantized model accuracy (should be ~same as original)
+- [ ] Create `modules/registry/inference_onnx.py`
+- [ ] Test locally with ONNX runtime
+- [ ] Deploy to Railway
+- [ ] Monitor RAM usage and response times
+
+---
+
+## Summary Checklist
+
+| Phase | Task | Status |
+|-------|------|--------|
+| 1 | Generate 2,000+ synthetic notes | [ ] |
+| 1 | Finalize train/test splits | [ ] |
+| 2 | Train `RoBERTa-base-PM-M3-Voc` on RTX 4070 Ti | [ ] |
+| 2 | Achieve Macro F1 > 0.90 | [ ] |
+| 3 | (Conditional) Teacher-student distillation | [ ] |
+| 4 | Write deterministic CPT rule functions | [ ] |
+| 4 | Validate rules against Golden Notes (100%) | [ ] |
+| 5 | Convert model to ONNX INT8 | [ ] |
+| 5 | Deploy to Railway | [ ] |
 
 ---
 
@@ -106,7 +321,7 @@ procedure-suite/
 │   │   ├── application/
 │   │   │   └── coding_service.py      # CodingService - main entry point
 │   │   ├── adapters/
-│   │   │   └── registry_coder.py      # NEW: Registry-based coder (create)
+│   │   │   └── registry_coder.py      # Registry-based coder
 │   │   └── domain/
 │   │       └── smart_hybrid.py        # SmartHybridOrchestrator
 │   ├── registry/
@@ -114,26 +329,38 @@ procedure-suite/
 │   │   │   └── registry_service.py    # RegistryService - main entry point
 │   │   ├── engine/
 │   │   │   └── registry_engine.py     # LLM extraction logic
-│   │   └── ml/                        # NEW: Registry ML predictors (create)
+│   │   ├── inference_onnx.py          # NEW: ONNX inference service
+│   │   └── ml/                        # Registry ML predictors
 │   ├── agents/
 │   │   ├── contracts.py               # Pydantic I/O schemas
 │   │   ├── run_pipeline.py            # Pipeline orchestration
 │   │   ├── parser/                    # ParserAgent
 │   │   ├── summarizer/                # SummarizerAgent
 │   │   └── structurer/                # StructurerAgent
-│   ├── ml_coder/                      # ML-based CPT predictor (legacy path)
+│   ├── ml_coder/                      # ML-based CPT predictor
+│   │   └── data_prep.py               # Train/test split generation
 │   └── reporter/                      # Synoptic report generator
+├── scripts/
+│   ├── augment_registry_data.py       # Data augmentation for rare classes
+│   ├── train_roberta.py               # RoBERTa training script
+│   └── quantize_to_onnx.py            # ONNX conversion & quantization
 ├── data/
-│   └── knowledge/
-│       ├── ip_coding_billing.v2_7.json  # CPT codes, RVUs, bundling rules
-│       ├── IP_Registry.json             # Registry schema definition
-│       └── golden_extractions/          # Training data
+│   ├── knowledge/
+│   │   ├── ip_coding_billing.v2_7.json  # CPT codes, RVUs, bundling rules
+│   │   ├── IP_Registry.json             # Registry schema definition
+│   │   └── golden_extractions/          # Training data
+│   └── rules/
+│       └── coding_rules.py            # Deterministic CPT derivation rules
+├── models/
+│   ├── registry_model.pt              # Trained PyTorch model
+│   └── registry_model_int8.onnx       # Quantized ONNX model
 ├── schemas/
 │   └── IP_Registry.json               # JSON Schema for validation
 └── tests/
     ├── coder/
     ├── registry/
-    └── ml_coder/
+    ├── ml_coder/
+    └── rules/                         # NEW: Rules engine tests
 ```
 
 ## Critical Development Rules
@@ -143,6 +370,7 @@ procedure-suite/
 - **ALWAYS** use `CodingService` from `modules/coder/application/coding_service.py`
 - **ALWAYS** use `RegistryService` from `modules/registry/application/registry_service.py`
 - Knowledge base is at `data/knowledge/ip_coding_billing.v2_7.json`
+- Deterministic rules are at `data/rules/coding_rules.py`
 
 ### 2. Testing Requirements
 - **ALWAYS** run `make test` before committing
@@ -152,6 +380,7 @@ procedure-suite/
   pytest tests/coder/ -v          # Coder tests
   pytest tests/registry/ -v       # Registry tests
   pytest tests/ml_coder/ -v       # ML coder tests
+  pytest tests/rules/ -v          # Rules engine tests
   make validate-registry          # Registry extraction validation
   ```
 
@@ -184,194 +413,6 @@ Pipeline behavior:
 - `ok` → Continue to next stage
 - `degraded` → Continue with warning
 - `failed` → Stop pipeline, return partial results
-
----
-
-## Implementation Tasks for Extraction-First Pivot
-
-### Task 1: Create Registry ML Module
-**Location**: `modules/registry/ml/`
-
-Create predictors for atomic clinical actions:
-
-```python
-# modules/registry/ml/action_predictor.py
-from pydantic import BaseModel
-from typing import List, Optional
-
-class ClinicalActions(BaseModel):
-    """Atomic clinical actions extracted from procedure note."""
-    ebus_performed: bool
-    ebus_stations: List[str]  # ["4R", "7", "11L"]
-    transbronchial_biopsy: bool
-    biopsy_sites: List[str]  # ["RUL", "LLL"]
-    navigation_used: bool
-    navigation_system: Optional[str]  # "superDimension", "Ion", etc.
-    brushings_performed: bool
-    brushings_sites: List[str]
-    bal_performed: bool
-    bal_sites: List[str]
-    # ... etc
-
-class ActionPredictor:
-    """Predicts atomic clinical actions from text."""
-    
-    def predict(self, text: str) -> ClinicalActions:
-        """Extract clinical actions from procedure note text."""
-        # Implementation using ML/NLP
-        pass
-```
-
-### Task 2: Create Registry-Based Coder
-**Location**: `modules/coder/adapters/registry_coder.py`
-
-```python
-# modules/coder/adapters/registry_coder.py
-from typing import List, Dict, Any
-from modules.registry.domain.models import RegistryRecord
-
-class RegistryBasedCoder:
-    """Derives CPT codes deterministically from structured registry data."""
-    
-    def __init__(self, knowledge_base_path: str):
-        """Load CPT rules from knowledge base."""
-        self.rules = self._load_rules(knowledge_base_path)
-    
-    def derive_codes(self, record: RegistryRecord) -> List[Dict[str, Any]]:
-        """
-        Derive CPT codes from registry record.
-        
-        Returns list of:
-        {
-            "code": "31653",
-            "description": "EBUS-TBNA, 3+ stations",
-            "rationale": "registry.procedures.ebus.stations count = 3",
-            "evidence_fields": ["procedures.ebus.stations"]
-        }
-        """
-        codes = []
-        
-        # EBUS coding logic
-        if record.procedures.ebus.performed:
-            codes.extend(self._derive_ebus_codes(record))
-        
-        # Biopsy coding logic
-        if record.procedures.transbronchial_biopsy.performed:
-            codes.extend(self._derive_biopsy_codes(record))
-        
-        # Navigation add-on logic
-        if record.procedures.navigation.performed:
-            codes.extend(self._derive_navigation_codes(record))
-        
-        # Apply bundling rules
-        codes = self._apply_bundling_rules(codes, record)
-        
-        return codes
-    
-    def _derive_ebus_codes(self, record: RegistryRecord) -> List[Dict]:
-        """Deterministic EBUS coding."""
-        stations = len(record.procedures.ebus.stations)
-        
-        if stations >= 3:
-            return [{
-                "code": "31653",
-                "description": "EBUS-TBNA, 3+ stations",
-                "rationale": f"stations sampled: {stations} >= 3",
-                "evidence_fields": ["procedures.ebus.stations"]
-            }]
-        elif stations >= 1:
-            return [{
-                "code": "31652",
-                "description": "EBUS-TBNA, 1-2 stations",
-                "rationale": f"stations sampled: {stations} < 3",
-                "evidence_fields": ["procedures.ebus.stations"]
-            }]
-        return []
-```
-
-### Task 3: Update RegistryService for Extraction-First
-**Location**: `modules/registry/application/registry_service.py`
-
-Modify to make registry extraction the primary path:
-
-```python
-class RegistryService:
-    """
-    EXTRACTION-FIRST architecture.
-    
-    1. Extract structured registry data (source of truth)
-    2. Derive CPT codes from registry (deterministic)
-    3. Validate against legacy ML predictor (safety net)
-    """
-    
-    def extract_and_code(self, note_text: str) -> ExtractAndCodeResult:
-        """
-        Primary entry point for extraction-first pipeline.
-        
-        Returns both registry data AND derived CPT codes.
-        """
-        # Step 1: Extract registry data (source of truth)
-        registry_record = self.extract_registry(note_text)
-        
-        # Step 2: Derive CPT codes deterministically
-        derived_codes = self.registry_coder.derive_codes(registry_record)
-        
-        # Step 3: Safety net - compare with ML predictions
-        ml_predictions = self.ml_predictor.predict(note_text)
-        discrepancies = self._reconcile(derived_codes, ml_predictions)
-        
-        return ExtractAndCodeResult(
-            registry=registry_record,
-            codes=derived_codes,
-            ml_codes=ml_predictions,
-            discrepancies=discrepancies,
-            confidence="high" if not discrepancies else "review_needed"
-        )
-```
-
-### Task 4: Create Reconciliation Logic
-**Location**: `modules/coder/reconciliation/reconciler.py`
-
-```python
-class CodeReconciler:
-    """Reconciles extraction-derived codes with ML-predicted codes."""
-    
-    def reconcile(
-        self, 
-        derived_codes: List[str], 
-        predicted_codes: List[str]
-    ) -> ReconciliationResult:
-        """
-        Compare derived (from registry) vs predicted (from ML) codes.
-        
-        Returns:
-        - matched: codes that appear in both
-        - extraction_only: codes derived from registry but not predicted
-        - prediction_only: codes predicted but not derived (potential misses)
-        - recommendation: "auto_approve" | "review_needed" | "flag_for_audit"
-        """
-        derived_set = set(derived_codes)
-        predicted_set = set(predicted_codes)
-        
-        matched = derived_set & predicted_set
-        extraction_only = derived_set - predicted_set
-        prediction_only = predicted_set - derived_set
-        
-        # Determine recommendation
-        if not prediction_only:
-            recommendation = "auto_approve"
-        elif len(prediction_only) == 1 and self._is_low_confidence(prediction_only):
-            recommendation = "review_needed"
-        else:
-            recommendation = "flag_for_audit"
-        
-        return ReconciliationResult(
-            matched=list(matched),
-            extraction_only=list(extraction_only),
-            prediction_only=list(prediction_only),
-            recommendation=recommendation
-        )
-```
 
 ---
 
@@ -459,6 +500,28 @@ def test_ebus_three_stations_produces_31653():
     assert "31653" in [c["code"] for c in codes]
 ```
 
+### Rules Engine Test Pattern
+```python
+def test_rule_31653():
+    """Test EBUS 3+ stations rule."""
+    registry = {
+        "linear_ebus": True,
+        "stations_sampled": 4
+    }
+    assert rule_31653(registry) is True
+    
+    registry["stations_sampled"] = 2
+    assert rule_31653(registry) is False
+
+def test_rule_31652():
+    """Test EBUS 1-2 stations rule."""
+    registry = {
+        "linear_ebus": True,
+        "stations_sampled": 2
+    }
+    assert rule_31652(registry) is True
+```
+
 ### Integration Test Pattern
 ```python
 def test_extraction_first_pipeline():
@@ -526,6 +589,13 @@ micromamba activate medparse-py311
 pip install -e .
 ```
 
+**ONNX inference issues:**
+```bash
+pip install onnxruntime  # CPU-only runtime
+# or
+pip install onnxruntime-gpu  # If GPU available
+```
+
 ---
 
 ## Contact & Resources
@@ -534,8 +604,10 @@ pip install -e .
 - **Registry Schema**: `schemas/IP_Registry.json`
 - **API Docs**: `docs/Registry_API.md`
 - **CPT Reference**: `docs/REFERENCES.md`
+- **Rules Engine**: `data/rules/coding_rules.py`
 
 ---
 
 *Last updated: December 2025*
-*Architecture: Extraction-First (in progress)*
+*Architecture: Extraction-First with RoBERTa ML + Deterministic Rules Engine*
+*Deployment Target: Railway (ONNX INT8)*

@@ -1,594 +1,797 @@
-note_text,diagnostic_bronchoscopy,brushings,tbna_conventional,linear_ebus,radial_ebus,navigational_bronchoscopy,transbronchial_biopsy,transbronchial_cryobiopsy,foreign_body_removal,airway_stent,thermal_ablation,blvr,peripheral_ablation,bronchial_thermoplasty,whole_lung_lavage,rigid_bronchoscopy,thoracentesis,chest_tube,ipc,medical_thoracoscopy,pleurodesis
-"Patient: Sanders, Lucille | 59F | MRN 8801001
-Date of Procedure: 11/14/2024
-Attending: Brian Cho, MD
-
-PRE-OP DIAGNOSIS:
-Right upper lobe lung mass, suspected non-small cell lung cancer
-
-POST-OP DIAGNOSIS:
-Same
-
-PROCEDURES PERFORMED:
-1. Flexible bronchoscopy
-2. Endobronchial ultrasound (linear) with transbronchial needle aspiration (EBUS-TBNA) of mediastinal/hilar lymph nodes
-
-ANESTHESIA:
-General anesthesia with 8.5 ETT, managed by anesthesia service
-
-INDICATION:
-Staging of PET-avid mediastinal/hilar adenopathy in a patient with RUL lung mass prior to lobectomy.
-
-DESCRIPTION OF PROCEDURE:
-After informed consent, the patient was brought to the bronchoscopy suite and placed under general anesthesia.
-An 8.5 mm endotracheal tube was placed by anesthesia. A standard diagnostic flexible bronchoscope was
-passed through the ETT. Full airway survey was performed. The trachea, carina, and right/left bronchial
-tree were inspected. No endobronchial lesion was seen in the central airways.
-
-The diagnostic bronchoscope was removed and the linear EBUS bronchoscope was introduced through the ETT.
-Systematic nodal survey was performed.
-
-Station 4R: Enlarged, 1.5 cm short axis, hypoechoic node with discrete borders. Four EBUS-TBNA passes
-performed using a 22G needle. Adequate material obtained, on-site smears cellular.
-
-Station 7: 1.2 cm hypoechoic subcarinal node. Four EBUS-TBNA passes performed with 22G needle. ROSE
-showed lymphoid tissue; no complications.
-
-Station 10R: Visualized only. Node measured approximately 6–7 mm. No clear malignant features.
-NO sampling was performed at 10R; it was intentionally observed only.
-
-No radial EBUS was used and no peripheral lung nodule sampling was attempted during this case.
-
-SPECIMENS:
-EBUS-TBNA station 4R x4 passes
-EBUS-TBNA station 7 x4 passes
-
-COMPLICATIONS:
-None. No significant bleeding or hypoxia.
-
-DISPOSITION:
-Extubated in procedure room and transferred to PACU in stable condition.
-
-CPT (requested by operator): 31622, 31652",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Patient: Ruiz, Omar | 64M | MRN 8801002
-Date of Procedure: 11/18/2024
-Attending: Sarah Lin, MD
-
-PRE-OP DIAGNOSIS:
-RLL lung mass with PET-avid mediastinal and hilar adenopathy
-
-POST-OP DIAGNOSIS:
-Same
-
-PROCEDURES PERFORMED:
-1. Flexible bronchoscopy
-2. Linear endobronchial ultrasound with transbronchial needle aspiration (EBUS-TBNA) of mediastinal/hilar nodes
-
-ANESTHESIA:
-General anesthesia with 8.0 ETT (anesthesia service)
-
-DESCRIPTION:
-Standard diagnostic bronchoscopy performed first; no endobronchial tumor visualized in the central airways.
-
-The linear EBUS bronchoscope was then advanced through the ETT. A systematic nodal survey was performed.
-
-Station 11R: 1.3 cm hypoechoic node. A radial EBUS miniprobe was briefly advanced into the node to better
-characterize internal echotexture. This probe was used within the node only, not to evaluate a peripheral lung lesion.
-EBUS-TBNA with 22G needle x4 passes was then performed.
-
-Station 4R: 1.0 cm node, classic malignant features. EBUS-TBNA x3 passes (22G).
-
-Station 7: 1.1 cm subcarinal node. EBUS-TBNA x3 passes (22G).
-
-No peripheral lung lesion was targeted with radial EBUS and no transbronchial lung biopsies were performed.
-
-SPECIMENS:
-EBUS-TBNA 11R, 4R, 7 (total 10 passes).
-
-COMPLICATIONS:
-None. Patient remained hemodynamically stable, minimal bleeding.
-
-DISPOSITION:
-Extubated in procedure room, transferred to PACU.
-
-CPT (requested): 31622, 31653, 31654",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Patient: Nguyen, Tina | 50F | MRN 8801003
-Date of Procedure: 11/21/2024
-Attending: Michael Hart, MD
-
-PRE-OP DIAGNOSIS:
-PET-avid 2.1 cm LLL peripheral nodule and mildly enlarged 11L/7 nodes
-
-POST-OP DIAGNOSIS:
-Same
-
-PROCEDURES PERFORMED:
-1. Robotic bronchoscopy with computer-assisted image-guided navigation to LLL nodule
-2. Radial EBUS of LLL nodule
-3. Transbronchial lung biopsy (TBLB), LLL
-4. Linear EBUS-TBNA of mediastinal/hilar nodes (11L and 7)
-
-ANESTHESIA:
-General anesthesia with 8.0 ETT (anesthesia team)
-
-DESCRIPTION:
-After induction of general anesthesia, an 8.0 ETT was placed. A robotic bronchoscope was docked (Ion system).
-Pre-procedure CT was loaded and registration performed with a registration error of 2.3 mm.
-
-Using computer-assisted navigation, the scope was advanced to the LLL target. Radial EBUS probe demonstrated
-a concentric hypoechoic lesion corresponding to the CT nodule. Through the robotic working channel, standard
-forceps transbronchial lung biopsies were obtained from the LLL (5 passes) with fluoroscopic confirmation of
-tool position. No pneumothorax seen on immediate fluoroscopy.
-
-Following peripheral sampling, the robotic scope was removed and a linear EBUS scope was introduced through the ETT
-for nodal staging.
-
-Station 11L: 1.0 cm node with mild PET uptake. EBUS-TBNA x4 passes (22G).
-
-Station 7: 0.9 cm node. EBUS-TBNA x3 passes (22G).
-
-No other nodal stations were sampled. No additional peripheral lesions were targeted.
-
-SPECIMENS:
-LLL TBLB x5, EBUS-TBNA 11L and 7.
-
-COMPLICATIONS:
-None. No hypoxia, bleeding, or pneumothorax noted intra-procedure.
-
-DISPOSITION:
-Extubated in OR and monitored in PACU before same-day discharge.
-
-CPT (requested): 31627, 31654, 31628, 31652",1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Patient: Fowler, Justin | 71M | MRN 8801004
-Date of Procedure: 11/23/2024
-Attending: Priya Desai, MD
-
-PRE-OP DIAGNOSIS:
-Mediastinal adenopathy in patient with unexplained weight loss
-
-POST-OP DIAGNOSIS:
-Same
-
-PROCEDURES PERFORMED:
-1. Flexible bronchoscopy with bronchoalveolar lavage
-2. Attempted EBUS bronchoscopy (aborted before lymph node sampling)
-
-SEDATION:
-Moderate sedation with midazolam 2 mg IV and fentanyl 75 mcg IV, native airway with nasal approach
-
-DESCRIPTION:
-After informed consent, patient was placed supine and topical lidocaine applied to nasopharynx. Diagnostic
-flexible bronchoscopy was performed via left naris. Vocal cords were mobile. Trachea and main bronchi without
-endobronchial lesion.
-
-Given CT suggestion of mediastinal nodes, attempt was made to pass the linear EBUS scope through the vocal cords.
-However, despite additional topical anesthesia, the patient developed severe coughing and transient desaturation
-to 84%. The EBUS scope could not be advanced safely beyond the glottis and NO nodal survey or TBNA passes were performed.
-
-To at least obtain diagnostic material, the conventional bronchoscope was reintroduced and bronchoalveolar lavage
-was performed in the right middle lobe (120 mL in, 70 mL out). Fluid sent for cytology, AFB smear/culture, and
-fungal studies.
-
-No biopsies (TBLB or TBNA) were performed and no EBUS images were obtained.
-
-COMPLICATIONS:
-Brief desaturation during attempted EBUS entry, resolved with oxygen and scope removal. No bleeding.
-
-DISPOSITION:
-Observed in step-down unit for 2 hours and discharged home the same day.
-
-CPT (requested by operator): 31652",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Patient: Brooks, Henry | 67M | MRN 8801005
-Date of Procedure: 11/26/2024
-Attending: Laura Kim, MD
-
-PRE-OP DIAGNOSIS:
-History of left mainstem silicone stent for malignant obstruction, increased mucus burden
-
-POST-OP DIAGNOSIS:
-Same; stent patent, no revision required
-
-PROCEDURE PERFORMED:
-Therapeutic flexible bronchoscopy with stent surveillance and airway toilet
-
-ANESTHESIA:
-Moderate sedation with midazolam 3 mg IV and fentanyl 100 mcg IV; native airway with oral bite block
-
-DESCRIPTION:
-Bronchoscope advanced orally with bite block in place. Vocal cords normal. Trachea and right bronchial tree
-without new lesions.
-
-Left mainstem silicone stent visualized in expected position. Approximately 60–70% of the stent lumen was
-filled with thick tenacious mucus. Spent 15 minutes performing aggressive suctioning and saline lavage to clear
-secretions. After airway toilet, the stent lumen was widely patent, >80% open.
-
-Stent edges inspected carefully. No evidence of migration, fracture, or tumor in-growth. Mild, non-obstructing
-granulation tissue at the distal end (<10% circumference) noted but not treated during this session.
-
-NO balloon dilation, NO stent repositioning, and NO stent exchange were performed. This was purely a routine
-stent check and cleaning.
-
-Remaining left-sided bronchi examined and were patent without additional lesions.
-
-COMPLICATIONS:
-Minimal mucosal oozing controlled with cold saline. No desaturation.
-
-DISPOSITION:
-Recovered uneventfully and discharged home.
-
-CPT (requested): 31645",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Patient: Alvarez, Maria | 63F | MRN 8801006
-Date of Procedure: 11/29/2024
-Attending: David Chen, MD
-
-PRE-OP DIAGNOSIS:
-Malignant right mainstem bronchus obstruction from squamous cell carcinoma
-
-POST-OP DIAGNOSIS:
-Same, status post rigid bronchoscopy with metallic stent placement
-
-PROCEDURES PERFORMED:
-Rigid bronchoscopy with airway tumor debulking and balloon dilation, followed by right mainstem metallic stent placement
-
-ANESTHESIA:
-General anesthesia with rigid bronchoscopy (anesthesia team)
-
-DESCRIPTION:
-Under general anesthesia, rigid bronchoscope introduced. A friable obstructing tumor was debulked with suction and forceps to
-create a working channel. No separate excision code is being considered for this case.
-
-A CRE balloon was then advanced to the right mainstem stenosis and inflated sequentially (10, 12, and 14 mm) across the same
-segment that would receive the stent. After dilation improved luminal caliber, a covered metallic stent (14 mm x 50 mm) was
-deployed in the right mainstem bronchus under bronchoscopic and fluoroscopic guidance. Post-deployment balloon dilation of the
-stent was performed to ensure apposition to the airway wall.
-
-All dilation occurred in the exact segment receiving the stent; no separate lobar or segmental dilation was performed outside
-the stented region.
-
-Stent position and patency were confirmed. No additional therapeutic bronchoscopy procedures were performed.
-
-COMPLICATIONS:
-None.
-
-DISPOSITION:
-Remained intubated briefly then extubated in OR and transferred to ICU.
-
-CPT (requested): 31631, 31630",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Patient: Gomez, Alicia | 74F | MRN 8801007
-Date of Procedure: 12/02/2024
-Attending: Robert Hayes, MD
-
-PRE-OP DIAGNOSIS:
-Endobronchial tumor in left lower lobe bronchus causing near-obstructing lesion
-
-POST-OP DIAGNOSIS:
-Same
-
-PROCEDURE PERFORMED:
-Rigid bronchoscopy with tumor destruction by cryotherapy and argon plasma coagulation (APC)
-
-ANESTHESIA:
-General anesthesia with rigid bronchoscopy
-
-DESCRIPTION:
-Rigid bronchoscope introduced under general anesthesia. A friable tumor was identified arising from the orifice
-of the left lower lobe bronchus, causing approximately 80% obstruction.
-
-A flexible bronchoscope was passed through the rigid barrel. Cryotherapy was performed using a 2.4 mm cryoprobe.
-The probe was applied to the tumor surface in multiple cycles (freeze 15–20 seconds, passive thaw) with subsequent
-sloughing of necrotic tumor tissue. No mechanical coring, snare resection, or microdebrider excision was used.
-
-Residual tumor base and bleeding points were treated with argon plasma coagulation (APC) at 40 W, 1.5 L/min argon
-flow, with FiO2 kept at 0.35 during activation.
-
-After combined cryotherapy and APC, the left lower lobe bronchial lumen improved to approximately 50–60% patency.
-No additional resection techniques were employed.
-
-COMPLICATIONS:
-Mild oozing controlled with APC; no hypoxia.
-
-DISPOSITION:
-Extubated in OR and transferred to PACU.
-
-CPT (requested): 31641, 31640",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"EMERGENCY BRONCHOSCOPY – HEMOPTYSIS
-Patient: Lee, Marcus | 62M | MRN 8801008
-Date: 12/03/2024 01:10 AM
-Attending: Rachel O'Neal, MD
-
-INDICATION:
-Acute moderate-to-massive hemoptysis in patient with known cavitary RUL lesion
-
-ANESTHESIA:
-Intubated in ICU by critical care team (8.0 ETT). Bronchoscopy performed under deep sedation on ventilator.
-
-DESCRIPTION:
-Flexible bronchoscope advanced through the ETT. Large amounts of fresh blood were suctioned from trachea and
-right mainstem bronchus.
-
-RIGHT LUNG:
-RUL found to be the bleeding source with active oozing from posterior segment. No foreign body or tumor identified.
-
-HEMOSTATIC MEASURES:
-- Iced saline lavage 50 mL aliquots x4 (200 mL total) to RUL
-- Topical epinephrine 1:10,000, 10 mL instilled to RUL
-- Tranexamic acid 500 mg in 50 mL NS instilled via bronchoscope
-- No radial EBUS, navigation, or biopsies were performed
-
-Following these measures, bleeding slowed from brisk to scant oozing. Airway was packed with small amounts of
-suctioned clot but remained patent. No balloon tamponade was required.
-
-LEFT LUNG:
-Normal, no blood.
-
-No transbronchial biopsies, brushings, or BAL were performed because priority was hemorrhage control.
-
-COMPLICATIONS:
-None beyond initial hemorrhage.
-
-DISPOSITION:
-Remain intubated in ICU, plan for IR bronchial artery embolization later this morning.
-
-CPT (requested): 31634, 31622",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Patient: Smith, Carolyn | 69F | MRN 8801009
-Date of Procedure: 12/04/2024
-Attending: Jason Moore, MD
-
-PRE-OP DIAGNOSIS:
-Recurrent malignant right pleural effusion with existing PleurX catheter
-
-POST-OP DIAGNOSIS:
-Same, status post chemical pleurodesis via existing tunneled pleural catheter
-
-PROCEDURE PERFORMED:
-Bedside chemical pleurodesis through existing tunneled pleural catheter (no new catheter placed)
-
-ANESTHESIA:
-Local anesthesia with 1% lidocaine at catheter site and small dose IV fentanyl for comfort
-
-DESCRIPTION:
-Patient with known metastatic lung cancer and an existing right-sided tunneled PleurX catheter was brought to
-procedure area. Catheter site prepped and draped in sterile fashion.
-
-Using sterile technique, 1 liter of serosanguinous pleural fluid was drained via the existing PleurX catheter.
-After drainage, 4 g of sterile talc slurry in 100 mL normal saline was instilled through the same catheter
-into the pleural space. The catheter was clamped and the patient rotated through several positions over
-1 hour to distribute talc.
-
-No new pleural catheter or chest tube was placed. The existing tunneled catheter was left in situ at the end
-of the procedure for ongoing drainage as needed.
-
-COMPLICATIONS:
-None. No respiratory distress.
-
-DISPOSITION:
-Returned to oncology ward for observation.
-
-CPT (requested): 32560, 32550",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1
-"Patient: Patel, Rohan | 58M | MRN 8801010
-Date of Procedure: 12/05/2024
-Attending: Emily Rogers, MD
-
-PRE-OP DIAGNOSIS:
-Small left pleural effusion of unclear etiology in patient with dyspnea
-
-POST-OP DIAGNOSIS:
-Same
-
-PROCEDURE PERFORMED:
-Ultrasound-guided diagnostic and therapeutic thoracentesis, left
-
-ANESTHESIA:
-Local anesthesia with 1% lidocaine at puncture site
-
-DESCRIPTION:
-Patient placed sitting upright. Bedside ultrasound demonstrated a small but definite left pleural effusion
-with a safe pocket of approximately 2 cm depth at the posterior axillary line.
-
-The skin and subcutaneous tissues were infiltrated with 1% lidocaine. Using real-time ultrasound guidance, a
-thoracentesis needle and catheter were advanced into the pleural space. Approximately 180 mL of straw-colored
-fluid was removed before the patient developed pleuritic chest discomfort and coughing. The procedure was
-terminated at that point, but adequate fluid was obtained for diagnostic testing.
-
-No chest tube or tunneled catheter was placed. Post-procedure ultrasound showed residual trace fluid and no
-evidence of pneumothorax.
-
-Fluid was sent for cell count, protein, LDH, glucose, cytology, and culture.
-
-COMPLICATIONS:
-Mild chest discomfort and cough; no pneumothorax.
-
-DISPOSITION:
-Observed for 2 hours and discharged home.
-
-CPT (requested): 32555",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
-"PROCEDURE NOTE: PLEURAL INTERVENTION CONVERSION
-
-**Patient:** James Howlett (MRN: 991823)
-**Date:** 10/31/2025
-**Provider:** Dr. C. Xavier
-
-**Indication:** 55M with fevers and large right pleural effusion. Concern for empyema.
-
-**Procedure Details:**
-Timeout performed. Right posterior chest prepped. 
-Ultrasound identified a loculated fluid collection. Local anesthesia (20cc Lidocaine). 
-
-1. **Diagnostic Thoracentesis:** A 6Fr catheter was inserted. 60cc of frank purulent fluid (pus) was aspirated. 
-   *Decision made to escalate to tube thoracostomy immediately given gross empyema.*
-
-2. **Chest Tube Placement:** Using the same site (tract dilated), a 14Fr Wayne pigtail catheter was inserted using Seldinger technique. 
-   Return: 450cc purulent fluid. 
-   Tube sutured in place and connected to atrium.
-
-3. **Fibrinolytics:** Given loculations seen on US, 10mg tPA and 5mg DNase were instilled through the new chest tube at the end of the case. Tube clamped.
-
-**Complications:** None.
-**Disposition:** Admitted for empyema management.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
-"**BRONCHOSCOPY SUITE - PROCEDURE NOTE**
-
-**Patient:** Logan Roy | **DOB:** 10/14/1948
-**Date:** 11/05/2025
-**MD:** Dr. Shiv Roy
-
-**History:** Massive hemoptysis (~300cc) this morning. History of squamous cell ca RUL.
-
-**Procedure:** Rigid Bronchoscopy (Emergency)
-**Anesthesia:** General.
-
-**Findings:**
-Blood clots filling trachea. Suctioned clear. 
-Active pulsatile bleeding identified from RUL orifice. Tumor invasion noted at RUL carina.
-
-**Intervention:**
-1. **Therapeutic Aspiration:** ~400cc of blood and clot evacuated from trachea and left mainstem to restore ventilation.
-2. **Balloon Tamponade:** A fogarty balloon was deployed into the RUL bronchus and inflated to tamponade bleeding. Held for 5 minutes. Bleeding slowed.
-3. **Tumor Destruction (Hemostasis):** APC (Argon Plasma Coagulation) was applied to the visible tumor bed at the RUL orifice to cauterize vessels. 
-4. **Iced Saline:** 500cc instilled and suctioned.
-
-**Outcome:** Hemostasis achieved. Extubated in OR once stable.
-
-**Impression:** Massive hemoptysis secondary to tumor erosion. Controlled with APC and Tamponade.",1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
-"PROCEDURE: Mixed Modality Staging and Treatment
-DATE: 06/06/2025
-PATIENT: Wade Wilson (MRN: Deadpool)
-
-**1. EBUS-TBNA:**
-Convex probe used. 
-- Station 7 (Subcarinal): Sampled. ROSE negative.
-- Station 4R: Sampled. ROSE negative.
-
-**2. Navigation & Cryobiopsy (LUL):**
-Ion robot used. Navigated to LUL nodule (1.5cm). Radial EBUS confirmed position. 
-**Action:** Cryoprobe inserted. Freezing applied for 6 seconds. Biopsy taken x 3. (CPT 31627, 31654, 31628?)
-
-**3. Incidental Finding & Treatment (RMB):**
-Upon withdrawal, a large polypoid lesion was seen in the Right Mainstem Bronchus (completely separate from LUL target) causing 50% obstruction. 
-**Action:** The lesion was resected using electrocautery snare and base treated with APC. (CPT 31641?)
-
-**Summary:** 
-- LUL Cryobiopsy (Navigated)
-- Mediastinal Staging
-- RMB Tumor Resection (Unplanned)
-
-No complications.",1,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Operative Note: Complex Stent Exchange
-Date: 02/02/2025
-Dr. F. N. Stein
-
-Patient with history of benign tracheal stenosis s/p silicone stent 1 year ago. Presents with halitosis and cough. 
-Bronchoscopy reveals the 14x40mm silicone stent is encrusted with granulation tissue at both ends. 
-
+note_text,diagnostic_bronchoscopy,bal,bronchial_wash,brushings,endobronchial_biopsy,transbronchial_biopsy,transbronchial_cryobiopsy,tbna_conventional,linear_ebus,radial_ebus,navigational_bronchoscopy,therapeutic_aspiration,foreign_body_removal,airway_dilation,airway_stent,rigid_bronchoscopy,thermal_ablation,cryotherapy,blvr,ipc,thoracentesis,chest_tube,medical_thoracoscopy,pleurodesis,peripheral_ablation,bronchial_thermoplasty,whole_lung_lavage,fibrinolytic_therapy
+"Pre-op: RUL mass. Staging.
+Anesthesia: GA, 8.5 ETT.
 Procedure:
-1. **Removal:** The proximal granulation tissue was cored out using the rigid barrel. The stent was grasped and removed. 
-2. **Assessment:** Underlying stenosis is stable but mucosa is inflamed. Significant granulation tissue remains at the distal seat.
-3. **Treatment:** APC and Cryotherapy applied to the granulomas to clean the airway base.
-4. **Replacement:** A NEW 14x40mm silicone stent was deployed in the same position.
+- Airway inspected: Clear.
+- Linear EBUS: Station 4R (1.5cm, hypoechoic) x4 passes. Station 7 (1.2cm) x4 passes.
+- Station 10R visualized (6-7mm), benign appearance, NOT sampled.
+- No radial EBUS.
+- Specimens: cellular/lymphoid tissue.
+Complications: None.
+Plan: Extubate. Recovery.",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"HISTORY: Ms. Sanders, a 59-year-old female with a right upper lobe pulmonary opacity suspicious for non-small cell carcinoma, underwent mediastinal staging.
+PROCEDURE: General anesthesia was induced and an 8.5 mm endotracheal tube secured. The bronchial tree was examined. Linear endobronchial ultrasound (EBUS) was utilized for systematic nodal interrogation. The paratracheal station 4R demonstrated sonographic features of malignancy; transbronchial needle aspiration (TBNA) was performed (4 passes). Similarly, the subcarinal station 7 was sampled (4 passes). Station 10R was visualized but deemed non-pathologic and was deliberately spared from biopsy.
+IMPRESSION: Successful EBUS-TBNA of stations 4R and 7. Station 10R observed only.",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Code Selection: 31652 (EBUS-TBNA 1-2 stations).
+Technique:
+1. Scope: Linear EBUS bronchoscope.
+2. Access: ETT (General Anesthesia).
+3. Sampling: Station 4R (4 passes, 22G). Station 7 (4 passes, 22G). Total distinct stations sampled: 2.
+4. Observation: Station 10R visualized but clearly documented as not sampled.
+5. Bundling: Diagnostic bronchoscopy (31622) included.
+Outcome: Adequate cytology obtained.",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: EBUS Staging
+Patient: Lucille Sanders
+Steps:
+1. GA with 8.5 ETT.
+2. Airway survey - clear.
+3. EBUS scope in.
+4. Sampled 4R: 4 passes, 22G.
+5. Sampled 7: 4 passes, 22G.
+6. Looked at 10R but didn't touch it.
+7. ROSE said lymphoid tissue.
+Plan: PACU.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Procedure note for Lucille Sanders 59F RUL mass staging. We did the EBUS today under general anesthesia tube 8.5. Went down looked around airways fine. Switched to EBUS scope checked the nodes. 4R looked big dark edges so we stuck it 4 times with the 22 needle. Station 7 also poked 4 times. Saw 10R but it looked small so we left it alone didn't biopsy that one. No bleeding really patient woke up fine sent to PACU thanks.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Flexible bronchoscopy and endobronchial ultrasound with transbronchial needle aspiration of mediastinal lymph nodes. Patient is a 59-year-old female. General anesthesia with 8.5 ETT. Standard airway survey negative. Linear EBUS performed. Station 4R sampled x4 passes with 22G needle. Station 7 sampled x4 passes with 22G needle. Station 10R visualized but not sampled. No complications. Specimens to cytology.,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"[Indication]
+Staging of PET-avid mediastinal adenopathy, RUL mass.
+[Anesthesia]
+General anesthesia, 8.5 ETT.
+[Description]
+Diagnostic bronchoscopy: normal anatomy. Linear EBUS: Station 4R (1.5cm) biopsied x4. Station 7 (1.2cm) biopsied x4. Station 10R visualized only, not biopsied. ROSE confirmed adequacy.
+[Plan]
+Extubate, PACU, await final path.",1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+The patient was brought to the room and placed under general anesthesia with an endotracheal tube. We performed a standard airway inspection which was unremarkable. We then introduced the linear EBUS scope to survey the lymph nodes. We identified an enlarged node at station 4R and performed four needle passes. We also sampled a node at station 7 with four passes. We visualized a smaller node at 10R but decided not to sample it. The procedure was uncomplicated.,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Flexible bronchoscopy with sonographic guidance and nodal aspiration.
+Subject: Lucille Sanders.
+Action: Under general anesthesia, the airway was surveyed. The linear EBUS instrument was deployed. Station 4R was interrogated and aspirated (4 passes). Station 7 was similarly aspirated. Station 10R was observed but not punctured. Material was collected for cytologic analysis.
+Result: No adverse events.",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Indication: RLL mass staging.
+Anesthesia: GA, 8.0 ETT.
+Procedure:
+- Airway clear.
+- EBUS-TBNA performed at 3 stations: 11R, 4R, 7.
+- Radial probe used inside 11R node for echotexture (not peripheral lung).
+- Total 10 passes.
+Complications: Minimal bleeding.
+Plan: PACU.",0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"HISTORY: Mr. Ruiz presented for staging of an RLL mass and associated adenopathy.
+PROCEDURE: General anesthesia was established via an 8.0 mm ETT. A diagnostic airway survey was unrevealing. A linear EBUS scope was introduced. Systematic staging involved TBNA of station 11R (interlobar), station 4R (lower paratracheal), and station 7 (subcarinal). Note: A radial miniprobe was utilized strictly intravascularly within the 11R node for characterization, not for peripheral lung navigation.
+IMPRESSION: Successful sampling of three distinct nodal stations (11R, 4R, 7).",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Billing Summary:
+- CPT 31653 (EBUS-TBNA 3+ stations).
+- Stations Sampled: 11R, 4R, 7 (Three distinct stations).
+- Note on 31654: Radial EBUS was used only within the lymph node (11R) for characterization. No peripheral lesion was targeted with radial EBUS. Therefore, 31654 is NOT reported.
+- 31622 Bundled.",0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: EBUS 3 Stations
+Patient: Omar Ruiz, 64M
+Steps:
+1. GA/ETT.
+2. Scope checked airways.
+3. EBUS scope used.
+4. Sampled 11R (used radial probe to look inside node first).
+5. Sampled 4R.
+6. Sampled 7.
+7. 10 passes total.
+Complications: None.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Procedure note Omar Ruiz 64M RLL mass. We did the bronch under GA. Airway looked ok. Used the EBUS scope to sample three nodes. First was 11R used the mini radial probe just to check the inside of the node then biopsied it. Then did 4R and 7. Good samples obtained. No peripheral biopsy done. Patient stable.,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Flexible bronchoscopy and linear EBUS-TBNA. General anesthesia 8.0 ETT. Diagnostic inspection normal. EBUS nodal survey performed. Station 11R sampled x4 passes (radial probe used for nodal characterization only). Station 4R sampled x3 passes. Station 7 sampled x3 passes. No peripheral lung sampling. Minimal bleeding. Patient stable.,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Mediastinal/hilar staging, RLL mass.
+[Anesthesia]
+General, 8.0 ETT.
+[Description]
+EBUS-TBNA performed at stations 11R, 4R, and 7. Radial probe utilized intra-nodally at 11R only. No peripheral lesion targeting. Total 10 passes.
+[Plan]
+Pathology review.",0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We performed a bronchoscopy on Mr. Ruiz under general anesthesia. We sampled three separate lymph node stations: 11R, 4R, and 7. At station 11R, we briefly used a radial probe to look at the node structure before sampling, but we did not go out to the lung periphery. All biopsies went well with minimal bleeding.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Operation: Endobronchial ultrasound with needle aspiration.
+Target: Stations 11R, 4R, 7.
+Details: The linear instrument was advanced. At station 11R, a radial transducer was employed to characterize the node interior prior to aspiration. Stations 4R and 7 were also aspirated. No peripheral lung nodule was targeted.
+Outcome: Samples acquired from three distinct stations.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Indication: LLL nodule + staging.
+Anesthesia: GA, 8.0 ETT.
+Procedure:
+- Ion Robot nav to LLL nodule.
+- Radial EBUS: Concentric view.
+- TBLB LLL x5 passes.
+- Linear EBUS: Stations 11L, 7 sampled.
+Complications: None.
+Plan: Extubate, discharge.",0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"HISTORY: Ms. Nguyen presented with a PET-avid 2.1 cm LLL nodule and adenopathy.
+PROCEDURE: Under general anesthesia (8.0 ETT), a robotic bronchoscopy (Ion) was performed. Registration was accurate (2.3mm error). Navigation to the LLL target was achieved, confirmed by concentric radial EBUS view. Transbronchial forceps biopsies were obtained. Subsequently, a linear EBUS scope was introduced for staging. TBNA was performed at stations 11L and 7.
+IMPRESSION: Successful diagnostic robotic bronchoscopy and mediastinal staging.",0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Coding: 31628 (TBLB), 31627 (Nav add-on), 31654 (REBUS add-on), 31652 (EBUS 1-2 stations).
+Justification:
+- Navigation (Ion) used to reach LLL target.
+- Radial EBUS confirmed peripheral lesion.
+- Biopsy taken from LLL (Single lobe).
+- Separate Linear EBUS scope used for stations 11L and 7 (2 stations).",0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Robot Bronch + EBUS
+Patient: Tina Nguyen, 50F
+Steps:
+1. GA, ETT.
+2. Ion robot docked. Registered.
+3. Navigated to LLL nodule.
+4. REBUS check - concentric.
+5. Biopsied nodule (TBLB).
+6. Switched to Linear EBUS.
+7. Sampled 11L and 7.
+Plan: Discharge.",0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Note for Tina Nguyen LLL nodule. GA with tube. Used the Ion robot system drove it out to the LLL spot. Radial probe showed the lesion concentric view so we took 5 biopsies. Then pulled that scope and put in the EBUS scope. Sampled the 11L and 7 nodes. Everything went smooth no pneumo on fluoro. Sending her home later.,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Robotic bronchoscopy with navigation, radial EBUS, TBLB, and linear EBUS-TBNA. Patient 50F. General anesthesia 8.0 ETT. Ion system navigation to LLL nodule. Radial EBUS confirmation. TBLB x5 passes. Linear EBUS sampling of stations 11L and 7. No complications. Extubated.",0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+LLL nodule, mediastinal adenopathy.
+[Anesthesia]
+General, 8.0 ETT.
+[Description]
+Robotic navigation to LLL target. Radial EBUS confirmation (concentric). TBLB performed. Linear EBUS-TBNA of stations 11L and 7 performed.
+[Plan]
+Outpatient discharge.",0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Ms. Nguyen was placed under general anesthesia for her procedure. We utilized the Ion robotic system to navigate to the nodule in the left lower lobe. We confirmed the location with a radial ultrasound probe and took five biopsies. Afterwards, we switched to the linear ultrasound scope and sampled lymph nodes at stations 11L and 7. The procedure was completed without issues.",0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Computer-guided bronchoscopy with peripheral and central ultrasound assessment.
+Action: The robotic catheter was navigated to the LLL lesion. Radial sonography verified the target. Forceps samples were acquired. The linear ultrasound instrument was then introduced to aspirate nodal stations 11L and 7.
+Result: Tissue procured from lung and nodes.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Indication: Mediastinal adenopathy.
+Sedation: Moderate (Versed/Fentanyl). Nasal.
+Procedure:
+- Airways inspected: Clear.
+- Attempted EBUS: Failed due to severe cough/desat.
+- ABORTED EBUS. No nodes sampled.
+- BAL performed RML.
+Complications: Desat, resolved.
+Plan: Discharge. Re-eval.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"HISTORY: Mr. Fowler presented for evaluation of mediastinal adenopathy.
+PROCEDURE: Under moderate sedation via nasal approach, the vocal cords were traversed. An attempt was made to introduce the linear EBUS scope; however, the patient exhibited severe tussive reflex and desaturation, necessitating abortion of the EBUS component prior to any sampling. A standard bronchoscope was reintroduced, and a bronchoalveolar lavage (BAL) was performed in the RML.
+IMPRESSION: Diagnostic bronchoscopy with BAL only. EBUS aborted.",1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Coding: 31624 (Bronchoscopy with BAL).
+Rationale:
+- EBUS codes (31652/53/54) are NOT billable as the scope did not advance/no sampling occurred.
+- 31622 (Diagnostic) is bundled into 31624.
+- Service performed: Inspection + BAL of RML.
+- Sedation: Moderate, inherent.",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Bronch BAL (Failed EBUS)
+Patient: Justin Fowler, 71M
+Steps:
+1. Mod sedation.
+2. Scope in nose.
+3. Tried EBUS, patient coughed too much, desatted to 84%.
+4. Stopped EBUS attempt.
+5. Did BAL in RML with regular scope.
+6. Patient recovered.
+Plan: Home.",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Procedure note Justin Fowler 71M. Wanted to do EBUS for nodes. Patient under moderate sedation via nose. Tried to get the EBUS scope down but he coughed like crazy and sats dropped. Couldn't do it so we stopped. Switched back to regular scope and just washed the RML (BAL). Sending fluid for labs. No biopsy done. Discharge home.,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Flexible bronchoscopy with bronchoalveolar lavage. Attempted EBUS aborted. Patient 71M. Moderate sedation. EBUS scope introduction failed due to severe cough and hypoxia. No nodal sampling performed. Standard bronchoscope used for BAL of RML. Patient stabilized. Discharged.,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Mediastinal adenopathy.
+[Anesthesia]
+Moderate sedation (native airway).
+[Description]
+Diagnostic inspection. Attempted EBUS aborted due to intolerance/desaturation. BAL RML performed. No biopsies.
+[Plan]
+Discharge, consider GA for future attempt.",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We attempted an EBUS on Mr. Fowler today using moderate sedation. Unfortunately, he had a severe cough and his oxygen levels dropped when we tried to pass the EBUS scope, so we had to stop that part of the procedure without sampling any nodes. We did manage to perform a lavage of the right middle lobe with a standard scope. He recovered well afterwards.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Flexible bronchoscopy with lavage; attempted sonographic staging.
+Details: Access was achieved via the naris. Introduction of the ultrasonic bronchoscope was precluded by respiratory instability. The EBUS component was terminated. A lavage of the RML was executed successfully.
+Outcome: Lavage fluid collected; no nodal tissue.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Indication: Stent check/mucus.
+Sedation: Moderate.
+Procedure:
+- Left mainstem stent visualized.
+- 70% occluded with mucus.
+- Action: Aggressive suction/lavage (15 mins).
+- Result: >80% patent.
+- No stent removal/replacement/dilation.
+Plan: Discharge.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"HISTORY: Mr. Brooks, with a history of left mainstem silicone stent, presented for surveillance.
+PROCEDURE: Under moderate sedation, the airway was inspected. The left mainstem stent was in situ but significantly obstructed by tenacious secretions. Therapeutic aspiration and lavage were performed extensively to clear the lumen. Inspection of the stent post-toilet revealed no migration or granulation tissue requiring intervention. The stent was left in place.
+IMPRESSION: Stent surveillance and therapeutic aspiration (clearing).",0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Coding: 31645 (Therapeutic aspiration/toilet).
+Rationale:
+- Procedure involved clearing initially obstructing mucus from an existing stent.
+- No stent placement (31636/31631) or removal performed.
+- No dilation (31630).
+- 31645 describes the therapeutic work of establishing patency via suction.",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Procedure: Bronch Stent Cleanout
+Patient: Henry Brooks, 67M
+Steps:
+1. Mod sedation.
+2. Scope in.
+3. Found LMS stent plugged with mucus.
+4. Cleaned it out with saline and suction.
+5. Stent looks open now.
+6. Didn't move or change the stent.
+Plan: Home.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Henry Brooks here for stent check. 67M. Used moderate sedation. The left main stent was clogged up with thick mucus about 60-70 percent. We spent a while suctioning and washing it out. Got it clean stent looks fine no issues. Didn't do anything else. Sending him home.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Therapeutic flexible bronchoscopy for airway toilet. Patient 67M with LMS stent. Moderate sedation. Stent lumen occluded by mucus. Aggressive suctioning and lavage performed. Stent patent post-procedure. No stent manipulation or exchange. Complications none. Discharged.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Stent surveillance, mucus burden.
+[Anesthesia]
+Moderate sedation.
+[Description]
+Left mainstem stent inspected. Mucus plugging noted. Therapeutic aspiration/lavage performed. Stent widely patent post-procedure. No granulation treated.
+[Plan]
+Routine follow-up.",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Mr. Brooks came in for a routine check of his airway stent. We found a significant amount of mucus clogging the stent in the left mainstem bronchus. We performed a thorough cleaning using suction and saline lavage. Once cleared, the stent looked good and was in the correct position. We did not need to replace or move the stent.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Therapeutic bronchoscopy with clearance of secretions.
+Action: The existing silicone prosthesis in the left mainstem was identified. Significant mucostasis was observed. The airway was cleared via lavage and aspiration. The prosthesis was retained in situ without modification.
+Result: Patency restored.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Indication: RMS malignant obstruction.
+Anesthesia: GA, Rigid.
+Procedure:
+- Rigid scope inserted.
+- Tumor debulked (suction/forceps).
+- Balloon dilation (CRE 10-14mm) RMS.
+- Metallic stent (14x50mm) deployed RMS.
+- Post-dilation performed.
+- Dilation/stent in same segment.
+Plan: ICU.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"HISTORY: Ms. Alvarez presented with critical right mainstem obstruction.
+PROCEDURE: General anesthesia was induced. Rigid bronchoscopy facilitated access. Obstructing tumor tissue was mechanically debulked. The stenotic segment was dilated with a CRE balloon. Subsequently, a covered metallic stent was deployed into the right mainstem bronchus. Balloon expansion confirmed apposition. Note: Dilation and stenting occurred in the identical anatomical segment.
+IMPRESSION: Restoration of RMS patency via stenting.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Coding: 31636 (Stent placement, initial bronchus).
+Rationale:
+- Primary service: Placement of bronchial stent (RMS).
+- Bundling: 31630 (dilation) is NOT separately reported because it was performed in the same segment to facilitate stent placement.
+- Debulking was performed to clear channel but stent is the primary code.
+- 31622 Bundled.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Rigid Bronch Stent
+Patient: Maria Alvarez, 63F
+Steps:
+1. GA, Rigid scope.
+2. Cleaned out tumor in RMS.
+3. Balloon dilated the narrow spot.
+4. Put in a metal stent (14x50).
+5. Dilated inside the stent.
+6. Airway open.
+Plan: ICU.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+Procedure note Maria Alvarez 63F. RMS blockage. Did rigid bronch under GA. Debulked the tumor a bit then used a balloon to open the RMS. Put a metallic stent in right there. Blew up the balloon inside to set it. Looks wide open now. Sending to ICU for watch.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Rigid bronchoscopy with tumor debulking, dilation, and stent placement. Patient 63F. GA. RMS obstruction. Mechanical debulking performed. Balloon dilation of RMS. Covered metallic stent deployed in RMS. Stent patent. Dilation bundled. ICU admission.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Malignant RMS obstruction.
+[Anesthesia]
+General, Rigid.
+[Description]
+Tumor debulked. RMS dilated. Metallic stent deployed in RMS. Post-deployment dilation performed. Good position.
+[Plan]
+ICU monitoring, CXR.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We performed a rigid bronchoscopy on Ms. Alvarez to treat her blocked right mainstem airway. After removing some of the tumor, we used a balloon to dilate the narrowing. We then placed a metallic stent in that same area to keep it open. The stent fits well and the airway is now patent.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Rigid bronchoscopy with prosthetic implantation.
+Action: The RMS obstruction was addressed. Tissue was debrided. The stenosis was expanded via balloon angioplasty. A metallic prosthesis was inserted into the RMS. The prosthesis was further expanded in situ.
+Result: Airway patency achieved.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Indication: LLL tumor obstruction.
+Anesthesia: GA, Rigid.
+Procedure:
+- Rigid scope to LLL orifice.
+- Cryotherapy (freeze/thaw) for tumor destruction.
+- APC used for base/hemostasis.
+- NO mechanical excision/coring.
+Result: Lumen 50-60% patent.
+Plan: PACU.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0
+"HISTORY: Ms. Gomez presented with LLL endobronchial obstruction.
+PROCEDURE: Under general anesthesia with rigid bronchoscopy, the LLL tumor was engaged. A cryoprobe was utilized for freeze-thaw ablation, resulting in tissue necrosis and sloughing. Argon Plasma Coagulation (APC) was applied for further tumor destruction and hemostasis. Mechanical debridement (coring/snare) was not employed. The airway caliber was significantly improved.
+IMPRESSION: Tumor destruction via cryotherapy and APC.",0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0
+"Coding: 31641 (Tumor destruction).
+Rationale:
+- Method: Cryotherapy and APC.
+- 31640 (Excision) is NOT supported as the note explicitly states 'No mechanical coring, snare resection, or microdebrider'.
+- 31641 covers destruction by any method (laser, cryo, APC).
+- 31622 Bundled.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+"Procedure: Rigid Bronch Ablation
+Patient: Alicia Gomez, 74F
+Steps:
+1. GA, Rigid.
+2. Saw LLL tumor.
+3. Used Cryo probe to freeze and kill tumor.
+4. Used APC to burn the rest.
+5. Didn't cut or snare anything.
+6. Airway open better.
+Plan: PACU.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+Note for Alicia Gomez LLL tumor. Rigid bronch GA. Used the cryo probe to freeze the tumor chunks off. Then hit it with APC. Cleaned it up pretty good. No coring or cutting done just the ablation. Bleeding stopped. Extubated to PACU.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+Rigid bronchoscopy with tumor destruction. Patient 74F. GA. LLL obstruction. Cryotherapy and APC applied to tumor. Necrotic tissue removed. No mechanical excision. Lumen improved. 31641 appropriate. Extubated.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+LLL tumor obstruction.
+[Anesthesia]
+General, Rigid.
+[Description]
+Cryotherapy applied to LLL mass. APC applied for destruction/hemostasis. Tumor destroyed. No excision performed.
+[Plan]
+PACU recovery.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+"Ms. Gomez underwent a rigid bronchoscopy to treat a tumor blocking her left lower lobe. We used a cryoprobe to freeze and destroy the tumor tissue and APC to cauterize the area. We did not cut or core the tumor out, relying solely on these ablation techniques. The airway is now much more open.",0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Rigid bronchoscopy with tissue ablation.
+Action: The LLL lesion was targeted. Cryotherapy cycles were administered to induce necrosis. Argon plasma coagulation was employed for further destruction. Mechanical excision was avoided.
+Result: Destruction of endobronchial pathology.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0
+"Indication: Massive hemoptysis.
+Anesthesia: Intubated ICU, Deep sed.
+Procedure:
+- Blood in airway.
+- Source: RUL posterior seg.
+- TX: Iced saline, Epi, TXA.
+- Bleeding slowed/stopped.
+- NO biopsies taken.
+Plan: IR Embolization.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"HISTORY: Mr. Lee presented with acute hemoptysis.
+PROCEDURE: The patient was intubated. Bronchoscopy revealed active hemorrhage from the RUL posterior segment. Hemostasis was achieved utilizing serial aliquots of iced saline, topical epinephrine, and tranexamic acid. No biopsy or brushing was performed to avoid exacerbating bleeding. The airway was cleared of clots.
+IMPRESSION: Hemoptysis control. Referred to IR.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Coding: 31634 (Bronchoscopy with control of hemorrhage).
+Rationale:
+- Primary intent and action was stopping active bleeding.
+- Methods: Iced saline, Epi, TXA.
+- No diagnostic samples (31622/28/25) taken.
+- 31622 is bundled into 31634.
+- Note supports active intervention for hemorrhage.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Emergent Bronch for Bleed
+Patient: Marcus Lee, 62M
+Steps:
+1. Already intubated.
+2. Scope down. Lot of blood.
+3. Found bleeder in RUL.
+4. Washed with iced saline, gave Epi and TXA.
+5. Bleeding stopped.
+6. Didn't biopsy anything.
+Plan: IR.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Emergency note for Marcus Lee. Coughing up blood. Intubated. Went down with scope. RUL bleeding active. We dumped iced saline and epi on it also TXA. Stopped the flow. Suctioned the clots out. No biopsy cause it was bleeding too much. Consult IR.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Emergency bronchoscopy for hemoptysis. Patient 62M. Intubated. Active bleeding RUL. Hemostasis achieved with iced saline, epinephrine, TXA. No biopsies performed. 31634 supported. Plan IR embolization.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Acute hemoptysis.
+[Anesthesia]
+General (Intubated).
+[Description]
+Blood suctioned. Source RUL. Iced saline, Epi, TXA instilled. Hemostasis achieved. No biopsies.
+[Plan]
+IR Bronchial Artery Embolization.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We performed an emergency bronchoscopy on Mr. Lee due to severe bleeding. We found the source in the right upper lobe. We used iced saline, epinephrine, and TXA to stop the bleeding. We successfully controlled the hemorrhage and cleared the airway. We did not take any biopsies to prevent further bleeding.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Emergency bronchoscopy with hemostasis.
+Action: Significant hemorrhage observed. Source localized to RUL. Hemostatic agents (cold saline, epinephrine, TXA) administered. Bleeding arrested. No tissue sampling conducted.
+Result: Control of airway hemorrhage.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Indication: Malignant effusion, existing PleurX.
+Procedure: Bedside pleurodesis.
+- Drained 1L fluid via existing PleurX.
+- Instilled 4g Talc slurry via PleurX.
+- Catheter clamped.
+- NO new catheter placed.
+Plan: Oncology ward.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0
+"HISTORY: Ms. Smith, with an indwelling tunneled pleural catheter (PleurX), required pleurodesis.
+PROCEDURE: The existing catheter was accessed sterilely. 1000 mL of serosanguinous fluid was evacuated. Subsequently, a slurry containing 4 grams of talc was instilled directly through the existing indwelling catheter. The catheter was clamped to facilitate dwell time. No new thoracostomy or catheter insertion was performed.
+IMPRESSION: Chemical pleurodesis via existing IPC.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0
+"Coding: 32560 (Pleurodesis via chest tube/catheter).
+Rationale:
+- Agent: Talc slurry.
+- Access: Existing tunneled catheter.
+- 32550 (Insertion of tunneled catheter) is NOT billable as the catheter was already in place.
+- 32560 is the standalone code for the instillation.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0
+"Procedure: PleurX Talc
+Patient: Carolyn Smith, 69F
+Steps:
+1. Sterile prep of existing PleurX.
+2. Drained fluid.
+3. Pushed talc slurry in.
+4. Clamped it.
+5. Didn't put in a new tube.
+Plan: Ward.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0
+Carolyn Smith here for pleurodesis. Has a PleurX already. We drained the fluid then put talc in through the PleurX line. 4 grams. Clamped it off. No new tube needed. She did fine.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0
+Chemical pleurodesis via existing catheter. Patient 69F. Existing PleurX. 1L drained. Talc slurry instilled via PleurX. Catheter clamped. No new placement. 32560 appropriate. Disposition ward.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0
+"[Indication]
+Recurrent effusion, existing PleurX.
+[Anesthesia]
+Local (lidocaine).
+[Description]
+Drained 1L fluid. Instilled Talc slurry via existing PleurX. Clamped. No new catheter.
+[Plan]
+Monitor.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0
+Ms. Smith has an existing PleurX catheter. Today we used it to perform a pleurodesis. We drained the fluid and then injected a talc slurry through the catheter into the pleural space. We clamped the catheter afterwards. No new procedures were needed.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0
+"Procedure: Intrapleural administration of sclerosing agent.
+Action: The resident tunneled catheter was accessed. Effusion evacuated. Sclerosant (talc) instilled. Catheter occluded. No de novo catheterization.
+Result: Pleurodesis initiated.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Indication: Left effusion.
+Procedure: US-Guided Thoracentesis.
+- Ultrasound: Fluid loculated/small.
+- Needle inserted under US guidance.
+- 180mL removed.
+- Stopped due to cough/pain.
+- No chest tube left.
+Plan: D/C.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+"HISTORY: Mr. Patel presented with a symptomatic left pleural effusion.
+PROCEDURE: Bedside ultrasound identified a pocket of fluid. Under real-time ultrasound guidance, a thoracentesis needle was advanced into the pleural space. Approximately 180 mL of fluid was aspirated. The procedure was terminated due to patient discomfort (pleuritic pain/cough). Post-procedure ultrasound ruled out pneumothorax. No catheter was left in situ.
+IMPRESSION: US-guided thoracentesis, diagnostic/therapeutic.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0
+"Coding: 32555 (Thoracentesis with Imaging Guidance).
+Rationale:
+- Ultrasound guidance was used during the procedure.
+- Fluid was removed (180mL).
+- Procedure stopped early but definition of code met.
+- No chest tube placed (excludes 32557/32551).
+- 32554 (without image guidance) is incorrect.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+"Procedure: US Thoracentesis
+Patient: Rohan Patel, 58M
+Steps:
+1. US check.
+2. Lidocaine.
+3. Needle in with US watching.
+4. Got 180cc straw fluid.
+5. Patient coughed, so we stopped.
+6. Pulled needle.
+Plan: Home.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+Note for Rohan Patel. Left side tap. Used ultrasound to find the spot and guide the needle. Got about 180ml out but he started coughing and hurting so we quit. Fluid sent to lab. No pneumo. Going home.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Ultrasound-guided thoracentesis. Patient 58M. Local anesthesia. Real-time US guidance. 180 mL fluid removed. Terminated due to symptoms. No complications. 32555 supported. Discharged.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+"[Indication]
+Left pleural effusion.
+[Anesthesia]
+Local.
+[Description]
+US-guided needle aspiration. 180mL removed. Stopped due to cough. No chest tube.
+[Plan]
+Analysis of fluid.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"We performed a thoracentesis on Mr. Patel using ultrasound guidance. We found a small pocket of fluid and inserted the needle. We managed to get 180 mL of fluid out before he developed some pain and coughing, so we stopped. We didn't leave a tube in. He is safe to go home.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+"Procedure: Image-guided pleural aspiration.
+Action: Sonographic localization performed. Needle introduced under guidance. Fluid aspirated (180 mL). Procedure halted due to intolerance. No drain placed.
+Result: Fluid obtained for analysis.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Indication: Stridor, stent migration. 
+Proc: Rigid Bronch, Stent Exchange, Laser.
+- 14mm Rigid inserted.
+- Migrated stent in RMB removed with forceps.
+- 70% mid-tracheal obstruction (tumor ingrowth).
+- Tx: Nd:YAG laser (40W), mechanical coring, 12mm CRE balloon dilation.
+- New 16x50mm Dumon stent deployed.
+- Final: Airway patent. EBL 50cc.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+"OPERATIVE NARRATIVE: The patient, a 65-year-old female with adenoid cystic carcinoma, presented with acute dyspnea secondary to prosthesis migration. Under general anesthesia with jet ventilation, the airway was cannulated with a 14mm rigid bronchoscope. The existing silicone stent was identified within the right mainstem bronchus and extracted. Significant tumor recurrence was noted at the proximal stent bed, narrowing the lumen by 70%. We utilized the Nd:YAG laser at 40 Watts for coagulative necrosis, followed by mechanical debridement with the rigid barrel. Balloon tracheoplasty was performed to 14mm. To maintain patency, a fresh 16x50mm Dumon silicone stent was deployed, covering the affected segment. Hemostasis was achieved.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedures Performed:
+1. Bronchoscopy, Rigid, with removal of foreign body (stent) [31638].
+2. Bronchoscopy, Rigid, with destruction of tumor (Laser/Coring) [31641].
 
-EBL: 10cc.",1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0
-"Procedure: Cryo-Ablation vs Biopsy
-Date: 09/09/2025
-
-**Scenario:** RLL endobronchial mass (Squamous cell).
-
-**Intervention:**
-Cryoprobe applied to the mass. Frozen for 10 seconds. 
-Probe and scope withdrawn. Large piece of tumor removed and **discarded** (not sent to pathology as diagnosis is known). 
-Repeat freeze-thaw cycles x 5 to debulk the airway. Airway now 80% patent.
-
-Then, advanced to LUL for a *new* 8mm nodule. Radial EBUS confirmation. 
-Cryobiopsy performed x 2. **Sent to pathology.**
-
-**Codes:**
-31641 (RLL Ablation)
-31628 (LUL Biopsy)",1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"OPERATIVE REPORT: COMPLEX AIRWAY INTERVENTION
-
-Patient: Octavia Butler (MRN: 772194)
-Date: 12/12/2025
-Attending: Dr. V. Frankenstein
-
-**Indication:** 65F with adenoid cystic carcinoma of the trachea. Status post silicone stent placement 6 months ago. Presents with worsening stridor. CT shows stent migration distally and tumor ingrowth at the proximal stent edge.
-
-**Procedure:** Rigid Bronchoscopy, Stent Removal, Laser Resection, New Stent Placement.
-**Anesthesia:** General (TIVA). Jet Ventilation.
-
-**Details:**
-Rigid bronchoscope (14mm) inserted. The existing silicone stent was found migrated into the right mainstem, partially obstructing the RUL. Using rigid forceps, the stent was grasped, folded, and removed en bloc.
-
-Inspection revealed exophytic tumor regrowth at the mid-trachea (proximal to old stent site) causing 70% obstruction. 
-Nd:YAG Laser was applied (40W) to coagulate and vaporize the tumor. Mechanical coring with the rigid barrel was performed. 
-Balloon dilation (CRE balloon, 12mm) was performed at the stenotic segment to 14mm.
-
-Once patency improved to >90%, a new 16x50mm Dumon silicone stent was loaded and deployed covering the mid-to-distal trachea. Position confirmed with flexible scope. RUL patent. Stent stable.
-
-**EBL:** 50cc.
-**Complications:** Minor hemorrhage controlled with cold saline and laser.",1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0
-"PROCEDURE: Electromagnetic Navigation Bronchoscopy & EBUS
-PATIENT: Leo Spaceman | MRN: 991283
-DATE: 01/20/2025
-
-**Plan:** Biopsy of 1.8cm RUL nodule and mediastinal staging.
-
-**EBUS-TBNA:**
-Linear EBUS scope inserted. 
-- Station 7 (Subcarinal): 12mm node. Sampled x 3 passes. ROSE: Benign lymphocytes.
-- Station 4R (Right Paratracheal): 10mm node. Sampled x 3 passes. ROSE: Benign lymphocytes.
-- Station 4L: 8mm node. Sampled x 2 passes. ROSE: Benign lymphocytes.
-
-**Navigation:**
-Scope exchanged for therapeutic bronchoscope. Electromagnetic navigation (Veran) attempted to RUL apical segment nodule. Registration error 5mm. 
-Despite multiple attempts and catheter adjustments, the target could not be successfully localized. Radial EBUS probe passed but no distinct lesion visualized (only normal lung parenchyma). 
-
-**Decision:** 
-Biopsy of the peripheral nodule was ABORTED due to lack of confirmation. No samples taken from RUL.
-
-**Procedure concluded.**",1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"**Procedure Note: Pleural Intervention**
-**Date:** 07/04/2025
-**Patient:** G. Washington (MRN: 1776)
-**Attending:** Dr. B. Ross
-
-**History:** Recurrent large left pleural effusion. Previous thoracentesis showed exudate, cytology negative. 
-
-**Procedure:**
-US guidance used to mark site. 1% Lidocaine. 
-Attempted thoracentesis with 18G needle - no fluid returned (Dry Tap). Repositioned 2 interspaces lower. 
-
-Successfully accessed pleural space with 18G needle. Guide wire passed. Dilated tract. 8Fr Pigtail catheter placed. 
-Drained 1400cc clear yellow fluid. 
-
-**Plan:** Leave pigtail in place for drainage. Send fluid for culture/cyto.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
-"Bronchoscopy Sedation Note
-Patient: M. Scott
-Date: 02/14/2025
-
-Start Time: 10:00 AM
-End Time: 10:48 AM
-Total Duration: 48 minutes
-
-Procedure: Bronchoscopy with BAL (RML) and Brushing (RML).
-Physician: Dr. J. Halpert (Performed Bronch + Administered Sedation)
-Observer: RN P. Beesly (Dedicated monitor)
-
-Medications: Fentanyl 100mcg, Versed 4mg.
-Vitals stable. No hypoxia.
-
-Procedure findings: RML infiltrate. Mucous plug suctioned. BAL obtained. Brush obtained.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"PROCEDURE: Transbronchial Cryobiopsy for ILD
-DATE: 10/31/2025
-PATIENT: Bruce Wayne (MRN: 10001)
-
-Indication: Progressive fibrotic ILD, UIP vs NSIP pattern.
-
-Technique: LMA placed. Flexible bronchoscopy. 
-Radial EBUS used to confirm absence of large vessels in RLL basilar segments. 
-Cryoprobe (1.9mm) advanced to RLL Posterior Basal segment. 
-Freezing performed x 5 seconds. 
-Probe and scope withdrawn en bloc. 
-Fogarty balloon inflated for hemostasis (prophylactic).
-Specimen: Large lung chunk (10mm) obtained. 
-Repeated in RLL Lateral Basal segment x 1.
-
-Total 2 biopsies. Fluoroscopy used.
-No pneumothorax on post-op ultrasound.",1,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+Technique:
+Access obtained via rigid bronchoscope. Existing stent found migrated distally; removed using optical forceps. Tumor ingrowth at mid-trachea treated with Nd:YAG laser ablation and coring. Stenosis dilated with CRE balloon. A new 16x50mm Dumon stent was sized and placed. 
+Medical Necessity: Critical central airway obstruction/stent failure.",0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Rigid Bronchoscopy / Stent Revision
+Attending: Dr. Frankenstein
+Steps:
+1. GA/Jet ventilation started.
+2. 14mm Rigid scope introduced.
+3. Old stent found in RMB -> Removed.
+4. Tumor regrowth (70%) seen mid-trachea.
+5. Laser (Nd:YAG) and coring used to open airway.
+6. Balloon dilation to 14mm.
+7. New Dumon stent (16x50mm) placed.
+8. EBL 50ml. Stable.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+patient octavia butler here for airway issue she has the adenoid cystic ca. stent slipped down to the right side so we went in with the rigid scope general anesthesia jet vent. pulled the old stent out no problem. saw tumor growing back about 70 percent blocked used the yag laser and the barrel to core it out then dilated with the balloon. put a new dumon silicone stent in 16 by 50 size looks good now airway open. little bit of bleeding stopped with saline.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Rigid bronchoscopy was performed for stent migration and tumor ingrowth. The patient was placed under general anesthesia. A 14mm rigid scope was used. The migrated silicone stent was retrieved from the right mainstem. Inspection showed 70% obstruction from tumor regrowth in the mid-trachea. This was treated with 40W Nd:YAG laser, mechanical coring, and 12mm balloon dilation. A new 16x50mm Dumon silicone stent was deployed. The airway was patent at the end of the case. EBL was 50cc.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Tracheal Adenoid Cystic Carcinoma, stent migration, stridor.
+[Anesthesia]
+General TIVA, Jet Ventilation.
+[Description]
+Rigid bronchoscopy (14mm). Migrated stent removed from RMB. Mid-tracheal tumor (70% stenosis) treated with Nd:YAG laser and mechanical coring. Balloon dilation performed. New 16x50mm Dumon stent placed.
+[Plan]
+ICU monitoring.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+"The patient was brought to the operating room for management of a migrated tracheal stent. After induction of general anesthesia and initiation of jet ventilation, a 14mm rigid bronchoscope was introduced. We located the previous stent migrated into the right mainstem bronchus and removed it using forceps. Further inspection revealed tumor ingrowth causing 70% obstruction at the mid-trachea. We applied Nd:YAG laser and performed mechanical coring to clear the obstruction, followed by balloon dilation. Finally, a new 16x50mm Dumon silicone stent was deployed, securing the airway.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Operation: Rigid endoscopy, prosthesis extraction, photo-ablation, and stent deployment.
+Subject: 65F with tracheal malignancy.
+Action: The rigid instrument was introduced. The displaced prosthesis was retrieved from the right lung. Exophytic tissue causing 70% occlusion was vaporized with the Nd:YAG laser and cored. The stricture was expanded via balloon. A replacement 16x50mm Dumon stent was implanted.
+Outcome: Patency restored.",0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Proc: EBUS-TBNA + Attempted Nav Bronch.
+LN Sampling:
+- Stn 7 (12mm): 3 passes, benign.
+- Stn 4R (10mm): 3 passes, benign.
+- Stn 4L (8mm): 2 passes, benign.
+Navigation: Veran system. RUL nodule target. Reg error 5mm. Target NOT reached/visualized despite multiple attempts. Radial EBUS negative.
+Outcome: Mediastinum staged. Peripheral biopsy aborted.",0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"PROCEDURE SUMMARY: The patient underwent combined EBUS-TBNA and attempted electromagnetic navigation bronchoscopy. Systematic mediastinal staging was performed first. EBUS-guided transbronchial needle aspiration was conducted at stations 7, 4R, and 4L; rapid on-site evaluation indicated benign lymphocytes for all stations. Following this, the scope was exchanged for navigation to the 1.8cm RUL apical nodule. Despite minimizing registration error to 5mm and utilizing radial EBUS, the lesion could not be eccentrically or concentrically visualized. Consequently, the peripheral biopsy component was aborted to avoid non-diagnostic sampling of normal parenchyma.",0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Billing Codes: 31653 (EBUS-TBNA 3+ stations), 31627 (Navigational Bronchoscopy).
+- EBUS: Stations 7, 4R, 4L sampled with needle aspiration. Cytology obtained.
+- Navigation: Planning and registration performed. Catheter advanced to RUL target zone. Lesion not confirmed via Radial EBUS (31654 not billed/bundled as no specific image obtained). Biopsy (31628) not performed.",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Resident Note
+Pt: Leo Spaceman
+Proc: EBUS + ENB
+1. EBUS scope in. Sampled 7, 4R, 4L. ROSE: Benign.
+2. Switched to therapeutic scope.
+3. Loaded Veran map. Navigated to RUL.
+4. Could not confirm target with REBUS.
+5. Stopped procedure without biopsy of nodule.
+Plan: Follow up or alternative biopsy method.",0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Procedure note for leo spaceman doing the ebus and navigation today. Ebus went fine we hit station 7 and 4r and 4l all looked benign on the slides. Switched to the nav scope for that RUL nodule. Tried to get there with the veran system but just couldnt see it on the radial probe. tried a few times but no luck so we didnt stick a needle in it. biopsy aborted just the lymph nodes done today.,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Electromagnetic Navigation Bronchoscopy and EBUS-TBNA were performed. Linear EBUS was used to sample lymph node stations 7, 4R, and 4L; all were benign on ROSE. Electromagnetic navigation was then attempted for a 1.8cm RUL nodule. Despite registration, the target was not localized with radial EBUS. The decision was made to abort the peripheral biopsy due to lack of target confirmation. The procedure was concluded without complications.",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+1.8cm RUL nodule, mediastinal staging.
+[Anesthesia]
+Moderate Sedation.
+[Description]
+EBUS-TBNA performed at stations 7, 4R, 4L. ROSE negative for malignancy. ENB attempted to RUL nodule. Lesion not visualized on Radial EBUS. Biopsy aborted.
+[Plan]
+Outpatient follow-up.",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We began the procedure with mediastinal staging using the linear EBUS scope. We successfully sampled lymph nodes at stations 7, 4R, and 4L, all of which showed benign lymphocytes on site. We then transitioned to the electromagnetic navigation phase to biopsy the RUL nodule. Although we navigated to the anatomical region, we could not confirm the lesion's location with radial EBUS. Therefore, we decided to abort the biopsy of the lung nodule to ensure patient safety.",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Endobronchial Ultrasound and Guided Navigation.
+Details: Nodal stations 7, 4R, and 4L were aspirated; onsite analysis showed benign cells. The instruments were exchanged for the electromagnetic guidance system. We navigated to the RUL apex but failed to localize the target lesion with ultrasound. The tissue sampling of the parenchymal nodule was cancelled.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Indication: Recurrent pleural effusion (L).
+Proc: US-guided pleural drainage/catheter.
+- Site marked US.
+- Thoracentesis attempt 1: Dry tap.
+- Repositioned 2 spaces lower.
+- 18G needle entered fluid. Wire passed.
+- 8Fr Pigtail placed.
+- Output: 1400cc clear yellow.
+Plan: Culture/Cyto. Catheter to drainage.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0
+"OPERATIVE REPORT: The patient presented with a recurrent large left pleural effusion. Ultrasound guidance was utilized to identify a pocket of fluid. An initial thoracentesis attempt at the primary site yielded no return. The puncture site was adjusted two intercostal spaces caudally. A Seldinger technique was then successfully employed to access the pleural space. An 8-French pigtail catheter was inserted and secured. Immediate drainage yielded 1400 mL of clear, exudative-appearing fluid. The patient tolerated the procedure well.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0
+"Code: 32557 (Pleural drainage with indwelling catheter, with imaging).
+Narrative:
+- Ultrasound guidance used to verify fluid and entry.
+- Percutaneous entry made (initial dry tap bundled).
+- Guide wire inserted, tract dilated.
+- Tunneled indwelling catheter (Pigtail 8Fr) placed.
+- 1400cc drained.
+Note: Imaging guidance is integral to 32557.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+"Procedure: Chest Tube/Pigtail Placement
+Patient: G. Washington
+1. US scan of L chest.
+2. Local lidocaine.
+3. First stick dry.
+4. Moved down. Hit fluid.
+5. Seldinger technique -> 8Fr Pigtail.
+6. Drained 1.4L yellow fluid.
+7. Secured and dressed.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+Mr Washington needed his chest drained again recurrent effusion left side. used the ultrasound. tried one spot with the needle and got nothing dry tap. moved down a couple ribs and got it. put the wire in then the 8 french pigtail catheter. drained about 1400cc of yellow fluid. leaving the tube in for now sending fluid to lab.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+"Ultrasound-guided placement of indwelling pleural catheter. Indication was recurrent left pleural effusion. Local anesthesia was administered. An initial thoracentesis attempt was dry. The site was repositioned. The pleural space was accessed, and an 8Fr pigtail catheter was placed using Seldinger technique. 1400cc of clear yellow fluid was drained. The catheter was secured.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0
+"[Indication]
+Recurrent large left pleural effusion.
+[Anesthesia]
+Local (Lidocaine).
+[Description]
+US guidance used. Initial attempt dry. Successful access 2 interspaces lower. 8Fr Pigtail catheter placed. 1400cc drained.
+[Plan]
+Drainage to bag. Fluid analysis.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+"Due to the patient's recurrent left pleural effusion, we proceeded with drainage. Using ultrasound, we marked the site. Our first attempt with the needle yielded no fluid, so we repositioned lower on the chest wall. On the second attempt, we successfully accessed the fluid pocket. We placed an 8 French pigtail catheter over a guidewire and drained 1400cc of fluid. The catheter was secured for ongoing drainage.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+"Intervention: Percutaneous pleural drainage with catheter insertion.
+Method: Sonographic localization. The initial aspiration was non-productive. A subsequent puncture inferiorly successfully engaged the effusion. An 8Fr drainage catheter was sited. 
+Volume: 1400ml of serous fluid was evacuated.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Proc: Bronchoscopy, BAL, Brush.
+MD: Dr. Halpert (Mod Sed + Bronch).
+Time: 48 min.
+Meds: Fentanyl 100mcg, Versed 4mg.
+Findings: RML infiltrate. Mucous plug.
+Action: Suction, BAL RML, Brush RML.
+Codes: 31623, 31624, 99152, 99153 x2.",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"PROCEDURE NOTE: Flexible fiberoptic bronchoscopy was performed by Dr. Halpert, who also directed the administration of moderate sedation (Fentanyl 100mcg/Versed 4mg). A dedicated independent observer monitored the patient throughout the 48-minute encounter. The airway inspection revealed an RML infiltrate and mucous plugging. Bronchoalveolar lavage and bronchial brushing of the right middle lobe were performed to identify an infectious etiology. The patient remained stable.",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Billing: 
+- 31624: Bronchoscopy w/ BAL (RML).
+- 31623: Bronchoscopy w/ Brushing (RML).
+- 99152: Mod Sedation (Physician/Observer), initial 15 min.
+- 99153 x2: Mod Sedation add-on, 30 min additional.
+Documentation supports 48 mins total time, dedicated observer present, same physician performing.",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Bronch + BAL + Brush
+Staff: Dr. Halpert
+Sedation: Fentanyl/Versed (Mod Sed). 48 mins.
+Steps:
+1. Scope in.
+2. Saw mucous plug RML.
+3. Did BAL.
+4. Did Brush.
+5. Pt tolerated well.
+Labs sent.",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Bronchoscopy on m. scott for that RML infiltrate. I did the sedation myself with the nurse watching fentanyl and versed used. Took about 48 minutes total. Went down saw some mucous in the middle lobe. Did a wash and a brush there. Patient did fine no oxygen drop.,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Flexible bronchoscopy with bronchoalveolar lavage and brushing. Indication was RML infiltrate. Moderate sedation provided by the bronchoscopist (48 minutes duration). Fentanyl 100mcg and Versed 4mg were used. Findings included RML mucous plugging. BAL and brush specimens were collected from the RML. Vital signs remained stable.,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+RML Infiltrate.
+[Sedation]
+Moderate (Dr. Halpert + Observer). 48 min total.
+[Description]
+Mucous plug RML. Suctioned. BAL and Brush performed RML.
+[Plan]
+Culture results pending.",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Dr. Halpert performed the bronchoscopy and administered the sedation for Mr. Scott, which lasted 48 minutes. Using Fentanyl and Versed, we achieved moderate sedation. Upon inspection, we found a mucous plug in the right middle lobe. We proceeded to suction the airway and collect both BAL and brush samples from the RML. The patient's vitals were stable throughout.",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Operation: Fiberoptic airway inspection with lavage and cytology brushing.
+Sedation: Moderate, administered by operator (48m).
+Findings: RML consolidation and secretions.
+Action: The segment was irrigated (BAL) and sampled via brush.
+Status: Stable.",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Indication: ILD (UIP/NSIP).
+Technique: LMA, Flex Bronch, Radial EBUS.
+- RLL Basilar segments cleared via REBUS.
+- 1.9mm Cryoprobe.
+- Site 1: RLL Posterior Basal (5s freeze).
+- Site 2: RLL Lateral Basal (5s freeze).
+- Fogarty balloon used prophylactically.
+- 2 samples (10mm each).
+- No pneumothorax.",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"OPERATIVE SUMMARY: The patient presented for diagnostic evaluation of progressive fibrotic interstitial lung disease. Under general anesthesia with a laryngeal mask airway, transbronchial cryobiopsy was performed. Radial EBUS confirmed the absence of significant vasculature in the target zones. A 1.9mm cryoprobe was utilized to obtain biopsies from the RLL posterior basal and lateral basal segments using a 5-second activation time. A Fogarty balloon was deployed immediately post-extraction for prophylactic hemostasis. Two substantial parenchymal specimens were retrieved.",0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Codes: 31628 (Transbronchial lung biopsy, single lobe), 31654 (Radial EBUS guidance).
+Justification:
+- Biopsies taken from lung parenchyma (RLL) using cryoprobe supports 31628.
+- Radial EBUS utilized to survey biopsy site for safety supports 31654.
+- Note: Multiple biopsies in same lobe bundle into single 31628.",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Cryobiopsy
+Pt: Bruce Wayne
+1. LMA/GA.
+2. Radial EBUS check RLL bases.
+3. Cryoprobe to RLL Post Basal -> Freeze 5s -> Pull.
+4. Balloon up for bleeding control.
+5. Repeat in RLL Lat Basal.
+6. 2 good chunks.
+7. Fluoro/US check neg for pneumo.",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Did a cryobiopsy on mr wayne for his ILD today. Used the LMA and general. Checked with the radial ebus first to make sure no vessels were there. Froze for 5 seconds in the RLL posterior and lateral basal segments. Pulled the whole scope out with the sample. Used the fogarty balloon to stop any bleeding. Got two big pieces of lung. No pneumothorax on the ultrasound after.,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Transbronchial cryobiopsy for interstitial lung disease. General anesthesia with LMA. Radial EBUS guidance used. Biopsies obtained from RLL posterior basal and lateral basal segments. 1.9mm probe, 5-second freeze time. Fogarty balloon used for hemostasis. Two specimens obtained. Post-procedure imaging negative for pneumothorax.",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Fibrotic ILD, suspect UIP/NSIP.
+[Anesthesia]
+General, LMA.
+[Description]
+Radial EBUS used. 1.9mm Cryoprobe biopsies x2 in RLL (Posterior/Lateral Basal). Freeze time 5s. Fogarty balloon control. Specimens 10mm.
+[Plan]
+Pathology pending. D/C home.",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We performed a cryobiopsy to evaluate Mr. Wayne's ILD. After placing an LMA, we used radial EBUS to ensure the biopsy sites in the right lower lobe were safe. We then advanced the cryoprobe and obtained biopsies from the posterior and lateral basal segments, freezing for 5 seconds each time. We used a Fogarty balloon to manage potential bleeding. We retrieved two large lung samples and confirmed there was no pneumothorax before finishing.",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Transbronchial cryo-sampling of parenchyma.
+Context: Pulmonary fibrosis.
+Method: Under LMA anesthesia, sonographic clearance was obtained. The cryo-instrument was applied to the RLL basilar segments. Freezing activation yielded two substantial tissue aggregates. Prophylactic balloon occlusion was employed.
+Result: Hemostasis secured. Lung intact.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Indication: Empyema suspected.
+Procedure: US guided access. 6F catheter placed -> frank pus. Converted to 14F chest tube via Seldinger. 450cc purulent drainage. tPA/DNase instilled. Tube clamped.
+Complications: None.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1
+"OPERATIVE REPORT: PLEURAL INTERVENTION
+The patient presented with signs of pleural sepsis. Ultrasound interrogation of the right hemithorax revealed a complex, loculated effusion. Initial diagnostic thoracentesis yielded frank purulence, necessitating immediate escalation to tube thoracostomy. A 14 French Wayne catheter was sited using the Seldinger technique, draining 450 mL of purulent fluid. To address the loculations, intrapleural fibrinolytic therapy (tPA/DNase) was administered.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1
+"Primary Service: Tube Thoracostomy (32551).
+Secondary Service: Fibrinolytic Instillation (32561).
+Sequence: Diagnostic aspiration (bundled) -> Conversion to therapeutic drainage (billable). 
+Site: Right posterior chest.
+Device: 14Fr Pigtail.
+Output: 450cc purulent fluid.
+Note: 32555 not billed as it converted to 32551 at same site.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1
+"Procedure: Chest Tube Placement
+Resident: Dr. X
+Steps:
+1. US check: Loculated fluid.
+2. Local lidocaine.
+3. Needle access -> Pus.
+4. Wire placed.
+5. Dilated.
+6. 14Fr chest tube placed.
+7. 10mg tPA / 5mg DNase instilled.
+8. Clamped.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1
+Dr Xavier here seeing Mr Howlett for the empyema right side. Started as a tap put in the small catheter got straight pus out so we switched to a chest tube right there. 14 french wayne. Drained about 450 pus. Because of the loculations on the ultrasound we put in tPA and DNase right away. Clamped it. Admitting him.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1
+Ultrasound-guided pleural intervention. Initial aspiration yielded frank purulence. Procedure converted to tube thoracostomy. 14 Fr catheter inserted via Seldinger technique. 450 cc purulent fluid evacuated. 10mg tPA and 5mg DNase instilled intrapleurally for loculation management. Tube clamped. Patient stable.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1
+"[Indication]
+Fevers, loculated right pleural effusion, empyema concern.
+[Anesthesia]
+Local (Lidocaine).
+[Description]
+Diagnostic thoracentesis revealed pus. Converted to 14Fr chest tube placement. 450cc purulent drainage. Instillation of tPA/DNase.
+[Plan]
+Admit for empyema protocol.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1
+"We performed a pleural intervention on Mr. Howlett. Initially, we inserted a small catheter for diagnostic purposes, which revealed frank pus. Consequently, we immediately proceeded to place a 14 French chest tube in the same location to establish drainage. We drained 450cc of fluid. Given the loculations seen on ultrasound, we instilled fibrinolytics (tPA and DNase) directly into the tube before clamping it.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1
+"Procedure: Thoracostomy conversion.
+Action: The pleural space was accessed. Purulence was aspirated. A drainage catheter was deployed. Effusion was evacuated. Fibrinolytics were administered.
+Outcome: Tube in situ.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1
+"Indication: Massive hemoptysis.
+Proc: Rigid bronch. 400cc clot aspirated. RUL bleeding ID'd. Fogarty balloon tamponade x 5 min. APC to tumor bed. Iced saline lavage.
+Result: Hemostasis achieved.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0
+"OPERATIVE NARRATIVE: EMERGENCY RIGID BRONCHOSCOPY
+Indication: Exsanguinating hemoptysis.
+Description: The rigid bronchoscope was introduced. Significant clot burden was evacuated from the central airways to restore ventilation. The source was localized to a tumor at the RUL orifice. Hemorrhage control was achieved via a multimodal approach utilizing Fogarty balloon tamponade, thermal ablation (APC) of the tumor bed, and cold saline lavage. The patient was stabilized and extubated.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0
+"Code 31641: Destruction of tumor (APC to RUL orifice).
+Code 31645: Therapeutic aspiration (400cc blood/clot from trachea/LMS).
+Note: Tamponade is incidental to control. Rigid scope used. General anesthesia.",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0
+"Procedure: Rigid Bronch for Hemoptysis
+Attending: Dr. Roy
+Steps:
+1. GA. Rigid scope in.
+2. Suctioned massive clots (400cc).
+3. Found bleeder RUL.
+4. Balloon tamponade.
+5. APC to tumor.
+6. Iced saline.
+Bleeding stopped.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+Emergency bronch for Logan Roy massive bleeding. Rigid scope. Tube was full of blood sucked out like 400cc just to see. Bleeding coming from RUL tumor. Put a balloon in there to block it for a bit then hit it with APC. Used iced saline too. Stopped bleeding. Extubated in room.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Emergency rigid bronchoscopy performed for massive hemoptysis. 400 cc blood/clot aspirated from central airways. Active bleeding RUL tumor. Interventions: Fogarty balloon tamponade, Argon Plasma Coagulation to tumor bed, iced saline lavage. Hemostasis achieved. Extubated.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0
+"[Indication]
+Massive hemoptysis, RUL SCC.
+[Anesthesia]
+General, Rigid Bronchoscopy.
+[Description]
+Evacuation of 400cc clot. Balloon tamponade RUL. APC destruction of bleeding tumor. Iced saline.
+[Plan]
+ICU admission.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Mr. Roy required emergency rigid bronchoscopy for massive hemoptysis. We first cleared the airway of approximately 400cc of clot to ventilate him. Identifying the bleeding source at the RUL tumor, we deployed a Fogarty balloon for tamponade. Subsequently, we applied APC to the tumor bed to cauterize the vessels and instilled iced saline. These measures successfully halted the bleeding.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Rigid endoscopy with hemorrhage control.
+Action: Clot was evacuated (Therapeutic Aspiration). The hemorrhage source was localized. Tamponade was applied. The lesion was cauterized (Destruction). Lavage performed.
+Outcome: Hemostasis.",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Proc: EBUS, Nav Cryobiopsy, Central Resection.
+EBUS: 4R, 7 sampled (neg).
+LUL: Navigated cryobiopsy x3 (nodule).
+RMB: Incidental tumor resected (snare/APC).
+Comp: None.",0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"OPERATIVE REPORT: MULTI-MODALITY INTERVENTION
+Indication: Staging and diagnosis.
+EBUS: Stations 7 and 4R were sampled; ROSE negative.
+Peripheral: Using the Ion platform and radial EBUS, the LUL nodule was localized. Transbronchial cryobiopsy was performed.
+Central: Inspection revealed an incidental obstructive lesion in the RMB. This was resected using electrocautery snare and APC base destruction to restore patency.",0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Coding:
+- 31652: EBUS (Stn 7, 4R).
+- 31627+31628: Navigated Cryobiopsy LUL nodule.
+- 31654: Radial EBUS LUL.
+- 31641: Destruction of RMB tumor (Snare/APC). Distinct target from LUL.
+Modifiers required.",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: EBUS / Ion / Resection
+Patient: Wade Wilson
+Steps:
+1. EBUS TBNA 7, 4R.
+2. Ion nav to LUL. Radial EBUS verify. Cryobiopsy x3.
+3. Found RMB polyp. Snared and APC'd it.
+No issues.",0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Busy case for Mr Wilson. Started with EBUS 7 and 4R negative. Then used the robot to get the LUL nodule froze it 3 times. On the way out saw a huge polyp in the right main. Snared it off and APCd the base. 3 separate procedures basically. Patient fine.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Flexible bronchoscopy with EBUS-TBNA, robotic navigation, and therapeutic resection. EBUS performed at 4R/7. Robotic navigation with radial EBUS to LUL nodule; cryobiopsy obtained. Incidental RMB tumor identified and resected via snare electrocautery and APC. No complications.",0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Staging, LUL nodule.
+[Anesthesia]
+General.
+[Description]
+1. EBUS-TBNA 4R, 7.
+2. Navigated cryobiopsy LUL nodule (w/ REBUS).
+3. Snare resection/APC of incidental RMB tumor.
+[Plan]
+Discharge.",0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We performed a complex procedure on Mr. Wilson. First, we staged the mediastinum using EBUS. Next, we used the Ion robot to navigate to and cryobiopsy a nodule in the LUL. Unexpectedly, we found a separate tumor obstructing the Right Mainstem Bronchus. We resected this central tumor using a snare and APC. All three targets were distinct.",0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Staging, targeted biopsy, and tumor ablation.
+Sites: Mediastinum, LUL, RMB.
+Action: Nodes were aspirated. The peripheral lesion was sampled via cryoprobe. The central obstruction was resected and cauterized.
+Outcome: Multiple targets addressed.",0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+"Indication: Stent obstruction (granulation).
+Proc: Rigid bronch. Proximal granulation cored. Stent removed. Distal granulation treated (APC/Cryo). New 14x40mm silicone stent placed.
+Result: Airway patent.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"OPERATIVE NARRATIVE: TRACHEAL STENT REVISION
+The patient presented with symptoms of stent obstruction. Rigid bronchoscopy revealed significant granulation tissue at the proximal and distal ends of the indwelling silicone stent. The device was removed following coring of the proximal tissue. The distal stent bed was treated with APC and cryotherapy to address granulomas. A replacement 14x40mm silicone stent was then deployed in the same anatomical position.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0
+"Code: 31638 (Revision of tracheal stent).
+Rationale: Procedure constitutes a replacement of an existing stent at the same site. Removal of the old stent and therapeutic prep of the airway (APC/Cryo) are bundled into the revision code.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Stent Exchange
+Attending: Dr. Stein
+Steps:
+1. Rigid scope.
+2. Cored granulation.
+3. Removed old stent.
+4. Cleaned base with APC/Cryo.
+5. Placed new 14x40mm stent.
+EBL 10cc.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+Dr Stein here. Patient with the tracheal stent has bad breath. Stent was full of granulation. Went in with the rigid took the old one out. Used APC and cryo to clean up the mess at the bottom. Put a fresh 14 by 40 in there. Looks much better.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Rigid bronchoscopy for tracheal stent revision. Indication: Granulation tissue obstruction. Old stent removed. Granulation tissue debrided via coring, APC, and cryotherapy. New 14x40mm silicone stent deployed. Airway patent.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Benign tracheal stenosis, stent obstruction.
+[Anesthesia]
+General, Rigid.
+[Description]
+Removal of obstructed silicone stent. Ablation of granulation tissue (APC/Cryo). Placement of new 14x40mm silicone stent.
+[Plan]
+Discharge.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We performed a stent exchange for this patient. The existing silicone stent was encrusted with granulation tissue. We used the rigid bronchoscope to core out the tissue and remove the stent. After treating the inflamed mucosa with APC and cryotherapy, we placed a brand new silicone stent of the same size in the trachea.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0
+"Procedure: Prosthesis revision.
+Indication: Stent failure.
+Action: The existing prosthesis was extracted. The tissue bed was ablated. A replacement prosthesis was inserted.
+Outcome: Revision complete.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Proc: RLL Mass Ablation + LUL Nodule Biopsy.
+RLL: Squamous CA. Cryo-ablation x5 cycles. Tissue discarded. 80% patency.
+LUL: New nodule. Radial EBUS. Cryobiopsy x2 sent to path.
+Codes: 31641, 31628, 31654.",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"OPERATIVE REPORT: THERAPEUTIC AND DIAGNOSTIC BRONCHOSCOPY
+The patient presented with a known RLL obstructing mass and a new LUL nodule. 
+1. RLL: The cryoprobe was used to therapeutically debulk the endobronchial tumor via freeze-thaw cycles. Extracted tissue was discarded as the diagnosis is established. 
+2. LUL: The scope was advanced to the LUL. Radial EBUS confirmed the target. Diagnostic cryobiopsies were obtained and submitted for analysis.",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Code 31641: RLL Tumor Destruction (Cryo-ablation/debulking).
+Code 31628: LUL Transbronchial Biopsy (Cryo-biopsy).
+Code 31654: Radial EBUS (LUL).
+Differentiation: RLL intervention was therapeutic (tissue discarded). LUL intervention was diagnostic (tissue sent).",0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Cryo Ablation and Biopsy
+Steps:
+1. RLL mass: Frozen/removed x5. Cleared airway.
+2. LUL nodule: Found with REBUS. Biopsied x2.
+Path sent for LUL only.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Two part procedure today. First the RLL mass we know its cancer so I just cryo'd it to open the airway threw the tissue away. Then went to the LUL for that new spot. Used the radar to find it and took two biopsies sent those to the lab. Codes are 31641 and 31628.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Therapeutic bronchoscopy RLL; Diagnostic bronchoscopy LUL. RLL squamous cell carcinoma debulked via cryotherapy (tissue discarded). LUL nodule localized via radial EBUS and biopsied via cryoprobe (tissue submitted). No complications.,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+RLL obstruction, LUL nodule.
+[Anesthesia]
+Moderate.
+[Description]
+1. Cryo-ablation of RLL mass (therapeutic).
+2. Radial EBUS localization LUL.
+3. Cryobiopsy LUL nodule (diagnostic).
+[Plan]
+Pathology pending for LUL.",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We addressed two issues today. For the known RLL tumor, we performed therapeutic debulking using the cryoprobe to open the airway, discarding the tissue. Then, we investigated the new LUL nodule, verifying its location with radial EBUS and obtaining diagnostic biopsies which were sent to pathology.",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Tumor ablation and parenchymal sampling.
+Sites: RLL, LUL.
+Action: The RLL mass was destructed via cryotherapy. The LUL lesion was localized and sampled.
+Outcome: Airway patent, samples collected.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0

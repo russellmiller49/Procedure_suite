@@ -70,7 +70,7 @@ from modules.registry.v2_booleans import (
 VALID_IP_CODES = {
     # Bronchoscopy codes (316xx)
     "31622", "31623", "31624", "31625", "31626", "31627", "31628", "31629",
-    "31631", "31632", "31633", "31634", "31636", "31637", "31638",
+    "31631", "31632", "31633", "31634", "31635", "31636", "31637", "31638",
     "31640", "31641", "31645", "31646", "31647",
     "31652", "31653", "31654", "31660", "31661",
     # Pleural/thoracic codes (325xx, 326xx)
@@ -81,8 +81,8 @@ VALID_IP_CODES = {
 }
 
 # Known typos/errors and their corrections
+# NOTE: 31635 is a VALID code for foreign body removal, NOT a typo
 CODE_CORRECTIONS = {
-    "31635": "31636",  # Typo -> bronchial stent
     "31630": "31631",  # Typo -> tracheal stent
     "31651": "31652",  # Typo -> EBUS 1-2 stations
     "31648": "31647",  # Typo -> catheter balloon
@@ -192,45 +192,53 @@ def _clean_codes(codes: List[str]) -> List[str]:
 
 def _iter_golden_files() -> List[Path]:
     """Iterate over golden extraction JSON files."""
-    pattern = str(GOLDEN_DIR / "consolidated_verified_notes_v2_8_part_*.json")
-    return [Path(p) for p in glob.glob(pattern)]
+    # Support both old consolidated format and new synthetic format
+    patterns = [
+        str(GOLDEN_DIR / "consolidated_verified_notes_v2_8_part_*.json"),
+        str(GOLDEN_DIR / "synthetic_*.json"),
+    ]
+    files = []
+    for pattern in patterns:
+        files.extend([Path(p) for p in glob.glob(pattern)])
+    return files
 
 
 def _extract_codes(entry: Dict[str, Any]) -> List[str]:
     """
     Extract CPT codes from an entry.
 
-    Priority order:
-    1. coding_review.final_cpt_codes (array)
-    2. coding_review.cpt_summary.final_codes (array)
-    3. coding_review.cpt_summary keys (if dict keyed by code)
-    4. coding_review.cpt_summary[].code (if list of objects)
-    5. cpt_codes (top-level fallback)
+    Priority order (ground truth first):
+    1. cpt_codes (top-level ground truth)
+    2. coding_review.final_cpt_codes (fallback)
+    3. coding_review.cpt_summary.final_codes (fallback)
+    4. coding_review.cpt_summary keys (fallback)
+    5. coding_review.cpt_summary[].code (fallback)
     """
+    # Primary: top-level cpt_codes is ground truth
+    raw = entry.get("cpt_codes", [])
+    if raw:
+        return [str(c) for c in raw]
+
+    # Fallback to coding_review if top-level missing
     cr = entry.get("coding_review", {})
     if not isinstance(cr, dict):
         cr = {}
 
-    # Try coding_review.final_cpt_codes first
     final_cpt = cr.get("final_cpt_codes")
     if final_cpt and isinstance(final_cpt, list):
         return [str(c) for c in final_cpt]
 
-    # Try coding_review.cpt_summary
     summary = cr.get("cpt_summary")
 
     if isinstance(summary, dict):
-        # Could be {"final_codes": [...]} or {"31653": {...}, "31628": {...}}
         final = summary.get("final_codes")
         if final and isinstance(final, list):
             return [str(c) for c in final]
-        # Keys are the codes themselves
         codes = [k for k in summary.keys() if k.isdigit() or (k.startswith("3") and len(k) == 5)]
         if codes:
             return codes
 
     elif isinstance(summary, list):
-        # List of objects like [{"code": "31653", ...}, ...]
         codes = []
         for item in summary:
             if isinstance(item, dict) and "code" in item:
@@ -238,9 +246,28 @@ def _extract_codes(entry: Dict[str, Any]) -> List[str]:
         if codes:
             return codes
 
-    # Fallback to top-level cpt_codes
-    raw = entry.get("cpt_codes", [])
-    return [str(c) for c in raw]
+    return []
+
+
+def _flatten_entries(data: Any) -> List[Dict[str, Any]]:
+    """Flatten entries from various JSON structures.
+
+    Handles:
+    - List of entry dicts (standard format)
+    - Dict with category keys containing lists of entries (nested format)
+    """
+    if isinstance(data, list):
+        return [e for e in data if isinstance(e, dict)]
+    elif isinstance(data, dict):
+        # Nested format: {"metadata": {...}, "category1": [...], "category2": [...]}
+        entries = []
+        for key, value in data.items():
+            if key == "metadata":
+                continue
+            if isinstance(value, list):
+                entries.extend([e for e in value if isinstance(e, dict)])
+        return entries
+    return []
 
 
 def _build_dataframe() -> pd.DataFrame:
@@ -250,7 +277,7 @@ def _build_dataframe() -> pd.DataFrame:
         with open(file_path, "r") as f:
             data = json.load(f)
 
-        for entry in data:
+        for entry in _flatten_entries(data):
             text = entry.get("note_text", "")
             codes = _clean_codes(_extract_codes(entry))
             source_file = entry.get("source_file", "")
@@ -403,7 +430,7 @@ def _build_registry_dataframe() -> pd.DataFrame:
         with open(file_path, "r") as f:
             data = json.load(f)
 
-        for entry in data:
+        for entry in _flatten_entries(data):
             text = entry.get("note_text", "")
             source_file = entry.get("source_file", "")
             registry = entry.get("registry_entry") or {}
