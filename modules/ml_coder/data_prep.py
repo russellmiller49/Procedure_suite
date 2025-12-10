@@ -19,6 +19,34 @@ GOLDEN_DIR = Path("data/knowledge/golden_extractions")
 
 EDGE_SOURCE_NAME = "synthetic_edge_case_notes_with_registry.jsonl"
 
+# Old/low-quality source files to exclude (embedded provenance metadata)
+# Only entries with empty source_file or source_file starting with "(from " are kept
+EXCLUDED_SOURCE_PREFIXES = {
+    "synthetic_notes_with_registry",  # Old v1 data
+    "synthetic_notes_with_CPT",       # Old CSV-based data
+    "synthetic_CPT_corrected",        # Old corrected data
+    "recovered_metadata",             # Recovery artifacts
+}
+
+
+def _is_valid_source(source_file: str) -> bool:
+    """Check if an entry's source_file indicates high-quality golden data.
+
+    Returns True if:
+    - source_file is empty (no provenance, assumed golden)
+    - source_file starts with "(from " (derived from golden file itself)
+    - source_file doesn't match any excluded prefix
+    """
+    if not source_file:
+        return True
+    if source_file.startswith("(from "):
+        return True
+    # Check against excluded prefixes
+    for prefix in EXCLUDED_SOURCE_PREFIXES:
+        if source_file.startswith(prefix):
+            return False
+    return True
+
 # Registry procedure fields for ML prediction
 PROCEDURE_FIELDS = [
     "diagnostic_bronchoscopy",

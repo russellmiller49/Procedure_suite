@@ -1,15 +1,21 @@
 [
   "diagnostic_bronchoscopy",
+  "bal",
+  "bronchial_wash",
   "brushings",
+  "endobronchial_biopsy",
   "tbna_conventional",
   "linear_ebus",
   "radial_ebus",
   "navigational_bronchoscopy",
   "transbronchial_biopsy",
   "transbronchial_cryobiopsy",
+  "therapeutic_aspiration",
   "foreign_body_removal",
+  "airway_dilation",
   "airway_stent",
   "thermal_ablation",
+  "cryotherapy",
   "blvr",
   "peripheral_ablation",
   "bronchial_thermoplasty",
@@ -20,6 +26,5 @@
   "ipc",
   "medical_thoracoscopy",
   "pleurodesis",
-  "bal",
-  "therapeutic_aspiration"
+  "fibrinolytic_therapy"
 ]
