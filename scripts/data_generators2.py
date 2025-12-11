@@ -9,19 +9,13 @@ import pandas as pd
 # CONFIG
 # =============================================================================
 
-GOLDEN_JSON_GLOB = "data/knowledge/golden_extractions/golden_*.json"
-TRAIN_FLAT_OUTPUT = "data/ml_training/train_flat.csv"
-REGISTRY_FROM_GOLDEN_OUTPUT = "data/ml_training/registry_from_golden.csv"
+GOLDEN_JSON_GLOB = "golden_*.json"
+TRAIN_CSV_INPUT = "train.csv"
+TRAIN_CSV_OUTPUT = "train_flat.csv"
+REGISTRY_CSV_OUTPUT = "registry_train.csv"
+REGISTRY_FROM_GOLDEN_OUTPUT = "registry_from_golden.csv"
 
-# BATCH CONFIG: Add all your input/output pairs here
-# NOTE: Input files must have 'note_text' and 'verified_cpt_codes' columns (comma-separated)
-CSV_BATCHES = [
-    # (Input Filename, Output Filename)
-    ("data/ml_training/train.csv",               "data/ml_training/registry_train.csv"),
-    ("data/ml_training/test.csv",                "data/ml_training/registry_test.csv"),
-    ("data/ml_training/edge_cases_holdout.csv",  "data/ml_training/registry_edge_cases.csv"),
-]
-
+# Columns for registry_train
 REGISTRY_COLUMNS = [
     "note_text", "verified_cpt_codes", "diagnostic_bronchoscopy", "bal",
     "bronchial_wash", "brushings", "endobronchial_biopsy", "transbronchial_biopsy",
@@ -33,6 +27,7 @@ REGISTRY_COLUMNS = [
     "medical_thoracoscopy", "pleurodesis", "fibrinolytic_therapy"
 ]
 
+# Columns for "train_flat" dataset
 TRAIN_FLAT_COLUMNS = [
     "source_file", "note_text", "billed_codes_list", "clinical_codes_list",
     "bal", "linear_ebus", "transbronchial_biopsy", "navigational_bronchoscopy",
@@ -45,26 +40,13 @@ TRAIN_FLAT_COLUMNS = [
 
 def normalize_cpt_list(raw):
     """Convert raw CPT representation into a set of 5-digit string codes."""
-    # 1. Handle None immediately
-    if raw is None: 
-        return set()
-    
-    # 2. Check if it's a list/set/tuple BEFORE checking for scalar NaN
-    # This prevents the "truth value of an array is ambiguous" error
+    if raw is None: return set()
     if isinstance(raw, (list, tuple, set)):
         return {str(x).strip() for x in raw if str(x).strip()}
-    
-    # 3. Handle scalar NaN (float('nan'), pd.NA, etc.) by string conversion
-    # or explicit pandas check if desired, but string conversion is robust for this
     s = str(raw)
-    
-    # Check for string "nan" or "None" just in case
-    if s.lower() in ('nan', 'none', 'nat'):
-        return set()
-
-    # 4. Extract codes via Regex
     codes = re.findall(r"\b\d{5}\b", s)
     return set(codes)
+
 # =============================================================================
 # PART A: Golden JSON -> ML Train-Style Dataset
 # =============================================================================
@@ -73,26 +55,21 @@ def golden_dataset_generator(json_dir_pattern):
     files = glob.glob(json_dir_pattern)
     for filepath in files:
         with open(filepath, "r") as f:
-            try:
-                data = json.load(f)
-            except json.JSONDecodeError:
-                print(f"Skipping invalid JSON: {filepath}")
-                continue
-
-        # Handle if data is a dict (single entry) or list (multiple entries)
-        if isinstance(data, dict):
-            data = [data]
+            data = json.load(f)
 
         for entry in data:
-            billed_codes = normalize_cpt_list(entry.get("cpt_codes", []))
+            billed_codes = set(str(c) for c in entry.get("cpt_codes", []))
             
-            # Robust rationale extraction
+            # --- FIX: Robust Rationale Extraction ---
+            # Handle varying paths: some files have 'coding_review' at root, others nested
             rationale_obj = entry.get("coding_support", {}).get("section_3_rationale", {})
             if not rationale_obj:
                 rationale_obj = entry.get("coding_review", {})
             
-            dropped = normalize_cpt_list(rationale_obj.get("dropped_codes", []))
-            clinical_reality_codes = billed_codes.union(dropped)
+            dropped = rationale_obj.get("dropped_codes", [])
+            dropped_codes = set(str(c) for c in dropped)
+
+            clinical_reality_codes = billed_codes.union(dropped_codes)
 
             flat_row = {
                 "source_file": Path(filepath).name,
@@ -101,8 +78,7 @@ def golden_dataset_generator(json_dir_pattern):
                 "clinical_codes_list": sorted(list(clinical_reality_codes)),
                 "bal": 1 if "31624" in clinical_reality_codes else 0,
                 "linear_ebus": 1 if any(c in clinical_reality_codes for c in ["31652", "31653"]) else 0,
-                # FIXED: Removed 31629/31633 (TBNA) from TBBx logic
-                "transbronchial_biopsy": 1 if any(c in clinical_reality_codes for c in ["31628", "31632"]) else 0,
+                "transbronchial_biopsy": 1 if any(c in clinical_reality_codes for c in ["31628", "31629", "31632", "31633"]) else 0,
                 "navigational_bronchoscopy": 1 if "31627" in clinical_reality_codes else 0,
                 "stent_placement": 1 if any(c in clinical_reality_codes for c in ["31631","31636","31637","31638"]) else 0,
                 "dilation": 1 if "31630" in clinical_reality_codes else 0,
@@ -112,23 +88,35 @@ def golden_dataset_generator(json_dir_pattern):
             yield flat_row
 
 def infer_rigid_from_entry(entry):
+    """
+    Checks for 'Rigid' in airway_type across flattened or nested structures.
+    """
     registry = entry.get("registry_entry") or {}
+    
+    # --- FIX: Handle String vs Dict in procedure_setting ---
+    # 1. Check root level first (Common in your flattened files)
     airway = str(registry.get("airway_type", "")).lower()
     
+    # 2. If empty, try nested if it exists and is a dict
     if not airway:
         setting = registry.get("procedure_setting")
         if isinstance(setting, dict):
             airway = str(setting.get("airway_type", "")).lower()
 
-    if "rigid" in airway: return 1
+    if "rigid" in airway:
+        return 1
 
+    # 3. Fallback on CPT or note text
+    # Note: Removed 31603 (Emergency Tracheostomy) as it is not strictly rigid bronchoscopy
+    cpt_codes = set(str(c) for c in entry.get("cpt_codes", []))
     text_lower = str(entry.get("note_text", "")).lower()
+    
     if "rigid" in text_lower and "bronch" in text_lower:
         if "no rigid" not in text_lower:
             return 1
     return 0
 
-def build_train_flat_from_golden(json_pattern=GOLDEN_JSON_GLOB, output_csv=TRAIN_FLAT_OUTPUT):
+def build_train_flat_from_golden(json_pattern=GOLDEN_JSON_GLOB, output_csv=TRAIN_CSV_OUTPUT):
     rows = list(golden_dataset_generator(json_pattern))
     if not rows:
         print(f"No rows generated from pattern {json_pattern}")
@@ -138,7 +126,7 @@ def build_train_flat_from_golden(json_pattern=GOLDEN_JSON_GLOB, output_csv=TRAIN
     print(f"Wrote {len(df_flat)} rows to {output_csv}")
 
 # =============================================================================
-# PART B: Registry Logic
+# PART B: CPT + Note -> Registry-Style Flags
 # =============================================================================
 
 def get_registry_flags_from_codes_and_text(cpt_raw, note_text):
@@ -147,7 +135,7 @@ def get_registry_flags_from_codes_and_text(cpt_raw, note_text):
 
     flags = {col: 0 for col in REGISTRY_COLUMNS if col not in ["note_text", "verified_cpt_codes"]}
 
-    # --- CPT MAPPING ---
+    # --- DIRECT CPT MAPPING ---
     if "31622" in cpt_codes: flags["diagnostic_bronchoscopy"] = 1
     if "31624" in cpt_codes: flags["bal"] = 1
     if "31623" in cpt_codes: flags["brushings"] = 1
@@ -161,39 +149,35 @@ def get_registry_flags_from_codes_and_text(cpt_raw, note_text):
     if any(c in cpt_codes for c in ["31645", "31646"]): flags["therapeutic_aspiration"] = 1
     if "31635" in cpt_codes: flags["foreign_body_removal"] = 1
     
-    if "31630" in cpt_codes: flags["airway_dilation"] = 1
-    if any(c in cpt_codes for c in ["31631", "31636", "31637", "31638"]): flags["airway_stent"] = 1
+    # --- FIX: CPT Correction ---
+    if "31630" in cpt_codes: flags["airway_dilation"] = 1 # 31631 removed from here
+    if any(c in cpt_codes for c in ["31631", "31636", "31637", "31638"]): flags["airway_stent"] = 1 # 31631 added here
     
     if any(c in cpt_codes for c in ["31660", "31661"]): flags["bronchial_thermoplasty"] = 1
     if "32997" in cpt_codes: flags["whole_lung_lavage"] = 1
 
+    # Pleural
     if "32550" in cpt_codes: flags["ipc"] = 1
     if any(c in cpt_codes for c in ["32554", "32555"]): flags["thoracentesis"] = 1
     if "32551" in cpt_codes: flags["chest_tube"] = 1
     if any(c in cpt_codes for c in ["32601", "32650"]): flags["medical_thoracoscopy"] = 1
     if any(c in cpt_codes for c in ["32650", "32560"]): flags["pleurodesis"] = 1
+
     if any(c in cpt_codes for c in ["31647", "31648", "31650", "31651"]): flags["blvr"] = 1
 
-    # --- HYBRID / TEXT FALLBACKS ---
+    # --- HYBRID: codes + text context ---
 
-    # Cryobiopsy: Check codes OR text + biopsy codes
+    # --- FIX: Cryobiopsy Logic ---
+    # Added 31645 (Therapeutic Asp) to the list, as per robotic sample data
     if any(c in cpt_codes for c in ["31628", "31632", "31645"]):
         if "cryo" in text_lower or "freeze" in text_lower:
             flags["transbronchial_cryobiopsy"] = 1
         elif "31628" in cpt_codes or "31632" in cpt_codes:
             flags["transbronchial_biopsy"] = 1
-    
-    # Rigid Bronch: Text or CPT
-    if "31603" in cpt_codes or ("rigid" in text_lower and "bronch" in text_lower):
-         if "no rigid" not in text_lower:
-            flags["rigid_bronchoscopy"] = 1
 
-    # Foreign Body: Text fallback if CPT missing (Fixed for your peanut case)
-    if flags["foreign_body_removal"] == 0:
-        if "foreign body" in text_lower and ("removed" in text_lower or "extraction" in text_lower):
-            flags["foreign_body_removal"] = 1
-        if "peanut" in text_lower and "removed" in text_lower:
-            flags["foreign_body_removal"] = 1
+    # Rigid bronchoscopy
+    if "rigid" in text_lower and "bronch" in text_lower:
+        flags["rigid_bronchoscopy"] = 1
 
     # Ablation
     if "31641" in cpt_codes:
@@ -207,78 +191,73 @@ def get_registry_flags_from_codes_and_text(cpt_raw, note_text):
     return flags
 
 def enrich_flags_with_registry_entry(flags, registry_entry):
+    """
+    FIX: Handles FLATTENED registry structure (matching golden_*.json).
+    Falls back to nested checks if flat keys aren't found.
+    """
     if not registry_entry:
         return flags
 
+    # 1. Try Nested (Strict Schema)
     proc_nested = registry_entry.get("procedures_performed") or {}
     pleural_nested = registry_entry.get("pleural_procedures") or {}
     
+    # 2. Helper to check both Nested and Flat keys
     def is_performed(key):
-        # Nested check
+        # Check nested schema
         if proc_nested.get(key, {}).get("performed") is True: return True
         if pleural_nested.get(key, {}).get("performed") is True: return True
         
-        # Flat check
+        # Check Flat keys (found in your sample data)
+        # e.g. "ablation_peripheral_performed": true
         if registry_entry.get(f"{key}_performed") is True: return True
         if registry_entry.get(key) is True: return True
         
-        # Specific mappings
+        # Specific flat key mappings based on your samples
         if key == "whole_lung_lavage" and (registry_entry.get("wll_volume_instilled_l") or 0) > 0: return True
         if key == "transbronchial_cryobiopsy" and registry_entry.get("nav_cryobiopsy_for_nodule"): return True
         if key == "peripheral_ablation" and registry_entry.get("ablation_peripheral_performed"): return True
         if key == "blvr" and registry_entry.get("blvr_valve_type"): return True
         if key == "navigational_bronchoscopy" and registry_entry.get("nav_platform"): return True
         if key == "radial_ebus" and registry_entry.get("nav_rebus_used"): return True
+        
         return False
 
+    # Apply to all flags
     for col in flags.keys():
         if is_performed(col):
             flags[col] = 1
             
+    # Extra check for Chest Tube via intervention text (common in your samples)
     intervention = str(registry_entry.get("pneumothorax_intervention", "")).lower()
     if "chest tube" in intervention or "pigtail" in intervention:
         flags["chest_tube"] = 1
 
     return flags
 
-# =============================================================================
-# CSV Processing (Train, Test, Edge Cases)
-# =============================================================================
+def build_registry_from_train_csv(input_csv=TRAIN_CSV_INPUT, output_csv=REGISTRY_CSV_OUTPUT):
+    if not os.path.exists(input_csv):
+        print(f"Input CSV {input_csv} not found.")
+        return
 
-def build_registry_from_csv_batch(batch_list):
-    """
-    Process multiple CSV files (train, test, edge cases).
-    batch_list: list of tuples (input_path, output_path)
-    """
-    for input_csv, output_csv in batch_list:
-        if not os.path.exists(input_csv):
-            print(f"Skipping {input_csv}: File not found.")
-            continue
+    df = pd.read_csv(input_csv)
+    rows = []
 
-        print(f"Processing {input_csv} -> {output_csv}...")
-        df = pd.read_csv(input_csv)
-        rows = []
+    for _, row in df.iterrows():
+        note_text = str(row.get("note_text", ""))
+        cpt_raw = row.get("verified_cpt_codes", "")
+        flags = get_registry_flags_from_codes_and_text(cpt_raw, note_text)
 
-        for _, row in df.iterrows():
-            note_text = str(row.get("note_text", ""))
-            cpt_raw = row.get("verified_cpt_codes", "")
-            
-            # Generate Flags
-            flags = get_registry_flags_from_codes_and_text(cpt_raw, note_text)
-            
-            # Clean CPT for output (removes NaN and formatting artifacts)
-            clean_cpts = normalize_cpt_list(cpt_raw)
+        row_dict = {
+            "note_text": note_text,
+            "verified_cpt_codes": str(row.get("verified_cpt_codes", ""))
+        }
+        row_dict.update(flags)
+        rows.append(row_dict)
 
-            row_dict = {
-                "note_text": note_text,
-                "verified_cpt_codes": ",".join(sorted(clean_cpts))
-            }
-            row_dict.update(flags)
-            rows.append(row_dict)
-
-        out_df = pd.DataFrame(rows, columns=REGISTRY_COLUMNS)
-        out_df.to_csv(output_csv, index=False)
-        print(f"  - Wrote {len(out_df)} rows.")
+    out_df = pd.DataFrame(rows, columns=REGISTRY_COLUMNS)
+    out_df.to_csv(output_csv, index=False)
+    print(f"Wrote {len(out_df)} rows to {output_csv}")
 
 def build_registry_from_golden(json_pattern=GOLDEN_JSON_GLOB, output_csv=REGISTRY_FROM_GOLDEN_OUTPUT):
     files = glob.glob(json_pattern)
@@ -286,21 +265,18 @@ def build_registry_from_golden(json_pattern=GOLDEN_JSON_GLOB, output_csv=REGISTR
 
     for filepath in files:
         with open(filepath, "r") as f:
-            try:
-                data = json.load(f)
-            except: continue
-        
-        if isinstance(data, dict): data = [data]
+            data = json.load(f)
 
         for entry in data:
             note_text = entry.get("note_text", "")
-            billed_codes = normalize_cpt_list(entry.get("cpt_codes", []))
+            billed_codes = set(str(c) for c in entry.get("cpt_codes", []))
             
+            # Use same robust rationale logic as above
             rationale_obj = entry.get("coding_support", {}).get("section_3_rationale", {})
             if not rationale_obj:
                 rationale_obj = entry.get("coding_review", {})
             
-            dropped = normalize_cpt_list(rationale_obj.get("dropped_codes", []))
+            dropped = set(str(c) for c in rationale_obj.get("dropped_codes", []))
             clinical_codes = billed_codes.union(dropped)
 
             flags = get_registry_flags_from_codes_and_text(list(clinical_codes), note_text)
@@ -313,21 +289,15 @@ def build_registry_from_golden(json_pattern=GOLDEN_JSON_GLOB, output_csv=REGISTR
             row_dict.update(flags)
             rows.append(row_dict)
 
-    if rows:
-        out_df = pd.DataFrame(rows, columns=REGISTRY_COLUMNS)
-        out_df.to_csv(output_csv, index=False)
-        print(f"Wrote {len(out_df)} rows to {output_csv}")
+    if not rows:
+        print(f"No rows generated from golden JSON pattern {json_pattern}")
+        return
 
-# =============================================================================
-# MAIN
-# =============================================================================
+    out_df = pd.DataFrame(rows, columns=REGISTRY_COLUMNS)
+    out_df.to_csv(output_csv, index=False)
+    print(f"Wrote {len(out_df)} rows to {output_csv}")
 
 if __name__ == "__main__":
-    # 1. Golden JSON -> ML Train Flat
     build_train_flat_from_golden()
-
-    # 2. Process all CSV Batches (Train, Test, Edge Cases)
-    build_registry_from_csv_batch(CSV_BATCHES)
-
-    # 3. Golden JSON -> Registry Ground Truth
+    build_registry_from_train_csv()
     build_registry_from_golden()
