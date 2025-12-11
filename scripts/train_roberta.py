@@ -185,24 +185,28 @@ class HeadTailTokenizer:
         sep_id = self.tokenizer.sep_token_id
         pad_id = self.tokenizer.pad_token_id
 
+        # Ensure input_ids is long type for consistency
+        input_ids = input_ids.long()
+
         # Build final sequence: [CLS] + tokens + [SEP] + padding
+        # Explicitly use dtype=torch.long to prevent type mismatches
         full_ids = torch.cat([
-            torch.tensor([cls_id]),
+            torch.tensor([cls_id], dtype=torch.long),
             input_ids,
-            torch.tensor([sep_id]),
+            torch.tensor([sep_id], dtype=torch.long),
         ])
 
         # Pad to max_length
         pad_length = self.max_length - len(full_ids)
         if pad_length > 0:
-            full_ids = torch.cat([full_ids, torch.full((pad_length,), pad_id)])
+            full_ids = torch.cat([full_ids, torch.full((pad_length,), pad_id, dtype=torch.long)])
 
         # Create attention mask (1 for real tokens, 0 for padding)
         attention_mask = (full_ids != pad_id).long()
 
         return {
-            "input_ids": full_ids,
-            "attention_mask": attention_mask,
+            "input_ids": full_ids.long(),  # Ensure final output is int64
+            "attention_mask": attention_mask.long(),
         }
 
 
@@ -229,8 +233,11 @@ class RegistryDataset(Dataset):
         encoding = self.tokenizer(text)
 
         return {
-            "input_ids": encoding["input_ids"],
-            "attention_mask": encoding["attention_mask"],
+            # Force input_ids to Long (int64) to prevent type mismatch in collation
+            "input_ids": encoding["input_ids"].long(),
+            # Force attention_mask to Long
+            "attention_mask": encoding["attention_mask"].long(),
+            # Keep labels as Float for BCEWithLogitsLoss
             "labels": torch.tensor(label, dtype=torch.float32),
         }
 
@@ -491,8 +498,8 @@ def train_epoch(
     total_loss = 0.0
     num_batches = 0
 
-    # Mixed precision scaler
-    scaler = torch.cuda.amp.GradScaler(enabled=config.fp16)
+    # Mixed precision scaler (use new API to avoid deprecation warnings)
+    scaler = torch.amp.GradScaler("cuda", enabled=config.fp16)
 
     progress_bar = tqdm(dataloader, desc=f"Epoch {epoch + 1}")
 
@@ -502,7 +509,7 @@ def train_epoch(
         labels = batch["labels"].to(config.device)
 
         # Forward pass with mixed precision
-        with torch.cuda.amp.autocast(enabled=config.fp16):
+        with torch.amp.autocast("cuda", enabled=config.fp16):
             outputs = model(input_ids, attention_mask, labels)
             loss = outputs["loss"] / config.gradient_accumulation_steps
 
