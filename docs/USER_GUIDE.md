@@ -163,7 +163,7 @@ Output:
 
 ## 📊 Key Files
 
-- **`data/knowledge/ip_coding_billing.v2_7.json`**: The "Brain". Contains all CPT codes, RVUs, and bundling rules.
+- **`data/knowledge/ip_coding_billing_v2_8.json`**: The "Brain". Contains all CPT codes, RVUs, and bundling rules.
 - **`schemas/IP_Registry.json`**: The "Law". Defines the valid structure for registry data.
 - **`reports/`**: Where output logs and validation summaries are saved.
 

@@ -49,33 +49,145 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 
 ---
 
-## 🚀 Implementation Roadmap
+## 🚀 ML Training Data Workflow
 
-### Phase 1: Data Augmentation & Prep (Local)
+### The Complete Pipeline: JSON → Trained Model
 
-**Goal**: Turn ~160 "Golden" notes into a robust training set of 2,000–5,000 examples, fixing class imbalance.
-
-**Tasks:**
-
-1. **Run Augmentation Agent** (`scripts/augment_registry_data.py`)
-   - Generate 10-20 variations for every rare case (e.g., `blvr`, `thermal_ablation`, `cryotherapy`)
-   - Target: Every label has at least 50+ positive examples
-   
-2. **Finalize Data Splits** (`modules/ml_coder/data_prep.py`)
-   - Generate `registry_train.csv` and `registry_test.csv`
-   - **Critical**: Ensure "Edge Cases" are in the Test Set to verify the model generalizes, not memorizes
-
-**Checklist:**
-- [ ] Run `augment_registry_data.py` 
-- [ ] Verify rare classes have 50+ examples each
-- [ ] Generate train/test splits
-- [ ] Confirm edge cases are in test set
+```
+Golden JSONs → data_generators.py → clean_and_split_data.py → Smart_splitter.py → train_roberta.py → ONNX Model
+```
 
 ---
 
-### Phase 2: RoBERTa Student Training (Local - Fast Track)
+### Step 1: Update Source Data
 
-**Goal**: Train a high-performance deep learning model without a teacher. This will likely be sufficient.
+Add or modify your golden JSON files in:
+```
+data/knowledge/golden_extractions/
+```
+(e.g., add `golden_099.json`, `golden_100.json`, etc.)
+
+---
+
+### Step 2: Generate Raw CSVs
+
+Run the generator script. This reads all JSONs, rebuilds `train_flat.csv`, and regenerates `registry_train.csv` with the latest data and schema/flag definitions.
+
+```bash
+python scripts/data_generators.py
+```
+
+**What this does:**
+- Scans all `golden_*.json` files
+- Updates `data/ml_training/train_flat.csv` (the raw map of text → codes)
+- Updates `data/ml_training/registry_train.csv` (calculates all the 0/1 flags based on the latest logic)
+
+> **Note:** This file will still contain duplicates and potential leakage at this stage.
+
+---
+
+### Step 3: Clean & Split (The V2 Fix)
+
+Run the cleaning script. This takes the "raw" output from Step 2, dedupes it, removes garbage rows, and strictly splits by Patient ID (`source_file`) to prevent leakage.
+
+```bash
+python scripts/clean_and_split_data.py
+```
+
+**What this does:**
+- Reads the updated `registry_train.csv` (and existing test/edge files)
+- Consolidates everything into one pool
+- Removes conflicts (e.g., same text having different labels)
+- Outputs:
+  - `data/ml_training/cleaned_v2/registry_train_clean.csv`
+  - `data/ml_training/cleaned_v2/registry_val_clean.csv`
+  - `data/ml_training/cleaned_v2/registry_test_clean.csv`
+
+---
+
+### Step 4: Optimize Class Balance (Smart Splitter)
+
+Run the smart splitter to optimize rare class coverage in val/test sets.
+
+```bash
+python scripts/Smart_splitter.py
+```
+
+**What this does:**
+- Loads all 3 splits from cleaned_v2/ and recombines them
+- Drops globally empty labels (e.g., `bronchial_wash`, `photodynamic_therapy`)
+- Identifies **single-source labels** (labels that exist in only one source_file) and forces those files into Train
+- Searches 1000 random seeds to find the split that maximizes rare label coverage in Val/Test
+- Outputs optimized splits to `data/ml_training/cleaned_v3_balanced/`
+
+**Why this matters:**
+If a rare label (e.g., `brachytherapy_catheter`) only appears in one source file, a random split might put all examples in Test, leaving zero training examples. The smart splitter prevents this by locking single-source files to Train.
+
+**Outputs:**
+- `data/ml_training/cleaned_v3_balanced/registry_train_clean.csv`
+- `data/ml_training/cleaned_v3_balanced/registry_val_clean.csv`
+- `data/ml_training/cleaned_v3_balanced/registry_test_clean.csv`
+- `data/ml_training/cleaned_v3_balanced/registry_label_fields.json`
+
+---
+
+### Step 5: Train Model
+
+Run the training script using the balanced V3 data.
+
+```bash
+python scripts/train_roberta.py \
+  --train-csv data/ml_training/cleaned_v3_balanced/registry_train_clean.csv \
+  --val-csv data/ml_training/cleaned_v3_balanced/registry_val_clean.csv \
+  --test-csv data/ml_training/cleaned_v3_balanced/registry_test_clean.csv
+```
+
+Or update the defaults in train_roberta.py and run:
+```bash
+python scripts/train_roberta.py --batch-size 16 --epochs 5
+```
+
+---
+
+### Summary of Script Responsibilities
+
+| Script | Responsibility | Input | Output |
+|--------|---------------|-------|--------|
+| `data_generators.py` | **Extraction & Logic** - Extracts text/codes from JSON and computes the flag columns | Golden JSONs | `registry_train.csv`, `train_flat.csv` |
+| `clean_and_split_data.py` | **Hygiene & Splitting** - Deduplicates rows, fixes conflicts, splits by Patient ID | `registry_train.csv`, `train_flat.csv` | `cleaned_v2/*.csv` |
+| `Smart_splitter.py` | **Balance Optimization** - Forces single-source labels to Train, optimizes rare class coverage | `cleaned_v2/*.csv` | `cleaned_v3_balanced/*.csv` |
+| `train_roberta.py` | **Modeling** - Learns to predict the flags from the text | `cleaned_v3_balanced/*.csv` | `data/models/roberta_registry/` |
+
+**Why the multi-step pipeline?**
+- **Step 2 vs Step 3**: If you modify `data_generators.py` to change how a flag is calculated, Step 2 updates the columns in the raw CSV. Step 3 ensures rows are cleanly distributed into Train/Val/Test without leakage.
+- **Step 3 vs Step 4**: Step 3 does basic splitting by Patient ID. Step 4 (Smart Splitter) further optimizes to ensure rare labels have representation in both Train and Val/Test sets, preventing zero-support classes that would drag down Macro F1.
+
+---
+
+## 🚀 Implementation Roadmap
+
+### Phase 1: Data Preparation (Local)
+
+**Goal**: Build clean, leak-free, class-balanced training data from Golden JSON notes.
+
+**Tasks:**
+
+1. **Add/Update Golden JSONs** in `data/knowledge/golden_extractions/`
+2. **Run `data_generators.py`** to extract flags from JSONs
+3. **Run `clean_and_split_data.py`** to create leak-free splits
+4. **Run `Smart_splitter.py`** to optimize rare class coverage
+
+**Output:**
+- `data/ml_training/cleaned_v3_balanced/registry_train_clean.csv`
+- `data/ml_training/cleaned_v3_balanced/registry_val_clean.csv`
+- `data/ml_training/cleaned_v3_balanced/registry_test_clean.csv`
+- `data/ml_training/cleaned_v3_balanced/registry_label_fields.json`
+
+---
+
+### Phase 2: BiomedBERT Training (Local - Fast Track)
+
+**Goal**: Train a high-performance deep learning model. This will likely be sufficient.
 
 **Hardware/Environment:**
 - **GPU**: RTX 4070 Ti (local)
@@ -83,32 +195,30 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 - **Mixed Precision**: `fp16=True`
 
 **Model Selection:**
-- **Primary**: `pminervini/RoBERTa-base-PM-M3-Voc-hf` (PubMed/MIMIC vocabulary)
-- **Alternative**: Distill-Align checkpoint with clinical vocabulary
+- **Primary**: `microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext` (#1 on BLURB benchmark)
+- **Alternative**: `RoBERTa-large-PM-M3-Voc` for teacher-student distillation
+
+**Key Training Features:**
+- **Head + Tail Truncation**: Keeps first 382 + last 128 tokens (preserves complications at end)
+- **pos_weight**: Upweights rare classes (capped at 100x)
+- **Per-Class Threshold Optimization**: F1-optimal thresholds per label (not uniform 0.5)
 
 **Training Script** (`scripts/train_roberta.py`):
 
-```python
-# Key configuration
-model_name = "pminervini/RoBERTa-base-PM-M3-Voc-hf"
-loss_function = BCEWithLogitsLoss(pos_weight=calculated_weights)
-batch_size = 16  # or 32 depending on VRAM
-fp16 = True
-
-# CRITICAL: Calculate pos_weight for each label based on training data
-# If "Stent" is rare (e.g., 5% positive), weight it ~19x higher
-pos_weight = (num_negative / num_positive) for each label
+```bash
+python scripts/train_roberta.py --batch-size 16 --epochs 5
 ```
 
 **Success Criteria:**
-- Macro F1 Score > 0.90 on `registry_test.csv`
+- Macro F1 Score > 0.90 on test set
 - F1 > 0.85 on rare classes (BLVR, thermal ablation, cryotherapy)
 - **If criteria met → SKIP Phase 3, proceed to Phase 4**
 
 **Checklist:**
-- [ ] Configure PyTorch with CUDA
-- [ ] Implement `scripts/train_roberta.py`
-- [ ] Calculate `pos_weight` for class imbalance
+- [x] Configure PyTorch with CUDA
+- [x] Implement `scripts/train_roberta.py` with Head+Tail truncation
+- [x] Calculate `pos_weight` for class imbalance
+- [x] Per-class threshold optimization
 - [ ] Train model with fp16 mixed precision
 - [ ] Evaluate Macro F1 on test set
 - [ ] Evaluate F1 on rare classes specifically
@@ -346,7 +456,7 @@ procedure-suite/
 │   └── quantize_to_onnx.py            # ONNX conversion & quantization
 ├── data/
 │   ├── knowledge/
-│   │   ├── ip_coding_billing.v2_7.json  # CPT codes, RVUs, bundling rules
+│   │   ├── ip_coding_billing_v2_8.json  # CPT codes, RVUs, bundling rules
 │   │   ├── IP_Registry.json             # Registry schema definition
 │   │   └── golden_extractions/          # Training data
 │   └── rules/
@@ -369,7 +479,7 @@ procedure-suite/
 - **ALWAYS** edit `modules/api/fastapi_app.py` — NOT `api/app.py` (deprecated)
 - **ALWAYS** use `CodingService` from `modules/coder/application/coding_service.py`
 - **ALWAYS** use `RegistryService` from `modules/registry/application/registry_service.py`
-- Knowledge base is at `data/knowledge/ip_coding_billing.v2_7.json`
+- Knowledge base is at `data/knowledge/ip_coding_billing_v2_8.json`
 - Deterministic rules are at `data/rules/coding_rules.py`
 
 ### 2. Testing Requirements
@@ -437,7 +547,7 @@ Pipeline behavior:
 - 31622 is bundled into any interventional procedure
 - 31627 can only be billed with a primary procedure
 - Multiple biopsies from same lobe = single code
-- Check `data/knowledge/ip_coding_billing.v2_7.json` for NCCI/MER rules
+- Check `data/knowledge/ip_coding_billing_v2_8.json` for NCCI/MER rules
 
 ---
 
@@ -600,7 +710,7 @@ pip install onnxruntime-gpu  # If GPU available
 
 ## Contact & Resources
 
-- **Knowledge Base**: `data/knowledge/ip_coding_billing.v2_7.json`
+- **Knowledge Base**: `data/knowledge/ip_coding_billing_v2_8.json`
 - **Registry Schema**: `schemas/IP_Registry.json`
 - **API Docs**: `docs/Registry_API.md`
 - **CPT Reference**: `docs/REFERENCES.md`

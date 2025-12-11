@@ -28,7 +28,7 @@ class ReasoningFields(BaseModel):
 
     # Provenance (filled by application/infra layers)
     model_version: str = ""  # e.g. "gemini-1.5-pro-002"
-    kb_version: str = ""  # "ip_coding_billing.v2_7"
+    kb_version: str = ""  # "ip_coding_billing.v2.8"
     policy_version: str = ""  # "smart_hybrid_v2"
     keyword_map_version: Optional[str] = None
     registry_schema_version: Optional[str] = None

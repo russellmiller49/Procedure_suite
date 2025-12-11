@@ -51,7 +51,7 @@ The Procedure Suite is a modular system designed to automate the processing of I
 │         ▼                                                       │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │                 Knowledge Layer                          │   │
-│  │         (data/knowledge/ip_coding_billing.v2_7.json)     │   │
+│  │         (data/knowledge/ip_coding_billing_v2_8.json)     │   │
 │  │         (schemas/IP_Registry.json)                       │   │
 │  └──────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────┘
@@ -100,7 +100,7 @@ The system is data-driven, relying heavily on external configuration files rathe
 
 | File | Path | Purpose |
 |------|------|---------|
-| **IP Coding & Billing** | `data/knowledge/ip_coding_billing.v2_7.json` | Source of truth for CPT codes, RVUs, NCCI edits, and bundling rules. |
+| **IP Coding & Billing** | `data/knowledge/ip_coding_billing_v2_8.json` | Source of truth for CPT codes, RVUs, NCCI edits, and bundling rules. |
 | **IP Registry Schema** | `schemas/IP_Registry.json` | JSON Schema defining the valid structure of a clinical registry entry. |
 | **Templates** | `proc_report/templates/` | Jinja2 templates for report generation. |
 

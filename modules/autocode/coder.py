@@ -506,8 +506,8 @@ class EnhancedCPTCoder:
     def _resolve_kb_path(self, repo_root: Path) -> Path:
         candidates = [
             os.getenv("PSUITE_KNOWLEDGE_FILE"),
-            repo_root / "data" / "knowledge" / "ip_coding_billing.v2_7.json",
-            repo_root / "proc_autocode" / "ip_kb" / "ip_coding_billing.v2_7.json",
+            repo_root / "data" / "knowledge" / "ip_coding_billing_v2_8.json",
+            repo_root / "proc_autocode" / "ip_kb" / "ip_coding_billing_v2_8.json",
             repo_root / "data" / "knowledge" / "ip_coding_billing.v2_2.json",
             repo_root / "proc_autocode" / "ip_kb" / "ip_coding_billing.v2_2.json",
         ]

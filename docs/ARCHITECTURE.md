@@ -10,6 +10,11 @@ The Procedure Suite is a modular system for automated medical coding, registry e
 - **Application services** (orchestration, workflows)
 - **Adapters** (LLM, ML, database, API)
 
+> **Architectural Pivot:** The system is currently **ML‑First** for CPT coding and
+> **hybrid‑first** for registry extraction. A pivot to **Extraction‑First**
+> (registry → deterministic CPT) is in progress; “Target” sections in docs
+> describe that end state.
+
 ## Directory Structure
 
 ```

@@ -4,7 +4,7 @@ from pathlib import Path
 
 from modules.autocode.ip_kb.terminology_utils import QARuleChecker, TerminologyNormalizer
 
-KNOWLEDGE_PATH = Path("data/knowledge/ip_coding_billing.v2_7.json")
+KNOWLEDGE_PATH = Path("data/knowledge/ip_coding_billing_v2_8.json")
 
 
 def test_terminology_normalizer_handles_variations() -> None:

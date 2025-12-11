@@ -5,7 +5,7 @@ Run the registry cleaning pipeline over a JSONL notes file.
 Usage:
     python scripts/run_cleaning_pipeline.py \
         --notes data/synthetic/synthetic_notes_with_registry.jsonl \
-        --kb data/knowledge/ip_coding_billing.v2_7.json \
+        --kb data/knowledge/ip_coding_billing_v2_8.json \
         --schema data/knowledge/IP_Registry_Enhanced_v2.json \
         --out-json autopatches/patches.json \
         --out-csv reports/errors.csv \

@@ -90,7 +90,7 @@ class RuleEngine:
             from modules.autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
 
             # Default KB path (same as config.kb_path default)
-            default_kb_path = Path("data/knowledge/ip_coding_billing.v2_7.json")
+            default_kb_path = Path("data/knowledge/ip_coding_billing_v2_8.json")
             self._ip_kb = IPCodingKnowledgeBase(default_kb_path)
             self._ip_kb_available = True
             logger.info(

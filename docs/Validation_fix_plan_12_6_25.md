@@ -119,7 +119,7 @@ Assuming you now have `modules/coder/rules_engine.py` and `CodingRulesEngine.app
 
    * In cases like the combined CAO + tunneled catheter note (31641, 31636, 31645, 32550):
 
-     * Ensure debulking, stent placement and stent revision/removal codes are applied according to rules in `ip_coding_billing.v2_7.json`, and suppress stray 31640/31646/31630 when they do not correspond to documented extra lobar biopsies or additional dilations beyond the bundle. 
+     * Ensure debulking, stent placement and stent revision/removal codes are applied according to rules in `ip_coding_billing.v2.8.json`, and suppress stray 31640/31646/31630 when they do not correspond to documented extra lobar biopsies or additional dilations beyond the bundle. 
 
 6. Run the new tests from §2.1 and existing coding tests. Iterate until all nav/EBUS/thoracoscopy/CAO tests pass and the worst FPs in the validation summaries are gone or clearly reduced. 
 
@@ -597,5 +597,4 @@ Suggested tests:
   ```bash
   pytest tests/registry/test_ebus_config_station_count.py -q
   ```
-
 

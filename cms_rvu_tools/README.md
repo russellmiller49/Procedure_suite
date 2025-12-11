@@ -32,14 +32,14 @@ cms_rvu_integration/
 
 ### Option 1: Use Pre-Populated CSV (Recommended)
 
-The examples below assume `data/knowledge/ip_coding_billing.v2_7.json` as the current baseline. The updater will increment the minor version automatically.
+The examples below assume `data/knowledge/ip_coding_billing_v2_8.json` as the current baseline. The updater will increment the minor version automatically.
 
 ```bash
 # Update your JSON with the included 2025 RVU data
 python local_rvu_updater.py update \
-    --input data/knowledge/ip_coding_billing.v2_7.json \
+    --input data/knowledge/ip_coding_billing_v2_8.json \
     --rvu-csv cms_rvus_2025_ip.csv \
-    --output data/knowledge/ip_coding_billing.v2_7.json \
+    --output data/knowledge/ip_coding_billing_v2_8.json \
     --source "CMS 2025 PFS Final Rule"
 ```
 
@@ -51,8 +51,8 @@ pip install pandas openpyxl
 
 python rvu_fetcher.py \
     --year 2025 \
-    --input data/knowledge/ip_coding_billing.v2_7.json \
-    --output data/knowledge/ip_coding_billing.v2_7.json \
+    --input data/knowledge/ip_coding_billing_v2_8.json \
+    --output data/knowledge/ip_coding_billing_v2_8.json \
     --report integration_report.json
 ```
 
@@ -64,9 +64,9 @@ python local_rvu_updater.py template --output my_rvus.csv
 
 # Fill in data from CMS website, then update
 python local_rvu_updater.py update \
-    --input data/knowledge/ip_coding_billing.v2_7.json \
+    --input data/knowledge/ip_coding_billing_v2_8.json \
     --rvu-csv my_rvus.csv \
-    --output data/knowledge/ip_coding_billing.v2_7.json
+    --output data/knowledge/ip_coding_billing_v2_8.json
 ```
 
 ## CSV Format
@@ -108,7 +108,7 @@ https://www.cms.gov/medicare/payment/fee-schedules/physician/pfs-federal-regulat
 
 ## Understanding the Output
 
-After running the updater, your JSON will have a new `cms_rvus` section. As of December 2025, these examples assume `data/knowledge/ip_coding_billing.v2_7.json` with a `cms_rvus` block structured like the following:
+After running the updater, your JSON will have a new `cms_rvus` section. As of December 2025, these examples assume `data/knowledge/ip_coding_billing_v2_8.json` with a `cms_rvus` block structured like the following:
 
 ```json
 {
@@ -204,7 +204,7 @@ Where:
 
 ```bash
 python local_rvu_updater.py validate \
-    --input data/knowledge/ip_coding_billing.v2_7.json \
+    --input data/knowledge/ip_coding_billing_v2_8.json \
     --rvu-csv cms_rvus_2025_ip.csv
 ```
 
@@ -250,7 +250,7 @@ To use this data in your chatbot:
 import json
 
 # Load the updated knowledge base
-with open('data/knowledge/ip_coding_billing.v2_7.json') as f:
+with open('data/knowledge/ip_coding_billing_v2_8.json') as f:
     coding_data = json.load(f)
 
 # Access CMS-validated RVU data

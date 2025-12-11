@@ -60,7 +60,7 @@ EnhancedCPTCoder._generate_codes has a bunch of if/else rules for things like:
 	•	EBUS linear vs radial
 	•	thoracoscopy site priority
 
-Those rules live in code instead of your JSON KB (ip_coding_billing.v2_7.json), so:
+Those rules live in code instead of your JSON KB (ip_coding_billing.v2.8.json), so:
 	•	The “truth” is split.
 	•	Updating rules requires a code change + redeploy.
 
@@ -78,7 +78,7 @@ When you want to tackle this, give Codex a focused prompt like:
 	•	Takes candidate codes + context.
 	•	Applies rules described in data (JSON or simple config objects).
 	•	Gradually migrate specific patterns (e.g., stent rules) from if/else code into:
-	•	new fields in ip_coding_billing.v2_7.json like conflicts_with, requires_evidence, mutually_exclusive_with, etc.
+	•	new fields in ip_coding_billing.v2.8.json like conflicts_with, requires_evidence, mutually_exclusive_with, etc.
 
 Important: do this incrementally (one rule family at a time), not a big bang.
 
@@ -236,7 +236,7 @@ _Last updated: YYYY-MM-DD_
 
 **Issue:** Certain IPC coding rules (stents, EBUS radial vs linear, thoracoscopy site priority, etc.) are implemented as Python `if/else` in `EnhancedCPTCoder._generate_codes`, not in the JSON KB.
 
-**Risk:** Knowledge is split between code and `ip_coding_billing.v2_7.json`.
+**Risk:** Knowledge is split between code and `ip_coding_billing.v2.8.json`.
 
 **Plan:**
 

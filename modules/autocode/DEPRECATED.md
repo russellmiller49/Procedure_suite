@@ -28,7 +28,7 @@ The canonical implementation for CPT coding now lives in the hexagonal architect
 
 ## If You Need To...
 
-- **Add a new CPT code**: Update `data/knowledge/ip_coding_billing.v2_7.json`
+- **Add a new CPT code**: Update `data/knowledge/ip_coding_billing_v2_8.json`
 - **Modify coding rules**: Update `modules/domain/coding_rules/`
 - **Update RVU data**: Update files in `data/RVU_files/`
 - **Modify LLM prompts**: Update `modules/coder/adapters/llm/gemini_advisor.py`

@@ -49,6 +49,11 @@ This toolkit enables:
 
 ## System Architecture
 
+> **Note:** The repository is in an architectural pivot toward **Extraction‑First**
+> (Registry extraction → deterministic CPT rules). The current production pipeline
+> remains ML‑First for CPT and hybrid‑first for registry; sections below describe
+> current behavior unless explicitly labeled as “Target.”
+
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                         Procedure Note                               │
@@ -103,7 +108,7 @@ Registry extraction follows a hybrid approach:
 
 | File | Purpose |
 |------|---------|
-| `data/knowledge/ip_coding_billing.v2_7.json` | CPT codes, RVUs, bundling rules |
+| `data/knowledge/ip_coding_billing_v2_8.json` | CPT codes, RVUs, bundling rules |
 | `data/knowledge/IP_Registry.json` | Registry schema definition |
 | `data/knowledge/golden_extractions/` | Training data for ML models |
 | `schemas/IP_Registry.json` | JSON Schema for validation |
@@ -133,7 +138,7 @@ make preflight
 - Always edit `modules/api/fastapi_app.py` (not `api/app.py` - deprecated)
 - Use `CodingService` from `modules/coder/application/coding_service.py`
 - Use `RegistryService` from `modules/registry/application/registry_service.py`
-- Knowledge base is at `data/knowledge/ip_coding_billing.v2_7.json`
+- Knowledge base is at `data/knowledge/ip_coding_billing_v2_8.json`
 - Run `make test` before committing
 
 ## Environment Variables

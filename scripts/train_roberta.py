@@ -50,9 +50,10 @@ class TrainingConfig:
     # Model
     model_name: str = "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext"
 
-    # Data paths
-    train_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_train.csv"))
-    test_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_test.csv"))
+    # Data paths (updated for cleaned_v3_balanced data - optimized for rare class coverage)
+    train_csv: Path = field(default_factory=lambda: Path("data/ml_training/cleaned_v3_balanced/registry_train_clean.csv"))
+    val_csv: Path = field(default_factory=lambda: Path("data/ml_training/cleaned_v3_balanced/registry_val_clean.csv"))
+    test_csv: Path = field(default_factory=lambda: Path("data/ml_training/cleaned_v3_balanced/registry_test_clean.csv"))
     label_fields_json: Path = field(default_factory=lambda: Path("data/ml_training/registry_label_fields.json"))
     output_dir: Path = field(default_factory=lambda: Path("data/models/roberta_registry"))
 
@@ -134,7 +135,8 @@ def load_registry_csv(path: Path, required_labels: list[str] = None) -> tuple[li
                 df[col] = 0
     else:
         # Infer columns (Training Phase)
-        exclude_cols = {"note_text", "verified_cpt_codes"}
+        # Exclude metadata columns that are not labels
+        exclude_cols = {"note_text", "verified_cpt_codes", "source_file", "original_split"}
         label_cols = [c for c in df.columns if c not in exclude_cols]
         # Sort for consistency
         label_cols.sort()
@@ -631,14 +633,20 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     test_texts, test_labels, _ = load_registry_csv(config.test_csv, required_labels=label_names)
     print(f"Test samples: {len(test_texts)}")
 
-    # Split into train and validation for threshold optimization
-    train_texts, val_texts, train_labels, val_labels = train_test_split(
-        train_texts,
-        train_labels,
-        test_size=config.val_split,
-        random_state=42,
-        stratify=None,  # Multi-label doesn't support stratify directly
-    )
+    # --- Load Validation Data ---
+    if config.val_csv and config.val_csv.exists():
+        print(f"\nLoading validation data from {config.val_csv}...")
+        val_texts, val_labels, _ = load_registry_csv(config.val_csv, required_labels=label_names)
+        print(f"Using explicit validation set: {len(val_texts)} samples")
+    else:
+        print(f"\nNo validation file found at {config.val_csv}. Performing random split ({config.val_split})...")
+        train_texts, val_texts, train_labels, val_labels = train_test_split(
+            train_texts,
+            train_labels,
+            test_size=config.val_split,
+            random_state=42,
+            stratify=None,  # Multi-label doesn't support stratify directly
+        )
     print(f"Training samples: {len(train_texts)}")
     print(f"Validation samples: {len(val_texts)}")
 
@@ -867,17 +875,23 @@ def main():
         description="Train BiomedBERT for registry procedure classification"
     )
 
-    # Data paths
+    # Data paths (defaults to cleaned_v3_balanced - output of Smart_splitter.py)
     parser.add_argument(
         "--train-csv",
         type=Path,
-        default=Path("data/ml_training/registry_train.csv"),
+        default=Path("data/ml_training/cleaned_v3_balanced/registry_train_clean.csv"),
         help="Path to training CSV",
+    )
+    parser.add_argument(
+        "--val-csv",
+        type=Path,
+        default=Path("data/ml_training/cleaned_v3_balanced/registry_val_clean.csv"),
+        help="Path to validation CSV (optional, overrides automatic split)",
     )
     parser.add_argument(
         "--test-csv",
         type=Path,
-        default=Path("data/ml_training/registry_test.csv"),
+        default=Path("data/ml_training/cleaned_v3_balanced/registry_test_clean.csv"),
         help="Path to test CSV",
     )
     parser.add_argument(
@@ -938,6 +952,7 @@ def main():
     config = TrainingConfig(
         model_name=args.model_name,
         train_csv=args.train_csv,
+        val_csv=args.val_csv,
         test_csv=args.test_csv,
         output_dir=args.output_dir,
         batch_size=args.batch_size,

@@ -339,7 +339,7 @@ def main():
     parser.add_argument(
         "--test-csv",
         type=Path,
-        default=Path("data/ml_training/registry_test.csv"),
+        default=Path("data/ml_training/cleaned_v3_balanced/registry_test_clean.csv"),
         help="Test CSV for validation",
     )
     parser.add_argument(

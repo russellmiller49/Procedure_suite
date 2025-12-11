@@ -7,7 +7,7 @@ This document is the **Single Source of Truth** for developers and AI assistants
 1.  **Main Application**: Always edit `modules/api/fastapi_app.py`. Never edit `api/app.py` (deprecated).
 2.  **Coding Service**: Use `CodingService` from `modules/coder/application/coding_service.py`. The old `modules.coder.engine.CoderEngine` is deprecated.
 3.  **Registry Service**: Use `RegistryService` from `modules/registry/application/registry_service.py`.
-4.  **Knowledge Base**: The source of truth for coding rules is `data/knowledge/ip_coding_billing.v2_7.json`.
+4.  **Knowledge Base**: The source of truth for coding rules is `data/knowledge/ip_coding_billing_v2_8.json`.
 5.  **Tests**: Preserve existing tests. Run `make test` before committing.
 
 ---

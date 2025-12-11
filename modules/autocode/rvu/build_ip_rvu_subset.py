@@ -165,7 +165,7 @@ if __name__ == "__main__":
     base = Path(__file__).resolve().parents[3]  # repo root (project root)
     # We use sample_rvu_2025.csv as the "CMS file" since we don't have the full TXT
     cms_file = base / "modules" / "autocode" / "rvu" / "data" / "sample_rvu_2025.csv"
-    ip_json = base / "data" / "knowledge" / "ip_coding_billing.v2_7.json"
+    ip_json = base / "data" / "knowledge" / "ip_coding_billing_v2_8.json"
     out_csv = base / "modules" / "autocode" / "rvu" / "data" / "rvu_ip_2025.csv"
 
     if not cms_file.exists():
