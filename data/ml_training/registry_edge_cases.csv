@@ -8,10 +8,10 @@ Procedure:
 - No radial EBUS.
 - Specimens: cellular/lymphoid tissue.
 Complications: None.
-Plan: Extubate. Recovery.",31652,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Plan: Extubate. Recovery.",31652,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "HISTORY: Ms. Sanders, a 59-year-old female with a right upper lobe pulmonary opacity suspicious for non-small cell carcinoma, underwent mediastinal staging.
 PROCEDURE: General anesthesia was induced and an 8.5 mm endotracheal tube secured. The bronchial tree was examined. Linear endobronchial ultrasound (EBUS) was utilized for systematic nodal interrogation. The paratracheal station 4R demonstrated sonographic features of malignancy; transbronchial needle aspiration (TBNA) was performed (4 passes). Similarly, the subcarinal station 7 was sampled (4 passes). Station 10R was visualized but deemed non-pathologic and was deliberately spared from biopsy.
-IMPRESSION: Successful EBUS-TBNA of stations 4R and 7. Station 10R observed only.",31652,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IMPRESSION: Successful EBUS-TBNA of stations 4R and 7. Station 10R observed only.",31652,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Code Selection: 31652 (EBUS-TBNA 1-2 stations).
 Technique:
 1. Scope: Linear EBUS bronchoscope.
@@ -19,7 +19,7 @@ Technique:
 3. Sampling: Station 4R (4 passes, 22G). Station 7 (4 passes, 22G). Total distinct stations sampled: 2.
 4. Observation: Station 10R visualized but clearly documented as not sampled.
 5. Bundling: Diagnostic bronchoscopy (31622) included.
-Outcome: Adequate cytology obtained.",31652,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Outcome: Adequate cytology obtained.",31652,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: EBUS Staging
 Patient: Lucille Sanders
 Steps:
@@ -30,9 +30,9 @@ Steps:
 5. Sampled 7: 4 passes, 22G.
 6. Looked at 10R but didn't touch it.
 7. ROSE said lymphoid tissue.
-Plan: PACU.",31652,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Procedure note for Lucille Sanders 59F RUL mass staging. We did the EBUS today under general anesthesia tube 8.5. Went down looked around airways fine. Switched to EBUS scope checked the nodes. 4R looked big dark edges so we stuck it 4 times with the 22 needle. Station 7 also poked 4 times. Saw 10R but it looked small so we left it alone didn't biopsy that one. No bleeding really patient woke up fine sent to PACU thanks.,31652,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Flexible bronchoscopy and endobronchial ultrasound with transbronchial needle aspiration of mediastinal lymph nodes. Patient is a 59-year-old female. General anesthesia with 8.5 ETT. Standard airway survey negative. Linear EBUS performed. Station 4R sampled x4 passes with 22G needle. Station 7 sampled x4 passes with 22G needle. Station 10R visualized but not sampled. No complications. Specimens to cytology.,31652,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Plan: PACU.",31652,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Procedure note for Lucille Sanders 59F RUL mass staging. We did the EBUS today under general anesthesia tube 8.5. Went down looked around airways fine. Switched to EBUS scope checked the nodes. 4R looked big dark edges so we stuck it 4 times with the 22 needle. Station 7 also poked 4 times. Saw 10R but it looked small so we left it alone didn't biopsy that one. No bleeding really patient woke up fine sent to PACU thanks.,31652,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Flexible bronchoscopy and endobronchial ultrasound with transbronchial needle aspiration of mediastinal lymph nodes. Patient is a 59-year-old female. General anesthesia with 8.5 ETT. Standard airway survey negative. Linear EBUS performed. Station 4R sampled x4 passes with 22G needle. Station 7 sampled x4 passes with 22G needle. Station 10R visualized but not sampled. No complications. Specimens to cytology.,31652,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "[Indication]
 Staging of PET-avid mediastinal adenopathy, RUL mass.
 [Anesthesia]
@@ -40,12 +40,12 @@ General anesthesia, 8.5 ETT.
 [Description]
 Diagnostic bronchoscopy: normal anatomy. Linear EBUS: Station 4R (1.5cm) biopsied x4. Station 7 (1.2cm) biopsied x4. Station 10R visualized only, not biopsied. ROSE confirmed adequacy.
 [Plan]
-Extubate, PACU, await final path.",31652,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-The patient was brought to the room and placed under general anesthesia with an endotracheal tube. We performed a standard airway inspection which was unremarkable. We then introduced the linear EBUS scope to survey the lymph nodes. We identified an enlarged node at station 4R and performed four needle passes. We also sampled a node at station 7 with four passes. We visualized a smaller node at 10R but decided not to sample it. The procedure was uncomplicated.,31652,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Extubate, PACU, await final path.",31652,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+The patient was brought to the room and placed under general anesthesia with an endotracheal tube. We performed a standard airway inspection which was unremarkable. We then introduced the linear EBUS scope to survey the lymph nodes. We identified an enlarged node at station 4R and performed four needle passes. We also sampled a node at station 7 with four passes. We visualized a smaller node at 10R but decided not to sample it. The procedure was uncomplicated.,31652,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Flexible bronchoscopy with sonographic guidance and nodal aspiration.
 Subject: Lucille Sanders.
 Action: Under general anesthesia, the airway was surveyed. The linear EBUS instrument was deployed. Station 4R was interrogated and aspirated (4 passes). Station 7 was similarly aspirated. Station 10R was observed but not punctured. Material was collected for cytologic analysis.
-Result: No adverse events.",31652,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Result: No adverse events.",31652,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Indication: RLL mass staging.
 Anesthesia: GA, 8.0 ETT.
 Procedure:
@@ -54,15 +54,15 @@ Procedure:
 - Radial probe used inside 11R node for echotexture (not peripheral lung).
 - Total 10 passes.
 Complications: Minimal bleeding.
-Plan: PACU.",31653,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Plan: PACU.",31653,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "HISTORY: Mr. Ruiz presented for staging of an RLL mass and associated adenopathy.
 PROCEDURE: General anesthesia was established via an 8.0 mm ETT. A diagnostic airway survey was unrevealing. A linear EBUS scope was introduced. Systematic staging involved TBNA of station 11R (interlobar), station 4R (lower paratracheal), and station 7 (subcarinal). Note: A radial miniprobe was utilized strictly intravascularly within the 11R node for characterization, not for peripheral lung navigation.
-IMPRESSION: Successful sampling of three distinct nodal stations (11R, 4R, 7).",31653,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IMPRESSION: Successful sampling of three distinct nodal stations (11R, 4R, 7).",31653,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Billing Summary:
 - CPT 31653 (EBUS-TBNA 3+ stations).
 - Stations Sampled: 11R, 4R, 7 (Three distinct stations).
 - Note on 31654: Radial EBUS was used only within the lymph node (11R) for characterization. No peripheral lesion was targeted with radial EBUS. Therefore, 31654 is NOT reported.
-- 31622 Bundled.",31653,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+- 31622 Bundled.",31653,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: EBUS 3 Stations
 Patient: Omar Ruiz, 64M
 Steps:
@@ -73,9 +73,9 @@ Steps:
 5. Sampled 4R.
 6. Sampled 7.
 7. 10 passes total.
-Complications: None.",31653,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Procedure note Omar Ruiz 64M RLL mass. We did the bronch under GA. Airway looked ok. Used the EBUS scope to sample three nodes. First was 11R used the mini radial probe just to check the inside of the node then biopsied it. Then did 4R and 7. Good samples obtained. No peripheral biopsy done. Patient stable.,31653,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Flexible bronchoscopy and linear EBUS-TBNA. General anesthesia 8.0 ETT. Diagnostic inspection normal. EBUS nodal survey performed. Station 11R sampled x4 passes (radial probe used for nodal characterization only). Station 4R sampled x3 passes. Station 7 sampled x3 passes. No peripheral lung sampling. Minimal bleeding. Patient stable.,31653,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Complications: None.",31653,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Procedure note Omar Ruiz 64M RLL mass. We did the bronch under GA. Airway looked ok. Used the EBUS scope to sample three nodes. First was 11R used the mini radial probe just to check the inside of the node then biopsied it. Then did 4R and 7. Good samples obtained. No peripheral biopsy done. Patient stable.,31653,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Flexible bronchoscopy and linear EBUS-TBNA. General anesthesia 8.0 ETT. Diagnostic inspection normal. EBUS nodal survey performed. Station 11R sampled x4 passes (radial probe used for nodal characterization only). Station 4R sampled x3 passes. Station 7 sampled x3 passes. No peripheral lung sampling. Minimal bleeding. Patient stable.,31653,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "[Indication]
 Mediastinal/hilar staging, RLL mass.
 [Anesthesia]
@@ -83,12 +83,12 @@ General, 8.0 ETT.
 [Description]
 EBUS-TBNA performed at stations 11R, 4R, and 7. Radial probe utilized intra-nodally at 11R only. No peripheral lesion targeting. Total 10 passes.
 [Plan]
-Pathology review.",31653,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"We performed a bronchoscopy on Mr. Ruiz under general anesthesia. We sampled three separate lymph node stations: 11R, 4R, and 7. At station 11R, we briefly used a radial probe to look at the node structure before sampling, but we did not go out to the lung periphery. All biopsies went well with minimal bleeding.",31653,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Pathology review.",31653,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We performed a bronchoscopy on Mr. Ruiz under general anesthesia. We sampled three separate lymph node stations: 11R, 4R, and 7. At station 11R, we briefly used a radial probe to look at the node structure before sampling, but we did not go out to the lung periphery. All biopsies went well with minimal bleeding.",31653,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Operation: Endobronchial ultrasound with needle aspiration.
 Target: Stations 11R, 4R, 7.
 Details: The linear instrument was advanced. At station 11R, a radial transducer was employed to characterize the node interior prior to aspiration. Stations 4R and 7 were also aspirated. No peripheral lung nodule was targeted.
-Outcome: Samples acquired from three distinct stations.",31653,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Outcome: Samples acquired from three distinct stations.",31653,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Indication: LLL nodule + staging.
 Anesthesia: GA, 8.0 ETT.
 Procedure:
@@ -97,16 +97,16 @@ Procedure:
 - TBLB LLL x5 passes.
 - Linear EBUS: Stations 11L, 7 sampled.
 Complications: None.
-Plan: Extubate, discharge.","31627,31628,31652,31654",0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Plan: Extubate, discharge.","31627,31628,31652,31654",1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "HISTORY: Ms. Nguyen presented with a PET-avid 2.1 cm LLL nodule and adenopathy.
 PROCEDURE: Under general anesthesia (8.0 ETT), a robotic bronchoscopy (Ion) was performed. Registration was accurate (2.3mm error). Navigation to the LLL target was achieved, confirmed by concentric radial EBUS view. Transbronchial forceps biopsies were obtained. Subsequently, a linear EBUS scope was introduced for staging. TBNA was performed at stations 11L and 7.
-IMPRESSION: Successful diagnostic robotic bronchoscopy and mediastinal staging.","31627,31628,31652,31654",0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IMPRESSION: Successful diagnostic robotic bronchoscopy and mediastinal staging.","31627,31628,31652,31654",1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Coding: 31628 (TBLB), 31627 (Nav add-on), 31654 (REBUS add-on), 31652 (EBUS 1-2 stations).
 Justification:
 - Navigation (Ion) used to reach LLL target.
 - Radial EBUS confirmed peripheral lesion.
 - Biopsy taken from LLL (Single lobe).
-- Separate Linear EBUS scope used for stations 11L and 7 (2 stations).","31627,31628,31652,31654",0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+- Separate Linear EBUS scope used for stations 11L and 7 (2 stations).","31627,31628,31652,31654",1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Robot Bronch + EBUS
 Patient: Tina Nguyen, 50F
 Steps:
@@ -117,9 +117,9 @@ Steps:
 5. Biopsied nodule (TBLB).
 6. Switched to Linear EBUS.
 7. Sampled 11L and 7.
-Plan: Discharge.","31627,31628,31652,31654",0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Note for Tina Nguyen LLL nodule. GA with tube. Used the Ion robot system drove it out to the LLL spot. Radial probe showed the lesion concentric view so we took 5 biopsies. Then pulled that scope and put in the EBUS scope. Sampled the 11L and 7 nodes. Everything went smooth no pneumo on fluoro. Sending her home later.,"31627,31628,31652,31654",0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Robotic bronchoscopy with navigation, radial EBUS, TBLB, and linear EBUS-TBNA. Patient 50F. General anesthesia 8.0 ETT. Ion system navigation to LLL nodule. Radial EBUS confirmation. TBLB x5 passes. Linear EBUS sampling of stations 11L and 7. No complications. Extubated.","31627,31628,31652,31654",0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Plan: Discharge.","31627,31628,31652,31654",1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Note for Tina Nguyen LLL nodule. GA with tube. Used the Ion robot system drove it out to the LLL spot. Radial probe showed the lesion concentric view so we took 5 biopsies. Then pulled that scope and put in the EBUS scope. Sampled the 11L and 7 nodes. Everything went smooth no pneumo on fluoro. Sending her home later.,"31627,31628,31652,31654",1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Robotic bronchoscopy with navigation, radial EBUS, TBLB, and linear EBUS-TBNA. Patient 50F. General anesthesia 8.0 ETT. Ion system navigation to LLL nodule. Radial EBUS confirmation. TBLB x5 passes. Linear EBUS sampling of stations 11L and 7. No complications. Extubated.","31627,31628,31652,31654",1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "[Indication]
 LLL nodule, mediastinal adenopathy.
 [Anesthesia]
@@ -127,11 +127,11 @@ General, 8.0 ETT.
 [Description]
 Robotic navigation to LLL target. Radial EBUS confirmation (concentric). TBLB performed. Linear EBUS-TBNA of stations 11L and 7 performed.
 [Plan]
-Outpatient discharge.","31627,31628,31652,31654",0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Ms. Nguyen was placed under general anesthesia for her procedure. We utilized the Ion robotic system to navigate to the nodule in the left lower lobe. We confirmed the location with a radial ultrasound probe and took five biopsies. Afterwards, we switched to the linear ultrasound scope and sampled lymph nodes at stations 11L and 7. The procedure was completed without issues.","31627,31628,31652,31654",0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Outpatient discharge.","31627,31628,31652,31654",1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Ms. Nguyen was placed under general anesthesia for her procedure. We utilized the Ion robotic system to navigate to the nodule in the left lower lobe. We confirmed the location with a radial ultrasound probe and took five biopsies. Afterwards, we switched to the linear ultrasound scope and sampled lymph nodes at stations 11L and 7. The procedure was completed without issues.","31627,31628,31652,31654",1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Computer-guided bronchoscopy with peripheral and central ultrasound assessment.
 Action: The robotic catheter was navigated to the LLL lesion. Radial sonography verified the target. Forceps samples were acquired. The linear ultrasound instrument was then introduced to aspirate nodal stations 11L and 7.
-Result: Tissue procured from lung and nodes.","31627,31628,31652,31654",0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Result: Tissue procured from lung and nodes.","31627,31628,31652,31654",1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Indication: Mediastinal adenopathy.
 Sedation: Moderate (Versed/Fentanyl). Nasal.
 Procedure:
@@ -140,16 +140,16 @@ Procedure:
 - ABORTED EBUS. No nodes sampled.
 - BAL performed RML.
 Complications: Desat, resolved.
-Plan: Discharge. Re-eval.",31624,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Plan: Discharge. Re-eval.",31624,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "HISTORY: Mr. Fowler presented for evaluation of mediastinal adenopathy.
 PROCEDURE: Under moderate sedation via nasal approach, the vocal cords were traversed. An attempt was made to introduce the linear EBUS scope; however, the patient exhibited severe tussive reflex and desaturation, necessitating abortion of the EBUS component prior to any sampling. A standard bronchoscope was reintroduced, and a bronchoalveolar lavage (BAL) was performed in the RML.
-IMPRESSION: Diagnostic bronchoscopy with BAL only. EBUS aborted.",31624,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IMPRESSION: Diagnostic bronchoscopy with BAL only. EBUS aborted.",31624,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Coding: 31624 (Bronchoscopy with BAL).
 Rationale:
 - EBUS codes (31652/53/54) are NOT billable as the scope did not advance/no sampling occurred.
 - 31622 (Diagnostic) is bundled into 31624.
 - Service performed: Inspection + BAL of RML.
-- Sedation: Moderate, inherent.",31624,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+- Sedation: Moderate, inherent.",31624,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Bronch BAL (Failed EBUS)
 Patient: Justin Fowler, 71M
 Steps:
@@ -159,9 +159,9 @@ Steps:
 4. Stopped EBUS attempt.
 5. Did BAL in RML with regular scope.
 6. Patient recovered.
-Plan: Home.",31624,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Procedure note Justin Fowler 71M. Wanted to do EBUS for nodes. Patient under moderate sedation via nose. Tried to get the EBUS scope down but he coughed like crazy and sats dropped. Couldn't do it so we stopped. Switched back to regular scope and just washed the RML (BAL). Sending fluid for labs. No biopsy done. Discharge home.,31624,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Flexible bronchoscopy with bronchoalveolar lavage. Attempted EBUS aborted. Patient 71M. Moderate sedation. EBUS scope introduction failed due to severe cough and hypoxia. No nodal sampling performed. Standard bronchoscope used for BAL of RML. Patient stabilized. Discharged.,31624,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Plan: Home.",31624,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Procedure note Justin Fowler 71M. Wanted to do EBUS for nodes. Patient under moderate sedation via nose. Tried to get the EBUS scope down but he coughed like crazy and sats dropped. Couldn't do it so we stopped. Switched back to regular scope and just washed the RML (BAL). Sending fluid for labs. No biopsy done. Discharge home.,31624,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Flexible bronchoscopy with bronchoalveolar lavage. Attempted EBUS aborted. Patient 71M. Moderate sedation. EBUS scope introduction failed due to severe cough and hypoxia. No nodal sampling performed. Standard bronchoscope used for BAL of RML. Patient stabilized. Discharged.,31624,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "[Indication]
 Mediastinal adenopathy.
 [Anesthesia]
@@ -169,11 +169,11 @@ Moderate sedation (native airway).
 [Description]
 Diagnostic inspection. Attempted EBUS aborted due to intolerance/desaturation. BAL RML performed. No biopsies.
 [Plan]
-Discharge, consider GA for future attempt.",31624,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"We attempted an EBUS on Mr. Fowler today using moderate sedation. Unfortunately, he had a severe cough and his oxygen levels dropped when we tried to pass the EBUS scope, so we had to stop that part of the procedure without sampling any nodes. We did manage to perform a lavage of the right middle lobe with a standard scope. He recovered well afterwards.",31624,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Discharge, consider GA for future attempt.",31624,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We attempted an EBUS on Mr. Fowler today using moderate sedation. Unfortunately, he had a severe cough and his oxygen levels dropped when we tried to pass the EBUS scope, so we had to stop that part of the procedure without sampling any nodes. We did manage to perform a lavage of the right middle lobe with a standard scope. He recovered well afterwards.",31624,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Flexible bronchoscopy with lavage; attempted sonographic staging.
 Details: Access was achieved via the naris. Introduction of the ultrasonic bronchoscope was precluded by respiratory instability. The EBUS component was terminated. A lavage of the RML was executed successfully.
-Outcome: Lavage fluid collected; no nodal tissue.",31624,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Outcome: Lavage fluid collected; no nodal tissue.",31624,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Indication: Stent check/mucus.
 Sedation: Moderate.
 Procedure:
@@ -267,16 +267,16 @@ Procedure:
 - APC used for base/hemostasis.
 - NO mechanical excision/coring.
 Result: Lumen 50-60% patent.
-Plan: PACU.",31641,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+Plan: PACU.",31641,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
 "HISTORY: Ms. Gomez presented with LLL endobronchial obstruction.
 PROCEDURE: Under general anesthesia with rigid bronchoscopy, the LLL tumor was engaged. A cryoprobe was utilized for freeze-thaw ablation, resulting in tissue necrosis and sloughing. Argon Plasma Coagulation (APC) was applied for further tumor destruction and hemostasis. Mechanical debridement (coring/snare) was not employed. The airway caliber was significantly improved.
-IMPRESSION: Tumor destruction via cryotherapy and APC.",31641,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
+IMPRESSION: Tumor destruction via cryotherapy and APC.",31641,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
 "Coding: 31641 (Tumor destruction).
 Rationale:
 - Method: Cryotherapy and APC.
 - 31640 (Excision) is NOT supported as the note explicitly states 'No mechanical coring, snare resection, or microdebrider'.
 - 31641 covers destruction by any method (laser, cryo, APC).
-- 31622 Bundled.",31641,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+- 31622 Bundled.",31641,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Rigid Bronch Ablation
 Patient: Alicia Gomez, 74F
 Steps:
@@ -286,9 +286,9 @@ Steps:
 4. Used APC to burn the rest.
 5. Didn't cut or snare anything.
 6. Airway open better.
-Plan: PACU.",31641,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
-Note for Alicia Gomez LLL tumor. Rigid bronch GA. Used the cryo probe to freeze the tumor chunks off. Then hit it with APC. Cleaned it up pretty good. No coring or cutting done just the ablation. Bleeding stopped. Extubated to PACU.,31641,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
-Rigid bronchoscopy with tumor destruction. Patient 74F. GA. LLL obstruction. Cryotherapy and APC applied to tumor. Necrotic tissue removed. No mechanical excision. Lumen improved. 31641 appropriate. Extubated.,31641,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
+Plan: PACU.",31641,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
+Note for Alicia Gomez LLL tumor. Rigid bronch GA. Used the cryo probe to freeze the tumor chunks off. Then hit it with APC. Cleaned it up pretty good. No coring or cutting done just the ablation. Bleeding stopped. Extubated to PACU.,31641,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
+Rigid bronchoscopy with tumor destruction. Patient 74F. GA. LLL obstruction. Cryotherapy and APC applied to tumor. Necrotic tissue removed. No mechanical excision. Lumen improved. 31641 appropriate. Extubated.,31641,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
 "[Indication]
 LLL tumor obstruction.
 [Anesthesia]
@@ -296,11 +296,11 @@ General, Rigid.
 [Description]
 Cryotherapy applied to LLL mass. APC applied for destruction/hemostasis. Tumor destroyed. No excision performed.
 [Plan]
-PACU recovery.",31641,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-"Ms. Gomez underwent a rigid bronchoscopy to treat a tumor blocking her left lower lobe. We used a cryoprobe to freeze and destroy the tumor tissue and APC to cauterize the area. We did not cut or core the tumor out, relying solely on these ablation techniques. The airway is now much more open.",31641,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
+PACU recovery.",31641,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+"Ms. Gomez underwent a rigid bronchoscopy to treat a tumor blocking her left lower lobe. We used a cryoprobe to freeze and destroy the tumor tissue and APC to cauterize the area. We did not cut or core the tumor out, relying solely on these ablation techniques. The airway is now much more open.",31641,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
 "Procedure: Rigid bronchoscopy with tissue ablation.
 Action: The LLL lesion was targeted. Cryotherapy cycles were administered to induce necrosis. Argon plasma coagulation was employed for further destruction. Mechanical excision was avoided.
-Result: Destruction of endobronchial pathology.",31641,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
+Result: Destruction of endobronchial pathology.",31641,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0
 "Indication: Massive hemoptysis.
 Anesthesia: Intubated ICU, Deep sed.
 Procedure:
@@ -432,15 +432,15 @@ Proc: Rigid Bronch, Stent Exchange, Laser.
 - 70% mid-tracheal obstruction (tumor ingrowth).
 - Tx: Nd:YAG laser (40W), mechanical coring, 12mm CRE balloon dilation.
 - New 16x50mm Dumon stent deployed.
-- Final: Airway patent. EBL 50cc.","31638,31641",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
-"OPERATIVE NARRATIVE: The patient, a 65-year-old female with adenoid cystic carcinoma, presented with acute dyspnea secondary to prosthesis migration. Under general anesthesia with jet ventilation, the airway was cannulated with a 14mm rigid bronchoscope. The existing silicone stent was identified within the right mainstem bronchus and extracted. Significant tumor recurrence was noted at the proximal stent bed, narrowing the lumen by 70%. We utilized the Nd:YAG laser at 40 Watts for coagulative necrosis, followed by mechanical debridement with the rigid barrel. Balloon tracheoplasty was performed to 14mm. To maintain patency, a fresh 16x50mm Dumon silicone stent was deployed, covering the affected segment. Hemostasis was achieved.","31638,31641",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
+- Final: Airway patent. EBL 50cc.","31638,31641",1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
+"OPERATIVE NARRATIVE: The patient, a 65-year-old female with adenoid cystic carcinoma, presented with acute dyspnea secondary to prosthesis migration. Under general anesthesia with jet ventilation, the airway was cannulated with a 14mm rigid bronchoscope. The existing silicone stent was identified within the right mainstem bronchus and extracted. Significant tumor recurrence was noted at the proximal stent bed, narrowing the lumen by 70%. We utilized the Nd:YAG laser at 40 Watts for coagulative necrosis, followed by mechanical debridement with the rigid barrel. Balloon tracheoplasty was performed to 14mm. To maintain patency, a fresh 16x50mm Dumon silicone stent was deployed, covering the affected segment. Hemostasis was achieved.","31638,31641",1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
 "Procedures Performed:
 1. Bronchoscopy, Rigid, with removal of foreign body (stent) [31638].
 2. Bronchoscopy, Rigid, with destruction of tumor (Laser/Coring) [31641].
 
 Technique:
 Access obtained via rigid bronchoscope. Existing stent found migrated distally; removed using optical forceps. Tumor ingrowth at mid-trachea treated with Nd:YAG laser ablation and coring. Stenosis dilated with CRE balloon. A new 16x50mm Dumon stent was sized and placed. 
-Medical Necessity: Critical central airway obstruction/stent failure.","31638,31641",0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
+Medical Necessity: Critical central airway obstruction/stent failure.","31638,31641",1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
 "Procedure: Rigid Bronchoscopy / Stent Revision
 Attending: Dr. Frankenstein
 Steps:
@@ -451,9 +451,9 @@ Steps:
 5. Laser (Nd:YAG) and coring used to open airway.
 6. Balloon dilation to 14mm.
 7. New Dumon stent (16x50mm) placed.
-8. EBL 50ml. Stable.","31638,31641",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
-patient octavia butler here for airway issue she has the adenoid cystic ca. stent slipped down to the right side so we went in with the rigid scope general anesthesia jet vent. pulled the old stent out no problem. saw tumor growing back about 70 percent blocked used the yag laser and the barrel to core it out then dilated with the balloon. put a new dumon silicone stent in 16 by 50 size looks good now airway open. little bit of bleeding stopped with saline.,"31638,31641",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
-"Rigid bronchoscopy was performed for stent migration and tumor ingrowth. The patient was placed under general anesthesia. A 14mm rigid scope was used. The migrated silicone stent was retrieved from the right mainstem. Inspection showed 70% obstruction from tumor regrowth in the mid-trachea. This was treated with 40W Nd:YAG laser, mechanical coring, and 12mm balloon dilation. A new 16x50mm Dumon silicone stent was deployed. The airway was patent at the end of the case. EBL was 50cc.","31638,31641",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
+8. EBL 50ml. Stable.","31638,31641",1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
+patient octavia butler here for airway issue she has the adenoid cystic ca. stent slipped down to the right side so we went in with the rigid scope general anesthesia jet vent. pulled the old stent out no problem. saw tumor growing back about 70 percent blocked used the yag laser and the barrel to core it out then dilated with the balloon. put a new dumon silicone stent in 16 by 50 size looks good now airway open. little bit of bleeding stopped with saline.,"31638,31641",1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+"Rigid bronchoscopy was performed for stent migration and tumor ingrowth. The patient was placed under general anesthesia. A 14mm rigid scope was used. The migrated silicone stent was retrieved from the right mainstem. Inspection showed 70% obstruction from tumor regrowth in the mid-trachea. This was treated with 40W Nd:YAG laser, mechanical coring, and 12mm balloon dilation. A new 16x50mm Dumon silicone stent was deployed. The airway was patent at the end of the case. EBL was 50cc.","31638,31641",1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
 "[Indication]
 Tracheal Adenoid Cystic Carcinoma, stent migration, stridor.
 [Anesthesia]
@@ -461,23 +461,23 @@ General TIVA, Jet Ventilation.
 [Description]
 Rigid bronchoscopy (14mm). Migrated stent removed from RMB. Mid-tracheal tumor (70% stenosis) treated with Nd:YAG laser and mechanical coring. Balloon dilation performed. New 16x50mm Dumon stent placed.
 [Plan]
-ICU monitoring.","31638,31641",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
-"The patient was brought to the operating room for management of a migrated tracheal stent. After induction of general anesthesia and initiation of jet ventilation, a 14mm rigid bronchoscope was introduced. We located the previous stent migrated into the right mainstem bronchus and removed it using forceps. Further inspection revealed tumor ingrowth causing 70% obstruction at the mid-trachea. We applied Nd:YAG laser and performed mechanical coring to clear the obstruction, followed by balloon dilation. Finally, a new 16x50mm Dumon silicone stent was deployed, securing the airway.","31638,31641",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
+ICU monitoring.","31638,31641",1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
+"The patient was brought to the operating room for management of a migrated tracheal stent. After induction of general anesthesia and initiation of jet ventilation, a 14mm rigid bronchoscope was introduced. We located the previous stent migrated into the right mainstem bronchus and removed it using forceps. Further inspection revealed tumor ingrowth causing 70% obstruction at the mid-trachea. We applied Nd:YAG laser and performed mechanical coring to clear the obstruction, followed by balloon dilation. Finally, a new 16x50mm Dumon silicone stent was deployed, securing the airway.","31638,31641",1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0
 "Operation: Rigid endoscopy, prosthesis extraction, photo-ablation, and stent deployment.
 Subject: 65F with tracheal malignancy.
 Action: The rigid instrument was introduced. The displaced prosthesis was retrieved from the right lung. Exophytic tissue causing 70% occlusion was vaporized with the Nd:YAG laser and cored. The stricture was expanded via balloon. A replacement 16x50mm Dumon stent was implanted.
-Outcome: Patency restored.","31638,31641",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+Outcome: Patency restored.","31638,31641",1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
 "Proc: EBUS-TBNA + Attempted Nav Bronch.
 LN Sampling:
 - Stn 7 (12mm): 3 passes, benign.
 - Stn 4R (10mm): 3 passes, benign.
 - Stn 4L (8mm): 2 passes, benign.
 Navigation: Veran system. RUL nodule target. Reg error 5mm. Target NOT reached/visualized despite multiple attempts. Radial EBUS negative.
-Outcome: Mediastinum staged. Peripheral biopsy aborted.","31627,31653",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"PROCEDURE SUMMARY: The patient underwent combined EBUS-TBNA and attempted electromagnetic navigation bronchoscopy. Systematic mediastinal staging was performed first. EBUS-guided transbronchial needle aspiration was conducted at stations 7, 4R, and 4L; rapid on-site evaluation indicated benign lymphocytes for all stations. Following this, the scope was exchanged for navigation to the 1.8cm RUL apical nodule. Despite minimizing registration error to 5mm and utilizing radial EBUS, the lesion could not be eccentrically or concentrically visualized. Consequently, the peripheral biopsy component was aborted to avoid non-diagnostic sampling of normal parenchyma.","31627,31653",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Outcome: Mediastinum staged. Peripheral biopsy aborted.","31627,31653",1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"PROCEDURE SUMMARY: The patient underwent combined EBUS-TBNA and attempted electromagnetic navigation bronchoscopy. Systematic mediastinal staging was performed first. EBUS-guided transbronchial needle aspiration was conducted at stations 7, 4R, and 4L; rapid on-site evaluation indicated benign lymphocytes for all stations. Following this, the scope was exchanged for navigation to the 1.8cm RUL apical nodule. Despite minimizing registration error to 5mm and utilizing radial EBUS, the lesion could not be eccentrically or concentrically visualized. Consequently, the peripheral biopsy component was aborted to avoid non-diagnostic sampling of normal parenchyma.","31627,31653",1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Billing Codes: 31653 (EBUS-TBNA 3+ stations), 31627 (Navigational Bronchoscopy).
 - EBUS: Stations 7, 4R, 4L sampled with needle aspiration. Cytology obtained.
-- Navigation: Planning and registration performed. Catheter advanced to RUL target zone. Lesion not confirmed via Radial EBUS (31654 not billed/bundled as no specific image obtained). Biopsy (31628) not performed.","31627,31653",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+- Navigation: Planning and registration performed. Catheter advanced to RUL target zone. Lesion not confirmed via Radial EBUS (31654 not billed/bundled as no specific image obtained). Biopsy (31628) not performed.","31627,31653",1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Resident Note
 Pt: Leo Spaceman
 Proc: EBUS + ENB
@@ -486,9 +486,9 @@ Proc: EBUS + ENB
 3. Loaded Veran map. Navigated to RUL.
 4. Could not confirm target with REBUS.
 5. Stopped procedure without biopsy of nodule.
-Plan: Follow up or alternative biopsy method.","31627,31653",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Procedure note for leo spaceman doing the ebus and navigation today. Ebus went fine we hit station 7 and 4r and 4l all looked benign on the slides. Switched to the nav scope for that RUL nodule. Tried to get there with the veran system but just couldnt see it on the radial probe. tried a few times but no luck so we didnt stick a needle in it. biopsy aborted just the lymph nodes done today.,"31627,31653",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Electromagnetic Navigation Bronchoscopy and EBUS-TBNA were performed. Linear EBUS was used to sample lymph node stations 7, 4R, and 4L; all were benign on ROSE. Electromagnetic navigation was then attempted for a 1.8cm RUL nodule. Despite registration, the target was not localized with radial EBUS. The decision was made to abort the peripheral biopsy due to lack of target confirmation. The procedure was concluded without complications.","31627,31653",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Plan: Follow up or alternative biopsy method.","31627,31653",1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Procedure note for leo spaceman doing the ebus and navigation today. Ebus went fine we hit station 7 and 4r and 4l all looked benign on the slides. Switched to the nav scope for that RUL nodule. Tried to get there with the veran system but just couldnt see it on the radial probe. tried a few times but no luck so we didnt stick a needle in it. biopsy aborted just the lymph nodes done today.,"31627,31653",1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Electromagnetic Navigation Bronchoscopy and EBUS-TBNA were performed. Linear EBUS was used to sample lymph node stations 7, 4R, and 4L; all were benign on ROSE. Electromagnetic navigation was then attempted for a 1.8cm RUL nodule. Despite registration, the target was not localized with radial EBUS. The decision was made to abort the peripheral biopsy due to lack of target confirmation. The procedure was concluded without complications.","31627,31653",1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "[Indication]
 1.8cm RUL nodule, mediastinal staging.
 [Anesthesia]
@@ -496,10 +496,10 @@ Moderate Sedation.
 [Description]
 EBUS-TBNA performed at stations 7, 4R, 4L. ROSE negative for malignancy. ENB attempted to RUL nodule. Lesion not visualized on Radial EBUS. Biopsy aborted.
 [Plan]
-Outpatient follow-up.","31627,31653",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"We began the procedure with mediastinal staging using the linear EBUS scope. We successfully sampled lymph nodes at stations 7, 4R, and 4L, all of which showed benign lymphocytes on site. We then transitioned to the electromagnetic navigation phase to biopsy the RUL nodule. Although we navigated to the anatomical region, we could not confirm the lesion's location with radial EBUS. Therefore, we decided to abort the biopsy of the lung nodule to ensure patient safety.","31627,31653",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Outpatient follow-up.","31627,31653",1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We began the procedure with mediastinal staging using the linear EBUS scope. We successfully sampled lymph nodes at stations 7, 4R, and 4L, all of which showed benign lymphocytes on site. We then transitioned to the electromagnetic navigation phase to biopsy the RUL nodule. Although we navigated to the anatomical region, we could not confirm the lesion's location with radial EBUS. Therefore, we decided to abort the biopsy of the lung nodule to ensure patient safety.","31627,31653",1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Endobronchial Ultrasound and Guided Navigation.
-Details: Nodal stations 7, 4R, and 4L were aspirated; onsite analysis showed benign cells. The instruments were exchanged for the electromagnetic guidance system. We navigated to the RUL apex but failed to localize the target lesion with ultrasound. The tissue sampling of the parenchymal nodule was cancelled.","31627,31653",0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Details: Nodal stations 7, 4R, and 4L were aspirated; onsite analysis showed benign cells. The instruments were exchanged for the electromagnetic guidance system. We navigated to the RUL apex but failed to localize the target lesion with ultrasound. The tissue sampling of the parenchymal nodule was cancelled.","31627,31653",1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Indication: Recurrent pleural effusion (L).
 Proc: US-guided pleural drainage/catheter.
 - Site marked US.
@@ -547,14 +547,14 @@ Time: 48 min.
 Meds: Fentanyl 100mcg, Versed 4mg.
 Findings: RML infiltrate. Mucous plug.
 Action: Suction, BAL RML, Brush RML.
-Codes: 31623, 31624, 99152, 99153 x2.","31623,31624",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"PROCEDURE NOTE: Flexible fiberoptic bronchoscopy was performed by Dr. Halpert, who also directed the administration of moderate sedation (Fentanyl 100mcg/Versed 4mg). A dedicated independent observer monitored the patient throughout the 48-minute encounter. The airway inspection revealed an RML infiltrate and mucous plugging. Bronchoalveolar lavage and bronchial brushing of the right middle lobe were performed to identify an infectious etiology. The patient remained stable.","31623,31624",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Codes: 31623, 31624, 99152, 99153 x2.","31623,31624",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"PROCEDURE NOTE: Flexible fiberoptic bronchoscopy was performed by Dr. Halpert, who also directed the administration of moderate sedation (Fentanyl 100mcg/Versed 4mg). A dedicated independent observer monitored the patient throughout the 48-minute encounter. The airway inspection revealed an RML infiltrate and mucous plugging. Bronchoalveolar lavage and bronchial brushing of the right middle lobe were performed to identify an infectious etiology. The patient remained stable.","31623,31624",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Billing: 
 - 31624: Bronchoscopy w/ BAL (RML).
 - 31623: Bronchoscopy w/ Brushing (RML).
 - 99152: Mod Sedation (Physician/Observer), initial 15 min.
 - 99153 x2: Mod Sedation add-on, 30 min additional.
-Documentation supports 48 mins total time, dedicated observer present, same physician performing.","31623,31624",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Documentation supports 48 mins total time, dedicated observer present, same physician performing.","31623,31624",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Bronch + BAL + Brush
 Staff: Dr. Halpert
 Sedation: Fentanyl/Versed (Mod Sed). 48 mins.
@@ -564,9 +564,9 @@ Steps:
 3. Did BAL.
 4. Did Brush.
 5. Pt tolerated well.
-Labs sent.","31623,31624",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Bronchoscopy on m. scott for that RML infiltrate. I did the sedation myself with the nurse watching fentanyl and versed used. Took about 48 minutes total. Went down saw some mucous in the middle lobe. Did a wash and a brush there. Patient did fine no oxygen drop.,"31623,31624",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Flexible bronchoscopy with bronchoalveolar lavage and brushing. Indication was RML infiltrate. Moderate sedation provided by the bronchoscopist (48 minutes duration). Fentanyl 100mcg and Versed 4mg were used. Findings included RML mucous plugging. BAL and brush specimens were collected from the RML. Vital signs remained stable.,"31623,31624",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Labs sent.","31623,31624",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Bronchoscopy on m. scott for that RML infiltrate. I did the sedation myself with the nurse watching fentanyl and versed used. Took about 48 minutes total. Went down saw some mucous in the middle lobe. Did a wash and a brush there. Patient did fine no oxygen drop.,"31623,31624",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Flexible bronchoscopy with bronchoalveolar lavage and brushing. Indication was RML infiltrate. Moderate sedation provided by the bronchoscopist (48 minutes duration). Fentanyl 100mcg and Versed 4mg were used. Findings included RML mucous plugging. BAL and brush specimens were collected from the RML. Vital signs remained stable.,"31623,31624",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "[Indication]
 RML Infiltrate.
 [Sedation]
@@ -574,13 +574,13 @@ Moderate (Dr. Halpert + Observer). 48 min total.
 [Description]
 Mucous plug RML. Suctioned. BAL and Brush performed RML.
 [Plan]
-Culture results pending.","31623,31624",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Dr. Halpert performed the bronchoscopy and administered the sedation for Mr. Scott, which lasted 48 minutes. Using Fentanyl and Versed, we achieved moderate sedation. Upon inspection, we found a mucous plug in the right middle lobe. We proceeded to suction the airway and collect both BAL and brush samples from the RML. The patient's vitals were stable throughout.","31623,31624",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Culture results pending.","31623,31624",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Dr. Halpert performed the bronchoscopy and administered the sedation for Mr. Scott, which lasted 48 minutes. Using Fentanyl and Versed, we achieved moderate sedation. Upon inspection, we found a mucous plug in the right middle lobe. We proceeded to suction the airway and collect both BAL and brush samples from the RML. The patient's vitals were stable throughout.","31623,31624",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Operation: Fiberoptic airway inspection with lavage and cytology brushing.
 Sedation: Moderate, administered by operator (48m).
 Findings: RML consolidation and secretions.
 Action: The segment was irrigated (BAL) and sampled via brush.
-Status: Stable.","31623,31624",0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Status: Stable.","31623,31624",1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Indication: ILD (UIP/NSIP).
 Technique: LMA, Flex Bronch, Radial EBUS.
 - RLL Basilar segments cleared via REBUS.
@@ -589,13 +589,13 @@ Technique: LMA, Flex Bronch, Radial EBUS.
 - Site 2: RLL Lateral Basal (5s freeze).
 - Fogarty balloon used prophylactically.
 - 2 samples (10mm each).
-- No pneumothorax.","31628,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"OPERATIVE SUMMARY: The patient presented for diagnostic evaluation of progressive fibrotic interstitial lung disease. Under general anesthesia with a laryngeal mask airway, transbronchial cryobiopsy was performed. Radial EBUS confirmed the absence of significant vasculature in the target zones. A 1.9mm cryoprobe was utilized to obtain biopsies from the RLL posterior basal and lateral basal segments using a 5-second activation time. A Fogarty balloon was deployed immediately post-extraction for prophylactic hemostasis. Two substantial parenchymal specimens were retrieved.","31628,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+- No pneumothorax.","31628,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"OPERATIVE SUMMARY: The patient presented for diagnostic evaluation of progressive fibrotic interstitial lung disease. Under general anesthesia with a laryngeal mask airway, transbronchial cryobiopsy was performed. Radial EBUS confirmed the absence of significant vasculature in the target zones. A 1.9mm cryoprobe was utilized to obtain biopsies from the RLL posterior basal and lateral basal segments using a 5-second activation time. A Fogarty balloon was deployed immediately post-extraction for prophylactic hemostasis. Two substantial parenchymal specimens were retrieved.","31628,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Codes: 31628 (Transbronchial lung biopsy, single lobe), 31654 (Radial EBUS guidance).
 Justification:
 - Biopsies taken from lung parenchyma (RLL) using cryoprobe supports 31628.
 - Radial EBUS utilized to survey biopsy site for safety supports 31654.
-- Note: Multiple biopsies in same lobe bundle into single 31628.","31628,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+- Note: Multiple biopsies in same lobe bundle into single 31628.","31628,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Cryobiopsy
 Pt: Bruce Wayne
 1. LMA/GA.
@@ -604,9 +604,9 @@ Pt: Bruce Wayne
 4. Balloon up for bleeding control.
 5. Repeat in RLL Lat Basal.
 6. 2 good chunks.
-7. Fluoro/US check neg for pneumo.","31628,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Did a cryobiopsy on mr wayne for his ILD today. Used the LMA and general. Checked with the radial ebus first to make sure no vessels were there. Froze for 5 seconds in the RLL posterior and lateral basal segments. Pulled the whole scope out with the sample. Used the fogarty balloon to stop any bleeding. Got two big pieces of lung. No pneumothorax on the ultrasound after.,"31628,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"Transbronchial cryobiopsy for interstitial lung disease. General anesthesia with LMA. Radial EBUS guidance used. Biopsies obtained from RLL posterior basal and lateral basal segments. 1.9mm probe, 5-second freeze time. Fogarty balloon used for hemostasis. Two specimens obtained. Post-procedure imaging negative for pneumothorax.","31628,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+7. Fluoro/US check neg for pneumo.","31628,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Did a cryobiopsy on mr wayne for his ILD today. Used the LMA and general. Checked with the radial ebus first to make sure no vessels were there. Froze for 5 seconds in the RLL posterior and lateral basal segments. Pulled the whole scope out with the sample. Used the fogarty balloon to stop any bleeding. Got two big pieces of lung. No pneumothorax on the ultrasound after.,"31628,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Transbronchial cryobiopsy for interstitial lung disease. General anesthesia with LMA. Radial EBUS guidance used. Biopsies obtained from RLL posterior basal and lateral basal segments. 1.9mm probe, 5-second freeze time. Fogarty balloon used for hemostasis. Two specimens obtained. Post-procedure imaging negative for pneumothorax.","31628,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "[Indication]
 Fibrotic ILD, suspect UIP/NSIP.
 [Anesthesia]
@@ -614,12 +614,12 @@ General, LMA.
 [Description]
 Radial EBUS used. 1.9mm Cryoprobe biopsies x2 in RLL (Posterior/Lateral Basal). Freeze time 5s. Fogarty balloon control. Specimens 10mm.
 [Plan]
-Pathology pending. D/C home.","31628,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-"We performed a cryobiopsy to evaluate Mr. Wayne's ILD. After placing an LMA, we used radial EBUS to ensure the biopsy sites in the right lower lobe were safe. We then advanced the cryoprobe and obtained biopsies from the posterior and lateral basal segments, freezing for 5 seconds each time. We used a Fogarty balloon to manage potential bleeding. We retrieved two large lung samples and confirmed there was no pneumothorax before finishing.","31628,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Pathology pending. D/C home.","31628,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We performed a cryobiopsy to evaluate Mr. Wayne's ILD. After placing an LMA, we used radial EBUS to ensure the biopsy sites in the right lower lobe were safe. We then advanced the cryoprobe and obtained biopsies from the posterior and lateral basal segments, freezing for 5 seconds each time. We used a Fogarty balloon to manage potential bleeding. We retrieved two large lung samples and confirmed there was no pneumothorax before finishing.","31628,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Transbronchial cryo-sampling of parenchyma.
 Context: Pulmonary fibrosis.
 Method: Under LMA anesthesia, sonographic clearance was obtained. The cryo-instrument was applied to the RLL basilar segments. Freezing activation yielded two substantial tissue aggregates. Prophylactic balloon occlusion was employed.
-Result: Hemostasis secured. Lung intact.","31628,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Result: Hemostasis secured. Lung intact.","31628,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "Indication: Empyema suspected.
 Procedure: US guided access. 6F catheter placed -> frank pus. Converted to 14F chest tube via Seldinger. 450cc purulent drainage. tPA/DNase instilled. Tube clamped.
 Complications: None.","32551,32561",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
@@ -659,13 +659,13 @@ Action: The pleural space was accessed. Purulence was aspirated. A drainage cath
 Outcome: Tube in situ.","32551,32561",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
 "Indication: Massive hemoptysis.
 Proc: Rigid bronch. 400cc clot aspirated. RUL bleeding ID'd. Fogarty balloon tamponade x 5 min. APC to tumor bed. Iced saline lavage.
-Result: Hemostasis achieved.","31641,31645",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+Result: Hemostasis achieved.","31641,31645",1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
 "OPERATIVE NARRATIVE: EMERGENCY RIGID BRONCHOSCOPY
 Indication: Exsanguinating hemoptysis.
-Description: The rigid bronchoscope was introduced. Significant clot burden was evacuated from the central airways to restore ventilation. The source was localized to a tumor at the RUL orifice. Hemorrhage control was achieved via a multimodal approach utilizing Fogarty balloon tamponade, thermal ablation (APC) of the tumor bed, and cold saline lavage. The patient was stabilized and extubated.","31641,31645",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+Description: The rigid bronchoscope was introduced. Significant clot burden was evacuated from the central airways to restore ventilation. The source was localized to a tumor at the RUL orifice. Hemorrhage control was achieved via a multimodal approach utilizing Fogarty balloon tamponade, thermal ablation (APC) of the tumor bed, and cold saline lavage. The patient was stabilized and extubated.","31641,31645",1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
 "Code 31641: Destruction of tumor (APC to RUL orifice).
 Code 31645: Therapeutic aspiration (400cc blood/clot from trachea/LMS).
-Note: Tamponade is incidental to control. Rigid scope used. General anesthesia.","31641,31645",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+Note: Tamponade is incidental to control. Rigid scope used. General anesthesia.","31641,31645",1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
 "Procedure: Rigid Bronch for Hemoptysis
 Attending: Dr. Roy
 Steps:
@@ -675,9 +675,9 @@ Steps:
 4. Balloon tamponade.
 5. APC to tumor.
 6. Iced saline.
-Bleeding stopped.","31641,31645",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
-Emergency bronch for Logan Roy massive bleeding. Rigid scope. Tube was full of blood sucked out like 400cc just to see. Bleeding coming from RUL tumor. Put a balloon in there to block it for a bit then hit it with APC. Used iced saline too. Stopped bleeding. Extubated in room.,"31641,31645",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
-"Emergency rigid bronchoscopy performed for massive hemoptysis. 400 cc blood/clot aspirated from central airways. Active bleeding RUL tumor. Interventions: Fogarty balloon tamponade, Argon Plasma Coagulation to tumor bed, iced saline lavage. Hemostasis achieved. Extubated.","31641,31645",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+Bleeding stopped.","31641,31645",1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+Emergency bronch for Logan Roy massive bleeding. Rigid scope. Tube was full of blood sucked out like 400cc just to see. Bleeding coming from RUL tumor. Put a balloon in there to block it for a bit then hit it with APC. Used iced saline too. Stopped bleeding. Extubated in room.,"31641,31645",1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+"Emergency rigid bronchoscopy performed for massive hemoptysis. 400 cc blood/clot aspirated from central airways. Active bleeding RUL tumor. Interventions: Fogarty balloon tamponade, Argon Plasma Coagulation to tumor bed, iced saline lavage. Hemostasis achieved. Extubated.","31641,31645",1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
 "[Indication]
 Massive hemoptysis, RUL SCC.
 [Anesthesia]
@@ -685,36 +685,36 @@ General, Rigid Bronchoscopy.
 [Description]
 Evacuation of 400cc clot. Balloon tamponade RUL. APC destruction of bleeding tumor. Iced saline.
 [Plan]
-ICU admission.","31641,31645",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
-"Mr. Roy required emergency rigid bronchoscopy for massive hemoptysis. We first cleared the airway of approximately 400cc of clot to ventilate him. Identifying the bleeding source at the RUL tumor, we deployed a Fogarty balloon for tamponade. Subsequently, we applied APC to the tumor bed to cauterize the vessels and instilled iced saline. These measures successfully halted the bleeding.","31641,31645",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+ICU admission.","31641,31645",1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+"Mr. Roy required emergency rigid bronchoscopy for massive hemoptysis. We first cleared the airway of approximately 400cc of clot to ventilate him. Identifying the bleeding source at the RUL tumor, we deployed a Fogarty balloon for tamponade. Subsequently, we applied APC to the tumor bed to cauterize the vessels and instilled iced saline. These measures successfully halted the bleeding.","31641,31645",1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
 "Procedure: Rigid endoscopy with hemorrhage control.
 Action: Clot was evacuated (Therapeutic Aspiration). The hemorrhage source was localized. Tamponade was applied. The lesion was cauterized (Destruction). Lavage performed.
-Outcome: Hemostasis.","31641,31645",0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+Outcome: Hemostasis.","31641,31645",1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
 "Proc: EBUS, Nav Cryobiopsy, Central Resection.
 EBUS: 4R, 7 sampled (neg).
 LUL: Navigated cryobiopsy x3 (nodule).
 RMB: Incidental tumor resected (snare/APC).
-Comp: None.","31627,31628,31641,31652,31654",0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Comp: None.","31627,31628,31641,31652,31654",1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "OPERATIVE REPORT: MULTI-MODALITY INTERVENTION
 Indication: Staging and diagnosis.
 EBUS: Stations 7 and 4R were sampled; ROSE negative.
 Peripheral: Using the Ion platform and radial EBUS, the LUL nodule was localized. Transbronchial cryobiopsy was performed.
-Central: Inspection revealed an incidental obstructive lesion in the RMB. This was resected using electrocautery snare and APC base destruction to restore patency.","31627,31628,31641,31652,31654",0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Central: Inspection revealed an incidental obstructive lesion in the RMB. This was resected using electrocautery snare and APC base destruction to restore patency.","31627,31628,31641,31652,31654",1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "Coding:
 - 31652: EBUS (Stn 7, 4R).
 - 31627+31628: Navigated Cryobiopsy LUL nodule.
 - 31654: Radial EBUS LUL.
 - 31641: Destruction of RMB tumor (Snare/APC). Distinct target from LUL.
-Modifiers required.","31627,31628,31641,31652,31654",0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Modifiers required.","31627,31628,31641,31652,31654",1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "Procedure: EBUS / Ion / Resection
 Patient: Wade Wilson
 Steps:
 1. EBUS TBNA 7, 4R.
 2. Ion nav to LUL. Radial EBUS verify. Cryobiopsy x3.
 3. Found RMB polyp. Snared and APC'd it.
-No issues.","31627,31628,31641,31652,31654",0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
-Busy case for Mr Wilson. Started with EBUS 7 and 4R negative. Then used the robot to get the LUL nodule froze it 3 times. On the way out saw a huge polyp in the right main. Snared it off and APCd the base. 3 separate procedures basically. Patient fine.,"31627,31628,31641,31652,31654",0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0
-"Flexible bronchoscopy with EBUS-TBNA, robotic navigation, and therapeutic resection. EBUS performed at 4R/7. Robotic navigation with radial EBUS to LUL nodule; cryobiopsy obtained. Incidental RMB tumor identified and resected via snare electrocautery and APC. No complications.","31627,31628,31641,31652,31654",0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+No issues.","31627,31628,31641,31652,31654",1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Busy case for Mr Wilson. Started with EBUS 7 and 4R negative. Then used the robot to get the LUL nodule froze it 3 times. On the way out saw a huge polyp in the right main. Snared it off and APCd the base. 3 separate procedures basically. Patient fine.,"31627,31628,31641,31652,31654",1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0
+"Flexible bronchoscopy with EBUS-TBNA, robotic navigation, and therapeutic resection. EBUS performed at 4R/7. Robotic navigation with radial EBUS to LUL nodule; cryobiopsy obtained. Incidental RMB tumor identified and resected via snare electrocautery and APC. No complications.","31627,31628,31641,31652,31654",1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "[Indication]
 Staging, LUL nodule.
 [Anesthesia]
@@ -724,12 +724,12 @@ General.
 2. Navigated cryobiopsy LUL nodule (w/ REBUS).
 3. Snare resection/APC of incidental RMB tumor.
 [Plan]
-Discharge.","31627,31628,31641,31652,31654",0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
-"We performed a complex procedure on Mr. Wilson. First, we staged the mediastinum using EBUS. Next, we used the Ion robot to navigate to and cryobiopsy a nodule in the LUL. Unexpectedly, we found a separate tumor obstructing the Right Mainstem Bronchus. We resected this central tumor using a snare and APC. All three targets were distinct.","31627,31628,31641,31652,31654",0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Discharge.","31627,31628,31641,31652,31654",1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+"We performed a complex procedure on Mr. Wilson. First, we staged the mediastinum using EBUS. Next, we used the Ion robot to navigate to and cryobiopsy a nodule in the LUL. Unexpectedly, we found a separate tumor obstructing the Right Mainstem Bronchus. We resected this central tumor using a snare and APC. All three targets were distinct.","31627,31628,31641,31652,31654",1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "Procedure: Staging, targeted biopsy, and tumor ablation.
 Sites: Mediastinum, LUL, RMB.
 Action: Nodes were aspirated. The peripheral lesion was sampled via cryoprobe. The central obstruction was resected and cauterized.
-Outcome: Multiple targets addressed.","31627,31628,31641,31652,31654",0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Outcome: Multiple targets addressed.","31627,31628,31641,31652,31654",1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "Indication: Stent obstruction (granulation).
 Proc: Rigid bronch. Proximal granulation cored. Stent removed. Distal granulation treated (APC/Cryo). New 14x40mm silicone stent placed.
 Result: Airway patent.",31638,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0
@@ -764,22 +764,22 @@ Outcome: Revision complete.",31638,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
 "Proc: RLL Mass Ablation + LUL Nodule Biopsy.
 RLL: Squamous CA. Cryo-ablation x5 cycles. Tissue discarded. 80% patency.
 LUL: New nodule. Radial EBUS. Cryobiopsy x2 sent to path.
-Codes: 31641, 31628, 31654.","31628,31641,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Codes: 31641, 31628, 31654.","31628,31641,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "OPERATIVE REPORT: THERAPEUTIC AND DIAGNOSTIC BRONCHOSCOPY
 The patient presented with a known RLL obstructing mass and a new LUL nodule. 
 1. RLL: The cryoprobe was used to therapeutically debulk the endobronchial tumor via freeze-thaw cycles. Extracted tissue was discarded as the diagnosis is established. 
-2. LUL: The scope was advanced to the LUL. Radial EBUS confirmed the target. Diagnostic cryobiopsies were obtained and submitted for analysis.","31628,31641,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+2. LUL: The scope was advanced to the LUL. Radial EBUS confirmed the target. Diagnostic cryobiopsies were obtained and submitted for analysis.","31628,31641,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "Code 31641: RLL Tumor Destruction (Cryo-ablation/debulking).
 Code 31628: LUL Transbronchial Biopsy (Cryo-biopsy).
 Code 31654: Radial EBUS (LUL).
-Differentiation: RLL intervention was therapeutic (tissue discarded). LUL intervention was diagnostic (tissue sent).","31628,31641,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Differentiation: RLL intervention was therapeutic (tissue discarded). LUL intervention was diagnostic (tissue sent).","31628,31641,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "Procedure: Cryo Ablation and Biopsy
 Steps:
 1. RLL mass: Frozen/removed x5. Cleared airway.
 2. LUL nodule: Found with REBUS. Biopsied x2.
-Path sent for LUL only.","31628,31641,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
-Two part procedure today. First the RLL mass we know its cancer so I just cryo'd it to open the airway threw the tissue away. Then went to the LUL for that new spot. Used the radar to find it and took two biopsies sent those to the lab. Codes are 31641 and 31628.,"31628,31641,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
-Therapeutic bronchoscopy RLL; Diagnostic bronchoscopy LUL. RLL squamous cell carcinoma debulked via cryotherapy (tissue discarded). LUL nodule localized via radial EBUS and biopsied via cryoprobe (tissue submitted). No complications.,"31628,31641,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Path sent for LUL only.","31628,31641,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Two part procedure today. First the RLL mass we know its cancer so I just cryo'd it to open the airway threw the tissue away. Then went to the LUL for that new spot. Used the radar to find it and took two biopsies sent those to the lab. Codes are 31641 and 31628.,"31628,31641,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Therapeutic bronchoscopy RLL; Diagnostic bronchoscopy LUL. RLL squamous cell carcinoma debulked via cryotherapy (tissue discarded). LUL nodule localized via radial EBUS and biopsied via cryoprobe (tissue submitted). No complications.,"31628,31641,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "[Indication]
 RLL obstruction, LUL nodule.
 [Anesthesia]
@@ -789,9 +789,9 @@ Moderate.
 2. Radial EBUS localization LUL.
 3. Cryobiopsy LUL nodule (diagnostic).
 [Plan]
-Pathology pending for LUL.","31628,31641,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
-"We addressed two issues today. For the known RLL tumor, we performed therapeutic debulking using the cryoprobe to open the airway, discarding the tissue. Then, we investigated the new LUL nodule, verifying its location with radial EBUS and obtaining diagnostic biopsies which were sent to pathology.","31628,31641,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Pathology pending for LUL.","31628,31641,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+"We addressed two issues today. For the known RLL tumor, we performed therapeutic debulking using the cryoprobe to open the airway, discarding the tissue. Then, we investigated the new LUL nodule, verifying its location with radial EBUS and obtaining diagnostic biopsies which were sent to pathology.","31628,31641,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
 "Procedure: Tumor ablation and parenchymal sampling.
 Sites: RLL, LUL.
 Action: The RLL mass was destructed via cryotherapy. The LUL lesion was localized and sampled.
-Outcome: Airway patent, samples collected.","31628,31641,31654",0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Outcome: Airway patent, samples collected.","31628,31641,31654",1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0

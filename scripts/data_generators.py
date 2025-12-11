@@ -157,7 +157,10 @@ def get_registry_flags_from_codes_and_text(clinical_codes_raw, note_text):
     flags = {col: 0 for col in REGISTRY_COLUMNS if col not in ["note_text", "verified_cpt_codes"]}
 
     # --- CPT MAPPING (Using Clinical Codes) ---
-    if "31622" in cpt_codes: flags["diagnostic_bronchoscopy"] = 1
+    # 1. Force Diagnostic Bronch flag if ANY bronch code is present
+    bronch_codes = ["31624", "31625", "31628", "31629", "31641", "31647", "31652", "31653"]
+    if any(c in cpt_codes for c in bronch_codes) or "31622" in cpt_codes:
+        flags["diagnostic_bronchoscopy"] = 1
     if "31624" in cpt_codes: flags["bal"] = 1
     if "31623" in cpt_codes: flags["brushings"] = 1
     if "31625" in cpt_codes: flags["endobronchial_biopsy"] = 1
@@ -185,8 +188,11 @@ def get_registry_flags_from_codes_and_text(clinical_codes_raw, note_text):
 
     # --- HYBRID / TEXT FALLBACKS ---
     
-    # Cryobiopsy
-    if any(c in cpt_codes for c in ["31628", "31632", "31645"]):
+    # 2. Force Cryobiopsy flag if text mentions it, even if code is just 31628
+    if "cryobiopsy" in text_lower or ("cryo" in text_lower and "biopsy" in text_lower):
+        flags["transbronchial_cryobiopsy"] = 1
+    # Cryobiopsy (code-based)
+    elif any(c in cpt_codes for c in ["31628", "31632", "31645"]):
         if "cryo" in text_lower or "freeze" in text_lower:
             flags["transbronchial_cryobiopsy"] = 1
         elif "31628" in cpt_codes or "31632" in cpt_codes:
