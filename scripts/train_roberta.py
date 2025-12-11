@@ -92,19 +92,25 @@ class TrainingConfig:
 
 def load_label_fields(path: Path) -> list[str]:
     """Load label field names from JSON file."""
+    if not path.exists():
+        return []
     with open(path) as f:
         return json.load(f)
 
-
-def load_registry_csv(path: Path) -> tuple[list[str], np.ndarray, list[str]]:
+def load_registry_csv(path: Path, required_labels: list[str] = None) -> tuple[list[str], np.ndarray, list[str]]:
     """Load registry training/test CSV file.
 
     Args:
         path: Path to CSV file with note_text and label columns
+        required_labels: Optional list of label columns to enforce order/presence.
+                        If provided, returns y with columns in this specific order.
 
     Returns:
         Tuple of (texts, labels_matrix, label_names)
     """
+    if not path.exists():
+        raise FileNotFoundError(f"CSV file not found: {path}")
+
     df = pd.read_csv(path)
 
     if df.empty:
@@ -116,18 +122,30 @@ def load_registry_csv(path: Path) -> tuple[list[str], np.ndarray, list[str]]:
     # Extract texts
     texts = df["note_text"].fillna("").astype(str).tolist()
 
-    # Label columns are all columns except note_text and verified_cpt_codes
-    exclude_cols = {"note_text", "verified_cpt_codes"}
-    label_cols = [c for c in df.columns if c not in exclude_cols]
+    # Determine Label Columns
+    if required_labels:
+        # Enforce exact columns from training set (or JSON)
+        label_cols = required_labels
+        # Check for missing columns
+        missing = [col for col in label_cols if col not in df.columns]
+        if missing:
+            print(f"WARNING: Missing columns in {path}, filling with 0: {missing}")
+            for col in missing:
+                df[col] = 0
+    else:
+        # Infer columns (Training Phase)
+        exclude_cols = {"note_text", "verified_cpt_codes"}
+        label_cols = [c for c in df.columns if c not in exclude_cols]
+        # Sort for consistency
+        label_cols.sort()
 
     if not label_cols:
         raise ValueError(f"Registry training file {path} has no label columns.")
 
-    # Extract label matrix
+    # Extract label matrix in correct order
     y = df[label_cols].fillna(0).astype(int).to_numpy()
 
     print(f"Loaded {len(texts)} samples with {len(label_cols)} labels from {path}")
-
     return texts, y, label_cols
 
 
@@ -418,7 +436,8 @@ def find_optimal_thresholds(
                 continue
 
         thresholds[label] = best_thresh
-        print(f"  {label}: threshold={best_thresh:.2f}, F1={best_f1:.3f}")
+        # Optional: Print verbose threshold info
+        # print(f"  {label}: threshold={best_thresh:.2f}, F1={best_f1:.3f}")
 
     return thresholds
 
@@ -593,14 +612,24 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     print(f"Epochs: {config.num_epochs}")
     print(f"{'=' * 60}\n")
 
-    # Load label fields
-    label_names = load_label_fields(config.label_fields_json)
-    num_labels = len(label_names)
-    print(f"Labels: {num_labels}")
-
-    # Load training data
+    # --- 1. Load Training Data & Infer Schema ---
     print("\nLoading training data...")
-    train_texts, train_labels, _ = load_registry_csv(config.train_csv)
+    # Load WITHOUT preset labels to discover new columns from schema change
+    train_texts, train_labels, label_names = load_registry_csv(config.train_csv)
+    num_labels = len(label_names)
+    print(f"Detected {num_labels} labels from training CSV: {label_names[:5]}...")
+
+    # --- 2. Update Label Definition JSON ---
+    # This keeps downstream scripts (quantization, inference) in sync
+    print(f"Updating label definition file: {config.label_fields_json}")
+    config.label_fields_json.parent.mkdir(parents=True, exist_ok=True)
+    with open(config.label_fields_json, "w") as f:
+        json.dump(label_names, f, indent=2)
+
+    # --- 3. Load Test Data (Enforcing Training Schema) ---
+    print("\nLoading test data...")
+    test_texts, test_labels, _ = load_registry_csv(config.test_csv, required_labels=label_names)
+    print(f"Test samples: {len(test_texts)}")
 
     # Split into train and validation for threshold optimization
     train_texts, val_texts, train_labels, val_labels = train_test_split(
@@ -612,11 +641,6 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     )
     print(f"Training samples: {len(train_texts)}")
     print(f"Validation samples: {len(val_texts)}")
-
-    # Load test data
-    print("\nLoading test data...")
-    test_texts, test_labels, _ = load_registry_csv(config.test_csv)
-    print(f"Test samples: {len(test_texts)}")
 
     # Calculate pos_weight for class imbalance
     print("\nCalculating pos_weight for class imbalance...")
