@@ -1,0 +1,30 @@
+# Training dependencies for BiomedBERT registry classifier
+# Install with: pip install -r requirements-train.txt
+# These are only needed for local training, not for production deployment
+
+# PyTorch with CUDA support (adjust CUDA version as needed)
+# For RTX 4070 Ti, use CUDA 11.8 or 12.1
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Transformers for BiomedBERT
+transformers>=4.35.0
+
+# Training acceleration
+accelerate>=0.25.0
+
+# ONNX export and quantization
+onnx>=1.15.0
+onnxruntime>=1.16.0
+
+# ML utilities (already in main requirements, but pinned for training)
+scikit-learn>=1.3.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Progress bars
+tqdm>=4.65.0
+
+# Optional: Mixed precision training (included in torch, but explicit)
+# apex  # Only if needed for older PyTorch versions

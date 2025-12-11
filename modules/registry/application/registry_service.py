@@ -156,6 +156,11 @@ class RegistryService:
     def _get_registry_ml_predictor(self) -> RegistryMLPredictor | None:
         """Get registry ML predictor with lazy initialization.
 
+        Attempts to load in order of preference:
+        1. ONNX predictor (if model exists) - preferred for production deployment
+        2. TF-IDF sklearn predictor (fallback)
+        3. None if no artifacts available
+
         Returns the predictor if available, or None if artifacts are missing.
         Logs once on initialization failure to avoid log spam.
         """
@@ -163,6 +168,27 @@ class RegistryService:
             return self._registry_ml_predictor
 
         self._ml_predictor_init_attempted = True
+
+        # Try ONNX predictor first (production-optimized)
+        try:
+            from modules.registry.inference_onnx import ONNXRegistryPredictor
+
+            onnx_predictor = ONNXRegistryPredictor()
+            if onnx_predictor.available:
+                self._registry_ml_predictor = onnx_predictor
+                logger.info(
+                    "Using ONNXRegistryPredictor with %d labels",
+                    len(onnx_predictor.labels),
+                )
+                return self._registry_ml_predictor
+            else:
+                logger.debug("ONNX model not available, trying sklearn predictor")
+        except ImportError:
+            logger.debug("ONNX runtime not available, trying sklearn predictor")
+        except Exception as e:
+            logger.debug("ONNX predictor init failed (%s), trying sklearn predictor", e)
+
+        # Fall back to TF-IDF sklearn predictor
         try:
             self._registry_ml_predictor = RegistryMLPredictor()
             if not self._registry_ml_predictor.available:
@@ -173,7 +199,7 @@ class RegistryService:
                 self._registry_ml_predictor = None
             else:
                 logger.info(
-                    "RegistryMLPredictor initialized with %d labels",
+                    "Using RegistryMLPredictor (TF-IDF) with %d labels",
                     len(self._registry_ml_predictor.labels),
                 )
         except Exception:
