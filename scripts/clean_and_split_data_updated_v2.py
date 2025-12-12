@@ -3,19 +3,11 @@ clean_and_split_data.py (updated)
 
 Fixes implemented:
 1) Removes label drift by using *case-level stratified group splitting* (multi-label).
-   - Uses group_id if present; falls back to patient_id / source_file if not.
-2) Fixes 0-label rows from unmapped CPT codes (if any remain) using a small fallback map + text cues.
-3) Redacts CPT-code leakage + PHI-like tokens (MRN/DOB/dates/times/long IDs) from note_text.
-4) Adds text-based labels for bronchial_wash / photodynamic_therapy when present in narrative text.
-
-Usage examples:
-  python clean_and_split_data_updated.py \
-      --input_csv data/ml_training/registry_from_golden.csv \
-      --output_dir data/ml_training/cleaned_v4 \
-      --group_col group_id
-
-If you only have existing splits (train/val/test) and want to rebalance them,
-use smart_splitter_updated.py instead.
+2) Fixes 0-label rows from unmapped CPT codes.
+3) Redacts CPT-code leakage + PHI-like tokens.
+4) Adds text-based labels for bronchial_wash / photodynamic_therapy.
+5) CRITICAL: Enforces CSV quoting (QUOTE_NONNUMERIC) to prevent type inference errors.
+6) CRITICAL: Applies safety patch for known label errors (Christopher Hayes) if missed upstream.
 """
 
 from __future__ import annotations
@@ -24,6 +16,7 @@ import argparse
 import json
 import os
 import re
+import csv  # <--- Added for QUOTE_NONNUMERIC
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -56,28 +49,13 @@ TEXT_COL = "note_text"
 def redact_note_text(text: str) -> str:
     """
     Redacts tokens that behave like PHI or create label leakage.
-
-    What gets removed / normalized:
-      - MRN / Medical Record Number / Patient ID / Case ID style fields (including alphanumeric IDs)
-      - DOB / Date of Birth fields
-      - dates + times
-      - long numeric IDs (>=6 digits)
-      - any 5-digit sequences (e.g., CPT codes) => "[CODE]"
-      - billing/coding lines (lines containing CPT/ICD/billing keywords or "[CODE]")
-
-    Notes:
-      - This is intentionally conservative: it is better to remove a billing line than to leak labels.
-      - If a note becomes blank after redaction, the row should be dropped upstream.
     """
     if text is None or pd.isna(text):
         return ""
 
     t = str(text).replace("\r", "\n")
 
-    # ---------------------------------------------------------------------
     # PHI-like IDs
-    # ---------------------------------------------------------------------
-    # MRN + variants (numeric or alphanumeric)
     t = re.sub(
         r"\b(?:MRN|Medical\s+Record\s+Number|Medical\s+Record\s*#|Record\s+Number|Patient\s+ID|Case\s+ID)\b\s*[:#]?\s*\S+",
         "[ID]",
@@ -104,9 +82,7 @@ def redact_note_text(text: str) -> str:
     # 5-digit sequences (CPT codes / short IDs)
     t = re.sub(r"\b\d{5}\b", "[CODE]", t)
 
-    # ---------------------------------------------------------------------
     # Remove billing/coding sections (post-redaction)
-    # ---------------------------------------------------------------------
     cleaned_lines = []
     for line in t.splitlines():
         ln = line.strip()
@@ -114,24 +90,18 @@ def redact_note_text(text: str) -> str:
             cleaned_lines.append(line)
             continue
 
-        # If the line still contains a code placeholder, it is almost certainly a billing line.
         if "[CODE]" in line:
             continue
-
         if re.search(r"(?i)\b(billing|billable|billed|cpt|icd|icd-?10)\b", line):
             continue
-
         if re.search(r"(?i)\bcodes?\s*:", line):
             continue
-
         if re.search(r"(?i)medical\s+record\s+number|date\s+of\s+birth", line):
             continue
 
         cleaned_lines.append(line)
 
     t = "\n".join(cleaned_lines)
-
-    # Normalize whitespace but keep newlines
     t = re.sub(r"[ \t]+", " ", t)
     t = re.sub(r"\n{3,}", "\n\n", t)
     return t.strip()
@@ -157,30 +127,21 @@ def add_text_based_labels(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 def patch_zero_label_rows(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Fills in labels for rows where all labels are 0 but verified_cpt_codes suggests
-    a known procedure class (this addresses unmapped CPT codes in the audit).
-    """
+    """Fills in labels for rows where all labels are 0."""
     out = df.copy()
     label_sum = out[LABEL_COLS].sum(axis=1)
     zero_idx = out.index[label_sum == 0].tolist()
     if not zero_idx:
         return out
 
-    # Map single-code cases to labels
     CODE_TO_LABELS: Dict[str, List[str]] = {
-        # Pleural drainage & catheters
-        "32556": ["chest_tube"],
-        "32557": ["chest_tube"],
-        "32551": ["chest_tube"],
-        "32552": ["ipc"],  # removal of tunneled pleural catheter (still IPC domain)
-        "32550": ["ipc"],
+        "32556": ["chest_tube"], "32557": ["chest_tube"], "32551": ["chest_tube"],
+        "32552": ["ipc"], "32550": ["ipc"],
         "32602": ["medical_thoracoscopy", "pleural_biopsy"],
         "32662": ["medical_thoracoscopy"],
-        # Bronch interventions
         "31640": ["diagnostic_bronchoscopy", "mechanical_debulking"],
         "31641": ["diagnostic_bronchoscopy", "mechanical_debulking"],
-        "31634": ["diagnostic_bronchoscopy"],  # BLVR set via text cues below
+        "31634": ["diagnostic_bronchoscopy"],
     }
 
     for idx in zero_idx:
@@ -188,41 +149,28 @@ def patch_zero_label_rows(df: pd.DataFrame) -> pd.DataFrame:
         text = str(out.at[idx, TEXT_COL] or "")
         tl = text.lower()
 
-        # Direct code map
         for lab in CODE_TO_LABELS.get(code, []):
-            if lab in out.columns:
-                out.at[idx, lab] = 1
+            if lab in out.columns: out.at[idx, lab] = 1
 
-        # BLVR cues for 31634
         if code == "31634":
             if any(k in tl for k in ["chartis", "collateral ventilation", "zephyr", "valve", "lung volume reduction", "emphysema"]):
                 out.at[idx, "blvr"] = 1
 
-        # If code is 31600, this is often tracheostomy (out-of-scope) *or* a coding bug.
-        # Use strong text cues to salvage navigation cases; otherwise keep as 0 and let the caller drop.
         if code == "31600":
             if any(k in tl for k in ["robotic", "ion ", "ion-", "monarch", "shape-sensing", "navigat"]):
-                out.at[idx, "diagnostic_bronchoscopy"] = 1
-                out.at[idx, "navigational_bronchoscopy"] = 1
+                out.at[idx, "diagnostic_bronchoscopy"] = 1; out.at[idx, "navigational_bronchoscopy"] = 1
             if any(k in tl for k in ["radial ebus", "rebus", "radial endobronchial ultrasound"]):
-                out.at[idx, "radial_ebus"] = 1
-                out.at[idx, "diagnostic_bronchoscopy"] = 1
+                out.at[idx, "radial_ebus"] = 1; out.at[idx, "diagnostic_bronchoscopy"] = 1
             if "tbna" in tl:
-                out.at[idx, "tbna_conventional"] = 1
-                out.at[idx, "diagnostic_bronchoscopy"] = 1
+                out.at[idx, "tbna_conventional"] = 1; out.at[idx, "diagnostic_bronchoscopy"] = 1
             if any(k in tl for k in ["cryobiopsy", "cryo biopsy"]):
-                out.at[idx, "transbronchial_cryobiopsy"] = 1
-                out.at[idx, "diagnostic_bronchoscopy"] = 1
+                out.at[idx, "transbronchial_cryobiopsy"] = 1; out.at[idx, "diagnostic_bronchoscopy"] = 1
             if any(k in tl for k in ["transbronchial biopsy", "tbbx"]):
-                out.at[idx, "transbronchial_biopsy"] = 1
-                out.at[idx, "diagnostic_bronchoscopy"] = 1
+                out.at[idx, "transbronchial_biopsy"] = 1; out.at[idx, "diagnostic_bronchoscopy"] = 1
             if any(k in tl for k in ["brush", "brushing"]):
-                out.at[idx, "brushings"] = 1
-                out.at[idx, "diagnostic_bronchoscopy"] = 1
+                out.at[idx, "brushings"] = 1; out.at[idx, "diagnostic_bronchoscopy"] = 1
             if "bal" in tl or "bronchoalveolar lavage" in tl:
-                out.at[idx, "bal"] = 1
-                out.at[idx, "diagnostic_bronchoscopy"] = 1
-
+                out.at[idx, "bal"] = 1; out.at[idx, "diagnostic_bronchoscopy"] = 1
     return out
 
 
@@ -239,16 +187,7 @@ def stratified_group_split(
     size_weight: float = 5.0,
     label_weight: float = 1.0,
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """
-    Greedy multi-label stratified split with group integrity.
-
-    Why this instead of GroupShuffleSplit?
-    - GroupShuffleSplit preserves group separation but doesn't preserve multi-label prevalence, causing the drift you saw.
-    - This heuristic explicitly targets label balance while respecting groups (case-level leakage avoidance).
-    """
     rng = np.random.default_rng(seed)
-
-    # group aggregates
     grp = df.groupby(group_col, dropna=False)
     group_ids = grp.size().index.tolist()
     group_size = grp.size().to_dict()
@@ -256,14 +195,10 @@ def stratified_group_split(
 
     total_rows = float(len(df))
     total_label = df[label_cols].sum().values.astype(float)
-
     target_rows = np.array(fracs, dtype=float) * total_rows
-    target_label = np.outer(fracs, total_label)  # (3, L)
-
-    # Higher weight for rare labels
+    target_label = np.outer(fracs, total_label)
     w = 1.0 / (total_label + 1e-6)
 
-    # Group ordering: put rare-label-heavy groups first
     scores = []
     for gid in group_ids:
         gl = np.array([group_label[gid][c] for c in label_cols], dtype=float)
@@ -276,7 +211,6 @@ def stratified_group_split(
     split_groups: List[List[str]] = [[] for _ in range(k)]
     split_rows = np.zeros(k)
     split_label = np.zeros((k, L))
-
     denom = np.where(target_label > 0, target_label, 1.0)
 
     for gid in ordered:
@@ -306,7 +240,6 @@ def stratified_group_split(
     train_df = df[df[group_col].isin(split_groups[0])].copy()
     val_df = df[df[group_col].isin(split_groups[1])].copy()
     test_df = df[df[group_col].isin(split_groups[2])].copy()
-
     return train_df, val_df, test_df
 
 
@@ -316,115 +249,83 @@ def stratified_group_split(
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--input_csv", required=True, help="Registry CSV with note_text + label columns.")
+    ap.add_argument("--input_csv", required=True)
     ap.add_argument("--output_dir", required=True)
-    ap.add_argument("--group_col", default="group_id", help="Grouping column to prevent leakage (default: group_id).")
+    ap.add_argument("--group_col", default="group_id")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--train_frac", type=float, default=0.8)
     ap.add_argument("--val_frac", type=float, default=0.1)
     ap.add_argument("--test_frac", type=float, default=0.1)
-    ap.add_argument("--drop_zero_label_rows", action="store_true", help="Drop rows with no positive labels after patching.")
+    ap.add_argument("--drop_zero_label_rows", action="store_true")
     args = ap.parse_args()
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    df = pd.read_csv(args.input_csv)
-    missing = [c for c in [TEXT_COL] + LABEL_COLS if c not in df.columns]
-    if missing:
-        raise ValueError(f"Input CSV missing expected columns: {missing}")
+    # 1. LOAD WITH EXPLICIT TYPES (Fixes Mixed Types Issue)
+    df = pd.read_csv(args.input_csv, dtype={'verified_cpt_codes': str})
 
-    # Ensure numeric 0/1
+    if "source_file" in df.columns and "original_index" in df.columns:
+        # 2. SAFETY PATCH (Fixes Labeling Error if upstream missed it)
+        # Christopher Hayes: golden_034.json, index 4.0 -> navigational_bronchoscopy should be 0
+        patch_mask = (df["source_file"] == "golden_034.json") & (df["original_index"] == 4.0)
+        if patch_mask.any():
+            print(f"Applying safety patch: Setting navigational_bronchoscopy=0 for {patch_mask.sum()} row(s).")
+            df.loc[patch_mask, "navigational_bronchoscopy"] = 0
+
+    missing = [c for c in [TEXT_COL] + LABEL_COLS if c not in df.columns]
+    if missing: raise ValueError(f"Input CSV missing: {missing}")
+
     for c in LABEL_COLS:
         df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0).astype(int)
         df[c] = (df[c] > 0).astype(int)
 
-    
-    # Drop rows with missing/blank note_text early (prevents "nan" text artifacts)
-    before_text = len(df)
     df = df[df[TEXT_COL].notna()].copy()
-    # Convert to string only after dropping NaNs
     df[TEXT_COL] = df[TEXT_COL].astype(str)
     df = df[df[TEXT_COL].str.strip().ne("")].copy()
     df = df[df[TEXT_COL].str.lower().ne("nan")].copy()
-    dropped_text = before_text - len(df)
-    if dropped_text:
-        print(f"Dropped {dropped_text} rows with missing/blank note_text.")
 
-# If group col missing, fall back
     group_col = args.group_col
     if group_col not in df.columns:
-        if "group_id" in df.columns:
-            group_col = "group_id"
-        elif "patient_id" in df.columns:
-            group_col = "patient_id"
-        elif "source_file" in df.columns:
-            group_col = "source_file"
+        if "group_id" in df.columns: group_col = "group_id"
+        elif "patient_id" in df.columns: group_col = "patient_id"
+        elif "source_file" in df.columns: group_col = "source_file"
         else:
-            # last resort: each row is its own group
             group_col = "__row_id__"
             df[group_col] = np.arange(len(df))
 
-    # Patch labels & add missing text-based labels
     df = patch_zero_label_rows(df)
     df = add_text_based_labels(df)
 
-    # Optionally drop out-of-scope rows
     if args.drop_zero_label_rows:
-        before = len(df)
         df = df[df[LABEL_COLS].sum(axis=1) > 0].copy()
-        print(f"Dropped {before - len(df)} rows with 0 labels.")
 
-    # Redact note_text to remove CPT leakage + PHI-like patterns
     df[TEXT_COL] = df[TEXT_COL].apply(redact_note_text)
-
-    # Drop rows that became blank after redaction (e.g., billing-only notes)
-    before_redact = len(df)
     df = df[df[TEXT_COL].str.strip().ne("")].copy()
-    df = df[df[TEXT_COL].str.lower().ne("nan")].copy()
-    dropped_after = before_redact - len(df)
-    if dropped_after:
-        print(f"Dropped {dropped_after} rows with blank note_text after redaction.")
 
-    # Split
+    # Ensure CPT codes are clean strings before saving
+    if "verified_cpt_codes" in df.columns:
+        df["verified_cpt_codes"] = df["verified_cpt_codes"].fillna("").astype(str)
+        df["verified_cpt_codes"] = df["verified_cpt_codes"].apply(
+            lambda x: x.replace(".0", "") if x.endswith(".0") and "," not in x else x
+        )
+
     fracs = (args.train_frac, args.val_frac, args.test_frac)
     train_df, val_df, test_df = stratified_group_split(
         df, group_col=group_col, label_cols=LABEL_COLS, fracs=fracs, seed=args.seed
     )
 
-    # Sanity checks
-    overlap = set(train_df[group_col].unique()) & set(val_df[group_col].unique()) \
-              | set(train_df[group_col].unique()) & set(test_df[group_col].unique()) \
-              | set(val_df[group_col].unique()) & set(test_df[group_col].unique())
-    if overlap:
-        print(f"WARNING: group overlap detected: {len(overlap)} groups")
+    # 3. SAVE WITH QUOTING ENFORCED (Fixes "Unquoted Text" & "Truncated CSV" issues)
+    # csv.QUOTE_NONNUMERIC wraps all non-number fields (like text and CPT lists) in quotes.
+    train_df.to_csv(output_dir / "registry_train_clean.csv", index=False, quoting=csv.QUOTE_NONNUMERIC)
+    val_df.to_csv(output_dir / "registry_val_clean.csv", index=False, quoting=csv.QUOTE_NONNUMERIC)
+    test_df.to_csv(output_dir / "registry_test_clean.csv", index=False, quoting=csv.QUOTE_NONNUMERIC)
 
-    # Save
-    train_df.to_csv(output_dir / "registry_train_clean.csv", index=False)
-    val_df.to_csv(output_dir / "registry_val_clean.csv", index=False)
-    test_df.to_csv(output_dir / "registry_test_clean.csv", index=False)
-
-    # Save label definition
     with open(output_dir / "registry_label_fields.json", "w") as f:
         json.dump(LABEL_COLS, f, indent=2)
 
-    # Summary
     print(f"Saved splits to: {output_dir}")
     print(f"Train: {len(train_df)} | Val: {len(val_df)} | Test: {len(test_df)}")
-    print(f"Zero-label rows (train/val/test): "
-          f"{int((train_df[LABEL_COLS].sum(axis=1)==0).sum())}/"
-          f"{int((val_df[LABEL_COLS].sum(axis=1)==0).sum())}/"
-          f"{int((test_df[LABEL_COLS].sum(axis=1)==0).sum())}")
-
-    # Quick drift report (top 10)
-    prev = pd.DataFrame({
-        "train": train_df[LABEL_COLS].mean(),
-        "val": val_df[LABEL_COLS].mean(),
-        "test": test_df[LABEL_COLS].mean(),
-    })
-    prev["abs_train_val"] = (prev["train"] - prev["val"]).abs()
-    print("\nTop label prevalence drifts (|train - val|):")
-    print(prev.sort_values("abs_train_val", ascending=False).head(10).to_string())
 
 if __name__ == "__main__":
     main()

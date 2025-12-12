@@ -1,73 +1,73 @@
 {
   "best_epoch": 5,
-  "best_val_macro_f1": 0.8032994076051551,
+  "best_val_macro_f1": 0.6894627032530858,
   "test_metrics": {
-    "macro_f1": 0.7723913019517461,
-    "micro_f1": 0.9123347219706575,
-    "rare_class_f1": 0.5737311502086809,
+    "macro_f1": 0.6786131334525675,
+    "micro_f1": 0.821486387049301,
+    "rare_class_f1": 0.5515634362498767,
     "per_label": {
       "airway_dilation": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "threshold": 0.8500000000000002,
-        "support": 0
+        "precision": 0.0707070707070707,
+        "recall": 0.2,
+        "f1": 0.1044776119402985,
+        "threshold": 0.1,
+        "support": 35
       },
       "airway_stent": {
-        "precision": 0.944954128440367,
-        "recall": 0.7518248175182481,
-        "f1": 0.8373983739837398,
-        "threshold": 0.7500000000000002,
-        "support": 137
+        "precision": 0.7802197802197802,
+        "recall": 0.8160919540229885,
+        "f1": 0.797752808988764,
+        "threshold": 0.8500000000000002,
+        "support": 87
       },
       "bal": {
-        "precision": 0.9166666666666666,
-        "recall": 0.9166666666666666,
-        "f1": 0.9166666666666666,
-        "threshold": 0.8500000000000002,
-        "support": 132
+        "precision": 0.9545454545454546,
+        "recall": 0.6885245901639344,
+        "f1": 0.8,
+        "threshold": 0.7000000000000002,
+        "support": 122
       },
       "blvr": {
-        "precision": 0.9529411764705882,
-        "recall": 1.0,
-        "f1": 0.9759036144578314,
-        "threshold": 0.8500000000000002,
-        "support": 81
+        "precision": 0.6153846153846154,
+        "recall": 0.37209302325581395,
+        "f1": 0.463768115942029,
+        "threshold": 0.3500000000000001,
+        "support": 43
       },
       "brachytherapy_catheter": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "threshold": 0.45000000000000007,
-        "support": 0
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "threshold": 0.25000000000000006,
+        "support": 9
       },
       "bronchial_thermoplasty": {
-        "precision": 1.0,
+        "precision": 0.6206896551724138,
         "recall": 1.0,
-        "f1": 1.0,
-        "threshold": 0.5500000000000002,
-        "support": 29
+        "f1": 0.7659574468085106,
+        "threshold": 0.15000000000000002,
+        "support": 18
       },
       "bronchial_wash": {
-        "precision": 1.0,
-        "recall": 1.0,
-        "f1": 1.0,
-        "threshold": 0.8500000000000002,
-        "support": 2
+        "precision": 0.26666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.38095238095238093,
+        "threshold": 0.40000000000000013,
+        "support": 6
       },
       "brushings": {
-        "precision": 0.9210526315789473,
-        "recall": 0.9271523178807947,
-        "f1": 0.9240924092409241,
-        "threshold": 0.8500000000000002,
-        "support": 151
+        "precision": 0.8275862068965517,
+        "recall": 0.7868852459016393,
+        "f1": 0.8067226890756303,
+        "threshold": 0.6500000000000001,
+        "support": 122
       },
       "chest_tube": {
-        "precision": 0.9668874172185431,
-        "recall": 0.9931972789115646,
-        "f1": 0.9798657718120806,
+        "precision": 0.8737864077669902,
+        "recall": 0.7894736842105263,
+        "f1": 0.8294930875576036,
         "threshold": 0.8000000000000002,
-        "support": 147
+        "support": 114
       },
       "cryotherapy": {
         "precision": 0.0,
@@ -77,123 +77,123 @@
         "support": 0
       },
       "diagnostic_bronchoscopy": {
-        "precision": 0.9569179784589892,
-        "recall": 0.953757225433526,
-        "f1": 0.9553349875930521,
-        "threshold": 0.15000000000000002,
-        "support": 1211
+        "precision": 0.9864406779661017,
+        "recall": 0.909375,
+        "f1": 0.9463414634146341,
+        "threshold": 0.25000000000000006,
+        "support": 640
       },
       "endobronchial_biopsy": {
-        "precision": 0.8939393939393939,
-        "recall": 1.0,
-        "f1": 0.944,
-        "threshold": 0.8500000000000002,
-        "support": 59
+        "precision": 0.44285714285714284,
+        "recall": 0.7045454545454546,
+        "f1": 0.543859649122807,
+        "threshold": 0.3500000000000001,
+        "support": 44
       },
       "fibrinolytic_therapy": {
-        "precision": 0.9166666666666666,
+        "precision": 0.6428571428571429,
         "recall": 1.0,
-        "f1": 0.9565217391304348,
-        "threshold": 0.45000000000000007,
-        "support": 11
-      },
-      "foreign_body_removal": {
-        "precision": 0.8,
-        "recall": 1.0,
-        "f1": 0.8888888888888888,
-        "threshold": 0.40000000000000013,
-        "support": 40
-      },
-      "ipc": {
-        "precision": 0.95,
-        "recall": 0.9047619047619048,
-        "f1": 0.926829268292683,
-        "threshold": 0.8000000000000002,
-        "support": 63
-      },
-      "linear_ebus": {
-        "precision": 0.9318885448916409,
-        "recall": 0.9525316455696202,
-        "f1": 0.9420970266040689,
-        "threshold": 0.5500000000000002,
-        "support": 316
-      },
-      "mechanical_debulking": {
-        "precision": 0.9806949806949807,
-        "recall": 0.951310861423221,
-        "f1": 0.9657794676806084,
-        "threshold": 0.7500000000000002,
-        "support": 267
-      },
-      "medical_thoracoscopy": {
-        "precision": 0.9166666666666666,
-        "recall": 0.9230769230769231,
-        "f1": 0.9198606271777003,
-        "threshold": 0.7500000000000002,
-        "support": 143
-      },
-      "navigational_bronchoscopy": {
-        "precision": 0.7137064071370641,
-        "recall": 0.963855421686747,
-        "f1": 0.8201304753028891,
-        "threshold": 0.25000000000000006,
-        "support": 913
-      },
-      "peripheral_ablation": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "threshold": 0.5,
-        "support": 0
-      },
-      "photodynamic_therapy": {
-        "precision": 0.9,
-        "recall": 1.0,
-        "f1": 0.9473684210526315,
-        "threshold": 0.7500000000000002,
+        "f1": 0.782608695652174,
+        "threshold": 0.7000000000000002,
         "support": 9
       },
-      "pleural_biopsy": {
-        "precision": 0.7228915662650602,
-        "recall": 0.967741935483871,
-        "f1": 0.8275862068965517,
+      "foreign_body_removal": {
+        "precision": 0.4117647058823529,
+        "recall": 0.3888888888888889,
+        "f1": 0.4,
+        "threshold": 0.45000000000000007,
+        "support": 18
+      },
+      "ipc": {
+        "precision": 0.9444444444444444,
+        "recall": 0.40476190476190477,
+        "f1": 0.5666666666666667,
         "threshold": 0.8500000000000002,
-        "support": 62
+        "support": 42
       },
-      "pleurodesis": {
-        "precision": 0.9910714285714286,
-        "recall": 0.9568965517241379,
-        "f1": 0.9736842105263158,
-        "threshold": 0.6500000000000001,
-        "support": 116
-      },
-      "radial_ebus": {
-        "precision": 0.9581497797356828,
-        "recall": 0.9477124183006536,
-        "f1": 0.9529025191675794,
-        "threshold": 0.8000000000000002,
-        "support": 459
-      },
-      "rigid_bronchoscopy": {
-        "precision": 0.9247311827956989,
-        "recall": 0.9942196531791907,
-        "f1": 0.958217270194986,
-        "threshold": 0.8000000000000002,
+      "linear_ebus": {
+        "precision": 0.8467153284671532,
+        "recall": 0.6705202312138728,
+        "f1": 0.7483870967741936,
+        "threshold": 0.5000000000000001,
         "support": 173
       },
+      "mechanical_debulking": {
+        "precision": 0.8506493506493507,
+        "recall": 0.7528735632183908,
+        "f1": 0.7987804878048781,
+        "threshold": 0.6000000000000002,
+        "support": 174
+      },
+      "medical_thoracoscopy": {
+        "precision": 0.9726027397260274,
+        "recall": 0.8554216867469879,
+        "f1": 0.9102564102564102,
+        "threshold": 0.5500000000000002,
+        "support": 83
+      },
+      "navigational_bronchoscopy": {
+        "precision": 0.7971014492753623,
+        "recall": 0.9428571428571428,
+        "f1": 0.8638743455497382,
+        "threshold": 0.25000000000000006,
+        "support": 525
+      },
+      "peripheral_ablation": {
+        "precision": 0.3076923076923077,
+        "recall": 0.13114754098360656,
+        "f1": 0.1839080459770115,
+        "threshold": 0.8500000000000002,
+        "support": 61
+      },
+      "photodynamic_therapy": {
+        "precision": 0.8095238095238095,
+        "recall": 1.0,
+        "f1": 0.8947368421052632,
+        "threshold": 0.40000000000000013,
+        "support": 17
+      },
+      "pleural_biopsy": {
+        "precision": 0.7777777777777778,
+        "recall": 0.9333333333333333,
+        "f1": 0.8484848484848485,
+        "threshold": 0.45000000000000007,
+        "support": 45
+      },
+      "pleurodesis": {
+        "precision": 0.9245283018867925,
+        "recall": 0.7205882352941176,
+        "f1": 0.8099173553719008,
+        "threshold": 0.8500000000000002,
+        "support": 68
+      },
+      "radial_ebus": {
+        "precision": 0.7961538461538461,
+        "recall": 0.8553719008264463,
+        "f1": 0.8247011952191236,
+        "threshold": 0.30000000000000004,
+        "support": 242
+      },
+      "rigid_bronchoscopy": {
+        "precision": 0.9416666666666667,
+        "recall": 0.889763779527559,
+        "f1": 0.9149797570850202,
+        "threshold": 0.8000000000000002,
+        "support": 127
+      },
       "tbna_conventional": {
-        "precision": 0.972809667673716,
-        "recall": 0.9611940298507463,
-        "f1": 0.9669669669669669,
-        "threshold": 0.7000000000000002,
-        "support": 335
+        "precision": 0.8872549019607843,
+        "recall": 0.8786407766990292,
+        "f1": 0.8829268292682927,
+        "threshold": 0.6500000000000001,
+        "support": 206
       },
       "therapeutic_aspiration": {
-        "precision": 0.6785714285714286,
-        "recall": 0.8636363636363636,
-        "f1": 0.76,
-        "threshold": 0.7500000000000002,
-        "support": 22
+        "precision": 0.21951219512195122,
+        "recall": 0.5294117647058824,
+        "f1": 0.3103448275862069,
+        "threshold": 0.40000000000000013,
+        "support": 17
       },
       "thermal_ablation": {
         "precision": 0.0,
@@ -203,32 +203,32 @@
         "support": 0
       },
       "thoracentesis": {
-        "precision": 0.8103448275862069,
-        "recall": 0.9591836734693877,
-        "f1": 0.8785046728971962,
-        "threshold": 0.8500000000000002,
-        "support": 49
+        "precision": 0.7435897435897436,
+        "recall": 0.7837837837837838,
+        "f1": 0.7631578947368421,
+        "threshold": 0.3500000000000001,
+        "support": 37
       },
       "transbronchial_biopsy": {
-        "precision": 0.8680351906158358,
-        "recall": 0.9278996865203761,
-        "f1": 0.896969696969697,
-        "threshold": 0.7500000000000002,
-        "support": 319
+        "precision": 0.8828451882845189,
+        "recall": 0.9547511312217195,
+        "f1": 0.9173913043478261,
+        "threshold": 0.25000000000000006,
+        "support": 221
       },
       "transbronchial_cryobiopsy": {
-        "precision": 0.8222222222222222,
-        "recall": 0.9487179487179487,
-        "f1": 0.8809523809523809,
-        "threshold": 0.8000000000000002,
-        "support": 39
+        "precision": 0.8732394366197183,
+        "recall": 0.8378378378378378,
+        "f1": 0.8551724137931035,
+        "threshold": 0.8500000000000002,
+        "support": 74
       },
       "whole_lung_lavage": {
-        "precision": 0.5625,
+        "precision": 1.0,
         "recall": 1.0,
-        "f1": 0.72,
-        "threshold": 0.3500000000000001,
-        "support": 18
+        "f1": 1.0,
+        "threshold": 0.5,
+        "support": 9
       }
     }
   },
