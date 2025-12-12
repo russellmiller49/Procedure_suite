@@ -2,7 +2,8 @@
 data_generators.py (updated)
 
 Key fixes:
-- Robust CPT extraction: prefer coding_review summary primary codes, then registry_entry.billing.cpt_codes, then registry_entry.cpt_codes, then top-level cpt_codes.
+- Robust CPT extraction: supports multiple observed coding_review schemas (cpt_summary / coding_summary / per_code / lines),
+  then falls back to registry_entry.billing.cpt_codes, registry_entry.cpt_codes, and top-level cpt_codes.
 - Correctly read dropped_codes from registry_entry.coding_support.section_3_rationale (old code looked at entry["coding_support"] which is often missing).
 - Expanded CPT->label mappings for codes that were producing 0-label rows.
 - Added text-based label inference for labels that were always 0.
@@ -52,7 +53,7 @@ LABEL_COLS = [
     "pleural_biopsy", "pleurodesis", "fibrinolytic_therapy",
 ]
 
-META_COLS = ["verified_cpt_codes", "group_id", "source_file", "style_type", "original_index"]
+META_COLS = ["verified_cpt_codes", "patient_id", "group_id", "source_file", "style_type", "original_index"]
 
 REGISTRY_COLUMNS = ["note_text"] + LABEL_COLS + META_COLS
 
@@ -101,12 +102,87 @@ def safe_get(d, *path, default=None):
         cur = cur[key]
     return cur
 
+def compute_patient_id(entry):
+    """
+    Patient grouping identifier used for splitting.
+
+    - Synthetic notes: keep full MRN including the '_syn_' suffix so each synthetic patient is distinct.
+    - Real data: use base MRN (split on '_') to keep related records grouped and protect privacy.
+    """
+    raw_mrn = safe_get(entry, "registry_entry", "patient_mrn", default=None)
+    if raw_mrn is None:
+        raw_mrn = entry.get("patient_mrn", "")
+    raw_mrn = "" if raw_mrn is None else str(raw_mrn).strip()
+
+    if not raw_mrn or raw_mrn.lower() in {"unknown", "none", "nan"}:
+        return ""
+    if "_syn_" in raw_mrn:
+        return raw_mrn
+    return raw_mrn.split("_")[0]
+
+def _extract_cpts_from_coding_review(cr):
+    """
+    Extract CPTs from multiple coding_review schema variants observed in golden JSONs.
+    Returns set[str] of 5-digit CPT codes.
+    """
+    if not isinstance(cr, dict):
+        return set()
+
+    found = set()
+
+    # Legacy-style: coding_review.summary.*
+    summary = cr.get("summary")
+    if isinstance(summary, dict):
+        for field in ["primary_codes", "primary_code", "primary_cpt", "final_codes", "all_cpts"]:
+            found |= normalize_cpt_list(summary.get(field))
+
+    # Style A: coding_review.cpt_summary.*
+    cpt_summary = cr.get("cpt_summary")
+    if isinstance(cpt_summary, dict):
+        for field in ["primary_code", "primary_cpt", "final_codes", "all_cpts", "primary_codes"]:
+            found |= normalize_cpt_list(cpt_summary.get(field))
+        lines = cpt_summary.get("lines")
+        if isinstance(lines, list):
+            for line in lines:
+                if isinstance(line, dict):
+                    found |= normalize_cpt_list(line.get("code"))
+
+    # Style B/D: coding_review.coding_summary.*
+    coding_summary = cr.get("coding_summary")
+    if isinstance(coding_summary, dict):
+        for field in ["primary_code", "primary_cpt", "final_codes", "all_cpts", "secondary_cpts"]:
+            found |= normalize_cpt_list(coding_summary.get(field))
+        lines = coding_summary.get("lines")
+        if isinstance(lines, list):
+            for line in lines:
+                if isinstance(line, dict):
+                    found |= normalize_cpt_list(line.get("code"))
+
+    # Style C: coding_review.per_code (list of dicts)
+    per_code = cr.get("per_code")
+    if isinstance(per_code, list):
+        for item in per_code:
+            if isinstance(item, dict):
+                found |= normalize_cpt_list(item.get("code"))
+            else:
+                found |= normalize_cpt_list(item)
+
+    # Fallback: sometimes lines can appear directly under coding_review
+    lines = cr.get("lines")
+    if isinstance(lines, list):
+        for line in lines:
+            if isinstance(line, dict):
+                found |= normalize_cpt_list(line.get("code"))
+
+    return found
+
 def extract_billed_cpt_codes(entry):
-    # 1) coding_review.summary.primary_codes
-    primary = safe_get(entry, "coding_review", "summary", "primary_codes", default=None)
-    primary_set = normalize_cpt_list(primary)
-    if primary_set:
-        return primary_set
+    # 1) coding_review (support multiple schema variants; check both top-level and nested)
+    cr_set = set()
+    cr_set |= _extract_cpts_from_coding_review(entry.get("coding_review"))
+    cr_set |= _extract_cpts_from_coding_review(safe_get(entry, "registry_entry", "coding_review", default=None))
+    if cr_set:
+        return cr_set
 
     # 2) registry_entry.billing.cpt_codes
     billing_cpts = safe_get(entry, "registry_entry", "billing", "cpt_codes", default=None)
@@ -137,16 +213,14 @@ def extract_dropped_cpt_codes(entry):
     return dropped
 
 def make_group_id(entry, filepath, fallback_index):
+    patient_id = compute_patient_id(entry)
+    if patient_id:
+        return f"MRN::{patient_id}"
+
     syn_src = safe_get(entry, "synthetic_metadata", "source_file", default=None)
     orig_idx = safe_get(entry, "synthetic_metadata", "original_index", default=None)
     if syn_src is not None and orig_idx is not None:
         return f"{syn_src}::idx{orig_idx}"
-
-    mrn = safe_get(entry, "registry_entry", "patient_mrn", default=None)
-    if mrn:
-        mrn = str(mrn)
-        mrn_base = mrn.split("_syn_")[0]
-        return f"MRN::{mrn_base}"
 
     return f"{Path(filepath).name}::idx{fallback_index}"
 
@@ -252,12 +326,23 @@ def enrich_flags_with_registry_entry(flags, registry_entry):
     if not registry_entry: return flags
     proc_nested = registry_entry.get("procedures_performed") or {}
     pleural_nested = registry_entry.get("pleural_procedures") or {}
+    cao_modality = str(registry_entry.get("cao_primary_modality") or "").lower().strip()
 
     def performed(key):
         for container in (proc_nested, pleural_nested):
             val = container.get(key)
             if val is True: return True
             if isinstance(val, dict) and val.get("performed") is True: return True
+
+        # CAO modality-driven mapping (matches canonical v2_booleans behavior)
+        if cao_modality:
+            if key == "thermal_ablation" and any(t in cao_modality for t in ["thermal", "electrocautery", "argon", "laser", "apc"]):
+                return True
+            if key == "cryotherapy" and "cryo" in cao_modality:
+                return True
+            if key == "airway_dilation" and ("dilation" in cao_modality or "balloon" in cao_modality):
+                return True
+
         if registry_entry.get(f"{key}_performed") is True: return True
         if registry_entry.get(key) is True: return True
         if key == "whole_lung_lavage" and (registry_entry.get("wll_volume_instilled_l") or 0) > 0: return True
@@ -270,6 +355,9 @@ def enrich_flags_with_registry_entry(flags, registry_entry):
 
     for key in LABEL_COLS:
         if performed(key): flags[key] = 1
+
+    if cao_modality and (flags.get("thermal_ablation") or flags.get("cryotherapy") or flags.get("airway_dilation")):
+        flags["diagnostic_bronchoscopy"] = 1
 
     intervention = str(registry_entry.get("pneumothorax_intervention", "")).lower()
     if "chest tube" in intervention or "pigtail" in intervention: flags["chest_tube"] = 1
@@ -361,11 +449,13 @@ def build_registry_from_golden(json_pattern=GOLDEN_JSON_GLOB, output_csv=REGISTR
 
             group_id = make_group_id(entry, filepath, i)
             style_type = safe_get(entry, "synthetic_metadata", "style_type", default=None)
+            patient_id = compute_patient_id(entry)
 
             row_dict = {"note_text": note_text}
             row_dict.update(flags)
             row_dict.update({
                 "verified_cpt_codes": clean_code_string(billed_codes),
+                "patient_id": patient_id,
                 "group_id": group_id,
                 "source_file": source_file,
                 "style_type": style_type,
@@ -413,10 +503,20 @@ def build_registry_from_csv_batch(batch_list):
             if not group_id:
                 group_id = f"{Path(input_csv).name}::idx{idx}"
 
+            patient_id = row.get("patient_id")
+            try:
+                if pd.isna(patient_id):
+                    patient_id = None
+            except Exception:
+                pass
+            if not patient_id and isinstance(group_id, str) and group_id.startswith("MRN::"):
+                patient_id = group_id.split("MRN::", 1)[1]
+
             row_dict = {"note_text": note_text}
             row_dict.update(flags)
             row_dict.update({
                 "verified_cpt_codes": clean_code_string(normalize_cpt_list(codes_for_target)),
+                "patient_id": patient_id,
                 "group_id": group_id,
                 "source_file": row.get("source_file", Path(input_csv).name),
                 "style_type": row.get("style_type"),
