@@ -227,7 +227,7 @@ python scripts/train_roberta.py --batch-size 16 --epochs 5
 
 ### Phase 3: Teacher-Student Distillation (Cloud - CONDITIONAL)
 
-> **Only execute if Phase 2 fails (Macro F1 < 0.85)**
+> **Only execute if Phase 2 fails success criteria (Macro F1 ≤ 0.90 OR rare-class F1 ≤ 0.85)**
 
 **Goal**: Use a larger model to "teach" the smaller model through knowledge distillation.
 
@@ -407,9 +407,9 @@ class ONNXRegistryPredictor:
 
 | Phase | Task | Status |
 |-------|------|--------|
-| 1 | Generate 2,000+ synthetic notes | [ ] |
-| 1 | Finalize train/test splits | [ ] |
-| 2 | Train `RoBERTa-base-PM-M3-Voc` on RTX 4070 Ti | [ ] |
+| 1 | Add/update Golden JSONs → generate training CSVs | [ ] |
+| 1 | Create leak-free, balanced train/val/test splits | [ ] |
+| 2 | Train `microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext` on RTX 4070 Ti | [ ] |
 | 2 | Achieve Macro F1 > 0.90 | [ ] |
 | 3 | (Conditional) Teacher-student distillation | [ ] |
 | 4 | Write deterministic CPT rule functions | [ ] |
