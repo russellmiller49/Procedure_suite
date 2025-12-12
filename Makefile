@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder dev-iu pull-model-pytorch
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -8,6 +8,10 @@ PYTHON := python
 KB_PATH := data/knowledge/ip_coding_billing_v2_8.json
 SCHEMA_PATH := data/knowledge/IP_Registry.json
 NOTES_PATH := data/knowledge/synthetic_notes_with_registry2.json
+PORT ?= 8000
+MODEL_BACKEND ?= pytorch
+PROCSUITE_SKIP_WARMUP ?= 1
+REGISTRY_RUNTIME_DIR ?= data/models/registry_runtime
 
 setup:
 	@if [ -f $(SETUP_STAMP) ]; then echo "Setup already done"; exit 0; fi
@@ -40,6 +44,17 @@ run-coder:
 		--kb $(KB_PATH) \
 		--keyword-dir data/keyword_mappings \
 		--out-json outputs/coder_suggestions.jsonl
+
+pull-model-pytorch:
+	MODEL_BUNDLE_S3_URI_PYTORCH="$(MODEL_BUNDLE_S3_URI_PYTORCH)" REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" ./scripts/dev_pull_model.sh
+
+dev-iu:
+	$(CONDA_ACTIVATE) && \
+		MODEL_BACKEND="$(MODEL_BACKEND)" \
+		REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" \
+		PROCSUITE_SKIP_WARMUP="$(PROCSUITE_SKIP_WARMUP)" \
+		RAILWAY_ENVIRONMENT="local" \
+		$(PYTHON) -m uvicorn modules.api.fastapi_app:app --reload --host 0.0.0.0 --port "$(PORT)"
 
 # Run cleaning pipeline with patches
 autopatch:

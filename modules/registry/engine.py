@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 import re
 from typing import Any, Dict, Set
 
@@ -761,16 +762,86 @@ class RegistryEngine:
             # Provide more helpful error message for Pydantic validation errors
             from pydantic import ValidationError
             if isinstance(e, ValidationError):
-                error_details = []
+                # Demo-friendly recovery: prune invalid fields and retry once.
+                #
+                # The LLM may emit values that are "close" but not schema-valid (e.g., lists where a
+                # literal is expected). For demo and interactive UI usage, it's better to drop those
+                # specific fields and return a partially-filled record than to fail the whole request.
+                pruned_payload = deepcopy(nested_payload)
+
+                def _null_out_path(obj: Any, loc: tuple[Any, ...] | list[Any]) -> None:
+                    if not loc:
+                        return
+                    cur: Any = obj
+                    for step in loc[:-1]:
+                        if isinstance(step, int):
+                            if isinstance(cur, list) and 0 <= step < len(cur):
+                                cur = cur[step]
+                            else:
+                                return
+                        else:
+                            if isinstance(cur, dict) and step in cur:
+                                cur = cur[step]
+                            else:
+                                return
+                    last = loc[-1]
+                    if isinstance(last, int):
+                        if isinstance(cur, list) and 0 <= last < len(cur):
+                            cur[last] = None
+                        return
+                    if isinstance(cur, dict) and last in cur:
+                        # Prefer deletion to let defaults apply if available.
+                        try:
+                            del cur[last]
+                        except Exception:
+                            cur[last] = None
+
                 for err in e.errors():
-                    field_path = " -> ".join(str(loc) for loc in err.get("loc", []))
-                    error_msg = err.get("msg", "Validation error")
-                    input_value = err.get("input", "N/A")
-                    error_details.append(f"{field_path}: {error_msg} (got: {input_value})")
-                raise ValueError(
-                    f"Registry validation failed:\n" + "\n".join(error_details)
-                ) from e
-            raise
+                    _null_out_path(pruned_payload, err.get("loc", []))
+
+                try:
+                    record = RegistryRecord(**pruned_payload)
+                    logger.warning(
+                        "RegistryRecord validation required pruning; returning partial record",
+                        extra={"pruned_error_count": len(e.errors())},
+                    )
+                except Exception as retry_exc:
+                    # Second recovery: drop entire top-level sections that still fail.
+                    from pydantic import ValidationError as _ValidationError
+
+                    if isinstance(retry_exc, _ValidationError):
+                        top_pruned_payload = deepcopy(pruned_payload)
+                        for err in retry_exc.errors():
+                            loc = err.get("loc", [])
+                            if not loc:
+                                continue
+                            top_key = loc[0]
+                            if isinstance(top_key, str) and isinstance(top_pruned_payload, dict):
+                                top_pruned_payload[top_key] = None
+                        try:
+                            record = RegistryRecord(**top_pruned_payload)
+                            logger.warning(
+                                "RegistryRecord validation required top-level pruning; returning partial record",
+                                extra={"top_pruned_error_count": len(retry_exc.errors())},
+                            )
+                        except Exception as final_exc:
+                            logger.error(
+                                "RegistryRecord validation failed after pruning; returning empty record",
+                                extra={"error": str(final_exc)},
+                            )
+                            record = RegistryRecord()
+                    else:
+                        logger.error(
+                            "RegistryRecord validation failed after pruning; returning empty record",
+                            extra={"error": str(retry_exc)},
+                        )
+                        record = RegistryRecord()
+            else:
+                logger.error(
+                    "RegistryRecord validation failed with non-validation error; returning empty record",
+                    extra={"error": str(e)},
+                )
+                record = RegistryRecord()
         
         normalized_evidence: dict[str, list[Span]] = {}
         if include_evidence:

@@ -10,6 +10,43 @@ from modules.registry.postprocess import (
     normalize_complication_list,
 )
 
+def _normalize_transbronchial_forceps_type(value: Any) -> str | None:
+    """Normalize transbronchial biopsy forceps type to the schema literals.
+
+    Schema expects: "Standard" | "Cryoprobe" | None.
+    LLM/slot extractors may return lists or unrelated tool types (e.g. "Needle").
+    """
+    if value is None:
+        return None
+
+    if isinstance(value, list):
+        for item in value:
+            normalized = _normalize_transbronchial_forceps_type(item)
+            if normalized is not None:
+                return normalized
+        return None
+
+    if not isinstance(value, str):
+        return None
+
+    raw = value.strip()
+    if not raw:
+        return None
+
+    lowered = raw.lower()
+    if lowered in {"standard", "forceps", "standard forceps", "biopsy forceps"}:
+        return "Standard"
+    if lowered in {"cryoprobe", "cryo", "cryo probe", "cryo-probe"}:
+        return "Cryoprobe"
+    if lowered in {"needle", "tbna needle", "ebus needle"}:
+        return None
+
+    # If the string already matches expected casing, pass it through safely.
+    if raw in {"Standard", "Cryoprobe"}:
+        return raw
+
+    return None
+
 
 def build_nested_registry_payload(data: dict[str, Any]) -> dict[str, Any]:
     """Return a copy of the flat registry payload with nested sections populated."""
@@ -271,8 +308,10 @@ def _build_procedures_performed(data: dict[str, Any], families: set[str]) -> dic
                     tblb["locations"] = locations
             elif isinstance(sites, str):
                 tblb["locations"] = [sites]
-        if data.get("bronch_tbbx_tool"):
-            tblb["forceps_type"] = data.get("bronch_tbbx_tool")
+        if "bronch_tbbx_tool" in data:
+            normalized = _normalize_transbronchial_forceps_type(data.get("bronch_tbbx_tool"))
+            if normalized is not None:
+                tblb["forceps_type"] = normalized
         procedures["transbronchial_biopsy"] = tblb
 
     if data.get("cryo_probe_size") or data.get("cryo_specimens_count"):

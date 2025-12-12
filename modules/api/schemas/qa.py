@@ -10,7 +10,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Any, Generic, TypeVar
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ModuleStatus(str, Enum):
@@ -111,6 +111,9 @@ class CoderData(BaseModel):
     model_version: str | None = None
     processing_time_ms: int | None = None
 
+    # Allow model_version without protected namespace warnings.
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class QARunResponse(BaseModel):
     """Composite response for QA sandbox endpoint.
@@ -126,10 +129,23 @@ class QARunResponse(BaseModel):
         repo_commit_sha: Git commit SHA
     """
 
+    # Allow fields like model_version without protected namespace warnings.
+    model_config = ConfigDict(protected_namespaces=())
+
     overall_status: str = "completed"
     registry: ModuleResult[RegistryData] | None = None
     reporter: ModuleResult[ReporterData] | None = None
     coder: ModuleResult[CoderData] | None = None
+
+    # Legacy flat outputs (kept for backward compatibility with UI/API routes)
+    registry_output: dict[str, Any] | None = None
+    reporter_output: dict[str, Any] | None = None
+    coder_output: dict[str, Any] | None = None
+
+    # Model provenance (registry predictor bundle)
+    model_backend: str | None = None
+    model_version: str | None = None
+
     reporter_version: str | None = None
     coder_version: str | None = None
     repo_branch: str | None = None

@@ -32,5 +32,9 @@ data/models/
 *.onnx
 runs/
 
+# Local distilled artifacts (never commit model binaries)
+distilled/
+dist/registry_bundle/
+
 # Explicit: prevent committing the large distill checkpoint if it exists locally
 data/models/RoBERTa-base-PM-M3-Voc-distill/RoBERTa-base-PM-M3-Voc-distill-hf/pytorch_model.bin

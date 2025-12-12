@@ -51,6 +51,7 @@ from modules.coder.application.smart_hybrid_policy import (
     HybridCoderResult,
 )
 from modules.ml_coder.registry_predictor import RegistryMLPredictor
+from modules.registry.model_runtime import get_registry_runtime_dir, resolve_model_backend
 
 
 @dataclass
@@ -143,7 +144,7 @@ class RegistryService:
         self.default_version = default_version
         self.hybrid_orchestrator = hybrid_orchestrator
         self._registry_engine = registry_engine
-        self._registry_ml_predictor: RegistryMLPredictor | None = None
+        self._registry_ml_predictor: Any | None = None
         self._ml_predictor_init_attempted: bool = False
 
     @property
@@ -153,13 +154,14 @@ class RegistryService:
             self._registry_engine = RegistryEngine()
         return self._registry_engine
 
-    def _get_registry_ml_predictor(self) -> RegistryMLPredictor | None:
+    def _get_registry_ml_predictor(self) -> Any | None:
         """Get registry ML predictor with lazy initialization.
 
-        Attempts to load in order of preference:
-        1. ONNX predictor (if model exists) - preferred for production deployment
-        2. TF-IDF sklearn predictor (fallback)
-        3. None if no artifacts available
+        Behavior:
+        - If MODEL_BACKEND is set to "pytorch" or "onnx", prefer that backend and
+          fall back to sklearn if unavailable.
+        - Otherwise ("auto"), keep legacy behavior: try ONNX first (if available),
+          then sklearn TF-IDF.
 
         Returns the predictor if available, or None if artifacts are missing.
         Logs once on initialization failure to avoid log spam.
@@ -169,24 +171,83 @@ class RegistryService:
 
         self._ml_predictor_init_attempted = True
 
-        # Try ONNX predictor first (production-optimized)
-        try:
-            from modules.registry.inference_onnx import ONNXRegistryPredictor
+        backend = resolve_model_backend()
+        runtime_dir = get_registry_runtime_dir()
 
-            onnx_predictor = ONNXRegistryPredictor()
-            if onnx_predictor.available:
-                self._registry_ml_predictor = onnx_predictor
-                logger.info(
-                    "Using ONNXRegistryPredictor with %d labels",
-                    len(onnx_predictor.labels),
+        def _try_pytorch() -> Any | None:
+            try:
+                from modules.registry.inference_pytorch import TorchRegistryPredictor
+
+                predictor = TorchRegistryPredictor(bundle_dir=runtime_dir)
+                if predictor.available:
+                    logger.info(
+                        "Using TorchRegistryPredictor with %d labels",
+                        len(getattr(predictor, "labels", [])),
+                    )
+                    return predictor
+                logger.debug("Torch predictor initialized but not available")
+            except ImportError as e:
+                logger.debug("PyTorch/Transformers not available (%s)", e)
+            except Exception as e:
+                logger.debug("Torch predictor init failed (%s)", e)
+            return None
+
+        def _try_onnx() -> Any | None:
+            try:
+                from modules.registry.inference_onnx import ONNXRegistryPredictor
+
+                # Prefer runtime bundle paths if present; otherwise keep defaults.
+                model_path = (
+                    runtime_dir / "registry_model_int8.onnx"
+                    if (runtime_dir / "registry_model_int8.onnx").exists()
+                    else None
                 )
+                tokenizer_path = (
+                    runtime_dir / "tokenizer" if (runtime_dir / "tokenizer").exists() else None
+                )
+                thresholds_path = (
+                    runtime_dir / "thresholds.json" if (runtime_dir / "thresholds.json").exists() else None
+                )
+                label_fields_path = (
+                    runtime_dir / "registry_label_fields.json"
+                    if (runtime_dir / "registry_label_fields.json").exists()
+                    else None
+                )
+
+                predictor = ONNXRegistryPredictor(
+                    model_path=model_path,
+                    tokenizer_path=tokenizer_path,
+                    thresholds_path=thresholds_path,
+                    label_fields_path=label_fields_path,
+                )
+                if predictor.available:
+                    logger.info(
+                        "Using ONNXRegistryPredictor with %d labels",
+                        len(getattr(predictor, "labels", [])),
+                    )
+                    return predictor
+                logger.debug("ONNX model not available")
+            except ImportError:
+                logger.debug("ONNX runtime not available")
+            except Exception as e:
+                logger.debug("ONNX predictor init failed (%s)", e)
+            return None
+
+        if backend == "pytorch":
+            predictor = _try_pytorch()
+            if predictor is not None:
+                self._registry_ml_predictor = predictor
                 return self._registry_ml_predictor
-            else:
-                logger.debug("ONNX model not available, trying sklearn predictor")
-        except ImportError:
-            logger.debug("ONNX runtime not available, trying sklearn predictor")
-        except Exception as e:
-            logger.debug("ONNX predictor init failed (%s), trying sklearn predictor", e)
+        elif backend == "onnx":
+            predictor = _try_onnx()
+            if predictor is not None:
+                self._registry_ml_predictor = predictor
+                return self._registry_ml_predictor
+        else:
+            predictor = _try_onnx()
+            if predictor is not None:
+                self._registry_ml_predictor = predictor
+                return self._registry_ml_predictor
 
         # Fall back to TF-IDF sklearn predictor
         try:

@@ -512,6 +512,7 @@ class MLAdvisorSuggestion(BaseModel):
     The advisor ONLY suggests - it does not make final coding decisions.
     """
     model_config = ConfigDict(
+        protected_namespaces=(),
         json_schema_extra={
             "example": {
                 "candidate_codes": ["31622", "31653", "31625"],

@@ -29,7 +29,15 @@ echo "[railway_start] =============================================="
 echo "[railway_start] PORT=${PORT:-8000}"
 echo "[railway_start] PROCSUITE_SPACY_MODEL=${PROCSUITE_SPACY_MODEL:-en_core_sci_sm}"
 echo "[railway_start] WORKERS=${WORKERS:-1}"
+export MODEL_BACKEND="${MODEL_BACKEND:-onnx}"
+echo "[railway_start] MODEL_BACKEND=${MODEL_BACKEND}"
 echo "[railway_start] =============================================="
+
+# Optional: pull registry model bundle from S3 before warmup.
+# - For production, Railway should set MODEL_BACKEND=onnx and MODEL_BUNDLE_S3_URI_ONNX.
+echo "[railway_start] Bootstrapping registry model bundle (if configured)..."
+python -c "from modules.registry.model_bootstrap import ensure_registry_model_bundle; ensure_registry_model_bundle()" || \
+  echo "[railway_start] WARNING: model bundle bootstrap failed/skipped, continuing..."
 
 # Step 1: Warm up NLP models
 echo "[railway_start] Warming up NLP models..."

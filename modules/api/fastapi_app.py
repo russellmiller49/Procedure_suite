@@ -16,7 +16,8 @@ from contextlib import asynccontextmanager
 
 # Load .env file early so API keys are available
 from dotenv import load_dotenv
-load_dotenv(override=True)
+# Prefer explicitly-exported environment variables over values in `.env`.
+load_dotenv(override=False)
 import subprocess
 import uuid
 from dataclasses import asdict
@@ -140,6 +141,16 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
                 exc,
                 exc_info=True,
             )
+
+    # Optional: pull registry model bundle from S3 (does not block startup on failure).
+    try:
+        from modules.registry.model_bootstrap import ensure_registry_model_bundle
+
+        ensure_registry_model_bundle()
+    except Exception as exc:
+        logging.getLogger(__name__).warning(
+            "Registry model bundle bootstrap skipped/failed: %s", exc
+        )
 
     yield  # Application runs
 
@@ -464,7 +475,16 @@ async def _run_ml_first_pipeline(
 @app.post("/v1/registry/run", response_model=RegistryResponse)
 async def registry_run(req: RegistryRequest) -> RegistryResponse:
     eng = RegistryEngine()
-    result = eng.run(req.note, explain=req.explain)
+    # For interactive/demo usage, best-effort extraction should return 200 whenever possible.
+    # RegistryEngine.run now attempts internal pruning on validation issues; if something still
+    # raises, fall back to an empty record rather than failing the request.
+    try:
+        result = eng.run(req.note, explain=req.explain)
+    except Exception as exc:
+        _logger.warning("registry_run failed; returning empty record", exc_info=True)
+        record = RegistryResponse()
+        record.evidence = {}
+        return record
     if isinstance(result, tuple):
         record, evidence = result
     else:
@@ -684,11 +704,20 @@ def _qapipeline_result_to_response(
         else:
             overall_status = "partial_success"
 
+    from modules.registry.model_runtime import get_registry_model_provenance
+
+    model_provenance = get_registry_model_provenance()
+
     return QARunResponse(
         overall_status=overall_status,
         registry=registry_result,
         reporter=reporter_result,
         coder=coder_result,
+        registry_output=(result.registry.data if result.registry.ok else None),
+        reporter_output=(result.reporter.data if result.reporter.ok else None),
+        coder_output=(result.coder.data if result.coder.ok else None),
+        model_backend=model_provenance.backend,
+        model_version=model_provenance.version,
         reporter_version=reporter_version,
         coder_version=coder_version,
         repo_branch=repo_branch,
