@@ -141,17 +141,53 @@ def load_registry_csv(path: Path, required_labels: list[str] = None) -> tuple[li
                 df[col] = 0
     else:
         # Infer columns (Training Phase)
-        # Exclude metadata columns that are not labels
-        exclude_cols = {"note_text", "verified_cpt_codes", "source_file", "original_split"}
-        label_cols = [c for c in df.columns if c not in exclude_cols]
+        metadata_cols = {
+            "note_text",
+            "verified_cpt_codes",
+            "source_file",
+            "original_split",
+            "group_id",
+            "style_type",
+            "original_index",
+        }
+
+        label_cols = []
+        skipped_cols = []
+
+        # Only keep binary numeric columns as labels to avoid metadata leakage
+        for col in df.columns:
+            if col in metadata_cols:
+                continue
+            numeric = pd.to_numeric(df[col], errors="coerce")
+            unique_vals = set(numeric.dropna().unique().tolist())
+            if unique_vals and unique_vals.issubset({0, 1}):
+                label_cols.append(col)
+            else:
+                skipped_cols.append(col)
+
+        if skipped_cols:
+            print(f"Skipping non-label columns (non-binary values): {skipped_cols}")
+
         # Sort for consistency
         label_cols.sort()
 
     if not label_cols:
         raise ValueError(f"Registry training file {path} has no label columns.")
 
-    # Extract label matrix in correct order
-    y = df[label_cols].fillna(0).astype(int).to_numpy()
+    # Extract label matrix in correct order, coercing safely to ints
+    label_df = df[label_cols].apply(pd.to_numeric, errors="coerce").fillna(0)
+
+    # Warn and clamp any unexpected values outside {0,1}
+    coerced = []
+    for col in label_cols:
+        unique_vals = set(label_df[col].unique().tolist())
+        if not unique_vals.issubset({0, 1}):
+            coerced.append(col)
+            label_df[col] = label_df[col].clip(0, 1)
+    if coerced:
+        print(f"WARNING: Clamped non-binary label values to [0,1] for columns: {coerced}")
+
+    y = label_df.astype(int).to_numpy()
 
     print(f"Loaded {len(texts)} samples with {len(label_cols)} labels from {path}")
     return texts, y, label_cols
