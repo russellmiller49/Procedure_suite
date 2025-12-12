@@ -50,10 +50,10 @@ class TrainingConfig:
     # Model
     model_name: str = "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext"
 
-    # Data paths (updated for cleaned_v3_balanced data - optimized for rare class coverage)
-    train_csv: Path = field(default_factory=lambda: Path("data/ml_training/cleaned_v3_balanced/registry_train_clean.csv"))
-    val_csv: Path = field(default_factory=lambda: Path("data/ml_training/cleaned_v3_balanced/registry_val_clean.csv"))
-    test_csv: Path = field(default_factory=lambda: Path("data/ml_training/cleaned_v3_balanced/registry_test_clean.csv"))
+    # Data paths (updated for data/ml_training flat files)
+    train_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_train.csv"))
+    val_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_val.csv"))
+    test_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_test.csv"))
     label_fields_json: Path = field(default_factory=lambda: Path("data/ml_training/registry_label_fields.json"))
     output_dir: Path = field(default_factory=lambda: Path("data/models/roberta_registry"))
 
@@ -875,23 +875,23 @@ def main():
         description="Train BiomedBERT for registry procedure classification"
     )
 
-    # Data paths (defaults to cleaned_v3_balanced - output of Smart_splitter.py)
+    # Data paths (updated defaults)
     parser.add_argument(
         "--train-csv",
         type=Path,
-        default=Path("data/ml_training/cleaned_v3_balanced/registry_train_clean.csv"),
+        default=Path("data/ml_training/registry_train.csv"),
         help="Path to training CSV",
     )
     parser.add_argument(
         "--val-csv",
         type=Path,
-        default=Path("data/ml_training/cleaned_v3_balanced/registry_val_clean.csv"),
+        default=Path("data/ml_training/registry_val.csv"),
         help="Path to validation CSV (optional, overrides automatic split)",
     )
     parser.add_argument(
         "--test-csv",
         type=Path,
-        default=Path("data/ml_training/cleaned_v3_balanced/registry_test_clean.csv"),
+        default=Path("data/ml_training/registry_test.csv"),
         help="Path to test CSV",
     )
     parser.add_argument(

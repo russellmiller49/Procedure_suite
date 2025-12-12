@@ -31,3 +31,6 @@ data/models/
 *.pt
 *.onnx
 runs/
+
+# Explicit: prevent committing the large distill checkpoint if it exists locally
+data/models/RoBERTa-base-PM-M3-Voc-distill/RoBERTa-base-PM-M3-Voc-distill-hf/pytorch_model.bin
