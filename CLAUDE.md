@@ -429,11 +429,11 @@ procedure-suite/
 │   │   └── fastapi_app.py             # Main FastAPI backend (NOT api/app.py!)
 │   ├── coder/
 │   │   ├── application/
-│   │   │   └── coding_service.py      # CodingService - main entry point
+│   │   │   ├── coding_service.py      # CodingService - main entry point
+│   │   │   └── smart_hybrid_policy.py # SmartHybridOrchestrator
 │   │   ├── adapters/
 │   │   │   └── registry_coder.py      # Registry-based coder
 │   │   └── domain/
-│   │       └── smart_hybrid.py        # SmartHybridOrchestrator
 │   ├── registry/
 │   │   ├── application/
 │   │   │   └── registry_service.py    # RegistryService - main entry point

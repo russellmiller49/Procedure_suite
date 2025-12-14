@@ -16,7 +16,9 @@ This project is typically deployed as **two Railway services**:
 ### Required env vars (production)
 
 - `MODEL_BACKEND=onnx`
-- `MODEL_BUNDLE_S3_URI_ONNX=s3://procedure-suite-models/deploy/registry/<version>/onnx/bundle.tar.gz`
+- `MODEL_BUNDLE_S3_URI_ONNX` (either a tarball bundle OR an S3 prefix of artifacts)
+  - Tarball bundle: `s3://procedure-suite-models/deploy/registry/<version>/onnx/bundle.tar.gz`
+  - Classifiers prefix (auto-picks newest `model_int8.onnx` under the prefix): `s3://procedure-suite-models/classifiers/`
 - AWS credentials + region (via Railway env vars):
   - `AWS_ACCESS_KEY_ID`
   - `AWS_SECRET_ACCESS_KEY`
@@ -33,6 +35,10 @@ Common:
 - `MODEL_BACKEND=pytorch`
 - `MODEL_BUNDLE_S3_URI_PYTORCH=s3://procedure-suite-models/deploy/registry/<version>/pytorch/bundle.tar.gz`
 
+If you want to run ONNX locally (no PyTorch dependency):
+- `MODEL_BACKEND=onnx`
+- `MODEL_BUNDLE_S3_URI_ONNX=s3://procedure-suite-models/classifiers/`
+
 ## Frontend (IP_website)
 
 - `PROC_API_URL=https://<your-backend>.up.railway.app`
@@ -40,4 +46,3 @@ Common:
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-
