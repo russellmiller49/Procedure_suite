@@ -1,5 +1,7 @@
 """Domain rules for code hierarchy and family consistency.
 
+NOTE: This module is now a package to support submodules (e.g. registry_to_cpt).
+
 This module provides standalone functions for enforcing CPT code family rules
 that can be used by both the legacy engine and the new hexagonal architecture.
 """
