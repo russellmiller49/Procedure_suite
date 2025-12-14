@@ -62,7 +62,9 @@ def focus_note_for_extraction(note_text: str) -> tuple[str, dict[str, Any]]:
     Guardrail: RAW-ML auditing must always run on the full raw note text and
     must never use the focused/summarized text.
     """
-    return note_text, {"status": "noop"}
+    from modules.registry.extraction.focus import focus_note_for_extraction as _focus
+
+    return _focus(note_text)
 
 
 def _apply_granular_up_propagation(record: RegistryRecord) -> tuple[RegistryRecord, list[str]]:
@@ -661,13 +663,31 @@ class RegistryService:
         elif extraction_engine == "agents_focus_then_engine":
             # Phase 2: focusing helper is optional; guardrail is that RAW-ML always
             # runs on the raw note text.
-            focused_text, focus_meta = focus_note_for_extraction(note_text)
-            meta["focus_meta"] = focus_meta
-            text_for_extraction = focused_text or note_text
+            try:
+                focused_text, focus_meta = focus_note_for_extraction(note_text)
+                meta["focus_meta"] = focus_meta
+                text_for_extraction = focused_text or note_text
+            except Exception as exc:
+                warnings.append(f"focus_note_for_extraction failed ({exc}); using raw note")
+                meta["focus_meta"] = {"status": "failed", "error": str(exc)}
+                text_for_extraction = note_text
         elif extraction_engine == "agents_structurer":
-            raise NotImplementedError(
-                "REGISTRY_EXTRACTION_ENGINE=agents_structurer is not implemented yet"
-            )
+            try:
+                from modules.registry.extraction.structurer import structure_note_to_registry_record
+
+                record, struct_meta = structure_note_to_registry_record(note_text, note_id=note_id)
+                meta["structurer_meta"] = struct_meta
+
+                record, granular_warnings = _apply_granular_up_propagation(record)
+                warnings.extend(granular_warnings)
+
+                return record, warnings, meta
+            except NotImplementedError as exc:
+                warnings.append(str(exc))
+                meta["structurer_meta"] = {"status": "not_implemented"}
+            except Exception as exc:
+                warnings.append(f"Structurer failed ({exc}); falling back to engine")
+                meta["structurer_meta"] = {"status": "failed", "error": str(exc)}
         else:
             warnings.append(f"Unknown REGISTRY_EXTRACTION_ENGINE='{extraction_engine}', using engine")
 

@@ -73,7 +73,7 @@ modules/coder/
 │   ├── llm/                    # LLM advisor adapter
 │   ├── nlp/                    # Keyword mapping, negation detection
 │   └── ml_ranker.py            # ML prediction adapter
-├── domain_rules.py             # NCCI bundling, EBUS rules
+├── domain_rules/               # NCCI bundling + deterministic registry→CPT
 ├── rules_engine.py             # Rule-based code inference
 └── engine.py                   # Legacy coder (deprecated)
 ```
@@ -139,6 +139,14 @@ modules/registry/
 4. Reconciliation (merge CPT-derived + LLM-extracted)
 5. Validation (IP_Registry.json schema)
 6. ML Audit (compare CPT-derived vs ML predictions)
+
+**Target: Extraction-First Registry Flow (feature-flagged)**
+1. Registry extraction from raw note text (no CPT hints)
+2. Granular → aggregate propagation (`derive_procedures_from_granular`)
+3. Deterministic RegistryRecord → CPT derivation (no note text)
+4. RAW-ML auditor calls `MLCoderPredictor.classify_case(raw_note_text)` directly (no orchestrator/rules)
+5. Compare deterministic CPT vs RAW-ML audit set and report discrepancies
+6. Optional guarded self-correction loop (default off)
 
 ### 5. Agents Module (`modules/agents/`)
 

@@ -8,7 +8,11 @@ class ParserAgent:
         "HPI",
         "History",
         "Procedure",
+        "Technique",
         "Findings",
+        "Indication",
+        "Impression",
+        "Specimens",
         "Sedation",
         "Complications",
         "Disposition",
@@ -25,7 +29,7 @@ class ParserAgent:
             header = match.group(1).strip()
             start = match.end()
             end = matches[idx + 1].start() if idx + 1 < len(matches) else len(text)
-            seg_type = header if header in self.headings else "unknown"
+            seg_type = next((h for h in self.headings if h.lower() == header.lower()), "unknown")
             seg_text = text[start:end].strip()
             segments.append(
                 Segment(
@@ -33,7 +37,6 @@ class ParserAgent:
                     text=seg_text,
                     start_char=start,
                     end_char=end,
-                    spans=None,
                 )
             )
         # Fallback: treat entire note as one segment
@@ -44,7 +47,6 @@ class ParserAgent:
                     text=text,
                     start_char=0,
                     end_char=len(text),
-                    spans=None,
                 )
             )
         trace = Trace(
@@ -53,4 +55,4 @@ class ParserAgent:
             confounders_checked=[],
             confidence=1.0,
         )
-        return ParserOut(segments=segments, entities=[], trace=trace)
+        return ParserOut(note_id=parser_in.note_id, segments=segments, entities=[], trace=trace)
