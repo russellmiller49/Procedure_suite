@@ -235,6 +235,9 @@ class CodingRulesEngine:
             discard("31632", "R008_ADDITIONAL_LOBE", "Less than 2 lobes")
 
         # ========== RULE 9: PARENCHYMAL TBBx (31628) ==========
+        # 31628 can be supported either by structured registry evidence OR strong note-body
+        # evidence (canonical KB group detection). Registry evidence is preferred when present,
+        # but tests and note-only coding flows rely on text evidence as well.
         has_parenchymal_tbbx = False
         try:
             num_tbbx = registry.get("bronch_num_tbbx")
@@ -246,6 +249,10 @@ class CodingRulesEngine:
                 has_parenchymal_tbbx = int(num_tbbx) > 0
         except Exception:
             has_parenchymal_tbbx = False
+
+        # Text-only evidence path (e.g., "forceps biopsies", "transbronchial biopsy", etc.)
+        if "bronchoscopy_biopsy_parenchymal" in groups:
+            has_parenchymal_tbbx = True
 
         tbbx_tool = registry.get("bronch_tbbx_tool") or context.registry_get(
             "procedures_performed", "transbronchial_biopsy", "forceps_type"
@@ -322,7 +329,9 @@ class CodingRulesEngine:
             "mucus plug aspiration", "aspirated clot", "clot aspiration",
             "clearance of secretions", "removal of secretions"
         ]
-        has_aspiration = any(t in text_lower for t in aspiration_terms)
+        has_aspiration = any(t in text_lower for t in aspiration_terms) or (
+            "bronchoscopy_therapeutic_aspiration" in groups
+        )
         if not has_aspiration:
             discard("31645", "R013_ASPIRATION", "No aspiration evidence")
             discard("31646", "R013_ASPIRATION", "No aspiration evidence")
