@@ -250,6 +250,8 @@ def classify_procedure_families(note_text: str) -> Set[str]:
         r"\bebus\b.*(?:tbna|sampl|aspirat|needle|biops)",
         r"(?:tbna|sampl|aspirat).*\bebus\b",
         r"linear\s+(?:ebus|endobronchial ultrasound)",
+        r"ebus[-\s]*findings",
+        r"overall\s+rose\s+diagnosis",
         # Station sampling - require close proximity and exclude negatives
         r"station\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l).{0,30}(?:sampl|pass|needle|aspirat)",
         r"(?:sampl|pass|needle|aspirat).{0,30}station\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l)",
@@ -349,6 +351,8 @@ def classify_procedure_families(note_text: str) -> Set[str]:
     # Only add STENT if there's a procedure AND it's not history-only (unless there's also a new procedure)
     if has_stent_procedure and not is_history_only:
         families.add("STENT")
+        # Airway stenting/removal is a CAO intervention family in this registry.
+        families.add("CAO")
     elif has_stent_procedure and is_history_only:
         # Check if there's explicit new stent action beyond the history mention
         new_action_patterns = [
@@ -358,6 +362,7 @@ def classify_procedure_families(note_text: str) -> Set[str]:
         ]
         if any(re.search(pat, proc_lowered) for pat in new_action_patterns):
             families.add("STENT")
+            families.add("CAO")
 
     # --- PLEURAL Detection ---
     # Be specific to avoid false positives from EBUS needle "aspiration"
@@ -425,11 +430,12 @@ def classify_procedure_families(note_text: str) -> Set[str]:
     # --- BAL Detection ---
     bal_indicators = [
         r"bronchoalveolar\s+lavage",
+        r"bronchial\s+alveolar\s+lavage",
         r"\bbal\b.*(?:perform|obtain|sent|collect)",
         r"(?:perform|obtain).*\bbal\b",
-        r"lavage\s+(?:perform|sent|obtain|specimen)",
+        r"lavage.{0,20}(?:perform|performed|sent|obtain|obtained|specimen|collect|collected)",
     ]
-    if any(re.search(pat, proc_lowered) for pat in bal_indicators):
+    if any(re.search(pat, proc_lowered) for pat in bal_indicators) or any(re.search(pat, lowered) for pat in bal_indicators):
         families.add("BAL")
 
     # --- BIOPSY Detection (general transbronchial/endobronchial) ---
@@ -635,6 +641,10 @@ class RegistryEngine:
 
         merged_data = self._merge_llm_and_seed(llm_data, seed_data)
 
+        # Seed linear EBUS station list early so downstream normalization and heuristics can use it.
+        if station_list and "EBUS" in procedure_families and not merged_data.get("linear_ebus_stations"):
+            merged_data["linear_ebus_stations"] = station_list
+
         # Apply field-specific normalization/postprocessing before validation
         for field, func in POSTPROCESSORS.items():
             if field in merged_data:
@@ -649,9 +659,6 @@ class RegistryEngine:
         # EBUS-TBNA (transbronchial needle aspiration) is NOT the same as TBBx (transbronchial biopsy)
         # For pure EBUS staging, bronch_num_tbbx and bronch_tbbx_tool should be null
         self._apply_ebus_only_bronch_cleanup(merged_data, note_text, procedure_families)
-
-        if station_list and not merged_data.get("linear_ebus_stations") and "EBUS" in procedure_families:
-            merged_data["linear_ebus_stations"] = station_list
 
         # Validate EBUS station fields: filter out any hallucinated stations not in the text
         if "EBUS" in procedure_families:
@@ -865,7 +872,7 @@ class RegistryEngine:
     def _extract_linear_station_spans(self, text: str) -> tuple[list[str], list[Span]]:
         """Extract linear EBUS station mentions and their spans from raw text."""
         # Require a boundary before the station number to avoid matching inside "12R" -> "2R"
-        pattern = r"(?mi)(?:station\s*)?(?<![0-9A-Za-z])(2R|2L|4R|4L|7|10R|10L|11R|11L)\b\s*[:\-]?"
+        pattern = r"(?mi)(?:station\s*)?(?<![0-9A-Za-z])(2R|2L|4R|4L|7|10R|10L|11R|11L)(?:[sSiI])?\b\s*[:\-]?"
         stations: list[str] = []
         spans: list[Span] = []
         for match in re.finditer(pattern, text):
@@ -897,6 +904,8 @@ class RegistryEngine:
                     rf"station\s+7\s*[:\-]",  # "station 7:" or "station 7-"
                     rf"station\s*7\s+(?:was\s+)?(?:sampl|biops|needle|pass|aspirat)",  # "station 7 was sampled"
                     rf"subcarinal\s+(?:lymph\s+)?node",  # "subcarinal node" (station 7 synonym)
+                    rf"\b7\b[^.\n]{{0,40}}subcarinal",  # "7 (subcarinal) node"
+                    rf"subcarinal[^.\n]{{0,40}}\b7\b",  # "subcarinal ... 7"
                     rf"(?:sampl|biops|needle|pass).{{0,30}}station\s*7\b",  # sampling context before station 7
                 ]
             else:
@@ -1120,6 +1129,21 @@ class RegistryEngine:
         # --- EBUS Heuristics (gated by procedure family) ---
         # Only extract EBUS-specific data if this is an EBUS procedure
         if is_ebus_procedure:
+            station_order = {
+                "2R": 0,
+                "2L": 1,
+                "4R": 2,
+                "4L": 3,
+                "7": 4,
+                "10R": 5,
+                "10L": 6,
+                "11R": 7,
+                "11L": 8,
+            }
+
+            def _sort_stations(stations: set[str]) -> list[str]:
+                return sorted({s.upper() for s in stations if s}, key=lambda s: (station_order.get(s, 999), s))
+
             # ebus_scope_brand
             if "Olympus" in text and ("BF-UC" in text or "EBUS" in text):
                 data["ebus_scope_brand"] = "Olympus"
@@ -1136,8 +1160,25 @@ class RegistryEngine:
                 if any(kw in snippet for kw in ["pass", "sample", "needle", "tbna", "aspirat"]):
                     if "not sampled" not in snippet:
                         stations_found.add(match.group(1).upper())
+            if not stations_found and data.get("linear_ebus_stations"):
+                # Fallback: if we have station numbers and the note indicates TBNA sampling,
+                # treat the documented stations as sampled.
+                lowered = text.lower()
+                has_sampling = any(
+                    kw in lowered
+                    for kw in [
+                        "tbna",
+                        "transbronchial needle",
+                        "needle aspiration",
+                        "needle aspirat",
+                        "needle pass",
+                        "passes",
+                    ]
+                )
+                if has_sampling:
+                    stations_found.update(data.get("linear_ebus_stations") or [])
             if stations_found:
-                data["ebus_stations_sampled"] = sorted(list(stations_found))
+                data["ebus_stations_sampled"] = _sort_stations(stations_found)
 
             # Station-level detail (size, passes, rose_result) when present
             detail_entries = data.get("ebus_stations_detail") or []
@@ -1160,6 +1201,10 @@ class RegistryEngine:
                     entry = detail_by_station.setdefault(station, {"station": station})
                     entry["rose_result"] = rose_val
 
+            # Ensure each planned station has a detail entry (even if only station is known).
+            for station in (data.get("linear_ebus_stations") or []):
+                detail_by_station.setdefault(station, {"station": station})
+
             if detail_by_station:
                 for entry in detail_by_station.values():
                     entry.setdefault("shape", None)
@@ -1168,12 +1213,16 @@ class RegistryEngine:
                     entry.setdefault("chs_present", None)
                     entry.setdefault("appearance_category", None)
                     entry.setdefault("rose_result", entry.get("rose_result", None))
-                data["ebus_stations_detail"] = list(detail_by_station.values())
+                data["ebus_stations_detail"] = [
+                    detail_by_station[st]
+                    for st in _sort_stations(set(detail_by_station.keys()))
+                    if st in detail_by_station
+                ]
                 if data.get("ebus_stations_sampled"):
                     merged = set(data["ebus_stations_sampled"]) | set(detail_by_station.keys())
-                    data["ebus_stations_sampled"] = sorted(merged)
+                    data["ebus_stations_sampled"] = _sort_stations(merged)
                 else:
-                    data["ebus_stations_sampled"] = sorted(detail_by_station.keys())
+                    data["ebus_stations_sampled"] = _sort_stations(set(detail_by_station.keys()))
 
             # ebus_needle_gauge - expanded pattern to capture "22 gauge needle" formats
             # Schema enum: [19, 21, 22, 25] (integers, not strings)

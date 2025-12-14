@@ -28,6 +28,7 @@ CUSTOM_FIELD_TYPES[("RegistryRecord", "pleural_procedures", "ipc")] = IPCProcedu
 CUSTOM_FIELD_TYPES[("RegistryRecord", "clinical_context")] = ClinicalContext
 CUSTOM_FIELD_TYPES[("RegistryRecord", "patient_demographics")] = PatientDemographics
 CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "airway_stent")] = AirwayStentProcedure
+CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "linear_ebus", "stations_detail")] = list[dict[str, Any]]
 _MODEL_CACHE: dict[tuple[str, ...], type[BaseModel]] = {}
 
 
@@ -113,6 +114,22 @@ def _build_registry_model() -> type[BaseModel]:
         evidence: dict[str, list[Span]] = Field(default_factory=dict)
         version: str | None = None
         procedure_families: list[str] = Field(default_factory=list)
+        ebus_systematic_staging: bool | None = Field(default=None, exclude=True)
+        ebus_scope_brand: str | None = Field(default=None, exclude=True)
+        pleural_procedure_type: str | None = Field(default=None, exclude=True)
+        pleural_side: str | None = Field(default=None, exclude=True)
+        pleural_fluid_volume: str | float | None = Field(default=None, exclude=True)
+        pleural_volume_drained_ml: float | None = Field(default=None, exclude=True)
+        pleural_fluid_appearance: str | None = Field(default=None, exclude=True)
+        pleural_guidance: str | None = Field(default=None, exclude=True)
+        pleural_intercostal_space: str | None = Field(default=None, exclude=True)
+        pleural_catheter_type: str | None = Field(default=None, exclude=True)
+        pleural_pleurodesis_agent: str | None = Field(default=None, exclude=True)
+        pleural_opening_pressure_measured: bool | None = Field(default=None, exclude=True)
+        pleural_opening_pressure_cmh2o: float | None = Field(default=None, exclude=True)
+        pleural_thoracoscopy_findings: str | None = Field(default=None, exclude=True)
+        bronch_num_tbbx: int | None = Field(default=None, exclude=True)
+        bronch_tbbx_tool: str | None = Field(default=None, exclude=True)
 
         # Granular per-site data (EBUS stations, navigation targets, CAO sites, etc.)
         granular_data: EnhancedRegistryGranularData | None = Field(
@@ -158,6 +175,149 @@ def _build_registry_model() -> type[BaseModel]:
                 values["granular_data"] = granular_dict
             else:
                 values.pop("granular_data", None)
+            return values
+
+        @model_validator(mode="before")
+        @classmethod
+        def map_pleural_legacy_fields(cls, values: Any):
+            """Map legacy pleural flat fields <-> pleural_procedures for compatibility."""
+            if not isinstance(values, dict):
+                return values
+
+            pleural_type = values.get("pleural_procedure_type")
+
+            pleural_raw = values.get("pleural_procedures")
+            pleural_dict: dict[str, Any] | None = None
+            if isinstance(pleural_raw, BaseModel):
+                pleural_dict = pleural_raw.model_dump()
+            elif isinstance(pleural_raw, dict):
+                pleural_dict = dict(pleural_raw)
+
+            def _map_guidance_to_schema(guidance: Any) -> str | None:
+                if guidance is None:
+                    return None
+                if not isinstance(guidance, str):
+                    return None
+                normalized = guidance.strip()
+                if not normalized:
+                    return None
+                if normalized.lower() == "blind":
+                    return "None/Landmark"
+                return normalized
+
+            def _infer_legacy_from_nested(pleural: dict[str, Any]) -> dict[str, Any]:
+                # Prefer thoracentesis over other pleural procedures for the legacy flat field.
+                if isinstance(pleural.get("thoracentesis"), dict) and pleural["thoracentesis"].get("performed"):
+                    thora = pleural["thoracentesis"]
+                    legacy: dict[str, Any] = {"pleural_procedure_type": "Thoracentesis"}
+                    legacy["pleural_side"] = thora.get("side")
+                    guidance = thora.get("guidance")
+                    if guidance == "None/Landmark":
+                        legacy["pleural_guidance"] = "Blind"
+                    else:
+                        legacy["pleural_guidance"] = guidance
+                    legacy["pleural_opening_pressure_cmh2o"] = thora.get("opening_pressure_cmh2o")
+                    if thora.get("opening_pressure_cmh2o") is not None:
+                        legacy["pleural_opening_pressure_measured"] = True
+                    return legacy
+
+                if isinstance(pleural.get("chest_tube"), dict) and pleural["chest_tube"].get("performed"):
+                    tube = pleural["chest_tube"]
+                    action = tube.get("action")
+                    legacy_type = "Chest Tube Removal" if action == "Removal" else "Chest Tube"
+                    legacy = {"pleural_procedure_type": legacy_type}
+                    legacy["pleural_side"] = tube.get("side")
+                    guidance = tube.get("guidance")
+                    if guidance == "None":
+                        legacy["pleural_guidance"] = "Blind"
+                    else:
+                        legacy["pleural_guidance"] = guidance
+                    return legacy
+
+                if isinstance(pleural.get("ipc"), dict) and pleural["ipc"].get("performed"):
+                    ipc = pleural["ipc"]
+                    action = ipc.get("action")
+                    if action == "Removal":
+                        legacy_type = "Tunneled Catheter Removal"
+                    else:
+                        legacy_type = "Tunneled Catheter"
+                    legacy = {"pleural_procedure_type": legacy_type}
+                    legacy["pleural_side"] = ipc.get("side")
+                    return legacy
+
+                if isinstance(pleural.get("medical_thoracoscopy"), dict) and pleural["medical_thoracoscopy"].get("performed"):
+                    thor = pleural["medical_thoracoscopy"]
+                    legacy = {"pleural_procedure_type": "Medical Thoracoscopy"}
+                    legacy["pleural_side"] = thor.get("side")
+                    return legacy
+
+                if isinstance(pleural.get("pleurodesis"), dict) and pleural["pleurodesis"].get("performed"):
+                    pleuro = pleural["pleurodesis"]
+                    legacy = {"pleural_procedure_type": "Chemical Pleurodesis"}
+                    legacy["pleural_side"] = pleuro.get("side")
+                    return legacy
+
+                return {}
+
+            def _build_nested_from_legacy() -> dict[str, Any]:
+                base: dict[str, Any] = {"performed": True}
+                if values.get("pleural_side") is not None:
+                    base["side"] = values.get("pleural_side")
+
+                guidance = _map_guidance_to_schema(values.get("pleural_guidance"))
+                if guidance is not None:
+                    base["guidance"] = guidance
+
+                if pleural_type == "Thoracentesis":
+                    thora = dict(base)
+                    if values.get("pleural_volume_drained_ml") is not None:
+                        thora["volume_removed_ml"] = values.get("pleural_volume_drained_ml")
+                    if values.get("pleural_opening_pressure_cmh2o") is not None:
+                        thora["opening_pressure_cmh2o"] = values.get("pleural_opening_pressure_cmh2o")
+                        thora["manometry_performed"] = True
+                    return {"thoracentesis": thora}
+
+                if pleural_type in {"Chest Tube", "Chest Tube Removal"}:
+                    tube = dict(base)
+                    tube["action"] = "Removal" if pleural_type == "Chest Tube Removal" else "Insertion"
+                    return {"chest_tube": tube}
+
+                if isinstance(pleural_type, str) and pleural_type.startswith("Tunneled"):
+                    ipc = {"performed": True}
+                    if values.get("pleural_side") is not None:
+                        ipc["side"] = values.get("pleural_side")
+                    ipc["action"] = "Insertion"
+                    return {"ipc": ipc}
+
+                if pleural_type == "Medical Thoracoscopy":
+                    thor = {"performed": True}
+                    if values.get("pleural_side") is not None:
+                        thor["side"] = values.get("pleural_side")
+                    return {"medical_thoracoscopy": thor}
+
+                if pleural_type == "Chemical Pleurodesis":
+                    pleuro = {"performed": True}
+                    if values.get("pleural_side") is not None:
+                        pleuro["side"] = values.get("pleural_side")
+                    if values.get("pleural_pleurodesis_agent") is not None:
+                        pleuro["agent"] = values.get("pleural_pleurodesis_agent")
+                    return {"pleurodesis": pleuro}
+
+                return {}
+
+            # Legacy -> nested (only if nested missing)
+            if pleural_type and not pleural_dict:
+                built = _build_nested_from_legacy()
+                if built:
+                    values["pleural_procedures"] = built
+
+            # Nested -> legacy (only fill missing flat fields)
+            if pleural_dict and not pleural_type:
+                inferred = _infer_legacy_from_nested(pleural_dict)
+                for key, val in inferred.items():
+                    if values.get(key) is None and val is not None:
+                        values[key] = val
+
             return values
 
     RegistryRecord.__name__ = "RegistryRecord"

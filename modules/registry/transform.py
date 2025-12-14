@@ -48,6 +48,29 @@ def _normalize_transbronchial_forceps_type(value: Any) -> str | None:
     return None
 
 
+def _format_ebus_needle_gauge(value: Any) -> str | None:
+    """Format EBUS needle gauge for the nested schema (e.g., '22G')."""
+    if value is None:
+        return None
+
+    if isinstance(value, int):
+        return f"{value}G"
+
+    if isinstance(value, str):
+        text = value.strip().upper()
+        if not text:
+            return None
+        if text in {"19G", "21G", "22G", "25G"}:
+            return text
+        import re
+
+        match = re.search(r"\b(19|21|22|25)\b", text)
+        if match:
+            return f"{match.group(1)}G"
+
+    return None
+
+
 def build_nested_registry_payload(data: dict[str, Any]) -> dict[str, Any]:
     """Return a copy of the flat registry payload with nested sections populated."""
     payload = dict(data)
@@ -124,17 +147,28 @@ def build_nested_registry_payload(data: dict[str, Any]) -> dict[str, Any]:
 
 
 def _build_providers(data: dict[str, Any]) -> dict[str, Any]:
+    providers: dict[str, Any] = {}
+
     attending = data.get("attending_name")
-    if not attending:
-        return {}
-    providers: dict[str, Any] = {"attending_name": attending}
-    providers["attending_npi"] = data.get("attending_npi")
-    providers["fellow_name"] = data.get("fellow_name")
-    providers["assistant_name"] = (data.get("assistant_name") or (data.get("assistant_names") or [None])[0])
-    # Use normalized assistant_role if available
-    providers["assistant_role"] = data.get("assistant_role")
-    providers["trainee_present"] = data.get("trainee_present")
-    providers["rose_present"] = data.get("ebus_rose_available")
+    if attending:
+        providers["attending_name"] = attending
+
+    if data.get("attending_npi") is not None:
+        providers["attending_npi"] = data.get("attending_npi")
+    if data.get("fellow_name") is not None:
+        providers["fellow_name"] = data.get("fellow_name")
+
+    assistant = data.get("assistant_name") or (data.get("assistant_names") or [None])[0]
+    if assistant is not None:
+        providers["assistant_name"] = assistant
+    if data.get("assistant_role") is not None:
+        providers["assistant_role"] = data.get("assistant_role")
+    if data.get("trainee_present") is not None:
+        providers["trainee_present"] = data.get("trainee_present")
+
+    if data.get("ebus_rose_available") is not None:
+        providers["rose_present"] = data.get("ebus_rose_available")
+
     return providers
 
 
@@ -242,8 +276,9 @@ def _build_procedures_performed(data: dict[str, Any], families: set[str]) -> dic
         linear: dict[str, Any] = {"performed": True}
         if data.get("ebus_stations_sampled"):
             linear["stations_sampled"] = data.get("ebus_stations_sampled")
-        if data.get("ebus_needle_gauge"):
-            linear["needle_gauge"] = data.get("ebus_needle_gauge")
+        gauge = _format_ebus_needle_gauge(data.get("ebus_needle_gauge"))
+        if gauge:
+            linear["needle_gauge"] = gauge
         if data.get("ebus_needle_type"):
             linear["needle_type"] = data.get("ebus_needle_type")
         if data.get("ebus_elastography_used") is not None:
