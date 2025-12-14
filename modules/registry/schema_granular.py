@@ -931,6 +931,31 @@ def derive_procedures_from_granular(
     procedures = dict(existing_procedures) if existing_procedures else {}
     warnings: list[str] = []
 
+    def _normalize_sampling_tool(tool: str) -> str:
+        s = str(tool).strip()
+        s_lower = s.lower()
+        if "needle" in s_lower or "tbna" in s_lower:
+            return "Needle"
+        if "forceps" in s_lower:
+            return "Forceps"
+        if "brush" in s_lower:
+            return "Brush"
+        if "cryo" in s_lower:
+            return "Cryoprobe"
+        return s
+
+    def _extract_station_tokens(text: str) -> list[str]:
+        """Extract IASLC station tokens like 4R, 7, 11L from free text."""
+        import re
+
+        matches = re.findall(r"\b(2R|2L|3p|4R|4L|7|10R|10L|11R|11L|12R|12L)\b", text, flags=re.IGNORECASE)
+        normalized: list[str] = []
+        for m in matches:
+            token = m.upper()
+            if token not in normalized:
+                normalized.append(token)
+        return normalized
+
     # ==========================================================================
     # 1. Derive transbronchial_cryobiopsy from cryobiopsy_sites
     # ==========================================================================
@@ -1026,15 +1051,40 @@ def derive_procedures_from_granular(
 
         if sampled_stations and not linear_ebus.get("stations_sampled"):
             linear_ebus["stations_sampled"] = sampled_stations
-            if not linear_ebus.get("performed"):
-                linear_ebus["performed"] = True
-            procedures["linear_ebus"] = linear_ebus
+
+        if not linear_ebus.get("performed"):
+            linear_ebus["performed"] = True
+
+        procedures["linear_ebus"] = linear_ebus
 
     # ==========================================================================
     # 4. Derive BAL, brushings from specimens_collected
     # ==========================================================================
     specimens = granular_data.get("specimens_collected", [])
     if specimens:
+        # EBUS-TBNA specimens can serve as backup evidence for linear_ebus
+        ebus_tbna_specimens = [
+            s for s in specimens
+            if s.get("source_procedure") == "EBUS-TBNA"
+        ]
+        if ebus_tbna_specimens:
+            linear_ebus = procedures.get("linear_ebus") or {}
+            if not linear_ebus.get("performed"):
+                linear_ebus["performed"] = True
+            if not linear_ebus.get("stations_sampled"):
+                stations: list[str] = []
+                for spec in ebus_tbna_specimens:
+                    loc = spec.get("source_location") or ""
+                    stations.extend(_extract_station_tokens(str(loc)))
+                if stations:
+                    # preserve order while de-duping
+                    deduped: list[str] = []
+                    for st in stations:
+                        if st not in deduped:
+                            deduped.append(st)
+                    linear_ebus["stations_sampled"] = deduped
+            procedures["linear_ebus"] = linear_ebus
+
         # BAL
         bal_specimens = [
             s for s in specimens
@@ -1051,6 +1101,19 @@ def derive_procedures_from_granular(
                         bal["location"] = loc
                         break
                 procedures["bal"] = bal
+
+        # Bronchial wash
+        wash_specimens = [
+            s for s in specimens
+            if s.get("source_procedure") == "Bronchial wash"
+        ]
+        if wash_specimens:
+            bronchial_wash = procedures.get("bronchial_wash") or {}
+            if not bronchial_wash.get("performed"):
+                bronchial_wash["performed"] = True
+            if not bronchial_wash.get("location"):
+                bronchial_wash["location"] = wash_specimens[0].get("source_location")
+            procedures["bronchial_wash"] = bronchial_wash
 
         # Brushings
         brushing_specimens = [
@@ -1077,38 +1140,217 @@ def derive_procedures_from_granular(
                 brushings["number_of_samples"] = total_samples
                 procedures["brushings"] = brushings
 
+        # Endobronchial biopsy
+        ebx_specimens = [
+            s for s in specimens
+            if s.get("source_procedure") == "Endobronchial biopsy"
+        ]
+        if ebx_specimens:
+            ebx = procedures.get("endobronchial_biopsy") or {}
+            if not ebx.get("performed"):
+                ebx["performed"] = True
+            if not ebx.get("locations"):
+                ebx_locations = [
+                    s.get("source_location")
+                    for s in ebx_specimens
+                    if s.get("source_location")
+                ]
+                if ebx_locations:
+                    ebx["locations"] = ebx_locations
+            if not ebx.get("number_of_samples"):
+                ebx_samples = sum((s.get("specimen_count") or 0) for s in ebx_specimens)
+                if ebx_samples:
+                    ebx["number_of_samples"] = ebx_samples
+            procedures["endobronchial_biopsy"] = ebx
+
+        # Transbronchial biopsy (including navigation-guided biopsy specimens)
+        tbbx_specimens = [
+            s for s in specimens
+            if s.get("source_procedure") in ("Transbronchial biopsy", "Navigation biopsy")
+        ]
+        if tbbx_specimens:
+            tbbx = procedures.get("transbronchial_biopsy") or {}
+            if not tbbx.get("performed"):
+                tbbx["performed"] = True
+            if not tbbx.get("locations"):
+                tbbx_locations = [
+                    s.get("source_location")
+                    for s in tbbx_specimens
+                    if s.get("source_location")
+                ]
+                if tbbx_locations:
+                    tbbx["locations"] = tbbx_locations
+            if not tbbx.get("number_of_samples"):
+                tbbx_samples = sum((s.get("specimen_count") or 0) for s in tbbx_specimens)
+                if tbbx_samples:
+                    tbbx["number_of_samples"] = tbbx_samples
+            procedures["transbronchial_biopsy"] = tbbx
+
+        # Navigation biopsy specimens imply navigation was performed
+        if any(s.get("source_procedure") == "Navigation biopsy" for s in specimens):
+            nav_bronch = procedures.get("navigational_bronchoscopy") or {}
+            if not nav_bronch.get("performed"):
+                nav_bronch["performed"] = True
+            procedures["navigational_bronchoscopy"] = nav_bronch
+
     # ==========================================================================
     # 5. Derive navigational_bronchoscopy.sampling_tools_used from navigation_targets
     # ==========================================================================
     if navigation_targets:
         nav_bronch = procedures.get("navigational_bronchoscopy") or {}
+        if not nav_bronch.get("performed"):
+            nav_bronch["performed"] = True
         existing_tools = nav_bronch.get("sampling_tools_used") or []
 
-        if not existing_tools:
-            # Collect all tools from all targets
-            all_tools: set[str] = set()
-            for target in navigation_targets:
-                tools = target.get("sampling_tools_used", [])
-                if tools:
-                    for tool in tools:
-                        # Normalize tool names
-                        if "needle" in tool.lower():
-                            all_tools.add("Needle")
-                        elif "forceps" in tool.lower():
-                            all_tools.add("Forceps")
-                        elif "brush" in tool.lower():
-                            all_tools.add("Brush")
-                        elif "cryo" in tool.lower():
-                            all_tools.add("Cryoprobe")
-                        else:
-                            all_tools.add(tool)
+        # Collect all tools from all targets and union with any existing list
+        all_tools: set[str] = {_normalize_sampling_tool(t) for t in existing_tools if t}
+        for target in navigation_targets:
+            tools = target.get("sampling_tools_used", []) or []
+            for tool in tools:
+                if tool:
+                    all_tools.add(_normalize_sampling_tool(tool))
 
-            if all_tools:
-                nav_bronch["sampling_tools_used"] = list(all_tools)
-                procedures["navigational_bronchoscopy"] = nav_bronch
+        if all_tools:
+            nav_bronch["sampling_tools_used"] = sorted(all_tools)
+
+        procedures["navigational_bronchoscopy"] = nav_bronch
+
+        # Up-propagate needle sampling / biopsy / brushings from target-level sampling evidence
+        has_needle = "Needle" in all_tools or any((t.get("number_of_needle_passes") or 0) > 0 for t in navigation_targets)
+        has_forceps = "Forceps" in all_tools or any((t.get("number_of_forceps_biopsies") or 0) > 0 for t in navigation_targets)
+        has_brush = "Brush" in all_tools
+        has_cryo = "Cryoprobe" in all_tools or any((t.get("number_of_cryo_biopsies") or 0) > 0 for t in navigation_targets)
+
+        if has_needle:
+            tbna = procedures.get("tbna_conventional") or {}
+            if not tbna.get("performed"):
+                tbna["performed"] = True
+            if not tbna.get("stations_sampled"):
+                sites = [
+                    t.get("target_location_text")
+                    for t in navigation_targets
+                    if t.get("target_location_text") and (
+                        (t.get("number_of_needle_passes") or 0) > 0
+                        or any("needle" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
+                    )
+                ]
+                tbna["stations_sampled"] = sites or ["Lung Mass"]
+            if not tbna.get("passes_per_station"):
+                pass_targets = [t for t in navigation_targets if (t.get("number_of_needle_passes") or 0) > 0]
+                total_passes = sum((t.get("number_of_needle_passes") or 0) for t in pass_targets)
+                if total_passes and pass_targets:
+                    tbna["passes_per_station"] = max(1, round(total_passes / len(pass_targets)))
+            procedures["tbna_conventional"] = tbna
+
+        if has_forceps:
+            tbbx = procedures.get("transbronchial_biopsy") or {}
+            if not tbbx.get("performed"):
+                tbbx["performed"] = True
+            if not tbbx.get("locations"):
+                tbbx_locations = [
+                    t.get("target_location_text")
+                    for t in navigation_targets
+                    if t.get("target_location_text") and (
+                        (t.get("number_of_forceps_biopsies") or 0) > 0
+                        or any("forceps" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
+                    )
+                ]
+                if tbbx_locations:
+                    tbbx["locations"] = tbbx_locations
+            if not tbbx.get("number_of_samples"):
+                total_biopsies = sum((t.get("number_of_forceps_biopsies") or 0) for t in navigation_targets)
+                if total_biopsies:
+                    tbbx["number_of_samples"] = total_biopsies
+            procedures["transbronchial_biopsy"] = tbbx
+
+        if has_brush:
+            brushings = procedures.get("brushings") or {}
+            if not brushings.get("performed"):
+                brushings["performed"] = True
+            procedures["brushings"] = brushings
+
+        if has_cryo:
+            cryo = procedures.get("transbronchial_cryobiopsy") or {}
+            if not cryo.get("performed"):
+                cryo["performed"] = True
+            procedures["transbronchial_cryobiopsy"] = cryo
 
     # ==========================================================================
-    # 6. Derive outcomes.procedure_completed and complications
+    # 6. Derive BLVR performed from blvr_valve_placements
+    # ==========================================================================
+    blvr_valves = granular_data.get("blvr_valve_placements", [])
+    if blvr_valves:
+        blvr = procedures.get("blvr") or {}
+        if not blvr.get("performed"):
+            blvr["performed"] = True
+        blvr.setdefault("procedure_type", "Valve placement")
+        if not blvr.get("number_of_valves"):
+            blvr["number_of_valves"] = len(blvr_valves)
+        if not blvr.get("valve_sizes"):
+            sizes = [v.get("valve_size") for v in blvr_valves if v.get("valve_size")]
+            if sizes:
+                blvr["valve_sizes"] = sizes
+        if not blvr.get("segments_treated"):
+            segments = [v.get("segment") for v in blvr_valves if v.get("segment")]
+            if segments:
+                blvr["segments_treated"] = segments
+        if not blvr.get("target_lobe"):
+            lobes = {v.get("target_lobe") for v in blvr_valves if v.get("target_lobe")}
+            if len(lobes) == 1:
+                blvr["target_lobe"] = next(iter(lobes))
+        if not blvr.get("valve_type"):
+            valve_types = {v.get("valve_type") for v in blvr_valves if v.get("valve_type")}
+            if len(valve_types) == 1:
+                blvr["valve_type"] = next(iter(valve_types))
+        procedures["blvr"] = blvr
+
+    # ==========================================================================
+    # 7. Derive CAO-related performed flags from cao_interventions_detail
+    # ==========================================================================
+    cao_details = granular_data.get("cao_interventions_detail", [])
+    if cao_details:
+        modalities: list[str] = []
+        stent_any = False
+        secretions_drained_any = False
+        for detail in cao_details:
+            if detail.get("stent_placed_at_site"):
+                stent_any = True
+            if detail.get("secretions_drained"):
+                secretions_drained_any = True
+            for app in (detail.get("modalities_applied") or []):
+                mod = app.get("modality")
+                if mod:
+                    modalities.append(str(mod).lower())
+
+        if modalities:
+            if any("balloon" in m or "dilation" in m for m in modalities):
+                airway_dilation = procedures.get("airway_dilation") or {}
+                airway_dilation["performed"] = True
+                procedures["airway_dilation"] = airway_dilation
+
+            if any(m.startswith("apc") or "electrocautery" in m or "laser" in m for m in modalities):
+                thermal_ablation = procedures.get("thermal_ablation") or {}
+                thermal_ablation["performed"] = True
+                procedures["thermal_ablation"] = thermal_ablation
+
+            if any("cryo" in m for m in modalities):
+                cryotherapy = procedures.get("cryotherapy") or {}
+                cryotherapy["performed"] = True
+                procedures["cryotherapy"] = cryotherapy
+
+            if any("suction" in m or "aspirat" in m for m in modalities) or secretions_drained_any:
+                aspiration = procedures.get("therapeutic_aspiration") or {}
+                aspiration["performed"] = True
+                procedures["therapeutic_aspiration"] = aspiration
+
+        if stent_any:
+            stent = procedures.get("airway_stent") or {}
+            if not stent.get("performed"):
+                stent["performed"] = True
+            procedures["airway_stent"] = stent
+
+    # ==========================================================================
+    # 8. Derive outcomes.procedure_completed and complications
     # ==========================================================================
     # This is done at a higher level since outcomes is a separate top-level field
 
@@ -1137,6 +1379,37 @@ def derive_procedures_from_granular(
                 "navigation_targets has rebus_used=true but "
                 "radial_ebus.performed was not set"
             )
+
+    # Check: performed=True but required detail missing (e.g., EBUS without stations)
+    linear_ebus = procedures.get("linear_ebus") or {}
+    if linear_ebus.get("performed") is True and not (linear_ebus.get("stations_sampled") or []):
+        warnings.append(
+            "procedures_performed.linear_ebus.performed=true but stations_sampled is empty/missing"
+        )
+
+    tbna = procedures.get("tbna_conventional") or {}
+    if tbna.get("performed") is True and not (tbna.get("stations_sampled") or []):
+        warnings.append(
+            "procedures_performed.tbna_conventional.performed=true but stations_sampled is empty/missing"
+        )
+
+    bronchial_wash = procedures.get("bronchial_wash") or {}
+    if bronchial_wash.get("performed") is True and not bronchial_wash.get("location"):
+        warnings.append(
+            "procedures_performed.bronchial_wash.performed=true but location is missing"
+        )
+
+    brushings = procedures.get("brushings") or {}
+    if brushings.get("performed") is True and not (brushings.get("locations") or []):
+        warnings.append(
+            "procedures_performed.brushings.performed=true but locations is empty/missing"
+        )
+
+    tbbx = procedures.get("transbronchial_biopsy") or {}
+    if tbbx.get("performed") is True and not (tbbx.get("locations") or []):
+        warnings.append(
+            "procedures_performed.transbronchial_biopsy.performed=true but locations is empty/missing"
+        )
 
     return procedures, warnings
 
