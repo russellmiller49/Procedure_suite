@@ -25,6 +25,28 @@ logger = get_logger("common.llm")
 load_dotenv(override=True)
 
 
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+def _normalize_openai_base_url(base_url: str | None) -> str:
+    normalized = (base_url or "").strip().rstrip("/")
+    if normalized.endswith("/v1"):
+        normalized = normalized[:-3].rstrip("/")
+    return normalized or "https://api.openai.com"
+
+
+def _resolve_openai_model(task: str | None) -> str:
+    task_key = (task or "").strip().lower()
+    if task_key == "summarizer":
+        return (os.getenv("OPENAI_MODEL_SUMMARIZER") or os.getenv("OPENAI_MODEL") or "").strip()
+    if task_key == "structurer":
+        return (os.getenv("OPENAI_MODEL_STRUCTURER") or os.getenv("OPENAI_MODEL") or "").strip()
+    if task_key == "judge":
+        return (os.getenv("OPENAI_MODEL_JUDGE") or os.getenv("OPENAI_MODEL") or "").strip()
+    return (os.getenv("OPENAI_MODEL") or "").strip()
+
+
 class LLMInterface(Protocol):
     def generate(self, prompt: str) -> str:
         ...
@@ -36,13 +58,16 @@ class OpenAILLM:
     def __init__(self, api_key: str | None = None, model: str | None = None) -> None:
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.model = model or os.getenv("OPENAI_MODEL", "gpt-5.1")
-        self.base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
+        self.base_url = _normalize_openai_base_url(os.getenv("OPENAI_BASE_URL"))
 
         if not self.api_key:
             logger.warning("OPENAI_API_KEY not set; OpenAILLM calls will fail.")
 
     def generate(self, prompt: str) -> str:
-        url = f"{self.base_url}/chat/completions"
+        if _truthy_env("OPENAI_OFFLINE") or not self.api_key:
+            return "{}"
+
+        url = f"{self.base_url}/v1/chat/completions"
         headers = {
             "Authorization": f"Bearer {self.api_key}" if self.api_key else "",
             "Content-Type": "application/json",
@@ -259,7 +284,7 @@ class LLMService:
     - validates it against a Pydantic model
     """
 
-    def __init__(self, llm: LLMInterface | None = None) -> None:
+    def __init__(self, llm: LLMInterface | None = None, *, task: str | None = None) -> None:
         if llm is not None:
             self._llm = llm
             return
@@ -267,10 +292,34 @@ class LLMService:
         use_stub = os.getenv("REGISTRY_USE_STUB_LLM", "").lower() in ("1", "true", "yes")
         use_stub = use_stub or os.getenv("GEMINI_OFFLINE", "").lower() in ("1", "true", "yes")
 
-        if use_stub or not os.getenv("GEMINI_API_KEY"):
+        if use_stub:
             self._llm = DeterministicStubLLM()
-        else:
-            self._llm = GeminiLLM()
+            return
+
+        provider = os.getenv("LLM_PROVIDER", "gemini").strip().lower()
+        if provider == "openai_compat":
+            openai_offline = _truthy_env("OPENAI_OFFLINE") or not bool(os.getenv("OPENAI_API_KEY"))
+            if openai_offline:
+                self._llm = DeterministicStubLLM()
+                return
+
+            model = _resolve_openai_model(task)
+            if not model:
+                logger.warning("OPENAI_MODEL not set; falling back to DeterministicStubLLM")
+                self._llm = DeterministicStubLLM()
+                return
+
+            self._llm = OpenAILLM(api_key=os.getenv("OPENAI_API_KEY"), model=model)
+            return
+
+        if provider != "gemini":
+            logger.warning("Unknown LLM_PROVIDER='%s'; defaulting to gemini", provider)
+
+        if not os.getenv("GEMINI_API_KEY"):
+            self._llm = DeterministicStubLLM()
+            return
+
+        self._llm = GeminiLLM()
 
     def generate_json(
         self,

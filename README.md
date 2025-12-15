@@ -145,9 +145,17 @@ make preflight
 
 | Variable | Description | Default |
 |----------|-------------|---------|
+| `LLM_PROVIDER` | LLM backend: `gemini` or `openai_compat` | `gemini` |
 | `GEMINI_API_KEY` | API key for Gemini LLM | Required for LLM features |
 | `GEMINI_OFFLINE` | Disable LLM calls (use stubs) | `1` |
 | `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry tests | `1` |
+| `OPENAI_API_KEY` | API key for OpenAI-protocol backend (openai_compat) | Required unless `OPENAI_OFFLINE=1` |
+| `OPENAI_BASE_URL` | Base URL for OpenAI-protocol backend (no `/v1`) | `https://api.openai.com` |
+| `OPENAI_MODEL` | Default model name for openai_compat | Required unless `OPENAI_OFFLINE=1` |
+| `OPENAI_MODEL_SUMMARIZER` | Model override for summarizer/focusing tasks (openai_compat only) | `OPENAI_MODEL` |
+| `OPENAI_MODEL_STRUCTURER` | Model override for structurer tasks (openai_compat only) | `OPENAI_MODEL` |
+| `OPENAI_MODEL_JUDGE` | Model override for self-correction judge (openai_compat only) | `OPENAI_MODEL` |
+| `OPENAI_OFFLINE` | Disable openai_compat network calls (use stubs) | `0` |
 | `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading at startup | `false` |
 | `PROCSUITE_PIPELINE_MODE` | Pipeline mode: `current` or `extraction_first` | `current` |
 | `REGISTRY_EXTRACTION_ENGINE` | Registry extraction engine: `engine`, `agents_focus_then_engine`, or `agents_structurer` | `engine` |

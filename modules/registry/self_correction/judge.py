@@ -18,7 +18,7 @@ class PatchProposal(BaseModel):
 
 class RegistryCorrectionJudge:
     def __init__(self, llm: LLMService | None = None) -> None:
-        self.llm = llm or LLMService()
+        self.llm = llm or LLMService(task="judge")
 
     def propose_correction(
         self,

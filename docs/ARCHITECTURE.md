@@ -297,9 +297,17 @@ Key configuration classes:
 
 | Variable | Description |
 |----------|-------------|
+| `LLM_PROVIDER` | LLM backend: `gemini` or `openai_compat` |
 | `GEMINI_API_KEY` | Gemini LLM API key |
 | `GEMINI_OFFLINE` | Skip LLM calls (use stubs) |
 | `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry |
+| `OPENAI_API_KEY` | API key for OpenAI-protocol backend (openai_compat) |
+| `OPENAI_BASE_URL` | Base URL for OpenAI-protocol backend (no `/v1`) |
+| `OPENAI_MODEL` | Default model name for openai_compat |
+| `OPENAI_MODEL_SUMMARIZER` | Model override for summarizer/focusing tasks (openai_compat only) |
+| `OPENAI_MODEL_STRUCTURER` | Model override for structurer tasks (openai_compat only) |
+| `OPENAI_MODEL_JUDGE` | Model override for self-correction judge (openai_compat only) |
+| `OPENAI_OFFLINE` | Disable openai_compat network calls (use stubs) |
 | `PROCSUITE_SKIP_WARMUP` | Skip model warmup |
 
 ## Dependencies

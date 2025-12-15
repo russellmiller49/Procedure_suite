@@ -10,6 +10,7 @@ Includes:
 
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass, field
 from enum import Enum
@@ -643,9 +644,16 @@ def build_hybrid_orchestrator(
         rules_engine = CodingRulesEngine()
 
     if llm_advisor is None:
-        from modules.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter
         from modules.ml_coder.data_prep import VALID_IP_CODES
-        llm_advisor = GeminiAdvisorAdapter(allowed_codes=list(VALID_IP_CODES))
+        provider = os.getenv("LLM_PROVIDER", "gemini").strip().lower()
+        if provider == "openai_compat":
+            from modules.coder.adapters.llm.openai_compat_advisor import OpenAICompatAdvisorAdapter
+
+            llm_advisor = OpenAICompatAdvisorAdapter(allowed_codes=list(VALID_IP_CODES))
+        else:
+            from modules.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter
+
+            llm_advisor = GeminiAdvisorAdapter(allowed_codes=list(VALID_IP_CODES))
 
     return SmartHybridOrchestrator(
         ml_predictor=ml_predictor,
