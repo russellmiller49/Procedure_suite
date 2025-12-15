@@ -6,6 +6,7 @@ from copy import deepcopy
 import re
 from typing import Any, Dict, Set
 
+from modules.common.logger import get_logger
 from modules.common.sectionizer import SectionizerService
 from modules.common.spans import Span
 from modules.registry.extractors.llm_detailed import LLMDetailedExtractor
@@ -16,6 +17,8 @@ from modules.registry.normalization import normalize_registry_enums
 
 from .schema import RegistryRecord
 
+
+logger = get_logger("registry_engine")
 
 # Procedure family tags used to gate schema fields and validation rules
 PROCEDURE_FAMILIES = {

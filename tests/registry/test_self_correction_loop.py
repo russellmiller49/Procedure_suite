@@ -11,6 +11,25 @@ class _StubRegistryEngine:
         return RegistryRecord()
 
 
+def _stub_raw_ml_high_conf(monkeypatch: pytest.MonkeyPatch, *, cpt: str, prob: float = 0.99) -> None:
+    from modules.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
+    from modules.ml_coder.thresholds import CaseDifficulty
+
+    pred = CodePrediction(cpt=cpt, prob=prob)
+
+    monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)
+    monkeypatch.setattr(
+        MLCoderPredictor,
+        "classify_case",
+        lambda self, raw_note_text: CaseClassification(
+            predictions=[pred],
+            high_conf=[pred],
+            gray_zone=[],
+            difficulty=CaseDifficulty.HIGH_CONF,
+        ),
+    )
+
+
 def test_self_correction_disabled_by_default(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
     monkeypatch.delenv("REGISTRY_SELF_CORRECT_ENABLED", raising=False)
@@ -36,3 +55,113 @@ def test_self_correction_disabled_by_default(monkeypatch: pytest.MonkeyPatch) ->
 
     service = RegistryService(hybrid_orchestrator=orchestrator, registry_engine=_StubRegistryEngine())
     service.extract_fields("Synthetic note text describing a bronchoscopy procedure.")
+
+
+def test_self_correction_successful_patch(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
+
+    _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
+
+    orchestrator = MagicMock()
+    orchestrator.get_codes.side_effect = RuntimeError("SmartHybridOrchestrator.get_codes() called")
+
+    service = RegistryService(hybrid_orchestrator=orchestrator, registry_engine=_StubRegistryEngine())
+    note_text = (
+        "PROCEDURE:\n"
+        "The patient underwent insertion of an indwelling pleural catheter (PleurX).\n"
+        "No complications."
+    )
+    result = service.extract_fields(note_text)
+
+    assert "32550" in result.cpt_codes
+    assert any(w.startswith("AUTO_CORRECTED: 32550") for w in result.warnings)
+    assert result.record.pleural_procedures is not None
+    assert result.record.pleural_procedures.ipc is not None
+    assert result.record.pleural_procedures.ipc.performed is True
+    assert result.self_correction
+    assert result.self_correction[0].trigger.target_cpt == "32550"
+
+
+def test_self_correction_rejects_hallucinated_quote(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
+
+    _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
+
+    from modules.registry.self_correction.types import JudgeProposal, SelfCorrectionTrigger
+    from modules.registry.self_correction import judge as judge_mod
+
+    def _hallucinating_judge(  # type: ignore[no-untyped-def]
+        *, raw_note_text: str, extraction_text: str | None, record: RegistryRecord, trigger: SelfCorrectionTrigger
+    ) -> JudgeProposal:
+        return JudgeProposal(
+            target_cpt=trigger.target_cpt,
+            patch=[{"op": "add", "path": "/pleural_procedures/ipc/performed", "value": True}],
+            evidence_quotes=["THIS QUOTE DOES NOT APPEAR IN THE NOTE"],
+            rationale="hallucinated for test",
+            model_info={"test": True},
+        )
+
+    monkeypatch.setattr(judge_mod, "propose_patch", _hallucinating_judge)
+
+    service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=_StubRegistryEngine())
+    result = service.extract_fields(
+        "PROCEDURE:\nInsertion of an indwelling pleural catheter (PleurX).\nNo complications."
+    )
+
+    assert "32550" not in result.cpt_codes
+    assert result.record.pleural_procedures is None
+    assert any("SELF_CORRECT_SKIPPED: 32550" in w for w in result.warnings)
+
+
+def test_self_correction_rejects_forbidden_path(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
+
+    _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
+
+    from modules.registry.self_correction.types import JudgeProposal, SelfCorrectionTrigger
+    from modules.registry.self_correction import judge as judge_mod
+
+    def _forbidden_path_judge(  # type: ignore[no-untyped-def]
+        *, raw_note_text: str, extraction_text: str | None, record: RegistryRecord, trigger: SelfCorrectionTrigger
+    ) -> JudgeProposal:
+        quote = "Insertion of an indwelling pleural catheter"
+        return JudgeProposal(
+            target_cpt=trigger.target_cpt,
+            patch=[{"op": "add", "path": "/patient_demographics/mrn", "value": "123"}],
+            evidence_quotes=[quote],
+            rationale="forbidden path for test",
+            model_info={"test": True},
+        )
+
+    monkeypatch.setattr(judge_mod, "propose_patch", _forbidden_path_judge)
+
+    service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=_StubRegistryEngine())
+    result = service.extract_fields(
+        "PROCEDURE:\nInsertion of an indwelling pleural catheter (PleurX).\nNo complications."
+    )
+
+    assert "32550" not in result.cpt_codes
+    assert result.record.pleural_procedures is None
+    assert any("SELF_CORRECT_SKIPPED: 32550" in w for w in result.warnings)
+
+
+def test_self_correction_not_run_when_auditor_disabled(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
+
+    from modules.registry.self_correction import judge as judge_mod
+
+    mocked = MagicMock()
+    mocked.side_effect = RuntimeError("judge.propose_patch should not be called")
+    monkeypatch.setattr(judge_mod, "propose_patch", mocked)
+
+    service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=_StubRegistryEngine())
+    service.extract_fields("Synthetic note text describing insertion of an indwelling pleural catheter (PleurX).")
+    mocked.assert_not_called()

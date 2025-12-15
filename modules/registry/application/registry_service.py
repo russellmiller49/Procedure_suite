@@ -12,7 +12,7 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, date
-from typing import Any, Literal
+from typing import Any, Literal, TYPE_CHECKING
 
 import os
 from pydantic import BaseModel, ValidationError
@@ -54,6 +54,10 @@ from modules.coder.application.smart_hybrid_policy import (
 )
 from modules.ml_coder.registry_predictor import RegistryMLPredictor
 from modules.registry.model_runtime import get_registry_runtime_dir, resolve_model_backend
+
+
+if TYPE_CHECKING:
+    from modules.registry.self_correction.types import SelfCorrectionMetadata
 
 
 def focus_note_for_extraction(note_text: str) -> tuple[str, dict[str, Any]]:
@@ -156,6 +160,7 @@ class RegistryExtractionResult:
     validation_errors: list[str] = field(default_factory=list)
     audit_warnings: list[str] = field(default_factory=list)
     audit_report: AuditCompareReport | None = None
+    self_correction: list["SelfCorrectionMetadata"] = field(default_factory=list)
 
 
 class RegistryService:
@@ -677,6 +682,7 @@ class RegistryService:
 
                 record, struct_meta = structure_note_to_registry_record(note_text, note_id=note_id)
                 meta["structurer_meta"] = struct_meta
+                meta["extraction_text"] = note_text
 
                 record, granular_warnings = _apply_granular_up_propagation(record)
                 warnings.extend(granular_warnings)
@@ -691,6 +697,7 @@ class RegistryService:
         else:
             warnings.append(f"Unknown REGISTRY_EXTRACTION_ENGINE='{extraction_engine}', using engine")
 
+        meta["extraction_text"] = text_for_extraction
         context = {"note_id": note_id} if note_id else None
         record = self.registry_engine.run(text_for_extraction, context=context)
         if isinstance(record, tuple):
@@ -712,16 +719,23 @@ class RegistryService:
         from modules.registry.audit.raw_ml_auditor import RawMLAuditor
         from modules.coder.domain_rules.registry_to_cpt.engine import apply as derive_registry_to_cpt
         from modules.registry.audit.compare import build_audit_compare_report
+        from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
+        from modules.registry.self_correction.judge import propose_patch
+        from modules.registry.self_correction.types import SelfCorrectionMetadata, SelfCorrectionTrigger
+        from modules.registry.self_correction.validation import allowlist_from_env, validate_proposal
 
         # Guardrail: auditing must always use the original raw note text. Do not
         # overwrite this variable with focused/summarized text.
         raw_text_for_audit = raw_note_text
 
-        record, extraction_warnings, _meta = self.extract_record(raw_note_text)
+        record, extraction_warnings, meta = self.extract_record(raw_note_text)
+        extraction_text = meta.get("extraction_text") if isinstance(meta.get("extraction_text"), str) else None
 
         derivation = derive_registry_to_cpt(record)
         derived_codes = [c.code for c in derivation.codes]
-        warnings = list(extraction_warnings) + list(derivation.warnings)
+        base_warnings = list(extraction_warnings)
+        self_correct_warnings: list[str] = []
+        self_correction_meta: list[SelfCorrectionMetadata] = []
 
         auditor_source = os.getenv("REGISTRY_AUDITOR_SOURCE", "raw_ml").strip().lower()
         audit_warnings: list[str] = []
@@ -745,16 +759,115 @@ class RegistryService:
                 ml_case=ml_case,
                 audit_preds=audit_preds,
             )
+            needs_manual_review = bool(audit_report.high_conf_omissions)
 
-            if audit_report.missing_in_derived:
-                for pred in audit_report.missing_in_derived:
-                    bucket = pred.bucket or "AUDIT_SET"
-                    audit_warnings.append(
-                        f"RAW_ML_AUDIT[{bucket}]: model suggests {pred.cpt} (prob={pred.prob:.2f}), "
-                        "but deterministic derivation missed it"
+            def _env_flag(name: str, default: str = "0") -> bool:
+                return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
+
+            def _env_int(name: str, default: int) -> int:
+                raw = os.getenv(name)
+                if raw is None:
+                    return default
+                raw = raw.strip()
+                if not raw:
+                    return default
+                try:
+                    return int(raw)
+                except ValueError:
+                    return default
+
+            self_correct_enabled = _env_flag("REGISTRY_SELF_CORRECT_ENABLED", "0")
+            if self_correct_enabled and audit_report.high_conf_omissions:
+                allowlist = allowlist_from_env()
+                max_attempts = max(0, _env_int("REGISTRY_SELF_CORRECT_MAX_ATTEMPTS", 1))
+                omission_set = {p.cpt for p in audit_report.high_conf_omissions}
+
+                bucket_by_cpt = {p.cpt: p.bucket for p in audit_report.ml_audit_codes}
+                trigger_preds = [
+                    p for p in auditor.self_correct_triggers(ml_case, cfg) if p.cpt in omission_set
+                ]
+
+                corrections_applied = 0
+                for pred in trigger_preds:
+                    if corrections_applied >= max_attempts:
+                        break
+
+                    trigger = SelfCorrectionTrigger(
+                        target_cpt=pred.cpt,
+                        ml_prob=float(pred.prob),
+                        ml_bucket=bucket_by_cpt.get(pred.cpt),
+                        reason="RAW_ML_HIGH_CONF_OMISSION",
                     )
 
-            needs_manual_review = bool(audit_report.high_conf_omissions)
+                    proposal = propose_patch(
+                        raw_note_text=raw_note_text,
+                        extraction_text=extraction_text,
+                        record=record,
+                        trigger=trigger,
+                    )
+
+                    validation = validate_proposal(
+                        proposal=proposal,
+                        raw_note_text=raw_note_text,
+                        extraction_text=extraction_text,
+                        allowlist=allowlist,
+                    )
+                    if not validation.ok:
+                        reason = "; ".join(validation.errors) if validation.errors else "validation failed"
+                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: {reason}")
+                        continue
+
+                    try:
+                        patched_record = apply_patch_to_record(record=record, patch=proposal.patch)
+                    except SelfCorrectionApplyError as exc:
+                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: apply failed ({exc})")
+                        continue
+
+                    if patched_record.model_dump() == record.model_dump():
+                        self_correct_warnings.append(
+                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: patch produced no change"
+                        )
+                        continue
+
+                    candidate_record, candidate_granular_warnings = _apply_granular_up_propagation(
+                        patched_record
+                    )
+
+                    candidate_derivation = derive_registry_to_cpt(candidate_record)
+                    candidate_codes = [c.code for c in candidate_derivation.codes]
+                    if trigger.target_cpt not in candidate_codes:
+                        self_correct_warnings.append(
+                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: patch did not derive target CPT"
+                        )
+                        continue
+
+                    record = candidate_record
+                    derivation = candidate_derivation
+                    derived_codes = candidate_codes
+                    corrections_applied += 1
+                    self_correct_warnings.extend(candidate_granular_warnings)
+
+                    self_correct_warnings.append(f"AUTO_CORRECTED: {pred.cpt}")
+                    self_correction_meta.append(
+                        SelfCorrectionMetadata(
+                            trigger=trigger,
+                            applied_paths=[str(op.get("path")) for op in proposal.patch if isinstance(op, dict)],
+                            evidence_quotes=list(proposal.evidence_quotes),
+                            config_snapshot={
+                                "max_attempts": max_attempts,
+                                "allowlist": sorted(allowlist),
+                                "audit_config": audit_report.config.to_dict(),
+                            },
+                        )
+                    )
+
+                    audit_report = build_audit_compare_report(
+                        derived_codes=derived_codes,
+                        cfg=cfg,
+                        ml_case=ml_case,
+                        audit_preds=audit_preds,
+                    )
+                    needs_manual_review = bool(audit_report.high_conf_omissions)
         elif auditor_source == "disabled":
             from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
 
@@ -770,6 +883,15 @@ class RegistryService:
         else:
             raise ValueError(f"Unknown REGISTRY_AUDITOR_SOURCE='{auditor_source}'")
 
+        if audit_report and audit_report.missing_in_derived:
+            for pred in audit_report.missing_in_derived:
+                bucket = pred.bucket or "AUDIT_SET"
+                audit_warnings.append(
+                    f"RAW_ML_AUDIT[{bucket}]: model suggests {pred.cpt} (prob={pred.prob:.2f}), "
+                    "but deterministic derivation missed it"
+                )
+
+        warnings = list(base_warnings) + list(derivation.warnings) + list(self_correct_warnings)
         return RegistryExtractionResult(
             record=record,
             cpt_codes=derived_codes,
@@ -781,6 +903,7 @@ class RegistryService:
             validation_errors=[],
             audit_warnings=audit_warnings,
             audit_report=audit_report,
+            self_correction=self_correction_meta,
         )
 
     def _merge_cpt_fields_into_record(
