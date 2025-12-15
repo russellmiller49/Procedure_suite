@@ -16,7 +16,7 @@ import os
 
 from pydantic import BaseModel, ValidationError
 
-from modules.common.llm import DeterministicStubLLM, GeminiLLM
+from modules.common.llm import DeterministicStubLLM, GeminiLLM, OpenAILLM
 from modules.common.logger import get_logger
 from modules.common.sectionizer import Section
 from modules.registry.prompts import build_registry_prompt
@@ -101,7 +101,7 @@ class LLMDetailedExtractor:
 
     def __init__(
         self,
-        llm: GeminiLLM | None = None,
+        llm: GeminiLLM | OpenAILLM | None = None,
         config: LLMExtractionConfig | None = None,
     ) -> None:
         if llm is not None:
@@ -110,10 +110,28 @@ class LLMDetailedExtractor:
             use_stub = os.getenv("REGISTRY_USE_STUB_LLM", "").lower() in ("1", "true", "yes")
             use_stub = use_stub or os.getenv("GEMINI_OFFLINE", "").lower() in ("1", "true", "yes")
 
-            if use_stub or not os.getenv("GEMINI_API_KEY"):
+            if use_stub:
                 self.llm = DeterministicStubLLM()
             else:
-                self.llm = GeminiLLM()
+                # Check LLM_PROVIDER to determine which LLM to use
+                provider = os.getenv("LLM_PROVIDER", "gemini").strip().lower()
+                if provider == "openai_compat":
+                    api_key = os.getenv("OPENAI_API_KEY")
+                    model = os.getenv("OPENAI_MODEL", "gpt-5.2")
+                    if api_key and model:
+                        self.llm = OpenAILLM(api_key=api_key, model=model)
+                        logger.info(f"Using OpenAI LLM with model: {model}")
+                    else:
+                        logger.warning("OPENAI_API_KEY or OPENAI_MODEL not set, falling back to stub")
+                        self.llm = DeterministicStubLLM()
+                else:
+                    # Default to Gemini
+                    if not os.getenv("GEMINI_API_KEY"):
+                        logger.warning("GEMINI_API_KEY not set, falling back to stub")
+                        self.llm = DeterministicStubLLM()
+                    else:
+                        self.llm = GeminiLLM()
+                        logger.info("Using Gemini LLM")
 
         self.config = config or LLMExtractionConfig()
         self.cache = NoteHashCache()

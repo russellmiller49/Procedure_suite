@@ -63,7 +63,14 @@ class OpenAILLM:
         if not self.api_key:
             logger.warning("OPENAI_API_KEY not set; OpenAILLM calls will fail.")
 
-    def generate(self, prompt: str) -> str:
+    def generate(self, prompt: str, response_schema: dict | None = None, **kwargs) -> str:
+        """Generate a response from OpenAI.
+        
+        Args:
+            prompt: The prompt text
+            response_schema: Ignored (OpenAI uses response_format instead)
+            **kwargs: Additional arguments (ignored for compatibility)
+        """
         if _truthy_env("OPENAI_OFFLINE") or not self.api_key:
             return "{}"
 
