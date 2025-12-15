@@ -8,14 +8,12 @@ This package contains:
 from __future__ import annotations
 
 from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
-from modules.registry.self_correction.judge import propose_patch
+from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
 from modules.registry.self_correction.types import (
-    JudgeProposal,
     SelfCorrectionMetadata,
     SelfCorrectionTrigger,
-    ValidationResult,
 )
-from modules.registry.self_correction.validation import validate_proposal
+from modules.registry.self_correction.validation import ALLOWED_PATHS, validate_proposal
 
 
 def get_allowed_values(field_name: str) -> list[str]:
@@ -53,10 +51,10 @@ def suggest_improvements_for_field(  # type: ignore[no-untyped-def]
 
 __all__ = [
     "SelfCorrectionTrigger",
-    "JudgeProposal",
-    "ValidationResult",
     "SelfCorrectionMetadata",
-    "propose_patch",
+    "PatchProposal",
+    "RegistryCorrectionJudge",
+    "ALLOWED_PATHS",
     "validate_proposal",
     "apply_patch_to_record",
     "SelfCorrectionApplyError",
@@ -65,4 +63,3 @@ __all__ = [
     "build_self_correction_prompt",
     "suggest_improvements_for_field",
 ]
-

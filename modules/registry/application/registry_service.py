@@ -720,9 +720,9 @@ class RegistryService:
         from modules.coder.domain_rules.registry_to_cpt.engine import apply as derive_registry_to_cpt
         from modules.registry.audit.compare import build_audit_compare_report
         from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
-        from modules.registry.self_correction.judge import propose_patch
+        from modules.registry.self_correction.judge import RegistryCorrectionJudge
         from modules.registry.self_correction.types import SelfCorrectionMetadata, SelfCorrectionTrigger
-        from modules.registry.self_correction.validation import allowlist_from_env, validate_proposal
+        from modules.registry.self_correction.validation import ALLOWED_PATHS, validate_proposal
 
         # Guardrail: auditing must always use the original raw note text. Do not
         # overwrite this variable with focused/summarized text.
@@ -778,7 +778,6 @@ class RegistryService:
 
             self_correct_enabled = _env_flag("REGISTRY_SELF_CORRECT_ENABLED", "0")
             if self_correct_enabled and audit_report.high_conf_omissions:
-                allowlist = allowlist_from_env()
                 max_attempts = max(0, _env_int("REGISTRY_SELF_CORRECT_MAX_ATTEMPTS", 1))
                 omission_set = {p.cpt for p in audit_report.high_conf_omissions}
 
@@ -786,6 +785,14 @@ class RegistryService:
                 trigger_preds = [
                     p for p in auditor.self_correct_triggers(ml_case, cfg) if p.cpt in omission_set
                 ]
+
+                judge = RegistryCorrectionJudge()
+
+                def _allowlist_snapshot() -> list[str]:
+                    raw = os.getenv("REGISTRY_SELF_CORRECT_ALLOWLIST", "").strip()
+                    if raw:
+                        return sorted({p.strip() for p in raw.split(",") if p.strip()})
+                    return sorted(ALLOWED_PATHS)
 
                 corrections_applied = 0
                 for pred in trigger_preds:
@@ -799,26 +806,26 @@ class RegistryService:
                         reason="RAW_ML_HIGH_CONF_OMISSION",
                     )
 
-                    proposal = propose_patch(
-                        raw_note_text=raw_note_text,
-                        extraction_text=extraction_text,
+                    discrepancy = (
+                        f"RAW-ML suggests missing CPT {pred.cpt} "
+                        f"(prob={float(pred.prob):.2f}, bucket={bucket_by_cpt.get(pred.cpt) or 'UNKNOWN'})."
+                    )
+                    proposal = judge.propose_correction(
+                        note_text=raw_note_text,
                         record=record,
-                        trigger=trigger,
+                        discrepancy=discrepancy,
                     )
+                    if proposal is None:
+                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: judge returned null")
+                        continue
 
-                    validation = validate_proposal(
-                        proposal=proposal,
-                        raw_note_text=raw_note_text,
-                        extraction_text=extraction_text,
-                        allowlist=allowlist,
-                    )
-                    if not validation.ok:
-                        reason = "; ".join(validation.errors) if validation.errors else "validation failed"
+                    is_valid, reason = validate_proposal(proposal, raw_note_text)
+                    if not is_valid:
                         self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: {reason}")
                         continue
 
                     try:
-                        patched_record = apply_patch_to_record(record=record, patch=proposal.patch)
+                        patched_record = apply_patch_to_record(record=record, patch=proposal.json_patch)
                     except SelfCorrectionApplyError as exc:
                         self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: apply failed ({exc})")
                         continue
@@ -851,12 +858,17 @@ class RegistryService:
                     self_correction_meta.append(
                         SelfCorrectionMetadata(
                             trigger=trigger,
-                            applied_paths=[str(op.get("path")) for op in proposal.patch if isinstance(op, dict)],
-                            evidence_quotes=list(proposal.evidence_quotes),
+                            applied_paths=[
+                                str(op.get("path"))
+                                for op in proposal.json_patch
+                                if isinstance(op, dict) and op.get("path") is not None
+                            ],
+                            evidence_quotes=[proposal.evidence_quote],
                             config_snapshot={
                                 "max_attempts": max_attempts,
-                                "allowlist": sorted(allowlist),
+                                "allowlist": _allowlist_snapshot(),
                                 "audit_config": audit_report.config.to_dict(),
+                                "judge_rationale": proposal.rationale,
                             },
                         )
                     )

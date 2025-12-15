@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import json
 import os
-from typing import Protocol
+from typing import Any, Protocol, TypeVar
 
 import httpx
 from dotenv import load_dotenv
+from pydantic import BaseModel
 try:
     from google.auth import default as google_auth_default
     from google.auth.transport.requests import Request as GoogleAuthRequest
@@ -143,7 +144,14 @@ class GeminiLLM:
             self._refresh_credentials()
         return self._credentials.token  # type: ignore[return-value]
 
-    def generate(self, prompt: str, response_schema: dict | None = None, max_retries: int = 3) -> str:
+    def generate(
+        self,
+        prompt: str,
+        response_schema: dict | None = None,
+        max_retries: int = 3,
+        *,
+        temperature: float | None = None,
+    ) -> str:
         import time
 
         if self.use_oauth:
@@ -160,9 +168,11 @@ class GeminiLLM:
             url = f"{self.base_url}/{self.model}:generateContent?key={self.api_key}"
             headers = {"Content-Type": "application/json"}
 
-        generation_config = {"response_mime_type": "application/json"}
+        generation_config: dict[str, Any] = {"response_mime_type": "application/json"}
         if response_schema:
             generation_config["response_schema"] = response_schema
+        if temperature is not None:
+            generation_config["temperature"] = float(temperature)
 
         payload = {
             "contents": [{"parts": [{"text": prompt}]}],
@@ -237,5 +247,70 @@ class DeterministicStubLLM:
         logger.warning("Using DeterministicStubLLM. Set GEMINI_API_KEY for real inference.")
         return json.dumps(self.payload)
 
+TModel = TypeVar("TModel", bound=BaseModel)
 
-__all__ = ["LLMInterface", "GeminiLLM", "OpenAILLM", "DeterministicStubLLM"]
+
+class LLMService:
+    """Small helper for structured (JSON) generations.
+
+    This wraps the repo's LLM clients and provides a convenience method that:
+    - requests JSON output
+    - parses the JSON payload
+    - validates it against a Pydantic model
+    """
+
+    def __init__(self, llm: LLMInterface | None = None) -> None:
+        if llm is not None:
+            self._llm = llm
+            return
+
+        use_stub = os.getenv("REGISTRY_USE_STUB_LLM", "").lower() in ("1", "true", "yes")
+        use_stub = use_stub or os.getenv("GEMINI_OFFLINE", "").lower() in ("1", "true", "yes")
+
+        if use_stub or not os.getenv("GEMINI_API_KEY"):
+            self._llm = DeterministicStubLLM()
+        else:
+            self._llm = GeminiLLM()
+
+    def generate_json(
+        self,
+        *,
+        system_prompt: str,
+        user_prompt: str,
+        response_model: type[TModel],
+        temperature: float = 0.0,
+    ) -> TModel:
+        prompt = f"{system_prompt.strip()}\n\n{user_prompt.strip()}\n"
+
+        # Prefer prompt-only enforcement for now; Gemini response_schema requires a
+        # provider-specific schema shape (see LLMDetailedExtractor for conversion).
+        raw = self._generate(prompt, temperature=temperature)
+        cleaned = _strip_markdown_code_fences(raw)
+
+        if cleaned.strip() in {"null", "None", ""}:
+            raise ValueError("LLM returned null/empty response")
+
+        data = json.loads(cleaned)
+        return response_model.model_validate(data)
+
+    def _generate(self, prompt: str, *, temperature: float) -> str:
+        llm = self._llm
+        if isinstance(llm, GeminiLLM):
+            return llm.generate(prompt, temperature=temperature)
+        return llm.generate(prompt)
+
+
+def _strip_markdown_code_fences(text: str) -> str:
+    if not text:
+        return ""
+    cleaned = text.strip()
+    if cleaned.startswith("```"):
+        cleaned = cleaned.lstrip("`").strip()
+        if cleaned.lower().startswith("json"):
+            cleaned = cleaned[4:].strip()
+    if cleaned.endswith("```"):
+        cleaned = cleaned[: -3].strip()
+    return cleaned.strip()
+
+
+__all__ = ["LLMInterface", "GeminiLLM", "OpenAILLM", "DeterministicStubLLM", "LLMService"]

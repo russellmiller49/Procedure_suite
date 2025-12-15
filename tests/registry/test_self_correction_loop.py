@@ -64,6 +64,19 @@ def test_self_correction_successful_patch(monkeypatch: pytest.MonkeyPatch) -> No
 
     _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
 
+    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
+
+    def _good_judge(  # type: ignore[no-untyped-def]
+        self, note_text: str, record: RegistryRecord, discrepancy: str
+    ) -> PatchProposal:
+        return PatchProposal(
+            rationale="Procedure explicitly documented",
+            json_patch=[{"op": "add", "path": "/pleural_procedures/ipc/performed", "value": True}],
+            evidence_quote="indwelling pleural catheter",
+        )
+
+    monkeypatch.setattr(RegistryCorrectionJudge, "propose_correction", _good_judge)
+
     orchestrator = MagicMock()
     orchestrator.get_codes.side_effect = RuntimeError("SmartHybridOrchestrator.get_codes() called")
 
@@ -91,21 +104,18 @@ def test_self_correction_rejects_hallucinated_quote(monkeypatch: pytest.MonkeyPa
 
     _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
 
-    from modules.registry.self_correction.types import JudgeProposal, SelfCorrectionTrigger
-    from modules.registry.self_correction import judge as judge_mod
+    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
 
     def _hallucinating_judge(  # type: ignore[no-untyped-def]
-        *, raw_note_text: str, extraction_text: str | None, record: RegistryRecord, trigger: SelfCorrectionTrigger
-    ) -> JudgeProposal:
-        return JudgeProposal(
-            target_cpt=trigger.target_cpt,
-            patch=[{"op": "add", "path": "/pleural_procedures/ipc/performed", "value": True}],
-            evidence_quotes=["THIS QUOTE DOES NOT APPEAR IN THE NOTE"],
+        self, note_text: str, record: RegistryRecord, discrepancy: str
+    ) -> PatchProposal:
+        return PatchProposal(
             rationale="hallucinated for test",
-            model_info={"test": True},
+            json_patch=[{"op": "add", "path": "/pleural_procedures/ipc/performed", "value": True}],
+            evidence_quote="THIS QUOTE DOES NOT APPEAR IN THE NOTE",
         )
 
-    monkeypatch.setattr(judge_mod, "propose_patch", _hallucinating_judge)
+    monkeypatch.setattr(RegistryCorrectionJudge, "propose_correction", _hallucinating_judge)
 
     service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=_StubRegistryEngine())
     result = service.extract_fields(
@@ -124,22 +134,18 @@ def test_self_correction_rejects_forbidden_path(monkeypatch: pytest.MonkeyPatch)
 
     _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
 
-    from modules.registry.self_correction.types import JudgeProposal, SelfCorrectionTrigger
-    from modules.registry.self_correction import judge as judge_mod
+    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
 
     def _forbidden_path_judge(  # type: ignore[no-untyped-def]
-        *, raw_note_text: str, extraction_text: str | None, record: RegistryRecord, trigger: SelfCorrectionTrigger
-    ) -> JudgeProposal:
-        quote = "Insertion of an indwelling pleural catheter"
-        return JudgeProposal(
-            target_cpt=trigger.target_cpt,
-            patch=[{"op": "add", "path": "/patient_demographics/mrn", "value": "123"}],
-            evidence_quotes=[quote],
+        self, note_text: str, record: RegistryRecord, discrepancy: str
+    ) -> PatchProposal:
+        return PatchProposal(
             rationale="forbidden path for test",
-            model_info={"test": True},
+            json_patch=[{"op": "add", "path": "/patient_demographics/mrn", "value": "123"}],
+            evidence_quote="Insertion of an indwelling pleural catheter",
         )
 
-    monkeypatch.setattr(judge_mod, "propose_patch", _forbidden_path_judge)
+    monkeypatch.setattr(RegistryCorrectionJudge, "propose_correction", _forbidden_path_judge)
 
     service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=_StubRegistryEngine())
     result = service.extract_fields(
@@ -156,11 +162,11 @@ def test_self_correction_not_run_when_auditor_disabled(monkeypatch: pytest.Monke
     monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
     monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
 
-    from modules.registry.self_correction import judge as judge_mod
+    from modules.registry.self_correction.judge import RegistryCorrectionJudge
 
     mocked = MagicMock()
-    mocked.side_effect = RuntimeError("judge.propose_patch should not be called")
-    monkeypatch.setattr(judge_mod, "propose_patch", mocked)
+    mocked.side_effect = RuntimeError("RegistryCorrectionJudge.propose_correction should not be called")
+    monkeypatch.setattr(RegistryCorrectionJudge, "propose_correction", mocked)
 
     service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=_StubRegistryEngine())
     service.extract_fields("Synthetic note text describing insertion of an indwelling pleural catheter (PleurX).")

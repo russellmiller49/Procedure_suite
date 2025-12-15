@@ -1,70 +1,77 @@
-"""Phase 6 proposal validation (strict hallucination guard)."""
+"""Strict validator for registry self-correction patches."""
 
 from __future__ import annotations
 
 import os
+from typing import Any
 
-from modules.registry.self_correction.types import JudgeProposal, ValidationResult
-
-
-DEFAULT_SELF_CORRECT_ALLOWLIST: set[str] = {
+ALLOWED_PATHS: set[str] = {
+    # Performed flags
+    "/procedures_performed/bal/performed",
+    "/procedures_performed/brushings/performed",
+    "/procedures_performed/transbronchial_biopsy/performed",
+    "/procedures_performed/transbronchial_cryobiopsy/performed",
+    "/procedures_performed/tbna_conventional/performed",
+    "/procedures_performed/linear_ebus/performed",
+    "/procedures_performed/radial_ebus/performed",
+    "/procedures_performed/navigational_bronchoscopy/performed",
     "/pleural_procedures/ipc/performed",
     "/pleural_procedures/thoracentesis/performed",
     "/pleural_procedures/chest_tube/performed",
+    # Add other safe fields as needed
 }
 
 
 def validate_proposal(
-    *,
-    proposal: JudgeProposal,
+    proposal: Any,
     raw_note_text: str,
-    extraction_text: str | None,
-    allowlist: set[str],
-) -> ValidationResult:
-    errors: list[str] = []
-    warnings: list[str] = []
+    *,
+    max_patch_ops: int | None = None,
+) -> tuple[bool, str]:
+    """Return (is_valid, reason)."""
 
-    max_ops = _env_int("REGISTRY_SELF_CORRECT_MAX_PATCH_OPS", 5)
+    quote = getattr(proposal, "evidence_quote", "")
+    if not isinstance(quote, str) or not quote.strip():
+        return False, "Missing evidence quote"
+    quote = quote.strip()
 
-    if not proposal.patch:
-        errors.append("empty patch")
-        return ValidationResult(ok=False, errors=errors, warnings=warnings)
+    text = raw_note_text or ""
+    if quote not in text:
+        return False, f"Quote not found verbatim in text: '{quote[:50]}...'"
 
-    if len(proposal.patch) > max_ops:
-        errors.append(f"patch has {len(proposal.patch)} ops; exceeds max {max_ops}")
+    patches = getattr(proposal, "json_patch", [])
+    if not isinstance(patches, list) or not patches:
+        return False, "Empty patch"
 
-    for idx, op in enumerate(proposal.patch):
+    if max_patch_ops is None:
+        max_patch_ops = _env_int("REGISTRY_SELF_CORRECT_MAX_PATCH_OPS", 5)
+
+    if len(patches) > max_patch_ops:
+        return False, f"Patch too large: {len(patches)} ops (max {max_patch_ops})"
+
+    allowed_paths = _allowed_paths_from_env(default=ALLOWED_PATHS)
+
+    for op in patches:
         if not isinstance(op, dict):
-            errors.append(f"patch[{idx}] is not an object")
-            continue
-
-        verb = op.get("op")
-        if verb not in {"add", "replace"}:
-            errors.append(f"patch[{idx}].op='{verb}' is forbidden (allow: add, replace)")
+            return False, "Patch operation must be an object"
 
         path = op.get("path")
-        if not isinstance(path, str) or not path.startswith("/"):
-            errors.append(f"patch[{idx}].path is invalid: {path!r}")
-            continue
+        if path not in allowed_paths:
+            return False, f"Path not allowed: {path}"
 
-        if path not in allowlist:
-            errors.append(f"patch[{idx}].path '{path}' is not allowlisted")
+        verb = op.get("op")
+        if verb not in ("add", "replace"):
+            return False, f"Op not allowed: {verb}"
 
-    if not proposal.evidence_quotes:
-        errors.append("missing evidence quotes")
+    return True, "Valid"
 
-    text_for_validation = extraction_text if (extraction_text and extraction_text.strip()) else raw_note_text
-    for idx, quote in enumerate(proposal.evidence_quotes):
-        if not isinstance(quote, str) or not quote.strip():
-            errors.append(f"evidence_quotes[{idx}] is empty")
-            continue
-        if quote not in text_for_validation:
-            preview = quote if len(quote) <= 80 else quote[:77] + "..."
-            errors.append(f"evidence quote missing from text: {preview!r}")
-        if not (10 <= len(quote) <= 200):
-            warnings.append(f"evidence_quotes[{idx}] length {len(quote)} outside 10-200 chars")
 
-    return ValidationResult(ok=not errors, errors=errors, warnings=warnings)
+def _allowed_paths_from_env(*, default: set[str]) -> set[str]:
+    raw = os.getenv("REGISTRY_SELF_CORRECT_ALLOWLIST", "")
+    if not raw.strip():
+        return set(default)
+    parsed = {p.strip() for p in raw.split(",") if p.strip()}
+    return parsed or set(default)
 
 
 def _env_int(name: str, default: int) -> int:
@@ -80,13 +87,5 @@ def _env_int(name: str, default: int) -> int:
         return default
 
 
-def allowlist_from_env(*, default: set[str] | None = None) -> set[str]:
-    raw = os.getenv("REGISTRY_SELF_CORRECT_ALLOWLIST")
-    if raw is None or not raw.strip():
-        return set(default or DEFAULT_SELF_CORRECT_ALLOWLIST)
+__all__ = ["ALLOWED_PATHS", "validate_proposal"]
 
-    allow = {p.strip() for p in raw.split(",") if p.strip()}
-    return allow or set(default or DEFAULT_SELF_CORRECT_ALLOWLIST)
-
-
-__all__ = ["DEFAULT_SELF_CORRECT_ALLOWLIST", "allowlist_from_env", "validate_proposal"]
