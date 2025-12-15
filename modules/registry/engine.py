@@ -20,6 +20,88 @@ from .schema import RegistryRecord
 
 logger = get_logger("registry_engine")
 
+# List-like fields that must contain only non-empty strings (no None/"").
+# Centralize this so enum-array fields don't trigger record-wide validation failures.
+_STRING_ENUM_LIST_FIELDS: set[str] = {"sampling_tools_used"}
+
+
+def _format_payload_path(path: tuple[Any, ...]) -> str:
+    rendered = ""
+    for part in path:
+        if isinstance(part, int):
+            rendered += f"[{part}]"
+        else:
+            if rendered:
+                rendered += "."
+            rendered += str(part)
+    return rendered or "<root>"
+
+
+def _sanitize_string_enum_lists(payload: Any) -> list[str]:
+    """Drop invalid items (None/blank/non-str) from known list-of-enum fields.
+
+    This runs before RegistryRecord validation to prevent broad pruning/fallbacks
+    when a single list contains an invalid element.
+    """
+    warnings: list[str] = []
+
+    def _walk(obj: Any, path: tuple[Any, ...]) -> None:
+        if isinstance(obj, dict):
+            for key, value in list(obj.items()):
+                next_path = path + (key,)
+                if key in _STRING_ENUM_LIST_FIELDS and isinstance(value, list):
+                    kept: list[str] = []
+                    dropped: list[Any] = []
+                    for item in value:
+                        if item is None:
+                            dropped.append(item)
+                            continue
+                        if not isinstance(item, str):
+                            dropped.append(item)
+                            continue
+                        if not item.strip():
+                            dropped.append(item)
+                            continue
+                        kept.append(item)
+
+                    if dropped:
+                        obj[key] = kept
+                        warnings.append(
+                            f"Dropped invalid list items from {_format_payload_path(next_path)}: {dropped!r}"
+                        )
+                    continue
+
+                _walk(value, next_path)
+            return
+
+        if isinstance(obj, list):
+            for idx, item in enumerate(obj):
+                _walk(item, path + (idx,))
+
+    _walk(payload, ())
+    return warnings
+
+
+def _summarize_list(items: list[str], *, max_items: int, sep: str = "; ") -> str:
+    if not items:
+        return ""
+    shown = items[:max_items]
+    suffix = f"{sep}(+{len(items) - max_items} more)" if len(items) > max_items else ""
+    return sep.join(shown) + suffix
+
+
+def _drop_none_items_from_lists(obj: Any) -> None:
+    """In-place removal of None items from any lists in a payload structure."""
+    if isinstance(obj, dict):
+        for value in obj.values():
+            _drop_none_items_from_lists(value)
+        return
+
+    if isinstance(obj, list):
+        obj[:] = [item for item in obj if item is not None]
+        for item in obj:
+            _drop_none_items_from_lists(item)
+
 # Procedure family tags used to gate schema fields and validation rules
 PROCEDURE_FAMILIES = {
     "EBUS",           # Linear endobronchial ultrasound
@@ -765,6 +847,15 @@ class RegistryEngine:
 
         nested_payload = normalize_registry_payload(nested_payload)
 
+        sanitization_warnings = _sanitize_string_enum_lists(nested_payload)
+        if sanitization_warnings:
+            for warning in sanitization_warnings:
+                try:
+                    logger.warning(warning)
+                except Exception:
+                    # Logging must never affect extraction correctness.
+                    pass
+
         # Attempt to create RegistryRecord with better error handling
         try:
             record = RegistryRecord(**nested_payload)
@@ -777,7 +868,10 @@ class RegistryEngine:
                 # The LLM may emit values that are "close" but not schema-valid (e.g., lists where a
                 # literal is expected). For demo and interactive UI usage, it's better to drop those
                 # specific fields and return a partially-filled record than to fail the whole request.
+                initial_errors = e.errors()
                 pruned_payload = deepcopy(nested_payload)
+                pruned_paths: list[str] = []
+                error_summaries: list[str] = []
 
                 def _null_out_path(obj: Any, loc: tuple[Any, ...] | list[Any]) -> None:
                     if not loc:
@@ -806,51 +900,94 @@ class RegistryEngine:
                         except Exception:
                             cur[last] = None
 
-                for err in e.errors():
-                    _null_out_path(pruned_payload, err.get("loc", []))
+                for err in initial_errors:
+                    loc = err.get("loc", [])
+                    loc_tuple = tuple(loc) if isinstance(loc, (list, tuple)) else (loc,)
+                    path_str = _format_payload_path(loc_tuple)
+                    pruned_paths.append(path_str)
+                    msg = err.get("msg") or err.get("type") or "validation error"
+                    error_summaries.append(f"{path_str}: {msg}")
+                    _null_out_path(pruned_payload, loc_tuple)
+
+                # If pruning sets list indices to None, strip them so enum-array validation can succeed.
+                _drop_none_items_from_lists(pruned_payload)
 
                 try:
                     record = RegistryRecord(**pruned_payload)
-                    logger.warning(
-                        "RegistryRecord validation required pruning; returning partial record",
-                        extra={"pruned_error_count": len(e.errors())},
-                    )
                 except Exception as retry_exc:
                     # Second recovery: drop entire top-level sections that still fail.
                     from pydantic import ValidationError as _ValidationError
 
                     if isinstance(retry_exc, _ValidationError):
+                        retry_errors = retry_exc.errors()
                         top_pruned_payload = deepcopy(pruned_payload)
-                        for err in retry_exc.errors():
+                        top_keys_pruned: list[str] = []
+                        retry_summaries: list[str] = []
+
+                        for err in retry_errors:
                             loc = err.get("loc", [])
                             if not loc:
                                 continue
+                            retry_loc_tuple = tuple(loc) if isinstance(loc, (list, tuple)) else (loc,)
+                            retry_path = _format_payload_path(retry_loc_tuple)
+                            msg = err.get("msg") or err.get("type") or "validation error"
+                            retry_summaries.append(f"{retry_path}: {msg}")
                             top_key = loc[0]
                             if isinstance(top_key, str) and isinstance(top_pruned_payload, dict):
                                 top_pruned_payload[top_key] = None
+
+                                if top_key not in top_keys_pruned:
+                                    top_keys_pruned.append(top_key)
                         try:
                             record = RegistryRecord(**top_pruned_payload)
-                            logger.warning(
-                                "RegistryRecord validation required top-level pruning; returning partial record",
-                                extra={"top_pruned_error_count": len(retry_exc.errors())},
-                            )
                         except Exception as final_exc:
+                            try:
+                                logger.error(
+                                    "RegistryRecord validation failed after pruning; returning empty record",
+                                    extra={"error": str(final_exc)},
+                                )
+                            except Exception:
+                                pass
+                            record = RegistryRecord()
+                        else:
+                            message = (
+                                "RegistryRecord validation required top-level pruning; returning partial record "
+                                f"(errors={len(retry_errors)}). "
+                                f"Top-level pruned: {_summarize_list(top_keys_pruned, max_items=5, sep=', ')}. "
+                                f"Error summary: {_summarize_list(retry_summaries, max_items=3)}"
+                            )
+                            try:
+                                logger.warning(message)
+                            except Exception:
+                                pass
+                    else:
+                        try:
                             logger.error(
                                 "RegistryRecord validation failed after pruning; returning empty record",
-                                extra={"error": str(final_exc)},
+                                extra={"error": str(retry_exc)},
                             )
-                            record = RegistryRecord()
-                    else:
-                        logger.error(
-                            "RegistryRecord validation failed after pruning; returning empty record",
-                            extra={"error": str(retry_exc)},
-                        )
+                        except Exception:
+                            pass
                         record = RegistryRecord()
+                else:
+                    message = (
+                        "RegistryRecord validation required pruning; returning partial record "
+                        f"(errors={len(initial_errors)}). "
+                        f"Pruned: {_summarize_list(pruned_paths, max_items=5, sep=', ')}. "
+                        f"Error summary: {_summarize_list(error_summaries, max_items=3)}"
+                    )
+                    try:
+                        logger.warning(message)
+                    except Exception:
+                        pass
             else:
-                logger.error(
-                    "RegistryRecord validation failed with non-validation error; returning empty record",
-                    extra={"error": str(e)},
-                )
+                try:
+                    logger.error(
+                        "RegistryRecord validation failed with non-validation error; returning empty record",
+                        extra={"error": str(e)},
+                    )
+                except Exception:
+                    pass
                 record = RegistryRecord()
         
         normalized_evidence: dict[str, list[Span]] = {}
