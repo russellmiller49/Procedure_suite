@@ -32,6 +32,7 @@ Rule ID Reference:
 from __future__ import annotations
 
 import os
+import re
 from typing import Any, Callable, Dict, Optional, Set
 
 from observability.logging_config import get_logger
@@ -238,6 +239,70 @@ class CodingRulesEngine:
         # 31628 can be supported either by structured registry evidence OR strong note-body
         # evidence (canonical KB group detection). Registry evidence is preferred when present,
         # but tests and note-only coding flows rely on text evidence as well.
+        def text_supports_parenchymal_tbbx(note_text_lower: str) -> bool:
+            if not note_text_lower:
+                return False
+
+            flags = re.DOTALL
+
+            has_transbronchial_phrase = re.search(
+                r"\btransbronchial(?:\s+lung)?\s+biops(?:y|ies)\b",
+                note_text_lower,
+                flags=flags,
+            )
+            has_abbreviation = re.search(r"\b(?:tbbx|tblb|tbblx)\b", note_text_lower, flags=flags)
+            has_cryo_phrase = re.search(
+                r"\b(?:transbronchial\s+cryobiops(?:y|ies)|cryobiops(?:y|ies)|cryo-?tbb)\b",
+                note_text_lower,
+                flags=flags,
+            )
+
+            has_forceps_phrase = re.search(
+                r"\b(?:forceps|forcep)\s+biops(?:y|ies)\b",
+                note_text_lower,
+                flags=flags,
+            )
+            if has_forceps_phrase:
+                has_lung_context = re.search(
+                    r"\b(lung|lobe|rul|rml|rll|lul|lll|lingula|peripheral|nodule|parenchym)\b",
+                    note_text_lower,
+                    flags=flags,
+                )
+                if not has_lung_context or re.search(r"\bendobronchial\b", note_text_lower, flags=flags):
+                    has_forceps_phrase = None
+
+            has_anchor = bool(
+                has_transbronchial_phrase
+                or has_abbreviation
+                or has_cryo_phrase
+                or has_forceps_phrase
+            )
+            if not has_anchor:
+                # Navigation cases often document "biopsy of peripheral nodule" without the
+                # explicit transbronchial/TBBx phrasing, but still represent parenchymal sampling.
+                nav_peripheral_biopsy = bool(
+                    ("bronchoscopy_navigation" in groups)
+                    and re.search(r"\bbiops(?:y|ies)\s+of\b", note_text_lower, flags=flags)
+                    and re.search(r"\b(peripheral|nodule|lesion|mass)\b", note_text_lower, flags=flags)
+                    and not re.search(r"\bendobronchial\b", note_text_lower, flags=flags)
+                )
+                if not nav_peripheral_biopsy:
+                    return False
+
+            negation_patterns = [
+                r"\bno\s+(?:transbronchial(?:\s+lung)?\s+biops(?:y|ies)|tbbx|tblb|tbblx|forceps\s+biops(?:y|ies))\b",
+                r"\bwithout\s+(?:transbronchial(?:\s+lung)?\s+biops(?:y|ies)|tbbx|tblb|tbblx)\b",
+                r"\btransbronchial(?:\s+lung)?\s+biops(?:y|ies)\b[\s\S]{0,80}\b(?:not\s+(?:performed|done|obtained|taken)|was\s+not\s+performed|were\s+not\s+performed)\b",
+                r"\b(?:tbbx|tblb|tbblx)\b[\s\S]{0,80}\b(?:not\s+(?:performed|done|obtained|taken)|was\s+not\s+performed|were\s+not\s+performed)\b",
+                r"\bforceps\s+biops(?:y|ies)\b[\s\S]{0,80}\b(?:not\s+(?:performed|done|obtained|taken)|was\s+not\s+performed|were\s+not\s+performed)\b",
+                r"\bbiops(?:y|ies)\s+of\b[\s\S]{0,80}\b(?:not\s+(?:performed|done)|was\s+not\s+performed|were\s+not\s+performed)\b",
+                r"\bmention(?:ed|s)\b[\s\S]{0,80}\b(?:transbronchial|tbbx|tblb|tbblx)\b[\s\S]{0,80}\b(?:not\s+(?:performed|done)|was\s+not\s+performed|were\s+not\s+performed)\b",
+            ]
+            if any(re.search(p, note_text_lower, flags=flags) for p in negation_patterns):
+                return False
+
+            return True
+
         has_parenchymal_tbbx = False
         try:
             num_tbbx = registry.get("bronch_num_tbbx")
@@ -247,12 +312,24 @@ class CodingRulesEngine:
                 )
             if num_tbbx is not None:
                 has_parenchymal_tbbx = int(num_tbbx) > 0
+                if int(num_tbbx) == 0:
+                    # Treat an explicit 0 as structured evidence against TBBx.
+                    has_parenchymal_tbbx = False
         except Exception:
             has_parenchymal_tbbx = False
 
         # Text-only evidence path (e.g., "forceps biopsies", "transbronchial biopsy", etc.)
-        if "bronchoscopy_biopsy_parenchymal" in groups:
-            has_parenchymal_tbbx = True
+        has_explicit_no_tbbx = False
+        try:
+            if registry.get("bronch_num_tbbx") is not None and int(registry["bronch_num_tbbx"]) == 0:
+                has_explicit_no_tbbx = True
+        except Exception:
+            has_explicit_no_tbbx = False
+
+        if (not has_parenchymal_tbbx) and (not has_explicit_no_tbbx) and (
+            "bronchoscopy_biopsy_parenchymal" in groups
+        ):
+            has_parenchymal_tbbx = text_supports_parenchymal_tbbx(text_lower)
 
         tbbx_tool = registry.get("bronch_tbbx_tool") or context.registry_get(
             "procedures_performed", "transbronchial_biopsy", "forceps_type"

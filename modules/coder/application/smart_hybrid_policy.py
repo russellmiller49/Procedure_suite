@@ -341,7 +341,7 @@ class HybridCoderResult:
 
     codes: List[str]
     source: str
-    difficulty: CaseDifficulty
+    difficulty: CaseDifficulty | None = None
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 

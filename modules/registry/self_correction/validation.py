@@ -26,6 +26,7 @@ def validate_proposal(
     proposal: Any,
     raw_note_text: str,
     *,
+    extraction_text: str | None = None,
     max_patch_ops: int | None = None,
 ) -> tuple[bool, str]:
     """Return (is_valid, reason)."""
@@ -35,9 +36,14 @@ def validate_proposal(
         return False, "Missing evidence quote"
     quote = quote.strip()
 
-    text = raw_note_text or ""
+    if extraction_text is not None and extraction_text.strip():
+        text = extraction_text
+        text_label = "focused procedure text"
+    else:
+        text = raw_note_text or ""
+        text_label = "raw note text"
     if quote not in text:
-        return False, f"Quote not found verbatim in text: '{quote[:50]}...'"
+        return False, f"Quote not found verbatim in {text_label}: '{quote[:50]}...'"
 
     patches = getattr(proposal, "json_patch", [])
     if not isinstance(patches, list) or not patches:
@@ -88,4 +94,3 @@ def _env_int(name: str, default: int) -> int:
 
 
 __all__ = ["ALLOWED_PATHS", "validate_proposal"]
-

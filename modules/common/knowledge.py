@@ -111,6 +111,11 @@ def get_rvu(cpt: str) -> dict[str, float] | None:
     data = get_knowledge()
     rvus = data.get("rvus", {})
     entry = rvus.get(cpt)
+    if not entry and not cpt.startswith("+"):
+        # Knowledge base stores some add-on RVUs with a '+' prefix (e.g. +31627).
+        entry = rvus.get(f"+{cpt}")
+    if not entry and cpt.startswith("+"):
+        entry = rvus.get(cpt.lstrip("+"))
     if not entry:
         return None
     return {
@@ -129,7 +134,12 @@ def total_rvu(cpt: str) -> float:
 
 def is_add_on_code(cpt: str) -> bool:
     data = get_knowledge()
-    return cpt.startswith("+") or cpt in set(data.get("add_on_codes", []))
+    add_ons = set(data.get("add_on_codes", []))
+    if cpt.startswith("+"):
+        return True
+    if cpt in add_ons:
+        return True
+    return f"+{cpt}" in add_ons
 
 
 def bundling_rules() -> dict[str, Any]:
@@ -146,15 +156,36 @@ def synonym_list(key: str) -> list[str]:
 
 
 def lobe_aliases() -> dict[str, list[str]]:
-    return cast(dict[str, list[str]], get_knowledge().get("lobes", {}))
+    data = get_knowledge()
+    lobes = data.get("lobes")
+    if isinstance(lobes, dict) and lobes:
+        return cast(dict[str, list[str]], lobes)
+    anatomy = data.get("anatomy")
+    if isinstance(anatomy, dict):
+        return cast(dict[str, list[str]], anatomy.get("lobes", {}) or {})
+    return {}
 
 
 def station_aliases() -> dict[str, list[str]]:
-    return cast(dict[str, list[str]], get_knowledge().get("stations", {}))
+    data = get_knowledge()
+    stations = data.get("stations")
+    if isinstance(stations, dict) and stations:
+        return cast(dict[str, list[str]], stations)
+    anatomy = data.get("anatomy")
+    if isinstance(anatomy, dict):
+        return cast(dict[str, list[str]], anatomy.get("lymph_node_stations", {}) or {})
+    return {}
 
 
 def airway_map() -> dict[str, dict[str, Any]]:
-    return cast(dict[str, dict[str, Any]], get_knowledge().get("airways", {}))
+    data = get_knowledge()
+    airways = data.get("airways")
+    if isinstance(airways, dict) and airways:
+        return cast(dict[str, dict[str, Any]], airways)
+    anatomy = data.get("anatomy")
+    if isinstance(anatomy, dict):
+        return cast(dict[str, dict[str, Any]], anatomy.get("airways", {}) or {})
+    return {}
 
 
 def blvr_config() -> dict[str, Any]:

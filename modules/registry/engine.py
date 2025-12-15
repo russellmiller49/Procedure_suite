@@ -22,7 +22,12 @@ logger = get_logger("registry_engine")
 
 # List-like fields that must contain only non-empty strings (no None/"").
 # Centralize this so enum-array fields don't trigger record-wide validation failures.
-_STRING_ENUM_LIST_FIELDS: set[str] = {"sampling_tools_used"}
+_STRING_ENUM_LIST_FIELDS: set[str] = {
+    "sampling_tools_used",
+    "specimen_sent_for",
+    "hemostasis_methods",
+    "destinations",
+}
 
 
 def _format_payload_path(path: tuple[Any, ...]) -> str:
@@ -686,9 +691,26 @@ class RegistryEngine:
         include_evidence: bool = True,
         context: dict[str, Any] | None = None,
     ) -> RegistryRecord | tuple[RegistryRecord, dict[str, list[Span]]]:
+        record, _warnings = self.run_with_warnings(
+            note_text,
+            include_evidence=include_evidence,
+            context=context,
+        )
+        if explain:
+            return record, record.evidence
+        return record
+
+    def run_with_warnings(
+        self,
+        note_text: str,
+        *,
+        include_evidence: bool = True,
+        context: dict[str, Any] | None = None,
+    ) -> tuple[RegistryRecord, list[str]]:
         sections = self.sectionizer.sectionize(note_text)
         evidence: Dict[str, list[Span]] = {}
         seed_data: Dict[str, Any] = {}
+        warnings: list[str] = []
 
         # Run deterministic extractors FIRST to seed commonly missed fields
         # These provide reliable extraction for demographics, ASA, sedation, etc.
@@ -849,6 +871,7 @@ class RegistryEngine:
 
         sanitization_warnings = _sanitize_string_enum_lists(nested_payload)
         if sanitization_warnings:
+            warnings.extend(sanitization_warnings)
             for warning in sanitization_warnings:
                 try:
                     logger.warning(warning)
@@ -905,8 +928,8 @@ class RegistryEngine:
                     loc_tuple = tuple(loc) if isinstance(loc, (list, tuple)) else (loc,)
                     path_str = _format_payload_path(loc_tuple)
                     pruned_paths.append(path_str)
-                    msg = err.get("msg") or err.get("type") or "validation error"
-                    error_summaries.append(f"{path_str}: {msg}")
+                    err_type = err.get("type") or "validation_error"
+                    error_summaries.append(f"{path_str}: {err_type}")
                     _null_out_path(pruned_payload, loc_tuple)
 
                 # If pruning sets list indices to None, strip them so enum-array validation can succeed.
@@ -930,8 +953,8 @@ class RegistryEngine:
                                 continue
                             retry_loc_tuple = tuple(loc) if isinstance(loc, (list, tuple)) else (loc,)
                             retry_path = _format_payload_path(retry_loc_tuple)
-                            msg = err.get("msg") or err.get("type") or "validation error"
-                            retry_summaries.append(f"{retry_path}: {msg}")
+                            err_type = err.get("type") or "validation_error"
+                            retry_summaries.append(f"{retry_path}: {err_type}")
                             top_key = loc[0]
                             if isinstance(top_key, str) and isinstance(top_pruned_payload, dict):
                                 top_pruned_payload[top_key] = None
@@ -956,6 +979,7 @@ class RegistryEngine:
                                 f"Top-level pruned: {_summarize_list(top_keys_pruned, max_items=5, sep=', ')}. "
                                 f"Error summary: {_summarize_list(retry_summaries, max_items=3)}"
                             )
+                            warnings.append(message)
                             try:
                                 logger.warning(message)
                             except Exception:
@@ -976,6 +1000,7 @@ class RegistryEngine:
                         f"Pruned: {_summarize_list(pruned_paths, max_items=5, sep=', ')}. "
                         f"Error summary: {_summarize_list(error_summaries, max_items=3)}"
                     )
+                    warnings.append(message)
                     try:
                         logger.warning(message)
                     except Exception:
@@ -1005,9 +1030,7 @@ class RegistryEngine:
             normalized_evidence = validate_evidence_spans(note_text, normalized_evidence)
 
         record.evidence = {field: spans for field, spans in normalized_evidence.items()}
-        if explain:
-            return record, record.evidence
-        return record
+        return record, warnings
 
     def _extract_linear_station_spans(self, text: str) -> tuple[list[str], list[Span]]:
         """Extract linear EBUS station mentions and their spans from raw text."""

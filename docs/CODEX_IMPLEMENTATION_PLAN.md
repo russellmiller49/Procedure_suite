@@ -288,7 +288,7 @@ Do NOT auto-merge ML outputs into RegistryRecord (audit only).
 ---
 
 ## 10) Phase 6 — Self-correction loop (guarded JSON patch) driven by RAW-ML
-### 10.1 Triggering (RAW-ML only)
+### 10.1 Triggering (RAW-ML only)'
 Only if REGISTRY_SELF_CORRECT_ENABLED=1 AND:
 - discrepancy exists
 - trigger candidate comes from RawMLAuditor.self_correct_triggers(cls, cfg)

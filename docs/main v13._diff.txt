@@ -1,0 +1,4468 @@
+diff --git a/README.md b/README.md
+index f9dfe6a..6d717f5 100644
+--- a/README.md
++++ b/README.md
+@@ -149,6 +149,17 @@ make preflight
+ | `GEMINI_OFFLINE` | Disable LLM calls (use stubs) | `1` |
+ | `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry tests | `1` |
+ | `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading at startup | `false` |
++| `PROCSUITE_PIPELINE_MODE` | Pipeline mode: `current` or `extraction_first` | `current` |
++| `REGISTRY_EXTRACTION_ENGINE` | Registry extraction engine: `engine`, `agents_focus_then_engine`, or `agents_structurer` | `engine` |
++| `REGISTRY_AUDITOR_SOURCE` | Registry auditor source (extraction-first): `raw_ml` or `disabled` | `raw_ml` |
++| `REGISTRY_ML_AUDIT_USE_BUCKETS` | Audit set = `high_conf + gray_zone` when `1`; else use `top_k + min_prob` | `1` |
++| `REGISTRY_ML_AUDIT_TOP_K` | Audit top-k predictions when buckets disabled | `25` |
++| `REGISTRY_ML_AUDIT_MIN_PROB` | Audit minimum probability when buckets disabled | `0.50` |
++| `REGISTRY_ML_SELF_CORRECT_MIN_PROB` | Min prob for self-correction trigger candidates | `0.95` |
++| `REGISTRY_SELF_CORRECT_ENABLED` | Enable guarded self-correction loop | `0` |
++| `REGISTRY_SELF_CORRECT_ALLOWLIST` | Comma-separated JSON Pointer allowlist for self-correction patch paths (default: `modules/registry/self_correction/validation.py` `ALLOWED_PATHS`) | `builtin` |
++| `REGISTRY_SELF_CORRECT_MAX_ATTEMPTS` | Max successful auto-corrections per case | `1` |
++| `REGISTRY_SELF_CORRECT_MAX_PATCH_OPS` | Max JSON Patch ops per proposal | `5` |
+ 
+ ---
+ 
+diff --git a/data/knowledge/IP_Registry.json b/data/knowledge/IP_Registry.json
+index 652d924..745bd11 100644
+--- a/data/knowledge/IP_Registry.json
++++ b/data/knowledge/IP_Registry.json
+@@ -824,16 +824,125 @@
+               },
+               "description": "Lymph node stations sampled"
+             },
++            "stations_planned": {
++              "type": [
++                "array",
++                "null"
++              ],
++              "items": {
++                "type": "string",
++                "enum": [
++                  "2R",
++                  "2L",
++                  "3p",
++                  "4R",
++                  "4L",
++                  "7",
++                  "10R",
++                  "10L",
++                  "11R",
++                  "11L",
++                  "12R",
++                  "12L",
++                  "Lung Mass",
++                  "Other"
++                ]
++              },
++              "description": "Lymph node stations inspected/planned"
++            },
++            "stations_detail": {
++              "type": [
++                "array",
++                "null"
++              ],
++              "description": "Per-station EBUS-TBNA details (passes, size, ROSE, etc.)",
++              "items": {
++                "type": "object",
++                "additionalProperties": true,
++                "properties": {
++                  "station": {
++                    "type": "string",
++                    "enum": [
++                      "2R",
++                      "2L",
++                      "3p",
++                      "4R",
++                      "4L",
++                      "7",
++                      "10R",
++                      "10L",
++                      "11R",
++                      "11L",
++                      "12R",
++                      "12L"
++                    ]
++                  },
++                  "size_mm": {
++                    "type": [
++                      "number",
++                      "null"
++                    ],
++                    "minimum": 0
++                  },
++                  "passes": {
++                    "type": [
++                      "integer",
++                      "null"
++                    ],
++                    "minimum": 1
++                  },
++                  "shape": {
++                    "type": [
++                      "string",
++                      "null"
++                    ]
++                  },
++                  "margin": {
++                    "type": [
++                      "string",
++                      "null"
++                    ]
++                  },
++                  "echogenicity": {
++                    "type": [
++                      "string",
++                      "null"
++                    ]
++                  },
++                  "chs_present": {
++                    "type": [
++                      "boolean",
++                      "null"
++                    ]
++                  },
++                  "appearance_category": {
++                    "type": [
++                      "string",
++                      "null"
++                    ]
++                  },
++                  "rose_result": {
++                    "type": [
++                      "string",
++                      "null"
++                    ]
++                  }
++                },
++                "required": [
++                  "station"
++                ]
++              }
++            },
+             "needle_gauge": {
+               "type": [
+-                "integer",
++                "string",
+                 "null"
+               ],
+               "enum": [
+-                19,
+-                21,
+-                22,
+-                25,
++                "19G",
++                "21G",
++                "22G",
++                "25G",
+                 null
+               ]
+             },
+@@ -862,11 +971,24 @@
+                 "null"
+               ]
+             },
++            "elastography_pattern": {
++              "type": [
++                "string",
++                "null"
++              ],
++              "description": "Elastography narrative/pattern if documented"
++            },
+             "doppler_used": {
+               "type": [
+                 "boolean",
+                 "null"
+               ]
++            },
++            "photodocumentation_complete": {
++              "type": [
++                "boolean",
++                "null"
++              ]
+             }
+           }
+         },
+@@ -4201,4 +4323,4 @@
+       }
+     }
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/data/synthetic_notes_with_registry.jsonl b/data/synthetic_notes_with_registry.jsonl
+new file mode 100644
+index 0000000..90aa91c
+--- /dev/null
++++ b/data/synthetic_notes_with_registry.jsonl
+@@ -0,0 +1 @@
++{"note_text":"PROCEDURE: EBUS-TBNA (endobronchial ultrasound)\\nEquipment: Olympus BF-UC190F EBUS bronchoscope.\\nSystematic staging performed with evaluation of N3 then N2 then N1 nodes.\\nTransbronchial needle aspiration (TBNA) performed using a 22-gauge needle.\\nLymph Nodes/Sites Inspected: 4R (lower paratracheal) node; 7 (subcarinal) node; 11L lymph node.\\nROSE: Positive for malignancy.\\nComplete photodocumentation of all accessible stations.\\nFlumazenil 0.2 mg IV given for reversal.\\n","registry_entry":{"patient_mrn":"SYNTH001","ebus_systematic_staging":true,"ebus_rose_available":true,"ebus_rose_result":"Adequate - malignant","ebus_stations_sampled":["4R","7","11L"],"ebus_scope_brand":"Olympus","ebus_needle_gauge":"22G","ebus_needle_type":"Standard FNA","ebus_photodocumentation_complete":true,"sedation_reversal_given":true,"sedation_reversal_agent":"Flumazenil"}}
+diff --git a/docs/ARCHITECTURE.md b/docs/ARCHITECTURE.md
+index ac7ec86..0577535 100644
+--- a/docs/ARCHITECTURE.md
++++ b/docs/ARCHITECTURE.md
+@@ -73,7 +73,7 @@ modules/coder/
+ │   ├── llm/                    # LLM advisor adapter
+ │   ├── nlp/                    # Keyword mapping, negation detection
+ │   └── ml_ranker.py            # ML prediction adapter
+-├── domain_rules.py             # NCCI bundling, EBUS rules
++├── domain_rules/               # NCCI bundling + deterministic registry→CPT
+ ├── rules_engine.py             # Rule-based code inference
+ └── engine.py                   # Legacy coder (deprecated)
+ ```
+@@ -140,6 +140,14 @@ modules/registry/
+ 5. Validation (IP_Registry.json schema)
+ 6. ML Audit (compare CPT-derived vs ML predictions)
+ 
++**Target: Extraction-First Registry Flow (feature-flagged)**
++1. Registry extraction from raw note text (no CPT hints)
++2. Granular → aggregate propagation (`derive_procedures_from_granular`)
++3. Deterministic RegistryRecord → CPT derivation (no note text)
++4. RAW-ML auditor calls `MLCoderPredictor.classify_case(raw_note_text)` directly (no orchestrator/rules)
++5. Compare deterministic CPT vs RAW-ML audit set and report discrepancies
++6. Optional guarded self-correction loop (default off)
++
+ ### 5. Agents Module (`modules/agents/`)
+ 
+ 3-agent pipeline for structured note processing.
+diff --git a/docs/DEVELOPMENT.md b/docs/DEVELOPMENT.md
+index 677102c..345a884 100644
+--- a/docs/DEVELOPMENT.md
++++ b/docs/DEVELOPMENT.md
+@@ -69,16 +69,16 @@ This document is the **Single Source of Truth** for developers and AI assistants
+ **Key Files:**
+ - `modules/coder/application/coding_service.py` - Main orchestrator
+ - `modules/coder/application/smart_hybrid_policy.py` - Hybrid decision logic
+-- `modules/coder/domain_rules.py` - NCCI bundling, domain rules
++- `modules/coder/domain_rules/` - NCCI bundling, domain rules
+ - `modules/coder/rules_engine.py` - Rule-based inference
+ 
+ **Responsibilities:**
+ - Maintain the 8-step coding pipeline in `CodingService`
+-- Update domain rules in `domain_rules.py`
++- Update domain rules in `modules/coder/domain_rules/`
+ - Ensure NCCI/MER compliance logic is correct
+ - Keep confidence thresholds tuned in `modules/ml_coder/thresholds.py`
+ 
+-**Rule**: Do not scatter logic. Keep business rules central in the Knowledge Base or domain_rules.py.
++**Rule**: Do not scatter logic. Keep business rules central in the Knowledge Base or `modules/coder/domain_rules/`.
+ 
+ ### 2. Registry Agent
+ 
+diff --git a/modules/agents/parser/parser_agent.py b/modules/agents/parser/parser_agent.py
+index 8dc7c8e..0271c13 100644
+--- a/modules/agents/parser/parser_agent.py
++++ b/modules/agents/parser/parser_agent.py
+@@ -8,7 +8,11 @@ class ParserAgent:
+         "HPI",
+         "History",
+         "Procedure",
++        "Technique",
+         "Findings",
++        "Indication",
++        "Impression",
++        "Specimens",
+         "Sedation",
+         "Complications",
+         "Disposition",
+@@ -25,7 +29,7 @@ def run(self, parser_in: ParserIn) -> ParserOut:
+             header = match.group(1).strip()
+             start = match.end()
+             end = matches[idx + 1].start() if idx + 1 < len(matches) else len(text)
+-            seg_type = header if header in self.headings else "unknown"
++            seg_type = next((h for h in self.headings if h.lower() == header.lower()), "unknown")
+             seg_text = text[start:end].strip()
+             segments.append(
+                 Segment(
+@@ -33,7 +37,6 @@ def run(self, parser_in: ParserIn) -> ParserOut:
+                     text=seg_text,
+                     start_char=start,
+                     end_char=end,
+-                    spans=None,
+                 )
+             )
+         # Fallback: treat entire note as one segment
+@@ -44,7 +47,6 @@ def run(self, parser_in: ParserIn) -> ParserOut:
+                     text=text,
+                     start_char=0,
+                     end_char=len(text),
+-                    spans=None,
+                 )
+             )
+         trace = Trace(
+@@ -53,4 +55,4 @@ def run(self, parser_in: ParserIn) -> ParserOut:
+             confounders_checked=[],
+             confidence=1.0,
+         )
+-        return ParserOut(segments=segments, entities=[], trace=trace)
++        return ParserOut(note_id=parser_in.note_id, segments=segments, entities=[], trace=trace)
+diff --git a/modules/coder/domain_rules.py b/modules/coder/domain_rules/__init__.py
+similarity index 99%
+rename from modules/coder/domain_rules.py
+rename to modules/coder/domain_rules/__init__.py
+index 5386185..c7a18f8 100644
+--- a/modules/coder/domain_rules.py
++++ b/modules/coder/domain_rules/__init__.py
+@@ -1,5 +1,7 @@
+ """Domain rules for code hierarchy and family consistency.
+ 
++NOTE: This module is now a package to support submodules (e.g. registry_to_cpt).
++
+ This module provides standalone functions for enforcing CPT code family rules
+ that can be used by both the legacy engine and the new hexagonal architecture.
+ """
+diff --git a/modules/coder/domain_rules/registry_to_cpt/__init__.py b/modules/coder/domain_rules/registry_to_cpt/__init__.py
+new file mode 100644
+index 0000000..f00df98
+--- /dev/null
++++ b/modules/coder/domain_rules/registry_to_cpt/__init__.py
+@@ -0,0 +1,2 @@
++"""Deterministic RegistryRecord → CPT derivation (extraction-first)."""
++
+diff --git a/modules/coder/domain_rules/registry_to_cpt/coding_rules.py b/modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+new file mode 100644
+index 0000000..7d5b802
+--- /dev/null
++++ b/modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+@@ -0,0 +1,262 @@
++"""Deterministic CPT code derivation from RegistryRecord only.
++
++This module is used by the extraction-first pipeline:
++  note_text -> RegistryRecord extraction -> deterministic RegistryRecord → CPT
++
++Non-negotiable constraint:
++Rules here must accept ONLY RegistryRecord and must not parse raw note text.
++"""
++
++from __future__ import annotations
++
++from typing import Any
++
++from modules.registry.schema import RegistryRecord
++
++
++def _performed(obj: Any) -> bool:
++    if obj is None:
++        return False
++    performed = getattr(obj, "performed", None)
++    return performed is True
++
++
++def _proc(record: RegistryRecord, name: str) -> Any:
++    procedures = getattr(record, "procedures_performed", None)
++    if procedures is None:
++        return None
++    return getattr(procedures, name, None)
++
++
++def _pleural(record: RegistryRecord, name: str) -> Any:
++    pleural = getattr(record, "pleural_procedures", None)
++    if pleural is None:
++        return None
++    return getattr(pleural, name, None)
++
++
++def _stations_sampled(record: RegistryRecord) -> list[str]:
++    linear = _proc(record, "linear_ebus")
++    stations = getattr(linear, "stations_sampled", None) if linear is not None else None
++    if not stations:
++        return []
++    return [str(s) for s in stations if s]
++
++
++def _lobe_tokens(values: list[str]) -> set[str]:
++    lobes: set[str] = set()
++    for value in values:
++        upper = value.upper()
++        for token in ("RUL", "RML", "RLL", "LUL", "LLL", "LINGULA"):
++            if token in upper:
++                lobes.add("Lingula" if token == "LINGULA" else token)
++    return lobes
++
++
++def derive_all_codes_with_meta(
++    record: RegistryRecord,
++) -> tuple[list[str], dict[str, str], list[str]]:
++    """Return (codes, rationales, warnings)."""
++    codes: list[str] = []
++    rationales: dict[str, str] = {}
++    warnings: list[str] = []
++
++    # --- Bronchoscopy family ---
++    diagnostic = _proc(record, "diagnostic_bronchoscopy")
++    if _performed(diagnostic):
++        interventional_names = [
++            "bal",
++            "brushings",
++            "endobronchial_biopsy",
++            "tbna_conventional",
++            "linear_ebus",
++            "radial_ebus",
++            "navigational_bronchoscopy",
++            "transbronchial_biopsy",
++            "transbronchial_cryobiopsy",
++            "therapeutic_aspiration",
++            "foreign_body_removal",
++            "airway_dilation",
++            "airway_stent",
++            "thermal_ablation",
++            "cryotherapy",
++            "blvr",
++            "bronchial_thermoplasty",
++            "whole_lung_lavage",
++            "rigid_bronchoscopy",
++        ]
++        if any(_performed(_proc(record, name)) for name in interventional_names):
++            warnings.append("Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure")
++        else:
++            codes.append("31622")
++            rationales["31622"] = "diagnostic_bronchoscopy.performed=true and no interventional bronchoscopy procedures"
++
++    if _performed(_proc(record, "brushings")):
++        codes.append("31623")
++        rationales["31623"] = "brushings.performed=true"
++
++    if _performed(_proc(record, "bal")):
++        codes.append("31624")
++        rationales["31624"] = "bal.performed=true"
++
++    # Transbronchial biopsy (31628) vs with fluoroscopy (31629)
++    if _performed(_proc(record, "transbronchial_biopsy")):
++        if getattr(record, "fluoroscopy_used", None) is True:
++            codes.append("31629")
++            rationales["31629"] = "transbronchial_biopsy.performed=true and fluoroscopy_used=true"
++        else:
++            codes.append("31628")
++            rationales["31628"] = "transbronchial_biopsy.performed=true"
++
++        # Additional lobe add-on (31632) requires multi-lobe locations.
++        tbbx = _proc(record, "transbronchial_biopsy")
++        locations = getattr(tbbx, "locations", None) if tbbx is not None else None
++        if locations:
++            lobes = _lobe_tokens([str(x) for x in locations if x])
++            if len(lobes) >= 2:
++                codes.append("31632")
++                rationales["31632"] = f"transbronchial_biopsy.locations spans lobes={sorted(lobes)}"
++
++    # Linear EBUS TBNA (31652/31653) based on station count.
++    if _performed(_proc(record, "linear_ebus")):
++        stations = _stations_sampled(record)
++        station_count = len(set(stations))
++        if station_count >= 3:
++            codes.append("31653")
++            rationales["31653"] = f"linear_ebus.performed=true and stations_sampled_count={station_count} (>=3)"
++        elif station_count in (1, 2):
++            codes.append("31652")
++            rationales["31652"] = f"linear_ebus.performed=true and stations_sampled_count={station_count} (1-2)"
++        else:
++            warnings.append("linear_ebus.performed=true but stations_sampled missing; cannot derive 31652/31653")
++
++    # Radial EBUS (repo mapping uses 31620)
++    if _performed(_proc(record, "radial_ebus")):
++        codes.append("31620")
++        rationales["31620"] = "radial_ebus.performed=true"
++
++    # Navigation add-on
++    if _performed(_proc(record, "navigational_bronchoscopy")):
++        codes.append("31627")
++        rationales["31627"] = "navigational_bronchoscopy.performed=true"
++
++    # Therapeutic aspiration
++    if _performed(_proc(record, "therapeutic_aspiration")):
++        codes.append("31645")
++        rationales["31645"] = "therapeutic_aspiration.performed=true"
++
++    # Foreign body removal
++    if _performed(_proc(record, "foreign_body_removal")):
++        codes.append("31635")
++        rationales["31635"] = "foreign_body_removal.performed=true"
++
++    # Airway dilation
++    if _performed(_proc(record, "airway_dilation")):
++        codes.append("31630")
++        rationales["31630"] = "airway_dilation.performed=true"
++
++    # Airway stent
++    if _performed(_proc(record, "airway_stent")):
++        codes.append("31636")
++        rationales["31636"] = "airway_stent.performed=true"
++
++    # BLVR valve family
++    blvr = _proc(record, "blvr")
++    if _performed(blvr):
++        procedure_type = getattr(blvr, "procedure_type", None)
++        num_valves = getattr(blvr, "number_of_valves", None)
++        if procedure_type == "Valve removal":
++            codes.append("31649")
++            rationales["31649"] = "blvr.procedure_type='Valve removal'"
++        else:
++            codes.append("31647")
++            rationales["31647"] = "blvr.procedure_type!='Valve removal' (default to valve placement family)"
++            if isinstance(num_valves, int) and num_valves >= 2:
++                codes.append("31648")
++                rationales["31648"] = f"blvr.number_of_valves={num_valves} (>=2)"
++
++    # Bronchial thermoplasty: 31660 initial + 31661 additional lobes.
++    bt = _proc(record, "bronchial_thermoplasty")
++    if _performed(bt):
++        codes.append("31660")
++        rationales["31660"] = "bronchial_thermoplasty.performed=true"
++        areas = getattr(bt, "areas_treated", None)
++        if areas and len(areas) >= 2:
++            codes.append("31661")
++            rationales["31661"] = f"bronchial_thermoplasty.areas_treated_count={len(areas)} (>=2)"
++
++    # --- Pleural family ---
++    if _performed(_pleural(record, "ipc")):
++        codes.append("32550")
++        rationales["32550"] = "pleural_procedures.ipc.performed=true"
++
++    thora = _pleural(record, "thoracentesis")
++    if _performed(thora):
++        guidance = getattr(thora, "guidance", None)
++        if guidance == "Ultrasound":
++            codes.append("32555")
++            rationales["32555"] = "thoracentesis.performed=true and guidance='Ultrasound'"
++        else:
++            codes.append("32554")
++            rationales["32554"] = "thoracentesis.performed=true and guidance!='Ultrasound'"
++
++    if _performed(_pleural(record, "chest_tube")):
++        codes.append("32551")
++        rationales["32551"] = "pleural_procedures.chest_tube.performed=true"
++
++    if _performed(_pleural(record, "medical_thoracoscopy")):
++        codes.append("32601")
++        rationales["32601"] = "pleural_procedures.medical_thoracoscopy.performed=true"
++
++    if _performed(_pleural(record, "pleurodesis")):
++        codes.append("32560")
++        rationales["32560"] = "pleural_procedures.pleurodesis.performed=true"
++
++    if _performed(_pleural(record, "fibrinolytic_therapy")):
++        codes.append("32561")
++        rationales["32561"] = "pleural_procedures.fibrinolytic_therapy.performed=true"
++
++    # ---------------------------------------------------------------------
++    # Post-processing: mutual exclusions & add-on safety
++    # ---------------------------------------------------------------------
++    derived = sorted(set(codes))
++
++    # Mutually exclusive: 31652 vs 31653 (prefer 31653)
++    if "31652" in derived and "31653" in derived:
++        derived = [c for c in derived if c != "31652"]
++        rationales.pop("31652", None)
++
++    # Mutually exclusive: 32554 vs 32555 (prefer imaging-guided)
++    if "32554" in derived and "32555" in derived:
++        derived = [c for c in derived if c != "32554"]
++        rationales.pop("32554", None)
++
++    # Add-on codes require a primary bronchoscopy.
++    addon_codes = {"31627", "31632", "31648", "31661"}
++    primary_bronch = {
++        "31622",
++        "31623",
++        "31624",
++        "31628",
++        "31629",
++        "31641",
++        "31647",
++        "31652",
++        "31653",
++        "31660",
++    }
++    if not any(c in primary_bronch for c in derived):
++        derived = [c for c in derived if c not in addon_codes]
++        for c in addon_codes:
++            rationales.pop(c, None)
++
++    return derived, rationales, warnings
++
++
++def derive_all_codes(record: RegistryRecord) -> list[str]:
++    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
++    return codes
++
++
++__all__ = ["derive_all_codes", "derive_all_codes_with_meta"]
++
+diff --git a/modules/coder/domain_rules/registry_to_cpt/engine.py b/modules/coder/domain_rules/registry_to_cpt/engine.py
+new file mode 100644
+index 0000000..77b4a08
+--- /dev/null
++++ b/modules/coder/domain_rules/registry_to_cpt/engine.py
+@@ -0,0 +1,29 @@
++from __future__ import annotations
++
++from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
++from modules.coder.domain_rules.registry_to_cpt.types import DerivedCode, RegistryCPTDerivation
++from modules.registry.schema import RegistryRecord
++
++
++class RegistryToCPTDerivationEngine:
++    def apply(self, record: RegistryRecord) -> RegistryCPTDerivation:
++        codes, rationales, warnings = derive_all_codes_with_meta(record)
++
++        derived = [
++            DerivedCode(
++                code=code,
++                rationale=rationales.get(code, "derived"),
++                rule_id=f"registry_to_cpt:{code}",
++                confidence=1.0,
++            )
++            for code in codes
++        ]
++        return RegistryCPTDerivation(codes=derived, warnings=warnings)
++
++
++def apply(record: RegistryRecord) -> RegistryCPTDerivation:
++    return RegistryToCPTDerivationEngine().apply(record)
++
++
++__all__ = ["RegistryToCPTDerivationEngine", "apply"]
++
+diff --git a/modules/coder/domain_rules/registry_to_cpt/types.py b/modules/coder/domain_rules/registry_to_cpt/types.py
+new file mode 100644
+index 0000000..815afaf
+--- /dev/null
++++ b/modules/coder/domain_rules/registry_to_cpt/types.py
+@@ -0,0 +1,18 @@
++from __future__ import annotations
++
++from dataclasses import dataclass, field
++
++
++@dataclass(frozen=True)
++class DerivedCode:
++    code: str
++    rationale: str
++    rule_id: str
++    confidence: float = 1.0
++
++
++@dataclass(frozen=True)
++class RegistryCPTDerivation:
++    codes: list[DerivedCode] = field(default_factory=list)
++    warnings: list[str] = field(default_factory=list)
++
+diff --git a/modules/common/llm.py b/modules/common/llm.py
+index 06e3298..bf5221b 100644
+--- a/modules/common/llm.py
++++ b/modules/common/llm.py
+@@ -4,10 +4,11 @@
+ 
+ import json
+ import os
+-from typing import Protocol
++from typing import Any, Protocol, TypeVar
+ 
+ import httpx
+ from dotenv import load_dotenv
++from pydantic import BaseModel
+ try:
+     from google.auth import default as google_auth_default
+     from google.auth.transport.requests import Request as GoogleAuthRequest
+@@ -143,7 +144,14 @@ def _get_access_token(self) -> str:
+             self._refresh_credentials()
+         return self._credentials.token  # type: ignore[return-value]
+ 
+-    def generate(self, prompt: str, response_schema: dict | None = None, max_retries: int = 3) -> str:
++    def generate(
++        self,
++        prompt: str,
++        response_schema: dict | None = None,
++        max_retries: int = 3,
++        *,
++        temperature: float | None = None,
++    ) -> str:
+         import time
+ 
+         if self.use_oauth:
+@@ -160,9 +168,11 @@ def generate(self, prompt: str, response_schema: dict | None = None, max_retries
+             url = f"{self.base_url}/{self.model}:generateContent?key={self.api_key}"
+             headers = {"Content-Type": "application/json"}
+ 
+-        generation_config = {"response_mime_type": "application/json"}
++        generation_config: dict[str, Any] = {"response_mime_type": "application/json"}
+         if response_schema:
+             generation_config["response_schema"] = response_schema
++        if temperature is not None:
++            generation_config["temperature"] = float(temperature)
+ 
+         payload = {
+             "contents": [{"parts": [{"text": prompt}]}],
+@@ -237,5 +247,70 @@ def generate(self, prompt: str) -> str:
+         logger.warning("Using DeterministicStubLLM. Set GEMINI_API_KEY for real inference.")
+         return json.dumps(self.payload)
+ 
++TModel = TypeVar("TModel", bound=BaseModel)
++
++
++class LLMService:
++    """Small helper for structured (JSON) generations.
++
++    This wraps the repo's LLM clients and provides a convenience method that:
++    - requests JSON output
++    - parses the JSON payload
++    - validates it against a Pydantic model
++    """
++
++    def __init__(self, llm: LLMInterface | None = None) -> None:
++        if llm is not None:
++            self._llm = llm
++            return
++
++        use_stub = os.getenv("REGISTRY_USE_STUB_LLM", "").lower() in ("1", "true", "yes")
++        use_stub = use_stub or os.getenv("GEMINI_OFFLINE", "").lower() in ("1", "true", "yes")
+ 
+-__all__ = ["LLMInterface", "GeminiLLM", "OpenAILLM", "DeterministicStubLLM"]
++        if use_stub or not os.getenv("GEMINI_API_KEY"):
++            self._llm = DeterministicStubLLM()
++        else:
++            self._llm = GeminiLLM()
++
++    def generate_json(
++        self,
++        *,
++        system_prompt: str,
++        user_prompt: str,
++        response_model: type[TModel],
++        temperature: float = 0.0,
++    ) -> TModel:
++        prompt = f"{system_prompt.strip()}\n\n{user_prompt.strip()}\n"
++
++        # Prefer prompt-only enforcement for now; Gemini response_schema requires a
++        # provider-specific schema shape (see LLMDetailedExtractor for conversion).
++        raw = self._generate(prompt, temperature=temperature)
++        cleaned = _strip_markdown_code_fences(raw)
++
++        if cleaned.strip() in {"null", "None", ""}:
++            raise ValueError("LLM returned null/empty response")
++
++        data = json.loads(cleaned)
++        return response_model.model_validate(data)
++
++    def _generate(self, prompt: str, *, temperature: float) -> str:
++        llm = self._llm
++        if isinstance(llm, GeminiLLM):
++            return llm.generate(prompt, temperature=temperature)
++        return llm.generate(prompt)
++
++
++def _strip_markdown_code_fences(text: str) -> str:
++    if not text:
++        return ""
++    cleaned = text.strip()
++    if cleaned.startswith("```"):
++        cleaned = cleaned.lstrip("`").strip()
++        if cleaned.lower().startswith("json"):
++            cleaned = cleaned[4:].strip()
++    if cleaned.endswith("```"):
++        cleaned = cleaned[: -3].strip()
++    return cleaned.strip()
++
++
++__all__ = ["LLMInterface", "GeminiLLM", "OpenAILLM", "DeterministicStubLLM", "LLMService"]
+diff --git a/modules/domain/coding_rules/coding_rules_engine.py b/modules/domain/coding_rules/coding_rules_engine.py
+index 755f83c..01cf540 100644
+--- a/modules/domain/coding_rules/coding_rules_engine.py
++++ b/modules/domain/coding_rules/coding_rules_engine.py
+@@ -235,6 +235,9 @@ def discard(code: str, rule_id: str, reason: str) -> None:
+             discard("31632", "R008_ADDITIONAL_LOBE", "Less than 2 lobes")
+ 
+         # ========== RULE 9: PARENCHYMAL TBBx (31628) ==========
++        # 31628 can be supported either by structured registry evidence OR strong note-body
++        # evidence (canonical KB group detection). Registry evidence is preferred when present,
++        # but tests and note-only coding flows rely on text evidence as well.
+         has_parenchymal_tbbx = False
+         try:
+             num_tbbx = registry.get("bronch_num_tbbx")
+@@ -247,6 +250,10 @@ def discard(code: str, rule_id: str, reason: str) -> None:
+         except Exception:
+             has_parenchymal_tbbx = False
+ 
++        # Text-only evidence path (e.g., "forceps biopsies", "transbronchial biopsy", etc.)
++        if "bronchoscopy_biopsy_parenchymal" in groups:
++            has_parenchymal_tbbx = True
++
+         tbbx_tool = registry.get("bronch_tbbx_tool") or context.registry_get(
+             "procedures_performed", "transbronchial_biopsy", "forceps_type"
+         )
+@@ -322,7 +329,9 @@ def discard(code: str, rule_id: str, reason: str) -> None:
+             "mucus plug aspiration", "aspirated clot", "clot aspiration",
+             "clearance of secretions", "removal of secretions"
+         ]
+-        has_aspiration = any(t in text_lower for t in aspiration_terms)
++        has_aspiration = any(t in text_lower for t in aspiration_terms) or (
++            "bronchoscopy_therapeutic_aspiration" in groups
++        )
+         if not has_aspiration:
+             discard("31645", "R013_ASPIRATION", "No aspiration evidence")
+             discard("31646", "R013_ASPIRATION", "No aspiration evidence")
+diff --git a/modules/ml_coder/data_prep.py b/modules/ml_coder/data_prep.py
+index d5e66f6..6aa1cee 100644
+--- a/modules/ml_coder/data_prep.py
++++ b/modules/ml_coder/data_prep.py
+@@ -13,7 +13,12 @@
+ 
+ import numpy as np
+ import pandas as pd
+-from skmultilearn.model_selection import iterative_train_test_split
++try:
++    # Optional dependency: used for multi-label iterative stratification during training.
++    # Tests and inference should not hard-require this package.
++    from skmultilearn.model_selection import iterative_train_test_split
++except ModuleNotFoundError:  # pragma: no cover
++    iterative_train_test_split = None
+ 
+ GOLDEN_DIR = Path("data/knowledge/golden_extractions")
+ 
+@@ -399,9 +404,18 @@ def stratified_split(
+     y, all_codes = _build_label_matrix(df)
+     X_indices = np.arange(len(df)).reshape(-1, 1)
+ 
+-    X_train, y_train, X_test, y_test = iterative_train_test_split(
+-        X_indices, y, test_size=test_size
+-    )
++    if iterative_train_test_split is None:
++        # Fallback split when scikit-multilearn isn't installed.
++        rng = np.random.default_rng(0)
++        idx = np.arange(len(df))
++        rng.shuffle(idx)
++        n_test = max(1, int(round(len(df) * test_size)))
++        X_test = idx[:n_test].reshape(-1, 1)
++        X_train = idx[n_test:].reshape(-1, 1)
++    else:
++        X_train, _y_train, X_test, _y_test = iterative_train_test_split(
++            X_indices, y, test_size=test_size
++        )
+ 
+     X_train, X_test = _enforce_encounter_grouping(df, X_train, X_test)
+     return X_train.flatten(), X_test.flatten(), all_codes
+@@ -524,9 +538,17 @@ def _registry_stratified_split(
+     X_indices = np.arange(len(df)).reshape(-1, 1)
+ 
+     # Use iterative stratification for multi-label split
+-    X_train, y_train, X_test, y_test = iterative_train_test_split(
+-        X_indices, y, test_size=test_size
+-    )
++    if iterative_train_test_split is None:
++        rng = np.random.default_rng(0)
++        idx = np.arange(len(df))
++        rng.shuffle(idx)
++        n_test = max(1, int(round(len(df) * test_size)))
++        X_test = idx[:n_test].reshape(-1, 1)
++        X_train = idx[n_test:].reshape(-1, 1)
++    else:
++        X_train, _y_train, X_test, _y_test = iterative_train_test_split(
++            X_indices, y, test_size=test_size
++        )
+ 
+     # Enforce encounter grouping to prevent data leakage
+     X_train, X_test = _enforce_encounter_grouping(df, X_train, X_test)
+diff --git a/modules/registry/application/registry_service.py b/modules/registry/application/registry_service.py
+index cdd2891..0f59be0 100644
+--- a/modules/registry/application/registry_service.py
++++ b/modules/registry/application/registry_service.py
+@@ -12,8 +12,9 @@
+ import uuid
+ from dataclasses import dataclass, field
+ from datetime import datetime, date
+-from typing import Any, Literal
++from typing import Any, Literal, TYPE_CHECKING
+ 
++import os
+ from pydantic import BaseModel, ValidationError
+ 
+ from modules.common.exceptions import RegistryError
+@@ -33,6 +34,7 @@
+ from modules.registry.engine import RegistryEngine
+ from modules.registry.schema import RegistryRecord
+ from modules.registry.schema_granular import derive_procedures_from_granular
++from modules.registry.audit.audit_types import AuditCompareReport
+ 
+ logger = get_logger("registry_service")
+ from proc_schemas.coding import FinalCode, CodingResult
+@@ -54,6 +56,52 @@
+ from modules.registry.model_runtime import get_registry_runtime_dir, resolve_model_backend
+ 
+ 
++if TYPE_CHECKING:
++    from modules.registry.self_correction.types import SelfCorrectionMetadata
++
++
++def focus_note_for_extraction(note_text: str) -> tuple[str, dict[str, Any]]:
++    """Optionally focus/summarize a note for deterministic extraction.
++
++    Guardrail: RAW-ML auditing must always run on the full raw note text and
++    must never use the focused/summarized text.
++    """
++    from modules.registry.extraction.focus import focus_note_for_extraction as _focus
++
++    return _focus(note_text)
++
++
++def _apply_granular_up_propagation(record: RegistryRecord) -> tuple[RegistryRecord, list[str]]:
++    """Apply granular→aggregate propagation using derive_procedures_from_granular().
++
++    This must remain the single place where granular evidence drives aggregate
++    performed flags.
++    """
++    if record.granular_data is None:
++        return record, []
++
++    granular = record.granular_data.model_dump()
++    existing_procedures = (
++        record.procedures_performed.model_dump() if record.procedures_performed is not None else None
++    )
++
++    updated_procs, granular_warnings = derive_procedures_from_granular(
++        granular_data=granular,
++        existing_procedures=existing_procedures,
++    )
++
++    if not updated_procs and not granular_warnings:
++        return record, []
++
++    record_data = record.model_dump()
++    if updated_procs:
++        record_data["procedures_performed"] = updated_procs
++    record_data.setdefault("granular_validation_warnings", [])
++    record_data["granular_validation_warnings"].extend(granular_warnings)
++
++    return RegistryRecord(**record_data), granular_warnings
++
++
+ @dataclass
+ class RegistryDraftResult:
+     """Result from building a draft registry entry."""
+@@ -111,6 +159,8 @@ class RegistryExtractionResult:
+     needs_manual_review: bool = False
+     validation_errors: list[str] = field(default_factory=list)
+     audit_warnings: list[str] = field(default_factory=list)
++    audit_report: AuditCompareReport | None = None
++    self_correction: list["SelfCorrectionMetadata"] = field(default_factory=list)
+ 
+ 
+ class RegistryService:
+@@ -526,6 +576,10 @@ def extract_fields(self, note_text: str) -> RegistryExtractionResult:
+         Returns:
+             RegistryExtractionResult with extracted record and metadata.
+         """
++        pipeline_mode = os.getenv("PROCSUITE_PIPELINE_MODE", "current").strip().lower()
++        if pipeline_mode == "extraction_first":
++            return self._extract_fields_extraction_first(note_text)
++
+         # Legacy fallback: if no hybrid orchestrator is injected, run extractor only
+         if self.hybrid_orchestrator is None:
+             logger.info("No hybrid_orchestrator configured, running extractor-only mode")
+@@ -586,6 +640,284 @@ def extract_fields(self, note_text: str) -> RegistryExtractionResult:
+ 
+         return final_result
+ 
++    # -------------------------------------------------------------------------
++    # Extraction-First Registry → Deterministic CPT → RAW-ML Audit
++    # -------------------------------------------------------------------------
++
++    def extract_record(
++        self,
++        note_text: str,
++        *,
++        note_id: str | None = None,
++    ) -> tuple[RegistryRecord, list[str], dict[str, Any]]:
++        """Extract a RegistryRecord from note text without CPT hints.
++
++        This is the extraction-first entrypoint for registry evidence. It must
++        not seed extraction with CPT codes, ML-predicted CPT codes, or any
++        SmartHybridOrchestrator output.
++        """
++        warnings: list[str] = []
++        meta: dict[str, Any] = {"note_id": note_id}
++
++        extraction_engine = os.getenv("REGISTRY_EXTRACTION_ENGINE", "engine").strip().lower()
++        meta["extraction_engine"] = extraction_engine
++
++        text_for_extraction = note_text
++        if extraction_engine == "engine":
++            pass
++        elif extraction_engine == "agents_focus_then_engine":
++            # Phase 2: focusing helper is optional; guardrail is that RAW-ML always
++            # runs on the raw note text.
++            try:
++                focused_text, focus_meta = focus_note_for_extraction(note_text)
++                meta["focus_meta"] = focus_meta
++                text_for_extraction = focused_text or note_text
++            except Exception as exc:
++                warnings.append(f"focus_note_for_extraction failed ({exc}); using raw note")
++                meta["focus_meta"] = {"status": "failed", "error": str(exc)}
++                text_for_extraction = note_text
++        elif extraction_engine == "agents_structurer":
++            try:
++                from modules.registry.extraction.structurer import structure_note_to_registry_record
++
++                record, struct_meta = structure_note_to_registry_record(note_text, note_id=note_id)
++                meta["structurer_meta"] = struct_meta
++                meta["extraction_text"] = note_text
++
++                record, granular_warnings = _apply_granular_up_propagation(record)
++                warnings.extend(granular_warnings)
++
++                return record, warnings, meta
++            except NotImplementedError as exc:
++                warnings.append(str(exc))
++                meta["structurer_meta"] = {"status": "not_implemented"}
++            except Exception as exc:
++                warnings.append(f"Structurer failed ({exc}); falling back to engine")
++                meta["structurer_meta"] = {"status": "failed", "error": str(exc)}
++        else:
++            warnings.append(f"Unknown REGISTRY_EXTRACTION_ENGINE='{extraction_engine}', using engine")
++
++        meta["extraction_text"] = text_for_extraction
++        context = {"note_id": note_id} if note_id else None
++        record = self.registry_engine.run(text_for_extraction, context=context)
++        if isinstance(record, tuple):
++            record = record[0]  # Unpack if evidence included
++
++        record, granular_warnings = _apply_granular_up_propagation(record)
++        warnings.extend(granular_warnings)
++
++        return record, warnings, meta
++
++    def _extract_fields_extraction_first(self, raw_note_text: str) -> RegistryExtractionResult:
++        """Extraction-first registry pipeline.
++
++        Order (must not call orchestrator / CPT seeding):
++        1) extract_record(raw_note_text)
++        2) deterministic Registry→CPT derivation (Phase 3)
++        3) RAW-ML audit via MLCoderPredictor.classify_case(raw_note_text)
++        """
++        from modules.registry.audit.raw_ml_auditor import RawMLAuditor
++        from modules.coder.domain_rules.registry_to_cpt.engine import apply as derive_registry_to_cpt
++        from modules.registry.audit.compare import build_audit_compare_report
++        from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
++        from modules.registry.self_correction.judge import RegistryCorrectionJudge
++        from modules.registry.self_correction.types import SelfCorrectionMetadata, SelfCorrectionTrigger
++        from modules.registry.self_correction.validation import ALLOWED_PATHS, validate_proposal
++
++        # Guardrail: auditing must always use the original raw note text. Do not
++        # overwrite this variable with focused/summarized text.
++        raw_text_for_audit = raw_note_text
++
++        record, extraction_warnings, meta = self.extract_record(raw_note_text)
++        extraction_text = meta.get("extraction_text") if isinstance(meta.get("extraction_text"), str) else None
++
++        derivation = derive_registry_to_cpt(record)
++        derived_codes = [c.code for c in derivation.codes]
++        base_warnings = list(extraction_warnings)
++        self_correct_warnings: list[str] = []
++        self_correction_meta: list[SelfCorrectionMetadata] = []
++
++        auditor_source = os.getenv("REGISTRY_AUDITOR_SOURCE", "raw_ml").strip().lower()
++        audit_warnings: list[str] = []
++        audit_report: AuditCompareReport | None = None
++        coder_difficulty = "unknown"
++        needs_manual_review = False
++
++        if auditor_source == "raw_ml":
++            from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
++
++            auditor = RawMLAuditor()
++            cfg = RawMLAuditConfig.from_env()
++            ml_case = auditor.classify(raw_text_for_audit)
++            coder_difficulty = ml_case.difficulty.value
++
++            audit_preds = auditor.audit_predictions(ml_case, cfg)
++
++            audit_report = build_audit_compare_report(
++                derived_codes=derived_codes,
++                cfg=cfg,
++                ml_case=ml_case,
++                audit_preds=audit_preds,
++            )
++            needs_manual_review = bool(audit_report.high_conf_omissions)
++
++            def _env_flag(name: str, default: str = "0") -> bool:
++                return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
++
++            def _env_int(name: str, default: int) -> int:
++                raw = os.getenv(name)
++                if raw is None:
++                    return default
++                raw = raw.strip()
++                if not raw:
++                    return default
++                try:
++                    return int(raw)
++                except ValueError:
++                    return default
++
++            self_correct_enabled = _env_flag("REGISTRY_SELF_CORRECT_ENABLED", "0")
++            if self_correct_enabled and audit_report.high_conf_omissions:
++                max_attempts = max(0, _env_int("REGISTRY_SELF_CORRECT_MAX_ATTEMPTS", 1))
++                omission_set = {p.cpt for p in audit_report.high_conf_omissions}
++
++                bucket_by_cpt = {p.cpt: p.bucket for p in audit_report.ml_audit_codes}
++                trigger_preds = [
++                    p for p in auditor.self_correct_triggers(ml_case, cfg) if p.cpt in omission_set
++                ]
++
++                judge = RegistryCorrectionJudge()
++
++                def _allowlist_snapshot() -> list[str]:
++                    raw = os.getenv("REGISTRY_SELF_CORRECT_ALLOWLIST", "").strip()
++                    if raw:
++                        return sorted({p.strip() for p in raw.split(",") if p.strip()})
++                    return sorted(ALLOWED_PATHS)
++
++                corrections_applied = 0
++                for pred in trigger_preds:
++                    if corrections_applied >= max_attempts:
++                        break
++
++                    trigger = SelfCorrectionTrigger(
++                        target_cpt=pred.cpt,
++                        ml_prob=float(pred.prob),
++                        ml_bucket=bucket_by_cpt.get(pred.cpt),
++                        reason="RAW_ML_HIGH_CONF_OMISSION",
++                    )
++
++                    discrepancy = (
++                        f"RAW-ML suggests missing CPT {pred.cpt} "
++                        f"(prob={float(pred.prob):.2f}, bucket={bucket_by_cpt.get(pred.cpt) or 'UNKNOWN'})."
++                    )
++                    proposal = judge.propose_correction(
++                        note_text=raw_note_text,
++                        record=record,
++                        discrepancy=discrepancy,
++                    )
++                    if proposal is None:
++                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: judge returned null")
++                        continue
++
++                    is_valid, reason = validate_proposal(proposal, raw_note_text)
++                    if not is_valid:
++                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: {reason}")
++                        continue
++
++                    try:
++                        patched_record = apply_patch_to_record(record=record, patch=proposal.json_patch)
++                    except SelfCorrectionApplyError as exc:
++                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: apply failed ({exc})")
++                        continue
++
++                    if patched_record.model_dump() == record.model_dump():
++                        self_correct_warnings.append(
++                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: patch produced no change"
++                        )
++                        continue
++
++                    candidate_record, candidate_granular_warnings = _apply_granular_up_propagation(
++                        patched_record
++                    )
++
++                    candidate_derivation = derive_registry_to_cpt(candidate_record)
++                    candidate_codes = [c.code for c in candidate_derivation.codes]
++                    if trigger.target_cpt not in candidate_codes:
++                        self_correct_warnings.append(
++                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: patch did not derive target CPT"
++                        )
++                        continue
++
++                    record = candidate_record
++                    derivation = candidate_derivation
++                    derived_codes = candidate_codes
++                    corrections_applied += 1
++                    self_correct_warnings.extend(candidate_granular_warnings)
++
++                    self_correct_warnings.append(f"AUTO_CORRECTED: {pred.cpt}")
++                    self_correction_meta.append(
++                        SelfCorrectionMetadata(
++                            trigger=trigger,
++                            applied_paths=[
++                                str(op.get("path"))
++                                for op in proposal.json_patch
++                                if isinstance(op, dict) and op.get("path") is not None
++                            ],
++                            evidence_quotes=[proposal.evidence_quote],
++                            config_snapshot={
++                                "max_attempts": max_attempts,
++                                "allowlist": _allowlist_snapshot(),
++                                "audit_config": audit_report.config.to_dict(),
++                                "judge_rationale": proposal.rationale,
++                            },
++                        )
++                    )
++
++                    audit_report = build_audit_compare_report(
++                        derived_codes=derived_codes,
++                        cfg=cfg,
++                        ml_case=ml_case,
++                        audit_preds=audit_preds,
++                    )
++                    needs_manual_review = bool(audit_report.high_conf_omissions)
++        elif auditor_source == "disabled":
++            from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
++
++            cfg = RawMLAuditConfig.from_env()
++            audit_report = build_audit_compare_report(
++                derived_codes=derived_codes,
++                cfg=cfg,
++                ml_case=None,
++                audit_preds=None,
++                warnings=["REGISTRY_AUDITOR_SOURCE=disabled; RAW-ML audit set is empty"],
++            )
++            coder_difficulty = "disabled"
++        else:
++            raise ValueError(f"Unknown REGISTRY_AUDITOR_SOURCE='{auditor_source}'")
++
++        if audit_report and audit_report.missing_in_derived:
++            for pred in audit_report.missing_in_derived:
++                bucket = pred.bucket or "AUDIT_SET"
++                audit_warnings.append(
++                    f"RAW_ML_AUDIT[{bucket}]: model suggests {pred.cpt} (prob={pred.prob:.2f}), "
++                    "but deterministic derivation missed it"
++                )
++
++        warnings = list(base_warnings) + list(derivation.warnings) + list(self_correct_warnings)
++        return RegistryExtractionResult(
++            record=record,
++            cpt_codes=derived_codes,
++            coder_difficulty=coder_difficulty,
++            coder_source="extraction_first",
++            mapped_fields={},
++            warnings=warnings,
++            needs_manual_review=needs_manual_review,
++            validation_errors=[],
++            audit_warnings=audit_warnings,
++            audit_report=audit_report,
++            self_correction=self_correction_meta,
++        )
++
+     def _merge_cpt_fields_into_record(
+         self,
+         record: RegistryRecord,
+diff --git a/modules/registry/audit/__init__.py b/modules/registry/audit/__init__.py
+new file mode 100644
+index 0000000..149f687
+--- /dev/null
++++ b/modules/registry/audit/__init__.py
+@@ -0,0 +1,2 @@
++"""Registry audit helpers (extraction-first)."""
++
+diff --git a/modules/registry/audit/audit_types.py b/modules/registry/audit/audit_types.py
+new file mode 100644
+index 0000000..91b8f65
+--- /dev/null
++++ b/modules/registry/audit/audit_types.py
+@@ -0,0 +1,66 @@
++"""Types for RAW-ML audit comparison reporting.
++
++These dataclasses provide a structured, machine-readable representation of:
++- The ML audit set (RAW-ML predictor output)
++- Deterministic CPT codes derived from RegistryRecord-only rules
++- A comparison report capturing discrepancies (no auto-merge behavior)
++"""
++
++from __future__ import annotations
++
++from dataclasses import dataclass, field
++from typing import Any
++
++
++@dataclass(frozen=True)
++class AuditPrediction:
++    cpt: str
++    prob: float
++    bucket: str | None = None
++
++    def to_dict(self) -> dict[str, Any]:
++        return {"cpt": self.cpt, "prob": self.prob, "bucket": self.bucket}
++
++
++@dataclass(frozen=True)
++class AuditConfigSnapshot:
++    use_buckets: bool
++    top_k: int
++    min_prob: float
++    self_correct_min_prob: float
++
++    def to_dict(self) -> dict[str, Any]:
++        return {
++            "use_buckets": self.use_buckets,
++            "top_k": self.top_k,
++            "min_prob": self.min_prob,
++            "self_correct_min_prob": self.self_correct_min_prob,
++        }
++
++
++@dataclass(frozen=True)
++class AuditCompareReport:
++    derived_codes: list[str]
++    ml_audit_codes: list[AuditPrediction]
++    missing_in_derived: list[AuditPrediction]
++    missing_in_ml: list[str]
++    high_conf_omissions: list[AuditPrediction]
++    ml_difficulty: str | None
++    config: AuditConfigSnapshot
++    warnings: list[str] = field(default_factory=list)
++
++    def to_dict(self) -> dict[str, Any]:
++        return {
++            "derived_codes": list(self.derived_codes),
++            "ml_audit_codes": [p.to_dict() for p in self.ml_audit_codes],
++            "missing_in_derived": [p.to_dict() for p in self.missing_in_derived],
++            "missing_in_ml": list(self.missing_in_ml),
++            "high_conf_omissions": [p.to_dict() for p in self.high_conf_omissions],
++            "ml_difficulty": self.ml_difficulty,
++            "config": self.config.to_dict(),
++            "warnings": list(self.warnings),
++        }
++
++
++__all__ = ["AuditCompareReport", "AuditConfigSnapshot", "AuditPrediction"]
++
+diff --git a/modules/registry/audit/compare.py b/modules/registry/audit/compare.py
+new file mode 100644
+index 0000000..60f297b
+--- /dev/null
++++ b/modules/registry/audit/compare.py
+@@ -0,0 +1,103 @@
++"""Build structured audit-compare reports for extraction-first registry pipeline."""
++
++from __future__ import annotations
++
++from typing import Iterable, Sequence
++
++from modules.ml_coder.predictor import CaseClassification, CodePrediction
++from modules.registry.audit.audit_types import (
++    AuditCompareReport,
++    AuditConfigSnapshot,
++    AuditPrediction,
++)
++from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
++
++
++def _index_preds(preds: Iterable[CodePrediction]) -> dict[str, CodePrediction]:
++    return {p.cpt: p for p in preds}
++
++
++def build_audit_compare_report(
++    *,
++    derived_codes: Sequence[str],
++    cfg: RawMLAuditConfig,
++    ml_case: CaseClassification | None = None,
++    audit_preds: Sequence[CodePrediction] | None = None,
++    warnings: list[str] | None = None,
++) -> AuditCompareReport:
++    """Create a structured compare report between deterministic and RAW-ML audit sets.
++
++    This function is reporting-only:
++    - It must not mutate the RegistryRecord or derived codes.
++    - It must not auto-merge ML outputs into the deterministic output.
++    """
++    derived_list = list(derived_codes)
++    derived_set = set(derived_list)
++
++    snapshot = AuditConfigSnapshot(
++        use_buckets=cfg.use_buckets,
++        top_k=cfg.top_k,
++        min_prob=cfg.min_prob,
++        self_correct_min_prob=cfg.self_correct_min_prob,
++    )
++
++    report_warnings = list(warnings or [])
++
++    if not ml_case or not audit_preds:
++        return AuditCompareReport(
++            derived_codes=derived_list,
++            ml_audit_codes=[],
++            missing_in_derived=[],
++            missing_in_ml=sorted(derived_set),
++            high_conf_omissions=[],
++            ml_difficulty=None,
++            config=snapshot,
++            warnings=report_warnings,
++        )
++
++    high_conf_set = {p.cpt for p in ml_case.high_conf}
++    gray_zone_set = {p.cpt for p in ml_case.gray_zone}
++    audit_index = _index_preds(audit_preds)
++
++    ml_audit_codes: list[AuditPrediction] = []
++    for pred in audit_preds:
++        bucket: str | None
++        if pred.cpt in high_conf_set:
++            bucket = "HIGH_CONF"
++        elif pred.cpt in gray_zone_set:
++            bucket = "GRAY_ZONE"
++        else:
++            bucket = "PREDICTIONS"
++        ml_audit_codes.append(AuditPrediction(cpt=pred.cpt, prob=float(pred.prob), bucket=bucket))
++
++    audit_set = {p.cpt for p in ml_audit_codes}
++    missing_in_ml = sorted(derived_set - audit_set)
++
++    missing_in_derived = [p for p in ml_audit_codes if p.cpt not in derived_set]
++
++    high_conf_omissions = [
++        p
++        for p in missing_in_derived
++        if p.bucket == "HIGH_CONF" or p.prob >= cfg.self_correct_min_prob
++    ]
++
++    # Ensure we always have prob populated for audit codes (defensive).
++    for pred in missing_in_derived:
++        if pred.prob == 0.0 and pred.cpt in audit_index:
++            # This should not happen; record for debugging if it does.
++            report_warnings.append(f"Missing prob for ML audit code {pred.cpt}; defaulted to 0.0")
++
++    return AuditCompareReport(
++        derived_codes=derived_list,
++        ml_audit_codes=ml_audit_codes,
++        missing_in_derived=missing_in_derived,
++        missing_in_ml=missing_in_ml,
++        high_conf_omissions=high_conf_omissions,
++        ml_difficulty=ml_case.difficulty.value,
++        config=snapshot,
++        warnings=report_warnings,
++    )
++
++
++__all__ = ["build_audit_compare_report"]
++
+diff --git a/modules/registry/audit/raw_ml_auditor.py b/modules/registry/audit/raw_ml_auditor.py
+new file mode 100644
+index 0000000..88b0333
+--- /dev/null
++++ b/modules/registry/audit/raw_ml_auditor.py
+@@ -0,0 +1,74 @@
++"""RAW-ML auditor for extraction-first registry pipeline.
++
++Critical invariant:
++This auditor must use raw ML output only via MLCoderPredictor.classify_case(raw_note_text)
++and must never call SmartHybridOrchestrator.get_codes() or any rules validation / LLM fallback.
++"""
++
++from __future__ import annotations
++
++import os
++from dataclasses import dataclass
++
++from modules.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
++
++
++@dataclass(frozen=True)
++class RawMLAuditConfig:
++    use_buckets: bool = True
++    top_k: int = 25
++    min_prob: float = 0.50
++    self_correct_min_prob: float = 0.95
++
++    @classmethod
++    def from_env(cls) -> "RawMLAuditConfig":
++        def _as_bool(name: str, default: str) -> bool:
++            return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
++
++        def _as_int(name: str, default: int) -> int:
++            try:
++                return int(os.getenv(name, str(default)).strip())
++            except ValueError:
++                return default
++
++        def _as_float(name: str, default: float) -> float:
++            try:
++                return float(os.getenv(name, str(default)).strip())
++            except ValueError:
++                return default
++
++        return cls(
++            use_buckets=_as_bool("REGISTRY_ML_AUDIT_USE_BUCKETS", "1"),
++            top_k=_as_int("REGISTRY_ML_AUDIT_TOP_K", 25),
++            min_prob=_as_float("REGISTRY_ML_AUDIT_MIN_PROB", 0.50),
++            self_correct_min_prob=_as_float("REGISTRY_ML_SELF_CORRECT_MIN_PROB", 0.95),
++        )
++
++
++class RawMLAuditor:
++    def __init__(self, predictor: MLCoderPredictor | None = None) -> None:
++        self._predictor = predictor or MLCoderPredictor()
++
++    def classify(self, raw_note_text: str) -> CaseClassification:
++        return self._predictor.classify_case(raw_note_text)
++
++    def audit_predictions(
++        self, cls: CaseClassification, cfg: RawMLAuditConfig | None = None
++    ) -> list[CodePrediction]:
++        cfg = cfg or RawMLAuditConfig.from_env()
++
++        if cfg.use_buckets:
++            return list(cls.high_conf) + list(cls.gray_zone)
++
++        preds = cls.predictions[: cfg.top_k]
++        return [p for p in preds if p.prob >= cfg.min_prob]
++
++    def self_correct_triggers(
++        self, cls: CaseClassification, cfg: RawMLAuditConfig | None = None
++    ) -> list[CodePrediction]:
++        cfg = cfg or RawMLAuditConfig.from_env()
++        return [p for p in cls.high_conf if p.prob >= cfg.self_correct_min_prob]
++
++
++__all__ = ["RawMLAuditor", "RawMLAuditConfig"]
++
+diff --git a/modules/registry/engine.py b/modules/registry/engine.py
+index 61d9ec8..8944ec2 100644
+--- a/modules/registry/engine.py
++++ b/modules/registry/engine.py
+@@ -6,6 +6,7 @@
+ import re
+ from typing import Any, Dict, Set
+ 
++from modules.common.logger import get_logger
+ from modules.common.sectionizer import SectionizerService
+ from modules.common.spans import Span
+ from modules.registry.extractors.llm_detailed import LLMDetailedExtractor
+@@ -17,6 +18,90 @@
+ from .schema import RegistryRecord
+ 
+ 
++logger = get_logger("registry_engine")
++
++# List-like fields that must contain only non-empty strings (no None/"").
++# Centralize this so enum-array fields don't trigger record-wide validation failures.
++_STRING_ENUM_LIST_FIELDS: set[str] = {"sampling_tools_used"}
++
++
++def _format_payload_path(path: tuple[Any, ...]) -> str:
++    rendered = ""
++    for part in path:
++        if isinstance(part, int):
++            rendered += f"[{part}]"
++        else:
++            if rendered:
++                rendered += "."
++            rendered += str(part)
++    return rendered or "<root>"
++
++
++def _sanitize_string_enum_lists(payload: Any) -> list[str]:
++    """Drop invalid items (None/blank/non-str) from known list-of-enum fields.
++
++    This runs before RegistryRecord validation to prevent broad pruning/fallbacks
++    when a single list contains an invalid element.
++    """
++    warnings: list[str] = []
++
++    def _walk(obj: Any, path: tuple[Any, ...]) -> None:
++        if isinstance(obj, dict):
++            for key, value in list(obj.items()):
++                next_path = path + (key,)
++                if key in _STRING_ENUM_LIST_FIELDS and isinstance(value, list):
++                    kept: list[str] = []
++                    dropped: list[Any] = []
++                    for item in value:
++                        if item is None:
++                            dropped.append(item)
++                            continue
++                        if not isinstance(item, str):
++                            dropped.append(item)
++                            continue
++                        if not item.strip():
++                            dropped.append(item)
++                            continue
++                        kept.append(item)
++
++                    if dropped:
++                        obj[key] = kept
++                        warnings.append(
++                            f"Dropped invalid list items from {_format_payload_path(next_path)}: {dropped!r}"
++                        )
++                    continue
++
++                _walk(value, next_path)
++            return
++
++        if isinstance(obj, list):
++            for idx, item in enumerate(obj):
++                _walk(item, path + (idx,))
++
++    _walk(payload, ())
++    return warnings
++
++
++def _summarize_list(items: list[str], *, max_items: int, sep: str = "; ") -> str:
++    if not items:
++        return ""
++    shown = items[:max_items]
++    suffix = f"{sep}(+{len(items) - max_items} more)" if len(items) > max_items else ""
++    return sep.join(shown) + suffix
++
++
++def _drop_none_items_from_lists(obj: Any) -> None:
++    """In-place removal of None items from any lists in a payload structure."""
++    if isinstance(obj, dict):
++        for value in obj.values():
++            _drop_none_items_from_lists(value)
++        return
++
++    if isinstance(obj, list):
++        obj[:] = [item for item in obj if item is not None]
++        for item in obj:
++            _drop_none_items_from_lists(item)
++
+ # Procedure family tags used to gate schema fields and validation rules
+ PROCEDURE_FAMILIES = {
+     "EBUS",           # Linear endobronchial ultrasound
+@@ -250,6 +335,8 @@ def classify_procedure_families(note_text: str) -> Set[str]:
+         r"\bebus\b.*(?:tbna|sampl|aspirat|needle|biops)",
+         r"(?:tbna|sampl|aspirat).*\bebus\b",
+         r"linear\s+(?:ebus|endobronchial ultrasound)",
++        r"ebus[-\s]*findings",
++        r"overall\s+rose\s+diagnosis",
+         # Station sampling - require close proximity and exclude negatives
+         r"station\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l).{0,30}(?:sampl|pass|needle|aspirat)",
+         r"(?:sampl|pass|needle|aspirat).{0,30}station\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l)",
+@@ -349,6 +436,8 @@ def classify_procedure_families(note_text: str) -> Set[str]:
+     # Only add STENT if there's a procedure AND it's not history-only (unless there's also a new procedure)
+     if has_stent_procedure and not is_history_only:
+         families.add("STENT")
++        # Airway stenting/removal is a CAO intervention family in this registry.
++        families.add("CAO")
+     elif has_stent_procedure and is_history_only:
+         # Check if there's explicit new stent action beyond the history mention
+         new_action_patterns = [
+@@ -358,6 +447,7 @@ def classify_procedure_families(note_text: str) -> Set[str]:
+         ]
+         if any(re.search(pat, proc_lowered) for pat in new_action_patterns):
+             families.add("STENT")
++            families.add("CAO")
+ 
+     # --- PLEURAL Detection ---
+     # Be specific to avoid false positives from EBUS needle "aspiration"
+@@ -425,11 +515,12 @@ def classify_procedure_families(note_text: str) -> Set[str]:
+     # --- BAL Detection ---
+     bal_indicators = [
+         r"bronchoalveolar\s+lavage",
++        r"bronchial\s+alveolar\s+lavage",
+         r"\bbal\b.*(?:perform|obtain|sent|collect)",
+         r"(?:perform|obtain).*\bbal\b",
+-        r"lavage\s+(?:perform|sent|obtain|specimen)",
++        r"lavage.{0,20}(?:perform|performed|sent|obtain|obtained|specimen|collect|collected)",
+     ]
+-    if any(re.search(pat, proc_lowered) for pat in bal_indicators):
++    if any(re.search(pat, proc_lowered) for pat in bal_indicators) or any(re.search(pat, lowered) for pat in bal_indicators):
+         families.add("BAL")
+ 
+     # --- BIOPSY Detection (general transbronchial/endobronchial) ---
+@@ -635,6 +726,10 @@ def run(
+ 
+         merged_data = self._merge_llm_and_seed(llm_data, seed_data)
+ 
++        # Seed linear EBUS station list early so downstream normalization and heuristics can use it.
++        if station_list and "EBUS" in procedure_families and not merged_data.get("linear_ebus_stations"):
++            merged_data["linear_ebus_stations"] = station_list
++
+         # Apply field-specific normalization/postprocessing before validation
+         for field, func in POSTPROCESSORS.items():
+             if field in merged_data:
+@@ -650,9 +745,6 @@ def run(
+         # For pure EBUS staging, bronch_num_tbbx and bronch_tbbx_tool should be null
+         self._apply_ebus_only_bronch_cleanup(merged_data, note_text, procedure_families)
+ 
+-        if station_list and not merged_data.get("linear_ebus_stations") and "EBUS" in procedure_families:
+-            merged_data["linear_ebus_stations"] = station_list
+-
+         # Validate EBUS station fields: filter out any hallucinated stations not in the text
+         if "EBUS" in procedure_families:
+             if merged_data.get("linear_ebus_stations"):
+@@ -755,6 +847,15 @@ def run(
+ 
+         nested_payload = normalize_registry_payload(nested_payload)
+ 
++        sanitization_warnings = _sanitize_string_enum_lists(nested_payload)
++        if sanitization_warnings:
++            for warning in sanitization_warnings:
++                try:
++                    logger.warning(warning)
++                except Exception:
++                    # Logging must never affect extraction correctness.
++                    pass
++
+         # Attempt to create RegistryRecord with better error handling
+         try:
+             record = RegistryRecord(**nested_payload)
+@@ -767,7 +868,10 @@ def run(
+                 # The LLM may emit values that are "close" but not schema-valid (e.g., lists where a
+                 # literal is expected). For demo and interactive UI usage, it's better to drop those
+                 # specific fields and return a partially-filled record than to fail the whole request.
++                initial_errors = e.errors()
+                 pruned_payload = deepcopy(nested_payload)
++                pruned_paths: list[str] = []
++                error_summaries: list[str] = []
+ 
+                 def _null_out_path(obj: Any, loc: tuple[Any, ...] | list[Any]) -> None:
+                     if not loc:
+@@ -796,51 +900,94 @@ def _null_out_path(obj: Any, loc: tuple[Any, ...] | list[Any]) -> None:
+                         except Exception:
+                             cur[last] = None
+ 
+-                for err in e.errors():
+-                    _null_out_path(pruned_payload, err.get("loc", []))
++                for err in initial_errors:
++                    loc = err.get("loc", [])
++                    loc_tuple = tuple(loc) if isinstance(loc, (list, tuple)) else (loc,)
++                    path_str = _format_payload_path(loc_tuple)
++                    pruned_paths.append(path_str)
++                    msg = err.get("msg") or err.get("type") or "validation error"
++                    error_summaries.append(f"{path_str}: {msg}")
++                    _null_out_path(pruned_payload, loc_tuple)
++
++                # If pruning sets list indices to None, strip them so enum-array validation can succeed.
++                _drop_none_items_from_lists(pruned_payload)
+ 
+                 try:
+                     record = RegistryRecord(**pruned_payload)
+-                    logger.warning(
+-                        "RegistryRecord validation required pruning; returning partial record",
+-                        extra={"pruned_error_count": len(e.errors())},
+-                    )
+                 except Exception as retry_exc:
+                     # Second recovery: drop entire top-level sections that still fail.
+                     from pydantic import ValidationError as _ValidationError
+ 
+                     if isinstance(retry_exc, _ValidationError):
++                        retry_errors = retry_exc.errors()
+                         top_pruned_payload = deepcopy(pruned_payload)
+-                        for err in retry_exc.errors():
++                        top_keys_pruned: list[str] = []
++                        retry_summaries: list[str] = []
++
++                        for err in retry_errors:
+                             loc = err.get("loc", [])
+                             if not loc:
+                                 continue
++                            retry_loc_tuple = tuple(loc) if isinstance(loc, (list, tuple)) else (loc,)
++                            retry_path = _format_payload_path(retry_loc_tuple)
++                            msg = err.get("msg") or err.get("type") or "validation error"
++                            retry_summaries.append(f"{retry_path}: {msg}")
+                             top_key = loc[0]
+                             if isinstance(top_key, str) and isinstance(top_pruned_payload, dict):
+                                 top_pruned_payload[top_key] = None
++
++                                if top_key not in top_keys_pruned:
++                                    top_keys_pruned.append(top_key)
+                         try:
+                             record = RegistryRecord(**top_pruned_payload)
+-                            logger.warning(
+-                                "RegistryRecord validation required top-level pruning; returning partial record",
+-                                extra={"top_pruned_error_count": len(retry_exc.errors())},
+-                            )
+                         except Exception as final_exc:
++                            try:
++                                logger.error(
++                                    "RegistryRecord validation failed after pruning; returning empty record",
++                                    extra={"error": str(final_exc)},
++                                )
++                            except Exception:
++                                pass
++                            record = RegistryRecord()
++                        else:
++                            message = (
++                                "RegistryRecord validation required top-level pruning; returning partial record "
++                                f"(errors={len(retry_errors)}). "
++                                f"Top-level pruned: {_summarize_list(top_keys_pruned, max_items=5, sep=', ')}. "
++                                f"Error summary: {_summarize_list(retry_summaries, max_items=3)}"
++                            )
++                            try:
++                                logger.warning(message)
++                            except Exception:
++                                pass
++                    else:
++                        try:
+                             logger.error(
+                                 "RegistryRecord validation failed after pruning; returning empty record",
+-                                extra={"error": str(final_exc)},
++                                extra={"error": str(retry_exc)},
+                             )
+-                            record = RegistryRecord()
+-                    else:
+-                        logger.error(
+-                            "RegistryRecord validation failed after pruning; returning empty record",
+-                            extra={"error": str(retry_exc)},
+-                        )
++                        except Exception:
++                            pass
+                         record = RegistryRecord()
++                else:
++                    message = (
++                        "RegistryRecord validation required pruning; returning partial record "
++                        f"(errors={len(initial_errors)}). "
++                        f"Pruned: {_summarize_list(pruned_paths, max_items=5, sep=', ')}. "
++                        f"Error summary: {_summarize_list(error_summaries, max_items=3)}"
++                    )
++                    try:
++                        logger.warning(message)
++                    except Exception:
++                        pass
+             else:
+-                logger.error(
+-                    "RegistryRecord validation failed with non-validation error; returning empty record",
+-                    extra={"error": str(e)},
+-                )
++                try:
++                    logger.error(
++                        "RegistryRecord validation failed with non-validation error; returning empty record",
++                        extra={"error": str(e)},
++                    )
++                except Exception:
++                    pass
+                 record = RegistryRecord()
+         
+         normalized_evidence: dict[str, list[Span]] = {}
+@@ -865,7 +1012,7 @@ def _null_out_path(obj: Any, loc: tuple[Any, ...] | list[Any]) -> None:
+     def _extract_linear_station_spans(self, text: str) -> tuple[list[str], list[Span]]:
+         """Extract linear EBUS station mentions and their spans from raw text."""
+         # Require a boundary before the station number to avoid matching inside "12R" -> "2R"
+-        pattern = r"(?mi)(?:station\s*)?(?<![0-9A-Za-z])(2R|2L|4R|4L|7|10R|10L|11R|11L)\b\s*[:\-]?"
++        pattern = r"(?mi)(?:station\s*)?(?<![0-9A-Za-z])(2R|2L|4R|4L|7|10R|10L|11R|11L)(?:[sSiI])?\b\s*[:\-]?"
+         stations: list[str] = []
+         spans: list[Span] = []
+         for match in re.finditer(pattern, text):
+@@ -897,6 +1044,8 @@ def _validate_station_mentions(self, text: str, stations: list[str]) -> list[str
+                     rf"station\s+7\s*[:\-]",  # "station 7:" or "station 7-"
+                     rf"station\s*7\s+(?:was\s+)?(?:sampl|biops|needle|pass|aspirat)",  # "station 7 was sampled"
+                     rf"subcarinal\s+(?:lymph\s+)?node",  # "subcarinal node" (station 7 synonym)
++                    rf"\b7\b[^.\n]{{0,40}}subcarinal",  # "7 (subcarinal) node"
++                    rf"subcarinal[^.\n]{{0,40}}\b7\b",  # "subcarinal ... 7"
+                     rf"(?:sampl|biops|needle|pass).{{0,30}}station\s*7\b",  # sampling context before station 7
+                 ]
+             else:
+@@ -1120,6 +1269,21 @@ def _apply_ebus_heuristics(
+         # --- EBUS Heuristics (gated by procedure family) ---
+         # Only extract EBUS-specific data if this is an EBUS procedure
+         if is_ebus_procedure:
++            station_order = {
++                "2R": 0,
++                "2L": 1,
++                "4R": 2,
++                "4L": 3,
++                "7": 4,
++                "10R": 5,
++                "10L": 6,
++                "11R": 7,
++                "11L": 8,
++            }
++
++            def _sort_stations(stations: set[str]) -> list[str]:
++                return sorted({s.upper() for s in stations if s}, key=lambda s: (station_order.get(s, 999), s))
++
+             # ebus_scope_brand
+             if "Olympus" in text and ("BF-UC" in text or "EBUS" in text):
+                 data["ebus_scope_brand"] = "Olympus"
+@@ -1136,8 +1300,25 @@ def _apply_ebus_heuristics(
+                 if any(kw in snippet for kw in ["pass", "sample", "needle", "tbna", "aspirat"]):
+                     if "not sampled" not in snippet:
+                         stations_found.add(match.group(1).upper())
++            if not stations_found and data.get("linear_ebus_stations"):
++                # Fallback: if we have station numbers and the note indicates TBNA sampling,
++                # treat the documented stations as sampled.
++                lowered = text.lower()
++                has_sampling = any(
++                    kw in lowered
++                    for kw in [
++                        "tbna",
++                        "transbronchial needle",
++                        "needle aspiration",
++                        "needle aspirat",
++                        "needle pass",
++                        "passes",
++                    ]
++                )
++                if has_sampling:
++                    stations_found.update(data.get("linear_ebus_stations") or [])
+             if stations_found:
+-                data["ebus_stations_sampled"] = sorted(list(stations_found))
++                data["ebus_stations_sampled"] = _sort_stations(stations_found)
+ 
+             # Station-level detail (size, passes, rose_result) when present
+             detail_entries = data.get("ebus_stations_detail") or []
+@@ -1160,6 +1341,10 @@ def _apply_ebus_heuristics(
+                     entry = detail_by_station.setdefault(station, {"station": station})
+                     entry["rose_result"] = rose_val
+ 
++            # Ensure each planned station has a detail entry (even if only station is known).
++            for station in (data.get("linear_ebus_stations") or []):
++                detail_by_station.setdefault(station, {"station": station})
++
+             if detail_by_station:
+                 for entry in detail_by_station.values():
+                     entry.setdefault("shape", None)
+@@ -1168,12 +1353,16 @@ def _apply_ebus_heuristics(
+                     entry.setdefault("chs_present", None)
+                     entry.setdefault("appearance_category", None)
+                     entry.setdefault("rose_result", entry.get("rose_result", None))
+-                data["ebus_stations_detail"] = list(detail_by_station.values())
++                data["ebus_stations_detail"] = [
++                    detail_by_station[st]
++                    for st in _sort_stations(set(detail_by_station.keys()))
++                    if st in detail_by_station
++                ]
+                 if data.get("ebus_stations_sampled"):
+                     merged = set(data["ebus_stations_sampled"]) | set(detail_by_station.keys())
+-                    data["ebus_stations_sampled"] = sorted(merged)
++                    data["ebus_stations_sampled"] = _sort_stations(merged)
+                 else:
+-                    data["ebus_stations_sampled"] = sorted(detail_by_station.keys())
++                    data["ebus_stations_sampled"] = _sort_stations(set(detail_by_station.keys()))
+ 
+             # ebus_needle_gauge - expanded pattern to capture "22 gauge needle" formats
+             # Schema enum: [19, 21, 22, 25] (integers, not strings)
+diff --git a/modules/registry/extraction/__init__.py b/modules/registry/extraction/__init__.py
+new file mode 100644
+index 0000000..62f2686
+--- /dev/null
++++ b/modules/registry/extraction/__init__.py
+@@ -0,0 +1,2 @@
++"""Registry extraction helpers (focusing, structuring) used by extraction-first mode."""
++
+diff --git a/modules/registry/extraction/focus.py b/modules/registry/extraction/focus.py
+new file mode 100644
+index 0000000..b9ef6a7
+--- /dev/null
++++ b/modules/registry/extraction/focus.py
+@@ -0,0 +1,111 @@
++"""Note focusing helpers for deterministic RegistryEngine extraction.
++
++This module is used by RegistryService.extract_record() when
++REGISTRY_EXTRACTION_ENGINE=agents_focus_then_engine.
++
++Guardrail: RAW-ML auditing must always run on the full raw note text. Focusing
++is for deterministic registry extraction only.
++"""
++
++from __future__ import annotations
++
++from typing import Any
++
++
++PREFERRED_SEGMENT_TYPES: tuple[str, ...] = (
++    "Procedure",
++    "Technique",
++    "Findings",
++    "Complications",
++    "Sedation",
++    "Disposition",
++)
++
++
++def focus_note_for_extraction(note_text: str) -> tuple[str, dict[str, Any]]:
++    """Return (focused_text, meta) for deterministic extraction.
++
++    The focused text should be a best-effort subset of the note that preserves
++    procedural evidence while reducing noise from indications/history.
++    """
++    meta: dict[str, Any] = {"method": "unknown", "fallback": False}
++
++    normalized = note_text or ""
++    if not normalized.strip():
++        meta["method"] = "empty"
++        meta["fallback"] = True
++        return note_text, meta
++
++    # Prefer the deterministic parser agent if present.
++    try:
++        from modules.agents.contracts import ParserIn
++        from modules.agents.parser.parser_agent import ParserAgent
++
++        parser_out = ParserAgent().run(ParserIn(note_id="", raw_text=normalized))
++        segments = getattr(parser_out, "segments", []) or []
++
++        selected = [s for s in segments if getattr(s, "type", None) in PREFERRED_SEGMENT_TYPES]
++        if selected:
++            meta["method"] = "agents.parser"
++            meta["selected_sections"] = [s.type for s in selected]
++            focused_parts: list[str] = []
++            for seg in selected:
++                text = (seg.text or "").strip()
++                if not text:
++                    continue
++                focused_parts.append(f"{seg.type.upper()}:\n{text}")
++            focused = "\n\n".join(focused_parts).strip()
++            if focused:
++                return focused, meta
++
++        # Parser ran but didn't find recognized headings; fall back to heuristics.
++        meta["parser_sections"] = [getattr(s, "type", None) for s in segments]
++        meta["parser_status"] = getattr(parser_out, "status", None)
++    except Exception as exc:
++        meta["agent_error"] = str(exc)
++
++    focused = _heuristic_focus_sections(normalized)
++    if focused and focused.strip() and focused.strip() != normalized.strip():
++        meta["method"] = "heuristic.sections_v1"
++        meta["fallback"] = False
++        return focused, meta
++
++    meta["method"] = "noop"
++    meta["fallback"] = True
++    return note_text, meta
++
++
++def _heuristic_focus_sections(note_text: str) -> str:
++    """Best-effort section extractor using common heading patterns."""
++    import re
++
++    text = note_text or ""
++    if not text.strip():
++        return text
++
++    # Match headings like "PROCEDURE:", "FINDINGS:", etc at start of line.
++    heading_re = re.compile(r"^(?P<header>[A-Za-z][A-Za-z /_-]{0,40}):\s*$", re.MULTILINE)
++    matches = list(heading_re.finditer(text))
++    if not matches:
++        return text
++
++    # Slice into (header, body) segments.
++    segments: list[tuple[str, str]] = []
++    for idx, match in enumerate(matches):
++        header = match.group("header").strip()
++        body_start = match.end()
++        body_end = matches[idx + 1].start() if idx + 1 < len(matches) else len(text)
++        body = text[body_start:body_end].strip()
++        if body:
++            segments.append((header, body))
++
++    wanted = {h.lower() for h in PREFERRED_SEGMENT_TYPES} | {"specimens", "impression"}
++    selected = [(h, b) for (h, b) in segments if h.strip().lower() in wanted]
++    if not selected:
++        return text
++
++    return "\n\n".join(f"{h.upper()}:\n{b}" for h, b in selected).strip()
++
++
++__all__ = ["focus_note_for_extraction"]
++
+diff --git a/modules/registry/extraction/structurer.py b/modules/registry/extraction/structurer.py
+new file mode 100644
+index 0000000..7b6ad43
+--- /dev/null
++++ b/modules/registry/extraction/structurer.py
+@@ -0,0 +1,26 @@
++"""Structurer-first extraction wiring (optional; behind feature flag).
++
++This module is reserved for a future implementation that converts a raw note
++directly into a RegistryRecord via an agents-based structurer.
++"""
++
++from __future__ import annotations
++
++from typing import Any
++
++from modules.registry.schema import RegistryRecord
++
++
++def structure_note_to_registry_record(
++    note_text: str,
++    *,
++    note_id: str | None = None,
++) -> tuple[RegistryRecord, dict[str, Any]]:
++    raise NotImplementedError(
++        "REGISTRY_EXTRACTION_ENGINE=agents_structurer is not implemented yet; "
++        "falling back to deterministic RegistryEngine extraction"
++    )
++
++
++__all__ = ["structure_note_to_registry_record"]
++
+diff --git a/modules/registry/postprocess.py b/modules/registry/postprocess.py
+index 6290ceb..8755f0d 100644
+--- a/modules/registry/postprocess.py
++++ b/modules/registry/postprocess.py
+@@ -19,6 +19,40 @@
+ # Pattern to match valid station format
+ STATION_PATTERN = re.compile(r"^(2R|2L|4R|4L|7|10R|10L|11R|11L)$", re.IGNORECASE)
+ 
++# Deterministic station ordering for stable outputs (and tests).
++_EBUS_STATION_SORT_ORDER = (
++    "2R",
++    "2L",
++    "3P",
++    "4R",
++    "4L",
++    "7",
++    "10R",
++    "10L",
++    "11R",
++    "11L",
++    "12R",
++    "12L",
++    "LUNG MASS",
++    "OTHER",
++)
++_EBUS_STATION_SORT_INDEX = {s: i for i, s in enumerate(_EBUS_STATION_SORT_ORDER)}
++
++
++def sort_ebus_stations(stations: list[str] | set[str]) -> list[str]:
++    """Return stations in deterministic order with de-duping."""
++    seen: set[str] = set()
++    normalized: list[str] = []
++    for station in stations:
++        if not station:
++            continue
++        token = str(station).strip().upper()
++        if not token or token in seen:
++            continue
++        seen.add(token)
++        normalized.append(token)
++    return sorted(normalized, key=lambda s: (_EBUS_STATION_SORT_INDEX.get(s, 999), s))
++
+ # Canonical ROSE result values (schema enum)
+ # Schema enum: ["Adequate - malignant", "Adequate - benign lymphocytes",
+ #               "Adequate - granulomas", "Adequate - other", "Inadequate", "Not performed"]
+@@ -728,9 +762,27 @@ def validate_station_format(station: str) -> str | None:
+     cleaned = station.strip().upper()
+     # Remove common prefixes
+     cleaned = re.sub(r"^(STATION|STN|NODE)[\s:]*", "", cleaned, flags=re.IGNORECASE).strip()
+-    if STATION_PATTERN.match(cleaned):
+-        return cleaned
+-    return None
++
++    # Extract the first plausible station token, allowing common sub-station suffixes:
++    # - "11Rs"/"11Ri" -> "11R"
++    match = re.search(
++        r"(?<![0-9A-Z])(2R|2L|4R|4L|7|10R|10L|11R|11L)(?:[SI])?(?![0-9A-Z])",
++        cleaned,
++    )
++    if not match:
++        return None
++
++    token = match.group(1).upper()
++
++    # Station 7 is ambiguous; require explicit context unless it is exactly "7".
++    if token == "7":
++        if cleaned == "7":
++            return "7"
++        if "SUBCARINAL" in cleaned or "STATION" in station.upper():
++            return "7"
++        return None
++
++    return token if STATION_PATTERN.match(token) else None
+ 
+ 
+ def normalize_ebus_station_rose_result(raw: Any) -> str | None:
+@@ -1937,9 +1989,9 @@ def apply_cross_field_consistency(data: Dict[str, Any]) -> Dict[str, Any]:
+         # Merge with sampled
+         all_stations = set(stations_sampled) | detail_stations
+         if all_stations:
+-            result["ebus_stations_sampled"] = sorted(all_stations)
++            result["ebus_stations_sampled"] = sort_ebus_stations(all_stations)
+             # Also update linear_ebus_stations to match
+-            result["linear_ebus_stations"] = sorted(all_stations)
++            result["linear_ebus_stations"] = sort_ebus_stations(all_stations)
+ 
+     # Derive global ROSE result from per-station data if available
+     if station_detail and not result.get("ebus_rose_result"):
+diff --git a/modules/registry/schema.py b/modules/registry/schema.py
+index 85426a7..8358898 100644
+--- a/modules/registry/schema.py
++++ b/modules/registry/schema.py
+@@ -28,6 +28,7 @@
+ CUSTOM_FIELD_TYPES[("RegistryRecord", "clinical_context")] = ClinicalContext
+ CUSTOM_FIELD_TYPES[("RegistryRecord", "patient_demographics")] = PatientDemographics
+ CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "airway_stent")] = AirwayStentProcedure
++CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "linear_ebus", "stations_detail")] = list[dict[str, Any]]
+ _MODEL_CACHE: dict[tuple[str, ...], type[BaseModel]] = {}
+ 
+ 
+@@ -113,6 +114,22 @@ class RegistryRecord(base_model):  # type: ignore[misc,valid-type]
+         evidence: dict[str, list[Span]] = Field(default_factory=dict)
+         version: str | None = None
+         procedure_families: list[str] = Field(default_factory=list)
++        ebus_systematic_staging: bool | None = Field(default=None, exclude=True)
++        ebus_scope_brand: str | None = Field(default=None, exclude=True)
++        pleural_procedure_type: str | None = Field(default=None, exclude=True)
++        pleural_side: str | None = Field(default=None, exclude=True)
++        pleural_fluid_volume: str | float | None = Field(default=None, exclude=True)
++        pleural_volume_drained_ml: float | None = Field(default=None, exclude=True)
++        pleural_fluid_appearance: str | None = Field(default=None, exclude=True)
++        pleural_guidance: str | None = Field(default=None, exclude=True)
++        pleural_intercostal_space: str | None = Field(default=None, exclude=True)
++        pleural_catheter_type: str | None = Field(default=None, exclude=True)
++        pleural_pleurodesis_agent: str | None = Field(default=None, exclude=True)
++        pleural_opening_pressure_measured: bool | None = Field(default=None, exclude=True)
++        pleural_opening_pressure_cmh2o: float | None = Field(default=None, exclude=True)
++        pleural_thoracoscopy_findings: str | None = Field(default=None, exclude=True)
++        bronch_num_tbbx: int | None = Field(default=None, exclude=True)
++        bronch_tbbx_tool: str | None = Field(default=None, exclude=True)
+ 
+         # Granular per-site data (EBUS stations, navigation targets, CAO sites, etc.)
+         granular_data: EnhancedRegistryGranularData | None = Field(
+@@ -160,6 +177,149 @@ def hoist_granular_arrays(cls, values: Any):
+                 values.pop("granular_data", None)
+             return values
+ 
++        @model_validator(mode="before")
++        @classmethod
++        def map_pleural_legacy_fields(cls, values: Any):
++            """Map legacy pleural flat fields <-> pleural_procedures for compatibility."""
++            if not isinstance(values, dict):
++                return values
++
++            pleural_type = values.get("pleural_procedure_type")
++
++            pleural_raw = values.get("pleural_procedures")
++            pleural_dict: dict[str, Any] | None = None
++            if isinstance(pleural_raw, BaseModel):
++                pleural_dict = pleural_raw.model_dump()
++            elif isinstance(pleural_raw, dict):
++                pleural_dict = dict(pleural_raw)
++
++            def _map_guidance_to_schema(guidance: Any) -> str | None:
++                if guidance is None:
++                    return None
++                if not isinstance(guidance, str):
++                    return None
++                normalized = guidance.strip()
++                if not normalized:
++                    return None
++                if normalized.lower() == "blind":
++                    return "None/Landmark"
++                return normalized
++
++            def _infer_legacy_from_nested(pleural: dict[str, Any]) -> dict[str, Any]:
++                # Prefer thoracentesis over other pleural procedures for the legacy flat field.
++                if isinstance(pleural.get("thoracentesis"), dict) and pleural["thoracentesis"].get("performed"):
++                    thora = pleural["thoracentesis"]
++                    legacy: dict[str, Any] = {"pleural_procedure_type": "Thoracentesis"}
++                    legacy["pleural_side"] = thora.get("side")
++                    guidance = thora.get("guidance")
++                    if guidance == "None/Landmark":
++                        legacy["pleural_guidance"] = "Blind"
++                    else:
++                        legacy["pleural_guidance"] = guidance
++                    legacy["pleural_opening_pressure_cmh2o"] = thora.get("opening_pressure_cmh2o")
++                    if thora.get("opening_pressure_cmh2o") is not None:
++                        legacy["pleural_opening_pressure_measured"] = True
++                    return legacy
++
++                if isinstance(pleural.get("chest_tube"), dict) and pleural["chest_tube"].get("performed"):
++                    tube = pleural["chest_tube"]
++                    action = tube.get("action")
++                    legacy_type = "Chest Tube Removal" if action == "Removal" else "Chest Tube"
++                    legacy = {"pleural_procedure_type": legacy_type}
++                    legacy["pleural_side"] = tube.get("side")
++                    guidance = tube.get("guidance")
++                    if guidance == "None":
++                        legacy["pleural_guidance"] = "Blind"
++                    else:
++                        legacy["pleural_guidance"] = guidance
++                    return legacy
++
++                if isinstance(pleural.get("ipc"), dict) and pleural["ipc"].get("performed"):
++                    ipc = pleural["ipc"]
++                    action = ipc.get("action")
++                    if action == "Removal":
++                        legacy_type = "Tunneled Catheter Removal"
++                    else:
++                        legacy_type = "Tunneled Catheter"
++                    legacy = {"pleural_procedure_type": legacy_type}
++                    legacy["pleural_side"] = ipc.get("side")
++                    return legacy
++
++                if isinstance(pleural.get("medical_thoracoscopy"), dict) and pleural["medical_thoracoscopy"].get("performed"):
++                    thor = pleural["medical_thoracoscopy"]
++                    legacy = {"pleural_procedure_type": "Medical Thoracoscopy"}
++                    legacy["pleural_side"] = thor.get("side")
++                    return legacy
++
++                if isinstance(pleural.get("pleurodesis"), dict) and pleural["pleurodesis"].get("performed"):
++                    pleuro = pleural["pleurodesis"]
++                    legacy = {"pleural_procedure_type": "Chemical Pleurodesis"}
++                    legacy["pleural_side"] = pleuro.get("side")
++                    return legacy
++
++                return {}
++
++            def _build_nested_from_legacy() -> dict[str, Any]:
++                base: dict[str, Any] = {"performed": True}
++                if values.get("pleural_side") is not None:
++                    base["side"] = values.get("pleural_side")
++
++                guidance = _map_guidance_to_schema(values.get("pleural_guidance"))
++                if guidance is not None:
++                    base["guidance"] = guidance
++
++                if pleural_type == "Thoracentesis":
++                    thora = dict(base)
++                    if values.get("pleural_volume_drained_ml") is not None:
++                        thora["volume_removed_ml"] = values.get("pleural_volume_drained_ml")
++                    if values.get("pleural_opening_pressure_cmh2o") is not None:
++                        thora["opening_pressure_cmh2o"] = values.get("pleural_opening_pressure_cmh2o")
++                        thora["manometry_performed"] = True
++                    return {"thoracentesis": thora}
++
++                if pleural_type in {"Chest Tube", "Chest Tube Removal"}:
++                    tube = dict(base)
++                    tube["action"] = "Removal" if pleural_type == "Chest Tube Removal" else "Insertion"
++                    return {"chest_tube": tube}
++
++                if isinstance(pleural_type, str) and pleural_type.startswith("Tunneled"):
++                    ipc = {"performed": True}
++                    if values.get("pleural_side") is not None:
++                        ipc["side"] = values.get("pleural_side")
++                    ipc["action"] = "Insertion"
++                    return {"ipc": ipc}
++
++                if pleural_type == "Medical Thoracoscopy":
++                    thor = {"performed": True}
++                    if values.get("pleural_side") is not None:
++                        thor["side"] = values.get("pleural_side")
++                    return {"medical_thoracoscopy": thor}
++
++                if pleural_type == "Chemical Pleurodesis":
++                    pleuro = {"performed": True}
++                    if values.get("pleural_side") is not None:
++                        pleuro["side"] = values.get("pleural_side")
++                    if values.get("pleural_pleurodesis_agent") is not None:
++                        pleuro["agent"] = values.get("pleural_pleurodesis_agent")
++                    return {"pleurodesis": pleuro}
++
++                return {}
++
++            # Legacy -> nested (only if nested missing)
++            if pleural_type and not pleural_dict:
++                built = _build_nested_from_legacy()
++                if built:
++                    values["pleural_procedures"] = built
++
++            # Nested -> legacy (only fill missing flat fields)
++            if pleural_dict and not pleural_type:
++                inferred = _infer_legacy_from_nested(pleural_dict)
++                for key, val in inferred.items():
++                    if values.get(key) is None and val is not None:
++                        values[key] = val
++
++            return values
++
+     RegistryRecord.__name__ = "RegistryRecord"
+     return RegistryRecord
+ 
+diff --git a/modules/registry/schema_granular.py b/modules/registry/schema_granular.py
+index 21ab99e..8b74aa3 100644
+--- a/modules/registry/schema_granular.py
++++ b/modules/registry/schema_granular.py
+@@ -931,6 +931,31 @@ def derive_procedures_from_granular(
+     procedures = dict(existing_procedures) if existing_procedures else {}
+     warnings: list[str] = []
+ 
++    def _normalize_sampling_tool(tool: str) -> str:
++        s = str(tool).strip()
++        s_lower = s.lower()
++        if "needle" in s_lower or "tbna" in s_lower:
++            return "Needle"
++        if "forceps" in s_lower:
++            return "Forceps"
++        if "brush" in s_lower:
++            return "Brush"
++        if "cryo" in s_lower:
++            return "Cryoprobe"
++        return s
++
++    def _extract_station_tokens(text: str) -> list[str]:
++        """Extract IASLC station tokens like 4R, 7, 11L from free text."""
++        import re
++
++        matches = re.findall(r"\b(2R|2L|3p|4R|4L|7|10R|10L|11R|11L|12R|12L)\b", text, flags=re.IGNORECASE)
++        normalized: list[str] = []
++        for m in matches:
++            token = m.upper()
++            if token not in normalized:
++                normalized.append(token)
++        return normalized
++
+     # ==========================================================================
+     # 1. Derive transbronchial_cryobiopsy from cryobiopsy_sites
+     # ==========================================================================
+@@ -1026,15 +1051,40 @@ def derive_procedures_from_granular(
+ 
+         if sampled_stations and not linear_ebus.get("stations_sampled"):
+             linear_ebus["stations_sampled"] = sampled_stations
+-            if not linear_ebus.get("performed"):
+-                linear_ebus["performed"] = True
+-            procedures["linear_ebus"] = linear_ebus
++
++        if not linear_ebus.get("performed"):
++            linear_ebus["performed"] = True
++
++        procedures["linear_ebus"] = linear_ebus
+ 
+     # ==========================================================================
+     # 4. Derive BAL, brushings from specimens_collected
+     # ==========================================================================
+     specimens = granular_data.get("specimens_collected", [])
+     if specimens:
++        # EBUS-TBNA specimens can serve as backup evidence for linear_ebus
++        ebus_tbna_specimens = [
++            s for s in specimens
++            if s.get("source_procedure") == "EBUS-TBNA"
++        ]
++        if ebus_tbna_specimens:
++            linear_ebus = procedures.get("linear_ebus") or {}
++            if not linear_ebus.get("performed"):
++                linear_ebus["performed"] = True
++            if not linear_ebus.get("stations_sampled"):
++                stations: list[str] = []
++                for spec in ebus_tbna_specimens:
++                    loc = spec.get("source_location") or ""
++                    stations.extend(_extract_station_tokens(str(loc)))
++                if stations:
++                    # preserve order while de-duping
++                    deduped: list[str] = []
++                    for st in stations:
++                        if st not in deduped:
++                            deduped.append(st)
++                    linear_ebus["stations_sampled"] = deduped
++            procedures["linear_ebus"] = linear_ebus
++
+         # BAL
+         bal_specimens = [
+             s for s in specimens
+@@ -1052,6 +1102,19 @@ def derive_procedures_from_granular(
+                         break
+                 procedures["bal"] = bal
+ 
++        # Bronchial wash
++        wash_specimens = [
++            s for s in specimens
++            if s.get("source_procedure") == "Bronchial wash"
++        ]
++        if wash_specimens:
++            bronchial_wash = procedures.get("bronchial_wash") or {}
++            if not bronchial_wash.get("performed"):
++                bronchial_wash["performed"] = True
++            if not bronchial_wash.get("location"):
++                bronchial_wash["location"] = wash_specimens[0].get("source_location")
++            procedures["bronchial_wash"] = bronchial_wash
++
+         # Brushings
+         brushing_specimens = [
+             s for s in specimens
+@@ -1077,38 +1140,217 @@ def derive_procedures_from_granular(
+                 brushings["number_of_samples"] = total_samples
+                 procedures["brushings"] = brushings
+ 
++        # Endobronchial biopsy
++        ebx_specimens = [
++            s for s in specimens
++            if s.get("source_procedure") == "Endobronchial biopsy"
++        ]
++        if ebx_specimens:
++            ebx = procedures.get("endobronchial_biopsy") or {}
++            if not ebx.get("performed"):
++                ebx["performed"] = True
++            if not ebx.get("locations"):
++                ebx_locations = [
++                    s.get("source_location")
++                    for s in ebx_specimens
++                    if s.get("source_location")
++                ]
++                if ebx_locations:
++                    ebx["locations"] = ebx_locations
++            if not ebx.get("number_of_samples"):
++                ebx_samples = sum((s.get("specimen_count") or 0) for s in ebx_specimens)
++                if ebx_samples:
++                    ebx["number_of_samples"] = ebx_samples
++            procedures["endobronchial_biopsy"] = ebx
++
++        # Transbronchial biopsy (including navigation-guided biopsy specimens)
++        tbbx_specimens = [
++            s for s in specimens
++            if s.get("source_procedure") in ("Transbronchial biopsy", "Navigation biopsy")
++        ]
++        if tbbx_specimens:
++            tbbx = procedures.get("transbronchial_biopsy") or {}
++            if not tbbx.get("performed"):
++                tbbx["performed"] = True
++            if not tbbx.get("locations"):
++                tbbx_locations = [
++                    s.get("source_location")
++                    for s in tbbx_specimens
++                    if s.get("source_location")
++                ]
++                if tbbx_locations:
++                    tbbx["locations"] = tbbx_locations
++            if not tbbx.get("number_of_samples"):
++                tbbx_samples = sum((s.get("specimen_count") or 0) for s in tbbx_specimens)
++                if tbbx_samples:
++                    tbbx["number_of_samples"] = tbbx_samples
++            procedures["transbronchial_biopsy"] = tbbx
++
++        # Navigation biopsy specimens imply navigation was performed
++        if any(s.get("source_procedure") == "Navigation biopsy" for s in specimens):
++            nav_bronch = procedures.get("navigational_bronchoscopy") or {}
++            if not nav_bronch.get("performed"):
++                nav_bronch["performed"] = True
++            procedures["navigational_bronchoscopy"] = nav_bronch
++
+     # ==========================================================================
+     # 5. Derive navigational_bronchoscopy.sampling_tools_used from navigation_targets
+     # ==========================================================================
+     if navigation_targets:
+         nav_bronch = procedures.get("navigational_bronchoscopy") or {}
++        if not nav_bronch.get("performed"):
++            nav_bronch["performed"] = True
+         existing_tools = nav_bronch.get("sampling_tools_used") or []
+ 
+-        if not existing_tools:
+-            # Collect all tools from all targets
+-            all_tools: set[str] = set()
+-            for target in navigation_targets:
+-                tools = target.get("sampling_tools_used", [])
+-                if tools:
+-                    for tool in tools:
+-                        # Normalize tool names
+-                        if "needle" in tool.lower():
+-                            all_tools.add("Needle")
+-                        elif "forceps" in tool.lower():
+-                            all_tools.add("Forceps")
+-                        elif "brush" in tool.lower():
+-                            all_tools.add("Brush")
+-                        elif "cryo" in tool.lower():
+-                            all_tools.add("Cryoprobe")
+-                        else:
+-                            all_tools.add(tool)
+-
+-            if all_tools:
+-                nav_bronch["sampling_tools_used"] = list(all_tools)
+-                procedures["navigational_bronchoscopy"] = nav_bronch
++        # Collect all tools from all targets and union with any existing list
++        all_tools: set[str] = {_normalize_sampling_tool(t) for t in existing_tools if t}
++        for target in navigation_targets:
++            tools = target.get("sampling_tools_used", []) or []
++            for tool in tools:
++                if tool:
++                    all_tools.add(_normalize_sampling_tool(tool))
++
++        if all_tools:
++            nav_bronch["sampling_tools_used"] = sorted(all_tools)
++
++        procedures["navigational_bronchoscopy"] = nav_bronch
++
++        # Up-propagate needle sampling / biopsy / brushings from target-level sampling evidence
++        has_needle = "Needle" in all_tools or any((t.get("number_of_needle_passes") or 0) > 0 for t in navigation_targets)
++        has_forceps = "Forceps" in all_tools or any((t.get("number_of_forceps_biopsies") or 0) > 0 for t in navigation_targets)
++        has_brush = "Brush" in all_tools
++        has_cryo = "Cryoprobe" in all_tools or any((t.get("number_of_cryo_biopsies") or 0) > 0 for t in navigation_targets)
++
++        if has_needle:
++            tbna = procedures.get("tbna_conventional") or {}
++            if not tbna.get("performed"):
++                tbna["performed"] = True
++            if not tbna.get("stations_sampled"):
++                sites = [
++                    t.get("target_location_text")
++                    for t in navigation_targets
++                    if t.get("target_location_text") and (
++                        (t.get("number_of_needle_passes") or 0) > 0
++                        or any("needle" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
++                    )
++                ]
++                tbna["stations_sampled"] = sites or ["Lung Mass"]
++            if not tbna.get("passes_per_station"):
++                pass_targets = [t for t in navigation_targets if (t.get("number_of_needle_passes") or 0) > 0]
++                total_passes = sum((t.get("number_of_needle_passes") or 0) for t in pass_targets)
++                if total_passes and pass_targets:
++                    tbna["passes_per_station"] = max(1, round(total_passes / len(pass_targets)))
++            procedures["tbna_conventional"] = tbna
++
++        if has_forceps:
++            tbbx = procedures.get("transbronchial_biopsy") or {}
++            if not tbbx.get("performed"):
++                tbbx["performed"] = True
++            if not tbbx.get("locations"):
++                tbbx_locations = [
++                    t.get("target_location_text")
++                    for t in navigation_targets
++                    if t.get("target_location_text") and (
++                        (t.get("number_of_forceps_biopsies") or 0) > 0
++                        or any("forceps" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
++                    )
++                ]
++                if tbbx_locations:
++                    tbbx["locations"] = tbbx_locations
++            if not tbbx.get("number_of_samples"):
++                total_biopsies = sum((t.get("number_of_forceps_biopsies") or 0) for t in navigation_targets)
++                if total_biopsies:
++                    tbbx["number_of_samples"] = total_biopsies
++            procedures["transbronchial_biopsy"] = tbbx
++
++        if has_brush:
++            brushings = procedures.get("brushings") or {}
++            if not brushings.get("performed"):
++                brushings["performed"] = True
++            procedures["brushings"] = brushings
++
++        if has_cryo:
++            cryo = procedures.get("transbronchial_cryobiopsy") or {}
++            if not cryo.get("performed"):
++                cryo["performed"] = True
++            procedures["transbronchial_cryobiopsy"] = cryo
++
++    # ==========================================================================
++    # 6. Derive BLVR performed from blvr_valve_placements
++    # ==========================================================================
++    blvr_valves = granular_data.get("blvr_valve_placements", [])
++    if blvr_valves:
++        blvr = procedures.get("blvr") or {}
++        if not blvr.get("performed"):
++            blvr["performed"] = True
++        blvr.setdefault("procedure_type", "Valve placement")
++        if not blvr.get("number_of_valves"):
++            blvr["number_of_valves"] = len(blvr_valves)
++        if not blvr.get("valve_sizes"):
++            sizes = [v.get("valve_size") for v in blvr_valves if v.get("valve_size")]
++            if sizes:
++                blvr["valve_sizes"] = sizes
++        if not blvr.get("segments_treated"):
++            segments = [v.get("segment") for v in blvr_valves if v.get("segment")]
++            if segments:
++                blvr["segments_treated"] = segments
++        if not blvr.get("target_lobe"):
++            lobes = {v.get("target_lobe") for v in blvr_valves if v.get("target_lobe")}
++            if len(lobes) == 1:
++                blvr["target_lobe"] = next(iter(lobes))
++        if not blvr.get("valve_type"):
++            valve_types = {v.get("valve_type") for v in blvr_valves if v.get("valve_type")}
++            if len(valve_types) == 1:
++                blvr["valve_type"] = next(iter(valve_types))
++        procedures["blvr"] = blvr
+ 
+     # ==========================================================================
+-    # 6. Derive outcomes.procedure_completed and complications
++    # 7. Derive CAO-related performed flags from cao_interventions_detail
++    # ==========================================================================
++    cao_details = granular_data.get("cao_interventions_detail", [])
++    if cao_details:
++        modalities: list[str] = []
++        stent_any = False
++        secretions_drained_any = False
++        for detail in cao_details:
++            if detail.get("stent_placed_at_site"):
++                stent_any = True
++            if detail.get("secretions_drained"):
++                secretions_drained_any = True
++            for app in (detail.get("modalities_applied") or []):
++                mod = app.get("modality")
++                if mod:
++                    modalities.append(str(mod).lower())
++
++        if modalities:
++            if any("balloon" in m or "dilation" in m for m in modalities):
++                airway_dilation = procedures.get("airway_dilation") or {}
++                airway_dilation["performed"] = True
++                procedures["airway_dilation"] = airway_dilation
++
++            if any(m.startswith("apc") or "electrocautery" in m or "laser" in m for m in modalities):
++                thermal_ablation = procedures.get("thermal_ablation") or {}
++                thermal_ablation["performed"] = True
++                procedures["thermal_ablation"] = thermal_ablation
++
++            if any("cryo" in m for m in modalities):
++                cryotherapy = procedures.get("cryotherapy") or {}
++                cryotherapy["performed"] = True
++                procedures["cryotherapy"] = cryotherapy
++
++            if any("suction" in m or "aspirat" in m for m in modalities) or secretions_drained_any:
++                aspiration = procedures.get("therapeutic_aspiration") or {}
++                aspiration["performed"] = True
++                procedures["therapeutic_aspiration"] = aspiration
++
++        if stent_any:
++            stent = procedures.get("airway_stent") or {}
++            if not stent.get("performed"):
++                stent["performed"] = True
++            procedures["airway_stent"] = stent
++
++    # ==========================================================================
++    # 8. Derive outcomes.procedure_completed and complications
+     # ==========================================================================
+     # This is done at a higher level since outcomes is a separate top-level field
+ 
+@@ -1138,6 +1380,37 @@ def derive_procedures_from_granular(
+                 "radial_ebus.performed was not set"
+             )
+ 
++    # Check: performed=True but required detail missing (e.g., EBUS without stations)
++    linear_ebus = procedures.get("linear_ebus") or {}
++    if linear_ebus.get("performed") is True and not (linear_ebus.get("stations_sampled") or []):
++        warnings.append(
++            "procedures_performed.linear_ebus.performed=true but stations_sampled is empty/missing"
++        )
++
++    tbna = procedures.get("tbna_conventional") or {}
++    if tbna.get("performed") is True and not (tbna.get("stations_sampled") or []):
++        warnings.append(
++            "procedures_performed.tbna_conventional.performed=true but stations_sampled is empty/missing"
++        )
++
++    bronchial_wash = procedures.get("bronchial_wash") or {}
++    if bronchial_wash.get("performed") is True and not bronchial_wash.get("location"):
++        warnings.append(
++            "procedures_performed.bronchial_wash.performed=true but location is missing"
++        )
++
++    brushings = procedures.get("brushings") or {}
++    if brushings.get("performed") is True and not (brushings.get("locations") or []):
++        warnings.append(
++            "procedures_performed.brushings.performed=true but locations is empty/missing"
++        )
++
++    tbbx = procedures.get("transbronchial_biopsy") or {}
++    if tbbx.get("performed") is True and not (tbbx.get("locations") or []):
++        warnings.append(
++            "procedures_performed.transbronchial_biopsy.performed=true but locations is empty/missing"
++        )
++
+     return procedures, warnings
+ 
+ 
+diff --git a/modules/registry/self_correction/__init__.py b/modules/registry/self_correction/__init__.py
+new file mode 100644
+index 0000000..20f92cc
+--- /dev/null
++++ b/modules/registry/self_correction/__init__.py
+@@ -0,0 +1,65 @@
++"""Self-correction helpers for registry extraction.
++
++This package contains:
++- Phase 6 guarded self-correction loop utilities (judge/validate/apply).
++- Legacy prompt-improvement tooling used by scripts (lazy-imported).
++"""
++
++from __future__ import annotations
++
++from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
++from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
++from modules.registry.self_correction.types import (
++    SelfCorrectionMetadata,
++    SelfCorrectionTrigger,
++)
++from modules.registry.self_correction.validation import ALLOWED_PATHS, validate_proposal
++
++
++def get_allowed_values(field_name: str) -> list[str]:
++    from modules.registry.self_correction.prompt_improvement import get_allowed_values as _impl
++
++    return _impl(field_name)
++
++
++def load_errors(path: str, target_field: str, max_examples: int = 20):  # type: ignore[no-untyped-def]
++    from modules.registry.self_correction.prompt_improvement import load_errors as _impl
++
++    return _impl(path, target_field, max_examples=max_examples)
++
++
++def build_self_correction_prompt(  # type: ignore[no-untyped-def]
++    field_name: str,
++    instruction_text: str,
++    errors,
++    allowed_values,
++) -> str:
++    from modules.registry.self_correction.prompt_improvement import build_self_correction_prompt as _impl
++
++    return _impl(field_name, instruction_text, errors, allowed_values)
++
++
++def suggest_improvements_for_field(  # type: ignore[no-untyped-def]
++    field_name: str, allowed_values: list[str], max_examples: int = 20
++) -> dict:
++    from modules.registry.self_correction.prompt_improvement import (
++        suggest_improvements_for_field as _impl,
++    )
++
++    return _impl(field_name, allowed_values, max_examples=max_examples)
++
++
++__all__ = [
++    "SelfCorrectionTrigger",
++    "SelfCorrectionMetadata",
++    "PatchProposal",
++    "RegistryCorrectionJudge",
++    "ALLOWED_PATHS",
++    "validate_proposal",
++    "apply_patch_to_record",
++    "SelfCorrectionApplyError",
++    "get_allowed_values",
++    "load_errors",
++    "build_self_correction_prompt",
++    "suggest_improvements_for_field",
++]
+diff --git a/modules/registry/self_correction/apply.py b/modules/registry/self_correction/apply.py
+new file mode 100644
+index 0000000..38f0603
+--- /dev/null
++++ b/modules/registry/self_correction/apply.py
+@@ -0,0 +1,130 @@
++"""Phase 6 patch application (safe dict->rebuild, no in-place mutation)."""
++
++from __future__ import annotations
++
++import copy
++
++from modules.registry.schema import RegistryRecord
++
++
++class SelfCorrectionApplyError(RuntimeError):
++    pass
++
++
++def apply_patch_to_record(*, record: RegistryRecord, patch: list[dict]) -> RegistryRecord:
++    record_dict = record.model_dump()
++    patched = copy.deepcopy(record_dict)
++
++    try:
++        for idx, op in enumerate(patch):
++            _apply_op(patched, op, idx=idx)
++    except Exception as exc:  # noqa: BLE001
++        raise SelfCorrectionApplyError(f"Failed applying JSON Patch: {exc}") from exc
++
++    try:
++        return RegistryRecord(**patched)
++    except Exception as exc:  # noqa: BLE001
++        raise SelfCorrectionApplyError(f"Patched record failed validation: {exc}") from exc
++
++
++def _apply_op(doc: object, op: dict, *, idx: int) -> None:
++    verb = op.get("op")
++    if verb not in {"add", "replace"}:
++        raise SelfCorrectionApplyError(f"patch[{idx}].op='{verb}' is not supported")
++
++    path = op.get("path")
++    if not isinstance(path, str) or not path.startswith("/"):
++        raise SelfCorrectionApplyError(f"patch[{idx}].path is invalid: {path!r}")
++
++    if "value" not in op:
++        raise SelfCorrectionApplyError(f"patch[{idx}] missing required 'value'")
++    value = op.get("value")
++
++    tokens = _parse_pointer(path)
++    if not tokens:
++        raise SelfCorrectionApplyError(f"patch[{idx}].path points to document root, which is forbidden")
++
++    if verb == "replace" and not _pointer_exists(doc, tokens):
++        raise SelfCorrectionApplyError(f"patch[{idx}].path does not exist for replace: {path}")
++
++    parent = _traverse(doc, tokens[:-1], create=(verb == "add"))
++    _set_child(parent, tokens[-1], value, verb=verb)
++
++
++def _parse_pointer(path: str) -> list[str]:
++    parts = path.split("/")[1:]
++    return [_unescape(p) for p in parts]
++
++
++def _unescape(token: str) -> str:
++    return token.replace("~1", "/").replace("~0", "~")
++
++
++def _pointer_exists(doc: object, tokens: list[str]) -> bool:
++    cur: object = doc
++    for token in tokens:
++        if isinstance(cur, dict):
++            if token not in cur:
++                return False
++            cur = cur[token]
++        elif isinstance(cur, list):
++            try:
++                index = int(token)
++            except ValueError:
++                return False
++            if index < 0 or index >= len(cur):
++                return False
++            cur = cur[index]
++        else:
++            return False
++    return True
++
++
++def _traverse(doc: object, tokens: list[str], *, create: bool) -> object:
++    cur: object = doc
++    for token in tokens:
++        if isinstance(cur, dict):
++            nxt = cur.get(token)
++            if nxt is None:
++                if not create:
++                    raise SelfCorrectionApplyError(f"Missing object at '{token}'")
++                nxt = {}
++                cur[token] = nxt
++            cur = nxt
++        elif isinstance(cur, list):
++            index = int(token)
++            if index < 0 or index >= len(cur):
++                raise SelfCorrectionApplyError(f"List index out of range at '{token}'")
++            cur = cur[index]
++        else:
++            raise SelfCorrectionApplyError(f"Cannot traverse non-container at '{token}'")
++    return cur
++
++
++def _set_child(parent: object, token: str, value: object, *, verb: str) -> None:
++    if isinstance(parent, dict):
++        if verb == "replace" and token not in parent:
++            raise SelfCorrectionApplyError(f"replace target '{token}' does not exist")
++        parent[token] = value
++        return
++
++    if isinstance(parent, list):
++        if token == "-" and verb == "add":
++            parent.append(value)
++            return
++        index = int(token)
++        if verb == "replace":
++            if index < 0 or index >= len(parent):
++                raise SelfCorrectionApplyError("replace list index out of range")
++            parent[index] = value
++            return
++        if verb == "add":
++            if index < 0 or index > len(parent):
++                raise SelfCorrectionApplyError("add list index out of range")
++            parent.insert(index, value)
++            return
++
++    raise SelfCorrectionApplyError(f"Cannot set child on non-container type {type(parent).__name__}")
++
++
++__all__ = ["apply_patch_to_record", "SelfCorrectionApplyError"]
+diff --git a/modules/registry/self_correction/judge.py b/modules/registry/self_correction/judge.py
+new file mode 100644
+index 0000000..1fc7dcc
+--- /dev/null
++++ b/modules/registry/self_correction/judge.py
+@@ -0,0 +1,71 @@
++"""Judge module for proposing registry self-corrections (Phase 6)."""
++
++from __future__ import annotations
++
++from typing import Any
++
++from pydantic import BaseModel
++
++from modules.common.llm import LLMService
++from modules.registry.schema import RegistryRecord
++
++
++class PatchProposal(BaseModel):
++    rationale: str
++    json_patch: list[dict[str, Any]]
++    evidence_quote: str
++
++
++class RegistryCorrectionJudge:
++    def __init__(self, llm: LLMService | None = None) -> None:
++        self.llm = llm or LLMService()
++
++    def propose_correction(
++        self,
++        note_text: str,
++        record: RegistryRecord,
++        discrepancy: str,
++    ) -> PatchProposal | None:
++        """Ask LLM if the discrepancy warrants a correction.
++
++        Returns a PatchProposal if a fix is high-confidence, else None.
++        """
++        system_prompt = (
++            "You are a strict clinical registry auditor. "
++            "Your job is to fix MISSING data in a registry record based on a specific discrepancy.\n"
++            "Rules:\n"
++            "1. Only fix what is explicitly missing/wrong based on the discrepancy.\n"
++            "2. You must provide a JSON Patch (RFC 6902) to apply the fix.\n"
++            "3. You must provide a VERBATIM quote from the note text that proves the fix.\n"
++            "4. If the evidence is ambiguous or weak, return null (do not fix).\n"
++            "5. Do NOT hallucinate quotes. The quote must exist exactly in the text.\n"
++        )
++
++        user_prompt = f"""
++Note Text:
++{note_text}
++
++Current Registry Record (JSON):
++{record.model_dump_json(exclude_none=True)}
++
++Discrepancy Detected:
++{discrepancy}
++
++Task:
++If the discrepancy represents a valid omission that is CLEARLY supported by the text, generate a JSON patch to fix it.
++Return JSON with keys: "rationale", "json_patch", "evidence_quote".
++"""
++        try:
++            response = self.llm.generate_json(
++                system_prompt=system_prompt,
++                user_prompt=user_prompt,
++                response_model=PatchProposal,
++                temperature=0.0,
++            )
++            return response
++        except Exception:
++            return None
++
++
++__all__ = ["PatchProposal", "RegistryCorrectionJudge"]
++
+diff --git a/modules/registry/self_correction.py b/modules/registry/self_correction/prompt_improvement.py
+similarity index 98%
+rename from modules/registry/self_correction.py
+rename to modules/registry/self_correction/prompt_improvement.py
+index 7f4cd9b..8b91a46 100644
+--- a/modules/registry/self_correction.py
++++ b/modules/registry/self_correction/prompt_improvement.py
+@@ -11,7 +11,7 @@
+ from modules.common.llm import GeminiLLM, OpenAILLM
+ from modules.registry.prompts import FIELD_INSTRUCTIONS
+ 
+-_SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
++_SCHEMA_PATH = Path(__file__).resolve().parents[3] / "data" / "knowledge" / "IP_Registry.json"
+ 
+ 
+ @dataclass
+diff --git a/modules/registry/self_correction/types.py b/modules/registry/self_correction/types.py
+new file mode 100644
+index 0000000..5c7358e
+--- /dev/null
++++ b/modules/registry/self_correction/types.py
+@@ -0,0 +1,47 @@
++"""Types for Phase 6 guarded registry self-correction."""
++
++from __future__ import annotations
++
++from dataclasses import dataclass, field
++from typing import Any
++
++
++@dataclass(frozen=True)
++class SelfCorrectionTrigger:
++    target_cpt: str
++    ml_prob: float
++    ml_bucket: str | None
++    reason: str
++
++
++@dataclass(frozen=True)
++class JudgeProposal:
++    target_cpt: str
++    patch: list[dict]
++    evidence_quotes: list[str]
++    rationale: str
++    model_info: dict[str, Any] = field(default_factory=dict)
++
++
++@dataclass(frozen=True)
++class ValidationResult:
++    ok: bool
++    errors: list[str] = field(default_factory=list)
++    warnings: list[str] = field(default_factory=list)
++
++
++@dataclass(frozen=True)
++class SelfCorrectionMetadata:
++    trigger: SelfCorrectionTrigger
++    applied_paths: list[str]
++    evidence_quotes: list[str]
++    config_snapshot: dict[str, Any]
++
++
++__all__ = [
++    "SelfCorrectionTrigger",
++    "JudgeProposal",
++    "ValidationResult",
++    "SelfCorrectionMetadata",
++]
++
+diff --git a/modules/registry/self_correction/validation.py b/modules/registry/self_correction/validation.py
+new file mode 100644
+index 0000000..7e3f7da
+--- /dev/null
++++ b/modules/registry/self_correction/validation.py
+@@ -0,0 +1,91 @@
++"""Strict validator for registry self-correction patches."""
++
++from __future__ import annotations
++
++import os
++from typing import Any
++
++ALLOWED_PATHS: set[str] = {
++    # Performed flags
++    "/procedures_performed/bal/performed",
++    "/procedures_performed/brushings/performed",
++    "/procedures_performed/transbronchial_biopsy/performed",
++    "/procedures_performed/transbronchial_cryobiopsy/performed",
++    "/procedures_performed/tbna_conventional/performed",
++    "/procedures_performed/linear_ebus/performed",
++    "/procedures_performed/radial_ebus/performed",
++    "/procedures_performed/navigational_bronchoscopy/performed",
++    "/pleural_procedures/ipc/performed",
++    "/pleural_procedures/thoracentesis/performed",
++    "/pleural_procedures/chest_tube/performed",
++    # Add other safe fields as needed
++}
++
++
++def validate_proposal(
++    proposal: Any,
++    raw_note_text: str,
++    *,
++    max_patch_ops: int | None = None,
++) -> tuple[bool, str]:
++    """Return (is_valid, reason)."""
++
++    quote = getattr(proposal, "evidence_quote", "")
++    if not isinstance(quote, str) or not quote.strip():
++        return False, "Missing evidence quote"
++    quote = quote.strip()
++
++    text = raw_note_text or ""
++    if quote not in text:
++        return False, f"Quote not found verbatim in text: '{quote[:50]}...'"
++
++    patches = getattr(proposal, "json_patch", [])
++    if not isinstance(patches, list) or not patches:
++        return False, "Empty patch"
++
++    if max_patch_ops is None:
++        max_patch_ops = _env_int("REGISTRY_SELF_CORRECT_MAX_PATCH_OPS", 5)
++
++    if len(patches) > max_patch_ops:
++        return False, f"Patch too large: {len(patches)} ops (max {max_patch_ops})"
++
++    allowed_paths = _allowed_paths_from_env(default=ALLOWED_PATHS)
++
++    for op in patches:
++        if not isinstance(op, dict):
++            return False, "Patch operation must be an object"
++
++        path = op.get("path")
++        if path not in allowed_paths:
++            return False, f"Path not allowed: {path}"
++
++        verb = op.get("op")
++        if verb not in ("add", "replace"):
++            return False, f"Op not allowed: {verb}"
++
++    return True, "Valid"
++
++
++def _allowed_paths_from_env(*, default: set[str]) -> set[str]:
++    raw = os.getenv("REGISTRY_SELF_CORRECT_ALLOWLIST", "")
++    if not raw.strip():
++        return set(default)
++    parsed = {p.strip() for p in raw.split(",") if p.strip()}
++    return parsed or set(default)
++
++
++def _env_int(name: str, default: int) -> int:
++    raw = os.getenv(name)
++    if raw is None:
++        return default
++    raw = raw.strip()
++    if not raw:
++        return default
++    try:
++        return int(raw)
++    except ValueError:
++        return default
++
++
++__all__ = ["ALLOWED_PATHS", "validate_proposal"]
++
+diff --git a/modules/registry/transform.py b/modules/registry/transform.py
+index df20b32..bfdc2a5 100644
+--- a/modules/registry/transform.py
++++ b/modules/registry/transform.py
+@@ -48,6 +48,29 @@ def _normalize_transbronchial_forceps_type(value: Any) -> str | None:
+     return None
+ 
+ 
++def _format_ebus_needle_gauge(value: Any) -> str | None:
++    """Format EBUS needle gauge for the nested schema (e.g., '22G')."""
++    if value is None:
++        return None
++
++    if isinstance(value, int):
++        return f"{value}G"
++
++    if isinstance(value, str):
++        text = value.strip().upper()
++        if not text:
++            return None
++        if text in {"19G", "21G", "22G", "25G"}:
++            return text
++        import re
++
++        match = re.search(r"\b(19|21|22|25)\b", text)
++        if match:
++            return f"{match.group(1)}G"
++
++    return None
++
++
+ def build_nested_registry_payload(data: dict[str, Any]) -> dict[str, Any]:
+     """Return a copy of the flat registry payload with nested sections populated."""
+     payload = dict(data)
+@@ -124,17 +147,28 @@ def build_nested_registry_payload(data: dict[str, Any]) -> dict[str, Any]:
+ 
+ 
+ def _build_providers(data: dict[str, Any]) -> dict[str, Any]:
++    providers: dict[str, Any] = {}
++
+     attending = data.get("attending_name")
+-    if not attending:
+-        return {}
+-    providers: dict[str, Any] = {"attending_name": attending}
+-    providers["attending_npi"] = data.get("attending_npi")
+-    providers["fellow_name"] = data.get("fellow_name")
+-    providers["assistant_name"] = (data.get("assistant_name") or (data.get("assistant_names") or [None])[0])
+-    # Use normalized assistant_role if available
+-    providers["assistant_role"] = data.get("assistant_role")
+-    providers["trainee_present"] = data.get("trainee_present")
+-    providers["rose_present"] = data.get("ebus_rose_available")
++    if attending:
++        providers["attending_name"] = attending
++
++    if data.get("attending_npi") is not None:
++        providers["attending_npi"] = data.get("attending_npi")
++    if data.get("fellow_name") is not None:
++        providers["fellow_name"] = data.get("fellow_name")
++
++    assistant = data.get("assistant_name") or (data.get("assistant_names") or [None])[0]
++    if assistant is not None:
++        providers["assistant_name"] = assistant
++    if data.get("assistant_role") is not None:
++        providers["assistant_role"] = data.get("assistant_role")
++    if data.get("trainee_present") is not None:
++        providers["trainee_present"] = data.get("trainee_present")
++
++    if data.get("ebus_rose_available") is not None:
++        providers["rose_present"] = data.get("ebus_rose_available")
++
+     return providers
+ 
+ 
+@@ -242,8 +276,9 @@ def _build_procedures_performed(data: dict[str, Any], families: set[str]) -> dic
+         linear: dict[str, Any] = {"performed": True}
+         if data.get("ebus_stations_sampled"):
+             linear["stations_sampled"] = data.get("ebus_stations_sampled")
+-        if data.get("ebus_needle_gauge"):
+-            linear["needle_gauge"] = data.get("ebus_needle_gauge")
++        gauge = _format_ebus_needle_gauge(data.get("ebus_needle_gauge"))
++        if gauge:
++            linear["needle_gauge"] = gauge
+         if data.get("ebus_needle_type"):
+             linear["needle_type"] = data.get("ebus_needle_type")
+         if data.get("ebus_elastography_used") is not None:
+diff --git a/scripts/generate_gitingest.py b/scripts/generate_gitingest.py
+new file mode 100755
+index 0000000..d8f36b2
+--- /dev/null
++++ b/scripts/generate_gitingest.py
+@@ -0,0 +1,248 @@
++#!/usr/bin/env python3
++"""
++Generate gitingest.md - A token-budget friendly snapshot of the repo structure
++and curated important files for LLM/context ingestion.
++"""
++
++import os
++import subprocess
++from datetime import datetime
++from pathlib import Path
++from typing import Set
++
++
++# Configuration
++EXCLUDED_DIRS = {
++    ".git",
++    ".mypy_cache",
++    ".pytest_cache",
++    ".ruff_cache",
++    "data",
++    "dist",
++    "distilled",
++    "proc_suite.egg-info",
++    "reports",
++    "validation_results",
++    "__pycache__",
++    ".pytest_cache",
++    ".ruff_cache",
++    ".mypy_cache",
++}
++
++EXCLUDED_FILE_EXTENSIONS = {
++    ".bin",
++    ".db",
++    ".onnx",
++    ".pt",
++    ".pth",
++    ".tar.gz",
++    ".zip",
++    ".pyc",
++    ".pyo",
++}
++
++IMPORTANT_DIRS = [
++    "modules/",
++    "proc_report/",
++    "proc_autocode/",
++    "proc_nlp/",
++    "proc_registry/",
++    "proc_schemas/",
++    "schemas/",
++    "configs/",
++    "scripts/",
++    "tests/",
++]
++
++IMPORTANT_FILES = [
++    "README.md",
++    "CLAUDE.md",
++    "pyproject.toml",
++    "requirements.txt",
++    "Makefile",
++    "runtime.txt",
++    "modules/api/fastapi_app.py",
++    "modules/coder/application/coding_service.py",
++    "modules/registry/application/registry_service.py",
++    "modules/agents/contracts.py",
++    "modules/agents/run_pipeline.py",
++    "docs/DEVELOPMENT.md",
++    "docs/ARCHITECTURE.md",
++    "docs/INSTALLATION.md",
++    "docs/USER_GUIDE.md",
++]
++
++
++def get_git_info() -> tuple[str, str]:
++    """Get current git branch and commit hash."""
++    try:
++        branch = (
++            subprocess.check_output(
++                ["git", "rev-parse", "--abbrev-ref", "HEAD"], stderr=subprocess.DEVNULL
++            )
++            .decode()
++            .strip()
++        )
++        commit = (
++            subprocess.check_output(
++                ["git", "rev-parse", "--short", "HEAD"], stderr=subprocess.DEVNULL
++            )
++            .decode()
++            .strip()
++        )
++        return branch, commit
++    except (subprocess.CalledProcessError, FileNotFoundError):
++        return "unknown", "unknown"
++
++
++def should_exclude_path(path: Path, repo_root: Path) -> bool:
++    """Check if a path should be excluded."""
++    try:
++        rel_path = path.relative_to(repo_root)
++    except ValueError:
++        return True
++    
++    # Check if any part of the path matches excluded dirs
++    parts = rel_path.parts
++    if any(part in EXCLUDED_DIRS for part in parts):
++        return True
++
++    # Check file extension
++    if path.is_file():
++        for ext in EXCLUDED_FILE_EXTENSIONS:
++            if str(path).endswith(ext):
++                return True
++
++    return False
++
++
++def build_tree(root: Path, repo_root: Path, depth: int = 0) -> list[str]:
++    """Build a directory tree structure matching the existing format."""
++    lines = []
++    indent = "  " * depth
++
++    # Get all items in current directory
++    try:
++        items = sorted(
++            [p for p in root.iterdir() if not should_exclude_path(p, repo_root)],
++            key=lambda p: (p.is_file(), p.name.lower()),
++        )
++    except PermissionError:
++        return lines
++
++    for item in items:
++        # Get relative path from repo root
++        rel_path = item.relative_to(repo_root)
++        path_str = str(rel_path).replace("\\", "/")
++        
++        lines.append(f"{indent}- {path_str}/" if item.is_dir() else f"{indent}- {path_str}")
++
++        if item.is_dir():
++            lines.extend(build_tree(item, repo_root, depth + 1))
++
++    return lines
++
++
++def get_repo_tree(repo_root: Path) -> str:
++    """Generate the repository tree structure."""
++    # Start with the root directory name
++    root_name = repo_root.name if repo_root.name else "."
++    tree_lines = [f"- {root_name}/"]
++    
++    # Build the rest of the tree
++    tree_lines.extend(build_tree(repo_root, repo_root, depth=1))
++    
++    return "\n".join(tree_lines)
++
++
++def read_file_content(file_path: Path) -> str:
++    """Read file content, handling encoding issues."""
++    try:
++        with open(file_path, "r", encoding="utf-8", errors="replace") as f:
++            return f.read()
++    except Exception as e:
++        return f"# Error reading file: {e}"
++
++
++def generate_gitingest(repo_root: Path, output_path: Path) -> None:
++    """Generate the gitingest.md file."""
++    print(f"Generating gitingest.md from {repo_root}...")
++
++    # Get git info
++    branch, commit = get_git_info()
++    # Format timestamp with timezone (matching original format)
++    timestamp = datetime.now().astimezone().isoformat(timespec="seconds")
++
++    # Generate repo tree
++    print("Building repository tree...")
++    repo_tree = get_repo_tree(repo_root)
++
++    # Build the markdown content
++    content_parts = [
++        "# Procedure Suite — gitingest (curated)",
++        "",
++        f"Generated: `{timestamp}`",
++        f"Git: `{branch}` @ `{commit}`",
++        "",
++        "## What this file is",
++        "- A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.",
++        "- Intended for LLM/context ingestion; excludes large artifacts (models, datasets, caches).",
++        "",
++        "## Exclusions (high level)",
++        f"- Directories: `{', '.join(sorted(EXCLUDED_DIRS))}`",
++        f"- File types: `{'`, `'.join(sorted(EXCLUDED_FILE_EXTENSIONS))}`",
++        "",
++        "## Repo tree (pruned)",
++        "```",
++        repo_tree,
++        "```",
++        "",
++        "## Important directories (not inlined)",
++    ]
++
++    # Add important directories
++    for dir_name in IMPORTANT_DIRS:
++        content_parts.append(f"- `{dir_name}`")
++
++    content_parts.extend([
++        "",
++        "## Important files (inlined)",
++        "",
++    ])
++
++    # Add important files
++    print("Inlining important files...")
++    for file_path_str in IMPORTANT_FILES:
++        file_path = repo_root / file_path_str
++        if file_path.exists():
++            print(f"  Reading {file_path_str}...")
++            file_content = read_file_content(file_path)
++            content_parts.extend([
++                "---",
++                f"### `{file_path_str}`",
++                "```",
++                file_content,
++                "```",
++                "",
++            ])
++        else:
++            print(f"  Warning: {file_path_str} not found, skipping...")
++
++    # Write the file
++    print(f"Writing to {output_path}...")
++    with open(output_path, "w", encoding="utf-8") as f:
++        f.write("\n".join(content_parts))
++
++    print(f"✅ Successfully generated {output_path}")
++
++
++def main():
++    """Main entry point."""
++    repo_root = Path(__file__).parent.parent
++    output_path = repo_root / "gitingest.md"
++
++    generate_gitingest(repo_root, output_path)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/tests/coder/test_registry_to_cpt_rules_pure_registry.py b/tests/coder/test_registry_to_cpt_rules_pure_registry.py
+new file mode 100644
+index 0000000..9e5931d
+--- /dev/null
++++ b/tests/coder/test_registry_to_cpt_rules_pure_registry.py
+@@ -0,0 +1,11 @@
++import inspect
++
++
++def test_deterministic_registry_to_cpt_rules_do_not_accept_note_text() -> None:
++    # Legacy import path remains supported via shim (Phase 3).
++    from data.rules import coding_rules
++
++    sig = inspect.signature(coding_rules.derive_all_codes)
++    assert "note_text" not in sig.parameters, "deterministic CPT rules must not accept note_text"
++    assert len(sig.parameters) == 1, "deterministic CPT rules must accept a single RegistryRecord"
++
+diff --git a/tests/coder/test_synthetic_patterns.py b/tests/coder/test_synthetic_patterns.py
+index 615cc95..71c4419 100644
+--- a/tests/coder/test_synthetic_patterns.py
++++ b/tests/coder/test_synthetic_patterns.py
+@@ -12,6 +12,7 @@
+ 
+ import json
+ import sys
++import warnings
+ from pathlib import Path
+ from typing import Set
+ 
+@@ -27,11 +28,73 @@
+ # Use the CORRECTED canonical source - synthetic_CPT_corrected.json
+ DATA_PATH = ROOT / "data" / "synthetic_CPT_corrected.json"
+ 
++# Minimal fallback patterns so this test suite can run in environments where the
++# canonical file is not present (e.g., OSS/CI checkouts).
++FALLBACK_PATTERNS: list[dict] = [
++    {
++        "procedure_id": "fallback_navigation_with_ablation",
++        "note_text": (
++            "Bronchoscopy with ENB navigation guidance to a right lower lobe "
++            "squamous cell carcinoma followed by radiofrequency ablation of the lesion."
++        ),
++        "coding_and_billing": {
++            "billed_codes": [{"cpt_code": "31641"}, {"cpt_code": "+31627"}],
++            "excluded_or_bundled_codes": [],
++        },
++    },
++    {
++        "procedure_id": "fallback_ipc_placement",
++        "note_text": (
++            "Ultrasound-guided tunneled PleurX catheter placement for recurrent "
++            "right malignant pleural effusion."
++        ),
++        "coding_and_billing": {
++            "billed_codes": [{"cpt_code": "32550"}],
++            "excluded_or_bundled_codes": [{"cpt_code": "76942"}],
++        },
++    },
++    {
++        "procedure_id": "fallback_ebus_staging_3_stations",
++        "note_text": (
++            "EBUS bronchoscopy with systematic mediastinal survey. "
++            "TBNA performed at stations 4R, 7, and 10R."
++        ),
++        "coding_and_billing": {
++            "billed_codes": [{"cpt_code": "31653"}],
++            "excluded_or_bundled_codes": [],
++        },
++    },
++    {
++        "procedure_id": "fallback_robotic_navigation_with_radial",
++        "note_text": (
++            "Robotic Ion navigational bronchoscopy with radial EBUS confirmation "
++            "and forceps biopsies of a peripheral left lower lobe nodule."
++        ),
++        "coding_and_billing": {
++            "billed_codes": [{"cpt_code": "+31627"}, {"cpt_code": "+31654"}],
++            "excluded_or_bundled_codes": [],
++        },
++    },
++]
++
+ 
+ def load_canonical_patterns() -> list[dict]:
+     """Load the canonical synthetic_CPT_corrected.json patterns."""
+-    with DATA_PATH.open() as f:
+-        return json.load(f)
++    try:
++        with DATA_PATH.open() as f:
++            patterns = json.load(f)
++    except FileNotFoundError:
++        warnings.warn(
++            f"Canonical patterns file not found at {DATA_PATH}. "
++            "Using minimal embedded fallback patterns for this test run.",
++            RuntimeWarning,
++        )
++        return FALLBACK_PATTERNS
++
++    if not isinstance(patterns, list):
++        raise TypeError(f"Expected {DATA_PATH} to contain a JSON list, got {type(patterns).__name__}")
++
++    return patterns
+ 
+ 
+ def normalize_code(code: str) -> str:
+diff --git a/tests/registry/test_audit_compare_report.py b/tests/registry/test_audit_compare_report.py
+new file mode 100644
+index 0000000..72b96d5
+--- /dev/null
++++ b/tests/registry/test_audit_compare_report.py
+@@ -0,0 +1,129 @@
++from unittest.mock import MagicMock
++
++import pytest
++
++from modules.registry.application.registry_service import RegistryService
++from modules.registry.schema import RegistryRecord
++
++
++class _StubRegistryEngine:
++    def __init__(self, record: RegistryRecord) -> None:
++        self.record = record
++        self.note_texts: list[str] = []
++
++    def run(self, note_text: str, *, context=None, **_kwargs):  # type: ignore[no-untyped-def]
++        self.note_texts.append(note_text)
++        return self.record
++
++
++def _raise(*_args, **_kwargs):  # type: ignore[no-untyped-def]
++    raise RuntimeError("Unexpected call in extraction-first audit path")
++
++
++def test_audit_compare_report_computes_missing_sets_and_high_conf(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
++    monkeypatch.setenv("REGISTRY_ML_AUDIT_USE_BUCKETS", "1")
++    monkeypatch.setenv("REGISTRY_ML_AUDIT_TOP_K", "7")
++    monkeypatch.setenv("REGISTRY_ML_AUDIT_MIN_PROB", "0.42")
++    monkeypatch.setenv("REGISTRY_ML_SELF_CORRECT_MIN_PROB", "0.95")
++
++    # Guardrails: orchestrator/rules must never be invoked for audit compare.
++    from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
++    from modules.coder.rules_engine import CodingRulesEngine
++
++    monkeypatch.setattr(SmartHybridOrchestrator, "get_codes", _raise)
++    monkeypatch.setattr(CodingRulesEngine, "validate", _raise)
++
++    # Deterministic derivation: derive 31624 via BAL performed.
++    record = RegistryRecord(procedures_performed={"bal": {"performed": True}})
++    engine = _StubRegistryEngine(record)
++
++    # RAW-ML: high-conf suggests IPC (32550), but deterministic derivation misses it.
++    from modules.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
++    from modules.ml_coder.thresholds import CaseDifficulty
++
++    classify_calls: list[str] = []
++
++    monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)
++
++    def _fake_classify_case(self, note_text: str):  # type: ignore[no-untyped-def]
++        classify_calls.append(note_text)
++        return CaseClassification(
++            predictions=[CodePrediction(cpt="32550", prob=0.97)],
++            high_conf=[CodePrediction(cpt="32550", prob=0.97)],
++            gray_zone=[],
++            difficulty=CaseDifficulty.HIGH_CONF,
++        )
++
++    monkeypatch.setattr(MLCoderPredictor, "classify_case", _fake_classify_case)
++
++    service = RegistryService(
++        hybrid_orchestrator=MagicMock(),
++        registry_engine=engine,
++    )
++
++    raw_note = "HPI: Mentions tunneled pleural catheter.\n\nPROCEDURE: BAL performed."
++    result = service.extract_fields(raw_note)
++
++    assert classify_calls == [raw_note]
++    assert result.audit_report is not None
++
++    report = result.audit_report
++    assert report.derived_codes == ["31624"]
++    assert [p.cpt for p in report.ml_audit_codes] == ["32550"]
++    assert [p.cpt for p in report.missing_in_derived] == ["32550"]
++    assert report.missing_in_ml == ["31624"]
++    assert [p.cpt for p in report.high_conf_omissions] == ["32550"]
++
++    assert report.config.use_buckets is True
++    assert report.config.top_k == 7
++    assert report.config.min_prob == 0.42
++    assert report.config.self_correct_min_prob == 0.95
++
++    assert result.needs_manual_review is True
++    assert any("32550" in w for w in result.audit_warnings)
++
++
++def test_audit_compare_report_created_when_auditor_disabled(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
++    monkeypatch.setenv("REGISTRY_ML_AUDIT_USE_BUCKETS", "1")
++    monkeypatch.setenv("REGISTRY_ML_AUDIT_TOP_K", "9")
++    monkeypatch.setenv("REGISTRY_ML_AUDIT_MIN_PROB", "0.11")
++    monkeypatch.setenv("REGISTRY_ML_SELF_CORRECT_MIN_PROB", "0.91")
++
++    # Guardrails: orchestrator/rules must never be invoked for audit compare.
++    from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
++    from modules.coder.rules_engine import CodingRulesEngine
++
++    monkeypatch.setattr(SmartHybridOrchestrator, "get_codes", _raise)
++    monkeypatch.setattr(CodingRulesEngine, "validate", _raise)
++
++    # RAW-ML must not run when auditor is disabled.
++    from modules.ml_coder.predictor import MLCoderPredictor
++
++    monkeypatch.setattr(MLCoderPredictor, "classify_case", _raise)
++
++    record = RegistryRecord(procedures_performed={"bal": {"performed": True}})
++    service = RegistryService(
++        hybrid_orchestrator=MagicMock(),
++        registry_engine=_StubRegistryEngine(record),
++    )
++
++    result = service.extract_fields("PROCEDURE: BAL performed.")
++    assert result.audit_report is not None
++
++    report = result.audit_report
++    assert report.ml_audit_codes == []
++    assert report.missing_in_derived == []
++    assert report.high_conf_omissions == []
++    assert report.missing_in_ml == ["31624"]
++    assert any("REGISTRY_AUDITOR_SOURCE=disabled" in w for w in report.warnings)
++    assert result.audit_warnings == []
++    assert result.needs_manual_review is False
++
+diff --git a/tests/registry/test_auditor_raw_ml_only.py b/tests/registry/test_auditor_raw_ml_only.py
+new file mode 100644
+index 0000000..86ce663
+--- /dev/null
++++ b/tests/registry/test_auditor_raw_ml_only.py
+@@ -0,0 +1,142 @@
++from unittest.mock import MagicMock
++
++import pytest
++
++from modules.registry.application.registry_service import RegistryService
++from modules.registry.schema import RegistryRecord
++
++
++class _StubRegistryEngine:
++    def __init__(self) -> None:
++        self.note_texts: list[str] = []
++
++    def run(self, note_text: str, *, context=None, **_kwargs):  # type: ignore[no-untyped-def]
++        self.note_texts.append(note_text)
++        return RegistryRecord()
++
++
++def test_registry_audit_calls_raw_ml_predictor_directly(monkeypatch: pytest.MonkeyPatch) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
++
++    # If the extraction-first path consults the orchestrator, this should explode.
++    from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
++
++    monkeypatch.setattr(
++        SmartHybridOrchestrator,
++        "get_codes",
++        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("SmartHybridOrchestrator.get_codes() called")),
++    )
++
++    orchestrator = MagicMock()
++    orchestrator.get_codes.side_effect = RuntimeError("SmartHybridOrchestrator.get_codes() called")
++
++    # If anything tries to invoke coder rules validation during audit, explode.
++    from modules.coder.rules_engine import CodingRulesEngine
++
++    monkeypatch.setattr(
++        CodingRulesEngine,
++        "validate",
++        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("CodingRulesEngine.validate() called")),
++    )
++
++    raw_note_text = "RAW NOTE: EBUS bronchoscopy performed. Station 7 sampled."
++
++    from modules.ml_coder.predictor import CaseClassification, MLCoderPredictor
++    from modules.ml_coder.thresholds import CaseDifficulty
++
++    classify_calls: list[str] = []
++
++    monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)
++
++    def _fake_classify_case(self, note_text: str):  # type: ignore[no-untyped-def]
++        classify_calls.append(note_text)
++        return CaseClassification(
++            predictions=[],
++            high_conf=[],
++            gray_zone=[],
++            difficulty=CaseDifficulty.LOW_CONF,
++        )
++
++    monkeypatch.setattr(MLCoderPredictor, "classify_case", _fake_classify_case)
++
++    service = RegistryService(
++        hybrid_orchestrator=orchestrator,
++        registry_engine=_StubRegistryEngine(),
++    )
++
++    service.extract_fields(raw_note_text)
++
++    assert classify_calls == [raw_note_text]
++
++
++def test_auditor_uses_raw_note_text_even_when_focusing_enabled(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
++    monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "agents_focus_then_engine")
++
++    from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
++
++    monkeypatch.setattr(
++        SmartHybridOrchestrator,
++        "get_codes",
++        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("SmartHybridOrchestrator.get_codes() called")),
++    )
++
++    from modules.coder.rules_engine import CodingRulesEngine
++
++    monkeypatch.setattr(
++        CodingRulesEngine,
++        "validate",
++        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("CodingRulesEngine.validate() called")),
++    )
++
++    raw_note_text = "RAW NOTE: Procedure section says BAL and navigation."
++    focused_text = "FOCUSED NOTE: only procedure summary"
++
++    import modules.registry.application.registry_service as registry_service_module
++
++    def _fake_focus(note_text: str):  # type: ignore[no-untyped-def]
++        assert note_text == raw_note_text
++        return focused_text, {"focused": True}
++
++    # This helper will be introduced in Phase 2; set raising=False so the test
++    # can be added before the implementation exists.
++    monkeypatch.setattr(
++        registry_service_module,
++        "focus_note_for_extraction",
++        _fake_focus,
++        raising=False,
++    )
++
++    engine = _StubRegistryEngine()
++
++    orchestrator = MagicMock()
++    orchestrator.get_codes.side_effect = RuntimeError("SmartHybridOrchestrator.get_codes() called")
++
++    from modules.ml_coder.predictor import CaseClassification, MLCoderPredictor
++    from modules.ml_coder.thresholds import CaseDifficulty
++
++    classify_calls: list[str] = []
++    monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)
++    monkeypatch.setattr(
++        MLCoderPredictor,
++        "classify_case",
++        lambda self, note_text: (
++            classify_calls.append(note_text)
++            or CaseClassification(
++                predictions=[],
++                high_conf=[],
++                gray_zone=[],
++                difficulty=CaseDifficulty.LOW_CONF,
++            )
++        ),
++    )
++
++    service = RegistryService(hybrid_orchestrator=orchestrator, registry_engine=engine)
++    service.extract_fields(raw_note_text)
++
++    assert engine.note_texts == [focused_text]
++    assert classify_calls == [raw_note_text]
+diff --git a/tests/registry/test_derive_procedures_from_granular_consistency.py b/tests/registry/test_derive_procedures_from_granular_consistency.py
+new file mode 100644
+index 0000000..d50b4cb
+--- /dev/null
++++ b/tests/registry/test_derive_procedures_from_granular_consistency.py
+@@ -0,0 +1,118 @@
++from modules.registry.schema_granular import derive_procedures_from_granular
++
++
++def test_derive_procedures_from_granular_up_propagates_navigation_performed() -> None:
++    granular_data = {
++        "navigation_targets": [
++            {
++                "target_number": 1,
++                "target_location_text": "RUL apical segment lesion",
++            }
++        ]
++    }
++    existing_procedures = {
++        "navigational_bronchoscopy": {"performed": False}
++    }
++
++    updated, _warnings = derive_procedures_from_granular(
++        granular_data=granular_data,
++        existing_procedures=existing_procedures,
++    )
++
++    assert updated["navigational_bronchoscopy"]["performed"] is True
++
++
++def test_derive_procedures_from_granular_up_propagates_linear_ebus_performed() -> None:
++    granular_data = {
++        "linear_ebus_stations_detail": [
++            {"station": "7", "sampled": True}
++        ]
++    }
++    existing_procedures = {
++        "linear_ebus": {"performed": False}
++    }
++
++    updated, warnings = derive_procedures_from_granular(
++        granular_data=granular_data,
++        existing_procedures=existing_procedures,
++    )
++
++    assert updated["linear_ebus"]["performed"] is True
++    assert updated["linear_ebus"]["stations_sampled"] == ["7"]
++    assert not any("procedures_performed.linear_ebus.performed=true" in w for w in warnings)
++
++
++def test_derive_procedures_from_granular_up_propagates_bal_performed() -> None:
++    granular_data = {
++        "specimens_collected": [
++            {
++                "specimen_number": 1,
++                "source_procedure": "BAL",
++                "source_location": "RLL",
++                "specimen_count": 1,
++            }
++        ]
++    }
++    existing_procedures = {
++        "bal": {"performed": False}
++    }
++
++    updated, _warnings = derive_procedures_from_granular(
++        granular_data=granular_data,
++        existing_procedures=existing_procedures,
++    )
++
++    assert updated["bal"]["performed"] is True
++
++
++def test_derive_procedures_from_granular_up_propagates_sampling_tools_paths() -> None:
++    granular_data = {
++        "navigation_targets": [
++            {
++                "target_number": 1,
++                "target_location_text": "RUL posterior segment lesion",
++                "sampling_tools_used": ["Needle", "Forceps"],
++                "number_of_needle_passes": 4,
++                "number_of_forceps_biopsies": 3,
++            }
++        ],
++        "specimens_collected": [
++            {
++                "specimen_number": 1,
++                "source_procedure": "Bronchial wash",
++                "source_location": "RUL",
++                "specimen_count": 1,
++            }
++        ],
++    }
++
++    updated, warnings = derive_procedures_from_granular(
++        granular_data=granular_data,
++        existing_procedures={},
++    )
++
++    assert updated["tbna_conventional"]["performed"] is True
++    assert "RUL posterior segment lesion" in (updated["tbna_conventional"].get("stations_sampled") or [])
++    assert updated["transbronchial_biopsy"]["performed"] is True
++    assert updated["transbronchial_biopsy"]["number_of_samples"] == 3
++    assert updated["bronchial_wash"]["performed"] is True
++    assert updated["bronchial_wash"]["location"] == "RUL"
++    assert not any("performed=true but" in w for w in warnings)
++
++
++def test_derive_procedures_from_granular_warns_on_ebus_performed_without_stations() -> None:
++    granular_data = {
++        "linear_ebus_stations_detail": [
++            {"station": "7", "sampled": False}
++        ]
++    }
++    existing_procedures = {
++        "linear_ebus": {"performed": True}
++    }
++
++    _updated, warnings = derive_procedures_from_granular(
++        granular_data=granular_data,
++        existing_procedures=existing_procedures,
++    )
++
++    assert any("procedures_performed.linear_ebus.performed=true" in w for w in warnings)
+diff --git a/tests/registry/test_extraction_first_flow.py b/tests/registry/test_extraction_first_flow.py
+new file mode 100644
+index 0000000..7a09ca6
+--- /dev/null
++++ b/tests/registry/test_extraction_first_flow.py
+@@ -0,0 +1,64 @@
++import inspect
++from unittest.mock import MagicMock
++
++import pytest
++
++from modules.registry.application.registry_service import RegistryService
++from modules.registry.schema import RegistryRecord
++
++
++class _AssertingRegistryEngine:
++    def __init__(self) -> None:
++        self.calls: list[dict] = []
++
++    def run(self, note_text: str, *, context=None, **_kwargs):  # type: ignore[no-untyped-def]
++        self.calls.append({"note_text": note_text, "context": context})
++        if context is not None:
++            assert "verified_cpt_codes" not in context
++            assert "ml_metadata" not in context
++        return RegistryRecord()
++
++
++def test_extraction_first_does_not_consult_cpt_or_orchestrator(monkeypatch: pytest.MonkeyPatch) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
++
++    engine = _AssertingRegistryEngine()
++
++    orchestrator = MagicMock()
++    orchestrator.get_codes.side_effect = RuntimeError("orchestrator called (should not happen)")
++
++    service = RegistryService(hybrid_orchestrator=orchestrator, registry_engine=engine)
++
++    # Guard against CPT-seeded merge in extraction-first mode.
++    monkeypatch.setattr(
++        service,
++        "_merge_cpt_fields_into_record",
++        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("_merge_cpt_fields_into_record called")),
++    )
++
++    # Stub RAW-ML predictor so the extraction-first path can complete once implemented.
++    from modules.ml_coder.predictor import CaseClassification, MLCoderPredictor
++    from modules.ml_coder.thresholds import CaseDifficulty
++
++    monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)
++    monkeypatch.setattr(
++        MLCoderPredictor,
++        "classify_case",
++        lambda self, raw_note_text: CaseClassification(
++            predictions=[],
++            high_conf=[],
++            gray_zone=[],
++            difficulty=CaseDifficulty.LOW_CONF,
++        ),
++    )
++
++    result = service.extract_fields("Synthetic note text describing a bronchoscopy procedure.")
++
++    # The test is primarily a call-graph guardrail:
++    # - No orchestrator
++    # - No CPT merge
++    # - No CPT hints passed into extraction
++    assert orchestrator.get_codes.call_count == 0
++    assert engine.calls, "expected extractor to run"
++    assert isinstance(result.record, RegistryRecord)
+diff --git a/tests/registry/test_focusing_audit_guardrail.py b/tests/registry/test_focusing_audit_guardrail.py
+new file mode 100644
+index 0000000..cf86665
+--- /dev/null
++++ b/tests/registry/test_focusing_audit_guardrail.py
+@@ -0,0 +1,80 @@
++from unittest.mock import MagicMock
++
++import pytest
++
++from modules.registry.application.registry_service import RegistryService
++from modules.registry.schema import RegistryRecord
++
++
++class _FocusSensitiveRegistryEngine:
++    def __init__(self) -> None:
++        self.note_texts: list[str] = []
++
++    def run(self, note_text: str, *, context=None, **_kwargs):  # type: ignore[no-untyped-def]
++        self.note_texts.append(note_text)
++
++        # Simulate an extractor that would only detect IPC if the keyword is present.
++        if "pleurx" in (note_text or "").lower():
++            return RegistryRecord(pleural_procedures={"ipc": {"performed": True}})
++        return RegistryRecord()
++
++
++def _raise(*_args, **_kwargs):  # type: ignore[no-untyped-def]
++    raise RuntimeError("Unexpected call in extraction-first audit path")
++
++
++def test_focusing_can_change_extraction_but_auditor_uses_raw_text_and_report_flags_gap(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
++    monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "agents_focus_then_engine")
++    monkeypatch.setenv("REGISTRY_ML_AUDIT_USE_BUCKETS", "1")
++    monkeypatch.setenv("REGISTRY_ML_SELF_CORRECT_MIN_PROB", "0.95")
++
++    # Guardrails: orchestrator/rules must never be invoked for audit compare.
++    from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
++    from modules.coder.rules_engine import CodingRulesEngine
++
++    monkeypatch.setattr(SmartHybridOrchestrator, "get_codes", _raise)
++    monkeypatch.setattr(CodingRulesEngine, "validate", _raise)
++
++    # RAW-ML should see the raw note text and predict IPC.
++    from modules.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
++    from modules.ml_coder.thresholds import CaseDifficulty
++
++    classify_calls: list[str] = []
++
++    monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)
++
++    def _fake_classify_case(self, note_text: str):  # type: ignore[no-untyped-def]
++        classify_calls.append(note_text)
++        return CaseClassification(
++            predictions=[CodePrediction(cpt="32550", prob=0.97)],
++            high_conf=[CodePrediction(cpt="32550", prob=0.97)],
++            gray_zone=[],
++            difficulty=CaseDifficulty.HIGH_CONF,
++        )
++
++    monkeypatch.setattr(MLCoderPredictor, "classify_case", _fake_classify_case)
++
++    engine = _FocusSensitiveRegistryEngine()
++    service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=engine)
++
++    raw_note = (
++        "HPI: Recurrent malignant pleural effusion; plan for PleurX catheter.\n"
++        "PROCEDURE: Diagnostic bronchoscopy only.\n"
++        "FINDINGS: Airways normal.\n"
++    )
++
++    result = service.extract_fields(raw_note)
++
++    assert classify_calls == [raw_note]
++    assert engine.note_texts, "Deterministic extraction should run"
++    assert "pleurx" not in engine.note_texts[0].lower(), "Focused text should omit HPI keyword"
++
++    assert result.audit_report is not None
++    assert [p.cpt for p in result.audit_report.missing_in_derived] == ["32550"]
++    assert [p.cpt for p in result.audit_report.high_conf_omissions] == ["32550"]
++    assert result.needs_manual_review is True
++
+diff --git a/tests/registry/test_registry_engine_sanitization.py b/tests/registry/test_registry_engine_sanitization.py
+new file mode 100644
+index 0000000..9d545f6
+--- /dev/null
++++ b/tests/registry/test_registry_engine_sanitization.py
+@@ -0,0 +1,61 @@
++from types import SimpleNamespace
++
++import pytest
++
++from modules.registry.engine import RegistryEngine
++
++
++class _StubExtractor:
++    def __init__(self, payload: dict) -> None:
++        self._payload = payload
++
++    def extract(self, _text, _sections, context=None):  # type: ignore[no-untyped-def]
++        return SimpleNamespace(value=self._payload)
++
++
++def test_invalid_enum_list_items_do_not_drop_registry_section(caplog: pytest.LogCaptureFixture) -> None:
++    engine = RegistryEngine(
++        llm_extractor=_StubExtractor(
++            {
++                "granular_data": {
++                    "navigation_targets": [
++                        {
++                            "target_number": 1,
++                            "target_location_text": "RUL nodule",
++                            "sampling_tools_used": ["Needle", None],
++                        }
++                    ]
++                }
++            }
++        )
++    )
++
++    with caplog.at_level("WARNING"):
++        record = engine.run("PROCEDURE: Navigational bronchoscopy performed.")
++
++    dumped = record.model_dump()
++    assert dumped.get("granular_data") is not None
++
++    nav_targets = dumped["granular_data"]["navigation_targets"]
++    assert nav_targets[0]["sampling_tools_used"] == ["Needle"]
++
++    assert any(
++        "sampling_tools_used" in rec.message and "Dropped" in rec.message for rec in caplog.records
++    )
++
++
++def test_pruning_warning_includes_paths_and_error_summary(caplog: pytest.LogCaptureFixture) -> None:
++    engine = RegistryEngine(
++        llm_extractor=_StubExtractor({"patient_demographics": {"height_cm": ["175 cm"]}})
++    )
++
++    with caplog.at_level("WARNING"):
++        _ = engine.run("PROCEDURE: Bronchoscopy performed.")
++
++    pruning_logs = [rec.message for rec in caplog.records if "validation required pruning" in rec.message]
++    assert pruning_logs
++
++    message = pruning_logs[0]
++    assert "patient_demographics.height_cm" in message
++    assert "Pruned:" in message
++    assert "Error summary:" in message
+diff --git a/tests/registry/test_self_correction_loop.py b/tests/registry/test_self_correction_loop.py
+new file mode 100644
+index 0000000..f41c0e4
+--- /dev/null
++++ b/tests/registry/test_self_correction_loop.py
+@@ -0,0 +1,173 @@
++from unittest.mock import MagicMock
++
++import pytest
++
++from modules.registry.application.registry_service import RegistryService
++from modules.registry.schema import RegistryRecord
++
++
++class _StubRegistryEngine:
++    def run(self, note_text: str, *, context=None, **_kwargs):  # type: ignore[no-untyped-def]
++        return RegistryRecord()
++
++
++def _stub_raw_ml_high_conf(monkeypatch: pytest.MonkeyPatch, *, cpt: str, prob: float = 0.99) -> None:
++    from modules.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
++    from modules.ml_coder.thresholds import CaseDifficulty
++
++    pred = CodePrediction(cpt=cpt, prob=prob)
++
++    monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)
++    monkeypatch.setattr(
++        MLCoderPredictor,
++        "classify_case",
++        lambda self, raw_note_text: CaseClassification(
++            predictions=[pred],
++            high_conf=[pred],
++            gray_zone=[],
++            difficulty=CaseDifficulty.HIGH_CONF,
++        ),
++    )
++
++
++def test_self_correction_disabled_by_default(monkeypatch: pytest.MonkeyPatch) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.delenv("REGISTRY_SELF_CORRECT_ENABLED", raising=False)
++
++    orchestrator = MagicMock()
++    orchestrator.get_codes.side_effect = RuntimeError("SmartHybridOrchestrator.get_codes() called")
++
++    # Stub RAW-ML predictor so the extraction-first path can complete once implemented.
++    from modules.ml_coder.predictor import CaseClassification, MLCoderPredictor
++    from modules.ml_coder.thresholds import CaseDifficulty
++
++    monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)
++    monkeypatch.setattr(
++        MLCoderPredictor,
++        "classify_case",
++        lambda self, raw_note_text: CaseClassification(
++            predictions=[],
++            high_conf=[],
++            gray_zone=[],
++            difficulty=CaseDifficulty.LOW_CONF,
++        ),
++    )
++
++    service = RegistryService(hybrid_orchestrator=orchestrator, registry_engine=_StubRegistryEngine())
++    service.extract_fields("Synthetic note text describing a bronchoscopy procedure.")
++
++
++def test_self_correction_successful_patch(monkeypatch: pytest.MonkeyPatch) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
++    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
++
++    _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
++
++    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
++
++    def _good_judge(  # type: ignore[no-untyped-def]
++        self, note_text: str, record: RegistryRecord, discrepancy: str
++    ) -> PatchProposal:
++        return PatchProposal(
++            rationale="Procedure explicitly documented",
++            json_patch=[{"op": "add", "path": "/pleural_procedures/ipc/performed", "value": True}],
++            evidence_quote="indwelling pleural catheter",
++        )
++
++    monkeypatch.setattr(RegistryCorrectionJudge, "propose_correction", _good_judge)
++
++    orchestrator = MagicMock()
++    orchestrator.get_codes.side_effect = RuntimeError("SmartHybridOrchestrator.get_codes() called")
++
++    service = RegistryService(hybrid_orchestrator=orchestrator, registry_engine=_StubRegistryEngine())
++    note_text = (
++        "PROCEDURE:\n"
++        "The patient underwent insertion of an indwelling pleural catheter (PleurX).\n"
++        "No complications."
++    )
++    result = service.extract_fields(note_text)
++
++    assert "32550" in result.cpt_codes
++    assert any(w.startswith("AUTO_CORRECTED: 32550") for w in result.warnings)
++    assert result.record.pleural_procedures is not None
++    assert result.record.pleural_procedures.ipc is not None
++    assert result.record.pleural_procedures.ipc.performed is True
++    assert result.self_correction
++    assert result.self_correction[0].trigger.target_cpt == "32550"
++
++
++def test_self_correction_rejects_hallucinated_quote(monkeypatch: pytest.MonkeyPatch) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
++    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
++
++    _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
++
++    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
++
++    def _hallucinating_judge(  # type: ignore[no-untyped-def]
++        self, note_text: str, record: RegistryRecord, discrepancy: str
++    ) -> PatchProposal:
++        return PatchProposal(
++            rationale="hallucinated for test",
++            json_patch=[{"op": "add", "path": "/pleural_procedures/ipc/performed", "value": True}],
++            evidence_quote="THIS QUOTE DOES NOT APPEAR IN THE NOTE",
++        )
++
++    monkeypatch.setattr(RegistryCorrectionJudge, "propose_correction", _hallucinating_judge)
++
++    service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=_StubRegistryEngine())
++    result = service.extract_fields(
++        "PROCEDURE:\nInsertion of an indwelling pleural catheter (PleurX).\nNo complications."
++    )
++
++    assert "32550" not in result.cpt_codes
++    assert result.record.pleural_procedures is None
++    assert any("SELF_CORRECT_SKIPPED: 32550" in w for w in result.warnings)
++
++
++def test_self_correction_rejects_forbidden_path(monkeypatch: pytest.MonkeyPatch) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
++    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
++
++    _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
++
++    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
++
++    def _forbidden_path_judge(  # type: ignore[no-untyped-def]
++        self, note_text: str, record: RegistryRecord, discrepancy: str
++    ) -> PatchProposal:
++        return PatchProposal(
++            rationale="forbidden path for test",
++            json_patch=[{"op": "add", "path": "/patient_demographics/mrn", "value": "123"}],
++            evidence_quote="Insertion of an indwelling pleural catheter",
++        )
++
++    monkeypatch.setattr(RegistryCorrectionJudge, "propose_correction", _forbidden_path_judge)
++
++    service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=_StubRegistryEngine())
++    result = service.extract_fields(
++        "PROCEDURE:\nInsertion of an indwelling pleural catheter (PleurX).\nNo complications."
++    )
++
++    assert "32550" not in result.cpt_codes
++    assert result.record.pleural_procedures is None
++    assert any("SELF_CORRECT_SKIPPED: 32550" in w for w in result.warnings)
++
++
++def test_self_correction_not_run_when_auditor_disabled(monkeypatch: pytest.MonkeyPatch) -> None:
++    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
++    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
++    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
++
++    from modules.registry.self_correction.judge import RegistryCorrectionJudge
++
++    mocked = MagicMock()
++    mocked.side_effect = RuntimeError("RegistryCorrectionJudge.propose_correction should not be called")
++    monkeypatch.setattr(RegistryCorrectionJudge, "propose_correction", mocked)
++
++    service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=_StubRegistryEngine())
++    service.extract_fields("Synthetic note text describing insertion of an indwelling pleural catheter (PleurX).")
++    mocked.assert_not_called()
+diff --git a/tests/registry/test_structurer_fallback.py b/tests/registry/test_structurer_fallback.py
+new file mode 100644
+index 0000000..28b76f9
+--- /dev/null
++++ b/tests/registry/test_structurer_fallback.py
+@@ -0,0 +1,33 @@
++from unittest.mock import MagicMock
++
++import pytest
++
++from modules.registry.application.registry_service import RegistryService
++from modules.registry.schema import RegistryRecord
++
++
++class _StubRegistryEngine:
++    def __init__(self) -> None:
++        self.note_texts: list[str] = []
++
++    def run(self, note_text: str, *, context=None, **_kwargs):  # type: ignore[no-untyped-def]
++        self.note_texts.append(note_text)
++        return RegistryRecord(version="from-engine")
++
++
++def test_agents_structurer_not_implemented_falls_back_to_engine(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "agents_structurer")
++
++    engine = _StubRegistryEngine()
++    service = RegistryService(hybrid_orchestrator=MagicMock(), registry_engine=engine)
++
++    record, warnings, meta = service.extract_record("PROCEDURE: Something happened.")
++
++    assert record.version == "from-engine"
++    assert engine.note_texts == ["PROCEDURE: Something happened."]
++    assert meta["extraction_engine"] == "agents_structurer"
++    assert meta.get("structurer_meta", {}).get("status") == "not_implemented"
++    assert any("agents_structurer is not implemented yet" in w for w in warnings)
++

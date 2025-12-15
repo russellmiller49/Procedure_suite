@@ -241,18 +241,12 @@ def _extract_codes(entry: Dict[str, Any]) -> List[str]:
     Extract CPT codes from an entry.
 
     Priority order (ground truth first):
-    1. cpt_codes (top-level ground truth)
-    2. coding_review.final_cpt_codes (fallback)
-    3. coding_review.cpt_summary.final_codes (fallback)
-    4. coding_review.cpt_summary keys (fallback)
-    5. coding_review.cpt_summary[].code (fallback)
+    1. coding_review.final_cpt_codes (most reviewed)
+    2. coding_review.cpt_summary.final_codes
+    3. coding_review.cpt_summary keys
+    4. coding_review.cpt_summary[].code
+    5. cpt_codes (top-level fallback)
     """
-    # Primary: top-level cpt_codes is ground truth
-    raw = entry.get("cpt_codes", [])
-    if raw:
-        return [str(c) for c in raw]
-
-    # Fallback to coding_review if top-level missing
     cr = entry.get("coding_review", {})
     if not isinstance(cr, dict):
         cr = {}
@@ -278,6 +272,10 @@ def _extract_codes(entry: Dict[str, Any]) -> List[str]:
                 codes.append(str(item["code"]))
         if codes:
             return codes
+
+    raw = entry.get("cpt_codes", [])
+    if raw and isinstance(raw, list):
+        return [str(c) for c in raw]
 
     return []
 

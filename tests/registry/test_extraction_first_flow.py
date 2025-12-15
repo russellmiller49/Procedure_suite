@@ -11,12 +11,15 @@ class _AssertingRegistryEngine:
     def __init__(self) -> None:
         self.calls: list[dict] = []
 
-    def run(self, note_text: str, *, context=None, **_kwargs):  # type: ignore[no-untyped-def]
+    def run(self, *_args, **_kwargs):  # type: ignore[no-untyped-def]
+        raise RuntimeError("RegistryEngine.run called (expected run_with_warnings)")
+
+    def run_with_warnings(self, note_text: str, *, context=None, **_kwargs):  # type: ignore[no-untyped-def]
         self.calls.append({"note_text": note_text, "context": context})
         if context is not None:
             assert "verified_cpt_codes" not in context
             assert "ml_metadata" not in context
-        return RegistryRecord()
+        return RegistryRecord(), ["ENGINE_WARNING"]
 
 
 def test_extraction_first_does_not_consult_cpt_or_orchestrator(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -62,3 +65,4 @@ def test_extraction_first_does_not_consult_cpt_or_orchestrator(monkeypatch: pyte
     assert orchestrator.get_codes.call_count == 0
     assert engine.calls, "expected extractor to run"
     assert isinstance(result.record, RegistryRecord)
+    assert "ENGINE_WARNING" in result.warnings

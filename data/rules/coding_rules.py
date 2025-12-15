@@ -871,7 +871,7 @@ MUTUALLY_EXCLUSIVE = [
 ]
 
 
-def derive_all_codes(registry: dict, note_text: str) -> list[str]:
+def derive_all_codes_from_registry_and_text(registry: dict, note_text: str) -> list[str]:
     """Derive CPT codes from registry flags and note text.
 
     This is the main entry point for deterministic CPT derivation.
@@ -996,7 +996,7 @@ def validate_against_golden(
         registry = record.get("registry_entry", {})
         expected_codes = set(str(c) for c in record.get("cpt_codes", []))
 
-        derived = set(derive_all_codes(registry, note_text))
+        derived = set(derive_all_codes_from_registry_and_text(registry, note_text))
 
         if derived == expected_codes:
             correct += 1
@@ -1030,9 +1030,19 @@ def validate_against_golden(
 
 __all__ = [
     "derive_all_codes",
+    "derive_all_codes_from_registry_and_text",
     "get_code_audit",
     "validate_against_golden",
     "get_ebus_station_count",
     "get_biopsy_lobe_count",
     "CPT_RULES",
 ]
+
+
+# -----------------------------------------------------------------------------
+# RegistryRecord-only deterministic CPT rules shim
+# -----------------------------------------------------------------------------
+
+from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
+    derive_all_codes as derive_all_codes,  # noqa: F401
+)

@@ -25,6 +25,8 @@ class RegistryCorrectionJudge:
         note_text: str,
         record: RegistryRecord,
         discrepancy: str,
+        *,
+        focused_procedure_text: str | None = None,
     ) -> PatchProposal | None:
         """Ask LLM if the discrepancy warrants a correction.
 
@@ -36,14 +38,23 @@ class RegistryCorrectionJudge:
             "Rules:\n"
             "1. Only fix what is explicitly missing/wrong based on the discrepancy.\n"
             "2. You must provide a JSON Patch (RFC 6902) to apply the fix.\n"
-            "3. You must provide a VERBATIM quote from the note text that proves the fix.\n"
+            "3. You must provide a VERBATIM quote that proves the fix. "
+            "If FOCUSED PROCEDURE TEXT is provided, the quote must come from that section.\n"
             "4. If the evidence is ambiguous or weak, return null (do not fix).\n"
             "5. Do NOT hallucinate quotes. The quote must exist exactly in the text.\n"
         )
 
+        focused_section = ""
+        if focused_procedure_text is not None and focused_procedure_text.strip():
+            focused_section = f"""
+FOCUSED PROCEDURE TEXT (preferred evidence source):
+{focused_procedure_text}
+"""
+
         user_prompt = f"""
-Note Text:
+RAW NOTE TEXT:
 {note_text}
+{focused_section}
 
 Current Registry Record (JSON):
 {record.model_dump_json(exclude_none=True)}
@@ -68,4 +79,3 @@ Return JSON with keys: "rationale", "json_patch", "evidence_quote".
 
 
 __all__ = ["PatchProposal", "RegistryCorrectionJudge"]
-

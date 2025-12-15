@@ -252,7 +252,7 @@ class EnhancedCPTCoder:
         term_hits = self._extract_term_hits(note_text)
 
         # 1) Generate candidate codes
-        codes: list[CodeSuggestion] = self._generate_codes(procedure_data, term_hits=term_hits)
+        codes: list[CodeSuggestion] = self._generate_codes(procedure_data)
         initial_cpts = [c.cpt for c in codes]
 
         # 2) Apply bundling rules from ip_coding_billing (with explanations)

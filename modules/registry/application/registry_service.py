@@ -699,9 +699,15 @@ class RegistryService:
 
         meta["extraction_text"] = text_for_extraction
         context = {"note_id": note_id} if note_id else None
-        record = self.registry_engine.run(text_for_extraction, context=context)
-        if isinstance(record, tuple):
-            record = record[0]  # Unpack if evidence included
+        engine_warnings: list[str] = []
+        run_with_warnings = getattr(self.registry_engine, "run_with_warnings", None)
+        if callable(run_with_warnings):
+            record, engine_warnings = run_with_warnings(text_for_extraction, context=context)
+        else:
+            record = self.registry_engine.run(text_for_extraction, context=context)
+            if isinstance(record, tuple):
+                record = record[0]  # Unpack if evidence included
+        warnings.extend(engine_warnings)
 
         record, granular_warnings = _apply_granular_up_propagation(record)
         warnings.extend(granular_warnings)
@@ -721,6 +727,7 @@ class RegistryService:
         from modules.registry.audit.compare import build_audit_compare_report
         from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
         from modules.registry.self_correction.judge import RegistryCorrectionJudge
+        from modules.registry.self_correction.keyword_guard import keyword_guard_passes
         from modules.registry.self_correction.types import SelfCorrectionMetadata, SelfCorrectionTrigger
         from modules.registry.self_correction.validation import ALLOWED_PATHS, validate_proposal
 
@@ -795,9 +802,20 @@ class RegistryService:
                     return sorted(ALLOWED_PATHS)
 
                 corrections_applied = 0
+                evidence_text = (
+                    extraction_text
+                    if extraction_text is not None and extraction_text.strip()
+                    else raw_note_text
+                )
                 for pred in trigger_preds:
                     if corrections_applied >= max_attempts:
                         break
+
+                    if not keyword_guard_passes(cpt=pred.cpt, evidence_text=evidence_text):
+                        self_correct_warnings.append(
+                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: keyword guard failed"
+                        )
+                        continue
 
                     trigger = SelfCorrectionTrigger(
                         target_cpt=pred.cpt,
@@ -814,12 +832,17 @@ class RegistryService:
                         note_text=raw_note_text,
                         record=record,
                         discrepancy=discrepancy,
+                        focused_procedure_text=extraction_text,
                     )
                     if proposal is None:
                         self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: judge returned null")
                         continue
 
-                    is_valid, reason = validate_proposal(proposal, raw_note_text)
+                    is_valid, reason = validate_proposal(
+                        proposal,
+                        raw_note_text,
+                        extraction_text=extraction_text,
+                    )
                     if not is_valid:
                         self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: {reason}")
                         continue
