@@ -633,7 +633,7 @@ async def unified_process(
     extraction_result = registry_service.extract_fields(req.note)
 
     # Step 2: Derive CPT codes from registry
-    record = extraction_result.registry_record
+    record = extraction_result.record
     if record is None:
         from modules.registry.schema import RegistryRecord
         record = RegistryRecord.model_validate(extraction_result.mapped_fields)

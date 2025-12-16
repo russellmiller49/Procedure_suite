@@ -606,8 +606,8 @@ class CodingService:
         extraction_result = registry_service.extract_fields(report_text)
 
         # Step 2: Derive CPT codes from registry fields
-        if extraction_result.registry_record:
-            record = extraction_result.registry_record
+        if extraction_result.record:
+            record = extraction_result.record
         else:
             # Build a minimal RegistryRecord from mapped_fields
             record = RegistryRecord.model_validate(extraction_result.mapped_fields)
