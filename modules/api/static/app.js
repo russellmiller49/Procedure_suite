@@ -1,5 +1,5 @@
 // Global state
-let currentMode = 'coder';
+let currentMode = 'unified';
 let lastResult = null;
 
 /**
@@ -1398,7 +1398,15 @@ async function run() {
     try {
         let url, payload;
 
-        if (currentMode === 'coder') {
+        if (currentMode === 'unified') {
+            url = '/api/v1/process';
+            payload = {
+                note: text,
+                locality: document.getElementById('unified-locality').value || '00',
+                include_financials: document.getElementById('unified-financials').checked,
+                explain: document.getElementById('unified-explain').checked
+            };
+        } else if (currentMode === 'coder') {
             url = '/v1/coder/run';
             payload = {
                 note: text,
@@ -1456,7 +1464,151 @@ function showResultTab(tab) {
     }
 
     // Formatted View Logic
-    if (currentMode === 'coder') {
+    if (currentMode === 'unified') {
+        // Unified mode: Registry + CPT codes combined
+        let html = `<h4>Unified Results <span class="badge bg-primary">Extraction-First</span></h4>`;
+
+        // Pipeline metadata
+        if (lastResult.pipeline_mode) {
+            html += `<div class="d-flex flex-wrap gap-2 mb-3">`;
+            html += `<span class="badge bg-secondary">Pipeline: ${lastResult.pipeline_mode}</span>`;
+            if (lastResult.coder_difficulty) {
+                const diffBadge = {
+                    'HIGH_CONF': 'bg-success',
+                    'GRAY_ZONE': 'bg-warning text-dark',
+                    'LOW_CONF': 'bg-danger'
+                }[lastResult.coder_difficulty] || 'bg-secondary';
+                html += `<span class="badge ${diffBadge}">Confidence: ${lastResult.coder_difficulty}</span>`;
+            }
+            if (lastResult.needs_manual_review) {
+                html += `<span class="badge bg-warning text-dark">Manual Review Needed</span>`;
+            }
+            html += `</div>`;
+        }
+
+        // CPT Codes section
+        html += `<div class="card mb-3 border-primary">`;
+        html += `<div class="card-header bg-primary text-white"><strong>CPT Codes</strong></div>`;
+        html += `<div class="card-body">`;
+
+        if (lastResult.cpt_codes && lastResult.cpt_codes.length > 0) {
+            html += `<div class="d-flex flex-wrap gap-2 mb-2">`;
+            lastResult.cpt_codes.forEach(code => {
+                html += `<span class="badge bg-primary fs-6">${code}</span>`;
+            });
+            html += `</div>`;
+        } else {
+            html += `<p class="text-muted mb-0">No CPT codes derived.</p>`;
+        }
+
+        // Suggestions with confidence
+        if (lastResult.suggestions && lastResult.suggestions.length > 0) {
+            html += `<hr><h6>Code Details</h6>`;
+            html += `<table class="table table-sm table-striped mb-0">`;
+            html += `<thead><tr><th>Code</th><th>Description</th><th>Confidence</th><th>Review</th></tr></thead>`;
+            html += `<tbody>`;
+            lastResult.suggestions.forEach(s => {
+                const confPct = (s.confidence * 100).toFixed(0);
+                const confBadge = s.confidence >= 0.9 ? 'bg-success' : s.confidence >= 0.7 ? 'bg-warning text-dark' : 'bg-danger';
+                const reviewBadge = s.review_flag === 'required' ? 'bg-danger' : s.review_flag === 'recommended' ? 'bg-warning text-dark' : 'bg-secondary';
+                html += `<tr>`;
+                html += `<td><code>${s.code}</code></td>`;
+                html += `<td>${s.description}</td>`;
+                html += `<td><span class="badge ${confBadge}">${confPct}%</span></td>`;
+                html += `<td><span class="badge ${reviewBadge}">${s.review_flag}</span></td>`;
+                html += `</tr>`;
+                if (s.rationale) {
+                    html += `<tr><td colspan="4"><small class="text-muted">${s.rationale}</small></td></tr>`;
+                }
+            });
+            html += `</tbody></table>`;
+        }
+        html += `</div></div>`;
+
+        // Financials section (if included)
+        if (lastResult.total_work_rvu !== null || lastResult.estimated_payment !== null) {
+            html += `<div class="card mb-3 border-success">`;
+            html += `<div class="card-header bg-success text-white"><strong>RVU & Payment</strong></div>`;
+            html += `<div class="card-body">`;
+            html += `<div class="row">`;
+            html += `<div class="col-md-6"><strong>Total Work RVU:</strong> ${lastResult.total_work_rvu?.toFixed(2) || 'N/A'}</div>`;
+            html += `<div class="col-md-6"><strong>Estimated Payment:</strong> $${lastResult.estimated_payment?.toFixed(2) || 'N/A'}</div>`;
+            html += `</div>`;
+
+            if (lastResult.per_code_billing && lastResult.per_code_billing.length > 0) {
+                html += `<hr><h6>Per-Code Breakdown</h6>`;
+                html += `<table class="table table-sm table-striped mb-0">`;
+                html += `<thead><tr><th>CPT</th><th>Work RVU</th><th>Payment</th></tr></thead>`;
+                html += `<tbody>`;
+                lastResult.per_code_billing.forEach(pcb => {
+                    html += `<tr>`;
+                    html += `<td><code>${pcb.cpt_code || pcb.code || 'N/A'}</code></td>`;
+                    html += `<td>${pcb.work_rvu?.toFixed(2) || 'N/A'}</td>`;
+                    html += `<td>$${pcb.payment?.toFixed(2) || pcb.allowed_facility_payment?.toFixed(2) || 'N/A'}</td>`;
+                    html += `</tr>`;
+                });
+                html += `</tbody></table>`;
+            }
+            html += `</div></div>`;
+        }
+
+        // Registry Extraction section
+        html += `<div class="card mb-3 border-info">`;
+        html += `<div class="card-header bg-info text-white"><strong>Registry Extraction</strong></div>`;
+        html += `<div class="card-body">`;
+
+        if (lastResult.registry && Object.keys(lastResult.registry).length > 0) {
+            const registryRows = buildRegistryDisplayRows({ record: lastResult.registry });
+            if (registryRows.length > 0) {
+                html += `<table class="table table-sm table-striped mb-0">`;
+                html += `<thead><tr><th>Field</th><th>Value</th></tr></thead>`;
+                html += `<tbody>`;
+                registryRows.forEach(row => {
+                    html += `<tr><td>${row.field}</td><td>${row.value}</td></tr>`;
+                });
+                html += `</tbody></table>`;
+            } else {
+                html += `<p class="text-muted mb-0">No registry fields extracted.</p>`;
+            }
+        } else {
+            html += `<p class="text-muted mb-0">No registry data available.</p>`;
+        }
+        html += `</div></div>`;
+
+        // Evidence section (if explain=true)
+        if (lastResult.evidence && Object.keys(lastResult.evidence).length > 0) {
+            html += `<div class="card mb-3 border-secondary">`;
+            html += `<div class="card-header bg-secondary text-white"><strong>Evidence</strong></div>`;
+            html += `<div class="card-body">`;
+            html += `<pre class="mb-0" style="max-height: 300px; overflow: auto;">${JSON.stringify(lastResult.evidence, null, 2)}</pre>`;
+            html += `</div></div>`;
+        }
+
+        // Warnings & Errors
+        if (lastResult.audit_warnings && lastResult.audit_warnings.length > 0) {
+            html += `<div class="alert alert-warning"><strong>Audit Warnings:</strong><ul class="mb-0">`;
+            lastResult.audit_warnings.forEach(w => { html += `<li>${w}</li>`; });
+            html += `</ul></div>`;
+        }
+
+        if (lastResult.validation_errors && lastResult.validation_errors.length > 0) {
+            html += `<div class="alert alert-danger"><strong>Validation Errors:</strong><ul class="mb-0">`;
+            lastResult.validation_errors.forEach(e => { html += `<li>${e}</li>`; });
+            html += `</ul></div>`;
+        }
+
+        // Versions
+        if (lastResult.kb_version || lastResult.policy_version || lastResult.processing_time_ms) {
+            html += `<div class="small text-muted mt-3">`;
+            if (lastResult.kb_version) html += `KB: ${lastResult.kb_version} · `;
+            if (lastResult.policy_version) html += `Policy: ${lastResult.policy_version} · `;
+            if (lastResult.processing_time_ms) html += `Time: ${lastResult.processing_time_ms.toFixed(0)}ms`;
+            html += `</div>`;
+        }
+
+        area.innerHTML = html;
+
+    } else if (currentMode === 'coder') {
         // Coder formatting
         let html = `<h4>Billing Codes</h4>`;
 

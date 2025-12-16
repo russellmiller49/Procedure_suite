@@ -66,7 +66,10 @@
                 <div class="card-header bg-white">
                     <ul class="nav nav-pills card-header-pills" id="mode-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" data-mode="coder" onclick="setMode('coder')">Coder</a>
+                            <a class="nav-link active" data-mode="unified" onclick="setMode('unified')">Unified</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-mode="coder" onclick="setMode('coder')">Coder</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-mode="registry" onclick="setMode('registry')">Registry</a>
@@ -86,8 +89,31 @@
                     <div id="options-area" class="mb-3 p-3 bg-light rounded border">
                         <h6 class="border-bottom pb-2 mb-3">Options</h6>
                         
+                        <!-- Unified Options (Registry + Coder combined) -->
+                        <div id="opt-unified" class="mode-opt">
+                            <div class="alert alert-info small mb-2">
+                                <strong>Extraction-First Pipeline:</strong> Extracts registry data, then derives CPT codes deterministically.
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <label for="unified-locality" class="form-label small">Locality</label>
+                                    <input type="text" class="form-control form-control-sm" id="unified-locality" value="00" placeholder="00 (National)">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch mt-4">
+                                        <input class="form-check-input" type="checkbox" id="unified-financials" checked>
+                                        <label class="form-check-label" for="unified-financials">Include RVU/Payment</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="unified-explain">
+                                <label class="form-check-label" for="unified-explain">Explain Extraction</label>
+                            </div>
+                        </div>
+
                         <!-- Coder Options -->
-                        <div id="opt-coder" class="mode-opt">
+                        <div id="opt-coder" class="mode-opt" style="display:none;">
                             <div class="form-check form-switch mb-2">
                                 <input class="form-check-input" type="checkbox" id="coder-ml-first" checked>
                                 <label class="form-check-label" for="coder-ml-first">
