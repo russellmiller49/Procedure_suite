@@ -7,6 +7,7 @@ to the legacy CoderOutput/CodeDecision format expected by existing clients.
 
 from __future__ import annotations
 
+import re
 from typing import Optional
 
 from config.settings import CoderSettings
@@ -20,6 +21,21 @@ from modules.coder.schema import (
     LLMCodeSuggestion,
 )
 from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
+
+
+_BILLABLE_HYBRID_DECISIONS = {
+    "accepted_agreement",
+    "accepted_hybrid",
+    "kept_rule_priority",
+}
+
+
+def _is_billable_suggestion(suggestion: CodeSuggestion) -> bool:
+    """Return True if a suggestion should be treated as billable in legacy output."""
+    # Defensive: older callers or manual suggestions may not set hybrid_decision.
+    if suggestion.hybrid_decision is None:
+        return True
+    return suggestion.hybrid_decision in _BILLABLE_HYBRID_DECISIONS
 
 
 def convert_suggestion_to_code_decision(
@@ -102,22 +118,46 @@ def convert_coding_result_to_coder_output(
     if conversion_factor is None:
         conversion_factor = CoderSettings().cms_conversion_factor
 
-    # Convert suggestions to CodeDecision objects
+    # Convert BILLABLE suggestions to CodeDecision objects.
+    # Bundled/removed/rejected suggestions must not inflate the final billed code list
+    # or financial totals.
     codes: list[CodeDecision] = []
     for suggestion in result.suggestions:
+        if not _is_billable_suggestion(suggestion):
+            continue
         code_decision = convert_suggestion_to_code_decision(suggestion, kb_repo)
         codes.append(code_decision)
 
-    # Build NCCI actions from warning notes
+    # Build NCCI actions from warning notes (result-level and per-suggestion reasoning)
     ncci_actions: list[BundleDecision] = []
-    for note in result.ncci_notes:
-        # Parse NCCI notes into BundleDecision if possible
-        # Format is typically "Code X bundles with Code Y"
-        ncci_actions.append(BundleDecision(
-            pair=("", ""),  # Would need parsing from note
-            action="bundled",
-            reason=note,
-        ))
+    ncci_notes: set[str] = set(result.ncci_notes or [])
+    for suggestion in result.suggestions:
+        if suggestion.reasoning and suggestion.reasoning.ncci_notes:
+            for part in suggestion.reasoning.ncci_notes.split(";"):
+                note = part.strip()
+                if note:
+                    ncci_notes.add(note)
+
+    for note in sorted(ncci_notes):
+        # Format from CodingService: "NCCI_BUNDLE: <removed> bundled into <primary> - <reason>"
+        # Keep it resilient so non-standard notes still appear.
+        primary = ""
+        removed = ""
+        match = re.match(
+            r"^NCCI_BUNDLE:\s*(?P<removed>[+]?\d+)\s+bundled\s+into\s+(?P<primary>[+]?\d+)\s+-\s+(?P<reason>.+)$",
+            note,
+            re.IGNORECASE,
+        )
+        if match:
+            primary = match.group("primary")
+            removed = match.group("removed")
+        ncci_actions.append(
+            BundleDecision(
+                pair=(primary, removed),
+                action="bundled",
+                reason=note,
+            )
+        )
 
     # Build financial summary if KB available
     financials: Optional[FinancialSummary] = None
@@ -172,7 +212,7 @@ def convert_coding_result_to_coder_output(
 
     # Collect all warnings
     warnings = list(result.warnings)
-    warnings.extend(result.ncci_notes)
+    warnings.extend(sorted(ncci_notes))
     warnings.extend(result.mer_notes)
 
     return CoderOutput(

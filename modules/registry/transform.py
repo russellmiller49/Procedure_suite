@@ -113,7 +113,23 @@ def build_nested_registry_payload(data: dict[str, Any]) -> dict[str, Any]:
 
     procedures = _build_procedures_performed(data, families)
     if procedures:
-        payload["procedures_performed"] = procedures
+        existing_procs = payload.get("procedures_performed")
+        if isinstance(existing_procs, dict) and existing_procs:
+            merged_procs: dict[str, Any] = dict(existing_procs)
+            for name, proc_payload in procedures.items():
+                if name not in merged_procs or merged_procs[name] in (None, "", [], {}):
+                    merged_procs[name] = proc_payload
+                    continue
+
+                if isinstance(merged_procs.get(name), dict) and isinstance(proc_payload, dict):
+                    current = dict(merged_procs[name])
+                    for k, v in proc_payload.items():
+                        if current.get(k) in (None, "", [], {}):
+                            current[k] = v
+                    merged_procs[name] = current
+            payload["procedures_performed"] = merged_procs
+        else:
+            payload["procedures_performed"] = procedures
 
     pleural = _build_pleural_procedures(data)
     if pleural:

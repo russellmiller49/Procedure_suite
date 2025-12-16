@@ -47,6 +47,29 @@ def _resolve_openai_model(task: str | None) -> str:
     return (os.getenv("OPENAI_MODEL") or "").strip()
 
 
+def _resolve_openai_timeout_seconds(task: str | None) -> float:
+    def _get_float(name: str) -> float | None:
+        raw = os.getenv(name)
+        if raw is None:
+            return None
+        raw = raw.strip()
+        if not raw:
+            return None
+        try:
+            return float(raw)
+        except ValueError:
+            return None
+
+    task_key = (task or "").strip().lower()
+    if task_key == "structurer":
+        return _get_float("OPENAI_TIMEOUT_SECONDS_STRUCTURER") or _get_float("OPENAI_TIMEOUT_SECONDS") or 30.0
+    if task_key == "judge":
+        return _get_float("OPENAI_TIMEOUT_SECONDS_JUDGE") or _get_float("OPENAI_TIMEOUT_SECONDS") or 30.0
+    if task_key == "summarizer":
+        return _get_float("OPENAI_TIMEOUT_SECONDS_SUMMARIZER") or _get_float("OPENAI_TIMEOUT_SECONDS") or 30.0
+    return _get_float("OPENAI_TIMEOUT_SECONDS") or 30.0
+
+
 class LLMInterface(Protocol):
     def generate(self, prompt: str) -> str:
         ...
@@ -55,10 +78,17 @@ class LLMInterface(Protocol):
 class OpenAILLM:
     """Minimal OpenAI chat client for use in self-correction flows."""
 
-    def __init__(self, api_key: str | None = None, model: str | None = None) -> None:
+    def __init__(
+        self,
+        api_key: str | None = None,
+        model: str | None = None,
+        *,
+        timeout_seconds: float | None = None,
+    ) -> None:
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.model = model or os.getenv("OPENAI_MODEL", "gpt-5.1")
         self.base_url = _normalize_openai_base_url(os.getenv("OPENAI_BASE_URL"))
+        self.timeout_seconds = float(timeout_seconds) if timeout_seconds is not None else _resolve_openai_timeout_seconds(None)
 
         if not self.api_key:
             logger.warning("OPENAI_API_KEY not set; OpenAILLM calls will fail.")
@@ -87,7 +117,8 @@ class OpenAILLM:
         }
 
         try:
-            with httpx.Client(timeout=30.0) as client:
+            timeout = httpx.Timeout(connect=10.0, read=self.timeout_seconds, write=30.0, pool=10.0)
+            with httpx.Client(timeout=timeout) as client:
                 response = client.post(url, headers=headers, json=payload)
                 response.raise_for_status()
                 data = response.json()
@@ -316,7 +347,11 @@ class LLMService:
                 self._llm = DeterministicStubLLM()
                 return
 
-            self._llm = OpenAILLM(api_key=os.getenv("OPENAI_API_KEY"), model=model)
+            self._llm = OpenAILLM(
+                api_key=os.getenv("OPENAI_API_KEY"),
+                model=model,
+                timeout_seconds=_resolve_openai_timeout_seconds(task),
+            )
             return
 
         if provider != "gemini":

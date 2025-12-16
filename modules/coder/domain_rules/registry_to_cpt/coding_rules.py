@@ -43,6 +43,25 @@ def _stations_sampled(record: RegistryRecord) -> list[str]:
     return [str(s) for s in stations if s]
 
 
+def _navigation_targets(record: RegistryRecord) -> list[Any]:
+    granular = getattr(record, "granular_data", None)
+    targets = getattr(granular, "navigation_targets", None) if granular is not None else None
+    if not targets:
+        return []
+    return list(targets)
+
+
+def _fiducial_marker_placed(record: RegistryRecord) -> bool:
+    for target in _navigation_targets(record):
+        placed = getattr(target, "fiducial_marker_placed", None)
+        details = getattr(target, "fiducial_marker_details", None)
+        if placed is True:
+            return True
+        if details is not None and str(details).strip():
+            return True
+    return False
+
+
 def _lobe_tokens(values: list[str]) -> set[str]:
     lobes: set[str] = set()
     for value in values:
@@ -140,6 +159,11 @@ def derive_all_codes_with_meta(
         codes.append("31627")
         rationales["31627"] = "navigational_bronchoscopy.performed=true"
 
+    # Fiducial marker placement (navigation add-on)
+    if _fiducial_marker_placed(record):
+        codes.append("31626")
+        rationales["31626"] = "granular_data.navigation_targets indicates fiducial marker placement"
+
     # Therapeutic aspiration
     if _performed(_proc(record, "therapeutic_aspiration")):
         codes.append("31645")
@@ -232,7 +256,7 @@ def derive_all_codes_with_meta(
         rationales.pop("32554", None)
 
     # Add-on codes require a primary bronchoscopy.
-    addon_codes = {"31627", "31632", "31648", "31661"}
+    addon_codes = {"31626", "31627", "31632", "31648", "31661"}
     primary_bronch = {
         "31622",
         "31623",
@@ -259,4 +283,3 @@ def derive_all_codes(record: RegistryRecord) -> list[str]:
 
 
 __all__ = ["derive_all_codes", "derive_all_codes_with_meta"]
-

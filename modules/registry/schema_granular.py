@@ -450,6 +450,10 @@ class NavigationTarget(BaseModel):
     number_of_forceps_biopsies: int | None = Field(None, ge=0)
     number_of_needle_passes: int | None = Field(None, ge=0)
     number_of_cryo_biopsies: int | None = Field(None, ge=0)
+
+    # Fiducial marker placement (e.g., for radiation planning)
+    fiducial_marker_placed: bool | None = None
+    fiducial_marker_details: str | None = None
     
     # ROSE
     rose_performed: bool | None = None

@@ -421,10 +421,16 @@ class SmartHybridOrchestrator:
         rules_error: Optional[str] = None
         rules_error_type: Optional[str] = None
 
-        if ml_candidates:
+        candidates_for_rules = ml_candidates
+        if difficulty == CaseDifficulty.HIGH_CONF.value:
+            from modules.coder.application.candidate_expansion import expand_candidates
+
+            candidates_for_rules = expand_candidates(note_text, ml_candidates)
+
+        if candidates_for_rules:
             try:
                 rules_cleaned_ml = self._rules.validate(
-                    ml_candidates, note_text, strict=True
+                    candidates_for_rules, note_text, strict=True
                 )
             except Exception as e:
                 # RuleViolationError or other validation error

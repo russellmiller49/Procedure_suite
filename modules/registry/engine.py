@@ -394,7 +394,12 @@ def classify_procedure_families(note_text: str) -> Set[str]:
         r"veran",
         r"spin(?:drive)?.*(?:navigat|target)",
     ]
-    if any(re.search(pat, proc_lowered, re.IGNORECASE) for pat in nav_indicators):
+    # Navigation details are often documented outside strict PROCEDURE/TECHNIQUE
+    # headers (e.g., planning and platform setup narratives). Check both the
+    # extracted procedure section text and the full note to avoid false negatives.
+    if any(re.search(pat, proc_lowered, re.IGNORECASE) for pat in nav_indicators) or any(
+        re.search(pat, lowered, re.IGNORECASE) for pat in nav_indicators
+    ):
         families.add("NAVIGATION")
 
     # --- CAO (Central Airway Obstruction) Detection ---
@@ -736,15 +741,35 @@ class RegistryEngine:
                     Span(text=mrn_match.group(0).strip(), start=mrn_match.start(), end=mrn_match.end())
                 )
 
-        llm_result = self.llm_extractor.extract(note_text, sections, context=context)
-        llm_data_raw = llm_result.value or {}
-        llm_data = llm_data_raw if isinstance(llm_data_raw, dict) else {}
-
-        # LLM responses sometimes return an "evidence" map with offsets only. Strip or
-        # normalize them so pydantic validation does not fail when building the record.
+        llm_result = None
+        llm_data: dict[str, Any] = {}
         raw_llm_evidence = None
-        if isinstance(llm_data, dict):
-            raw_llm_evidence = llm_data.pop("evidence", None)
+        try:
+            llm_result = self.llm_extractor.extract(note_text, sections, context=context)
+        except TimeoutError as exc:
+            warnings.append("REGISTRY_LLM_TIMEOUT_FALLBACK_TO_ENGINE")
+            try:
+                logger.warning("LLM timeout; falling back to deterministic engine extractors (%s)", exc)
+            except Exception:
+                pass
+        except Exception as exc:
+            warnings.append("REGISTRY_LLM_TIMEOUT_FALLBACK_TO_ENGINE")
+            try:
+                logger.warning("LLM extractor error; falling back to deterministic engine extractors (%s)", exc)
+            except Exception:
+                pass
+
+        if llm_result is not None:
+            llm_data_raw = llm_result.value
+            llm_data = llm_data_raw if isinstance(llm_data_raw, dict) else {}
+
+            # Treat empty dict/null as a degraded LLM extraction and proceed with seeded/heuristic extraction.
+            if not llm_data:
+                warnings.append("REGISTRY_LLM_TIMEOUT_FALLBACK_TO_ENGINE")
+
+            # LLM responses sometimes return an "evidence" map with offsets only. Strip or
+            # normalize them so pydantic validation does not fail when building the record.
+            raw_llm_evidence = llm_data.pop("evidence", None) if isinstance(llm_data, dict) else None
 
         merged_data = self._merge_llm_and_seed(llm_data, seed_data)
 
@@ -761,6 +786,8 @@ class RegistryEngine:
         # Pass procedure_families to gate EBUS-specific extractions
         self._apply_ebus_heuristics(merged_data, note_text, procedure_families)
         self._apply_pleural_heuristics(merged_data, note_text, procedure_families)
+        self._apply_bronchoscopy_therapeutics_heuristics(merged_data, note_text)
+        self._apply_navigation_fiducial_heuristics(merged_data, note_text)
 
         # Clear bronch_tbbx fields for EBUS-only cases
         # EBUS-TBNA (transbronchial needle aspiration) is NOT the same as TBBx (transbronchial biopsy)
@@ -1587,6 +1614,210 @@ class RegistryEngine:
                 data["disposition"] = "Floor Admission"
             elif "discharge" in lowered and "home" in lowered:
                 data["disposition"] = "Discharge Home"
+
+    def _apply_bronchoscopy_therapeutics_heuristics(self, data: dict[str, Any], text: str) -> None:
+        """Deterministically seed common therapeutic bronchoscopy actions.
+
+        The extraction engine may run in stub/offline mode (or the LLM may fail). These
+        heuristics ensure high-salience actions are reflected in procedures_performed
+        when they are explicitly documented in the note.
+        """
+        lowered = text.lower()
+
+        existing = data.get("procedures_performed")
+        procedures: dict[str, Any]
+        if isinstance(existing, dict):
+            procedures = dict(existing)
+        elif existing is None:
+            procedures = {}
+        else:
+            # Unexpected type (e.g., narrative string). Leave untouched.
+            return
+
+        def _is_performed(obj: Any) -> bool:
+            return isinstance(obj, dict) and obj.get("performed") is True
+
+        def _set_if_missing(name: str, payload: dict[str, Any]) -> None:
+            current = procedures.get(name)
+            if _is_performed(current):
+                return
+            if isinstance(current, dict):
+                merged = dict(current)
+                for k, v in payload.items():
+                    if merged.get(k) in (None, "", [], {}):
+                        merged[k] = v
+                procedures[name] = merged
+            else:
+                procedures[name] = payload
+
+        # Therapeutic aspiration (31645)
+        # Anchor on explicit phrase to avoid confusing suctioning with BAL.
+        if re.search(r"\btherapeutic\s+aspiration\b", lowered) and not re.search(
+            r"\b(?:no|not|without)\b[^.\n]{0,40}\btherapeutic\s+aspiration\b",
+            lowered,
+        ):
+            aspiration: dict[str, Any] = {"performed": True}
+            if "mucus" in lowered:
+                aspiration["material"] = "Mucus plug"
+            _set_if_missing("therapeutic_aspiration", aspiration)
+
+        # Airway dilation (31630)
+        # Require balloon + dilat* (or a known balloon brand) and avoid explicit negation.
+        has_dilation = bool(
+            re.search(r"\bmustang\s+balloon\b", lowered)
+            or re.search(r"\bballoon\b[^.\n]{0,60}\bdilat", lowered)
+            or re.search(r"\bdilat\w*\b[^.\n]{0,60}\bballoon\b", lowered)
+        )
+        dilation_negated = bool(
+            re.search(r"\b(?:no|not|without)\b[^.\n]{0,60}\bdilat", lowered)
+            or re.search(r"\bdilat\w*\b[^.\n]{0,30}\b(?:not|no)\b[^.\n]{0,30}\bperformed", lowered)
+        )
+        if has_dilation and not dilation_negated:
+            dilation: dict[str, Any] = {"performed": True, "method": "Balloon"}
+            size_match = re.search(r"\b(\d+(?:\.\d+)?)\s*mm\b[^.\n]{0,60}\bballoon\b", lowered)
+            if size_match:
+                try:
+                    dilation["balloon_diameter_mm"] = float(size_match.group(1))
+                except ValueError:
+                    pass
+            _set_if_missing("airway_dilation", dilation)
+
+        if procedures:
+            data["procedures_performed"] = procedures
+
+    def _apply_navigation_fiducial_heuristics(self, data: dict[str, Any], text: str) -> None:
+        """Deterministically extract fiducial marker placement into granular navigation targets."""
+        families = {str(x) for x in (data.get("procedure_families") or []) if x}
+        if "NAVIGATION" not in families:
+            return
+
+        lowered = text.lower()
+        if "fiducial" not in lowered:
+            return
+
+        fiducial_sentence: str | None = None
+        for line in text.splitlines():
+            if re.search(r"\bfiducial\s+marker\b", line, re.IGNORECASE):
+                fiducial_sentence = line.strip()
+                break
+        if fiducial_sentence is None:
+            match = re.search(r"\bfiducial\s+marker\b", text, re.IGNORECASE)
+            if match:
+                window = text[match.start() : match.start() + 300]
+                fiducial_sentence = window.splitlines()[0].strip() if window else None
+        if fiducial_sentence is None:
+            return
+
+        fiducial_lower = fiducial_sentence.lower()
+        if not re.search(r"\b(?:placed|deploy\w*|position\w*|insert\w*)\b", fiducial_lower):
+            return
+        if re.search(r"\b(?:no|not|without)\b", fiducial_lower):
+            return
+
+        def _extract_target_location() -> str:
+            for pattern in (
+                r"\bengage(?:d)?\s+the\s+([^\n.]{3,200})",
+                r"\bnavigate(?:d|ion)?\s+to\s+([^\n.]{3,200})",
+                r"\btarget(?:ed)?\s+lesion\s+(?:is\s+)?(?:in|at)\s+([^\n.]{3,200})",
+            ):
+                match = re.search(pattern, text, re.IGNORECASE)
+                if match:
+                    loc = match.group(1).strip()
+                    if loc:
+                        return loc
+            return "Unknown target"
+
+        def _extract_target_lobe(location_text: str) -> str | None:
+            upper = location_text.upper()
+            for token in ("RUL", "RML", "RLL", "LUL", "LLL"):
+                if re.search(rf"\b{token}\b", upper):
+                    return token
+            if "LINGULA" in upper:
+                return "Lingula"
+            if "LEFT UPPER" in upper:
+                return "LUL"
+            if "LEFT LOWER" in upper:
+                return "LLL"
+            if "RIGHT UPPER" in upper:
+                return "RUL"
+            if "RIGHT MIDDLE" in upper:
+                return "RML"
+            if "RIGHT LOWER" in upper:
+                return "RLL"
+            return None
+
+        def _extract_lesion_size_mm() -> float | None:
+            cm_match = re.search(r"\blesion\b[^.\n]{0,80}\b(\d+(?:\.\d+)?)\s*cm\b", lowered)
+            if cm_match:
+                try:
+                    return float(cm_match.group(1)) * 10.0
+                except ValueError:
+                    return None
+            mm_match = re.search(r"\blesion\b[^.\n]{0,80}\b(\d+(?:\.\d+)?)\s*mm\b", lowered)
+            if mm_match:
+                try:
+                    return float(mm_match.group(1))
+                except ValueError:
+                    return None
+            return None
+
+        def _extract_segment(location_text: str) -> str | None:
+            match = re.search(r"\((LB[^)]+)\)", location_text, re.IGNORECASE)
+            if match:
+                seg = match.group(1).strip()
+                return seg or None
+            return None
+
+        granular_raw = data.get("granular_data")
+        granular: dict[str, Any]
+        if granular_raw is None:
+            granular = {}
+        elif isinstance(granular_raw, dict):
+            granular = dict(granular_raw)
+        else:
+            return
+
+        targets_raw = granular.get("navigation_targets")
+        targets: list[dict[str, Any]]
+        if isinstance(targets_raw, list):
+            targets = [t for t in targets_raw if isinstance(t, dict)]
+        else:
+            targets = []
+
+        details = fiducial_sentence
+        location = _extract_target_location()
+        lesion_size_mm = _extract_lesion_size_mm()
+
+        if targets:
+            target0 = dict(targets[0])
+            target0.setdefault("target_number", 1)
+            target0.setdefault("target_location_text", location)
+            target0.setdefault("target_lobe", _extract_target_lobe(location))
+            target0.setdefault("target_segment", _extract_segment(location))
+            if lesion_size_mm is not None:
+                target0.setdefault("lesion_size_mm", lesion_size_mm)
+            target0["fiducial_marker_placed"] = True
+            target0.setdefault("fiducial_marker_details", details)
+            targets[0] = target0
+        else:
+            target_payload: dict[str, Any] = {
+                "target_number": 1,
+                "target_location_text": location,
+                "fiducial_marker_placed": True,
+                "fiducial_marker_details": details,
+            }
+            lobe = _extract_target_lobe(location)
+            if lobe is not None:
+                target_payload["target_lobe"] = lobe
+            segment = _extract_segment(location)
+            if segment is not None:
+                target_payload["target_segment"] = segment
+            if lesion_size_mm is not None:
+                target_payload["lesion_size_mm"] = lesion_size_mm
+            targets = [target_payload]
+
+        granular["navigation_targets"] = targets
+        data["granular_data"] = granular
 
     def _apply_ebus_only_bronch_cleanup(
         self, data: dict[str, Any], text: str, procedure_families: Set[str]

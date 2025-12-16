@@ -617,9 +617,14 @@ class RegistryService:
             "ml_metadata": coder_result.metadata.get("ml_result"),
         }
 
-        record = self.registry_engine.run(note_text, context=extraction_context)
-        if isinstance(record, tuple):
-            record = record[0]  # Unpack if evidence included
+        engine_warnings: list[str] = []
+        run_with_warnings = getattr(self.registry_engine, "run_with_warnings", None)
+        if callable(run_with_warnings):
+            record, engine_warnings = run_with_warnings(note_text, context=extraction_context)
+        else:
+            record = self.registry_engine.run(note_text, context=extraction_context)
+            if isinstance(record, tuple):
+                record = record[0]  # Unpack if evidence included
 
         # 4. Merge CPT-driven fields into the extraction result
         merged_record = self._merge_cpt_fields_into_record(record, mapped_fields)
@@ -632,7 +637,7 @@ class RegistryService:
                 coder_difficulty=coder_result.difficulty.value,
                 coder_source=coder_result.source,
                 mapped_fields=mapped_fields,
-                warnings=[],
+                warnings=list(engine_warnings),
             ),
             coder_result=coder_result,
             note_text=note_text,
