@@ -88,6 +88,10 @@ from modules.coder.schema import CodeDecision, CoderOutput
 from modules.common.knowledge import knowledge_hash, knowledge_version
 from modules.common.spans import Span
 from modules.registry.engine import RegistryEngine
+from modules.registry.schema import RegistryRecord
+from modules.api.normalization import simplify_billing_cpt_codes
+from modules.api.routes_registry import _prune_none
+from modules.registry.summarize import add_procedure_summaries
 
 # New architecture imports
 from modules.coder.application.coding_service import CodingService
@@ -480,7 +484,11 @@ async def _run_ml_first_pipeline(
     )
 
 
-@app.post("/v1/registry/run", response_model=RegistryResponse)
+@app.post(
+    "/v1/registry/run",
+    response_model=RegistryResponse,
+    response_model_exclude_none=True,
+)
 async def registry_run(req: RegistryRequest) -> RegistryResponse:
     eng = RegistryEngine()
     # For interactive/demo usage, best-effort extraction should return 200 whenever possible.
@@ -491,16 +499,15 @@ async def registry_run(req: RegistryRequest) -> RegistryResponse:
     except Exception as exc:
         _logger.warning("registry_run failed; returning empty record", exc_info=True)
         record = RegistryResponse()
-        record.evidence = {}
-        return record
-    if isinstance(result, tuple):
-        record, evidence = result
+        evidence = {}
     else:
-        record, evidence = result, result.evidence
+        if isinstance(result, tuple):
+            record, evidence = result
+        else:
+            record, evidence = result, getattr(result, "evidence", {})
 
-    payload = record.model_dump()
-    payload["evidence"] = _serialize_evidence(evidence)
-    return RegistryResponse(**payload)
+    payload = _shape_registry_payload(record, evidence)
+    return JSONResponse(content=payload)
 
 
 def _verify_bundle(bundle) -> tuple[ProcedureBundle, list[MissingFieldIssue], list[str], list[str], list[str]]:
@@ -564,13 +571,31 @@ async def report_render(req: RenderRequest) -> RenderResponse:
 def _serialize_evidence(evidence: dict[str, list[Span]] | None) -> dict[str, list[dict[str, Any]]]:
     serialized: dict[str, list[dict[str, Any]]] = {}
     for field, spans in (evidence or {}).items():
-        serialized[field] = [_span_to_dict(span) for span in spans]
+        cleaned: list[dict[str, Any]] = []
+        for span in spans or []:
+            if span is None:
+                continue
+            cleaned.append(_prune_none(_span_to_dict(span)))
+        if cleaned:
+            serialized[field] = cleaned
     return serialized
 
 
 def _span_to_dict(span: Span) -> dict[str, Any]:
     data = asdict(span)
     return data
+
+
+def _shape_registry_payload(record: RegistryRecord, evidence: dict[str, list[Span]] | None) -> dict[str, Any]:
+    """Convert a registry record + evidence into a JSON-safe, null-pruned payload."""
+    payload = _prune_none(record.model_dump(exclude_none=True))
+
+    # Optional UI-friendly enrichments
+    simplify_billing_cpt_codes(payload)
+    add_procedure_summaries(payload)
+
+    payload["evidence"] = _serialize_evidence(evidence)
+    return payload
 
 
 # --- QA Sandbox Endpoint ---

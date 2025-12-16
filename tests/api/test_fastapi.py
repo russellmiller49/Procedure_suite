@@ -7,6 +7,10 @@ from pathlib import Path
 from httpx import AsyncClient
 import pytest
 
+from modules.api.fastapi_app import _shape_registry_payload
+from modules.common.spans import Span
+from modules.registry.schema import RegistryRecord
+
 FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"
 
 pytestmark = pytest.mark.asyncio
@@ -103,3 +107,36 @@ async def test_report_verify_and_render_flow(api_client: AsyncClient) -> None:
     assert render_payload["markdown"], "Rendered markdown should be present when issues resolved"
     assert not render_payload.get("issues"), "No critical issues expected after patch"
     assert not render_payload.get("warnings"), "Warnings should clear after patch"
+
+
+async def test_shape_registry_payload_prunes_none_and_enriches():
+    record = RegistryRecord(
+        clinical_context={"asa_class": 3, "primary_indication": "Test case"},
+        sedation={"type": "General", "agents_used": None},
+        procedures_performed={
+            "tbna_conventional": {
+                "performed": True,
+                "passes_per_station": 6,
+                "stations_sampled": ["LB10"],
+                "needle_gauge": None,
+            }
+        },
+        billing={"cpt_codes": [{"code": "31645", "description": None}]},
+    )
+
+    payload = _shape_registry_payload(record, {"clinical_context": [Span(text="ASA 3", start=0, end=5)]})
+
+    def _contains_none(obj):
+        if obj is None:
+            return True
+        if isinstance(obj, dict):
+            return any(_contains_none(v) for v in obj.values())
+        if isinstance(obj, list):
+            return any(_contains_none(v) for v in obj)
+        return False
+
+    assert not _contains_none(payload), "Payload should be pruned of None values"
+    assert payload["billing"]["cpt_codes_simple"] == ["31645"]
+    tbna = payload["procedures_performed"]["tbna_conventional"]
+    assert tbna["summary"].startswith("Performed")
+    assert payload["evidence"]["clinical_context"][0]["start"] == 0
