@@ -333,7 +333,7 @@ class TestSharedV2BooleansModule:
             extract_v2_booleans,
         )
 
-        assert len(PROCEDURE_BOOLEAN_FIELDS) == 29
+        assert len(PROCEDURE_BOOLEAN_FIELDS) == 30
         assert PROCEDURE_BOOLEAN_FIELDS == list(REGISTRY_TARGET_FIELDS)
 
     def test_shared_module_matches_wrapper(self):
@@ -525,9 +525,9 @@ class TestRegistryTargetFieldsSchemaAlignment:
     boolean fields in the registry schema.
     """
 
-    def test_field_count_is_29(self):
-        """REGISTRY_TARGET_FIELDS should have exactly 29 procedure flags."""
-        assert len(REGISTRY_TARGET_FIELDS) == 29
+    def test_field_count_is_30(self):
+        """REGISTRY_TARGET_FIELDS should have exactly 30 procedure flags."""
+        assert len(REGISTRY_TARGET_FIELDS) == 30
 
     def test_bronchoscopy_procedures_present(self):
         """All expected bronchoscopy procedures should be present."""
@@ -554,6 +554,7 @@ class TestRegistryTargetFieldsSchemaAlignment:
             "bronchial_thermoplasty",
             "whole_lung_lavage",
             "rigid_bronchoscopy",
+            "fiducial_placement",
         ]
         for field in expected_bronch:
             assert field in REGISTRY_TARGET_FIELDS, f"Missing bronch field: {field}"

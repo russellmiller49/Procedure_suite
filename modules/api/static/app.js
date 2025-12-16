@@ -1146,142 +1146,170 @@ function buildRegistryDisplayRows(payload) {
 
     const rows = [];
 
-    const normalizeDisplayValue = (value) => {
-        const preferred = getPreferredFieldValue(value);
-        if (preferred === null || preferred === undefined) {
-            return null;
-        }
-        if (typeof preferred === "string") {
-            const trimmed = preferred.trim();
-            return trimmed.length ? trimmed : null;
-        }
-        if (Array.isArray(preferred)) {
-            const normalizedArray = preferred
-                .map(item => (typeof item === "string" ? item.trim() : item))
-                .filter(item => {
-                    if (item === null || item === undefined) return false;
-                    if (typeof item === "string") return item.length > 0;
-                    return true;
-                });
-            if (!normalizedArray.length) {
-                return null;
-            }
-            return normalizedArray.join(", ");
-        }
-        return preferred;
+    const LABEL_OVERRIDES = {
+        asa_class: "ASA Class",
+        primary_indication: "Primary Indication",
+        radiographic_findings: "Radiographic Findings",
+        lesion_size_mm: "Lesion Size (mm)",
+        lesion_location: "Lesion Location",
+        sedation: "Sedation",
+        equipment: "Equipment",
+        navigation_platform: "Navigation Platform",
+        procedures_performed: "Procedures",
+        pleural_procedures: "Pleural Procedures",
+        tbna_conventional: "TBNA",
+        radial_ebus: "Radial EBUS",
+        navigational_bronchoscopy: "Navigational Bronchoscopy",
+        transbronchial_biopsy: "Transbronchial Biopsy",
+        transbronchial_cryobiopsy: "Transbronchial Cryobiopsy",
+        therapeutic_aspiration: "Therapeutic Aspiration",
+        passes_per_station: "Passes per Station",
+        stations_sampled: "Stations Sampled",
+        probe_position: "View",
+        tool_in_lesion_confirmed: "Tool-in-Lesion Confirmed",
+        confirmation_method: "Tool-in-Lesion Confirmation Method",
+        sampling_tools_used: "Sampling Tools Used",
+        freeze_time_seconds: "Freeze Time (sec)",
+        number_of_samples: "Sample Count",
+        number_of_biopsies: "Biopsy Count",
+        number_of_cryo_biopsies: "Cryobiopsy Count",
+        number_of_needle_passes: "Needle Pass Count",
+        material: "Material",
+        location: "Location",
+        disposition: "Disposition",
+        procedure_completed: "Procedure Completed",
+        procedure_families: "Procedure Families",
+        version: "Registry Version",
+        granular_validation_warnings: "Validation Warnings",
+        navigation_targets: "Navigation Target",
+        linear_ebus_stations_detail: "EBUS Station",
+        cryobiopsy_sites: "Cryobiopsy Site",
+        specimens_collected: "Specimen",
+        probe_size_mm: "Probe Size (mm)",
+        distance_from_pleura: "Distance from Pleura",
+        blocker_used: "Blocker Used",
+        bleeding_severity: "Bleeding Severity",
+        target_lobe: "Target Lobe",
+        target_segment: "Target Segment",
+        target_location_text: "Target Location",
+        target_number: "Navigation Target Number",
+        bronchus_sign: "Bronchus Sign",
+        cpt_codes_simple: "CPT Codes",
+        cpt_codes: "CPT Codes",
     };
 
-    const addRow = (field, value) => {
-        const normalized = normalizeDisplayValue(value);
-        if (normalized === null || normalized === undefined) {
+    const ACRONYM_MAP = {
+        tbna: "TBNA",
+        ebus: "EBUS",
+        cbct: "CBCT",
+        suv: "SUV",
+    };
+
+    const SKIP_KEYS = new Set(["evidence"]);
+    const COLLAPSE_KEYS = new Set([
+        "procedures_performed",
+        "granular_data",
+        "clinical_context",
+        "equipment",
+        "outcomes",
+        "billing",
+        "providers",
+        "patient_demographics",
+        "procedure_setting",
+        "metadata",
+        "complications",
+        "coding_support",
+        "pleural_procedures",
+        "specimens",
+        "pathology_results",
+    ]);
+
+    const prettifySegment = (segment) => {
+        if (LABEL_OVERRIDES[segment]) return LABEL_OVERRIDES[segment];
+        // Preserve already formatted labels (e.g., with index)
+        if (segment.match(/^[A-Z].*\d+$/)) return segment;
+        return segment
+            .split("_")
+            .map(part => {
+                const lower = part.toLowerCase();
+                if (ACRONYM_MAP[lower]) return ACRONYM_MAP[lower];
+                return lower.charAt(0).toUpperCase() + lower.slice(1);
+            })
+            .join(" ");
+    };
+
+    const singularize = (word) => {
+        if (word.endsWith("s")) return word.slice(0, -1);
+        return word;
+    };
+
+    const formatPrimitive = (value) => {
+        if (typeof value === "boolean") return value ? "Yes" : "No";
+        if (typeof value === "number") return String(value);
+        if (typeof value === "string") return value.trim();
+        return JSON.stringify(value);
+    };
+
+    const labelFromPath = (parts) => {
+        const filtered = parts.filter(p => !COLLAPSE_KEYS.has(p));
+        const effective = filtered.length ? filtered : parts;
+        return effective.map(prettifySegment).join(" ");
+    };
+
+    const flatten = (value, pathParts) => {
+        const preferred = getPreferredFieldValue(value);
+        if (preferred === null || preferred === undefined) return;
+
+        // Handle arrays
+        if (Array.isArray(preferred)) {
+            const filtered = preferred.filter(item => item !== null && item !== undefined);
+            if (!filtered.length) return;
+
+            const allPrimitives = filtered.every(item => {
+                return (
+                    item === null ||
+                    ["string", "number", "boolean"].includes(typeof item)
+                );
+            });
+
+            if (allPrimitives) {
+                rows.push({
+                    field: labelFromPath(pathParts),
+                    value: filtered.map(formatPrimitive).join("; "),
+                });
+                return;
+            }
+
+            // Array of objects -> recurse with index
+            filtered.forEach((item, idx) => {
+                const base = singularize(pathParts[pathParts.length - 1] || "Item");
+                flatten(item, [...pathParts.slice(0, -1), `${prettifySegment(base)} ${idx + 1}`]);
+            });
             return;
         }
-        rows.push({
-            field,
-            value: typeof normalized === "string" ? normalized : String(normalized),
-        });
+
+        // Handle objects
+        if (typeof preferred === "object") {
+            const entries = Object.entries(preferred).filter(([, v]) => v !== null && v !== undefined);
+            if (!entries.length) return;
+            entries.forEach(([key, val]) => {
+                if (SKIP_KEYS.has(key)) return;
+                flatten(val, [...pathParts, key]);
+            });
+            return;
+        }
+
+        // Primitive
+        const label = labelFromPath(pathParts);
+        const formatted = formatPrimitive(preferred);
+        if (formatted === "") return;
+        rows.push({ field: label, value: formatted });
     };
 
-    const isAffirmative = (value) => {
-        const preferred = getPreferredFieldValue(value);
-        if (preferred === null || preferred === undefined) {
-            return false;
-        }
-        if (typeof preferred === "boolean") {
-            return preferred;
-        }
-        if (typeof preferred === "number") {
-            return preferred !== 0;
-        }
-        if (typeof preferred === "string") {
-            const normalized = preferred.trim().toLowerCase();
-            if (!normalized) {
-                return false;
-            }
-            if (["yes", "true", "y", "1"].includes(normalized)) {
-                return true;
-            }
-            return normalized.startsWith("yes") || normalized.startsWith("true");
-        }
-        return false;
-    };
-
-    addRow("MRN", rec.patient_mrn);
-    addRow("Procedure date", rec.procedure_date);
-
-    const providers = getPreferredFieldValue(rec.providers) || {};
-    addRow("Attending", providers.attending_name);
-    addRow("Fellow", providers.fellow_name);
-    const assistantName = normalizeDisplayValue(providers.assistant_name);
-    if (assistantName) {
-        const assistantRole = normalizeDisplayValue(providers.assistant_role);
-        const roleSuffix = assistantRole ? ` (${assistantRole})` : "";
-        rows.push({ field: "Assistant", value: assistantName + roleSuffix });
-    }
-
-    const ctx = getPreferredFieldValue(rec.clinical_context) || {};
-    addRow("Primary indication", ctx.primary_indication);
-    addRow("Lesion location", ctx.lesion_location);
-
-    const sed = getPreferredFieldValue(rec.sedation) || {};
-    addRow("Sedation type", sed.type);
-    addRow("Sedation intraservice (min)", sed.intraservice_minutes);
-
-    const equip = getPreferredFieldValue(rec.equipment) || {};
-    const scopeSummary = buildScopeSummary(equip);
-    if (scopeSummary) {
-        rows.push({ field: "Bronchoscope(s)", value: scopeSummary });
-    }
-    addRow("Navigation platform", equip.navigation_platform);
-
-    const proc = getPreferredFieldValue(rec.procedures_performed) || {};
-    const tbbx = getPreferredFieldValue(proc.transbronchial_biopsy) || {};
-    if (isAffirmative(tbbx.performed)) {
-        const locations = getPreferredFieldValue(tbbx.locations);
-        let locsText = "";
-        if (Array.isArray(locations) && locations.length) {
-            locsText = locations.join(", ");
-        } else if (typeof locations === "string" && locations.trim()) {
-            locsText = locations.trim();
-        }
-        rows.push({
-            field: "Transbronchial biopsy",
-            value: locsText ? `Yes (${locsText})` : "Yes",
-        });
-    }
-    const stent = getPreferredFieldValue(proc.airway_stent) || {};
-    if (isAffirmative(stent.performed)) {
-        const parts = [];
-        const stentType = normalizeDisplayValue(stent.stent_type);
-        const stentLocation = normalizeDisplayValue(stent.location);
-        if (stentType) parts.push(stentType);
-        if (stentLocation) parts.push(`at ${stentLocation}`);
-        rows.push({
-            field: "Airway stent",
-            value: parts.length ? parts.join(" ") : "Yes",
-        });
-    }
-
-    const comp = getPreferredFieldValue(rec.complications) || {};
-    if (isAffirmative(comp.any_complication)) {
-        rows.push({ field: "Any complication", value: "Yes" });
-    }
-    const compList = getPreferredFieldValue(comp.complication_list);
-    if (Array.isArray(compList) && compList.length) {
-        rows.push({
-            field: "Complications",
-            value: compList.join(", "),
-        });
-    }
-    const resp = getPreferredFieldValue(comp.respiratory) || {};
-    if (isAffirmative(resp.hypoxia_occurred)) {
-        rows.push({ field: "Respiratory complication", value: "Hypoxia" });
-    }
-
-    const out = getPreferredFieldValue(rec.outcomes) || {};
-    addRow("Disposition", out.disposition);
-
-    addRow("Procedure families", rec.procedure_families);
+    Object.entries(rec).forEach(([key, val]) => {
+        if (SKIP_KEYS.has(key)) return;
+        flatten(val, [key]);
+    });
 
     return rows;
 }

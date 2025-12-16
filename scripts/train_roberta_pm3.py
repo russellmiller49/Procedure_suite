@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -812,10 +813,14 @@ def train(config: TrainingConfig) -> dict[str, Any]:
             # Save tokenizer
             base_tokenizer.save_pretrained(config.output_dir / "tokenizer")
 
-            # Save thresholds
-            thresholds_path = config.output_dir.parent / "roberta_pm3_registry_thresholds.json"
+            # Save thresholds inside model directory
+            thresholds_path = config.output_dir / "thresholds.json"
             with open(thresholds_path, "w") as f:
                 json.dump(thresholds, f, indent=2)
+
+            # Copy label fields JSON to model directory for runtime loading
+            if config.label_fields_json.exists():
+                shutil.copy(config.label_fields_json, config.output_dir / "registry_label_fields.json")
 
     print(f"\n{'=' * 60}")
     print(f"Training complete! Best epoch: {best_epoch}, Best Macro F1: {best_val_f1:.4f}")
@@ -828,8 +833,8 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     model = RoBERTaPM3MultiLabel.from_pretrained(config.output_dir, num_labels)
     model.to(config.device)
 
-    # Load best thresholds
-    thresholds_path = config.output_dir.parent / "roberta_pm3_registry_thresholds.json"
+    # Load best thresholds from model directory
+    thresholds_path = config.output_dir / "thresholds.json"
     with open(thresholds_path) as f:
         thresholds = json.load(f)
 
@@ -849,8 +854,8 @@ def train(config: TrainingConfig) -> dict[str, Any]:
         m = test_metrics["per_label"][label]
         print(f"  {label}: P={m['precision']:.3f} R={m['recall']:.3f} F1={m['f1']:.3f} (n={m['support']})")
 
-    # Save final metrics
-    metrics_path = config.output_dir.parent / "roberta_pm3_registry_metrics.json"
+    # Save final metrics inside model directory
+    metrics_path = config.output_dir / "metrics.json"
     final_metrics = {
         "best_epoch": best_epoch,
         "best_val_macro_f1": best_val_f1,
@@ -868,10 +873,12 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     with open(metrics_path, "w") as f:
         json.dump(final_metrics, f, indent=2)
 
-    print(f"\nArtifacts saved:")
+    print(f"\nArtifacts saved (all co-located in model directory):")
     print(f"  Model: {config.output_dir}")
+    print(f"  Tokenizer: {config.output_dir / 'tokenizer'}")
     print(f"  Thresholds: {thresholds_path}")
     print(f"  Metrics: {metrics_path}")
+    print(f"  Label fields: {config.output_dir / 'registry_label_fields.json'}")
 
     # Check if targets met
     print(f"\n{'=' * 60}")

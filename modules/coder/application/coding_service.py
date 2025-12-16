@@ -3,15 +3,19 @@
 This service coordinates rule-based coding, LLM advisor suggestions,
 smart hybrid merge, evidence validation, NCCI/MER compliance, and
 produces CodeSuggestion objects for review.
+
+Supports two pipeline modes (controlled by PROCSUITE_PIPELINE_MODE env var):
+- "current" (default): 8-step hybrid pipeline (Rules + LLM + ML)
+- "extraction_first": Registry extraction → Deterministic CPT derivation → ML audit
 """
 
 from __future__ import annotations
 
+import os
+import time
 import uuid
 from datetime import datetime
 from typing import Optional
-
-import os
 
 from config.settings import CoderSettings
 from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
@@ -120,12 +124,28 @@ class CodingService:
         Returns:
             Tuple of (List of CodeSuggestion objects, LLM latency in ms).
         """
+        # Check pipeline mode
+        pipeline_mode = os.getenv("PROCSUITE_PIPELINE_MODE", "current").strip().lower()
+
+        if pipeline_mode == "extraction_first":
+            return self._generate_suggestions_extraction_first(procedure_id, report_text)
+
+        # Default: existing 8-step hybrid pipeline
+        return self._generate_suggestions_hybrid(procedure_id, report_text, use_llm)
+
+    def _generate_suggestions_hybrid(
+        self,
+        procedure_id: str,
+        report_text: str,
+        use_llm: bool = True,
+    ) -> tuple[list[CodeSuggestion], float]:
+        """Hybrid pipeline: Rules + LLM + ML merge (original 8-step pipeline)."""
         llm_latency_ms = 0.0
 
         # Log input text size for debugging truncation issues
         text_length = len(report_text)
         logger.info(
-            "Starting coding pipeline",
+            "Starting coding pipeline (hybrid mode)",
             extra={
                 "procedure_id": procedure_id,
                 "text_length_chars": text_length,
@@ -549,3 +569,123 @@ class CodingService:
             return scrubbed_text
         tokens = max_llm_input_tokens()
         return accordion_truncate(scrubbed_text, tokens)
+
+    def _generate_suggestions_extraction_first(
+        self,
+        procedure_id: str,
+        report_text: str,
+    ) -> tuple[list[CodeSuggestion], float]:
+        """Extraction-first pipeline: Registry → Deterministic CPT → ML Audit.
+
+        This pipeline:
+        1. Extracts a RegistryRecord from the note text
+        2. Derives CPT codes deterministically from the registry fields
+        3. Optionally audits the derived codes against raw ML predictions
+
+        Returns:
+            Tuple of (List of CodeSuggestion objects, processing latency in ms).
+        """
+        from modules.registry.application.registry_service import RegistryService
+        from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
+            derive_all_codes_with_meta,
+        )
+        from modules.registry.schema import RegistryRecord
+
+        start_time = time.time()
+
+        logger.info(
+            "Starting coding pipeline (extraction-first mode)",
+            extra={
+                "procedure_id": procedure_id,
+                "text_length_chars": len(report_text),
+            },
+        )
+
+        # Step 1: Extract registry fields
+        registry_service = RegistryService()
+        extraction_result = registry_service.extract_fields(report_text)
+
+        # Step 2: Derive CPT codes from registry fields
+        if extraction_result.registry_record:
+            record = extraction_result.registry_record
+        else:
+            # Build a minimal RegistryRecord from mapped_fields
+            record = RegistryRecord.model_validate(extraction_result.mapped_fields)
+
+        codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
+
+        # Step 3: Build audit warnings
+        audit_warnings: list[str] = list(extraction_result.audit_warnings or [])
+        audit_warnings.extend(derivation_warnings)
+
+        # Determine difficulty level
+        if extraction_result.coder_difficulty == "HIGH_CONF":
+            base_confidence = 0.95
+        elif extraction_result.coder_difficulty == "MEDIUM":
+            base_confidence = 0.80
+        else:
+            base_confidence = 0.70
+
+        # Step 4: Build CodeSuggestion objects
+        suggestions: list[CodeSuggestion] = []
+        for code in codes:
+            rationale = rationales.get(code, "")
+
+            # Format audit warnings for mer_notes
+            mer_notes = ""
+            if audit_warnings:
+                mer_notes = "AUDIT FLAGS:\n" + "\n".join(f"• {w}" for w in audit_warnings)
+
+            reasoning = ReasoningFields(
+                trigger_phrases=[],
+                evidence_spans=[],
+                rule_paths=[f"DETERMINISTIC: {rationale}"],
+                ncci_notes="",
+                mer_notes=mer_notes,
+                confidence=base_confidence,
+                kb_version=self.kb_repo.version,
+                policy_version="extraction_first_v1",
+            )
+
+            # Determine review flag
+            if extraction_result.needs_manual_review:
+                review_flag = "required"
+            elif audit_warnings:
+                review_flag = "recommended"
+            else:
+                review_flag = "optional"
+
+            # Get procedure description
+            proc_info = self.kb_repo.get_procedure_info(code)
+            description = proc_info.description if proc_info else ""
+
+            suggestion = CodeSuggestion(
+                code=code,
+                description=description,
+                source="hybrid",  # Extraction-first is a form of hybrid
+                hybrid_decision="EXTRACTION_FIRST",
+                rule_confidence=base_confidence,
+                llm_confidence=None,
+                final_confidence=base_confidence,
+                reasoning=reasoning,
+                review_flag=review_flag,
+                trigger_phrases=[],
+                evidence_verified=True,
+                suggestion_id=str(uuid.uuid4()),
+                procedure_id=procedure_id,
+            )
+            suggestions.append(suggestion)
+
+        latency_ms = (time.time() - start_time) * 1000
+
+        logger.info(
+            "Coding complete (extraction-first mode)",
+            extra={
+                "procedure_id": procedure_id,
+                "num_suggestions": len(suggestions),
+                "processing_time_ms": latency_ms,
+                "codes": codes,
+            },
+        )
+
+        return suggestions, latency_ms

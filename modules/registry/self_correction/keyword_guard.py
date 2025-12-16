@@ -22,7 +22,7 @@ CPT_KEYWORDS: dict[str, list[str]] = {
     "31629": ["transbronchial biopsy", "tbbx", "tblb", "fluoroscopy"],
     "31652": ["ebus", "endobronchial ultrasound", "tbna"],
     "31653": ["ebus", "endobronchial ultrasound", "tbna"],
-    "31620": ["radial ebus", "radial ultrasound", "rp-ebus"],
+    "31654": ["radial ebus", "radial ultrasound", "rp-ebus"],
     "31627": ["navigational bronchoscopy", "navigation", "electromagnetic navigation", "enb"],
 }
 

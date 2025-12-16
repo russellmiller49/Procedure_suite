@@ -104,9 +104,60 @@ class QARunRequest(BaseModel):
     procedure_type: str | None = None
 
 
+class UnifiedProcessRequest(BaseModel):
+    """Request schema for unified registry + coder endpoint (extraction-first)."""
+
+    note: str = Field(..., description="The procedure note text to process")
+    locality: str = Field("00", description="Geographic locality for RVU calculations")
+    include_financials: bool = Field(True, description="Whether to include RVU/payment info")
+    explain: bool = Field(False, description="Include extraction evidence/rationales")
+
+
+class CodeSuggestionSummary(BaseModel):
+    """Simplified code suggestion for unified response."""
+
+    code: str
+    description: str
+    confidence: float
+    rationale: str = ""
+    review_flag: str = "optional"
+
+
+class UnifiedProcessResponse(BaseModel):
+    """Response schema combining registry extraction and CPT coding."""
+
+    # Registry output
+    registry: dict[str, Any] = Field(default_factory=dict, description="Extracted registry fields")
+    evidence: dict[str, Any] = Field(default_factory=dict, description="Extraction evidence spans")
+
+    # Coder output
+    cpt_codes: list[str] = Field(default_factory=list, description="Derived CPT codes")
+    suggestions: list[CodeSuggestionSummary] = Field(
+        default_factory=list, description="Code suggestions with confidence"
+    )
+
+    # Financials (optional)
+    total_work_rvu: float | None = None
+    estimated_payment: float | None = None
+    per_code_billing: list[dict[str, Any]] = Field(default_factory=list)
+
+    # Metadata
+    pipeline_mode: str = "extraction_first"
+    coder_difficulty: str = ""
+    needs_manual_review: bool = False
+    audit_warnings: list[str] = Field(default_factory=list)
+    validation_errors: list[str] = Field(default_factory=list)
+
+    # Versions
+    kb_version: str = ""
+    policy_version: str = ""
+    processing_time_ms: float = 0.0
+
+
 __all__ = [
     "CoderRequest",
     "CoderResponse",
+    "CodeSuggestionSummary",
     "HybridPipelineMetadata",
     "KnowledgeMeta",
     "QARunRequest",
@@ -114,6 +165,8 @@ __all__ = [
     "RegistryResponse",
     "RenderRequest",
     "RenderResponse",
+    "UnifiedProcessRequest",
+    "UnifiedProcessResponse",
     "VerifyRequest",
     "VerifyResponse",
 ]

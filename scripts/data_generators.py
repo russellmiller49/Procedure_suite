@@ -5,6 +5,9 @@ import re
 import os
 import pandas as pd
 
+# Import canonical procedure boolean fields from v2_booleans
+from modules.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS
+
 # =============================================================================
 # CONFIG
 # =============================================================================
@@ -12,6 +15,7 @@ import pandas as pd
 GOLDEN_JSON_GLOB = "data/knowledge/golden_extractions/golden_*.json"
 TRAIN_FLAT_OUTPUT = "data/ml_training/train_flat.csv"
 REGISTRY_FROM_GOLDEN_OUTPUT = "data/ml_training/registry_from_golden.csv"
+REGISTRY_LABEL_FIELDS_OUTPUT = "data/ml_training/registry_label_fields.json"
 
 # FIXED: Inputs point to existing registry files for test/edge cases to allow in-place schema updates
 CSV_BATCHES = [
@@ -20,21 +24,9 @@ CSV_BATCHES = [
     ("data/ml_training/registry_edge_cases.csv",  "data/ml_training/registry_edge_cases.csv"),
 ]
 
-# UPDATED: Added missing schema fields identified in review
-REGISTRY_COLUMNS = [
-    "note_text", "verified_cpt_codes", 
-    # Bronchoscopy
-    "diagnostic_bronchoscopy", "bal", "bronchial_wash", "brushings", 
-    "endobronchial_biopsy", "transbronchial_biopsy", "transbronchial_cryobiopsy", 
-    "tbna_conventional", "linear_ebus", "radial_ebus", "navigational_bronchoscopy", 
-    "therapeutic_aspiration", "foreign_body_removal", "airway_dilation", "airway_stent", 
-    "thermal_ablation", "cryotherapy", "mechanical_debulking", "brachytherapy_catheter", # Added
-    "blvr", "peripheral_ablation", "bronchial_thermoplasty", "whole_lung_lavage", 
-    "rigid_bronchoscopy", "photodynamic_therapy", # Added
-    # Pleural / Thoracic
-    "thoracentesis", "chest_tube", "ipc", "medical_thoracoscopy", 
-    "pleural_biopsy", "pleurodesis", "fibrinolytic_therapy" # Added pleural_biopsy
-]
+# REGISTRY_COLUMNS now derived from canonical PROCEDURE_BOOLEAN_FIELDS in v2_booleans.py
+# This ensures alignment between data generation and ML training
+REGISTRY_COLUMNS = ["note_text", "verified_cpt_codes"] + sorted(PROCEDURE_BOOLEAN_FIELDS)
 
 TRAIN_FLAT_COLUMNS = [
     "source_file", "note_text", "billed_codes_list", "clinical_codes_list",
@@ -135,6 +127,7 @@ def get_registry_flags_from_codes_and_text(clinical_codes_raw, note_text):
     if any(c in cpt_codes for c in ["31652", "31653"]): flags["linear_ebus"] = 1
     if "31654" in cpt_codes: flags["radial_ebus"] = 1
     if "31627" in cpt_codes: flags["navigational_bronchoscopy"] = 1
+    if "31626" in cpt_codes: flags["fiducial_placement"] = 1
     if any(c in cpt_codes for c in ["31645", "31646"]): flags["therapeutic_aspiration"] = 1
     if "31635" in cpt_codes: flags["foreign_body_removal"] = 1
     if "31630" in cpt_codes: flags["airway_dilation"] = 1
@@ -312,7 +305,16 @@ def build_registry_from_golden(json_pattern=GOLDEN_JSON_GLOB, output_csv=REGISTR
         out_df.to_csv(output_csv, index=False)
         print(f"Wrote {len(out_df)} rows to {output_csv}")
 
+def write_registry_label_fields(output_path=REGISTRY_LABEL_FIELDS_OUTPUT):
+    """Write the ordered list of registry label fields to JSON for ML training alignment."""
+    label_fields = sorted(PROCEDURE_BOOLEAN_FIELDS)
+    with open(output_path, "w") as f:
+        json.dump(label_fields, f, indent=2)
+    print(f"Wrote {len(label_fields)} label fields to {output_path}")
+
+
 if __name__ == "__main__":
     build_train_flat_from_golden()
     build_registry_from_csv_batch(CSV_BATCHES)
     build_registry_from_golden()
+    write_registry_label_fields()

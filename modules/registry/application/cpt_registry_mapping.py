@@ -164,7 +164,7 @@ CPT_TO_REGISTRY_MAPPING: dict[str, RegistryFieldMapping] = {
     ),
 
     # Radial EBUS
-    "31620": RegistryFieldMapping(
+    "31654": RegistryFieldMapping(
         fields={"radial_ebus_performed": True},
         hints={"procedure_type": "radial_ebus"},
     ),
@@ -263,8 +263,8 @@ def aggregate_registry_fields(
             linear["station_count_bucket"] = "1-2"
         procedures["linear_ebus"] = linear
 
-    # Radial EBUS: 31620
-    if "31620" in code_set:
+    # Radial EBUS: 31654
+    if "31654" in code_set:
         procedures["radial_ebus"] = {"performed": True}
 
     # BAL: 31624 (single lobe), 31625 (each additional lobe)

@@ -435,6 +435,85 @@ def extract_providers(note_text: str) -> Dict[str, Any]:
     return result
 
 
+# =============================================================================
+# PROCEDURE EXTRACTORS (Phase 7)
+# =============================================================================
+
+# BAL detection patterns
+BAL_PATTERNS = [
+    r"\bbronchoalveolar\s+lavage\b",
+    r"\bBAL\b(?!\s*score)",  # BAL but not "BAL score"
+    r"\blavage\b[^.\n]{0,30}(?:bronch|alveol)",
+]
+
+# Therapeutic aspiration patterns (exclude routine suction)
+THERAPEUTIC_ASPIRATION_PATTERNS = [
+    r"\btherapeutic\s+aspiration\b",
+    r"\bmucus\s+plug\s+(?:removal|aspiration|extracted|suctioned|cleared)\b",
+    r"\b(?:large\s+)?(?:blood\s+)?clot\s+(?:removal|aspiration|extracted|suctioned|cleared)\b",
+    r"\bairway\s+(?:cleared|cleared\s+of)\s+(?:mucus|secretions|blood|clot)\b",
+]
+
+ROUTINE_SUCTION_PATTERNS = [
+    r"\broutine\s+suction(?:ing)?\b",
+    r"\bminimal\s+secretions?\s+(?:suctioned|cleared|noted)\b",
+    r"\bstandard\s+suction(?:ing)?\b",
+    r"\bscant\s+secretions?\b",
+]
+
+
+def extract_bal(note_text: str) -> Dict[str, Any]:
+    """Extract BAL (bronchoalveolar lavage) procedure indicator.
+
+    Returns:
+        Dict with 'bal': {'performed': True} if BAL detected, empty dict otherwise
+    """
+    text_lower = note_text.lower()
+
+    for pattern in BAL_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            # Check for negation
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,40}" + pattern
+            if not re.search(negation_check, text_lower, re.IGNORECASE):
+                return {"bal": {"performed": True}}
+    return {}
+
+
+def extract_therapeutic_aspiration(note_text: str) -> Dict[str, Any]:
+    """Extract therapeutic aspiration procedure indicator.
+
+    Distinguishes therapeutic aspiration (mucus plug removal, clot removal)
+    from routine suctioning which is not separately billable.
+
+    Returns:
+        Dict with 'therapeutic_aspiration': {'performed': True, 'material': <str>}
+        if therapeutic aspiration detected, empty dict otherwise
+    """
+    text_lower = note_text.lower()
+
+    # Check for routine suction first (exclude these)
+    for pattern in ROUTINE_SUCTION_PATTERNS:
+        if re.search(pattern, text_lower):
+            return {}
+
+    for pattern in THERAPEUTIC_ASPIRATION_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            # Check for negation
+            negation_check = r"\b(?:no|not|without)\b[^.\n]{0,40}" + pattern
+            if not re.search(negation_check, text_lower, re.IGNORECASE):
+                # Determine material type
+                material = None
+                if "mucus" in text_lower or "plug" in text_lower:
+                    material = "Mucus plug"
+                elif "clot" in text_lower or "blood" in text_lower:
+                    material = "Blood clot"
+                result = {"therapeutic_aspiration": {"performed": True}}
+                if material:
+                    result["therapeutic_aspiration"]["material"] = material
+                return result
+    return {}
+
+
 def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     """Run all deterministic extractors and return combined seed data.
 
@@ -489,6 +568,17 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
         if value is not None:
             seed_data.setdefault("providers", {})[key] = value
 
+    # Procedure extractors (Phase 7)
+    # BAL
+    bal_data = extract_bal(note_text)
+    if bal_data:
+        seed_data.setdefault("procedures_performed", {}).update(bal_data)
+
+    # Therapeutic aspiration
+    ta_data = extract_therapeutic_aspiration(note_text)
+    if ta_data:
+        seed_data.setdefault("procedures_performed", {}).update(ta_data)
+
     return seed_data
 
 
@@ -502,4 +592,6 @@ __all__ = [
     "extract_disposition",
     "extract_bleeding_severity",
     "extract_providers",
+    "extract_bal",
+    "extract_therapeutic_aspiration",
 ]

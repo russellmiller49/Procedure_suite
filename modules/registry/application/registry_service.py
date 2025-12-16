@@ -1154,11 +1154,11 @@ class RegistryService:
                     except (ValueError, TypeError):
                         pass
 
-        # Radial EBUS: 31620
-        if "31620" in codes:
+        # Radial EBUS: 31654
+        if "31654" in codes:
             if not _proc_is_set(procedures, "radial_ebus"):
                 validation_errors.append(
-                    "CPT 31620 present but procedures_performed.radial_ebus is not marked."
+                    "CPT 31654 present but procedures_performed.radial_ebus is not marked."
                 )
 
         # BAL: 31624, 31625

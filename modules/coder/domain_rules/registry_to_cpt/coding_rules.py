@@ -52,6 +52,12 @@ def _navigation_targets(record: RegistryRecord) -> list[Any]:
 
 
 def _fiducial_marker_placed(record: RegistryRecord) -> bool:
+    # Check explicit fiducial_placement procedure first
+    fiducial_proc = _proc(record, "fiducial_placement")
+    if _performed(fiducial_proc):
+        return True
+
+    # Check granular navigation targets (fallback)
     for target in _navigation_targets(record):
         placed = getattr(target, "fiducial_marker_placed", None)
         details = getattr(target, "fiducial_marker_details", None)
@@ -70,6 +76,40 @@ def _lobe_tokens(values: list[str]) -> set[str]:
             if token in upper:
                 lobes.add("Lingula" if token == "LINGULA" else token)
     return lobes
+
+
+def _dilation_in_distinct_lobe_from_destruction(record: RegistryRecord) -> bool:
+    """Check if dilation was performed in a different lobe than destruction.
+
+    Returns True only if granular data proves distinct anatomic locations.
+    If granular data is missing, returns False (assume bundled).
+    """
+    granular = getattr(record, "granular_data", None)
+    if not granular:
+        return False
+
+    # Get lobes for dilation
+    dilation_lobes: set[str] = set()
+    dilation_targets = getattr(granular, "dilation_targets", None) or []
+    for target in dilation_targets:
+        lobe = getattr(target, "lobe", None)
+        if lobe:
+            dilation_lobes.add(str(lobe).upper())
+
+    # Get lobes for destruction/ablation
+    destruction_lobes: set[str] = set()
+    ablation_targets = getattr(granular, "ablation_targets", None) or []
+    for target in ablation_targets:
+        lobe = getattr(target, "lobe", None)
+        if lobe:
+            destruction_lobes.add(str(lobe).upper())
+
+    # If no granular data for either, assume bundled
+    if not dilation_lobes or not destruction_lobes:
+        return False
+
+    # Check for distinct lobes (dilation in lobe not used for destruction)
+    return bool(dilation_lobes - destruction_lobes)
 
 
 def derive_all_codes_with_meta(
@@ -149,10 +189,10 @@ def derive_all_codes_with_meta(
         else:
             warnings.append("linear_ebus.performed=true but stations_sampled missing; cannot derive 31652/31653")
 
-    # Radial EBUS (repo mapping uses 31620)
+    # Radial EBUS (add-on code for peripheral lesion localization)
     if _performed(_proc(record, "radial_ebus")):
-        codes.append("31620")
-        rationales["31620"] = "radial_ebus.performed=true"
+        codes.append("31654")
+        rationales["31654"] = "radial_ebus.performed=true"
 
     # Navigation add-on
     if _performed(_proc(record, "navigational_bronchoscopy")):
@@ -183,6 +223,17 @@ def derive_all_codes_with_meta(
     if _performed(_proc(record, "airway_stent")):
         codes.append("31636")
         rationales["31636"] = "airway_stent.performed=true"
+
+    # Thermal ablation (tumor destruction) → 31641
+    if _performed(_proc(record, "thermal_ablation")):
+        codes.append("31641")
+        rationales["31641"] = "thermal_ablation.performed=true"
+
+    # Cryotherapy (tumor destruction) → 31641
+    # Note: If both thermal_ablation and cryotherapy performed, only one 31641
+    if _performed(_proc(record, "cryotherapy")) and "31641" not in codes:
+        codes.append("31641")
+        rationales["31641"] = "cryotherapy.performed=true"
 
     # BLVR valve family
     blvr = _proc(record, "blvr")
@@ -255,8 +306,21 @@ def derive_all_codes_with_meta(
         derived = [c for c in derived if c != "32554"]
         rationales.pop("32554", None)
 
+    # Bundling: Dilation (31630) vs Destruction (31641) / Excision (31640)
+    # If destruction/excision is present, bundle dilation unless in distinct lobe
+    destruction_codes = {"31641", "31640"}
+    if any(c in destruction_codes for c in derived) and "31630" in derived:
+        distinct_lobes = _dilation_in_distinct_lobe_from_destruction(record)
+        if not distinct_lobes:
+            derived = [c for c in derived if c != "31630"]
+            warnings.append(
+                "31630 (dilation) bundled into destruction/excision code - "
+                "add granular lobe data if performed in distinct anatomic location"
+            )
+            rationales.pop("31630", None)
+
     # Add-on codes require a primary bronchoscopy.
-    addon_codes = {"31626", "31627", "31632", "31648", "31661"}
+    addon_codes = {"31626", "31627", "31632", "31648", "31654", "31661"}
     primary_bronch = {
         "31622",
         "31623",

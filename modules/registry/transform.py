@@ -372,12 +372,28 @@ def _build_procedures_performed(data: dict[str, Any], families: set[str]) -> dic
         cryo["freeze_time_seconds"] = data.get("cryo_freeze_time")
         procedures["transbronchial_cryobiopsy"] = cryo
 
+    # BAL - handle both detailed volume data and simple performed flag
+    bal_data = data.get("bal")
     if data.get("bal_volume_instilled") or data.get("bal_volume_returned"):
         bal: dict[str, Any] = {"performed": True}
         bal["volume_instilled_ml"] = data.get("bal_volume_instilled")
         bal["volume_returned_ml"] = data.get("bal_volume_returned")
         bal["location"] = data.get("bal_location")
         procedures["bal"] = bal
+    elif isinstance(bal_data, dict) and bal_data.get("performed"):
+        procedures["bal"] = {"performed": True}
+    elif bal_data is True:
+        procedures["bal"] = {"performed": True}
+
+    # Therapeutic Aspiration
+    ta_data = data.get("therapeutic_aspiration")
+    if isinstance(ta_data, dict) and ta_data.get("performed"):
+        ta: dict[str, Any] = {"performed": True}
+        if ta_data.get("material"):
+            ta["material"] = ta_data.get("material")
+        procedures["therapeutic_aspiration"] = ta
+    elif ta_data is True:
+        procedures["therapeutic_aspiration"] = {"performed": True}
 
     if data.get("stent_type") or data.get("stent_action"):
         stent: dict[str, Any] = {"performed": True}

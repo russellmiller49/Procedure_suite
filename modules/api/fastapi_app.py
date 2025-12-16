@@ -56,6 +56,7 @@ from modules.api.schemas import (
     # Base schemas
     CoderRequest,
     CoderResponse,
+    CodeSuggestionSummary,
     HybridPipelineMetadata,
     KnowledgeMeta,
     QARunRequest,
@@ -63,6 +64,8 @@ from modules.api.schemas import (
     RegistryResponse,
     RenderRequest,
     RenderResponse,
+    UnifiedProcessRequest,
+    UnifiedProcessResponse,
     VerifyRequest,
     VerifyResponse,
     # QA pipeline schemas
@@ -262,13 +265,14 @@ async def root(request: Request) -> Any:
         
     return {
         "name": "Procedure Suite API",
-        "version": "0.2.0",
+        "version": "0.3.0",
         "endpoints": {
             "ui": "/ui/",
             "health": "/health",
             "knowledge": "/knowledge",
             "docs": "/docs",
             "redoc": "/redoc",
+            "unified_process": "/api/v1/process",  # NEW: Combined registry + coder
             "coder": "/v1/coder/run",
             "localities": "/v1/coder/localities",
             "registry": "/v1/registry/run",
@@ -286,7 +290,7 @@ async def root(request: Request) -> Any:
             },
             "registry_extract": "/api/registry/extract",
         },
-        "note": "Coder uses CodingService (hexagonal architecture) with smart hybrid policy. ML Advisor endpoints available at /api/v1/ml-advisor/*",
+        "note": "Use /api/v1/process for extraction-first pipeline (registry → CPT codes in one call). Legacy endpoints /v1/coder/run and /v1/registry/run still available.",
     }
 
 
@@ -596,6 +600,132 @@ def _shape_registry_payload(record: RegistryRecord, evidence: dict[str, list[Spa
 
     payload["evidence"] = _serialize_evidence(evidence)
     return payload
+
+
+# --- Unified Process Endpoint (Extraction-First) ---
+
+@app.post("/api/v1/process", response_model=UnifiedProcessResponse)
+async def unified_process(
+    req: UnifiedProcessRequest,
+    coding_service: CodingService = Depends(get_coding_service),
+) -> UnifiedProcessResponse:
+    """Unified endpoint combining registry extraction and CPT code derivation.
+
+    This endpoint implements the extraction-first pipeline:
+    1. Extracts structured registry fields from the procedure note
+    2. Derives CPT codes deterministically from the registry fields
+    3. Optionally calculates RVU/payment information
+
+    Returns both registry data and derived CPT codes in a single response,
+    making it ideal for production use where both outputs are needed.
+
+    This replaces the need to call /v1/registry/run and /v1/coder/run separately.
+    """
+    import time
+    from modules.registry.application.registry_service import RegistryService
+    from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+    from config.settings import CoderSettings
+
+    start_time = time.time()
+
+    # Step 1: Registry extraction
+    registry_service = RegistryService()
+    extraction_result = registry_service.extract_fields(req.note)
+
+    # Step 2: Derive CPT codes from registry
+    record = extraction_result.registry_record
+    if record is None:
+        from modules.registry.schema import RegistryRecord
+        record = RegistryRecord.model_validate(extraction_result.mapped_fields)
+
+    codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
+
+    # Build suggestions with confidence and rationale
+    suggestions = []
+    base_confidence = 0.95 if extraction_result.coder_difficulty == "HIGH_CONF" else 0.80
+
+    for code in codes:
+        proc_info = coding_service.kb_repo.get_procedure_info(code)
+        description = proc_info.description if proc_info else ""
+        rationale = rationales.get(code, "")
+
+        # Determine review flag
+        if extraction_result.needs_manual_review:
+            review_flag = "required"
+        elif extraction_result.audit_warnings:
+            review_flag = "recommended"
+        else:
+            review_flag = "optional"
+
+        suggestions.append(CodeSuggestionSummary(
+            code=code,
+            description=description,
+            confidence=base_confidence,
+            rationale=rationale,
+            review_flag=review_flag,
+        ))
+
+    # Step 3: Calculate financials if requested
+    total_work_rvu = None
+    estimated_payment = None
+    per_code_billing = []
+
+    if req.include_financials and codes:
+        settings = CoderSettings()
+        conversion_factor = settings.cms_conversion_factor
+        total_work = 0.0
+        total_payment = 0.0
+
+        for code in codes:
+            proc_info = coding_service.kb_repo.get_procedure_info(code)
+            if proc_info:
+                work_rvu = proc_info.work_rvu
+                total_rvu = proc_info.total_facility_rvu
+                payment = total_rvu * conversion_factor
+
+                total_work += work_rvu
+                total_payment += payment
+
+                per_code_billing.append({
+                    "cpt_code": code,
+                    "description": proc_info.description,
+                    "work_rvu": work_rvu,
+                    "total_facility_rvu": total_rvu,
+                    "facility_payment": round(payment, 2),
+                })
+
+        total_work_rvu = round(total_work, 2)
+        estimated_payment = round(total_payment, 2)
+
+    # Combine audit warnings
+    all_warnings = list(extraction_result.audit_warnings or [])
+    all_warnings.extend(derivation_warnings)
+
+    processing_time_ms = (time.time() - start_time) * 1000
+
+    # Build response
+    registry_payload = _prune_none(record.model_dump(exclude_none=True))
+    evidence_payload = {}
+    if req.explain and hasattr(extraction_result, 'evidence'):
+        evidence_payload = _serialize_evidence(getattr(extraction_result, 'evidence', {}))
+
+    return UnifiedProcessResponse(
+        registry=registry_payload,
+        evidence=evidence_payload,
+        cpt_codes=codes,
+        suggestions=suggestions,
+        total_work_rvu=total_work_rvu,
+        estimated_payment=estimated_payment,
+        per_code_billing=per_code_billing,
+        pipeline_mode="extraction_first",
+        coder_difficulty=extraction_result.coder_difficulty or "",
+        needs_manual_review=extraction_result.needs_manual_review,
+        audit_warnings=all_warnings,
+        validation_errors=extraction_result.validation_errors or [],
+        kb_version=coding_service.kb_repo.version,
+        policy_version="extraction_first_v1",
+        processing_time_ms=round(processing_time_ms, 2),
+    )
 
 
 # --- QA Sandbox Endpoint ---

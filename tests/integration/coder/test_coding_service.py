@@ -261,13 +261,14 @@ class TestCodingServicePipeline:
             config=config,
         )
 
-        suggestions = service.generate_suggestions(
+        suggestions, latency_ms = service.generate_suggestions(
             procedure_id="test-123",
             report_text="BAL was performed successfully.",
             use_llm=True,
         )
 
         assert len(suggestions) == 1
+        assert latency_ms >= 0
         assert suggestions[0].code == "31622"
         assert suggestions[0].hybrid_decision == HybridDecision.ACCEPTED_AGREEMENT.value
         assert suggestions[0].source == "hybrid"
@@ -299,13 +300,14 @@ class TestCodingServicePipeline:
             config=config,
         )
 
-        suggestions = service.generate_suggestions(
+        suggestions, latency_ms = service.generate_suggestions(
             procedure_id="test-124",
             report_text="EBUS-TBNA performed at lymph node station 4R.",
             use_llm=True,
         )
 
         assert len(suggestions) == 1
+        assert latency_ms >= 0
         assert suggestions[0].code == "31652"
         assert suggestions[0].hybrid_decision == HybridDecision.ACCEPTED_HYBRID.value
         assert suggestions[0].source == "llm"
@@ -337,13 +339,14 @@ class TestCodingServicePipeline:
             config=config,
         )
 
-        suggestions = service.generate_suggestions(
+        suggestions, latency_ms = service.generate_suggestions(
             procedure_id="test-125",
             report_text="BAL and biopsy performed.",
             use_llm=False,  # LLM disabled
         )
 
         # Should only have rule-based codes
+        assert latency_ms >= 0
         codes = {s.code for s in suggestions}
         assert "31622" in codes
         assert "31624" in codes
@@ -421,12 +424,13 @@ class TestCodingServiceReviewFlags:
         )
 
         # Text WITHOUT EBUS keywords → needs review
-        suggestions = service.generate_suggestions(
+        suggestions, latency_ms = service.generate_suggestions(
             procedure_id="test-127",
             report_text="Normal bronchoscopy performed.",
             use_llm=True,
         )
 
+        assert latency_ms >= 0
         ebus_suggestion = next((s for s in suggestions if s.code == "31652"), None)
         assert ebus_suggestion is not None
         assert ebus_suggestion.review_flag == "required"
@@ -456,12 +460,13 @@ class TestCodingServiceReviewFlags:
             config=config,
         )
 
-        suggestions = service.generate_suggestions(
+        suggestions, latency_ms = service.generate_suggestions(
             procedure_id="test-128",
             report_text="BAL was performed.",
             use_llm=True,
         )
 
+        assert latency_ms >= 0
         assert len(suggestions) == 1
         assert suggestions[0].review_flag == "optional"
 
@@ -494,12 +499,13 @@ class TestCodingServiceReasoning:
             config=config,
         )
 
-        suggestions = service.generate_suggestions(
+        suggestions, latency_ms = service.generate_suggestions(
             procedure_id="test-129",
             report_text="BAL performed.",
             use_llm=True,
         )
 
+        assert latency_ms >= 0
         assert len(suggestions) == 1
         reasoning = suggestions[0].reasoning
 

@@ -7,6 +7,7 @@ This package contains all Pydantic schemas for the FastAPI integration layer.
 from modules.api.schemas.base import (
     CoderRequest,
     CoderResponse,
+    CodeSuggestionSummary,
     HybridPipelineMetadata,
     KnowledgeMeta,
     QARunRequest,
@@ -14,6 +15,8 @@ from modules.api.schemas.base import (
     RegistryResponse,
     RenderRequest,
     RenderResponse,
+    UnifiedProcessRequest,
+    UnifiedProcessResponse,
     VerifyRequest,
     VerifyResponse,
 )
@@ -33,6 +36,7 @@ __all__ = [
     # Base schemas
     "CoderRequest",
     "CoderResponse",
+    "CodeSuggestionSummary",
     "HybridPipelineMetadata",
     "KnowledgeMeta",
     "QARunRequest",
@@ -40,6 +44,8 @@ __all__ = [
     "RegistryResponse",
     "RenderRequest",
     "RenderResponse",
+    "UnifiedProcessRequest",
+    "UnifiedProcessResponse",
     "VerifyRequest",
     "VerifyResponse",
     # QA pipeline schemas

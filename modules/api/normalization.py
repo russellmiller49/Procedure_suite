@@ -623,7 +623,9 @@ def normalize_registry_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
         elif parenchymal_locs:
             tbbx["locations"] = parenchymal_locs + ambiguous_locs
 
-    payload["procedures_performed"] = procedures
+    # Only set procedures_performed if it was already present or is non-empty
+    if procedures or "procedures_performed" in raw:
+        payload["procedures_performed"] = procedures
 
     # ==========================================================================
     # Derive outcomes from note content
