@@ -218,6 +218,56 @@ class TestRegistryExtractWithMockedService:
             app.dependency_overrides.pop(get_registry_service, None)
 
     @pytest.mark.asyncio
+    async def test_response_prunes_nulls_and_adds_formatted_fields(self) -> None:
+        """Response should exclude None fields and add UI-friendly derived fields."""
+        mock_result = make_mock_extraction_result(
+            cpt_codes=["31653"],
+            record_data={
+                "billing": {
+                    "cpt_codes": [
+                        {"code": "31653", "description": None, "modifier": None},
+                    ],
+                },
+                "procedures_performed": {
+                    "linear_ebus": {
+                        "performed": True,
+                        "passes_per_station": 6,
+                        "stations_sampled": ["4R", "7"],
+                    }
+                },
+            },
+        )
+
+        mock_service = MagicMock(spec=RegistryService)
+        mock_service.extract_fields.return_value = mock_result
+
+        app.dependency_overrides[get_registry_service] = lambda: mock_service
+
+        try:
+            transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
+            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+                response = await client.post(
+                    "/api/registry/extract",
+                    json={"note_text": "PROCEDURE: EBUS-TBNA performed at station 4R and 7."},
+                )
+
+                assert response.status_code == 200
+                data = response.json()
+
+                # Null pruning: schema-required fields not provided should not emit nulls.
+                assert "patient_mrn" not in data["record"]
+                assert "procedure_date" not in data["record"]
+
+                # Billing CPT simplification: add simple list when no metadata exists.
+                assert data["record"]["billing"]["cpt_codes_simple"] == ["31653"]
+
+                # Procedure summaries: add a human-readable summary string.
+                summary = data["record"]["procedures_performed"]["linear_ebus"]["summary"]
+                assert summary == "Performed; 6 passes; stations: 4R, 7"
+        finally:
+            app.dependency_overrides.pop(get_registry_service, None)
+
+    @pytest.mark.asyncio
     async def test_validation_errors_in_response(self) -> None:
         """Validation errors should appear in response."""
         mock_result = make_mock_extraction_result(

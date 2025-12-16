@@ -52,6 +52,55 @@ def _normalize_numeric_with_unit(value: Any, unit_patterns: list[str]) -> Any:
     return value
 
 
+def simplify_billing_cpt_codes(payload: dict[str, Any]) -> None:
+    """Add a simplified CPT code list when the detailed objects carry no metadata.
+
+    For UI-friendly JSON output, callers may prefer a simple list of CPT code
+    strings when the detailed objects contain only `code` (and otherwise empty
+    metadata like description/modifiers).
+
+    This function is safe to call on either pre- or post-validation payloads.
+    """
+    billing = payload.get("billing")
+    if not isinstance(billing, dict) or not billing:
+        return
+
+    cpt_data = billing.get("cpt_codes")
+    if not isinstance(cpt_data, list) or not cpt_data:
+        return
+
+    code_dicts: list[dict[str, Any]] = [
+        c for c in cpt_data if isinstance(c, dict) and isinstance(c.get("code"), str) and c.get("code").strip()
+    ]
+    if not code_dicts:
+        return
+
+    def _has_details(item: dict[str, Any]) -> bool:
+        if item.get("description"):
+            return True
+        if item.get("modifier"):
+            return True
+        modifiers = item.get("modifiers")
+        if isinstance(modifiers, list) and any(isinstance(m, str) and m.strip() for m in modifiers):
+            return True
+        units = item.get("units")
+        return units not in (None, 1)
+
+    if any(_has_details(item) for item in code_dicts):
+        return
+
+    simplified: list[str] = []
+    seen: set[str] = set()
+    for item in code_dicts:
+        code = str(item.get("code")).strip()
+        if code and code not in seen:
+            simplified.append(code)
+            seen.add(code)
+
+    if simplified:
+        billing["cpt_codes_simple"] = simplified
+
+
 # Role mapping: common variations -> canonical enum values
 # From IP_Registry.json: ["RN", "RT", "Tech", "Resident", "PA", "NP", "Medical Student", null]
 ASSISTANT_ROLE_MAP: dict[str, str] = {
@@ -586,7 +635,8 @@ def normalize_registry_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
         # This is a fallback - ideally the LLM sets this
         pass  # Will be handled by LLM or explicit derivation
 
+    simplify_billing_cpt_codes(payload)
     return payload
 
 
-__all__ = ["normalize_registry_payload", "FORCEPS_TYPE_MAP"]
+__all__ = ["normalize_registry_payload", "simplify_billing_cpt_codes", "FORCEPS_TYPE_MAP"]

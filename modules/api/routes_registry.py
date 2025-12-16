@@ -26,6 +26,21 @@ from modules.registry.application.registry_service import (
 
 logger = logging.getLogger(__name__)
 
+
+def _prune_none(obj: Any) -> Any:
+    """Recursively remove None values from dict/list structures."""
+    if isinstance(obj, dict):
+        cleaned: dict[str, Any] = {}
+        for key, value in obj.items():
+            if value is None:
+                continue
+            cleaned[key] = _prune_none(value)
+        return cleaned
+    if isinstance(obj, list):
+        return [_prune_none(item) for item in obj if item is not None]
+    return obj
+
+
 # =============================================================================
 # ROUTER SETUP
 # =============================================================================
@@ -115,12 +130,22 @@ class RegistryExtractResponse(BaseModel):
         Returns:
             RegistryExtractResponse suitable for JSON serialization.
         """
+        record = _prune_none(result.record.model_dump(exclude_none=True))
+        mapped_fields = _prune_none(result.mapped_fields)
+
+        # Output shaping helpers (keep PHI-safe; no response text logging)
+        from modules.api.normalization import simplify_billing_cpt_codes
+        from modules.registry.summarize import add_procedure_summaries
+
+        simplify_billing_cpt_codes(record)
+        add_procedure_summaries(record)
+
         return cls(
-            record=result.record.model_dump(),
+            record=record,
             cpt_codes=result.cpt_codes,
             coder_difficulty=result.coder_difficulty,
             coder_source=result.coder_source,
-            mapped_fields=result.mapped_fields,
+            mapped_fields=mapped_fields,
             warnings=result.warnings,
             needs_manual_review=result.needs_manual_review,
             validation_errors=result.validation_errors,
@@ -136,6 +161,7 @@ class RegistryExtractResponse(BaseModel):
 @router.post(
     "/extract",
     response_model=RegistryExtractResponse,
+    response_model_exclude_none=True,
     summary="Extract registry fields from procedure note",
     description=(
         "Runs the hybrid-first extraction pipeline:\n"

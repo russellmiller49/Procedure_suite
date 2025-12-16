@@ -111,37 +111,64 @@ def parse_responses_text(resp_json: dict[str, Any]) -> str:
     if not isinstance(resp_json, dict):
         raise ValueError("Responses API returned non-dict response")
 
-    # Try output_text first (simplest form)
-    if "output_text" in resp_json:
-        return str(resp_json["output_text"])
+    # Debug: log response structure (keys only, no PHI)
+    logger.debug(
+        "Responses API response keys: %s",
+        list(resp_json.keys()) if resp_json else "empty",
+    )
+
+    debug_console = _truthy_env("OPENAI_RESPONSES_DEBUG")
+    if debug_console:
+        print(f"DEBUG RESPONSES API - Keys: {list(resp_json.keys())}")
+
+    # Try output_text first (simplest form), but only if it's non-empty.
+    # Some Responses API responses include output_text as "" while the real content
+    # is inside resp_json["output"].
+    ot = resp_json.get("output_text")
+    if isinstance(ot, str) and ot.strip():
+        return ot.strip()
 
     output = resp_json.get("output")
 
     # Direct string output
     if isinstance(output, str):
-        return output
+        return output.strip()
 
     # List of output segments
     if isinstance(output, list):
-        texts = []
+        texts: list[str] = []
         for segment in output:
             if isinstance(segment, str):
                 texts.append(segment)
             elif isinstance(segment, dict):
+                stype = segment.get("type")
                 # Handle message-style output
-                if segment.get("type") == "message":
+                if stype == "message":
                     content = segment.get("content", [])
                     if isinstance(content, list):
                         for part in content:
-                            if isinstance(part, dict) and part.get("type") == "text":
-                                texts.append(str(part.get("text", "")))
+                            if isinstance(part, dict):
+                                ptype = part.get("type")
+                                # Prefer assistant output blocks; avoid echoing prompt.
+                                if ptype in ("output_text", "text"):
+                                    t = part.get("text", "")
+                                    if isinstance(t, str) and t.strip():
+                                        texts.append(t)
+                                # Ignore prompt echo explicitly.
+                                elif ptype == "input_text":
+                                    continue
                             elif isinstance(part, str):
                                 texts.append(part)
                     elif isinstance(content, str):
                         texts.append(content)
                 # Handle text-type directly
-                elif segment.get("type") == "text":
-                    texts.append(str(segment.get("text", "")))
+                elif stype in ("output_text", "text"):
+                    t = segment.get("text", "")
+                    if isinstance(t, str) and t.strip():
+                        texts.append(t)
+                # Ignore prompt echo segments explicitly.
+                elif stype == "input_text":
+                    continue
                 # Handle content array directly
                 elif "content" in segment:
                     content = segment["content"]
@@ -149,19 +176,45 @@ def parse_responses_text(resp_json: dict[str, Any]) -> str:
                         texts.append(content)
                 # Fallback: try text field
                 elif "text" in segment:
-                    texts.append(str(segment["text"]))
+                    t = segment.get("text")
+                    if isinstance(t, str) and t.strip():
+                        texts.append(t)
         if texts:
-            return "".join(texts)
+            joined = "".join(texts).strip()
+            if joined:
+                return joined
 
     # Dict output with text field
     if isinstance(output, dict):
         if "text" in output:
-            return str(output["text"])
+            return str(output["text"]).strip()
         if "content" in output:
             content = output["content"]
             if isinstance(content, str):
-                return content
+                return content.strip()
 
+    # Debug: log full structure when extraction fails (PHI-safe: only structure, not values)
+    def _safe_structure(obj: Any, depth: int = 0) -> Any:
+        """Return structure of object without actual text values."""
+        if depth > 3:
+            return "..."
+        if isinstance(obj, dict):
+            return {k: _safe_structure(v, depth + 1) for k, v in obj.items()}
+        if isinstance(obj, list):
+            if not obj:
+                return []
+            return [_safe_structure(obj[0], depth + 1), f"... ({len(obj)} items)"] if len(obj) > 1 else [_safe_structure(obj[0], depth + 1)]
+        if isinstance(obj, str):
+            return f"<str len={len(obj)}>"
+        return type(obj).__name__
+
+    structure_json = json.dumps(_safe_structure(resp_json), indent=2)
+    logger.warning(
+        "Responses API extraction failed. Response structure: %s",
+        structure_json,
+    )
+    if debug_console:
+        print(f"DEBUG RESPONSES API - Extraction FAILED! Structure:\n{structure_json}")
     raise ValueError("Responses API returned no extractable output")
 
 
@@ -363,7 +416,13 @@ def post_responses(
                 ) from exc
 
             if response.status_code < 400:
-                return response.json()
+                resp_json = response.json()
+                logger.debug(
+                    "Responses API success status=%s keys=%s",
+                    response.status_code,
+                    list(resp_json.keys()) if isinstance(resp_json, dict) else type(resp_json).__name__,
+                )
+                return resp_json
 
             message, error_type, error_param = _openai_error_details(response)
             request_id = _openai_request_id(response)
