@@ -374,7 +374,6 @@ THERAPEUTIC_ASPIRATION_SYNONYMS: List[str] = [
     "bronchial toilet",
     "secretion clearance",
     "mucus plugging",
-    "suctioning of secretions",
     "extensive suctioning",
     "aggressive suctioning",
     "hemoptysis",

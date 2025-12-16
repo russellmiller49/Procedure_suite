@@ -11,7 +11,6 @@ from fastapi.testclient import TestClient
 os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
 os.environ.setdefault("PHI_DATABASE_URL", "sqlite:///:memory:")
 os.environ.setdefault("PHI_ENCRYPTION_MODE", "demo")
-os.environ.setdefault("CODER_REQUIRE_PHI_REVIEW", "true")
 os.environ.setdefault("PHI_SCRUBBER_MODE", "stub")
 
 from modules.api.fastapi_app import app  # noqa: E402
@@ -69,6 +68,11 @@ def override_coding_service():
     app.dependency_overrides[get_coding_service] = lambda: fake
     yield fake
     app.dependency_overrides.pop(get_coding_service, None)
+
+
+@pytest.fixture(autouse=True)
+def require_phi_review(monkeypatch):
+    monkeypatch.setenv("CODER_REQUIRE_PHI_REVIEW", "true")
 
 
 def test_phi_to_coding_end_to_end(client, override_coding_service, monkeypatch):

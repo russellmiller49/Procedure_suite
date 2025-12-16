@@ -21,7 +21,6 @@ from modules.common.llm import (
     GeminiLLM,
     OpenAILLM,
     _resolve_openai_model,
-    _resolve_openai_timeout_seconds,
 )
 from modules.common.logger import get_logger
 from modules.common.sectionizer import Section
@@ -131,7 +130,7 @@ class LLMDetailedExtractor:
                         self.llm = OpenAILLM(
                             api_key=api_key,
                             model=model,
-                            timeout_seconds=_resolve_openai_timeout_seconds("structurer"),
+                            task="registry_extraction",
                         )
                         logger.info(f"Using OpenAI LLM with model: {model}")
                     else:
@@ -181,7 +180,7 @@ class LLMDetailedExtractor:
         prompt = build_registry_prompt(relevant_text, context=context)
 
         try:
-            response = self.llm.generate(prompt)
+            response = self.llm.generate(prompt, task="registry_extraction")
             # Basic cleanup of markdown code blocks if present
             response = self._clean_response(response)
             data = json.loads(response)
@@ -279,7 +278,7 @@ class LLMDetailedExtractor:
             start_time = time.perf_counter()
 
             try:
-                response = self.llm.generate(prompt, response_schema=response_schema)
+                response = self.llm.generate(prompt, response_schema=response_schema, task="registry_extraction")
                 elapsed_ms = (time.perf_counter() - start_time) * 1000
 
                 # Clean and parse response

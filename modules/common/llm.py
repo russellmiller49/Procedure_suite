@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import os
+import random
+import time
 from typing import Any, Protocol, TypeVar
 
 import httpx
@@ -22,13 +24,16 @@ from modules.common.model_capabilities import filter_payload_for_model, is_gpt5
 
 logger = get_logger("common.llm")
 
-# Load environment variables from a .env file if present so GEMINI_* keys are available locally.
-# Override=True ensures .env values take precedence over stale shell exports.
-load_dotenv(override=True)
-
 
 def _truthy_env(name: str) -> bool:
     return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+# Load environment variables from a .env file if present so GEMINI_* keys are available locally.
+# Override=True ensures .env values take precedence over stale shell exports.
+# Tests can opt out (and avoid accidental real API keys) by setting `PROCSUITE_SKIP_DOTENV=1`.
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=True)
 
 
 def _normalize_openai_base_url(base_url: str | None) -> str:
@@ -50,26 +55,66 @@ def _resolve_openai_model(task: str | None) -> str:
 
 
 def _resolve_openai_timeout_seconds(task: str | None) -> float:
-    def _get_float(name: str) -> float | None:
-        raw = os.getenv(name)
-        if raw is None:
-            return None
-        raw = raw.strip()
-        if not raw:
-            return None
-        try:
-            return float(raw)
-        except ValueError:
-            return None
+    # Back-compat shim for older callers/tests. Prefer `_resolve_openai_timeout()`.
+    return float(_resolve_openai_timeout(task).read)
+
+
+def _get_float_env(name: str) -> float | None:
+    raw = os.getenv(name)
+    if raw is None:
+        return None
+    raw = raw.strip()
+    if not raw:
+        return None
+    try:
+        return float(raw)
+    except ValueError:
+        return None
+
+
+def _resolve_openai_timeout(task: str | None) -> httpx.Timeout:
+    """Resolve an OpenAI httpx.Timeout based on workload/task.
+
+    Env overrides:
+    - `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` (default 180)
+    - `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` (default 60)
+
+    Legacy env (read-timeout shims):
+    - `OPENAI_TIMEOUT_SECONDS`, `OPENAI_TIMEOUT_SECONDS_STRUCTURER`,
+      `OPENAI_TIMEOUT_SECONDS_JUDGE`, `OPENAI_TIMEOUT_SECONDS_SUMMARIZER`
+    """
 
     task_key = (task or "").strip().lower()
-    if task_key == "structurer":
-        return _get_float("OPENAI_TIMEOUT_SECONDS_STRUCTURER") or _get_float("OPENAI_TIMEOUT_SECONDS") or 30.0
-    if task_key == "judge":
-        return _get_float("OPENAI_TIMEOUT_SECONDS_JUDGE") or _get_float("OPENAI_TIMEOUT_SECONDS") or 30.0
-    if task_key == "summarizer":
-        return _get_float("OPENAI_TIMEOUT_SECONDS_SUMMARIZER") or _get_float("OPENAI_TIMEOUT_SECONDS") or 30.0
-    return _get_float("OPENAI_TIMEOUT_SECONDS") or 30.0
+
+    is_registry_task = False
+    if task_key:
+        if task_key in {"registry", "registry_extraction", "registry-extraction", "structurer"}:
+            is_registry_task = True
+        elif "registry" in task_key and "extract" in task_key:
+            is_registry_task = True
+
+    if is_registry_task:
+        read_seconds = (
+            _get_float_env("OPENAI_TIMEOUT_READ_REGISTRY_SECONDS")
+            or _get_float_env("OPENAI_TIMEOUT_SECONDS_STRUCTURER")
+            or _get_float_env("OPENAI_TIMEOUT_SECONDS")
+            or 180.0
+        )
+    else:
+        legacy_task_read: float | None = None
+        if task_key == "judge":
+            legacy_task_read = _get_float_env("OPENAI_TIMEOUT_SECONDS_JUDGE")
+        elif task_key == "summarizer":
+            legacy_task_read = _get_float_env("OPENAI_TIMEOUT_SECONDS_SUMMARIZER")
+
+        read_seconds = (
+            _get_float_env("OPENAI_TIMEOUT_READ_DEFAULT_SECONDS")
+            or legacy_task_read
+            or _get_float_env("OPENAI_TIMEOUT_SECONDS")
+            or 60.0
+        )
+
+    return httpx.Timeout(connect=10.0, read=read_seconds, write=30.0, pool=30.0)
 
 
 def _openai_request_id(response: httpx.Response) -> str | None:
@@ -184,7 +229,7 @@ def _prepend_json_object_instruction(prompt: str) -> str:
 
 
 class LLMInterface(Protocol):
-    def generate(self, prompt: str) -> str:
+    def generate(self, prompt: str, **kwargs: Any) -> str:
         ...
 
 
@@ -196,17 +241,26 @@ class OpenAILLM:
         api_key: str | None = None,
         model: str | None = None,
         *,
+        task: str | None = None,
         timeout_seconds: float | None = None,
     ) -> None:
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.model = model or os.getenv("OPENAI_MODEL", "gpt-5.1")
         self.base_url = _normalize_openai_base_url(os.getenv("OPENAI_BASE_URL"))
-        self.timeout_seconds = float(timeout_seconds) if timeout_seconds is not None else _resolve_openai_timeout_seconds(None)
+        self.task = task
+        self.timeout_seconds = float(timeout_seconds) if timeout_seconds is not None else None
 
         if not self.api_key:
             logger.warning("OPENAI_API_KEY not set; OpenAILLM calls will fail.")
 
-    def generate(self, prompt: str, response_schema: dict | None = None, **kwargs) -> str:
+    def generate(
+        self,
+        prompt: str,
+        response_schema: dict | None = None,
+        *,
+        task: str | None = None,
+        **kwargs,
+    ) -> str:
         """Generate a response from OpenAI.
         
         Args:
@@ -250,13 +304,43 @@ class OpenAILLM:
         payload = filter_payload_for_model(payload, self.model)
 
         removed_on_retry: list[str] = []
-        timeout = httpx.Timeout(connect=10.0, read=self.timeout_seconds, write=30.0, pool=10.0)
+        task_key = task if task is not None else self.task
+        resolved_timeout = _resolve_openai_timeout(task_key)
+        read_override = self.timeout_seconds
+        timeout = (
+            httpx.Timeout(
+                connect=resolved_timeout.connect,
+                read=read_override,
+                write=resolved_timeout.write,
+                pool=resolved_timeout.pool,
+            )
+            if read_override is not None
+            else resolved_timeout
+        )
 
         try:
             with httpx.Client(timeout=timeout) as client:
                 attempt_payload = payload
-                for attempt in range(2):
-                    response = client.post(url, headers=headers, json=attempt_payload)
+                did_retry_timeout = False
+                did_retry_unsupported = False
+
+                for _ in range(3):
+                    try:
+                        response = client.post(url, headers=headers, json=attempt_payload)
+                    except (httpx.ReadTimeout, httpx.ConnectTimeout, httpx.RemoteProtocolError, httpx.TransportError) as exc:
+                        if not did_retry_timeout:
+                            did_retry_timeout = True
+                            backoff = random.uniform(0.8, 1.5)
+                            logger.warning(
+                                "OpenAI API transient transport error; retrying once endpoint=%s model=%s",
+                                url,
+                                self.model,
+                            )
+                            time.sleep(backoff)
+                            continue
+                        raise LLMError(
+                            f"OpenAI transport error after retry (model={self.model}): {type(exc).__name__}"
+                        ) from exc
 
                     if response.status_code < 400:
                         data = response.json()
@@ -269,16 +353,15 @@ class OpenAILLM:
                     request_id = _openai_request_id(response)
                     request_id_suffix = f" request_id={request_id}" if request_id else ""
                     logger.warning(
-                        "OpenAI API error status=%s endpoint=%s model=%s%s message=%s",
+                        "OpenAI API error status=%s endpoint=%s model=%s%s",
                         response.status_code,
                         url,
                         self.model,
                         request_id_suffix,
-                        message,
                     )
 
                     should_retry = (
-                        attempt == 0
+                        not did_retry_unsupported
                         and response.status_code == 400
                         and _looks_like_unsupported_parameter_error(
                             message=message, error_type=error_type, error_param=error_param
@@ -292,6 +375,7 @@ class OpenAILLM:
                         )
                         if removed_on_retry:
                             attempt_payload = retry_payload
+                            did_retry_unsupported = True
                             continue
 
                     removed_summary = ", ".join(removed_on_retry) if removed_on_retry else "none"
@@ -384,6 +468,7 @@ class GeminiLLM:
         max_retries: int = 3,
         *,
         temperature: float | None = None,
+        task: str | None = None,
     ) -> str:
         import time
 
@@ -476,7 +561,7 @@ class DeterministicStubLLM:
             "disposition": "Home",
         }
 
-    def generate(self, prompt: str) -> str:
+    def generate(self, prompt: str, **_kwargs: Any) -> str:
         logger.warning("Using DeterministicStubLLM. Set GEMINI_API_KEY for real inference.")
         return json.dumps(self.payload)
 
@@ -520,7 +605,7 @@ class LLMService:
             self._llm = OpenAILLM(
                 api_key=os.getenv("OPENAI_API_KEY"),
                 model=model,
-                timeout_seconds=_resolve_openai_timeout_seconds(task),
+                task=task,
             )
             return
 

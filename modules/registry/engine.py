@@ -1091,6 +1091,7 @@ class RegistryEngine:
                 # This is more strict than before to prevent false positives from
                 # random "7" occurrences (times, dates, ages, etc.)
                 patterns = [
+                    rf"(?m)^\s*7\s*[:\-]\s*[^\n]{{0,80}}(?:\d{{1,2}}\s*g\b|needle|pass|rose|sampl|biops)",  # "7: 22G, 4 passes"
                     rf"station\s+7\s*[:\-]",  # "station 7:" or "station 7-"
                     rf"station\s*7\s+(?:was\s+)?(?:sampl|biops|needle|pass|aspirat)",  # "station 7 was sampled"
                     rf"subcarinal\s+(?:lymph\s+)?node",  # "subcarinal node" (station 7 synonym)

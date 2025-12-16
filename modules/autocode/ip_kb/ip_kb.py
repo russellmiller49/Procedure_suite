@@ -359,11 +359,15 @@ class IPCodingKnowledgeBase:
                     "reason": reason,
                 })
 
-        # Rule 1: Radial EBUS (+31654) cannot be billed with Linear EBUS (31652/31653)
-        # From synthetic_CPT_corrected.json patterns
+        # Rule 1: Radial EBUS (+31654) is often a false positive when linear EBUS-TBNA (31652/31653)
+        # is present WITHOUT any peripheral-lesion workflow evidence (e.g., navigation/biopsy).
+        #
+        # In combined cases (linear staging + nav/peripheral biopsy), +31654 can be appropriate and
+        # should be kept.
         linear_present = norm_codes & canonical_rules.RADIAL_LINEAR_EBUS_EXCLUSIVE["linear_ebus_codes"]
         radial_codes = canonical_rules.RADIAL_LINEAR_EBUS_EXCLUSIVE["radial_ebus_codes"]
-        if linear_present:
+        peripheral_context_present = bool(norm_codes & {"31627", "31628", "31629", "31626"})
+        if linear_present and not peripheral_context_present:
             linear_code = list(linear_present)[0]
             for rc in radial_codes & norm_codes:
                 record_bundle(rc, linear_code, "RADIAL_LINEAR_EBUS_EXCLUSIVE",
@@ -495,10 +499,19 @@ class IPCodingKnowledgeBase:
             return any(v.lower() in text for v in verb_patterns)
 
         # ========== Navigation Detection ==========
-        nav_platform = self._contains_any(text, canonical_rules.NAVIGATION_SYNONYMS)
+        # Avoid short-token substring false positives (e.g., "ion" in "insertion").
+        nav_platform = self._contains_any(
+            text,
+            [p for p in canonical_rules.NAVIGATION_SYNONYMS if p not in ("ion", "enb", "emn")],
+        ) or bool(re.search(r"\b(?:ion|enb|emn)\b", text))
         # Additional platform-specific triggers
         nav_platform = nav_platform or any(
-            term in text for term in [
+            (
+                bool(re.search(r"\b" + re.escape(term) + r"\b", text))
+                if term in {"ion", "emn", "enb"}
+                else term in text
+            )
+            for term in [
                 "ion", "ion robotic", "superdimension", "emn", "enb",
                 "robotic bronchoscopy", "robotic navigation",
                 "electromagnetic navigation", "spin thoracic"
@@ -540,7 +553,28 @@ class IPCodingKnowledgeBase:
         # ========== EBUS Detection ==========
         # Radial EBUS
         radial_hit = self._contains_any(text, canonical_rules.RADIAL_EBUS_SYNONYMS)
-        evidence["bronchoscopy_ebus_radial"] = {"radial": radial_hit}
+        radial_negated = False
+        if radial_hit:
+            radial_negated = bool(
+                re.search(
+                    r"\bradial\s+ebus\b[^\n]{0,120}\b(?:not|no|without|never|aborted|unable|failed|mentioned)\b",
+                    text,
+                    re.IGNORECASE,
+                )
+                or re.search(
+                    r"\b(?:not|no|without|never|aborted|unable|failed)\b[^\n]{0,120}\bradial\s+ebus\b",
+                    text,
+                    re.IGNORECASE,
+                )
+                or re.search(
+                    r"\b(?:probe|tool|catheter)\b[^\n]{0,80}\b(?:not|never)\s+advanced\b[^\n]{0,40}\b(?:lesion|target)\b",
+                    text,
+                    re.IGNORECASE,
+                )
+            )
+
+        radial_hit = radial_hit and not radial_negated
+        evidence["bronchoscopy_ebus_radial"] = {"radial": radial_hit, "negated": radial_negated}
         if radial_hit:
             matched_groups.add("bronchoscopy_ebus_radial")
 
@@ -619,6 +653,34 @@ class IPCodingKnowledgeBase:
         tblb_hit = self._contains_any(text, canonical_rules.TBLB_SYNONYMS)
         if tblb_hit:
             matched_groups.add("bronchoscopy_biopsy_parenchymal")
+
+        # TBNA of peripheral lesion (31629) - distinguish from EBUS-TBNA nodal staging
+        tbna_hit = any(
+            term in text
+            for term in [
+                "tbna",
+                "transbronchial needle aspiration",
+                "transbronchial needle biopsy",
+                "needle aspiration",
+            ]
+        )
+        tbna_station_context = bool(
+            re.search(r"tbna[^\n]{0,80}station|station[^\n]{0,80}tbna", text, re.IGNORECASE)
+        )
+        tbna_lesion_context = bool(
+            re.search(
+                r"tbna[^\n]{0,120}\b(?:lesion|nodule|target|segment|lobe|rul|rml|rll|lul|lll)\b",
+                text,
+                re.IGNORECASE,
+            )
+        )
+        evidence["bronchoscopy_tbna"] = {
+            "tbna": tbna_hit,
+            "lesion_context": tbna_lesion_context,
+            "station_context": tbna_station_context,
+        }
+        if tbna_hit and tbna_lesion_context and not tbna_station_context:
+            matched_groups.add("bronchoscopy_tbna")
 
         # Navigation with biopsy triggers TBLB + radial EBUS (common pattern)
         if "bronchoscopy_navigation" in matched_groups and "biop" in text:
@@ -720,7 +782,18 @@ class IPCodingKnowledgeBase:
             "deployed a stent", "deployed the stent", "placed a stent",
             "placement of stent", "stent deployment", "deploying the stent"
         ]
-        stent_placement_action = any(a in text for a in stent_placement_actions)
+        stent_placement_action = any(a in text for a in stent_placement_actions) or bool(
+            re.search(
+                r"\bstent\b[^\n]{0,120}\b(?:deployed|placed|inserted|positioned|anchored)\b",
+                text,
+                re.IGNORECASE,
+            )
+            or re.search(
+                r"\b(?:deployed|placed|inserted|positioned|anchored)\b[^\n]{0,120}\bstent\b",
+                text,
+                re.IGNORECASE,
+            )
+        )
 
         # Revision verbs for 31638
         stent_revision_actions = [
@@ -1018,7 +1091,13 @@ class IPCodingKnowledgeBase:
         if bal_explicit and not pleural_context:
             # If BAL is in a different lobe from biopsy, it can be billed separately
             # Look for patterns like "BAL in RUL" or "lavage from RML"
-            bal_lobe_match = re.search(r"bal\s+(?:in|from|of)\s+([a-z]+)", text, re.IGNORECASE)
+            bal_lobe_match = re.search(
+                r"bal[^\n]{0,80}(?:\b(?:rul|rml|rll|lul|lll)\b|"
+                r"right\s+upper\s+lobe|right\s+middle\s+lobe|right\s+lower\s+lobe|"
+                r"left\s+upper\s+lobe|left\s+lower\s+lobe|lingula)",
+                text,
+                re.IGNORECASE,
+            )
             if bal_lobe_match or "bronchoscopy_biopsy_parenchymal" not in matched_groups:
                 matched_groups.add("bronchoscopy_bal")
 

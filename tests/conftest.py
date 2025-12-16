@@ -1,5 +1,8 @@
 import os
 
+# Prevent local `.env` files from influencing tests (and avoid accidental real network calls).
+os.environ.setdefault("PROCSUITE_SKIP_DOTENV", "1")
+
 import pytest
 
 from modules.reporting import engine as report_engine
@@ -7,7 +10,7 @@ from modules.reporting import engine as report_engine
 # Keep tests offline-friendly by default.
 os.environ.setdefault("REGISTRY_USE_STUB_LLM", "1")
 os.environ.setdefault("GEMINI_OFFLINE", "1")
-os.environ.setdefault("DISABLE_STATIC_FILES", "1")
+os.environ.setdefault("DISABLE_STATIC_FILES", "0")
 
 
 def _fake_umls_link(_: str):

@@ -8,7 +8,7 @@ from modules.autocode.ip_kb.terminology_utils import TerminologyNormalizer, QARu
 from modules.autocode.rvu.rvu_calculator import ProcedureRVUCalculator
 from modules.coder.rules_engine import CodingRulesEngine as PipelineRulesEngine
 from modules.coder.types import CodeCandidate, EBUSNodeEvidence, PeripheralLesionEvidence
-from modules.coder.ebus_rules import ebus_nodes_to_candidates
+from modules.coder.ebus_rules import ebus_nodes_to_candidates, get_sampled_station_list
 from modules.coder.ebus_extractor import EBUSEvidenceExtractor
 from modules.coder.peripheral_rules import peripheral_lesions_to_candidates
 from modules.coder.peripheral_extractor import PeripheralLesionExtractor
@@ -83,8 +83,10 @@ class EnhancedCPTCoder:
         self._last_evidence_context: Optional[EvidenceContext] = None
         self._ebus_tuple_mode = os.getenv("CODING_EBUS_TUPLE_MODE", "").lower() in ("true", "1", "yes")
         self._ebus_extractor = ebus_extractor if self._ebus_tuple_mode else None
+        self._last_ebus_evidence: list[EBUSNodeEvidence] | None = None
         self._peripheral_tuple_mode = os.getenv("CODING_PERIPHERAL_TUPLE_MODE", "").lower() in ("true", "1", "yes")
         self._peripheral_extractor = peripheral_extractor if self._peripheral_tuple_mode else None
+        self._last_peripheral_evidence: list[PeripheralLesionEvidence] | None = None
 
     def _collect_initial_candidates(
         self,
@@ -138,25 +140,29 @@ class EnhancedCPTCoder:
     def _collect_ebus_candidates(self, note_text: str) -> list[CodeCandidate]:
         """Use LLM-extracted EBUS evidence to produce additional candidates."""
         if not self._ebus_tuple_mode:
+            self._last_ebus_evidence = None
             return []
         if self._ebus_extractor is None:
             self._ebus_extractor = EBUSEvidenceExtractor()
         evidence: list[EBUSNodeEvidence] = self._ebus_extractor.extract(note_text) or []
+        self._last_ebus_evidence = evidence
         return ebus_nodes_to_candidates(evidence)
 
     def _collect_peripheral_candidates(self, note_text: str) -> list[CodeCandidate]:
         """Use LLM-extracted peripheral lesion evidence for add-on codes."""
         if not self._peripheral_tuple_mode:
+            self._last_peripheral_evidence = None
             return []
         if self._peripheral_extractor is None:
             self._peripheral_extractor = PeripheralLesionExtractor()
         evidence: list[PeripheralLesionEvidence] = self._peripheral_extractor.extract(note_text) or []
+        self._last_peripheral_evidence = evidence
         return peripheral_lesions_to_candidates(evidence)
 
     def _select_final_codes(self, candidates: list[CodeCandidate]) -> list[CodeSuggestion]:
         """Convert candidates to CodeSuggestion objects with stable ordering."""
         filtered_codes = {
-            candidate.code
+            candidate.code.lstrip("+")
             for candidate in candidates
             if NCCI_BUNDLED_REASON_PREFIX not in (candidate.reason or "")
         }
@@ -175,11 +181,66 @@ class EnhancedCPTCoder:
         This runs AFTER all candidates are collected (initial + EBUS + peripheral)
         to ensure rules like EBUS mutual exclusion work correctly.
         """
-        navigation_context = self._extract_navigation_registry(registry)
-        radial_context = self._extract_radial_registry(registry)
+        registry_for_rules = dict(registry)
+        navigation_context = self._extract_navigation_registry(registry_for_rules)
+        radial_context = self._extract_radial_registry(registry_for_rules)
 
         groups_from_text = self.ip_kb.groups_from_text(note_text)
         evidence = getattr(self.ip_kb, "last_group_evidence", {}) or {}
+
+        if self._ebus_tuple_mode and self._last_ebus_evidence:
+            sampled_stations = get_sampled_station_list(self._last_ebus_evidence)
+            if sampled_stations:
+                linear_ev = dict(evidence.get("bronchoscopy_ebus_linear") or {})
+                linear_ev["ebus"] = True
+                linear_ev["station_context"] = True
+                linear_ev["station_count"] = max(
+                    int(linear_ev.get("station_count") or 0),
+                    len(sampled_stations),
+                )
+                evidence["bronchoscopy_ebus_linear"] = linear_ev
+                groups_from_text.add("bronchoscopy_ebus_linear")
+                if len(sampled_stations) >= 3:
+                    groups_from_text.add("bronchoscopy_ebus_linear_additional")
+
+        if self._peripheral_tuple_mode and self._last_peripheral_evidence:
+            any_nav = any(getattr(item, "navigation", False) for item in self._last_peripheral_evidence)
+            any_radial = any(getattr(item, "radial_ebus", False) for item in self._last_peripheral_evidence)
+            actions = {
+                str(action).strip().lower()
+                for item in self._last_peripheral_evidence
+                for action in (getattr(item, "actions", None) or [])
+            }
+
+            if any_nav:
+                nav_ev = dict(evidence.get("bronchoscopy_navigation") or {})
+                nav_ev.update({"platform": True, "concept": True, "direct": True, "aborted": False})
+                evidence["bronchoscopy_navigation"] = nav_ev
+                navigation_context = dict(navigation_context)
+                navigation_context.update({"performed": True, "tool_in_lesion": True, "target_reached": True})
+                groups_from_text.add("bronchoscopy_navigation")
+
+            if any_radial:
+                radial_ev = dict(evidence.get("bronchoscopy_ebus_radial") or {})
+                radial_ev.update({"radial": True, "negated": False})
+                evidence["bronchoscopy_ebus_radial"] = radial_ev
+                radial_context = dict(radial_context)
+                radial_context.update({"performed": True, "visualization": radial_context.get("visualization")})
+                groups_from_text.add("bronchoscopy_ebus_radial")
+
+            if "bal" in actions:
+                bal_ev = dict(evidence.get("bronchoscopy_bal") or {})
+                bal_ev.update({"bal_explicit": True, "pleural_context": False})
+                evidence["bronchoscopy_bal"] = bal_ev
+
+            if any(a in actions for a in ("cryobiopsy", "transbronchial cryobiopsy", "tbbx", "tblb", "biopsy")):
+                current = registry_for_rules.get("bronch_num_tbbx")
+                try:
+                    current_int = int(current) if current is not None else 0
+                except Exception:
+                    current_int = 0
+                registry_for_rules["bronch_num_tbbx"] = max(current_int, 1)
+                registry_for_rules.setdefault("bronch_tbbx_tool", "Cryoprobe")
 
         # Build context with ALL candidates
         all_candidate_codes = {c.code for c in candidates}
@@ -187,7 +248,7 @@ class EnhancedCPTCoder:
         context = EvidenceContext.from_procedure_data(
             groups_from_text=groups_from_text,
             evidence=evidence,
-            registry=registry,
+            registry=registry_for_rules,
             candidates_from_text=all_candidate_codes,
             term_hits=term_hits,
             navigation_context=navigation_context,

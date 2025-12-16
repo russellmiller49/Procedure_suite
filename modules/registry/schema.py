@@ -114,6 +114,10 @@ def _build_registry_model() -> type[BaseModel]:
         evidence: dict[str, list[Span]] = Field(default_factory=dict)
         version: str | None = None
         procedure_families: list[str] = Field(default_factory=list)
+        linear_ebus_stations: list[str] | None = Field(default=None)
+        ebus_stations_sampled: list[str] | None = Field(default=None)
+        ebus_stations_detail: list[dict[str, Any]] | None = Field(default=None)
+        follow_up_plan: str | None = Field(default=None)
         ebus_systematic_staging: bool | None = Field(default=None, exclude=True)
         ebus_scope_brand: str | None = Field(default=None, exclude=True)
         pleural_procedure_type: str | None = Field(default=None, exclude=True)

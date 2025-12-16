@@ -12,9 +12,17 @@ import re
 # Ensure .env is loaded before reading API keys
 from pathlib import Path
 from dotenv import load_dotenv
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
 # Find and load the .env file from project root
 _env_path = Path(__file__).resolve().parents[4] / ".env"
-load_dotenv(_env_path, override=True)
+# Tests can opt out (and avoid accidental real network calls) by setting `PROCSUITE_SKIP_DOTENV=1`.
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(_env_path, override=True)
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Optional

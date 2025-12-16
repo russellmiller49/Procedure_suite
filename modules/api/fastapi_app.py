@@ -16,8 +16,16 @@ from contextlib import asynccontextmanager
 
 # Load .env file early so API keys are available
 from dotenv import load_dotenv
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
 # Prefer explicitly-exported environment variables over values in `.env`.
-load_dotenv(override=False)
+# Tests can opt out (and avoid accidental real network calls) by setting `PROCSUITE_SKIP_DOTENV=1`.
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
 import subprocess
 import uuid
 from dataclasses import asdict

@@ -223,15 +223,15 @@ class TestThoracoscopyTalcPleurodesis:
 
 # =============================================================================
 # TEST CASE 5: CAO Rigid Debulking + Stent + Tunneled Catheter
-# Expected: {31641, 31636, 31645, 32550}
-# Should NOT include: 31640, 31646, 31630
+# Expected: {31636/31631, 32550} (debulking bundled with stent)
+# Should NOT include: 31640, 31641, 31646, 31630
 # =============================================================================
 
 class TestCAODebulkingStentIPC:
     """CAO with rigid debulking, stent placement, and tunneled catheter."""
 
     def test_cao_stent_ipc_expected_codes(self, coder):
-        """CAO + stent + IPC should produce 31641, 31636, 31645, 32550."""
+        """CAO + stent + IPC should bill stent + IPC; debulking is bundled into stent."""
         note = """
         PROCEDURE: Rigid Bronchoscopy with Tumor Debulking, Stent Placement, and
         Tunneled Pleural Catheter Insertion
@@ -272,17 +272,15 @@ class TestCAODebulkingStentIPC:
         result = coder.code_procedure({"note_text": note, "registry": registry})
         codes = extract_codes(result)
 
-        # Should include ablation debulking code
-        assert "31641" in codes, "31641 (ablation tumor destruction) should be present"
-
         # Should include stent code
         assert "31636" in codes or "31631" in codes, "Stent code should be present"
 
         # Should include IPC insertion
         assert "32550" in codes, "32550 (tunneled pleural catheter) should be present"
 
-        # Should NOT include redundant codes bundled with CAO
-        assert "31640" not in codes, "31640 should not be present with 31641 (ablation supersedes mechanical)"
+        # Should NOT include debulking codes (bundled into stent)
+        assert "31640" not in codes, "31640 should not be billed separately when stent is placed"
+        assert "31641" not in codes, "31641 should not be billed separately when stent is placed"
         assert "31646" not in codes, "31646 (therapeutic aspiration) bundled with CAO"
 
         # 31630 should not be present unless dilation separately documented

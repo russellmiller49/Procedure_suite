@@ -12,7 +12,6 @@ from fastapi.testclient import TestClient
 os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
 os.environ.setdefault("PHI_DATABASE_URL", "sqlite:///:memory:")
 os.environ.setdefault("PHI_ENCRYPTION_MODE", "demo")
-os.environ.setdefault("CODER_REQUIRE_PHI_REVIEW", "true")
 
 from modules.api.fastapi_app import app  # noqa: E402
 from modules.api.phi_dependencies import SessionLocal, engine  # noqa: E402
@@ -107,6 +106,11 @@ def test_coding_allowed_after_review_uses_scrubbed_text(client, override_coding_
     )
     assert resp.status_code == 200
     assert override_coding_service.last_report_text == scrubbed_text
+
+
+@pytest.fixture(autouse=True)
+def require_phi_review(monkeypatch):
+    monkeypatch.setenv("CODER_REQUIRE_PHI_REVIEW", "true")
 
 
 def test_coder_run_blocked_when_review_required(client):

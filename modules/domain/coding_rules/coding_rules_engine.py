@@ -137,7 +137,7 @@ class CodingRulesEngine:
             invalid_codes = set()
             for code in result.codes:
                 norm_code = code.lstrip("+")
-                if norm_code not in self.valid_cpts:
+                if norm_code not in self.valid_cpts and f"+{norm_code}" not in self.valid_cpts:
                     invalid_codes.add(code)
             for code in invalid_codes:
                 discard(code, "R001_OUT_OF_DOMAIN", "Code not in IP knowledge base")

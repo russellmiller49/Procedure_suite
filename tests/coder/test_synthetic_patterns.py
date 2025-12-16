@@ -202,18 +202,19 @@ class TestBundlingRulesFromPatterns:
     """Test specific bundling rules derived from excluded_or_bundled_codes."""
 
     def test_radial_ebus_bundled_with_linear_ebus(self, coder: EnhancedCPTCoder):
-        """Radial EBUS (+31654) should not appear with Linear EBUS (31652/31653)."""
+        """Radial EBUS (+31654) should not appear with Linear EBUS (31652/31653) without peripheral workflow evidence."""
         note = (
-            "EBUS bronchoscopy with systematic mediastinal survey and "
-            "transbronchial lung biopsy using navigation and radial EBUS "
-            "for a pulmonary nodule."
+            "Linear EBUS bronchoscopy performed for mediastinal staging. "
+            "EBUS-TBNA performed at station 7 with multiple passes. "
+            "Radial EBUS probe was used briefly (no peripheral lesion workflow documented)."
         )
         result = coder.code_procedure({"note_text": note})
         detected = extract_coder_codes(result)
 
-        # If linear EBUS present, radial should be excluded
-        if "31652" in detected or "31653" in detected:
-            assert "31654" not in detected, "31654 bundled with linear EBUS codes"
+        # If linear EBUS present and there is no peripheral-lesion workflow evidence, radial should be excluded.
+        peripheral_context_present = bool(detected & {"31627", "31628", "31629", "31626"})
+        if ("31652" in detected or "31653" in detected) and not peripheral_context_present:
+            assert "31654" not in detected, "31654 bundled with linear EBUS codes (no peripheral context)"
 
     def test_brushing_bundled_with_tblb(self, coder: EnhancedCPTCoder):
         """Brushing (31623) should be bundled into TBLB (31628) same lobe."""

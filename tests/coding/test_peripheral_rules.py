@@ -7,7 +7,7 @@ from modules.coder.types import PeripheralLesionEvidence
 
 
 def _codes_for(lesions: list[PeripheralLesionEvidence]) -> set[str]:
-    return {candidate.code for candidate in peripheral_lesions_to_candidates(lesions)}
+    return {candidate.code.lstrip("+") for candidate in peripheral_lesions_to_candidates(lesions)}
 
 
 def test_peripheral_rules_empty_input_returns_no_candidates():
@@ -42,4 +42,3 @@ def test_peripheral_rules_ignore_tbna_only_lesion():
 
     codes = _codes_for(lesions)
     assert codes == set()
-
