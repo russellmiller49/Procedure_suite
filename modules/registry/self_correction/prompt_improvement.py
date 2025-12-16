@@ -11,7 +11,7 @@ from typing import List
 from modules.common.llm import GeminiLLM, OpenAILLM
 from modules.registry.prompts import FIELD_INSTRUCTIONS
 
-_SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
+_SCHEMA_PATH = Path(__file__).resolve().parents[3] / "data" / "knowledge" / "IP_Registry.json"
 
 
 @dataclass

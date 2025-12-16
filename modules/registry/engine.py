@@ -6,6 +6,7 @@ from copy import deepcopy
 import re
 from typing import Any, Dict, Set
 
+from modules.common.logger import get_logger
 from modules.common.sectionizer import SectionizerService
 from modules.common.spans import Span
 from modules.registry.extractors.llm_detailed import LLMDetailedExtractor
@@ -16,6 +17,95 @@ from modules.registry.normalization import normalize_registry_enums
 
 from .schema import RegistryRecord
 
+
+logger = get_logger("registry_engine")
+
+# List-like fields that must contain only non-empty strings (no None/"").
+# Centralize this so enum-array fields don't trigger record-wide validation failures.
+_STRING_ENUM_LIST_FIELDS: set[str] = {
+    "sampling_tools_used",
+    "specimen_sent_for",
+    "hemostasis_methods",
+    "destinations",
+}
+
+
+def _format_payload_path(path: tuple[Any, ...]) -> str:
+    rendered = ""
+    for part in path:
+        if isinstance(part, int):
+            rendered += f"[{part}]"
+        else:
+            if rendered:
+                rendered += "."
+            rendered += str(part)
+    return rendered or "<root>"
+
+
+def _sanitize_string_enum_lists(payload: Any) -> list[str]:
+    """Drop invalid items (None/blank/non-str) from known list-of-enum fields.
+
+    This runs before RegistryRecord validation to prevent broad pruning/fallbacks
+    when a single list contains an invalid element.
+    """
+    warnings: list[str] = []
+
+    def _walk(obj: Any, path: tuple[Any, ...]) -> None:
+        if isinstance(obj, dict):
+            for key, value in list(obj.items()):
+                next_path = path + (key,)
+                if key in _STRING_ENUM_LIST_FIELDS and isinstance(value, list):
+                    kept: list[str] = []
+                    dropped: list[Any] = []
+                    for item in value:
+                        if item is None:
+                            dropped.append(item)
+                            continue
+                        if not isinstance(item, str):
+                            dropped.append(item)
+                            continue
+                        if not item.strip():
+                            dropped.append(item)
+                            continue
+                        kept.append(item)
+
+                    if dropped:
+                        obj[key] = kept
+                        warnings.append(
+                            f"Dropped invalid list items from {_format_payload_path(next_path)}: {dropped!r}"
+                        )
+                    continue
+
+                _walk(value, next_path)
+            return
+
+        if isinstance(obj, list):
+            for idx, item in enumerate(obj):
+                _walk(item, path + (idx,))
+
+    _walk(payload, ())
+    return warnings
+
+
+def _summarize_list(items: list[str], *, max_items: int, sep: str = "; ") -> str:
+    if not items:
+        return ""
+    shown = items[:max_items]
+    suffix = f"{sep}(+{len(items) - max_items} more)" if len(items) > max_items else ""
+    return sep.join(shown) + suffix
+
+
+def _drop_none_items_from_lists(obj: Any) -> None:
+    """In-place removal of None items from any lists in a payload structure."""
+    if isinstance(obj, dict):
+        for value in obj.values():
+            _drop_none_items_from_lists(value)
+        return
+
+    if isinstance(obj, list):
+        obj[:] = [item for item in obj if item is not None]
+        for item in obj:
+            _drop_none_items_from_lists(item)
 
 # Procedure family tags used to gate schema fields and validation rules
 PROCEDURE_FAMILIES = {
@@ -250,6 +340,8 @@ def classify_procedure_families(note_text: str) -> Set[str]:
         r"\bebus\b.*(?:tbna|sampl|aspirat|needle|biops)",
         r"(?:tbna|sampl|aspirat).*\bebus\b",
         r"linear\s+(?:ebus|endobronchial ultrasound)",
+        r"ebus[-\s]*findings",
+        r"overall\s+rose\s+diagnosis",
         # Station sampling - require close proximity and exclude negatives
         r"station\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l).{0,30}(?:sampl|pass|needle|aspirat)",
         r"(?:sampl|pass|needle|aspirat).{0,30}station\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l)",
@@ -302,7 +394,12 @@ def classify_procedure_families(note_text: str) -> Set[str]:
         r"veran",
         r"spin(?:drive)?.*(?:navigat|target)",
     ]
-    if any(re.search(pat, proc_lowered, re.IGNORECASE) for pat in nav_indicators):
+    # Navigation details are often documented outside strict PROCEDURE/TECHNIQUE
+    # headers (e.g., planning and platform setup narratives). Check both the
+    # extracted procedure section text and the full note to avoid false negatives.
+    if any(re.search(pat, proc_lowered, re.IGNORECASE) for pat in nav_indicators) or any(
+        re.search(pat, lowered, re.IGNORECASE) for pat in nav_indicators
+    ):
         families.add("NAVIGATION")
 
     # --- CAO (Central Airway Obstruction) Detection ---
@@ -349,6 +446,8 @@ def classify_procedure_families(note_text: str) -> Set[str]:
     # Only add STENT if there's a procedure AND it's not history-only (unless there's also a new procedure)
     if has_stent_procedure and not is_history_only:
         families.add("STENT")
+        # Airway stenting/removal is a CAO intervention family in this registry.
+        families.add("CAO")
     elif has_stent_procedure and is_history_only:
         # Check if there's explicit new stent action beyond the history mention
         new_action_patterns = [
@@ -358,6 +457,7 @@ def classify_procedure_families(note_text: str) -> Set[str]:
         ]
         if any(re.search(pat, proc_lowered) for pat in new_action_patterns):
             families.add("STENT")
+            families.add("CAO")
 
     # --- PLEURAL Detection ---
     # Be specific to avoid false positives from EBUS needle "aspiration"
@@ -425,11 +525,12 @@ def classify_procedure_families(note_text: str) -> Set[str]:
     # --- BAL Detection ---
     bal_indicators = [
         r"bronchoalveolar\s+lavage",
+        r"bronchial\s+alveolar\s+lavage",
         r"\bbal\b.*(?:perform|obtain|sent|collect)",
         r"(?:perform|obtain).*\bbal\b",
-        r"lavage\s+(?:perform|sent|obtain|specimen)",
+        r"lavage.{0,20}(?:perform|performed|sent|obtain|obtained|specimen|collect|collected)",
     ]
-    if any(re.search(pat, proc_lowered) for pat in bal_indicators):
+    if any(re.search(pat, proc_lowered) for pat in bal_indicators) or any(re.search(pat, lowered) for pat in bal_indicators):
         families.add("BAL")
 
     # --- BIOPSY Detection (general transbronchial/endobronchial) ---
@@ -595,9 +696,26 @@ class RegistryEngine:
         include_evidence: bool = True,
         context: dict[str, Any] | None = None,
     ) -> RegistryRecord | tuple[RegistryRecord, dict[str, list[Span]]]:
+        record, _warnings = self.run_with_warnings(
+            note_text,
+            include_evidence=include_evidence,
+            context=context,
+        )
+        if explain:
+            return record, record.evidence
+        return record
+
+    def run_with_warnings(
+        self,
+        note_text: str,
+        *,
+        include_evidence: bool = True,
+        context: dict[str, Any] | None = None,
+    ) -> tuple[RegistryRecord, list[str]]:
         sections = self.sectionizer.sectionize(note_text)
         evidence: Dict[str, list[Span]] = {}
         seed_data: Dict[str, Any] = {}
+        warnings: list[str] = []
 
         # Run deterministic extractors FIRST to seed commonly missed fields
         # These provide reliable extraction for demographics, ASA, sedation, etc.
@@ -623,17 +741,41 @@ class RegistryEngine:
                     Span(text=mrn_match.group(0).strip(), start=mrn_match.start(), end=mrn_match.end())
                 )
 
-        llm_result = self.llm_extractor.extract(note_text, sections, context=context)
-        llm_data_raw = llm_result.value or {}
-        llm_data = llm_data_raw if isinstance(llm_data_raw, dict) else {}
-
-        # LLM responses sometimes return an "evidence" map with offsets only. Strip or
-        # normalize them so pydantic validation does not fail when building the record.
+        llm_result = None
+        llm_data: dict[str, Any] = {}
         raw_llm_evidence = None
-        if isinstance(llm_data, dict):
-            raw_llm_evidence = llm_data.pop("evidence", None)
+        try:
+            llm_result = self.llm_extractor.extract(note_text, sections, context=context)
+        except TimeoutError as exc:
+            warnings.append("REGISTRY_LLM_TIMEOUT_FALLBACK_TO_ENGINE")
+            try:
+                logger.warning("LLM timeout; falling back to deterministic engine extractors (%s)", exc)
+            except Exception:
+                pass
+        except Exception as exc:
+            warnings.append("REGISTRY_LLM_TIMEOUT_FALLBACK_TO_ENGINE")
+            try:
+                logger.warning("LLM extractor error; falling back to deterministic engine extractors (%s)", exc)
+            except Exception:
+                pass
+
+        if llm_result is not None:
+            llm_data_raw = llm_result.value
+            llm_data = llm_data_raw if isinstance(llm_data_raw, dict) else {}
+
+            # Treat empty dict/null as a degraded LLM extraction and proceed with seeded/heuristic extraction.
+            if not llm_data:
+                warnings.append("REGISTRY_LLM_TIMEOUT_FALLBACK_TO_ENGINE")
+
+            # LLM responses sometimes return an "evidence" map with offsets only. Strip or
+            # normalize them so pydantic validation does not fail when building the record.
+            raw_llm_evidence = llm_data.pop("evidence", None) if isinstance(llm_data, dict) else None
 
         merged_data = self._merge_llm_and_seed(llm_data, seed_data)
+
+        # Seed linear EBUS station list early so downstream normalization and heuristics can use it.
+        if station_list and "EBUS" in procedure_families and not merged_data.get("linear_ebus_stations"):
+            merged_data["linear_ebus_stations"] = station_list
 
         # Apply field-specific normalization/postprocessing before validation
         for field, func in POSTPROCESSORS.items():
@@ -644,14 +786,13 @@ class RegistryEngine:
         # Pass procedure_families to gate EBUS-specific extractions
         self._apply_ebus_heuristics(merged_data, note_text, procedure_families)
         self._apply_pleural_heuristics(merged_data, note_text, procedure_families)
+        self._apply_bronchoscopy_therapeutics_heuristics(merged_data, note_text)
+        self._apply_navigation_fiducial_heuristics(merged_data, note_text)
 
         # Clear bronch_tbbx fields for EBUS-only cases
         # EBUS-TBNA (transbronchial needle aspiration) is NOT the same as TBBx (transbronchial biopsy)
         # For pure EBUS staging, bronch_num_tbbx and bronch_tbbx_tool should be null
         self._apply_ebus_only_bronch_cleanup(merged_data, note_text, procedure_families)
-
-        if station_list and not merged_data.get("linear_ebus_stations") and "EBUS" in procedure_families:
-            merged_data["linear_ebus_stations"] = station_list
 
         # Validate EBUS station fields: filter out any hallucinated stations not in the text
         if "EBUS" in procedure_families:
@@ -755,6 +896,16 @@ class RegistryEngine:
 
         nested_payload = normalize_registry_payload(nested_payload)
 
+        sanitization_warnings = _sanitize_string_enum_lists(nested_payload)
+        if sanitization_warnings:
+            warnings.extend(sanitization_warnings)
+            for warning in sanitization_warnings:
+                try:
+                    logger.warning(warning)
+                except Exception:
+                    # Logging must never affect extraction correctness.
+                    pass
+
         # Attempt to create RegistryRecord with better error handling
         try:
             record = RegistryRecord(**nested_payload)
@@ -767,7 +918,10 @@ class RegistryEngine:
                 # The LLM may emit values that are "close" but not schema-valid (e.g., lists where a
                 # literal is expected). For demo and interactive UI usage, it's better to drop those
                 # specific fields and return a partially-filled record than to fail the whole request.
+                initial_errors = e.errors()
                 pruned_payload = deepcopy(nested_payload)
+                pruned_paths: list[str] = []
+                error_summaries: list[str] = []
 
                 def _null_out_path(obj: Any, loc: tuple[Any, ...] | list[Any]) -> None:
                     if not loc:
@@ -796,51 +950,96 @@ class RegistryEngine:
                         except Exception:
                             cur[last] = None
 
-                for err in e.errors():
-                    _null_out_path(pruned_payload, err.get("loc", []))
+                for err in initial_errors:
+                    loc = err.get("loc", [])
+                    loc_tuple = tuple(loc) if isinstance(loc, (list, tuple)) else (loc,)
+                    path_str = _format_payload_path(loc_tuple)
+                    pruned_paths.append(path_str)
+                    err_type = err.get("type") or "validation_error"
+                    error_summaries.append(f"{path_str}: {err_type}")
+                    _null_out_path(pruned_payload, loc_tuple)
+
+                # If pruning sets list indices to None, strip them so enum-array validation can succeed.
+                _drop_none_items_from_lists(pruned_payload)
 
                 try:
                     record = RegistryRecord(**pruned_payload)
-                    logger.warning(
-                        "RegistryRecord validation required pruning; returning partial record",
-                        extra={"pruned_error_count": len(e.errors())},
-                    )
                 except Exception as retry_exc:
                     # Second recovery: drop entire top-level sections that still fail.
                     from pydantic import ValidationError as _ValidationError
 
                     if isinstance(retry_exc, _ValidationError):
+                        retry_errors = retry_exc.errors()
                         top_pruned_payload = deepcopy(pruned_payload)
-                        for err in retry_exc.errors():
+                        top_keys_pruned: list[str] = []
+                        retry_summaries: list[str] = []
+
+                        for err in retry_errors:
                             loc = err.get("loc", [])
                             if not loc:
                                 continue
+                            retry_loc_tuple = tuple(loc) if isinstance(loc, (list, tuple)) else (loc,)
+                            retry_path = _format_payload_path(retry_loc_tuple)
+                            err_type = err.get("type") or "validation_error"
+                            retry_summaries.append(f"{retry_path}: {err_type}")
                             top_key = loc[0]
                             if isinstance(top_key, str) and isinstance(top_pruned_payload, dict):
                                 top_pruned_payload[top_key] = None
+
+                                if top_key not in top_keys_pruned:
+                                    top_keys_pruned.append(top_key)
                         try:
                             record = RegistryRecord(**top_pruned_payload)
-                            logger.warning(
-                                "RegistryRecord validation required top-level pruning; returning partial record",
-                                extra={"top_pruned_error_count": len(retry_exc.errors())},
-                            )
                         except Exception as final_exc:
+                            try:
+                                logger.error(
+                                    "RegistryRecord validation failed after pruning; returning empty record",
+                                    extra={"error": str(final_exc)},
+                                )
+                            except Exception:
+                                pass
+                            record = RegistryRecord()
+                        else:
+                            message = (
+                                "RegistryRecord validation required top-level pruning; returning partial record "
+                                f"(errors={len(retry_errors)}). "
+                                f"Top-level pruned: {_summarize_list(top_keys_pruned, max_items=5, sep=', ')}. "
+                                f"Error summary: {_summarize_list(retry_summaries, max_items=3)}"
+                            )
+                            warnings.append(message)
+                            try:
+                                logger.warning(message)
+                            except Exception:
+                                pass
+                    else:
+                        try:
                             logger.error(
                                 "RegistryRecord validation failed after pruning; returning empty record",
-                                extra={"error": str(final_exc)},
+                                extra={"error": str(retry_exc)},
                             )
-                            record = RegistryRecord()
-                    else:
-                        logger.error(
-                            "RegistryRecord validation failed after pruning; returning empty record",
-                            extra={"error": str(retry_exc)},
-                        )
+                        except Exception:
+                            pass
                         record = RegistryRecord()
+                else:
+                    message = (
+                        "RegistryRecord validation required pruning; returning partial record "
+                        f"(errors={len(initial_errors)}). "
+                        f"Pruned: {_summarize_list(pruned_paths, max_items=5, sep=', ')}. "
+                        f"Error summary: {_summarize_list(error_summaries, max_items=3)}"
+                    )
+                    warnings.append(message)
+                    try:
+                        logger.warning(message)
+                    except Exception:
+                        pass
             else:
-                logger.error(
-                    "RegistryRecord validation failed with non-validation error; returning empty record",
-                    extra={"error": str(e)},
-                )
+                try:
+                    logger.error(
+                        "RegistryRecord validation failed with non-validation error; returning empty record",
+                        extra={"error": str(e)},
+                    )
+                except Exception:
+                    pass
                 record = RegistryRecord()
         
         normalized_evidence: dict[str, list[Span]] = {}
@@ -858,14 +1057,12 @@ class RegistryEngine:
             normalized_evidence = validate_evidence_spans(note_text, normalized_evidence)
 
         record.evidence = {field: spans for field, spans in normalized_evidence.items()}
-        if explain:
-            return record, record.evidence
-        return record
+        return record, warnings
 
     def _extract_linear_station_spans(self, text: str) -> tuple[list[str], list[Span]]:
         """Extract linear EBUS station mentions and their spans from raw text."""
         # Require a boundary before the station number to avoid matching inside "12R" -> "2R"
-        pattern = r"(?mi)(?:station\s*)?(?<![0-9A-Za-z])(2R|2L|4R|4L|7|10R|10L|11R|11L)\b\s*[:\-]?"
+        pattern = r"(?mi)(?:station\s*)?(?<![0-9A-Za-z])(2R|2L|4R|4L|7|10R|10L|11R|11L)(?:[sSiI])?\b\s*[:\-]?"
         stations: list[str] = []
         spans: list[Span] = []
         for match in re.finditer(pattern, text):
@@ -897,6 +1094,8 @@ class RegistryEngine:
                     rf"station\s+7\s*[:\-]",  # "station 7:" or "station 7-"
                     rf"station\s*7\s+(?:was\s+)?(?:sampl|biops|needle|pass|aspirat)",  # "station 7 was sampled"
                     rf"subcarinal\s+(?:lymph\s+)?node",  # "subcarinal node" (station 7 synonym)
+                    rf"\b7\b[^.\n]{{0,40}}subcarinal",  # "7 (subcarinal) node"
+                    rf"subcarinal[^.\n]{{0,40}}\b7\b",  # "subcarinal ... 7"
                     rf"(?:sampl|biops|needle|pass).{{0,30}}station\s*7\b",  # sampling context before station 7
                 ]
             else:
@@ -1120,6 +1319,21 @@ class RegistryEngine:
         # --- EBUS Heuristics (gated by procedure family) ---
         # Only extract EBUS-specific data if this is an EBUS procedure
         if is_ebus_procedure:
+            station_order = {
+                "2R": 0,
+                "2L": 1,
+                "4R": 2,
+                "4L": 3,
+                "7": 4,
+                "10R": 5,
+                "10L": 6,
+                "11R": 7,
+                "11L": 8,
+            }
+
+            def _sort_stations(stations: set[str]) -> list[str]:
+                return sorted({s.upper() for s in stations if s}, key=lambda s: (station_order.get(s, 999), s))
+
             # ebus_scope_brand
             if "Olympus" in text and ("BF-UC" in text or "EBUS" in text):
                 data["ebus_scope_brand"] = "Olympus"
@@ -1136,8 +1350,25 @@ class RegistryEngine:
                 if any(kw in snippet for kw in ["pass", "sample", "needle", "tbna", "aspirat"]):
                     if "not sampled" not in snippet:
                         stations_found.add(match.group(1).upper())
+            if not stations_found and data.get("linear_ebus_stations"):
+                # Fallback: if we have station numbers and the note indicates TBNA sampling,
+                # treat the documented stations as sampled.
+                lowered = text.lower()
+                has_sampling = any(
+                    kw in lowered
+                    for kw in [
+                        "tbna",
+                        "transbronchial needle",
+                        "needle aspiration",
+                        "needle aspirat",
+                        "needle pass",
+                        "passes",
+                    ]
+                )
+                if has_sampling:
+                    stations_found.update(data.get("linear_ebus_stations") or [])
             if stations_found:
-                data["ebus_stations_sampled"] = sorted(list(stations_found))
+                data["ebus_stations_sampled"] = _sort_stations(stations_found)
 
             # Station-level detail (size, passes, rose_result) when present
             detail_entries = data.get("ebus_stations_detail") or []
@@ -1160,6 +1391,10 @@ class RegistryEngine:
                     entry = detail_by_station.setdefault(station, {"station": station})
                     entry["rose_result"] = rose_val
 
+            # Ensure each planned station has a detail entry (even if only station is known).
+            for station in (data.get("linear_ebus_stations") or []):
+                detail_by_station.setdefault(station, {"station": station})
+
             if detail_by_station:
                 for entry in detail_by_station.values():
                     entry.setdefault("shape", None)
@@ -1168,12 +1403,16 @@ class RegistryEngine:
                     entry.setdefault("chs_present", None)
                     entry.setdefault("appearance_category", None)
                     entry.setdefault("rose_result", entry.get("rose_result", None))
-                data["ebus_stations_detail"] = list(detail_by_station.values())
+                data["ebus_stations_detail"] = [
+                    detail_by_station[st]
+                    for st in _sort_stations(set(detail_by_station.keys()))
+                    if st in detail_by_station
+                ]
                 if data.get("ebus_stations_sampled"):
                     merged = set(data["ebus_stations_sampled"]) | set(detail_by_station.keys())
-                    data["ebus_stations_sampled"] = sorted(merged)
+                    data["ebus_stations_sampled"] = _sort_stations(merged)
                 else:
-                    data["ebus_stations_sampled"] = sorted(detail_by_station.keys())
+                    data["ebus_stations_sampled"] = _sort_stations(set(detail_by_station.keys()))
 
             # ebus_needle_gauge - expanded pattern to capture "22 gauge needle" formats
             # Schema enum: [19, 21, 22, 25] (integers, not strings)
@@ -1375,6 +1614,210 @@ class RegistryEngine:
                 data["disposition"] = "Floor Admission"
             elif "discharge" in lowered and "home" in lowered:
                 data["disposition"] = "Discharge Home"
+
+    def _apply_bronchoscopy_therapeutics_heuristics(self, data: dict[str, Any], text: str) -> None:
+        """Deterministically seed common therapeutic bronchoscopy actions.
+
+        The extraction engine may run in stub/offline mode (or the LLM may fail). These
+        heuristics ensure high-salience actions are reflected in procedures_performed
+        when they are explicitly documented in the note.
+        """
+        lowered = text.lower()
+
+        existing = data.get("procedures_performed")
+        procedures: dict[str, Any]
+        if isinstance(existing, dict):
+            procedures = dict(existing)
+        elif existing is None:
+            procedures = {}
+        else:
+            # Unexpected type (e.g., narrative string). Leave untouched.
+            return
+
+        def _is_performed(obj: Any) -> bool:
+            return isinstance(obj, dict) and obj.get("performed") is True
+
+        def _set_if_missing(name: str, payload: dict[str, Any]) -> None:
+            current = procedures.get(name)
+            if _is_performed(current):
+                return
+            if isinstance(current, dict):
+                merged = dict(current)
+                for k, v in payload.items():
+                    if merged.get(k) in (None, "", [], {}):
+                        merged[k] = v
+                procedures[name] = merged
+            else:
+                procedures[name] = payload
+
+        # Therapeutic aspiration (31645)
+        # Anchor on explicit phrase to avoid confusing suctioning with BAL.
+        if re.search(r"\btherapeutic\s+aspiration\b", lowered) and not re.search(
+            r"\b(?:no|not|without)\b[^.\n]{0,40}\btherapeutic\s+aspiration\b",
+            lowered,
+        ):
+            aspiration: dict[str, Any] = {"performed": True}
+            if "mucus" in lowered:
+                aspiration["material"] = "Mucus plug"
+            _set_if_missing("therapeutic_aspiration", aspiration)
+
+        # Airway dilation (31630)
+        # Require balloon + dilat* (or a known balloon brand) and avoid explicit negation.
+        has_dilation = bool(
+            re.search(r"\bmustang\s+balloon\b", lowered)
+            or re.search(r"\bballoon\b[^.\n]{0,60}\bdilat", lowered)
+            or re.search(r"\bdilat\w*\b[^.\n]{0,60}\bballoon\b", lowered)
+        )
+        dilation_negated = bool(
+            re.search(r"\b(?:no|not|without)\b[^.\n]{0,60}\bdilat", lowered)
+            or re.search(r"\bdilat\w*\b[^.\n]{0,30}\b(?:not|no)\b[^.\n]{0,30}\bperformed", lowered)
+        )
+        if has_dilation and not dilation_negated:
+            dilation: dict[str, Any] = {"performed": True, "method": "Balloon"}
+            size_match = re.search(r"\b(\d+(?:\.\d+)?)\s*mm\b[^.\n]{0,60}\bballoon\b", lowered)
+            if size_match:
+                try:
+                    dilation["balloon_diameter_mm"] = float(size_match.group(1))
+                except ValueError:
+                    pass
+            _set_if_missing("airway_dilation", dilation)
+
+        if procedures:
+            data["procedures_performed"] = procedures
+
+    def _apply_navigation_fiducial_heuristics(self, data: dict[str, Any], text: str) -> None:
+        """Deterministically extract fiducial marker placement into granular navigation targets."""
+        families = {str(x) for x in (data.get("procedure_families") or []) if x}
+        if "NAVIGATION" not in families:
+            return
+
+        lowered = text.lower()
+        if "fiducial" not in lowered:
+            return
+
+        fiducial_sentence: str | None = None
+        for line in text.splitlines():
+            if re.search(r"\bfiducial\s+marker\b", line, re.IGNORECASE):
+                fiducial_sentence = line.strip()
+                break
+        if fiducial_sentence is None:
+            match = re.search(r"\bfiducial\s+marker\b", text, re.IGNORECASE)
+            if match:
+                window = text[match.start() : match.start() + 300]
+                fiducial_sentence = window.splitlines()[0].strip() if window else None
+        if fiducial_sentence is None:
+            return
+
+        fiducial_lower = fiducial_sentence.lower()
+        if not re.search(r"\b(?:placed|deploy\w*|position\w*|insert\w*)\b", fiducial_lower):
+            return
+        if re.search(r"\b(?:no|not|without)\b", fiducial_lower):
+            return
+
+        def _extract_target_location() -> str:
+            for pattern in (
+                r"\bengage(?:d)?\s+the\s+([^\n.]{3,200})",
+                r"\bnavigate(?:d|ion)?\s+to\s+([^\n.]{3,200})",
+                r"\btarget(?:ed)?\s+lesion\s+(?:is\s+)?(?:in|at)\s+([^\n.]{3,200})",
+            ):
+                match = re.search(pattern, text, re.IGNORECASE)
+                if match:
+                    loc = match.group(1).strip()
+                    if loc:
+                        return loc
+            return "Unknown target"
+
+        def _extract_target_lobe(location_text: str) -> str | None:
+            upper = location_text.upper()
+            for token in ("RUL", "RML", "RLL", "LUL", "LLL"):
+                if re.search(rf"\b{token}\b", upper):
+                    return token
+            if "LINGULA" in upper:
+                return "Lingula"
+            if "LEFT UPPER" in upper:
+                return "LUL"
+            if "LEFT LOWER" in upper:
+                return "LLL"
+            if "RIGHT UPPER" in upper:
+                return "RUL"
+            if "RIGHT MIDDLE" in upper:
+                return "RML"
+            if "RIGHT LOWER" in upper:
+                return "RLL"
+            return None
+
+        def _extract_lesion_size_mm() -> float | None:
+            cm_match = re.search(r"\blesion\b[^.\n]{0,80}\b(\d+(?:\.\d+)?)\s*cm\b", lowered)
+            if cm_match:
+                try:
+                    return float(cm_match.group(1)) * 10.0
+                except ValueError:
+                    return None
+            mm_match = re.search(r"\blesion\b[^.\n]{0,80}\b(\d+(?:\.\d+)?)\s*mm\b", lowered)
+            if mm_match:
+                try:
+                    return float(mm_match.group(1))
+                except ValueError:
+                    return None
+            return None
+
+        def _extract_segment(location_text: str) -> str | None:
+            match = re.search(r"\((LB[^)]+)\)", location_text, re.IGNORECASE)
+            if match:
+                seg = match.group(1).strip()
+                return seg or None
+            return None
+
+        granular_raw = data.get("granular_data")
+        granular: dict[str, Any]
+        if granular_raw is None:
+            granular = {}
+        elif isinstance(granular_raw, dict):
+            granular = dict(granular_raw)
+        else:
+            return
+
+        targets_raw = granular.get("navigation_targets")
+        targets: list[dict[str, Any]]
+        if isinstance(targets_raw, list):
+            targets = [t for t in targets_raw if isinstance(t, dict)]
+        else:
+            targets = []
+
+        details = fiducial_sentence
+        location = _extract_target_location()
+        lesion_size_mm = _extract_lesion_size_mm()
+
+        if targets:
+            target0 = dict(targets[0])
+            target0.setdefault("target_number", 1)
+            target0.setdefault("target_location_text", location)
+            target0.setdefault("target_lobe", _extract_target_lobe(location))
+            target0.setdefault("target_segment", _extract_segment(location))
+            if lesion_size_mm is not None:
+                target0.setdefault("lesion_size_mm", lesion_size_mm)
+            target0["fiducial_marker_placed"] = True
+            target0.setdefault("fiducial_marker_details", details)
+            targets[0] = target0
+        else:
+            target_payload: dict[str, Any] = {
+                "target_number": 1,
+                "target_location_text": location,
+                "fiducial_marker_placed": True,
+                "fiducial_marker_details": details,
+            }
+            lobe = _extract_target_lobe(location)
+            if lobe is not None:
+                target_payload["target_lobe"] = lobe
+            segment = _extract_segment(location)
+            if segment is not None:
+                target_payload["target_segment"] = segment
+            if lesion_size_mm is not None:
+                target_payload["lesion_size_mm"] = lesion_size_mm
+            targets = [target_payload]
+
+        granular["navigation_targets"] = targets
+        data["granular_data"] = granular
 
     def _apply_ebus_only_bronch_cleanup(
         self, data: dict[str, Any], text: str, procedure_families: Set[str]

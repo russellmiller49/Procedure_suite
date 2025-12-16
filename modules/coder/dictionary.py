@@ -235,12 +235,20 @@ def _detect_radial(
 ) -> list[DetectedIntent]:
     intents: list[DetectedIntent] = []
     lower_text = text.lower()
+    # Radial EBUS is only billable when used for peripheral lesion localization. Notes often
+    # document the peripheral context outside the immediate "radial" sentence (e.g. in the
+    # Indication), so allow a global peripheral context signal as well.
+    global_peripheral = any(term in lower_text for term in lexical.peripheral_terms)
+    if not global_peripheral:
+        global_peripheral = "peripheral" in lower_text and any(
+            term in lower_text for term in ("lesion", "nodule", "ppl", "target")
+        )
     for pattern in lexical.radial_terms:
         for match in pattern.finditer(text):
             context = _context_slice(lower_text, match.start(), match.end())
             if "no radial" in context or "without radial" in context:
                 continue
-            peripheral = any(term in context for term in lexical.peripheral_terms)
+            peripheral = global_peripheral or any(term in context for term in lexical.peripheral_terms)
             span = _sentence_span(sentences, text, sections, match.start(), match.end())
             intents.append(
                 DetectedIntent(
@@ -637,6 +645,8 @@ def _detect_sedation(text: str, sections: Sequence[Section], lexical: Lexicon) -
         if "no moderate sedation" in normalized or "no sedation" in normalized:
             continue
         observer = any(term in normalized for term in lexical.observer_terms)
+        if not observer and re.search(r"\bindependent\b[\s\S]{0,40}\bobserver\b", normalized):
+            observer = True
         times = {match.group(1).lower(): _parse_time_string(match.group(2)) for match in _TIME_TOKEN.finditer(block)}
         start_minutes = times.get("start")
         stop_minutes = times.get("stop")

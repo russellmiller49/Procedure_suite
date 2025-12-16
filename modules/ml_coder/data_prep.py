@@ -13,7 +13,12 @@ from typing import Any, Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
-from skmultilearn.model_selection import iterative_train_test_split
+try:
+    # Optional dependency: used for multi-label iterative stratification during training.
+    # Tests and inference should not hard-require this package.
+    from skmultilearn.model_selection import iterative_train_test_split
+except ModuleNotFoundError:  # pragma: no cover
+    iterative_train_test_split = None
 
 GOLDEN_DIR = Path("data/knowledge/golden_extractions")
 
@@ -236,18 +241,12 @@ def _extract_codes(entry: Dict[str, Any]) -> List[str]:
     Extract CPT codes from an entry.
 
     Priority order (ground truth first):
-    1. cpt_codes (top-level ground truth)
-    2. coding_review.final_cpt_codes (fallback)
-    3. coding_review.cpt_summary.final_codes (fallback)
-    4. coding_review.cpt_summary keys (fallback)
-    5. coding_review.cpt_summary[].code (fallback)
+    1. coding_review.final_cpt_codes (most reviewed)
+    2. coding_review.cpt_summary.final_codes
+    3. coding_review.cpt_summary keys
+    4. coding_review.cpt_summary[].code
+    5. cpt_codes (top-level fallback)
     """
-    # Primary: top-level cpt_codes is ground truth
-    raw = entry.get("cpt_codes", [])
-    if raw:
-        return [str(c) for c in raw]
-
-    # Fallback to coding_review if top-level missing
     cr = entry.get("coding_review", {})
     if not isinstance(cr, dict):
         cr = {}
@@ -273,6 +272,10 @@ def _extract_codes(entry: Dict[str, Any]) -> List[str]:
                 codes.append(str(item["code"]))
         if codes:
             return codes
+
+    raw = entry.get("cpt_codes", [])
+    if raw and isinstance(raw, list):
+        return [str(c) for c in raw]
 
     return []
 
@@ -399,9 +402,18 @@ def stratified_split(
     y, all_codes = _build_label_matrix(df)
     X_indices = np.arange(len(df)).reshape(-1, 1)
 
-    X_train, y_train, X_test, y_test = iterative_train_test_split(
-        X_indices, y, test_size=test_size
-    )
+    if iterative_train_test_split is None:
+        # Fallback split when scikit-multilearn isn't installed.
+        rng = np.random.default_rng(0)
+        idx = np.arange(len(df))
+        rng.shuffle(idx)
+        n_test = max(1, int(round(len(df) * test_size)))
+        X_test = idx[:n_test].reshape(-1, 1)
+        X_train = idx[n_test:].reshape(-1, 1)
+    else:
+        X_train, _y_train, X_test, _y_test = iterative_train_test_split(
+            X_indices, y, test_size=test_size
+        )
 
     X_train, X_test = _enforce_encounter_grouping(df, X_train, X_test)
     return X_train.flatten(), X_test.flatten(), all_codes
@@ -524,9 +536,17 @@ def _registry_stratified_split(
     X_indices = np.arange(len(df)).reshape(-1, 1)
 
     # Use iterative stratification for multi-label split
-    X_train, y_train, X_test, y_test = iterative_train_test_split(
-        X_indices, y, test_size=test_size
-    )
+    if iterative_train_test_split is None:
+        rng = np.random.default_rng(0)
+        idx = np.arange(len(df))
+        rng.shuffle(idx)
+        n_test = max(1, int(round(len(df) * test_size)))
+        X_test = idx[:n_test].reshape(-1, 1)
+        X_train = idx[n_test:].reshape(-1, 1)
+    else:
+        X_train, _y_train, X_test, _y_test = iterative_train_test_split(
+            X_indices, y, test_size=test_size
+        )
 
     # Enforce encounter grouping to prevent data leakage
     X_train, X_test = _enforce_encounter_grouping(df, X_train, X_test)

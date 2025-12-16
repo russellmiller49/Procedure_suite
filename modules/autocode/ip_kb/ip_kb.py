@@ -71,6 +71,7 @@ class IPCodingKnowledgeBase:
         "thoracoscopy_surgical_pleurodesis_decortication": ["thoracoscopy_surgical"],
         # Pleural mappings
         "pleural_pleurodesis": ["pleural_intrapleural_treatment"],
+        "pleural_drainage": ["pleural_drainage_catheter"],
         # PDT is not in v2.7 code_lists - need to handle separately or add
         "pdt_endobronchial": [],  # No mapping available; would need KB update
     }

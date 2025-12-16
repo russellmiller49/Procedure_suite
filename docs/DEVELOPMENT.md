@@ -69,16 +69,16 @@ This document is the **Single Source of Truth** for developers and AI assistants
 **Key Files:**
 - `modules/coder/application/coding_service.py` - Main orchestrator
 - `modules/coder/application/smart_hybrid_policy.py` - Hybrid decision logic
-- `modules/coder/domain_rules.py` - NCCI bundling, domain rules
+- `modules/coder/domain_rules/` - NCCI bundling, domain rules
 - `modules/coder/rules_engine.py` - Rule-based inference
 
 **Responsibilities:**
 - Maintain the 8-step coding pipeline in `CodingService`
-- Update domain rules in `domain_rules.py`
+- Update domain rules in `modules/coder/domain_rules/`
 - Ensure NCCI/MER compliance logic is correct
 - Keep confidence thresholds tuned in `modules/ml_coder/thresholds.py`
 
-**Rule**: Do not scatter logic. Keep business rules central in the Knowledge Base or domain_rules.py.
+**Rule**: Do not scatter logic. Keep business rules central in the Knowledge Base or `modules/coder/domain_rules/`.
 
 ### 2. Registry Agent
 

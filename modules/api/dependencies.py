@@ -14,7 +14,7 @@ from modules.coder.application.coding_service import CodingService
 from modules.coder.adapters.persistence.csv_kb_adapter import JsonKnowledgeBaseAdapter
 from modules.coder.adapters.nlp.keyword_mapping_loader import YamlKeywordMappingRepository
 from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDetector
-from modules.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter, MockLLMAdvisor
+from modules.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter, LLMAdvisorPort, MockLLMAdvisor
 from modules.domain.coding_rules.rule_engine import RuleEngine
 from modules.domain.procedure_store.repository import ProcedureStore
 from modules.coder.adapters.persistence.inmemory_procedure_store import (
@@ -102,20 +102,37 @@ def get_coding_service() -> CodingService:
     )
 
     # 5. LLM advisor (conditionally enabled)
-    llm_advisor: Optional[GeminiAdvisorAdapter | MockLLMAdvisor] = None
+    llm_advisor: Optional[LLMAdvisorPort] = None
     use_llm = os.getenv("CODER_USE_LLM_ADVISOR", "").lower() in ("true", "1", "yes")
 
     if use_llm:
-        api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY", "")
-        if api_key:
-            llm_advisor = GeminiAdvisorAdapter(
-                model_name=config.model_version,
-                allowed_codes=list(kb_repo.get_all_codes()),
-                api_key=api_key,
-            )
-            logger.info(f"LLM advisor enabled: {config.model_version}")
+        provider = os.getenv("LLM_PROVIDER", "gemini").strip().lower()
+        if provider == "openai_compat":
+            offline = os.getenv("OPENAI_OFFLINE", "").strip().lower() in ("1", "true", "yes")
+            api_key = os.getenv("OPENAI_API_KEY", "")
+            model_name = os.getenv("OPENAI_MODEL", "")
+            if not offline and api_key and not model_name:
+                logger.warning("OPENAI_MODEL not set, LLM advisor disabled")
+            else:
+                from modules.coder.adapters.llm.openai_compat_advisor import OpenAICompatAdvisorAdapter
+
+                llm_advisor = OpenAICompatAdvisorAdapter(
+                    model_name=model_name,
+                    allowed_codes=list(kb_repo.get_all_codes()),
+                    api_key=api_key,
+                )
+                logger.info("LLM advisor enabled: openai_compat")
         else:
-            logger.warning("GOOGLE_API_KEY not set, LLM advisor disabled")
+            api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY", "")
+            if api_key:
+                llm_advisor = GeminiAdvisorAdapter(
+                    model_name=config.model_version,
+                    allowed_codes=list(kb_repo.get_all_codes()),
+                    api_key=api_key,
+                )
+                logger.info(f"LLM advisor enabled: {config.model_version}")
+            else:
+                logger.warning("GOOGLE_API_KEY not set, LLM advisor disabled")
     else:
         logger.info("LLM advisor disabled (CODER_USE_LLM_ADVISOR not set)")
 

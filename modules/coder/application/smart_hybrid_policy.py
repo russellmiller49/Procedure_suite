@@ -10,6 +10,7 @@ Includes:
 
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass, field
 from enum import Enum
@@ -341,7 +342,7 @@ class HybridCoderResult:
 
     codes: List[str]
     source: str
-    difficulty: CaseDifficulty
+    difficulty: CaseDifficulty | None = None
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -420,10 +421,16 @@ class SmartHybridOrchestrator:
         rules_error: Optional[str] = None
         rules_error_type: Optional[str] = None
 
-        if ml_candidates:
+        candidates_for_rules = ml_candidates
+        if difficulty == CaseDifficulty.HIGH_CONF.value:
+            from modules.coder.application.candidate_expansion import expand_candidates
+
+            candidates_for_rules = expand_candidates(note_text, ml_candidates)
+
+        if candidates_for_rules:
             try:
                 rules_cleaned_ml = self._rules.validate(
-                    ml_candidates, note_text, strict=True
+                    candidates_for_rules, note_text, strict=True
                 )
             except Exception as e:
                 # RuleViolationError or other validation error
@@ -643,9 +650,16 @@ def build_hybrid_orchestrator(
         rules_engine = CodingRulesEngine()
 
     if llm_advisor is None:
-        from modules.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter
         from modules.ml_coder.data_prep import VALID_IP_CODES
-        llm_advisor = GeminiAdvisorAdapter(allowed_codes=list(VALID_IP_CODES))
+        provider = os.getenv("LLM_PROVIDER", "gemini").strip().lower()
+        if provider == "openai_compat":
+            from modules.coder.adapters.llm.openai_compat_advisor import OpenAICompatAdvisorAdapter
+
+            llm_advisor = OpenAICompatAdvisorAdapter(allowed_codes=list(VALID_IP_CODES))
+        else:
+            from modules.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter
+
+            llm_advisor = GeminiAdvisorAdapter(allowed_codes=list(VALID_IP_CODES))
 
     return SmartHybridOrchestrator(
         ml_predictor=ml_predictor,

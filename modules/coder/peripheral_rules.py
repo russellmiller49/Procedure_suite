@@ -68,7 +68,7 @@ def peripheral_lesions_to_candidates(
         )
     if want_31654:
         candidates.append(
-            CodeCandidate(code="31654", confidence=0.8, reason="peripheral:radial_ebus", evidence=None)
+            CodeCandidate(code="+31654", confidence=0.8, reason="peripheral:radial_ebus", evidence=None)
         )
 
     return candidates

@@ -824,16 +824,125 @@
               },
               "description": "Lymph node stations sampled"
             },
+            "stations_planned": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "2R",
+                  "2L",
+                  "3p",
+                  "4R",
+                  "4L",
+                  "7",
+                  "10R",
+                  "10L",
+                  "11R",
+                  "11L",
+                  "12R",
+                  "12L",
+                  "Lung Mass",
+                  "Other"
+                ]
+              },
+              "description": "Lymph node stations inspected/planned"
+            },
+            "stations_detail": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "Per-station EBUS-TBNA details (passes, size, ROSE, etc.)",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "station": {
+                    "type": "string",
+                    "enum": [
+                      "2R",
+                      "2L",
+                      "3p",
+                      "4R",
+                      "4L",
+                      "7",
+                      "10R",
+                      "10L",
+                      "11R",
+                      "11L",
+                      "12R",
+                      "12L"
+                    ]
+                  },
+                  "size_mm": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  },
+                  "passes": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1
+                  },
+                  "shape": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "margin": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "echogenicity": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "chs_present": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "appearance_category": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "rose_result": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "station"
+                ]
+              }
+            },
             "needle_gauge": {
               "type": [
-                "integer",
+                "string",
                 "null"
               ],
               "enum": [
-                19,
-                21,
-                22,
-                25,
+                "19G",
+                "21G",
+                "22G",
+                "25G",
                 null
               ]
             },
@@ -862,7 +971,20 @@
                 "null"
               ]
             },
+            "elastography_pattern": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Elastography narrative/pattern if documented"
+            },
             "doppler_used": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "photodocumentation_complete": {
               "type": [
                 "boolean",
                 "null"

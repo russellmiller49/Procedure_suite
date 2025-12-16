@@ -12,8 +12,9 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, date
-from typing import Any, Literal
+from typing import Any, Literal, TYPE_CHECKING
 
+import os
 from pydantic import BaseModel, ValidationError
 
 from modules.common.exceptions import RegistryError
@@ -33,6 +34,7 @@ from modules.registry.application.registry_builder import (
 from modules.registry.engine import RegistryEngine
 from modules.registry.schema import RegistryRecord
 from modules.registry.schema_granular import derive_procedures_from_granular
+from modules.registry.audit.audit_types import AuditCompareReport
 
 logger = get_logger("registry_service")
 from proc_schemas.coding import FinalCode, CodingResult
@@ -52,6 +54,52 @@ from modules.coder.application.smart_hybrid_policy import (
 )
 from modules.ml_coder.registry_predictor import RegistryMLPredictor
 from modules.registry.model_runtime import get_registry_runtime_dir, resolve_model_backend
+
+
+if TYPE_CHECKING:
+    from modules.registry.self_correction.types import SelfCorrectionMetadata
+
+
+def focus_note_for_extraction(note_text: str) -> tuple[str, dict[str, Any]]:
+    """Optionally focus/summarize a note for deterministic extraction.
+
+    Guardrail: RAW-ML auditing must always run on the full raw note text and
+    must never use the focused/summarized text.
+    """
+    from modules.registry.extraction.focus import focus_note_for_extraction as _focus
+
+    return _focus(note_text)
+
+
+def _apply_granular_up_propagation(record: RegistryRecord) -> tuple[RegistryRecord, list[str]]:
+    """Apply granular→aggregate propagation using derive_procedures_from_granular().
+
+    This must remain the single place where granular evidence drives aggregate
+    performed flags.
+    """
+    if record.granular_data is None:
+        return record, []
+
+    granular = record.granular_data.model_dump()
+    existing_procedures = (
+        record.procedures_performed.model_dump() if record.procedures_performed is not None else None
+    )
+
+    updated_procs, granular_warnings = derive_procedures_from_granular(
+        granular_data=granular,
+        existing_procedures=existing_procedures,
+    )
+
+    if not updated_procs and not granular_warnings:
+        return record, []
+
+    record_data = record.model_dump()
+    if updated_procs:
+        record_data["procedures_performed"] = updated_procs
+    record_data.setdefault("granular_validation_warnings", [])
+    record_data["granular_validation_warnings"].extend(granular_warnings)
+
+    return RegistryRecord(**record_data), granular_warnings
 
 
 @dataclass
@@ -111,6 +159,8 @@ class RegistryExtractionResult:
     needs_manual_review: bool = False
     validation_errors: list[str] = field(default_factory=list)
     audit_warnings: list[str] = field(default_factory=list)
+    audit_report: AuditCompareReport | None = None
+    self_correction: list["SelfCorrectionMetadata"] = field(default_factory=list)
 
 
 class RegistryService:
@@ -526,6 +576,10 @@ class RegistryService:
         Returns:
             RegistryExtractionResult with extracted record and metadata.
         """
+        pipeline_mode = os.getenv("PROCSUITE_PIPELINE_MODE", "current").strip().lower()
+        if pipeline_mode == "extraction_first":
+            return self._extract_fields_extraction_first(note_text)
+
         # Legacy fallback: if no hybrid orchestrator is injected, run extractor only
         if self.hybrid_orchestrator is None:
             logger.info("No hybrid_orchestrator configured, running extractor-only mode")
@@ -563,9 +617,14 @@ class RegistryService:
             "ml_metadata": coder_result.metadata.get("ml_result"),
         }
 
-        record = self.registry_engine.run(note_text, context=extraction_context)
-        if isinstance(record, tuple):
-            record = record[0]  # Unpack if evidence included
+        engine_warnings: list[str] = []
+        run_with_warnings = getattr(self.registry_engine, "run_with_warnings", None)
+        if callable(run_with_warnings):
+            record, engine_warnings = run_with_warnings(note_text, context=extraction_context)
+        else:
+            record = self.registry_engine.run(note_text, context=extraction_context)
+            if isinstance(record, tuple):
+                record = record[0]  # Unpack if evidence included
 
         # 4. Merge CPT-driven fields into the extraction result
         merged_record = self._merge_cpt_fields_into_record(record, mapped_fields)
@@ -578,13 +637,314 @@ class RegistryService:
                 coder_difficulty=coder_result.difficulty.value,
                 coder_source=coder_result.source,
                 mapped_fields=mapped_fields,
-                warnings=[],
+                warnings=list(engine_warnings),
             ),
             coder_result=coder_result,
             note_text=note_text,
         )
 
         return final_result
+
+    # -------------------------------------------------------------------------
+    # Extraction-First Registry → Deterministic CPT → RAW-ML Audit
+    # -------------------------------------------------------------------------
+
+    def extract_record(
+        self,
+        note_text: str,
+        *,
+        note_id: str | None = None,
+    ) -> tuple[RegistryRecord, list[str], dict[str, Any]]:
+        """Extract a RegistryRecord from note text without CPT hints.
+
+        This is the extraction-first entrypoint for registry evidence. It must
+        not seed extraction with CPT codes, ML-predicted CPT codes, or any
+        SmartHybridOrchestrator output.
+        """
+        warnings: list[str] = []
+        meta: dict[str, Any] = {"note_id": note_id}
+
+        extraction_engine = os.getenv("REGISTRY_EXTRACTION_ENGINE", "engine").strip().lower()
+        meta["extraction_engine"] = extraction_engine
+
+        text_for_extraction = note_text
+        if extraction_engine == "engine":
+            pass
+        elif extraction_engine == "agents_focus_then_engine":
+            # Phase 2: focusing helper is optional; guardrail is that RAW-ML always
+            # runs on the raw note text.
+            try:
+                focused_text, focus_meta = focus_note_for_extraction(note_text)
+                meta["focus_meta"] = focus_meta
+                text_for_extraction = focused_text or note_text
+            except Exception as exc:
+                warnings.append(f"focus_note_for_extraction failed ({exc}); using raw note")
+                meta["focus_meta"] = {"status": "failed", "error": str(exc)}
+                text_for_extraction = note_text
+        elif extraction_engine == "agents_structurer":
+            try:
+                from modules.registry.extraction.structurer import structure_note_to_registry_record
+
+                record, struct_meta = structure_note_to_registry_record(note_text, note_id=note_id)
+                meta["structurer_meta"] = struct_meta
+                meta["extraction_text"] = note_text
+
+                record, granular_warnings = _apply_granular_up_propagation(record)
+                warnings.extend(granular_warnings)
+
+                return record, warnings, meta
+            except NotImplementedError as exc:
+                warnings.append(str(exc))
+                meta["structurer_meta"] = {"status": "not_implemented"}
+            except Exception as exc:
+                warnings.append(f"Structurer failed ({exc}); falling back to engine")
+                meta["structurer_meta"] = {"status": "failed", "error": str(exc)}
+        else:
+            warnings.append(f"Unknown REGISTRY_EXTRACTION_ENGINE='{extraction_engine}', using engine")
+
+        meta["extraction_text"] = text_for_extraction
+        context = {"note_id": note_id} if note_id else None
+        engine_warnings: list[str] = []
+        run_with_warnings = getattr(self.registry_engine, "run_with_warnings", None)
+        if callable(run_with_warnings):
+            record, engine_warnings = run_with_warnings(text_for_extraction, context=context)
+        else:
+            record = self.registry_engine.run(text_for_extraction, context=context)
+            if isinstance(record, tuple):
+                record = record[0]  # Unpack if evidence included
+        warnings.extend(engine_warnings)
+
+        record, granular_warnings = _apply_granular_up_propagation(record)
+        warnings.extend(granular_warnings)
+
+        return record, warnings, meta
+
+    def _extract_fields_extraction_first(self, raw_note_text: str) -> RegistryExtractionResult:
+        """Extraction-first registry pipeline.
+
+        Order (must not call orchestrator / CPT seeding):
+        1) extract_record(raw_note_text)
+        2) deterministic Registry→CPT derivation (Phase 3)
+        3) RAW-ML audit via MLCoderPredictor.classify_case(raw_note_text)
+        """
+        from modules.registry.audit.raw_ml_auditor import RawMLAuditor
+        from modules.coder.domain_rules.registry_to_cpt.engine import apply as derive_registry_to_cpt
+        from modules.registry.audit.compare import build_audit_compare_report
+        from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
+        from modules.registry.self_correction.judge import RegistryCorrectionJudge
+        from modules.registry.self_correction.keyword_guard import keyword_guard_passes
+        from modules.registry.self_correction.types import SelfCorrectionMetadata, SelfCorrectionTrigger
+        from modules.registry.self_correction.validation import ALLOWED_PATHS, validate_proposal
+
+        # Guardrail: auditing must always use the original raw note text. Do not
+        # overwrite this variable with focused/summarized text.
+        raw_text_for_audit = raw_note_text
+
+        record, extraction_warnings, meta = self.extract_record(raw_note_text)
+        extraction_text = meta.get("extraction_text") if isinstance(meta.get("extraction_text"), str) else None
+
+        derivation = derive_registry_to_cpt(record)
+        derived_codes = [c.code for c in derivation.codes]
+        base_warnings = list(extraction_warnings)
+        self_correct_warnings: list[str] = []
+        self_correction_meta: list[SelfCorrectionMetadata] = []
+
+        auditor_source = os.getenv("REGISTRY_AUDITOR_SOURCE", "raw_ml").strip().lower()
+        audit_warnings: list[str] = []
+        audit_report: AuditCompareReport | None = None
+        coder_difficulty = "unknown"
+        needs_manual_review = False
+
+        if auditor_source == "raw_ml":
+            from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
+
+            auditor = RawMLAuditor()
+            cfg = RawMLAuditConfig.from_env()
+            ml_case = auditor.classify(raw_text_for_audit)
+            coder_difficulty = ml_case.difficulty.value
+
+            audit_preds = auditor.audit_predictions(ml_case, cfg)
+
+            audit_report = build_audit_compare_report(
+                derived_codes=derived_codes,
+                cfg=cfg,
+                ml_case=ml_case,
+                audit_preds=audit_preds,
+            )
+            needs_manual_review = bool(audit_report.high_conf_omissions)
+
+            def _env_flag(name: str, default: str = "0") -> bool:
+                return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
+
+            def _env_int(name: str, default: int) -> int:
+                raw = os.getenv(name)
+                if raw is None:
+                    return default
+                raw = raw.strip()
+                if not raw:
+                    return default
+                try:
+                    return int(raw)
+                except ValueError:
+                    return default
+
+            self_correct_enabled = _env_flag("REGISTRY_SELF_CORRECT_ENABLED", "0")
+            if self_correct_enabled and audit_report.high_conf_omissions:
+                max_attempts = max(0, _env_int("REGISTRY_SELF_CORRECT_MAX_ATTEMPTS", 1))
+                omission_set = {p.cpt for p in audit_report.high_conf_omissions}
+
+                bucket_by_cpt = {p.cpt: p.bucket for p in audit_report.ml_audit_codes}
+                trigger_preds = [
+                    p for p in auditor.self_correct_triggers(ml_case, cfg) if p.cpt in omission_set
+                ]
+
+                judge = RegistryCorrectionJudge()
+
+                def _allowlist_snapshot() -> list[str]:
+                    raw = os.getenv("REGISTRY_SELF_CORRECT_ALLOWLIST", "").strip()
+                    if raw:
+                        return sorted({p.strip() for p in raw.split(",") if p.strip()})
+                    return sorted(ALLOWED_PATHS)
+
+                corrections_applied = 0
+                evidence_text = (
+                    extraction_text
+                    if extraction_text is not None and extraction_text.strip()
+                    else raw_note_text
+                )
+                for pred in trigger_preds:
+                    if corrections_applied >= max_attempts:
+                        break
+
+                    if not keyword_guard_passes(cpt=pred.cpt, evidence_text=evidence_text):
+                        self_correct_warnings.append(
+                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: keyword guard failed"
+                        )
+                        continue
+
+                    trigger = SelfCorrectionTrigger(
+                        target_cpt=pred.cpt,
+                        ml_prob=float(pred.prob),
+                        ml_bucket=bucket_by_cpt.get(pred.cpt),
+                        reason="RAW_ML_HIGH_CONF_OMISSION",
+                    )
+
+                    discrepancy = (
+                        f"RAW-ML suggests missing CPT {pred.cpt} "
+                        f"(prob={float(pred.prob):.2f}, bucket={bucket_by_cpt.get(pred.cpt) or 'UNKNOWN'})."
+                    )
+                    proposal = judge.propose_correction(
+                        note_text=raw_note_text,
+                        record=record,
+                        discrepancy=discrepancy,
+                        focused_procedure_text=extraction_text,
+                    )
+                    if proposal is None:
+                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: judge returned null")
+                        continue
+
+                    is_valid, reason = validate_proposal(
+                        proposal,
+                        raw_note_text,
+                        extraction_text=extraction_text,
+                    )
+                    if not is_valid:
+                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: {reason}")
+                        continue
+
+                    try:
+                        patched_record = apply_patch_to_record(record=record, patch=proposal.json_patch)
+                    except SelfCorrectionApplyError as exc:
+                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: apply failed ({exc})")
+                        continue
+
+                    if patched_record.model_dump() == record.model_dump():
+                        self_correct_warnings.append(
+                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: patch produced no change"
+                        )
+                        continue
+
+                    candidate_record, candidate_granular_warnings = _apply_granular_up_propagation(
+                        patched_record
+                    )
+
+                    candidate_derivation = derive_registry_to_cpt(candidate_record)
+                    candidate_codes = [c.code for c in candidate_derivation.codes]
+                    if trigger.target_cpt not in candidate_codes:
+                        self_correct_warnings.append(
+                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: patch did not derive target CPT"
+                        )
+                        continue
+
+                    record = candidate_record
+                    derivation = candidate_derivation
+                    derived_codes = candidate_codes
+                    corrections_applied += 1
+                    self_correct_warnings.extend(candidate_granular_warnings)
+
+                    self_correct_warnings.append(f"AUTO_CORRECTED: {pred.cpt}")
+                    self_correction_meta.append(
+                        SelfCorrectionMetadata(
+                            trigger=trigger,
+                            applied_paths=[
+                                str(op.get("path"))
+                                for op in proposal.json_patch
+                                if isinstance(op, dict) and op.get("path") is not None
+                            ],
+                            evidence_quotes=[proposal.evidence_quote],
+                            config_snapshot={
+                                "max_attempts": max_attempts,
+                                "allowlist": _allowlist_snapshot(),
+                                "audit_config": audit_report.config.to_dict(),
+                                "judge_rationale": proposal.rationale,
+                            },
+                        )
+                    )
+
+                    audit_report = build_audit_compare_report(
+                        derived_codes=derived_codes,
+                        cfg=cfg,
+                        ml_case=ml_case,
+                        audit_preds=audit_preds,
+                    )
+                    needs_manual_review = bool(audit_report.high_conf_omissions)
+        elif auditor_source == "disabled":
+            from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
+
+            cfg = RawMLAuditConfig.from_env()
+            audit_report = build_audit_compare_report(
+                derived_codes=derived_codes,
+                cfg=cfg,
+                ml_case=None,
+                audit_preds=None,
+                warnings=["REGISTRY_AUDITOR_SOURCE=disabled; RAW-ML audit set is empty"],
+            )
+            coder_difficulty = "disabled"
+        else:
+            raise ValueError(f"Unknown REGISTRY_AUDITOR_SOURCE='{auditor_source}'")
+
+        if audit_report and audit_report.missing_in_derived:
+            for pred in audit_report.missing_in_derived:
+                bucket = pred.bucket or "AUDIT_SET"
+                audit_warnings.append(
+                    f"RAW_ML_AUDIT[{bucket}]: model suggests {pred.cpt} (prob={pred.prob:.2f}), "
+                    "but deterministic derivation missed it"
+                )
+
+        warnings = list(base_warnings) + list(derivation.warnings) + list(self_correct_warnings)
+        return RegistryExtractionResult(
+            record=record,
+            cpt_codes=derived_codes,
+            coder_difficulty=coder_difficulty,
+            coder_source="extraction_first",
+            mapped_fields={},
+            warnings=warnings,
+            needs_manual_review=needs_manual_review,
+            validation_errors=[],
+            audit_warnings=audit_warnings,
+            audit_report=audit_report,
+            self_correction=self_correction_meta,
+        )
 
     def _merge_cpt_fields_into_record(
         self,

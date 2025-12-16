@@ -73,7 +73,7 @@ modules/coder/
 │   ├── llm/                    # LLM advisor adapter
 │   ├── nlp/                    # Keyword mapping, negation detection
 │   └── ml_ranker.py            # ML prediction adapter
-├── domain_rules.py             # NCCI bundling, EBUS rules
+├── domain_rules/               # NCCI bundling + deterministic registry→CPT
 ├── rules_engine.py             # Rule-based code inference
 └── engine.py                   # Legacy coder (deprecated)
 ```
@@ -139,6 +139,14 @@ modules/registry/
 4. Reconciliation (merge CPT-derived + LLM-extracted)
 5. Validation (IP_Registry.json schema)
 6. ML Audit (compare CPT-derived vs ML predictions)
+
+**Target: Extraction-First Registry Flow (feature-flagged)**
+1. Registry extraction from raw note text (no CPT hints)
+2. Granular → aggregate propagation (`derive_procedures_from_granular`)
+3. Deterministic RegistryRecord → CPT derivation (no note text)
+4. RAW-ML auditor calls `MLCoderPredictor.classify_case(raw_note_text)` directly (no orchestrator/rules)
+5. Compare deterministic CPT vs RAW-ML audit set and report discrepancies
+6. Optional guarded self-correction loop (default off)
 
 ### 5. Agents Module (`modules/agents/`)
 
@@ -289,9 +297,17 @@ Key configuration classes:
 
 | Variable | Description |
 |----------|-------------|
+| `LLM_PROVIDER` | LLM backend: `gemini` or `openai_compat` |
 | `GEMINI_API_KEY` | Gemini LLM API key |
 | `GEMINI_OFFLINE` | Skip LLM calls (use stubs) |
 | `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry |
+| `OPENAI_API_KEY` | API key for OpenAI-protocol backend (openai_compat) |
+| `OPENAI_BASE_URL` | Base URL for OpenAI-protocol backend (no `/v1`) |
+| `OPENAI_MODEL` | Default model name for openai_compat |
+| `OPENAI_MODEL_SUMMARIZER` | Model override for summarizer/focusing tasks (openai_compat only) |
+| `OPENAI_MODEL_STRUCTURER` | Model override for structurer tasks (openai_compat only) |
+| `OPENAI_MODEL_JUDGE` | Model override for self-correction judge (openai_compat only) |
+| `OPENAI_OFFLINE` | Disable openai_compat network calls (use stubs) |
 | `PROCSUITE_SKIP_WARMUP` | Skip model warmup |
 
 ## Dependencies

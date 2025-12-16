@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import sys
+import warnings
 from pathlib import Path
 from typing import Set
 
@@ -27,11 +28,73 @@ from modules.autocode.coder import EnhancedCPTCoder
 # Use the CORRECTED canonical source - synthetic_CPT_corrected.json
 DATA_PATH = ROOT / "data" / "synthetic_CPT_corrected.json"
 
+# Minimal fallback patterns so this test suite can run in environments where the
+# canonical file is not present (e.g., OSS/CI checkouts).
+FALLBACK_PATTERNS: list[dict] = [
+    {
+        "procedure_id": "fallback_navigation_with_ablation",
+        "note_text": (
+            "Bronchoscopy with ENB navigation guidance to a right lower lobe "
+            "squamous cell carcinoma followed by radiofrequency ablation of the lesion."
+        ),
+        "coding_and_billing": {
+            "billed_codes": [{"cpt_code": "31641"}, {"cpt_code": "+31627"}],
+            "excluded_or_bundled_codes": [],
+        },
+    },
+    {
+        "procedure_id": "fallback_ipc_placement",
+        "note_text": (
+            "Ultrasound-guided tunneled PleurX catheter placement for recurrent "
+            "right malignant pleural effusion."
+        ),
+        "coding_and_billing": {
+            "billed_codes": [{"cpt_code": "32550"}],
+            "excluded_or_bundled_codes": [{"cpt_code": "76942"}],
+        },
+    },
+    {
+        "procedure_id": "fallback_ebus_staging_3_stations",
+        "note_text": (
+            "EBUS bronchoscopy with systematic mediastinal survey. "
+            "TBNA performed at stations 4R, 7, and 10R."
+        ),
+        "coding_and_billing": {
+            "billed_codes": [{"cpt_code": "31653"}],
+            "excluded_or_bundled_codes": [],
+        },
+    },
+    {
+        "procedure_id": "fallback_robotic_navigation_with_radial",
+        "note_text": (
+            "Robotic Ion navigational bronchoscopy with radial EBUS confirmation "
+            "and forceps biopsies of a peripheral left lower lobe nodule."
+        ),
+        "coding_and_billing": {
+            "billed_codes": [{"cpt_code": "+31627"}, {"cpt_code": "+31654"}],
+            "excluded_or_bundled_codes": [],
+        },
+    },
+]
+
 
 def load_canonical_patterns() -> list[dict]:
     """Load the canonical synthetic_CPT_corrected.json patterns."""
-    with DATA_PATH.open() as f:
-        return json.load(f)
+    try:
+        with DATA_PATH.open() as f:
+            patterns = json.load(f)
+    except FileNotFoundError:
+        warnings.warn(
+            f"Canonical patterns file not found at {DATA_PATH}. "
+            "Using minimal embedded fallback patterns for this test run.",
+            RuntimeWarning,
+        )
+        return FALLBACK_PATTERNS
+
+    if not isinstance(patterns, list):
+        raise TypeError(f"Expected {DATA_PATH} to contain a JSON list, got {type(patterns).__name__}")
+
+    return patterns
 
 
 def normalize_code(code: str) -> str:

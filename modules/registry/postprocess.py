@@ -19,6 +19,40 @@ VALID_EBUS_STATIONS = frozenset({
 # Pattern to match valid station format
 STATION_PATTERN = re.compile(r"^(2R|2L|4R|4L|7|10R|10L|11R|11L)$", re.IGNORECASE)
 
+# Deterministic station ordering for stable outputs (and tests).
+_EBUS_STATION_SORT_ORDER = (
+    "2R",
+    "2L",
+    "3P",
+    "4R",
+    "4L",
+    "7",
+    "10R",
+    "10L",
+    "11R",
+    "11L",
+    "12R",
+    "12L",
+    "LUNG MASS",
+    "OTHER",
+)
+_EBUS_STATION_SORT_INDEX = {s: i for i, s in enumerate(_EBUS_STATION_SORT_ORDER)}
+
+
+def sort_ebus_stations(stations: list[str] | set[str]) -> list[str]:
+    """Return stations in deterministic order with de-duping."""
+    seen: set[str] = set()
+    normalized: list[str] = []
+    for station in stations:
+        if not station:
+            continue
+        token = str(station).strip().upper()
+        if not token or token in seen:
+            continue
+        seen.add(token)
+        normalized.append(token)
+    return sorted(normalized, key=lambda s: (_EBUS_STATION_SORT_INDEX.get(s, 999), s))
+
 # Canonical ROSE result values (schema enum)
 # Schema enum: ["Adequate - malignant", "Adequate - benign lymphocytes",
 #               "Adequate - granulomas", "Adequate - other", "Inadequate", "Not performed"]
@@ -728,9 +762,27 @@ def validate_station_format(station: str) -> str | None:
     cleaned = station.strip().upper()
     # Remove common prefixes
     cleaned = re.sub(r"^(STATION|STN|NODE)[\s:]*", "", cleaned, flags=re.IGNORECASE).strip()
-    if STATION_PATTERN.match(cleaned):
-        return cleaned
-    return None
+
+    # Extract the first plausible station token, allowing common sub-station suffixes:
+    # - "11Rs"/"11Ri" -> "11R"
+    match = re.search(
+        r"(?<![0-9A-Z])(2R|2L|4R|4L|7|10R|10L|11R|11L)(?:[SI])?(?![0-9A-Z])",
+        cleaned,
+    )
+    if not match:
+        return None
+
+    token = match.group(1).upper()
+
+    # Station 7 is ambiguous; require explicit context unless it is exactly "7".
+    if token == "7":
+        if cleaned == "7":
+            return "7"
+        if "SUBCARINAL" in cleaned or "STATION" in station.upper():
+            return "7"
+        return None
+
+    return token if STATION_PATTERN.match(token) else None
 
 
 def normalize_ebus_station_rose_result(raw: Any) -> str | None:
@@ -1937,9 +1989,9 @@ def apply_cross_field_consistency(data: Dict[str, Any]) -> Dict[str, Any]:
         # Merge with sampled
         all_stations = set(stations_sampled) | detail_stations
         if all_stations:
-            result["ebus_stations_sampled"] = sorted(all_stations)
+            result["ebus_stations_sampled"] = sort_ebus_stations(all_stations)
             # Also update linear_ebus_stations to match
-            result["linear_ebus_stations"] = sorted(all_stations)
+            result["linear_ebus_stations"] = sort_ebus_stations(all_stations)
 
     # Derive global ROSE result from per-station data if available
     if station_detail and not result.get("ebus_rose_result"):
