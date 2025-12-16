@@ -17,6 +17,8 @@ except ImportError:  # google-auth is optional unless OAuth is used
     GoogleAuthRequest = None  # type: ignore[assignment]
 
 from modules.common.logger import get_logger
+from modules.common.exceptions import LLMError
+from modules.common.model_capabilities import filter_payload_for_model, is_gpt5
 
 logger = get_logger("common.llm")
 
@@ -70,6 +72,117 @@ def _resolve_openai_timeout_seconds(task: str | None) -> float:
     return _get_float("OPENAI_TIMEOUT_SECONDS") or 30.0
 
 
+def _openai_request_id(response: httpx.Response) -> str | None:
+    for header_name in ("x-request-id", "request-id", "x-openai-request-id", "openai-request-id"):
+        value = response.headers.get(header_name)
+        if value:
+            return value
+    return None
+
+
+def _openai_error_details(response: httpx.Response) -> tuple[str, str | None, str | None]:
+    message = ""
+    error_type: str | None = None
+    error_param: str | None = None
+
+    try:
+        data = response.json()
+    except Exception:  # noqa: BLE001
+        data = None
+
+    if isinstance(data, dict):
+        err = data.get("error")
+        if isinstance(err, dict):
+            message = str(err.get("message") or "")
+            error_type = str(err.get("type") or "") or None
+            error_param = str(err.get("param") or "") or None
+
+    if not message:
+        message = str((response.text or "")).strip()
+
+    message = " ".join(message.split())
+    if len(message) > 500:
+        message = message[:500] + "…"
+
+    if not message:
+        message = f"HTTP {response.status_code} from OpenAI"
+
+    return message, error_type, error_param
+
+
+def _looks_like_unsupported_parameter_error(
+    *,
+    message: str,
+    error_type: str | None,
+    error_param: str | None,
+) -> bool:
+    if error_param and error_param in {
+        "response_format",
+        "temperature",
+        "top_p",
+        "seed",
+        "logprobs",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+    }:
+        return True
+
+    haystack = f"{error_type or ''} {message}".lower()
+    return any(
+        token in haystack
+        for token in (
+            "unsupported",
+            "unknown parameter",
+            "unrecognized request argument",
+            "unrecognized",
+            "unexpected",
+            "additional properties",
+            "extra fields",
+            "invalid_request_error",
+        )
+    )
+
+
+def _error_suggests_tools_unsupported(*, message: str, error_param: str | None) -> bool:
+    if error_param and error_param in {"tools", "tool_choice", "parallel_tool_calls"}:
+        return True
+    haystack = message.lower()
+    return any(token in haystack for token in (" tools", "tool_choice", "parallel_tool_calls", "function calling"))
+
+
+def _build_unsupported_param_retry_payload(
+    payload: dict[str, Any],
+    *,
+    message: str,
+    error_param: str | None,
+) -> tuple[dict[str, Any], list[str]]:
+    retry_payload: dict[str, Any] = dict(payload)
+    removed: list[str] = []
+
+    def _pop(key: str) -> None:
+        if key in retry_payload:
+            retry_payload.pop(key, None)
+            removed.append(key)
+
+    _pop("response_format")
+    for key in ("temperature", "top_p", "seed", "logprobs", "top_logprobs"):
+        _pop(key)
+
+    if _error_suggests_tools_unsupported(message=message, error_param=error_param):
+        for key in ("tools", "tool_choice", "parallel_tool_calls"):
+            _pop(key)
+
+    return retry_payload, removed
+
+
+def _prepend_json_object_instruction(prompt: str) -> str:
+    instruction = "Return exactly one JSON object. No markdown. No code fences."
+    if instruction.lower() in (prompt or "").lower():
+        return prompt
+    return f"{instruction}\n\n{prompt}"
+
+
 class LLMInterface(Protocol):
     def generate(self, prompt: str) -> str:
         ...
@@ -98,8 +211,8 @@ class OpenAILLM:
         
         Args:
             prompt: The prompt text
-            response_schema: Ignored (OpenAI uses response_format instead)
-            **kwargs: Additional arguments (ignored for compatibility)
+            response_schema: Currently ignored (Gemini-only schema shape)
+            **kwargs: Optional OpenAI Chat Completions parameters (best-effort)
         """
         if _truthy_env("OPENAI_OFFLINE") or not self.api_key:
             return "{}"
@@ -109,33 +222,90 @@ class OpenAILLM:
             "Authorization": f"Bearer {self.api_key}" if self.api_key else "",
             "Content-Type": "application/json",
         }
-        payload = {
+        wants_json = True
+        outgoing_prompt = _prepend_json_object_instruction(prompt) if is_gpt5(self.model) and wants_json else prompt
+
+        payload: dict[str, Any] = {
             "model": self.model,
-            "messages": [{"role": "user", "content": prompt}],
-            # Encourage JSON output; the prompt should still enforce structure.
-            "response_format": {"type": "json_object"},
+            "messages": [{"role": "user", "content": outgoing_prompt}],
         }
 
+        # Prefer native structured outputs where supported; GPT-5 rejects response_format.
+        if wants_json and not is_gpt5(self.model):
+            payload["response_format"] = {"type": "json_object"}
+
+        # Best-effort optional parameters (ignored when unsupported by the model).
+        for float_key in ("temperature", "top_p"):
+            if float_key in kwargs and kwargs[float_key] is not None:
+                payload[float_key] = float(kwargs[float_key])
+        for int_key in ("max_tokens", "max_completion_tokens", "seed", "top_logprobs"):
+            if int_key in kwargs and kwargs[int_key] is not None:
+                payload[int_key] = int(kwargs[int_key])
+        if "logprobs" in kwargs and kwargs["logprobs"] is not None:
+            payload["logprobs"] = kwargs["logprobs"]
+        for raw_key in ("tools", "tool_choice", "parallel_tool_calls"):
+            if raw_key in kwargs and kwargs[raw_key] is not None:
+                payload[raw_key] = kwargs[raw_key]
+
+        payload = filter_payload_for_model(payload, self.model)
+
+        removed_on_retry: list[str] = []
+        timeout = httpx.Timeout(connect=10.0, read=self.timeout_seconds, write=30.0, pool=10.0)
+
         try:
-            timeout = httpx.Timeout(connect=10.0, read=self.timeout_seconds, write=30.0, pool=10.0)
             with httpx.Client(timeout=timeout) as client:
-                response = client.post(url, headers=headers, json=payload)
-                response.raise_for_status()
-                data = response.json()
-                choices = data.get("choices", [])
-                if not choices:
-                    logger.error("No choices returned from OpenAI API")
-                    return "{}"
-                return choices[0].get("message", {}).get("content", "")
-        except httpx.RequestError as e:
-            logger.error(f"Network error contacting OpenAI API: {e}")
-            return "{}"
-        except httpx.HTTPStatusError as e:
-            logger.error(f"HTTP error from OpenAI API: {e.response.text}")
-            return "{}"
-        except Exception as e:
-            logger.error(f"Unexpected error in OpenAILLM: {e}")
-            return "{}"
+                attempt_payload = payload
+                for attempt in range(2):
+                    response = client.post(url, headers=headers, json=attempt_payload)
+
+                    if response.status_code < 400:
+                        data = response.json()
+                        choices = data.get("choices", [])
+                        if not choices:
+                            raise LLMError("No choices returned from OpenAI API")
+                        return choices[0].get("message", {}).get("content", "")
+
+                    message, error_type, error_param = _openai_error_details(response)
+                    request_id = _openai_request_id(response)
+                    request_id_suffix = f" request_id={request_id}" if request_id else ""
+                    logger.warning(
+                        "OpenAI API error status=%s endpoint=%s model=%s%s message=%s",
+                        response.status_code,
+                        url,
+                        self.model,
+                        request_id_suffix,
+                        message,
+                    )
+
+                    should_retry = (
+                        attempt == 0
+                        and response.status_code == 400
+                        and _looks_like_unsupported_parameter_error(
+                            message=message, error_type=error_type, error_param=error_param
+                        )
+                    )
+                    if should_retry:
+                        retry_payload, removed_on_retry = _build_unsupported_param_retry_payload(
+                            attempt_payload,
+                            message=message,
+                            error_param=error_param,
+                        )
+                        if removed_on_retry:
+                            attempt_payload = retry_payload
+                            continue
+
+                    removed_summary = ", ".join(removed_on_retry) if removed_on_retry else "none"
+                    raise LLMError(
+                        f"OpenAI request failed (status={response.status_code}, model={self.model}, "
+                        f"removed_on_retry={removed_summary}): {message}"
+                    )
+
+        except httpx.RequestError as exc:
+            raise LLMError(f"Network error contacting OpenAI API (model={self.model}): {exc}") from exc
+        except Exception as exc:
+            if isinstance(exc, LLMError):
+                raise
+            raise LLMError(f"Unexpected error in OpenAILLM (model={self.model}): {exc}") from exc
 
 
 class GeminiLLM:

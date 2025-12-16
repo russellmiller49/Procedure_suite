@@ -13,6 +13,7 @@ import re
 import httpx
 
 from observability.logging_config import get_logger
+from modules.common.model_capabilities import filter_payload_for_model
 
 from .gemini_advisor import LLMAdvisorPort, LLMCodeSuggestion
 
@@ -28,6 +29,110 @@ def _normalize_openai_base_url(base_url: str) -> str:
     if normalized.endswith("/v1"):
         normalized = normalized[:-3].rstrip("/")
     return normalized or "https://api.openai.com"
+
+
+def _openai_request_id(response: httpx.Response) -> str | None:
+    for header_name in ("x-request-id", "request-id", "x-openai-request-id", "openai-request-id"):
+        value = response.headers.get(header_name)
+        if value:
+            return value
+    return None
+
+
+def _openai_error_details(response: httpx.Response) -> tuple[str, str | None, str | None]:
+    message = ""
+    error_type: str | None = None
+    error_param: str | None = None
+
+    try:
+        data = response.json()
+    except Exception:  # noqa: BLE001
+        data = None
+
+    if isinstance(data, dict):
+        err = data.get("error")
+        if isinstance(err, dict):
+            message = str(err.get("message") or "")
+            error_type = str(err.get("type") or "") or None
+            error_param = str(err.get("param") or "") or None
+
+    if not message:
+        message = str((response.text or "")).strip()
+
+    message = " ".join(message.split())
+    if len(message) > 500:
+        message = message[:500] + "…"
+
+    if not message:
+        message = f"HTTP {response.status_code} from OpenAI"
+
+    return message, error_type, error_param
+
+
+def _looks_like_unsupported_parameter_error(
+    *,
+    message: str,
+    error_type: str | None,
+    error_param: str | None,
+) -> bool:
+    if error_param and error_param in {
+        "response_format",
+        "temperature",
+        "top_p",
+        "seed",
+        "logprobs",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+    }:
+        return True
+
+    haystack = f"{error_type or ''} {message}".lower()
+    return any(
+        token in haystack
+        for token in (
+            "unsupported",
+            "unknown parameter",
+            "unrecognized request argument",
+            "unrecognized",
+            "unexpected",
+            "additional properties",
+            "extra fields",
+            "invalid_request_error",
+        )
+    )
+
+
+def _error_suggests_tools_unsupported(*, message: str, error_param: str | None) -> bool:
+    if error_param and error_param in {"tools", "tool_choice", "parallel_tool_calls"}:
+        return True
+    haystack = message.lower()
+    return any(token in haystack for token in (" tools", "tool_choice", "parallel_tool_calls", "function calling"))
+
+
+def _build_unsupported_param_retry_payload(
+    payload: dict,
+    *,
+    message: str,
+    error_param: str | None,
+) -> tuple[dict, list[str]]:
+    retry_payload: dict = dict(payload)
+    removed: list[str] = []
+
+    def _pop(key: str) -> None:
+        if key in retry_payload:
+            retry_payload.pop(key, None)
+            removed.append(key)
+
+    _pop("response_format")
+    for key in ("temperature", "top_p", "seed", "logprobs", "top_logprobs"):
+        _pop(key)
+
+    if _error_suggests_tools_unsupported(message=message, error_param=error_param):
+        for key in ("tools", "tool_choice", "parallel_tool_calls"):
+            _pop(key)
+
+    return retry_payload, removed
 
 
 class OpenAICompatAdvisorAdapter(LLMAdvisorPort):
@@ -192,17 +297,58 @@ Return ONLY the JSON array, no other text.
             "Content-Type": "application/json",
         }
 
-        payload = {
+        payload: dict = {
             "model": self._resolve_model(),
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.0,
         }
 
+        payload = filter_payload_for_model(payload, str(payload.get("model", "")))
+
         timeout = httpx.Timeout(connect=10.0, read=60.0, write=30.0, pool=10.0)
         with httpx.Client(timeout=timeout) as client:
-            response = client.post(url, headers=headers, json=payload)
-            response.raise_for_status()
-            data = response.json()
+            removed_on_retry: list[str] = []
+            attempt_payload: dict = payload
+            for attempt in range(2):
+                response = client.post(url, headers=headers, json=attempt_payload)
+                if response.status_code < 400:
+                    data = response.json()
+                    break
+
+                message, error_type, error_param = _openai_error_details(response)
+                request_id = _openai_request_id(response)
+                logger.warning(
+                    "OpenAI-compat API error",
+                    extra={
+                        "status": response.status_code,
+                        "endpoint": url,
+                        "model": attempt_payload.get("model", ""),
+                        "request_id": request_id,
+                        "openai_error_message": message,
+                    },
+                )
+
+                should_retry = (
+                    attempt == 0
+                    and response.status_code == 400
+                    and _looks_like_unsupported_parameter_error(
+                        message=message, error_type=error_type, error_param=error_param
+                    )
+                )
+                if should_retry:
+                    retry_payload, removed_on_retry = _build_unsupported_param_retry_payload(
+                        attempt_payload,
+                        message=message,
+                        error_param=error_param,
+                    )
+                    if removed_on_retry:
+                        attempt_payload = retry_payload
+                        continue
+
+                response.raise_for_status()
+            else:
+                # Defensive: should never reach; loop either breaks or raises.
+                raise RuntimeError("OpenAI-compat request failed after retry")
 
         choices = data.get("choices", []) if isinstance(data, dict) else []
         if not choices:
