@@ -31,6 +31,8 @@ def test_filter_payload_for_model_removes_response_format_for_gpt5() -> None:
 
 def test_openai_llm_retries_once_on_unsupported_response_format(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("OPENAI_OFFLINE", raising=False)
+    # Force Chat Completions mode for this test (tests Chat-specific retry logic)
+    monkeypatch.setenv("OPENAI_PRIMARY_API", "chat")
 
     llm = OpenAILLM(api_key="test-key", model="gpt-4.1", timeout_seconds=1.0)
     sent_payloads: list[dict] = []
@@ -69,6 +71,8 @@ def test_openai_llm_retries_once_on_unsupported_response_format(monkeypatch: pyt
 
 def test_openai_llm_retries_once_on_unsupported_sampling_params(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("OPENAI_OFFLINE", raising=False)
+    # Force Chat Completions mode for this test (tests Chat-specific retry logic)
+    monkeypatch.setenv("OPENAI_PRIMARY_API", "chat")
 
     llm = OpenAILLM(api_key="test-key", model="gpt-4.1", timeout_seconds=1.0)
     sent_payloads: list[dict] = []
@@ -112,6 +116,8 @@ def test_openai_llm_retries_once_on_unsupported_sampling_params(monkeypatch: pyt
 
 def test_openai_llm_only_retries_once(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("OPENAI_OFFLINE", raising=False)
+    # Force Chat Completions mode for this test (tests Chat-specific retry logic)
+    monkeypatch.setenv("OPENAI_PRIMARY_API", "chat")
 
     llm = OpenAILLM(api_key="test-key", model="gpt-4.1", timeout_seconds=1.0)
     sent_payloads: list[dict] = []

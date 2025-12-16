@@ -1,15 +1,15 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2025-12-12T10:05:11-08:00`
-Git: `main` @ `9eddcc8`
+Generated: `2025-12-16T12:23:59-08:00`
+Git: `main` @ `4da5130`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
 - Intended for LLM/context ingestion; excludes large artifacts (models, datasets, caches).
 
 ## Exclusions (high level)
-- Directories: `.git/`, `.mypy_cache/`, `.pytest_cache/`, `.ruff_cache/`, `data/`, `dist/`, `distilled/`, `proc_suite.egg-info/`, `reports/`, `validation_results/`
-- File types: `*.bin`, `*.db`, `*.onnx`, `*.pt`, `*.pth`, `*.tar.gz`, `*.zip`
+- Directories: `.git, .mypy_cache, .pytest_cache, .ruff_cache, __pycache__, data, dist, distilled, proc_suite.egg-info, reports, validation_results`
+- File types: `.bin`, `.db`, `.onnx`, `.pt`, `.pth`, `.pyc`, `.pyo`, `.tar.gz`, `.zip`
 
 ## Repo tree (pruned)
 ```
@@ -194,16 +194,27 @@ Git: `main` @ `9eddcc8`
       - docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     - docs/phi_review_system/
       - docs/phi_review_system/backend/
+        - docs/phi_review_system/backend/dependencies.py
+        - docs/phi_review_system/backend/endpoints.py
+        - docs/phi_review_system/backend/main.py
+        - docs/phi_review_system/backend/models.py
+        - docs/phi_review_system/backend/schemas.py
       - docs/phi_review_system/frontend/
+        - docs/phi_review_system/frontend/PHIReviewDemo.jsx
+        - docs/phi_review_system/frontend/PHIReviewEditor.jsx
       - docs/phi_review_system/README.md
     - docs/AGENTS.md
     - docs/ARCHITECTURE.md
+    - docs/CODEX_IMPLEMENTATION_PLAN.md
+    - docs/CODEX_IMPLEMENTATION_PLAN_v5_POST.md
+    - docs/CODEX_PR_CHECKLIST.md
     - docs/DEPLOY_ARCH.md
     - docs/DEPLOY_RAILWAY.md
     - docs/DEPLOYMENT.md
     - docs/DEVELOPMENT.md
     - docs/GRAFANA_DASHBOARDS.md
     - docs/INSTALLATION.md
+    - docs/main v13._diff.txt
     - docs/ml_first_hybrid_policy.md
     - docs/model_release_runbook.md
     - docs/REFERENCES.md
@@ -221,16 +232,36 @@ Git: `main` @ `9eddcc8`
   - modules/
     - modules/agents/
       - modules/agents/parser/
+        - modules/agents/parser/__init__.py
+        - modules/agents/parser/parser_agent.py
       - modules/agents/structurer/
+        - modules/agents/structurer/__init__.py
+        - modules/agents/structurer/structurer_agent.py
       - modules/agents/summarizer/
+        - modules/agents/summarizer/__init__.py
+        - modules/agents/summarizer/summarizer_agent.py
       - modules/agents/__init__.py
       - modules/agents/contracts.py
       - modules/agents/run_pipeline.py
     - modules/api/
       - modules/api/routes/
+        - modules/api/routes/__init__.py
+        - modules/api/routes/metrics.py
+        - modules/api/routes/phi.py
+        - modules/api/routes/phi_demo_cases.py
+        - modules/api/routes/procedure_codes.py
       - modules/api/schemas/
+        - modules/api/schemas/__init__.py
+        - modules/api/schemas/base.py
+        - modules/api/schemas/qa.py
       - modules/api/services/
+        - modules/api/services/__init__.py
+        - modules/api/services/qa_pipeline.py
       - modules/api/static/
+        - modules/api/static/app.js
+        - modules/api/static/index.html
+        - modules/api/static/phi_demo.html
+        - modules/api/static/phi_demo.js
       - modules/api/__init__.py
       - modules/api/coder_adapter.py
       - modules/api/dependencies.py
@@ -243,10 +274,20 @@ Git: `main` @ `9eddcc8`
       - modules/api/routes_registry.py
     - modules/autocode/
       - modules/autocode/ip_kb/
+        - modules/autocode/ip_kb/canonical_rules.py
+        - modules/autocode/ip_kb/ip_coding_billing.v2_2.json
+        - modules/autocode/ip_kb/ip_kb.py
+        - modules/autocode/ip_kb/terminology_utils.py
       - modules/autocode/logging/
+        - modules/autocode/logging/reasoning_logger.py
       - modules/autocode/rvu/
+        - modules/autocode/rvu/build_ip_rvu_subset.py
+        - modules/autocode/rvu/rvu_calculator.py
+        - modules/autocode/rvu/rvu_parser.py
       - modules/autocode/tools/
+        - modules/autocode/tools/eval_synthetic_notes.py
       - modules/autocode/utils/
+        - modules/autocode/utils/timing.py
       - modules/autocode/__init__.py
       - modules/autocode/coder.py
       - modules/autocode/compat_v2.py
@@ -258,14 +299,44 @@ Git: `main` @ `9eddcc8`
       - modules/autocode/rules.py
     - modules/coder/
       - modules/coder/adapters/
+        - modules/coder/adapters/llm/
+          - modules/coder/adapters/llm/__init__.py
+          - modules/coder/adapters/llm/gemini_advisor.py
+          - modules/coder/adapters/llm/openai_compat_advisor.py
+        - modules/coder/adapters/nlp/
+          - modules/coder/adapters/nlp/__init__.py
+          - modules/coder/adapters/nlp/keyword_mapping_loader.py
+          - modules/coder/adapters/nlp/simple_negation_detector.py
+        - modules/coder/adapters/persistence/
+          - modules/coder/adapters/persistence/__init__.py
+          - modules/coder/adapters/persistence/csv_kb_adapter.py
+          - modules/coder/adapters/persistence/inmemory_procedure_store.py
+          - modules/coder/adapters/persistence/supabase_procedure_store.py
+        - modules/coder/adapters/__init__.py
+        - modules/coder/adapters/ml_ranker.py
+        - modules/coder/adapters/registry_coder.py
       - modules/coder/application/
+        - modules/coder/application/__init__.py
+        - modules/coder/application/candidate_expansion.py
+        - modules/coder/application/coding_service.py
+        - modules/coder/application/procedure_type_detector.py
+        - modules/coder/application/smart_hybrid_policy.py
+      - modules/coder/domain_rules/
+        - modules/coder/domain_rules/registry_to_cpt/
+          - modules/coder/domain_rules/registry_to_cpt/__init__.py
+          - modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+          - modules/coder/domain_rules/registry_to_cpt/engine.py
+          - modules/coder/domain_rules/registry_to_cpt/types.py
+        - modules/coder/domain_rules/__init__.py
       - modules/coder/reconciliation/
+        - modules/coder/reconciliation/__init__.py
+        - modules/coder/reconciliation/pipeline.py
+        - modules/coder/reconciliation/reconciler.py
       - modules/coder/__init__.py
       - modules/coder/cli.py
       - modules/coder/code_families.py
       - modules/coder/constants.py
       - modules/coder/dictionary.py
-      - modules/coder/domain_rules.py
       - modules/coder/ebus_extractor.py
       - modules/coder/ebus_rules.py
       - modules/coder/engine.py
@@ -282,6 +353,10 @@ Git: `main` @ `9eddcc8`
       - modules/coder/types.py
     - modules/common/
       - modules/common/rules_engine/
+        - modules/common/rules_engine/__init__.py
+        - modules/common/rules_engine/dsl.py
+        - modules/common/rules_engine/mer.py
+        - modules/common/rules_engine/ncci.py
       - modules/common/__init__.py
       - modules/common/exceptions.py
       - modules/common/knowledge.py
@@ -289,6 +364,7 @@ Git: `main` @ `9eddcc8`
       - modules/common/knowledge_schema.py
       - modules/common/llm.py
       - modules/common/logger.py
+      - modules/common/model_capabilities.py
       - modules/common/rvu_calc.py
       - modules/common/sectionizer.py
       - modules/common/spans.py
@@ -296,11 +372,29 @@ Git: `main` @ `9eddcc8`
       - modules/common/umls_linking.py
     - modules/domain/
       - modules/domain/coding_rules/
+        - modules/domain/coding_rules/__init__.py
+        - modules/domain/coding_rules/coding_rules_engine.py
+        - modules/domain/coding_rules/evidence_context.py
+        - modules/domain/coding_rules/json_rules_evaluator.py
+        - modules/domain/coding_rules/mer.py
+        - modules/domain/coding_rules/ncci.py
+        - modules/domain/coding_rules/rule_engine.py
       - modules/domain/knowledge_base/
+        - modules/domain/knowledge_base/__init__.py
+        - modules/domain/knowledge_base/models.py
+        - modules/domain/knowledge_base/repository.py
       - modules/domain/procedure_store/
+        - modules/domain/procedure_store/__init__.py
+        - modules/domain/procedure_store/repository.py
       - modules/domain/reasoning/
+        - modules/domain/reasoning/__init__.py
+        - modules/domain/reasoning/models.py
       - modules/domain/rvu/
+        - modules/domain/rvu/__init__.py
+        - modules/domain/rvu/calculator.py
       - modules/domain/text/
+        - modules/domain/text/__init__.py
+        - modules/domain/text/negation.py
       - modules/domain/__init__.py
     - modules/infra/
       - modules/infra/__init__.py
@@ -318,6 +412,12 @@ Git: `main` @ `9eddcc8`
       - modules/ml_coder/utils.py
     - modules/phi/
       - modules/phi/adapters/
+        - modules/phi/adapters/__init__.py
+        - modules/phi/adapters/audit_logger_db.py
+        - modules/phi/adapters/encryption_insecure_demo.py
+        - modules/phi/adapters/fernet_encryption.py
+        - modules/phi/adapters/presidio_scrubber.py
+        - modules/phi/adapters/scrubber_stub.py
       - modules/phi/__init__.py
       - modules/phi/db.py
       - modules/phi/models.py
@@ -329,11 +429,62 @@ Git: `main` @ `9eddcc8`
       - modules/proc_ml_advisor/schemas.py
     - modules/registry/
       - modules/registry/adapters/
+        - modules/registry/adapters/__init__.py
+        - modules/registry/adapters/schema_registry.py
       - modules/registry/application/
+        - modules/registry/application/__init__.py
+        - modules/registry/application/cpt_registry_mapping.py
+        - modules/registry/application/registry_builder.py
+        - modules/registry/application/registry_service.py
+      - modules/registry/audit/
+        - modules/registry/audit/__init__.py
+        - modules/registry/audit/audit_types.py
+        - modules/registry/audit/compare.py
+        - modules/registry/audit/raw_ml_auditor.py
+      - modules/registry/extraction/
+        - modules/registry/extraction/__init__.py
+        - modules/registry/extraction/focus.py
+        - modules/registry/extraction/structurer.py
       - modules/registry/extractors/
+        - modules/registry/extractors/__init__.py
+        - modules/registry/extractors/llm_detailed.py
       - modules/registry/legacy/
+        - modules/registry/legacy/adapters/
+          - modules/registry/legacy/adapters/__init__.py
+          - modules/registry/legacy/adapters/airway.py
+          - modules/registry/legacy/adapters/base.py
+          - modules/registry/legacy/adapters/pleural.py
+        - modules/registry/legacy/__init__.py
+        - modules/registry/legacy/adapter.py
+        - modules/registry/legacy/supabase_sink.py
       - modules/registry/ml/
+        - modules/registry/ml/__init__.py
+        - modules/registry/ml/action_predictor.py
+        - modules/registry/ml/evaluate.py
+        - modules/registry/ml/models.py
+      - modules/registry/self_correction/
+        - modules/registry/self_correction/__init__.py
+        - modules/registry/self_correction/apply.py
+        - modules/registry/self_correction/judge.py
+        - modules/registry/self_correction/keyword_guard.py
+        - modules/registry/self_correction/prompt_improvement.py
+        - modules/registry/self_correction/types.py
+        - modules/registry/self_correction/validation.py
       - modules/registry/slots/
+        - modules/registry/slots/__init__.py
+        - modules/registry/slots/base.py
+        - modules/registry/slots/blvr.py
+        - modules/registry/slots/complications.py
+        - modules/registry/slots/dilation.py
+        - modules/registry/slots/disposition.py
+        - modules/registry/slots/ebus.py
+        - modules/registry/slots/imaging.py
+        - modules/registry/slots/indication.py
+        - modules/registry/slots/pleura.py
+        - modules/registry/slots/sedation.py
+        - modules/registry/slots/stent.py
+        - modules/registry/slots/tblb.py
+        - modules/registry/slots/therapeutics.py
       - modules/registry/__init__.py
       - modules/registry/cli.py
       - modules/registry/deterministic_extractors.py
@@ -351,7 +502,6 @@ Git: `main` @ `9eddcc8`
       - modules/registry/registry_system_prompt.txt
       - modules/registry/schema.py
       - modules/registry/schema_granular.py
-      - modules/registry/self_correction.py
       - modules/registry/transform.py
       - modules/registry/v2_booleans.py
     - modules/registry_cleaning/
@@ -363,6 +513,9 @@ Git: `main` @ `9eddcc8`
       - modules/registry_cleaning/schema_utils.py
     - modules/reporter/
       - modules/reporter/templates/
+        - modules/reporter/templates/blvr_synoptic.md.jinja
+        - modules/reporter/templates/bronchoscopy_synoptic.md.jinja
+        - modules/reporter/templates/pleural_synoptic.md.jinja
       - modules/reporter/__init__.py
       - modules/reporter/cli.py
       - modules/reporter/engine.py
@@ -370,7 +523,117 @@ Git: `main` @ `9eddcc8`
       - modules/reporter/schema.py
     - modules/reporting/
       - modules/reporting/second_pass/
+        - modules/reporting/second_pass/.keep
+        - modules/reporting/second_pass/__init__.py
+        - modules/reporting/second_pass/counts_backfill.py
+        - modules/reporting/second_pass/laterality_guard.py
+        - modules/reporting/second_pass/station_consistency.py
       - modules/reporting/templates/
+        - modules/reporting/templates/addons/
+          - modules/reporting/templates/addons/__init__.py
+          - modules/reporting/templates/addons/airway_stent_placement.jinja
+          - modules/reporting/templates/addons/airway_stent_removal_revision.jinja
+          - modules/reporting/templates/addons/airway_stent_surveillance_bronchoscopy.jinja
+          - modules/reporting/templates/addons/awake_fiberoptic_intubation_foi.jinja
+          - modules/reporting/templates/addons/balloon_dilation.jinja
+          - modules/reporting/templates/addons/blvr_discharge.jinja
+          - modules/reporting/templates/addons/bronchial_brushings.jinja
+          - modules/reporting/templates/addons/bronchial_washing.jinja
+          - modules/reporting/templates/addons/bronchoalveolar_lavage.jinja
+          - modules/reporting/templates/addons/bronchopleural_fistula_bpf_localization_and_occlusion_test.jinja
+          - modules/reporting/templates/addons/bronchoscopy_guided_double_lumen_tube_dlt_placement_confirmation.jinja
+          - modules/reporting/templates/addons/chemical_cauterization_of_granulation_tissue.jinja
+          - modules/reporting/templates/addons/chemical_pleurodesis_via_chest_tube_talc_slurry_or_doxycycline.jinja
+          - modules/reporting/templates/addons/chemical_pleurodesis_via_tunneled_pleural_catheter_ipc.jinja
+          - modules/reporting/templates/addons/chest_tube_exchange_upsizing_over_guidewire.jinja
+          - modules/reporting/templates/addons/chest_tube_pleurx_catheter_discharge.jinja
+          - modules/reporting/templates/addons/chest_tube_removal.jinja
+          - modules/reporting/templates/addons/cone_beam_ct_cbct_augmented_fluoroscopy_assisted_bronchoscopy.jinja
+          - modules/reporting/templates/addons/control_of_minor_tracheostomy_bleeding_electrocautery.jinja
+          - modules/reporting/templates/addons/ebus_guided_19_gauge_core_fine_needle_biopsy_fnb.jinja
+          - modules/reporting/templates/addons/ebus_guided_intranodal_forceps_biopsy_ifb.jinja
+          - modules/reporting/templates/addons/ebus_tbna.jinja
+          - modules/reporting/templates/addons/electromagnetic_navigation_bronchoscopy.jinja
+          - modules/reporting/templates/addons/endobronchial_biopsy.jinja
+          - modules/reporting/templates/addons/endobronchial_blocker_placement_isolation_hemorrhage_control.jinja
+          - modules/reporting/templates/addons/endobronchial_cryoablation.jinja
+          - modules/reporting/templates/addons/endobronchial_hemostasis_hemoptysis_control.jinja
+          - modules/reporting/templates/addons/endobronchial_sealant_application_for_bronchopleural_fistula_bpf.jinja
+          - modules/reporting/templates/addons/endobronchial_tumor_destruction.jinja
+          - modules/reporting/templates/addons/endobronchial_tumor_excision.jinja
+          - modules/reporting/templates/addons/endobronchial_valve_placement.jinja
+          - modules/reporting/templates/addons/endobronchial_valve_placement_for_persistent_air_leak_bpf.jinja
+          - modules/reporting/templates/addons/endobronchial_valve_removal_exchange.jinja
+          - modules/reporting/templates/addons/eus_b.jinja
+          - modules/reporting/templates/addons/fiducial_marker_placement.jinja
+          - modules/reporting/templates/addons/flexible_fiberoptic_laryngoscopy.jinja
+          - modules/reporting/templates/addons/focused_thoracic_ultrasound_pleura_lung.jinja
+          - modules/reporting/templates/addons/foreign_body_removal_flexible_rigid.jinja
+          - modules/reporting/templates/addons/general_bronchoscopy_note.jinja
+          - modules/reporting/templates/addons/image_guided_chest_tube.jinja
+          - modules/reporting/templates/addons/indwelling_pleural_catheter_ipc_exchange.jinja
+          - modules/reporting/templates/addons/indwelling_tunneled_pleural_catheter_placement.jinja
+          - modules/reporting/templates/addons/interventional_pulmonology_operative_report.jinja
+          - modules/reporting/templates/addons/intra_procedural_cbct_cact_fusion_registration_correction_e_g_navilink_3d.jinja
+          - modules/reporting/templates/addons/intrapleural_fibrinolysis.jinja
+          - modules/reporting/templates/addons/ion_registration_complete.jinja
+          - modules/reporting/templates/addons/ion_registration_partial_efficiency_strategy_ssrab.jinja
+          - modules/reporting/templates/addons/ion_registration_registration_drift_mismatch.jinja
+          - modules/reporting/templates/addons/medical_thoracoscopy.jinja
+          - modules/reporting/templates/addons/paracentesis.jinja
+          - modules/reporting/templates/addons/peg_discharge.jinja
+          - modules/reporting/templates/addons/peg_placement.jinja
+          - modules/reporting/templates/addons/peg_removal_exchange.jinja
+          - modules/reporting/templates/addons/percutaneous_tracheostomy_revision.jinja
+          - modules/reporting/templates/addons/photodynamic_therapy_debridement_48_96_hours_post_light.jinja
+          - modules/reporting/templates/addons/photodynamic_therapy_pdt_light_application.jinja
+          - modules/reporting/templates/addons/pigtail_catheter_placement.jinja
+          - modules/reporting/templates/addons/post_blvr_management_protocol.jinja
+          - modules/reporting/templates/addons/pre_anesthesia_assessment_for_moderate_sedation.jinja
+          - modules/reporting/templates/addons/radial_ebus_guided_sampling_with_guide_sheath.jinja
+          - modules/reporting/templates/addons/radial_ebus_survey.jinja
+          - modules/reporting/templates/addons/rigid_bronchoscopy_diagnostic_therapeutic.jinja
+          - modules/reporting/templates/addons/robotic_navigational_bronchoscopy_ion.jinja
+          - modules/reporting/templates/addons/robotic_navigational_bronchoscopy_monarch_auris.jinja
+          - modules/reporting/templates/addons/stoma_or_tracheal_granulation_mechanical_debridement.jinja
+          - modules/reporting/templates/addons/therapeutic_aspiration.jinja
+          - modules/reporting/templates/addons/thoracentesis.jinja
+          - modules/reporting/templates/addons/thoracentesis_with_pleural_manometry.jinja
+          - modules/reporting/templates/addons/thoravent_placement.jinja
+          - modules/reporting/templates/addons/tool_in_lesion_confirmation.jinja
+          - modules/reporting/templates/addons/tracheobronchoscopy_via_tracheostomy.jinja
+          - modules/reporting/templates/addons/tracheostomy_decannulation_bedside.jinja
+          - modules/reporting/templates/addons/tracheostomy_downsizing_fenestrated_tube_placement.jinja
+          - modules/reporting/templates/addons/tracheostomy_planned_percutaneous_bronchoscopic_assistance.jinja
+          - modules/reporting/templates/addons/tracheostomy_tube_change.jinja
+          - modules/reporting/templates/addons/transbronchial_cryobiopsy.jinja
+          - modules/reporting/templates/addons/transbronchial_dye_marker_placement_for_surgical_localization.jinja
+          - modules/reporting/templates/addons/transbronchial_lung_biopsy.jinja
+          - modules/reporting/templates/addons/transbronchial_needle_aspiration.jinja
+          - modules/reporting/templates/addons/transthoracic_needle_biopsy.jinja
+          - modules/reporting/templates/addons/tunneled_pleural_catheter_instructions.jinja
+          - modules/reporting/templates/addons/tunneled_pleural_catheter_removal.jinja
+          - modules/reporting/templates/addons/ultrasound_guided_pleural_biopsy_closed_core.jinja
+          - modules/reporting/templates/addons/whole_lung_lavage.jinja
+        - modules/reporting/templates/macros/
+          - modules/reporting/templates/macros/01_minor_trach_laryngoscopy.j2
+          - modules/reporting/templates/macros/02_core_bronchoscopy.j2
+          - modules/reporting/templates/macros/03_navigation_robotic_ebus.j2
+          - modules/reporting/templates/macros/04_blvr_cryo.j2
+          - modules/reporting/templates/macros/05_pleural.j2
+          - modules/reporting/templates/macros/06_other_interventions.j2
+          - modules/reporting/templates/macros/07_clinical_assessment.j2
+          - modules/reporting/templates/macros/base.j2
+          - modules/reporting/templates/macros/main.j2
+          - modules/reporting/templates/macros/template_schema.json
+        - modules/reporting/templates/.keep
+        - modules/reporting/templates/bronchoscopy.jinja
+        - modules/reporting/templates/cryobiopsy.jinja
+        - modules/reporting/templates/ebus_tbna.jinja
+        - modules/reporting/templates/ipc.jinja
+        - modules/reporting/templates/pleuroscopy.jinja
+        - modules/reporting/templates/stent.jinja
+        - modules/reporting/templates/thoracentesis.jinja
       - modules/reporting/__init__.py
       - modules/reporting/coder_view.py
       - modules/reporting/engine.py
@@ -431,6 +694,7 @@ Git: `main` @ `9eddcc8`
     - scripts/data_generators_updated_v2.py
     - scripts/dev_pull_model.sh
     - scripts/devserver.sh
+    - scripts/discover_aws_region.sh
     - scripts/eval_hybrid_pipeline.py
     - scripts/evaluate_coder.py
     - scripts/evaluate_cpt.py
@@ -438,6 +702,7 @@ Git: `main` @ `9eddcc8`
     - scripts/fix_ml_data.py
     - scripts/fix_registry_data.py
     - scripts/generate_addon_templates.py
+    - scripts/generate_gitingest.py
     - scripts/immediate_csv_fix.py
     - scripts/preflight.py
     - scripts/prepare_data.py
@@ -471,15 +736,20 @@ Git: `main` @ `9eddcc8`
       - tests/api/test_registry_extract_endpoint.py
       - tests/api/test_ui.py
     - tests/coder/
+      - tests/coder/test_candidate_expansion.py
       - tests/coder/test_coder_qa_regressions.py
       - tests/coder/test_coder_smoke.py
       - tests/coder/test_enhanced_rationale.py
       - tests/coder/test_hierarchy_bundling_fixes.py
+      - tests/coder/test_kitchen_sink_ml_first_fastpath_completeness.py
+      - tests/coder/test_llm_provider_openai_compat.py
       - tests/coder/test_mer_ncci.py
       - tests/coder/test_navigation_qa.py
+      - tests/coder/test_ncci_bundling_excludes_financials.py
       - tests/coder/test_pleuroscopy_patterns.py
       - tests/coder/test_reconciliation.py
       - tests/coder/test_registry_coder.py
+      - tests/coder/test_registry_to_cpt_rules_pure_registry.py
       - tests/coder/test_regression_notes.py
       - tests/coder/test_rules_engine.py
       - tests/coder/test_smart_hybrid_policy.py
@@ -510,6 +780,8 @@ Git: `main` @ `9eddcc8`
       - tests/e2e/test_coder_e2e.py
       - tests/e2e/test_registry_e2e.py
     - tests/fixtures/
+      - tests/fixtures/notes/
+        - tests/fixtures/notes/kitchen_sink_ion_nav_ebus_fiducial_dilation.txt
       - tests/fixtures/.gitkeep
       - tests/fixtures/blvr_two_lobes.txt
       - tests/fixtures/complex_tracheal_stenosis.txt
@@ -522,8 +794,20 @@ Git: `main` @ `9eddcc8`
       - tests/helpers/phi_asserts.py
     - tests/integration/
       - tests/integration/api/
+        - tests/integration/api/__init__.py
+        - tests/integration/api/test_coder_run_endpoint.py
+        - tests/integration/api/test_health_endpoint.py
+        - tests/integration/api/test_metrics_endpoint.py
+        - tests/integration/api/test_procedure_codes_endpoints.py
+        - tests/integration/api/test_registry_endpoints.py
+        - tests/integration/api/test_startup_warmup.py
       - tests/integration/coder/
+        - tests/integration/coder/__init__.py
+        - tests/integration/coder/test_coding_service.py
+        - tests/integration/coder/test_hybrid_policy.py
       - tests/integration/persistence/
+        - tests/integration/persistence/__init__.py
+        - tests/integration/persistence/test_supabase_procedure_store.py
       - tests/integration/.gitkeep
       - tests/integration/test_phi_workflow_end_to_end.py
       - tests/integration/test_placeholder.py
@@ -547,19 +831,30 @@ Git: `main` @ `9eddcc8`
       - tests/phi/test_service.py
     - tests/registry/
       - tests/registry/test_action_predictor.py
+      - tests/registry/test_audit_compare_report.py
+      - tests/registry/test_auditor_raw_ml_only.py
       - tests/registry/test_cao_extraction.py
+      - tests/registry/test_derive_procedures_from_granular_consistency.py
       - tests/registry/test_ebus_config_station_count.py
       - tests/registry/test_ebus_deterministic.py
+      - tests/registry/test_extraction_first_flow.py
       - tests/registry/test_extraction_quality.py
+      - tests/registry/test_focusing_audit_guardrail.py
       - tests/registry/test_granular_registry_models.py
+      - tests/registry/test_kitchen_sink_extraction_first.py
+      - tests/registry/test_llm_timeout_fallback.py
       - tests/registry/test_new_extractors.py
       - tests/registry/test_normalization.py
+      - tests/registry/test_openai_model_structurer_override.py
       - tests/registry/test_pleural_extraction.py
+      - tests/registry/test_registry_engine_sanitization.py
       - tests/registry/test_registry_extraction_ebus.py
       - tests/registry/test_registry_qa_regressions.py
       - tests/registry/test_registry_service_hybrid_flow.py
       - tests/registry/test_sedation_blvr.py
+      - tests/registry/test_self_correction_loop.py
       - tests/registry/test_slots_ebus_tblb.py
+      - tests/registry/test_structurer_fallback.py
     - tests/reporter/
       - tests/reporter/test_ip_addons.py
       - tests/reporter/test_macro_engine_features.py
@@ -576,6 +871,8 @@ Git: `main` @ `9eddcc8`
       - tests/unit/test_inmemory_procedure_store.py
       - tests/unit/test_knowledge.py
       - tests/unit/test_no_legacy_imports.py
+      - tests/unit/test_openai_payload_compat.py
+      - tests/unit/test_openai_timeouts.py
       - tests/unit/test_procedure_type_detector.py
       - tests/unit/test_rules.py
       - tests/unit/test_schemas.py
@@ -600,8 +897,10 @@ Git: `main` @ `9eddcc8`
   - CLAUDE.md
   - diagnose_codex.sh
   - geminiquota.py
+  - gitingest.md
   - ip_golden_knowledge_v2_2.json
   - Makefile
+  - pm3_lr2e5_e12_a0.3_t2.0run_metrics.json
   - pyproject.toml
   - README.md
   - requirements-train.txt
@@ -775,14 +1074,34 @@ make preflight
 
 | Variable | Description | Default |
 |----------|-------------|---------|
+| `LLM_PROVIDER` | LLM backend: `gemini` or `openai_compat` | `gemini` |
 | `GEMINI_API_KEY` | API key for Gemini LLM | Required for LLM features |
 | `GEMINI_OFFLINE` | Disable LLM calls (use stubs) | `1` |
 | `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry tests | `1` |
+| `OPENAI_API_KEY` | API key for OpenAI-protocol backend (openai_compat) | Required unless `OPENAI_OFFLINE=1` |
+| `OPENAI_BASE_URL` | Base URL for OpenAI-protocol backend (no `/v1`) | `https://api.openai.com` |
+| `OPENAI_MODEL` | Default model name for openai_compat | Required unless `OPENAI_OFFLINE=1` |
+| `OPENAI_MODEL_SUMMARIZER` | Model override for summarizer/focusing tasks (openai_compat only) | `OPENAI_MODEL` |
+| `OPENAI_MODEL_STRUCTURER` | Model override for structurer tasks (openai_compat only) | `OPENAI_MODEL` |
+| `OPENAI_MODEL_JUDGE` | Model override for self-correction judge (openai_compat only) | `OPENAI_MODEL` |
+| `OPENAI_OFFLINE` | Disable openai_compat network calls (use stubs) | `0` |
 | `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading at startup | `false` |
+| `PROCSUITE_PIPELINE_MODE` | Pipeline mode: `current` or `extraction_first` | `current` |
+| `REGISTRY_EXTRACTION_ENGINE` | Registry extraction engine: `engine`, `agents_focus_then_engine`, or `agents_structurer` | `engine` |
+| `REGISTRY_AUDITOR_SOURCE` | Registry auditor source (extraction-first): `raw_ml` or `disabled` | `raw_ml` |
+| `REGISTRY_ML_AUDIT_USE_BUCKETS` | Audit set = `high_conf + gray_zone` when `1`; else use `top_k + min_prob` | `1` |
+| `REGISTRY_ML_AUDIT_TOP_K` | Audit top-k predictions when buckets disabled | `25` |
+| `REGISTRY_ML_AUDIT_MIN_PROB` | Audit minimum probability when buckets disabled | `0.50` |
+| `REGISTRY_ML_SELF_CORRECT_MIN_PROB` | Min prob for self-correction trigger candidates | `0.95` |
+| `REGISTRY_SELF_CORRECT_ENABLED` | Enable guarded self-correction loop | `0` |
+| `REGISTRY_SELF_CORRECT_ALLOWLIST` | Comma-separated JSON Pointer allowlist for self-correction patch paths (default: `modules/registry/self_correction/validation.py` `ALLOWED_PATHS`) | `builtin` |
+| `REGISTRY_SELF_CORRECT_MAX_ATTEMPTS` | Max successful auto-corrections per case | `1` |
+| `REGISTRY_SELF_CORRECT_MAX_PATCH_OPS` | Max JSON Patch ops per proposal | `5` |
 
 ---
 
 *Last updated: December 2025*
+
 ```
 
 ---
@@ -1219,11 +1538,11 @@ procedure-suite/
 │   │   └── fastapi_app.py             # Main FastAPI backend (NOT api/app.py!)
 │   ├── coder/
 │   │   ├── application/
-│   │   │   └── coding_service.py      # CodingService - main entry point
+│   │   │   ├── coding_service.py      # CodingService - main entry point
+│   │   │   └── smart_hybrid_policy.py # SmartHybridOrchestrator
 │   │   ├── adapters/
 │   │   │   └── registry_coder.py      # Registry-based coder
 │   │   └── domain/
-│   │       └── smart_hybrid.py        # SmartHybridOrchestrator
 │   ├── registry/
 │   │   ├── application/
 │   │   │   └── registry_service.py    # RegistryService - main entry point
@@ -1511,6 +1830,7 @@ pip install onnxruntime-gpu  # If GPU available
 *Last updated: December 2025*
 *Architecture: Extraction-First with RoBERTa ML + Deterministic Rules Engine*
 *Deployment Target: Railway (ONNX INT8)*
+
 ```
 
 ---
@@ -1649,6 +1969,7 @@ ignore_errors = false
 [[tool.mypy.overrides]]
 module = "modules.reporter.cli"
 ignore_errors = false
+
 ```
 
 ---
@@ -1692,6 +2013,7 @@ transformers>=4.35,<5
 # API dependencies (required for FastAPI server)
 fastapi>=0.115
 uvicorn>=0.30
+
 ```
 
 ---
@@ -1808,12 +2130,15 @@ help:
 	@echo "  codex-train    - Full training pipeline"
 	@echo "  codex-metrics  - Run metrics over notes batch"
 	@echo "  clean          - Remove generated files"
+
 ```
 
 ---
 ### `runtime.txt`
 ```
 python-3.11
+
+
 ```
 
 ---
@@ -1837,8 +2162,16 @@ from contextlib import asynccontextmanager
 
 # Load .env file early so API keys are available
 from dotenv import load_dotenv
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
 # Prefer explicitly-exported environment variables over values in `.env`.
-load_dotenv(override=False)
+# Tests can opt out (and avoid accidental real network calls) by setting `PROCSUITE_SKIP_DOTENV=1`.
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
 import subprocess
 import uuid
 from dataclasses import asdict
@@ -2584,6 +2917,7 @@ async def qa_run(
 
 
 __all__ = ["app"]
+
 ```
 
 ---
@@ -3140,6 +3474,7 @@ class CodingService:
             return scrubbed_text
         tokens = max_llm_input_tokens()
         return accordion_truncate(scrubbed_text, tokens)
+
 ```
 
 ---
@@ -3159,8 +3494,9 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, date
-from typing import Any, Literal
+from typing import Any, Literal, TYPE_CHECKING
 
+import os
 from pydantic import BaseModel, ValidationError
 
 from modules.common.exceptions import RegistryError
@@ -3180,6 +3516,7 @@ from modules.registry.application.registry_builder import (
 from modules.registry.engine import RegistryEngine
 from modules.registry.schema import RegistryRecord
 from modules.registry.schema_granular import derive_procedures_from_granular
+from modules.registry.audit.audit_types import AuditCompareReport
 
 logger = get_logger("registry_service")
 from proc_schemas.coding import FinalCode, CodingResult
@@ -3199,6 +3536,52 @@ from modules.coder.application.smart_hybrid_policy import (
 )
 from modules.ml_coder.registry_predictor import RegistryMLPredictor
 from modules.registry.model_runtime import get_registry_runtime_dir, resolve_model_backend
+
+
+if TYPE_CHECKING:
+    from modules.registry.self_correction.types import SelfCorrectionMetadata
+
+
+def focus_note_for_extraction(note_text: str) -> tuple[str, dict[str, Any]]:
+    """Optionally focus/summarize a note for deterministic extraction.
+
+    Guardrail: RAW-ML auditing must always run on the full raw note text and
+    must never use the focused/summarized text.
+    """
+    from modules.registry.extraction.focus import focus_note_for_extraction as _focus
+
+    return _focus(note_text)
+
+
+def _apply_granular_up_propagation(record: RegistryRecord) -> tuple[RegistryRecord, list[str]]:
+    """Apply granular→aggregate propagation using derive_procedures_from_granular().
+
+    This must remain the single place where granular evidence drives aggregate
+    performed flags.
+    """
+    if record.granular_data is None:
+        return record, []
+
+    granular = record.granular_data.model_dump()
+    existing_procedures = (
+        record.procedures_performed.model_dump() if record.procedures_performed is not None else None
+    )
+
+    updated_procs, granular_warnings = derive_procedures_from_granular(
+        granular_data=granular,
+        existing_procedures=existing_procedures,
+    )
+
+    if not updated_procs and not granular_warnings:
+        return record, []
+
+    record_data = record.model_dump()
+    if updated_procs:
+        record_data["procedures_performed"] = updated_procs
+    record_data.setdefault("granular_validation_warnings", [])
+    record_data["granular_validation_warnings"].extend(granular_warnings)
+
+    return RegistryRecord(**record_data), granular_warnings
 
 
 @dataclass
@@ -3258,6 +3641,8 @@ class RegistryExtractionResult:
     needs_manual_review: bool = False
     validation_errors: list[str] = field(default_factory=list)
     audit_warnings: list[str] = field(default_factory=list)
+    audit_report: AuditCompareReport | None = None
+    self_correction: list["SelfCorrectionMetadata"] = field(default_factory=list)
 
 
 class RegistryService:
@@ -3673,6 +4058,10 @@ class RegistryService:
         Returns:
             RegistryExtractionResult with extracted record and metadata.
         """
+        pipeline_mode = os.getenv("PROCSUITE_PIPELINE_MODE", "current").strip().lower()
+        if pipeline_mode == "extraction_first":
+            return self._extract_fields_extraction_first(note_text)
+
         # Legacy fallback: if no hybrid orchestrator is injected, run extractor only
         if self.hybrid_orchestrator is None:
             logger.info("No hybrid_orchestrator configured, running extractor-only mode")
@@ -3710,9 +4099,14 @@ class RegistryService:
             "ml_metadata": coder_result.metadata.get("ml_result"),
         }
 
-        record = self.registry_engine.run(note_text, context=extraction_context)
-        if isinstance(record, tuple):
-            record = record[0]  # Unpack if evidence included
+        engine_warnings: list[str] = []
+        run_with_warnings = getattr(self.registry_engine, "run_with_warnings", None)
+        if callable(run_with_warnings):
+            record, engine_warnings = run_with_warnings(note_text, context=extraction_context)
+        else:
+            record = self.registry_engine.run(note_text, context=extraction_context)
+            if isinstance(record, tuple):
+                record = record[0]  # Unpack if evidence included
 
         # 4. Merge CPT-driven fields into the extraction result
         merged_record = self._merge_cpt_fields_into_record(record, mapped_fields)
@@ -3725,13 +4119,314 @@ class RegistryService:
                 coder_difficulty=coder_result.difficulty.value,
                 coder_source=coder_result.source,
                 mapped_fields=mapped_fields,
-                warnings=[],
+                warnings=list(engine_warnings),
             ),
             coder_result=coder_result,
             note_text=note_text,
         )
 
         return final_result
+
+    # -------------------------------------------------------------------------
+    # Extraction-First Registry → Deterministic CPT → RAW-ML Audit
+    # -------------------------------------------------------------------------
+
+    def extract_record(
+        self,
+        note_text: str,
+        *,
+        note_id: str | None = None,
+    ) -> tuple[RegistryRecord, list[str], dict[str, Any]]:
+        """Extract a RegistryRecord from note text without CPT hints.
+
+        This is the extraction-first entrypoint for registry evidence. It must
+        not seed extraction with CPT codes, ML-predicted CPT codes, or any
+        SmartHybridOrchestrator output.
+        """
+        warnings: list[str] = []
+        meta: dict[str, Any] = {"note_id": note_id}
+
+        extraction_engine = os.getenv("REGISTRY_EXTRACTION_ENGINE", "engine").strip().lower()
+        meta["extraction_engine"] = extraction_engine
+
+        text_for_extraction = note_text
+        if extraction_engine == "engine":
+            pass
+        elif extraction_engine == "agents_focus_then_engine":
+            # Phase 2: focusing helper is optional; guardrail is that RAW-ML always
+            # runs on the raw note text.
+            try:
+                focused_text, focus_meta = focus_note_for_extraction(note_text)
+                meta["focus_meta"] = focus_meta
+                text_for_extraction = focused_text or note_text
+            except Exception as exc:
+                warnings.append(f"focus_note_for_extraction failed ({exc}); using raw note")
+                meta["focus_meta"] = {"status": "failed", "error": str(exc)}
+                text_for_extraction = note_text
+        elif extraction_engine == "agents_structurer":
+            try:
+                from modules.registry.extraction.structurer import structure_note_to_registry_record
+
+                record, struct_meta = structure_note_to_registry_record(note_text, note_id=note_id)
+                meta["structurer_meta"] = struct_meta
+                meta["extraction_text"] = note_text
+
+                record, granular_warnings = _apply_granular_up_propagation(record)
+                warnings.extend(granular_warnings)
+
+                return record, warnings, meta
+            except NotImplementedError as exc:
+                warnings.append(str(exc))
+                meta["structurer_meta"] = {"status": "not_implemented"}
+            except Exception as exc:
+                warnings.append(f"Structurer failed ({exc}); falling back to engine")
+                meta["structurer_meta"] = {"status": "failed", "error": str(exc)}
+        else:
+            warnings.append(f"Unknown REGISTRY_EXTRACTION_ENGINE='{extraction_engine}', using engine")
+
+        meta["extraction_text"] = text_for_extraction
+        context = {"note_id": note_id} if note_id else None
+        engine_warnings: list[str] = []
+        run_with_warnings = getattr(self.registry_engine, "run_with_warnings", None)
+        if callable(run_with_warnings):
+            record, engine_warnings = run_with_warnings(text_for_extraction, context=context)
+        else:
+            record = self.registry_engine.run(text_for_extraction, context=context)
+            if isinstance(record, tuple):
+                record = record[0]  # Unpack if evidence included
+        warnings.extend(engine_warnings)
+
+        record, granular_warnings = _apply_granular_up_propagation(record)
+        warnings.extend(granular_warnings)
+
+        return record, warnings, meta
+
+    def _extract_fields_extraction_first(self, raw_note_text: str) -> RegistryExtractionResult:
+        """Extraction-first registry pipeline.
+
+        Order (must not call orchestrator / CPT seeding):
+        1) extract_record(raw_note_text)
+        2) deterministic Registry→CPT derivation (Phase 3)
+        3) RAW-ML audit via MLCoderPredictor.classify_case(raw_note_text)
+        """
+        from modules.registry.audit.raw_ml_auditor import RawMLAuditor
+        from modules.coder.domain_rules.registry_to_cpt.engine import apply as derive_registry_to_cpt
+        from modules.registry.audit.compare import build_audit_compare_report
+        from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
+        from modules.registry.self_correction.judge import RegistryCorrectionJudge
+        from modules.registry.self_correction.keyword_guard import keyword_guard_passes
+        from modules.registry.self_correction.types import SelfCorrectionMetadata, SelfCorrectionTrigger
+        from modules.registry.self_correction.validation import ALLOWED_PATHS, validate_proposal
+
+        # Guardrail: auditing must always use the original raw note text. Do not
+        # overwrite this variable with focused/summarized text.
+        raw_text_for_audit = raw_note_text
+
+        record, extraction_warnings, meta = self.extract_record(raw_note_text)
+        extraction_text = meta.get("extraction_text") if isinstance(meta.get("extraction_text"), str) else None
+
+        derivation = derive_registry_to_cpt(record)
+        derived_codes = [c.code for c in derivation.codes]
+        base_warnings = list(extraction_warnings)
+        self_correct_warnings: list[str] = []
+        self_correction_meta: list[SelfCorrectionMetadata] = []
+
+        auditor_source = os.getenv("REGISTRY_AUDITOR_SOURCE", "raw_ml").strip().lower()
+        audit_warnings: list[str] = []
+        audit_report: AuditCompareReport | None = None
+        coder_difficulty = "unknown"
+        needs_manual_review = False
+
+        if auditor_source == "raw_ml":
+            from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
+
+            auditor = RawMLAuditor()
+            cfg = RawMLAuditConfig.from_env()
+            ml_case = auditor.classify(raw_text_for_audit)
+            coder_difficulty = ml_case.difficulty.value
+
+            audit_preds = auditor.audit_predictions(ml_case, cfg)
+
+            audit_report = build_audit_compare_report(
+                derived_codes=derived_codes,
+                cfg=cfg,
+                ml_case=ml_case,
+                audit_preds=audit_preds,
+            )
+            needs_manual_review = bool(audit_report.high_conf_omissions)
+
+            def _env_flag(name: str, default: str = "0") -> bool:
+                return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
+
+            def _env_int(name: str, default: int) -> int:
+                raw = os.getenv(name)
+                if raw is None:
+                    return default
+                raw = raw.strip()
+                if not raw:
+                    return default
+                try:
+                    return int(raw)
+                except ValueError:
+                    return default
+
+            self_correct_enabled = _env_flag("REGISTRY_SELF_CORRECT_ENABLED", "0")
+            if self_correct_enabled and audit_report.high_conf_omissions:
+                max_attempts = max(0, _env_int("REGISTRY_SELF_CORRECT_MAX_ATTEMPTS", 1))
+                omission_set = {p.cpt for p in audit_report.high_conf_omissions}
+
+                bucket_by_cpt = {p.cpt: p.bucket for p in audit_report.ml_audit_codes}
+                trigger_preds = [
+                    p for p in auditor.self_correct_triggers(ml_case, cfg) if p.cpt in omission_set
+                ]
+
+                judge = RegistryCorrectionJudge()
+
+                def _allowlist_snapshot() -> list[str]:
+                    raw = os.getenv("REGISTRY_SELF_CORRECT_ALLOWLIST", "").strip()
+                    if raw:
+                        return sorted({p.strip() for p in raw.split(",") if p.strip()})
+                    return sorted(ALLOWED_PATHS)
+
+                corrections_applied = 0
+                evidence_text = (
+                    extraction_text
+                    if extraction_text is not None and extraction_text.strip()
+                    else raw_note_text
+                )
+                for pred in trigger_preds:
+                    if corrections_applied >= max_attempts:
+                        break
+
+                    if not keyword_guard_passes(cpt=pred.cpt, evidence_text=evidence_text):
+                        self_correct_warnings.append(
+                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: keyword guard failed"
+                        )
+                        continue
+
+                    trigger = SelfCorrectionTrigger(
+                        target_cpt=pred.cpt,
+                        ml_prob=float(pred.prob),
+                        ml_bucket=bucket_by_cpt.get(pred.cpt),
+                        reason="RAW_ML_HIGH_CONF_OMISSION",
+                    )
+
+                    discrepancy = (
+                        f"RAW-ML suggests missing CPT {pred.cpt} "
+                        f"(prob={float(pred.prob):.2f}, bucket={bucket_by_cpt.get(pred.cpt) or 'UNKNOWN'})."
+                    )
+                    proposal = judge.propose_correction(
+                        note_text=raw_note_text,
+                        record=record,
+                        discrepancy=discrepancy,
+                        focused_procedure_text=extraction_text,
+                    )
+                    if proposal is None:
+                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: judge returned null")
+                        continue
+
+                    is_valid, reason = validate_proposal(
+                        proposal,
+                        raw_note_text,
+                        extraction_text=extraction_text,
+                    )
+                    if not is_valid:
+                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: {reason}")
+                        continue
+
+                    try:
+                        patched_record = apply_patch_to_record(record=record, patch=proposal.json_patch)
+                    except SelfCorrectionApplyError as exc:
+                        self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: apply failed ({exc})")
+                        continue
+
+                    if patched_record.model_dump() == record.model_dump():
+                        self_correct_warnings.append(
+                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: patch produced no change"
+                        )
+                        continue
+
+                    candidate_record, candidate_granular_warnings = _apply_granular_up_propagation(
+                        patched_record
+                    )
+
+                    candidate_derivation = derive_registry_to_cpt(candidate_record)
+                    candidate_codes = [c.code for c in candidate_derivation.codes]
+                    if trigger.target_cpt not in candidate_codes:
+                        self_correct_warnings.append(
+                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: patch did not derive target CPT"
+                        )
+                        continue
+
+                    record = candidate_record
+                    derivation = candidate_derivation
+                    derived_codes = candidate_codes
+                    corrections_applied += 1
+                    self_correct_warnings.extend(candidate_granular_warnings)
+
+                    self_correct_warnings.append(f"AUTO_CORRECTED: {pred.cpt}")
+                    self_correction_meta.append(
+                        SelfCorrectionMetadata(
+                            trigger=trigger,
+                            applied_paths=[
+                                str(op.get("path"))
+                                for op in proposal.json_patch
+                                if isinstance(op, dict) and op.get("path") is not None
+                            ],
+                            evidence_quotes=[proposal.evidence_quote],
+                            config_snapshot={
+                                "max_attempts": max_attempts,
+                                "allowlist": _allowlist_snapshot(),
+                                "audit_config": audit_report.config.to_dict(),
+                                "judge_rationale": proposal.rationale,
+                            },
+                        )
+                    )
+
+                    audit_report = build_audit_compare_report(
+                        derived_codes=derived_codes,
+                        cfg=cfg,
+                        ml_case=ml_case,
+                        audit_preds=audit_preds,
+                    )
+                    needs_manual_review = bool(audit_report.high_conf_omissions)
+        elif auditor_source == "disabled":
+            from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
+
+            cfg = RawMLAuditConfig.from_env()
+            audit_report = build_audit_compare_report(
+                derived_codes=derived_codes,
+                cfg=cfg,
+                ml_case=None,
+                audit_preds=None,
+                warnings=["REGISTRY_AUDITOR_SOURCE=disabled; RAW-ML audit set is empty"],
+            )
+            coder_difficulty = "disabled"
+        else:
+            raise ValueError(f"Unknown REGISTRY_AUDITOR_SOURCE='{auditor_source}'")
+
+        if audit_report and audit_report.missing_in_derived:
+            for pred in audit_report.missing_in_derived:
+                bucket = pred.bucket or "AUDIT_SET"
+                audit_warnings.append(
+                    f"RAW_ML_AUDIT[{bucket}]: model suggests {pred.cpt} (prob={pred.prob:.2f}), "
+                    "but deterministic derivation missed it"
+                )
+
+        warnings = list(base_warnings) + list(derivation.warnings) + list(self_correct_warnings)
+        return RegistryExtractionResult(
+            record=record,
+            cpt_codes=derived_codes,
+            coder_difficulty=coder_difficulty,
+            coder_source="extraction_first",
+            mapped_fields={},
+            warnings=warnings,
+            needs_manual_review=needs_manual_review,
+            validation_errors=[],
+            audit_warnings=audit_warnings,
+            audit_report=audit_report,
+            self_correction=self_correction_meta,
+        )
 
     def _merge_cpt_fields_into_record(
         self,
@@ -4155,6 +4850,7 @@ class RegistryService:
 def get_registry_service() -> RegistryService:
     """Get a RegistryService instance with default configuration."""
     return RegistryService()
+
 ```
 
 ---
@@ -4286,6 +4982,7 @@ class PipelineResult(BaseModel):
     structurer: Optional[StructurerOut] = None
     registry: Optional[Dict[str, Any]] = None
     codes: Optional[Dict[str, Any]] = None
+
 ```
 
 ---
@@ -4503,6 +5200,7 @@ def _run_structurer(summarizer_out: SummarizerOut) -> StructurerOut:
                 )
             ],
         )
+
 ```
 
 ---
@@ -4579,16 +5277,16 @@ This document is the **Single Source of Truth** for developers and AI assistants
 **Key Files:**
 - `modules/coder/application/coding_service.py` - Main orchestrator
 - `modules/coder/application/smart_hybrid_policy.py` - Hybrid decision logic
-- `modules/coder/domain_rules.py` - NCCI bundling, domain rules
+- `modules/coder/domain_rules/` - NCCI bundling, domain rules
 - `modules/coder/rules_engine.py` - Rule-based inference
 
 **Responsibilities:**
 - Maintain the 8-step coding pipeline in `CodingService`
-- Update domain rules in `domain_rules.py`
+- Update domain rules in `modules/coder/domain_rules/`
 - Ensure NCCI/MER compliance logic is correct
 - Keep confidence thresholds tuned in `modules/ml_coder/thresholds.py`
 
-**Rule**: Do not scatter logic. Keep business rules central in the Knowledge Base or domain_rules.py.
+**Rule**: Do not scatter logic. Keep business rules central in the Knowledge Base or `modules/coder/domain_rules/`.
 
 ### 2. Registry Agent
 
@@ -4785,6 +5483,7 @@ Before committing changes:
 ---
 
 *Last updated: December 2025*
+
 ```
 
 ---
@@ -4865,7 +5564,7 @@ modules/coder/
 │   ├── llm/                    # LLM advisor adapter
 │   ├── nlp/                    # Keyword mapping, negation detection
 │   └── ml_ranker.py            # ML prediction adapter
-├── domain_rules.py             # NCCI bundling, EBUS rules
+├── domain_rules/               # NCCI bundling + deterministic registry→CPT
 ├── rules_engine.py             # Rule-based code inference
 └── engine.py                   # Legacy coder (deprecated)
 ```
@@ -4931,6 +5630,14 @@ modules/registry/
 4. Reconciliation (merge CPT-derived + LLM-extracted)
 5. Validation (IP_Registry.json schema)
 6. ML Audit (compare CPT-derived vs ML predictions)
+
+**Target: Extraction-First Registry Flow (feature-flagged)**
+1. Registry extraction from raw note text (no CPT hints)
+2. Granular → aggregate propagation (`derive_procedures_from_granular`)
+3. Deterministic RegistryRecord → CPT derivation (no note text)
+4. RAW-ML auditor calls `MLCoderPredictor.classify_case(raw_note_text)` directly (no orchestrator/rules)
+5. Compare deterministic CPT vs RAW-ML audit set and report discrepancies
+6. Optional guarded self-correction loop (default off)
 
 ### 5. Agents Module (`modules/agents/`)
 
@@ -5081,9 +5788,17 @@ Key configuration classes:
 
 | Variable | Description |
 |----------|-------------|
+| `LLM_PROVIDER` | LLM backend: `gemini` or `openai_compat` |
 | `GEMINI_API_KEY` | Gemini LLM API key |
 | `GEMINI_OFFLINE` | Skip LLM calls (use stubs) |
 | `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry |
+| `OPENAI_API_KEY` | API key for OpenAI-protocol backend (openai_compat) |
+| `OPENAI_BASE_URL` | Base URL for OpenAI-protocol backend (no `/v1`) |
+| `OPENAI_MODEL` | Default model name for openai_compat |
+| `OPENAI_MODEL_SUMMARIZER` | Model override for summarizer/focusing tasks (openai_compat only) |
+| `OPENAI_MODEL_STRUCTURER` | Model override for structurer tasks (openai_compat only) |
+| `OPENAI_MODEL_JUDGE` | Model override for self-correction judge (openai_compat only) |
+| `OPENAI_OFFLINE` | Disable openai_compat network calls (use stubs) |
 | `PROCSUITE_SKIP_WARMUP` | Skip model warmup |
 
 ## Dependencies
@@ -5127,6 +5842,7 @@ make validate-registry              # Registry validation
 ---
 
 *Last updated: December 2025*
+
 ```
 
 ---
@@ -5260,6 +5976,7 @@ make api
 
 The API will be available at `http://localhost:8000`.
 Docs: `http://localhost:8000/docs`
+
 ```
 
 ---
@@ -5603,4 +6320,5 @@ Lower thresholds = more cases use fast path (faster but may miss edge cases)
 ---
 
 *Last updated: December 2025*
+
 ```

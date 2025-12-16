@@ -436,11 +436,16 @@ class CoderEngine:
         chartis_intents = grouped.get("chartis_assessment", [])
         if not chartis_intents:
             return [], []
-        policy = knowledge.get_knowledge().get("policies", {}).get(
-            "chartis_same_session", "allow"
-        )
+        policy_value = knowledge.get_knowledge().get("policies", {}).get("chartis_same_session", "allow")
+        policy = policy_value.get("default") if isinstance(policy_value, dict) else policy_value
         warnings: list[str] = []
+        blvr_valves_present = bool(grouped.get("blvr_lobe"))
+
         if policy == "suppress":
+            warnings.append("Chartis same-session policy suppresses 31634; verify payer rules.")
+            return [], warnings
+
+        if policy == "bundled_with_valves" and blvr_valves_present:
             warnings.append("Chartis same-session policy suppresses 31634; verify payer rules.")
             return [], warnings
         if policy == "warn":

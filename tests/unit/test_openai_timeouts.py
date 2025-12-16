@@ -27,6 +27,8 @@ def test_openai_llm_retries_once_on_read_timeout(
     monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
 ) -> None:
     monkeypatch.delenv("OPENAI_OFFLINE", raising=False)
+    # Force Chat Completions mode for this test
+    monkeypatch.setenv("OPENAI_PRIMARY_API", "chat")
 
     llm = OpenAILLM(api_key="test-key", model="gpt-5-mini")
     prompt = "VERY_SENSITIVE_PROMPT_SHOULD_NOT_APPEAR_IN_LOGS"
@@ -57,6 +59,8 @@ def test_openai_llm_retries_once_on_read_timeout(
 
 def test_openai_llm_raises_after_one_timeout_retry(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("OPENAI_OFFLINE", raising=False)
+    # Force Chat Completions mode for this test
+    monkeypatch.setenv("OPENAI_PRIMARY_API", "chat")
 
     llm = OpenAILLM(api_key="test-key", model="gpt-5-mini")
     calls = {"count": 0}

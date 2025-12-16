@@ -192,11 +192,24 @@ make lint                           # Linting
 By default, tests run in offline mode with stub LLMs. To test actual extraction:
 
 ```bash
+# Gemini
 export GEMINI_OFFLINE=0
 export REGISTRY_USE_STUB_LLM=0
 export GEMINI_API_KEY="..."
 pytest tests/registry/test_extraction.py
+
+# OpenAI (uses Responses API by default)
+export OPENAI_OFFLINE=0
+export OPENAI_API_KEY="..."
+export OPENAI_MODEL="gpt-4o"
+pytest tests/unit/test_openai_responses_primary.py
+
+# OpenAI with Chat Completions API (legacy mode)
+export OPENAI_PRIMARY_API=chat
+pytest tests/unit/test_openai_timeouts.py
 ```
+
+**Note**: The OpenAI integration uses the Responses API (`/v1/responses`) by default. When writing tests that mock httpx for OpenAI, set `OPENAI_PRIMARY_API=chat` to use the Chat Completions path if your mock expects that format.
 
 ### Test Data
 

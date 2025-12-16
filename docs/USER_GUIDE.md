@@ -308,6 +308,22 @@ This generates a markdown report in `data/eval_results/` with:
 | `CODER_REQUIRE_PHI_REVIEW` | Require PHI review before coding | `false` |
 | `DEMO_MODE` | Enable demo mode (synthetic data only) | `false` |
 
+### OpenAI Configuration
+
+When using an OpenAI-compatible backend (`LLM_PROVIDER=openai_compat`):
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `OPENAI_API_KEY` | API key for OpenAI | Required |
+| `OPENAI_MODEL` | Model name (e.g., `gpt-4o`) | Required |
+| `OPENAI_BASE_URL` | Base URL (no `/v1` suffix) | `https://api.openai.com` |
+| `OPENAI_PRIMARY_API` | API path: `responses` or `chat` | `responses` |
+| `OPENAI_RESPONSES_FALLBACK_TO_CHAT` | Fall back to Chat on 404 | `1` |
+| `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` | Registry task timeout (seconds) | `180` |
+| `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` | Default task timeout (seconds) | `60` |
+
+**Note**: The system uses OpenAI's Responses API by default. For endpoints that don't support it, use `OPENAI_PRIMARY_API=chat`.
+
 ### Adjusting ML Thresholds
 
 The ML model's confidence thresholds can be tuned in `modules/ml_coder/thresholds.py`:

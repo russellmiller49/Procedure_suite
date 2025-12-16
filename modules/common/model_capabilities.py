@@ -58,29 +58,59 @@ def capabilities_for(model: str) -> Capabilities:
     )
 
 
-def filter_payload_for_model(payload: dict[str, Any], model: str) -> dict[str, Any]:
-    """Return a filtered copy of `payload` with unsupported keys removed."""
+def filter_payload_for_model(
+    payload: dict[str, Any],
+    model: str,
+    *,
+    api_style: str = "chat",
+) -> dict[str, Any]:
+    """Return a filtered copy of `payload` with unsupported keys removed.
+
+    Args:
+        payload: The request payload
+        model: Model identifier
+        api_style: "chat" for Chat Completions, "responses" for Responses API
+
+    Returns:
+        Filtered payload safe for the target API
+    """
     filtered: dict[str, Any] = dict(payload)
     caps = capabilities_for(model)
 
-    if not (caps.supports_response_format_json_object or caps.supports_response_format_json_schema):
-        filtered.pop("response_format", None)
+    if api_style == "responses":
+        # Responses API uses different structure; remove chat-specific keys
+        for chat_key in ("messages", "response_format", "stream"):
+            filtered.pop(chat_key, None)
 
-    if not caps.supports_temperature:
-        filtered.pop("temperature", None)
+        # Responses API may not support all sampling params for all models
+        if not caps.supports_temperature:
+            filtered.pop("temperature", None)
+        if not caps.supports_top_p:
+            filtered.pop("top_p", None)
+        if not caps.supports_seed:
+            filtered.pop("seed", None)
+        if not caps.supports_logprobs:
+            filtered.pop("logprobs", None)
 
-    if not caps.supports_top_p:
-        filtered.pop("top_p", None)
+    else:  # api_style == "chat"
+        if not (caps.supports_response_format_json_object or caps.supports_response_format_json_schema):
+            filtered.pop("response_format", None)
 
-    if not caps.supports_seed:
-        filtered.pop("seed", None)
+        if not caps.supports_temperature:
+            filtered.pop("temperature", None)
 
-    if not caps.supports_logprobs:
-        filtered.pop("logprobs", None)
+        if not caps.supports_top_p:
+            filtered.pop("top_p", None)
 
-    if not caps.supports_tools:
-        for key in ("tools", "tool_choice", "parallel_tool_calls"):
-            filtered.pop(key, None)
+        if not caps.supports_seed:
+            filtered.pop("seed", None)
+
+        if not caps.supports_logprobs:
+            filtered.pop("logprobs", None)
+
+        if not caps.supports_tools:
+            for key in ("tools", "tool_choice", "parallel_tool_calls"):
+                filtered.pop(key, None)
 
     return filtered
 

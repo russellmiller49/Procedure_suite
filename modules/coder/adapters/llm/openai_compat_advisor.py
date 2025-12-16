@@ -14,6 +14,7 @@ import httpx
 
 from observability.logging_config import get_logger
 from modules.common.model_capabilities import filter_payload_for_model
+from modules.common.llm import _resolve_openai_timeout
 
 from .gemini_advisor import LLMAdvisorPort, LLMCodeSuggestion
 
@@ -230,7 +231,7 @@ Return ONLY the JSON array, no other text.
             return "openai_compat_offline_stub"
         return "openai_compat_unconfigured"
 
-    def suggest_codes(self, report_text: str) -> list[LLMCodeSuggestion]:
+    def suggest_codes(self, report_text: str, *, task: str | None = None) -> list[LLMCodeSuggestion]:
         if self._offline:
             return self._offline_suggestions()
 
@@ -242,7 +243,7 @@ Return ONLY the JSON array, no other text.
         )
 
         try:
-            response_text = self._call_chat(prompt)
+            response_text = self._call_chat(prompt, task=task or "coder")
             return self._parse_response(response_text)
         except Exception as exc:  # noqa: BLE001
             logger.error("OpenAI-compat advisor call failed: %s", type(exc).__name__)
@@ -252,6 +253,8 @@ Return ONLY the JSON array, no other text.
         self,
         report_text: str,
         context: dict,
+        *,
+        task: str | None = None,
     ) -> list[LLMCodeSuggestion]:
         if self._offline:
             return self._offline_suggestions()
@@ -274,7 +277,7 @@ Return ONLY the JSON array, no other text.
         )
 
         try:
-            response_text = self._call_chat(prompt)
+            response_text = self._call_chat(prompt, task=task or "coder")
             return self._parse_response(response_text)
         except Exception as exc:  # noqa: BLE001
             logger.error("OpenAI-compat advisor call with context failed: %s", type(exc).__name__)
@@ -290,7 +293,7 @@ Return ONLY the JSON array, no other text.
             return "openai_compat_offline_stub"
         raise ValueError("OPENAI_MODEL is required unless OPENAI_OFFLINE=1")
 
-    def _call_chat(self, prompt: str) -> str:
+    def _call_chat(self, prompt: str, *, task: str | None = None) -> str:
         url = f"{self.base_url}/v1/chat/completions"
         headers = {
             "Authorization": f"Bearer {self.api_key}",
@@ -303,9 +306,10 @@ Return ONLY the JSON array, no other text.
             "temperature": 0.0,
         }
 
-        payload = filter_payload_for_model(payload, str(payload.get("model", "")))
+        payload = filter_payload_for_model(payload, str(payload.get("model", "")), api_style="chat")
 
-        timeout = httpx.Timeout(connect=10.0, read=60.0, write=30.0, pool=10.0)
+        # Use task-aware timeout (registry extraction gets longer read timeout)
+        timeout = _resolve_openai_timeout(task)
         with httpx.Client(timeout=timeout) as client:
             removed_on_retry: list[str] = []
             attempt_payload: dict = payload

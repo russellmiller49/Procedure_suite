@@ -457,8 +457,9 @@ def _detect_chartis(
     lobe_patterns: Dict[str, Tuple[re.Pattern[str], ...]],
 ) -> list[DetectedIntent]:
     config = knowledge.blvr_config()
-    neg_terms = [term.lower() for term in config.get("chartis_negative_terms", [])]
-    pos_terms = [term.lower() for term in config.get("chartis_positive_terms", [])]
+    chartis_results = config.get("chartis_results") or {}
+    neg_terms = [term.lower() for term in (chartis_results.get("negative") or config.get("chartis_negative_terms") or [])]
+    pos_terms = [term.lower() for term in (chartis_results.get("positive") or config.get("chartis_positive_terms") or [])]
     intents: list[DetectedIntent] = []
     for start, end in sentences:
         sentence_text = text[start:end]

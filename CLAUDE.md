@@ -501,6 +501,13 @@ procedure-suite/
 | `GEMINI_OFFLINE` | Disable LLM calls (use stubs) | `1` |
 | `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry tests | `1` |
 | `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading | `false` |
+| `OPENAI_API_KEY` | API key for OpenAI LLM | Required for OpenAI |
+| `OPENAI_MODEL` | OpenAI model to use | `gpt-5.1` |
+| `OPENAI_PRIMARY_API` | Primary API: `responses` or `chat` | `responses` |
+| `OPENAI_RESPONSES_FALLBACK_TO_CHAT` | Fall back to Chat on 404 | `1` |
+| `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` | Read timeout for registry tasks | `180` |
+| `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` | Read timeout for default tasks | `60` |
+| `OPENAI_OFFLINE` | Disable OpenAI calls (use stubs) | `0` |
 
 ### 4. Contract-First Development
 All agents use Pydantic contracts defined in `modules/agents/contracts.py`:

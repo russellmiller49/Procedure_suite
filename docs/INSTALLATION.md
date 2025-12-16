@@ -70,6 +70,34 @@ GEMINI_USE_OAUTH=true
 # GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account.json"
 ```
 
+### OpenAI-Compatible API Configuration (Alternative to Gemini)
+
+If using an OpenAI-compatible backend (including OpenAI, Azure OpenAI, or local models):
+
+```bash
+# Required settings
+LLM_PROVIDER=openai_compat
+OPENAI_API_KEY=your-api-key-here
+OPENAI_MODEL=gpt-4o  # or your preferred model
+
+# Optional: Custom endpoint (for Azure, local models, etc.)
+# OPENAI_BASE_URL=https://your-endpoint.com  # No /v1 suffix
+
+# API Selection (default: Responses API)
+# OPENAI_PRIMARY_API=responses        # Use Responses API (default)
+# OPENAI_PRIMARY_API=chat             # Use Chat Completions API
+
+# Fallback behavior (when Responses API returns 404)
+# OPENAI_RESPONSES_FALLBACK_TO_CHAT=1  # Fall back to Chat (default)
+# OPENAI_RESPONSES_FALLBACK_TO_CHAT=0  # Disable fallback
+
+# Timeout configuration (seconds)
+# OPENAI_TIMEOUT_READ_REGISTRY_SECONDS=180  # Registry tasks (default: 180s)
+# OPENAI_TIMEOUT_READ_DEFAULT_SECONDS=60    # Other tasks (default: 60s)
+```
+
+**Note**: The system uses the OpenAI Responses API (`POST /v1/responses`) by default. If your endpoint doesn't support it, set `OPENAI_PRIMARY_API=chat` or enable fallback with `OPENAI_RESPONSES_FALLBACK_TO_CHAT=1`.
+
 ### Other Settings
 
 ```bash

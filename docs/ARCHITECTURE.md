@@ -308,6 +308,10 @@ Key configuration classes:
 | `OPENAI_MODEL_STRUCTURER` | Model override for structurer tasks (openai_compat only) |
 | `OPENAI_MODEL_JUDGE` | Model override for self-correction judge (openai_compat only) |
 | `OPENAI_OFFLINE` | Disable openai_compat network calls (use stubs) |
+| `OPENAI_PRIMARY_API` | Primary API: `responses` or `chat` (default: `responses`) |
+| `OPENAI_RESPONSES_FALLBACK_TO_CHAT` | Fall back to Chat Completions on 404 (default: `1`) |
+| `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` | Read timeout for registry tasks (default: `180`) |
+| `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` | Read timeout for default tasks (default: `60`) |
 | `PROCSUITE_SKIP_WARMUP` | Skip model warmup |
 
 ## Dependencies

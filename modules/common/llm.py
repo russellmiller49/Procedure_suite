@@ -21,6 +21,14 @@ except ImportError:  # google-auth is optional unless OAuth is used
 from modules.common.logger import get_logger
 from modules.common.exceptions import LLMError
 from modules.common.model_capabilities import filter_payload_for_model, is_gpt5
+from modules.common.openai_responses import (
+    get_primary_api,
+    is_fallback_enabled,
+    build_responses_payload,
+    parse_responses_text,
+    post_responses,
+    ResponsesEndpointNotFound,
+)
 
 logger = get_logger("common.llm")
 
@@ -234,7 +242,11 @@ class LLMInterface(Protocol):
 
 
 class OpenAILLM:
-    """Minimal OpenAI chat client for use in self-correction flows."""
+    """OpenAI client supporting both Responses API and Chat Completions.
+
+    By default, uses Responses API (POST /v1/responses) for first-party OpenAI.
+    Falls back to Chat Completions on 404 or when configured.
+    """
 
     def __init__(
         self,
@@ -253,6 +265,31 @@ class OpenAILLM:
         if not self.api_key:
             logger.warning("OPENAI_API_KEY not set; OpenAILLM calls will fail.")
 
+    def _is_openai_endpoint(self) -> bool:
+        """Check if base_url points to OpenAI's API."""
+        base = self.base_url.lower()
+        return "api.openai.com" in base or not base or base == "https://api.openai.com"
+
+    def _get_timeout(self, task_key: str | None) -> httpx.Timeout:
+        """Get timeout configuration for the task."""
+        resolved_timeout = _resolve_openai_timeout(task_key)
+        read_override = self.timeout_seconds
+        if read_override is not None:
+            return httpx.Timeout(
+                connect=resolved_timeout.connect,
+                read=read_override,
+                write=resolved_timeout.write,
+                pool=resolved_timeout.pool,
+            )
+        return resolved_timeout
+
+    def _get_headers(self) -> dict[str, str]:
+        """Get request headers with auth."""
+        return {
+            "Authorization": f"Bearer {self.api_key}" if self.api_key else "",
+            "Content-Type": "application/json",
+        }
+
     def generate(
         self,
         prompt: str,
@@ -262,20 +299,98 @@ class OpenAILLM:
         **kwargs,
     ) -> str:
         """Generate a response from OpenAI.
-        
+
+        Uses Responses API by default for first-party OpenAI endpoints.
+        Falls back to Chat Completions on 404 or when configured.
+
         Args:
             prompt: The prompt text
             response_schema: Currently ignored (Gemini-only schema shape)
-            **kwargs: Optional OpenAI Chat Completions parameters (best-effort)
+            task: Task identifier for timeout/capability selection
+            **kwargs: Optional parameters (best-effort, capability-filtered)
         """
         if _truthy_env("OPENAI_OFFLINE") or not self.api_key:
             return "{}"
 
+        task_key = task if task is not None else self.task
+        primary_api = get_primary_api()
+
+        # Use Responses API for first-party OpenAI when configured
+        if primary_api == "responses" and self._is_openai_endpoint():
+            try:
+                return self._generate_via_responses(prompt, task=task_key, **kwargs)
+            except ResponsesEndpointNotFound:
+                if is_fallback_enabled():
+                    logger.info(
+                        "Responses API not available; falling back to Chat Completions model=%s",
+                        self.model,
+                    )
+                    return self._generate_via_chat(prompt, task=task_key, **kwargs)
+                raise
+
+        # Use Chat Completions for compat endpoints or when configured
+        return self._generate_via_chat(prompt, task=task_key, **kwargs)
+
+    def _generate_via_responses(
+        self,
+        prompt: str,
+        *,
+        task: str | None = None,
+        **kwargs,
+    ) -> str:
+        """Generate using Responses API (POST /v1/responses)."""
+        url = f"{self.base_url}/v1/responses"
+        headers = self._get_headers()
+        timeout = self._get_timeout(task)
+
+        # Build extra params from kwargs (capability-filtered later)
+        extra: dict[str, Any] = {}
+        for float_key in ("temperature", "top_p"):
+            if float_key in kwargs and kwargs[float_key] is not None:
+                extra[float_key] = float(kwargs[float_key])
+        for int_key in ("max_tokens", "max_completion_tokens", "seed"):
+            if int_key in kwargs and kwargs[int_key] is not None:
+                extra[int_key] = int(kwargs[int_key])
+
+        payload = build_responses_payload(
+            self.model,
+            prompt,
+            wants_json=True,
+            task=task,
+            extra=extra,
+        )
+
+        # Apply capability filtering for responses API
+        payload = filter_payload_for_model(payload, self.model, api_style="responses")
+
+        try:
+            resp_json = post_responses(
+                url=url,
+                headers=headers,
+                payload=payload,
+                timeout=timeout,
+                model=self.model,
+            )
+            return parse_responses_text(resp_json)
+        except ResponsesEndpointNotFound:
+            raise
+        except LLMError:
+            raise
+        except Exception as exc:
+            raise LLMError(f"Unexpected error in Responses API (model={self.model}): {exc}") from exc
+
+    def _generate_via_chat(
+        self,
+        prompt: str,
+        *,
+        task: str | None = None,
+        **kwargs,
+    ) -> str:
+        """Generate using Chat Completions API (POST /v1/chat/completions)."""
         url = f"{self.base_url}/v1/chat/completions"
-        headers = {
-            "Authorization": f"Bearer {self.api_key}" if self.api_key else "",
-            "Content-Type": "application/json",
-        }
+        headers = self._get_headers()
+        timeout = self._get_timeout(task)
+
         wants_json = True
         outgoing_prompt = _prepend_json_object_instruction(prompt) if is_gpt5(self.model) and wants_json else prompt
 
@@ -301,22 +416,9 @@ class OpenAILLM:
             if raw_key in kwargs and kwargs[raw_key] is not None:
                 payload[raw_key] = kwargs[raw_key]
 
-        payload = filter_payload_for_model(payload, self.model)
+        payload = filter_payload_for_model(payload, self.model, api_style="chat")
 
         removed_on_retry: list[str] = []
-        task_key = task if task is not None else self.task
-        resolved_timeout = _resolve_openai_timeout(task_key)
-        read_override = self.timeout_seconds
-        timeout = (
-            httpx.Timeout(
-                connect=resolved_timeout.connect,
-                read=read_override,
-                write=resolved_timeout.write,
-                pool=resolved_timeout.pool,
-            )
-            if read_override is not None
-            else resolved_timeout
-        )
 
         try:
             with httpx.Client(timeout=timeout) as client:
@@ -332,28 +434,28 @@ class OpenAILLM:
                             did_retry_timeout = True
                             backoff = random.uniform(0.8, 1.5)
                             logger.warning(
-                                "OpenAI API transient transport error; retrying once endpoint=%s model=%s",
+                                "Chat Completions API transient transport error; retrying once endpoint=%s model=%s",
                                 url,
                                 self.model,
                             )
                             time.sleep(backoff)
                             continue
                         raise LLMError(
-                            f"OpenAI transport error after retry (model={self.model}): {type(exc).__name__}"
+                            f"Chat Completions transport error after retry (model={self.model}): {type(exc).__name__}"
                         ) from exc
 
                     if response.status_code < 400:
                         data = response.json()
                         choices = data.get("choices", [])
                         if not choices:
-                            raise LLMError("No choices returned from OpenAI API")
+                            raise LLMError("No choices returned from Chat Completions API")
                         return choices[0].get("message", {}).get("content", "")
 
                     message, error_type, error_param = _openai_error_details(response)
                     request_id = _openai_request_id(response)
                     request_id_suffix = f" request_id={request_id}" if request_id else ""
                     logger.warning(
-                        "OpenAI API error status=%s endpoint=%s model=%s%s",
+                        "Chat Completions API error status=%s endpoint=%s model=%s%s",
                         response.status_code,
                         url,
                         self.model,
@@ -380,16 +482,19 @@ class OpenAILLM:
 
                     removed_summary = ", ".join(removed_on_retry) if removed_on_retry else "none"
                     raise LLMError(
-                        f"OpenAI request failed (status={response.status_code}, model={self.model}, "
+                        f"Chat Completions request failed (status={response.status_code}, model={self.model}, "
                         f"removed_on_retry={removed_summary}): {message}"
                     )
 
         except httpx.RequestError as exc:
-            raise LLMError(f"Network error contacting OpenAI API (model={self.model}): {exc}") from exc
+            raise LLMError(f"Network error contacting Chat Completions API (model={self.model}): {exc}") from exc
         except Exception as exc:
             if isinstance(exc, LLMError):
                 raise
-            raise LLMError(f"Unexpected error in OpenAILLM (model={self.model}): {exc}") from exc
+            raise LLMError(f"Unexpected error in Chat Completions (model={self.model}): {exc}") from exc
+
+        # Should not reach here
+        raise LLMError(f"Chat Completions request failed after all attempts (model={self.model})")
 
 
 class GeminiLLM:
