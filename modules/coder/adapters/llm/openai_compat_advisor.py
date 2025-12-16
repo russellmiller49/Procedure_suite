@@ -72,8 +72,8 @@ def _get_persistent_client(base_url: str, api_key: str) -> httpx.Client:
                     write=10.0,
                     pool=10.0,
                 ),
-                # HTTP/2 for better multiplexing (if server supports it)
-                http2=True,
+                # Stick with HTTP/1.1 - HTTP/2 can cause issues with some API providers
+                http2=False,
             )
             _client_base_url = base_url
             _client_api_key = api_key
