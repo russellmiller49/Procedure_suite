@@ -2,13 +2,19 @@
 
 Implements the same interface as GeminiAdvisorAdapter but uses an OpenAI-protocol
 backend selected via environment variables.
+
+Performance optimization: Uses a persistent httpx client with connection pooling
+to avoid TCP handshake + TLS negotiation overhead on each request (~100-300ms savings).
 """
 
 from __future__ import annotations
 
+import atexit
 import json
 import os
 import re
+import threading
+from typing import Any
 
 import httpx
 
@@ -19,6 +25,81 @@ from modules.common.llm import _resolve_openai_timeout
 from .gemini_advisor import LLMAdvisorPort, LLMCodeSuggestion
 
 logger = get_logger("llm_advisor")
+
+
+# Module-level persistent client for connection pooling
+# This avoids TCP handshake + TLS negotiation on each request
+_client_lock = threading.Lock()
+_persistent_client: httpx.Client | None = None
+_client_base_url: str | None = None
+_client_api_key: str | None = None
+
+
+def _get_persistent_client(base_url: str, api_key: str) -> httpx.Client:
+    """Get or create a persistent httpx client with connection pooling.
+
+    Thread-safe lazy initialization. Client is reused across all requests
+    to the same base URL, avoiding expensive TCP/TLS setup per request.
+    """
+    global _persistent_client, _client_base_url, _client_api_key
+
+    with _client_lock:
+        # Check if we need to create a new client (first call or config changed)
+        if (
+            _persistent_client is None
+            or _client_base_url != base_url
+            or _client_api_key != api_key
+        ):
+            # Close existing client if config changed
+            if _persistent_client is not None:
+                try:
+                    _persistent_client.close()
+                except Exception:
+                    pass
+
+            # Create new persistent client with connection pooling
+            _persistent_client = httpx.Client(
+                # Use connection pooling with keep-alive
+                limits=httpx.Limits(
+                    max_keepalive_connections=5,
+                    max_connections=10,
+                    keepalive_expiry=30.0,  # Keep connections alive for 30 seconds
+                ),
+                # Default timeout (can be overridden per-request)
+                timeout=httpx.Timeout(
+                    connect=10.0,
+                    read=180.0,  # Registry extraction can be slow
+                    write=10.0,
+                    pool=10.0,
+                ),
+                # HTTP/2 for better multiplexing (if server supports it)
+                http2=True,
+            )
+            _client_base_url = base_url
+            _client_api_key = api_key
+            logger.info(
+                "Created persistent HTTP client for OpenAI API",
+                extra={"base_url": base_url},
+            )
+
+        return _persistent_client
+
+
+def _cleanup_persistent_client() -> None:
+    """Clean up the persistent client on module unload."""
+    global _persistent_client
+    with _client_lock:
+        if _persistent_client is not None:
+            try:
+                _persistent_client.close()
+                logger.debug("Closed persistent HTTP client")
+            except Exception:
+                pass
+            _persistent_client = None
+
+
+# Register cleanup on interpreter shutdown
+atexit.register(_cleanup_persistent_client)
 
 
 def _truthy_env(name: str) -> bool:
@@ -310,55 +391,60 @@ Return ONLY the JSON array, no other text.
 
         # Use task-aware timeout (registry extraction gets longer read timeout)
         timeout = _resolve_openai_timeout(task)
-        with httpx.Client(timeout=timeout) as client:
-            removed_on_retry: list[str] = []
-            attempt_payload: dict = payload
-            for attempt in range(2):
-                response = client.post(url, headers=headers, json=attempt_payload)
-                if response.status_code < 400:
-                    data = response.json()
-                    break
 
-                message, error_type, error_param = _openai_error_details(response)
-                request_id = _openai_request_id(response)
-                logger.warning(
-                    "OpenAI-compat API error",
-                    extra={
-                        "status": response.status_code,
-                        "endpoint": url,
-                        "model": attempt_payload.get("model", ""),
-                        "request_id": request_id,
-                        "openai_error_message": message,
-                    },
+        # Use persistent client with connection pooling (avoids TCP/TLS handshake per request)
+        client = _get_persistent_client(self.base_url, self.api_key)
+
+        removed_on_retry: list[str] = []
+        attempt_payload: dict = payload
+        data: dict[str, Any] = {}
+
+        for attempt in range(2):
+            response = client.post(url, headers=headers, json=attempt_payload, timeout=timeout)
+            if response.status_code < 400:
+                data = response.json()
+                break
+
+            message, error_type, error_param = _openai_error_details(response)
+            request_id = _openai_request_id(response)
+            logger.warning(
+                "OpenAI-compat API error",
+                extra={
+                    "status": response.status_code,
+                    "endpoint": url,
+                    "model": attempt_payload.get("model", ""),
+                    "request_id": request_id,
+                    "openai_error_message": message,
+                },
+            )
+
+            should_retry = (
+                attempt == 0
+                and response.status_code == 400
+                and _looks_like_unsupported_parameter_error(
+                    message=message, error_type=error_type, error_param=error_param
                 )
-
-                should_retry = (
-                    attempt == 0
-                    and response.status_code == 400
-                    and _looks_like_unsupported_parameter_error(
-                        message=message, error_type=error_type, error_param=error_param
-                    )
+            )
+            if should_retry:
+                retry_payload, removed_on_retry = _build_unsupported_param_retry_payload(
+                    attempt_payload,
+                    message=message,
+                    error_param=error_param,
                 )
-                if should_retry:
-                    retry_payload, removed_on_retry = _build_unsupported_param_retry_payload(
-                        attempt_payload,
-                        message=message,
-                        error_param=error_param,
-                    )
-                    if removed_on_retry:
-                        attempt_payload = retry_payload
-                        continue
+                if removed_on_retry:
+                    attempt_payload = retry_payload
+                    continue
 
-                response.raise_for_status()
-            else:
-                # Defensive: should never reach; loop either breaks or raises.
-                raise RuntimeError("OpenAI-compat request failed after retry")
+            response.raise_for_status()
+        else:
+            # Defensive: should never reach; loop either breaks or raises.
+            raise RuntimeError("OpenAI-compat request failed after retry")
 
         choices = data.get("choices", []) if isinstance(data, dict) else []
         if not choices:
             return ""
-        message = choices[0].get("message", {}) if isinstance(choices[0], dict) else {}
-        content = message.get("content", "") if isinstance(message, dict) else ""
+        msg = choices[0].get("message", {}) if isinstance(choices[0], dict) else {}
+        content = msg.get("content", "") if isinstance(msg, dict) else ""
         return content or ""
 
     def _offline_suggestions(self) -> list[LLMCodeSuggestion]:
