@@ -95,11 +95,11 @@ class CodingService:
             config=config,
         )
 
-        # Log PHI scrubber status
-        if llm_advisor and not phi_scrubber:
-            logger.warning(
-                "LLM advisor enabled but no PHI scrubber configured. "
-                "Raw text may be sent to external LLM service."
+        # Note: PHI scrubbing is now handled at route level (modules/api/phi_redaction.py).
+        # The phi_scrubber parameter is deprecated and ignored.
+        if phi_scrubber:
+            logger.debug(
+                "phi_scrubber parameter is deprecated; PHI redaction is now handled at route level"
             )
 
         # Log ML ranker status
@@ -326,9 +326,9 @@ class CodingService:
     def _run_llm_advisor(self, report_text: str, use_llm: bool) -> tuple[AdvisorResult, float]:
         """Step 3: Run the LLM advisor.
 
-        PHI Guardrail: If a PHI scrubber is configured, the text is scrubbed
-        before being sent to the external LLM service. This prevents PHI
-        from being transmitted to third-party APIs.
+        NOTE: PHI redaction is now handled at the API route handler level.
+        The report_text passed here should already be scrubbed. The phi_scrubber
+        parameter on CodingService is deprecated and ignored.
 
         Returns:
             Tuple of (AdvisorResult, latency_ms)
@@ -336,23 +336,7 @@ class CodingService:
         if not use_llm or not self.llm_advisor:
             return AdvisorResult(codes=[], confidence={}), 0.0
 
-        # PHI Guardrail: Scrub text before sending to LLM
-        text_for_llm = report_text
-        if self.phi_scrubber:
-            try:
-                scrub_result = self.phi_scrubber.scrub(report_text)
-                text_for_llm = scrub_result.scrubbed_text
-                logger.debug(
-                    "PHI scrubbed before LLM call",
-                    extra={"entities_found": len(scrub_result.entities)},
-                )
-            except Exception as e:
-                logger.error(f"PHI scrubbing failed: {e}", exc_info=True)
-                # Fail safely: don't send potentially unscrubbed text to LLM
-                logger.warning("Skipping LLM advisor due to scrubbing failure")
-                return AdvisorResult(codes=[], confidence={}), 0.0
-
-        text_for_llm = self._prepare_llm_context(text_for_llm)
+        text_for_llm = self._prepare_llm_context(report_text)
 
         with timed("coding_service.llm_advisor") as timing:
             suggestions = self.llm_advisor.suggest_codes(text_for_llm)

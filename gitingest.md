@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2025-12-16T12:23:59-08:00`
-Git: `main` @ `4da5130`
+Generated: `2025-12-17T15:04:41-08:00`
+Git: `main` @ `a7ae51a`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -30,6 +30,48 @@ Git: `main` @ `4da5130`
     - analysis/synthetic_notes_eval.txt
     - analysis/synthetic_notes_eval_after_kb_update.txt
     - analysis/synthetic_notes_eval_detailed.txt
+  - archive/
+    - archive/docs/
+      - archive/docs/CODEX_IMPLEMENTATION_PLAN.md
+      - archive/docs/CODEX_IMPLEMENTATION_PLAN_v5_POST.md
+      - archive/docs/CODEX_PR_CHECKLIST.md
+      - archive/docs/main v13._diff.txt
+      - archive/docs/Validation_fix_plan_12_6_25.md
+    - archive/knowledge/
+      - archive/knowledge/ip_coding_billing_v2_8.json
+    - archive/root/
+      - archive/root/geminiquota.py
+      - archive/root/test_gemini_simple.py
+    - archive/scripts/
+      - archive/scripts/apply_patch.py
+      - archive/scripts/clean_and_split_data.py
+      - archive/scripts/clean_and_split_data_updated.py
+      - archive/scripts/clean_and_split_data_updated_v2.py
+      - archive/scripts/clean_ip_registry.py
+      - archive/scripts/cleanup_v4_branch.sh
+      - archive/scripts/data_generators.py
+      - archive/scripts/data_generators_updated.py
+      - archive/scripts/data_generators_updated_v2.py
+      - archive/scripts/fix_ml_data.py
+      - archive/scripts/fix_registry_data.py
+      - archive/scripts/immediate_csv_fix.py
+      - archive/scripts/run_cleaning_pipeline.py
+      - archive/scripts/Smart_splitter.py
+      - archive/scripts/Smart_splitter_updated.py
+      - archive/scripts/Smart_splitter_updated_v2.py
+      - archive/scripts/validate_registry2.py
+      - archive/scripts/verify_active_app.sh
+      - archive/scripts/verify_v4_enhancements.sh
+    - archive/README.md
+  - artifacts/
+    - artifacts/phi_audit/
+      - artifacts/phi_audit/20251217_211201Z.json
+      - artifacts/phi_audit/20251217_211512Z.json
+      - artifacts/phi_audit/20251217_223316Z.json
+      - artifacts/phi_audit/20251217_223841Z.json
+      - artifacts/phi_audit/20251217_224125Z.json
+      - artifacts/phi_audit/20251217_224849Z.json
+      - artifacts/phi_audit/redaction_decisions.jsonl
   - cms_rvu_tools/
     - cms_rvu_tools/cms_rvus_2025_ip.csv
     - cms_rvu_tools/IP_Registry_Enhanced_v2.json
@@ -205,25 +247,21 @@ Git: `main` @ `4da5130`
       - docs/phi_review_system/README.md
     - docs/AGENTS.md
     - docs/ARCHITECTURE.md
-    - docs/CODEX_IMPLEMENTATION_PLAN.md
-    - docs/CODEX_IMPLEMENTATION_PLAN_v5_POST.md
-    - docs/CODEX_PR_CHECKLIST.md
     - docs/DEPLOY_ARCH.md
     - docs/DEPLOY_RAILWAY.md
     - docs/DEPLOYMENT.md
     - docs/DEVELOPMENT.md
     - docs/GRAFANA_DASHBOARDS.md
     - docs/INSTALLATION.md
-    - docs/main v13._diff.txt
     - docs/ml_first_hybrid_policy.md
     - docs/model_release_runbook.md
+    - docs/optimization_12_16_25.md
     - docs/REFERENCES.md
     - docs/Registry_API.md
     - docs/Registry_ML_summary.md
     - docs/REPORTER_STYLE_GUIDE.md
     - docs/STRUCTURED_REPORTER.md
     - docs/USER_GUIDE.md
-    - docs/Validation_fix_plan_12_6_25.md
   - Feedback_csv_files/
     - Feedback_csv_files/qa-sessions-2025-11-30.csv
   - infra/
@@ -271,6 +309,7 @@ Git: `main` @ `4da5130`
       - modules/api/normalization.py
       - modules/api/phi_demo_store.py
       - modules/api/phi_dependencies.py
+      - modules/api/readiness.py
       - modules/api/routes_registry.py
     - modules/autocode/
       - modules/autocode/ip_kb/
@@ -365,6 +404,7 @@ Git: `main` @ `4da5130`
       - modules/common/llm.py
       - modules/common/logger.py
       - modules/common/model_capabilities.py
+      - modules/common/openai_responses.py
       - modules/common/rvu_calc.py
       - modules/common/sectionizer.py
       - modules/common/spans.py
@@ -398,7 +438,16 @@ Git: `main` @ `4da5130`
       - modules/domain/__init__.py
     - modules/infra/
       - modules/infra/__init__.py
+      - modules/infra/cache.py
+      - modules/infra/executors.py
+      - modules/infra/llm_control.py
       - modules/infra/nlp_warmup.py
+      - modules/infra/perf.py
+      - modules/infra/safe_logging.py
+      - modules/infra/settings.py
+    - modules/llm/
+      - modules/llm/__init__.py
+      - modules/llm/client.py
     - modules/ml_coder/
       - modules/ml_coder/__init__.py
       - modules/ml_coder/data_prep.py
@@ -502,6 +551,7 @@ Git: `main` @ `4da5130`
       - modules/registry/registry_system_prompt.txt
       - modules/registry/schema.py
       - modules/registry/schema_granular.py
+      - modules/registry/summarize.py
       - modules/registry/transform.py
       - modules/registry/v2_booleans.py
     - modules/registry_cleaning/
@@ -681,17 +731,8 @@ Git: `main` @ `4da5130`
   - schemas/
     - schemas/IP_Registry.json
   - scripts/
-    - scripts/apply_patch.py
     - scripts/build_registry_bundle.py
     - scripts/check_pydantic_models.py
-    - scripts/clean_and_split_data.py
-    - scripts/clean_and_split_data_updated.py
-    - scripts/clean_and_split_data_updated_v2.py
-    - scripts/clean_ip_registry.py
-    - scripts/cleanup_v4_branch.sh
-    - scripts/data_generators.py
-    - scripts/data_generators_updated.py
-    - scripts/data_generators_updated_v2.py
     - scripts/dev_pull_model.sh
     - scripts/devserver.sh
     - scripts/discover_aws_region.sh
@@ -699,32 +740,25 @@ Git: `main` @ `4da5130`
     - scripts/evaluate_coder.py
     - scripts/evaluate_cpt.py
     - scripts/fit_thresholds_from_eval.py
-    - scripts/fix_ml_data.py
-    - scripts/fix_registry_data.py
     - scripts/generate_addon_templates.py
     - scripts/generate_gitingest.py
-    - scripts/immediate_csv_fix.py
+    - scripts/phi_audit.py
     - scripts/preflight.py
     - scripts/prepare_data.py
     - scripts/quantize_to_onnx.py
     - scripts/railway_start.sh
+    - scripts/railway_start_gunicorn.sh
     - scripts/render_report.py
     - scripts/review_llm_fallback_errors.py
-    - scripts/run_cleaning_pipeline.py
     - scripts/run_coder_hybrid.py
     - scripts/self_correct_registry.py
-    - scripts/Smart_splitter.py
-    - scripts/Smart_splitter_updated.py
-    - scripts/Smart_splitter_updated_v2.py
+    - scripts/smoke_run.sh
     - scripts/train_cpt_custom.py
     - scripts/train_roberta.py
     - scripts/train_roberta_pm3.py
     - scripts/upload_registry_bundle.sh
     - scripts/validate_golden_extractions.py
     - scripts/validate_jsonschema.py
-    - scripts/validate_registry2.py
-    - scripts/verify_active_app.sh
-    - scripts/verify_v4_enhancements.sh
     - scripts/warm_models.py
   - tests/
     - tests/api/
@@ -739,6 +773,7 @@ Git: `main` @ `4da5130`
       - tests/coder/test_candidate_expansion.py
       - tests/coder/test_coder_qa_regressions.py
       - tests/coder/test_coder_smoke.py
+      - tests/coder/test_coding_rules_phase7.py
       - tests/coder/test_enhanced_rationale.py
       - tests/coder/test_hierarchy_bundling_fixes.py
       - tests/coder/test_kitchen_sink_ml_first_fastpath_completeness.py
@@ -782,6 +817,7 @@ Git: `main` @ `4da5130`
     - tests/fixtures/
       - tests/fixtures/notes/
         - tests/fixtures/notes/kitchen_sink_ion_nav_ebus_fiducial_dilation.txt
+        - tests/fixtures/notes/phi_example_note.txt
       - tests/fixtures/.gitkeep
       - tests/fixtures/blvr_two_lobes.txt
       - tests/fixtures/complex_tracheal_stenosis.txt
@@ -827,6 +863,7 @@ Git: `main` @ `4da5130`
       - tests/phi/test_fernet_encryption_adapter.py
       - tests/phi/test_manual_scrub.py
       - tests/phi/test_models.py
+      - tests/phi/test_presidio_nlp_backend_smoke.py
       - tests/phi/test_presidio_scrubber_adapter.py
       - tests/phi/test_service.py
     - tests/registry/
@@ -872,6 +909,7 @@ Git: `main` @ `4da5130`
       - tests/unit/test_knowledge.py
       - tests/unit/test_no_legacy_imports.py
       - tests/unit/test_openai_payload_compat.py
+      - tests/unit/test_openai_responses_primary.py
       - tests/unit/test_openai_timeouts.py
       - tests/unit/test_procedure_type_detector.py
       - tests/unit/test_rules.py
@@ -885,6 +923,8 @@ Git: `main` @ `4da5130`
       - tests/utils/case_filter.py
     - tests/conftest.py
     - tests/test_clean_ip_registry.py
+    - tests/test_openai_responses_parse.py
+    - tests/test_phi_redaction_contract.py
     - tests/test_registry_normalization.py
   - .env
   - .env.example
@@ -896,7 +936,6 @@ Git: `main` @ `4da5130`
   - aws-g5-key.pem
   - CLAUDE.md
   - diagnose_codex.sh
-  - geminiquota.py
   - gitingest.md
   - ip_golden_knowledge_v2_2.json
   - Makefile
@@ -906,7 +945,7 @@ Git: `main` @ `4da5130`
   - requirements-train.txt
   - requirements.txt
   - runtime.txt
-  - test_gemini_simple.py
+  - test_redact.txt
   - update_nodejs_conda.sh
 ```
 
@@ -1037,7 +1076,7 @@ Registry extraction follows a hybrid approach:
 
 | File | Purpose |
 |------|---------|
-| `data/knowledge/ip_coding_billing_v2_8.json` | CPT codes, RVUs, bundling rules |
+| `data/knowledge/ip_coding_billing_v2_9.json` | CPT codes, RVUs, bundling rules |
 | `data/knowledge/IP_Registry.json` | Registry schema definition |
 | `data/knowledge/golden_extractions/` | Training data for ML models |
 | `schemas/IP_Registry.json` | JSON Schema for validation |
@@ -1067,7 +1106,7 @@ make preflight
 - Always edit `modules/api/fastapi_app.py` (not `api/app.py` - deprecated)
 - Use `CodingService` from `modules/coder/application/coding_service.py`
 - Use `RegistryService` from `modules/registry/application/registry_service.py`
-- Knowledge base is at `data/knowledge/ip_coding_billing_v2_8.json`
+- Knowledge base is at `data/knowledge/ip_coding_billing_v2_9.json`
 - Run `make test` before committing
 
 ## Environment Variables
@@ -1085,6 +1124,10 @@ make preflight
 | `OPENAI_MODEL_STRUCTURER` | Model override for structurer tasks (openai_compat only) | `OPENAI_MODEL` |
 | `OPENAI_MODEL_JUDGE` | Model override for self-correction judge (openai_compat only) | `OPENAI_MODEL` |
 | `OPENAI_OFFLINE` | Disable openai_compat network calls (use stubs) | `0` |
+| `OPENAI_PRIMARY_API` | Primary API: `responses` or `chat` | `responses` |
+| `OPENAI_RESPONSES_FALLBACK_TO_CHAT` | Fall back to Chat Completions on 404 | `1` |
+| `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` | Read timeout for registry tasks (seconds) | `180` |
+| `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` | Read timeout for default tasks (seconds) | `60` |
 | `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading at startup | `false` |
 | `PROCSUITE_PIPELINE_MODE` | Pipeline mode: `current` or `extraction_first` | `current` |
 | `REGISTRY_EXTRACTION_ENGINE` | Registry extraction engine: `engine`, `agents_focus_then_engine`, or `agents_structurer` | `engine` |
@@ -1163,8 +1206,10 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 ### The Complete Pipeline: JSON → Trained Model
 
 ```
-Golden JSONs → data_generators.py → clean_and_split_data.py → Smart_splitter.py → train_roberta.py → ONNX Model
+Golden JSONs → modules/ml_coder/data_prep.py → train_roberta.py → ONNX Model
 ```
+
+The production data preparation module handles all data extraction, cleaning, and splitting in one step with proper multi-label stratification.
 
 ---
 
@@ -1178,98 +1223,61 @@ data/knowledge/golden_extractions/
 
 ---
 
-### Step 2: Generate Raw CSVs
+### Step 2: Prepare Training Splits
 
-Run the generator script. This reads all JSONs, rebuilds `train_flat.csv`, and regenerates `registry_train.csv` with the latest data and schema/flag definitions.
+The `modules/ml_coder/data_prep.py` module provides functions for generating clean, stratified training data:
 
-```bash
-python scripts/data_generators.py
+```python
+from modules.ml_coder.data_prep import prepare_registry_training_splits
+
+# Generate train/val/test splits with proper stratification
+train_df, val_df, test_df = prepare_registry_training_splits()
+
+# Save to CSV for training
+train_df.to_csv("data/ml_training/registry_train.csv", index=False)
+val_df.to_csv("data/ml_training/registry_val.csv", index=False)
+test_df.to_csv("data/ml_training/registry_test.csv", index=False)
 ```
 
 **What this does:**
-- Scans all `golden_*.json` files
-- Updates `data/ml_training/train_flat.csv` (the raw map of text → codes)
-- Updates `data/ml_training/registry_train.csv` (calculates all the 0/1 flags based on the latest logic)
-
-> **Note:** This file will still contain duplicates and potential leakage at this stage.
-
----
-
-### Step 3: Clean & Split (The V2 Fix)
-
-Run the cleaning script. This takes the "raw" output from Step 2, dedupes it, removes garbage rows, and strictly splits by Patient ID (`source_file`) to prevent leakage.
-
-```bash
-python scripts/clean_and_split_data.py
-```
-
-**What this does:**
-- Reads the updated `registry_train.csv` (and existing test/edge files)
-- Consolidates everything into one pool
-- Removes conflicts (e.g., same text having different labels)
-- Outputs:
-  - `data/ml_training/cleaned_v2/registry_train_clean.csv`
-  - `data/ml_training/cleaned_v2/registry_val_clean.csv`
-  - `data/ml_training/cleaned_v2/registry_test_clean.csv`
+- Scans all `golden_*.json` files in `data/knowledge/golden_extractions/`
+- Extracts procedure boolean flags using canonical `v2_booleans` module
+- Cleans and validates CPT codes (typo correction, domain filtering)
+- Applies iterative multi-label stratification (`skmultilearn`)
+- Enforces encounter-level grouping to prevent data leakage
+- Filters rare labels (< 5 examples) that can't be trained reliably
 
 ---
 
-### Step 4: Optimize Class Balance (Smart Splitter)
+### Step 3: Train Model
 
-Run the smart splitter to optimize rare class coverage in val/test sets.
+Run the training script:
 
-```bash
-python scripts/Smart_splitter.py
-```
-
-**What this does:**
-- Loads all 3 splits from cleaned_v2/ and recombines them
-- Drops globally empty labels (e.g., `bronchial_wash`, `photodynamic_therapy`)
-- Identifies **single-source labels** (labels that exist in only one source_file) and forces those files into Train
-- Searches 1000 random seeds to find the split that maximizes rare label coverage in Val/Test
-- Outputs optimized splits to `data/ml_training/cleaned_v3_balanced/`
-
-**Why this matters:**
-If a rare label (e.g., `brachytherapy_catheter`) only appears in one source file, a random split might put all examples in Test, leaving zero training examples. The smart splitter prevents this by locking single-source files to Train.
-
-**Outputs:**
-- `data/ml_training/cleaned_v3_balanced/registry_train_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_val_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_test_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_label_fields.json`
-
----
-
-### Step 5: Train Model
-
-Run the training script using the balanced V3 data.
-
-```bash
-python scripts/train_roberta.py \
-  --train-csv data/ml_training/cleaned_v3_balanced/registry_train_clean.csv \
-  --val-csv data/ml_training/cleaned_v3_balanced/registry_val_clean.csv \
-  --test-csv data/ml_training/cleaned_v3_balanced/registry_test_clean.csv
-```
-
-Or update the defaults in train_roberta.py and run:
 ```bash
 python scripts/train_roberta.py --batch-size 16 --epochs 5
 ```
 
+Or with explicit paths:
+```bash
+python scripts/train_roberta.py \
+  --train-csv data/ml_training/registry_train.csv \
+  --val-csv data/ml_training/registry_val.csv \
+  --test-csv data/ml_training/registry_test.csv
+```
+
 ---
 
-### Summary of Script Responsibilities
+### Key Module Functions
 
-| Script | Responsibility | Input | Output |
-|--------|---------------|-------|--------|
-| `data_generators.py` | **Extraction & Logic** - Extracts text/codes from JSON and computes the flag columns | Golden JSONs | `registry_train.csv`, `train_flat.csv` |
-| `clean_and_split_data.py` | **Hygiene & Splitting** - Deduplicates rows, fixes conflicts, splits by Patient ID | `registry_train.csv`, `train_flat.csv` | `cleaned_v2/*.csv` |
-| `Smart_splitter.py` | **Balance Optimization** - Forces single-source labels to Train, optimizes rare class coverage | `cleaned_v2/*.csv` | `cleaned_v3_balanced/*.csv` |
-| `train_roberta.py` | **Modeling** - Learns to predict the flags from the text | `cleaned_v3_balanced/*.csv` | `data/models/roberta_registry/` |
+| Function | Purpose |
+|----------|---------|
+| `prepare_registry_training_splits()` | Main entry point - returns (train_df, val_df, test_df) |
+| `prepare_training_and_eval_splits()` | CPT code prediction splits |
+| `stratified_split()` | Iterative multi-label stratification with encounter grouping |
 
-**Why the multi-step pipeline?**
-- **Step 2 vs Step 3**: If you modify `data_generators.py` to change how a flag is calculated, Step 2 updates the columns in the raw CSV. Step 3 ensures rows are cleanly distributed into Train/Val/Test without leakage.
-- **Step 3 vs Step 4**: Step 3 does basic splitting by Patient ID. Step 4 (Smart Splitter) further optimizes to ensure rare labels have representation in both Train and Val/Test sets, preventing zero-support classes that would drag down Macro F1.
+**Location**: `modules/ml_coder/data_prep.py`
+
+**Tests**: `tests/ml_coder/test_data_prep.py`, `tests/ml_coder/test_registry_data_prep.py`
 
 ---
 
@@ -1282,15 +1290,12 @@ python scripts/train_roberta.py --batch-size 16 --epochs 5
 **Tasks:**
 
 1. **Add/Update Golden JSONs** in `data/knowledge/golden_extractions/`
-2. **Run `data_generators.py`** to extract flags from JSONs
-3. **Run `clean_and_split_data.py`** to create leak-free splits
-4. **Run `Smart_splitter.py`** to optimize rare class coverage
+2. **Run `prepare_registry_training_splits()`** from `modules/ml_coder/data_prep.py`
 
 **Output:**
-- `data/ml_training/cleaned_v3_balanced/registry_train_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_val_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_test_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_label_fields.json`
+- `data/ml_training/registry_train.csv`
+- `data/ml_training/registry_val.csv`
+- `data/ml_training/registry_test.csv`
 
 ---
 
@@ -1535,41 +1540,68 @@ procedure-suite/
 ├── CLAUDE.md                          # THIS FILE - read first!
 ├── modules/
 │   ├── api/
-│   │   └── fastapi_app.py             # Main FastAPI backend (NOT api/app.py!)
+│   │   ├── fastapi_app.py             # Main FastAPI backend (NOT api/app.py!)
+│   │   ├── readiness.py               # require_ready dependency for endpoints
+│   │   ├── routes_registry.py         # Registry API routes
+│   │   └── services/
+│   │       └── qa_pipeline.py         # Parallelized QA pipeline
+│   ├── infra/                         # Infrastructure & optimization
+│   │   ├── settings.py                # Centralized env var configuration
+│   │   ├── perf.py                    # timed() context manager for metrics
+│   │   ├── cache.py                   # LRU cache with TTL (memory/Redis)
+│   │   ├── executors.py               # run_cpu() async wrapper for threads
+│   │   ├── llm_control.py             # LLM semaphore, backoff, retry logic
+│   │   ├── safe_logging.py            # PHI-safe text hashing for logs
+│   │   └── nlp_warmup.py              # NLP model warmup utilities
+│   ├── llm/
+│   │   └── client.py                  # Async HTTP client for LLM providers
+│   ├── common/
+│   │   ├── llm.py                     # Centralized LLM caching & retry
+│   │   └── openai_responses.py        # OpenAI Responses API wrapper
 │   ├── coder/
 │   │   ├── application/
 │   │   │   ├── coding_service.py      # CodingService - main entry point
-│   │   │   └── smart_hybrid_policy.py # SmartHybridOrchestrator
+│   │   │   └── smart_hybrid_policy.py # SmartHybridOrchestrator (with fallback)
 │   │   ├── adapters/
-│   │   │   └── registry_coder.py      # Registry-based coder
+│   │   │   ├── registry_coder.py      # Registry-based coder
+│   │   │   └── llm/
+│   │   │       ├── gemini_advisor.py  # Gemini LLM with cache/retry
+│   │   │       └── openai_compat_advisor.py # OpenAI with cache/retry
 │   │   └── domain/
 │   ├── registry/
 │   │   ├── application/
 │   │   │   └── registry_service.py    # RegistryService - main entry point
 │   │   ├── engine/
 │   │   │   └── registry_engine.py     # LLM extraction logic
-│   │   ├── inference_onnx.py          # NEW: ONNX inference service
+│   │   ├── inference_onnx.py          # ONNX inference service
 │   │   └── ml/                        # Registry ML predictors
 │   ├── agents/
 │   │   ├── contracts.py               # Pydantic I/O schemas
-│   │   ├── run_pipeline.py            # Pipeline orchestration
+│   │   ├── run_pipeline.py            # Pipeline orchestration (with timing)
 │   │   ├── parser/                    # ParserAgent
 │   │   ├── summarizer/                # SummarizerAgent
 │   │   └── structurer/                # StructurerAgent
-│   ├── ml_coder/                      # ML-based CPT predictor
-│   │   └── data_prep.py               # Train/test split generation
+│   ├── ml_coder/
+│   │   ├── data_prep.py               # Training data preparation (stratified splits)
+│   │   ├── predictor.py               # ML predictor (with caching)
+│   │   └── registry_predictor.py      # Registry boolean predictor
 │   └── reporter/                      # Synoptic report generator
 ├── scripts/
-│   ├── augment_registry_data.py       # Data augmentation for rare classes
+│   ├── railway_start.sh               # Railway startup (uvicorn, no pre-warmup)
+│   ├── railway_start_gunicorn.sh      # Alternative: Gunicorn prefork+preload
+│   ├── warm_models.py                 # Pre-load NLP models (optional)
+│   ├── smoke_run.sh                   # Local smoke test (/health, /ready)
 │   ├── train_roberta.py               # RoBERTa training script
 │   └── quantize_to_onnx.py            # ONNX conversion & quantization
 ├── data/
 │   ├── knowledge/
-│   │   ├── ip_coding_billing_v2_8.json  # CPT codes, RVUs, bundling rules
+│   │   ├── ip_coding_billing_v2_9.json  # CPT codes, RVUs, bundling rules
 │   │   ├── IP_Registry.json             # Registry schema definition
 │   │   └── golden_extractions/          # Training data
 │   └── rules/
 │       └── coding_rules.py            # Deterministic CPT derivation rules
+├── docs/
+│   └── optimization_12_16_25.md       # 8-phase optimization roadmap
 ├── models/
 │   ├── registry_model.pt              # Trained PyTorch model
 │   └── registry_model_int8.onnx       # Quantized ONNX model
@@ -1579,7 +1611,7 @@ procedure-suite/
     ├── coder/
     ├── registry/
     ├── ml_coder/
-    └── rules/                         # NEW: Rules engine tests
+    └── rules/                         # Rules engine tests
 ```
 
 ## Critical Development Rules
@@ -1588,7 +1620,7 @@ procedure-suite/
 - **ALWAYS** edit `modules/api/fastapi_app.py` — NOT `api/app.py` (deprecated)
 - **ALWAYS** use `CodingService` from `modules/coder/application/coding_service.py`
 - **ALWAYS** use `RegistryService` from `modules/registry/application/registry_service.py`
-- Knowledge base is at `data/knowledge/ip_coding_billing_v2_8.json`
+- Knowledge base is at `data/knowledge/ip_coding_billing_v2_9.json`
 - Deterministic rules are at `data/rules/coding_rules.py`
 
 ### 2. Testing Requirements
@@ -1604,12 +1636,50 @@ procedure-suite/
   ```
 
 ### 3. Environment Variables
+
+#### LLM Configuration
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `GEMINI_API_KEY` | API key for Gemini LLM | Required for LLM |
 | `GEMINI_OFFLINE` | Disable LLM calls (use stubs) | `1` |
 | `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry tests | `1` |
-| `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading | `false` |
+| `OPENAI_API_KEY` | API key for OpenAI LLM | Required for OpenAI |
+| `OPENAI_MODEL` | OpenAI model to use | `gpt-4.1` |
+| `OPENAI_PRIMARY_API` | Primary API: `responses` or `chat` | `responses` |
+| `OPENAI_RESPONSES_FALLBACK_TO_CHAT` | Fall back to Chat on 404 | `1` |
+| `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` | Read timeout for registry tasks | `180` |
+| `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` | Read timeout for default tasks | `60` |
+| `OPENAI_OFFLINE` | Disable OpenAI calls (use stubs) | `0` |
+
+#### Warmup & Startup (see `modules/infra/settings.py`)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `SKIP_WARMUP` | Skip all model warmup at startup | `false` |
+| `PROCSUITE_SKIP_WARMUP` | Alias for `SKIP_WARMUP` | `false` |
+| `ENABLE_UMLS_LINKER` | Load UMLS linker (~1GB memory) | `true` |
+| `WAIT_FOR_READY_S` | Seconds to wait for readiness before 503 | `0` |
+
+#### Performance Tuning
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `CPU_WORKERS` | Thread pool size for CPU-bound work | `1` |
+| `LLM_CONCURRENCY` | Max concurrent LLM requests (semaphore) | `2` |
+| `LLM_TIMEOUT_S` | Max time for LLM calls before fallback | `60` |
+| `LIMIT_CONCURRENCY` | Uvicorn connection limit | `50` |
+
+#### Caching
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `ENABLE_LLM_CACHE` | Cache LLM responses (memory) | `true` |
+| `ENABLE_REDIS_CACHE` | Use Redis backend for caching | `false` |
+
+#### Thread Limiting (Railway)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `OMP_NUM_THREADS` | OpenMP threads (sklearn/ONNX) | `1` |
+| `MKL_NUM_THREADS` | Intel MKL threads | `1` |
+| `OPENBLAS_NUM_THREADS` | OpenBLAS threads | `1` |
+| `NUMEXPR_NUM_THREADS` | NumExpr threads | `1` |
 
 ### 4. Contract-First Development
 All agents use Pydantic contracts defined in `modules/agents/contracts.py`:
@@ -1656,7 +1726,7 @@ Pipeline behavior:
 - 31622 is bundled into any interventional procedure
 - 31627 can only be billed with a primary procedure
 - Multiple biopsies from same lobe = single code
-- Check `data/knowledge/ip_coding_billing_v2_8.json` for NCCI/MER rules
+- Check `data/knowledge/ip_coding_billing_v2_9.json` for NCCI/MER rules
 
 ---
 
@@ -1695,6 +1765,76 @@ result = run_pipeline({
 print(result["registry"])  # Structured data
 print(result["codes"])     # CPT codes
 ```
+
+---
+
+## Runtime Architecture (Railway Deployment)
+
+The system uses a robust startup and concurrency pattern optimized for Railway's containerized environment.
+
+### Liveness vs Readiness Pattern
+
+```
+/health (liveness)  → Always 200, fast response
+/ready  (readiness) → 200 only after models loaded, else 503 + Retry-After
+```
+
+- Railway should probe `/health` for container health (liveness)
+- Load balancers should use `/ready` before routing traffic
+- Heavy endpoints use `require_ready` dependency to fail fast during warmup
+
+### Application State (`app.state`)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `model_ready` | `bool` | True when all models loaded |
+| `model_error` | `Optional[str]` | Error message if warmup failed |
+| `ready_event` | `asyncio.Event` | Signaled when ready |
+| `cpu_executor` | `ThreadPoolExecutor` | For CPU-bound work |
+| `llm_sem` | `asyncio.Semaphore` | Limits concurrent LLM calls |
+| `llm_http` | `httpx.AsyncClient` | Shared HTTP client for LLM |
+
+### CPU Offload Pattern
+
+CPU-bound operations (sklearn, spaCy, ONNX) run in a thread pool to avoid blocking the async event loop:
+
+```python
+from modules.infra.executors import run_cpu
+
+# In an async endpoint:
+result = await run_cpu(app, model.predict, [note])
+```
+
+### LLM Concurrency Control
+
+All LLM calls go through a semaphore to prevent rate limit spikes:
+
+```python
+from modules.infra.llm_control import llm_slot
+
+async with llm_slot(app):
+    response = await call_llm(prompt)
+```
+
+Features:
+- Exponential backoff with jitter on 429/5xx
+- Retry-After header parsing
+- Cache key generation (PHI-safe, uses SHA256)
+
+### Graceful Degradation
+
+When LLM times out or fails:
+1. ML + rules output is returned as fallback
+2. Response includes `"degraded": true` flag
+3. Logged with timing info (no PHI)
+
+### Startup Scripts
+
+| Script | Use Case |
+|--------|----------|
+| `scripts/railway_start.sh` | **Default**: Uvicorn, 1 worker, background warmup |
+| `scripts/railway_start_gunicorn.sh` | Alternative: Gunicorn prefork+preload (higher RAM) |
+| `scripts/smoke_run.sh` | Local testing: start server, hit /health, /ready |
 
 ---
 
@@ -1798,7 +1938,7 @@ export REGISTRY_USE_STUB_LLM=1
 
 **NLP models not loading:**
 ```bash
-export PROCSUITE_SKIP_WARMUP=true
+export SKIP_WARMUP=true
 make install  # Reinstall spaCy models
 ```
 
@@ -1815,21 +1955,51 @@ pip install onnxruntime  # CPU-only runtime
 pip install onnxruntime-gpu  # If GPU available
 ```
 
+**Railway OOM (Out of Memory):**
+```bash
+# Disable UMLS linker to save ~1GB
+ENABLE_UMLS_LINKER=false
+
+# Ensure thread limiting is set
+OMP_NUM_THREADS=1
+MKL_NUM_THREADS=1
+```
+
+**503 errors on first request:**
+This is expected during warmup. The server returns `503 + Retry-After` while models load.
+Wait for `/ready` to return 200 before sending traffic.
+
+**LLM rate limiting (429 errors):**
+The system handles this automatically with exponential backoff. To reduce 429s:
+```bash
+# Lower concurrent LLM requests
+LLM_CONCURRENCY=1
+```
+
+**Slow cold starts:**
+Check that background warmup is working:
+1. `/health` should return immediately with `"ready": false`
+2. `/ready` should return 503 during warmup
+3. After warmup, `/ready` returns 200
+
 ---
 
 ## Contact & Resources
 
-- **Knowledge Base**: `data/knowledge/ip_coding_billing_v2_8.json`
+- **Knowledge Base**: `data/knowledge/ip_coding_billing_v2_9.json`
 - **Registry Schema**: `schemas/IP_Registry.json`
 - **API Docs**: `docs/Registry_API.md`
 - **CPT Reference**: `docs/REFERENCES.md`
 - **Rules Engine**: `data/rules/coding_rules.py`
+- **Optimization Roadmap**: `docs/optimization_12_16_25.md`
+- **Settings Reference**: `modules/infra/settings.py`
 
 ---
 
-*Last updated: December 2025*
+*Last updated: December 17, 2025*
 *Architecture: Extraction-First with RoBERTa ML + Deterministic Rules Engine*
-*Deployment Target: Railway (ONNX INT8)*
+*Runtime: Async FastAPI + ThreadPool CPU offload + LLM concurrency control*
+*Deployment Target: Railway (ONNX INT8, Uvicorn single-worker)*
 
 ```
 
@@ -2014,6 +2184,8 @@ transformers>=4.35,<5
 fastapi>=0.115
 uvicorn>=0.30
 
+pydantic-settings>=2.0.0
+
 ```
 
 ---
@@ -2026,7 +2198,7 @@ SHELL := /bin/bash
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
 SETUP_STAMP := .setup.stamp
 PYTHON := python
-KB_PATH := data/knowledge/ip_coding_billing_v2_8.json
+KB_PATH := data/knowledge/ip_coding_billing_v2_9.json
 SCHEMA_PATH := data/knowledge/IP_Registry.json
 NOTES_PATH := data/knowledge/synthetic_notes_with_registry2.json
 PORT ?= 8000
@@ -2138,7 +2310,6 @@ help:
 ```
 python-3.11
 
-
 ```
 
 ---
@@ -2156,12 +2327,15 @@ See AI_ASSISTANT_GUIDE.md for details.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 
 # Load .env file early so API keys are available
 from dotenv import load_dotenv
+import httpx
 
 
 def _truthy_env(name: str) -> bool:
@@ -2180,7 +2354,6 @@ from pathlib import Path
 from typing import Any, AsyncIterator, List
 
 from fastapi import FastAPI, Request, Depends, HTTPException
-from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -2196,12 +2369,15 @@ from modules.api.routes.procedure_codes import router as procedure_codes_router
 from modules.api.routes.metrics import router as metrics_router
 from modules.api.routes.phi_demo_cases import router as phi_demo_router
 from modules.api.routes_registry import router as registry_extract_router
+from modules.api.readiness import require_ready
+from modules.infra.executors import run_cpu
 
 # All API schemas (base + QA pipeline)
 from modules.api.schemas import (
     # Base schemas
     CoderRequest,
     CoderResponse,
+    CodeSuggestionSummary,
     HybridPipelineMetadata,
     KnowledgeMeta,
     QARunRequest,
@@ -2209,6 +2385,8 @@ from modules.api.schemas import (
     RegistryResponse,
     RenderRequest,
     RenderResponse,
+    UnifiedProcessRequest,
+    UnifiedProcessResponse,
     VerifyRequest,
     VerifyResponse,
     # QA pipeline schemas
@@ -2227,13 +2405,23 @@ from modules.api.services.qa_pipeline import (
     QAPipelineResult,
     QAPipelineService,
 )
-from modules.api.dependencies import get_coding_service, get_qa_pipeline_service
+from modules.api.dependencies import (
+    get_coding_service,
+    get_qa_pipeline_service,
+    get_registry_service,
+)
 
 from config.settings import CoderSettings
 from modules.coder.schema import CodeDecision, CoderOutput
 from modules.common.knowledge import knowledge_hash, knowledge_version
+from modules.common.exceptions import LLMError
 from modules.common.spans import Span
 from modules.registry.engine import RegistryEngine
+from modules.registry.application.registry_service import RegistryService
+from modules.registry.schema import RegistryRecord
+from modules.api.normalization import simplify_billing_cpt_codes
+from modules.api.routes_registry import _prune_none
+from modules.registry.summarize import add_procedure_summaries
 
 # New architecture imports
 from modules.coder.application.coding_service import CodingService
@@ -2264,52 +2452,103 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     This replaces the deprecated @app.on_event("startup") pattern.
 
     Startup:
-    - Preloads heavy NLP models to avoid cold-start latency
-    - Gracefully handles warmup failures (app still starts)
+    - Initializes readiness state (/health vs /ready)
+    - Starts heavy model warmup (background by default)
 
     Shutdown:
     - Placeholder for cleanup if needed in the future
 
-    Environment variables:
-    - PROCSUITE_SKIP_WARMUP: Set to "1", "true", or "yes" to skip warmup entirely
-    - RAILWAY_ENVIRONMENT: If set, skips warmup (Railway caches models separately)
+    Environment variables (see modules.infra.settings.InfraSettings):
+    - SKIP_WARMUP / PROCSUITE_SKIP_WARMUP: Skip warmup entirely
+    - BACKGROUND_WARMUP: Run warmup in the background (default: true)
+    - WAIT_FOR_READY_S: Optional await time for readiness gating
     """
     # Import here to avoid circular import at module load time
     from modules.infra.nlp_warmup import (
         should_skip_warmup as _should_skip_warmup,
-        warm_heavy_resources as _warm_heavy_resources_fn,
+        warm_heavy_resources_sync as _warm_heavy_resources_sync,
+    )
+    from modules.infra.settings import get_infra_settings
+
+    settings = get_infra_settings()
+    logger = logging.getLogger(__name__)
+
+    # Readiness state (liveness vs readiness)
+    app.state.model_ready = False
+    app.state.model_error = None
+    app.state.ready_event = asyncio.Event()
+    app.state.cpu_executor = ThreadPoolExecutor(max_workers=settings.cpu_workers)
+    app.state.llm_sem = asyncio.Semaphore(settings.llm_concurrency)
+    app.state.llm_http = httpx.AsyncClient(
+        timeout=httpx.Timeout(
+            connect=10.0,
+            read=float(settings.llm_timeout_s),
+            write=30.0,
+            pool=30.0,
+        )
     )
 
-    # Startup phase
-    if _should_skip_warmup():
-        logging.getLogger(__name__).info(
-            "Skipping heavy NLP warmup (disabled via environment)"
-        )
-    else:
+    loop = asyncio.get_running_loop()
+
+    def _warmup_worker() -> None:
         try:
-            await _warm_heavy_resources_fn()
-        except Exception as exc:
-            logging.getLogger(__name__).error(
-                "Heavy NLP warmup failed - starting API without NLP features. "
-                "Some endpoints may return errors or degraded results. Error: %s",
-                exc,
-                exc_info=True,
-            )
+            _warm_heavy_resources_sync()
+        except Exception as exc:  # noqa: BLE001
+            ok = False
+            error = f"{type(exc).__name__}: {exc}"
+            logger.error("Warmup failed: %s", error, exc_info=True)
+        else:
+            ok = True
+            error = None
+        app.state.model_ready = ok
+        app.state.model_error = error
+        loop.call_soon_threadsafe(app.state.ready_event.set)
 
-    # Optional: pull registry model bundle from S3 (does not block startup on failure).
-    try:
-        from modules.registry.model_bootstrap import ensure_registry_model_bundle
+    def _bootstrap_registry_models() -> None:
+        # Optional: pull registry model bundle from S3 (does not gate readiness).
+        try:
+            from modules.registry.model_bootstrap import ensure_registry_model_bundle
 
-        ensure_registry_model_bundle()
-    except Exception as exc:
-        logging.getLogger(__name__).warning(
-            "Registry model bundle bootstrap skipped/failed: %s", exc
-        )
+            ensure_registry_model_bundle()
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("Registry model bundle bootstrap skipped/failed: %s", exc)
+
+    # Startup phase
+    if settings.skip_warmup or _should_skip_warmup():
+        logger.info("Skipping heavy NLP warmup (disabled via environment)")
+        app.state.model_ready = True
+        app.state.ready_event.set()
+    elif settings.background_warmup:
+        logger.info("Starting background warmup")
+        loop.run_in_executor(app.state.cpu_executor, _warmup_worker)
+    else:
+        logger.info("Running warmup before serving traffic")
+        try:
+            await loop.run_in_executor(app.state.cpu_executor, _warm_heavy_resources_sync)
+        except Exception as exc:  # noqa: BLE001
+            ok = False
+            error = f"{type(exc).__name__}: {exc}"
+            logger.error("Warmup failed: %s", error, exc_info=True)
+        else:
+            ok = True
+            error = None
+        app.state.model_ready = ok
+        app.state.model_error = error
+        app.state.ready_event.set()
+
+    # Kick off model bundle bootstrap in the background (best-effort).
+    loop.run_in_executor(app.state.cpu_executor, _bootstrap_registry_models)
 
     yield  # Application runs
 
     # Shutdown phase (cleanup if needed)
-    # Currently no cleanup required
+    llm_http = getattr(app.state, "llm_http", None)
+    if llm_http is not None:
+        await llm_http.aclose()
+
+    cpu_executor = getattr(app.state, "cpu_executor", None)
+    if cpu_executor is not None:
+        cpu_executor.shutdown(wait=False, cancel_futures=True)
 
 
 app = FastAPI(
@@ -2404,13 +2643,15 @@ async def root(request: Request) -> Any:
         
     return {
         "name": "Procedure Suite API",
-        "version": "0.2.0",
+        "version": "0.3.0",
         "endpoints": {
             "ui": "/ui/",
             "health": "/health",
+            "ready": "/ready",
             "knowledge": "/knowledge",
             "docs": "/docs",
             "redoc": "/redoc",
+            "unified_process": "/api/v1/process",  # NEW: Combined registry + coder
             "coder": "/v1/coder/run",
             "localities": "/v1/coder/localities",
             "registry": "/v1/registry/run",
@@ -2428,13 +2669,29 @@ async def root(request: Request) -> Any:
             },
             "registry_extract": "/api/registry/extract",
         },
-        "note": "Coder uses CodingService (hexagonal architecture) with smart hybrid policy. ML Advisor endpoints available at /api/v1/ml-advisor/*",
+        "note": "Use /api/v1/process for extraction-first pipeline (registry → CPT codes in one call). Legacy endpoints /v1/coder/run and /v1/registry/run still available.",
     }
 
 
 @app.get("/health")
-async def health() -> dict[str, bool]:
-    return {"ok": True}
+async def health(request: Request) -> dict[str, bool]:
+    return {"ok": True, "ready": bool(getattr(request.app.state, "model_ready", False))}
+
+
+@app.get("/ready")
+async def ready(request: Request) -> JSONResponse:
+    is_ready = bool(getattr(request.app.state, "model_ready", False))
+    if is_ready:
+        return JSONResponse(status_code=200, content={"status": "ok", "ready": True})
+
+    model_error = getattr(request.app.state, "model_error", None)
+    content: dict[str, Any] = {"status": "warming", "ready": False}
+    if model_error:
+        content["status"] = "error"
+        content["error"] = str(model_error)
+        return JSONResponse(status_code=503, content=content)
+
+    return JSONResponse(status_code=503, content=content, headers={"Retry-After": "10"})
 
 
 @app.get("/health/nlp")
@@ -2478,6 +2735,7 @@ async def coder_localities() -> List[LocalityInfo]:
 @app.post("/v1/coder/run", response_model=CoderResponse)
 async def coder_run(
     req: CoderRequest,
+    request: Request,
     mode: str | None = None,
     coding_service: CodingService = Depends(get_coding_service),
 ) -> CoderResponse:
@@ -2495,7 +2753,7 @@ async def coder_run(
 
     # Check if ML-first hybrid pipeline is requested
     if req.use_ml_first:
-        return await _run_ml_first_pipeline(report_text, req.locality, coding_service)
+        return await _run_ml_first_pipeline(request, report_text, req.locality, coding_service)
 
     # Determine if LLM should be used based on mode
     use_llm = True
@@ -2503,7 +2761,9 @@ async def coder_run(
         use_llm = False
 
     # Run the coding pipeline
-    result = coding_service.generate_result(
+    result = await run_cpu(
+        request.app,
+        coding_service.generate_result,
         procedure_id=procedure_id,
         report_text=report_text,
         use_llm=use_llm,
@@ -2521,6 +2781,7 @@ async def coder_run(
 
 
 async def _run_ml_first_pipeline(
+    request: Request,
     report_text: str,
     locality: str,
     coding_service: CodingService,
@@ -2541,11 +2802,11 @@ async def _run_ml_first_pipeline(
     """
     from modules.coder.application.smart_hybrid_policy import build_hybrid_orchestrator
 
-    # Build orchestrator with default components
-    orchestrator = build_hybrid_orchestrator()
+    def _run_hybrid() -> Any:
+        orchestrator = build_hybrid_orchestrator()
+        return orchestrator.get_codes(report_text)
 
-    # Run the hybrid pipeline
-    result = orchestrator.get_codes(report_text)
+    result = await run_cpu(request.app, _run_hybrid)
 
     # Build code decisions from orchestrator result
     from modules.coder.schema import CodeDecision
@@ -2626,27 +2887,34 @@ async def _run_ml_first_pipeline(
     )
 
 
-@app.post("/v1/registry/run", response_model=RegistryResponse)
-async def registry_run(req: RegistryRequest) -> RegistryResponse:
+@app.post(
+    "/v1/registry/run",
+    response_model=RegistryResponse,
+    response_model_exclude_none=True,
+)
+async def registry_run(
+    req: RegistryRequest,
+    request: Request,
+    _ready: None = Depends(require_ready),
+) -> RegistryResponse:
     eng = RegistryEngine()
     # For interactive/demo usage, best-effort extraction should return 200 whenever possible.
     # RegistryEngine.run now attempts internal pruning on validation issues; if something still
     # raises, fall back to an empty record rather than failing the request.
     try:
-        result = eng.run(req.note, explain=req.explain)
+        result = await run_cpu(request.app, eng.run, req.note, explain=req.explain)
     except Exception as exc:
         _logger.warning("registry_run failed; returning empty record", exc_info=True)
         record = RegistryResponse()
-        record.evidence = {}
-        return record
-    if isinstance(result, tuple):
-        record, evidence = result
+        evidence = {}
     else:
-        record, evidence = result, result.evidence
+        if isinstance(result, tuple):
+            record, evidence = result
+        else:
+            record, evidence = result, getattr(result, "evidence", {})
 
-    payload = record.model_dump()
-    payload["evidence"] = _serialize_evidence(evidence)
-    return RegistryResponse(**payload)
+    payload = _shape_registry_payload(record, evidence)
+    return JSONResponse(content=payload)
 
 
 def _verify_bundle(bundle) -> tuple[ProcedureBundle, list[MissingFieldIssue], list[str], list[str], list[str]]:
@@ -2710,13 +2978,176 @@ async def report_render(req: RenderRequest) -> RenderResponse:
 def _serialize_evidence(evidence: dict[str, list[Span]] | None) -> dict[str, list[dict[str, Any]]]:
     serialized: dict[str, list[dict[str, Any]]] = {}
     for field, spans in (evidence or {}).items():
-        serialized[field] = [_span_to_dict(span) for span in spans]
+        cleaned: list[dict[str, Any]] = []
+        for span in spans or []:
+            if span is None:
+                continue
+            cleaned.append(_prune_none(_span_to_dict(span)))
+        if cleaned:
+            serialized[field] = cleaned
     return serialized
 
 
 def _span_to_dict(span: Span) -> dict[str, Any]:
     data = asdict(span)
     return data
+
+
+def _shape_registry_payload(record: RegistryRecord, evidence: dict[str, list[Span]] | None) -> dict[str, Any]:
+    """Convert a registry record + evidence into a JSON-safe, null-pruned payload."""
+    payload = _prune_none(record.model_dump(exclude_none=True))
+
+    # Optional UI-friendly enrichments
+    simplify_billing_cpt_codes(payload)
+    add_procedure_summaries(payload)
+
+    payload["evidence"] = _serialize_evidence(evidence)
+    return payload
+
+
+# --- Unified Process Endpoint (Extraction-First) ---
+
+@app.post("/api/v1/process", response_model=UnifiedProcessResponse)
+async def unified_process(
+    req: UnifiedProcessRequest,
+    request: Request,
+    _ready: None = Depends(require_ready),
+    registry_service: RegistryService = Depends(get_registry_service),
+    coding_service: CodingService = Depends(get_coding_service),
+) -> UnifiedProcessResponse:
+    """Unified endpoint combining registry extraction and CPT code derivation.
+
+    This endpoint implements the extraction-first pipeline:
+    1. Extracts structured registry fields from the procedure note
+    2. Derives CPT codes deterministically from the registry fields
+    3. Optionally calculates RVU/payment information
+
+    Returns both registry data and derived CPT codes in a single response,
+    making it ideal for production use where both outputs are needed.
+
+    This replaces the need to call /v1/registry/run and /v1/coder/run separately.
+    """
+    import time
+    from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+    from config.settings import CoderSettings
+
+    start_time = time.time()
+
+    # Step 1: Registry extraction
+    try:
+        extraction_result = await run_cpu(request.app, registry_service.extract_fields, req.note)
+    except httpx.HTTPStatusError as exc:
+        if exc.response is not None and exc.response.status_code == 429:
+            retry_after = exc.response.headers.get("Retry-After") or "10"
+            raise HTTPException(
+                status_code=503,
+                detail="Upstream LLM rate limited",
+                headers={"Retry-After": str(retry_after)},
+            ) from exc
+        raise
+    except LLMError as exc:
+        if "429" in str(exc):
+            raise HTTPException(
+                status_code=503,
+                detail="Upstream LLM rate limited",
+                headers={"Retry-After": "10"},
+            ) from exc
+        raise
+
+    # Step 2: Derive CPT codes from registry
+    record = extraction_result.record
+    if record is None:
+        from modules.registry.schema import RegistryRecord
+        record = RegistryRecord.model_validate(extraction_result.mapped_fields)
+
+    codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
+
+    # Build suggestions with confidence and rationale
+    suggestions = []
+    base_confidence = 0.95 if extraction_result.coder_difficulty == "HIGH_CONF" else 0.80
+
+    for code in codes:
+        proc_info = coding_service.kb_repo.get_procedure_info(code)
+        description = proc_info.description if proc_info else ""
+        rationale = rationales.get(code, "")
+
+        # Determine review flag
+        if extraction_result.needs_manual_review:
+            review_flag = "required"
+        elif extraction_result.audit_warnings:
+            review_flag = "recommended"
+        else:
+            review_flag = "optional"
+
+        suggestions.append(CodeSuggestionSummary(
+            code=code,
+            description=description,
+            confidence=base_confidence,
+            rationale=rationale,
+            review_flag=review_flag,
+        ))
+
+    # Step 3: Calculate financials if requested
+    total_work_rvu = None
+    estimated_payment = None
+    per_code_billing = []
+
+    if req.include_financials and codes:
+        settings = CoderSettings()
+        conversion_factor = settings.cms_conversion_factor
+        total_work = 0.0
+        total_payment = 0.0
+
+        for code in codes:
+            proc_info = coding_service.kb_repo.get_procedure_info(code)
+            if proc_info:
+                work_rvu = proc_info.work_rvu
+                total_rvu = proc_info.total_facility_rvu
+                payment = total_rvu * conversion_factor
+
+                total_work += work_rvu
+                total_payment += payment
+
+                per_code_billing.append({
+                    "cpt_code": code,
+                    "description": proc_info.description,
+                    "work_rvu": work_rvu,
+                    "total_facility_rvu": total_rvu,
+                    "facility_payment": round(payment, 2),
+                })
+
+        total_work_rvu = round(total_work, 2)
+        estimated_payment = round(total_payment, 2)
+
+    # Combine audit warnings
+    all_warnings = list(extraction_result.audit_warnings or [])
+    all_warnings.extend(derivation_warnings)
+
+    processing_time_ms = (time.time() - start_time) * 1000
+
+    # Build response
+    registry_payload = _prune_none(record.model_dump(exclude_none=True))
+    evidence_payload = {}
+    if req.explain and hasattr(extraction_result, 'evidence'):
+        evidence_payload = _serialize_evidence(getattr(extraction_result, 'evidence', {}))
+
+    return UnifiedProcessResponse(
+        registry=registry_payload,
+        evidence=evidence_payload,
+        cpt_codes=codes,
+        suggestions=suggestions,
+        total_work_rvu=total_work_rvu,
+        estimated_payment=estimated_payment,
+        per_code_billing=per_code_billing,
+        pipeline_mode="extraction_first",
+        coder_difficulty=extraction_result.coder_difficulty or "",
+        needs_manual_review=extraction_result.needs_manual_review,
+        audit_warnings=all_warnings,
+        validation_errors=extraction_result.validation_errors or [],
+        kb_version=coding_service.kb_repo.version,
+        policy_version="extraction_first_v1",
+        processing_time_ms=round(processing_time_ms, 2),
+    )
 
 
 # --- QA Sandbox Endpoint ---
@@ -2882,6 +3313,8 @@ def _qapipeline_result_to_response(
 @app.post("/qa/run", response_model=QARunResponse)
 async def qa_run(
     payload: QARunRequest,
+    request: Request,
+    _ready: None = Depends(require_ready),
     qa_service: QAPipelineService = Depends(get_qa_pipeline_service),
 ) -> QARunResponse:
     """
@@ -2898,8 +3331,8 @@ async def qa_run(
     """
     branch, commit = _get_git_info()
 
-    # Run pipeline in thread pool to avoid blocking event loop
-    result = await run_in_threadpool(
+    result = await run_cpu(
+        request.app,
         qa_service.run_pipeline,
         text=payload.note_text,
         modules=payload.modules_run,
@@ -2928,15 +3361,19 @@ __all__ = ["app"]
 This service coordinates rule-based coding, LLM advisor suggestions,
 smart hybrid merge, evidence validation, NCCI/MER compliance, and
 produces CodeSuggestion objects for review.
+
+Supports two pipeline modes (controlled by PROCSUITE_PIPELINE_MODE env var):
+- "current" (default): 8-step hybrid pipeline (Rules + LLM + ML)
+- "extraction_first": Registry extraction → Deterministic CPT derivation → ML audit
 """
 
 from __future__ import annotations
 
+import os
+import time
 import uuid
 from datetime import datetime
 from typing import Optional
-
-import os
 
 from config.settings import CoderSettings
 from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
@@ -3045,12 +3482,28 @@ class CodingService:
         Returns:
             Tuple of (List of CodeSuggestion objects, LLM latency in ms).
         """
+        # Check pipeline mode
+        pipeline_mode = os.getenv("PROCSUITE_PIPELINE_MODE", "current").strip().lower()
+
+        if pipeline_mode == "extraction_first":
+            return self._generate_suggestions_extraction_first(procedure_id, report_text)
+
+        # Default: existing 8-step hybrid pipeline
+        return self._generate_suggestions_hybrid(procedure_id, report_text, use_llm)
+
+    def _generate_suggestions_hybrid(
+        self,
+        procedure_id: str,
+        report_text: str,
+        use_llm: bool = True,
+    ) -> tuple[list[CodeSuggestion], float]:
+        """Hybrid pipeline: Rules + LLM + ML merge (original 8-step pipeline)."""
         llm_latency_ms = 0.0
 
         # Log input text size for debugging truncation issues
         text_length = len(report_text)
         logger.info(
-            "Starting coding pipeline",
+            "Starting coding pipeline (hybrid mode)",
             extra={
                 "procedure_id": procedure_id,
                 "text_length_chars": text_length,
@@ -3474,6 +3927,126 @@ class CodingService:
             return scrubbed_text
         tokens = max_llm_input_tokens()
         return accordion_truncate(scrubbed_text, tokens)
+
+    def _generate_suggestions_extraction_first(
+        self,
+        procedure_id: str,
+        report_text: str,
+    ) -> tuple[list[CodeSuggestion], float]:
+        """Extraction-first pipeline: Registry → Deterministic CPT → ML Audit.
+
+        This pipeline:
+        1. Extracts a RegistryRecord from the note text
+        2. Derives CPT codes deterministically from the registry fields
+        3. Optionally audits the derived codes against raw ML predictions
+
+        Returns:
+            Tuple of (List of CodeSuggestion objects, processing latency in ms).
+        """
+        from modules.registry.application.registry_service import RegistryService
+        from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
+            derive_all_codes_with_meta,
+        )
+        from modules.registry.schema import RegistryRecord
+
+        start_time = time.time()
+
+        logger.info(
+            "Starting coding pipeline (extraction-first mode)",
+            extra={
+                "procedure_id": procedure_id,
+                "text_length_chars": len(report_text),
+            },
+        )
+
+        # Step 1: Extract registry fields
+        registry_service = RegistryService()
+        extraction_result = registry_service.extract_fields(report_text)
+
+        # Step 2: Derive CPT codes from registry fields
+        if extraction_result.record:
+            record = extraction_result.record
+        else:
+            # Build a minimal RegistryRecord from mapped_fields
+            record = RegistryRecord.model_validate(extraction_result.mapped_fields)
+
+        codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
+
+        # Step 3: Build audit warnings
+        audit_warnings: list[str] = list(extraction_result.audit_warnings or [])
+        audit_warnings.extend(derivation_warnings)
+
+        # Determine difficulty level
+        if extraction_result.coder_difficulty == "HIGH_CONF":
+            base_confidence = 0.95
+        elif extraction_result.coder_difficulty == "MEDIUM":
+            base_confidence = 0.80
+        else:
+            base_confidence = 0.70
+
+        # Step 4: Build CodeSuggestion objects
+        suggestions: list[CodeSuggestion] = []
+        for code in codes:
+            rationale = rationales.get(code, "")
+
+            # Format audit warnings for mer_notes
+            mer_notes = ""
+            if audit_warnings:
+                mer_notes = "AUDIT FLAGS:\n" + "\n".join(f"• {w}" for w in audit_warnings)
+
+            reasoning = ReasoningFields(
+                trigger_phrases=[],
+                evidence_spans=[],
+                rule_paths=[f"DETERMINISTIC: {rationale}"],
+                ncci_notes="",
+                mer_notes=mer_notes,
+                confidence=base_confidence,
+                kb_version=self.kb_repo.version,
+                policy_version="extraction_first_v1",
+            )
+
+            # Determine review flag
+            if extraction_result.needs_manual_review:
+                review_flag = "required"
+            elif audit_warnings:
+                review_flag = "recommended"
+            else:
+                review_flag = "optional"
+
+            # Get procedure description
+            proc_info = self.kb_repo.get_procedure_info(code)
+            description = proc_info.description if proc_info else ""
+
+            suggestion = CodeSuggestion(
+                code=code,
+                description=description,
+                source="hybrid",  # Extraction-first is a form of hybrid
+                hybrid_decision="EXTRACTION_FIRST",
+                rule_confidence=base_confidence,
+                llm_confidence=None,
+                final_confidence=base_confidence,
+                reasoning=reasoning,
+                review_flag=review_flag,
+                trigger_phrases=[],
+                evidence_verified=True,
+                suggestion_id=str(uuid.uuid4()),
+                procedure_id=procedure_id,
+            )
+            suggestions.append(suggestion)
+
+        latency_ms = (time.time() - start_time) * 1000
+
+        logger.info(
+            "Coding complete (extraction-first mode)",
+            extra={
+                "procedure_id": procedure_id,
+                "num_suggestions": len(suggestions),
+                "processing_time_ms": latency_ms,
+                "codes": codes,
+            },
+        )
+
+        return suggestions, latency_ms
 
 ```
 
@@ -4636,11 +5209,11 @@ class RegistryService:
                     except (ValueError, TypeError):
                         pass
 
-        # Radial EBUS: 31620
-        if "31620" in codes:
+        # Radial EBUS: 31654
+        if "31654" in codes:
             if not _proc_is_set(procedures, "radial_ebus"):
                 validation_errors.append(
-                    "CPT 31620 present but procedures_performed.radial_ebus is not marked."
+                    "CPT 31654 present but procedures_performed.radial_ebus is not marked."
                 )
 
         # BAL: 31624, 31625
@@ -5049,10 +5622,15 @@ def run_pipeline_typed(note: dict) -> PipelineResult:
     note_id = note.get("note_id", "")
     raw_text = note.get("raw_text", "")
 
+    parser_ms = 0.0
+    summarizer_ms = 0.0
+    structurer_ms = 0.0
+
     with timed("pipeline.total") as timing:
         # Stage 1: Parser
-        with timed("pipeline.parser"):
+        with timed("pipeline.parser") as t_parser:
             parser_out = _run_parser(note_id, raw_text)
+        parser_ms = t_parser.elapsed_ms
 
         if parser_out.status == "failed":
             logger.warning(
@@ -5065,8 +5643,9 @@ def run_pipeline_typed(note: dict) -> PipelineResult:
             )
 
         # Stage 2: Summarizer
-        with timed("pipeline.summarizer"):
+        with timed("pipeline.summarizer") as t_summarizer:
             summarizer_out = _run_summarizer(parser_out)
+        summarizer_ms = t_summarizer.elapsed_ms
 
         if summarizer_out.status == "failed":
             logger.warning(
@@ -5080,8 +5659,9 @@ def run_pipeline_typed(note: dict) -> PipelineResult:
             )
 
         # Stage 3: Structurer
-        with timed("pipeline.structurer"):
+        with timed("pipeline.structurer") as t_structurer:
             structurer_out = _run_structurer(summarizer_out)
+        structurer_ms = t_structurer.elapsed_ms
 
         if structurer_out.status == "failed":
             logger.warning(
@@ -5108,6 +5688,9 @@ def run_pipeline_typed(note: dict) -> PipelineResult:
             "note_id": note_id,
             "pipeline_status": pipeline_status,
             "processing_time_ms": timing.elapsed_ms,
+            "parser_time_ms": parser_ms,
+            "summarizer_time_ms": summarizer_ms,
+            "structurer_time_ms": structurer_ms,
             "parser_status": parser_out.status,
             "summarizer_status": summarizer_out.status,
             "structurer_status": structurer_out.status,
@@ -5215,7 +5798,7 @@ This document is the **Single Source of Truth** for developers and AI assistants
 1.  **Main Application**: Always edit `modules/api/fastapi_app.py`. Never edit `api/app.py` (deprecated).
 2.  **Coding Service**: Use `CodingService` from `modules/coder/application/coding_service.py`. The old `modules.coder.engine.CoderEngine` is deprecated.
 3.  **Registry Service**: Use `RegistryService` from `modules/registry/application/registry_service.py`.
-4.  **Knowledge Base**: The source of truth for coding rules is `data/knowledge/ip_coding_billing_v2_8.json`.
+4.  **Knowledge Base**: The source of truth for coding rules is `data/knowledge/ip_coding_billing_v2_9.json`.
 5.  **Tests**: Preserve existing tests. Run `make test` before committing.
 
 ---
@@ -5400,11 +5983,24 @@ make lint                           # Linting
 By default, tests run in offline mode with stub LLMs. To test actual extraction:
 
 ```bash
+# Gemini
 export GEMINI_OFFLINE=0
 export REGISTRY_USE_STUB_LLM=0
 export GEMINI_API_KEY="..."
 pytest tests/registry/test_extraction.py
+
+# OpenAI (uses Responses API by default)
+export OPENAI_OFFLINE=0
+export OPENAI_API_KEY="..."
+export OPENAI_MODEL="gpt-4o"
+pytest tests/unit/test_openai_responses_primary.py
+
+# OpenAI with Chat Completions API (legacy mode)
+export OPENAI_PRIMARY_API=chat
+pytest tests/unit/test_openai_timeouts.py
 ```
+
+**Note**: The OpenAI integration uses the Responses API (`/v1/responses`) by default. When writing tests that mock httpx for OpenAI, set `OPENAI_PRIMARY_API=chat` to use the Chat Completions path if your mock expects that format.
 
 ### Test Data
 
@@ -5799,6 +6395,10 @@ Key configuration classes:
 | `OPENAI_MODEL_STRUCTURER` | Model override for structurer tasks (openai_compat only) |
 | `OPENAI_MODEL_JUDGE` | Model override for self-correction judge (openai_compat only) |
 | `OPENAI_OFFLINE` | Disable openai_compat network calls (use stubs) |
+| `OPENAI_PRIMARY_API` | Primary API: `responses` or `chat` (default: `responses`) |
+| `OPENAI_RESPONSES_FALLBACK_TO_CHAT` | Fall back to Chat Completions on 404 (default: `1`) |
+| `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` | Read timeout for registry tasks (default: `180`) |
+| `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` | Read timeout for default tasks (default: `60`) |
 | `PROCSUITE_SKIP_WARMUP` | Skip model warmup |
 
 ## Dependencies
@@ -5919,6 +6519,34 @@ GEMINI_USE_OAUTH=true
 # Optional: Path to service account JSON if not using default credentials
 # GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account.json"
 ```
+
+### OpenAI-Compatible API Configuration (Alternative to Gemini)
+
+If using an OpenAI-compatible backend (including OpenAI, Azure OpenAI, or local models):
+
+```bash
+# Required settings
+LLM_PROVIDER=openai_compat
+OPENAI_API_KEY=your-api-key-here
+OPENAI_MODEL=gpt-4o  # or your preferred model
+
+# Optional: Custom endpoint (for Azure, local models, etc.)
+# OPENAI_BASE_URL=https://your-endpoint.com  # No /v1 suffix
+
+# API Selection (default: Responses API)
+# OPENAI_PRIMARY_API=responses        # Use Responses API (default)
+# OPENAI_PRIMARY_API=chat             # Use Chat Completions API
+
+# Fallback behavior (when Responses API returns 404)
+# OPENAI_RESPONSES_FALLBACK_TO_CHAT=1  # Fall back to Chat (default)
+# OPENAI_RESPONSES_FALLBACK_TO_CHAT=0  # Disable fallback
+
+# Timeout configuration (seconds)
+# OPENAI_TIMEOUT_READ_REGISTRY_SECONDS=180  # Registry tasks (default: 180s)
+# OPENAI_TIMEOUT_READ_DEFAULT_SECONDS=60    # Other tasks (default: 60s)
+```
+
+**Note**: The system uses the OpenAI Responses API (`POST /v1/responses`) by default. If your endpoint doesn't support it, set `OPENAI_PRIMARY_API=chat` or enable fallback with `OPENAI_RESPONSES_FALLBACK_TO_CHAT=1`.
 
 ### Other Settings
 
@@ -6147,7 +6775,7 @@ Output:
 
 ## 📊 Key Files
 
-- **`data/knowledge/ip_coding_billing_v2_8.json`**: The "Brain". Contains all CPT codes, RVUs, and bundling rules.
+- **`data/knowledge/ip_coding_billing_v2_9.json`**: The "Brain". Contains all CPT codes, RVUs, and bundling rules.
 - **`schemas/IP_Registry.json`**: The "Law". Defines the valid structure for registry data.
 - **`reports/`**: Where output logs and validation summaries are saved.
 
@@ -6291,6 +6919,22 @@ This generates a markdown report in `data/eval_results/` with:
 | `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading at startup | `false` |
 | `CODER_REQUIRE_PHI_REVIEW` | Require PHI review before coding | `false` |
 | `DEMO_MODE` | Enable demo mode (synthetic data only) | `false` |
+
+### OpenAI Configuration
+
+When using an OpenAI-compatible backend (`LLM_PROVIDER=openai_compat`):
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `OPENAI_API_KEY` | API key for OpenAI | Required |
+| `OPENAI_MODEL` | Model name (e.g., `gpt-4o`) | Required |
+| `OPENAI_BASE_URL` | Base URL (no `/v1` suffix) | `https://api.openai.com` |
+| `OPENAI_PRIMARY_API` | API path: `responses` or `chat` | `responses` |
+| `OPENAI_RESPONSES_FALLBACK_TO_CHAT` | Fall back to Chat on 404 | `1` |
+| `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` | Registry task timeout (seconds) | `180` |
+| `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` | Default task timeout (seconds) | `60` |
+
+**Note**: The system uses OpenAI's Responses API by default. For endpoints that don't support it, use `OPENAI_PRIMARY_API=chat`.
 
 ### Adjusting ML Thresholds
 

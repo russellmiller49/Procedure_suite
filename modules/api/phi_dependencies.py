@@ -98,4 +98,23 @@ def get_phi_service(db: Session = Depends(get_phi_session)) -> PHIService:
     return PHIService(session=db, encryption=encryption, scrubber=scrubber, audit_logger=audit_logger)
 
 
-__all__ = ["get_phi_service", "get_phi_session", "engine", "SessionLocal"]
+def get_phi_scrubber():
+    """Get the PHI scrubber as a FastAPI dependency.
+
+    Returns the cached scrubber instance, or None if unavailable.
+    This allows graceful degradation when Presidio is not configured.
+
+    Usage:
+        @app.post("/endpoint")
+        async def handler(phi_scrubber = Depends(get_phi_scrubber)):
+            if phi_scrubber:
+                result = phi_scrubber.scrub(text)
+    """
+    try:
+        return _get_scrubber()
+    except Exception:
+        logger.warning("PHI scrubber unavailable for dependency injection")
+        return None
+
+
+__all__ = ["get_phi_service", "get_phi_session", "get_phi_scrubber", "engine", "SessionLocal"]

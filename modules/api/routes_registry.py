@@ -20,6 +20,8 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel, Field
 
 from modules.api.dependencies import get_registry_service
+from modules.api.phi_dependencies import get_phi_scrubber
+from modules.api.phi_redaction import apply_phi_redaction
 from modules.api.readiness import require_ready
 from modules.infra.executors import run_cpu
 from modules.common.exceptions import LLMError
@@ -181,6 +183,7 @@ async def extract_registry_fields(
     request: Request,
     _ready: None = Depends(require_ready),
     registry_service: RegistryService = Depends(get_registry_service),
+    phi_scrubber=Depends(get_phi_scrubber),
 ) -> RegistryExtractResponse:
     """
     Extract registry fields from a procedure note using hybrid-first pipeline.
@@ -199,8 +202,12 @@ async def extract_registry_fields(
     Raises:
         HTTPException: If extraction fails due to missing orchestrator or errors.
     """
+    # Early PHI redaction - scrub once at entry, use scrubbed text downstream
+    redaction = apply_phi_redaction(payload.note_text, phi_scrubber)
+    note_text = redaction.text
+
     try:
-        result = await run_cpu(request.app, registry_service.extract_fields, payload.note_text)
+        result = await run_cpu(request.app, registry_service.extract_fields, note_text)
         return RegistryExtractResponse.from_domain(result)
 
     except ValueError as e:

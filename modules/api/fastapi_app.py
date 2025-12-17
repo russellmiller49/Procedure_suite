@@ -93,6 +93,8 @@ from modules.api.dependencies import (
     get_qa_pipeline_service,
     get_registry_service,
 )
+from modules.api.phi_dependencies import get_phi_scrubber
+from modules.api.phi_redaction import apply_phi_redaction
 
 from config.settings import CoderSettings
 from modules.coder.schema import CodeDecision, CoderOutput
@@ -579,13 +581,18 @@ async def registry_run(
     req: RegistryRequest,
     request: Request,
     _ready: None = Depends(require_ready),
+    phi_scrubber=Depends(get_phi_scrubber),
 ) -> RegistryResponse:
+    # Early PHI redaction - scrub once at entry
+    redaction = apply_phi_redaction(req.note, phi_scrubber)
+    note_text = redaction.text
+
     eng = RegistryEngine()
     # For interactive/demo usage, best-effort extraction should return 200 whenever possible.
     # RegistryEngine.run now attempts internal pruning on validation issues; if something still
     # raises, fall back to an empty record rather than failing the request.
     try:
-        result = await run_cpu(request.app, eng.run, req.note, explain=req.explain)
+        result = await run_cpu(request.app, eng.run, note_text, explain=req.explain)
     except Exception as exc:
         _logger.warning("registry_run failed; returning empty record", exc_info=True)
         record = RegistryResponse()
@@ -697,6 +704,7 @@ async def unified_process(
     _ready: None = Depends(require_ready),
     registry_service: RegistryService = Depends(get_registry_service),
     coding_service: CodingService = Depends(get_coding_service),
+    phi_scrubber=Depends(get_phi_scrubber),
 ) -> UnifiedProcessResponse:
     """Unified endpoint combining registry extraction and CPT code derivation.
 
@@ -716,9 +724,13 @@ async def unified_process(
 
     start_time = time.time()
 
+    # Early PHI redaction - scrub once at entry, use scrubbed text downstream
+    redaction = apply_phi_redaction(req.note, phi_scrubber)
+    note_text = redaction.text
+
     # Step 1: Registry extraction
     try:
-        extraction_result = await run_cpu(request.app, registry_service.extract_fields, req.note)
+        extraction_result = await run_cpu(request.app, registry_service.extract_fields, note_text)
     except httpx.HTTPStatusError as exc:
         if exc.response is not None and exc.response.status_code == 429:
             retry_after = exc.response.headers.get("Retry-After") or "10"

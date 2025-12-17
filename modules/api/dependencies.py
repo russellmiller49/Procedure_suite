@@ -136,15 +136,8 @@ def get_coding_service() -> CodingService:
     else:
         logger.info("LLM advisor disabled (CODER_USE_LLM_ADVISOR not set)")
 
-    # 6. PHI scrubber (optional, for LLM calls)
-    phi_scrubber = None
-    if use_llm:
-        try:
-            from modules.api.phi_dependencies import _get_scrubber
-            phi_scrubber = _get_scrubber()
-            logger.info("PHI scrubber configured for LLM calls")
-        except Exception as e:
-            logger.warning(f"Failed to initialize PHI scrubber: {e}")
+    # 6. PHI scrubbing is now handled at route level (modules/api/phi_redaction.py).
+    # The phi_scrubber parameter on CodingService is deprecated.
 
     # 7. Build CodingService
     service = CodingService(
@@ -154,7 +147,7 @@ def get_coding_service() -> CodingService:
         rule_engine=rule_engine,
         llm_advisor=llm_advisor,
         config=config,
-        phi_scrubber=phi_scrubber,
+        # phi_scrubber omitted - now handled at route level
     )
 
     logger.info("CodingService initialized successfully")
