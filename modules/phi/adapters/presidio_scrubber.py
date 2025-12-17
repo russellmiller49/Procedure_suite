@@ -360,6 +360,7 @@ def redact_with_audit(
     relative_datetime_phrases: Iterable[str],
     nlp_backend: str | None = None,
     nlp_model: str | None = None,
+    requested_nlp_model: str | None = None,
 ) -> tuple[ScrubResult, dict[str, Any]]:
     if not text:
         empty = ScrubResult(scrubbed_text="", entities=[])
@@ -437,6 +438,7 @@ def redact_with_audit(
         "config": {
             "nlp_backend": nlp_backend,
             "nlp_model": nlp_model,
+            "requested_nlp_model": requested_nlp_model,
             "enable_driver_license_recognizer": enable_driver_license_recognizer,
             "entity_score_thresholds": dict(score_thresholds),
             "relative_datetime_phrases": list(relative_datetime_phrases),
@@ -464,12 +466,19 @@ def _build_analyzer(model_name: str):
 
     # High-confidence override: treat anything after "Patient:" on that line as PERSON.
     # This helps when Presidio misses the patient identity in demographic headers.
-    from presidio_analyzer import PatternRecognizer, RecognizerResult
+    from presidio_analyzer import Pattern, PatternRecognizer, RecognizerResult
 
     class _PatientLabelRecognizer(PatternRecognizer):
         def __init__(self):
-            super().__init__(supported_entity="PERSON", patterns=[], name="PATIENT_LABEL_NAME")
-            self._re = re.compile(r"(?im)^Patient:\\s*(.+)$")
+            super().__init__(
+                supported_entity="PERSON",
+                patterns=[
+                    # Dummy pattern required by Presidio; actual span logic is implemented in analyze().
+                    Pattern(name="patient_label_line", regex=r"(?im)^Patient:\s*.+$", score=0.95)
+                ],
+                name="PATIENT_LABEL_NAME",
+            )
+            self._re = re.compile(r"(?im)^Patient:\s*(.+)$")
 
         def analyze(self, text: str, entities: list[str], nlp_artifacts=None):  # type: ignore[override]
             results: list[RecognizerResult] = []
@@ -501,9 +510,36 @@ class PresidioScrubber(PHIScrubberPort):
 
     def __init__(self, model_name: str | None = None):
         self.nlp_backend = os.getenv("NLP_BACKEND", "spacy").lower()
-        default_model = "en_core_sci_sm" if self.nlp_backend == "scispacy" else "en_core_web_lg"
-        self.model_name = model_name or os.getenv("PRESIDIO_NLP_MODEL", default_model)
-        self._analyzer = _get_analyzer(self.model_name)
+        default_model = "en_core_sci_sm" if self.nlp_backend == "scispacy" else "en_core_web_sm"
+        self.requested_model_name = model_name or os.getenv("PRESIDIO_NLP_MODEL", default_model)
+
+        fallbacks_env = os.getenv("PRESIDIO_NLP_MODEL_FALLBACKS")
+        if fallbacks_env is not None:
+            fallback_models = [m.strip() for m in fallbacks_env.split(",") if m.strip()]
+        else:
+            fallback_models = ["en_core_web_sm", "en_core_web_md", "en_core_web_lg"]
+
+        model_candidates = [self.requested_model_name] + [
+            m for m in fallback_models if m != self.requested_model_name
+        ]
+
+        last_exc: RuntimeError | None = None
+        for candidate in model_candidates:
+            try:
+                self._analyzer = _get_analyzer(candidate)
+                self.model_name = candidate
+                break
+            except RuntimeError as exc:
+                last_exc = exc
+
+        if last_exc is not None and not hasattr(self, "_analyzer"):
+            raise last_exc
+
+        if self.model_name != self.requested_model_name:
+            logger.warning(
+                "Requested spaCy model unavailable; falling back",
+                extra={"requested_model": self.requested_model_name, "fallback_model": self.model_name},
+            )
         # Clinical procedure notes rarely contain driver license IDs, but the recognizer
         # often false-positives on device model tokens like "T190" bronchoscope models.
         self.enable_driver_license_recognizer = _env_flag("ENABLE_DRIVER_LICENSE_RECOGNIZER", False)
@@ -561,6 +597,7 @@ class PresidioScrubber(PHIScrubberPort):
             relative_datetime_phrases=self.relative_datetime_phrases,
             nlp_backend=self.nlp_backend,
             nlp_model=self.model_name,
+            requested_nlp_model=self.requested_model_name,
         )
 
     def scrub(self, text: str, document_type: str | None = None, specialty: str | None = None) -> ScrubResult:

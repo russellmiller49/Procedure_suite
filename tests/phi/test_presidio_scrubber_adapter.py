@@ -33,3 +33,13 @@ def test_presidio_scrubber_preserves_anatomical_terms():
         span = text[ent["original_start"] : ent["original_end"]].lower()
         assert "right upper lobe" not in span
         assert "ebus" not in span
+
+
+def test_presidio_scrubber_patient_label_overrides_name():
+    os.environ.setdefault("PRESIDIO_NLP_MODEL", "en_core_web_lg")
+    scrubber = PresidioScrubber()
+    text = "Patient: Fisher, Sarah\nSURGEON: John Smith, MD\n"
+    result = scrubber.scrub(text)
+
+    assert "Patient: <PERSON>" in result.scrubbed_text
+    assert "Fisher, Sarah" not in result.scrubbed_text

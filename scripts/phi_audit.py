@@ -7,11 +7,26 @@ Intended for synthetic notes only (do not run on real PHI).
 from __future__ import annotations
 
 import json
+import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import typer
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
 
 
 def _utc_timestamp() -> str:
@@ -77,7 +92,7 @@ def run(
         golden_path.write_text(json.dumps(golden_payload, indent=2, ensure_ascii=False), encoding="utf-8")
 
     typer.echo(json.dumps(report, indent=2, ensure_ascii=False))
-    typer.echo(f"\nWrote {out_path}")
+    typer.echo(f"Wrote {out_path}", err=True)
 
 
 if __name__ == "__main__":

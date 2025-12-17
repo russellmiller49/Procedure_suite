@@ -6,6 +6,7 @@ Production deployments should swap in KMS-backed encryption and a real scrubber.
 
 from __future__ import annotations
 
+import logging
 import os
 from functools import lru_cache
 from typing import Iterator
@@ -24,6 +25,8 @@ from modules.phi.adapters import (
 )
 from modules.phi.adapters.fernet_encryption import FernetEncryptionAdapter
 from modules.phi.db import Base
+
+logger = logging.getLogger(__name__)
 
 
 def _default_db_url() -> str:
@@ -71,9 +74,17 @@ def _get_scrubber():
     mode = os.getenv("PHI_SCRUBBER_MODE", "presidio").lower()
     if mode == "stub":
         return StubScrubber()
+    strict = os.getenv("PHI_SCRUBBER_STRICT", "").strip().lower() in {"1", "true", "yes"}
     try:
         return PresidioScrubber()
     except Exception as exc:  # noqa: BLE001
+        logger.warning(
+            "PresidioScrubber unavailable; falling back to StubScrubber (set PHI_SCRUBBER_MODE=stub to silence, "
+            "or install the configured spaCy model and presidio-analyzer to enable real scrubbing).",
+            extra={"error_type": type(exc).__name__},
+        )
+        if strict:
+            raise
         # Fallback to stub if Presidio is unavailable (keeps tests/demo running)
         return StubScrubber()
 
