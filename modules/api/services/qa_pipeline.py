@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import logging
 import uuid
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -280,22 +281,31 @@ class QAPipelineService:
         if not run_coder:
             result.coder = ModuleOutcome(skipped=True)
 
-        # Registry extraction
         registry_data: dict[str, Any] | None = None
-        if run_registry:
-            result.registry = self._run_registry(text)
-            if result.registry.ok and result.registry.data:
-                registry_data = result.registry.data
 
-        # Reporter
-        if run_reporter:
-            result.reporter = self._run_reporter(
-                text, registry_data, procedure_type
-            )
+        # Overlap independent work (registry + coder) to reduce wall-clock latency.
+        registry_future = None
+        coder_future = None
 
-        # Coder
-        if run_coder:
-            result.coder = self._run_coder(text, procedure_type)
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            if run_registry:
+                registry_future = pool.submit(self._run_registry, text)
+            if run_coder:
+                coder_future = pool.submit(self._run_coder, text, procedure_type)
+
+            # Registry result (needed for reporter)
+            if registry_future is not None:
+                result.registry = registry_future.result()
+                if result.registry.ok and result.registry.data:
+                    registry_data = result.registry.data
+
+            # Reporter (depends on registry_data, but can run while coder is still in-flight)
+            if run_reporter:
+                result.reporter = self._run_reporter(text, registry_data, procedure_type)
+
+            # Coder result (independent)
+            if coder_future is not None:
+                result.coder = coder_future.result()
 
         return result
 

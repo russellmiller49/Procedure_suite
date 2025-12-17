@@ -7,19 +7,35 @@ Includes:
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 import joblib
+import re
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MultiLabelBinarizer
 
 from modules.common.logger import get_logger
+from modules.infra.cache import get_ml_memory_cache
+from modules.infra.settings import get_infra_settings
 from modules.ml_coder.thresholds import CaseDifficulty, Thresholds, load_thresholds
 from modules.ml_coder.training import MLB_PATH, PIPELINE_PATH
 
 logger = get_logger("ml_coder.predictor")
+
+_WHITESPACE_RE = re.compile(r"\s+")
+
+
+def _normalize_for_cache(text: str) -> str:
+    return _WHITESPACE_RE.sub(" ", (text or "").strip())
+
+
+def _ml_cache_key(prefix: str, text: str) -> str:
+    normalized = _normalize_for_cache(text)
+    digest = hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+    return f"{prefix}:{digest}"
 
 
 class MLCoderService:
@@ -228,6 +244,14 @@ class MLCoderPredictor:
         Returns:
             CaseClassification with predictions and difficulty level
         """
+        settings = get_infra_settings()
+        cache_key: str | None = None
+        if settings.enable_ml_cache:
+            cache_key = _ml_cache_key("mlcoder.case", note_text)
+            cached = get_ml_memory_cache().get(cache_key)
+            if isinstance(cached, CaseClassification):
+                return cached
+
         predictions = self.predict_proba(note_text)
 
         high_conf: list[CodePrediction] = []
@@ -250,12 +274,17 @@ class MLCoderPredictor:
         else:
             difficulty = CaseDifficulty.LOW_CONF
 
-        return CaseClassification(
+        result = CaseClassification(
             predictions=predictions,
             high_conf=high_conf,
             gray_zone=gray_zone,
             difficulty=difficulty,
         )
+
+        if cache_key is not None:
+            get_ml_memory_cache().set(cache_key, result, ttl_s=3600)
+
+        return result
 
     def classify_batch(self, note_texts: list[str]) -> list[CaseClassification]:
         """

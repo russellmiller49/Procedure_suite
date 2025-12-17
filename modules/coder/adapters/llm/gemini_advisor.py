@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
 
 # Ensure .env is loaded before reading API keys
 from pathlib import Path
@@ -28,6 +29,9 @@ from dataclasses import dataclass
 from typing import Optional
 
 from observability.logging_config import get_logger
+from modules.infra.cache import get_llm_memory_cache
+from modules.infra.llm_control import backoff_seconds, llm_slot, make_llm_cache_key
+from modules.infra.settings import get_infra_settings
 
 logger = get_logger("llm_advisor")
 
@@ -194,17 +198,40 @@ Return ONLY the JSON array, no other text.
             report_text=processed_text,
         )
 
-        try:
-            response = client.generate_content(prompt)  # type: ignore
-            response_text = response.text
+        settings = get_infra_settings()
+        deadline = time.monotonic() + float(settings.llm_timeout_s)
 
-            # Parse JSON response
-            suggestions = self._parse_response(response_text)
-            return suggestions
+        cache_key: str | None = None
+        if settings.enable_llm_cache:
+            prompt_version = (os.getenv("LLM_PROMPT_VERSION") or "default").strip() or "default"
+            cache_key = make_llm_cache_key(
+                model=self.model_name,
+                prompt=prompt,
+                prompt_version=prompt_version,
+            )
+            cached = get_llm_memory_cache().get(cache_key)
+            if isinstance(cached, str) and cached:
+                return self._parse_response(cached)
 
-        except Exception as e:
-            logger.error(f"Gemini API call failed: {e}")
-            return []
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                with llm_slot():
+                    response = client.generate_content(prompt)  # type: ignore
+                response_text = response.text
+                if cache_key is not None and response_text:
+                    get_llm_memory_cache().set(cache_key, response_text, ttl_s=3600)
+                return self._parse_response(response_text)
+            except Exception as e:  # noqa: BLE001
+                if attempt >= max_retries - 1 or time.monotonic() >= deadline:
+                    logger.error("Gemini API call failed: %s", type(e).__name__)
+                    return []
+
+                sleep_s = backoff_seconds(attempt)
+                remaining = max(0.0, deadline - time.monotonic())
+                if remaining > 0:
+                    time.sleep(min(sleep_s, remaining))
+        return []
 
     def suggest_with_context(
         self,
@@ -251,15 +278,40 @@ Return ONLY the JSON array, no other text.
             report_text=processed_text,
         )
 
-        try:
-            response = client.generate_content(prompt)  # type: ignore
-            response_text = response.text
-            suggestions = self._parse_response(response_text)
-            return suggestions
+        settings = get_infra_settings()
+        deadline = time.monotonic() + float(settings.llm_timeout_s)
 
-        except Exception as e:
-            logger.error(f"Gemini API call with context failed: {e}")
-            return []
+        cache_key: str | None = None
+        if settings.enable_llm_cache:
+            prompt_version = (os.getenv("LLM_PROMPT_VERSION") or "default").strip() or "default"
+            cache_key = make_llm_cache_key(
+                model=self.model_name,
+                prompt=prompt,
+                prompt_version=prompt_version,
+            )
+            cached = get_llm_memory_cache().get(cache_key)
+            if isinstance(cached, str) and cached:
+                return self._parse_response(cached)
+
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                with llm_slot():
+                    response = client.generate_content(prompt)  # type: ignore
+                response_text = response.text
+                if cache_key is not None and response_text:
+                    get_llm_memory_cache().set(cache_key, response_text, ttl_s=3600)
+                return self._parse_response(response_text)
+            except Exception as e:  # noqa: BLE001
+                if attempt >= max_retries - 1 or time.monotonic() >= deadline:
+                    logger.error("Gemini API call with context failed: %s", type(e).__name__)
+                    return []
+
+                sleep_s = backoff_seconds(attempt)
+                remaining = max(0.0, deadline - time.monotonic())
+                if remaining > 0:
+                    time.sleep(min(sleep_s, remaining))
+        return []
 
     def _prepare_text_for_llm(self, text: str) -> str:
         """Prepare text for LLM processing with smart truncation.

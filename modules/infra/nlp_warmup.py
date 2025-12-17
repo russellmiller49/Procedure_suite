@@ -15,9 +15,8 @@ Usage:
                 logger.exception("Heavy NLP warmup failed, starting in degraded mode")
 
 Environment Variables:
-    PROCSUITE_SKIP_WARMUP: Set to "1", "true", or "yes" to skip warmup
+    PROCSUITE_SKIP_WARMUP / SKIP_WARMUP: Set to "1", "true", or "yes" to skip warmup
     PROCSUITE_SPACY_MODEL: SpaCy model name (default: en_core_sci_sm)
-    RAILWAY_ENVIRONMENT: If set, skips warmup (Railway caches models separately)
     ENABLE_UMLS_LINKER: Set to "false", "0", or "no" to skip UMLS linker (saves memory)
 """
 
@@ -40,16 +39,8 @@ def should_skip_warmup() -> bool:
     Returns:
         True if warmup should be skipped, False otherwise.
     """
-    # Check explicit skip flag
-    skip_warmup = os.getenv("PROCSUITE_SKIP_WARMUP", "").lower() in ("1", "true", "yes")
-    if skip_warmup:
-        return True
-
-    # Skip if running on Railway - models are pre-cached
-    if os.getenv("RAILWAY_ENVIRONMENT"):
-        return True
-
-    return False
+    skip_warmup = os.getenv("SKIP_WARMUP") or os.getenv("PROCSUITE_SKIP_WARMUP") or ""
+    return skip_warmup.lower() in ("1", "true", "yes")
 
 
 @lru_cache(maxsize=1)
@@ -156,6 +147,11 @@ async def warm_heavy_resources() -> None:
     _do_heavy_warmup()
 
 
+def warm_heavy_resources_sync() -> None:
+    """Synchronous warmup entry point (for background threads/executors)."""
+    _do_heavy_warmup()
+
+
 def is_nlp_warmed() -> bool:
     """Check if NLP warmup completed successfully.
 
@@ -177,3 +173,14 @@ def reset_warmup_state() -> None:
     _nlp_warmup_successful = False
     get_spacy_model.cache_clear()
     get_sectionizer.cache_clear()
+
+
+__all__ = [
+    "should_skip_warmup",
+    "warm_heavy_resources",
+    "warm_heavy_resources_sync",
+    "is_nlp_warmed",
+    "get_spacy_model",
+    "get_sectionizer",
+    "reset_warmup_state",
+]

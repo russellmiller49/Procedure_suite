@@ -491,6 +491,38 @@ class SmartHybridOrchestrator:
 
         llm_codes = self._call_llm_with_context(note_text, llm_context)
 
+        if not llm_codes:
+            fallback_codes = rules_cleaned_ml or candidates_for_rules or ml_candidates
+            self._emit_telemetry(
+                difficulty=difficulty,
+                source="hybrid_llm_fallback",
+                llm_used=True,
+                rules_error=rules_error,
+                rules_error_type=rules_error_type,
+                ml_candidates_count=len(ml_candidates),
+                final_codes_count=len(fallback_codes),
+                llm_raw_count=0,
+                rules_modified_llm=False,
+                fallback_reason=f"{reason_for_fallback} (llm_empty)",
+            )
+            return HybridCoderResult(
+                codes=fallback_codes,
+                source="hybrid_llm_fallback",
+                difficulty=ml_result.difficulty,
+                metadata={
+                    "ml_difficulty": difficulty,
+                    "ml_candidates": ml_candidates,
+                    "ml_predictions": preds,
+                    "rules_error": rules_error,
+                    "rules_error_type": rules_error_type,
+                    "llm_called": True,
+                    "llm_failed": True,
+                    "llm_raw_codes": [],
+                    "reason_for_fallback": reason_for_fallback,
+                    "rules_modified_llm": False,
+                },
+            )
+
         # 5. Final safety check – rules veto LLM output if needed
         # Use non-strict validation to clean rather than reject
         final_codes = self._rules.validate(llm_codes, note_text, strict=False)

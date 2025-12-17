@@ -14,6 +14,7 @@ import json
 import os
 import re
 import threading
+import time
 from typing import Any
 
 import httpx
@@ -21,6 +22,14 @@ import httpx
 from observability.logging_config import get_logger
 from modules.common.model_capabilities import filter_payload_for_model
 from modules.common.llm import _resolve_openai_timeout
+from modules.infra.cache import get_llm_memory_cache
+from modules.infra.llm_control import (
+    backoff_seconds,
+    llm_slot,
+    make_llm_cache_key,
+    parse_retry_after_seconds,
+)
+from modules.infra.settings import get_infra_settings
 
 from .gemini_advisor import LLMAdvisorPort, LLMCodeSuggestion
 
@@ -381,8 +390,24 @@ Return ONLY the JSON array, no other text.
             "Content-Type": "application/json",
         }
 
+        settings = get_infra_settings()
+        model_name = self._resolve_model()
+        deadline = time.monotonic() + float(settings.llm_timeout_s)
+
+        cache_key: str | None = None
+        if settings.enable_llm_cache:
+            prompt_version = (os.getenv("LLM_PROMPT_VERSION") or "default").strip() or "default"
+            cache_key = make_llm_cache_key(
+                model=model_name,
+                prompt=prompt,
+                prompt_version=prompt_version,
+            )
+            cached = get_llm_memory_cache().get(cache_key)
+            if isinstance(cached, str) and cached:
+                return cached
+
         payload: dict = {
-            "model": self._resolve_model(),
+            "model": model_name,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.0,
         }
@@ -399,8 +424,9 @@ Return ONLY the JSON array, no other text.
         attempt_payload: dict = payload
         data: dict[str, Any] = {}
 
-        for attempt in range(2):
-            response = client.post(url, headers=headers, json=attempt_payload, timeout=timeout)
+        for attempt in range(5):
+            with llm_slot():
+                response = client.post(url, headers=headers, json=attempt_payload, timeout=timeout)
             if response.status_code < 400:
                 data = response.json()
                 break
@@ -417,6 +443,15 @@ Return ONLY the JSON array, no other text.
                     "openai_error_message": message,
                 },
             )
+
+            if response.status_code == 429 or 500 <= response.status_code <= 599:
+                if attempt < 4 and time.monotonic() < deadline:
+                    retry_after = parse_retry_after_seconds(response.headers)
+                    sleep_s = retry_after if retry_after is not None else backoff_seconds(attempt)
+                    remaining = max(0.0, deadline - time.monotonic())
+                    if remaining > 0:
+                        time.sleep(min(sleep_s, remaining))
+                        continue
 
             should_retry = (
                 attempt == 0
@@ -445,7 +480,10 @@ Return ONLY the JSON array, no other text.
             return ""
         msg = choices[0].get("message", {}) if isinstance(choices[0], dict) else {}
         content = msg.get("content", "") if isinstance(msg, dict) else ""
-        return content or ""
+        content = content or ""
+        if cache_key is not None and content:
+            get_llm_memory_cache().set(cache_key, content, ttl_s=3600)
+        return content
 
     def _offline_suggestions(self) -> list[LLMCodeSuggestion]:
         if not self.allowed_codes:

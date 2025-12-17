@@ -29,6 +29,14 @@ from modules.common.openai_responses import (
     post_responses,
     ResponsesEndpointNotFound,
 )
+from modules.infra.cache import get_llm_memory_cache
+from modules.infra.llm_control import (
+    backoff_seconds,
+    llm_slot,
+    make_llm_cache_key,
+    parse_retry_after_seconds,
+)
+from modules.infra.settings import get_infra_settings
 
 logger = get_logger("common.llm")
 
@@ -312,24 +320,50 @@ class OpenAILLM:
         if _truthy_env("OPENAI_OFFLINE") or not self.api_key:
             return "{}"
 
+        settings = get_infra_settings()
+        prompt_version = str(
+            kwargs.pop("prompt_version", "") or os.getenv("LLM_PROMPT_VERSION") or "default"
+        ).strip() or "default"
+
+        cache_key: str | None = None
+        if settings.enable_llm_cache:
+            temperature = kwargs.get("temperature")
+            cacheable = temperature is None or float(temperature) == 0.0
+            if cacheable:
+                cache_key = make_llm_cache_key(
+                    model=self.model,
+                    prompt=prompt,
+                    prompt_version=prompt_version,
+                )
+                cached = get_llm_memory_cache().get(cache_key)
+                if isinstance(cached, str) and cached:
+                    return cached
+
         task_key = task if task is not None else self.task
         primary_api = get_primary_api()
 
         # Use Responses API for first-party OpenAI when configured
         if primary_api == "responses" and self._is_openai_endpoint():
             try:
-                return self._generate_via_responses(prompt, task=task_key, **kwargs)
+                response_text = self._generate_via_responses(prompt, task=task_key, **kwargs)
             except ResponsesEndpointNotFound:
                 if is_fallback_enabled():
                     logger.info(
                         "Responses API not available; falling back to Chat Completions model=%s",
                         self.model,
                     )
-                    return self._generate_via_chat(prompt, task=task_key, **kwargs)
-                raise
+                    response_text = self._generate_via_chat(prompt, task=task_key, **kwargs)
+                else:
+                    raise
 
-        # Use Chat Completions for compat endpoints or when configured
-        return self._generate_via_chat(prompt, task=task_key, **kwargs)
+        else:
+            # Use Chat Completions for compat endpoints or when configured
+            response_text = self._generate_via_chat(prompt, task=task_key, **kwargs)
+
+        if cache_key is not None and response_text:
+            get_llm_memory_cache().set(cache_key, response_text, ttl_s=3600)
+
+        return response_text
 
     def _generate_via_responses(
         self,
@@ -421,14 +455,16 @@ class OpenAILLM:
         removed_on_retry: list[str] = []
 
         try:
+            deadline = time.monotonic() + float(get_infra_settings().llm_timeout_s)
             with httpx.Client(timeout=timeout) as client:
                 attempt_payload = payload
                 did_retry_timeout = False
                 did_retry_unsupported = False
 
-                for _ in range(3):
+                for attempt in range(3):
                     try:
-                        response = client.post(url, headers=headers, json=attempt_payload)
+                        with llm_slot():
+                            response = client.post(url, headers=headers, json=attempt_payload)
                     except (httpx.ReadTimeout, httpx.ConnectTimeout, httpx.RemoteProtocolError, httpx.TransportError) as exc:
                         if not did_retry_timeout:
                             did_retry_timeout = True
@@ -461,6 +497,15 @@ class OpenAILLM:
                         self.model,
                         request_id_suffix,
                     )
+
+                    if response.status_code == 429 or 500 <= response.status_code <= 599:
+                        if attempt < 2 and time.monotonic() < deadline:
+                            retry_after = parse_retry_after_seconds(response.headers)
+                            sleep_s = retry_after if retry_after is not None else backoff_seconds(attempt)
+                            remaining = max(0.0, deadline - time.monotonic())
+                            if remaining > 0:
+                                time.sleep(min(sleep_s, remaining))
+                                continue
 
                     should_retry = (
                         not did_retry_unsupported
@@ -574,8 +619,24 @@ class GeminiLLM:
         *,
         temperature: float | None = None,
         task: str | None = None,
+        prompt_version: str | None = None,
     ) -> str:
-        import time
+        settings = get_infra_settings()
+        deadline = time.monotonic() + float(settings.llm_timeout_s)
+
+        prompt_version_value = str(prompt_version or os.getenv("LLM_PROMPT_VERSION") or "default").strip() or "default"
+        cache_key: str | None = None
+        if settings.enable_llm_cache:
+            cacheable = temperature is None or float(temperature) == 0.0
+            if cacheable:
+                cache_key = make_llm_cache_key(
+                    model=self.model,
+                    prompt=prompt,
+                    prompt_version=prompt_version_value,
+                )
+                cached = get_llm_memory_cache().get(cache_key)
+                if isinstance(cached, str) and cached:
+                    return cached
 
         if self.use_oauth:
             url = f"{self.base_url}/{self.model}:generateContent"
@@ -606,12 +667,26 @@ class GeminiLLM:
         last_error = None
         for attempt in range(max_retries):
             try:
-                logger.info(f"Sending request to Gemini model: {self.model} (auth: {'OAuth2' if self.use_oauth else 'API key'}, attempt {attempt + 1}/{max_retries})")
-                # Increase timeout to 120s for complex extractions; use separate connect/read timeouts
-                timeout = httpx.Timeout(connect=10.0, read=120.0, write=30.0, pool=10.0)
+                timeout = httpx.Timeout(
+                    connect=10.0,
+                    read=float(settings.llm_timeout_s),
+                    write=30.0,
+                    pool=10.0,
+                )
                 with httpx.Client(timeout=timeout) as client:
-                    response = client.post(url, headers=headers, json=payload)
-                    response.raise_for_status()
+                    with llm_slot():
+                        response = client.post(url, headers=headers, json=payload)
+
+                    if response.status_code >= 400:
+                        if response.status_code == 429 or response.status_code >= 500:
+                            raise httpx.HTTPStatusError(
+                                f"Transient HTTP {response.status_code}",
+                                request=response.request,
+                                response=response,
+                            )
+                        logger.error("Gemini API HTTP error status=%s", response.status_code)
+                        return "{}"
+
                     data = response.json()
 
                     # Extract text from response structure
@@ -622,29 +697,31 @@ class GeminiLLM:
                         return "{}"
 
                     text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                    if cache_key is not None and text:
+                        get_llm_memory_cache().set(cache_key, text, ttl_s=3600)
                     return text
             except httpx.RequestError as e:
                 last_error = e
-                logger.warning(f"Network error contacting Gemini API (attempt {attempt + 1}): {e}")
-                if attempt < max_retries - 1:
-                    wait_time = 2 ** attempt  # Exponential backoff: 1s, 2s, 4s
-                    logger.info(f"Retrying in {wait_time}s...")
-                    time.sleep(wait_time)
+                logger.warning("Gemini API transport error attempt=%s error=%s", attempt + 1, type(e).__name__)
             except httpx.HTTPStatusError as e:
-                # Don't retry on 4xx errors (client errors) - only on 5xx (server errors)
-                if e.response.status_code >= 500:
-                    last_error = e
-                    logger.warning(f"HTTP 5xx error from Gemini API (attempt {attempt + 1}): {e.response.text}")
-                    if attempt < max_retries - 1:
-                        wait_time = 2 ** attempt
-                        logger.info(f"Retrying in {wait_time}s...")
-                        time.sleep(wait_time)
-                else:
-                    logger.error(f"HTTP error from Gemini API: {e.response.text}")
-                    return "{}"
+                last_error = e
+                status_code = getattr(e.response, "status_code", None)
+                logger.warning("Gemini API transient HTTP error attempt=%s status=%s", attempt + 1, status_code)
             except Exception as e:
                 logger.error(f"Unexpected error in GeminiLLM: {e}")
                 return "{}"
+
+            if attempt >= max_retries - 1 or time.monotonic() >= deadline:
+                break
+
+            retry_after = None
+            if isinstance(last_error, httpx.HTTPStatusError) and last_error.response is not None:
+                retry_after = parse_retry_after_seconds(last_error.response.headers)
+
+            sleep_s = retry_after if retry_after is not None else backoff_seconds(attempt)
+            remaining = max(0.0, deadline - time.monotonic())
+            if remaining > 0:
+                time.sleep(min(sleep_s, remaining))
 
         # All retries exhausted
         logger.error(f"All {max_retries} retries exhausted. Last error: {last_error}")

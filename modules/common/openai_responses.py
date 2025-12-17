@@ -19,6 +19,8 @@ import httpx
 from modules.common.logger import get_logger
 from modules.common.exceptions import LLMError
 from modules.common.model_capabilities import filter_payload_for_model, is_gpt5
+from modules.infra.llm_control import backoff_seconds, llm_slot, parse_retry_after_seconds
+from modules.infra.settings import get_infra_settings
 
 logger = get_logger("common.openai_responses")
 
@@ -396,10 +398,13 @@ def post_responses(
 
     attempt_payload = payload
 
+    deadline = time.monotonic() + float(get_infra_settings().llm_timeout_s)
+
     with httpx.Client(timeout=timeout) as client:
-        for _ in range(3):  # Max attempts
+        for attempt in range(3):  # Max attempts
             try:
-                response = client.post(url, headers=headers, json=attempt_payload)
+                with llm_slot():
+                    response = client.post(url, headers=headers, json=attempt_payload)
             except (httpx.ReadTimeout, httpx.ConnectTimeout, httpx.RemoteProtocolError, httpx.TransportError) as exc:
                 if not did_retry_timeout:
                     did_retry_timeout = True
@@ -441,6 +446,15 @@ def post_responses(
                 raise ResponsesEndpointNotFound(
                     f"Responses endpoint not available (status={response.status_code}, model={model})"
                 )
+
+            if response.status_code == 429 or 500 <= response.status_code <= 599:
+                if attempt < 2 and time.monotonic() < deadline:
+                    retry_after = parse_retry_after_seconds(response.headers)
+                    sleep_s = retry_after if retry_after is not None else backoff_seconds(attempt)
+                    remaining = max(0.0, deadline - time.monotonic())
+                    if remaining > 0:
+                        time.sleep(min(sleep_s, remaining))
+                        continue
 
             # Try retry on unsupported param
             should_retry = (

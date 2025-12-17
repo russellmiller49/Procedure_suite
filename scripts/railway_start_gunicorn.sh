@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Optional Railway start command using Gunicorn prefork + preload.
+#
+# WARNING:
+# - Gunicorn is not included by default in this repo; install it before using.
+# - Prefork workers increase memory usage; use only on higher-RAM plans.
+# - Avoid starting background threads *before* prefork.
+#
+# Suggested Railway Start Command (optional):
+#   scripts/railway_start_gunicorn.sh
+
+set -euo pipefail
+
+if ! command -v gunicorn >/dev/null 2>&1; then
+  echo "[railway_start_gunicorn] ERROR: gunicorn not installed in this environment."
+  echo "[railway_start_gunicorn] Install gunicorn and retry."
+  exit 1
+fi
+
+export PYTHONPATH="${PYTHONPATH:-}:${PWD}"
+echo "[railway_start_gunicorn] PYTHONPATH=${PYTHONPATH}"
+
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+export VECLIB_MAXIMUM_THREADS="${VECLIB_MAXIMUM_THREADS:-1}"
+
+PORT="${PORT:-8000}"
+WORKERS="${WORKERS:-2}"
+TIMEOUT="${TIMEOUT:-120}"
+
+echo "[railway_start_gunicorn] PORT=${PORT}"
+echo "[railway_start_gunicorn] WORKERS=${WORKERS}"
+echo "[railway_start_gunicorn] TIMEOUT=${TIMEOUT}"
+
+# NOTE: `uvicorn.workers.UvicornWorker` is the traditional integration; check uvicorn docs for the
+# recommended worker package/version for your deployment.
+exec gunicorn "modules.api.fastapi_app:app" \
+  --bind "0.0.0.0:${PORT}" \
+  --workers "${WORKERS}" \
+  --worker-class "uvicorn.workers.UvicornWorker" \
+  --preload \
+  --timeout "${TIMEOUT}"
+

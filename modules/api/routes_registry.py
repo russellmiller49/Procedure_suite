@@ -15,10 +15,14 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, status
+import httpx
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel, Field
 
 from modules.api.dependencies import get_registry_service
+from modules.api.readiness import require_ready
+from modules.infra.executors import run_cpu
+from modules.common.exceptions import LLMError
 from modules.registry.application.registry_service import (
     RegistryService,
     RegistryExtractionResult,
@@ -172,8 +176,10 @@ class RegistryExtractResponse(BaseModel):
         "5. Returns combined result with manual review flags if needed"
     ),
 )
-def extract_registry_fields(
+async def extract_registry_fields(
     payload: RegistryExtractRequest,
+    request: Request,
+    _ready: None = Depends(require_ready),
     registry_service: RegistryService = Depends(get_registry_service),
 ) -> RegistryExtractResponse:
     """
@@ -194,7 +200,7 @@ def extract_registry_fields(
         HTTPException: If extraction fails due to missing orchestrator or errors.
     """
     try:
-        result = registry_service.extract_fields(payload.note_text)
+        result = await run_cpu(request.app, registry_service.extract_fields, payload.note_text)
         return RegistryExtractResponse.from_domain(result)
 
     except ValueError as e:
@@ -206,6 +212,19 @@ def extract_registry_fields(
         )
 
     except Exception as e:
+        if isinstance(e, httpx.HTTPStatusError) and e.response is not None and e.response.status_code == 429:
+            retry_after = e.response.headers.get("Retry-After") or "10"
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Upstream LLM rate limited",
+                headers={"Retry-After": str(retry_after)},
+            )
+        if isinstance(e, LLMError) and "429" in str(e):
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Upstream LLM rate limited",
+                headers={"Retry-After": "10"},
+            )
         logger.error(f"Registry extraction failed: {e}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

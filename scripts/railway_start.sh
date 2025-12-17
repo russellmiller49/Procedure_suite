@@ -2,8 +2,8 @@
 # Railway startup script for Procedure Suite API
 #
 # This script:
-# 1. Warms up heavy NLP models before starting the server
-# 2. Starts the FastAPI application with uvicorn
+# 1. Starts the FastAPI application quickly (liveness via /health)
+# 2. Lets the app perform background warmup (readiness via /ready)
 #
 # Usage:
 #   scripts/railway_start.sh
@@ -12,6 +12,7 @@
 #   PORT - Port to listen on (default: 8000)
 #   PROCSUITE_SPACY_MODEL - spaCy model to use (default: en_core_sci_sm)
 #   WORKERS - Number of uvicorn workers (default: 1)
+#   LIMIT_CONCURRENCY - uvicorn concurrency cap (default: 50)
 #
 # Railway Configuration:
 #   Set "Start Command" to: scripts/railway_start.sh
@@ -29,22 +30,18 @@ echo "[railway_start] =============================================="
 echo "[railway_start] PORT=${PORT:-8000}"
 echo "[railway_start] PROCSUITE_SPACY_MODEL=${PROCSUITE_SPACY_MODEL:-en_core_sci_sm}"
 echo "[railway_start] WORKERS=${WORKERS:-1}"
+echo "[railway_start] LIMIT_CONCURRENCY=${LIMIT_CONCURRENCY:-50}"
 export MODEL_BACKEND="${MODEL_BACKEND:-onnx}"
 echo "[railway_start] MODEL_BACKEND=${MODEL_BACKEND}"
+
+# Limit BLAS/OpenMP thread oversubscription (important for sklearn/ONNX on small Railway machines)
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+export VECLIB_MAXIMUM_THREADS="${VECLIB_MAXIMUM_THREADS:-1}"
+echo "[railway_start] OMP_NUM_THREADS=${OMP_NUM_THREADS} MKL_NUM_THREADS=${MKL_NUM_THREADS} OPENBLAS_NUM_THREADS=${OPENBLAS_NUM_THREADS}"
 echo "[railway_start] =============================================="
-
-# Optional: pull registry model bundle from S3 before warmup.
-# - For production, Railway should set MODEL_BACKEND=onnx and MODEL_BUNDLE_S3_URI_ONNX.
-echo "[railway_start] Bootstrapping registry model bundle (if configured)..."
-python -c "from modules.registry.model_bootstrap import ensure_registry_model_bundle; ensure_registry_model_bundle()" || \
-  echo "[railway_start] WARNING: model bundle bootstrap failed/skipped, continuing..."
-
-# Step 1: Warm up NLP models
-echo "[railway_start] Warming up NLP models..."
-if ! python scripts/warm_models.py; then
-    echo "[railway_start] WARNING: Model warmup had errors, but continuing..."
-    # Don't exit on warmup errors - the app might still work
-fi
 
 echo "[railway_start] =============================================="
 echo "[railway_start] Starting FastAPI (uvicorn)..."
@@ -58,4 +55,5 @@ exec python -m uvicorn modules.api.fastapi_app:app \
     --host 0.0.0.0 \
     --port "${PORT:-8000}" \
     --workers "${WORKERS:-1}" \
+    --limit-concurrency "${LIMIT_CONCURRENCY:-50}" \
     --log-level info

@@ -10,12 +10,15 @@ See AI_ASSISTANT_GUIDE.md for details.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 
 # Load .env file early so API keys are available
 from dotenv import load_dotenv
+import httpx
 
 
 def _truthy_env(name: str) -> bool:
@@ -34,7 +37,6 @@ from pathlib import Path
 from typing import Any, AsyncIterator, List
 
 from fastapi import FastAPI, Request, Depends, HTTPException
-from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -50,6 +52,8 @@ from modules.api.routes.procedure_codes import router as procedure_codes_router
 from modules.api.routes.metrics import router as metrics_router
 from modules.api.routes.phi_demo_cases import router as phi_demo_router
 from modules.api.routes_registry import router as registry_extract_router
+from modules.api.readiness import require_ready
+from modules.infra.executors import run_cpu
 
 # All API schemas (base + QA pipeline)
 from modules.api.schemas import (
@@ -84,13 +88,19 @@ from modules.api.services.qa_pipeline import (
     QAPipelineResult,
     QAPipelineService,
 )
-from modules.api.dependencies import get_coding_service, get_qa_pipeline_service
+from modules.api.dependencies import (
+    get_coding_service,
+    get_qa_pipeline_service,
+    get_registry_service,
+)
 
 from config.settings import CoderSettings
 from modules.coder.schema import CodeDecision, CoderOutput
 from modules.common.knowledge import knowledge_hash, knowledge_version
+from modules.common.exceptions import LLMError
 from modules.common.spans import Span
 from modules.registry.engine import RegistryEngine
+from modules.registry.application.registry_service import RegistryService
 from modules.registry.schema import RegistryRecord
 from modules.api.normalization import simplify_billing_cpt_codes
 from modules.api.routes_registry import _prune_none
@@ -125,52 +135,103 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     This replaces the deprecated @app.on_event("startup") pattern.
 
     Startup:
-    - Preloads heavy NLP models to avoid cold-start latency
-    - Gracefully handles warmup failures (app still starts)
+    - Initializes readiness state (/health vs /ready)
+    - Starts heavy model warmup (background by default)
 
     Shutdown:
     - Placeholder for cleanup if needed in the future
 
-    Environment variables:
-    - PROCSUITE_SKIP_WARMUP: Set to "1", "true", or "yes" to skip warmup entirely
-    - RAILWAY_ENVIRONMENT: If set, skips warmup (Railway caches models separately)
+    Environment variables (see modules.infra.settings.InfraSettings):
+    - SKIP_WARMUP / PROCSUITE_SKIP_WARMUP: Skip warmup entirely
+    - BACKGROUND_WARMUP: Run warmup in the background (default: true)
+    - WAIT_FOR_READY_S: Optional await time for readiness gating
     """
     # Import here to avoid circular import at module load time
     from modules.infra.nlp_warmup import (
         should_skip_warmup as _should_skip_warmup,
-        warm_heavy_resources as _warm_heavy_resources_fn,
+        warm_heavy_resources_sync as _warm_heavy_resources_sync,
+    )
+    from modules.infra.settings import get_infra_settings
+
+    settings = get_infra_settings()
+    logger = logging.getLogger(__name__)
+
+    # Readiness state (liveness vs readiness)
+    app.state.model_ready = False
+    app.state.model_error = None
+    app.state.ready_event = asyncio.Event()
+    app.state.cpu_executor = ThreadPoolExecutor(max_workers=settings.cpu_workers)
+    app.state.llm_sem = asyncio.Semaphore(settings.llm_concurrency)
+    app.state.llm_http = httpx.AsyncClient(
+        timeout=httpx.Timeout(
+            connect=10.0,
+            read=float(settings.llm_timeout_s),
+            write=30.0,
+            pool=30.0,
+        )
     )
 
-    # Startup phase
-    if _should_skip_warmup():
-        logging.getLogger(__name__).info(
-            "Skipping heavy NLP warmup (disabled via environment)"
-        )
-    else:
+    loop = asyncio.get_running_loop()
+
+    def _warmup_worker() -> None:
         try:
-            await _warm_heavy_resources_fn()
-        except Exception as exc:
-            logging.getLogger(__name__).error(
-                "Heavy NLP warmup failed - starting API without NLP features. "
-                "Some endpoints may return errors or degraded results. Error: %s",
-                exc,
-                exc_info=True,
-            )
+            _warm_heavy_resources_sync()
+        except Exception as exc:  # noqa: BLE001
+            ok = False
+            error = f"{type(exc).__name__}: {exc}"
+            logger.error("Warmup failed: %s", error, exc_info=True)
+        else:
+            ok = True
+            error = None
+        app.state.model_ready = ok
+        app.state.model_error = error
+        loop.call_soon_threadsafe(app.state.ready_event.set)
 
-    # Optional: pull registry model bundle from S3 (does not block startup on failure).
-    try:
-        from modules.registry.model_bootstrap import ensure_registry_model_bundle
+    def _bootstrap_registry_models() -> None:
+        # Optional: pull registry model bundle from S3 (does not gate readiness).
+        try:
+            from modules.registry.model_bootstrap import ensure_registry_model_bundle
 
-        ensure_registry_model_bundle()
-    except Exception as exc:
-        logging.getLogger(__name__).warning(
-            "Registry model bundle bootstrap skipped/failed: %s", exc
-        )
+            ensure_registry_model_bundle()
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("Registry model bundle bootstrap skipped/failed: %s", exc)
+
+    # Startup phase
+    if settings.skip_warmup or _should_skip_warmup():
+        logger.info("Skipping heavy NLP warmup (disabled via environment)")
+        app.state.model_ready = True
+        app.state.ready_event.set()
+    elif settings.background_warmup:
+        logger.info("Starting background warmup")
+        loop.run_in_executor(app.state.cpu_executor, _warmup_worker)
+    else:
+        logger.info("Running warmup before serving traffic")
+        try:
+            await loop.run_in_executor(app.state.cpu_executor, _warm_heavy_resources_sync)
+        except Exception as exc:  # noqa: BLE001
+            ok = False
+            error = f"{type(exc).__name__}: {exc}"
+            logger.error("Warmup failed: %s", error, exc_info=True)
+        else:
+            ok = True
+            error = None
+        app.state.model_ready = ok
+        app.state.model_error = error
+        app.state.ready_event.set()
+
+    # Kick off model bundle bootstrap in the background (best-effort).
+    loop.run_in_executor(app.state.cpu_executor, _bootstrap_registry_models)
 
     yield  # Application runs
 
     # Shutdown phase (cleanup if needed)
-    # Currently no cleanup required
+    llm_http = getattr(app.state, "llm_http", None)
+    if llm_http is not None:
+        await llm_http.aclose()
+
+    cpu_executor = getattr(app.state, "cpu_executor", None)
+    if cpu_executor is not None:
+        cpu_executor.shutdown(wait=False, cancel_futures=True)
 
 
 app = FastAPI(
@@ -269,6 +330,7 @@ async def root(request: Request) -> Any:
         "endpoints": {
             "ui": "/ui/",
             "health": "/health",
+            "ready": "/ready",
             "knowledge": "/knowledge",
             "docs": "/docs",
             "redoc": "/redoc",
@@ -295,8 +357,24 @@ async def root(request: Request) -> Any:
 
 
 @app.get("/health")
-async def health() -> dict[str, bool]:
-    return {"ok": True}
+async def health(request: Request) -> dict[str, bool]:
+    return {"ok": True, "ready": bool(getattr(request.app.state, "model_ready", False))}
+
+
+@app.get("/ready")
+async def ready(request: Request) -> JSONResponse:
+    is_ready = bool(getattr(request.app.state, "model_ready", False))
+    if is_ready:
+        return JSONResponse(status_code=200, content={"status": "ok", "ready": True})
+
+    model_error = getattr(request.app.state, "model_error", None)
+    content: dict[str, Any] = {"status": "warming", "ready": False}
+    if model_error:
+        content["status"] = "error"
+        content["error"] = str(model_error)
+        return JSONResponse(status_code=503, content=content)
+
+    return JSONResponse(status_code=503, content=content, headers={"Retry-After": "10"})
 
 
 @app.get("/health/nlp")
@@ -340,6 +418,7 @@ async def coder_localities() -> List[LocalityInfo]:
 @app.post("/v1/coder/run", response_model=CoderResponse)
 async def coder_run(
     req: CoderRequest,
+    request: Request,
     mode: str | None = None,
     coding_service: CodingService = Depends(get_coding_service),
 ) -> CoderResponse:
@@ -357,7 +436,7 @@ async def coder_run(
 
     # Check if ML-first hybrid pipeline is requested
     if req.use_ml_first:
-        return await _run_ml_first_pipeline(report_text, req.locality, coding_service)
+        return await _run_ml_first_pipeline(request, report_text, req.locality, coding_service)
 
     # Determine if LLM should be used based on mode
     use_llm = True
@@ -365,7 +444,9 @@ async def coder_run(
         use_llm = False
 
     # Run the coding pipeline
-    result = coding_service.generate_result(
+    result = await run_cpu(
+        request.app,
+        coding_service.generate_result,
         procedure_id=procedure_id,
         report_text=report_text,
         use_llm=use_llm,
@@ -383,6 +464,7 @@ async def coder_run(
 
 
 async def _run_ml_first_pipeline(
+    request: Request,
     report_text: str,
     locality: str,
     coding_service: CodingService,
@@ -403,11 +485,11 @@ async def _run_ml_first_pipeline(
     """
     from modules.coder.application.smart_hybrid_policy import build_hybrid_orchestrator
 
-    # Build orchestrator with default components
-    orchestrator = build_hybrid_orchestrator()
+    def _run_hybrid() -> Any:
+        orchestrator = build_hybrid_orchestrator()
+        return orchestrator.get_codes(report_text)
 
-    # Run the hybrid pipeline
-    result = orchestrator.get_codes(report_text)
+    result = await run_cpu(request.app, _run_hybrid)
 
     # Build code decisions from orchestrator result
     from modules.coder.schema import CodeDecision
@@ -493,13 +575,17 @@ async def _run_ml_first_pipeline(
     response_model=RegistryResponse,
     response_model_exclude_none=True,
 )
-async def registry_run(req: RegistryRequest) -> RegistryResponse:
+async def registry_run(
+    req: RegistryRequest,
+    request: Request,
+    _ready: None = Depends(require_ready),
+) -> RegistryResponse:
     eng = RegistryEngine()
     # For interactive/demo usage, best-effort extraction should return 200 whenever possible.
     # RegistryEngine.run now attempts internal pruning on validation issues; if something still
     # raises, fall back to an empty record rather than failing the request.
     try:
-        result = eng.run(req.note, explain=req.explain)
+        result = await run_cpu(request.app, eng.run, req.note, explain=req.explain)
     except Exception as exc:
         _logger.warning("registry_run failed; returning empty record", exc_info=True)
         record = RegistryResponse()
@@ -607,6 +693,9 @@ def _shape_registry_payload(record: RegistryRecord, evidence: dict[str, list[Spa
 @app.post("/api/v1/process", response_model=UnifiedProcessResponse)
 async def unified_process(
     req: UnifiedProcessRequest,
+    request: Request,
+    _ready: None = Depends(require_ready),
+    registry_service: RegistryService = Depends(get_registry_service),
     coding_service: CodingService = Depends(get_coding_service),
 ) -> UnifiedProcessResponse:
     """Unified endpoint combining registry extraction and CPT code derivation.
@@ -622,15 +711,31 @@ async def unified_process(
     This replaces the need to call /v1/registry/run and /v1/coder/run separately.
     """
     import time
-    from modules.registry.application.registry_service import RegistryService
     from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
     from config.settings import CoderSettings
 
     start_time = time.time()
 
     # Step 1: Registry extraction
-    registry_service = RegistryService()
-    extraction_result = registry_service.extract_fields(req.note)
+    try:
+        extraction_result = await run_cpu(request.app, registry_service.extract_fields, req.note)
+    except httpx.HTTPStatusError as exc:
+        if exc.response is not None and exc.response.status_code == 429:
+            retry_after = exc.response.headers.get("Retry-After") or "10"
+            raise HTTPException(
+                status_code=503,
+                detail="Upstream LLM rate limited",
+                headers={"Retry-After": str(retry_after)},
+            ) from exc
+        raise
+    except LLMError as exc:
+        if "429" in str(exc):
+            raise HTTPException(
+                status_code=503,
+                detail="Upstream LLM rate limited",
+                headers={"Retry-After": "10"},
+            ) from exc
+        raise
 
     # Step 2: Derive CPT codes from registry
     record = extraction_result.record
@@ -891,6 +996,8 @@ def _qapipeline_result_to_response(
 @app.post("/qa/run", response_model=QARunResponse)
 async def qa_run(
     payload: QARunRequest,
+    request: Request,
+    _ready: None = Depends(require_ready),
     qa_service: QAPipelineService = Depends(get_qa_pipeline_service),
 ) -> QARunResponse:
     """
@@ -907,8 +1014,8 @@ async def qa_run(
     """
     branch, commit = _get_git_info()
 
-    # Run pipeline in thread pool to avoid blocking event loop
-    result = await run_in_threadpool(
+    result = await run_cpu(
+        request.app,
         qa_service.run_pipeline,
         text=payload.note_text,
         modules=payload.modules_run,

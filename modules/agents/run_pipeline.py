@@ -59,10 +59,15 @@ def run_pipeline_typed(note: dict) -> PipelineResult:
     note_id = note.get("note_id", "")
     raw_text = note.get("raw_text", "")
 
+    parser_ms = 0.0
+    summarizer_ms = 0.0
+    structurer_ms = 0.0
+
     with timed("pipeline.total") as timing:
         # Stage 1: Parser
-        with timed("pipeline.parser"):
+        with timed("pipeline.parser") as t_parser:
             parser_out = _run_parser(note_id, raw_text)
+        parser_ms = t_parser.elapsed_ms
 
         if parser_out.status == "failed":
             logger.warning(
@@ -75,8 +80,9 @@ def run_pipeline_typed(note: dict) -> PipelineResult:
             )
 
         # Stage 2: Summarizer
-        with timed("pipeline.summarizer"):
+        with timed("pipeline.summarizer") as t_summarizer:
             summarizer_out = _run_summarizer(parser_out)
+        summarizer_ms = t_summarizer.elapsed_ms
 
         if summarizer_out.status == "failed":
             logger.warning(
@@ -90,8 +96,9 @@ def run_pipeline_typed(note: dict) -> PipelineResult:
             )
 
         # Stage 3: Structurer
-        with timed("pipeline.structurer"):
+        with timed("pipeline.structurer") as t_structurer:
             structurer_out = _run_structurer(summarizer_out)
+        structurer_ms = t_structurer.elapsed_ms
 
         if structurer_out.status == "failed":
             logger.warning(
@@ -118,6 +125,9 @@ def run_pipeline_typed(note: dict) -> PipelineResult:
             "note_id": note_id,
             "pipeline_status": pipeline_status,
             "processing_time_ms": timing.elapsed_ms,
+            "parser_time_ms": parser_ms,
+            "summarizer_time_ms": summarizer_ms,
+            "structurer_time_ms": structurer_ms,
             "parser_status": parser_out.status,
             "summarizer_status": summarizer_out.status,
             "structurer_status": structurer_out.status,
