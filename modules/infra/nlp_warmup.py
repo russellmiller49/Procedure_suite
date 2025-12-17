@@ -18,6 +18,7 @@ Environment Variables:
     PROCSUITE_SKIP_WARMUP: Set to "1", "true", or "yes" to skip warmup
     PROCSUITE_SPACY_MODEL: SpaCy model name (default: en_core_sci_sm)
     RAILWAY_ENVIRONMENT: If set, skips warmup (Railway caches models separately)
+    ENABLE_UMLS_LINKER: Set to "false", "0", or "no" to skip UMLS linker (saves memory)
 """
 
 from __future__ import annotations
@@ -123,15 +124,21 @@ def _do_heavy_warmup() -> None:
     _ = get_sectionizer()
 
     # Also warm up the UMLS linker from proc_nlp if available
-    try:
-        from proc_nlp.umls_linker import _load_model
+    # Check env var first to save memory on Railway
+    enable_umls = os.getenv("ENABLE_UMLS_LINKER", "true").lower() in ("true", "1", "yes")
 
-        model_name = os.getenv("PROCSUITE_SPACY_MODEL", "en_core_sci_sm")
-        _logger.info("Warming up UMLS linker with model: %s", model_name)
-        _load_model(model_name)
-        _logger.info("UMLS linker warmed up successfully")
-    except Exception as exc:
-        _logger.warning("UMLS linker warmup skipped: %s", exc)
+    if enable_umls:
+        try:
+            from proc_nlp.umls_linker import _load_model
+
+            model_name = os.getenv("PROCSUITE_SPACY_MODEL", "en_core_sci_sm")
+            _logger.info("Warming up UMLS linker with model: %s", model_name)
+            _load_model(model_name)
+            _logger.info("UMLS linker warmed up successfully")
+        except Exception as exc:
+            _logger.warning("UMLS linker warmup skipped: %s", exc)
+    else:
+        _logger.info("UMLS linker warmup skipped (ENABLE_UMLS_LINKER=false)")
 
     _logger.info("Heavy NLP resources warmed up successfully")
     _nlp_warmup_successful = True
