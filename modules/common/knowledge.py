@@ -20,7 +20,7 @@ DEFAULT_KNOWLEDGE_FILE = (
     Path(__file__).resolve().parents[2]
     / "data"
     / "knowledge"
-    / "ip_coding_billing_v2_8.json"
+    / "ip_coding_billing_v2_9.json"
 )
 
 KNOWLEDGE_ENV_VAR = "PSUITE_KNOWLEDGE_FILE"

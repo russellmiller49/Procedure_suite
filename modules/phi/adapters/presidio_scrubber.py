@@ -8,6 +8,9 @@ from __future__ import annotations
 
 import logging
 import os
+import re
+from dataclasses import dataclass
+from typing import Any
 from functools import lru_cache
 from typing import Iterable
 
@@ -67,6 +70,384 @@ ANATOMICAL_ALLOW_LIST = {
     "unilateral",
 }
 
+CLINICAL_ALLOW_LIST = {
+    # Meds + common descriptors that frequently false-positive as PHI.
+    "kenalog",
+    "nonobstructive",
+    # Existing anatomical allow-list (critical for procedure coding).
+    *ANATOMICAL_ALLOW_LIST,
+}
+
+DEFAULT_ENTITY_SCORE_THRESHOLDS: dict[str, float] = {
+    "PERSON": 0.50,
+    "DATE_TIME": 0.60,
+    "LOCATION": 0.70,
+    "__DEFAULT__": 0.50,
+}
+
+DEFAULT_RELATIVE_DATE_TIME_PHRASES: tuple[str, ...] = (
+    "about a week",
+    "in a week",
+    "next week",
+    "today",
+    "tomorrow",
+)
+
+_ALLOWLIST_BOUNDARY_RE = re.compile(
+    r"(?i)\b(?:"
+    + "|".join(sorted((re.escape(t) for t in CLINICAL_ALLOW_LIST), key=len, reverse=True))
+    + r")\b"
+)
+
+_DEVICE_MODEL_CONTEXT_RE = re.compile(
+    r"\b(?:[A-Z]{1,3}\d{2,4}|[A-Z]{1,3}-[A-Z0-9]{2,10})\b"
+    r"(?=[^\n]{0,20}\b(?:video bronchoscope|bronchoscope|scope|cryoprobe|needle)\b)",
+    re.IGNORECASE,
+)
+
+_MRN_ID_LINE_RE = re.compile(r"\b(mrn|id)\s*[:#]", re.IGNORECASE)
+
+
+@dataclass(frozen=True)
+class Detection:
+    entity_type: str
+    start: int
+    end: int
+    score: float
+
+
+def _detection_key(d: Detection) -> tuple[str, int, int, float]:
+    return (d.entity_type, d.start, d.end, d.score)
+
+
+def _diff_removed(before: list[Detection], after: list[Detection]) -> list[Detection]:
+    remaining: dict[tuple[str, int, int, float], int] = {}
+    for d in after:
+        key = _detection_key(d)
+        remaining[key] = remaining.get(key, 0) + 1
+
+    removed: list[Detection] = []
+    for d in before:
+        key = _detection_key(d)
+        count = remaining.get(key, 0)
+        if count > 0:
+            remaining[key] = count - 1
+            continue
+        removed.append(d)
+    return removed
+
+
+def _env_flag(name: str, default: bool) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "y", "on"}
+
+
+def _parse_score_thresholds(value: str | None) -> dict[str, float]:
+    if not value:
+        return dict(DEFAULT_ENTITY_SCORE_THRESHOLDS)
+
+    thresholds: dict[str, float] = dict(DEFAULT_ENTITY_SCORE_THRESHOLDS)
+    for part in value.split(","):
+        if not part.strip():
+            continue
+        if ":" not in part:
+            continue
+        entity, raw_score = part.split(":", 1)
+        entity = entity.strip().upper()
+        try:
+            thresholds[entity] = float(raw_score.strip())
+        except ValueError:
+            continue
+    return thresholds
+
+
+def _is_allowlisted(detected_text: str) -> bool:
+    stripped = detected_text.strip().lower()
+    if stripped in CLINICAL_ALLOW_LIST:
+        return True
+    return _ALLOWLIST_BOUNDARY_RE.search(detected_text) is not None
+
+
+def filter_allowlisted_terms(text: str, results: list) -> list:
+    """Drop detections whose detected text is allow-listed."""
+
+    filtered: list = []
+    for res in results:
+        detected_text = text[int(getattr(res, "start")) : int(getattr(res, "end"))]
+        if _is_allowlisted(detected_text):
+            continue
+        filtered.append(res)
+    return filtered
+
+
+def filter_device_model_context(text: str, results: list) -> list:
+    """Drop detections which match known device/model identifiers in device context."""
+
+    safe_spans: list[tuple[int, int]] = []
+    for m in _DEVICE_MODEL_CONTEXT_RE.finditer(text):
+        line_start, line_end = _line_bounds(text, m.start())
+        line = text[line_start:line_end]
+        if _MRN_ID_LINE_RE.search(line):
+            continue
+        safe_spans.append((m.start(), m.end()))
+
+    if not safe_spans:
+        return results
+
+    filtered: list = []
+    for res in results:
+        start = int(getattr(res, "start"))
+        end = int(getattr(res, "end"))
+        if any(start >= s and end <= e for s, e in safe_spans):
+            continue
+        filtered.append(res)
+    return filtered
+
+
+def filter_datetime_exclusions(text: str, results: list, relative_phrases: Iterable[str]) -> list:
+    """Drop DATE_TIME detections that are durations or vague/relative time."""
+
+    duration_re = re.compile(
+        r"^\s*\d+(?:\.\d+)?\s*(?:second|seconds|minute|minutes|hour|hours|day|days|week|weeks)\b",
+        re.IGNORECASE,
+    )
+    relative_res = [re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE) for p in relative_phrases]
+
+    filtered: list = []
+    for res in results:
+        if getattr(res, "entity_type", None) != "DATE_TIME":
+            filtered.append(res)
+            continue
+        detected_text = text[int(getattr(res, "start")) : int(getattr(res, "end"))]
+        if duration_re.search(detected_text):
+            continue
+        if any(r.search(detected_text) for r in relative_res):
+            continue
+        filtered.append(res)
+    return filtered
+
+
+def filter_low_score_results(results: list, thresholds: dict[str, float]) -> list:
+    """Drop detections below per-entity minimum score thresholds."""
+
+    filtered: list = []
+    for res in results:
+        entity_type = str(getattr(res, "entity_type", "")).upper()
+        score = float(getattr(res, "score", 0.0) or 0.0)
+        minimum = float(thresholds.get(entity_type, thresholds.get("__DEFAULT__", 0.0)))
+        if score < minimum:
+            continue
+        filtered.append(res)
+    return filtered
+
+
+def select_non_overlapping_results(results: list) -> list:
+    """Resolve overlaps by keeping the highest-confidence, longest detections."""
+
+    def _key(r) -> tuple[float, int, int, str]:
+        start = int(getattr(r, "start"))
+        end = int(getattr(r, "end"))
+        score = float(getattr(r, "score", 0.0) or 0.0)
+        length = end - start
+        entity_type = str(getattr(r, "entity_type", ""))
+        return (score, length, -start, entity_type)
+
+    selected: list = []
+    for res in sorted(results, key=_key, reverse=True):
+        start = int(getattr(res, "start"))
+        end = int(getattr(res, "end"))
+        if any(start < int(getattr(s, "end")) and end > int(getattr(s, "start")) for s in selected):
+            continue
+        selected.append(res)
+
+    return sorted(selected, key=lambda r: int(getattr(r, "start")))
+
+
+def filter_provider_signature_block(text: str, results: list) -> list:
+    """Drop PERSON detections in likely provider signature blocks near the end."""
+
+    header = re.search(r"(?im)^recommendations:\s*$", text)
+    zone_start = header.start() if header else int(len(text) * 0.75)
+
+    cred_re = re.compile(r"(?:,\s*)?(md|do)\b", re.IGNORECASE)
+    service_re = re.compile(r"\binterventional\s+pulmonology\b", re.IGNORECASE)
+
+    filtered: list = []
+    for res in results:
+        if getattr(res, "entity_type", None) != "PERSON":
+            filtered.append(res)
+            continue
+        if int(getattr(res, "start")) < zone_start:
+            filtered.append(res)
+            continue
+
+        line_start, line_end = _line_bounds(text, int(getattr(res, "start")))
+        line = text[line_start:line_end]
+        next_line = ""
+        if line_end < len(text):
+            nl_start = line_end + 1
+            nl_end = text.find("\n", nl_start)
+            if nl_end == -1:
+                nl_end = len(text)
+            next_line = text[nl_start:nl_end]
+
+        has_cred = cred_re.search(line) is not None
+        has_service = service_re.search(line) is not None or service_re.search(next_line) is not None
+        if has_cred and has_service:
+            continue
+
+        filtered.append(res)
+
+    return filtered
+
+
+def _line_bounds(text: str, index: int) -> tuple[int, int]:
+    start = text.rfind("\n", 0, index) + 1
+    end = text.find("\n", index)
+    if end == -1:
+        end = len(text)
+    return start, end
+
+
+def _context_window(text: str, start: int, end: int, window: int = 40) -> str:
+    left = max(0, start - window)
+    right = min(len(text), end + window)
+    return text[left:right]
+
+
+def filter_person_provider_context(text: str, results: list) -> list:
+    """Prevent redaction of clinician/provider names based on local context."""
+
+    provider_label_re = re.compile(
+        r"^(surgeon|assistant|anesthesiologist|attending|fellow|resident)\s*:",
+        re.IGNORECASE,
+    )
+    credential_line_re = re.compile(r"(?:,\s*)?(md|do)\b\s*$", re.IGNORECASE)
+    dr_prefix_re = re.compile(r"\b(dr\.?|doctor)\s*$", re.IGNORECASE)
+
+    filtered: list = []
+    for res in results:
+        if getattr(res, "entity_type", None) != "PERSON":
+            filtered.append(res)
+            continue
+
+        start, _ = _line_bounds(text, int(getattr(res, "start")))
+        _, end = _line_bounds(text, int(getattr(res, "end")))
+        line = text[start:end]
+        if provider_label_re.search(line.lstrip()):
+            continue
+        if credential_line_re.search(line.rstrip()):
+            continue
+
+        res_start = int(getattr(res, "start"))
+        prefix_window = text[max(0, res_start - 20) : res_start]
+        if dr_prefix_re.search(prefix_window):
+            continue
+
+        filtered.append(res)
+
+    return filtered
+
+
+def redact_with_audit(
+    *,
+    text: str,
+    detections: list[Detection],
+    enable_driver_license_recognizer: bool,
+    score_thresholds: dict[str, float],
+    relative_datetime_phrases: Iterable[str],
+    nlp_backend: str | None = None,
+    nlp_model: str | None = None,
+) -> tuple[ScrubResult, dict[str, Any]]:
+    if not text:
+        empty = ScrubResult(scrubbed_text="", entities=[])
+        return empty, {"detections": [], "removed_detections": [], "redacted_text": ""}
+
+    raw = detections
+    removed: list[dict[str, Any]] = []
+
+    def _record_removed(before: list[Detection], after: list[Detection], reason: str) -> None:
+        for d in _diff_removed(before, after):
+            removed.append(
+                {
+                    "reason": reason,
+                    "entity_type": d.entity_type,
+                    "start": d.start,
+                    "end": d.end,
+                    "score": d.score,
+                    "detected_text": text[d.start : d.end],
+                    "surrounding_context": _context_window(text, d.start, d.end, window=40),
+                }
+            )
+
+    step = filter_person_provider_context(text, raw)
+    _record_removed(raw, step, "provider_context")
+
+    step2 = filter_provider_signature_block(text, step)
+    _record_removed(step, step2, "provider_context")
+
+    step3 = filter_device_model_context(text, step2)
+    _record_removed(step2, step3, "device_model")
+
+    step4 = filter_datetime_exclusions(text, step3, relative_phrases=relative_datetime_phrases)
+    _record_removed(step3, step4, "duration_datetime")
+
+    step5 = filter_allowlisted_terms(text, step4)
+    _record_removed(step4, step5, "allowlist")
+
+    step6 = filter_low_score_results(step5, thresholds=score_thresholds)
+    _record_removed(step5, step6, "low_score")
+
+    final = select_non_overlapping_results(step6)
+    _record_removed(step6, final, "overlap")
+
+    scrubbed_text = text
+    entities = []
+    for _, d in enumerate(sorted(final, key=lambda r: r.start, reverse=True)):
+        placeholder = f"<{d.entity_type.upper()}>"
+        scrubbed_text = scrubbed_text[: d.start] + placeholder + scrubbed_text[d.end :]
+        entities.append(
+            {
+                "placeholder": placeholder,
+                "entity_type": d.entity_type,
+                "original_start": d.start,
+                "original_end": d.end,
+            }
+        )
+
+    entities = list(reversed(entities))
+    scrub_result = ScrubResult(scrubbed_text=scrubbed_text, entities=entities)
+
+    detections_report = []
+    for d in raw:
+        detections_report.append(
+            {
+                "entity_type": d.entity_type,
+                "start": d.start,
+                "end": d.end,
+                "score": d.score,
+                "detected_text": text[d.start : d.end],
+                "surrounding_context": _context_window(text, d.start, d.end, window=40),
+            }
+        )
+
+    report: dict[str, Any] = {
+        "config": {
+            "nlp_backend": nlp_backend,
+            "nlp_model": nlp_model,
+            "enable_driver_license_recognizer": enable_driver_license_recognizer,
+            "entity_score_thresholds": dict(score_thresholds),
+            "relative_datetime_phrases": list(relative_datetime_phrases),
+        },
+        "detections": detections_report,
+        "removed_detections": removed,
+        "redacted_text": scrub_result.scrubbed_text,
+    }
+
+    return scrub_result, report
+
 
 def _build_analyzer(model_name: str):
     from presidio_analyzer import AnalyzerEngine
@@ -79,7 +460,28 @@ def _build_analyzer(model_name: str):
         }
     )
     nlp_engine = provider.create_engine()
-    return AnalyzerEngine(nlp_engine=nlp_engine)
+    analyzer = AnalyzerEngine(nlp_engine=nlp_engine)
+
+    # High-confidence override: treat anything after "Patient:" on that line as PERSON.
+    # This helps when Presidio misses the patient identity in demographic headers.
+    from presidio_analyzer import PatternRecognizer, RecognizerResult
+
+    class _PatientLabelRecognizer(PatternRecognizer):
+        def __init__(self):
+            super().__init__(supported_entity="PERSON", patterns=[], name="PATIENT_LABEL_NAME")
+            self._re = re.compile(r"(?im)^Patient:\\s*(.+)$")
+
+        def analyze(self, text: str, entities: list[str], nlp_artifacts=None):  # type: ignore[override]
+            results: list[RecognizerResult] = []
+            if "PERSON" not in entities:
+                return results
+            for m in self._re.finditer(text):
+                start, end = m.span(1)
+                results.append(RecognizerResult(entity_type="PERSON", start=start, end=end, score=0.95))
+            return results
+
+    analyzer.registry.add_recognizer(_PatientLabelRecognizer())
+    return analyzer
 
 
 @lru_cache()
@@ -98,70 +500,72 @@ class PresidioScrubber(PHIScrubberPort):
     """Presidio-powered scrubber with IP allowlist filtering."""
 
     def __init__(self, model_name: str | None = None):
-        self.model_name = model_name or os.getenv("PRESIDIO_NLP_MODEL", "en_core_web_lg")
+        self.nlp_backend = os.getenv("NLP_BACKEND", "spacy").lower()
+        default_model = "en_core_sci_sm" if self.nlp_backend == "scispacy" else "en_core_web_lg"
+        self.model_name = model_name or os.getenv("PRESIDIO_NLP_MODEL", default_model)
         self._analyzer = _get_analyzer(self.model_name)
+        # Clinical procedure notes rarely contain driver license IDs, but the recognizer
+        # often false-positives on device model tokens like "T190" bronchoscope models.
+        self.enable_driver_license_recognizer = _env_flag("ENABLE_DRIVER_LICENSE_RECOGNIZER", False)
 
-    def _is_allowlisted(self, text: str) -> bool:
-        lower = text.lower()
-        if lower in ANATOMICAL_ALLOW_LIST:
-            return True
-        # Simple substring heuristic for composite phrases
-        for term in ANATOMICAL_ALLOW_LIST:
-            if term in lower:
-                return True
-        return False
+        self.score_thresholds = _parse_score_thresholds(os.getenv("PHI_ENTITY_SCORE_THRESHOLDS"))
+        self.relative_datetime_phrases = tuple(
+            p.strip()
+            for p in os.getenv("PHI_DATE_TIME_RELATIVE_PHRASES", ",".join(DEFAULT_RELATIVE_DATE_TIME_PHRASES)).split(
+                ","
+            )
+            if p.strip()
+        )
 
-    def _placeholder(self, entity_type: str, index: int) -> str:
-        return f"<{entity_type.upper()}_{index}>"
+        # Entity types to request from Presidio (used by the scrubber and audit CLI).
+        entities: list[str] = [
+            "PERSON",
+            "EMAIL_ADDRESS",
+            "PHONE_NUMBER",
+            "US_SSN",
+            "LOCATION",
+            "DATE_TIME",
+            "MEDICAL_LICENSE",
+        ]
+        if self.enable_driver_license_recognizer:
+            entities.append("US_DRIVER_LICENSE")
+        self.entities = entities
 
-    def scrub(self, text: str, document_type: str | None = None, specialty: str | None = None) -> ScrubResult:
-        if not text:
-            return ScrubResult(scrubbed_text="", entities=[])
-
-        # Analyze
+    def _analyze_detections(self, text: str) -> list[Detection]:
         results = self._analyzer.analyze(
             text=text,
             language="en",
-            entities=[
-                "PERSON",
-                "EMAIL_ADDRESS",
-                "PHONE_NUMBER",
-                "US_SSN",
-                "LOCATION",
-                "DATE_TIME",
-                "US_DRIVER_LICENSE",
-                "MEDICAL_LICENSE",
-            ],
+            entities=self.entities,
+        )
+        detections: list[Detection] = []
+        for r in results:
+            detections.append(
+                Detection(
+                    entity_type=str(getattr(r, "entity_type")),
+                    start=int(getattr(r, "start")),
+                    end=int(getattr(r, "end")),
+                    score=float(getattr(r, "score", 0.0) or 0.0),
+                )
+            )
+        return detections
+
+    def scrub_with_audit(
+        self, text: str, document_type: str | None = None, specialty: str | None = None
+    ) -> tuple[ScrubResult, dict[str, Any]]:
+        raw = self._analyze_detections(text)
+        return redact_with_audit(
+            text=text,
+            detections=raw,
+            enable_driver_license_recognizer=self.enable_driver_license_recognizer,
+            score_thresholds=self.score_thresholds,
+            relative_datetime_phrases=self.relative_datetime_phrases,
+            nlp_backend=self.nlp_backend,
+            nlp_model=self.model_name,
         )
 
-        # Filter and build entity list
-        filtered = []
-        for res in results:
-            detected_text = text[res.start : res.end]
-            if self._is_allowlisted(detected_text):
-                continue
-            filtered.append(res)
-
-        # Replace from end to start to preserve offsets
-        scrubbed_text = text
-        entities = []
-        for idx, res in enumerate(sorted(filtered, key=lambda r: r.start, reverse=True)):
-            placeholder = self._placeholder(res.entity_type, idx)
-            scrubbed_text = (
-                scrubbed_text[: res.start] + placeholder + scrubbed_text[res.end :]
-            )
-            entities.append(
-                {
-                    "placeholder": placeholder,
-                    "entity_type": res.entity_type,
-                    "original_start": res.start,
-                    "original_end": res.end,
-                }
-            )
-
-        # Preserve ordering from original text (ascending) for entity map
-        entities = list(reversed(entities))
-        return ScrubResult(scrubbed_text=scrubbed_text, entities=entities)
+    def scrub(self, text: str, document_type: str | None = None, specialty: str | None = None) -> ScrubResult:
+        scrub_result, _ = self.scrub_with_audit(text, document_type=document_type, specialty=specialty)
+        return scrub_result
 
 
 __all__ = ["PresidioScrubber"]

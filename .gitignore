@@ -32,6 +32,9 @@ data/models/
 *.onnx
 runs/
 
+# Local audit artifacts
+artifacts/phi_audit/
+
 # Local distilled artifacts (never commit model binaries)
 distilled/
 dist/registry_bundle/

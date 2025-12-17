@@ -6,7 +6,7 @@ over a JSONL notes file and emit CodeSuggestion[] per note.
 Usage:
     python scripts/run_coder_hybrid.py \
         --notes data/synthetic/synthetic_notes_with_registry.jsonl \
-        --kb data/knowledge/ip_coding_billing_v2_8.json \
+        --kb data/knowledge/ip_coding_billing_v2_9.json \
         --keyword-dir data/keyword_mappings \
         --model-version gemini-1.5-pro-002 \
         --out-json outputs/coder_suggestions.jsonl
@@ -42,7 +42,7 @@ def iter_notes(jsonl_path: Path) -> Iterator[Dict[str, Any]]:
 def main() -> int:
     ap = argparse.ArgumentParser(description="Run smart-hybrid coder over notes.")
     ap.add_argument("--notes", required=True, help="JSONL file with notes.")
-    ap.add_argument("--kb", default="data/knowledge/ip_coding_billing_v2_8.json")
+    ap.add_argument("--kb", default="data/knowledge/ip_coding_billing_v2_9.json")
     ap.add_argument(
         "--keyword-dir",
         default="data/keyword_mappings",

@@ -8,7 +8,7 @@ terminology_mappings section of the IP coding JSON.
 Usage:
     from terminology_utils import TerminologyNormalizer
     
-    normalizer = TerminologyNormalizer('data/knowledge/ip_coding_billing_v2_8.json')
+    normalizer = TerminologyNormalizer('data/knowledge/ip_coding_billing_v2_9.json')
     
     # Normalize user input to canonical key
     canonical = normalizer.to_canonical('conscious sedation')  # → 'moderate_sedation'
@@ -38,7 +38,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional
 
 
 # Default JSON path - update this when releasing new versions
-DEFAULT_JSON_PATH = Path("data/knowledge/ip_coding_billing_v2_8.json")
+DEFAULT_JSON_PATH = Path("data/knowledge/ip_coding_billing_v2_9.json")
 KNOWLEDGE_ENV_VAR = "PSUITE_KNOWLEDGE_FILE"
 
 

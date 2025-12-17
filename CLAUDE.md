@@ -54,8 +54,10 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 ### The Complete Pipeline: JSON → Trained Model
 
 ```
-Golden JSONs → data_generators.py → clean_and_split_data.py → Smart_splitter.py → train_roberta.py → ONNX Model
+Golden JSONs → modules/ml_coder/data_prep.py → train_roberta.py → ONNX Model
 ```
+
+The production data preparation module handles all data extraction, cleaning, and splitting in one step with proper multi-label stratification.
 
 ---
 
@@ -69,98 +71,61 @@ data/knowledge/golden_extractions/
 
 ---
 
-### Step 2: Generate Raw CSVs
+### Step 2: Prepare Training Splits
 
-Run the generator script. This reads all JSONs, rebuilds `train_flat.csv`, and regenerates `registry_train.csv` with the latest data and schema/flag definitions.
+The `modules/ml_coder/data_prep.py` module provides functions for generating clean, stratified training data:
 
-```bash
-python scripts/data_generators.py
+```python
+from modules.ml_coder.data_prep import prepare_registry_training_splits
+
+# Generate train/val/test splits with proper stratification
+train_df, val_df, test_df = prepare_registry_training_splits()
+
+# Save to CSV for training
+train_df.to_csv("data/ml_training/registry_train.csv", index=False)
+val_df.to_csv("data/ml_training/registry_val.csv", index=False)
+test_df.to_csv("data/ml_training/registry_test.csv", index=False)
 ```
 
 **What this does:**
-- Scans all `golden_*.json` files
-- Updates `data/ml_training/train_flat.csv` (the raw map of text → codes)
-- Updates `data/ml_training/registry_train.csv` (calculates all the 0/1 flags based on the latest logic)
-
-> **Note:** This file will still contain duplicates and potential leakage at this stage.
-
----
-
-### Step 3: Clean & Split (The V2 Fix)
-
-Run the cleaning script. This takes the "raw" output from Step 2, dedupes it, removes garbage rows, and strictly splits by Patient ID (`source_file`) to prevent leakage.
-
-```bash
-python scripts/clean_and_split_data.py
-```
-
-**What this does:**
-- Reads the updated `registry_train.csv` (and existing test/edge files)
-- Consolidates everything into one pool
-- Removes conflicts (e.g., same text having different labels)
-- Outputs:
-  - `data/ml_training/cleaned_v2/registry_train_clean.csv`
-  - `data/ml_training/cleaned_v2/registry_val_clean.csv`
-  - `data/ml_training/cleaned_v2/registry_test_clean.csv`
+- Scans all `golden_*.json` files in `data/knowledge/golden_extractions/`
+- Extracts procedure boolean flags using canonical `v2_booleans` module
+- Cleans and validates CPT codes (typo correction, domain filtering)
+- Applies iterative multi-label stratification (`skmultilearn`)
+- Enforces encounter-level grouping to prevent data leakage
+- Filters rare labels (< 5 examples) that can't be trained reliably
 
 ---
 
-### Step 4: Optimize Class Balance (Smart Splitter)
+### Step 3: Train Model
 
-Run the smart splitter to optimize rare class coverage in val/test sets.
+Run the training script:
 
-```bash
-python scripts/Smart_splitter.py
-```
-
-**What this does:**
-- Loads all 3 splits from cleaned_v2/ and recombines them
-- Drops globally empty labels (e.g., `bronchial_wash`, `photodynamic_therapy`)
-- Identifies **single-source labels** (labels that exist in only one source_file) and forces those files into Train
-- Searches 1000 random seeds to find the split that maximizes rare label coverage in Val/Test
-- Outputs optimized splits to `data/ml_training/cleaned_v3_balanced/`
-
-**Why this matters:**
-If a rare label (e.g., `brachytherapy_catheter`) only appears in one source file, a random split might put all examples in Test, leaving zero training examples. The smart splitter prevents this by locking single-source files to Train.
-
-**Outputs:**
-- `data/ml_training/cleaned_v3_balanced/registry_train_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_val_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_test_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_label_fields.json`
-
----
-
-### Step 5: Train Model
-
-Run the training script using the balanced V3 data.
-
-```bash
-python scripts/train_roberta.py \
-  --train-csv data/ml_training/cleaned_v3_balanced/registry_train_clean.csv \
-  --val-csv data/ml_training/cleaned_v3_balanced/registry_val_clean.csv \
-  --test-csv data/ml_training/cleaned_v3_balanced/registry_test_clean.csv
-```
-
-Or update the defaults in train_roberta.py and run:
 ```bash
 python scripts/train_roberta.py --batch-size 16 --epochs 5
 ```
 
+Or with explicit paths:
+```bash
+python scripts/train_roberta.py \
+  --train-csv data/ml_training/registry_train.csv \
+  --val-csv data/ml_training/registry_val.csv \
+  --test-csv data/ml_training/registry_test.csv
+```
+
 ---
 
-### Summary of Script Responsibilities
+### Key Module Functions
 
-| Script | Responsibility | Input | Output |
-|--------|---------------|-------|--------|
-| `data_generators.py` | **Extraction & Logic** - Extracts text/codes from JSON and computes the flag columns | Golden JSONs | `registry_train.csv`, `train_flat.csv` |
-| `clean_and_split_data.py` | **Hygiene & Splitting** - Deduplicates rows, fixes conflicts, splits by Patient ID | `registry_train.csv`, `train_flat.csv` | `cleaned_v2/*.csv` |
-| `Smart_splitter.py` | **Balance Optimization** - Forces single-source labels to Train, optimizes rare class coverage | `cleaned_v2/*.csv` | `cleaned_v3_balanced/*.csv` |
-| `train_roberta.py` | **Modeling** - Learns to predict the flags from the text | `cleaned_v3_balanced/*.csv` | `data/models/roberta_registry/` |
+| Function | Purpose |
+|----------|---------|
+| `prepare_registry_training_splits()` | Main entry point - returns (train_df, val_df, test_df) |
+| `prepare_training_and_eval_splits()` | CPT code prediction splits |
+| `stratified_split()` | Iterative multi-label stratification with encounter grouping |
 
-**Why the multi-step pipeline?**
-- **Step 2 vs Step 3**: If you modify `data_generators.py` to change how a flag is calculated, Step 2 updates the columns in the raw CSV. Step 3 ensures rows are cleanly distributed into Train/Val/Test without leakage.
-- **Step 3 vs Step 4**: Step 3 does basic splitting by Patient ID. Step 4 (Smart Splitter) further optimizes to ensure rare labels have representation in both Train and Val/Test sets, preventing zero-support classes that would drag down Macro F1.
+**Location**: `modules/ml_coder/data_prep.py`
+
+**Tests**: `tests/ml_coder/test_data_prep.py`, `tests/ml_coder/test_registry_data_prep.py`
 
 ---
 
@@ -173,15 +138,12 @@ python scripts/train_roberta.py --batch-size 16 --epochs 5
 **Tasks:**
 
 1. **Add/Update Golden JSONs** in `data/knowledge/golden_extractions/`
-2. **Run `data_generators.py`** to extract flags from JSONs
-3. **Run `clean_and_split_data.py`** to create leak-free splits
-4. **Run `Smart_splitter.py`** to optimize rare class coverage
+2. **Run `prepare_registry_training_splits()`** from `modules/ml_coder/data_prep.py`
 
 **Output:**
-- `data/ml_training/cleaned_v3_balanced/registry_train_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_val_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_test_clean.csv`
-- `data/ml_training/cleaned_v3_balanced/registry_label_fields.json`
+- `data/ml_training/registry_train.csv`
+- `data/ml_training/registry_val.csv`
+- `data/ml_training/registry_test.csv`
 
 ---
 
@@ -426,41 +388,68 @@ procedure-suite/
 ├── CLAUDE.md                          # THIS FILE - read first!
 ├── modules/
 │   ├── api/
-│   │   └── fastapi_app.py             # Main FastAPI backend (NOT api/app.py!)
+│   │   ├── fastapi_app.py             # Main FastAPI backend (NOT api/app.py!)
+│   │   ├── readiness.py               # require_ready dependency for endpoints
+│   │   ├── routes_registry.py         # Registry API routes
+│   │   └── services/
+│   │       └── qa_pipeline.py         # Parallelized QA pipeline
+│   ├── infra/                         # Infrastructure & optimization
+│   │   ├── settings.py                # Centralized env var configuration
+│   │   ├── perf.py                    # timed() context manager for metrics
+│   │   ├── cache.py                   # LRU cache with TTL (memory/Redis)
+│   │   ├── executors.py               # run_cpu() async wrapper for threads
+│   │   ├── llm_control.py             # LLM semaphore, backoff, retry logic
+│   │   ├── safe_logging.py            # PHI-safe text hashing for logs
+│   │   └── nlp_warmup.py              # NLP model warmup utilities
+│   ├── llm/
+│   │   └── client.py                  # Async HTTP client for LLM providers
+│   ├── common/
+│   │   ├── llm.py                     # Centralized LLM caching & retry
+│   │   └── openai_responses.py        # OpenAI Responses API wrapper
 │   ├── coder/
 │   │   ├── application/
 │   │   │   ├── coding_service.py      # CodingService - main entry point
-│   │   │   └── smart_hybrid_policy.py # SmartHybridOrchestrator
+│   │   │   └── smart_hybrid_policy.py # SmartHybridOrchestrator (with fallback)
 │   │   ├── adapters/
-│   │   │   └── registry_coder.py      # Registry-based coder
+│   │   │   ├── registry_coder.py      # Registry-based coder
+│   │   │   └── llm/
+│   │   │       ├── gemini_advisor.py  # Gemini LLM with cache/retry
+│   │   │       └── openai_compat_advisor.py # OpenAI with cache/retry
 │   │   └── domain/
 │   ├── registry/
 │   │   ├── application/
 │   │   │   └── registry_service.py    # RegistryService - main entry point
 │   │   ├── engine/
 │   │   │   └── registry_engine.py     # LLM extraction logic
-│   │   ├── inference_onnx.py          # NEW: ONNX inference service
+│   │   ├── inference_onnx.py          # ONNX inference service
 │   │   └── ml/                        # Registry ML predictors
 │   ├── agents/
 │   │   ├── contracts.py               # Pydantic I/O schemas
-│   │   ├── run_pipeline.py            # Pipeline orchestration
+│   │   ├── run_pipeline.py            # Pipeline orchestration (with timing)
 │   │   ├── parser/                    # ParserAgent
 │   │   ├── summarizer/                # SummarizerAgent
 │   │   └── structurer/                # StructurerAgent
-│   ├── ml_coder/                      # ML-based CPT predictor
-│   │   └── data_prep.py               # Train/test split generation
+│   ├── ml_coder/
+│   │   ├── data_prep.py               # Training data preparation (stratified splits)
+│   │   ├── predictor.py               # ML predictor (with caching)
+│   │   └── registry_predictor.py      # Registry boolean predictor
 │   └── reporter/                      # Synoptic report generator
 ├── scripts/
-│   ├── augment_registry_data.py       # Data augmentation for rare classes
+│   ├── railway_start.sh               # Railway startup (uvicorn, no pre-warmup)
+│   ├── railway_start_gunicorn.sh      # Alternative: Gunicorn prefork+preload
+│   ├── warm_models.py                 # Pre-load NLP models (optional)
+│   ├── smoke_run.sh                   # Local smoke test (/health, /ready)
 │   ├── train_roberta.py               # RoBERTa training script
 │   └── quantize_to_onnx.py            # ONNX conversion & quantization
 ├── data/
 │   ├── knowledge/
-│   │   ├── ip_coding_billing_v2_8.json  # CPT codes, RVUs, bundling rules
+│   │   ├── ip_coding_billing_v2_9.json  # CPT codes, RVUs, bundling rules
 │   │   ├── IP_Registry.json             # Registry schema definition
 │   │   └── golden_extractions/          # Training data
 │   └── rules/
 │       └── coding_rules.py            # Deterministic CPT derivation rules
+├── docs/
+│   └── optimization_12_16_25.md       # 8-phase optimization roadmap
 ├── models/
 │   ├── registry_model.pt              # Trained PyTorch model
 │   └── registry_model_int8.onnx       # Quantized ONNX model
@@ -470,7 +459,7 @@ procedure-suite/
     ├── coder/
     ├── registry/
     ├── ml_coder/
-    └── rules/                         # NEW: Rules engine tests
+    └── rules/                         # Rules engine tests
 ```
 
 ## Critical Development Rules
@@ -479,7 +468,7 @@ procedure-suite/
 - **ALWAYS** edit `modules/api/fastapi_app.py` — NOT `api/app.py` (deprecated)
 - **ALWAYS** use `CodingService` from `modules/coder/application/coding_service.py`
 - **ALWAYS** use `RegistryService` from `modules/registry/application/registry_service.py`
-- Knowledge base is at `data/knowledge/ip_coding_billing_v2_8.json`
+- Knowledge base is at `data/knowledge/ip_coding_billing_v2_9.json`
 - Deterministic rules are at `data/rules/coding_rules.py`
 
 ### 2. Testing Requirements
@@ -495,19 +484,50 @@ procedure-suite/
   ```
 
 ### 3. Environment Variables
+
+#### LLM Configuration
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `GEMINI_API_KEY` | API key for Gemini LLM | Required for LLM |
 | `GEMINI_OFFLINE` | Disable LLM calls (use stubs) | `1` |
 | `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry tests | `1` |
-| `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading | `false` |
 | `OPENAI_API_KEY` | API key for OpenAI LLM | Required for OpenAI |
-| `OPENAI_MODEL` | OpenAI model to use | `gpt-5.1` |
+| `OPENAI_MODEL` | OpenAI model to use | `gpt-4.1` |
 | `OPENAI_PRIMARY_API` | Primary API: `responses` or `chat` | `responses` |
 | `OPENAI_RESPONSES_FALLBACK_TO_CHAT` | Fall back to Chat on 404 | `1` |
 | `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` | Read timeout for registry tasks | `180` |
 | `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` | Read timeout for default tasks | `60` |
 | `OPENAI_OFFLINE` | Disable OpenAI calls (use stubs) | `0` |
+
+#### Warmup & Startup (see `modules/infra/settings.py`)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `SKIP_WARMUP` | Skip all model warmup at startup | `false` |
+| `PROCSUITE_SKIP_WARMUP` | Alias for `SKIP_WARMUP` | `false` |
+| `ENABLE_UMLS_LINKER` | Load UMLS linker (~1GB memory) | `true` |
+| `WAIT_FOR_READY_S` | Seconds to wait for readiness before 503 | `0` |
+
+#### Performance Tuning
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `CPU_WORKERS` | Thread pool size for CPU-bound work | `1` |
+| `LLM_CONCURRENCY` | Max concurrent LLM requests (semaphore) | `2` |
+| `LLM_TIMEOUT_S` | Max time for LLM calls before fallback | `60` |
+| `LIMIT_CONCURRENCY` | Uvicorn connection limit | `50` |
+
+#### Caching
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `ENABLE_LLM_CACHE` | Cache LLM responses (memory) | `true` |
+| `ENABLE_REDIS_CACHE` | Use Redis backend for caching | `false` |
+
+#### Thread Limiting (Railway)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `OMP_NUM_THREADS` | OpenMP threads (sklearn/ONNX) | `1` |
+| `MKL_NUM_THREADS` | Intel MKL threads | `1` |
+| `OPENBLAS_NUM_THREADS` | OpenBLAS threads | `1` |
+| `NUMEXPR_NUM_THREADS` | NumExpr threads | `1` |
 
 ### 4. Contract-First Development
 All agents use Pydantic contracts defined in `modules/agents/contracts.py`:
@@ -554,7 +574,7 @@ Pipeline behavior:
 - 31622 is bundled into any interventional procedure
 - 31627 can only be billed with a primary procedure
 - Multiple biopsies from same lobe = single code
-- Check `data/knowledge/ip_coding_billing_v2_8.json` for NCCI/MER rules
+- Check `data/knowledge/ip_coding_billing_v2_9.json` for NCCI/MER rules
 
 ---
 
@@ -593,6 +613,76 @@ result = run_pipeline({
 print(result["registry"])  # Structured data
 print(result["codes"])     # CPT codes
 ```
+
+---
+
+## Runtime Architecture (Railway Deployment)
+
+The system uses a robust startup and concurrency pattern optimized for Railway's containerized environment.
+
+### Liveness vs Readiness Pattern
+
+```
+/health (liveness)  → Always 200, fast response
+/ready  (readiness) → 200 only after models loaded, else 503 + Retry-After
+```
+
+- Railway should probe `/health` for container health (liveness)
+- Load balancers should use `/ready` before routing traffic
+- Heavy endpoints use `require_ready` dependency to fail fast during warmup
+
+### Application State (`app.state`)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `model_ready` | `bool` | True when all models loaded |
+| `model_error` | `Optional[str]` | Error message if warmup failed |
+| `ready_event` | `asyncio.Event` | Signaled when ready |
+| `cpu_executor` | `ThreadPoolExecutor` | For CPU-bound work |
+| `llm_sem` | `asyncio.Semaphore` | Limits concurrent LLM calls |
+| `llm_http` | `httpx.AsyncClient` | Shared HTTP client for LLM |
+
+### CPU Offload Pattern
+
+CPU-bound operations (sklearn, spaCy, ONNX) run in a thread pool to avoid blocking the async event loop:
+
+```python
+from modules.infra.executors import run_cpu
+
+# In an async endpoint:
+result = await run_cpu(app, model.predict, [note])
+```
+
+### LLM Concurrency Control
+
+All LLM calls go through a semaphore to prevent rate limit spikes:
+
+```python
+from modules.infra.llm_control import llm_slot
+
+async with llm_slot(app):
+    response = await call_llm(prompt)
+```
+
+Features:
+- Exponential backoff with jitter on 429/5xx
+- Retry-After header parsing
+- Cache key generation (PHI-safe, uses SHA256)
+
+### Graceful Degradation
+
+When LLM times out or fails:
+1. ML + rules output is returned as fallback
+2. Response includes `"degraded": true` flag
+3. Logged with timing info (no PHI)
+
+### Startup Scripts
+
+| Script | Use Case |
+|--------|----------|
+| `scripts/railway_start.sh` | **Default**: Uvicorn, 1 worker, background warmup |
+| `scripts/railway_start_gunicorn.sh` | Alternative: Gunicorn prefork+preload (higher RAM) |
+| `scripts/smoke_run.sh` | Local testing: start server, hit /health, /ready |
 
 ---
 
@@ -696,7 +786,7 @@ export REGISTRY_USE_STUB_LLM=1
 
 **NLP models not loading:**
 ```bash
-export PROCSUITE_SKIP_WARMUP=true
+export SKIP_WARMUP=true
 make install  # Reinstall spaCy models
 ```
 
@@ -713,18 +803,48 @@ pip install onnxruntime  # CPU-only runtime
 pip install onnxruntime-gpu  # If GPU available
 ```
 
+**Railway OOM (Out of Memory):**
+```bash
+# Disable UMLS linker to save ~1GB
+ENABLE_UMLS_LINKER=false
+
+# Ensure thread limiting is set
+OMP_NUM_THREADS=1
+MKL_NUM_THREADS=1
+```
+
+**503 errors on first request:**
+This is expected during warmup. The server returns `503 + Retry-After` while models load.
+Wait for `/ready` to return 200 before sending traffic.
+
+**LLM rate limiting (429 errors):**
+The system handles this automatically with exponential backoff. To reduce 429s:
+```bash
+# Lower concurrent LLM requests
+LLM_CONCURRENCY=1
+```
+
+**Slow cold starts:**
+Check that background warmup is working:
+1. `/health` should return immediately with `"ready": false`
+2. `/ready` should return 503 during warmup
+3. After warmup, `/ready` returns 200
+
 ---
 
 ## Contact & Resources
 
-- **Knowledge Base**: `data/knowledge/ip_coding_billing_v2_8.json`
+- **Knowledge Base**: `data/knowledge/ip_coding_billing_v2_9.json`
 - **Registry Schema**: `schemas/IP_Registry.json`
 - **API Docs**: `docs/Registry_API.md`
 - **CPT Reference**: `docs/REFERENCES.md`
 - **Rules Engine**: `data/rules/coding_rules.py`
+- **Optimization Roadmap**: `docs/optimization_12_16_25.md`
+- **Settings Reference**: `modules/infra/settings.py`
 
 ---
 
-*Last updated: December 2025*
+*Last updated: December 17, 2025*
 *Architecture: Extraction-First with RoBERTa ML + Deterministic Rules Engine*
-*Deployment Target: Railway (ONNX INT8)*
+*Runtime: Async FastAPI + ThreadPool CPU offload + LLM concurrency control*
+*Deployment Target: Railway (ONNX INT8, Uvicorn single-worker)*

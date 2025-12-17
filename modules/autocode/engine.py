@@ -21,8 +21,8 @@ _PAYER_PATH = _ROOT / "configs" / "coding" / "payer_overrides.yaml"
 
 # Initialize singletons
 _KB_CANDIDATES = [
-    _ROOT / "data" / "knowledge" / "ip_coding_billing_v2_8.json",
-    _ROOT / "proc_autocode" / "ip_kb" / "ip_coding_billing_v2_8.json",
+    _ROOT / "data" / "knowledge" / "ip_coding_billing_v2_9.json",
+    _ROOT / "proc_autocode" / "ip_kb" / "ip_coding_billing_v2_9.json",
     _ROOT / "data" / "knowledge" / "ip_coding_billing.v2_2.json",
     _ROOT / "proc_autocode" / "ip_kb" / "ip_coding_billing.v2_2.json",
 ]

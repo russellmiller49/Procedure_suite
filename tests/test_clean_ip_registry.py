@@ -25,7 +25,7 @@ def _schema_path() -> str:
 
 def _kb_path() -> str:
     candidates = [
-        Path("data/knowledge/ip_coding_billing_v2_8.json"),
+        Path("data/knowledge/ip_coding_billing_v2_9.json"),
         Path("data/ip_coding_billing.v2_3.json"),
         Path("data/ip_coding_billing.v2_2.json"),
         Path("data/knowledge/ip_coding_billing.v2_2.json"),
