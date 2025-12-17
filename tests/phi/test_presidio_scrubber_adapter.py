@@ -43,3 +43,33 @@ def test_presidio_scrubber_patient_label_overrides_name():
 
     assert "Patient: <PERSON>" in result.scrubbed_text
     assert "Fisher, Sarah" not in result.scrubbed_text
+    assert "SURGEON: John Smith, MD" in result.scrubbed_text
+    assert "<LOCATION>" not in result.scrubbed_text
+
+
+def test_presidio_scrubber_redacts_patient_header_name_and_mrn_preserves_providers():
+    os.environ.setdefault("PRESIDIO_NLP_MODEL", "en_core_web_lg")
+    scrubber = PresidioScrubber()
+    text = (
+        "Aronson, Gary MRN: 11207396 PREOPERATIVE DIAGNOSIS: X "
+        "SURGEON: George Cheng MD ASSISTANT: Russell Miller, MD Sedation: General Anesthesia"
+    )
+    result = scrubber.scrub(text)
+
+    assert "Aronson, Gary" not in result.scrubbed_text
+    assert "11207396" not in result.scrubbed_text
+    assert "<PERSON> MRN: <MRN>" in result.scrubbed_text
+    assert "SURGEON: George Cheng MD" in result.scrubbed_text
+    assert "ASSISTANT: Russell Miller, MD" in result.scrubbed_text
+    assert "General Anesthesia" in result.scrubbed_text
+    assert "<LOCATION>" not in result.scrubbed_text
+
+
+def test_provider_credential_at_end_of_note_does_not_disable_patient_redaction():
+    os.environ.setdefault("PRESIDIO_NLP_MODEL", "en_core_web_lg")
+    scrubber = PresidioScrubber()
+    text = "Aronson, Gary MRN: 11207396 SURGEON: George Cheng MD"
+    result = scrubber.scrub(text)
+
+    assert "<PERSON> MRN: <MRN>" in result.scrubbed_text
+    assert "SURGEON: George Cheng MD" in result.scrubbed_text

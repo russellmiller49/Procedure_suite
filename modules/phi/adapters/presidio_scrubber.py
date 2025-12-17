@@ -74,6 +74,13 @@ CLINICAL_ALLOW_LIST = {
     # Meds + common descriptors that frequently false-positive as PHI.
     "kenalog",
     "nonobstructive",
+    # Common clinical/admin tokens that spaCy can misclassify as entities (often LOCATION).
+    "anesthesia",
+    "general anesthesia",
+    # Common clinician credentials.
+    "md",
+    "do",
+    "phd",
     # Existing anatomical allow-list (critical for procedure coding).
     *ANATOMICAL_ALLOW_LIST,
 }
@@ -82,6 +89,7 @@ DEFAULT_ENTITY_SCORE_THRESHOLDS: dict[str, float] = {
     "PERSON": 0.50,
     "DATE_TIME": 0.60,
     "LOCATION": 0.70,
+    "MRN": 0.50,
     "__DEFAULT__": 0.50,
 }
 
@@ -320,12 +328,13 @@ def _context_window(text: str, start: int, end: int, window: int = 40) -> str:
 def filter_person_provider_context(text: str, results: list) -> list:
     """Prevent redaction of clinician/provider names based on local context."""
 
-    provider_label_re = re.compile(
-        r"^(surgeon|assistant|anesthesiologist|attending|fellow|resident)\s*:",
+    patient_label_re = re.compile(r"^patient\s*:", re.IGNORECASE)
+    dr_prefix_re = re.compile(r"\b(dr\.?|doctor)\s*$", re.IGNORECASE)
+    provider_inline_label_re = re.compile(
+        r"\b(surgeon|assistant|anesthesiologist|attending|fellow|resident)\b\s*:\s*$",
         re.IGNORECASE,
     )
-    credential_line_re = re.compile(r"(?:,\s*)?(md|do)\b\s*$", re.IGNORECASE)
-    dr_prefix_re = re.compile(r"\b(dr\.?|doctor)\s*$", re.IGNORECASE)
+    credential_suffix_re = re.compile(r"^\s*,?\s*(md|do)\b", re.IGNORECASE)
 
     filtered: list = []
     for res in results:
@@ -333,17 +342,25 @@ def filter_person_provider_context(text: str, results: list) -> list:
             filtered.append(res)
             continue
 
-        start, _ = _line_bounds(text, int(getattr(res, "start")))
-        _, end = _line_bounds(text, int(getattr(res, "end")))
+        res_start = int(getattr(res, "start"))
+        res_end = int(getattr(res, "end"))
+        start, _ = _line_bounds(text, res_start)
+        _, end = _line_bounds(text, res_end)
         line = text[start:end]
-        if provider_label_re.search(line.lstrip()):
-            continue
-        if credential_line_re.search(line.rstrip()):
+
+        # Patient header line always redacts (even if patient is a clinician with credentials).
+        if patient_label_re.search(line.lstrip()):
+            filtered.append(res)
             continue
 
-        res_start = int(getattr(res, "start"))
-        prefix_window = text[max(0, res_start - 20) : res_start]
+        prefix_window = text[max(0, res_start - 60) : res_start]
+        if provider_inline_label_re.search(prefix_window):
+            continue
         if dr_prefix_re.search(prefix_window):
+            continue
+
+        suffix_window = text[res_end : min(len(text), res_end + 12)]
+        if credential_suffix_re.search(suffix_window):
             continue
 
         filtered.append(res)
@@ -464,7 +481,7 @@ def _build_analyzer(model_name: str):
     nlp_engine = provider.create_engine()
     analyzer = AnalyzerEngine(nlp_engine=nlp_engine)
 
-    # High-confidence override: treat anything after "Patient:" on that line as PERSON.
+    # High-confidence override: treat patient header patterns as PERSON.
     # This helps when Presidio misses the patient identity in demographic headers.
     from presidio_analyzer import Pattern, PatternRecognizer, RecognizerResult
 
@@ -473,23 +490,59 @@ def _build_analyzer(model_name: str):
             super().__init__(
                 supported_entity="PERSON",
                 patterns=[
-                    # Dummy pattern required by Presidio; actual span logic is implemented in analyze().
-                    Pattern(name="patient_label_line", regex=r"(?im)^Patient:\s*.+$", score=0.95)
+                    Pattern(name="patient_label_line", regex=r"(?im)^Patient:\s*.+$", score=0.95),
+                    Pattern(
+                        name="name_then_mrn",
+                        regex=r"(?im)^[A-Z][A-Za-z'-]+\s*,\s*[A-Z][A-Za-z'-]+.*\b(?:MRN|ID)\s*[:#]",
+                        score=0.95,
+                    ),
                 ],
                 name="PATIENT_LABEL_NAME",
             )
-            self._re = re.compile(r"(?im)^Patient:\s*(.+)$")
+            self._patient_line = re.compile(
+                r"(?im)^Patient:\s*(.+?)(?:\s+(?:MRN|ID)\s*[:#].*)?$"
+            )
+            self._name_then_mrn = re.compile(
+                r"(?im)^([A-Z][A-Za-z'-]+\s*,\s*[A-Z][A-Za-z'-]+(?:\s+[A-Z][A-Za-z'-]+)?)\s+(?=(?:MRN|ID)\s*[:#])"
+            )
 
         def analyze(self, text: str, entities: list[str], nlp_artifacts=None):  # type: ignore[override]
             results: list[RecognizerResult] = []
             if "PERSON" not in entities:
                 return results
-            for m in self._re.finditer(text):
+            for m in self._patient_line.finditer(text):
                 start, end = m.span(1)
-                results.append(RecognizerResult(entity_type="PERSON", start=start, end=end, score=0.95))
+                if end - start >= 2:
+                    results.append(RecognizerResult(entity_type="PERSON", start=start, end=end, score=0.95))
+            for m in self._name_then_mrn.finditer(text):
+                start, end = m.span(1)
+                if end - start >= 2:
+                    results.append(RecognizerResult(entity_type="PERSON", start=start, end=end, score=0.95))
             return results
 
     analyzer.registry.add_recognizer(_PatientLabelRecognizer())
+
+    class _MrnRecognizer(PatternRecognizer):
+        def __init__(self):
+            super().__init__(
+                supported_entity="MRN",
+                patterns=[
+                    Pattern(name="mrn", regex=r"(?i)\b(?:MRN|ID)\s*[:#]?\s*[A-Z0-9][A-Z0-9-]{3,}\b", score=0.95)
+                ],
+                name="MRN",
+            )
+            self._mrn = re.compile(r"(?i)\b(?:MRN|ID)\s*[:#]?\s*([A-Z0-9][A-Z0-9-]{3,})\b")
+
+        def analyze(self, text: str, entities: list[str], nlp_artifacts=None):  # type: ignore[override]
+            results: list[RecognizerResult] = []
+            if "MRN" not in entities:
+                return results
+            for m in self._mrn.finditer(text):
+                start, end = m.span(1)
+                results.append(RecognizerResult(entity_type="MRN", start=start, end=end, score=0.95))
+            return results
+
+    analyzer.registry.add_recognizer(_MrnRecognizer())
     return analyzer
 
 
@@ -562,6 +615,7 @@ class PresidioScrubber(PHIScrubberPort):
             "LOCATION",
             "DATE_TIME",
             "MEDICAL_LICENSE",
+            "MRN",
         ]
         if self.enable_driver_license_recognizer:
             entities.append("US_DRIVER_LICENSE")
