@@ -8,6 +8,10 @@ deployments where cold-start latency can cause timeouts.
 Usage:
     python scripts/warm_models.py
 
+Environment Variables:
+    PROCSUITE_SPACY_MODEL - spaCy model to use (default: en_core_sci_sm)
+    ENABLE_UMLS_LINKER - Set to "false" to skip UMLS linker (saves ~1GB memory)
+
 Exit codes:
     0 - All models loaded successfully
     1 - One or more models failed to load
@@ -70,22 +74,26 @@ def main() -> int:
         errors.append(f"Sectionizer initialization failed: {exc}")
         logger.error("Sectionizer initialization failed: %s", exc)
 
-    # 3. Load UMLS linker (if available)
-    logger.info("Initializing UMLS linker...")
-    try:
-        from proc_nlp.umls_linker import _load_model, umls_link
+    # 3. Load UMLS linker (if available and enabled)
+    enable_umls = os.getenv("ENABLE_UMLS_LINKER", "true").lower() in ("true", "1", "yes")
+    if enable_umls:
+        logger.info("Initializing UMLS linker...")
+        try:
+            from proc_nlp.umls_linker import _load_model, umls_link
 
-        _load_model(model_name)
-        # Test UMLS linking with a simple term
-        concepts = umls_link("bronchoscopy")
-        logger.info("UMLS linker initialized (%d concepts found)", len(concepts))
-    except ImportError as exc:
-        logger.warning("UMLS linker not available: %s", exc)
-    except RuntimeError as exc:
-        logger.warning("UMLS linker not available: %s", exc)
-    except Exception as exc:
-        # UMLS linker is optional, so we just warn
-        logger.warning("UMLS linker initialization skipped: %s", exc)
+            _load_model(model_name)
+            # Test UMLS linking with a simple term
+            concepts = umls_link("bronchoscopy")
+            logger.info("UMLS linker initialized (%d concepts found)", len(concepts))
+        except ImportError as exc:
+            logger.warning("UMLS linker not available: %s", exc)
+        except RuntimeError as exc:
+            logger.warning("UMLS linker not available: %s", exc)
+        except Exception as exc:
+            # UMLS linker is optional, so we just warn
+            logger.warning("UMLS linker initialization skipped: %s", exc)
+    else:
+        logger.info("UMLS linker skipped (ENABLE_UMLS_LINKER=false)")
 
     # 4. Import FastAPI app to trigger any module-level initialization
     logger.info("Importing FastAPI app...")
