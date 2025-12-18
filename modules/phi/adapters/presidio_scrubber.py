@@ -33,6 +33,23 @@ ZERO_WIDTH_TRANSLATION_TABLE: dict[int, int] = {ord(ch): ord(" ") for ch in ZERO
 
 
 ANATOMICAL_ALLOW_LIST = {
+    # Head & Neck / Upper Airway
+    "larynx",
+    "pharynx",
+    "oropharynx",
+    "nasopharynx",
+    "glottis",
+    "subglottis",
+    "epiglottis",
+    "vocal cords",
+    "true vocal cords",
+    "false vocal cords",
+    "cords",
+    "naris",
+    "nares",
+    "oral cavity",
+    "tongue",
+    "palate",
     # Lung lobes and shorthand
     "upper lobe",
     "lower lobe",
@@ -48,14 +65,23 @@ ANATOMICAL_ALLOW_LIST = {
     "left lower lobe",
     "lll",
     "lingula",
+    "lingular",
     # Airway structures
     "carina",
+    "main carina",
     "trachea",
+    "distal trachea",
+    "proximal trachea",
     "bronchus",
     "bronchi",
     "mainstem",
+    "right mainstem",
+    "left mainstem",
+    "bronchus intermedius",
     "segmental",
     "subsegmental",
+    "proximal airways",
+    "distal airways",
     # Stations
     "station 4r",
     "station 4l",
@@ -77,9 +103,15 @@ ANATOMICAL_ALLOW_LIST = {
     "11ri",
     # Mediastinal/lymphatic terms
     "mediastinum",
+    "mediastinal",
     "hilum",
     "hilar",
     "paratracheal",
+    "subcarinal",
+    "lymph node",
+    "lymph nodes",
+    "node",
+    "nodes",
     # Procedures/techniques
     "ebus",
     "eus",
@@ -109,20 +141,26 @@ CLINICAL_ALLOW_LIST = {
     # Catheters & Tubes
     "pleurx", "aspira", "rocket", "yueh", "cooke", "pigtail", "tru-cut", 
     "abrams", "heimlich", "pleurovac", "chest tube", "ipc", "tunneled catheter",
+    "picc", "picc line", "midline", "central line", "art line", "a-line",
     
     # Stents
     "dumon", "hood", "novatech", "aero", "ultraflex", "sems", "silicone",
-    "hybrid stent", "y-stent", "airway stent",
+    "hybrid stent", "y-stent", "airway stent", "bonastent",
     
     # Imaging & Guidance
     "cios", "cios spin", "cone beam", "cbct", "fluoroscopy", "rebus", 
     "radial ebus", "radial probe", "miniprobe", "ultrasound", "sonographic",
+    "elastography", "ultrasound elastography",
     
     # Ablation & Tools
     "apc", "argon plasma", "electrocautery", "cryo", "cryoprobe", "cryospray",
-    "cryoablation", "cryotherapy", "mwa", "microwave", "radiofrequency", "rfa",
+    "cryoablation", "cryotherapy", "cryobiopsy", "mwa", "microwave", "radiofrequency", "rfa",
     "laser", "nd:yag", "co2 laser", "diode", "microdebrider", "snare", "basket",
-    "fogarty", "arndt", "cohen", "blocker", "balloon", "bougie",
+    "fogarty", "arndt", "cohen", "blocker", "balloon", "bougie", "brush", "knife",
+    "forceps", "alligator forceps", "needle", "catheter", "dilator", "guidewire",
+    "trochar", "introduction needle", "introducer", "lyofoam",
+    "rigid", "rigid scope", "rigid bronchoscope", "ventilating scope",
+    "lma", "laryngeal mask", "laryngeal mask airway", "ett", "endotracheal tube",
     
     # Medications (Sedation/Reversal/Local) - commonly flagged
     "lidocaine", "fentanyl", "midazolam", "versed", "propofol", "etomidate",
@@ -130,6 +168,7 @@ CLINICAL_ALLOW_LIST = {
     "glycopyrrolate", "atropine", "epinephrine", "phenylephrine", "norepinephrine",
     "flumazenil", "naloxone", "narcan", "romazicon", "kenalog", "tranexamic acid", 
     "txa", "doxycycline", "bleomycin", "talc", "saline", "ns",
+    "instillation", "fibrinolysis", "tpa", "dnase",
     
     # Common Clinical Descriptors & Status
     "absen", "absent", "present", "normal", "abnormal", "stable", "unstable",
@@ -138,6 +177,10 @@ CLINICAL_ALLOW_LIST = {
     "anthracotic", "cobblestoning", "erythematous", "friable", "nodular", "polypoid",
     "patent", "occluded", "obstructed", "stenosis", "stricture", "malacia",
     "fistula", "dehiscence", "granulation", "secretions", "mucus", "blood", "clot",
+    "purulent", "serous", "serosanguinous", "chylous", "bloody", "fluid",
+    "size", "volume", "echogenicity", "anechoic", "hypoechoic", "isoechoic",
+    "hyperechoic", "loculations", "thin", "thick", "diminished", "eccentric",
+    "continuous", "margin",
     
     # Anatomy & Pathology
     "lung", "lungs", "lobe", "lobes", "pleura", "pleural", "airway", "trachea",
@@ -145,11 +188,13 @@ CLINICAL_ALLOW_LIST = {
     "nodule", "mass", "lesion", "tumor", "infiltrate", "consolidation", 
     "ground glass", "cavity", "calcification", "effusion", "pneumothorax", 
     "hemothorax", "empyema", "chylothorax", "trapped lung", "lymphadenopathy",
+    "neoplasm", "malignancy", "mycetoma", "pleural effusion",
     
     # Administrative/Coding Terms (often flagged as DATE/TIME or IDs)
     "initial day", "subsequent day", "initial episode", "repeat", "modifier",
     "separate structure", "distinct service", "unlisted procedure",
     "cpt", "icd-10", "diagnosis", "indication", "history", "plan", "assessment",
+    "tbbx", "tbna", "tbcbx",
     
     # Units & Measurements
     "mm", "cm", "fr", "french", "gauge", "liter", "liters", "cc", "ml", 
@@ -158,6 +203,7 @@ CLINICAL_ALLOW_LIST = {
     # Personnel roles (lower case to catch common misclassifications)
     "attending", "fellow", "resident", "anesthesiologist", "crna", "nurse", "rn", 
     "tech", "technician", "observer", "proceduralist", "assistant",
+    "self, referred", "referred", "provider",
     
     # Disease specific
     "hodgkin", "hodgkin's", "non-hodgkin", "lymphoma", "carcinoma", 
@@ -173,6 +219,7 @@ CLINICAL_ALLOW_LIST = {
     "us",  # Ultrasound (often misread as United States)
     "mc",  # Mail code / internal routing shorthand
     "pacs",
+    "on",  # "on" (preposition) sometimes flagged
     # Common clinician credentials.
     "md",
     "do",
@@ -184,9 +231,10 @@ CLINICAL_ALLOW_LIST = {
     "media",
     "samples",
     "sample",
+    "specimen",
+    "specimens",
     "disposition",
     "mediastinal",
-    "specimen",
     "lymph",
     "lymph node",
     "lymph nodes",
@@ -318,6 +366,10 @@ _SECTION_HEADER_WORDS: frozenset[str] = frozenset(
         "CRYOBIOPSY",
         "MEDIASTINAL",
         "MEDIA",
+        "SIZE",
+        "FLUID",
+        "LARYNX",
+        "PHARYNX",
     }
 )
 
@@ -1099,15 +1151,24 @@ def _build_analyzer(model_name: str):
             super().__init__(
                 supported_entity="PERSON",
                 patterns=[
+                    # Pattern 1: Standard "Patient: First Last"
                     Pattern(name="patient_label_line", regex=r"(?im)^Patient:\s*.+$", score=0.95),
+                    # Pattern 2: "Last, First" followed by MRN/ID
                     Pattern(
                         name="name_then_mrn",
                         regex=r"(?im)^[A-Z][A-Za-z'-]+\s*,\s*[A-Z][A-Za-z'-]+.*\b(?:MRN|ID)\s*[:#]",
                         score=0.95,
                     ),
+                    # Pattern 3: Explicit "Patient: Last, First" where MRN might be on next line
+                    Pattern(
+                         name="patient_label_comma",
+                         regex=r"(?im)^Patient:\s*[A-Z][A-Za-z'-]+\s*,\s*[A-Z][A-Za-z'-]+",
+                         score=0.95
+                    )
                 ],
                 name="PATIENT_LABEL_NAME",
             )
+            # Regex to extract the name part only from the full matched line
             self._patient_line = re.compile(
                 r"(?im)^Patient:\s*(.+?)(?:\s+(?:MRN|ID)\s*[:#].*)?$"
             )
@@ -1119,10 +1180,14 @@ def _build_analyzer(model_name: str):
             results: list[RecognizerResult] = []
             if "PERSON" not in entities:
                 return results
+            
+            # Handle "Patient: Name" lines
             for m in self._patient_line.finditer(text):
                 start, end = m.span(1)
                 if end - start >= 2:
                     results.append(RecognizerResult(entity_type="PERSON", start=start, end=end, score=0.95))
+            
+            # Handle "Name, Name MRN: ..." lines
             for m in self._name_then_mrn.finditer(text):
                 start, end = m.span(1)
                 if end - start >= 2:
@@ -1130,6 +1195,21 @@ def _build_analyzer(model_name: str):
             return results
 
     analyzer.registry.add_recognizer(_PatientLabelRecognizer())
+
+    class _InstitutionRecognizer(PatternRecognizer):
+        def __init__(self):
+            super().__init__(
+                supported_entity="LOCATION",
+                patterns=[
+                    Pattern(name="ucsd", regex=r"(?i)\bUCSD\b", score=0.95),
+                    Pattern(name="nmcsd", regex=r"(?i)\bNMCSD\b", score=0.95),
+                    Pattern(name="balboa", regex=r"(?i)\bBalboa\b", score=0.95),
+                    Pattern(name="navy", regex=r"(?i)\bNavy\b", score=0.95),
+                ],
+                name="INSTITUTION_PATTERN",
+            )
+    
+    analyzer.registry.add_recognizer(_InstitutionRecognizer())
 
     class _MrnRecognizer(PatternRecognizer):
         def __init__(self):
