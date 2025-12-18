@@ -914,6 +914,241 @@ def get_registry_export(
 
 
 # ============================================================================
+# Unified Extraction Endpoint (PHI-Gated)
+# ============================================================================
+
+
+class UnifiedExtractRequest(BaseModel):
+    """Request body for PHI-gated unified extraction."""
+
+    include_financials: bool = Field(
+        False, description="Whether to calculate RVU/payment estimates"
+    )
+    explain: bool = Field(
+        False, description="Whether to include evidence spans in response"
+    )
+
+
+class UnifiedExtractResponse(BaseModel):
+    """Response from PHI-gated unified extraction."""
+
+    procedure_id: str
+    status: str = Field(..., description="Status: 'success', 'partial', or 'failed'")
+    registry: dict[str, Any] = Field(
+        default_factory=dict, description="Extracted registry fields"
+    )
+    cpt_codes: list[str] = Field(
+        default_factory=list, description="Derived CPT codes"
+    )
+    suggestions: list[CodeSuggestion] = Field(
+        default_factory=list, description="Code suggestions with rationale"
+    )
+    total_work_rvu: float | None = Field(None, description="Total work RVU")
+    estimated_payment: float | None = Field(None, description="Estimated payment")
+    coder_difficulty: str = Field("", description="Difficulty classification")
+    needs_manual_review: bool = Field(False, description="Whether manual review is recommended")
+    audit_warnings: list[str] = Field(default_factory=list)
+    processing_time_ms: float = 0.0
+
+
+@router.post(
+    "/procedures/{proc_id}/extract",
+    response_model=UnifiedExtractResponse,
+    summary="Run unified extraction on PHI-reviewed procedure",
+    description=(
+        "Runs the extraction-first pipeline on a PHI-reviewed procedure:\n"
+        "1. Validates that the procedure has been PHI-reviewed\n"
+        "2. Uses the reviewed scrubbed_text for extraction\n"
+        "3. Extracts registry fields and derives CPT codes\n"
+        "4. Returns combined results for clinician review\n\n"
+        "Requires: CODER_REQUIRE_PHI_REVIEW=true and procedure status=PHI_REVIEWED"
+    ),
+)
+def run_unified_extraction(
+    proc_id: str,
+    request: UnifiedExtractRequest,
+    registry_service: RegistryService = Depends(get_registry_service),
+    coding_service: CodingService = Depends(get_coding_service),
+    store: ProcedureStore = Depends(get_procedure_store),
+    phi_db=Depends(get_phi_session),
+) -> UnifiedExtractResponse:
+    """Run unified extraction-first pipeline on a PHI-reviewed procedure.
+
+    This endpoint enforces PHI review before extraction:
+    1. Loads the PHI-reviewed procedure (requires status=PHI_REVIEWED)
+    2. Uses proc.scrubbed_text (no raw PHI exposure)
+    3. Runs registry extraction to get structured fields
+    4. Derives CPT codes deterministically from registry
+    5. Optionally calculates financial estimates
+    6. Persists suggestions for review workflow
+
+    Args:
+        proc_id: Procedure identifier (from /v1/phi/submit)
+        request: Extraction options (financials, explain)
+        registry_service: Injected RegistryService
+        coding_service: Injected CodingService (for KB access)
+        store: Injected ProcedureStore
+        phi_db: PHI database session
+
+    Returns:
+        UnifiedExtractResponse with registry, codes, and suggestions
+
+    Raises:
+        HTTPException 403: If procedure has not been PHI-reviewed
+        HTTPException 404: If procedure not found
+    """
+    from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+    from config.settings import CoderSettings
+
+    # Always require PHI review for this endpoint
+    require_review = True
+
+    try:
+        proc_uuid = uuid.UUID(proc_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid procedure_id format")
+
+    # Load the PHI-reviewed procedure
+    try:
+        proc = load_procedure_for_coding(phi_db, proc_uuid, require_review=require_review)
+    except PermissionError as exc:
+        logger.info(
+            "extraction_phi_gated",
+            extra={"procedure_id": proc_id, "reason": "not_reviewed"},
+        )
+        raise HTTPException(status_code=403, detail=str(exc))
+    except ValueError as exc:
+        logger.info(
+            "extraction_phi_missing",
+            extra={"procedure_id": proc_id},
+        )
+        raise HTTPException(status_code=404, detail=str(exc))
+
+    if proc is None:
+        raise HTTPException(status_code=404, detail="Procedure not found or missing scrubbed text")
+
+    # Use the scrubbed text from the reviewed procedure
+    scrubbed_text = proc.scrubbed_text
+
+    logger.info(
+        "Unified extraction requested",
+        extra={
+            "procedure_id": proc_id,
+            "include_financials": request.include_financials,
+            "text_length": len(scrubbed_text),
+        },
+    )
+
+    try:
+        with timed("api.unified_extraction") as timing:
+            # Step 1: Registry extraction
+            extraction_result = registry_service.extract_fields(scrubbed_text)
+
+            # Step 2: Derive CPT codes from registry
+            record = extraction_result.record
+            if record is None:
+                from modules.registry.schema import RegistryRecord
+                record = RegistryRecord.model_validate(extraction_result.mapped_fields)
+
+            codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
+
+            # Build suggestions with confidence and rationale
+            suggestions = []
+            base_confidence = 0.95 if extraction_result.coder_difficulty == "HIGH_CONF" else 0.80
+
+            for code in codes:
+                proc_info = coding_service.kb_repo.get_procedure_info(code)
+                description = proc_info.description if proc_info else ""
+                rationale = rationales.get(code, "")
+
+                # Determine review flag
+                if extraction_result.needs_manual_review:
+                    review_flag = "required"
+                elif extraction_result.audit_warnings:
+                    review_flag = "recommended"
+                else:
+                    review_flag = "optional"
+
+                suggestions.append(CodeSuggestion(
+                    id=f"{proc_id}_{code}",
+                    code=code,
+                    description=description,
+                    source="extraction_first",
+                    confidence=base_confidence,
+                    review_flag=review_flag,
+                    reasoning=ReasoningFields(
+                        rule_paths=["registry_to_cpt"],
+                        confidence=base_confidence,
+                        rationale=rationale,
+                    ),
+                ))
+
+            # Step 3: Calculate financials if requested
+            total_work_rvu = None
+            estimated_payment = None
+
+            if request.include_financials and codes:
+                settings = CoderSettings()
+                conversion_factor = settings.cms_conversion_factor
+                total_work = 0.0
+                total_payment = 0.0
+
+                for code in codes:
+                    proc_info = coding_service.kb_repo.get_procedure_info(code)
+                    if proc_info:
+                        work_rvu = proc_info.work_rvu
+                        total_rvu = proc_info.total_facility_rvu
+                        payment = total_rvu * conversion_factor
+
+                        total_work += work_rvu
+                        total_payment += payment
+
+                total_work_rvu = round(total_work, 2)
+                estimated_payment = round(total_payment, 2)
+
+        # Persist suggestions for review workflow
+        store.save_suggestions(proc_id, suggestions)
+
+        # Combine audit warnings
+        all_warnings = list(extraction_result.audit_warnings or [])
+        all_warnings.extend(derivation_warnings)
+
+        # Serialize registry
+        registry_payload = record.model_dump(exclude_none=True) if record else {}
+
+        logger.info(
+            "Unified extraction completed",
+            extra={
+                "procedure_id": proc_id,
+                "num_codes": len(codes),
+                "num_suggestions": len(suggestions),
+                "processing_time_ms": timing.elapsed_ms,
+            },
+        )
+
+        return UnifiedExtractResponse(
+            procedure_id=proc_id,
+            status="success",
+            registry=registry_payload,
+            cpt_codes=codes,
+            suggestions=suggestions,
+            total_work_rvu=total_work_rvu,
+            estimated_payment=estimated_payment,
+            coder_difficulty=extraction_result.coder_difficulty or "",
+            needs_manual_review=extraction_result.needs_manual_review,
+            audit_warnings=all_warnings,
+            processing_time_ms=round(timing.elapsed_ms, 2),
+        )
+
+    except Exception as e:
+        logger.exception(f"Unified extraction error: {e}", extra={"procedure_id": proc_id})
+        raise HTTPException(
+            status_code=500,
+            detail=f"Extraction error: {str(e)}",
+        )
+
+
+# ============================================================================
 # Store management (for testing)
 # ============================================================================
 

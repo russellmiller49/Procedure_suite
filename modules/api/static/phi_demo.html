@@ -36,7 +36,7 @@
                     <div class="d-flex gap-2">
                         <button id="btn-preview" class="btn btn-primary">Preview PHI</button>
                         <button id="btn-submit" class="btn btn-success" disabled>Confirm &amp; Submit</button>
-                        <button id="btn-mark-reviewed" class="btn btn-outline-secondary" disabled>Mark Reviewed</button>
+                        <button id="btn-mark-reviewed" class="btn btn-warning" disabled>Approve &amp; Extract</button>
                     </div>
                     <div class="form-text mt-2">No logs/analytics capture this text. Only synthetic PHI is allowed.</div>
                 </div>
@@ -73,13 +73,37 @@
 
             <div class="card shadow-sm mb-3">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <strong>Status &amp; Coding</strong>
+                    <strong>Status &amp; Extraction</strong>
                     <button id="btn-refresh-status" class="btn btn-sm btn-outline-secondary" disabled>Refresh</button>
                 </div>
                 <div class="card-body">
                     <div class="mb-2">Procedure ID: <code id="procedure-id">-</code></div>
                     <div class="mb-2">Status: <span class="badge bg-info text-dark" id="procedure-status">-</span></div>
-                    <div id="coding-results" class="small text-muted">Submit and review to trigger coding.</div>
+                    <div id="extraction-prompt" class="small text-muted">Submit and approve PHI review to run extraction.</div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-3" id="extraction-results-card" style="display: none;">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <strong>Extraction Results</strong>
+                    <span id="extraction-time" class="text-muted small"></span>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="d-flex justify-content-between align-items-center">
+                            CPT Codes
+                            <span id="cpt-rvu" class="badge bg-secondary"></span>
+                        </h6>
+                        <div id="cpt-codes-list" class="d-flex flex-wrap gap-2"></div>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Registry Fields</h6>
+                        <div id="registry-fields" class="small" style="max-height: 200px; overflow-y: auto;"></div>
+                    </div>
+                    <div id="audit-warnings-section" style="display: none;">
+                        <h6 class="text-warning">Audit Warnings</h6>
+                        <ul id="audit-warnings-list" class="small text-warning mb-0"></ul>
+                    </div>
                 </div>
             </div>
 

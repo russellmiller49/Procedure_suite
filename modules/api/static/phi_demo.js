@@ -42,6 +42,18 @@ const api = {
         if (!resp.ok) throw new Error("Feedback failed");
         return resp.json();
     },
+    async extract(procedure_id, include_financials = true) {
+        const resp = await fetch(`/api/v1/procedures/${procedure_id}/extract`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ include_financials, explain: true }),
+        });
+        if (!resp.ok) {
+            const err = await resp.json().catch(() => ({}));
+            throw new Error(err.detail || "Extraction failed");
+        }
+        return resp.json();
+    },
     async reidentify(procedure_id) {
         const resp = await fetch("/v1/phi/reidentify", {
             method: "POST",
@@ -208,6 +220,99 @@ function generateScrubbedText(text, entities) {
 function renderStatus(status, procedureId) {
     $("procedure-id").textContent = procedureId || "-";
     $("procedure-status").textContent = status || "-";
+
+    // Update prompt based on status
+    const prompt = $("extraction-prompt");
+    if (status === "PHI_REVIEWED") {
+        prompt.textContent = "PHI reviewed. Running extraction...";
+        prompt.className = "small text-info";
+    } else if (status === "PENDING_REVIEW") {
+        prompt.textContent = "Click 'Approve & Extract' to run extraction.";
+        prompt.className = "small text-warning";
+    } else {
+        prompt.textContent = "Submit and approve PHI review to run extraction.";
+        prompt.className = "small text-muted";
+    }
+}
+
+function renderExtractionResults(result) {
+    const card = $("extraction-results-card");
+    card.style.display = "block";
+
+    // Processing time
+    $("extraction-time").textContent = `${result.processing_time_ms}ms`;
+
+    // CPT codes with descriptions
+    const cptList = $("cpt-codes-list");
+    cptList.innerHTML = "";
+    (result.suggestions || []).forEach(s => {
+        const badge = document.createElement("span");
+        badge.className = "badge bg-primary";
+        badge.title = s.description || "";
+        badge.innerHTML = `${s.code}`;
+        if (s.confidence) {
+            const conf = document.createElement("span");
+            conf.className = "ms-1 badge bg-light text-dark";
+            conf.textContent = `${Math.round(s.confidence * 100)}%`;
+            badge.appendChild(conf);
+        }
+        cptList.appendChild(badge);
+    });
+
+    if (result.cpt_codes && result.cpt_codes.length === 0) {
+        cptList.innerHTML = '<span class="text-muted">No CPT codes derived</span>';
+    }
+
+    // RVU/payment
+    const rvuBadge = $("cpt-rvu");
+    if (result.total_work_rvu !== null && result.total_work_rvu !== undefined) {
+        let rvuText = `${result.total_work_rvu} wRVU`;
+        if (result.estimated_payment !== null && result.estimated_payment !== undefined) {
+            rvuText += ` / $${result.estimated_payment.toFixed(2)}`;
+        }
+        rvuBadge.textContent = rvuText;
+        rvuBadge.style.display = "inline";
+    } else {
+        rvuBadge.style.display = "none";
+    }
+
+    // Registry fields (formatted as key-value pairs)
+    const registryDiv = $("registry-fields");
+    registryDiv.innerHTML = "";
+    if (result.registry && Object.keys(result.registry).length > 0) {
+        const pre = document.createElement("pre");
+        pre.className = "mb-0";
+        pre.style.fontSize = "0.75rem";
+        pre.textContent = JSON.stringify(result.registry, null, 2);
+        registryDiv.appendChild(pre);
+    } else {
+        registryDiv.innerHTML = '<span class="text-muted">No registry fields extracted</span>';
+    }
+
+    // Audit warnings
+    const warningsSection = $("audit-warnings-section");
+    const warningsList = $("audit-warnings-list");
+    warningsList.innerHTML = "";
+    if (result.audit_warnings && result.audit_warnings.length > 0) {
+        warningsSection.style.display = "block";
+        result.audit_warnings.forEach(w => {
+            const li = document.createElement("li");
+            li.textContent = w;
+            warningsList.appendChild(li);
+        });
+    } else {
+        warningsSection.style.display = "none";
+    }
+
+    // Update prompt
+    const prompt = $("extraction-prompt");
+    if (result.needs_manual_review) {
+        prompt.textContent = "Manual review recommended.";
+        prompt.className = "small text-warning";
+    } else {
+        prompt.textContent = "Extraction complete.";
+        prompt.className = "small text-success";
+    }
 }
 
 function renderCases(cases) {
@@ -307,8 +412,9 @@ async function handleStatus() {
 
 async function handleReview() {
     if (!state.procedureId || !state.scrubbedText) return;
-    setStatus("Marking reviewed...", "bg-info text-dark");
+    setStatus("Approving PHI review...", "bg-info text-dark");
     try {
+        // Step 1: Mark as reviewed
         const res = await api.feedback(state.procedureId, {
             scrubbed_text: state.scrubbedText,
             entities: state.entities || [],
@@ -319,7 +425,19 @@ async function handleReview() {
         });
         renderStatus(res.status, state.procedureId);
         $("btn-reidentify").disabled = false;
-        setStatus("Reviewed", "bg-success");
+        setStatus("PHI Approved - Extracting...", "bg-info text-dark");
+
+        // Step 2: Run extraction
+        try {
+            const extraction = await api.extract(state.procedureId, true);
+            renderExtractionResults(extraction);
+            setStatus("Extraction Complete", "bg-success");
+        } catch (extractErr) {
+            console.error("Extraction failed:", extractErr);
+            setStatus("Reviewed (extraction failed)", "bg-warning text-dark");
+            $("extraction-prompt").textContent = `Extraction failed: ${extractErr.message}`;
+            $("extraction-prompt").className = "small text-danger";
+        }
     } catch (err) {
         setStatus("Review failed", "bg-danger");
     }

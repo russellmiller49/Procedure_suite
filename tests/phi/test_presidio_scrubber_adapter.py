@@ -6,9 +6,17 @@ import os
 
 import pytest
 
+
+class _SpanResult:
+    def __init__(self, *, entity_type: str, start: int, end: int, score: float = 0.5):
+        self.entity_type = entity_type
+        self.start = start
+        self.end = end
+        self.score = score
+
 pytest.importorskip("presidio_analyzer")
 
-from modules.phi.adapters.presidio_scrubber import PresidioScrubber
+from modules.phi.adapters.presidio_scrubber import PresidioScrubber, filter_allowlisted_terms, filter_cpt_codes
 
 
 def test_presidio_scrubber_detects_obvious_person_name():
@@ -73,3 +81,25 @@ def test_provider_credential_at_end_of_note_does_not_disable_patient_redaction()
 
     assert "<PERSON> MRN: <MRN>" in result.scrubbed_text
     assert "SURGEON: George Cheng MD" in result.scrubbed_text
+
+
+def test_filter_cpt_codes_drops_detections_overlapping_cpt_numbers():
+    text = "PROCEDURE PERFORMED:\nCPT 31641 Bronchoscopy\nCPT 31624 BAL\n"
+    d1 = _SpanResult(entity_type="DATE_TIME", start=text.index("31641"), end=text.index("31641") + 5)
+    d2 = _SpanResult(entity_type="DATE_TIME", start=text.index("31624"), end=text.index("31624") + 5)
+    kept = filter_cpt_codes(text, [d1, d2])
+    assert kept == []
+
+
+def test_filter_allowlisted_terms_drops_known_clinical_false_positives():
+    text = "Target: Lung Nodule\nStation 11Rs\nUS guidance\nNS flush\nMC routing\n"
+    results = [
+        _SpanResult(entity_type="PERSON", start=text.index("Lung Nodule"), end=text.index("Lung Nodule") + len("Lung Nodule")),
+        _SpanResult(entity_type="DATE_TIME", start=text.index("11Rs"), end=text.index("11Rs") + len("11Rs")),
+        _SpanResult(entity_type="LOCATION", start=text.index("US"), end=text.index("US") + len("US")),
+        _SpanResult(entity_type="LOCATION", start=text.index("NS"), end=text.index("NS") + len("NS")),
+        _SpanResult(entity_type="LOCATION", start=text.index("MC"), end=text.index("MC") + len("MC")),
+        _SpanResult(entity_type="PERSON", start=text.index("Target"), end=text.index("Target") + len("Target")),
+    ]
+    kept = filter_allowlisted_terms(text, results)
+    assert kept == []

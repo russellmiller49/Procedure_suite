@@ -52,6 +52,16 @@ ANATOMICAL_ALLOW_LIST = {
     "station 10",
     "station 11",
     "station 12",
+    # Station shorthand (common in bronchoscopy/EBUS notes)
+    "4r",
+    "4l",
+    "7",
+    "10r",
+    "10l",
+    "11r",
+    "11l",
+    "11rs",
+    "11ri",
     # Mediastinal/lymphatic terms
     "mediastinum",
     "hilum",
@@ -77,10 +87,30 @@ CLINICAL_ALLOW_LIST = {
     # Common clinical/admin tokens that spaCy can misclassify as entities (often LOCATION).
     "anesthesia",
     "general anesthesia",
+    # Common abbreviations which can false-positive as entities.
+    "ns",  # Normal saline (often misread as Nova Scotia)
+    "us",  # Ultrasound (often misread as United States)
+    "mc",  # Mail code / internal routing shorthand
+    "pacs",
     # Common clinician credentials.
     "md",
     "do",
     "phd",
+    # Clinical terms often capitalized in headers/lists.
+    "target",
+    "freeze",
+    "cryobiopsy",
+    "brush",
+    "media",
+    "specimen",
+    "lymph",
+    "lymph node",
+    "lymph nodes",
+    "lung nodule",
+    "solitary lung nodule",
+    "mass",
+    "nodule",
+    "lesion",
     # Existing anatomical allow-list (critical for procedure coding).
     *ANATOMICAL_ALLOW_LIST,
 }
@@ -200,6 +230,38 @@ def filter_device_model_context(text: str, results: list) -> list:
         if _MRN_ID_LINE_RE.search(line):
             continue
         safe_spans.append((m.start(), m.end()))
+
+    if not safe_spans:
+        return results
+
+    filtered: list = []
+    for res in results:
+        start = int(getattr(res, "start"))
+        end = int(getattr(res, "end"))
+        if any(start >= s and end <= e for s, e in safe_spans):
+            continue
+        filtered.append(res)
+    return filtered
+
+
+def filter_cpt_codes(text: str, results: list) -> list:
+    """Drop detections which point at CPT/medical procedure codes.
+
+    In clinical procedure notes, CPT codes (5 digits) are frequently present and may
+    be misclassified as DATE_TIME (e.g., "years") or other entity types.
+    To avoid suppressing ZIP codes or other legitimate PHI-like numbers, only treat
+    5-digit tokens as CPT codes when they appear on a line containing "CPT".
+    """
+
+    cpt_line_re = re.compile(r"(?im)^.*\bCPT\b.*$")
+    # Negative lookbehind avoids matching the year portion of dates like 12/17/2025.
+    code_re = re.compile(r"\b(?<!/)\d{5}[A-Z0-9]*\b", re.IGNORECASE)
+
+    safe_spans: list[tuple[int, int]] = []
+    for line_match in cpt_line_re.finditer(text):
+        line_start, line_end = line_match.span()
+        for m in code_re.finditer(text, line_start, line_end):
+            safe_spans.append((m.start(), m.end()))
 
     if not safe_spans:
         return results
@@ -409,8 +471,11 @@ def redact_with_audit(
     step3 = filter_device_model_context(text, step2)
     _record_removed(step2, step3, "device_model")
 
-    step4 = filter_datetime_exclusions(text, step3, relative_phrases=relative_datetime_phrases)
-    _record_removed(step3, step4, "duration_datetime")
+    step_cpt = filter_cpt_codes(text, step3)
+    _record_removed(step3, step_cpt, "cpt_code")
+
+    step4 = filter_datetime_exclusions(text, step_cpt, relative_phrases=relative_datetime_phrases)
+    _record_removed(step_cpt, step4, "duration_datetime")
 
     step5 = filter_allowlisted_terms(text, step4)
     _record_removed(step4, step5, "allowlist")

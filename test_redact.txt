@@ -1,24 +1,32 @@
-Aronson, Gary MRN: 11207396
+Name: Henry Barron III
+DoD ID: 1599007195
+Date of procedure: 5/18/2023
+Indications: Hodgkin’s Lymphoma with possible recurrence
+Medications: General Anesthesia,
+Proceduralist: CDR Russell Miller MD
+Procedure: EBUS guided bronchoscopy 
+CPT Codes: 31653 bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed with endobronchial ultrasound (EBUS) guided transtracheal and/or transbronchial sampling 3 or more structures.
+Procedural Details: 
+The patient provided informed consent for the procedure after receiving an explanation in lay terms about the indications, details of the procedure, potential risks, and alternatives. All questions were addressed, and informed consent was documented in accordance with institutional protocol. A history and physical examination were conducted, and the findings were updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed before the intervention.
+The patient received intravenous medications, as documented in the record, and topical anesthesia was applied to the upper airway and tracheobronchial tree. The Q190 video bronchoscope was introduced through the mouth via a laryngeal mask airway and advanced into the tracheobronchial tree. The laryngeal mask airway was properly positioned. The vocal cords appeared normal, and the subglottic space was unremarkable. The trachea had a normal caliber, and the carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. The bronchial mucosa and anatomy were normal, with no endobronchial lesions or secretions observed.
+The Q190 video bronchoscope was removed, and the UC180F convex probe endobronchial ultrasound (EBUS) bronchoscope was introduced through the mouth via the laryngeal mask airway and advanced into the tracheobronchial tree.
+A directed EBUS examination was performed to evaluate the abnormal lymph node that had been previously identified and biopsied as follows
+1.	After identification of the 11Rs lymph node transbronchial needle aspiration (TBNA) was performed using the 19-gauge and 21 gauge Olympus ViziShot 2 EBUS-TBNA needles . A total of eight biopsies were performed. Rapid on-site evaluation (ROSE) yielded lymphocytes.
+2.	After identification of the station 7 lymph node transbronchial needle aspiration (TBNA) was performed using the 19-gauge and 21 gauge Olympus ViziShot 2 EBUS-TBNA needles . A total of eight biopsies were performed. Rapid on-site evaluation (ROSE) yielded lymphocytes.
+3.	After identification of the station 4R lymph node transbronchial needle aspiration (TBNA) was performed using the 19-gauge Olympus ViziShot 2 EBUS-TBNA needle and ROSE yielded scant tissue from a single pass, and it was decided to return our focus to a more abnormal appearing node given known Hodgkin’s and higher yield with larger tissue samples. 
+4.	We then returned to the station 7 lymph node and created a tract with the 19-gauge Olympus ViziShot 2 EBUS-TBNA needle using the sheath to dilate the tract, the spybite mini-forceps were inserted through the tract and into the lymph node under EBUS guidance and tissue biopsies were obtained. A total of four tissue samples were obtained.  
+Following the completion of EBUS bronchoscopy, the Q190 video bronchoscope was re-inserted. After suctioning blood and secretions, no evidence of active bleeding was observed. The bronchoscope was subsequently removed.
 
-PREOPERATIVE DIAGNOSIS: Malignant Central Airway Obstruction 
+ All TBNA samples were sent for routine cytology and mini-forceps sample were sent for histology. 
+Complications: No immediate complications
+Estimated Blood Loss: 10 cc
 
-POSTOPERATIVE DIAGNOSIS: Malignant Central Airway Obstruction
+Post Procedure Diagnosis:
+- Technically successful flexible bronchoscopy with endobronchial ultrasound-guided needle and forceps biopsies.
+- The patient has remained stable and has been transferred in good condition to the post-surgical monitoring unit.
+- Will await final pathology results
 
-PROCEDURE PERFORMED: 
-CPT 31641 Bronchoscopy destruction of tumor or relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
-CPT 31624 Bronchoscopy with bronchial alveolar lavage
-
-SURGEON: George Cheng MD
-
-ASSISTANT: Russell Miller, MD
-
-INDICATIONS: Airway stent occlusion 
-
-Sedation: General Anesthesia
-
-DESCRIPTION OF PROCEDURE: The procedure was performed in the bronchoscopy suite. After administration of sedatives an LMA was inserted and the therapeutic flexible bronchoscope was passed through the vocal cords and into the trachea. The patients known Silicone Y-stent was well positioned. There was signifigant thich dry mucous with mild obstruction of the tracheal limb, moderate obstruction of the left bronchial limb and significant obstruction of the right bronchial limb and the telescoping right mainstem covered metallic stent. The right upper lobe was partially obstructed by the distal tip of the SEM but there was no evidence of post-obstructive pneumonia and all right sided segmental airways were patent without endobronchial disease. On the left the distal mainstem, lower lobe bronchi were patient without evidence of endobronchial disease. At the anterior aspect of the left upper lobe takeoff there was partially obstructive endobronchial tumor causing approximately 40% reduction in caliber which did not warrant treatment at this time. Through a combination of mechanical debulking with the bronchoscope tip, forceps debulking and use of sodium bicarbonate instillation the adhesive mucous was slowly removed, with near complete recanalization of the stents. Subsequently a mini BAL was performed in the anterior segment of the left upper lobe with 40cc instillation and 30cc return. At this point inspection was performed to evaluate for any bleeding or other complications and none was seen. The bronchoscope was removed and the procedure was completed. 
-
-Recommendations:
-- Transfer to PACU
-- Discharge once criteria met.
+Russell Miller MD
+interventional pulmonary Staff
+Naval Medical Center San Diego
 
