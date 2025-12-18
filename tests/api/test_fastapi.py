@@ -23,7 +23,9 @@ def _read_fixture(name: str) -> str:
 async def test_health_endpoint(api_client: AsyncClient) -> None:
     response = await api_client.get("/health")
     assert response.status_code == 200
-    assert response.json() == {"ok": True}
+    data = response.json()
+    assert data["ok"] is True
+    # Ready field depends on app.state.model_ready (set by conftest.py fixture)
 
 
 async def test_knowledge_endpoint(api_client: AsyncClient) -> None:

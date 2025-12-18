@@ -32,6 +32,8 @@ from modules.ml_coder.thresholds import CaseDifficulty
 # Fixtures
 # ============================================================================
 
+# Note: setup_app_state fixture is provided by conftest.py (autouse=True)
+
 
 @pytest_asyncio.fixture
 async def api_client():
