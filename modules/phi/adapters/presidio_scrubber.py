@@ -153,10 +153,10 @@ PATIENT_NAME_LINE_RE = re.compile(
         (?:INDICATION\s+FOR\s+OPERATION|IMPRESSION\s*/\s*PLAN)\s*:\s*
         (?P<name>
             [A-Z][a-z'’-]+
-            (?:\s+[A-Z]\.)?
+            (?:\s+[A-Z]\.?)?
             (?:\s+[A-Z][a-z'’-]+){1,3}
         )
-        \s+is\s+a\b
+        \s+is\s+(?:a|an)\b
     """,
     re.VERBOSE,
 )
@@ -594,23 +594,31 @@ def filter_strict_datetime_patterns(text: str, results: list) -> list:
         start = int(getattr(res, "start"))
         end = int(getattr(res, "end"))
         detected_text = text[start:end]
+        candidate = detected_text.strip()
         if (
-            _DATE_NUMERIC_RE.fullmatch(detected_text)
-            or _DATE_ISO_RE.fullmatch(detected_text)
-            or _DATE_TEXT_MONTH_FIRST_RE.fullmatch(detected_text)
-            or _DATE_TEXT_DAY_FIRST_RE.fullmatch(detected_text)
-            or _DATETIME_ISO_RE.fullmatch(detected_text)
-            or _DATETIME_SLASH_TIME_COLON_RE.fullmatch(detected_text)
-            or (_DATETIME_SLASH_TIME_COMPACT_RE.fullmatch(detected_text) and _valid_hhmm(detected_text.split()[-1]))
+            _DATE_NUMERIC_RE.fullmatch(candidate)
+            or _DATE_ISO_RE.fullmatch(candidate)
+            or _DATE_TEXT_MONTH_FIRST_RE.fullmatch(candidate)
+            or _DATE_TEXT_DAY_FIRST_RE.fullmatch(candidate)
+            or _DATETIME_ISO_RE.fullmatch(candidate)
+            or _DATETIME_SLASH_TIME_COLON_RE.fullmatch(candidate)
+            or (_DATETIME_SLASH_TIME_COMPACT_RE.fullmatch(candidate) and _valid_hhmm(candidate.split()[-1]))
         ):
             filtered.append(res)
             continue
 
-        filtered.append(res)  # fallback; allow callers to explicitly pass non-standard DATE_TIME spans
     return filtered
 
 
 def _is_header_label_context(text: str, start: int, end: int) -> bool:
+    token = text[start:end].strip()
+    if not token:
+        return False
+    if any(ch.islower() for ch in token):
+        return False
+    if not any(ch.isalpha() for ch in token):
+        return False
+
     line_start, line_end = _line_bounds(text, start)
     line = text[line_start:line_end]
     prefix = line[: start - line_start]
@@ -901,7 +909,7 @@ def redact_with_audit(
     _record_removed(raw, step0, "provider_context")
 
     step = filter_person_provider_context(text, step0)
-    _record_removed(raw, step, "provider_context")
+    _record_removed(step0, step, "provider_context")
 
     step2 = filter_provider_signature_block(text, step)
     _record_removed(step, step2, "provider_context")
@@ -915,17 +923,17 @@ def redact_with_audit(
     step_cpt = filter_cpt_codes(text, step_cred)
     _record_removed(step_cred, step_cpt, "cpt_code")
 
-    step_dt_strict = filter_strict_datetime_patterns(text, step_cpt)
-    _record_removed(step_cpt, step_dt_strict, "datetime_pattern")
+    step4 = filter_datetime_exclusions(text, step_cpt, relative_phrases=relative_datetime_phrases)
+    _record_removed(step_cpt, step4, "duration_datetime")
 
-    step_dt_meas = filter_datetime_measurements(text, step_dt_strict)
-    _record_removed(step_dt_strict, step_dt_meas, "measurement_datetime")
+    step_dt_meas = filter_datetime_measurements(text, step4)
+    _record_removed(step4, step_dt_meas, "measurement_datetime")
 
-    step4 = filter_datetime_exclusions(text, step_dt_meas, relative_phrases=relative_datetime_phrases)
-    _record_removed(step_dt_meas, step4, "duration_datetime")
+    step_dt_strict = filter_strict_datetime_patterns(text, step_dt_meas)
+    _record_removed(step_dt_meas, step_dt_strict, "datetime_pattern")
 
-    step5 = filter_allowlisted_terms(text, step4)
-    _record_removed(step4, step5, "allowlist")
+    step5 = filter_allowlisted_terms(text, step_dt_strict)
+    _record_removed(step_dt_strict, step5, "allowlist")
 
     step_fp = filter_person_location_false_positives(text, step5)
     _record_removed(step5, step_fp, "header_false_positive")
