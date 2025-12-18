@@ -18,6 +18,19 @@ from modules.phi.ports import PHIScrubberPort, ScrubResult
 
 logger = logging.getLogger(__name__)
 
+ZERO_WIDTH_CHARACTERS: frozenset[str] = frozenset(
+    {
+        "\u200b",  # ZERO WIDTH SPACE
+        "\u200c",  # ZERO WIDTH NON-JOINER
+        "\u200d",  # ZERO WIDTH JOINER
+        "\u200e",  # LEFT-TO-RIGHT MARK
+        "\u200f",  # RIGHT-TO-LEFT MARK
+        "\u2060",  # WORD JOINER
+        "\ufeff",  # ZERO WIDTH NO-BREAK SPACE (BOM)
+    }
+)
+ZERO_WIDTH_TRANSLATION_TABLE: dict[int, int] = {ord(ch): ord(" ") for ch in ZERO_WIDTH_CHARACTERS}
+
 
 ANATOMICAL_ALLOW_LIST = {
     # Lung lobes and shorthand
@@ -102,6 +115,10 @@ CLINICAL_ALLOW_LIST = {
     "cryobiopsy",
     "brush",
     "media",
+    "samples",
+    "sample",
+    "disposition",
+    "mediastinal",
     "specimen",
     "lymph",
     "lymph node",
@@ -131,6 +148,111 @@ DEFAULT_RELATIVE_DATE_TIME_PHRASES: tuple[str, ...] = (
     "tomorrow",
 )
 
+PATIENT_NAME_LINE_RE = re.compile(
+    r"""(?im)^\s*
+        (?:INDICATION\s+FOR\s+OPERATION|IMPRESSION\s*/\s*PLAN)\s*:\s*
+        (?P<name>
+            [A-Z][a-z'’-]+
+            (?:\s+[A-Z]\.)?
+            (?:\s+[A-Z][a-z'’-]+){1,3}
+        )
+        \s+is\s+a\b
+    """,
+    re.VERBOSE,
+)
+
+_DATE_NUMERIC_RE = re.compile(
+    r"""(?ix)
+    \b(
+        # MM/DD/YYYY or M/D/YY (supports / or -)
+        (?:0?[1-9]|1[0-2]) [/-] (?:0?[1-9]|[12]\d|3[01]) [/-] (?:\d{4}|\d{2})
+        |
+        # MM/DDYYYY (missing slash before year): 12/162025
+        (?:0?[1-9]|1[0-2]) [/-] (?:0?[1-9]|[12]\d|3[01]) (?:\d{4})
+    )\b
+    """
+)
+
+_DATE_ISO_RE = re.compile(r"\b(?:19|20)\d{2}[/-](?:0[1-9]|1[0-2])[/-](?:0[1-9]|[12]\d|3[01])\b")
+
+_MONTH_NAME_FRAGMENT = (
+    r"jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|"
+    r"sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?"
+)
+_DATE_TEXT_MONTH_FIRST_RE = re.compile(
+    rf"(?ix)\b(?:{_MONTH_NAME_FRAGMENT})\s+(?:0?[1-9]|[12]\d|3[01])(?:st|nd|rd|th)?(?:,)?\s+(?:\d{{4}}|\d{{2}})\b"
+)
+_DATE_TEXT_DAY_FIRST_RE = re.compile(
+    rf"(?ix)\b(?:0?[1-9]|[12]\d|3[01])(?:st|nd|rd|th)?\s+(?:{_MONTH_NAME_FRAGMENT})(?:,)?\s+(?:\d{{4}}|\d{{2}})\b"
+)
+
+_DATETIME_ISO_RE = re.compile(
+    r"(?ix)\b(?:19|20)\d{2}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?\b"
+)
+_DATETIME_SLASH_TIME_COLON_RE = re.compile(
+    r"""(?ix)\b
+        (?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4})\s+
+        (?:[01]?\d|2[0-3]):[0-5]\d
+        (?:\s*(?:am|pm))?
+    \b"""
+)
+_DATETIME_SLASH_TIME_COMPACT_RE = re.compile(r"\b\d{1,2}/\d{1,2}/\d{2,4}\s+\d{3,4}\b")
+
+_MEASUREMENT_UNIT_TAIL_RE = re.compile(r"(?i)^\s*(?:ml|cc|mg|mcg|g|kg|fr|cmh2o|mmhg|%|c|°c)\b")
+
+_CREDENTIAL_NORMALIZED: frozenset[str] = frozenset(
+    {
+        "MD",
+        "DO",
+        "PHD",
+        "RN",
+        "RT",
+        "PA",
+        "PAC",
+        "NPC",
+        "NP",
+        "DNP",
+        "FNP",
+        "CRNA",
+        "RRT",
+        "LPN",
+        "CNA",
+        "MA",
+    }
+)
+
+_PROVIDER_LINE_LABEL_RE = re.compile(
+    r"""(?im)^\s*(?:CC\s+REFERRED\s+PHYSICIAN|REFERRED\s+PHYSICIAN|REFERRING\s+PHYSICIAN|
+        PRIMARY\s+CARE\s+PHYSICIAN|ATTENDING(?:\s+PHYSICIAN)?|SURGEON|ASSISTANT|
+        ANESTHESIOLOGIST|FELLOW|RESIDENT|COSIGNED\s+BY|SIGNED\s+BY|DICTATED\s+BY|
+        PERFORMED\s+BY|AUTHORED\s+BY|PROVIDER)\s*:\s*""",
+    re.VERBOSE,
+)
+_STAFF_ROLE_LINE_RE = re.compile(r"(?im)^\s*(?:RN|RT|PA|NP|MA|CNA)\s*:\s*")
+
+_SECTION_HEADER_WORDS: frozenset[str] = frozenset(
+    {
+        "DISPOSITION",
+        "SPECIMEN",
+        "SPECIMEN(S)",
+        "SAMPLE",
+        "SAMPLES",
+        "IMPRESSION",
+        "PLAN",
+        "PROCEDURE",
+        "PROCEDURES",
+        "ATTENDING",
+        "ASSISTANT",
+        "ANESTHESIA",
+        "MONITORING",
+        "TRACHEA",
+        "BRUSH",
+        "CRYOBIOPSY",
+        "MEDIASTINAL",
+        "MEDIA",
+    }
+)
+
 _ALLOWLIST_BOUNDARY_RE = re.compile(
     r"(?i)\b(?:"
     + "|".join(sorted((re.escape(t) for t in CLINICAL_ALLOW_LIST), key=len, reverse=True))
@@ -152,10 +274,11 @@ class Detection:
     start: int
     end: int
     score: float
+    source: str | None = None
 
 
-def _detection_key(d: Detection) -> tuple[str, int, int, float]:
-    return (d.entity_type, d.start, d.end, d.score)
+def _detection_key(d: Detection) -> tuple[str, int, int, float, str | None]:
+    return (d.entity_type, d.start, d.end, d.score, d.source)
 
 
 def _diff_removed(before: list[Detection], after: list[Detection]) -> list[Detection]:
@@ -213,6 +336,13 @@ def filter_allowlisted_terms(text: str, results: list) -> list:
 
     filtered: list = []
     for res in results:
+        entity_type = str(getattr(res, "entity_type", "")).upper()
+        if entity_type == "ADDRESS":
+            filtered.append(res)
+            continue
+        if getattr(res, "source", None) == "forced_patient_name":
+            filtered.append(res)
+            continue
         detected_text = text[int(getattr(res, "start")) : int(getattr(res, "end"))]
         if _is_allowlisted(detected_text):
             continue
@@ -253,15 +383,27 @@ def filter_cpt_codes(text: str, results: list) -> list:
     5-digit tokens as CPT codes when they appear on a line containing "CPT".
     """
 
-    cpt_line_re = re.compile(r"(?im)^.*\bCPT\b.*$")
+    cpt_hint_re = re.compile(r"\b(?:CPT|HCPCS|ICD-?10|ICD)\b", re.IGNORECASE)
     # Negative lookbehind avoids matching the year portion of dates like 12/17/2025.
-    code_re = re.compile(r"\b(?<!/)\d{5}[A-Z0-9]*\b", re.IGNORECASE)
+    code_re = re.compile(r"\b(?<!/)\d{5}[A-Z0-9]{0,4}\b", re.IGNORECASE)
 
     safe_spans: list[tuple[int, int]] = []
-    for line_match in cpt_line_re.finditer(text):
-        line_start, line_end = line_match.span()
-        for m in code_re.finditer(text, line_start, line_end):
-            safe_spans.append((m.start(), m.end()))
+    cursor = 0
+    while cursor <= len(text):
+        line_end = text.find("\n", cursor)
+        if line_end == -1:
+            line_end = len(text)
+        line = text[cursor:line_end]
+        if line.strip():
+            if cpt_hint_re.search(line):
+                for m in code_re.finditer(line):
+                    safe_spans.append((cursor + m.start(), cursor + m.end()))
+            elif re.match(r"^\s*\d{5}[A-Z0-9]{0,4}\b", line) and not _ADDRESS_STREET_LINE_RE.match(line):
+                for m in code_re.finditer(line):
+                    safe_spans.append((cursor + m.start(), cursor + m.end()))
+        if line_end == len(text):
+            break
+        cursor = line_end + 1
 
     if not safe_spans:
         return results
@@ -273,6 +415,281 @@ def filter_cpt_codes(text: str, results: list) -> list:
         if any(start >= s and end <= e for s, e in safe_spans):
             continue
         filtered.append(res)
+    return filtered
+
+
+def sanitize_length_preserving(text: str) -> str:
+    """Replace invisible/formatting marks without shifting offsets."""
+
+    if not text:
+        return text
+    return text.translate(ZERO_WIDTH_TRANSLATION_TABLE)
+
+
+def extract_patient_names(text: str) -> list[str]:
+    names: set[str] = set()
+    for m in PATIENT_NAME_LINE_RE.finditer(text):
+        names.add(m.group("name").strip())
+    return sorted(names, key=len, reverse=True)
+
+
+def forced_patient_name_detections(text: str, names: Iterable[str]) -> list[Detection]:
+    detections: list[Detection] = []
+    for name in names:
+        if not name:
+            continue
+        pattern = re.compile(rf"(?i)\b{re.escape(name)}\b")
+        for m in pattern.finditer(text):
+            detections.append(
+                Detection(
+                    entity_type="PERSON",
+                    start=m.start(),
+                    end=m.end(),
+                    score=1.0,
+                    source="forced_patient_name",
+                )
+            )
+    return detections
+
+
+def _valid_hhmm(token: str) -> bool:
+    if not token.isdigit() or len(token) not in {3, 4}:
+        return False
+    if len(token) == 3:
+        hour = int(token[0])
+        minute = int(token[1:])
+    else:
+        hour = int(token[:2])
+        minute = int(token[2:])
+    return 0 <= hour <= 23 and 0 <= minute <= 59
+
+
+def detect_datetime_detections(text: str) -> list[Detection]:
+    detections: list[Detection] = []
+    seen: set[tuple[int, int, str]] = set()
+
+    def _add(start: int, end: int, source: str) -> None:
+        key = (start, end, "DATE_TIME")
+        if key in seen:
+            return
+        seen.add(key)
+        detections.append(Detection(entity_type="DATE_TIME", start=start, end=end, score=1.0, source=source))
+
+    for m in _DATETIME_ISO_RE.finditer(text):
+        _add(m.start(), m.end(), "regex_datetime_iso")
+    for m in _DATETIME_SLASH_TIME_COLON_RE.finditer(text):
+        _add(m.start(), m.end(), "regex_datetime_time_colon")
+    for m in _DATETIME_SLASH_TIME_COMPACT_RE.finditer(text):
+        token = m.group(0)
+        time_token = token.split()[-1]
+        if _valid_hhmm(time_token):
+            _add(m.start(), m.end(), "regex_datetime_time_compact")
+
+    for m in _DATE_NUMERIC_RE.finditer(text):
+        _add(m.start(), m.end(), "regex_date_numeric")
+    for m in _DATE_ISO_RE.finditer(text):
+        _add(m.start(), m.end(), "regex_date_iso")
+    for m in _DATE_TEXT_MONTH_FIRST_RE.finditer(text):
+        _add(m.start(), m.end(), "regex_date_text")
+    for m in _DATE_TEXT_DAY_FIRST_RE.finditer(text):
+        _add(m.start(), m.end(), "regex_date_text")
+
+    return detections
+
+
+_ADDRESS_STATE_ZIP_RE = re.compile(r"\b[A-Z]{2}\s+\d{5}(?:-\d{4})?\b")
+_ADDRESS_STREET_LINE_RE = re.compile(
+    r"(?im)^\s*\d{1,6}\s+.+\b(?:St\.?|Street|Ave\.?|Avenue|Blvd\.?|Boulevard|Rd\.?|Road|Dr\.?|Drive|Ln\.?|Lane|Way|Ct\.?|Court|Pl\.?|Place|Ter\.?|Terrace|Pkwy\.?|Parkway|Hwy\.?|Highway|Cir\.?|Circle)\b.*$"
+)
+_ADDRESS_MAILCODE_RE = re.compile(r"\bMC\s*\d{3,6}\b", re.IGNORECASE)
+
+
+def detect_address_detections(text: str) -> list[Detection]:
+    detections: list[Detection] = []
+    for m in _ADDRESS_STREET_LINE_RE.finditer(text):
+        line_start, line_end = m.span()
+        detections.append(
+            Detection(entity_type="ADDRESS", start=line_start, end=line_end, score=1.0, source="regex_address_line")
+        )
+
+        if line_end < len(text):
+            next_start = line_end + 1
+            next_end = text.find("\n", next_start)
+            if next_end == -1:
+                next_end = len(text)
+            next_line = text[next_start:next_end]
+            if _ADDRESS_STATE_ZIP_RE.search(next_line):
+                detections.append(
+                    Detection(
+                        entity_type="ADDRESS",
+                        start=next_start,
+                        end=next_end,
+                        score=1.0,
+                        source="regex_address_line_continuation",
+                    )
+                )
+
+    for m in _ADDRESS_STATE_ZIP_RE.finditer(text):
+        detections.append(
+            Detection(entity_type="ADDRESS", start=m.start(), end=m.end(), score=1.0, source="regex_state_zip")
+        )
+
+    for m in _ADDRESS_MAILCODE_RE.finditer(text):
+        detections.append(
+            Detection(entity_type="ADDRESS", start=m.start(), end=m.end(), score=0.95, source="regex_mail_code")
+        )
+
+    return detections
+
+
+def _normalize_credential(text: str) -> str:
+    return re.sub(r"[^A-Za-z0-9]", "", text).upper()
+
+
+def is_credential(detected_text: str) -> bool:
+    normalized = _normalize_credential(detected_text.strip())
+    return normalized in _CREDENTIAL_NORMALIZED
+
+
+def filter_credentials(text: str, results: list) -> list:
+    """Drop detections which are provider credentials/titles (MD, RN, etc)."""
+
+    filtered: list = []
+    for res in results:
+        detected_text = text[int(getattr(res, "start")) : int(getattr(res, "end"))]
+        if is_credential(detected_text):
+            continue
+        filtered.append(res)
+    return filtered
+
+
+def filter_datetime_measurements(text: str, results: list) -> list:
+    """Drop DATE_TIME false positives which are numeric measurements with units (e.g., '1250 ml')."""
+
+    filtered: list = []
+    for res in results:
+        if str(getattr(res, "entity_type", "")).upper() != "DATE_TIME":
+            filtered.append(res)
+            continue
+        start = int(getattr(res, "start"))
+        end = int(getattr(res, "end"))
+        token = text[start:end]
+        if token.isdigit():
+            tail = text[end : min(len(text), end + 12)]
+            if _MEASUREMENT_UNIT_TAIL_RE.match(tail):
+                continue
+        filtered.append(res)
+    return filtered
+
+
+def filter_strict_datetime_patterns(text: str, results: list) -> list:
+    """Drop DATE_TIME detections which don't match strict date/time patterns."""
+
+    filtered: list = []
+    for res in results:
+        if str(getattr(res, "entity_type", "")).upper() != "DATE_TIME":
+            filtered.append(res)
+            continue
+
+        start = int(getattr(res, "start"))
+        end = int(getattr(res, "end"))
+        detected_text = text[start:end]
+        if (
+            _DATE_NUMERIC_RE.fullmatch(detected_text)
+            or _DATE_ISO_RE.fullmatch(detected_text)
+            or _DATE_TEXT_MONTH_FIRST_RE.fullmatch(detected_text)
+            or _DATE_TEXT_DAY_FIRST_RE.fullmatch(detected_text)
+            or _DATETIME_ISO_RE.fullmatch(detected_text)
+            or _DATETIME_SLASH_TIME_COLON_RE.fullmatch(detected_text)
+            or (_DATETIME_SLASH_TIME_COMPACT_RE.fullmatch(detected_text) and _valid_hhmm(detected_text.split()[-1]))
+        ):
+            filtered.append(res)
+            continue
+
+        filtered.append(res)  # fallback; allow callers to explicitly pass non-standard DATE_TIME spans
+    return filtered
+
+
+def _is_header_label_context(text: str, start: int, end: int) -> bool:
+    line_start, line_end = _line_bounds(text, start)
+    line = text[line_start:line_end]
+    prefix = line[: start - line_start]
+    if prefix.strip():
+        return False
+    suffix = line[end - line_start :]
+    colon_idx = suffix.find(":")
+    if colon_idx == -1 or colon_idx > 40:
+        return False
+    return True
+
+
+def filter_person_location_false_positives(text: str, results: list) -> list:
+    """Drop common clinical/header false positives for PERSON/LOCATION."""
+
+    filtered: list = []
+    for res in results:
+        entity_type = str(getattr(res, "entity_type", "")).upper()
+        if entity_type not in {"PERSON", "LOCATION"}:
+            filtered.append(res)
+            continue
+
+        start = int(getattr(res, "start"))
+        end = int(getattr(res, "end"))
+        detected_text = text[start:end].strip()
+        if not detected_text:
+            continue
+        if any(ch.isdigit() for ch in detected_text):
+            continue
+        if "/" in detected_text or ":" in detected_text:
+            continue
+        if detected_text.upper() in _SECTION_HEADER_WORDS:
+            continue
+        if _is_header_label_context(text, start, end):
+            continue
+
+        filtered.append(res)
+
+    return filtered
+
+
+def filter_person_provider_lines(text: str, results: list) -> list:
+    """Suppress PERSON detections on structured provider/staff lines (keep clinician names)."""
+
+    provider_line_spans: list[tuple[int, int]] = []
+    for m in _PROVIDER_LINE_LABEL_RE.finditer(text):
+        line_start, line_end = _line_bounds(text, m.start())
+        provider_line_spans.append((line_start, line_end))
+    for m in _STAFF_ROLE_LINE_RE.finditer(text):
+        line_start, line_end = _line_bounds(text, m.start())
+        provider_line_spans.append((line_start, line_end))
+
+    if not provider_line_spans:
+        return results
+
+    patient_label_re = re.compile(r"^patient\s*:", re.IGNORECASE)
+
+    filtered: list = []
+    for res in results:
+        if str(getattr(res, "entity_type", "")).upper() != "PERSON":
+            filtered.append(res)
+            continue
+        if getattr(res, "source", None) == "forced_patient_name":
+            filtered.append(res)
+            continue
+
+        start = int(getattr(res, "start"))
+        end = int(getattr(res, "end"))
+        line_start, line_end = _line_bounds(text, start)
+        line = text[line_start:line_end]
+        if patient_label_re.search(line.lstrip()):
+            filtered.append(res)
+            continue
+
+        if any(start >= s and end <= e for s, e in provider_line_spans):
+            continue
+
+        filtered.append(res)
+
     return filtered
 
 
@@ -316,13 +733,27 @@ def filter_low_score_results(results: list, thresholds: dict[str, float]) -> lis
 def select_non_overlapping_results(results: list) -> list:
     """Resolve overlaps by keeping the highest-confidence, longest detections."""
 
-    def _key(r) -> tuple[float, int, int, str]:
+    entity_priority: dict[str, int] = {
+        "MRN": 100,
+        "US_SSN": 95,
+        "EMAIL_ADDRESS": 90,
+        "PHONE_NUMBER": 90,
+        "ADDRESS": 85,
+        "DATE_TIME": 80,
+        "PERSON": 70,
+        "LOCATION": 60,
+        "MEDICAL_LICENSE": 50,
+        "US_DRIVER_LICENSE": 50,
+    }
+
+    def _key(r) -> tuple[int, float, int, int, str]:
         start = int(getattr(r, "start"))
         end = int(getattr(r, "end"))
         score = float(getattr(r, "score", 0.0) or 0.0)
         length = end - start
         entity_type = str(getattr(r, "entity_type", ""))
-        return (score, length, -start, entity_type)
+        priority = entity_priority.get(entity_type.upper(), 0)
+        return (priority, score, length, -start, entity_type)
 
     selected: list = []
     for res in sorted(results, key=_key, reverse=True):
@@ -403,6 +834,9 @@ def filter_person_provider_context(text: str, results: list) -> list:
         if getattr(res, "entity_type", None) != "PERSON":
             filtered.append(res)
             continue
+        if getattr(res, "source", None) == "forced_patient_name":
+            filtered.append(res)
+            continue
 
         res_start = int(getattr(res, "start"))
         res_end = int(getattr(res, "end"))
@@ -457,12 +891,16 @@ def redact_with_audit(
                     "start": d.start,
                     "end": d.end,
                     "score": d.score,
+                    "source": d.source,
                     "detected_text": text[d.start : d.end],
                     "surrounding_context": _context_window(text, d.start, d.end, window=40),
                 }
             )
 
-    step = filter_person_provider_context(text, raw)
+    step0 = filter_person_provider_lines(text, raw)
+    _record_removed(raw, step0, "provider_context")
+
+    step = filter_person_provider_context(text, step0)
     _record_removed(raw, step, "provider_context")
 
     step2 = filter_provider_signature_block(text, step)
@@ -471,17 +909,29 @@ def redact_with_audit(
     step3 = filter_device_model_context(text, step2)
     _record_removed(step2, step3, "device_model")
 
-    step_cpt = filter_cpt_codes(text, step3)
-    _record_removed(step3, step_cpt, "cpt_code")
+    step_cred = filter_credentials(text, step3)
+    _record_removed(step3, step_cred, "credentials")
 
-    step4 = filter_datetime_exclusions(text, step_cpt, relative_phrases=relative_datetime_phrases)
-    _record_removed(step_cpt, step4, "duration_datetime")
+    step_cpt = filter_cpt_codes(text, step_cred)
+    _record_removed(step_cred, step_cpt, "cpt_code")
+
+    step_dt_strict = filter_strict_datetime_patterns(text, step_cpt)
+    _record_removed(step_cpt, step_dt_strict, "datetime_pattern")
+
+    step_dt_meas = filter_datetime_measurements(text, step_dt_strict)
+    _record_removed(step_dt_strict, step_dt_meas, "measurement_datetime")
+
+    step4 = filter_datetime_exclusions(text, step_dt_meas, relative_phrases=relative_datetime_phrases)
+    _record_removed(step_dt_meas, step4, "duration_datetime")
 
     step5 = filter_allowlisted_terms(text, step4)
     _record_removed(step4, step5, "allowlist")
 
-    step6 = filter_low_score_results(step5, thresholds=score_thresholds)
-    _record_removed(step5, step6, "low_score")
+    step_fp = filter_person_location_false_positives(text, step5)
+    _record_removed(step5, step_fp, "header_false_positive")
+
+    step6 = filter_low_score_results(step_fp, thresholds=score_thresholds)
+    _record_removed(step_fp, step6, "low_score")
 
     final = select_non_overlapping_results(step6)
     _record_removed(step6, final, "overlap")
@@ -511,6 +961,7 @@ def redact_with_audit(
                 "start": d.start,
                 "end": d.end,
                 "score": d.score,
+                "source": d.source,
                 "detected_text": text[d.start : d.end],
                 "surrounding_context": _context_window(text, d.start, d.end, window=40),
             }
@@ -678,7 +1129,6 @@ class PresidioScrubber(PHIScrubberPort):
             "PHONE_NUMBER",
             "US_SSN",
             "LOCATION",
-            "DATE_TIME",
             "MEDICAL_LICENSE",
             "MRN",
         ]
@@ -707,9 +1157,15 @@ class PresidioScrubber(PHIScrubberPort):
     def scrub_with_audit(
         self, text: str, document_type: str | None = None, specialty: str | None = None
     ) -> tuple[ScrubResult, dict[str, Any]]:
-        raw = self._analyze_detections(text)
+        sanitized = sanitize_length_preserving(text)
+        raw = self._analyze_detections(sanitized)
+        forced_names = extract_patient_names(sanitized)
+        forced_detections = forced_patient_name_detections(sanitized, forced_names)
+        datetime_detections = detect_datetime_detections(sanitized)
+        address_detections = detect_address_detections(sanitized)
+        raw = raw + forced_detections + datetime_detections + address_detections
         return redact_with_audit(
-            text=text,
+            text=sanitized,
             detections=raw,
             enable_driver_license_recognizer=self.enable_driver_license_recognizer,
             score_thresholds=self.score_thresholds,
