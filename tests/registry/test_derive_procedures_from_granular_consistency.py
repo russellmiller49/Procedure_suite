@@ -100,6 +100,28 @@ def test_derive_procedures_from_granular_up_propagates_sampling_tools_paths() ->
     assert not any("performed=true but" in w for w in warnings)
 
 
+def test_derive_procedures_from_granular_filters_invalid_navigation_sampling_tools() -> None:
+    granular_data = {
+        "navigation_targets": [
+            {
+                "target_number": 1,
+                "target_location_text": "RUL posterior segment lesion",
+                "sampling_tools_used": ["BAL", "Needle", "forcep"],
+            }
+        ]
+    }
+    existing_procedures = {
+        "navigational_bronchoscopy": {"performed": True, "sampling_tools_used": ["BAL"]}
+    }
+
+    updated, _warnings = derive_procedures_from_granular(
+        granular_data=granular_data,
+        existing_procedures=existing_procedures,
+    )
+
+    assert updated["navigational_bronchoscopy"]["sampling_tools_used"] == ["Forceps", "Needle"]
+
+
 def test_derive_procedures_from_granular_warns_on_ebus_performed_without_stations() -> None:
     granular_data = {
         "linear_ebus_stations_detail": [

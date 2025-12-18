@@ -8,10 +8,12 @@ procedure flags from clinical procedure notes. Key features:
 - pos_weight calculation for severe class imbalance
 - Per-class threshold optimization on validation set
 - Mixed precision training (fp16) for RTX 4070 Ti
+- **PHI scrubbing**: Optional de-identification before training (--scrub-phi)
 
 Usage:
     python scripts/train_roberta_pm3.py
     python scripts/train_roberta_pm3.py --batch-size 32 --epochs 10
+    python scripts/train_roberta_pm3.py --scrub-phi  # Train on PHI-redacted text
     python scripts/train_roberta_pm3.py --evaluate-only --model-dir data/models/roberta_pm3_registry
 """
 

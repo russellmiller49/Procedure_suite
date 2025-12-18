@@ -224,7 +224,7 @@
     }
   },
   {
-    "note_text": "Procedure: 32609 (Thoracoscopy with biopsy of pleura).\nTechnique: Ultrasound guidance used for port placement. Single-port technique. Semi-rigid thoracoscope inserted.\nFluid Removal: 1.1 Liters drained.\nBiopsy: Forceps biopsies (x10) taken from parietal and diaphragmatic pleura to rule out malignancy/TB.\nPost-op: 20 Fr chest tube placed.",
+    "note_text": "Procedure: 32609 (Thoracoscopy with biopsy of pleura).\nTechnique: Ultrasound guidance used for port placement. Single-port technique. Semi-rigid thoracoscope inserted.\n<PERSON>: 1.1 Liters drained.\nBiopsy: Forceps biopsies (x10) taken from parietal and diaphragmatic pleura to rule out malignancy/TB.\nPost-op: 20 Fr chest tube placed.",
     "cpt_codes": [
       32609
     ],
@@ -333,10 +333,16 @@
       "style_type": 3,
       "generated_name": "Clara Davis",
       "generation_date": "2025-12-09T12:09:25.998122"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: Grace Wilson\nStaff: Dr. Ross\nPre-op Dx: L pleural effusion.\nSteps:\n1. Moderate sedation.\n2. US guided entry 6th ICS.\n3. Thoracoscope inserted.\n4. Drained 1.1L fluid.\n5. Biopsied parietal pleura (looks granular).\n6. Chest tube placed.\nPlan: Admit, check cxr.",
+    "note_text": "Procedure Note\nPatient: <PERSON>\nStaff: Dr. Ross\nPre-op Dx: L pleural effusion.\nSteps:\n1. Moderate sedation.\n2. <LOCATION> guided entry 6th ICS.\n3. Thoracoscope inserted.\n4. Drained 1.1L fluid.\n5. Biopsied parietal pleura (looks granular).\n6. Chest tube placed.\nPlan: Admit, check cxr.",
     "cpt_codes": [
       32609
     ],
@@ -445,10 +451,17 @@
       "style_type": 4,
       "generated_name": "Dora Edwards",
       "generation_date": "2025-12-09T12:09:25.998154"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "medical thoracoscopy note patient grace wilson here for the left effusion used moderate sedation and lidocaine. went in at the 6th rib space drained about a liter of cloudy fluid saw some granular stuff on the wall so took ten biopsies. no pleurodesis done just put a tube in at the end. no complications blood loss minimal admitting her for observation.",
+    "note_text": "medical thoracoscopy note patient <PERSON> here for the left effusion used moderate sedation and lidocaine. went in at the 6th rib space drained about a liter of cloudy fluid saw some granular stuff on the wall so took ten biopsies. no pleurodesis done just put a tube in at the end. no complications blood loss minimal admitting her for observation.",
     "cpt_codes": [
       32609
     ],
@@ -557,10 +570,16 @@
       "style_type": 5,
       "generated_name": "Evelyn Frank",
       "generation_date": "2025-12-09T12:09:25.998185"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "The patient underwent a medical thoracoscopy for a recurrent left exudative pleural effusion. After moderate sedation and local anesthesia, a semi-rigid thoracoscope was inserted at the 6th intercostal space. We drained 1.1 L of cloudy, straw-colored fluid. The parietal pleura appeared diffusely granular with small nodules. Ten biopsies were taken from the parietal and diaphragmatic surfaces. No pleurodesis was performed. A 20 Fr chest tube was placed to water seal. There were no complications.",
+    "note_text": "The patient underwent a medical thoracoscopy for a recurrent left exudative pleural effusion. After moderate sedation and local <LOCATION>, a semi-rigid thoracoscope was inserted at the 6th intercostal space. We drained 1.1 L of cloudy, straw-colored fluid. The parietal pleura appeared diffusely granular with small nodules. Ten biopsies were taken from the parietal and diaphragmatic surfaces. No pleurodesis was performed. A 20 Fr chest tube was placed to water seal. There were no complications.",
     "cpt_codes": [
       32609
     ],
@@ -669,10 +688,16 @@
       "style_type": 6,
       "generated_name": "Fiona Green",
       "generation_date": "2025-12-09T12:09:25.998214"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent left exudative pleural effusion, cytology negative.\n[Anesthesia]\nModerate sedation (Midazolam/Fentanyl).\n[Description]\n1.1 L fluid drained. Granular pleural thickening observed. 10 biopsies taken from parietal/diaphragmatic pleura. 20 Fr chest tube placed.\n[Plan]\nAdmit. Await pathology/microbiology.",
+    "note_text": "[Indication]\nRecurrent left exudative pleural effusion, cytology negative.\n[<LOCATION>]\nModerate sedation (Midazolam/Fentanyl).\n[Description]\n1.1 L fluid drained. Granular pleural thickening observed. 10 biopsies taken from parietal/diaphragmatic pleura. 20 Fr chest tube placed.\n[Plan]\nAdmit. Await pathology/microbiology.",
     "cpt_codes": [
       32609
     ],
@@ -781,10 +806,16 @@
       "style_type": 7,
       "generated_name": "Gina Harris",
       "generation_date": "2025-12-09T12:09:25.998242"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Under moderate sedation, a medical thoracoscopy was performed on Ms. Wilson to investigate her recurrent left pleural effusion. Upon entering the pleural space, we drained approximately 1.1 liters of cloudy, straw-colored fluid. Visual inspection of the pleura revealed diffuse granular thickening along the chest wall and diaphragm, along with fibrin strands. We used biopsy forceps to take ten samples from these abnormal areas. We decided against pleurodesis at this time. The procedure concluded with the placement of a 20 Fr chest tube.",
+    "note_text": "Under moderate sedation, a medical thoracoscopy was performed on Ms. <PERSON> to investigate her recurrent left pleural effusion. Upon entering the pleural space, we drained approximately 1.1 liters of cloudy, straw-colored fluid. Visual inspection of the pleura revealed diffuse granular thickening along the chest wall and diaphragm, along with fibrin strands. We used biopsy forceps to take ten samples from these abnormal areas. We decided against pleurodesis at this time. The procedure concluded with the placement of a 20 Fr chest tube.",
     "cpt_codes": [
       32609
     ],
@@ -893,10 +924,16 @@
       "style_type": 8,
       "generated_name": "Helen Ives",
       "generation_date": "2025-12-09T12:09:25.998270"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Pleuroscopy with pleural sampling.\nIndication: Persistent left effusion.\nDetails: Ultrasound located fluid. Scope introduced. 1.1L evacuated. Granular thickening observed. Tissue sampled (10x) from parietal/diaphragmatic surfaces. No chemical sclerosis performed. Drain inserted.\nStatus: Stable.",
+    "note_text": "Procedure: Pleuroscopy with pleural sampling.\nIndication: Persistent left effusion.\nDetails: Ultrasound located fluid. Scope introduced. 1.1L evacuated. Granular thickening observed. Tissue sampled (<DATE_TIME>) from parietal/diaphragmatic surfaces. No chemical sclerosis performed. Drain inserted.\nStatus: Stable.",
     "cpt_codes": [
       32609
     ],
@@ -1005,6 +1042,12 @@
       "style_type": 9,
       "generated_name": "Iris Jones",
       "generation_date": "2025-12-09T12:09:25.998297"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -1120,7 +1163,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Medical Thoracoscopy.\nINDICATIONS: 69-year-old male with asbestos exposure and right-sided pleural thickening suspicious for malignant pleural mesothelioma.\nDESCRIPTION: Under general anesthesia, the right hemithorax was accessed. Approximately 900 mL of serous fluid was aspirated. Thorough inspection demonstrated extensive nodular and plaque-like neoplastic-appearing thickening involving the parietal and diaphragmatic pleura. Twelve large-capacity biopsies were harvested for definitive histopathologic characterization. Pleurodesis was deferred pending final staging. A 24 Fr thoracostomy tube was secured.",
+    "note_text": "OPERATIVE REPORT: Medical Thoracoscopy.\nINDICATIONS: <DATE_TIME> male with asbestos exposure and right-sided pleural thickening suspicious for malignant pleural mesothelioma.\n<PERSON>: Under general <LOCATION>, the right hemithorax was accessed. Approximately 900 mL of serous fluid was aspirated. Thorough inspection demonstrated extensive nodular and plaque-like neoplastic-appearing thickening involving the parietal and diaphragmatic pleura. Twelve large-capacity biopsies were harvested for definitive histopathologic characterization. Pleurodesis was deferred pending final staging. A 24 Fr thoracostomy tube was secured.",
     "cpt_codes": [
       32609
     ],
@@ -1229,6 +1272,14 @@
       "style_type": 2,
       "generated_name": "Ben Lewis",
       "generation_date": "2025-12-09T12:09:25.998356"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -1344,7 +1395,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Medical Thoracoscopy\nPatient: Ryan Brooks\nAttending: Dr. Stone\nIndication: R effusion, r/o mesothelioma.\nProcedure:\n- GA / ETT.\n- Port placed 5th ICS.\n- Drained 900ml fluid.\n- Saw nodules/plaques on pleura.\n- Took 12 biopsies.\n- Chest tube placed.\nComplications: Minor oozing, cauterized.",
+    "note_text": "Resident Note: Medical Thoracoscopy\nPatient: <PERSON>\nAttending: Dr. Stone\nIndication: R effusion, r/o mesothelioma.\nProcedure:\n- GA / ETT.\n- Port placed 5th ICS.\n- Drained 900ml fluid.\n- Saw nodules/plaques on pleura.\n- Took 12 biopsies.\n- Chest tube placed.\nComplications: Minor oozing, cauterized.",
     "cpt_codes": [
       32609
     ],
@@ -1453,6 +1504,12 @@
       "style_type": 4,
       "generated_name": "David Nelson",
       "generation_date": "2025-12-09T12:09:25.998413"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1568,7 +1625,7 @@
     }
   },
   {
-    "note_text": "Medical thoracoscopy was performed under general anesthesia for a 69-year-old male with suspected mesothelioma. Access was established at the right 5th intercostal space. 900 mL of serous fluid was drained. The parietal and diaphragmatic pleura showed diffuse nodular thickening. Twelve biopsies were obtained using rigid forceps. Minor bleeding was controlled with cautery and epinephrine. A 24 Fr chest tube was placed. The patient was admitted to the thoracic surgery floor.",
+    "note_text": "Medical thoracoscopy was performed under general <LOCATION> for a <DATE_TIME> male with suspected mesothelioma. Access was established at the right 5th intercostal space. 900 mL of serous fluid was drained. The parietal and diaphragmatic pleura showed diffuse nodular thickening. Twelve biopsies were obtained using rigid forceps. Minor bleeding was controlled with cautery and epinephrine. A 24 Fr chest tube was placed. The patient was admitted to the thoracic surgery floor.",
     "cpt_codes": [
       32609
     ],
@@ -1677,10 +1734,17 @@
       "style_type": 6,
       "generated_name": "Frank Perry",
       "generation_date": "2025-12-09T12:09:25.998470"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected malignant pleural mesothelioma, R pleural thickening.\n[Anesthesia]\nGeneral Anesthesia, ETT.\n[Description]\n900 mL fluid drained. Diffuse nodular/plaque-like thickening observed. 12 biopsies taken from parietal/diaphragmatic pleura. No pleurodesis.\n[Plan]\nPathology/IHC. PET/CT pending results.",
+    "note_text": "[Indication]\nSuspected malignant pleural mesothelioma, R pleural thickening.\n[<LOCATION>]\nGeneral <PERSON>, ETT.\n[Description]\n900 mL fluid drained. Diffuse nodular/plaque-like thickening observed. 12 biopsies taken from parietal/diaphragmatic pleura. No pleurodesis.\n[Plan]\nPathology/IHC. PET/CT pending results.",
     "cpt_codes": [
       32609
     ],
@@ -1789,10 +1853,17 @@
       "style_type": 7,
       "generated_name": "George Quinn",
       "generation_date": "2025-12-09T12:09:25.998501"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "The patient was brought to the operating room for a medical thoracoscopy to investigate suspected mesothelioma. After inducing general anesthesia, we accessed the right pleural space and drained 900 mL of fluid. The thoracoscopic view was significant for extensive nodular and plaque-like thickening covering the parietal and diaphragmatic pleura. We utilized rigid forceps to obtain twelve biopsies from these suspicious areas. Given the need for diagnostic clarity before staging, we opted not to perform pleurodesis. A chest tube was placed at the conclusion of the case.",
+    "note_text": "The patient was brought to the operating room for a medical thoracoscopy to investigate suspected mesothelioma. After inducing general <LOCATION>, we accessed the right pleural space and drained 900 mL of fluid. The thoracoscopic view was significant for extensive nodular and plaque-like thickening covering the parietal and diaphragmatic pleura. We utilized rigid forceps to obtain twelve biopsies from these suspicious areas. Given the need for diagnostic clarity before staging, we opted not to perform pleurodesis. A chest tube was placed at the conclusion of the case.",
     "cpt_codes": [
       32609
     ],
@@ -1901,6 +1972,12 @@
       "style_type": 8,
       "generated_name": "Henry Roberts",
       "generation_date": "2025-12-09T12:09:25.998527"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -2128,7 +2205,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Diagnostic Pleuroscopy.\nCLINICAL CONTEXT: 54-year-old female with seropositive rheumatoid arthritis presenting with recurrent exudative right pleural effusion.\nINTRAOPERATIVE FINDINGS: The pleural space was accessed, and 900 mL of turbid, yellow effusion was evacuated. The parietal pleural surface appeared diffusely erythematous with granular, whitish nodularity consistent with chronic inflammation. No gross malignancy was identified. Eight biopsy specimens were procured for histologic analysis. A 16 Fr chest tube was inserted for postoperative drainage.",
+    "note_text": "PROCEDURE NOTE: Diagnostic Pleuroscopy.\nCLINICAL CONTEXT: <DATE_TIME> female with seropositive rheumatoid arthritis presenting with recurrent exudative right pleural effusion.\nINTRAOPERATIVE FINDINGS: The pleural space was accessed, and 900 mL of turbid, yellow effusion was evacuated. The parietal pleural surface appeared diffusely erythematous with granular, whitish nodularity consistent with chronic inflammation. No gross malignancy was identified. Eight biopsy specimens were procured for histologic analysis. A 16 Fr chest tube was inserted for postoperative drainage.",
     "cpt_codes": [
       32609
     ],
@@ -2237,10 +2314,16 @@
       "style_type": 2,
       "generated_name": "Kathy Underwood",
       "generation_date": "2025-12-09T12:09:25.998611"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Service: 32609 Medical Thoracoscopy.\nSite: Right 6th intercostal space.\nProcedure: Drainage of 900mL exudative fluid. Visualization of inflamed pleura. Biopsy (x8) of parietal/diaphragmatic pleura using semi-rigid thoracoscope.\nDevice: 16 Fr chest tube placed.\nIndication: Rule out malignancy vs rheumatoid pleuritis.",
+    "note_text": "Service: 32609 Medical Thoracoscopy.\nSite: Right 6th intercostal space.\nProcedure: Drainage of 900mL exudative fluid. Visualization of inflamed pleura. <PERSON> (x8) of parietal/diaphragmatic pleura using semi-rigid thoracoscope.\nDevice: 16 Fr chest tube placed.\nIndication: Rule out malignancy vs rheumatoid pleuritis.",
     "cpt_codes": [
       32609
     ],
@@ -2349,10 +2432,16 @@
       "style_type": 3,
       "generated_name": "Laura Vance",
       "generation_date": "2025-12-09T12:09:25.998640"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Medical Thoracoscopy\nPatient: Isabella Martinez\nIndication: R effusion, RA.\nSteps:\n1. Sedation + local.\n2. Trocar in 6th ICS.\n3. Drained 900cc cloudy fluid.\n4. Biopsied inflamed pleura (8 samples).\n5. Chest tube placed.\nPlan: Rheum follow up.",
+    "note_text": "Procedure: Medical Thoracoscopy\nPatient: <PERSON>\nIndication: R effusion, RA.\nSteps:\n1. Sedation + local.\n2. Trocar in 6th ICS.\n3. Drained 900cc cloudy fluid.\n4. Biopsied inflamed pleura (8 samples).\n5. Chest tube placed.\nPlan: Rheum follow up.",
     "cpt_codes": [
       32609
     ],
@@ -2461,10 +2550,16 @@
       "style_type": 4,
       "generated_name": "Mary Walker",
       "generation_date": "2025-12-09T12:09:25.998668"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "patient isabella martinez with ra has a right effusion we did a thoracoscopy today. moderate sedation used. went in at the 6th space drained 900 ml cloudy fluid. pleura looked red and bumpy white nodules. took 8 biopsies to check for cancer vs ra lung. put in a small chest tube 16 french. no complications she is on the rheum floor.",
+    "note_text": "patient <PERSON> with ra has a right effusion we did a thoracoscopy today. moderate sedation used. went in at the 6th space drained 900 ml cloudy fluid. pleura looked red and bumpy white nodules. took 8 biopsies to check for cancer vs ra lung. put in a small chest tube 16 french. no complications she is on the rheum floor.",
     "cpt_codes": [
       32609
     ],
@@ -2573,10 +2668,16 @@
       "style_type": 5,
       "generated_name": "Nora Xavier",
       "generation_date": "2025-12-09T12:09:25.998697"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We performed a medical thoracoscopy on a 54-year-old female with rheumatoid arthritis and a recurrent right pleural effusion. Using moderate sedation, we accessed the right pleural space and drained 900 mL of cloudy yellow fluid. The parietal pleura was diffusely inflamed with small nodules. We took eight biopsies to differentiate between rheumatoid pleuritis and other causes. No pleurodesis was performed. A 16 Fr chest tube was left in place.",
+    "note_text": "We performed a medical thoracoscopy on a <DATE_TIME> female with rheumatoid arthritis and a recurrent right pleural effusion. Using moderate sedation, we accessed the right pleural space and drained 900 mL of cloudy yellow fluid. The parietal pleura was diffusely inflamed with small nodules. We took eight biopsies to differentiate between rheumatoid pleuritis and other causes. No pleurodesis was performed. A 16 Fr chest tube was left in place.",
     "cpt_codes": [
       32609
     ],
@@ -2685,10 +2786,16 @@
       "style_type": 6,
       "generated_name": "Olive Young",
       "generation_date": "2025-12-09T12:09:25.998723"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent R exudative effusion, h/o Rheumatoid Arthritis.\n[Anesthesia]\nModerate Sedation.\n[Description]\n900 mL cloudy fluid drained. Diffuse inflammation/nodules seen. 8 biopsies taken. 16 Fr chest tube placed.\n[Plan]\nHistology/Microbiology. Adjust RA meds.",
+    "note_text": "[Indication]\nRecurrent R exudative effusion, h/o Rheumatoid Arthritis.\n[<LOCATION>]\nModerate Sedation.\n[Description]\n900 mL cloudy fluid drained. Diffuse inflammation/nodules seen. 8 biopsies taken. 16 Fr chest tube placed.\n[Plan]\nHistology/Microbiology. Adjust RA meds.",
     "cpt_codes": [
       32609
     ],
@@ -2797,10 +2904,16 @@
       "style_type": 7,
       "generated_name": "Paula Zane",
       "generation_date": "2025-12-09T12:09:25.998751"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Martinez underwent a medical thoracoscopy to evaluate her recurrent right pleural effusion in the setting of rheumatoid arthritis. Under moderate sedation, we entered the chest cavity and removed 900 mL of cloudy fluid. The pleural lining appeared inflamed with multiple small white nodules scattered throughout. We obtained eight biopsies from the parietal and diaphragmatic surfaces to confirm the diagnosis. A 16 Fr chest tube was placed to allow for continued drainage.",
+    "note_text": "Ms. <PERSON> underwent a medical thoracoscopy to evaluate her recurrent right pleural effusion in the setting of rheumatoid arthritis. Under moderate sedation, we entered the chest cavity and removed 900 mL of cloudy fluid. The pleural lining appeared inflamed with multiple small white nodules scattered throughout. We obtained eight biopsies from the parietal and diaphragmatic surfaces to confirm the diagnosis. A 16 Fr chest tube was placed to allow for continued drainage.",
     "cpt_codes": [
       32609
     ],
@@ -2909,6 +3022,12 @@
       "style_type": 8,
       "generated_name": "Quinn Adams",
       "generation_date": "2025-12-09T12:09:25.998788"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3360,7 +3479,7 @@
     }
   },
   {
-    "note_text": "Procedure Note: Med Thoracoscopy\nPatient: Ahmed Ali\nIndication: R/O TB effusion.\nSteps:\n1. Mod sedation.\n2. Port @ 5th ICS.\n3. Drained 800cc fluid.\n4. Saw white nodules (TB?).\n5. Biopsied nodules.\n6. 16Fr chest tube.\nPlan: Isolation, empiric TB meds if path +.",
+    "note_text": "Procedure Note: <PERSON>\nPatient: <PERSON>\nIndication: R/O TB effusion.\nSteps:\n1. <PERSON> sedation.\n2. Port @ 5th ICS.\n3. Drained 800cc fluid.\n4. Saw white nodules (TB?).\n5. Biopsied nodules.\n6. 16Fr chest tube.\nPlan: Isolation, empiric TB meds if path +.",
     "cpt_codes": [
       32609
     ],
@@ -3469,10 +3588,18 @@
       "style_type": 4,
       "generated_name": "Victor Ford",
       "generation_date": "2025-12-09T12:09:25.998933"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "did a thoracoscopy on mr ali for his left effusion thinking it's tb. sedation was fine. put the scope in the 5th space drained 800 ml straw fluid. saw a lot of white nodules and adhesions everywhere looks like tb. took biopsies sent for afb and pcr. put a small chest tube in. sending him to id floor.",
+    "note_text": "did a thoracoscopy on mr ali for his left effusion thinking it's tb. sedation was fine. put the scope in the 5th space drained 800 ml straw fluid. saw a lot of white nodules and adhesions everywhere looks like tb. took biopsies sent for afb and pcr. put a small chest tube in. sending him to id <MRN>.",
     "cpt_codes": [
       32609
     ],
@@ -3581,10 +3708,16 @@
       "style_type": 5,
       "generated_name": "Walter Grey",
       "generation_date": "2025-12-09T12:09:25.998961"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "MRN"
+      ]
     }
   },
   {
-    "note_text": "A medical thoracoscopy was performed for suspected tuberculous pleuritis in a 46-year-old male. Using moderate sedation, the left pleural space was accessed at the 5th intercostal space. 800 mL of straw-colored fluid was drained. The parietal pleura showed diffuse white nodules and adhesions. Biopsies were taken for pathology and microbiology. A 16 Fr chest tube was inserted. The patient was admitted for observation.",
+    "note_text": "A medical thoracoscopy was performed for suspected tuberculous pleuritis in a <DATE_TIME> male. Using moderate sedation, the left pleural space was accessed at the 5th intercostal space. 800 mL of straw-colored fluid was drained. The parietal pleura showed diffuse white nodules and adhesions. Biopsies were taken for pathology and microbiology. A 16 Fr chest tube was inserted. The patient was admitted for observation.",
     "cpt_codes": [
       32609
     ],
@@ -3693,10 +3826,16 @@
       "style_type": 6,
       "generated_name": "Xander Hill",
       "generation_date": "2025-12-09T12:09:25.998989"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected TB pleuritis, lymphocytic effusion, high ADA.\n[Anesthesia]\nModerate Sedation.\n[Description]\n800 mL fluid drained. Diffuse white nodules/adhesions. Biopsies taken for AFB/Path. 16 Fr chest tube placed.\n[Plan]\nInfectious Disease admission. Await culture/PCR.",
+    "note_text": "[Indication]\nSuspected TB pleuritis, lymphocytic effusion, high ADA.\n[<LOCATION>]\nModerate Sedation.\n[Description]\n800 mL fluid drained. Diffuse white nodules/adhesions. Biopsies taken for AFB/Path. 16 Fr chest tube placed.\n[Plan]\nInfectious Disease admission. Await culture/PCR.",
     "cpt_codes": [
       32609
     ],
@@ -3805,10 +3944,16 @@
       "style_type": 7,
       "generated_name": "Yusuf Irwin",
       "generation_date": "2025-12-09T12:09:25.999019"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Ali underwent a medical thoracoscopy to investigate a suspected tuberculous pleural effusion. After sedation, we introduced the thoracoscope and drained 800 mL of fluid. The inspection revealed widespread white nodules and adhesions on the parietal pleura, strongly suggestive of TB. We obtained multiple biopsies from the chest wall and diaphragm for confirmation. The procedure ended with the placement of a 16 Fr chest tube.",
+    "note_text": "Mr. <PERSON> underwent a medical thoracoscopy to investigate a suspected tuberculous pleural effusion. After sedation, we introduced the thoracoscope and drained 800 mL of fluid. The inspection revealed widespread white nodules and adhesions on the parietal pleura, strongly suggestive of TB. We obtained multiple biopsies from the chest wall and diaphragm for confirmation. The procedure ended with the placement of a 16 Fr chest tube.",
     "cpt_codes": [
       32609
     ],
@@ -3917,6 +4062,12 @@
       "style_type": 8,
       "generated_name": "Zachary James",
       "generation_date": "2025-12-09T12:09:25.999048"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4144,7 +4295,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Medical Thoracoscopy with Biopsy.\nPATIENT: 62-year-old female with metastatic gastric adenocarcinoma.\nINDICATION: New right-sided pleural effusion; rule out pleural carcinomatosis.\nFINDINGS: Thoracoscopy revealed 1000 mL of serous fluid. The diaphragmatic and basal parietal pleura were studded with multiple small implants and plaques. Ten biopsies were obtained for histologic confirmation and HER2 analysis. Pleurodesis was deferred. A 20 Fr chest tube was placed.",
+    "note_text": "OPERATIVE SUMMARY: Medical Thoracoscopy with <LOCATION>.\nPATIENT: <DATE_TIME> female with metastatic gastric adenocarcinoma.\nINDICATION: New right-sided pleural effusion; rule out pleural carcinomatosis.\nFINDINGS: Thoracoscopy revealed 1000 mL of serous fluid. The diaphragmatic and basal parietal pleura were studded with multiple small implants and plaques. Ten biopsies were obtained for histologic confirmation and <LOCATION> analysis. Pleurodesis was deferred. A 20 Fr chest tube was placed.",
     "cpt_codes": [
       32609
     ],
@@ -4253,6 +4404,14 @@
       "style_type": 2,
       "generated_name": "Cathy Miller",
       "generation_date": "2025-12-09T12:09:25.999141"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -4368,7 +4527,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Mei Chen\nDx: Gastric CA, new effusion.\nProc: Med Thoracoscopy.\nSteps:\n1. GA / ETT.\n2. Scope in R 6th ICS.\n3. Drained 1L.\n4. Biopsied nodules on diaphragm.\n5. Chest tube 20Fr.\nPlan: Oncology to review path.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nDx: <PERSON>, new effusion.\nProc: Med Thoracoscopy.\nSteps:\n1. GA / ETT.\n2. Scope in R 6th ICS.\n3. Drained 1L.\n4. Biopsied nodules on diaphragm.\n5. Chest tube <DATE_TIME>.\nPlan: Oncology to review path.",
     "cpt_codes": [
       32609
     ],
@@ -4477,10 +4636,18 @@
       "style_type": 4,
       "generated_name": "Ellen Otis",
       "generation_date": "2025-12-09T12:09:25.999199"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "procedure note for mei chen she has stomach cancer and now fluid on the right lung. we did a thoracoscopy under ga. drained a liter of fluid. saw some nodules on the bottom pleura looks like mets. took 10 biopsies sent for her2 testing. didnt do pleurodesis cause they might do chemo. chest tube is in.",
+    "note_text": "procedure note for <PERSON> she has stomach cancer and now fluid on the right lung. we did a thoracoscopy under ga. drained a liter of fluid. saw some nodules on the bottom pleura looks like mets. took 10 biopsies sent for her2 testing. didnt do pleurodesis cause they might do chemo. chest tube is in.",
     "cpt_codes": [
       32609
     ],
@@ -4589,10 +4756,16 @@
       "style_type": 5,
       "generated_name": "Fran Parker",
       "generation_date": "2025-12-09T12:09:25.999227"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical thoracoscopy was performed on a 62-year-old female with metastatic gastric cancer and a new right pleural effusion. Under general anesthesia, the right pleural space was entered. 1.0 L of serous fluid was drained. Small nodules and plaques were visualized on the diaphragmatic and basal pleura. Ten biopsies were obtained. A 20 Fr chest tube was placed. No pleurodesis was performed.",
+    "note_text": "Medical thoracoscopy was performed on a <DATE_TIME> female with metastatic gastric cancer and a new right pleural effusion. Under general <LOCATION>, the right pleural space was entered. 1.0 L of serous fluid was drained. Small nodules and plaques were visualized on the diaphragmatic and basal pleura. Ten biopsies were obtained. A 20 Fr chest tube was placed. No pleurodesis was performed.",
     "cpt_codes": [
       32609
     ],
@@ -4701,10 +4874,17 @@
       "style_type": 6,
       "generated_name": "Gail Reed",
       "generation_date": "2025-12-09T12:09:25.999258"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nR pleural effusion, metastatic gastric adenocarcinoma.\n[Anesthesia]\nGeneral Anesthesia.\n[Description]\n1.0 L fluid drained. Nodules/plaques on diaphragm/basal pleura. 10 biopsies taken. 20 Fr chest tube placed.\n[Plan]\nPathology (HER2). Tumor board discussion.",
+    "note_text": "[Indication]\nR pleural effusion, metastatic gastric adenocarcinoma.\n[<LOCATION>]\nGeneral <LOCATION>.\n[Description]\n1.0 <LOCATION> drained. Nodules/plaques on diaphragm/basal pleura. 10 biopsies taken. 20 Fr chest tube placed.\n[Plan]\nPathology (HER2). Tumor board discussion.",
     "cpt_codes": [
       32609
     ],
@@ -4813,10 +4993,18 @@
       "style_type": 7,
       "generated_name": "Holly Scott",
       "generation_date": "2025-12-09T12:09:25.999287"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Chen was brought to the procedure suite for a medical thoracoscopy to evaluate a new right pleural effusion in the context of her gastric cancer. After inducing general anesthesia, we drained 1.0 L of fluid. We observed multiple small nodules and plaques on the diaphragm and lower chest wall. We took ten biopsies from these areas to confirm metastasis and checking HER2 status. We decided not to perform pleurodesis at this time. A 20 Fr chest tube was inserted.",
+    "note_text": "Ms. <PERSON> was brought to the procedure suite for a medical thoracoscopy to evaluate a new right pleural effusion in the context of her gastric cancer. After inducing general <LOCATION>, we drained 1.0 L of fluid. We observed multiple small nodules and plaques on the diaphragm and lower chest wall. We took ten biopsies from these areas to confirm metastasis and checking HER2 status. We decided not to perform pleurodesis at this time. A 20 Fr chest tube was inserted.",
     "cpt_codes": [
       32609
     ],
@@ -4925,10 +5113,17 @@
       "style_type": 8,
       "generated_name": "Irene Tate",
       "generation_date": "2025-12-09T12:09:25.999315"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Thoracoscopic inspection and tissue sampling.\nContext: Gastric malignancy with new effusion.\nFindings: 1L fluid removed. Pleural implants noted. Specimens collected (10x). No sclerosis. Catheter placed.",
+    "note_text": "Procedure: Thoracoscopic inspection and tissue sampling.\nContext: Gastric malignancy with new effusion.\nFindings: 1L fluid removed. Pleural implants noted. Specimens collected (<DATE_TIME>). No sclerosis. Catheter placed.",
     "cpt_codes": [
       32609
     ],
@@ -5037,6 +5232,12 @@
       "style_type": 9,
       "generated_name": "Judy Ursa",
       "generation_date": "2025-12-09T12:09:25.999343"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -5264,7 +5465,7 @@
     }
   },
   {
-    "note_text": "Code: 32609.\nIndication: Undiagnosed pleural effusion (R/O Amiodarone toxicity).\nProcedure: Right medical thoracoscopy via 6th ICS. 700 mL fluid drained. Biopsy (x6) of thickened parietal pleura. \nPost-procedure: 16 Fr chest tube.",
+    "note_text": "Code: 32609.\nIndication: Undiagnosed pleural effusion (R/O Amiodarone toxicity).\nProcedure: Right medical thoracoscopy via 6th ICS. 700 mL fluid drained. <PERSON> (x6) of thickened parietal pleura. \nPost-procedure: 16 Fr chest tube.",
     "cpt_codes": [
       32609
     ],
@@ -5373,10 +5574,16 @@
       "style_type": 3,
       "generated_name": "Mona Yates",
       "generation_date": "2025-12-09T12:09:25.999478"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Med Thoracoscopy\nPatient: Zoe Ramirez\nIndication: ?Amiodarone lung/pleura.\nSteps:\n1. Mod sed.\n2. Scope R 6th ICS.\n3. 700ml fluid out.\n4. Pleura looked red/thick, no masses.\n5. Biopsies taken.\n6. 16Fr tube.\nPlan: Check path, maybe stop amio.",
+    "note_text": "Procedure: <PERSON>\nPatient: <PERSON>\nIndication: ?Amiodarone lung/pleura.\nSteps:\n1. <PERSON> sed.\n2. Scope R 6th ICS.\n3. 700ml fluid out.\n4. Pleura looked red/thick, no masses.\n5. Biopsies taken.\n6. 16Fr tube.\nPlan: Check path, maybe stop amio.",
     "cpt_codes": [
       32609
     ],
@@ -5485,6 +5692,14 @@
       "style_type": 4,
       "generated_name": "Nina Zola",
       "generation_date": "2025-12-09T12:09:25.999523"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -5600,7 +5815,7 @@
     }
   },
   {
-    "note_text": "We performed a medical thoracoscopy on a 39-year-old female to investigate a right-sided eosinophilic pleural effusion, possibly secondary to amiodarone. Under moderate sedation, we drained 700 mL of serous fluid. The pleura appeared mildly thickened with petechiae but no obvious nodules. Six biopsies were taken for histology. A 16 Fr chest tube was placed.",
+    "note_text": "We performed a medical thoracoscopy on a <DATE_TIME> female to investigate a right-sided eosinophilic pleural effusion, possibly secondary to amiodarone. Under moderate sedation, we drained 700 mL of serous fluid. The pleura appeared mildly thickened with petechiae but no obvious nodules. Six biopsies were taken for histology. A 16 Fr chest tube was placed.",
     "cpt_codes": [
       32609
     ],
@@ -5709,10 +5924,16 @@
       "style_type": 6,
       "generated_name": "Patty Bell",
       "generation_date": "2025-12-09T12:09:25.999589"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nR eosinophilic pleural effusion, ?Amiodarone toxicity.\n[Anesthesia]\nModerate Sedation.\n[Description]\n700 mL fluid drained. Mild pleural thickening/petechiae. 6 biopsies taken. 16 Fr chest tube placed.\n[Plan]\nPathology. Cardiology consult.",
+    "note_text": "[Indication]\nR eosinophilic pleural effusion, ?Amiodarone toxicity.\n[<LOCATION>]\nModerate Sedation.\n[Description]\n700 mL fluid drained. Mild pleural thickening/petechiae. 6 biopsies taken. 16 Fr chest tube placed.\n[Plan]\nPathology. Cardiology consult.",
     "cpt_codes": [
       32609
     ],
@@ -5821,10 +6042,16 @@
       "style_type": 7,
       "generated_name": "Queen Cole",
       "generation_date": "2025-12-09T12:09:25.999618"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Ramirez underwent a medical thoracoscopy to evaluate her right pleural effusion, which is suspected to be related to her amiodarone therapy. We drained 700 mL of fluid and inspected the pleura, finding mild thickening and some petechial spots but no distinct masses. We collected six biopsies to rule out other causes. A 16 Fr chest tube was inserted for drainage.",
+    "note_text": "Ms. <PERSON> underwent a medical thoracoscopy to evaluate her right pleural effusion, which is suspected to be related to her amiodarone therapy. We drained 700 mL of fluid and inspected the pleura, finding mild thickening and some petechial spots but no distinct masses. We collected six biopsies to rule out other causes. A 16 Fr chest tube was inserted for drainage.",
     "cpt_codes": [
       32609
     ],
@@ -5933,6 +6160,12 @@
       "style_type": 8,
       "generated_name": "Rita Day",
       "generation_date": "2025-12-09T12:09:25.999650"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6160,7 +6393,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NOTE: Medical Thoracoscopy.\nPATIENT: 48-year-old male with Diffuse Large B-Cell Lymphoma.\nINDICATION: New left pleural effusion; rule out pleural involvement.\nFINDINGS: 1200 mL of serous fluid was evacuated. The parietal pleura showed mild thickening with scattered pale nodules. Biopsies were obtained for histology, flow cytometry, and cytogenetics to confirm lymphomatous involvement. A 20 Fr chest tube was placed.",
+    "note_text": "OPERATIVE NOTE: Medical Thoracoscopy.\nPATIENT: <DATE_TIME> male with Diffuse Large B-Cell Lymphoma.\nINDICATION: New left pleural effusion; rule out pleural involvement.\nFINDINGS: 1200 mL of serous fluid was evacuated. The parietal pleura showed mild thickening with scattered pale nodules. Biopsies were obtained for histology, flow cytometry, and cytogenetics to confirm lymphomatous involvement. A 20 Fr chest tube was placed.",
     "cpt_codes": [
       32609
     ],
@@ -6269,6 +6502,12 @@
       "style_type": 2,
       "generated_name": "Cal Good",
       "generation_date": "2025-12-09T12:09:25.999742"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -6384,7 +6623,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Connor Davis\nDx: Lymphoma, new effusion.\nProc: Med Thoracoscopy.\nSteps:\n1. GA / ETT.\n2. Scope L 6th ICS.\n3. Drained 1.2L.\n4. Biopsied pale nodules.\n5. Sent for flow.\n6. Chest tube 20Fr.\nPlan: Chemo adjustment.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nDx: Lymphoma, new effusion.\nProc: Med Thoracoscopy.\nSteps:\n1. GA / ETT.\n2. Scope L 6th ICS.\n3. Drained 1.2L.\n4. Biopsied pale nodules.\n5. Sent for flow.\n6. Chest tube <DATE_TIME>.\nPlan: Chemo adjustment.",
     "cpt_codes": [
       32609
     ],
@@ -6493,10 +6732,17 @@
       "style_type": 4,
       "generated_name": "Eli Ivy",
       "generation_date": "2025-12-09T12:09:25.999802"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "connor davis has lymphoma and a new effusion on the left. did a thoracoscopy under general. drained 1200 ml fluid. saw some pale bumps on the pleura prob lymphoma. took 10 biopsies sent for flow and genetics. tube is in. admitting to heme.",
+    "note_text": "connor <PERSON> has lymphoma and a new effusion on the left. did a thoracoscopy under general. drained 1200 ml fluid. saw some pale bumps on the pleura prob lymphoma. took 10 biopsies sent for flow and genetics. tube is in. admitting to heme.",
     "cpt_codes": [
       32609
     ],
@@ -6605,10 +6851,16 @@
       "style_type": 5,
       "generated_name": "Fred Jack",
       "generation_date": "2025-12-09T12:09:25.999829"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical thoracoscopy was performed on a 48-year-old male with DLBCL and a new left pleural effusion. Under general anesthesia, 1.2 L of serous fluid was drained. Mild pleural thickening and pale nodules were observed. Ten biopsies were taken for histology and flow cytometry. A 20 Fr chest tube was placed. No complications occurred.",
+    "note_text": "Medical thoracoscopy was performed on a <DATE_TIME> male with DLBCL and a new left pleural effusion. Under general <LOCATION>, 1.2 L of serous fluid was drained. Mild pleural thickening and pale nodules were observed. Ten biopsies were taken for histology and flow cytometry. A 20 Fr chest tube was placed. No complications occurred.",
     "cpt_codes": [
       32609
     ],
@@ -6717,10 +6969,17 @@
       "style_type": 6,
       "generated_name": "Gus Kent",
       "generation_date": "2025-12-09T12:09:25.999858"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nL pleural effusion, DLBCL.\n[Anesthesia]\nGeneral Anesthesia.\n[Description]\n1.2 L fluid drained. Pale pleural nodules seen. 10 biopsies for Flow/Cyto. 20 Fr chest tube placed.\n[Plan]\nHeme/Onc follow-up.",
+    "note_text": "[Indication]\nL pleural effusion, DLBCL.\n[<LOCATION>]\nGeneral <LOCATION>.\n[Description]\n1.2 L fluid drained. Pale pleural nodules seen. 10 biopsies for Flow/Cyto. 20 Fr chest tube placed.\n[Plan]\nHeme/Onc follow-up.",
     "cpt_codes": [
       32609
     ],
@@ -6829,10 +7088,17 @@
       "style_type": 7,
       "generated_name": "Hal Lee",
       "generation_date": "2025-12-09T12:09:25.999888"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Davis underwent a medical thoracoscopy to investigate a new left pleural effusion in the setting of his lymphoma. We drained 1.2 liters of fluid and found the pleura to be mildly thickened with scattered pale nodules. We obtained ten biopsies to send for flow cytometry and other studies to confirm if the lymphoma has spread to the pleura. A 20 Fr chest tube was placed at the end of the procedure.",
+    "note_text": "Mr. <PERSON> underwent a medical thoracoscopy to investigate a new left pleural effusion in the setting of his lymphoma. We drained 1.2 liters of fluid and found the pleura to be mildly thickened with scattered pale nodules. We obtained ten biopsies to send for flow cytometry and other studies to confirm if the lymphoma has spread to the pleura. A 20 Fr chest tube was placed at the end of the procedure.",
     "cpt_codes": [
       32609
     ],
@@ -6941,10 +7207,16 @@
       "style_type": 8,
       "generated_name": "Ike Mann",
       "generation_date": "2025-12-09T12:09:25.999979"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Thoracoscopic exploration and sampling.\nContext: Lymphoma with effusion.\nFindings: 1.2L fluid removed. Pale nodules visualized. Specimens collected (10x) for analysis. Catheter secured.",
+    "note_text": "Procedure: Thoracoscopic exploration and sampling.\nContext: Lymphoma with effusion.\nFindings: 1.2L fluid removed. Pale nodules visualized. Specimens collected (<DATE_TIME>) for analysis. Catheter secured.",
     "cpt_codes": [
       32609
     ],
@@ -7053,6 +7325,12 @@
       "style_type": 9,
       "generated_name": "Joe Nash",
       "generation_date": "2025-12-09T12:09:26.000010"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -7280,7 +7558,7 @@
     }
   },
   {
-    "note_text": "Code: 32609.\nIndication: R/O Malignancy in HF patient.\nProcedure: Right medical thoracoscopy. 1.5 L fluid drained. Random parietal pleural biopsies (x6) taken despite benign gross appearance. 20 Fr chest tube placed.",
+    "note_text": "Code: 32609.\nIndication: R/O Malignancy in <LOCATION> patient.\nProcedure: Right medical thoracoscopy. 1.5 <LOCATION> drained. Random parietal pleural biopsies (x6) taken despite benign gross appearance. 20 Fr chest tube placed.",
     "cpt_codes": [
       32609
     ],
@@ -7389,10 +7667,17 @@
       "style_type": 3,
       "generated_name": "Max Quay",
       "generation_date": "2025-12-09T12:09:26.000098"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Med Thoracoscopy\nPatient: William Scott\nIndication: HF effusion w/ weird cells.\nSteps:\n1. Mod sed.\n2. Scope R 7th ICS.\n3. Drained 1.5L clear fluid.\n4. Pleura looked normal.\n5. Random biopsies taken.\n6. 20Fr tube.\nPlan: Cardiology admit.",
+    "note_text": "Procedure: <PERSON>\nPatient: <PERSON>\nIndication: HF effusion w/ weird cells.\nSteps:\n1. <PERSON> sed.\n2. Scope R 7th ICS.\n3. Drained 1.5L clear fluid.\n4. Pleura looked normal.\n5. Random biopsies taken.\n6. 20Fr tube.\nPlan: Cardiology admit.",
     "cpt_codes": [
       32609
     ],
@@ -7501,10 +7786,18 @@
       "style_type": 4,
       "generated_name": "Ned Ray",
       "generation_date": "2025-12-09T12:09:26.000126"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "mr scott has heart failure and a big effusion with some weird cells. did a thoracoscopy to be sure. drained 1.5 liters clear fluid. pleura looked totally fine smooth. took random biopsies anyway just to check. put a 20 french tube in. back to cardio floor.",
+    "note_text": "mr <PERSON> has heart failure and a big effusion with some weird cells. did a thoracoscopy to be sure. drained 1.5 liters clear fluid. pleura looked totally fine smooth. took random biopsies anyway just to check. put a 20 french tube in. back to cardio floor.",
     "cpt_codes": [
       32609
     ],
@@ -7613,10 +7906,16 @@
       "style_type": 5,
       "generated_name": "Otis Sims",
       "generation_date": "2025-12-09T12:09:26.000155"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We performed a medical thoracoscopy on a 74-year-old male with heart failure and a large right pleural effusion with atypical cytology. Under moderate sedation, 1.5 L of clear fluid was drained. The pleura appeared smooth and benign. Six random biopsies were taken to rule out occult malignancy. A 20 Fr chest tube was placed.",
+    "note_text": "We performed a medical thoracoscopy on a <DATE_TIME> male with heart failure and a large right pleural effusion with atypical cytology. Under moderate sedation, 1.5 L of clear fluid was drained. The pleura appeared smooth and benign. Six random biopsies were taken to rule out occult malignancy. A 20 Fr chest tube was placed.",
     "cpt_codes": [
       32609
     ],
@@ -7725,10 +8024,16 @@
       "style_type": 6,
       "generated_name": "Paul Todd",
       "generation_date": "2025-12-09T12:09:26.000184"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nR pleural effusion, HF, atypical cytology.\n[Anesthesia]\nModerate Sedation.\n[Description]\n1.5 L clear fluid drained. Smooth pleura. 6 random biopsies taken. 20 Fr chest tube placed.\n[Plan]\nCardiology management. Await path.",
+    "note_text": "[Indication]\nR pleural effusion, HF, atypical cytology.\n[<LOCATION>]\nModerate Sedation.\n[Description]\n1.5 L clear fluid drained. Smooth pleura. 6 random biopsies taken. 20 Fr chest tube placed.\n[Plan]\nCardiology management. Await path.",
     "cpt_codes": [
       32609
     ],
@@ -7837,10 +8142,16 @@
       "style_type": 7,
       "generated_name": "Quincy Ury",
       "generation_date": "2025-12-09T12:09:26.000211"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Scott underwent a medical thoracoscopy to investigate his large right pleural effusion, which had shown atypical cells despite his history of heart failure. We drained 1.5 liters of clear fluid. The pleura looked healthy and smooth, but we took six random biopsies to be certain there was no malignancy. A 20 Fr chest tube was inserted to continue drainage.",
+    "note_text": "Mr. <PERSON> underwent a medical thoracoscopy to investigate his large right pleural effusion, which had shown atypical cells despite his history of heart failure. We drained 1.5 liters of clear fluid. The pleura looked healthy and smooth, but we took six random biopsies to be certain there was no malignancy. A 20 Fr chest tube was inserted to continue drainage.",
     "cpt_codes": [
       32609
     ],
@@ -7949,6 +8260,12 @@
       "style_type": 8,
       "generated_name": "Ray Vale",
       "generation_date": "2025-12-09T12:09:26.000238"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8288,7 +8605,7 @@
     }
   },
   {
-    "note_text": "CPT: 32609.\nDiagnosis: Suspected Sarcoid Pleuritis.\nProcedure: Right medical thoracoscopy via 5th ICS. Drainage of 600 mL exudate. Biopsy (x8) of nodular parietal pleura.\nPost-op: 16 Fr chest tube.",
+    "note_text": "CPT: 32609.\nDiagnosis: Suspected Sarcoid Pleuritis.\nProcedure: Right medical thoracoscopy via 5th ICS. Drainage of 600 mL exudate. <PERSON> (x8) of nodular parietal pleura.\nPost-op: 16 Fr chest tube.",
     "cpt_codes": [
       32609
     ],
@@ -8397,10 +8714,16 @@
       "style_type": 3,
       "generated_name": "Vera Zink",
       "generation_date": "2025-12-09T12:09:26.000352"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Med Thoracoscopy\nPatient: Natalie Perez\nIndication: Sarcoid effusion?\nSteps:\n1. Mod sed.\n2. Scope R 5th ICS.\n3. Drained 600cc.\n4. Saw fine nodules.\n5. Biopsied nodules.\n6. 16Fr tube.\nPlan: Pulm f/u.",
+    "note_text": "Procedure: <PERSON>\nPatient: <PERSON>\nIndication: <PERSON> effusion?\nSteps:\n1. <PERSON> sed.\n2. Scope R 5th ICS.\n3. Drained 600cc.\n4. Saw fine nodules.\n5. Biopsied nodules.\n6. 16Fr tube.\nPlan: Pulm f/u.",
     "cpt_codes": [
       32609
     ],
@@ -8509,10 +8832,19 @@
       "style_type": 4,
       "generated_name": "Wanda Ash",
       "generation_date": "2025-12-09T12:09:26.000431"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 4,
+      "entity_types": [
+        "PERSON",
+        "PERSON",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "natalie perez has sarcoid and a new effusion on the right. did a thoracoscopy to check it out. drained 600 ml yellow fluid. saw these little bumps on the ribs. took 8 biopsies. chest tube is in. admitting to pulmonary.",
+    "note_text": "<PERSON> has sarcoid and a new effusion on the right. did a thoracoscopy to check it out. drained 600 ml yellow fluid. saw these little bumps on the ribs. took 8 biopsies. chest tube is in. admitting to pulmonary.",
     "cpt_codes": [
       32609
     ],
@@ -8621,10 +8953,16 @@
       "style_type": 5,
       "generated_name": "Xena Barr",
       "generation_date": "2025-12-09T12:09:26.000468"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical thoracoscopy was performed on a 44-year-old female with sarcoidosis and a right pleural effusion. Under moderate sedation, 600 mL of yellow fluid was drained. The parietal pleura showed fine nodularity. Eight biopsies were obtained to confirm sarcoid pleuritis. A 16 Fr chest tube was placed.",
+    "note_text": "Medical thoracoscopy was performed on a <DATE_TIME> female with sarcoidosis and a right pleural effusion. Under moderate sedation, 600 mL of yellow fluid was drained. The parietal pleura showed fine nodularity. Eight biopsies were obtained to confirm sarcoid pleuritis. A 16 Fr chest tube was placed.",
     "cpt_codes": [
       32609
     ],
@@ -8733,10 +9071,16 @@
       "style_type": 6,
       "generated_name": "Yara Carr",
       "generation_date": "2025-12-09T12:09:26.000496"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nR pleural effusion, Sarcoidosis.\n[Anesthesia]\nModerate Sedation.\n[Description]\n600 mL fluid drained. Fine pleural nodularity. 8 biopsies taken. 16 Fr chest tube placed.\n[Plan]\nPathology (Granulomas). Adjust steroids.",
+    "note_text": "[Indication]\nR pleural effusion, Sarcoidosis.\n[<LOCATION>]\nModerate Sedation.\n[Description]\n600 mL fluid drained. Fine pleural nodularity. 8 biopsies taken. 16 Fr chest tube placed.\n[Plan]\nPathology (<PERSON>). Adjust steroids.",
     "cpt_codes": [
       32609
     ],
@@ -8845,10 +9189,17 @@
       "style_type": 7,
       "generated_name": "Zelda Dart",
       "generation_date": "2025-12-09T12:09:26.000528"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ms. Perez underwent a medical thoracoscopy to evaluate her right pleural effusion in the setting of sarcoidosis. We drained 600 mL of fluid and observed fine nodularity along the chest wall pleura. We took eight biopsies to confirm granulomatous inflammation. A 16 Fr chest tube was placed for drainage.",
+    "note_text": "Ms. <PERSON> underwent a medical thoracoscopy to evaluate her right pleural effusion in the setting of sarcoidosis. We drained 600 mL of fluid and observed fine nodularity along the chest wall pleura. We took eight biopsies to confirm granulomatous inflammation. A 16 Fr chest tube was placed for drainage.",
     "cpt_codes": [
       32609
     ],
@@ -8957,6 +9308,12 @@
       "style_type": 8,
       "generated_name": "Amy Eads",
       "generation_date": "2025-12-09T12:09:26.000558"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9184,7 +9541,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NOTE: Medical Thoracoscopy.\nPATIENT: 63-year-old male with metastatic colorectal adenocarcinoma.\nINDICATION: New symptomatic left pleural effusion.\nFINDINGS: 1000 mL of straw-colored fluid was evacuated. Inspection revealed scattered nodules and subtle plaques on the parietal pleura. Biopsies were obtained for histologic confirmation and molecular profiling (KRAS/NRAS). Pleurodesis was deferred pending treatment planning. A 20 Fr chest tube was placed.",
+    "note_text": "OPERATIVE NOTE: Medical Thoracoscopy.\nPATIENT: <DATE_TIME> male with metastatic colorectal adenocarcinoma.\nINDICATION: New symptomatic left pleural effusion.\nFINDINGS: 1000 mL of straw-colored fluid was evacuated. Inspection revealed scattered nodules and subtle plaques on the parietal pleura. Biopsies were obtained for histologic confirmation and molecular profiling (KRAS/NRAS). Pleurodesis was deferred pending treatment planning. A 20 Fr chest tube was placed.",
     "cpt_codes": [
       32609
     ],
@@ -9293,10 +9650,16 @@
       "style_type": 2,
       "generated_name": "Ulysses Hart",
       "generation_date": "2025-12-09T12:09:26.000664"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Code: 32609.\nIndication: Suspected Pleural Metastasis.\nProcedure: Left medical thoracoscopy. 1.0 L fluid drainage. Targeted biopsy (x8) of pleural nodules.\nPlan: Molecular testing to guide systemic therapy. 20 Fr chest tube.",
+    "note_text": "Code: 32609.\nIndication: Suspected Pleural Metastasis.\nProcedure: Left medical thoracoscopy. 1.0 <LOCATION>. Targeted biopsy (x8) of pleural nodules.\nPlan: Molecular testing to guide systemic therapy. 20 Fr chest tube.",
     "cpt_codes": [
       32609
     ],
@@ -9405,10 +9768,16 @@
       "style_type": 3,
       "generated_name": "Vince Inez",
       "generation_date": "2025-12-09T12:09:26.000692"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Jason Wright\nDx: Colon CA, effusion.\nProc: Med Thoracoscopy.\nSteps:\n1. GA / ETT.\n2. Scope L 6th ICS.\n3. Drained 1L.\n4. Biopsied nodules.\n5. Chest tube 20Fr.\nPlan: Onc f/u.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nDx: Colon CA, effusion.\nProc: Med Thoracoscopy.\nSteps:\n1. GA / ETT.\n2. Scope L 6th ICS.\n3. Drained 1L.\n4. Biopsied nodules.\n5. Chest tube <DATE_TIME>.\nPlan: Onc f/u.",
     "cpt_codes": [
       32609
     ],
@@ -9517,10 +9886,17 @@
       "style_type": 4,
       "generated_name": "Will Jett",
       "generation_date": "2025-12-09T12:09:26.000722"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "jason wright has colon cancer and fluid on the left. did a thoracoscopy under general. drained a liter. saw some nodules and plaques. took 8 biopsies for kras testing. didnt do pleurodesis cause chemo might change. chest tube is in.",
+    "note_text": "<PERSON> has colon cancer and fluid on the left. did a thoracoscopy under general. drained a liter. saw some nodules and plaques. took 8 biopsies for kras testing. didnt do pleurodesis cause chemo might change. chest tube is in.",
     "cpt_codes": [
       32609
     ],
@@ -9629,10 +10005,16 @@
       "style_type": 5,
       "generated_name": "Xavier Karr",
       "generation_date": "2025-12-09T12:09:26.000750"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical thoracoscopy was performed on a 63-year-old male with metastatic colorectal cancer and a left pleural effusion. Under general anesthesia, 1.0 L of fluid was drained. Scattered pleural nodules and plaques were biopsied. Eight samples were sent for pathology and molecular testing. A 20 Fr chest tube was placed. No pleurodesis was performed.",
+    "note_text": "Medical thoracoscopy was performed on a <DATE_TIME> male with metastatic colorectal cancer and a left pleural effusion. Under general <LOCATION>, 1.0 L of fluid was drained. Scattered pleural nodules and plaques were biopsied. Eight samples were sent for pathology and molecular testing. A 20 Fr chest tube was placed. No pleurodesis was performed.",
     "cpt_codes": [
       32609
     ],
@@ -9741,10 +10123,17 @@
       "style_type": 6,
       "generated_name": "Yuri Lane",
       "generation_date": "2025-12-09T12:09:26.000779"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nL pleural effusion, metastatic colon CA.\n[Anesthesia]\nGeneral Anesthesia.\n[Description]\n1.0 L fluid drained. Scattered nodules/plaques. 8 biopsies taken. 20 Fr chest tube placed.\n[Plan]\nOncology follow-up. Molecular testing.",
+    "note_text": "[Indication]\nL pleural effusion, metastatic colon CA.\n[<LOCATION>]\nGeneral <LOCATION>.\n[Description]\n1.0 <LOCATION> drained. Scattered nodules/plaques. 8 biopsies taken. 20 Fr chest tube placed.\n[Plan]\nOncology follow-up. Molecular testing.",
     "cpt_codes": [
       32609
     ],
@@ -9853,10 +10242,18 @@
       "style_type": 7,
       "generated_name": "Zack Moon",
       "generation_date": "2025-12-09T12:09:26.000818"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Wright underwent a medical thoracoscopy to evaluate a new left pleural effusion related to his metastatic colorectal cancer. We drained 1.0 L of fluid and found scattered nodules and plaques on the pleura. We obtained eight biopsies to confirm metastasis and for molecular testing. We decided against pleurodesis at this time. A 20 Fr chest tube was inserted.",
+    "note_text": "Mr. <PERSON> underwent a medical thoracoscopy to evaluate a new left pleural effusion related to his metastatic colorectal cancer. We drained 1.0 L of fluid and found scattered nodules and plaques on the pleura. We obtained eight biopsies to confirm metastasis and for molecular testing. We decided against pleurodesis at this time. A 20 Fr chest tube was inserted.",
     "cpt_codes": [
       32609
     ],
@@ -9965,6 +10362,12 @@
       "style_type": 8,
       "generated_name": "Al North",
       "generation_date": "2025-12-09T12:09:26.000846"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

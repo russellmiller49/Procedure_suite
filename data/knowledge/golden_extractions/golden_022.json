@@ -526,7 +526,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy with multiple diagnostic interventions.\nTechnique:\n1. 31624: Bronchoscope wedged in Right Middle Lobe; 100mL saline instilled/aspirated for BAL.\n2. 31628: Scope repositioned to Right Lower Lobe. Fluoroscopy utilized to guide forceps to periphery. Six (6) biopsies obtained from single lobe (RLL).\nJustification: Diagnostic evaluation of ILD. Samples sent for pathology and micro.",
+    "note_text": "Procedure: Bronchoscopy with multiple diagnostic interventions.\nTechnique:\n1. 31624: <PERSON> wedged in Right Middle Lobe; 100mL saline instilled/aspirated for BAL.\n2. 31628: Scope repositioned to Right Lower Lobe. Fluoroscopy utilized to guide forceps to periphery. Six (6) biopsies obtained from single lobe (RLL).\nJustification: Diagnostic evaluation of ILD. Samples sent for pathology and micro.",
     "cpt_codes": [
       31624,
       31628
@@ -786,10 +786,16 @@
       "style_type": 3,
       "generated_name": "Leia Organa",
       "generation_date": "2025-12-09T09:19:18.184388"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure Note\nResident: Dr. Doe\nAttending: Dr. Allen\nIndication: ILD workup.\nSteps:\n1. Time out.\n2. Sedation start.\n3. Airway inspection: Normal.\n4. BAL: RML (good return).\n5. Biopsy: RLL Lat Basal x 6. Fluoro used.\n6. Complications: Minimal bleeding.\nDisposition: Recovery.",
+    "note_text": "Procedure Note\nResident: Dr. Doe\nAttending: Dr. Allen\nIndication: ILD workup.\nSteps:\n1. Time out.\n2. Sedation start.\n3. Airway inspection: Normal.\n4. BAL: RML (good return).\n5. Biopsy: RLL Lat Basal x 6. <LOCATION> used.\n6. Complications: Minimal bleeding.\nDisposition: Recovery.",
     "cpt_codes": [
       31624,
       31628
@@ -1049,6 +1055,12 @@
       "style_type": 4,
       "generated_name": "Dana Scully",
       "generation_date": "2025-12-09T09:19:18.184459"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -1315,7 +1327,7 @@
     }
   },
   {
-    "note_text": "Flexible bronchoscopy with BAL and transbronchial biopsies for interstitial lung disease evaluation. Patient is a 53-year-old female with progressive dyspnea and bilateral ground-glass opacities. Moderate sedation with fentanyl and midazolam; native airway. Normal airways to subsegmental level. BAL performed in right middle lobe. Fluoroscopy-guided transbronchial biopsies (6 samples) obtained from right lower lobe lateral basal segment using standard forceps. Mild bleeding controlled with iced saline; no pneumothorax on postprocedure CXR. Discharged home from recovery area.",
+    "note_text": "Flexible bronchoscopy with BAL and transbronchial biopsies for interstitial lung disease evaluation. Patient is a <DATE_TIME> female with progressive dyspnea and bilateral ground-glass opacities. Moderate sedation with fentanyl and midazolam; native airway. Normal airways to subsegmental level. BAL performed in right middle lobe. Fluoroscopy-guided transbronchial biopsies (6 samples) obtained from right lower lobe lateral basal segment using standard forceps. Mild bleeding controlled with iced saline; no pneumothorax on postprocedure CXR. Discharged home from recovery area.",
     "cpt_codes": [
       31624,
       31628
@@ -1575,10 +1587,16 @@
       "style_type": 6,
       "generated_name": "Laurie Strode",
       "generation_date": "2025-12-09T09:19:18.184615"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nProgressive dyspnea, GGOs.\n[Anesthesia]\nModerate sedation (Fentanyl/Versed).\n[Description]\nScope advanced. RML lavaged (BAL). RLL lateral basal segment biopsied x6 using fluoro guidance. Hemostasis achieved.\n[Plan]\nDischarge home. Follow up in ILD clinic.",
+    "note_text": "[Indication]\nProgressive dyspnea, GGOs.\n[<LOCATION>]\nModerate sedation (Fentanyl/Versed).\n[Description]\nScope advanced. RML lavaged (BAL). RLL lateral basal segment biopsied x6 using fluoro guidance. Hemostasis achieved.\n[Plan]\nDischarge home. Follow up in ILD clinic.",
     "cpt_codes": [
       31624,
       31628
@@ -1838,6 +1856,12 @@
       "style_type": 7,
       "generated_name": "Sidney Prescott",
       "generation_date": "2025-12-09T09:19:18.184681"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -2367,7 +2391,7 @@
     }
   },
   {
-    "note_text": "Proc: Cryobiopsy ILD.\n- ETT/GA.\n- RLL basal segments target.\n- Radial EBUS: Safe zone confirmed.\n- 3x Cryobiopsy (1.9mm), 1x Forceps.\n- Blocker used for hemostasis.\n- No pneumo.",
+    "note_text": "Proc: Cryobiopsy ILD.\n- ETT/GA.\n- RLL basal segments target.\n- Radial EBUS: Safe zone confirmed.\n- 3x <PERSON> (1.9mm), 1x Forceps.\n- Blocker used for hemostasis.\n- No pneumo.",
     "cpt_codes": [
       31628
     ],
@@ -2603,10 +2627,16 @@
       "style_type": 1,
       "generated_name": "Juan Rico",
       "generation_date": "2025-12-09T09:19:18.184877"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "PROCEDURE NARRATIVE: Under general anesthesia, the bronchoscope was advanced to the right lower lobe. To minimize hemorrhage risk, a prophylactic bronchial blocker was positioned. Radial EBUS interrogation confirmed a target area free of major vasculature. Three large tissue samples were acquired via a 1.9 mm cryoprobe, supplemented by one standard forceps biopsy. Hemostasis was managed via temporary balloon inflation.",
+    "note_text": "PROCEDURE NARRATIVE: Under general <LOCATION>, the bronchoscope was advanced to the right lower lobe. To minimize hemorrhage risk, a prophylactic bronchial blocker was positioned. Radial EBUS interrogation confirmed a target area free of major vasculature. Three large tissue samples were acquired via a 1.9 mm cryoprobe, supplemented by one standard forceps biopsy. Hemostasis was managed via temporary balloon inflation.",
     "cpt_codes": [
       31628
     ],
@@ -2842,10 +2872,16 @@
       "style_type": 2,
       "generated_name": "Tony Montana",
       "generation_date": "2025-12-09T09:19:18.184937"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Coding Summary:\nCode 31628: Transbronchial lung biopsy, single lobe (RLL).\nTechnique: Cryoprobe activation (freezing) used to obtain parenchymal tissue. Note: Cryobiopsy for parenchymal disease is reported with 31628 (biopsy), not 31641 (cryotherapy).\nGuidance: Fluoroscopy and Radial EBUS utilized for safety.",
+    "note_text": "Coding Summary:\nCode 31628: Transbronchial lung biopsy, single lobe (RLL).\nTechnique: Cryoprobe activation (freezing) used to obtain parenchymal tissue. Note: <PERSON> for parenchymal disease is reported with <DATE_TIME> (biopsy), not <DATE_TIME> (cryotherapy).\nGuidance: Fluoroscopy and Radial EBUS utilized for safety.",
     "cpt_codes": [
       31628
     ],
@@ -3081,10 +3117,18 @@
       "style_type": 3,
       "generated_name": "Manny Ribera",
       "generation_date": "2025-12-09T09:19:18.185000"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Resident Note:\nProcedure: Cryobiopsy.\nSteps:\n1. Intubation 8.5 ETT.\n2. Scope to RLL.\n3. Radial EBUS check.\n4. Blocker placed.\n5. Cryoprobe: 3 passes RLL basals.\n6. Forceps: 1 pass.\n7. Bleeding controlled with blocker.\nPlan: Admit for obs.",
+    "note_text": "Resident Note:\nProcedure: <PERSON>.\nSteps:\n1. Intubation 8.5 ETT.\n2. Scope to RLL.\n3. Radial EBUS check.\n4. Blocker placed.\n5. Cryoprobe: 3 passes RLL basals.\n6. Forceps: 1 pass.\n7. Bleeding controlled with blocker.\nPlan: Admit for obs.",
     "cpt_codes": [
       31628
     ],
@@ -3320,10 +3364,16 @@
       "style_type": 4,
       "generated_name": "Chaucer",
       "generation_date": "2025-12-09T09:19:18.185060"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "carlos rivera 47 male ild study general anesthesia tube down scope to rll we used the radial ebus to check for vessels looked good put the bronchial blocker down just in case did three cryo biopsies with the 1.9 probe and one regular forcep biopsy little bleeding blew up the balloon and used cold saline stopped fine no pneumo on xray admitting for observation.",
+    "note_text": "<PERSON> 47 male ild study general <LOCATION> tube down scope to rll we used the radial ebus to check for vessels looked good put the bronchial blocker down just in case did three cryo biopsies with the 1.9 probe and one regular forcep biopsy little bleeding blew up the balloon and used cold saline stopped fine no pneumo on xray admitting for observation.",
     "cpt_codes": [
       31628
     ],
@@ -3559,10 +3609,17 @@
       "style_type": 5,
       "generated_name": "William Thatcher",
       "generation_date": "2025-12-09T09:19:18.185117"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Bronchoscopy with transbronchial cryobiopsies for interstitial lung disease. Patient is a 47-year-old male with suspected fibrotic ILD. General anesthesia with endotracheal intubation. Bronchoscope advanced to RLL; fluoroscopy and radial EBUS used to identify safe parenchymal target areas. Three cryobiopsies obtained from RLL basal segments using 1.9 mm cryoprobe and one standard forceps biopsy. Bronchial blocker placed prophylactically. Mild bleeding controlled with temporary bronchial blocker inflation and iced saline. No pneumothorax on postprocedure CXR. Admitted overnight for observation.",
+    "note_text": "Bronchoscopy with transbronchial cryobiopsies for interstitial lung disease. Patient is a <DATE_TIME> male with suspected fibrotic ILD. General <LOCATION> with endotracheal intubation. Bronchoscope advanced to RLL; fluoroscopy and radial EBUS used to identify safe parenchymal target areas. Three cryobiopsies obtained from RLL basal segments using 1.9 mm cryoprobe and one standard forceps biopsy. Bronchial blocker placed prophylactically. Mild bleeding controlled with temporary bronchial blocker inflation and iced saline. No pneumothorax on postprocedure CXR. Admitted overnight for observation.",
     "cpt_codes": [
       31628
     ],
@@ -3798,10 +3855,17 @@
       "style_type": 6,
       "generated_name": "Wat Tyler",
       "generation_date": "2025-12-09T09:19:18.185178"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected fibrotic ILD.\n[Anesthesia]\nGA, 8.5 ETT.\n[Description]\nRLL cannulated. Radial EBUS cleared target. Prophylactic blocker placed. 3 cryobiopsies + 1 forceps biopsy taken. Blocker inflated for hemostasis.\n[Plan]\nAdmit overnight. CXR in AM.",
+    "note_text": "[Indication]\nSuspected fibrotic ILD.\n[<LOCATION>]\nGA, 8.5 ETT.\n[Description]\nRLL cannulated. Radial EBUS cleared target. Prophylactic blocker placed. 3 cryobiopsies + 1 forceps biopsy taken. Blocker inflated for hemostasis.\n[Plan]\nAdmit overnight. CXR in AM.",
     "cpt_codes": [
       31628
     ],
@@ -4037,10 +4101,16 @@
       "style_type": 7,
       "generated_name": "Roland Deschain",
       "generation_date": "2025-12-09T09:19:18.185238"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a bronchoscopy with cryobiopsy on Mr. Rivera to investigate his ILD. Under general anesthesia, we navigated to the right lower lobe. We used radial EBUS to ensure we weren't near large vessels. We took three biopsies using the freezing probe and one with standard forceps. A bronchial blocker was used to manage the mild bleeding that occurred. He is being admitted for observation.",
+    "note_text": "We performed a bronchoscopy with cryobiopsy on Mr. <PERSON> to investigate his ILD. Under general <LOCATION>, we navigated to the right lower lobe. We used radial EBUS to ensure we weren't near large vessels. We took three biopsies using the freezing probe and one with standard forceps. A bronchial blocker was used to manage the mild bleeding that occurred. He is being admitted for observation.",
     "cpt_codes": [
       31628
     ],
@@ -4276,6 +4346,13 @@
       "style_type": 8,
       "generated_name": "Eddie Dean",
       "generation_date": "2025-12-09T09:19:18.185298"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -4518,7 +4595,7 @@
     }
   },
   {
-    "note_text": "Proc: Cryobiopsy LLL.\n- 3 samples (1.9mm probe).\n- Complication: Desaturation, absent breath sounds L.\n- Dx: Pneumothorax (Fluoro/US).\n- Rx: 14Fr Pigtail placed. Air evacuated.\n- Pt stable. Admitted.",
+    "note_text": "Proc: Cryobiopsy LLL.\n- 3 samples (1.9mm probe).\n- Complication: Desaturation, absent breath sounds L.\n- Dx: Pneumothorax (Fluoro/<LOCATION>).\n- Rx: 14Fr Pigtail placed. Air evacuated.\n- Pt stable. Admitted.",
     "cpt_codes": [
       31628,
       32551
@@ -4778,6 +4855,12 @@
       "style_type": 1,
       "generated_name": "Jessica Fletcher",
       "generation_date": "2025-12-09T09:19:18.185428"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -5044,7 +5127,7 @@
     }
   },
   {
-    "note_text": "Codes:\n- 31628: Transbronchial biopsy LLL (3 samples).\n- 32551: Tube thoracostomy (Chest tube) for iatrogenic pneumothorax.\nRationale: Separate distinct procedure required to manage complication (chest tube). Biopsy completed prior to event.",
+    "note_text": "Codes:\n- 31628: Transbronchial biopsy LLL (3 samples).\n- 32551: Tube thoracostomy (Chest tube) for iatrogenic pneumothorax.\nRationale: Separate distinct procedure required to manage complication (chest tube). <PERSON> completed prior to event.",
     "cpt_codes": [
       31628,
       32551
@@ -5304,10 +5387,16 @@
       "style_type": 3,
       "generated_name": "Harriet Vane",
       "generation_date": "2025-12-09T09:19:18.185599"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Cryobiopsy + Chest Tube\nPatient: Megan Collins\nEvents:\n1. ETT/GA.\n2. Cryobiopsy LLL x3.\n3. Patient crashed (Sat 85%, High Pressures).\n4. Fluoro showed pneumo.\n5. Pigtail catheter placed L side.\n6. Improved.\nPlan: Step-down unit.",
+    "note_text": "Procedure: Cryobiopsy + Chest Tube\nPatient: <PERSON>\nEvents:\n1. ETT/GA.\n2. Cryobiopsy LLL x3.\n3. Patient crashed (Sat 85%, High Pressures).\n4. <LOCATION> showed pneumo.\n5. Pigtail catheter placed L side.\n6. Improved.\nPlan: Step-down unit.",
     "cpt_codes": [
       31628,
       32551
@@ -5567,10 +5656,17 @@
       "style_type": 4,
       "generated_name": "Nancy Drew",
       "generation_date": "2025-12-09T09:19:18.185668"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "megan collins 60f hp suspicion general anesthesia we did cryobiopsy lll three samples on the last one pressures went up sats dropped breath sounds gone left side fluoro showed pneumothorax so we put in a pigtail chest tube 14 french suction applied patient stabilized lung came up admitting her to step down.",
+    "note_text": "<PERSON> 60f hp suspicion general <LOCATION> we did cryobiopsy lll three samples on the last one pressures went up sats dropped breath sounds gone left side fluoro showed pneumothorax so we put in a pigtail chest tube 14 french suction applied patient stabilized lung came up admitting her to step down.",
     "cpt_codes": [
       31628,
       32551
@@ -5830,10 +5926,17 @@
       "style_type": 5,
       "generated_name": "Veronica Mars",
       "generation_date": "2025-12-09T09:19:18.185736"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Bronchoscopy with transbronchial cryobiopsy complicated by pneumothorax. Patient is a 60-year-old female with suspected hypersensitivity pneumonitis. General anesthesia with ETT. Cryobiopsies obtained from left lower lobe basal segments using 1.9 mm cryoprobe (3 samples). Fluoroscopy used. After third biopsy, patient developed decreased breath sounds and rising airway pressures. Left pneumothorax confirmed on fluoroscopy and ultrasound. A 14 Fr pigtail chest tube placed with immediate improvement. Admitted to step-down unit with chest tube to suction.",
+    "note_text": "Bronchoscopy with transbronchial cryobiopsy complicated by pneumothorax. Patient is a <DATE_TIME> female with suspected hypersensitivity pneumonitis. General anesthesia with ETT. Cryobiopsies obtained from left lower lobe basal segments using 1.9 mm cryoprobe (3 samples). Fluoroscopy used. After third biopsy, patient developed decreased breath sounds and rising airway pressures. Left pneumothorax confirmed on fluoroscopy and ultrasound. A 14 Fr pigtail chest tube placed with immediate improvement. Admitted to step-down unit with chest tube to suction.",
     "cpt_codes": [
       31628,
       32551
@@ -6093,10 +6196,16 @@
       "style_type": 6,
       "generated_name": "Lisbeth Salander",
       "generation_date": "2025-12-09T09:19:18.185803"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected HP, Cryobiopsy.\n[Anesthesia]\nGA, ETT.\n[Description]\n3 Cryobiopsies taken LLL. Complicated by immediate pneumothorax. 14Fr Chest tube inserted. Lung expanded.\n[Plan]\nAdmit step-down. Suction. Daily CXR.",
+    "note_text": "[Indication]\nSuspected HP, <PERSON>.\n[<LOCATION>]\nGA, ETT.\n[Description]\n3 Cryobiopsies taken LLL. Complicated by immediate pneumothorax. 14Fr Chest tube inserted. Lung expanded.\n[Plan]\nAdmit step-down. Suction. Daily CXR.",
     "cpt_codes": [
       31628,
       32551
@@ -6356,6 +6465,13 @@
       "style_type": 7,
       "generated_name": "Hermione Granger",
       "generation_date": "2025-12-09T09:19:18.185872"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -6885,7 +7001,7 @@
     }
   },
   {
-    "note_text": "Proc: Robotic Bronch + RFA LLL.\n- Ion robot to 12mm lesion.\n- Confirmed: REBUS + Cone Beam CT.\n- Ablation: 50W / 600s / 90C.\n- Margins: +5mm achieved.\n- Mild bleeding. No pneumo.",
+    "note_text": "Proc: Robotic Bronch + RFA LLL.\n- Ion robot to 12mm lesion.\n- Confirmed: REBUS + Cone Beam CT.\n- Ablation: 50W / 600s / 90C.\n- Margins: <PERSON> achieved.\n- Mild bleeding. No pneumo.",
     "cpt_codes": [
       31641,
       31627,
@@ -7172,6 +7288,12 @@
       "style_type": 1,
       "generated_name": "Walter White",
       "generation_date": "2025-12-09T09:19:18.186087"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7465,7 +7587,7 @@
     }
   },
   {
-    "note_text": "Billing Codes:\n- 31641: Therapeutic bronchoscopy, destruction of tumor (RFA).\n- 31627: Navigational Bronchoscopy (Add-on).\n- 31654: EBUS Peripheral (Add-on).\nLogic: Navigation and REBUS used to localize. RFA used to destroy. Single session.",
+    "note_text": "Billing Codes:\n- <DATE_TIME>: Therapeutic bronchoscopy, destruction of tumor (RFA).\n- 31627: Navigational Bronchoscopy (Add-on).\n- 31654: EBUS Peripheral (Add-on).\nLogic: Navigation and REBUS used to localize. RFA used to destroy. Single session.",
     "cpt_codes": [
       31641,
       31627,
@@ -7752,6 +7874,12 @@
       "style_type": 3,
       "generated_name": "Saul Goodman",
       "generation_date": "2025-12-09T09:19:18.186329"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -8335,7 +8463,7 @@
     }
   },
   {
-    "note_text": "Robotic navigational bronchoscopy with radiofrequency ablation (RFA) of peripheral left lower lobe nodule. Patient is a 66-year-old male with oligometastatic colorectal cancer to lung. General anesthesia with ETT. Ion robotic platform used to access 12 mm LLL peripheral metastasis. Registration error 2.3 mm. Radial EBUS confirmed solid lesion; cone-beam CT confirmed tool-in-lesion. RFA probe advanced through working channel. Ablation performed at 50 W for 600 seconds with maximum temperature 90 degrees Celsius. Postablation cone-beam CT demonstrated satisfactory ablation zone with 5 mm margin. Mild perilesional hemorrhage without hemodynamic compromise. Admitted overnight for observation.",
+    "note_text": "Robotic navigational bronchoscopy with radiofrequency ablation (RFA) of peripheral left lower lobe nodule. Patient is a <DATE_TIME> male with oligometastatic colorectal cancer to lung. General anesthesia with ETT. Ion robotic platform used to access 12 mm LLL peripheral metastasis. Registration error 2.3 mm. Radial EBUS confirmed solid lesion; cone-beam CT confirmed tool-in-lesion. RFA probe advanced through working channel. Ablation performed at 50 W for 600 seconds with maximum temperature 90 degrees Celsius. Postablation cone-beam CT demonstrated satisfactory ablation zone with 5 mm margin. Mild perilesional hemorrhage without hemodynamic compromise. Admitted overnight for observation.",
     "cpt_codes": [
       31641,
       31627,
@@ -8622,10 +8750,16 @@
       "style_type": 6,
       "generated_name": "Hank Schrader",
       "generation_date": "2025-12-09T09:19:18.186613"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nOligometastatic CRC to Lung.\n[Anesthesia]\nGA, 8.5 ETT.\n[Description]\nIon Robot nav to LLL. REBUS/CBCT confirmed position. RFA performed (50W, 600s). Ablation zone confirmed on CBCT.\n[Plan]\nAdmit. CT Chest 3 mos.",
+    "note_text": "[Indication]\nOligometastatic CRC to Lung.\n[<LOCATION>]\nGA, 8.5 ETT.\n[Description]\nIon Robot nav to LLL. REBUS/CBCT confirmed position. RFA performed (50W, <PERSON>). Ablation zone confirmed on CBCT.\n[Plan]\nAdmit. CT Chest 3 mos.",
     "cpt_codes": [
       31641,
       31627,
@@ -8912,10 +9046,17 @@
       "style_type": 7,
       "generated_name": "Skyler White",
       "generation_date": "2025-12-09T09:19:18.186700"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We performed a robotic bronchoscopy to ablate a metastasis in Mr. Price's left lung. Using the Ion system and Cone-Beam CT, we perfectly targeted the 12mm nodule. We applied radiofrequency energy to destroy the tumor, reaching 90 degrees Celsius. The post-procedure scan showed we covered the whole tumor with a good margin. There was minimal bleeding and no complications.",
+    "note_text": "We performed a robotic bronchoscopy to ablate a metastasis in Mr. <PERSON>'s left lung. Using the Ion system and Cone-Beam CT, we perfectly targeted the 12mm nodule. We applied radiofrequency energy to destroy the tumor, reaching 90 degrees Celsius. The post-procedure scan showed we covered the whole tumor with a good margin. There was minimal bleeding and no complications.",
     "cpt_codes": [
       31641,
       31627,
@@ -9202,10 +9343,16 @@
       "style_type": 8,
       "generated_name": "Marie Schrader",
       "generation_date": "2025-12-09T09:19:18.186786"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Robotic navigational bronchoscopy with thermal destruction (RFA).\nAction: Ion platform navigated to LLL lesion. REBUS verified target. Thermal ablation executed at 50 W. Post-treatment imaging verified satisfactory necrosis zone.",
+    "note_text": "Procedure: Robotic navigational bronchoscopy with thermal destruction (RFA).\nAction: Ion platform navigated to LLL lesion. REBUS verified target. Thermal ablation executed at 50 <PERSON> imaging verified satisfactory necrosis zone.",
     "cpt_codes": [
       31641,
       31627,
@@ -9492,6 +9639,12 @@
       "style_type": 9,
       "generated_name": "Flynn White",
       "generation_date": "2025-12-09T09:19:18.186859"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10073,7 +10226,7 @@
     }
   },
   {
-    "note_text": "Coding: 31641 (Destruction/Relief) + 31627 (Nav) + 31654 (REBUS).\nDevice: Microwave Ablation Catheter.\nGuidance: EMN + CBCT + Fluoroscopy.\nTarget: Peripheral RUL nodule (RCC met).",
+    "note_text": "Coding: <DATE_TIME> (Destruction/Relief) + <DATE_TIME> (Nav) + 31654 (REBUS).\nDevice: Microwave Ablation Catheter.\nGuidance: EMN + CBCT + Fluoroscopy.\nTarget: Peripheral RUL nodule (RCC met).",
     "cpt_codes": [
       31641,
       31627,
@@ -10359,10 +10512,17 @@
       "style_type": 3,
       "generated_name": "Mary Bennet",
       "generation_date": "2025-12-09T09:19:18.187080"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Bronch MWA\nPt: Julia Bennett\nSteps:\n1. GA/ETT.\n2. Navigated to RUL using SuperD.\n3. REBUS/CBCT confirm.\n4. Microwaved: 60W for 7 mins.\n5. Pt coughed up 15cc blood, then stopped.\n6. Stable.\nPlan: Admit.",
+    "note_text": "Procedure: Bronch MWA\nPt: <PERSON>\nSteps:\n1. GA/ETT.\n2. Navigated to RUL using SuperD.\n3. REBUS/CBCT confirm.\n4. Microwaved: 60W for 7 mins.\n5. Pt coughed up 15cc blood, then stopped.\n6. Stable.\nPlan: Admit.",
     "cpt_codes": [
       31641,
       31627,
@@ -10648,6 +10808,12 @@
       "style_type": 4,
       "generated_name": "Kitty Bennet",
       "generation_date": "2025-12-09T09:19:18.187148"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10940,7 +11106,7 @@
     }
   },
   {
-    "note_text": "Bronchoscopic microwave ablation (MWA) of right upper lobe peripheral nodule. Patient is a 62-year-old female with solitary lung metastasis from renal cell carcinoma. General anesthesia with ETT. superDimension EMN platform used to reach 18 mm RUL posterior segment nodule. Fluoroscopy and cone-beam CT confirmed tool-in-lesion. Microwave antenna advanced through extended working channel. Ablation performed with Emprint MWA system at 60 W for 420 seconds. Postablation imaging demonstrated adequate ablation zone with 8 mm margin. Transient hemoptysis of approximately 15 mL, resolved spontaneously. Admitted overnight to telemetry.",
+    "note_text": "Bronchoscopic microwave ablation (MWA) of right upper lobe peripheral nodule. Patient is a <DATE_TIME> female with solitary lung metastasis from renal cell carcinoma. General anesthesia with ETT. superDimension EMN platform used to reach 18 mm RUL posterior segment nodule. Fluoroscopy and cone-beam CT confirmed tool-in-lesion. Microwave antenna advanced through extended working channel. Ablation performed with Emprint MWA system at 60 W for 420 seconds. Postablation imaging demonstrated adequate ablation zone with 8 mm margin. Transient hemoptysis of approximately 15 mL, resolved spontaneously. Admitted <DATE_TIME> to telemetry.",
     "cpt_codes": [
       31641,
       31627,
@@ -11226,10 +11392,17 @@
       "style_type": 6,
       "generated_name": "Charlotte Lucas",
       "generation_date": "2025-12-09T09:19:18.187297"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSolitary RCC Met RUL.\n[Anesthesia]\nGA.\n[Description]\nEMN nav to RUL. Confirmed w/ CBCT. MWA performed (60W, 420s). Good ablation zone.\n[Complications]\nSelf-limited hemoptysis (15mL).\n[Plan]\nAdmit Telemetry. CT 3 mos.",
+    "note_text": "[Indication]\nSolitary RCC Met RUL.\n[<LOCATION>]\nGA.\n[Description]\nEMN nav to RUL. Confirmed w/ CBCT. MWA performed (60W, <PERSON>). Good ablation zone.\n[Complications]\nSelf-limited hemoptysis (15mL).\n[Plan]\nAdmit Telemetry. CT 3 mos.",
     "cpt_codes": [
       31641,
       31627,
@@ -11515,10 +11688,17 @@
       "style_type": 7,
       "generated_name": "Caroline Bingley",
       "generation_date": "2025-12-09T09:19:18.187369"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ms. Bennett underwent bronchoscopic microwave ablation for her RUL tumor. We used electromagnetic navigation to guide the antenna to the spot, verifying it with CT. We treated the area with 60 Watts of energy for 7 minutes. She coughed up a little blood during the procedure, but it stopped quickly. The final scan showed the tumor was successfully treated with a safety margin.",
+    "note_text": "Ms. <PERSON> underwent bronchoscopic microwave ablation for her RUL tumor. We used electromagnetic navigation to guide the antenna to the spot, verifying it with CT. We treated the area with 60 Watts of energy for 7 minutes. She coughed up a little blood during the procedure, but it stopped quickly. The final scan showed the tumor was successfully treated with a safety margin.",
     "cpt_codes": [
       31641,
       31627,
@@ -11804,10 +11984,16 @@
       "style_type": 8,
       "generated_name": "Lady Catherine",
       "generation_date": "2025-12-09T09:19:18.187438"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopic microwave thermal therapy.\nTarget: RUL peripheral nodule.\nAction: Navigated via EMN. Position verified. Microwave energy applied (60W). Hemorrhage of 15 mL occurred but resolved. Ablation zone deemed adequate.",
+    "note_text": "Procedure: Bronchoscopic microwave thermal therapy.\nTarget: RUL peripheral nodule.\nAction: Navigated via EMN. Position verified. Microwave energy applied (<DATE_TIME>). Hemorrhage of 15 mL occurred but resolved. Ablation zone deemed adequate.",
     "cpt_codes": [
       31641,
       31627,
@@ -12093,6 +12279,12 @@
       "style_type": 9,
       "generated_name": "Georgiana Darcy",
       "generation_date": "2025-12-09T09:19:18.187508"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -13256,7 +13448,7 @@
     }
   },
   {
-    "note_text": "ryan cooper 69m nsclc poor lung fxn so doing ablation monarch robot used navigated to rll superior seg 16mm nodule confirmed with rebus and cone beam did cryoablation 3 cycles 5 mins each saw the ice ball covering the tumor little bit of hemoptysis and o2 drop but recovered fine admitted.",
+    "note_text": "<PERSON> 69m <PERSON> poor lung fxn so doing ablation monarch robot used navigated to rll superior seg 16mm nodule confirmed with rebus and cone beam did cryoablation 3 cycles 5 mins each saw the ice ball covering the tumor little bit of hemoptysis and o2 drop but recovered fine admitted.",
     "cpt_codes": [
       31641,
       31627,
@@ -13543,10 +13735,17 @@
       "style_type": 5,
       "generated_name": "John Doggett",
       "generation_date": "2025-12-09T09:19:18.187889"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Bronchoscopic cryoablation of peripheral right lower lobe lesion. Patient is a 69-year-old male with small presumed primary NSCLC not amenable to surgery. General anesthesia with ETT. Monarch robotic platform used to reach 16 mm RLL superior segment lesion. Radial EBUS and cone-beam CT confirmed tool-in-lesion. Flexible cryoprobe advanced and three freeze-thaw cycles performed (each 300 seconds). Postablation cone-beam CT demonstrated ice ball encompassing lesion with 5 mm margin. Mild transient hemoptysis and temporary increase in oxygen requirement; no pneumothorax. Admitted overnight to monitored bed.",
+    "note_text": "Bronchoscopic cryoablation of peripheral right lower lobe lesion. Patient is a <DATE_TIME> male with small presumed primary NSCLC not amenable to surgery. General anesthesia with ETT. Monarch robotic platform used to reach 16 mm RLL superior segment lesion. Radial EBUS and cone-beam CT confirmed tool-in-lesion. Flexible cryoprobe advanced and three freeze-thaw cycles performed (each 300 seconds). Postablation cone-beam CT demonstrated ice ball encompassing lesion with 5 mm margin. Mild transient hemoptysis and temporary increase in oxygen requirement; no pneumothorax. Admitted <DATE_TIME> to monitored bed.",
     "cpt_codes": [
       31641,
       31627,
@@ -13833,10 +14032,17 @@
       "style_type": 6,
       "generated_name": "Monica Reyes",
       "generation_date": "2025-12-09T09:19:18.187963"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nEarly stage NSCLC, non-surgical.\n[Anesthesia]\nGA.\n[Description]\nMonarch nav to RLL. Cryoablation x3 cycles (300s). Ice ball confirmed on CBCT.\n[Complications]\nMild hemoptysis, transient hypoxia.\n[Plan]\nAdmit. Oncology follow up.",
+    "note_text": "[Indication]\nEarly stage NSCLC, non-surgical.\n[<LOCATION>]\nGA.\n[Description]\nMonarch nav to RLL. Cryoablation <PERSON> cycles (300s). Ice ball confirmed on CBCT.\n[Complications]\nMild hemoptysis, transient hypoxia.\n[Plan]\nAdmit. Oncology follow up.",
     "cpt_codes": [
       31641,
       31627,
@@ -14123,10 +14329,17 @@
       "style_type": 7,
       "generated_name": "Deep Throat",
       "generation_date": "2025-12-09T09:19:18.188034"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We treated Mr. Cooper's lung cancer with cryoablation today. Using the Monarch robot, we guided a freezing probe directly into the tumor in his right lower lobe. We froze the tumor three times for 5 minutes each. The CT scan during the procedure showed a nice ice ball covering the whole area. He had a bit of bleeding and needed some extra oxygen for a moment, but he is doing well now.",
+    "note_text": "We treated Mr. <PERSON>'s lung cancer with cryoablation today. Using the Monarch robot, we guided a freezing probe directly into the tumor in his right lower lobe. We froze the tumor three times for 5 minutes each. The CT scan during the procedure showed a nice ice ball covering the whole area. He had a bit of bleeding and needed some extra oxygen for a moment, but he is doing well now.",
     "cpt_codes": [
       31641,
       31627,
@@ -14413,6 +14626,12 @@
       "style_type": 8,
       "generated_name": "X",
       "generation_date": "2025-12-09T09:19:18.188103"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14706,7 +14925,7 @@
     }
   },
   {
-    "note_text": "Proc: EBUS TBNA + Nav TBBx.\n- EBUS: Systematic staging (3+ stations).\n- Nav/REBUS: Peripheral nodule.\n- TBBx: Samples obtained.\n- No complications.",
+    "note_text": "Proc: EBUS TBNA + Nav TBBx.\n- EBUS: Systematic staging (3+ stations).\n- Nav/REBUS: Peripheral nodule.\n- TBBx: <PERSON> obtained.\n- No complications.",
     "cpt_codes": [
       31653,
       31628,
@@ -14915,6 +15134,12 @@
       "style_type": 1,
       "generated_name": "Lara Croft",
       "generation_date": "2025-12-09T09:19:18.188235"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15130,7 +15355,7 @@
     }
   },
   {
-    "note_text": "Codes:\n- 31653: EBUS Sampling 3+ stations.\n- 31628: TBBx single lobe.\n- 31627: Navigation Add-on.\n- 31654: Radial EBUS Add-on.\nJustification: Staging concurrent with diagnostic workup of nodule.",
+    "note_text": "Codes:\n- 31653: EBUS Sampling 3+ stations.\n- 31628: TBBx single lobe.\n- 31627: <PERSON>\n- 31654: Radial EBUS Add-on.\nJustification: Staging concurrent with diagnostic workup of nodule.",
     "cpt_codes": [
       31653,
       31628,
@@ -15339,6 +15564,12 @@
       "style_type": 3,
       "generated_name": "Claire Redfield",
       "generation_date": "2025-12-09T09:19:18.188345"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15978,7 +16209,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPulmonary nodule, staging.\n[Anesthesia]\nGeneral.\n[Description]\nEBUS TBNA x3 stations. Nav bronch to nodule. REBUS confirmation. TBBx x5.\n[Plan]\nDischarge. Follow up path.",
+    "note_text": "[Indication]\n<PERSON> nodule, staging.\n[<LOCATION>]\nGeneral.\n[Description]\nEBUS TBNA x3 stations. Nav bronch to nodule. REBUS confirmation. TBBx x5.\n[Plan]\nDischarge. Follow up path.",
     "cpt_codes": [
       31653,
       31628,
@@ -16187,6 +16418,13 @@
       "style_type": 7,
       "generated_name": "Princess Peach",
       "generation_date": "2025-12-09T09:19:18.188561"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -17676,7 +17914,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRLL SCC, non-surgical.\n[Anesthesia]\nGA.\n[Description]\nENB/REBUS nav to RLL. RFA performed for tumor destruction.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nRLL SCC, non-surgical.\n[<LOCATION>]\nGA.\n[Description]\nENB/REBUS nav to RLL. RFA performed for tumor destruction.\n[Plan]\nAdmit.",
     "cpt_codes": [
       31622,
       31641,
@@ -17850,6 +18088,12 @@
       "style_type": 7,
       "generated_name": "Yoshi",
       "generation_date": "2025-12-09T09:19:18.189106"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -18564,7 +18808,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nProcedure: PleurX Placement\nSteps:\n1. Local anesthetic.\n2. US check.\n3. Tunnel created.\n4. Catheter in R pleural space.\n5. Drained 1L fluid.\nPlan: Home with drain instructions.",
+    "note_text": "Resident Note\nProcedure: PleurX Placement\nSteps:\n1. Local anesthetic.\n2. <LOCATION> check.\n3. Tunnel created.\n4. Catheter in R pleural space.\n5. Drained 1L fluid.\nPlan: Home with drain instructions.",
     "cpt_codes": [
       32550
     ],
@@ -18680,6 +18924,12 @@
       "style_type": 4,
       "generated_name": "Pig-Pen",
       "generation_date": "2025-12-09T09:19:18.189399"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -18802,7 +19052,7 @@
     }
   },
   {
-    "note_text": "Ultrasound-guided tunneled PleurX catheter placement for recurrent right malignant pleural effusion with large-volume drainage. Catheter tunneled and inserted without complication. Fluid drained.",
+    "note_text": "Ultrasound-guided tunneled PleurX catheter placement for recurrent right malignant pleural effusion with large-volume drainage. Catheter tunneled and inserted without complication. <PERSON> drained.",
     "cpt_codes": [
       32550
     ],
@@ -18918,10 +19168,16 @@
       "style_type": 6,
       "generated_name": "Marcie",
       "generation_date": "2025-12-09T09:19:18.189469"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent malignant effusion.\n[Anesthesia]\nLocal.\n[Description]\nUS guidance. Tunneled tract created. PleurX catheter inserted Right side. Fluid drained.\n[Plan]\nDischarge. Home nursing.",
+    "note_text": "[Indication]\nRecurrent malignant effusion.\n[<LOCATION>]\nLocal.\n[Description]\n<LOCATION> guidance. Tunneled tract created. PleurX catheter inserted Right side. <PERSON> drained.\n[Plan]\nDischarge. Home nursing.",
     "cpt_codes": [
       32550
     ],
@@ -19037,6 +19293,14 @@
       "style_type": 7,
       "generated_name": "Franklin",
       "generation_date": "2025-12-09T09:19:18.189623"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
@@ -19278,7 +19542,7 @@
     }
   },
   {
-    "note_text": "Proc: Robotic Bronch LLL Nodule.\n- Ion Platform.\n- REBUS confirmed.\n- Sampling: Forceps + Brush.\n- No complications.",
+    "note_text": "Proc: Robotic Bronch LLL Nodule.\n- Ion Platform.\n- REBUS confirmed.\n- Sampling: <PERSON>.\n- No complications.",
     "cpt_codes": [
       31628,
       31623,
@@ -19483,10 +19747,16 @@
       "style_type": 1,
       "generated_name": "Bruce Wayne",
       "generation_date": "2025-12-09T09:19:18.189763"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Robotic Ion navigational bronchoscopy was utilized to access a peripheral left lower lobe nodule. Radial EBUS confirmation was obtained. Diagnostic sampling was performed via forceps biopsies and bronchial brushing. (CPT 31628, 31623, 31627, 31654).",
+    "note_text": "PROCEDURE: Robotic Ion navigational bronchoscopy was utilized to access a peripheral left lower lobe nodule. Radial EBUS confirmation was obtained. Diagnostic sampling was performed via forceps biopsies and bronchial brushing. (CPT <DATE_TIME>, 31627, 31654).",
     "cpt_codes": [
       31628,
       31623,
@@ -19691,10 +19961,16 @@
       "style_type": 2,
       "generated_name": "Clark Kent",
       "generation_date": "2025-12-09T09:19:18.189821"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Codes: 31628 (TBBx), 31623 (Brush), 31627 (Nav), 31654 (REBUS).\nNote: 31622 bundled.\nTarget: LLL Nodule.",
+    "note_text": "Codes: 31628 (TBBx), 31623 (<PERSON>), 31627 (Nav), 31654 (REBUS).\nNote: 31622 bundled.\nTarget: LLL Nodule.",
     "cpt_codes": [
       31628,
       31623,
@@ -19899,6 +20175,12 @@
       "style_type": 3,
       "generated_name": "Barry Allen",
       "generation_date": "2025-12-09T09:19:18.189875"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -20526,7 +20808,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLLL Nodule.\n[Anesthesia]\nGA.\n[Description]\nIon Nav to LLL. REBUS confirm. TBBx and Brushings taken.\n[Plan]\nRecovery.",
+    "note_text": "[Indication]\nLLL Nodule.\n[<LOCATION>]\nGA.\n[Description]\nIon Nav to LLL. REBUS confirm. TBBx and Brushings taken.\n[Plan]\nRecovery.",
     "cpt_codes": [
       31628,
       31623,
@@ -20731,6 +21013,12 @@
       "style_type": 7,
       "generated_name": "Oliver Queen",
       "generation_date": "2025-12-09T09:19:18.190086"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {

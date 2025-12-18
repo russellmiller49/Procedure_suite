@@ -1,7 +1,7 @@
 [
   {
     "note_id": "bd312310",
-    "note_text": "Indication: Post-intubation tracheal stenosis.\nProcedure: Bronchoscopy with balloon dilation (31630).\n- LMA airway.\n- Stenosis 2-4cm below cords, 76% narrowing.\n- CRE balloon: 12mm, 14mm, 16mm x 45s.\n- Post-dilation: 12% residual narrowing.\n- No complications.\nPlan: Extubate. Decadron 8mg. Follow-up 6 wks.",
+    "note_text": "Indication: Post-intubation tracheal stenosis.\nProcedure: Bronchoscopy with balloon dilation (31630).\n- LMA airway.\n- Stenosis 2-4cm below cords, 76% narrowing.\n- CRE balloon: 12mm, 14mm, 16mm x <DATE_TIME>.\n- Post-dilation: 12% residual narrowing.\n- No complications.\nPlan: Extubate. Decadron 8mg. Follow-up 6 wks.",
     "cpt_codes": [
       31630
     ],
@@ -209,11 +209,17 @@
       "style_type": 1,
       "generated_name": "Maria Gonzalez",
       "generation_date": "2025-12-11T12:42:00.495990"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "bd312310",
-    "note_text": "PROCEDURE PERFORMED: Therapeutic flexible bronchoscopy with serial balloon dilation.\nCLINICAL NARRATIVE: The patient, a 58-year-old female with a history of prolonged intubation complicated by sepsis, presented with biphasic stridor. Upon bronchoscopic evaluation, a complex tracheal stenosis with granulation tissue was identified 2-4 cm subglottically. The lumen was compromised by approximately 76%. Therapeutic intervention was pursued using a CRE balloon catheter. Sequential dilations were performed at 12mm, 14mm, and 16mm for 45 seconds each. Post-procedural inspection revealed significant luminal improvement to 12% residual stenosis without mucosal avulsion. The patient tolerated the procedure well.",
+    "note_text": "PROCEDURE PERFORMED: Therapeutic flexible bronchoscopy with serial balloon dilation.\nCLINICAL NARRATIVE: The patient, a <DATE_TIME> female with a history of prolonged intubation complicated by sepsis, presented with biphasic stridor. Upon bronchoscopic evaluation, a complex tracheal stenosis with granulation tissue was identified 2-4 cm subglottically. The lumen was compromised by approximately 76%. Therapeutic intervention was pursued using a CRE balloon catheter. Sequential dilations were performed at 12mm, 14mm, and 16mm for 45 seconds each. Post-procedural inspection revealed significant luminal improvement to 12% residual stenosis without mucosal avulsion. The patient tolerated the procedure well.",
     "cpt_codes": [
       31630
     ],
@@ -421,6 +427,12 @@
       "style_type": 2,
       "generated_name": "Sarah Lee",
       "generation_date": "2025-12-11T12:42:00.496069"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -637,7 +649,7 @@
   },
   {
     "note_id": "bd312310",
-    "note_text": "Resident Procedure Note\nPatient: Jennifer Flores\nAttending: Dr. K. Patel\nProcedure: Balloon Dilation (31630)\nSteps:\n1. Time out performed.\n2. MAC anesthesia, LMA placed.\n3. Scope inserted transnasally.\n4. Stenosis found 2cm below cords.\n5. CRE balloon used for 3 inflations up to 16mm.\n6. Good result, minimal bleeding.\nPlan: PACU, Decadron given.",
+    "note_text": "Resident Procedure Note\nPatient: <PERSON>\nAttending: Dr. K. Patel\nProcedure: Balloon Dilation (31630)\nSteps:\n1. Time out performed.\n2. MAC <LOCATION>, LMA placed.\n3. Scope inserted transnasally.\n4. Stenosis found 2cm below cords.\n5. CRE balloon used for 3 inflations up to 16mm.\n6. Good result, minimal bleeding.\nPlan: PACU, Decadron given.",
     "cpt_codes": [
       31630
     ],
@@ -845,11 +857,18 @@
       "style_type": 4,
       "generated_name": "Jessica Davis",
       "generation_date": "2025-12-11T12:42:00.496186"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "bd312310",
-    "note_text": "pt jennifer flores here for tracheal stenosis dilation. had sepsis before intubated 10 days. having stridor now. we used mac and lma scope went in nose. saw the narrowing below the cords about 76 percent blocked. used the cre balloon did 12 14 and 16 mm held for 45 secs each. looks way better now maybe 12 percent left. no bleeding really gave some epi just in case. she woke up fine sent to recovery with some decadron.",
+    "note_text": "pt <PERSON> here for tracheal stenosis dilation. had sepsis before intubated 10 days. having stridor now. we used mac and lma scope went in nose. saw the narrowing below the cords about 76 percent blocked. used the cre balloon did 12 14 and 16 mm held for 45 secs each. looks way better now maybe 12 percent left. no bleeding really gave some epi just in case. she woke up fine sent to recovery with some decadron.",
     "cpt_codes": [
       31630
     ],
@@ -1057,11 +1076,17 @@
       "style_type": 5,
       "generated_name": "Amanda Wilson",
       "generation_date": "2025-12-11T12:42:00.496242"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "bd312310",
-    "note_text": "The patient is a 58-year-old female with post-intubation tracheal stenosis presenting for therapeutic bronchoscopy. Under MAC anesthesia with an LMA, the airway was inspected. Vocal cords moved normally. A complex stenosis with granulation tissue was found 2-4 cm below the cords, narrowing the lumen by 76%. We advanced a CRE balloon and performed serial dilations at 12mm, 14mm, and 16mm for 45 seconds each. The airway patency improved significantly to 88%. There were no complications. The patient was extubated and transferred to the floor.",
+    "note_text": "The patient is a <DATE_TIME> female with post-intubation tracheal stenosis presenting for therapeutic bronchoscopy. Under MAC anesthesia with an LMA, the airway was inspected. Vocal cords moved normally. A complex stenosis with granulation tissue was found 2-4 cm below the cords, narrowing the lumen by 76%. We advanced a CRE balloon and performed serial dilations at 12mm, 14mm, and 16mm for 45 seconds each. The airway patency improved significantly to 88%. There were no complications. The patient was extubated and transferred to the floor.",
     "cpt_codes": [
       31630
     ],
@@ -1269,11 +1294,17 @@
       "style_type": 6,
       "generated_name": "Jennifer Taylor",
       "generation_date": "2025-12-11T12:42:00.496299"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "bd312310",
-    "note_text": "[Indication]\nPost-intubation tracheal stenosis with stridor.\n[Anesthesia]\nMAC, LMA.\n[Description]\nScope advanced. 76% stenosis identified 2-4 cm below cords. CRE balloon dilation performed (12, 14, 16mm). Luminal patency improved to 88%.\n[Plan]\nRepeat in 6 weeks. PFTs prior.",
+    "note_text": "[Indication]\nPost-intubation tracheal stenosis with stridor.\n[<LOCATION>]\nMAC, LMA.\n[Description]\nScope advanced. 76% stenosis identified 2-4 cm below cords. CRE balloon dilation performed (12, <DATE_TIME>, 16mm). Luminal patency improved to 88%.\n[Plan]\nRepeat in 6 weeks. PFTs prior.",
     "cpt_codes": [
       31630
     ],
@@ -1481,11 +1512,18 @@
       "style_type": 7,
       "generated_name": "Melissa White",
       "generation_date": "2025-12-11T12:42:00.496353"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "bd312310",
-    "note_text": "The patient was brought to the bronchoscopy suite for management of post-intubation tracheal stenosis. After induction of anesthesia, the scope was introduced. We identified a complex stenosis approximately 2-4 cm below the vocal cords with 76% narrowing. We proceeded to dilate the airway using a CRE balloon. Three inflations were performed sequentially at 12mm, 14mm, and 16mm. Following the intervention, the airway patency was markedly improved, with only 12% residual narrowing remaining. The patient tolerated the procedure well.",
+    "note_text": "The patient was brought to the bronchoscopy suite for management of post-intubation tracheal stenosis. After induction of <LOCATION>, the scope was introduced. We identified a complex stenosis approximately 2-4 cm below the vocal cords with 76% narrowing. We proceeded to dilate the airway using a CRE balloon. Three inflations were performed sequentially at 12mm, 14mm, and 16mm. Following the intervention, the airway patency was markedly improved, with only 12% residual narrowing remaining. The patient tolerated the procedure well.",
     "cpt_codes": [
       31630
     ],
@@ -1693,6 +1731,12 @@
       "style_type": 8,
       "generated_name": "Nicole Martin",
       "generation_date": "2025-12-11T12:42:00.496406"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -1909,7 +1953,7 @@
   },
   {
     "note_id": "e7f554e7",
-    "note_text": "Indication: Post-trach subglottic stenosis.\nProcedure: Balloon dilation (31630).\n- LMA airway.\n- Eccentric weblike stenosis 1-2cm below cords.\n- CRE balloon: 12, 14, 16mm x 30s.\n- 25% -> 85% patency.\n- No complications.\nPlan: Admit overnight. Decadron 10mg.",
+    "note_text": "Indication: Post-trach subglottic stenosis.\nProcedure: Balloon dilation (31630).\n- LMA airway.\n- Eccentric weblike stenosis 1-2cm below cords.\n- CRE balloon: 12, <DATE_TIME>, 16mm x <DATE_TIME>.\n- 25% -> 85% patency.\n- No complications.\nPlan: Admit overnight. Decadron 10mg.",
     "cpt_codes": [
       31630
     ],
@@ -2116,11 +2160,18 @@
       "style_type": 1,
       "generated_name": "Ashley Brown",
       "generation_date": "2025-12-11T12:42:00.496514"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "e7f554e7",
-    "note_text": "PROCEDURE: Therapeutic bronchoscopy with balloon dilation.\nCLINICAL SUMMARY: Ms. White, a 36-year-old female with a history of tracheostomy, presented with biphasic stridor. Endoscopic examination revealed an eccentric weblike stenosis in the subglottic region, approximately 1-2 cm distal to the vocal cords. The luminal compromise was estimated at 75%. Mechanical dilation was effected using a controlled radial expansion balloon. Sequential dilations to 16mm resulted in restoration of airway patency to approximately 85% of normal caliber. Hemostasis was maintained.",
+    "note_text": "PROCEDURE: Therapeutic bronchoscopy with balloon dilation.\nCLINICAL SUMMARY: Ms. <PERSON>, a <DATE_TIME> female with a history of tracheostomy, presented with biphasic stridor. Endoscopic examination revealed an eccentric weblike stenosis in the subglottic region, approximately 1-2 cm distal to the vocal cords. The luminal compromise was estimated at 75%. Mechanical dilation was effected using a controlled radial expansion balloon. Sequential dilations to 16mm resulted in restoration of airway patency to approximately 85% of normal caliber. Hemostasis was maintained.",
     "cpt_codes": [
       31630
     ],
@@ -2327,6 +2378,13 @@
       "style_type": 2,
       "generated_name": "Megan Jones",
       "generation_date": "2025-12-11T12:42:00.496567"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -2542,7 +2600,7 @@
   },
   {
     "note_id": "e7f554e7",
-    "note_text": "Resident Note\nPatient: Dorothy White\nProcedure: Balloon Dilation\nAttending: Dr. L. Garcia\nSteps:\n1. MAC anesthesia, LMA.\n2. Airway inspected.\n3. Stenosis found subglottic.\n4. CRE balloon dilation x 2 cycles.\n5. Patency improved.\n6. No bleeding.\nPlan: Admit for observation.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: Balloon Dilation\nAttending: Dr. L. Garcia\nSteps:\n1. MAC <LOCATION>, LMA.\n2. Airway inspected.\n3. Stenosis found subglottic.\n4. CRE balloon dilation x 2 cycles.\n5. Patency improved.\n6. No bleeding.\nPlan: Admit for observation.",
     "cpt_codes": [
       31630
     ],
@@ -2749,11 +2807,18 @@
       "style_type": 4,
       "generated_name": "Lauren Garcia",
       "generation_date": "2025-12-11T12:42:00.496675"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "e7f554e7",
-    "note_text": "dorothy white 36 f here for subglottic stenosis dilation. she had a trach before. stridor at rest. we used mac and an lma. saw the web like narrowing right below cords. used the balloon to open it up did 12 14 16 mm. opened up real nice went from 75 blocked to only 15. minimal bleeding. gave epi anyway. admit her overnight give decadron thanks.",
+    "note_text": "<PERSON> <DATE_TIME> f here for subglottic stenosis dilation. she had a trach before. stridor at rest. we used mac and an lma. saw the web like narrowing right below cords. used the balloon to open it up did 12 14 16 mm. opened up real nice went from 75 blocked to only 15. minimal bleeding. gave epi anyway. admit her overnight give decadron thanks.",
     "cpt_codes": [
       31630
     ],
@@ -2960,11 +3025,18 @@
       "style_type": 5,
       "generated_name": "Samantha Rodriguez",
       "generation_date": "2025-12-11T12:42:00.496724"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "e7f554e7",
-    "note_text": "A 36-year-old female underwent flexible bronchoscopy for post-tracheostomy subglottic stenosis. Under MAC anesthesia, the stenosis was identified 1-2 cm below the vocal cords with 75% narrowing. A controlled radial expansion balloon was used for dilation at 12mm, 14mm, and 16mm. Patency improved to 85%. There were no complications. The patient was admitted for overnight observation.",
+    "note_text": "A <DATE_TIME> female underwent flexible bronchoscopy for post-tracheostomy subglottic stenosis. Under MAC <LOCATION>, the stenosis was identified 1-2 cm below the vocal cords with 75% narrowing. A controlled radial expansion balloon was used for dilation at 12mm, 14mm, and 16mm. Patency improved to 85%. There were no complications. The patient was admitted for <DATE_TIME> observation.",
     "cpt_codes": [
       31630
     ],
@@ -3171,11 +3243,19 @@
       "style_type": 6,
       "generated_name": "Kayla Martinez",
       "generation_date": "2025-12-11T12:42:00.496776"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "e7f554e7",
-    "note_text": "[Indication]\nPost-tracheostomy subglottic stenosis.\n[Anesthesia]\nMAC, LMA.\n[Description]\nSubglottic stenosis (75%) identified. Balloon dilation performed (12-16mm). Patency improved to 85%.\n[Plan]\nAdmit overnight. Repeat in 6 weeks.",
+    "note_text": "[Indication]\nPost-tracheostomy subglottic stenosis.\n[<LOCATION>]\nMAC, LMA.\n[Description]\nSubglottic stenosis (75%) identified. Balloon dilation performed (12-16mm). Patency improved to 85%.\n[Plan]\nAdmit overnight. Repeat in 6 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -3382,11 +3462,17 @@
       "style_type": 7,
       "generated_name": "Hannah Hernandez",
       "generation_date": "2025-12-11T12:42:00.496828"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "e7f554e7",
-    "note_text": "The patient presented for treatment of subglottic stenosis. We induced anesthesia and inserted the bronchoscope. The examination revealed an eccentric web-like stenosis narrowing the airway by 75%. We advanced a balloon catheter and performed serial dilations up to 16mm. The airway opened significantly, leaving only about 15% residual narrowing. The patient was stable throughout and was admitted for monitoring.",
+    "note_text": "The patient presented for treatment of subglottic stenosis. We induced <LOCATION> and inserted the bronchoscope. The examination revealed an eccentric web-like stenosis narrowing the airway by 75%. We advanced a balloon catheter and performed serial dilations up to 16mm. The airway opened significantly, leaving only about 15% residual narrowing. The patient was stable throughout and was admitted for monitoring.",
     "cpt_codes": [
       31630
     ],
@@ -3593,11 +3679,17 @@
       "style_type": 8,
       "generated_name": "Alexis Lopez",
       "generation_date": "2025-12-11T12:42:00.496881"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "e7f554e7",
-    "note_text": "DIAGNOSIS: Post-tracheostomy subglottic constriction.\nPROCEDURE: Bronchoscopy with balloon widening.\nFINDINGS: We located the constriction 1-2 cm below the cords. It was an eccentric web. We used a radial expansion balloon to widen the passage. Cycles were run at 12, 14, and 16mm. The airway diameter increased substantially. No tissue damage occurred. The patient was moved to the floor for observation.",
+    "note_text": "DIAGNOSIS: Post-tracheostomy subglottic constriction.\nPROCEDURE: Bronchoscopy with balloon widening.\nFINDINGS: We located the constriction 1-2 cm below the cords. It was an eccentric web. We used a radial expansion balloon to widen the passage. Cycles were run at 12, <DATE_TIME>, and 16mm. The airway diameter increased substantially. No tissue damage occurred. The patient was moved to the floor for observation.",
     "cpt_codes": [
       31630
     ],
@@ -3804,11 +3896,17 @@
       "style_type": 9,
       "generated_name": "Victoria Wright",
       "generation_date": "2025-12-11T12:42:00.496934"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "30c24a80",
-    "note_text": "Indication: Lung tx anastomotic stricture.\nProcedure: Balloon dilation (31630).\n- 8.0 ETT.\n- Anastomotic stenosis, 77% narrowing.\n- Hurricane balloon: 6, 8, 10mm.\n- 4 inflations total.\n- Post: 79% patency.\nPlan: Home today. F/u 4 weeks.",
+    "note_text": "Indication: Lung tx anastomotic stricture.\nProcedure: Balloon dilation (31630).\n- 8.0 ETT.\n- Anastomotic stenosis, 77% narrowing.\n- Hurricane balloon: 6, <DATE_TIME>, 10mm.\n- 4 inflations total.\n- Post: 79% patency.\nPlan: Home today. F/u 4 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -4015,11 +4113,17 @@
       "style_type": 1,
       "generated_name": "James Smith",
       "generation_date": "2025-12-11T12:42:00.497005"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "30c24a80",
-    "note_text": "OPERATIVE REPORT: Bronchoscopic dilation of anastomotic stricture.\nINDICATIONS: A 54-year-old male status post bilateral lung transplant presenting with dyspnea and secretions. Imaging confirmed anastomotic narrowing.\nPROCEDURE: General anesthesia was induced. The bronchoscope was introduced via an 8.0mm ETT. A circumferential fibrous stricture was visualized at the bronchial anastomosis with 77% luminal compromise. A Hurricane balloon was utilized for graduated dilation up to 10mm. Post-procedural assessment demonstrated marked improvement in luminal caliber to 79% of expected diameter. No significant hemorrhage occurred.",
+    "note_text": "OPERATIVE REPORT: Bronchoscopic dilation of anastomotic stricture.\nINDICATIONS: A <DATE_TIME> male status post bilateral lung transplant presenting with dyspnea and secretions. Imaging confirmed anastomotic narrowing.\nPROCEDURE: General <LOCATION> was induced. The bronchoscope was introduced via an 8.0mm ETT. A circumferential fibrous stricture was visualized at the bronchial anastomosis with 77% luminal compromise. A Hurricane balloon was utilized for graduated dilation up to 10mm. Post-procedural assessment demonstrated marked improvement in luminal caliber to 79% of expected diameter. No significant hemorrhage occurred.",
     "cpt_codes": [
       31630
     ],
@@ -4226,11 +4330,18 @@
       "style_type": 2,
       "generated_name": "Robert Johnson",
       "generation_date": "2025-12-11T12:42:00.497061"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "30c24a80",
-    "note_text": "Service: Bronchoscopy with Dilation (31630).\nTarget: Bronchial Anastomosis.\nMethod: Balloon Dilation (Hurricane).\nDetails: Stricture identified. Balloon catheter inserted. Serial inflations performed (6mm, 8mm, 10mm). Airway patency restored. Procedure required due to symptomatic stricture post-transplant.",
+    "note_text": "Service: Bronchoscopy with Dilation (<DATE_TIME>).\nTarget: Bronchial Anastomosis.\nMethod: Balloon Dilation (Hurricane).\nDetails: Stricture identified. Balloon catheter inserted. Serial inflations performed (6mm, 8mm, 10mm). Airway patency restored. Procedure required due to symptomatic stricture post-transplant.",
     "cpt_codes": [
       31630
     ],
@@ -4437,11 +4548,17 @@
       "style_type": 3,
       "generated_name": "Michael Williams",
       "generation_date": "2025-12-11T12:42:00.497110"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "30c24a80",
-    "note_text": "Fellow Procedure Note\nPatient: Timothy Brown\nAttending: Dr. S. Kim\nProcedure: Balloon dilation of airway\nSteps:\n1. ETT 8.0 placed.\n2. Scope passed.\n3. Anastomotic stricture found.\n4. Hurricane balloon dilation x 4.\n5. Airway looked much better.\nPlan: Dexamethasone given. Follow up in 4 weeks.",
+    "note_text": "Fellow Procedure Note\nPatient: <PERSON>\nAttending: Dr. S. Kim\nProcedure: Balloon dilation of airway\nSteps:\n1. ETT 8.0 placed.\n2. Scope passed.\n3. Anastomotic stricture found.\n4. Hurricane balloon dilation x 4.\n5. Airway looked much better.\nPlan: Dexamethasone given. Follow up in 4 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -4648,11 +4765,17 @@
       "style_type": 4,
       "generated_name": "David Brown",
       "generation_date": "2025-12-11T12:42:00.497167"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "30c24a80",
-    "note_text": "timothy brown lung transplant patient has a stricture at the anastomosis. having trouble breathing. we put him under general with a tube. saw the scar tissue blocking about 77 percent. used the hurricane balloon 6 8 and 10 mm. opened it up good to about 79 percent open. little bit of bleeding but stopped on its own. going home today.",
+    "note_text": "<PERSON> lung transplant patient has a stricture at the anastomosis. having trouble breathing. we put him under general with a tube. saw the scar tissue blocking about 77 percent. used the hurricane balloon <DATE_TIME> and 10 mm. opened it up good to about 79 percent open. little bit of bleeding but stopped on its own. going home today.",
     "cpt_codes": [
       31630
     ],
@@ -4859,11 +4982,18 @@
       "style_type": 5,
       "generated_name": "William Jones",
       "generation_date": "2025-12-11T12:42:00.497219"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "30c24a80",
-    "note_text": "This 54-year-old male with a history of lung transplant underwent bronchoscopy for anastomotic stricture. Under general anesthesia, the stricture was identified with 77% narrowing. We used a Hurricane balloon to dilate the airway, performing inflations at 6mm, 8mm, and 10mm. The airway lumen improved significantly to 79%. There were no complications. The patient was discharged the same day.",
+    "note_text": "This <DATE_TIME> male with a history of lung transplant underwent bronchoscopy for anastomotic stricture. Under general <LOCATION>, the stricture was identified with 77% narrowing. We used a <LOCATION> balloon to dilate the airway, performing inflations at 6mm, 8mm, and 10mm. The airway lumen improved significantly to 79%. There were no complications. The patient was discharged the same day.",
     "cpt_codes": [
       31630
     ],
@@ -5070,11 +5200,19 @@
       "style_type": 6,
       "generated_name": "Richard Miller",
       "generation_date": "2025-12-11T12:42:00.497271"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "30c24a80",
-    "note_text": "[Indication]\nAnastomotic bronchial stricture post lung transplant.\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nStricture (77%) identified. Hurricane balloon dilation performed (6-10mm). Patency improved to 79%.\n[Plan]\nHome today. Repeat in 4 weeks.",
+    "note_text": "[Indication]\nAnastomotic bronchial stricture post lung transplant.\n[<LOCATION>]\nGeneral, 8.0 ETT.\n[Description]\nStricture (77%) identified. Hurricane balloon dilation performed (6-10mm). Patency improved to 79%.\n[Plan]\nHome today. Repeat in 4 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -5281,11 +5419,17 @@
       "style_type": 7,
       "generated_name": "Joseph Davis",
       "generation_date": "2025-12-11T12:42:00.497323"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "30c24a80",
-    "note_text": "Mr. Brown was brought to the OR for dilation of his bronchial anastomotic stricture. After securing the airway, we identified the stenosis which was causing significant obstruction. Using a Hurricane balloon, we performed graduated dilations starting at 6mm and going up to 10mm. The response was excellent, with the airway opening up to near normal caliber. He recovered well and was discharged home.",
+    "note_text": "Mr. <PERSON> was brought to the OR for dilation of his bronchial anastomotic stricture. After securing the airway, we identified the stenosis which was causing significant obstruction. Using a Hurricane balloon, we performed graduated dilations starting at 6mm and going up to 10mm. The response was excellent, with the airway opening up to near normal caliber. He recovered well and was discharged home.",
     "cpt_codes": [
       31630
     ],
@@ -5492,11 +5636,17 @@
       "style_type": 8,
       "generated_name": "Thomas Garcia",
       "generation_date": "2025-12-11T12:42:00.497375"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "30c24a80",
-    "note_text": "PROBLEM: Anastomotic bronchial narrowing.\nINTERVENTION: Bronchoscopy with balloon expansion.\nOBSERVATIONS: We found a circumferential scar narrowing the bronchus. We utilized a Hurricane balloon to stretch the airway. We cycled through 6mm, 8mm, and 10mm sizes. The passage widened considerably. There was minor mucosal disruption but no bleeding. Recommendations include voice rest and follow-up.",
+    "note_text": "PROBLEM: Anastomotic bronchial narrowing.\nINTERVENTION: Bronchoscopy with balloon expansion.\nOBSERVATIONS: We found a circumferential scar narrowing the bronchus. We utilized a <LOCATION> balloon to stretch the airway. We cycled through 6mm, 8mm, and 10mm sizes. The passage widened considerably. There was minor mucosal disruption but no bleeding. Recommendations include voice rest and follow-up.",
     "cpt_codes": [
       31630
     ],
@@ -5703,11 +5853,17 @@
       "style_type": 9,
       "generated_name": "Charles Rodriguez",
       "generation_date": "2025-12-11T12:42:00.497427"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "9669b068",
-    "note_text": "Indication: iSGS, symptomatic.\nProcedure: Balloon dilation (31630).\n- 8.0 ETT.\n- Subglottic stenosis, 71% narrowing.\n- Hurricane balloon: 10, 12, 15mm x 90s.\n- Post: 68% patency.\n- Minimal bleeding.\nPlan: Admit overnight. Decadron 10mg.",
+    "note_text": "Indication: iSGS, symptomatic.\nProcedure: Balloon dilation (31630).\n- 8.0 ETT.\n- Subglottic stenosis, 71% narrowing.\n- Hurricane balloon: <DATE_TIME>, 15mm x <DATE_TIME>.\n- Post: 68% patency.\n- Minimal bleeding.\nPlan: Admit overnight. Decadron 10mg.",
     "cpt_codes": [
       31630
     ],
@@ -5914,11 +6070,18 @@
       "style_type": 1,
       "generated_name": "Lisa Wilson",
       "generation_date": "2025-12-11T12:42:00.497483"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "9669b068",
-    "note_text": "PROCEDURE NOTE: Therapeutic bronchoscopy for idiopathic subglottic stenosis.\nHISTORY: 50-year-old female with recurrent iSGS presenting with stridor.\nTECHNIQUE: General anesthesia was administered. Direct visualization revealed a mature cicatricial stricture immediately subglottic with 71% compromise. A Hurricane balloon was employed for serial dilations reaching 15mm. Each inflation was held for 90 seconds. Post-dilation, the airway patency was estimated at 68% of normal. Minimal mucosal bleeding was noted and was self-limited.",
+    "note_text": "PROCEDURE NOTE: Therapeutic bronchoscopy for idiopathic subglottic stenosis.\nHISTORY: <DATE_TIME> female with recurrent iSGS presenting with stridor.\nTECHNIQUE: General <LOCATION> was administered. Direct visualization revealed a mature cicatricial stricture immediately subglottic with 71% compromise. A Hurricane balloon was employed for serial dilations reaching 15mm. Each inflation was held for 90 seconds. Post-dilation, the airway patency was estimated at 68% of normal. Minimal mucosal bleeding was noted and was self-limited.",
     "cpt_codes": [
       31630
     ],
@@ -6125,11 +6288,18 @@
       "style_type": 2,
       "generated_name": "Nancy Martinez",
       "generation_date": "2025-12-11T12:42:00.497536"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "9669b068",
-    "note_text": "CPT: 31630 (Dilation of trachea/bronchus).\nCondition: Idiopathic Subglottic Stenosis.\nAction: Flexible bronchoscopy performed. Stenosis identified. Hurricane balloon used to dilate area to 15mm. Improvement in airflow documented. Medical necessity: Symptomatic airway obstruction.",
+    "note_text": "CPT: 31630 (Dilation of trachea/bronchus).\nCondition: Idiopathic Subglottic Stenosis.\nAction: Flexible bronchoscopy performed. Stenosis identified. Hurricane balloon used to dilate area to 15mm. Improvement in airflow documented. Medical necessity: <LOCATION> airway obstruction.",
     "cpt_codes": [
       31630
     ],
@@ -6336,11 +6506,17 @@
       "style_type": 3,
       "generated_name": "Karen Anderson",
       "generation_date": "2025-12-11T12:42:00.497647"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "9669b068",
-    "note_text": "Resident Note\nPatient: Donna Thomas\nProcedure: Airway Dilation\nStaff: Dr. N. Shah\nSteps:\n1. GA with 8.0 ETT.\n2. Stenosis visualized subglottic.\n3. Balloon dilation (10, 12, 15mm).\n4. Good expansion achieved.\n5. Minor bleeding controlled.\nPlan: Admit for obs.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: Airway Dilation\nStaff: Dr. N. Shah\nSteps:\n1. GA with 8.0 ETT.\n2. Stenosis visualized subglottic.\n3. Balloon dilation (<DATE_TIME>, 15mm).\n4. Good expansion achieved.\n5. Minor bleeding controlled.\nPlan: Admit for obs.",
     "cpt_codes": [
       31630
     ],
@@ -6547,11 +6723,18 @@
       "style_type": 4,
       "generated_name": "Betty Taylor",
       "generation_date": "2025-12-11T12:42:00.497701"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "9669b068",
-    "note_text": "donna thomas here for her isgs dilation again. having trouble breathing. put her under general. saw the scar tissue right below the cords about 70 percent blocked. used the hurricane balloon big ones this time 10 12 15 mm held for 90 seconds. opened up pretty good. little bit of bleeding but fine. admit her for the night gave steroids.",
+    "note_text": "<PERSON> here for her isgs dilation again. having trouble breathing. put her under general. saw the scar tissue right below the cords about 70 percent blocked. used the hurricane balloon big ones this time 10 12 15 mm held for 90 seconds. opened up pretty good. little bit of bleeding but fine. admit her for the night gave steroids.",
     "cpt_codes": [
       31630
     ],
@@ -6758,11 +6941,17 @@
       "style_type": 5,
       "generated_name": "Sandra Thomas",
       "generation_date": "2025-12-11T12:42:00.497755"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "9669b068",
-    "note_text": "The patient, a 50-year-old female with idiopathic subglottic stenosis, underwent therapeutic bronchoscopy. Under general anesthesia, a subglottic stricture with 71% narrowing was identified. We performed balloon dilation using a Hurricane balloon at 10mm, 12mm, and 15mm. The airway patency improved to 68%. Minimal mucosal bleeding occurred. The patient was admitted for overnight observation.",
+    "note_text": "The patient, a <DATE_TIME> female with idiopathic subglottic stenosis, underwent therapeutic bronchoscopy. Under general <LOCATION>, a subglottic stricture with 71% narrowing was identified. We performed balloon dilation using a Hurricane balloon at 10mm, 12mm, and 15mm. The airway patency improved to 68%. Minimal mucosal bleeding occurred. The patient was admitted for <DATE_TIME> observation.",
     "cpt_codes": [
       31630
     ],
@@ -6969,11 +7158,19 @@
       "style_type": 6,
       "generated_name": "Ashley Hernandez",
       "generation_date": "2025-12-11T12:42:00.497806"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "9669b068",
-    "note_text": "[Indication]\nIdiopathic subglottic stenosis.\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nSubglottic stricture (71%) identified. Balloon dilation performed (10-15mm). Patency improved to 68%.\n[Plan]\nAdmit overnight. Repeat in 8 weeks.",
+    "note_text": "[Indication]\nIdiopathic subglottic stenosis.\n[<LOCATION>]\nGeneral, 8.0 ETT.\n[Description]\nSubglottic stricture (71%) identified. Balloon dilation performed (<DATE_TIME>). Patency improved to 68%.\n[Plan]\nAdmit overnight. Repeat in 8 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -7180,11 +7377,18 @@
       "style_type": 7,
       "generated_name": "Kimberly Moore",
       "generation_date": "2025-12-11T12:42:00.497856"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "9669b068",
-    "note_text": "We brought Ms. Thomas to the operating room to address her recurrent subglottic stenosis. After inducing anesthesia, we located the stricture which was significantly narrowing her airway. We used a Hurricane balloon to perform graduated dilations, holding each inflation for 90 seconds to maximize the effect. The final diameter was 15mm. The airway looked much better afterwards with improved caliber. She was admitted for monitoring.",
+    "note_text": "We brought Ms. <PERSON> to the operating room to address her recurrent subglottic stenosis. After inducing anesthesia, we located the stricture which was significantly narrowing her airway. We used a <LOCATION> balloon to perform graduated dilations, holding each inflation for 90 seconds to maximize the effect. The final diameter was 15mm. The airway looked much better afterwards with improved caliber. She was admitted for monitoring.",
     "cpt_codes": [
       31630
     ],
@@ -7391,11 +7595,18 @@
       "style_type": 8,
       "generated_name": "Donna Martin",
       "generation_date": "2025-12-11T12:42:00.497910"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "9669b068",
-    "note_text": "INDICATION: Idiopathic subglottic constriction.\nACTION: Bronchoscopy with balloon widening.\nFINDINGS: A mature scar was seen narrowing the airway. We used a Hurricane balloon to expand the lumen. We inflated it to 10, 12, and 15mm. The airway opened up significantly. Minor bleeding was noted. The patient will stay overnight.",
+    "note_text": "INDICATION: Idiopathic subglottic constriction.\nACTION: Bronchoscopy with balloon widening.\nFINDINGS: A mature scar was seen narrowing the airway. We used a <LOCATION> balloon to expand the lumen. We inflated it to 10, <DATE_TIME>, and 15mm. The airway opened up significantly. Minor bleeding was noted. The patient will stay <DATE_TIME>.",
     "cpt_codes": [
       31630
     ],
@@ -7602,11 +7813,19 @@
       "style_type": 9,
       "generated_name": "Carol Jackson",
       "generation_date": "2025-12-11T12:42:00.497960"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "a549b90b",
-    "note_text": "Indication: GPA subglottic stenosis.\nProcedure: Balloon dilation (31630).\n- 8.5 ETT.\n- 79% narrowing, weblike.\n- CRE balloon: 10, 12, 14mm.\n- Post: 17% residual.\n- Minor mucosal tear.\nPlan: Admit overnight. Decadron 8mg.",
+    "note_text": "Indication: GPA subglottic stenosis.\nProcedure: Balloon dilation (31630).\n- 8.5 ETT.\n- 79% narrowing, weblike.\n- CRE balloon: 10, <DATE_TIME>, 14mm.\n- Post: 17% residual.\n- Minor mucosal tear.\nPlan: Admit overnight. Decadron 8mg.",
     "cpt_codes": [
       31630
     ],
@@ -7813,11 +8032,17 @@
       "style_type": 1,
       "generated_name": "Christopher Thompson",
       "generation_date": "2025-12-11T12:42:00.498014"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "a549b90b",
-    "note_text": "OPERATIVE SUMMARY: Bronchoscopic management of GPA-associated airway stenosis.\nPATIENT: 48-year-old male with Granulomatosis with Polyangiitis.\nFINDINGS: Significant subglottic stenosis (approx. 79%) extending 1.5 cm. The stenosis was weblike in character.\nINTERVENTION: Controlled radial expansion balloon dilation was performed sequentially to 14mm. Two inflation cycles were completed. \nOUTCOME: Residual stenosis reduced to approximately 17%. A minor mucosal tear was noted but required no intervention.",
+    "note_text": "OPERATIVE SUMMARY: Bronchoscopic management of GPA-associated airway stenosis.\nPATIENT: <PERSON>\nFINDINGS: Significant subglottic stenosis (approx. 79%) extending 1.5 cm. The stenosis was weblike in character.\nINTERVENTION: Controlled radial expansion balloon dilation was performed sequentially to 14mm. Two inflation cycles were completed. \nOUTCOME: Residual stenosis reduced to approximately 17%. A minor mucosal tear was noted but required no intervention.",
     "cpt_codes": [
       31630
     ],
@@ -8024,6 +8249,12 @@
       "style_type": 2,
       "generated_name": "Daniel White",
       "generation_date": "2025-12-11T12:42:00.498069"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8239,7 +8470,7 @@
   },
   {
     "note_id": "a549b90b",
-    "note_text": "Fellow Note\nPatient: Joshua Williams\nProcedure: Balloon Dilation\nAttending: Dr. J. Williams\nSteps:\n1. General Anesthesia, ETT 8.5.\n2. Scope inserted.\n3. Stenosis identified subglottic.\n4. CRE balloon dilation 10->14mm.\n5. Airway opened well.\nPlan: Admit, follow up 6 weeks.",
+    "note_text": "Fellow Note\nPatient: <PERSON>\nProcedure: Balloon Dilation\nAttending: Dr. J. Williams\nSteps:\n1. General <PERSON>, ETT 8.5.\n2. Scope inserted.\n3. Stenosis identified subglottic.\n4. CRE balloon dilation 10->14mm.\n5. Airway opened well.\nPlan: Admit, follow up 6 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -8446,11 +8677,18 @@
       "style_type": 4,
       "generated_name": "Anthony Lee",
       "generation_date": "2025-12-11T12:42:00.498172"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "a549b90b",
-    "note_text": "joshua williams has gpa and cant breathe. subglottic stenosis. we took him to the OR put him to sleep. saw the narrowing about 80 percent blocked. used the cre balloon dilated it up to 14mm. opened up really nice only maybe 15 percent left. little tear in the tissue but no bleeding. keeping him overnight.",
+    "note_text": "<PERSON> has gpa and cant breathe. subglottic stenosis. we took him to the OR put him to sleep. saw the narrowing about 80 percent blocked. used the cre balloon dilated it up to 14mm. opened up really nice only maybe 15 percent left. little tear in the tissue but no bleeding. keeping him <DATE_TIME>.",
     "cpt_codes": [
       31630
     ],
@@ -8657,11 +8895,18 @@
       "style_type": 5,
       "generated_name": "Mark Gonzalez",
       "generation_date": "2025-12-11T12:42:00.498225"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "a549b90b",
-    "note_text": "A 48-year-old male with GPA underwent bronchoscopy for subglottic stenosis. Under general anesthesia, the stenosis was identified with 79% narrowing. A CRE balloon was used for serial dilation at 10mm, 12mm, and 14mm. The airway patency improved to 83%. A minor mucosal tear was noted. The patient was admitted for overnight observation.",
+    "note_text": "A <DATE_TIME> male with GPA underwent bronchoscopy for subglottic stenosis. Under general <LOCATION>, the stenosis was identified with 79% narrowing. A CRE balloon was used for serial dilation at 10mm, 12mm, and 14mm. The airway patency improved to 83%. A minor mucosal tear was noted. The patient was admitted for <DATE_TIME> observation.",
     "cpt_codes": [
       31630
     ],
@@ -8868,11 +9113,19 @@
       "style_type": 6,
       "generated_name": "Donald Harris",
       "generation_date": "2025-12-11T12:42:00.498277"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "a549b90b",
-    "note_text": "[Indication]\nGPA related subglottic stenosis.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nSubglottic stenosis (79%) identified. CRE balloon dilation performed (10-14mm). Patency improved significantly.\n[Plan]\nAdmit overnight. Repeat PRN.",
+    "note_text": "[Indication]\nGPA related subglottic stenosis.\n[<LOCATION>]\nGeneral, 8.5 ETT.\n[Description]\nSubglottic stenosis (79%) identified. CRE balloon dilation performed (10-14mm). Patency improved significantly.\n[Plan]\nAdmit overnight. Repeat PRN.",
     "cpt_codes": [
       31630
     ],
@@ -9079,11 +9332,17 @@
       "style_type": 7,
       "generated_name": "Steven Clark",
       "generation_date": "2025-12-11T12:42:00.498333"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "a549b90b",
-    "note_text": "Mr. Williams presented with worsening stridor due to his GPA. We proceeded with bronchoscopic dilation. Upon entering the airway, we found a tight subglottic stenosis. We used a CRE balloon to dilate the area, stepping up the size from 10mm to 14mm. The airway responded well, opening up to near normal size. There was a small tear in the mucosa, which is expected, but no bleeding. He will be observed overnight.",
+    "note_text": "Mr. <PERSON> presented with worsening stridor due to his GPA. We proceeded with bronchoscopic dilation. Upon entering the airway, we found a tight subglottic stenosis. We used a CRE balloon to dilate the area, stepping up the size from 10mm to 14mm. The airway responded well, opening up to near normal size. There was a small tear in the mucosa, which is expected, but no bleeding. He will be observed <DATE_TIME>.",
     "cpt_codes": [
       31630
     ],
@@ -9290,6 +9549,13 @@
       "style_type": 8,
       "generated_name": "Paul Lewis",
       "generation_date": "2025-12-11T12:42:00.498383"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -9505,7 +9771,7 @@
   },
   {
     "note_id": "18d2df08",
-    "note_text": "Indication: BI stenosis post-intubation.\nProcedure: Balloon dilation (31630).\n- 8.0 ETT.\n- BI stenosis 55%.\n- CRE balloon: 6, 8, 10mm x 60s.\n- Post: 26% residual.\n- Minimal ooze.\nPlan: Admit overnight. Decadron 10mg.",
+    "note_text": "Indication: BI stenosis post-intubation.\nProcedure: Balloon dilation (31630).\n- 8.0 ETT.\n- BI stenosis 55%.\n- CRE balloon: 6, <DATE_TIME>, 10mm x <DATE_TIME>.\n- Post: 26% residual.\n- Minimal ooze.\nPlan: Admit overnight. Decadron 10mg.",
     "cpt_codes": [
       31630
     ],
@@ -9712,11 +9978,18 @@
       "style_type": 1,
       "generated_name": "Barbara Walker",
       "generation_date": "2025-12-11T12:42:00.498525"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "18d2df08",
-    "note_text": "PROCEDURE REPORT: Therapeutic bronchoscopy for bronchus intermedius stenosis.\nCLINICAL CONTEXT: 73-year-old female with history of prolonged intubation.\nFINDINGS: Circumferential stenosis of the bronchus intermedius, 2 cm distal to the carina, with 55% luminal narrowing.\nINTERVENTION: Serial balloon dilation utilizing a CRE catheter was performed to a maximum diameter of 10mm. Each inflation was maintained for 60 seconds.\nRESULT: Immediate improvement in airway caliber to 74% patency. Minimal mucosal oozing observed.",
+    "note_text": "PROCEDURE REPORT: Therapeutic bronchoscopy for bronchus intermedius stenosis.\nCLINICAL CONTEXT: <DATE_TIME> female with history of prolonged intubation.\nFINDINGS: Circumferential stenosis of the bronchus intermedius, 2 cm distal to the carina, with 55% luminal narrowing.\nINTERVENTION: Serial balloon dilation utilizing a CRE catheter was performed to a maximum diameter of 10mm. Each inflation was maintained for 60 seconds.\nRESULT: Immediate improvement in airway caliber to 74% patency. Minimal mucosal oozing observed.",
     "cpt_codes": [
       31630
     ],
@@ -9923,11 +10196,17 @@
       "style_type": 2,
       "generated_name": "Elizabeth Young",
       "generation_date": "2025-12-11T12:42:00.498581"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "18d2df08",
-    "note_text": "Service: Bronchoscopy with dilation (31630).\nSite: Bronchus Intermedius.\nTool: CRE Balloon.\nProcess: Stenosis visualized (55%). Dilation performed at 6mm, 8mm, 10mm. Airway patency improved to 74%. Medical necessity: Symptomatic stenosis.",
+    "note_text": "Service: Bronchoscopy with dilation (<DATE_TIME>).\nSite: Bronchus Intermedius.\nTool: CRE Balloon.\nProcess: Stenosis visualized (55%). Dilation performed at 6mm, 8mm, 10mm. Airway patency improved to 74%. Medical necessity: Symptomatic stenosis.",
     "cpt_codes": [
       31630
     ],
@@ -10134,11 +10413,17 @@
       "style_type": 3,
       "generated_name": "Margaret Allen",
       "generation_date": "2025-12-11T12:42:00.498638"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "18d2df08",
-    "note_text": "Resident Note\nPatient: Jessica Lopez\nProcedure: Balloon Dilation\nStaff: Dr. S. Kim\nSteps:\n1. GA, ETT 8.0.\n2. Scope to BI.\n3. Stenosis found.\n4. CRE balloon dilation x 2 cycles.\n5. Good result.\nPlan: Admit overnight.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: Balloon Dilation\nStaff: Dr. S. Kim\nSteps:\n1. GA, ETT 8.0.\n2. Scope to <LOCATION>.\n3. Stenosis found.\n4. CRE balloon dilation x 2 cycles.\n5. Good result.\nPlan: Admit overnight.",
     "cpt_codes": [
       31630
     ],
@@ -10345,11 +10630,18 @@
       "style_type": 4,
       "generated_name": "Patricia King",
       "generation_date": "2025-12-11T12:42:00.498691"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "18d2df08",
-    "note_text": "jessica lopez 73 female post intubation stenosis in the bi. took her to or general anesthesia. saw the narrowing about halfway closed. used the cre balloon did 6 8 and 10 mm. held it for a minute each time. looks way better now. tiny bit of bleeding stopped on its own. admit for obs.",
+    "note_text": "<PERSON> lopez 73 female post intubation stenosis in the bi. took her to or general <LOCATION>. saw the narrowing about halfway closed. used the cre balloon did <DATE_TIME> and 10 mm. held it for <DATE_TIME> each time. looks way better now. tiny bit of bleeding stopped on its own. admit for obs.",
     "cpt_codes": [
       31630
     ],
@@ -10556,11 +10848,20 @@
       "style_type": 5,
       "generated_name": "Susan Wright",
       "generation_date": "2025-12-11T12:42:00.498744"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 4,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "18d2df08",
-    "note_text": "This 73-year-old female underwent bronchoscopy for post-intubation bronchus intermedius stenosis. Under general anesthesia, the stenosis was identified with 55% narrowing. A CRE balloon was used for dilation at 6mm, 8mm, and 10mm. The airway patency improved to 74%. Minimal mucosal oozing was noted. The patient was admitted for overnight observation.",
+    "note_text": "This <DATE_TIME> female underwent bronchoscopy for post-intubation bronchus intermedius stenosis. Under general <LOCATION>, the stenosis was identified with 55% narrowing. A CRE balloon was used for dilation at 6mm, 8mm, and 10mm. The airway patency improved to 74%. Minimal mucosal oozing was noted. The patient was admitted for <DATE_TIME> observation.",
     "cpt_codes": [
       31630
     ],
@@ -10767,11 +11068,19 @@
       "style_type": 6,
       "generated_name": "Dorothy Scott",
       "generation_date": "2025-12-11T12:42:00.498796"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "18d2df08",
-    "note_text": "[Indication]\nPost-intubation bronchus intermedius stenosis.\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nBI stenosis (55%) identified. CRE balloon dilation performed (6-10mm). Patency improved to 74%.\n[Plan]\nAdmit overnight. Repeat in 4 weeks.",
+    "note_text": "[Indication]\nPost-intubation bronchus intermedius stenosis.\n[<LOCATION>]\nGeneral, 8.0 ETT.\n[Description]\nBI stenosis (55%) identified. CRE balloon dilation performed (6-10mm). Patency improved to 74%.\n[Plan]\nAdmit overnight. Repeat in 4 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -10978,11 +11287,17 @@
       "style_type": 7,
       "generated_name": "Jessica Torres",
       "generation_date": "2025-12-11T12:42:00.498851"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "18d2df08",
-    "note_text": "Mrs. Lopez came in for dilation of her bronchus intermedius stenosis. Under general anesthesia, we advanced the scope and found the narrowing. We used a CRE balloon to dilate the area, carefully increasing the size to 10mm. The airway opened up nicely. There was a tiny amount of oozing which stopped quickly. We admitted her for routine monitoring.",
+    "note_text": "Mrs. <PERSON> came in for dilation of her bronchus intermedius stenosis. Under general <LOCATION>, we advanced the scope and found the narrowing. We used a CRE balloon to dilate the area, carefully increasing the size to 10mm. The airway opened up nicely. There was a tiny amount of oozing which stopped quickly. We admitted her for routine monitoring.",
     "cpt_codes": [
       31630
     ],
@@ -11189,11 +11504,18 @@
       "style_type": 8,
       "generated_name": "Sarah Nguyen",
       "generation_date": "2025-12-11T12:42:00.498904"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "18d2df08",
-    "note_text": "INDICATION: Bronchus intermedius constriction.\nPROCEDURE: Bronchoscopy with balloon stretching.\nFINDINGS: We found a circumferential narrowing in the BI. We utilized a CRE balloon to widen the lumen. We cycled through 6, 8, and 10mm sizes. The passage caliber improved. Minor bleeding was seen. She will be hospitalized overnight.",
+    "note_text": "INDICATION: Bronchus intermedius constriction.\nPROCEDURE: Bronchoscopy with balloon stretching.\nFINDINGS: We found a circumferential narrowing in the <LOCATION>. We utilized a CRE balloon to widen the lumen. We cycled through 6, <DATE_TIME>, and 10mm sizes. The passage caliber improved. Minor bleeding was seen. She will be hospitalized <DATE_TIME>.",
     "cpt_codes": [
       31630
     ],
@@ -11400,11 +11722,19 @@
       "style_type": 9,
       "generated_name": "Karen Hill",
       "generation_date": "2025-12-11T12:42:00.498974"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "b0715249",
-    "note_text": "Indication: Bronchial stricture post-sleeve resection.\nProcedure: Balloon dilation (31630).\n- Deep sedation.\n- RUL anastomosis stenosis 74%.\n- Hurricane balloon: 6, 8, 9mm x 45s.\n- Post: 28% residual.\n- Mild bleeding.\nPlan: Admit overnight. Decadron 10mg.",
+    "note_text": "Indication: Bronchial stricture post-sleeve resection.\nProcedure: Balloon dilation (31630).\n- Deep sedation.\n- RUL anastomosis stenosis 74%.\n- Hurricane balloon: 6, <DATE_TIME>, 9mm x <DATE_TIME>.\n- Post: 28% residual.\n- Mild bleeding.\nPlan: Admit overnight. Decadron 10mg.",
     "cpt_codes": [
       31630
     ],
@@ -11611,11 +11941,18 @@
       "style_type": 1,
       "generated_name": "George Green",
       "generation_date": "2025-12-11T12:42:00.499032"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "b0715249",
-    "note_text": "OPERATIVE NOTE: Management of post-surgical bronchial anastomotic stricture.\nPATIENT: 52-year-old male status post RUL sleeve resection.\nFINDINGS: Significant circumferential stenosis at the right upper lobe bronchial anastomosis, estimated at 74% narrowing.\nPROCEDURE: Under deep sedation, a Hurricane balloon catheter was positioned across the stricture. Serial dilations were performed to a maximum of 9mm. Four inflation cycles were completed.\nOUTCOME: Residual stenosis reduced to 28%. Mild mucosal oozing was noted and was self-limited.",
+    "note_text": "OPERATIVE NOTE: Management of post-surgical bronchial anastomotic stricture.\n<PERSON>: <DATE_TIME> male status post RUL sleeve resection.\nFINDINGS: Significant circumferential stenosis at the right upper lobe bronchial anastomosis, estimated at 74% narrowing.\nPROCEDURE: Under deep sedation, a <LOCATION> balloon catheter was positioned across the stricture. Serial dilations were performed to a maximum of 9mm. Four inflation cycles were completed.\nOUTCOME: Residual stenosis reduced to 28%. Mild mucosal oozing was noted and was self-limited.",
     "cpt_codes": [
       31630
     ],
@@ -11822,6 +12159,14 @@
       "style_type": 2,
       "generated_name": "Kenneth Adams",
       "generation_date": "2025-12-11T12:42:00.499086"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -12037,7 +12382,7 @@
   },
   {
     "note_id": "b0715249",
-    "note_text": "Fellow Note\nPatient: Donald Wilson\nProcedure: Airway dilation\nAttending: Dr. D. Anderson\nSteps:\n1. Deep sedation.\n2. Scope to RUL anastomosis.\n3. Stricture identified.\n4. Hurricane balloon dilation up to 9mm.\n5. Airway opened well.\nPlan: Admit, f/u 6 weeks.",
+    "note_text": "Fellow Note\nPatient: <PERSON>\nProcedure: Airway dilation\nAttending: Dr. D. Anderson\nSteps:\n1. Deep sedation.\n2. Scope to RUL anastomosis.\n3. Stricture identified.\n4. Hurricane balloon dilation up to 9mm.\n5. Airway opened well.\nPlan: Admit, f/u 6 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -12244,11 +12589,17 @@
       "style_type": 4,
       "generated_name": "Edward Nelson",
       "generation_date": "2025-12-11T12:42:00.499197"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "b0715249",
-    "note_text": "donald wilson had a sleeve resection now has a stricture at the rul. deep sedation used. saw the narrowing pretty tight 74 percent. used the hurricane balloon went 6 8 and 9 mm. held for 45 secs. opened up to about 28 percent left. bit of bleeding but fine. admit him give decadron.",
+    "note_text": "<PERSON> had a sleeve resection now has a stricture at the rul. deep sedation used. saw the narrowing pretty tight 74 percent. used the hurricane balloon went 6 8 and 9 mm. held for 45 secs. opened up to about 28 percent left. bit of bleeding but fine. admit him give decadron.",
     "cpt_codes": [
       31630
     ],
@@ -12455,11 +12806,17 @@
       "style_type": 5,
       "generated_name": "Brian Carter",
       "generation_date": "2025-12-11T12:42:00.499250"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "b0715249",
-    "note_text": "A 52-year-old male underwent bronchoscopy for a bronchial stricture following sleeve resection. Under deep sedation, the RUL anastomosis was found to be narrowed by 74%. A Hurricane balloon was used for serial dilation at 6mm, 8mm, and 9mm. The airway patency improved to 72%. Mild mucosal oozing occurred. The patient was admitted for overnight observation.",
+    "note_text": "A <DATE_TIME> male underwent bronchoscopy for a bronchial stricture following sleeve resection. Under deep sedation, the RUL anastomosis was found to be narrowed by 74%. A Hurricane balloon was used for serial dilation at 6mm, 8mm, and 9mm. The airway patency improved to 72%. Mild mucosal oozing occurred. The patient was admitted for <DATE_TIME> observation.",
     "cpt_codes": [
       31630
     ],
@@ -12666,11 +13023,18 @@
       "style_type": 6,
       "generated_name": "Ronald Mitchell",
       "generation_date": "2025-12-11T12:42:00.499301"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "b0715249",
-    "note_text": "[Indication]\nBronchial stricture post sleeve resection.\n[Anesthesia]\nDeep sedation.\n[Description]\nRUL anastomosis stenosis (74%) identified. Hurricane balloon dilation performed (6-9mm). Patency improved to 72%.\n[Plan]\nAdmit overnight. Repeat in 6 weeks.",
+    "note_text": "[Indication]\nBronchial stricture post sleeve resection.\n[<LOCATION>]\nDeep sedation.\n[Description]\nRUL anastomosis stenosis (74%) identified. Hurricane balloon dilation performed (6-9mm). Patency improved to 72%.\n[Plan]\nAdmit overnight. Repeat in 6 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -12877,11 +13241,17 @@
       "style_type": 7,
       "generated_name": "Anthony Perez",
       "generation_date": "2025-12-11T12:42:00.499357"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "b0715249",
-    "note_text": "We performed a bronchoscopy on Mr. Wilson to address his anastomotic stricture. After sedation, we examined the RUL anastomosis and found it significantly narrowed. We used a Hurricane balloon to dilate the stricture, performing multiple inflations up to 9mm. The airway diameter improved noticeably. There was some minor bleeding which resolved on its own. He was admitted for observation.",
+    "note_text": "We performed a bronchoscopy on Mr. <PERSON> to address his anastomotic stricture. After sedation, we examined the RUL anastomosis and found it significantly narrowed. We used a <LOCATION> balloon to dilate the stricture, performing multiple inflations up to 9mm. The airway diameter improved noticeably. There was some minor bleeding which resolved on its own. He was admitted for observation.",
     "cpt_codes": [
       31630
     ],
@@ -13088,11 +13458,18 @@
       "style_type": 8,
       "generated_name": "Kevin Roberts",
       "generation_date": "2025-12-11T12:42:00.499411"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "b0715249",
-    "note_text": "DIAGNOSIS: Bronchial narrowing after surgery.\nPROCEDURE: Scope with balloon expansion.\nOBSERVATIONS: We saw a tight spot at the RUL connection. We used a Hurricane balloon to stretch it out. We went up to 9mm. The opening is much better now. Minor bleeding was observed. He will stay in the hospital tonight.",
+    "note_text": "DIAGNOSIS: Bronchial narrowing after surgery.\nPROCEDURE: Scope with balloon expansion.\nOBSERVATIONS: We saw a tight spot at the RUL connection. We used a <LOCATION> balloon to stretch it out. We went up to 9mm. The opening is much better now. Minor bleeding was observed. He will stay in the hospital <DATE_TIME>.",
     "cpt_codes": [
       31630
     ],
@@ -13299,11 +13676,18 @@
       "style_type": 9,
       "generated_name": "Jason Turner",
       "generation_date": "2025-12-11T12:42:00.499463"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "08ec3eba",
-    "note_text": "Indication: Post-TB bronchial stenosis L main.\nProcedure: Balloon dilation (31630).\n- MAC, LMA.\n- L mainstem stenosis 59%.\n- CRE balloon: 7, 8, 10mm x 90s.\n- Post: 34% residual.\n- Minimal ooze.\nPlan: D/C same day. Decadron 10mg.",
+    "note_text": "Indication: Post-TB bronchial stenosis L main.\nProcedure: Balloon dilation (31630).\n- MAC, LMA.\n- L mainstem stenosis 59%.\n- CRE balloon: 7, <DATE_TIME>, 10mm x <DATE_TIME>.\n- Post: 34% residual.\n- Minimal ooze.\nPlan: D/C same day. Decadron 10mg.",
     "cpt_codes": [
       31630
     ],
@@ -13510,6 +13894,13 @@
       "style_type": 1,
       "generated_name": "Jeffrey Phillips",
       "generation_date": "2025-12-11T12:42:00.499517"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -13936,7 +14327,7 @@
   },
   {
     "note_id": "08ec3eba",
-    "note_text": "Resident Note\nPatient: Kevin Torres\nProcedure: Balloon Dilation\nStaff: Dr. D. Anderson\nSteps:\n1. MAC, LMA.\n2. Scope to L main.\n3. Stenosis identified.\n4. CRE balloon dilation x 3.\n5. Good result.\nPlan: Discharge today.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: Balloon Dilation\nStaff: Dr. D. Anderson\nSteps:\n1. MAC, LMA.\n2. Scope to L main.\n3. Stenosis identified.\n4. CRE balloon dilation x 3.\n5. Good result.\nPlan: Discharge today.",
     "cpt_codes": [
       31630
     ],
@@ -14143,11 +14534,17 @@
       "style_type": 4,
       "generated_name": "Gary Evans",
       "generation_date": "2025-12-11T12:42:00.499677"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "08ec3eba",
-    "note_text": "kevin torres had tb years ago now his left main bronchus is closing up. did a bronch with mac. saw the narrowing about 60 percent. used the cre balloon 7 8 10 mm held for 90 seconds. opened up decent maybe 35 percent left. little bleeding. discharge him today with steroids.",
+    "note_text": "<PERSON> torres had <DATE_TIME> now his left main bronchus is closing up. did a bronch with mac. saw the narrowing about 60 percent. used the cre balloon 7 8 10 mm held for 90 seconds. opened up decent maybe 35 percent left. little bleeding. discharge him today with steroids.",
     "cpt_codes": [
       31630
     ],
@@ -14354,11 +14751,18 @@
       "style_type": 5,
       "generated_name": "Nicholas Edwards",
       "generation_date": "2025-12-11T12:42:00.499728"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "08ec3eba",
-    "note_text": "This 55-year-old male with a history of TB underwent bronchoscopy for left mainstem bronchial stenosis. Under MAC anesthesia, the stenosis was identified with 59% narrowing. A CRE balloon was used for dilation at 7mm, 8mm, and 10mm. The airway patency improved to 66%. Minimal mucosal oozing was noted. The patient was discharged the same day.",
+    "note_text": "This <DATE_TIME> male with a history of TB underwent bronchoscopy for left mainstem bronchial stenosis. Under MAC <LOCATION>, the stenosis was identified with 59% narrowing. A CRE balloon was used for dilation at 7mm, 8mm, and 10mm. The airway patency improved to 66%. Minimal mucosal oozing was noted. The patient was discharged the same day.",
     "cpt_codes": [
       31630
     ],
@@ -14565,11 +14969,18 @@
       "style_type": 6,
       "generated_name": "Eric Collins",
       "generation_date": "2025-12-11T12:42:00.499780"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "08ec3eba",
-    "note_text": "[Indication]\nPost-tuberculous bronchial stenosis.\n[Anesthesia]\nMAC, LMA.\n[Description]\nL mainstem stenosis (59%) identified. CRE balloon dilation performed (7-10mm). Patency improved to 66%.\n[Plan]\nDischarge same day. Repeat in 6 weeks.",
+    "note_text": "[Indication]\nPost-tuberculous bronchial stenosis.\n[<LOCATION>]\nMAC, LMA.\n[Description]\nL mainstem stenosis (59%) identified. CRE balloon dilation performed (7-10mm). Patency improved to 66%.\n[Plan]\nDischarge same day. Repeat in 6 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -14776,11 +15187,17 @@
       "style_type": 7,
       "generated_name": "Stephen Stewart",
       "generation_date": "2025-12-11T12:42:00.499835"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "08ec3eba",
-    "note_text": "Mr. Torres presented for dilation of his post-TB bronchial stenosis. We used MAC anesthesia. The scope revealed a significant narrowing in the left mainstem bronchus. We utilized a CRE balloon to dilate the airway, holding the inflations for 90 seconds to ensure a good result. The airway caliber improved significantly. He tolerated the procedure well and was discharged home.",
+    "note_text": "Mr. <PERSON> presented for dilation of his post-TB bronchial stenosis. We used MAC anesthesia. The scope revealed a significant narrowing in the left mainstem bronchus. We utilized a CRE balloon to dilate the airway, holding the inflations for 90 seconds to ensure a good result. The airway caliber improved significantly. He tolerated the procedure well and was discharged home.",
     "cpt_codes": [
       31630
     ],
@@ -14987,11 +15404,17 @@
       "style_type": 8,
       "generated_name": "Larry Sanchez",
       "generation_date": "2025-12-11T12:42:00.499886"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "08ec3eba",
-    "note_text": "INDICATION: Post-TB airway constriction.\nACTION: Bronchoscopy with balloon widening.\nFINDINGS: We found an eccentric narrowing in the left main bronchus. We used a CRE balloon to expand the lumen. We inflated to 7, 8, and 10mm. The passage opened up well. Minor oozing occurred. He is going home today.",
+    "note_text": "INDICATION: Post-TB airway constriction.\nACTION: Bronchoscopy with balloon widening.\nFINDINGS: We found an eccentric narrowing in the left main bronchus. We used a CRE balloon to expand the lumen. We inflated to 7, <DATE_TIME>, and 10mm. The passage opened up well. Minor oozing occurred. He is going home today.",
     "cpt_codes": [
       31630
     ],
@@ -15198,11 +15621,17 @@
       "style_type": 9,
       "generated_name": "Scott Morris",
       "generation_date": "2025-12-11T12:42:00.499938"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "fd2aa138",
-    "note_text": "Indication: Tracheal granulation/stenosis post-decannulation.\nProcedure: Balloon dilation (31630).\n- MAC, LMA.\n- Mid-trachea stenosis 73%.\n- CRE balloon: 12, 14, 16mm x 90s.\n- Post: 20% residual.\n- Mucosa intact.\nPlan: D/C to recovery. Decadron 8mg.",
+    "note_text": "Indication: Tracheal granulation/stenosis post-decannulation.\nProcedure: Balloon dilation (31630).\n- MAC, LMA.\n- Mid-trachea stenosis 73%.\n- CRE balloon: 12, <DATE_TIME>, 16mm x <DATE_TIME>.\n- Post: 20% residual.\n- Mucosa intact.\nPlan: D/C to recovery. Decadron 8mg.",
     "cpt_codes": [
       31630
     ],
@@ -15409,11 +15838,18 @@
       "style_type": 1,
       "generated_name": "Cynthia Rogers",
       "generation_date": "2025-12-11T12:42:00.499991"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "fd2aa138",
-    "note_text": "OPERATIVE REPORT: Management of post-tracheostomy tracheal stenosis.\nPATIENT: 48-year-old female recently decannulated.\nFINDINGS: Circumferential fibrous scarring and granulation tissue at the prior stoma site in the mid-trachea, causing 73% obstruction.\nPROCEDURE: A CRE balloon was advanced to the lesion. Sequential dilations were performed at 12mm, 14mm, and 16mm. \nRESULT: Restoration of airway patency to approximately 80% of normal. No significant mucosal injury observed.",
+    "note_text": "OPERATIVE REPORT: Management of post-tracheostomy tracheal stenosis.\nPATIENT: <PERSON>\nFINDINGS: Circumferential fibrous scarring and granulation tissue at the prior stoma site in the mid-trachea, causing 73% obstruction.\nPROCEDURE: A CRE balloon was advanced to the lesion. Sequential dilations were performed at 12mm, 14mm, and 16mm. \nRESULT: Restoration of airway patency to approximately 80% of normal. No significant mucosal injury observed.",
     "cpt_codes": [
       31630
     ],
@@ -15620,6 +16056,12 @@
       "style_type": 2,
       "generated_name": "Kathleen Reed",
       "generation_date": "2025-12-11T12:42:00.500042"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15835,7 +16277,7 @@
   },
   {
     "note_id": "fd2aa138",
-    "note_text": "Fellow Note\nPatient: Ana Garcia\nProcedure: Tracheal Dilation\nAttending: Dr. B. Martinez\nSteps:\n1. MAC, LMA.\n2. Scope inserted.\n3. Tracheal stenosis found.\n4. CRE balloon dilation x 3.\n5. Airway opened well.\nPlan: Discharge with precautions.",
+    "note_text": "Fellow Note\nPatient: <PERSON>\nProcedure: Tracheal Dilation\nAttending: Dr. B. Martinez\nSteps:\n1. MAC, LMA.\n2. Scope inserted.\n3. Tracheal stenosis found.\n4. CRE balloon dilation x 3.\n5. Airway opened well.\nPlan: Discharge with precautions.",
     "cpt_codes": [
       31630
     ],
@@ -16042,11 +16484,17 @@
       "style_type": 4,
       "generated_name": "Shirley Morgan",
       "generation_date": "2025-12-11T12:42:00.500146"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "fd2aa138",
-    "note_text": "ana garcia had a trach taken out now has scarring. mid trachea is tight 73 percent. used mac anesthesia. went in with the scope saw the narrowing. used the cre balloon 12 14 16 mm. held for 90 seconds. opened up really well 80 percent open now. no bleeding. discharge home.",
+    "note_text": "<PERSON> had a trach taken out now has scarring. mid trachea is tight 73 percent. used <PERSON>. went in with the scope saw the narrowing. used the cre balloon 12 14 16 mm. held for 90 seconds. opened up really well 80 percent open now. no bleeding. discharge home.",
     "cpt_codes": [
       31630
     ],
@@ -16253,11 +16701,18 @@
       "style_type": 5,
       "generated_name": "Angela Bell",
       "generation_date": "2025-12-11T12:42:00.500197"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "fd2aa138",
-    "note_text": "A 48-year-old female underwent bronchoscopy for tracheal stenosis following tracheostomy decannulation. Under MAC anesthesia, a mid-tracheal stenosis with 73% narrowing was identified. A CRE balloon was used for dilation at 12mm, 14mm, and 16mm. The airway patency improved to 80%. The mucosa remained intact. The patient was discharged to recovery.",
+    "note_text": "A <DATE_TIME> female underwent bronchoscopy for tracheal stenosis following tracheostomy decannulation. Under MAC <LOCATION>, a mid-tracheal stenosis with 73% narrowing was identified. A CRE balloon was used for dilation at 12mm, 14mm, and 16mm. The airway patency improved to 80%. The mucosa remained intact. The patient was discharged to recovery.",
     "cpt_codes": [
       31630
     ],
@@ -16464,11 +16919,18 @@
       "style_type": 6,
       "generated_name": "Helen Murphy",
       "generation_date": "2025-12-11T12:42:00.500251"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "fd2aa138",
-    "note_text": "[Indication]\nTracheal granulation tissue with stenosis post tracheostomy decannulation.\n[Anesthesia]\nMAC, LMA.\n[Description]\nMid-trachea stenosis (73%) identified. CRE balloon dilation performed (12-16mm). Patency improved to 80%.\n[Plan]\nDischarge. Repeat in 8 weeks.",
+    "note_text": "[Indication]\nTracheal granulation tissue with stenosis post tracheostomy decannulation.\n[<LOCATION>]\nMAC, LMA.\n[Description]\nMid-trachea stenosis (73%) identified. CRE balloon dilation performed (12-16mm). Patency improved to 80%.\n[Plan]\nDischarge. Repeat in 8 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -16675,11 +17137,17 @@
       "style_type": 7,
       "generated_name": "Anna Bailey",
       "generation_date": "2025-12-11T12:42:00.500300"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "fd2aa138",
-    "note_text": "Ms. Garcia came in for treatment of her tracheal stenosis after having her trach removed. We used MAC anesthesia. The scope showed scarring at the old stoma site. We used a CRE balloon to dilate the area, working up to 16mm. The airway opened up beautifully. There was no injury to the tissue. She was stable and discharged.",
+    "note_text": "Ms. <PERSON> came in for treatment of her tracheal stenosis after having her trach removed. We used MAC anesthesia. The scope showed scarring at the old stoma site. We used a CRE balloon to dilate the area, working up to 16mm. The airway opened up beautifully. There was no injury to the tissue. She was stable and discharged.",
     "cpt_codes": [
       31630
     ],
@@ -16886,11 +17354,17 @@
       "style_type": 8,
       "generated_name": "Brenda Rivera",
       "generation_date": "2025-12-11T12:42:00.500352"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "fd2aa138",
-    "note_text": "DIAGNOSIS: Tracheal narrowing after trach removal.\nPROCEDURE: Scope with balloon expansion.\nDETAILS: We found scar tissue in the middle of the windpipe. We used a radial balloon to stretch it open. We cycled through 12, 14, and 16mm. The airway is much wider now. No damage was seen. She is being sent home.",
+    "note_text": "DIAGNOSIS: Tracheal narrowing after trach removal.\nPROCEDURE: Scope with balloon expansion.\nDETAILS: We found scar tissue in the middle of the windpipe. We used a radial balloon to stretch it open. We cycled through 12, <DATE_TIME>, and 16mm. The airway is much wider now. No damage was seen. She is being sent home.",
     "cpt_codes": [
       31630
     ],
@@ -17097,11 +17571,17 @@
       "style_type": 9,
       "generated_name": "Pamela Cooper",
       "generation_date": "2025-12-11T12:42:00.500401"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "b69020c8",
-    "note_text": "Indication: Extrinsic compression L mainstem from lymphadenopathy.\nProcedure: Balloon dilation (31630).\n- GA, ETT.\n- Proximal LMS stenosis 63%.\n- Hurricane balloon: 6, 8, 9mm x 45s.\n- Post: 35% residual.\n- No bleeding.\nPlan: Admit overnight. Decadron 10mg.",
+    "note_text": "Indication: Extrinsic compression L mainstem from lymphadenopathy.\nProcedure: Balloon dilation (31630).\n- GA, ETT.\n- Proximal LMS stenosis 63%.\n- Hurricane balloon: 6, <DATE_TIME>, 9mm x <DATE_TIME>.\n- Post: 35% residual.\n- No bleeding.\nPlan: Admit overnight. Decadron 10mg.",
     "cpt_codes": [
       31630
     ],
@@ -17308,11 +17788,18 @@
       "style_type": 1,
       "generated_name": "Deborah Richardson",
       "generation_date": "2025-12-11T12:42:00.500456"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "b69020c8",
-    "note_text": "PROCEDURE NOTE: Palliative bronchoscopic dilation for malignant extrinsic compression.\nPATIENT: 78-year-old female with metastatic lung adenocarcinoma.\nFINDINGS: Extrinsic compression of the proximal left mainstem bronchus due to mediastinal lymphadenopathy, resulting in 63% luminal narrowing. Complex mucosal changes noted.\nINTERVENTION: Hurricane balloon dilation was performed at 6mm, 8mm, and 9mm to alleviate obstruction.\nOUTCOME: Improvement in luminal patency to approximately 65%. No complications.",
+    "note_text": "PROCEDURE NOTE: Palliative bronchoscopic dilation for malignant extrinsic compression.\nPATIENT: <DATE_TIME> female with metastatic lung adenocarcinoma.\nFINDINGS: Extrinsic compression of the proximal left mainstem bronchus due to mediastinal lymphadenopathy, resulting in 63% luminal narrowing. Complex mucosal changes noted.\nINTERVENTION: Hurricane balloon dilation was performed at 6mm, 8mm, and 9mm to alleviate obstruction.\nOUTCOME: Improvement in luminal patency to approximately 65%. No complications.",
     "cpt_codes": [
       31630
     ],
@@ -17519,6 +18006,12 @@
       "style_type": 2,
       "generated_name": "Janet Cox",
       "generation_date": "2025-12-11T12:42:00.500537"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -17734,7 +18227,7 @@
   },
   {
     "note_id": "b69020c8",
-    "note_text": "Resident Note\nPatient: Susan Jackson\nProcedure: Airway Dilation\nStaff: Dr. J. Williams\nSteps:\n1. GA, ETT 8.0.\n2. Scope to LMS.\n3. Extrinsic compression found.\n4. Hurricane balloon dilation x 3.\n5. Modest improvement.\nPlan: Admit overnight.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: Airway Dilation\nStaff: Dr. J. Williams\nSteps:\n1. GA, ETT 8.0.\n2. Scope to LMS.\n3. Extrinsic compression found.\n4. Hurricane balloon dilation x 3.\n5. Modest improvement.\nPlan: Admit overnight.",
     "cpt_codes": [
       31630
     ],
@@ -17941,11 +18434,17 @@
       "style_type": 4,
       "generated_name": "Carolyn Ward",
       "generation_date": "2025-12-11T12:42:00.500642"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "b69020c8",
-    "note_text": "susan jackson has lung cancer and nodes pushing on her airway. left main is tight 63 percent. put her to sleep. used the hurricane balloon 6 8 9 mm. helped a bit opened to maybe 65 percent. no bleeding. keep her overnight for observation.",
+    "note_text": "<PERSON> has lung cancer and nodes pushing on her airway. left main is tight 63 percent. put her to sleep. used the hurricane balloon 6 8 9 mm. helped a bit opened to maybe 65 percent. no bleeding. keep her overnight for observation.",
     "cpt_codes": [
       31630
     ],
@@ -18152,11 +18651,17 @@
       "style_type": 5,
       "generated_name": "Sharon Torres",
       "generation_date": "2025-12-11T12:42:00.500692"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "b69020c8",
-    "note_text": "This 78-year-old female with metastatic lung cancer underwent bronchoscopy for extrinsic bronchial compression. Under general anesthesia, the left mainstem bronchus was found to be narrowed by 63% due to lymphadenopathy. A Hurricane balloon was used for dilation at 6mm, 8mm, and 9mm. The airway patency improved to 65%. There were no complications. The patient was admitted for overnight observation.",
+    "note_text": "This <DATE_TIME> female with metastatic lung cancer underwent bronchoscopy for extrinsic bronchial compression. Under general <LOCATION>, the left mainstem bronchus was found to be narrowed by 63% due to lymphadenopathy. A Hurricane balloon was used for dilation at 6mm, 8mm, and 9mm. The airway patency improved to 65%. There were no complications. The patient was admitted for <DATE_TIME> observation.",
     "cpt_codes": [
       31630
     ],
@@ -18363,11 +18868,19 @@
       "style_type": 6,
       "generated_name": "Michelle Peterson",
       "generation_date": "2025-12-11T12:42:00.500747"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "b69020c8",
-    "note_text": "[Indication]\nExtrinsic bronchial compression from mediastinal lymphadenopathy.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nL mainstem stenosis (63%) identified. Hurricane balloon dilation performed (6-9mm). Patency improved to 65%.\n[Plan]\nAdmit overnight. Repeat in 6 weeks.",
+    "note_text": "[Indication]\nExtrinsic bronchial compression from mediastinal lymphadenopathy.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nL mainstem stenosis (63%) identified. Hurricane balloon dilation performed (6-9mm). Patency improved to 65%.\n[Plan]\nAdmit overnight. Repeat in 6 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -18574,11 +19087,17 @@
       "style_type": 7,
       "generated_name": "Laura Gray",
       "generation_date": "2025-12-11T12:42:00.500797"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "b69020c8",
-    "note_text": "Ms. Jackson underwent a palliative dilation for her airway compression. After induction, we visualized the left mainstem bronchus which was compressed by lymph nodes. We used a Hurricane balloon to gently dilate the area. We saw some improvement in the airway caliber. She tolerated the procedure well and was admitted for monitoring.",
+    "note_text": "Ms. <PERSON> underwent a palliative dilation for her airway compression. After induction, we visualized the left mainstem bronchus which was compressed by lymph nodes. We used a <LOCATION> balloon to gently dilate the area. We saw some improvement in the airway caliber. She tolerated the procedure well and was admitted for monitoring.",
     "cpt_codes": [
       31630
     ],
@@ -18785,11 +19304,18 @@
       "style_type": 8,
       "generated_name": "Sarah Ramirez",
       "generation_date": "2025-12-11T12:42:00.500851"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "b69020c8",
-    "note_text": "PROBLEM: Airway squashing from cancer nodes.\nACTION: Scope with balloon stretching.\nFINDINGS: The left main air tube was pinched shut by about 63%. We used a Hurricane balloon to push it open. We went up to 9mm. The opening improved slightly. No bleeding occurred. She will stay in the hospital tonight.",
+    "note_text": "PROBLEM: Airway squashing from cancer nodes.\nACTION: Scope with balloon stretching.\nFINDINGS: The left main air tube was pinched shut by about 63%. We used a <LOCATION> balloon to push it open. We went up to 9mm. The opening improved slightly. No bleeding occurred. She will stay in the hospital <DATE_TIME>.",
     "cpt_codes": [
       31630
     ],
@@ -18996,6 +19522,13 @@
       "style_type": 9,
       "generated_name": "Kimberly James",
       "generation_date": "2025-12-11T12:42:00.500901"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   }
 ]

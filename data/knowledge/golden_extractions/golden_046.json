@@ -302,7 +302,7 @@
     }
   },
   {
-    "note_text": "Code Selection: 31645 (Therapeutic aspiration of tracheobronchial tree).\nJustification: Procedure performed for initial therapeutic purposes to resolve mucus plugging causing respiratory failure. Extensive suctioning and lavage required to clear right mainstem, RML, and RLL bronchi. No biopsy or diagnostic washing performed.",
+    "note_text": "Code Selection: <DATE_TIME> (Therapeutic aspiration of tracheobronchial tree).\nJustification: Procedure performed for initial therapeutic purposes to resolve mucus plugging causing respiratory failure. Extensive suctioning and lavage required to clear right mainstem, RML, and RLL bronchi. No biopsy or diagnostic washing performed.",
     "cpt_codes": [
       31645
     ],
@@ -450,6 +450,12 @@
       "style_type": 3,
       "generated_name": "Susan Black",
       "generation_date": "2025-12-09T09:20:39.365814"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -906,7 +912,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nAcute hypoxemic respiratory failure, mucus plugging.\n[Anesthesia]\nICU Sedation (Propofol/Fentanyl).\n[Description]\nTherapeutic aspiration performed. Large mucus plugs removed from R main/RML/RLL. Lavage utilized. Airways cleared.\n[Plan]\nContinue mechanical ventilation. Monitor secretions.",
+    "note_text": "[Indication]\nAcute hypoxemic respiratory failure, mucus plugging.\n[<LOCATION>]\nICU Sedation (Propofol/Fentanyl).\n[Description]\nTherapeutic aspiration performed. Large mucus plugs removed from R main/RML/RLL. Lavage utilized. Airways cleared.\n[Plan]\nContinue mechanical ventilation. Monitor secretions.",
     "cpt_codes": [
       31645
     ],
@@ -1054,10 +1060,16 @@
       "style_type": 7,
       "generated_name": "Maria Lopez",
       "generation_date": "2025-12-09T09:20:39.366139"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Dr. Holloway performed a bedside bronchoscopy on Ms. Lopez to address her dropping oxygen levels. We passed the scope through her breathing tube and immediately found heavy mucus blocking the right lung. We spent significant time suctioning and washing the area with saline until the breathing tubes were clear. The left side looked much better. Afterward, her ventilator pressures went down, which is a good sign.",
+    "note_text": "Dr. Holloway performed a bedside bronchoscopy on Ms. <PERSON> to address her dropping oxygen levels. We passed the scope through her breathing tube and immediately found heavy mucus blocking the right lung. We spent significant time suctioning and washing the area with saline until the breathing tubes were clear. The left side looked much better. Afterward, her ventilator pressures went down, which is a good sign.",
     "cpt_codes": [
       31645
     ],
@@ -1205,6 +1217,12 @@
       "style_type": 8,
       "generated_name": "Mrs. Lopez",
       "generation_date": "2025-12-09T09:20:39.366188"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1380,7 +1398,7 @@
         "patient_age": "PATIENT: Samuel Norris, 63-year-old Male",
         "gender": "PATIENT: Samuel Norris, 63-year-old Male",
         "procedure_date": "DATE OF PROCEDURE: 09/03/2025",
-        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.",
+        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.",
         "sedation_type": "ANESTHESIA: General anesthesia with endotracheal intubation",
         "airway_type": "AIRWAY: 8.0 ETT",
         "stent_location": "stent was visualized in the left mainstem bronchus with proximal migration",
@@ -1519,7 +1537,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. Norris presented with symptomatic migration of a left mainstem bronchial stent. Under general anesthesia, bronchoscopy revealed the covered metal stent protruding into the distal trachea. The stent was manipulated distally using alligator forceps and repositioned into the appropriate anatomic location. Balloon dilation was performed to ensure apposition to the bronchial wall. The airway is now patent.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented with symptomatic migration of a left mainstem bronchial stent. Under general <LOCATION>, bronchoscopy revealed the covered metal stent protruding into the distal trachea. The stent was manipulated distally using alligator forceps and repositioned into the appropriate anatomic location. Balloon dilation was performed to ensure apposition to the bronchial wall. The airway is now patent.",
     "cpt_codes": [
       31638
     ],
@@ -1540,7 +1558,7 @@
         "patient_age": "PATIENT: Samuel Norris, 63-year-old Male",
         "gender": "PATIENT: Samuel Norris, 63-year-old Male",
         "procedure_date": "DATE OF PROCEDURE: 09/03/2025",
-        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.",
+        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.",
         "sedation_type": "ANESTHESIA: General anesthesia with endotracheal intubation",
         "airway_type": "AIRWAY: 8.0 ETT",
         "stent_location": "stent was visualized in the left mainstem bronchus with proximal migration",
@@ -1676,10 +1694,17 @@
       "style_type": 2,
       "generated_name": "Arthur P. Henderson",
       "generation_date": "2025-12-09T09:20:39.366390"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "CPT Code: 31638 (Revision of tracheobronchial stent).\nDetail: Existing stent was manipulated and repositioned (not removed/replaced). Balloon dilation (bundled) used to seat the stent. Fluoroscopy confirmed position. Meets criteria for revision.",
+    "note_text": "CPT Code: 31638 (Revision of tracheobronchial stent).\n<PERSON>: Existing stent was manipulated and repositioned (not removed/replaced). Balloon dilation (bundled) used to seat the stent. Fluoroscopy confirmed position. Meets criteria for revision.",
     "cpt_codes": [
       31638
     ],
@@ -1700,7 +1725,7 @@
         "patient_age": "PATIENT: Samuel Norris, 63-year-old Male",
         "gender": "PATIENT: Samuel Norris, 63-year-old Male",
         "procedure_date": "DATE OF PROCEDURE: 09/03/2025",
-        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.",
+        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.",
         "sedation_type": "ANESTHESIA: General anesthesia with endotracheal intubation",
         "airway_type": "AIRWAY: 8.0 ETT",
         "stent_location": "stent was visualized in the left mainstem bronchus with proximal migration",
@@ -1836,10 +1861,16 @@
       "style_type": 3,
       "generated_name": "Frank Miller",
       "generation_date": "2025-12-09T09:20:39.366448"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Stent Revision\nPatient: Samuel Norris\n1. ETT 8.0.\n2. Scope inserted.\n3. Stent migrated proximal.\n4. Used forceps/snare to push it back.\n5. Ballooned it (12mm).\n6. Looks good now.\n7. No bleeding.",
+    "note_text": "Procedure: Stent Revision\nPatient: <PERSON>\n1. ETT 8.0.\n2. Scope inserted.\n3. Stent migrated proximal.\n4. Used forceps/snare to push it back.\n5. Ballooned it (12mm).\n6. Looks good now.\n7. No bleeding.",
     "cpt_codes": [
       31638
     ],
@@ -1860,7 +1891,7 @@
         "patient_age": "PATIENT: Samuel Norris, 63-year-old Male",
         "gender": "PATIENT: Samuel Norris, 63-year-old Male",
         "procedure_date": "DATE OF PROCEDURE: 09/03/2025",
-        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.",
+        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.",
         "sedation_type": "ANESTHESIA: General anesthesia with endotracheal intubation",
         "airway_type": "AIRWAY: 8.0 ETT",
         "stent_location": "stent was visualized in the left mainstem bronchus with proximal migration",
@@ -1996,10 +2027,16 @@
       "style_type": 4,
       "generated_name": "Sam N.",
       "generation_date": "2025-12-09T09:20:39.366498"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "samuel norris his stent moved up into the trachea causing coughing. went in with the scope grabbed the edge of the stent and pushed it back down into the left main where it belongs. dilated it with a balloon so it sticks better. looks fine now no tumor growth just migration.",
+    "note_text": "<PERSON> his stent moved up into the trachea causing coughing. went in with the scope grabbed the edge of the stent and pushed it back down into the left main where it belongs. dilated it with a balloon so it sticks better. looks fine now no tumor growth just migration.",
     "cpt_codes": [
       31638
     ],
@@ -2020,7 +2057,7 @@
         "patient_age": "PATIENT: Samuel Norris, 63-year-old Male",
         "gender": "PATIENT: Samuel Norris, 63-year-old Male",
         "procedure_date": "DATE OF PROCEDURE: 09/03/2025",
-        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.",
+        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.",
         "sedation_type": "ANESTHESIA: General anesthesia with endotracheal intubation",
         "airway_type": "AIRWAY: 8.0 ETT",
         "stent_location": "stent was visualized in the left mainstem bronchus with proximal migration",
@@ -2156,6 +2193,12 @@
       "style_type": 5,
       "generated_name": "samuel norris",
       "generation_date": "2025-12-09T09:20:39.366563"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2180,7 +2223,7 @@
         "patient_age": "PATIENT: Samuel Norris, 63-year-old Male",
         "gender": "PATIENT: Samuel Norris, 63-year-old Male",
         "procedure_date": "DATE OF PROCEDURE: 09/03/2025",
-        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.",
+        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.",
         "sedation_type": "ANESTHESIA: General anesthesia with endotracheal intubation",
         "airway_type": "AIRWAY: 8.0 ETT",
         "stent_location": "stent was visualized in the left mainstem bronchus with proximal migration",
@@ -2319,7 +2362,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nStent migration LMSB.\n[Anesthesia]\nGeneral.\n[Description]\nVisualization: Stent proximal. Action: Repositioned distal using forceps. Balloon dilation 10-12mm. Position corrected.\n[Plan]\nExtubate. Obs.",
+    "note_text": "[Indication]\nStent migration LMSB.\n[<LOCATION>]\nGeneral.\n[Description]\nVisualization: Stent proximal. Action: Repositioned distal using forceps. Balloon dilation 10-12mm. Position corrected.\n[Plan]\nExtubate. Obs.",
     "cpt_codes": [
       31638
     ],
@@ -2340,7 +2383,7 @@
         "patient_age": "PATIENT: Samuel Norris, 63-year-old Male",
         "gender": "PATIENT: Samuel Norris, 63-year-old Male",
         "procedure_date": "DATE OF PROCEDURE: 09/03/2025",
-        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.",
+        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.",
         "sedation_type": "ANESTHESIA: General anesthesia with endotracheal intubation",
         "airway_type": "AIRWAY: 8.0 ETT",
         "stent_location": "stent was visualized in the left mainstem bronchus with proximal migration",
@@ -2476,10 +2519,16 @@
       "style_type": 7,
       "generated_name": "Samuel Norris",
       "generation_date": "2025-12-09T09:20:39.366738"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We took Mr. Norris to the OR to fix his lung stent. It had slipped up into his windpipe. We put him to sleep and used a scope to carefully push the stent back down into the left lung airway where it belongs. We used a balloon to widen it so it stays put. He is breathing better now.",
+    "note_text": "We took Mr. <PERSON> to the OR to fix his lung stent. It had slipped up into his windpipe. We put him to sleep and used a scope to carefully push the stent back down into the left lung airway where it belongs. We used a balloon to widen it so it stays put. He is breathing better now.",
     "cpt_codes": [
       31638
     ],
@@ -2500,7 +2549,7 @@
         "patient_age": "PATIENT: Samuel Norris, 63-year-old Male",
         "gender": "PATIENT: Samuel Norris, 63-year-old Male",
         "procedure_date": "DATE OF PROCEDURE: 09/03/2025",
-        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.",
+        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.",
         "sedation_type": "ANESTHESIA: General anesthesia with endotracheal intubation",
         "airway_type": "AIRWAY: 8.0 ETT",
         "stent_location": "stent was visualized in the left mainstem bronchus with proximal migration",
@@ -2636,6 +2685,12 @@
       "style_type": 8,
       "generated_name": "Mr. Norris",
       "generation_date": "2025-12-09T09:20:39.366810"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2660,7 +2715,7 @@
         "patient_age": "PATIENT: Samuel Norris, 63-year-old Male",
         "gender": "PATIENT: Samuel Norris, 63-year-old Male",
         "procedure_date": "DATE OF PROCEDURE: 09/03/2025",
-        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.",
+        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.",
         "sedation_type": "ANESTHESIA: General anesthesia with endotracheal intubation",
         "airway_type": "AIRWAY: 8.0 ETT",
         "stent_location": "stent was visualized in the left mainstem bronchus with proximal migration",
@@ -2950,7 +3005,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Bronchoscopic Dilation of Tracheal Stenosis.\nINDICATION: Symptomatic idiopathic subglottic stenosis.\nFINDINGS: A circumferential stricture was identified in the proximal trachea reducing the lumen by 60%. \nINTERVENTION: Radial dilation was performed using a CRE wire-guided balloon with progressive inflation to 12mm. Post-dilation inspection revealed significant improvement in airway caliber to approximately 80% of normal.",
+    "note_text": "PROCEDURE NOTE: Bronchoscopic Dilation of Tracheal Stenosis.\nINDICATION: <LOCATION> idiopathic subglottic stenosis.\nFINDINGS: A circumferential stricture was identified in the proximal trachea reducing the lumen by 60%. \nINTERVENTION: Radial dilation was performed using a CRE wire-guided balloon with progressive inflation to 12mm. Post-dilation inspection revealed significant improvement in airway caliber to approximately 80% of normal.",
     "cpt_codes": [
       31630
     ],
@@ -3098,10 +3153,16 @@
       "style_type": 2,
       "generated_name": "Elena M. Rodriguez",
       "generation_date": "2025-12-09T09:20:39.367031"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Billing: 31630 (Bronchoscopy with dilation of trachea).\nTechnique: Balloon dilation of a single stricture in the trachea. Serial inflations performed. No stent placed. No biopsy performed.",
+    "note_text": "Billing: <DATE_TIME> (Bronchoscopy with dilation of trachea).\nTechnique: Balloon dilation of a single stricture in the trachea. Serial inflations performed. No stent placed. No biopsy performed.",
     "cpt_codes": [
       31630
     ],
@@ -3249,10 +3310,16 @@
       "style_type": 3,
       "generated_name": "Jane D.",
       "generation_date": "2025-12-09T09:20:39.367103"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Resident Note: Airway Dilation\nPatient: Hannah Keller\n1. ETT 6.5.\n2. Stenosis seen subglottic (60%).\n3. Balloon catheter passed.\n4. Inflated 8mm -> 10mm -> 12mm.\n5. Mucosa split slightly (expected).\n6. Airway much more open now.",
+    "note_text": "Resident Note: Airway Dilation\nPatient: <PERSON>\n1. ETT 6.5.\n2. Stenosis seen subglottic (60%).\n3. Balloon catheter passed.\n4. Inflated 8mm -> 10mm -> 12mm.\n5. Mucosa split slightly (expected).\n6. Airway much more open now.",
     "cpt_codes": [
       31630
     ],
@@ -3400,10 +3467,16 @@
       "style_type": 4,
       "generated_name": "Hannah K.",
       "generation_date": "2025-12-09T09:20:39.367185"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "hannah keller has that tracheal stenosis again hard to breathe. put her to sleep dilated it with the balloon 8 10 then 12 millimeters. opened up nice looks like 80 percent open now little bit of bleeding but stopped. sending her home.",
+    "note_text": "<PERSON> has that tracheal stenosis again hard to breathe. put her to sleep dilated it with the balloon 8 <DATE_TIME>. opened up nice looks like 80 percent open now little bit of bleeding but stopped. sending her home.",
     "cpt_codes": [
       31630
     ],
@@ -3551,6 +3624,13 @@
       "style_type": 5,
       "generated_name": "hannah keller",
       "generation_date": "2025-12-09T09:20:39.367249"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -3705,7 +3785,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nIdiopathic tracheal stenosis.\n[Anesthesia]\nGeneral.\n[Description]\nStenosis ID'd. CRE Balloon dilation (8-12mm). Patency improved from 40% to 80%.\n[Plan]\nDischarge. F/U ENT.",
+    "note_text": "[Indication]\nIdiopathic tracheal stenosis.\n[<LOCATION>]\nGeneral.\n[Description]\nStenosis ID'd. CRE Balloon dilation (<DATE_TIME>). Patency improved from 40% to 80%.\n[Plan]\nDischarge. F/U ENT.",
     "cpt_codes": [
       31630
     ],
@@ -3853,10 +3933,17 @@
       "style_type": 7,
       "generated_name": "Hannah Keller",
       "generation_date": "2025-12-09T09:20:39.367396"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Ms. Keller had her windpipe dilated today. She has a narrowing just below her vocal cords. We used a special balloon that we inflated inside the narrow part to stretch it open. We did this three times with increasing pressure. The airway is much wider now, which should help her breathing.",
+    "note_text": "Ms. <PERSON> had her windpipe dilated today. She has a narrowing just below her vocal cords. We used a special balloon that we inflated inside the narrow part to stretch it open. We did this three times with increasing pressure. The airway is much wider now, which should help her breathing.",
     "cpt_codes": [
       31630
     ],
@@ -4004,6 +4091,12 @@
       "style_type": 8,
       "generated_name": "Ms. Keller",
       "generation_date": "2025-12-09T09:20:39.367466"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4180,7 +4273,7 @@
         "gender": "Patient: Carter, Jacob | 32M | MRN 502118",
         "procedure_date": "Date: 07/02/2025 21:15",
         "primary_indication": "Acute airway obstruction after aspiration of peanut while eating at home.",
-        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).",
+        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia–equivalent).",
         "airway_type": "8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.",
         "fb_object_type": "peanut fragments were removed piecemeal",
         "fb_tools": "Using a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed"
@@ -4338,7 +4431,7 @@
         "gender": "Patient: Carter, Jacob | 32M | MRN 502118",
         "procedure_date": "Date: 07/02/2025 21:15",
         "primary_indication": "Acute airway obstruction after aspiration of peanut while eating at home.",
-        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).",
+        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia–equivalent).",
         "airway_type": "8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.",
         "fb_object_type": "peanut fragments were removed piecemeal",
         "fb_tools": "Using a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed"
@@ -4474,7 +4567,7 @@
     }
   },
   {
-    "note_text": "Code: 31635 (Bronchoscopy with removal of foreign body).\nDetail: Removal of aspirated organic material from Right Mainstem/RLL using basket and forceps. Complexity: Piecemeal removal required.",
+    "note_text": "Code: 31635 (Bronchoscopy with removal of foreign body).\n<PERSON>: Removal of aspirated organic material from Right Mainstem/RLL using basket and forceps. Complexity: Piecemeal removal required.",
     "cpt_codes": [
       31635
     ],
@@ -4496,7 +4589,7 @@
         "gender": "Patient: Carter, Jacob | 32M | MRN 502118",
         "procedure_date": "Date: 07/02/2025 21:15",
         "primary_indication": "Acute airway obstruction after aspiration of peanut while eating at home.",
-        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).",
+        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia–equivalent).",
         "airway_type": "8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.",
         "fb_object_type": "peanut fragments were removed piecemeal",
         "fb_tools": "Using a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed"
@@ -4629,10 +4722,16 @@
       "style_type": 3,
       "generated_name": "David White",
       "generation_date": "2025-12-09T09:20:39.367756"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Emergency Bronch Note\nPatient: Jacob Carter\n1. Intubated for aspiration.\n2. Scope down -> Peanut parts in R lung.\n3. Used basket and forceps.\n4. Pulled out multiple pieces.\n5. Suctioned clear.\n6. R lung reinflated.\n7. Done.",
+    "note_text": "Emergency <PERSON>\nPatient: <PERSON>\n1. Intubated for aspiration.\n2. Scope down -> Peanut parts in R lung.\n3. Used basket and forceps.\n4. Pulled out multiple pieces.\n5. Suctioned clear.\n6. R lung reinflated.\n7. Done.",
     "cpt_codes": [
       31635
     ],
@@ -4654,7 +4753,7 @@
         "gender": "Patient: Carter, Jacob | 32M | MRN 502118",
         "procedure_date": "Date: 07/02/2025 21:15",
         "primary_indication": "Acute airway obstruction after aspiration of peanut while eating at home.",
-        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).",
+        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia–equivalent).",
         "airway_type": "8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.",
         "fb_object_type": "peanut fragments were removed piecemeal",
         "fb_tools": "Using a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed"
@@ -4787,10 +4886,17 @@
       "style_type": 4,
       "generated_name": "Jake C.",
       "generation_date": "2025-12-09T09:20:39.367865"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "jacob carter choked on a peanut ems intubated him. right lung down. went in with the scope giant peanut mess in the right main. used the basket and grabbers took a while to get it all out in pieces. cleaned it up nicely lung is up now on xray.",
+    "note_text": "<PERSON> choked on a peanut ems intubated him. right lung down. went in with the scope giant peanut mess in the right main. used the basket and grabbers took a while to get it all out in pieces. cleaned it up nicely lung is up now on xray.",
     "cpt_codes": [
       31635
     ],
@@ -4812,7 +4918,7 @@
         "gender": "Patient: Carter, Jacob | 32M | MRN 502118",
         "procedure_date": "Date: 07/02/2025 21:15",
         "primary_indication": "Acute airway obstruction after aspiration of peanut while eating at home.",
-        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).",
+        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia–equivalent).",
         "airway_type": "8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.",
         "fb_object_type": "peanut fragments were removed piecemeal",
         "fb_tools": "Using a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed"
@@ -4945,6 +5051,12 @@
       "style_type": 5,
       "generated_name": "jacob carter",
       "generation_date": "2025-12-09T09:20:39.367942"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4970,7 +5082,7 @@
         "gender": "Patient: Carter, Jacob | 32M | MRN 502118",
         "procedure_date": "Date: 07/02/2025 21:15",
         "primary_indication": "Acute airway obstruction after aspiration of peanut while eating at home.",
-        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).",
+        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia–equivalent).",
         "airway_type": "8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.",
         "fb_object_type": "peanut fragments were removed piecemeal",
         "fb_tools": "Using a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed"
@@ -5106,7 +5218,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nForeign body aspiration, respiratory failure.\n[Anesthesia]\nGeneral (Propofol/Fentanyl).\n[Description]\nFB identified (Peanut) R lung. Removal via basket/forceps. Airways patent post-removal.\n[Plan]\nWean vent. CXR.",
+    "note_text": "[Indication]\nForeign body aspiration, respiratory failure.\n[<LOCATION>]\nGeneral (Propofol/Fentanyl).\n[Description]\nFB identified (<PERSON>) R lung. Removal via basket/forceps. Airways patent post-removal.\n[Plan]\nWean vent. CXR.",
     "cpt_codes": [
       31635
     ],
@@ -5128,7 +5240,7 @@
         "gender": "Patient: Carter, Jacob | 32M | MRN 502118",
         "procedure_date": "Date: 07/02/2025 21:15",
         "primary_indication": "Acute airway obstruction after aspiration of peanut while eating at home.",
-        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).",
+        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia–equivalent).",
         "airway_type": "8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.",
         "fb_object_type": "peanut fragments were removed piecemeal",
         "fb_tools": "Using a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed"
@@ -5261,10 +5373,17 @@
       "style_type": 7,
       "generated_name": "Jacob Carter",
       "generation_date": "2025-12-09T09:20:39.368077"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We performed an emergency procedure on Mr. Carter to remove a peanut he inhaled. It was blocking his right lung. Using a small basket and grippers through the scope, we removed the peanut in several pieces. Once it was all out, we suctioned the airway clean, and his lung re-expanded.",
+    "note_text": "We performed an emergency procedure on Mr. <PERSON> to remove a peanut he inhaled. It was blocking his right lung. Using a small basket and grippers through the scope, we removed the peanut in several pieces. Once it was all out, we suctioned the airway clean, and his lung re-expanded.",
     "cpt_codes": [
       31635
     ],
@@ -5286,7 +5405,7 @@
         "gender": "Patient: Carter, Jacob | 32M | MRN 502118",
         "procedure_date": "Date: 07/02/2025 21:15",
         "primary_indication": "Acute airway obstruction after aspiration of peanut while eating at home.",
-        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).",
+        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia–equivalent).",
         "airway_type": "8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.",
         "fb_object_type": "peanut fragments were removed piecemeal",
         "fb_tools": "Using a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed"
@@ -5419,6 +5538,12 @@
       "style_type": 8,
       "generated_name": "Mr. Carter",
       "generation_date": "2025-12-09T09:20:39.368143"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5444,7 +5569,7 @@
         "gender": "Patient: Carter, Jacob | 32M | MRN 502118",
         "procedure_date": "Date: 07/02/2025 21:15",
         "primary_indication": "Acute airway obstruction after aspiration of peanut while eating at home.",
-        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).",
+        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia–equivalent).",
         "airway_type": "8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.",
         "fb_object_type": "peanut fragments were removed piecemeal",
         "fb_tools": "Using a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed"
@@ -5580,7 +5705,7 @@
     }
   },
   {
-    "note_text": "Indication: Mediastinal LAD.\nProc: EBUS-TBNA.\nStations: 7, 11R.\nROSE: Granulomas.\nResult: 2 stations sampled.\nPlan: D/C.",
+    "note_text": "Indication: Mediastinal LAD.\nProc: EBUS-TBNA.\nStations: 7, 11R.\nROSE: <PERSON>.\nResult: 2 stations sampled.\nPlan: D/C.",
     "cpt_codes": [
       31652
     ],
@@ -5742,6 +5867,12 @@
       "style_type": 1,
       "generated_name": "Maria Garcia",
       "generation_date": "2025-12-09T09:20:39.368490"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5910,7 +6041,7 @@
     }
   },
   {
-    "note_text": "Code: 31652 (EBUS-TBNA, 1-2 stations).\nSpecifics: Sampled Station 7 and Station 11R (Total 2 stations). This qualifies for the base EBUS code 31652, not the multiple station code 31653.",
+    "note_text": "Code: 31652 (EBUS-TBNA, 1-2 stations).\nSpecifics: Sampled Station 7 and Station 11R (Total 2 stations). This qualifies for the base EBUS code <DATE_TIME>, not the multiple station code <DATE_TIME>.",
     "cpt_codes": [
       31652
     ],
@@ -6072,10 +6203,17 @@
       "style_type": 3,
       "generated_name": "Patricia Moore",
       "generation_date": "2025-12-09T09:20:39.368633"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "EBUS Note\nPatient: Linda Reyes\n1. ETT 8.0.\n2. EBUS scope in.\n3. Station 7: 4 passes -> Granulomas.\n4. Station 11R: 3 passes -> Granulomas.\n5. No other nodes sampled.\n6. Pt stable.",
+    "note_text": "EBUS Note\nPatient: <PERSON>\n1. ETT 8.0.\n2. EBUS scope in.\n3. Station 7: 4 passes -> Granulomas.\n4. Station 11R: 3 passes -> Granulomas.\n5. No other nodes sampled.\n6. Pt stable.",
     "cpt_codes": [
       31652
     ],
@@ -6237,10 +6375,16 @@
       "style_type": 4,
       "generated_name": "Linda R.",
       "generation_date": "2025-12-09T09:20:39.368702"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "linda reyes for ebus checking for sarcoid. lymph nodes looked big at 7 and 11r. poked them with the needle got good samples rose said granulomas. didn't see anything else weird. patient woke up fine going home.",
+    "note_text": "<PERSON> reyes for ebus checking for sarcoid. lymph nodes looked big at 7 and 11r. poked them with the needle got good samples rose said granulomas. didn't see anything else weird. patient woke up fine going home.",
     "cpt_codes": [
       31652
     ],
@@ -6402,6 +6546,12 @@
       "style_type": 5,
       "generated_name": "linda reyes",
       "generation_date": "2025-12-09T09:20:39.368769"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6570,7 +6720,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMediastinal adenopathy, ?Sarcoid.\n[Anesthesia]\nGeneral.\n[Description]\nEBUS-TBNA Stations 7 & 11R. ROSE: Granulomas.\n[Plan]\nDischarge. Follow-up ILD clinic.",
+    "note_text": "[Indication]\nMediastinal adenopathy, ?<PERSON>.\n[<LOCATION>]\nGeneral.\n[Description]\nEBUS-TBNA Stations 7 & 11R. ROSE: <PERSON>.\n[Plan]\nDischarge. Follow-up ILD clinic.",
     "cpt_codes": [
       31652
     ],
@@ -6732,10 +6882,18 @@
       "style_type": 7,
       "generated_name": "Linda Reyes",
       "generation_date": "2025-12-09T09:20:39.368870"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Dr. Cole performed an EBUS procedure on Ms. Reyes to investigate her swollen lymph nodes. We used a special ultrasound scope to guide a needle into nodes in the center of her chest and the right side. The preliminary results show granulomas, which points towards sarcoidosis. We sampled two areas total.",
+    "note_text": "Dr. Cole performed an EBUS procedure on Ms. <PERSON> to investigate her swollen lymph nodes. We used a special ultrasound scope to guide a needle into nodes in the center of her chest and the right side. The preliminary results show granulomas, which points towards sarcoidosis. We sampled two areas total.",
     "cpt_codes": [
       31652
     ],
@@ -6897,6 +7055,12 @@
       "style_type": 8,
       "generated_name": "Mrs. Reyes",
       "generation_date": "2025-12-09T09:20:39.368923"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7065,7 +7229,7 @@
     }
   },
   {
-    "note_text": "Indication: Severe Asthma.\nProc: Bronchial Thermoplasty (Session 2/3).\nTarget: RLL, LLL.\nActivations: 92 total.\nComplication: Mild bronchospasm (treated).\nPlan: D/C.",
+    "note_text": "Indication: Severe Asthma.\nProc: Bronchial Thermoplasty (<DATE_TIME>).\nTarget: RLL, LLL.\nActivations: 92 total.\nComplication: Mild bronchospasm (treated).\nPlan: D/C.",
     "cpt_codes": [
       31661
     ],
@@ -7215,10 +7379,16 @@
       "style_type": 1,
       "generated_name": "Linda Hamilton",
       "generation_date": "2025-12-09T09:20:39.369043"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "OPERATIVE NOTE: Bronchial Thermoplasty, Session 2.\nINDICATION: Refractory asthma.\nPROCEDURE: The lower lobes were targeted for this session. The Alair catheter was deployed systematically in the segmental and subsegmental bronchi of the right and left lower lobes. A total of 92 radiofrequency activations were delivered. The patient tolerated the procedure with only mild, transient bronchospasm managed pharmacologically.",
+    "note_text": "OPERATIVE NOTE: Bronchial <PERSON>, <DATE_TIME>.\nINDICATION: Refractory asthma.\nPROCEDURE: The lower lobes were targeted for this session. The Alair catheter was deployed systematically in the segmental and subsegmental bronchi of the right and left lower lobes. A total of 92 radiofrequency activations were delivered. The patient tolerated the procedure with only mild, transient bronchospasm managed pharmacologically.",
     "cpt_codes": [
       31661
     ],
@@ -7368,6 +7538,13 @@
       "style_type": 2,
       "generated_name": "Ripley Alien",
       "generation_date": "2025-12-09T09:20:39.369106"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -7524,7 +7701,7 @@
     }
   },
   {
-    "note_text": "Procedure: BT Session 2\nPatient: Danielle Morgan\n1. General Anesthesia.\n2. Treated RLL (48 hits) and LLL (44 hits).\n3. Total 92 activations.\n4. Pt got wheezy, gave albuterol/solumedrol.\n5. Improved.\n6. Extubated.",
+    "note_text": "Procedure: BT Session 2\nPatient: <PERSON>\n1. General <PERSON>.\n2. Treated RLL (48 hits) and LLL (44 hits).\n3. Total 92 activations.\n4. Pt got wheezy, gave albuterol/solumedrol.\n5. Improved.\n6. Extubated.",
     "cpt_codes": [
       31661
     ],
@@ -7674,10 +7851,17 @@
       "style_type": 4,
       "generated_name": "Dani M.",
       "generation_date": "2025-12-09T09:20:39.369210"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "danielle morgan back for her second thermoplasty session doing the lower lobes today. went smoothly did about 90 burns total in the right and left lower lobes. she got a little tight during the case gave some nebs and steroids she opened up. going home today.",
+    "note_text": "<LOCATION> morgan back for her second thermoplasty session doing the lower lobes today. went smoothly did about 90 burns total in the right and left lower lobes. she got a little tight during the case gave some nebs and steroids she opened up. going home today.",
     "cpt_codes": [
       31661
     ],
@@ -7827,6 +8011,12 @@
       "style_type": 5,
       "generated_name": "danielle morgan",
       "generation_date": "2025-12-09T09:20:39.369250"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -7983,7 +8173,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSevere Asthma.\n[Anesthesia]\nGeneral.\n[Description]\nBronchial Thermoplasty RLL & LLL. 92 Activations. \n[Complications]\nTransient bronchospasm.\n[Plan]\nDischarge. Session 3 in 3 weeks.",
+    "note_text": "[Indication]\nSevere Asthma.\n[<LOCATION>]\nGeneral.\n[Description]\nBronchial Thermoplasty RLL & LLL. 92 Activations. \n[Complications]\nTransient bronchospasm.\n[Plan]\nDischarge. Session 3 in 3 weeks.",
     "cpt_codes": [
       31661
     ],
@@ -8133,10 +8323,16 @@
       "style_type": 7,
       "generated_name": "Danielle Morgan",
       "generation_date": "2025-12-09T09:20:39.369380"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Morgan came in for her second bronchial thermoplasty treatment for her asthma. Today we treated the bottom sections of both lungs. We used a special catheter to warm the airway walls to reduce muscle thickness. We did 92 treatments in total. She had a little asthma flare during the procedure but we treated it quickly and she is doing fine now.",
+    "note_text": "Ms. <PERSON> came in for her second bronchial thermoplasty treatment for her asthma. Today we treated the bottom sections of both lungs. We used a special catheter to warm the airway walls to reduce muscle thickness. We did <DATE_TIME> treatments in total. She had a little asthma flare during the procedure but we treated it quickly and she is doing fine now.",
     "cpt_codes": [
       31661
     ],
@@ -8286,6 +8482,13 @@
       "style_type": 8,
       "generated_name": "Ms. Morgan",
       "generation_date": "2025-12-09T09:20:39.369434"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -8594,7 +8797,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Ultrasound-Guided Left Thoracentesis.\nINDICATION: Symptomatic pleural effusion refractory to diuretic therapy.\nDESCRIPTION: The largest fluid pocket was localized via bedside ultrasound. Under local anesthesia, a catheter was introduced using Seldinger technique. 1300 mL of serous fluid was drained for symptomatic relief and diagnostic analysis. Post-procedure ultrasound ruled out pneumothorax.",
+    "note_text": "PROCEDURE NOTE: Ultrasound-Guided Left Thoracentesis.\nINDICATION: <LOCATION> pleural effusion refractory to diuretic therapy.\n<PERSON>: The largest fluid pocket was localized via bedside ultrasound. Under local <LOCATION>, a catheter was introduced using Seldinger technique. 1300 mL of serous fluid was drained for symptomatic relief and diagnostic analysis. Post-procedure ultrasound ruled out pneumothorax.",
     "cpt_codes": [
       32555
     ],
@@ -8743,6 +8946,14 @@
       "style_type": 2,
       "generated_name": "Thomas R. Davies",
       "generation_date": "2025-12-09T09:20:39.369568"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -8898,7 +9109,7 @@
     }
   },
   {
-    "note_text": "Procedure: Thoracentesis\nPatient: Anil Patel\n1. Sitting up.\n2. US check: Left effusion.\n3. Prepped/numbed 8th ICS.\n4. Needle in -> fluid -> catheter in.\n5. Drained 1.3L straw fluid.\n6. Pulled catheter.\n7. Bandaged.",
+    "note_text": "Procedure: Thoracentesis\nPatient: <PERSON>\n1. Sitting up.\n2. <LOCATION> check: Left effusion.\n3. Prepped/numbed 8th ICS.\n4. Needle in -> fluid -> catheter in.\n5. Drained 1.3L straw fluid.\n6. Pulled catheter.\n7. Bandaged.",
     "cpt_codes": [
       32555
     ],
@@ -9047,10 +9258,17 @@
       "style_type": 4,
       "generated_name": "Anil P.",
       "generation_date": "2025-12-09T09:20:39.369647"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "anil patel fluid on the left lung heart failure. did a tap at the bedside used the ultrasound to find a good spot. drained 1.3 liters of yellow fluid he feels better breathing now. sent fluid to lab no complications.",
+    "note_text": "<PERSON> on the left lung heart failure. did a tap at the bedside used the ultrasound to find a good spot. drained 1.3 liters of yellow fluid he feels better breathing now. sent fluid to lab no complications.",
     "cpt_codes": [
       32555
     ],
@@ -9199,6 +9417,12 @@
       "style_type": 5,
       "generated_name": "anil patel",
       "generation_date": "2025-12-09T09:20:39.369689"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9354,7 +9578,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLeft pleural effusion, symptomatic.\n[Anesthesia]\nLocal (Lidocaine).\n[Description]\nUS-guided thoracentesis. 1.3L removed. Samples sent.\n[Plan]\nMonitor O2. Diuretics.",
+    "note_text": "[Indication]\nLeft pleural effusion, symptomatic.\n[<LOCATION>]\nLocal (Lidocaine).\n[Description]\n<LOCATION>-guided thoracentesis. 1.3L removed. Samples sent.\n[Plan]\n<PERSON>. Diuretics.",
     "cpt_codes": [
       32555
     ],
@@ -9503,10 +9727,18 @@
       "style_type": 7,
       "generated_name": "Anil Patel",
       "generation_date": "2025-12-09T09:20:39.369922"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Dr. Simmons performed a procedure to drain fluid from around Mr. Patel's left lung. Using ultrasound to guide the needle, we removed 1.3 liters of fluid. This helped his breathing immediately. We sent the fluid to the lab to make sure there is no infection.",
+    "note_text": "Dr. Simmons performed a procedure to drain fluid from around Mr. <PERSON>'s left lung. Using ultrasound to guide the needle, we removed 1.3 liters of fluid. This helped his breathing immediately. We sent the fluid to the lab to make sure there is no infection.",
     "cpt_codes": [
       32555
     ],
@@ -9655,6 +9887,12 @@
       "style_type": 8,
       "generated_name": "Mr. Patel",
       "generation_date": "2025-12-09T09:20:39.369970"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9960,7 +10198,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Tube Thoracostomy.\nINDICATION: Primary spontaneous pneumothorax.\nPROCEDURE: The right hemithorax was prepped. Local anesthesia was infiltrated. A 28 French chest tube was inserted via blunt dissection at the 5th intercostal space. Significant air release was confirmed. The tube was secured and placed to suction. Post-procedure imaging confirmed lung re-expansion.",
+    "note_text": "PROCEDURE NOTE: Tube Thoracostomy.\nINDICATION: <PERSON> spontaneous pneumothorax.\nPROCEDURE: The right hemithorax was prepped. Local <LOCATION> was infiltrated. A 28 French chest tube was inserted via blunt dissection at the 5th intercostal space. Significant air release was confirmed. The tube was secured and placed to suction. Post-procedure imaging confirmed lung re-expansion.",
     "cpt_codes": [
       32551
     ],
@@ -10107,10 +10345,17 @@
       "style_type": 2,
       "generated_name": "Bruce Wayne",
       "generation_date": "2025-12-09T09:20:39.370235"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Code: 32551 (Tube thoracostomy).\nSpecifics: Open/blunt dissection technique used (not percutaneous/Seldinger). 28Fr tube placed. Connected to suction.",
+    "note_text": "Code: 32551 (Tube thoracostomy).\nSpecifics: Open/blunt dissection technique used (not percutaneous/<PERSON>). 28Fr tube placed. Connected to suction.",
     "cpt_codes": [
       32551
     ],
@@ -10257,10 +10502,16 @@
       "style_type": 3,
       "generated_name": "Clark Kent",
       "generation_date": "2025-12-09T09:20:39.370277"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Chest Tube\nPatient: Thomas Nguyen\n1. Prep R chest.\n2. Lidocaine/Fentanyl.\n3. Cut at 5th ICS.\n4. Clamp dissection into pleura.\n5. Finger sweep.\n6. Tube (28Fr) in.\n7. Stitch and tape.\n8. CXR: Lung up.",
+    "note_text": "Procedure: Chest Tube\nPatient: <PERSON>\n1. Prep R chest.\n2. Lidocaine/Fentanyl.\n3. Cut at 5th ICS.\n4. Clamp dissection into pleura.\n5. Finger sweep.\n6. Tube (28Fr) in.\n7. Stitch and tape.\n8. CXR: Lung up.",
     "cpt_codes": [
       32551
     ],
@@ -10407,10 +10658,16 @@
       "style_type": 4,
       "generated_name": "Tom N.",
       "generation_date": "2025-12-09T09:20:39.370317"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "thomas nguyen young guy spontaneous pneumo right side. pigtail didn't work so put in a real chest tube. 28 french right side 5th intercostal. big rush of air lung came up nicely on the xray. hooked to suction admitting him.",
+    "note_text": "<PERSON> young guy spontaneous pneumo right side. pigtail didn't work so put in a real chest tube. 28 french right side 5th intercostal. big rush of air lung came up nicely on the xray. hooked to suction admitting him.",
     "cpt_codes": [
       32551
     ],
@@ -10557,6 +10814,12 @@
       "style_type": 5,
       "generated_name": "thomas nguyen",
       "generation_date": "2025-12-09T09:20:39.370358"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10710,7 +10973,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRight Pneumothorax.\n[Anesthesia]\nLocal + Moderate analgesia.\n[Description]\n28Fr Chest Tube placed R 5th ICS. Air evacuated. Lung re-expanded.\n[Plan]\nAdmit. Suction.",
+    "note_text": "[Indication]\nRight Pneumothorax.\n[<LOCATION>]\nLocal + Moderate analgesia.\n[Description]\n28Fr Chest Tube placed R 5th ICS. Air evacuated. Lung re-expanded.\n[Plan]\nAdmit. Suction.",
     "cpt_codes": [
       32551
     ],
@@ -10857,10 +11120,16 @@
       "style_type": 7,
       "generated_name": "Thomas Nguyen",
       "generation_date": "2025-12-09T09:20:39.370437"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We placed a chest tube in Mr. Nguyen's right side to treat his collapsed lung. We numbed the area and inserted a large tube between the ribs. A lot of air came out, and his breathing improved. The X-ray showed the lung is back up. He is admitted to the hospital.",
+    "note_text": "We placed a chest tube in Mr. <PERSON>'s right side to treat his collapsed lung. We numbed the area and inserted a large tube between the ribs. A lot of air came out, and his breathing improved. The X-ray showed the lung is back up. He is admitted to the hospital.",
     "cpt_codes": [
       32551
     ],
@@ -11007,6 +11276,12 @@
       "style_type": 8,
       "generated_name": "Mr. Nguyen",
       "generation_date": "2025-12-09T09:20:39.370476"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11470,7 +11745,7 @@
     }
   },
   {
-    "note_text": "Code: 32604 (Thoracoscopy with pleural biopsy).\nDetails: Diagnostic inspection + Biopsy of parietal pleura. No talc (32650) or lung biopsy (32609) performed. Catheter was removed at end of case, so no chest tube code.",
+    "note_text": "Code: 32604 (Thoracoscopy with pleural biopsy).\nDetails: Diagnostic inspection + Biopsy of parietal pleura. No talc (<DATE_TIME>) or lung biopsy (<DATE_TIME>) performed. Catheter was removed at end of case, so no chest tube code.",
     "cpt_codes": [
       32604
     ],
@@ -11622,10 +11897,17 @@
       "style_type": 3,
       "generated_name": "Helen Mirren",
       "generation_date": "2025-12-09T09:20:39.370637"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Pleuroscopy\nPatient: Evelyn Sanders\n1. Port in R 6th ICS.\n2. Drained 900cc fluid.\n3. Saw nodules everywhere.\n4. Biopsied x10.\n5. Lung expanded.\n6. Pulled tube, closed skin.",
+    "note_text": "Procedure: Pleuroscopy\nPatient: <PERSON>\n1. Port in R 6th ICS.\n2. Drained 900cc fluid.\n3. Saw nodules everywhere.\n4. Biopsied x10.\n5. Lung expanded.\n6. Pulled tube, closed skin.",
     "cpt_codes": [
       32604
     ],
@@ -11777,10 +12059,16 @@
       "style_type": 4,
       "generated_name": "Eve S.",
       "generation_date": "2025-12-09T09:20:39.370678"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "evelyn sanders fluid on the right lung looks like cancer. did the thoracoscopy looked inside nodules all over the wall. took a bunch of biopsies like 10 of them. drained the fluid out. didn't leave a chest tube just stitched it up. waiting on path.",
+    "note_text": "<PERSON> on the right lung looks like cancer. did the thoracoscopy looked inside nodules all over the wall. took a bunch of biopsies like 10 of them. drained the fluid out. didn't leave a chest tube just stitched it up. waiting on path.",
     "cpt_codes": [
       32604
     ],
@@ -11932,6 +12220,12 @@
       "style_type": 5,
       "generated_name": "evelyn sanders",
       "generation_date": "2025-12-09T09:20:39.370716"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12090,7 +12384,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPleural effusion, r/o malignancy.\n[Anesthesia]\nModerate Sedation.\n[Description]\nThoracoscopy R chest. Parietal pleura biopsies x10. Fluid drained. No drain left.\n[Plan]\nAdmit. Path pending.",
+    "note_text": "[Indication]\nPleural effusion, r/o malignancy.\n[<LOCATION>]\nModerate Sedation.\n[Description]\nThoracoscopy R chest. Parietal pleura biopsies x10. <PERSON> drained. No drain left.\n[Plan]\nAdmit. Path pending.",
     "cpt_codes": [
       32604
     ],
@@ -12242,10 +12536,17 @@
       "style_type": 7,
       "generated_name": "Evelyn Sanders",
       "generation_date": "2025-12-09T09:20:39.370794"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Dr. Rahman performed a thoracoscopy on Ms. Sanders. We made a small cut in her side and put a camera into the chest cavity. We drained the fluid and saw many small lumps on the lining of the chest wall. We took samples of these lumps to test for cancer. We didn't need to leave a tube in.",
+    "note_text": "Dr. Rahman performed a thoracoscopy on Ms. <PERSON>. We made a small cut in her side and put a camera into the chest cavity. We drained the fluid and saw many small lumps on the lining of the chest wall. We took samples of these lumps to test for cancer. We didn't need to leave a tube in.",
     "cpt_codes": [
       32604
     ],
@@ -12397,6 +12698,12 @@
       "style_type": 8,
       "generated_name": "Mrs. Sanders",
       "generation_date": "2025-12-09T09:20:39.370834"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -13344,7 +13651,7 @@
     }
   },
   {
-    "note_text": "Procedure: Robotic Bronch\nPatient: Teresa Johnson\n1. Navigated to RUL nodule -> REBUS confirm -> Biopsy x3.\n2. Navigated to RLL nodule -> REBUS confirm -> Biopsy x4.\n3. Fluoroscopy used.\n4. No pneumo.\n5. Good samples.",
+    "note_text": "Procedure: Robotic Bronch\nPatient: <PERSON>\n1. Navigated to RUL nodule -> REBUS confirm -> Biopsy x3.\n2. Navigated to RLL nodule -> REBUS confirm -> Biopsy x4.\n3. Fluoroscopy used.\n4. No pneumo.\n5. Good samples.",
     "cpt_codes": [
       31628,
       31632,
@@ -13604,10 +13911,16 @@
       "style_type": 4,
       "generated_name": "Terry J.",
       "generation_date": "2025-12-09T09:20:39.371163"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "teresa johnson two spots on the lung right side. used the robot to get out there. found the top one with the ultrasound took some bites. then went to the bottom one found that too took more bites. everything went smooth no bleeding patient went home.",
+    "note_text": "teresa <PERSON> two spots on the lung right side. used the robot to get out there. found the top one with the ultrasound took some bites. then went to the bottom one found that too took more bites. everything went smooth no bleeding patient went home.",
     "cpt_codes": [
       31628,
       31632,
@@ -13867,6 +14180,12 @@
       "style_type": 5,
       "generated_name": "teresa johnson",
       "generation_date": "2025-12-09T09:20:39.371226"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14133,7 +14452,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLung nodules RUL/RLL.\n[Anesthesia]\nGeneral.\n[Description]\nRobotic Nav to RUL & RLL. REBUS confirmation. Transbronchial biopsies performed x2 lobes.\n[Plan]\nDischarge. CT f/u.",
+    "note_text": "[Indication]\nLung nodules RUL/RLL.\n[<LOCATION>]\nGeneral.\n[Description]\nRobotic Nav to RUL & RLL. REBUS confirmation. Transbronchial biopsies performed x2 lobes.\n[Plan]\nDischarge. CT f/u.",
     "cpt_codes": [
       31628,
       31632,
@@ -14393,10 +14712,16 @@
       "style_type": 7,
       "generated_name": "Teresa Johnson",
       "generation_date": "2025-12-09T09:20:39.371358"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Johnson had a robotic bronchoscopy today to biopsy two spots in her right lung. We used the robot to steer the camera deep into the lung to reach the spots in the upper and lower lobes. We confirmed we were in the right place with ultrasound and took biopsies from both. She did very well.",
+    "note_text": "Ms. <PERSON> had a robotic bronchoscopy today to biopsy two spots in her right lung. We used the robot to steer the camera deep into the lung to reach the spots in the upper and lower lobes. We confirmed we were in the right place with ultrasound and took biopsies from both. She did very well.",
     "cpt_codes": [
       31628,
       31632,
@@ -14656,6 +14981,12 @@
       "style_type": 8,
       "generated_name": "Ms. Johnson",
       "generation_date": "2025-12-09T09:20:39.371419"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Indication: Staging RUL NSCLC.\nProc: EBUS-TBNA.\nNodes sampled: 4R, 7, 11R.\nFindings:\n- 4R: 11mm, PET+. 5 passes. Benign.\n- 7: 15mm, PET+. 3 passes. Malignant (N2).\n- 11R: 7mm, PET-. 3 passes. Benign.\nComplications: None.\nImpression: N2 positive (Stn 7).",
+    "note_text": "Indication: Staging RUL NSCLC.\nProc: EBUS-TBNA.\nNodes sampled: 4R, 7, 11R.\nFindings:\n- 4R: 11mm, <PERSON>. 5 passes. Benign.\n- 7: 15mm, <PERSON>. 3 passes. Malignant (N2).\n- 11R: 7mm, PET-. 3 passes. Benign.\nComplications: None.\nImpression: N2 positive (Stn 7).",
     "cpt_codes": [
       31653
     ],
@@ -211,10 +211,17 @@
       "style_type": 1,
       "generated_name": "Frank Garcia",
       "generation_date": "2025-12-09T09:19:03.728755"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "HISTORY: Mr. Martinez presented for mediastinal staging of a right upper lobe non-small cell lung cancer. \nPROCEDURE: Endobronchial ultrasound-guided transbronchial needle aspiration was systematically performed under moderate sedation. The lymph node stations were interrogated in the standard sequence. Station 7 (subcarinal) demonstrated immediate positivity for malignancy on rapid on-site evaluation. Station 4R (right paratracheal), despite PET avidity, required multiple passes to achieve adequate cellularity and appeared benign. Station 11R was also sampled. \nCONCLUSION: Confirmed N2 disease involving the subcarinal station.",
+    "note_text": "HISTORY: Mr. <PERSON> presented for mediastinal staging of a right upper lobe non-small cell lung cancer. \nPROCEDURE: Endobronchial ultrasound-guided transbronchial needle aspiration was systematically performed under moderate sedation. The lymph node stations were interrogated in the standard sequence. Station 7 (subcarinal) demonstrated immediate positivity for malignancy on rapid on-site evaluation. Station 4R (right paratracheal), despite PET avidity, required multiple passes to achieve adequate cellularity and appeared benign. Station 11R was also sampled. \nCONCLUSION: Confirmed <PERSON> disease involving the subcarinal station.",
     "cpt_codes": [
       31653
     ],
@@ -425,6 +432,13 @@
       "style_type": 2,
       "generated_name": "Hector Ramirez",
       "generation_date": "2025-12-09T09:19:03.728829"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -642,7 +656,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: George Martinez\nAttending: Dr. X\nSteps:\n1. Time out. Sedation (Versed/Fentanyl).\n2. Airway exam normal.\n3. EBUS scope down.\n4. Sampled 4R (took 5 passes to get cells).\n5. Sampled 7 (Positive for cancer).\n6. Sampled 11R (Benign).\nPlan: Oncology referral for Stage IIIA.",
+    "note_text": "Procedure Note\nPatient: <PERSON>\nAttending: Dr. X\nSteps:\n1. Time out. Sedation (Versed/Fentanyl).\n2. Airway exam normal.\n3. EBUS scope down.\n4. Sampled 4R (took 5 passes to get cells).\n5. Sampled 7 (Positive for cancer).\n6. Sampled 11R (Benign).\nPlan: Oncology referral for Stage IIIA.",
     "cpt_codes": [
       31653
     ],
@@ -853,10 +867,16 @@
       "style_type": 4,
       "generated_name": "Carlos Sanchez",
       "generation_date": "2025-12-09T09:19:03.728944"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "george martinez here for ebus staging he has the rul lung cancer. sedation was moderate patient comfortable. we looked at the nodes 4r was pet positive but rose kept saying not enough cells took 5 tries finally got lymphocytes. station 7 was huge and positive right away. 11r was normal. no bleeding. n2 disease confirmed.",
+    "note_text": "<PERSON> here for ebus staging he has the rul lung cancer. sedation was moderate patient comfortable. we looked at the nodes 4r was pet positive but rose kept saying not enough cells took 5 tries finally got lymphocytes. station 7 was huge and positive right away. 11r was normal. no bleeding. n2 disease confirmed.",
     "cpt_codes": [
       31653
     ],
@@ -1067,10 +1087,16 @@
       "style_type": 5,
       "generated_name": "Miguel Hernandez",
       "generation_date": "2025-12-09T09:19:03.728997"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Name: George Martinez / MRN: ZZ-4829-Q / Birth: 07/19/1956 INDICATION: Mediastinal staging, RUL NSCLC. Sedation: Moderate (midazolam/fentanyl). EBUS-TBNA performed with systematic approach. Station 4R (11mm, PET+): 5 total passes needed for adequacy. Station 7 (15mm, PET+): ROSE adequate immediately, positive for malignancy. Station 11R (7mm, PET-): ROSE adequate. No complications. Impression: N2 disease confirmed (station 7). Station 4R benign despite PET avidity. Adequate tissue for molecular testing obtained.",
+    "note_text": "Name: <PERSON> / MRN: <MRN> / Birth: <DATE_TIME> INDICATION: Mediastinal staging, RUL NSCLC. Sedation: Moderate (midazolam/fentanyl). EBUS-TBNA performed with systematic approach. Station 4R (11mm, <PERSON>): 5 total passes needed for adequacy. Station 7 (15mm, <PERSON>): ROSE adequate immediately, positive for malignancy. Station 11R (7mm, PET-): ROSE adequate. No complications. Impression: N2 disease confirmed (station 7). Station 4R benign despite PET avidity. Adequate tissue for molecular testing obtained.",
     "cpt_codes": [
       31653
     ],
@@ -1281,10 +1307,20 @@
       "style_type": 6,
       "generated_name": "Jose Rodriguez",
       "generation_date": "2025-12-09T09:19:03.729049"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 5,
+      "entity_types": [
+        "PERSON",
+        "MRN",
+        "DATE_TIME",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nRUL NSCLC, mediastinal staging.\n[Anesthesia]\nModerate sedation.\n[Description]\nEBUS-TBNA performed. Station 4R (benign), Station 7 (malignant), Station 11R (benign). Systematic sampling achieved.\n[Plan]\nOncology consult for N2 disease.",
+    "note_text": "[Indication]\nRUL NSCLC, mediastinal staging.\n[<LOCATION>]\nModerate sedation.\n[Description]\nEBUS-TBNA performed. Station 4R (benign), Station 7 (malignant), Station 11R (benign). Systematic sampling achieved.\n[Plan]\nOncology consult for N2 disease.",
     "cpt_codes": [
       31653
     ],
@@ -1495,6 +1531,12 @@
       "style_type": 7,
       "generated_name": "Juan Flores",
       "generation_date": "2025-12-09T09:19:03.729104"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -2131,7 +2173,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Flexible Bronchoscopy with Linear EBUS-TBNA.\nCLINICAL SUMMARY: 63-year-old male with RUL mass and borderline adenopathy.\nOPERATIVE NARRATIVE: The patient was placed under deep sedation. A systematic mediastinal survey was conducted using the Olympus BF-UC180F. Lymph node stations 2R, 4R, and 7 were visualized and sampled using a 21-gauge aspiration needle. Rapid on-site evaluation demonstrated adequate lymphoid tissue without evidence of metastasis at all sampled stations.\nIMPRESSION: Negative mediastinal staging by EBUS (N0 by EBUS).",
+    "note_text": "PROCEDURE: Flexible Bronchoscopy with Linear EBUS-TBNA.\nCLINICAL SUMMARY: <DATE_TIME> male with RUL mass and borderline adenopathy.\nOPERATIVE NARRATIVE: The patient was placed under deep sedation. A systematic mediastinal survey was conducted using the Olympus BF-<PERSON> node stations 2R, 4R, and 7 were visualized and sampled using a 21-gauge aspiration needle. Rapid on-site evaluation demonstrated adequate lymphoid tissue without evidence of metastasis at all sampled stations.\nIMPRESSION: Negative mediastinal staging by EBUS (N0 by EBUS).",
     "cpt_codes": [
       31653
     ],
@@ -2333,6 +2375,13 @@
       "style_type": 2,
       "generated_name": "William Allen",
       "generation_date": "2025-12-09T09:19:03.729308"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "PERSON"
+      ]
     }
   },
   {
@@ -2541,7 +2590,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Henry Walker\nProcedure: EBUS\nSteps:\n1. Propofol sedation.\n2. Scope inserted.\n3. Identified nodes 2R, 4R, 7.\n4. TBNA x3 passes each station.\n5. ROSE: Lymphocytes only.\n6. No complications.\nPlan: Surgery clinic follow-up.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: EBUS\nSteps:\n1. Propofol sedation.\n2. Scope inserted.\n3. Identified nodes 2R, 4R, 7.\n4. TBNA x3 passes each station.\n5. ROSE: Lymphocytes only.\n6. No complications.\nPlan: Surgery clinic follow-up.",
     "cpt_codes": [
       31653
     ],
@@ -2743,6 +2792,12 @@
       "style_type": 4,
       "generated_name": "Thomas King",
       "generation_date": "2025-12-09T09:19:03.729421"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2951,7 +3006,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note. Procedure: Flexible bronchoscopy with linear EBUS-TBNA. Patient: Henry Walker, 63-year-old male. Indication: Mediastinal staging prior to lobectomy. Findings: Normal vocal cords. Central airways patent. EBUS: Olympus BF-UC180F scope used. Lymph nodes identified and sampled at 2R, 4R, and 7 using 21G Vizishot needle. Three passes obtained per station. ROSE adequate at all stations with lymphocytes only. No elastography. Complications: None. Disposition: Discharged home.",
+    "note_text": "Interventional Pulmonology Procedure Note. Procedure: Flexible bronchoscopy with linear EBUS-TBNA. Patient: <PERSON>, <DATE_TIME> male. Indication: Mediastinal staging prior to lobectomy. Findings: Normal vocal cords. Central airways patent. EBUS: Olympus BF-UC180F scope used. Lymph nodes identified and sampled at 2R, 4R, and 7 using 21G Vizishot needle. Three passes obtained per station. ROSE adequate at all stations with lymphocytes only. No elastography. Complications: None. Disposition: Discharged home.",
     "cpt_codes": [
       31653
     ],
@@ -3153,10 +3208,17 @@
       "style_type": 6,
       "generated_name": "Charles Scott",
       "generation_date": "2025-12-09T09:19:03.729621"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nRUL mass, staging.\n[Anesthesia]\nDeep sedation (Propofol).\n[Description]\nEBUS-TBNA of stations 2R, 4R, 7. Three passes per node. ROSE negative for malignancy.\n[Plan]\nThoracic surgery referral.",
+    "note_text": "[Indication]\nRUL mass, staging.\n[<LOCATION>]\nDeep sedation (Propofol).\n[Description]\nEBUS-TBNA of stations 2R, 4R, 7. Three passes per node. ROSE negative for malignancy.\n[Plan]\nThoracic surgery referral.",
     "cpt_codes": [
       31653
     ],
@@ -3358,10 +3420,16 @@
       "style_type": 7,
       "generated_name": "Joseph Green",
       "generation_date": "2025-12-09T09:19:03.729724"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Walker underwent bronchoscopy to check his lymph nodes before potential lung surgery. We used deep sedation to keep him comfortable. The ultrasound scope allowed us to see and sample nodes in the upper and lower trachea (2R, 4R) and under the airway split (7). Preliminary results from the room showed no cancer in the lymph nodes, suggesting the cancer hasn't spread there.",
+    "note_text": "Mr. <PERSON> underwent bronchoscopy to check his lymph nodes before potential lung surgery. We used deep sedation to keep him comfortable. The ultrasound scope allowed us to see and sample nodes in the upper and lower trachea (2R, 4R) and under the airway split (7). Preliminary results from the room showed no cancer in the lymph nodes, suggesting the cancer hasn't spread there.",
     "cpt_codes": [
       31653
     ],
@@ -3563,6 +3631,12 @@
       "style_type": 8,
       "generated_name": "Richard Baker",
       "generation_date": "2025-12-09T09:19:03.729785"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3771,7 +3845,7 @@
     }
   },
   {
-    "note_text": "Indication: Staging RLL Adeno.\nLocation: OR, GA, ETT.\nEBUS: 4R, 7, 10R sampled.\nResult: Stn 7 positive (Adeno). 4R/10R negative.\nPlan: Admit. Oncology.",
+    "note_text": "Indication: Staging RLL Adeno.\nLocation: OR, GA, ETT.\nEBUS: 4R, 7, 10R sampled.\nResult: Stn 7 positive (<LOCATION>). 4R/10R negative.\nPlan: Admit. Oncology.",
     "cpt_codes": [
       31653
     ],
@@ -3970,10 +4044,16 @@
       "style_type": 1,
       "generated_name": "Sarah Turner",
       "generation_date": "2025-12-09T09:19:03.729887"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Linear Endobronchial Ultrasound.\nINDICATION: 57F with biopsy-proven RLL adenocarcinoma.\nNARRATIVE: Under general anesthesia, the mediastinum was staged. Stations 4R, 7, and 10R were identified. Transbronchial needle aspiration confirmed metastatic adenocarcinoma in the subcarinal station (7), confirming N2 disease. The paratracheal and hilar stations appeared reactive on preliminary assessment.\nIMPRESSION: Stage IIIA (N2) Adenocarcinoma.",
+    "note_text": "PROCEDURE: Linear Endobronchial Ultrasound.\nINDICATION: 57F with biopsy-proven RLL adenocarcinoma.\nNARRATIVE: Under general <LOCATION>, the mediastinum was staged. Stations 4R, 7, and 10R were identified. Transbronchial needle aspiration confirmed metastatic adenocarcinoma in the subcarinal station (7), confirming N2 disease. The paratracheal and hilar stations appeared reactive on preliminary assessment.\nIMPRESSION: Stage IIIA (N2) Adenocarcinoma.",
     "cpt_codes": [
       31653
     ],
@@ -4172,10 +4252,16 @@
       "style_type": 2,
       "generated_name": "Jennifer Collins",
       "generation_date": "2025-12-09T09:19:03.729938"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Billing: 31653 (EBUS 3 stations).\nSite of Service: Operating Room.\nStations: 4R, 7, 10R.\nPathology: Malignancy confirmed in station 7.\nTechnique: 22G needle aspiration.",
+    "note_text": "Billing: <DATE_TIME> (EBUS 3 stations).\nSite of Service: Operating Room.\nStations: 4R, 7, 10R.\nPathology: Malignancy confirmed in station 7.\nTechnique: 22G needle aspiration.",
     "cpt_codes": [
       31653
     ],
@@ -4374,10 +4460,16 @@
       "style_type": 3,
       "generated_name": "Jessica Cook",
       "generation_date": "2025-12-09T09:19:03.729987"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure: EBUS Staging\nPatient: Allison Parker\nSteps:\n1. Patient intubated (GA).\n2. EBUS scope passed.\n3. Sampled 7 (Positive).\n4. Sampled 4R and 10R (Negative).\n5. Extubated in OR.\nDiagnosis: N2 positive lung cancer.",
+    "note_text": "Procedure: EBUS Staging\nPatient: <PERSON>\nSteps:\n1. Patient intubated (GA).\n2. EBUS scope passed.\n3. Sampled 7 (Positive).\n4. Sampled 4R and 10R (Negative).\n5. Extubated in OR.\nDiagnosis: N2 positive lung cancer.",
     "cpt_codes": [
       31653
     ],
@@ -4576,10 +4668,16 @@
       "style_type": 4,
       "generated_name": "Amanda Murphy",
       "generation_date": "2025-12-09T09:19:03.730038"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Allison Parker 57 female RLL cancer. did ebus in the OR under GA. Checked 4R 7 and 10R. Station 7 had cancer cells rose confirmed. The others were fine. She's admitted to the floor. Will need chemo rads probably.",
+    "note_text": "<PERSON> 57 female RLL cancer. did ebus in the OR under GA. Checked 4R 7 and 10R. Station 7 had cancer cells rose confirmed. The others were fine. She's admitted to the floor. Will need chemo rads probably.",
     "cpt_codes": [
       31653
     ],
@@ -4778,10 +4876,16 @@
       "style_type": 5,
       "generated_name": "Melissa Bell",
       "generation_date": "2025-12-09T09:19:03.730085"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note. Procedure: Linear EBUS-TBNA under general anesthesia. Patient: Allison Parker, 57-year-old female with RLL adenocarcinoma. Indication: Mediastinal staging. EBUS Details: Stations 4R, 7, and 10R evaluated. A 22G needle was used. ROSE demonstrated malignant cells at station 7 consistent with adenocarcinoma; other stations reactive. Complications: None. Disposition: Admitted to oncology floor.",
+    "note_text": "Interventional Pulmonology Procedure Note. Procedure: Linear EBUS-TBNA under general <LOCATION>. Patient: <PERSON>, <DATE_TIME> female with RLL adenocarcinoma. Indication: Mediastinal staging. EBUS Details: Stations 4R, 7, and 10R evaluated. A 22G needle was used. ROSE demonstrated malignant cells at station 7 consistent with adenocarcinoma; other stations reactive. Complications: None. Disposition: Admitted to oncology floor.",
     "cpt_codes": [
       31653
     ],
@@ -4980,10 +5084,18 @@
       "style_type": 6,
       "generated_name": "Stephanie Bailey",
       "generation_date": "2025-12-09T09:19:03.730134"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nRLL Adenocarcinoma, N2 staging.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nEBUS-TBNA of 4R, 7, 10R. Malignancy found in Station 7. Others benign.\n[Plan]\nAdmit. Tumor board.",
+    "note_text": "[Indication]\nRLL Adenocarcinoma, <LOCATION> staging.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nEBUS-TBNA of 4R, 7, 10R. <PERSON> found in Station 7. Others benign.\n[Plan]\nAdmit. Tumor board.",
     "cpt_codes": [
       31653
     ],
@@ -5182,10 +5294,18 @@
       "style_type": 7,
       "generated_name": "Nicole Rivera",
       "generation_date": "2025-12-09T09:19:03.730183"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ms. Parker was brought to the operating room for staging of her lung cancer. We used general anesthesia. The EBUS procedure focused on three main lymph node areas. Unfortunately, the node underneath the airway division (station 7) contained cancer cells. The other nodes tested were clear. This places her at a more advanced stage than initially hoped, requiring systemic treatment.",
+    "note_text": "Ms. <PERSON> was brought to the operating room for staging of her lung cancer. We used general anesthesia. The EBUS procedure focused on three main lymph node areas. Unfortunately, the node underneath the airway division (station 7) contained cancer cells. The other nodes tested were clear. This places her at a more advanced stage than initially hoped, requiring systemic treatment.",
     "cpt_codes": [
       31653
     ],
@@ -5384,6 +5504,12 @@
       "style_type": 8,
       "generated_name": "Heather Cooper",
       "generation_date": "2025-12-09T09:19:03.730231"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5589,7 +5715,7 @@
     }
   },
   {
-    "note_text": "Indication: Suspected Sarcoidosis.\nProc: EBUS + Elastography + Forceps Bx.\nNodes: 4R, 7, 11L.\nFindings: Blue pattern (4R/7), Green (11L). Granulomas at Stn 7.\nComp: Minor bleeding.\nDisp: Home.",
+    "note_text": "Indication: Suspected Sarcoidosis.\nProc: EBUS + Elastography + Forceps Bx.\nNodes: 4R, 7, 11L.\nFindings: Blue pattern (4R/7), <PERSON> (11L). <PERSON> at Stn 7.\nComp: Minor bleeding.\nDisp: Home.",
     "cpt_codes": [
       31653
     ],
@@ -5791,10 +5917,17 @@
       "style_type": 1,
       "generated_name": "Mark Williams",
       "generation_date": "2025-12-09T09:19:03.730335"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Linear EBUS with Elastography and Intranodal Forceps Biopsy.\nINDICATION: Evaluation of mediastinal adenopathy, rule out sarcoidosis.\nNARRATIVE: EBUS visualization revealed enlarged nodes at stations 4R, 7, and 11L. Elastography patterns were recorded. TBNA was performed at all stations. To increase diagnostic yield for granulomatous disease, intranodal forceps biopsies were obtained from station 7. ROSE confirmed granulomatous inflammation consistent with sarcoidosis.\nIMPRESSION: Pulmonary Sarcoidosis.",
+    "note_text": "PROCEDURE: Linear EBUS with <PERSON> and Intranodal Forceps Biopsy.\nINDICATION: Evaluation of mediastinal adenopathy, rule out sarcoidosis.\nNARRATIVE: EBUS visualization revealed enlarged nodes at stations 4R, 7, and 11L. Elastography patterns were recorded. TBNA was performed at all stations. To increase diagnostic yield for granulomatous disease, intranodal forceps biopsies were obtained from station 7. ROSE confirmed granulomatous inflammation consistent with sarcoidosis.\nIMPRESSION: Pulmonary Sarcoidosis.",
     "cpt_codes": [
       31653
     ],
@@ -5996,10 +6129,16 @@
       "style_type": 2,
       "generated_name": "Donald Jones",
       "generation_date": "2025-12-09T09:19:03.730387"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Codes: 31653 (EBUS 3 stations).\nTechnique: TBNA + Intranodal Forceps (Mini-forceps).\nNote: Elastography used for target selection (not separately billable).\nPathology: Granulomas.",
+    "note_text": "Codes: 31653 (EBUS 3 stations).\nTechnique: TBNA + Intranodal Forceps (Mini-forceps).\nNote: Elastography used for target selection (not separately billable).\nPathology: <PERSON>.",
     "cpt_codes": [
       31653
     ],
@@ -6201,10 +6340,16 @@
       "style_type": 3,
       "generated_name": "George Brown",
       "generation_date": "2025-12-09T09:19:03.730436"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: EBUS for Sarcoid\nPatient: Eric Johnson\nSteps:\n1. MAC sedation.\n2. EBUS scope inserted.\n3. Saw big nodes at 4R, 7, 11L.\n4. Needled all of them.\n5. Used little forceps in station 7 for tissue.\n6. ROSE: Granulomas.\nPlan: Follow up in clinic.",
+    "note_text": "Procedure: EBUS for <PERSON>\nPatient: <PERSON>\nSteps:\n1. MAC sedation.\n2. EBUS scope inserted.\n3. Saw big nodes at 4R, 7, 11L.\n4. Needled all of them.\n5. Used little forceps in station 7 for tissue.\n6. ROSE: <PERSON>.\nPlan: Follow up in clinic.",
     "cpt_codes": [
       31653
     ],
@@ -6406,10 +6551,18 @@
       "style_type": 4,
       "generated_name": "Kenneth Davis",
       "generation_date": "2025-12-09T09:19:03.730486"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure note Eric Johnson sarcoid workup. MAC anesthesia. EBUS showed nodes 4r 7 11l. elastography was mixed. did needle biopsy on all three then used the forceps on station 7 to get a chunk. rose saw granulomas so its sarcoid. little bit of bleeding but stopped. discharged home.",
+    "note_text": "Procedure note <PERSON> sarcoid workup. MAC anesthesia. EBUS showed nodes 4r 7 11l. elastography was mixed. did needle biopsy on all three then used the forceps on station 7 to get a chunk. rose saw granulomas so its sarcoid. little bit of bleeding but stopped. discharged home.",
     "cpt_codes": [
       31653
     ],
@@ -6611,10 +6764,16 @@
       "style_type": 5,
       "generated_name": "Steven Miller",
       "generation_date": "2025-12-09T09:19:03.730536"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Linear EBUS with elastography and intranodal forceps biopsy. Patient: Eric Johnson, 69-year-old male. Indication: Tissue diagnosis of mediastinal adenopathy. EBUS findings: Enlarged nodes at 4R, 7, and 11L. A 22G needle was used for TBNA at all three stations. Intranodal forceps biopsies were performed at station 7 through prior needle tract. ROSE: Granulomatous-appearing inflammation at station 7. Complications: Self-limited bleeding. Disposition: Discharged home.",
+    "note_text": "Linear EBUS with elastography and intranodal forceps biopsy. Patient: <PERSON>, <DATE_TIME> male. Indication: Tissue diagnosis of mediastinal adenopathy. EBUS findings: Enlarged nodes at 4R, 7, and 11L. A 22G needle was used for TBNA at all three stations. Intranodal forceps biopsies were performed at station 7 through prior needle tract. ROSE: Granulomatous-appearing inflammation at station 7. Complications: Self-limited bleeding. Disposition: Discharged home.",
     "cpt_codes": [
       31653
     ],
@@ -6816,10 +6975,17 @@
       "style_type": 6,
       "generated_name": "Edward Wilson",
       "generation_date": "2025-12-09T09:19:03.730586"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nMediastinal adenopathy, r/o sarcoid.\n[Anesthesia]\nMAC.\n[Description]\nEBUS-TBNA 4R, 7, 11L. Intranodal forceps Bx Station 7. Elastography performed. Findings: Granulomatous inflammation.\n[Plan]\nPulmonary clinic follow-up.",
+    "note_text": "[Indication]\nMediastinal adenopathy, r/o sarcoid.\n[<LOCATION>]\nMAC.\n[Description]\nEBUS-TBNA 4R, 7, 11L. Intranodal forceps Bx Station 7. Elastography performed. Findings: Granulomatous inflammation.\n[Plan]\nPulmonary clinic follow-up.",
     "cpt_codes": [
       31653
     ],
@@ -7021,10 +7187,16 @@
       "style_type": 7,
       "generated_name": "Brian Moore",
       "generation_date": "2025-12-09T09:19:03.730636"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Johnson underwent an EBUS procedure to investigate swollen lymph nodes in his chest. We suspected sarcoidosis. We sampled three different node stations using a needle. To be sure we got enough tissue to diagnose sarcoidosis, we also used tiny forceps to take a small bite of tissue from the largest node (station 7). The preliminary look in the microscope showed the typical inflammation seen in sarcoidosis.",
+    "note_text": "Mr. <PERSON> underwent an EBUS procedure to investigate swollen lymph nodes in his chest. We suspected sarcoidosis. We sampled three different node stations using a needle. To be sure we got enough tissue to diagnose sarcoidosis, we also used tiny forceps to take a small bite of tissue from the largest node (station 7). The preliminary look in the microscope showed the typical inflammation seen in sarcoidosis.",
     "cpt_codes": [
       31653
     ],
@@ -7226,6 +7398,12 @@
       "style_type": 8,
       "generated_name": "Ronald Taylor",
       "generation_date": "2025-12-09T09:19:03.730689"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7434,7 +7612,7 @@
     }
   },
   {
-    "note_text": "Indication: RML nodule (15mm).\nProc: Radial EBUS (No Nav).\nDetails: Fluoroscopy guidance. Concentric view. TBBx x4, Brush x2.\nROSE: Suspicious for carcinoma.\nComp: None.\nDisp: Home.",
+    "note_text": "Indication: RML nodule (15mm).\nProc: Radial EBUS (No Nav).\nDetails: Fluoroscopy guidance. Concentric view. TBBx <LOCATION>, Brush x2.\nROSE: Suspicious for carcinoma.\nComp: None.\nDisp: Home.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -7646,10 +7824,16 @@
       "style_type": 1,
       "generated_name": "Betty White",
       "generation_date": "2025-12-09T09:19:03.730796"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Radial EBUS-Guided Transbronchial Biopsy.\nINDICATION: Peripheral RML nodule.\nNARRATIVE: The bronchoscope was advanced to the RML lateral segment. A radial EBUS probe was inserted via a guide sheath under fluoroscopic guidance, identifying a concentric, solid lesion. Transbronchial forceps biopsies and brushings were obtained. Preliminary cytology is suspicious for malignancy.\nIMPRESSION: Likely RML Non-Small Cell Lung Cancer.",
+    "note_text": "PROCEDURE: Radial EBUS-Guided Transbronchial <LOCATION>.\nINDICATION: Peripheral RML nodule.\nNARRATIVE: The bronchoscope was advanced to the RML lateral segment. A radial EBUS probe was inserted via a guide sheath under fluoroscopic guidance, identifying a concentric, solid lesion. Transbronchial forceps biopsies and brushings were obtained. Preliminary cytology is suspicious for malignancy.\nIMPRESSION: Likely RML Non-Small Cell Lung Cancer.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -7861,10 +8045,16 @@
       "style_type": 2,
       "generated_name": "Dorothy Harris",
       "generation_date": "2025-12-09T09:19:03.730849"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Codes: 31628 (Lung Biopsy), 31654 (Radial EBUS).\nNote: No electromagnetic navigation charged (31627 excluded).\nTechnique: Guide sheath + Fluoroscopy + Radial Probe.\nTarget: Single lesion RML.",
+    "note_text": "Codes: 31628 (Lung Biopsy), 31654 (Radial EBUS).\nNote: No electromagnetic navigation charged (<DATE_TIME> excluded).\nTechnique: Guide sheath + Fluoroscopy + Radial Probe.\nTarget: Single lesion RML.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -8076,10 +8266,16 @@
       "style_type": 3,
       "generated_name": "Helen Martin",
       "generation_date": "2025-12-09T09:19:03.730901"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure: R-EBUS Biopsy\nPatient: Janice Moore\nSteps:\n1. Moderate sedation.\n2. Scope to RML.\n3. Radial probe found lesion (concentric).\n4. Left sheath in place.\n5. Biopsied x4, Brushed x2.\n6. Fluoro used to check position.\nResult: Suspicious for cancer.",
+    "note_text": "Procedure: R-EBUS Biopsy\nPatient: <PERSON>\nSteps:\n1. Moderate sedation.\n2. Scope to RML.\n3. Radial probe found lesion (concentric).\n4. Left sheath in place.\n5. <PERSON>, Brushed x2.\n6. <LOCATION> used to check position.\nResult: Suspicious for cancer.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -8291,10 +8487,18 @@
       "style_type": 4,
       "generated_name": "Margaret Thompson",
       "generation_date": "2025-12-09T09:19:03.730954"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Janice Moore 71 female RML spot. No navigation just used fluoro and the radial probe. Found it in the lateral segment concentric view. took 4 biopsies and 2 brushes. rose looks like cancer. patient did fine going home.",
+    "note_text": "<PERSON> 71 female RML spot. No navigation just used fluoro and the radial probe. Found it in the lateral segment concentric view. took 4 biopsies and 2 brushes. rose looks like cancer. patient did fine going home.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -8506,10 +8710,16 @@
       "style_type": 5,
       "generated_name": "Ruth Garcia",
       "generation_date": "2025-12-09T09:19:03.731005"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Bronchoscopy Procedure Note. Procedure: Radial EBUS-guided biopsy of right middle lobe nodule (no navigation). Patient: Janice Moore, 71-year-old female. Procedure summary: Radial EBUS catheter advanced through guide sheath into RML lateral segment based on fluoroscopy and CT roadmap. Concentric solid lesion pattern obtained. Four transbronchial forceps biopsies and two brushings performed through guide sheath. ROSE: Suspicious for malignancy. Disposition: Discharged home.",
+    "note_text": "Bronchoscopy Procedure Note. Procedure: Radial EBUS-guided biopsy of right middle lobe nodule (no navigation). Patient: <PERSON>, <DATE_TIME> female. Procedure summary: Radial EBUS catheter advanced through guide sheath into RML lateral segment based on fluoroscopy and CT roadmap. Concentric solid lesion pattern obtained. Four transbronchial forceps biopsies and two brushings performed through guide sheath. ROSE: Suspicious for malignancy. Disposition: Discharged home.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -8721,10 +8931,17 @@
       "style_type": 6,
       "generated_name": "Sandra Martinez",
       "generation_date": "2025-12-09T09:19:03.731067"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\n15mm RML nodule.\n[Anesthesia]\nModerate sedation.\n[Description]\nRadial EBUS (concentric view) + Fluoro. TBBx x4, Brush x2. No EMN used. ROSE suspicious for malignancy.\n[Plan]\nNodule clinic follow-up.",
+    "note_text": "[Indication]\n15mm RML nodule.\n[<LOCATION>]\nModerate sedation.\n[Description]\nRadial EBUS (concentric view) + <LOCATION>. TBBx <LOCATION>, Brush x2. No EMN used. ROSE suspicious for malignancy.\n[Plan]\nNodule clinic follow-up.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -8936,10 +9153,18 @@
       "style_type": 7,
       "generated_name": "Sharon Robinson",
       "generation_date": "2025-12-09T09:19:03.731122"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Moore had a small nodule in her right middle lobe. We performed a bronchoscopy to biopsy it. We didn't use the navigation system; instead, we found the right airway using x-ray guidance and the radial ultrasound probe. We got a good ultrasound image of the nodule and took several samples. The pathologist is worried it looks like cancer.",
+    "note_text": "Ms. <PERSON> had a small nodule in her right middle lobe. We performed a bronchoscopy to biopsy it. We didn't use the navigation system; instead, we found the right airway using x-ray guidance and the radial ultrasound probe. We got a good ultrasound image of the nodule and took several samples. The pathologist is worried it looks like cancer.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -9151,6 +9376,12 @@
       "style_type": 8,
       "generated_name": "Carol Clark",
       "generation_date": "2025-12-09T09:19:03.731189"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9369,7 +9600,7 @@
     }
   },
   {
-    "note_text": "Indication: LUL nodule (20mm).\nProc: Ion Robotic, Radial EBUS, Cone-Beam CT, Cryo.\nDetails: Nav to LUL apicoposterior. REBUS concentric. CBCT confirmed. Cryo x3, Forceps x3.\nROSE: Adenocarcinoma.\nComp: Mild bleed, wedged.\nDisp: Home.",
+    "note_text": "Indication: LUL nodule (20mm).\nProc: Ion Robotic, Radial EBUS, Cone-Beam CT, Cryo.\nDetails: Nav to LUL apicoposterior. REBUS concentric. CBCT confirmed. Cryo x3, <PERSON>.\nROSE: Adenocarcinoma.\nComp: Mild bleed, wedged.\nDisp: Home.",
     "cpt_codes": [
       "31628",
       "31627",
@@ -9606,10 +9837,16 @@
       "style_type": 1,
       "generated_name": "Lisa Lewis",
       "generation_date": "2025-12-09T09:19:03.731304"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Robotic-Assisted Bronchoscopy with Cone-Beam CT and Cryobiopsy.\nINDICATION: Solitary LUL pulmonary nodule.\nNARRATIVE: The Ion robotic catheter was registered and navigated to the target in the apicoposterior segment of the LUL. Localization was multimodal: radial EBUS (concentric) and Cone-Beam CT (tool-in-lesion). Transbronchial cryobiopsies and standard forceps biopsies were obtained. ROSE confirmed adenocarcinoma. \nIMPRESSION: Primary Lung Adenocarcinoma.",
+    "note_text": "PROCEDURE: Robotic-Assisted Bronchoscopy with Cone-Beam CT and <PERSON>.\nINDICATION: Solitary LUL pulmonary nodule.\nNARRATIVE: The Ion robotic catheter was registered and navigated to the target in the apicoposterior segment of the LUL. Localization was multimodal: radial EBUS (concentric) and Cone-Beam CT (tool-in-lesion). Transbronchial cryobiopsies and standard forceps biopsies were obtained. ROSE confirmed adenocarcinoma. \nIMPRESSION: Primary Lung Adenocarcinoma.",
     "cpt_codes": [
       "31628",
       "31627",
@@ -9846,10 +10083,16 @@
       "style_type": 2,
       "generated_name": "Nancy Lee",
       "generation_date": "2025-12-09T09:19:03.731363"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Codes: 31628 (Biopsy), 31627 (Robotic Nav), 31654 (REBUS).\nNote: Cryobiopsy used for tissue acquisition (billed as biopsy).\nImaging: Cone-beam CT and Radial EBUS used for verification.",
+    "note_text": "Codes: 31628 (<LOCATION>), 31627 (Robotic Nav), 31654 (REBUS).\nNote: <PERSON> used for tissue acquisition (billed as biopsy).\nImaging: Cone-beam CT and Radial EBUS used for verification.",
     "cpt_codes": [
       "31628",
       "31627",
@@ -10086,10 +10329,17 @@
       "style_type": 3,
       "generated_name": "Karen Walker",
       "generation_date": "2025-12-09T09:19:03.731527"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Ion + Cryo\nPatient: Olivia Carter\nSteps:\n1. GA. Ion registered.\n2. Navigated to LUL nodule.\n3. Checked with REBUS and Spin CT.\n4. Cryoprobe used for 3 biopsies.\n5. Forceps used for 3 biopsies.\n6. ROSE: Adeno.\n7. Mild bleeding, stopped.\nResult: Cancer.",
+    "note_text": "Procedure: Ion + Cryo\nPatient: <PERSON>\nSteps:\n1. GA. Ion registered.\n2. Navigated to LUL nodule.\n3. Checked with REBUS and Spin CT.\n4. Cryoprobe used for 3 biopsies.\n5. Forceps used for 3 biopsies.\n6. ROSE: <PERSON>.\n7. Mild bleeding, stopped.\nResult: Cancer.",
     "cpt_codes": [
       "31628",
       "31627",
@@ -10326,10 +10576,17 @@
       "style_type": 4,
       "generated_name": "Donna Hall",
       "generation_date": "2025-12-09T09:19:03.731594"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Olivia Carter 59 female LUL nodule. Used the Ion robot. Navigated out there confirmed with radial ebus and the cone beam spin. Took 3 cryo biopsies and 3 forceps. ROSE says adenocarcinoma. a little bleeding but wedging stopped it. discharged to home.",
+    "note_text": "<PERSON> 59 female LUL nodule. Used the Ion robot. Navigated out there confirmed with radial ebus and the cone beam spin. Took 3 cryo biopsies and 3 forceps. ROSE says adenocarcinoma. a little bleeding but wedging stopped it. discharged to home.",
     "cpt_codes": [
       "31628",
       "31627",
@@ -10566,10 +10823,16 @@
       "style_type": 5,
       "generated_name": "Susan Allen",
       "generation_date": "2025-12-09T09:19:03.731661"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Robotic Bronchoscopy / EBUS Note. Procedures: Ion robotic-assisted bronchoscopy, Radial EBUS and cone-beam CT, Transbronchial cryobiopsy and forceps biopsy of LUL nodule. Patient: Olivia Carter. Robotic catheter navigated to apicoposterior segment of LUL. Concentric radial EBUS view obtained. Cone-beam CT confirmed tool-in-lesion. Three cryobiopsies and three standard forceps biopsies performed. ROSE: Malignant epithelial cells, favor adenocarcinoma.",
+    "note_text": "Robotic Bronchoscopy / EBUS Note. Procedures: Ion robotic-assisted bronchoscopy, Radial EBUS and cone-beam CT, Transbronchial cryobiopsy and forceps biopsy of LUL nodule. Patient: <PERSON>. Robotic catheter navigated to apicoposterior segment of LUL. Concentric radial EBUS view obtained. Cone-beam CT confirmed tool-in-lesion. Three cryobiopsies and three standard forceps biopsies performed. ROSE: Malignant epithelial cells, favor adenocarcinoma.",
     "cpt_codes": [
       "31628",
       "31627",
@@ -10806,10 +11069,16 @@
       "style_type": 6,
       "generated_name": "Patricia Young",
       "generation_date": "2025-12-09T09:19:03.731722"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nLUL Nodule (20mm).\n[Anesthesia]\nGeneral.\n[Description]\nIon Robotic Navigation. Radial EBUS concentric. Cone-Beam CT confirmation. Cryobiopsy x3, Forceps x3. Diagnosis: Adenocarcinoma.\n[Plan]\nLung cancer clinic.",
+    "note_text": "[Indication]\nLUL Nodule (20mm).\n[<LOCATION>]\nGeneral.\n[Description]\nIon Robotic Navigation. Radial EBUS concentric. Cone-Beam CT confirmation. <PERSON>, <PERSON>. Diagnosis: Adenocarcinoma.\n[Plan]\nLung cancer clinic.",
     "cpt_codes": [
       "31628",
       "31627",
@@ -11046,10 +11315,18 @@
       "style_type": 7,
       "generated_name": "Linda King",
       "generation_date": "2025-12-09T09:19:03.731787"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ms. Carter underwent a robotic bronchoscopy for her left lung nodule. We drove the robotic catheter to the exact spot and used both ultrasound and a 3D CT spin in the room to make sure we were right inside the nodule. We used a freezing probe (cryobiopsy) to get large samples. The preliminary results show adenocarcinoma. She went home after waking up.",
+    "note_text": "Ms. <PERSON> underwent a robotic bronchoscopy for her left lung nodule. We drove the robotic catheter to the exact spot and used both ultrasound and a 3D CT spin in the room to make sure we were right inside the nodule. We used a freezing probe (cryobiopsy) to get large samples. The preliminary results show adenocarcinoma. She went home after waking up.",
     "cpt_codes": [
       "31628",
       "31627",
@@ -11286,6 +11563,12 @@
       "style_type": 8,
       "generated_name": "Barbara Wright",
       "generation_date": "2025-12-09T09:19:03.731848"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11991,7 +12274,7 @@
     }
   },
   {
-    "note_text": "Codes: 31627 (Nav), 31628 (Biopsy), 31654 (REBUS).\nTarget: LLL Nodule.\nYield: Nondiagnostic on ROSE.\nTechnique: Electromagnetic navigation with fluoroscopic confirmation.",
+    "note_text": "Codes: 31627 (Nav), 31628 (<LOCATION>), 31654 (REBUS).\nTarget: LLL Nodule.\nYield: Nondiagnostic on ROSE.\nTechnique: Electromagnetic navigation with fluoroscopic confirmation.",
     "cpt_codes": [
       "31627",
       "31628",
@@ -12219,10 +12502,16 @@
       "style_type": 3,
       "generated_name": "David Flores",
       "generation_date": "2025-12-09T09:19:03.732090"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Procedure: EMN Bronch\nPatient: Daniel Rivera\nSteps:\n1. Moderate sedation.\n2. Registered superDimension.\n3. Navigated to LLL.\n4. Radial EBUS: Eccentric.\n5. Biopsied anyway x5.\n6. ROSE: Just bronchial cells.\nPlan: Maybe CT biopsy next?",
+    "note_text": "Procedure: EMN Bronch\nPatient: <PERSON>\nSteps:\n1. Moderate sedation.\n2. Registered superDimension.\n3. Navigated to LLL.\n4. Radial EBUS: Eccentric.\n5. Biopsied anyway x5.\n6. ROSE: Just bronchial cells.\nPlan: Maybe CT biopsy next?",
     "cpt_codes": [
       "31627",
       "31628",
@@ -12450,6 +12739,12 @@
       "style_type": 4,
       "generated_name": "James Green",
       "generation_date": "2025-12-09T09:19:03.732150"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12684,7 +12979,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note. Procedures: Electromagnetic navigational bronchoscopy (superDimension) with radial EBUS and transbronchial biopsies of left lower lobe nodule. Patient: Daniel Rivera, 65-year-old male. Highlights: EMN plan created. Radial EBUS showed eccentric view. Fluoroscopy confirmed position at lesion. Five forceps biopsies, two brushings and one mini-BAL obtained. ROSE: Nondiagnostic, bronchial cells only. Disposition: Discharged home.",
+    "note_text": "Interventional Pulmonology Procedure Note. Procedures: Electromagnetic navigational bronchoscopy (superDimension) with radial EBUS and transbronchial biopsies of left lower lobe nodule. Patient: <PERSON>, <DATE_TIME> male. Highlights: EMN plan created. Radial EBUS showed eccentric view. Fluoroscopy confirmed position at lesion. Five forceps biopsies, two brushings and one mini-BAL obtained. ROSE: Nondiagnostic, bronchial cells only. Disposition: Discharged home.",
     "cpt_codes": [
       "31627",
       "31628",
@@ -12912,10 +13207,17 @@
       "style_type": 6,
       "generated_name": "William Baker",
       "generation_date": "2025-12-09T09:19:03.732264"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\n14mm LLL nodule.\n[Anesthesia]\nModerate sedation.\n[Description]\nEMN (superDimension) to LLL lateral basal. REBUS eccentric. Biopsies/Brush/BAL performed. ROSE negative.\n[Plan]\nRepeat biopsy (CT guided) or surveillance.",
+    "note_text": "[Indication]\n14mm LLL nodule.\n[<LOCATION>]\nModerate sedation.\n[Description]\nEMN (superDimension) to LLL lateral basal. REBUS eccentric. Biopsies/Brush/BAL performed. ROSE negative.\n[Plan]\nRepeat biopsy (CT guided) or surveillance.",
     "cpt_codes": [
       "31627",
       "31628",
@@ -13143,10 +13445,16 @@
       "style_type": 7,
       "generated_name": "Richard Gonzalez",
       "generation_date": "2025-12-09T09:19:03.732322"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Rivera had a small nodule in the left lower lung. We used the electromagnetic navigation system to try and reach it. We got close, but the ultrasound probe was next to the nodule rather than inside it (eccentric view). We took biopsies from that spot, but the preliminary reading didn't show any cancer or specific diagnosis. We may need to try a different biopsy method.",
+    "note_text": "Mr. <PERSON> had a small nodule in the left lower lung. We used the electromagnetic navigation system to try and reach it. We got close, but the ultrasound probe was next to the nodule rather than inside it (eccentric view). We took biopsies from that spot, but the preliminary reading didn't show any cancer or specific diagnosis. We may need to try a different biopsy method.",
     "cpt_codes": [
       "31627",
       "31628",
@@ -13374,6 +13682,12 @@
       "style_type": 8,
       "generated_name": "Thomas Nelson",
       "generation_date": "2025-12-09T09:19:03.732378"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14004,7 +14318,7 @@
     }
   },
   {
-    "note_text": "Code: 31631 (Tracheal Stent Placement).\nNote: Dilation (31630) is bundled/included when stent is placed.\nDevice: Silicone Stent.\nIndication: Benign stenosis.",
+    "note_text": "Code: 31631 (Tracheal Stent Placement).\nNote: Dilation (<DATE_TIME>) is bundled/included when stent is placed.\nDevice: Silicone Stent.\nIndication: Benign stenosis.",
     "cpt_codes": [
       31631
     ],
@@ -14199,10 +14513,16 @@
       "style_type": 3,
       "generated_name": "Daniel Roberts",
       "generation_date": "2025-12-09T09:19:03.732586"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch & Stent\nPatient: Patrick Hughes\nSteps:\n1. GA / Jet ventilation.\n2. Rigid scope 11.\n3. Found tight stenosis in trachea.\n4. Balloon dilated.\n5. Placed silicone stent.\n6. Airway looks good now.\nPlan: Observe overnight.",
+    "note_text": "Procedure: Rigid Bronch & Stent\nPatient: <PERSON>\nSteps:\n1. GA / Jet ventilation.\n2. Rigid scope 11.\n3. Found tight stenosis in trachea.\n4. Balloon dilated.\n5. Placed silicone stent.\n6. Airway looks good now.\nPlan: Observe <DATE_TIME>.",
     "cpt_codes": [
       31631
     ],
@@ -14397,10 +14717,17 @@
       "style_type": 4,
       "generated_name": "Anthony Turner",
       "generation_date": "2025-12-09T09:19:03.732635"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Patrick Hughes 58 male with stridor. Tracheal stenosis from old intubation. Did rigid bronch under jet vent. dilated it up with a balloon then put a silicone stent 12 by 40. looks wide open now. minor bleeding. admit for obs.",
+    "note_text": "<PERSON> 58 male with stridor. Tracheal stenosis from old intubation. Did rigid bronch under jet vent. dilated it up with a balloon then put a silicone stent 12 by 40. looks wide open now. minor bleeding. admit for obs.",
     "cpt_codes": [
       31631
     ],
@@ -14595,10 +14922,16 @@
       "style_type": 5,
       "generated_name": "Mark Phillips",
       "generation_date": "2025-12-09T09:19:03.732683"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Central Airway Therapeutic Bronchoscopy Note. Procedures: Rigid bronchoscopy, Balloon dilation of tracheal stenosis, Silicone stent placement. Patient: Patrick Hughes. Findings: Short-segment concentric fibrotic stenosis 2 cm below vocal cords; ~70% luminal narrowing. Intervention: Serial balloon dilations performed to 12 mm, then a 12 x 40 mm silicone straight stent placed across the stenotic segment. Disposition: Extubated to PACU and admitted overnight.",
+    "note_text": "Central Airway Therapeutic Bronchoscopy Note. Procedures: Rigid bronchoscopy, Balloon dilation of tracheal stenosis, Silicone stent placement. Patient: <PERSON>. Findings: Short-segment concentric fibrotic stenosis 2 cm below vocal cords; <LOCATION> luminal narrowing. Intervention: Serial balloon dilations performed to 12 mm, then a 12 x 40 mm silicone straight stent placed across the stenotic segment. Disposition: Extubated to PACU and admitted <DATE_TIME>.",
     "cpt_codes": [
       31631
     ],
@@ -14793,10 +15126,18 @@
       "style_type": 6,
       "generated_name": "Donald Campbell",
       "generation_date": "2025-12-09T09:19:03.732732"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nPost-intubation tracheal stenosis.\n[Anesthesia]\nGeneral, Rigid, Jet Vent.\n[Description]\nSubglottic stenosis dilated (balloon). 12x40mm silicone stent placed. Patency restored.\n[Plan]\nAdmit. Airway monitoring.",
+    "note_text": "[Indication]\nPost-intubation tracheal stenosis.\n[<LOCATION>]\nGeneral, <PERSON>, <PERSON>.\n[Description]\nSubglottic stenosis dilated (balloon). <PERSON> silicone stent placed. Patency restored.\n[Plan]\nAdmit. Airway monitoring.",
     "cpt_codes": [
       31631
     ],
@@ -14991,10 +15332,19 @@
       "style_type": 7,
       "generated_name": "Paul Parker",
       "generation_date": "2025-12-09T09:19:03.732780"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 4,
+      "entity_types": [
+        "LOCATION",
+        "PERSON",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mr. Hughes was suffering from stridor due to scar tissue in his trachea from a breathing tube. We took him to the OR and used a rigid scope to dilate the scar tissue with a balloon. To keep it open, we placed a silicone stent. His airway is much more open now, and he should breathe easier. We'll watch him overnight.",
+    "note_text": "Mr. <PERSON> was suffering from stridor due to scar tissue in his trachea from a breathing tube. We took him to the OR and used a rigid scope to dilate the scar tissue with a balloon. To keep it open, we placed a silicone stent. His airway is much more open now, and he should breathe easier. We'll watch him overnight.",
     "cpt_codes": [
       31631
     ],
@@ -15189,6 +15539,12 @@
       "style_type": 8,
       "generated_name": "Steven Evans",
       "generation_date": "2025-12-09T09:19:03.732829"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15786,7 +16142,7 @@
     }
   },
   {
-    "note_text": "Code: 31630 (Bronchial Dilation).\nSite: Left Mainstem.\nTechnique: Rigid + Balloon.\nNote: No stent placed (excludes 31636).",
+    "note_text": "Code: 31630 (Bronchial Dilation).\nSite: Left Mainstem.\nTechnique: Rigid + Balloon.\nNote: No stent placed (excludes <DATE_TIME>).",
     "cpt_codes": [
       31630
     ],
@@ -15981,10 +16337,16 @@
       "style_type": 3,
       "generated_name": "Kathleen Sanchez",
       "generation_date": "2025-12-09T09:19:03.733025"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Rigid Dilation\nPatient: Brenda Lewis\nSteps:\n1. GA / Jet.\n2. Rigid scope to LMS.\n3. Anastomosis tight.\n4. Dilated with scope and balloon.\n5. Opened up to 10mm.\n6. No stent needed today.\nPlan: Transplant ward.",
+    "note_text": "Procedure: Rigid Dilation\nPatient: <PERSON>\nSteps:\n1. GA / Jet.\n2. Rigid scope to LMS.\n3. Anastomosis tight.\n4. Dilated with scope and balloon.\n5. Opened up to 10mm.\n6. No stent needed today.\nPlan: Transplant ward.",
     "cpt_codes": [
       31630
     ],
@@ -16179,10 +16541,16 @@
       "style_type": 4,
       "generated_name": "Amy Morris",
       "generation_date": "2025-12-09T09:19:03.733073"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Brenda Lewis transplant patient with stenosis left side. went in with rigid scope. dilated the anastomosis with the barrel then a balloon. opened up good. didn't put a stent in. little tear in the mucosa but stopped bleeding. sending her to the floor.",
+    "note_text": "<PERSON> transplant patient with stenosis left side. went in with rigid scope. dilated the anastomosis with the barrel then a balloon. opened up good. didn't put a stent in. little tear in the mucosa but stopped bleeding. sending her to the floor.",
     "cpt_codes": [
       31630
     ],
@@ -16377,10 +16745,16 @@
       "style_type": 5,
       "generated_name": "Angela Rogers",
       "generation_date": "2025-12-09T09:19:03.733126"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Rigid Bronchoscopy Procedure Note. Procedures: Rigid bronchoscopy and mechanical debulking, Balloon dilation of left mainstem bronchus. Patient: Brenda Lewis, 73-year-old female. Findings: Fibrotic annular stenosis at anastomotic site in left mainstem with ~60% narrowing. Interventions: Mechanical dilation with rigid barrel and forceps followed by controlled balloon dilation to 10 mm. No stent placed. Complications: Small mucosal tear without active bleeding.",
+    "note_text": "Rigid Bronchoscopy Procedure Note. Procedures: Rigid bronchoscopy and mechanical debulking, Balloon dilation of left mainstem bronchus. Patient: <PERSON>, <DATE_TIME> female. Findings: Fibrotic annular stenosis at anastomotic site in left mainstem with ~60% narrowing. Interventions: Mechanical dilation with rigid barrel and forceps followed by controlled balloon dilation to 10 mm. No stent placed. Complications: Small mucosal tear without active bleeding.",
     "cpt_codes": [
       31630
     ],
@@ -16575,10 +16949,17 @@
       "style_type": 6,
       "generated_name": "Debra Reed",
       "generation_date": "2025-12-09T09:19:03.733185"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nLMS transplant stenosis.\n[Anesthesia]\nGeneral, Rigid.\n[Description]\nAnastomosis 60% stenosed. Dilated mechanically and with balloon to 10mm. No stent placed.\n[Plan]\nAdmit to transplant service.",
+    "note_text": "[Indication]\nLMS transplant stenosis.\n[<LOCATION>]\nGeneral, <PERSON>.\n[Description]\nAnastomosis 60% stenosed. Dilated mechanically and with balloon to 10mm. No stent placed.\n[Plan]\nAdmit to transplant service.",
     "cpt_codes": [
       31630
     ],
@@ -16773,10 +17154,17 @@
       "style_type": 7,
       "generated_name": "Martha Cook",
       "generation_date": "2025-12-09T09:19:03.733238"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mrs. Lewis has narrowing at her lung transplant connection site on the left. We used a rigid bronchoscope to stretch this area open, first with the scope itself and then with a balloon. It opened up nicely to 10mm. We decided not to place a stent at this time. There was a tiny tear from the stretching, but it wasn't bleeding significantly.",
+    "note_text": "Mrs. <PERSON> has narrowing at her lung transplant connection site on the left. We used a rigid bronchoscope to stretch this area open, first with the scope itself and then with a balloon. It opened up nicely to 10mm. We decided not to place a stent at this time. There was a tiny tear from the stretching, but it wasn't bleeding significantly.",
     "cpt_codes": [
       31630
     ],
@@ -16971,6 +17359,12 @@
       "style_type": 8,
       "generated_name": "Christine Morgan",
       "generation_date": "2025-12-09T09:19:03.733286"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17172,7 +17566,7 @@
     }
   },
   {
-    "note_text": "Indication: Carinal SCC, obstruction.\nProc: Rigid bronch, Debulk (Mechanical/APC), Y-Stent.\nDetails: 80% obstruction distal trachea/carina. Debulked. 14x60/40mm Y-stent placed.\nComp: Desat during deployment.\nDisp: ICU, intubated.",
+    "note_text": "Indication: Carinal SCC, obstruction.\nProc: Rigid bronch, <PERSON> (Mechanical/APC), Y-Stent.\nDetails: 80% obstruction distal trachea/carina. Debulked. 14x60/40mm Y-stent placed.\nComp: Desat during deployment.\nDisp: ICU, intubated.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -17397,6 +17791,12 @@
       "style_type": 1,
       "generated_name": "Gregory Murphy",
       "generation_date": "2025-12-09T09:19:03.733400"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17856,7 +18256,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch Y-Stent\nPatient: Raymond Scott\nSteps:\n1. Rigid scope inserted.\n2. Carina blocked by tumor.\n3. Cored out tumor, used APC.\n4. Placed Y-stent (Silicone).\n5. Patient desatted, bagged up.\n6. Stent looks good.\nPlan: ICU intubated.",
+    "note_text": "Procedure: Rigid Bronch Y-Stent\nPatient: <PERSON>\nSteps:\n1. Rigid scope inserted.\n2. Carina blocked by tumor.\n3. Cored out tumor, used APC.\n4. Placed Y-stent (Silicone).\n5. Patient desatted, bagged up.\n6. Stent looks good.\nPlan: ICU intubated.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -18081,10 +18481,16 @@
       "style_type": 4,
       "generated_name": "Walter Cooper",
       "generation_date": "2025-12-09T09:19:03.733642"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Raymond Scott carinal tumor. rigid bronch to open it up. mechanical debulking and APC. put in a Y stent to cover trachea and both mains. he desatted during the placement but came back up. keeping him on the vent in the ICU.",
+    "note_text": "<PERSON> carinal tumor. rigid bronch to open it up. mechanical debulking and APC. put in a Y stent to cover trachea and both mains. he desatted during the placement but came back up. keeping him on the vent in the ICU.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -18309,10 +18715,16 @@
       "style_type": 5,
       "generated_name": "Peter Richardson",
       "generation_date": "2025-12-09T09:19:03.733699"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Central Airway Stenting Note. Procedures: Rigid bronchoscopy with tumor debulking, Y-shaped silicone stent placement. Patient: Raymond Scott. Findings: Bulky endobronchial tumor involving distal trachea and extending into both mainstem bronchi causing ~80% obstruction. Interventions: Mechanical debulking with rigid barrel and forceps followed by argon plasma coagulation. A custom 14 x 60/40 mm silicone Y stent was deployed. Disposition: Remained intubated postprocedure and transferred to ICU.",
+    "note_text": "Central Airway Stenting Note. Procedures: Rigid bronchoscopy with tumor debulking, Y-shaped silicone stent placement. Patient: <PERSON>. Findings: Bulky endobronchial tumor involving distal trachea and extending into both mainstem bronchi causing ~80% obstruction. Interventions: Mechanical debulking with rigid barrel and forceps followed by argon plasma coagulation. A custom 14 x 60/40 mm silicone Y stent was deployed. Disposition: Remained intubated postprocedure and transferred to ICU.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -18537,10 +18949,16 @@
       "style_type": 6,
       "generated_name": "Harold Cox",
       "generation_date": "2025-12-09T09:19:03.733755"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nMalignant carinal obstruction.\n[Anesthesia]\nGeneral, Rigid.\n[Description]\nTumor debulked (Core/APC). Y-Stent placed (Trachea/RMS/LMS). Airway patent.\n[Plan]\nICU, mechanical ventilation.",
+    "note_text": "[Indication]\nMalignant carinal obstruction.\n[<LOCATION>]\nGeneral, <PERSON>.\n[Description]\nTumor debulked (Core/APC). Y-Stent placed (Trachea/RMS/LMS). Airway patent.\n[Plan]\nICU, mechanical ventilation.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -18765,10 +19183,17 @@
       "style_type": 7,
       "generated_name": "Douglas Howard",
       "generation_date": "2025-12-09T09:19:03.733813"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mr. Scott had a large tumor blocking the split of his windpipe (carina). We performed an emergency procedure to open the airway. Using a rigid scope, we scraped away the tumor and burned the base. Then, we placed a Y-shaped silicone stent that holds open the trachea and both lung tubes. He had a brief drop in oxygen levels during the stent placement but recovered. He stays on the ventilator in the ICU for now.",
+    "note_text": "Mr. <PERSON> had a large tumor blocking the split of his windpipe (carina). We performed an emergency procedure to open the airway. Using a rigid scope, we scraped away the tumor and burned the base. Then, we placed a Y-shaped silicone stent that holds open the trachea and both lung tubes. He had a brief drop in oxygen levels during the stent placement but recovered. He stays on the ventilator in the ICU for now.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -18993,6 +19418,12 @@
       "style_type": 8,
       "generated_name": "Carl Ward",
       "generation_date": "2025-12-09T09:19:03.733871"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

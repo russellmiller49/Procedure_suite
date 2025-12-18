@@ -173,6 +173,17 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         )
     )
 
+    # Ensure PHI database tables exist (auto-create on startup)
+    try:
+        from modules.phi.db import Base as PHIBase
+        from modules.api.phi_dependencies import engine as phi_engine
+        from modules.phi import models as _phi_models  # noqa: F401 - register models
+
+        PHIBase.metadata.create_all(bind=phi_engine)
+        logger.info("PHI database tables verified/created")
+    except Exception as e:
+        logger.warning(f"Could not initialize PHI tables: {e}")
+
     loop = asyncio.get_running_loop()
 
     def _warmup_worker() -> None:

@@ -94,14 +94,82 @@ ANATOMICAL_ALLOW_LIST = {
 }
 
 CLINICAL_ALLOW_LIST = {
+    # --- From IP_Registry.json & Dictionaries ---
+    
+    # Navigation & Robotics (often flagged as Locations/Persons)
+    "ion", "monarch", "galaxy", "superdimension", "illumisite", "spin", 
+    "lungvision", "archimedes", "inreach", "veran", "intuitive", "auris",
+    "shape-sensing", "robotic-assisted", "nav-guided", "enb",
+    
+    # Valves & Devices
+    "zephyr", "spiration", "pulmonx", "olympus", "coviden", "medtronic",
+    "boston scientific", "cook", "merit", "conmed", "erbe",
+    "chartis", "collateral ventilation",
+    
+    # Catheters & Tubes
+    "pleurx", "aspira", "rocket", "yueh", "cooke", "pigtail", "tru-cut", 
+    "abrams", "heimlich", "pleurovac", "chest tube", "ipc", "tunneled catheter",
+    
+    # Stents
+    "dumon", "hood", "novatech", "aero", "ultraflex", "sems", "silicone",
+    "hybrid stent", "y-stent", "airway stent",
+    
+    # Imaging & Guidance
+    "cios", "cios spin", "cone beam", "cbct", "fluoroscopy", "rebus", 
+    "radial ebus", "radial probe", "miniprobe", "ultrasound", "sonographic",
+    
+    # Ablation & Tools
+    "apc", "argon plasma", "electrocautery", "cryo", "cryoprobe", "cryospray",
+    "cryoablation", "cryotherapy", "mwa", "microwave", "radiofrequency", "rfa",
+    "laser", "nd:yag", "co2 laser", "diode", "microdebrider", "snare", "basket",
+    "fogarty", "arndt", "cohen", "blocker", "balloon", "bougie",
+    
+    # Medications (Sedation/Reversal/Local) - commonly flagged
+    "lidocaine", "fentanyl", "midazolam", "versed", "propofol", "etomidate",
+    "succinylcholine", "rocuronium", "cisatracurium", "sugammadex", "neostigmine",
+    "glycopyrrolate", "atropine", "epinephrine", "phenylephrine", "norepinephrine",
+    "flumazenil", "naloxone", "narcan", "romazicon", "kenalog", "tranexamic acid", 
+    "txa", "doxycycline", "bleomycin", "talc", "saline", "ns",
+    
+    # Common Clinical Descriptors & Status
+    "absen", "absent", "present", "normal", "abnormal", "stable", "unstable",
+    "adequate", "inadequate", "diagnostic", "nondiagnostic", "malignant", "benign",
+    "suspicious", "atypical", "granuloma", "necrosis", "inflammation", 
+    "anthracotic", "cobblestoning", "erythematous", "friable", "nodular", "polypoid",
+    "patent", "occluded", "obstructed", "stenosis", "stricture", "malacia",
+    "fistula", "dehiscence", "granulation", "secretions", "mucus", "blood", "clot",
+    
+    # Anatomy & Pathology
+    "lung", "lungs", "lobe", "lobes", "pleura", "pleural", "airway", "trachea",
+    "esophagus", "thyroid", "spine", "rib", "chest wall", "diaphragm",
+    "nodule", "mass", "lesion", "tumor", "infiltrate", "consolidation", 
+    "ground glass", "cavity", "calcification", "effusion", "pneumothorax", 
+    "hemothorax", "empyema", "chylothorax", "trapped lung", "lymphadenopathy",
+    
+    # Administrative/Coding Terms (often flagged as DATE/TIME or IDs)
+    "initial day", "subsequent day", "initial episode", "repeat", "modifier",
+    "separate structure", "distinct service", "unlisted procedure",
+    "cpt", "icd-10", "diagnosis", "indication", "history", "plan", "assessment",
+    
+    # Units & Measurements
+    "mm", "cm", "fr", "french", "gauge", "liter", "liters", "cc", "ml", 
+    "joules", "watts", "lpm", "l/min", "mins", "seconds", "secs", "minutes",
+    
+    # Personnel roles (lower case to catch common misclassifications)
+    "attending", "fellow", "resident", "anesthesiologist", "crna", "nurse", "rn", 
+    "tech", "technician", "observer", "proceduralist", "assistant",
+    
+    # Disease specific
+    "hodgkin", "hodgkin's", "non-hodgkin", "lymphoma", "carcinoma", 
+    "adenocarcinoma", "squamous", "sarcoidosis", "tuberculosis", "afb",
+    "fungal", "bacterial", "viral",
+    
     # Meds + common descriptors that frequently false-positive as PHI.
-    "kenalog",
     "nonobstructive",
     # Common clinical/admin tokens that spaCy can misclassify as entities (often LOCATION).
     "anesthesia",
     "general anesthesia",
     # Common abbreviations which can false-positive as entities.
-    "ns",  # Normal saline (often misread as Nova Scotia)
     "us",  # Ultrasound (often misread as United States)
     "mc",  # Mail code / internal routing shorthand
     "pacs",
@@ -112,7 +180,6 @@ CLINICAL_ALLOW_LIST = {
     # Clinical terms often capitalized in headers/lists.
     "target",
     "freeze",
-    "cryobiopsy",
     "brush",
     "media",
     "samples",
@@ -126,7 +193,6 @@ CLINICAL_ALLOW_LIST = {
     "lung nodule",
     "solitary lung nodule",
     "mass",
-    "nodule",
     "lesion",
     # Existing anatomical allow-list (critical for procedure coding).
     *ANATOMICAL_ALLOW_LIST,
@@ -146,6 +212,8 @@ DEFAULT_RELATIVE_DATE_TIME_PHRASES: tuple[str, ...] = (
     "next week",
     "today",
     "tomorrow",
+    "yesterday",
+    "same day",
 )
 
 PATIENT_NAME_LINE_RE = re.compile(
@@ -377,17 +445,17 @@ def filter_device_model_context(text: str, results: list) -> list:
 def filter_cpt_codes(text: str, results: list) -> list:
     """Drop detections which point at CPT/medical procedure codes.
 
-    In clinical procedure notes, CPT codes (5 digits) are frequently present and may
-    be misclassified as DATE_TIME (e.g., "years") or other entity types.
-    To avoid suppressing ZIP codes or other legitimate PHI-like numbers, only treat
-    5-digit tokens as CPT codes when they appear on a line containing "CPT".
+    Detects CPT codes (5 digits, optionally alphanumeric) when they appear:
+    1. On a line containing "CPT" or "PROCEDURE".
+    2. In a block of text following a "PROCEDURE:"-style header.
     """
+    safe_spans: list[tuple[int, int]] = []
 
     cpt_hint_re = re.compile(r"\b(?:CPT|HCPCS|ICD-?10|ICD)\b", re.IGNORECASE)
     # Negative lookbehind avoids matching the year portion of dates like 12/17/2025.
     code_re = re.compile(r"\b(?<!/)\d{5}[A-Z0-9]{0,4}\b", re.IGNORECASE)
 
-    safe_spans: list[tuple[int, int]] = []
+    # Pass 1: line-based scanning (protect codes on CPT/ICD/HCPCS lines or standalone code lines).
     cursor = 0
     while cursor <= len(text):
         line_end = text.find("\n", cursor)
@@ -404,6 +472,23 @@ def filter_cpt_codes(text: str, results: list) -> list:
         if line_end == len(text):
             break
         cursor = line_end + 1
+
+    # Pass 2: block-based scanning after "PROCEDURE:" / "CPT CODES:" headers.
+    header_re = re.compile(r"(?im)^\s*(?:PROCEDURE|CPT\s*CODES?|CODES?)\s*[:]")
+    next_header_re = re.compile(r"(?im)^\s*[A-Z][A-Za-z\s/]+[:]")
+    lines = text.splitlines(keepends=True)
+    current_pos = 0
+    in_cpt_block = False
+    for line in lines:
+        line_len = len(line)
+        if header_re.match(line):
+            in_cpt_block = True
+        elif in_cpt_block and next_header_re.match(line):
+            in_cpt_block = False
+        if in_cpt_block or "CPT" in line:
+            for m in code_re.finditer(line):
+                safe_spans.append((current_pos + m.start(), current_pos + m.end()))
+        current_pos += line_len
 
     if not safe_spans:
         return results
@@ -1050,12 +1135,13 @@ def _build_analyzer(model_name: str):
         def __init__(self):
             super().__init__(
                 supported_entity="MRN",
+                # Added \b before and after to strictly match word ID, avoiding matches inside "identified".
                 patterns=[
-                    Pattern(name="mrn", regex=r"(?i)\b(?:MRN|ID)\s*[:#]?\s*[A-Z0-9][A-Z0-9-]{3,}\b", score=0.95)
+                    Pattern(name="mrn", regex=r"(?i)\b(?:MRN|ID)\b\s*[:#]?\s*[A-Z0-9][A-Z0-9-]{3,}\b", score=0.95)
                 ],
                 name="MRN",
             )
-            self._mrn = re.compile(r"(?i)\b(?:MRN|ID)\s*[:#]?\s*([A-Z0-9][A-Z0-9-]{3,})\b")
+            self._mrn = re.compile(r"(?i)\b(?:MRN|ID)\b\s*[:#]?\s*([A-Z0-9][A-Z0-9-]{3,})\b")
 
         def analyze(self, text: str, entities: list[str], nlp_artifacts=None):  # type: ignore[override]
             results: list[RecognizerResult] = []
@@ -1152,11 +1238,20 @@ class PresidioScrubber(PHIScrubberPort):
         )
         detections: list[Detection] = []
         for r in results:
+            start = int(getattr(r, "start"))
+            end = int(getattr(r, "end"))
+            # Truncate detections that mistakenly span across newlines (e.g. "Name\nLabel")
+            text_span = text[start:end]
+            if "\n" in text_span:
+                newline_idx = text_span.find("\n")
+                # Keep only the first line of the detection
+                end = start + newline_idx
+            
             detections.append(
                 Detection(
                     entity_type=str(getattr(r, "entity_type")),
-                    start=int(getattr(r, "start")),
-                    end=int(getattr(r, "end")),
+                    start=start,
+                    end=end,
                     score=float(getattr(r, "score", 0.0) or 0.0),
                 )
             )

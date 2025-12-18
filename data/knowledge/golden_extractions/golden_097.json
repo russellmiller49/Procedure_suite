@@ -1,7 +1,7 @@
 [
   {
     "note_id": "PDT_LIGHT_001",
-    "note_text": "Pre-op: RLL bronchus SCC (T1a). Pt declined surgery.\nAnesthesia: GA, 8.0 ETT.\nProcedure:\n- Bronchoscopy: Normal upper airway.\n- Tumor: RLL, 1.2x1.1cm, flat/plaque.\n- PDT: 630nm laser via 3cm diffuser. 200 J/cm2. 500s. 1.2W.\n- No visible change/bleeding.\nPlan: Extubate. Light precautions. F/u 48h for debridement.",
+    "note_text": "Pre-op: RLL bronchus SCC (T1a). Pt declined surgery.\n<LOCATION>: GA, 8.0 ETT.\nProcedure:\n- Bronchoscopy: Normal upper airway.\n- Tumor: RLL, 1.2x1.1cm, flat/plaque.\n- PDT: 630nm laser via 3cm diffuser. 200 J/cm2. 500s. 1.2W.\n- No visible change/bleeding.\nPlan: Extubate. Light precautions. F/u 48h for debridement.",
     "cpt_codes": [
       31641
     ],
@@ -106,11 +106,17 @@
       "style_type": 1,
       "generated_name": "Carlos Sanchez",
       "generation_date": "2025-12-11T12:42:10.248663"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_001",
-    "note_text": "OPERATIVE NARRATIVE: The patient, Mr. Rodriguez, presenting with Stage IA1 endobronchial squamous cell carcinoma of the right lower lobe, was brought to the operating theater for photodynamic therapy. Following induction of general anesthesia, the airway was secured. A thorough bronchoscopic interrogation identified the lesion within the RLL bronchus. A cylindrical diffusing fiber (3.0 cm) was positioned centrally across the malignancy. Laser energy at 630 nm was delivered to achieve a total fluence of 200 J/cm², activating the previously administered Porfimer sodium. The procedure concluded without hemodynamic instability or immediate localized tissue reaction.",
+    "note_text": "OPERATIVE NARRATIVE: The patient, Mr. <PERSON>, presenting with Stage IA1 endobronchial squamous cell carcinoma of the right lower lobe, was brought to the operating theater for photodynamic therapy. Following induction of general <LOCATION>, the airway was secured. A thorough bronchoscopic interrogation identified the lesion within the RLL bronchus. A cylindrical diffusing fiber (3.0 cm) was positioned centrally across the malignancy. Laser energy at 630 nm was delivered to achieve a total fluence of 200 J/cm², activating the previously administered Porfimer sodium. The procedure concluded without hemodynamic instability or immediate localized tissue reaction.",
     "cpt_codes": [
       31641
     ],
@@ -215,6 +221,13 @@
       "style_type": 2,
       "generated_name": "Juan Perez",
       "generation_date": "2025-12-11T12:42:10.248705"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -328,7 +341,7 @@
   },
   {
     "note_id": "PDT_LIGHT_001",
-    "note_text": "Procedure: PDT Light Application\nAttending: Dr. Walsh\nSteps:\n1. Time out verified Photofrin admin 48h prior.\n2. ETT placed.\n3. Scope advanced to RLL.\n4. Lesion measured (1.2cm). Fiber placed.\n5. Laser activation: 630nm, 8min 20sec.\n6. Fiber removed. No bleeding.\nPlan: PACU, light precautions.",
+    "note_text": "Procedure: PDT Light Application\nAttending: Dr. Walsh\nSteps:\n1. Time out verified <LOCATION> admin 48h prior.\n2. ETT placed.\n3. Scope advanced to RLL.\n4. Lesion measured (1.2cm). Fiber placed.\n5. Laser activation: 630nm, <DATE_TIME>.\n6. Fiber removed. No bleeding.\nPlan: PACU, light precautions.",
     "cpt_codes": [
       31641
     ],
@@ -433,11 +446,18 @@
       "style_type": 4,
       "generated_name": "Michael Torres",
       "generation_date": "2025-12-11T12:42:10.248774"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_001",
-    "note_text": "patient james rodriguez for pdt light session right lower lobe tumor anesthesia was general tube size 8 used the olympus scope saw the tumor in the rll looked flat about 1cm put the fiber in 3cm diffuser turned the laser on for 500 seconds settings were standard 200 joules per cm2 no issues during light delivery patient stable extubated sent to recovery remind him about the sunlight precautions thanks",
+    "note_text": "patient <PERSON> for pdt light session right lower lobe tumor <LOCATION> was general tube size 8 used the olympus scope saw the tumor in the rll looked flat about 1cm put the fiber in 3cm diffuser turned the laser on for 500 seconds settings were standard 200 joules per cm2 no issues during light delivery patient stable extubated sent to recovery remind him about the sunlight precautions thanks",
     "cpt_codes": [
       31641
     ],
@@ -542,11 +562,18 @@
       "style_type": 5,
       "generated_name": "David Ramirez",
       "generation_date": "2025-12-11T12:42:10.248806"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_001",
-    "note_text": "The patient was brought to the endoscopy suite and placed under general anesthesia with an 8.0mm ETT. Initial survey showed a 1.2cm flat lesion in the Right Lower Lobe bronchus causing 54% obstruction. We proceeded with Photodynamic Therapy. A 3.0cm cylindrical diffusing fiber was inserted and 630nm red laser light was delivered at 400mW/cm for 500 seconds (Total 200 J/cm2). The patient tolerated the procedure well with no immediate complications. Post-procedure light precautions were reviewed and the patient was transferred to recovery.",
+    "note_text": "The patient was brought to the endoscopy suite and placed under general <LOCATION> with an 8.0mm ETT. Initial survey showed a 1.2cm flat lesion in the Right Lower Lobe bronchus causing 54% obstruction. We proceeded with <PERSON>. A 3.0cm cylindrical diffusing fiber was inserted and 630nm red laser light was delivered at 400mW/cm for 500 seconds (Total 200 J/cm2). The patient tolerated the procedure well with no immediate complications. Post-procedure light precautions were reviewed and the patient was transferred to recovery.",
     "cpt_codes": [
       31641
     ],
@@ -651,11 +678,18 @@
       "style_type": 6,
       "generated_name": "Jose Hernandez",
       "generation_date": "2025-12-11T12:42:10.248836"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_001",
-    "note_text": "[Indication]\nRLL endobronchial SCC, T1aN0M0, declined surgery.\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nScope passed to RLL. Tumor visualized. 3.0cm diffuser fiber placed. Laser energy delivered (630nm, 200 J/cm2, 500s). No immediate tissue change.\n[Plan]\nDebridement in 48 hours. Strict light avoidance.",
+    "note_text": "[Indication]\nRLL endobronchial SCC, T1aN0M0, declined surgery.\n[<LOCATION>]\nGeneral, 8.0 ETT.\n[Description]\nScope passed to RLL. Tumor visualized. 3.0cm diffuser fiber placed. Laser energy delivered (630nm, 200 J/cm2, 500s). No immediate tissue change.\n[Plan]\nDebridement in 48 hours. Strict light avoidance.",
     "cpt_codes": [
       31641
     ],
@@ -760,11 +794,17 @@
       "style_type": 7,
       "generated_name": "Luis Martinez",
       "generation_date": "2025-12-11T12:42:10.248864"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_001",
-    "note_text": "Mr. Rodriguez was anesthetized and intubated for his scheduled PDT session. We advanced the bronchoscope to the right lower lobe, identifying the squamous cell carcinoma which appeared as a flat, plaque-like lesion. We inserted the 3.0cm diffusing fiber and centered it over the tumor. The laser was activated at 630nm, delivering 200 J/cm2 over 500 seconds. The patient remained stable throughout the illumination phase. Upon completion, we removed the fiber and noted no immediate bleeding or edema. The patient was extubated and transferred to the PACU with instructions for strict light avoidance.",
+    "note_text": "Mr. <PERSON> was anesthetized and intubated for his scheduled PDT session. We advanced the bronchoscope to the right lower lobe, identifying the squamous cell carcinoma which appeared as a flat, plaque-like lesion. We inserted the 3.0cm diffusing fiber and centered it over the tumor. The laser was activated at 630nm, delivering 200 J/cm2 over 500 seconds. The patient remained stable throughout the illumination phase. Upon completion, we removed the fiber and noted no immediate bleeding or edema. The patient was extubated and transferred to the PACU with instructions for strict light avoidance.",
     "cpt_codes": [
       31641
     ],
@@ -869,11 +909,17 @@
       "style_type": 8,
       "generated_name": "Pedro Castillo",
       "generation_date": "2025-12-11T12:42:10.248893"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_001",
-    "note_text": "PROCEDURES EXECUTED: 1. Photodynamic therapy - laser illumination. 2. Flexible bronchoscopy with tumor gauging.\nDETAILS: Following anesthesia, the scope was navigated to the RLL. The malignancy was located. A light fiber was deployed. Laser energy was emitted at 630nm for 500 seconds to activate the photosensitizer. No thermal damage was noted. The fiber was retracted. The patient was awakened and moved to recovery.",
+    "note_text": "PROCEDURES EXECUTED: 1. Photodynamic therapy - laser illumination. 2. Flexible bronchoscopy with tumor gauging.\nDETAILS: Following <LOCATION>, the scope was navigated to the RLL. The malignancy was located. A light fiber was deployed. Laser energy was emitted at 630nm for 500 seconds to activate the photosensitizer. No thermal damage was noted. The fiber was retracted. The patient was awakened and moved to recovery.",
     "cpt_codes": [
       31641
     ],
@@ -978,11 +1024,17 @@
       "style_type": 9,
       "generated_name": "Manuel Diaz",
       "generation_date": "2025-12-11T12:42:10.248919"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_002",
-    "note_text": "Indication: LLL Mucoepidermoid CA. ECOG 3.\nAnesthesia: GA, 8.0 ETT.\nAction: 3.0cm diffuser placed at LLL lesion. 630nm laser x 500s. 200 J/cm2.\nResult: No immediate change. Pt stable.\nPlan: D/C to home. Light precautions. Return 48h.",
+    "note_text": "Indication: LLL Mucoepidermoid CA. ECOG 3.\n<LOCATION>: GA, 8.0 ETT.\nAction: 3.0cm diffuser placed at LLL lesion. 630nm laser x 500s. 200 J/cm2.\nResult: No immediate change. Pt stable.\nPlan: D/C to home. Light precautions. Return <DATE_TIME>.",
     "cpt_codes": [
       31641
     ],
@@ -1087,11 +1139,18 @@
       "style_type": 1,
       "generated_name": "William Smith",
       "generation_date": "2025-12-11T12:42:10.248952"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_002",
-    "note_text": "OPERATIVE REPORT: Mr. Brown, a 66-year-old male with significant comorbidities (ECOG 3), underwent palliative photodynamic therapy for an obstructing LLL mucoepidermoid carcinoma. Under general anesthesia, the lesion was targeted using a 3.0 cm cylindrical diffuser. We delivered 630 nm light energy at a fluence of 200 J/cm² to activate the systemic porfimer sodium. Intraprocedural monitoring confirmed stable hemodynamics. The non-thermal nature of the treatment preserved airway integrity.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON>, a <DATE_TIME> male with significant comorbidities (ECOG 3), underwent palliative photodynamic therapy for an obstructing LLL mucoepidermoid carcinoma. Under general <LOCATION>, the lesion was targeted using a 3.0 cm cylindrical diffuser. We delivered 630 nm light energy at a fluence of 200 J/cm² to activate the systemic porfimer sodium. Intraprocedural monitoring confirmed stable hemodynamics. The non-thermal nature of the treatment preserved airway integrity.",
     "cpt_codes": [
       31641
     ],
@@ -1196,6 +1255,14 @@
       "style_type": 2,
       "generated_name": "James Johnson",
       "generation_date": "2025-12-11T12:42:10.248982"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -1309,7 +1376,7 @@
   },
   {
     "note_id": "PDT_LIGHT_002",
-    "note_text": "Procedure: PDT Light\nPatient: Joseph Brown\nStaff: Dr. Kim\nSteps:\n1. GA induced.\n2. Airway inspected. LLL tumor ID'd (exophytic).\n3. 3cm fiber placed.\n4. Laser on: 630nm, 500 sec.\n5. Fiber out. Pt stable.\n6. Extubated.\nPlan: Light precautions education.",
+    "note_text": "Procedure: PDT Light\nPatient: <PERSON>\nStaff: Dr. Kim\nSteps:\n1. GA induced.\n2. Airway inspected. LLL tumor ID'd (exophytic).\n3. 3cm fiber placed.\n4. Laser on: 630nm, 500 sec.\n5. Fiber out. Pt stable.\n6. Extubated.\nPlan: Light precautions education.",
     "cpt_codes": [
       31641
     ],
@@ -1414,11 +1481,17 @@
       "style_type": 4,
       "generated_name": "Michael Jones",
       "generation_date": "2025-12-11T12:42:10.249041"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_002",
-    "note_text": "joseph brown for pdt on left lower lobe tumor general anesthesia used pentax scope used 3cm fiber laser set to 630nm 200 joules per square centimeter ran for 500 seconds no issues patient did fine woke up ok sending to pacu will see him back in 2 days for cleanup",
+    "note_text": "<PERSON> for pdt on left lower lobe tumor general <LOCATION> used pentax scope used 3cm fiber laser set to 630nm 200 joules per <PERSON> ran for 500 seconds no issues patient did fine woke up ok sending to pacu will see him back in 2 days for cleanup",
     "cpt_codes": [
       31641
     ],
@@ -1523,11 +1596,19 @@
       "style_type": 5,
       "generated_name": "David Brown",
       "generation_date": "2025-12-11T12:42:10.249068"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_002",
-    "note_text": "Under general anesthesia, a flexible bronchoscope was introduced. An exophytic mucoepidermoid carcinoma was visualized in the Left Lower Lobe bronchus (34% obstruction). A 3.0cm diffusing fiber was positioned. Laser light (630nm) was applied for 500 seconds at 200 J/cm2. The patient tolerated the light application without desaturation or hemodynamic instability. Post-procedure light safety protocols were initiated.",
+    "note_text": "Under general <LOCATION>, a flexible bronchoscope was introduced. An exophytic mucoepidermoid carcinoma was visualized in the Left Lower Lobe bronchus (34% obstruction). A 3.0cm diffusing fiber was positioned. Laser light (630nm) was applied for 500 seconds at 200 J/cm2. The patient tolerated the light application without desaturation or hemodynamic instability. Post-procedure light safety protocols were initiated.",
     "cpt_codes": [
       31641
     ],
@@ -1632,11 +1713,17 @@
       "style_type": 6,
       "generated_name": "Richard Davis",
       "generation_date": "2025-12-11T12:42:10.249096"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_002",
-    "note_text": "[Indication]\nLLL Mucoepidermoid Carcinoma, ECOG 3.\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nLLL cannulated. 3cm fiber positioned. 630nm light delivered (200 J/cm2, 500s). No charring observed.\n[Plan]\nStrict light precautions. Debridement in 48h.",
+    "note_text": "[Indication]\nLLL Mucoepidermoid Carcinoma, ECOG 3.\n[<LOCATION>]\nGeneral, 8.0 ETT.\n[Description]\nLLL cannulated. 3cm fiber positioned. 630nm light delivered (200 J/cm2, 500s). No charring observed.\n[Plan]\nStrict light precautions. Debridement in <DATE_TIME>.",
     "cpt_codes": [
       31641
     ],
@@ -1741,11 +1828,18 @@
       "style_type": 7,
       "generated_name": "Charles Miller",
       "generation_date": "2025-12-11T12:42:10.249124"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_002",
-    "note_text": "We brought Mr. Brown to the endoscopy suite for his PDT light session. After induction, we visualized the exophytic tumor in the left lower lobe. We carefully threaded the 3.0cm laser fiber through the scope, centering it on the mass. The laser was activated for 8 minutes and 20 seconds, delivering the calculated dose of red light. There were no complications during the illumination. We extubated the patient and reinforced the importance of avoiding bright light for the next month.",
+    "note_text": "We brought Mr. <PERSON> to the endoscopy suite for his PDT light session. After induction, we visualized the exophytic tumor in the left lower lobe. We carefully threaded the 3.0cm laser fiber through the scope, centering it on the mass. The laser was activated for 8 minutes and 20 seconds, delivering the calculated dose of red light. There were no complications during the illumination. We extubated the patient and reinforced the importance of avoiding bright light for <DATE_TIME>.",
     "cpt_codes": [
       31641
     ],
@@ -1850,6 +1944,13 @@
       "style_type": 8,
       "generated_name": "Joseph Wilson",
       "generation_date": "2025-12-11T12:42:10.249151"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -1963,7 +2064,7 @@
   },
   {
     "note_id": "PDT_LIGHT_003",
-    "note_text": "Dx: LLL Large Cell CA. T1cN0M0.\nAnesthesia: GA, 8.5 ETT.\nProcedure: PDT Light Delivery.\n- Fiber: 5.0cm.\n- Laser: 630nm, 200 J/cm2, 500s.\n- Location: LLL.\nFindings: No immediate reaction. No bleeding.\nPlan: Debride 48h.",
+    "note_text": "Dx: LLL Large Cell CA. T1cN0M0.\n<LOCATION>: GA, 8.5 ETT.\nProcedure: PDT Light Delivery.\n- Fiber: 5.0cm.\n- Laser: 630nm, 200 J/cm2, 500s.\n- Location: LLL.\nFindings: No immediate reaction. No bleeding.\nPlan: Debride 48h.",
     "cpt_codes": [
       31641
     ],
@@ -2068,11 +2169,17 @@
       "style_type": 1,
       "generated_name": "John Taylor",
       "generation_date": "2025-12-11T12:42:10.249208"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_003",
-    "note_text": "PROCEDURE NOTE: Mr. Williams presented for photodynamic therapy of a large cell carcinoma in the left lower lobe. Given his ASA 4 status, careful anesthetic management was employed. The lesion, measuring 2.5 cm longitudinally, necessitated a 5.0 cm cylindrical diffuser. We delivered 2000 mW of 630 nm light for 500 seconds, achieving a fluence of 200 J/cm². The procedure was completed without complication, initiating the photochemical necrosis of the endobronchial tumor.",
+    "note_text": "PROCEDURE NOTE: Mr. <PERSON> presented for photodynamic therapy of a large cell carcinoma in the left lower lobe. Given his ASA 4 status, careful anesthetic management was employed. The lesion, measuring 2.5 cm longitudinally, necessitated a 5.0 cm cylindrical diffuser. We delivered <DATE_TIME> mW of 630 nm light for 500 seconds, achieving a fluence of 200 J/cm². The procedure was completed without complication, initiating the photochemical necrosis of the endobronchial tumor.",
     "cpt_codes": [
       31641
     ],
@@ -2177,11 +2284,18 @@
       "style_type": 2,
       "generated_name": "Robert Anderson",
       "generation_date": "2025-12-11T12:42:10.249238"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_003",
-    "note_text": "Service: Bronchoscopy w/ Tumor Destruction (31641).\nMethod: Photodynamic Therapy (Light application).\nTarget: Left Lower Lobe (LLL).\nTech Specs: 5.0cm Diffuser, 630nm Laser.\nSettings: 400mW/cm, Total 2.0W, 500 sec.\nOutcome: Successful illumination of target tissue. No complications.",
+    "note_text": "Service: Bronchoscopy w/ Tumor Destruction (<DATE_TIME>).\nMethod: Photodynamic Therapy (Light application).\nTarget: Left Lower Lobe (LLL).\nTech Specs: 5.0cm Diffuser, 630nm Laser.\nSettings: 400mW/cm, Total 2.0W, 500 sec.\nOutcome: Successful illumination of target tissue. No complications.",
     "cpt_codes": [
       31641
     ],
@@ -2286,11 +2400,17 @@
       "style_type": 3,
       "generated_name": "Michael Thomas",
       "generation_date": "2025-12-11T12:42:10.249265"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_003",
-    "note_text": "Resident Note\nPt: David Williams\nProc: PDT Light\n1. Pt intubated (8.5 ETT).\n2. Scope to LLL.\n3. Tumor visualized (large cell CA).\n4. 5cm fiber utilized.\n5. Laser active 500s @ 630nm.\n6. Stable.\nPlan: Light precautions, f/u 48h.",
+    "note_text": "Resident Note\nPt: <PERSON>\nProc: PDT Light\n1. Pt intubated (8.5 ETT).\n2. Scope to LLL.\n3. Tumor visualized (large cell CA).\n4. 5cm fiber utilized.\n5. Laser active 500s @ 630nm.\n6. Stable.\nPlan: Light precautions, f/u 48h.",
     "cpt_codes": [
       31641
     ],
@@ -2395,11 +2515,17 @@
       "style_type": 4,
       "generated_name": "William Jackson",
       "generation_date": "2025-12-11T12:42:10.249292"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_003",
-    "note_text": "david williams 74 male for pdt left lower lobe large cell ca high risk patient general anesthesia used 5cm fiber because the tumor was long laser on for 500 seconds total energy delivered appropriate no issues during the case extubated fine transfer to pacu watch for light sensitivity",
+    "note_text": "<PERSON> 74 male for pdt left lower lobe large cell ca high risk patient general <LOCATION> used 5cm fiber because the tumor was long laser on for 500 seconds total energy delivered appropriate no issues during the case extubated fine transfer to pacu watch for light sensitivity",
     "cpt_codes": [
       31641
     ],
@@ -2504,6 +2630,13 @@
       "style_type": 5,
       "generated_name": "David White",
       "generation_date": "2025-12-11T12:42:10.249321"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -2617,7 +2750,7 @@
   },
   {
     "note_id": "PDT_LIGHT_003",
-    "note_text": "[Indication]\nLLL Large Cell Carcinoma, inoperable.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\n5.0cm fiber placed in LLL. 630nm laser delivered (2.0W, 500s). Target dose 200 J/cm2 achieved.\n[Plan]\nLight precautions. Return for debridement May 08.",
+    "note_text": "[Indication]\nLLL Large Cell Carcinoma, inoperable.\n[<LOCATION>]\nGeneral, 8.5 ETT.\n[Description]\n5.0cm fiber placed in LLL. 630nm laser delivered (2.0W, 500s). Target dose 200 J/cm2 achieved.\n[Plan]\nLight precautions. Return for debridement <DATE_TIME>.",
     "cpt_codes": [
       31641
     ],
@@ -2722,11 +2855,18 @@
       "style_type": 7,
       "generated_name": "Charles Martin",
       "generation_date": "2025-12-11T12:42:10.249376"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_003",
-    "note_text": "Mr. Williams underwent PDT for his left lower lobe tumor. Under general anesthesia, we identified the 2.5 cm lesion. A 5.0 cm diffuser was required to ensure adequate coverage. We delivered the light therapy over 500 seconds without incident. The patient tolerated the anesthesia well despite his comorbidities. We removed the equipment and confirmed he was stable before transfer to the PACU.",
+    "note_text": "Mr. <PERSON> underwent PDT for his left lower lobe tumor. Under general <LOCATION>, we identified the 2.5 cm lesion. A 5.0 cm diffuser was required to ensure adequate coverage. We delivered the light therapy over 500 seconds without incident. The patient tolerated the <LOCATION> well despite his comorbidities. We removed the equipment and confirmed he was stable before transfer to the PACU.",
     "cpt_codes": [
       31641
     ],
@@ -2831,6 +2971,14 @@
       "style_type": 8,
       "generated_name": "Joseph Thompson",
       "generation_date": "2025-12-11T12:42:10.249402"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -2944,7 +3092,7 @@
   },
   {
     "note_id": "PDT_LIGHT_004",
-    "note_text": "Indication: RLL Carcinoid. Severe COPD.\nSensitizer: Temoporfin (Foscan) 96h prior.\nAnesthesia: GA, 8.5 ETT.\nProcedure: PDT Light.\n- Fiber: 1.5cm.\n- Laser: 630nm, 200 J/cm2, 500s.\n- Site: RLL.\nPlan: Debride 48h. Light precautions.",
+    "note_text": "Indication: RLL Carcinoid. Severe COPD.\nSensitizer: Temoporfin (Foscan) <DATE_TIME> prior.\n<LOCATION>: GA, 8.5 ETT.\nProcedure: PDT Light.\n- Fiber: 1.5cm.\n- Laser: 630nm, 200 J/cm2, 500s.\n- Site: RLL.\nPlan: Debride 48h. Light precautions.",
     "cpt_codes": [
       31641
     ],
@@ -3049,11 +3197,18 @@
       "style_type": 1,
       "generated_name": "James Robinson",
       "generation_date": "2025-12-11T12:42:10.249459"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_004",
-    "note_text": "OPERATIVE SUMMARY: Mr. Jones, a patient with severe COPD and an RLL carcinoid tumor, underwent photodynamic therapy. Temoporfin was administered 96 hours prior. Using a 1.5 cm cylindrical diffuser, we illuminated the endobronchial lesion with 630 nm light (fluence 200 J/cm²) for 500 seconds. The extended drug-light interval is specific to the pharmacokinetics of Temoporfin. The patient tolerated the procedure well with no exacerbation of his underlying COPD.",
+    "note_text": "OPERATIVE SUMMARY: Mr. <PERSON>, a patient with severe COPD and an RLL carcinoid tumor, underwent photodynamic therapy. Temoporfin was administered 96 hours prior. Using a 1.5 cm cylindrical diffuser, we illuminated the endobronchial lesion with 630 nm light (fluence 200 J/cm²) for 500 seconds. The extended drug-light interval is specific to the pharmacokinetics of <LOCATION>. The patient tolerated the procedure well with no exacerbation of his underlying COPD.",
     "cpt_codes": [
       31641
     ],
@@ -3158,6 +3313,13 @@
       "style_type": 2,
       "generated_name": "John Clark",
       "generation_date": "2025-12-11T12:42:10.249486"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -3271,7 +3433,7 @@
   },
   {
     "note_id": "PDT_LIGHT_004",
-    "note_text": "Procedure: PDT (Foscan)\nPt: David Jones\n1. Intubation 8.5 ETT.\n2. Scope to RLL.\n3. 1.5cm fiber placed.\n4. Laser 630nm x 500s.\n5. Pt stable.\nPlan: Admit obs, strict light avoidance.",
+    "note_text": "Procedure: PDT (Foscan)\nPt: <PERSON>\n1. Intubation 8.5 ETT.\n2. Scope to RLL.\n3. 1.5cm fiber placed.\n4. Laser 630nm x 500s.\n5. Pt stable.\nPlan: Admit obs, strict light avoidance.",
     "cpt_codes": [
       31641
     ],
@@ -3376,11 +3538,17 @@
       "style_type": 4,
       "generated_name": "Michael Lewis",
       "generation_date": "2025-12-11T12:42:10.249546"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_004",
-    "note_text": "procedure note for david jones he has a carcinoid in the right lower lobe and bad copd used foscan this time waiting 96 hours 1.5cm fiber used laser settings standard 630nm 200 joules 500 seconds he did ok no desats extubated in room send to recovery",
+    "note_text": "procedure note for <PERSON> he has a carcinoid in the right lower lobe and bad copd used foscan this time waiting 96 hours 1.5cm fiber used laser settings standard 630nm 200 joules 500 seconds he did ok no desats extubated in room send to recovery",
     "cpt_codes": [
       31641
     ],
@@ -3485,6 +3653,12 @@
       "style_type": 5,
       "generated_name": "William Lee",
       "generation_date": "2025-12-11T12:42:10.249574"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3598,7 +3772,7 @@
   },
   {
     "note_id": "PDT_LIGHT_004",
-    "note_text": "[Indication]\nRLL Carcinoid, Severe COPD.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\n1.5cm fiber placed in RLL. 630nm light applied (Temoporfin activation). 200 J/cm2 over 500s.\n[Plan]\nStrict light precautions. Debridement Oct 28.",
+    "note_text": "[Indication]\nRLL Carcinoid, Severe COPD.\n[<LOCATION>]\nGeneral, 8.5 ETT.\n[Description]\n1.5cm fiber placed in RLL. 630nm light applied (Temoporfin activation). 200 J/cm2 over 500s.\n[Plan]\nStrict light precautions. <PERSON>.",
     "cpt_codes": [
       31641
     ],
@@ -3703,11 +3877,18 @@
       "style_type": 7,
       "generated_name": "Charles Hall",
       "generation_date": "2025-12-11T12:42:10.249629"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_004",
-    "note_text": "We performed PDT on Mr. Jones for his right lower lobe carcinoid. Because of his severe COPD, we were particularly careful with anesthesia. We used a 1.5 cm fiber to treat the lesion, activating the Temoporfin with 630 nm light for just over 8 minutes. He maintained good oxygenation throughout. We removed the fiber and bronchoscope, and he was extubated successfully.",
+    "note_text": "We performed PDT on Mr. <PERSON> for his right lower lobe carcinoid. Because of his severe COPD, we were particularly careful with <LOCATION>. We used a 1.5 cm fiber to treat the lesion, activating the <PERSON> with 630 nm light for just over 8 minutes. He maintained good oxygenation throughout. We removed the fiber and bronchoscope, and he was extubated successfully.",
     "cpt_codes": [
       31641
     ],
@@ -3812,6 +3993,14 @@
       "style_type": 8,
       "generated_name": "Joseph Allen",
       "generation_date": "2025-12-11T12:42:10.249656"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
@@ -3925,7 +4114,7 @@
   },
   {
     "note_id": "PDT_LIGHT_005",
-    "note_text": "Dx: Distal Trachea Mucoepidermoid CA. Fibrosis.\nSensitizer: Temoporfin (Foscan) 96h prior.\nAnesthesia: GA, 8.0 ETT.\nProcedure: PDT Light.\n- Fiber: 1.5cm.\n- Laser: 630nm, 200 J/cm2, 500s.\n- Site: Distal Trachea.\nPlan: Debride 72-96h.",
+    "note_text": "Dx: Distal Trachea Mucoepidermoid CA. Fibrosis.\nSensitizer: Temoporfin (Foscan) <DATE_TIME> prior.\n<LOCATION>: GA, 8.0 ETT.\nProcedure: PDT Light.\n- Fiber: 1.5cm.\n- Laser: 630nm, 200 J/cm2, 500s.\n- Site: Distal Trachea.\nPlan: Debride <DATE_TIME>.",
     "cpt_codes": [
       31641
     ],
@@ -4030,11 +4219,19 @@
       "style_type": 1,
       "generated_name": "Maria Hernandez",
       "generation_date": "2025-12-11T12:42:10.249714"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_005",
-    "note_text": "OPERATIVE REPORT: Ms. Martinez presented for PDT of a distal tracheal mucoepidermoid carcinoma. Background of severe pulmonary fibrosis necessitated careful airway management. Following the 96-hour Temoporfin uptake period, we delivered 630 nm laser light via a 1.5 cm cylindrical diffuser. The total energy density was 200 J/cm² over 500 seconds. The tracheal location required precise fiber positioning to avoid cuff rupture, which was successfully achieved.",
+    "note_text": "OPERATIVE REPORT: Ms. <PERSON> presented for PDT of a distal tracheal mucoepidermoid carcinoma. Background of severe pulmonary fibrosis necessitated careful airway management. Following the <DATE_TIME> Temoporfin uptake period, we delivered 630 nm laser light via a 1.5 cm cylindrical diffuser. The total energy density was 200 J/cm² over 500 seconds. The tracheal location required precise fiber positioning to avoid cuff rupture, which was successfully achieved.",
     "cpt_codes": [
       31641
     ],
@@ -4139,6 +4336,13 @@
       "style_type": 2,
       "generated_name": "Linda King",
       "generation_date": "2025-12-11T12:42:10.249741"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -4252,7 +4456,7 @@
   },
   {
     "note_id": "PDT_LIGHT_005",
-    "note_text": "Procedure: PDT Trachea\nPt: Patricia Martinez\n1. GA, 8.0 ETT.\n2. Scope to distal trachea.\n3. 1.5cm fiber placed centrally.\n4. Laser active 500s.\n5. No complications.\nPlan: Light precautions.",
+    "note_text": "Procedure: PDT Trachea\nPt: <PERSON>\n1. GA, 8.0 ETT.\n2. Scope to distal trachea.\n3. 1.5cm fiber placed centrally.\n4. Laser active 500s.\n5. No complications.\nPlan: Light precautions.",
     "cpt_codes": [
       31641
     ],
@@ -4357,11 +4561,17 @@
       "style_type": 4,
       "generated_name": "Elizabeth Lopez",
       "generation_date": "2025-12-11T12:42:10.249797"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_005",
-    "note_text": "patricia martinez for pdt trachea tumor she has bad fibrosis used foscan 4 days ago 1.5cm fiber laser 630nm for 500 seconds kept the fiber centered away from the tube cuff no issues patient stable extubated",
+    "note_text": "<PERSON> for pdt trachea tumor she has bad fibrosis used foscan 4 days ago 1.5cm fiber laser 630nm for 500 seconds kept the fiber centered away from the tube cuff no issues patient stable extubated",
     "cpt_codes": [
       31641
     ],
@@ -4466,11 +4676,17 @@
       "style_type": 5,
       "generated_name": "Jennifer Hill",
       "generation_date": "2025-12-11T12:42:10.249824"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_005",
-    "note_text": "Under general anesthesia, the distal tracheal tumor was visualized. A 1.5cm cylindrical diffusing fiber was positioned ensuring clearance from the ETT cuff. 630nm light was delivered for 500 seconds to activate Temoporfin. The patient remained stable. Light precautions were reviewed upon transfer to recovery.",
+    "note_text": "Under general <LOCATION>, the distal tracheal tumor was visualized. A 1.5cm cylindrical diffusing fiber was positioned ensuring clearance from the ETT cuff. 630nm light was delivered for 500 seconds to activate <PERSON>. The patient remained stable. Light precautions were reviewed upon transfer to recovery.",
     "cpt_codes": [
       31641
     ],
@@ -4575,11 +4791,18 @@
       "style_type": 6,
       "generated_name": "Susan Scott",
       "generation_date": "2025-12-11T12:42:10.249854"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_005",
-    "note_text": "[Indication]\nDistal Tracheal Mucoepidermoid CA.\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\n1.5cm fiber placed in distal trachea. 630nm light delivered (200 J/cm2, 500s). No thermal injury.\n[Plan]\nLight precautions. Debride Jan 05.",
+    "note_text": "[Indication]\nDistal Tracheal Mucoepidermoid CA.\n[<LOCATION>]\nGeneral, 8.0 ETT.\n[Description]\n1.5cm fiber placed in distal trachea. 630nm light delivered (200 J/cm2, 500s). No thermal injury.\n[Plan]\nLight precautions. Debride <DATE_TIME>.",
     "cpt_codes": [
       31641
     ],
@@ -4684,11 +4907,18 @@
       "style_type": 7,
       "generated_name": "Margaret Green",
       "generation_date": "2025-12-11T12:42:10.249882"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "PDT_LIGHT_005",
-    "note_text": "Ms. Martinez underwent PDT for her tracheal tumor. We were very careful with fiber placement given the location in the distal trachea. We used a 1.5 cm fiber and delivered the standard light dose for Temoporfin activation. The procedure went smoothly with no desaturations despite her pulmonary fibrosis. She was extubated and taken to recovery.",
+    "note_text": "Ms. <PERSON> underwent PDT for her tracheal tumor. We were very careful with fiber placement given the location in the distal trachea. We used a 1.5 cm fiber and delivered the standard light dose for <PERSON> activation. The procedure went smoothly with no desaturations despite her pulmonary fibrosis. She was extubated and taken to recovery.",
     "cpt_codes": [
       31641
     ],
@@ -4793,6 +5023,13 @@
       "style_type": 8,
       "generated_name": "Dorothy Adams",
       "generation_date": "2025-12-11T12:42:10.249909"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -4906,7 +5143,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_001",
-    "note_text": "Indication: Post-PDT Debridement (48h).\nProcedure: Bronchoscopy, Debridement, Biopsy.\nFindings: LLL necrosis. 52% obstructed -> 27% post-debridement.\nTools: Rigid coring.\nSpecimen: Biopsies x4.\nPlan: Continue light precautions. F/u 8 wks.",
+    "note_text": "Indication: Post-PDT Debridement (<DATE_TIME>).\nProcedure: Bronchoscopy, Debridement, <LOCATION>.\nFindings: LLL necrosis. 52% obstructed -> 27% post-debridement.\nTools: Rigid coring.\nSpecimen: Biopsies x4.\nPlan: Continue light precautions. F/u 8 wks.",
     "cpt_codes": [
       31641,
       31625
@@ -5023,11 +5260,18 @@
       "style_type": 1,
       "generated_name": "Robert Gonzalez",
       "generation_date": "2025-12-11T12:42:10.249967"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_001",
-    "note_text": "OPERATIVE NARRATIVE: Mr. Williams returned 48 hours post-PDT for scheduled debridement. Bronchoscopy revealed extensive necrotic debris in the left lower lobe bronchus, consistent with a moderate therapeutic response. Utilizing rigid coring techniques, the necrotic tissue was systematically excised, improving airway patency from 52% to 27%. Biopsies of the treatment bed were obtained to evaluate for residual neoplastic cells. Hemostasis was maintained throughout.",
+    "note_text": "OPERATIVE NARRATIVE: Mr. <PERSON> returned 48 hours post-PDT for scheduled debridement. Bronchoscopy revealed extensive necrotic debris in the left lower lobe bronchus, consistent with a moderate therapeutic response. Utilizing rigid coring techniques, the necrotic tissue was systematically excised, improving airway patency from 52% to 27%. Biopsies of the treatment bed were obtained to evaluate for residual neoplastic cells. Hemostasis was maintained throughout.",
     "cpt_codes": [
       31641,
       31625
@@ -5144,11 +5388,17 @@
       "style_type": 2,
       "generated_name": "John Nelson",
       "generation_date": "2025-12-11T12:42:10.249998"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_001",
-    "note_text": "Procedures: 31641 (Debridement), 31625 (Biopsy).\nSite: Left Lower Lobe (LLL).\nIndication: Necrosis post-PDT.\nTechnique: Rigid coring for tissue removal.\nResult: Obstruction reduced (52% -> 27%).\nPathology: 4 biopsies submitted.",
+    "note_text": "Procedures: <DATE_TIME> (Debridement), <DATE_TIME> (<LOCATION>).\nSite: Left Lower Lobe (LLL).\nIndication: Necrosis post-PDT.\nTechnique: Rigid coring for tissue removal.\nResult: Obstruction reduced (52% -> 27%).\nPathology: 4 biopsies submitted.",
     "cpt_codes": [
       31641,
       31625
@@ -5265,11 +5515,19 @@
       "style_type": 3,
       "generated_name": "Michael Carter",
       "generation_date": "2025-12-11T12:42:10.250077"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_001",
-    "note_text": "Procedure: PDT Debridement\nPt: Thomas Williams\n1. GA induced.\n2. Scope to LLL.\n3. Necrotic debris seen.\n4. Rigid coring used to clean it out.\n5. Biopsies x4 taken.\n6. Airway open.\nPlan: Path pending.",
+    "note_text": "Procedure: PDT Debridement\nPt: <PERSON>\n1. GA induced.\n2. Scope to LLL.\n3. Necrotic debris seen.\n4. Rigid coring used to clean it out.\n5. <LOCATION> taken.\n6. Airway open.\nPlan: Path pending.",
     "cpt_codes": [
       31641,
       31625
@@ -5386,11 +5644,18 @@
       "style_type": 4,
       "generated_name": "William Mitchell",
       "generation_date": "2025-12-11T12:42:10.250123"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_001",
-    "note_text": "thomas williams back for debridement 2 days after pdt lll lots of necrosis used the rigid coring to scrape it out looks much better now airway open biopsies taken from the bed patient did well no bleeding extubated",
+    "note_text": "<PERSON> back for debridement 2 days after pdt lll lots of necrosis used the rigid coring to scrape it out looks much better now airway open biopsies taken from the bed patient did well no bleeding extubated",
     "cpt_codes": [
       31641,
       31625
@@ -5507,6 +5772,12 @@
       "style_type": 5,
       "generated_name": "David Perez",
       "generation_date": "2025-12-11T12:42:10.250156"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5632,7 +5903,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_001",
-    "note_text": "[Indication]\nPost-PDT Debridement (48h), LLL.\n[Anesthesia]\nGeneral, 7.5 ETT.\n[Description]\nNecrotic debris removed from LLL via rigid coring. Biopsies x4 taken. Obstruction improved.\n[Plan]\nAwait path. Light precautions.",
+    "note_text": "[Indication]\nPost-PDT Debridement (<DATE_TIME>), LLL.\n[<LOCATION>]\nGeneral, 7.5 ETT.\n[Description]\nNecrotic debris removed from LLL via rigid coring. Biopsies x4 taken. Obstruction improved.\n[Plan]\n<LOCATION> path. Light precautions.",
     "cpt_codes": [
       31641,
       31625
@@ -5749,11 +6020,19 @@
       "style_type": 7,
       "generated_name": "Charles Turner",
       "generation_date": "2025-12-11T12:42:10.250243"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_001",
-    "note_text": "Mr. Williams came back for his clean-up bronchoscopy. We found a good amount of dead tissue in the left lower lobe where the tumor used to be. We used a coring tool to clear it all out, which really opened up the airway. We grabbed a few biopsies from the base to check for any leftover cancer. He handled the anesthesia fine and is recovering well.",
+    "note_text": "Mr. <PERSON> came back for his clean-up bronchoscopy. We found a good amount of dead tissue in the left lower lobe where the tumor used to be. We used a coring tool to clear it all out, which really opened up the airway. We grabbed a few biopsies from the base to check for any leftover cancer. He handled the <LOCATION> fine and is recovering well.",
     "cpt_codes": [
       31641,
       31625
@@ -5870,6 +6149,13 @@
       "style_type": 8,
       "generated_name": "Joseph Phillips",
       "generation_date": "2025-12-11T12:42:10.250278"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -6105,7 +6391,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_002",
-    "note_text": "OPERATIVE REPORT: Mr. Anderson presented 72 hours following PDT for debridement of the left lower lobe. Significant tumor necrosis was visualized. A microdebrider was utilized to mechanically resect the debris, resulting in a marked improvement in airway caliber (66% to 11% obstruction). No biopsies were performed at this interval. The mucosal bed showed healthy granulation tissue.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented 72 hours following PDT for debridement of the left lower lobe. Significant tumor necrosis was visualized. A microdebrider was utilized to mechanically resect the debris, resulting in a marked improvement in airway caliber (66% to 11% obstruction). No biopsies were performed at this interval. The mucosal bed showed healthy granulation tissue.",
     "cpt_codes": [
       31641
     ],
@@ -6211,6 +6497,12 @@
       "style_type": 2,
       "generated_name": "William Evans",
       "generation_date": "2025-12-11T12:42:10.250370"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6325,7 +6617,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_002",
-    "note_text": "Procedure: PDT Debridement\nPt: James Anderson\n1. Intubation.\n2. Scope to LLL.\n3. Microdebrider used on necrosis.\n4. Airway clear (11% obstruction).\n5. No biopsies.\nPlan: F/u 8 weeks.",
+    "note_text": "Procedure: PDT Debridement\nPt: <PERSON>\n1. Intubation.\n2. Scope to LLL.\n3. Microdebrider used on necrosis.\n4. Airway clear (11% obstruction).\n5. No biopsies.\nPlan: F/u 8 weeks.",
     "cpt_codes": [
       31641
     ],
@@ -6431,11 +6723,17 @@
       "style_type": 4,
       "generated_name": "Richard Collins",
       "generation_date": "2025-12-11T12:42:10.250521"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_002",
-    "note_text": "james anderson 3 days post pdt lll tumor debridement used the microdebrider cleaned it out really well went from 66 percent blocked to 11 percent looks great no biopsy today just cleaned it up patient stable",
+    "note_text": "<PERSON> 3 days post pdt lll tumor debridement used the microdebrider cleaned it out really well went from 66 percent blocked to 11 percent looks great no biopsy today just cleaned it up patient stable",
     "cpt_codes": [
       31641
     ],
@@ -6541,6 +6839,12 @@
       "style_type": 5,
       "generated_name": "Charles Stewart",
       "generation_date": "2025-12-11T12:42:10.250555"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6655,7 +6959,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_002",
-    "note_text": "[Indication]\nPost-PDT Debridement (72h), LLL.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nNecrosis debrided with microdebrider. Airway opened significantly. No biopsies.\n[Plan]\nSurveillance in 8 weeks.",
+    "note_text": "[Indication]\nPost-PDT Debridement (72h), LLL.\n[<LOCATION>]\nGeneral, 8.5 ETT.\n[Description]\nNecrosis debrided with microdebrider. Airway opened significantly. No biopsies.\n[Plan]\nSurveillance in 8 weeks.",
     "cpt_codes": [
       31641
     ],
@@ -6761,11 +7065,17 @@
       "style_type": 7,
       "generated_name": "Thomas Morris",
       "generation_date": "2025-12-11T12:42:10.250615"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_002",
-    "note_text": "We performed the scheduled debridement for Mr. Anderson. The left lower lobe looked exactly as we expected with plenty of necrotic tissue. We used the microdebrider to clean it all out, and the airway looks fantastic now—almost wide open. We decided not to biopsy today since the response looked so complete. He's good to go home.",
+    "note_text": "We performed the scheduled debridement for Mr. <PERSON>. The left lower lobe looked exactly as we expected with plenty of necrotic tissue. We used the microdebrider to clean it all out, and the airway looks fantastic now—almost wide open. We decided not to biopsy today since the response looked so complete. He's good to go home.",
     "cpt_codes": [
       31641
     ],
@@ -6871,6 +7181,12 @@
       "style_type": 8,
       "generated_name": "Robert Rogers",
       "generation_date": "2025-12-11T12:42:10.250657"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6985,7 +7301,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_003",
-    "note_text": "Indication: Post-PDT Debridement (48h).\nProcedure: Bronchoscopy, Debridement.\nFindings: LUL necrosis. 74% obstructed -> 5% post-debridement.\nTools: Forceps, Rigid Coring, Cryoprobe.\nSpecimen: None.\nPlan: Surveillance 6 wks.",
+    "note_text": "Indication: Post-PDT Debridement (<DATE_TIME>).\nProcedure: Bronchoscopy, Debridement.\nFindings: LUL necrosis. 74% obstructed -> 5% post-debridement.\nTools: Forceps, Rigid Coring, Cryoprobe.\nSpecimen: None.\nPlan: Surveillance 6 wks.",
     "cpt_codes": [
       31641
     ],
@@ -7093,11 +7409,17 @@
       "style_type": 1,
       "generated_name": "Rajiv Gupta",
       "generation_date": "2025-12-11T12:42:10.250724"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_003",
-    "note_text": "OPERATIVE SUMMARY: Mr. Patel underwent debridement of the left upper lobe 48 hours after PDT light application. The airway was heavily obstructed by necrotic coagulum. We employed a multimodal approach using biopsy forceps, rigid coring, and cryotherapy to extract the adherent debris. This resulted in near-complete restoration of airway patency (5% residual obstruction). The procedure was well-tolerated.",
+    "note_text": "OPERATIVE SUMMARY: Mr. <PERSON> underwent debridement of the left upper lobe 48 hours after PDT light application. The airway was heavily obstructed by necrotic coagulum. We employed a multimodal approach using biopsy forceps, rigid coring, and cryotherapy to extract the adherent debris. This resulted in near-complete restoration of airway patency (5% residual obstruction). The procedure was well-tolerated.",
     "cpt_codes": [
       31641
     ],
@@ -7205,6 +7527,12 @@
       "style_type": 2,
       "generated_name": "Sanjay Kumar",
       "generation_date": "2025-12-11T12:42:10.250753"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7321,7 +7649,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_003",
-    "note_text": "Procedure: PDT Debridement\nPt: William Patel\n1. GA.\n2. LUL inspection.\n3. Necrosis debrided with forceps, coring, and cryo.\n4. Airway wide open (5%).\n5. No bleeding.\nPlan: F/u 6 weeks.",
+    "note_text": "Procedure: PDT Debridement\nPt: <PERSON>\n1. GA.\n2. LUL inspection.\n3. Necrosis debrided with forceps, coring, and cryo.\n4. Airway wide open (5%).\n5. No bleeding.\nPlan: F/u 6 weeks.",
     "cpt_codes": [
       31641
     ],
@@ -7429,11 +7757,17 @@
       "style_type": 4,
       "generated_name": "Vijay Sharma",
       "generation_date": "2025-12-11T12:42:10.250814"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_003",
-    "note_text": "william patel for lul debridement 2 days after pdt lots of necrosis stuck pretty hard used everything forceps coring and the cryoprobe got it all out looks great 5 percent obstruction left patient did fine",
+    "note_text": "<PERSON> for lul debridement 2 days after pdt lots of necrosis stuck pretty hard used everything forceps coring and the cryoprobe got it all out looks great 5 percent obstruction left patient did fine",
     "cpt_codes": [
       31641
     ],
@@ -7541,6 +7875,12 @@
       "style_type": 5,
       "generated_name": "Rahul Verma",
       "generation_date": "2025-12-11T12:42:10.250841"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7657,7 +7997,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_003",
-    "note_text": "[Indication]\nPost-PDT Debridement (48h), LUL.\n[Anesthesia]\nGeneral, 7.5 ETT.\n[Description]\nNecrosis debrided via forceps, coring, cryo. Airway patent. No biopsies.\n[Plan]\nSurveillance 6 weeks.",
+    "note_text": "[Indication]\nPost-PDT Debridement (<DATE_TIME>), LUL.\n[<LOCATION>]\nGeneral, 7.5 ETT.\n[Description]\nNecrosis debrided via forceps, coring, cryo. Airway patent. No biopsies.\n[Plan]\nSurveillance 6 weeks.",
     "cpt_codes": [
       31641
     ],
@@ -7765,11 +8105,18 @@
       "style_type": 7,
       "generated_name": "Arun Mishra",
       "generation_date": "2025-12-11T12:42:10.250902"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_003",
-    "note_text": "Mr. Patel's LUL needed significant cleaning 48 hours after his light treatment. The dead tissue was pretty stuck, so we had to use forceps, the coring tool, and the cryoprobe to get it all out. It worked perfectly though—the airway is basically completely open now. We didn't take biopsies this time. He's doing well.",
+    "note_text": "Mr. <PERSON>'s LUL needed significant cleaning 48 hours after his light treatment. The dead tissue was pretty stuck, so we had to use forceps, the coring tool, and the cryoprobe to get it all out. It worked perfectly though—the airway is basically completely open now. We didn't take biopsies this time. He's doing well.",
     "cpt_codes": [
       31641
     ],
@@ -7877,6 +8224,12 @@
       "style_type": 8,
       "generated_name": "Deepak Shah",
       "generation_date": "2025-12-11T12:42:10.250930"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7993,7 +8346,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_004",
-    "note_text": "Indication: Post-PDT Debridement (96h).\nProcedure: Bronchoscopy, Debridement.\nFindings: Left Mainstem necrosis. 72% obstructed -> 7% post-debridement.\nTools: Rigid Coring, Suction, Forceps.\nSpecimen: None.\nPlan: Surveillance 8 wks.",
+    "note_text": "Indication: Post-PDT Debridement (<DATE_TIME>).\nProcedure: Bronchoscopy, Debridement.\nFindings: Left Mainstem necrosis. 72% obstructed -> 7% post-debridement.\nTools: Rigid Coring, Suction, Forceps.\nSpecimen: None.\nPlan: Surveillance 8 wks.",
     "cpt_codes": [
       31641
     ],
@@ -8101,11 +8454,17 @@
       "style_type": 1,
       "generated_name": "Patricia Cook",
       "generation_date": "2025-12-11T12:42:10.250991"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_004",
-    "note_text": "OPERATIVE REPORT: Ms. Miller presented for debridement of the left mainstem bronchus 96 hours post-PDT. Examination revealed extensive necrosis consistent with an excellent therapeutic response. We utilized rigid coring, suction, and forceps to debulk the airway. The luminal obstruction was reduced from 72% to 7%, restoring ventilation to the left lung. No complications occurred.",
+    "note_text": "OPERATIVE REPORT: Ms. <PERSON> presented for debridement of the left mainstem bronchus 96 hours post-PDT. Examination revealed extensive necrosis consistent with an excellent therapeutic response. We utilized rigid coring, suction, and forceps to debulk the airway. The luminal obstruction was reduced from 72% to 7%, restoring ventilation to the left lung. No complications occurred.",
     "cpt_codes": [
       31641
     ],
@@ -8213,11 +8572,17 @@
       "style_type": 2,
       "generated_name": "Linda Morgan",
       "generation_date": "2025-12-11T12:42:10.251023"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_004",
-    "note_text": "Procedure: 31641 (Debridement).\nSite: Left Mainstem Bronchus (LMS).\nTools: Rigid coring, Suction, Forceps.\nIndication: Post-PDT cleanup.\nResult: 72% -> 7% obstruction.\nNote: 96 hour interval appropriate for Temoporfin.",
+    "note_text": "Procedure: 31641 (Debridement).\nSite: Left Mainstem Bronchus (LMS).\nTools: Rigid coring, Suction, Forceps.\nIndication: Post-PDT cleanup.\nResult: 72% -> 7% obstruction.\nNote: 96 hour interval appropriate for <PERSON>.",
     "cpt_codes": [
       31641
     ],
@@ -8325,11 +8690,17 @@
       "style_type": 3,
       "generated_name": "Barbara Bell",
       "generation_date": "2025-12-11T12:42:10.251052"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_004",
-    "note_text": "Procedure: PDT Debridement\nPt: Jennifer Miller\n1. Intubation.\n2. LMS visualization.\n3. Debridement with coring/suction/forceps.\n4. Airway clear.\n5. Extubated.\nPlan: F/u 8 weeks.",
+    "note_text": "Procedure: PDT Debridement\nPt: <PERSON>\n1. Intubation.\n2. LMS visualization.\n3. Debridement with coring/suction/forceps.\n4. Airway clear.\n5. Extubated.\nPlan: F/u 8 weeks.",
     "cpt_codes": [
       31641
     ],
@@ -8437,11 +8808,17 @@
       "style_type": 4,
       "generated_name": "Elizabeth Murphy",
       "generation_date": "2025-12-11T12:42:10.251084"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_004",
-    "note_text": "jennifer miller 4 days after pdt left mainstem clean out used rigid coring and suction and forceps lots of junk in there got it all out airway looks good now 7 percent blocked patient ok",
+    "note_text": "<PERSON> 4 days after pdt left mainstem clean out used rigid coring and suction and forceps lots of junk in there got it all out airway looks good now 7 percent blocked patient ok",
     "cpt_codes": [
       31641
     ],
@@ -8549,6 +8926,12 @@
       "style_type": 5,
       "generated_name": "Susan Bailey",
       "generation_date": "2025-12-11T12:42:10.251113"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8665,7 +9048,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_004",
-    "note_text": "[Indication]\nPost-PDT Debridement (96h), LMS.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nNecrosis removed from LMS using coring, suction, forceps. Airway patent. No biopsies.\n[Plan]\nSurveillance 8 weeks.",
+    "note_text": "[Indication]\nPost-PDT Debridement (<DATE_TIME>), LMS.\n[<LOCATION>]\nGeneral, 8.5 ETT.\n[Description]\nNecrosis removed from LMS using coring, suction, forceps. Airway patent. No biopsies.\n[Plan]\nSurveillance 8 weeks.",
     "cpt_codes": [
       31641
     ],
@@ -8773,11 +9156,18 @@
       "style_type": 7,
       "generated_name": "Dorothy Cooper",
       "generation_date": "2025-12-11T12:42:10.251171"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_004",
-    "note_text": "We performed the clean-up bronchoscopy for Ms. Miller on her left mainstem bronchus. It had been 4 days since the light treatment. We found a lot of debris and cleared it out using coring, suction, and forceps. The airway opened up beautifully, down to just 7% obstruction. She woke up fine and is breathing much better.",
+    "note_text": "We performed the clean-up bronchoscopy for Ms. <PERSON> on her left mainstem bronchus. It had been 4 days since the light treatment. We found a lot of debris and cleared it out using coring, suction, and forceps. The airway opened up beautifully, down to just 7% obstruction. She woke up fine and is breathing much better.",
     "cpt_codes": [
       31641
     ],
@@ -8885,6 +9275,12 @@
       "style_type": 8,
       "generated_name": "Lisa Richardson",
       "generation_date": "2025-12-11T12:42:10.251200"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9001,7 +9397,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_005",
-    "note_text": "Indication: Post-PDT Debridement (96h).\nProcedure: Bronchoscopy, Debridement, Biopsy.\nFindings: LUL necrosis. 44% obstructed -> 22% post-debridement.\nTools: Rigid Coring, Forceps.\nSpecimen: Biopsies x3.\nPlan: Surveillance 4 wks.",
+    "note_text": "Indication: Post-PDT Debridement (<DATE_TIME>).\nProcedure: Bronchoscopy, Debridement, <LOCATION>.\nFindings: LUL necrosis. 44% obstructed -> 22% post-debridement.\nTools: Rigid Coring, Forceps.\nSpecimen: Biopsies x3.\nPlan: Surveillance 4 wks.",
     "cpt_codes": [
       31641,
       31625
@@ -9119,11 +9515,18 @@
       "style_type": 1,
       "generated_name": "James Howard",
       "generation_date": "2025-12-11T12:42:10.251266"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_005",
-    "note_text": "OPERATIVE NARRATIVE: Mr. Davis underwent debridement of the left upper lobe 96 hours following PDT. The airway showed moderate necrosis. We utilized rigid coring and biopsy forceps to remove the devitalized tissue, improving patency from 44% to 22% obstruction. Three biopsies were taken from the tumor bed to assess for viable malignancy. The patient remained stable throughout.",
+    "note_text": "OPERATIVE NARRATIVE: Mr. <PERSON> underwent debridement of the left upper lobe 96 hours following PDT. The airway showed moderate necrosis. We utilized rigid coring and biopsy forceps to remove the devitalized tissue, improving patency from 44% to 22% obstruction. Three biopsies were taken from the tumor bed to assess for viable malignancy. The patient remained stable throughout.",
     "cpt_codes": [
       31641,
       31625
@@ -9241,11 +9644,17 @@
       "style_type": 2,
       "generated_name": "John Ward",
       "generation_date": "2025-12-11T12:42:10.251298"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_005",
-    "note_text": "Procedures: 31641 (Debridement), 31625 (Biopsy).\nSite: Left Upper Lobe (LUL).\nTools: Rigid coring, Forceps.\nResult: 44% -> 22% obstruction.\nPathology: 3 biopsies sent.\nNote: Post-PDT surveillance biopsies.",
+    "note_text": "Procedures: <DATE_TIME> (Debridement), <DATE_TIME> (<LOCATION>).\nSite: Left Upper Lobe (LUL).\nTools: Rigid coring, <PERSON>.\nResult: 44% -> 22% obstruction.\nPathology: 3 biopsies sent.\nNote: Post-PDT surveillance biopsies.",
     "cpt_codes": [
       31641,
       31625
@@ -9363,11 +9772,20 @@
       "style_type": 3,
       "generated_name": "Robert Torres",
       "generation_date": "2025-12-11T12:42:10.251330"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 4,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_005",
-    "note_text": "Procedure: PDT Debridement\nPt: Richard Davis\n1. GA.\n2. LUL exam.\n3. Debridement with coring/forceps.\n4. Biopsies x3 taken.\n5. Airway improved.\nPlan: Await path.",
+    "note_text": "Procedure: PDT Debridement\nPt: <PERSON>\n1. GA.\n2. LUL exam.\n3. Debridement with coring/forceps.\n4. Biopsies <PERSON>.\n5. Airway improved.\nPlan: Await path.",
     "cpt_codes": [
       31641,
       31625
@@ -9485,11 +9903,18 @@
       "style_type": 4,
       "generated_name": "Michael Peterson",
       "generation_date": "2025-12-11T12:42:10.251359"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_005",
-    "note_text": "richard davis 4 days post pdt lul debridement used coring and forceps cleaned it out decent result went from 44 to 22 percent took 3 biopsies to check for cancer left patient did fine",
+    "note_text": "<PERSON> 4 days post pdt lul debridement used coring and forceps cleaned it out decent result went from 44 to 22 percent took 3 biopsies to check for cancer left patient did fine",
     "cpt_codes": [
       31641,
       31625
@@ -9607,6 +10032,12 @@
       "style_type": 5,
       "generated_name": "William Gray",
       "generation_date": "2025-12-11T12:42:10.251389"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9733,7 +10164,7 @@
   },
   {
     "note_id": "PDT_DEBRIDE_005",
-    "note_text": "[Indication]\nPost-PDT Debridement (96h), LUL.\n[Anesthesia]\nGeneral, 7.5 ETT.\n[Description]\nNecrosis debrided via coring/forceps. Biopsies x3 taken. Obstruction improved.\n[Plan]\nAwait path. Surveillance 4 weeks.",
+    "note_text": "[Indication]\nPost-PDT Debridement (<DATE_TIME>), LUL.\n[<LOCATION>]\nGeneral, 7.5 ETT.\n[Description]\nNecrosis debrided via coring/forceps. Biopsies x3 taken. Obstruction improved.\n[Plan]\n<LOCATION> path. Surveillance 4 weeks.",
     "cpt_codes": [
       31641,
       31625
@@ -9851,11 +10282,19 @@
       "style_type": 7,
       "generated_name": "Joseph James",
       "generation_date": "2025-12-11T12:42:10.251450"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_005",
-    "note_text": "We brought Mr. Davis back for his debridement 4 days after the light session. The left upper lobe had some necrotic tissue which we cleared out with coring and forceps. It wasn't a complete clearance, but we got it down to 22% obstruction. We took three biopsies to see if there's still active cancer growing there. He's doing well.",
+    "note_text": "We brought Mr. <PERSON> back for his debridement 4 days after the light session. The left upper lobe had some necrotic tissue which we cleared out with coring and forceps. It wasn't a complete clearance, but we got it down to 22% obstruction. We took three biopsies to see if there's still active cancer growing there. He's doing well.",
     "cpt_codes": [
       31641,
       31625
@@ -9973,11 +10412,17 @@
       "style_type": 8,
       "generated_name": "Thomas Watson",
       "generation_date": "2025-12-11T12:42:10.251480"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "PDT_DEBRIDE_005",
-    "note_text": "PROCEDURES: 1. Bronchoscopy with excision of necrotic tissue. 2. Endobronchial sampling.\nDETAILS: The LUL was examined. Debris was present. Rigid coring was used to extract the tissue. Patency was improved. Samples were harvested for pathology. The patient was recovered.",
+    "note_text": "PROCEDURES: 1. Bronchoscopy with excision of necrotic tissue. 2. Endobronchial sampling.\nDETAILS: The LUL was examined. <PERSON> was present. Rigid coring was used to extract the tissue. Patency was improved. Samples were harvested for pathology. The patient was recovered.",
     "cpt_codes": [
       31641,
       31625
@@ -10095,6 +10540,12 @@
       "style_type": 9,
       "generated_name": "David Brooks",
       "generation_date": "2025-12-11T12:42:10.251509"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   }
 ]

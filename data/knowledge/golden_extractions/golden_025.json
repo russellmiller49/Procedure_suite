@@ -186,7 +186,7 @@
     }
   },
   {
-    "note_text": "Procedure coded as: 31628 (Transbronchial lung biopsy, single lobe), 31627 (Navigation add-on), 31654 (Radial EBUS add-on). Cryoprobe used for specimen acquisition. Arndt blocker utilized for hemorrhage control.",
+    "note_text": "Procedure coded as: <DATE_TIME> (Transbronchial lung biopsy, single lobe), <DATE_TIME> (Navigation add-on), <DATE_TIME> (Radial EBUS add-on). Cryoprobe used for specimen acquisition. Arndt blocker utilized for hemorrhage control.",
     "cpt_codes": [
       31628,
       31654,
@@ -276,6 +276,14 @@
       "style_type": 3,
       "generated_name": "John Williams",
       "generation_date": "2025-12-09T09:19:26.864714"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -558,7 +566,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPeripheral RLL nodule requiring biopsy.\n[Anesthesia]\nGeneral.\n[Description]\nEMN navigation used. Radial EBUS confirmed target. Transbronchial cryobiopsy performed. Arndt blocker used for hemostasis.\n[Plan]\nPathology pending.",
+    "note_text": "[Indication]\nPeripheral RLL nodule requiring biopsy.\n[<LOCATION>]\nGeneral.\n[Description]\nEMN navigation used. Radial EBUS confirmed target. Transbronchial cryobiopsy performed. Arndt blocker used for hemostasis.\n[Plan]\nPathology pending.",
     "cpt_codes": [
       31628,
       31654,
@@ -648,6 +656,12 @@
       "style_type": 7,
       "generated_name": "Richard Miller",
       "generation_date": "2025-12-09T09:19:26.864812"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -1347,7 +1361,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLymphoma staging.\n[Anesthesia]\nGeneral.\n[Description]\nEBUS-TBNA performed on stations 7, 4R, 10R, 11R. All positive for follicular lymphoma.\n[Plan]\nOncology referral.",
+    "note_text": "[Indication]\nLymphoma staging.\n[<LOCATION>]\nGeneral.\n[Description]\nEBUS-TBNA performed on stations 7, 4R, 10R, 11R. All positive for follicular lymphoma.\n[Plan]\nOncology referral.",
     "cpt_codes": [
       31653
     ],
@@ -1429,6 +1443,12 @@
       "style_type": 7,
       "generated_name": "Susan Thomas",
       "generation_date": "2025-12-09T09:19:26.865028"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -1602,7 +1622,7 @@
     }
   },
   {
-    "note_text": "Procedure:\n- BAL RUL.\n- ENB nav to Lingula.\n- Radial EBUS confirm.\n- TBNA and Forceps Bx of Lingula lesion under fluoro.",
+    "note_text": "Procedure:\n- BAL RUL.\n- ENB nav to Lingula.\n- Radial EBUS confirm.\n- TBNA and <PERSON> of Lingula lesion under fluoro.",
     "cpt_codes": [
       31629,
       31624,
@@ -1715,6 +1735,12 @@
       "style_type": 1,
       "generated_name": "Charles Jackson",
       "generation_date": "2025-12-09T09:19:26.865101"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2298,7 +2324,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLung lesion.\n[Anesthesia]\nModerate.\n[Description]\nBAL RUL. ENB to Lingula. REBUS confirmation. TBNA and forceps biopsies obtained.\n[Plan]\nAwait path.",
+    "note_text": "[Indication]\nLung lesion.\n[<LOCATION>]\nModerate.\n[Description]\nBAL RUL. ENB to Lingula. REBUS confirmation. TBNA and forceps biopsies obtained.\n[Plan]\n<LOCATION> path.",
     "cpt_codes": [
       31629,
       31624,
@@ -2411,6 +2437,13 @@
       "style_type": 7,
       "generated_name": "Donald Harris",
       "generation_date": "2025-12-09T09:19:26.865281"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -2646,7 +2679,7 @@
     }
   },
   {
-    "note_text": "Dx: Malignant pleural effusion (R).\nProc: US-guided PleurX placement.\nDrainage: 1.55 L.\nComplications: None.",
+    "note_text": "Dx: Malignant pleural effusion (R).\nProc: <LOCATION>-guided PleurX placement.\nDrainage: 1.55 L.\nComplications: None.",
     "cpt_codes": [
       32550
     ],
@@ -2714,6 +2747,12 @@
       "style_type": 1,
       "generated_name": "Karen Ramirez",
       "generation_date": "2025-12-09T09:19:26.865360"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -2788,7 +2827,7 @@
     }
   },
   {
-    "note_text": "Code 32550: Insertion of indwelling tunneled pleural catheter with cuff. Imaging guidance (US) utilized. 1.55 L fluid drained.",
+    "note_text": "Code 32550: Insertion of indwelling tunneled pleural catheter with cuff. Imaging guidance (<LOCATION>) utilized. 1.55 <LOCATION> drained.",
     "cpt_codes": [
       32550
     ],
@@ -2856,10 +2895,17 @@
       "style_type": 3,
       "generated_name": "Lisa Robinson",
       "generation_date": "2025-12-09T09:19:26.865410"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Procedure:\n1. US localization.\n2. Local anesthetic.\n3. Tunnel created.\n4. Catheter inserted into pleural space.\n5. 1.55 L drained.\n6. Dressing applied.",
+    "note_text": "Procedure:\n1. <LOCATION> localization.\n2. Local anesthetic.\n3. Tunnel created.\n4. Catheter inserted into pleural space.\n5. 1.55 L drained.\n6. Dressing applied.",
     "cpt_codes": [
       32550
     ],
@@ -2927,6 +2973,12 @@
       "style_type": 4,
       "generated_name": "Betty Walker",
       "generation_date": "2025-12-09T09:19:26.865437"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -3072,7 +3124,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent malignant effusion.\n[Anesthesia]\nLocal.\n[Description]\nUS-guided PleurX placement right side. 1.55 L drained.\n[Plan]\nHome nursing setup.",
+    "note_text": "[Indication]\nRecurrent malignant effusion.\n[<LOCATION>]\nLocal.\n[Description]\n<LOCATION>-guided PleurX placement right side. 1.55 L drained.\n[Plan]\nHome nursing setup.",
     "cpt_codes": [
       32550
     ],
@@ -3140,6 +3192,13 @@
       "style_type": 7,
       "generated_name": "Ashley King",
       "generation_date": "2025-12-09T09:19:26.865500"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -3453,7 +3512,7 @@
     }
   },
   {
-    "note_text": "Bill 31653: EBUS sampling of 3 or more stations (7, 4R, 10L, 11R). Procedure indicated for lymphadenopathy concerning for lymphoma.",
+    "note_text": "<PERSON> <DATE_TIME>: EBUS sampling of 3 or more stations (7, 4R, 10L, 11R). Procedure indicated for lymphadenopathy concerning for lymphoma.",
     "cpt_codes": [
       31653
     ],
@@ -3534,6 +3593,13 @@
       "style_type": 3,
       "generated_name": "Kenneth Hill",
       "generation_date": "2025-12-09T09:19:26.865606"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -3789,7 +3855,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLymphadenopathy/Lymphoma.\n[Anesthesia]\nGeneral.\n[Description]\nEBUS-TBNA of stations 7, 4R, 10L, 11R.\n[Plan]\nFollow up path.",
+    "note_text": "[Indication]\nLymphadenopathy/Lymphoma.\n[<LOCATION>]\nGeneral.\n[Description]\nEBUS-TBNA of stations 7, 4R, 10L, 11R.\n[Plan]\nFollow up path.",
     "cpt_codes": [
       31653
     ],
@@ -3870,6 +3936,12 @@
       "style_type": 7,
       "generated_name": "Edward Nelson",
       "generation_date": "2025-12-09T09:19:26.865694"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -4041,7 +4113,7 @@
     }
   },
   {
-    "note_text": "Proc: Therapeutic Thora (US guided).\nSite: Right.\nFluid: 800 mL clear yellow.\nDx: Hepatic hydrothorax.",
+    "note_text": "Proc: Therapeutic <PERSON> (<LOCATION> guided).\nSite: Right.\nFluid: 800 mL clear yellow.\nDx: Hepatic hydrothorax.",
     "cpt_codes": [
       32555
     ],
@@ -4109,6 +4181,13 @@
       "style_type": 1,
       "generated_name": "Donna Rivera",
       "generation_date": "2025-12-09T09:19:26.865757"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -4254,7 +4333,7 @@
     }
   },
   {
-    "note_text": "Steps:\n1. US scan.\n2. Prep and drape.\n3. Needle insertion.\n4. Aspiration of 800 mL.\n5. Catheter removal.",
+    "note_text": "Steps:\n1. <LOCATION> scan.\n2. Prep and drape.\n3. Needle insertion.\n4. Aspiration of 800 mL.\n5. Catheter removal.",
     "cpt_codes": [
       32555
     ],
@@ -4322,6 +4401,12 @@
       "style_type": 4,
       "generated_name": "Carol Carter",
       "generation_date": "2025-12-09T09:19:26.865814"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -4467,7 +4552,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nHepatic hydrothorax.\n[Anesthesia]\nLocal.\n[Description]\nUS-guided thoracentesis right. 800 mL removed.\n[Plan]\nMonitor.",
+    "note_text": "[Indication]\nHepatic hydrothorax.\n[<LOCATION>]\nLocal.\n[Description]\n<LOCATION>-guided thoracentesis right. 800 mL removed.\n[Plan]\nMonitor.",
     "cpt_codes": [
       32555
     ],
@@ -4535,6 +4620,13 @@
       "style_type": 7,
       "generated_name": "Deborah Phillips",
       "generation_date": "2025-12-09T09:19:26.865870"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -5130,7 +5222,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nTracheal obstruction.\n[Anesthesia]\nGeneral.\n[Description]\nRigid bronch. Snare resection. APC ablation of polyps.\n[Plan]\nObs.",
+    "note_text": "[Indication]\nTracheal obstruction.\n[<LOCATION>]\nGeneral.\n[Description]\nRigid bronch. Snare resection. APC ablation of polyps.\n[Plan]\nObs.",
     "cpt_codes": [
       31641
     ],
@@ -5202,6 +5294,12 @@
       "style_type": 7,
       "generated_name": "Eric Stewart",
       "generation_date": "2025-12-09T09:19:26.866114"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -5913,7 +6011,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRUL Nodule.\n[Anesthesia]\nGeneral.\n[Description]\nIon robotic nav. REBUS confirm. TBBx of 2.8 cm RUL nodule.\n[Plan]\nPath.",
+    "note_text": "[Indication]\nRUL Nodule.\n[<LOCATION>]\nGeneral.\n[Description]\nIon robotic nav. REBUS confirm. TBBx of 2.8 cm RUL nodule.\n[Plan]\nPath.",
     "cpt_codes": [
       31628,
       31627,
@@ -6003,6 +6101,12 @@
       "style_type": 7,
       "generated_name": "Angela Reed",
       "generation_date": "2025-12-09T09:19:26.866325"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -6378,7 +6482,7 @@
     }
   },
   {
-    "note_text": "Billing 31627 (Nav), 31628 (Bx), 31654 (REBUS). Target is solitary 2.3 cm PET-avid nodule in RUL.",
+    "note_text": "Billing <DATE_TIME> (Nav), <DATE_TIME> (Bx), <DATE_TIME> (REBUS). Target is solitary 2.3 cm PET-avid nodule in RUL.",
     "cpt_codes": [
       31628,
       31627,
@@ -6468,10 +6572,18 @@
       "style_type": 3,
       "generated_name": "Frank Howard",
       "generation_date": "2025-12-09T09:19:26.866453"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure:\n1. Robot setup.\n2. Nav to RUL nodule.\n3. EBUS verification.\n4. Biopsy performed.\n5. Finish.",
+    "note_text": "Procedure:\n1. Robot setup.\n2. Nav to RUL nodule.\n3. EBUS verification.\n4. <PERSON> performed.\n5. Finish.",
     "cpt_codes": [
       31628,
       31627,
@@ -6561,6 +6673,12 @@
       "style_type": 4,
       "generated_name": "Justin Ward",
       "generation_date": "2025-12-09T09:19:26.866476"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6750,7 +6868,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPET-avid RUL nodule.\n[Anesthesia]\nGeneral.\n[Description]\nIon robotic nav. REBUS. TBBx 2.3 cm nodule.\n[Plan]\nAwait results.",
+    "note_text": "[Indication]\nPET-avid RUL nodule.\n[<LOCATION>]\nGeneral.\n[Description]\nIon robotic nav. REBUS. TBBx 2.3 cm nodule.\n[Plan]\n<LOCATION> results.",
     "cpt_codes": [
       31628,
       31627,
@@ -6840,6 +6958,13 @@
       "style_type": 7,
       "generated_name": "Gregory Richardson",
       "generation_date": "2025-12-09T09:19:26.866567"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -7248,7 +7373,7 @@
     }
   },
   {
-    "note_text": "Steps:\n1. Rigid scope intubation.\n2. Debridement of tumor.\n3. Hemostasis with APC.\n4. Dumon stent (14x60mm) placement.\n5. Airway patent.",
+    "note_text": "Steps:\n1. Rigid scope intubation.\n2. Debridement of tumor.\n3. Hemostasis with APC.\n4. Dumon stent (<PERSON>) placement.\n5. Airway patent.",
     "cpt_codes": [
       31636
     ],
@@ -7318,6 +7443,12 @@
       "style_type": 4,
       "generated_name": "Katherine James",
       "generation_date": "2025-12-09T09:19:26.866697"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7467,7 +7598,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nL mainstem obstruction.\n[Anesthesia]\nGeneral.\n[Description]\nRigid bronch. Debridement/APC. Dumon stent 14x60mm placed.\n[Plan]\nMonitor.",
+    "note_text": "[Indication]\nL mainstem obstruction.\n[<LOCATION>]\nGeneral.\n[Description]\nRigid bronch. Debridement/APC. Dumon stent 14x60mm placed.\n[Plan]\nMonitor.",
     "cpt_codes": [
       31636
     ],
@@ -7537,6 +7668,12 @@
       "style_type": 7,
       "generated_name": "Rachel Hughes",
       "generation_date": "2025-12-09T09:19:26.866817"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {

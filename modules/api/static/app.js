@@ -2,6 +2,14 @@
 let currentMode = 'unified';
 let lastResult = null;
 
+// PHI preview state (for unified mode two-step workflow)
+const phiState = {
+    rawText: null,           // Original text before scrubbing
+    scrubbedText: null,      // Scrubbed text after preview
+    entities: [],            // Entity array from preview (editable)
+    previewDone: false,      // Whether preview step completed
+};
+
 /**
  * Convert snake_case to Title Case for display
  */
@@ -1334,7 +1342,10 @@ function ensureReporterTemplates() {
 
 function setMode(mode) {
     currentMode = mode;
-    
+
+    // Reset PHI state when switching modes
+    resetPHIState();
+
     // Update Tab UI
     document.querySelectorAll('#mode-tabs .nav-link').forEach(el => {
         el.classList.remove('active');
@@ -1344,7 +1355,207 @@ function setMode(mode) {
     // Update Options UI
     document.querySelectorAll('.mode-opt').forEach(el => el.style.display = 'none');
     document.getElementById(`opt-${mode}`).style.display = 'block';
+
+    // Toggle button visibility for unified vs other modes
+    const unifiedButtons = document.getElementById('unified-buttons');
+    const otherButtons = document.getElementById('other-buttons');
+    const phiPreviewArea = document.getElementById('phi-preview-area');
+
+    if (unifiedButtons) unifiedButtons.style.display = mode === 'unified' ? 'grid' : 'none';
+    if (otherButtons) otherButtons.style.display = mode === 'unified' ? 'none' : 'grid';
+    if (phiPreviewArea) phiPreviewArea.style.display = 'none';
 }
+
+function resetPHIState() {
+    phiState.rawText = null;
+    phiState.scrubbedText = null;
+    phiState.entities = [];
+    phiState.previewDone = false;
+
+    const btnPreview = document.getElementById('btn-phi-preview');
+    const btnExtract = document.getElementById('btn-extract');
+
+    if (btnPreview) {
+        btnPreview.classList.remove('btn-success');
+        btnPreview.classList.add('btn-warning');
+        btnPreview.innerHTML = '<i class="bi bi-shield-check"></i> 1. Redact PHI';
+    }
+    if (btnExtract) btnExtract.disabled = true;
+}
+
+// ============================================================================
+// PHI PREVIEW FUNCTIONS (Two-step workflow for unified mode)
+// ============================================================================
+
+/**
+ * Handle PHI Preview button click (Step 1 of unified workflow)
+ */
+async function handlePHIPreview() {
+    const text = document.getElementById('input-text').value;
+    if (!text.trim()) {
+        alert("Please enter a procedure note.");
+        return;
+    }
+
+    showLoading(true);
+    try {
+        // Call preview endpoint (no persistence, no database writes)
+        const resp = await fetch('/v1/phi/scrub/preview', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text, document_type: 'procedure_note' })
+        });
+        if (!resp.ok) {
+            const err = await resp.json().catch(() => ({}));
+            throw new Error(err.detail || 'PHI preview failed');
+        }
+        const result = await resp.json();
+
+        // Store state
+        phiState.rawText = text;
+        phiState.scrubbedText = result.scrubbed_text;
+        phiState.entities = result.entities || [];
+        phiState.previewDone = true;
+
+        // Show preview area and render
+        renderPHIPreview();
+
+        // Enable extract button and update preview button
+        document.getElementById('btn-extract').disabled = false;
+        const btnPreview = document.getElementById('btn-phi-preview');
+        btnPreview.classList.remove('btn-warning');
+        btnPreview.classList.add('btn-success');
+        btnPreview.innerHTML = '<i class="bi bi-check-circle"></i> PHI Redacted';
+
+    } catch (error) {
+        alert(`PHI Preview Error: ${error.message}`);
+    } finally {
+        showLoading(false);
+    }
+}
+
+/**
+ * Render the PHI preview area with scrubbed text and entity badges
+ */
+function renderPHIPreview() {
+    const previewArea = document.getElementById('phi-preview-area');
+    previewArea.style.display = 'block';
+
+    const previewDiv = document.getElementById('scrubbed-preview');
+    previewDiv.textContent = phiState.scrubbedText;
+    previewDiv.classList.remove('text-muted');
+
+    document.getElementById('phi-entity-count').textContent =
+        `${phiState.entities.length} entities`;
+
+    renderEntityBadges();
+}
+
+/**
+ * Render entity badges with edit and remove buttons
+ */
+function renderEntityBadges() {
+    const list = document.getElementById('entity-list');
+    list.innerHTML = '';
+
+    phiState.entities.forEach((ent, idx) => {
+        const badge = document.createElement('span');
+        badge.className = 'badge bg-info text-dark entity-badge d-inline-flex align-items-center';
+
+        const span = document.createElement('span');
+        span.textContent = `${ent.entity_type} → ${ent.placeholder}`;
+        badge.appendChild(span);
+
+        // Edit button (pencil)
+        const editBtn = document.createElement('i');
+        editBtn.className = 'bi bi-pencil-square ms-2';
+        editBtn.style.cursor = 'pointer';
+        editBtn.onclick = () => openEditModal(idx);
+        badge.appendChild(editBtn);
+
+        // Remove button (x)
+        const closeBtn = document.createElement('i');
+        closeBtn.className = 'bi bi-x ms-2';
+        closeBtn.style.cursor = 'pointer';
+        closeBtn.onclick = () => removeEntity(idx);
+        badge.appendChild(closeBtn);
+
+        list.appendChild(badge);
+    });
+}
+
+/**
+ * Remove an entity from the list and regenerate scrubbed text
+ */
+function removeEntity(index) {
+    phiState.entities.splice(index, 1);
+    phiState.scrubbedText = generateScrubbedText(phiState.rawText, phiState.entities);
+    renderPHIPreview();
+}
+
+/**
+ * Open the entity edit modal
+ */
+function openEditModal(index) {
+    const ent = phiState.entities[index];
+    if (!ent) return;
+
+    document.getElementById('edit-entity-index').value = index;
+    document.getElementById('edit-entity-type').value = ent.entity_type;
+    document.getElementById('edit-entity-placeholder').value = ent.placeholder;
+
+    const modal = new bootstrap.Modal(document.getElementById('entityEditModal'));
+    modal.show();
+}
+
+/**
+ * Save entity changes from the modal
+ */
+function saveEntity() {
+    const idx = parseInt(document.getElementById('edit-entity-index').value);
+    const type = document.getElementById('edit-entity-type').value;
+    const placeholder = document.getElementById('edit-entity-placeholder').value;
+
+    if (phiState.entities[idx]) {
+        phiState.entities[idx].entity_type = type;
+        phiState.entities[idx].placeholder = placeholder;
+        phiState.scrubbedText = generateScrubbedText(phiState.rawText, phiState.entities);
+        renderPHIPreview();
+    }
+
+    const modalEl = document.getElementById('entityEditModal');
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    if (modal) modal.hide();
+}
+
+/**
+ * Generate scrubbed text by replacing entities with their placeholders.
+ * Processes entities from end to beginning to avoid index shifting.
+ */
+function generateScrubbedText(text, entities) {
+    if (!text || !entities || entities.length === 0) return text;
+
+    // Sort entities by original_start descending to avoid index shift issues
+    const sorted = [...entities].sort((a, b) => b.original_start - a.original_start);
+
+    let chars = text.split('');
+
+    sorted.forEach(ent => {
+        const start = ent.original_start;
+        const end = ent.original_end;
+        if (start < 0 || end > chars.length) return;
+
+        const placeholder = ent.placeholder || `[${ent.entity_type}]`;
+        // Replace the character range with placeholder characters
+        chars.splice(start, end - start, ...placeholder.split(''));
+    });
+
+    return chars.join('');
+}
+
+// ============================================================================
+// END PHI PREVIEW FUNCTIONS
+// ============================================================================
 
 function showLoading(show) {
     const overlay = document.getElementById('loading-overlay');
@@ -1366,9 +1577,12 @@ async function postJSON(url, payload) {
 }
 
 async function runReporterFlow(noteText) {
-    // Step 1: registry extraction
+    // Step 0: PHI scrubbing
+    const { scrubbedText } = await submitAndApprovePHI(noteText);
+
+    // Step 1: registry extraction with scrubbed text
     const extraction = await postJSON('/v1/registry/run', {
-        note: noteText,
+        note: scrubbedText,
         explain: document.getElementById('registry-explain')?.checked || false,
     });
 
@@ -1386,6 +1600,202 @@ async function runReporterFlow(noteText) {
     return { extraction, verify, render };
 }
 
+/**
+ * Submit text to PHI vault and auto-approve.
+ * Returns the procedure_id and scrubbed_text.
+ */
+async function submitAndApprovePHI(text) {
+    // Step 1: Submit to PHI vault for scrubbing
+    const submitResp = await fetch('/v1/phi/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            text: text,
+            submitted_by: 'workbench_user',
+            document_type: 'procedure_note',
+        })
+    });
+    if (!submitResp.ok) {
+        const err = await submitResp.json().catch(() => ({}));
+        throw new Error(`PHI submit failed: ${err.detail || submitResp.statusText}`);
+    }
+    const submitResult = await submitResp.json();
+    const procedureId = submitResult.procedure_id;
+    const scrubbedText = submitResult.scrubbed_text;
+
+    // Step 2: Auto-approve (mark as reviewed)
+    const feedbackResp = await fetch(`/v1/phi/procedure/${procedureId}/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            scrubbed_text: scrubbedText,
+            entities: submitResult.entities || [],
+            reviewer_id: 'workbench_auto',
+            reviewer_email: 'workbench@local',
+            reviewer_role: 'auto',
+            comment: 'Auto-approved via workbench'
+        })
+    });
+    if (!feedbackResp.ok) {
+        const err = await feedbackResp.json().catch(() => ({}));
+        throw new Error(`PHI review failed: ${err.detail || feedbackResp.statusText}`);
+    }
+
+    return { procedureId, scrubbedText };
+}
+
+/**
+ * Run coder through PHI workflow:
+ * 1. Submit and approve PHI
+ * 2. Call coder endpoint with scrubbed text
+ */
+async function runCoderViaPHI(text, options) {
+    const { scrubbedText } = await submitAndApprovePHI(text);
+
+    // Call coder with scrubbed text
+    const coderResp = await fetch('/v1/coder/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            note: scrubbedText,
+            explain: options.explain,
+            allow_weak_sedation_docs: options.allow_weak_sedation_docs,
+            locality: options.locality,
+            setting: options.setting,
+            use_ml_first: options.use_ml_first
+        })
+    });
+    if (!coderResp.ok) {
+        const err = await coderResp.json().catch(() => ({}));
+        throw new Error(`Coder failed: ${err.detail || coderResp.statusText}`);
+    }
+
+    return coderResp.json();
+}
+
+/**
+ * Run registry through PHI workflow:
+ * 1. Submit and approve PHI
+ * 2. Call registry endpoint with scrubbed text
+ */
+async function runRegistryViaPHI(text, options) {
+    const { scrubbedText } = await submitAndApprovePHI(text);
+
+    // Call registry with scrubbed text
+    const registryResp = await fetch('/v1/registry/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            note: scrubbedText,
+            explain: options.explain
+        })
+    });
+    if (!registryResp.ok) {
+        const err = await registryResp.json().catch(() => ({}));
+        throw new Error(`Registry failed: ${err.detail || registryResp.statusText}`);
+    }
+
+    return registryResp.json();
+}
+
+/**
+ * Run unified extraction through PHI workflow:
+ * 1. Submit note to PHI vault (scrub)
+ * 2. Auto-approve the scrubbed text
+ * 3. Call PHI-gated extraction endpoint
+ *
+ * If phiState.previewDone is true, uses pre-edited entities (two-step workflow).
+ * Otherwise, uses auto-scrubbing (single-step fallback).
+ */
+async function runUnifiedViaPHI(text, options) {
+    // If preview was completed, use confirmed entities (no re-scrubbing)
+    if (phiState.previewDone) {
+        return await runUnifiedWithConfirmedEntities(options);
+    }
+
+    // Fallback to original single-step behavior (auto-scrub + auto-approve)
+    const { procedureId } = await submitAndApprovePHI(text);
+
+    // Run PHI-gated extraction
+    const extractResp = await fetch(`/api/v1/procedures/${procedureId}/extract`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            include_financials: options.include_financials,
+            explain: options.explain
+        })
+    });
+    if (!extractResp.ok) {
+        const err = await extractResp.json().catch(() => ({}));
+        throw new Error(`Extraction failed: ${err.detail || extractResp.statusText}`);
+    }
+
+    return extractResp.json();
+}
+
+/**
+ * Run unified extraction with confirmed (pre-edited) entities.
+ * This is the two-step workflow:
+ * 1. Submit with confirmed_entities (bypass Presidio re-scrubbing)
+ * 2. Auto-approve the scrubbed text
+ * 3. Run extraction (no Presidio at this point - text already clean)
+ */
+async function runUnifiedWithConfirmedEntities(options) {
+    // Step 1: Submit with confirmed_entities (uses pre-edited entities, no re-scrubbing)
+    const submitResp = await fetch('/v1/phi/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            text: phiState.rawText,
+            submitted_by: 'workbench_user',
+            document_type: 'procedure_note',
+            confirmed_entities: phiState.entities  // Pass edited entities
+        })
+    });
+    if (!submitResp.ok) {
+        const err = await submitResp.json().catch(() => ({}));
+        throw new Error(`PHI submit failed: ${err.detail || submitResp.statusText}`);
+    }
+    const { procedure_id, scrubbed_text } = await submitResp.json();
+
+    // Step 2: Mark as reviewed (auto-approve with confirmed entities)
+    const feedbackResp = await fetch(`/v1/phi/procedure/${procedure_id}/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            scrubbed_text: scrubbed_text,
+            entities: phiState.entities,
+            reviewer_id: 'workbench_auto',
+            reviewer_email: 'workbench@local',
+            reviewer_role: 'auto',
+            comment: 'Approved via workbench two-step workflow (user reviewed PHI)'
+        })
+    });
+    if (!feedbackResp.ok) {
+        const err = await feedbackResp.json().catch(() => ({}));
+        throw new Error(`PHI review failed: ${err.detail || feedbackResp.statusText}`);
+    }
+
+    // Step 3: Run extraction (no Presidio at this point - text already scrubbed)
+    const extractResp = await fetch(`/api/v1/procedures/${procedure_id}/extract`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            include_financials: options.include_financials,
+            explain: options.explain
+        })
+    });
+    if (!extractResp.ok) {
+        const err = await extractResp.json().catch(() => ({}));
+        throw new Error(`Extraction failed: ${err.detail || extractResp.statusText}`);
+    }
+
+    // Reset PHI state after successful extraction
+    resetPHIState();
+
+    return extractResp.json();
+}
+
 async function run() {
     const text = document.getElementById('input-text').value;
     if (!text.trim()) {
@@ -1394,34 +1804,39 @@ async function run() {
     }
 
     showLoading(true);
-    
+
     try {
         let url, payload;
 
         if (currentMode === 'unified') {
-            url = '/api/v1/process';
-            payload = {
-                note: text,
-                locality: document.getElementById('unified-locality').value || '00',
+            // Route through PHI workflow for unified mode
+            lastResult = await runUnifiedViaPHI(text, {
                 include_financials: document.getElementById('unified-financials').checked,
                 explain: document.getElementById('unified-explain').checked
-            };
+            });
+            console.log('API Response (via PHI):', lastResult);
+            renderResult();
+            return;
         } else if (currentMode === 'coder') {
-            url = '/v1/coder/run';
-            payload = {
-                note: text,
+            // Route coder through PHI workflow too
+            lastResult = await runCoderViaPHI(text, {
                 explain: document.getElementById('coder-explain').checked,
                 allow_weak_sedation_docs: document.getElementById('coder-weak-sedation').checked,
                 locality: document.getElementById('coder-locality').value || '00',
                 setting: document.getElementById('coder-setting').value || 'facility',
                 use_ml_first: document.getElementById('coder-ml-first').checked
-            };
+            });
+            console.log('API Response (via PHI):', lastResult);
+            renderResult();
+            return;
         } else if (currentMode === 'registry') {
-            url = '/v1/registry/run';
-            payload = {
-                note: text,
+            // Route registry through PHI workflow too
+            lastResult = await runRegistryViaPHI(text, {
                 explain: document.getElementById('registry-explain').checked
-            };
+            });
+            console.log('API Response (via PHI):', lastResult);
+            renderResult();
+            return;
         } else if (currentMode === 'reporter') {
             lastResult = await runReporterFlow(text);
             renderResult();

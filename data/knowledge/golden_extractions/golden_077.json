@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Indication: Mesothelioma susp.\nProcedure: Dx Thoracoscopy. 6th ICS entry.\nFindings: Normal pleura. No nodules. Fluid evacuated.\nAction: 24Fr chest tube placed.\nPlan: Water seal. Path pending.",
+    "note_text": "Indication: Mesothelioma susp.\nProcedure: Dx Thoracoscopy. 6th ICS entry.\nFindings: Normal pleura. No nodules. <PERSON> evacuated.\nAction: 24Fr chest tube placed.\nPlan: Water seal. Path pending.",
     "cpt_codes": [
       32601
     ],
@@ -84,10 +84,16 @@
       "style_type": 1,
       "generated_name": "Sarah O'Connor",
       "generation_date": "2025-12-09T12:09:10.802769"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "HISTORY: A 55-year-old female presented with unilateral pleural effusion suspicious for malignant mesothelioma.\nPROCEDURE: Medical thoracoscopy was performed under moderate sedation. The pleural space was accessed via the sixth intercostal space. Detailed inspection of the parietal and visceral surfaces revealed normal mesothelial architecture without evidence of gross neoplasia.\nOUTCOME: Complete evacuation of effusion. A thoracostomy tube was secured. The patient was admitted for observation.",
+    "note_text": "HISTORY: A <DATE_TIME> female presented with unilateral pleural effusion suspicious for malignant mesothelioma.\nPROCEDURE: Medical thoracoscopy was performed under moderate sedation. The pleural space was accessed via the sixth intercostal space. Detailed inspection of the parietal and visceral surfaces revealed normal mesothelial architecture without evidence of gross <LOCATION>.\nOUTCOME: Complete evacuation of effusion. A thoracostomy tube was secured. The patient was admitted for observation.",
     "cpt_codes": [
       32601
     ],
@@ -171,6 +177,13 @@
       "style_type": 2,
       "generated_name": "Jessica Miller",
       "generation_date": "2025-12-09T12:09:10.802807"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -261,7 +274,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nResident: LT Torres\nAttending: Dr. Garcia\nSteps:\n1. Time out.\n2. Local anesthesia + Mod Sed.\n3. Trocar placed 6th ICS.\n4. Scope inserted. Pleura looked normal.\n5. Fluid drained.\n6. Chest tube placed.\nPlan: Admit.",
+    "note_text": "Procedure Note\nResident: LT Torres\nAttending: Dr. Garcia\nSteps:\n1. Time out.\n2. Local <PERSON>.\n3. Trocar placed 6th ICS.\n4. Scope inserted. Pleura looked normal.\n5. <PERSON> drained.\n6. Chest tube placed.\nPlan: Admit.",
     "cpt_codes": [
       32601
     ],
@@ -345,10 +358,17 @@
       "style_type": 4,
       "generated_name": "Emily Clark",
       "generation_date": "2025-12-09T12:09:10.802867"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure note for Jennifer Allen doing the diagnostic scope today left side suspected meso. We went in at the 6th intercostal space mild sedation used. Looked around everything looked surprisingly normal no bumps no masses. We sucked out the rest of the fluid put in a chest tube. No air leak really. Sending her to the floor check path in a few days.",
+    "note_text": "Procedure note for <PERSON> doing the diagnostic scope today left side suspected meso. We went in at the 6th intercostal space mild sedation used. Looked around everything looked surprisingly normal no bumps no masses. We sucked out the rest of the fluid put in a chest tube. No air leak really. Sending her to the floor check path in <DATE_TIME>.",
     "cpt_codes": [
       32601
     ],
@@ -432,10 +452,17 @@
       "style_type": 5,
       "generated_name": "Amanda Wilson",
       "generation_date": "2025-12-09T12:09:10.802894"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Medical thoracoscopy (pleuroscopy) diagnostic was performed on a 55-year-old female for suspected mesothelioma. Under moderate sedation and local anesthesia, a single-port entry was established at the 6th intercostal space. The semi-rigid pleuroscope was inserted. Findings included normal-appearing parietal, visceral, and diaphragmatic pleura. All remaining fluid was evacuated under direct visualization. A chest tube was placed. There was no air leak and the lung expanded. Patient admitted to floor.",
+    "note_text": "Medical thoracoscopy (pleuroscopy) diagnostic was performed on a <DATE_TIME> female for suspected mesothelioma. Under moderate sedation and local <LOCATION>, a single-port entry was established at the 6th intercostal space. The semi-rigid pleuroscope was inserted. Findings included normal-appearing parietal, visceral, and diaphragmatic pleura. All remaining fluid was evacuated under direct visualization. A chest tube was placed. There was no air leak and the lung expanded. Patient admitted to floor.",
     "cpt_codes": [
       32601
     ],
@@ -519,10 +546,17 @@
       "style_type": 6,
       "generated_name": "Betty Hall",
       "generation_date": "2025-12-09T12:09:10.802919"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected mesothelioma, undiagnosed effusion.\n[Anesthesia]\nModerate sedation, local infiltration.\n[Description]\nLeft chest accessed (6th ICS). Pleura visualized; appearance normal. Fluid evacuated. Chest tube placed.\n[Plan]\nAdmit. Water seal. Await cytology.",
+    "note_text": "[Indication]\nSuspected mesothelioma, undiagnosed effusion.\n[<LOCATION>]\nModerate sedation, local infiltration.\n[Description]\nLeft chest accessed (6th ICS). Pleura visualized; appearance normal. <PERSON> evacuated. Chest tube placed.\n[Plan]\nAdmit. Water seal. Await cytology.",
     "cpt_codes": [
       32601
     ],
@@ -606,6 +640,13 @@
       "style_type": 7,
       "generated_name": "Laura Lewis",
       "generation_date": "2025-12-09T12:09:10.802944"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
@@ -696,7 +737,7 @@
     }
   },
   {
-    "note_text": "Operation: Medical Thoracoscopy - Diagnostic.\nContext: Presumed mesothelioma.\nAction: The pleural cavity was accessed. The pleura was surveyed and deemed normal. Fluid was extracted. A drainage catheter was installed.\nResult: Lung re-expansion confirmed.",
+    "note_text": "Operation: Medical Thoracoscopy - Diagnostic.\nContext: Presumed mesothelioma.\nAction: The pleural cavity was accessed. The pleura was surveyed and deemed normal. <PERSON> was extracted. A drainage catheter was installed.\nResult: Lung re-expansion confirmed.",
     "cpt_codes": [
       32601
     ],
@@ -780,6 +821,12 @@
       "style_type": 9,
       "generated_name": "Sandra Robinson",
       "generation_date": "2025-12-09T12:09:10.802991"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1074,7 +1121,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Medical Thoracoscopy\nPatient: Sharon Lee\n1. Trocar entry 6th ICS.\n2. Saw tumor implants on lung.\n3. Took 11 biopsies (parietal).\n4. Sprayed Talc for pleurodesis.\n5. Chest tube placed.\nPatient stable.",
+    "note_text": "Resident Note: Medical Thoracoscopy\nPatient: <PERSON>\n1. Trocar entry 6th ICS.\n2. Saw tumor implants on lung.\n3. Took 11 biopsies (parietal).\n4. Sprayed Talc for pleurodesis.\n5. Chest tube placed.\nPatient stable.",
     "cpt_codes": [
       32609,
       32650
@@ -1168,10 +1215,16 @@
       "style_type": 4,
       "generated_name": "Diane Green",
       "generation_date": "2025-12-09T12:09:10.803098"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Note for Sharon Lee doing the scope for staging. Went in left side mod sedation. Yeah there were tumor implants everywhere on the visceral pleura. We grabbed like 11 biopsies from the chest wall side. Decided to do the talc while we were there to stop the fluid coming back. Chest tube in no air leak sending to floor.",
+    "note_text": "Note for <PERSON> doing the scope for staging. Went in left side mod sedation. Yeah there were tumor implants everywhere on the visceral pleura. We grabbed like 11 biopsies from the chest wall side. Decided to do the talc while we were there to stop the fluid coming back. Chest tube in no air leak sending to floor.",
     "cpt_codes": [
       32609,
       32650
@@ -1265,10 +1318,16 @@
       "style_type": 5,
       "generated_name": "Martha Adams",
       "generation_date": "2025-12-09T12:09:10.803124"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical Thoracoscopy with Pleural Biopsy and Talc Poudrage. Patient is a 71-year-old female. Indication was staging for lung cancer. Under moderate sedation, the left pleural space was accessed. Findings included visceral pleural tumor implants. Multiple biopsies (11) were obtained from the parietal pleura. Talc poudrage was performed for pleurodesis. A chest tube was placed. Hemostasis was confirmed.",
+    "note_text": "Medical Thoracoscopy with Pleural <PERSON> and Talc Poudrage. Patient is a <DATE_TIME> female. Indication was staging for lung cancer. Under moderate sedation, the left pleural space was accessed. Findings included visceral pleural tumor implants. Multiple biopsies (11) were obtained from the parietal pleura. Talc poudrage was performed for pleurodesis. A chest tube was placed. Hemostasis was confirmed.",
     "cpt_codes": [
       32609,
       32650
@@ -1362,10 +1421,17 @@
       "style_type": 6,
       "generated_name": "Carol Baker",
       "generation_date": "2025-12-09T12:09:10.803150"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nLung cancer staging, pleural involvement.\n[Anesthesia]\nModerate sedation.\n[Description]\nVisceral implants visualized. 11 parietal biopsies obtained. Talc poudrage performed. Chest tube placed.\n[Plan]\nAdmit. Suction. Oncology consult.",
+    "note_text": "[Indication]\nLung cancer staging, pleural involvement.\n[<LOCATION>]\nModerate sedation.\n[Description]\nVisceral implants visualized. 11 parietal biopsies obtained. Talc poudrage performed. Chest tube placed.\n[Plan]\nAdmit. Suction. Oncology consult.",
     "cpt_codes": [
       32609,
       32650
@@ -1459,10 +1525,16 @@
       "style_type": 7,
       "generated_name": "Ruth Nelson",
       "generation_date": "2025-12-09T12:09:10.803174"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Lee underwent a procedure to check her lung lining for cancer spread. Using a camera, we inspected the space and unfortunately saw spots on the lung surface consistent with tumor. We took eleven samples from the chest wall for the lab. Because of the fluid buildup, we also sprayed medical talc into the space to seal it up. She is recovering with a tube in place.",
+    "note_text": "Ms. <PERSON> underwent a procedure to check her lung lining for cancer spread. Using a camera, we inspected the space and unfortunately saw spots on the lung surface consistent with tumor. We took eleven samples from the chest wall for the lab. Because of the fluid buildup, we also sprayed medical talc into the space to seal it up. She is recovering with a tube in place.",
     "cpt_codes": [
       32609,
       32650
@@ -1556,10 +1628,16 @@
       "style_type": 8,
       "generated_name": "Virginia Carter",
       "generation_date": "2025-12-09T12:09:10.803201"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Thoracoscopy with pleural sampling and chemical sclerosis.\nFindings: Visceral pleural deposits.\nAction: Eleven specimens were harvested. Talc was insufflated for symphysis. Fluid was drained.\nDisposition: Inpatient monitoring.",
+    "note_text": "Procedure: Thoracoscopy with pleural sampling and chemical sclerosis.\nFindings: Visceral pleural deposits.\nAction: Eleven specimens were harvested. Talc was insufflated for symphysis. <PERSON> was drained.\nDisposition: Inpatient monitoring.",
     "cpt_codes": [
       32609,
       32650
@@ -1653,6 +1731,12 @@
       "style_type": 9,
       "generated_name": "Shirley Mitchell",
       "generation_date": "2025-12-09T12:09:10.803226"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1753,7 +1837,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE RECORD: Medical Thoracoscopy.\nINDICATION: Recurrent pleural effusion refractory to thoracentesis.\nOBSERVATIONS: Direct visualization revealed metastatic deposits on the visceral pleura. Biopsies (n=8) were excised from the parietal pleura. To prevent recurrence, talc poudrage was executed. The hemithorax was evacuated and drained.",
+    "note_text": "PROCEDURE RECORD: Medical Thoracoscopy.\nINDICATION: <LOCATION> pleural effusion refractory to thoracentesis.\nOBSERVATIONS: Direct visualization revealed metastatic deposits on the visceral pleura. Biopsies (n=8) were excised from the parietal pleura. To prevent recurrence, talc poudrage was executed. The hemithorax was evacuated and drained.",
     "cpt_codes": [
       32609,
       32650
@@ -1847,10 +1931,16 @@
       "style_type": 2,
       "generated_name": "Pamela Evans",
       "generation_date": "2025-12-09T12:09:10.803278"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "CPT 32609: Biopsy of pleura (8 samples taken).\nCPT 32650: Induction of pleurodesis (Talc).\nJustification: Diagnostic biopsy and therapeutic pleurodesis performed in same session for malignant effusion management.",
+    "note_text": "CPT 32609: <LOCATION> of pleura (8 samples taken).\nCPT 32650: Induction of pleurodesis (Talc).\nJustification: Diagnostic biopsy and therapeutic pleurodesis performed in same session for malignant effusion management.",
     "cpt_codes": [
       32609,
       32650
@@ -1944,6 +2034,12 @@
       "style_type": 3,
       "generated_name": "Debra Turner",
       "generation_date": "2025-12-09T12:09:10.803302"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -2044,7 +2140,7 @@
     }
   },
   {
-    "note_text": "Angela Green procedure note. Persistent effusion right side. We went in and saw tumor implants on the lung surface. Took 8 biopsies from the wall. Did the talc powder thing to glue it shut. Chest tube is in and verified. No air leak. Patient fine.",
+    "note_text": "<PERSON> procedure note. Persistent effusion right side. We went in and saw tumor implants on the lung surface. Took 8 biopsies from the wall. Did the talc powder thing to glue it shut. Chest tube is in and verified. No air leak. Patient fine.",
     "cpt_codes": [
       32609,
       32650
@@ -2138,6 +2234,12 @@
       "style_type": 5,
       "generated_name": "Katherine Parker",
       "generation_date": "2025-12-09T12:09:10.803354"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2238,7 +2340,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPersistent effusion.\n[Anesthesia]\nModerate.\n[Description]\nVisceral implants found. 8 biopsies taken. Talc pleurodesis performed. Fluid drained.\n[Plan]\nChest tube to suction. Path pending.",
+    "note_text": "[Indication]\nPersistent effusion.\n[<LOCATION>]\nModerate.\n[Description]\nVisceral implants found. 8 biopsies taken. Talc pleurodesis performed. <PERSON> drained.\n[Plan]\nChest tube to suction. Path pending.",
     "cpt_codes": [
       32609,
       32650
@@ -2332,10 +2434,17 @@
       "style_type": 7,
       "generated_name": "Donna Edwards",
       "generation_date": "2025-12-09T12:09:10.803403"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We performed a scope procedure on Mrs. Green to investigate why her fluid keeps coming back. We saw some abnormal spots on the lung and took eight small samples to test. To stop the fluid, we sprayed talc powder inside the chest cavity. We left a tube in to help the lung expand fully.",
+    "note_text": "We performed a scope procedure on Mrs. <PERSON> to investigate why her fluid keeps coming back. We saw some abnormal spots on the lung and took eight small samples to test. To stop the fluid, we sprayed talc powder inside the chest cavity. We left a tube in to help the lung expand fully.",
     "cpt_codes": [
       32609,
       32650
@@ -2429,6 +2538,12 @@
       "style_type": 8,
       "generated_name": "Carolyn Stewart",
       "generation_date": "2025-12-09T12:09:10.803429"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2529,7 +2644,7 @@
     }
   },
   {
-    "note_text": "Indication: Exudative effusion.\nProc: Thoracoscopy + Talc.\nFindings: Diffuse nodularity.\nAction: Talc poudrage. Fluid drained. Tube placed.\nPlan: Admit.",
+    "note_text": "Indication: Exudative effusion.\nProc: Thoracoscopy + Talc.\nFindings: Diffuse nodularity.\nAction: Talc poudrage. <PERSON> drained. Tube placed.\nPlan: Admit.",
     "cpt_codes": [
       32650
     ],
@@ -2614,6 +2729,12 @@
       "style_type": 1,
       "generated_name": "James Roberts",
       "generation_date": "2025-12-09T12:09:10.803480"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2793,7 +2914,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Kevin Allen\nIndication: Effusion.\nSteps:\n1. Scope in.\n2. Saw diffuse nodules.\n3. Sprayed Talc.\n4. Drained fluid.\n5. Chest tube in.",
+    "note_text": "Resident Note: <PERSON>\nIndication: Effusion.\nSteps:\n1. Scope in.\n2. Saw diffuse nodules.\n3. Sprayed Talc.\n4. Drained fluid.\n5. Chest tube in.",
     "cpt_codes": [
       32650
     ],
@@ -2878,10 +2999,16 @@
       "style_type": 4,
       "generated_name": "Michael Evans",
       "generation_date": "2025-12-09T12:09:10.803554"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure for Kevin Allen undiagnosed effusion. Went in left side. Saw a lot of nodules everywhere on the pleura. Did the talc poudrage to treat the fluid. Drained it all out put a chest tube in. Water seal. Done.",
+    "note_text": "Procedure for <PERSON> undiagnosed effusion. Went in left side. Saw a lot of nodules everywhere on the pleura. Did the talc poudrage to treat the fluid. Drained it all out put a chest tube in. Water seal. Done.",
     "cpt_codes": [
       32650
     ],
@@ -2966,10 +3093,16 @@
       "style_type": 5,
       "generated_name": "William Turner",
       "generation_date": "2025-12-09T12:09:10.803575"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical Thoracoscopy (Pleuroscopy) Diagnostic with Talc Poudrage. 54-year-old male with undiagnosed exudative pleural effusion. Left side. Diffuse pleural nodularity visualized. Talc poudrage performed for pleurodesis. Chest tube placed. Lung expanded.",
+    "note_text": "Medical Thoracoscopy (Pleuroscopy) Diagnostic with Talc Poudrage. <DATE_TIME> male with undiagnosed exudative pleural effusion. Left side. Diffuse pleural nodularity visualized. Talc poudrage performed for pleurodesis. Chest tube placed. Lung expanded.",
     "cpt_codes": [
       32650
     ],
@@ -3054,10 +3187,16 @@
       "style_type": 6,
       "generated_name": "David Parker",
       "generation_date": "2025-12-09T12:09:10.803600"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nExudative effusion.\n[Anesthesia]\nModerate.\n[Description]\nDiffuse nodularity seen. Talc poudrage performed. Fluid evacuated.\n[Plan]\nAdmit. Tube to water seal.",
+    "note_text": "[Indication]\nExudative effusion.\n[<LOCATION>]\nModerate.\n[Description]\nDiffuse nodularity seen. Talc poudrage performed. <PERSON> evacuated.\n[Plan]\nAdmit. Tube to water seal.",
     "cpt_codes": [
       32650
     ],
@@ -3142,10 +3281,17 @@
       "style_type": 7,
       "generated_name": "Richard Collins",
       "generation_date": "2025-12-09T12:09:10.803623"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mr. Allen underwent a thoracoscopy for his fluid buildup. We saw distinct bumpiness (nodularity) along the lining. We proceeded to treat the fluid buildup by spraying talc into the space. The fluid was drained, and he is resting comfortably.",
+    "note_text": "Mr. <PERSON> underwent a thoracoscopy for his fluid buildup. We saw distinct bumpiness (nodularity) along the lining. We proceeded to treat the fluid buildup by spraying talc into the space. The fluid was drained, and he is resting comfortably.",
     "cpt_codes": [
       32650
     ],
@@ -3230,6 +3376,12 @@
       "style_type": 8,
       "generated_name": "Joseph Edwards",
       "generation_date": "2025-12-09T12:09:10.803646"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3321,7 +3473,7 @@
     }
   },
   {
-    "note_text": "Indication: Susp. malignancy.\nProc: Thoracoscopy + Biopsy.\nFindings: Visceral implants.\nAction: 6 parietal biopsies taken. Fluid drained. Tube placed.\nNote: No talc.",
+    "note_text": "Indication: Susp. malignancy.\nProc: Thoracoscopy + Biopsy.\nFindings: Visceral implants.\nAction: 6 parietal biopsies taken. <PERSON> drained. Tube placed.\nNote: No talc.",
     "cpt_codes": [
       32609
     ],
@@ -3406,10 +3558,16 @@
       "style_type": 1,
       "generated_name": "Elizabeth Morris",
       "generation_date": "2025-12-09T12:09:10.803696"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: Medical Thoracoscopy with Biopsy.\nFINDINGS: Visceral pleural tumor implants were identified. To characterize the pathology, six biopsy specimens were obtained from the parietal pleura. No chemical pleurodesis was performed at this time.\nCONCLUSION: Diagnostic samples obtained; fluid evacuated.",
+    "note_text": "OPERATIVE NARRATIVE: Medical Thoracoscopy with <LOCATION>.\nFINDINGS: Visceral pleural tumor implants were identified. To characterize the pathology, six biopsy specimens were obtained from the parietal pleura. No chemical pleurodesis was performed at this time.\nCONCLUSION: Diagnostic samples obtained; fluid evacuated.",
     "cpt_codes": [
       32609
     ],
@@ -3494,10 +3652,16 @@
       "style_type": 2,
       "generated_name": "Linda Rogers",
       "generation_date": "2025-12-09T12:09:10.803719"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "CPT: 32609 (Thoracoscopy with biopsy).\nDetail: Biopsies taken from parietal pleura (x6). Visceral implants noted but not biopsied to avoid air leak. No pleurodesis performed.",
+    "note_text": "CPT: 32609 (Thoracoscopy with biopsy).\n<PERSON>: Biopsies taken from parietal pleura (x6). Visceral implants noted but not biopsied to avoid air leak. No pleurodesis performed.",
     "cpt_codes": [
       32609
     ],
@@ -3582,10 +3746,16 @@
       "style_type": 3,
       "generated_name": "Barbara Reed",
       "generation_date": "2025-12-09T12:09:10.803744"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Resident Note: Patricia Taylor\n1. Left chest entry.\n2. Visceral implants seen.\n3. Biopsied parietal pleura (6 pieces).\n4. Drained fluid.\n5. Chest tube placed.\nPlan: Path pending.",
+    "note_text": "Resident Note: <PERSON>\n1. Left chest entry.\n2. Visceral implants seen.\n3. Biopsied parietal pleura (6 pieces).\n4. Drained fluid.\n5. Chest tube placed.\nPlan: Path pending.",
     "cpt_codes": [
       32609
     ],
@@ -3670,10 +3840,16 @@
       "style_type": 4,
       "generated_name": "Susan Cook",
       "generation_date": "2025-12-09T12:09:10.803767"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Note for Patricia Taylor. Suspected cancer. We went in with the scope left side. Saw implants on the lung itself. Took 6 biopsies from the wall instead. Drained the fluid put a tube in. No talc this time.",
+    "note_text": "Note for <PERSON>. Suspected cancer. We went in with the scope left side. Saw implants on the lung itself. Took 6 biopsies from the wall instead. Drained the fluid put a tube in. No talc this time.",
     "cpt_codes": [
       32609
     ],
@@ -3758,10 +3934,16 @@
       "style_type": 5,
       "generated_name": "Jennifer Morgan",
       "generation_date": "2025-12-09T12:09:10.803793"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical Thoracoscopy with Pleural Biopsy. Indication biopsy-negative suspected malignancy. Left side. Findings: Visceral pleural tumor implants. Multiple biopsies (6) obtained from parietal pleura. Fluid evacuated. Chest tube placed. Hemostasis confirmed.",
+    "note_text": "Medical Thoracoscopy with Pleural Biopsy. Indication biopsy-negative suspected malignancy. Left side. Findings: Visceral pleural tumor implants. Multiple biopsies (6) obtained from parietal pleura. <PERSON> evacuated. Chest tube placed. Hemostasis confirmed.",
     "cpt_codes": [
       32609
     ],
@@ -3846,10 +4028,16 @@
       "style_type": 6,
       "generated_name": "Maria Bell",
       "generation_date": "2025-12-09T12:09:10.803816"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSusp. malignancy.\n[Anesthesia]\nModerate.\n[Description]\nVisceral implants seen. 6 parietal biopsies. Fluid drained. Tube placed.\n[Plan]\nAdmit. Suction.",
+    "note_text": "[Indication]\nSusp. malignancy.\n[<LOCATION>]\nModerate.\n[Description]\nVisceral implants seen. 6 parietal biopsies. <PERSON> drained. Tube placed.\n[Plan]\nAdmit. Suction.",
     "cpt_codes": [
       32609
     ],
@@ -3934,10 +4122,17 @@
       "style_type": 7,
       "generated_name": "Margaret Murphy",
       "generation_date": "2025-12-09T12:09:10.803838"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ms. Taylor had a scope procedure to investigate suspicious findings. We saw implants on the lung surface. We carefully took six samples from the chest wall lining to figure out what it is. We drained the fluid and placed a tube, but did not use talc today.",
+    "note_text": "Ms. <PERSON> had a scope procedure to investigate suspicious findings. We saw implants on the lung surface. We carefully took six samples from the chest wall lining to figure out what it is. We drained the fluid and placed a tube, but did not use talc today.",
     "cpt_codes": [
       32609
     ],
@@ -4022,6 +4217,12 @@
       "style_type": 8,
       "generated_name": "Dorothy Bailey",
       "generation_date": "2025-12-09T12:09:10.803863"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4404,7 +4605,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Brian Allen\nRight side staging.\n- Entry 6th ICS.\n- Looks inflammatory, no nodules.\n- Biopsied anyway (6x).\n- Talc sprayed.\n- Chest tube in.",
+    "note_text": "Resident Note: <PERSON>\nRight side staging.\n- Entry 6th ICS.\n- Looks inflammatory, no nodules.\n- Biopsied anyway (6x).\n- Talc sprayed.\n- Chest tube in.",
     "cpt_codes": [
       32609,
       32650
@@ -4498,10 +4699,16 @@
       "style_type": 4,
       "generated_name": "Matthew Howard",
       "generation_date": "2025-12-09T12:09:10.803990"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Brian Allen procedure note. Staging for lung cancer. Went in right side. Honestly looked mostly inflammatory not really nodular. Still took 6 biopsies to be sure. Did the talc poudrage anyway to stop the fluid. Chest tube in.",
+    "note_text": "<PERSON> procedure note. Staging for lung cancer. Went in right side. Honestly looked mostly inflammatory not really nodular. Still took 6 biopsies to be sure. Did the talc poudrage anyway to stop the fluid. Chest tube in.",
     "cpt_codes": [
       32609,
       32650
@@ -4595,10 +4802,16 @@
       "style_type": 5,
       "generated_name": "Anthony Ward",
       "generation_date": "2025-12-09T12:09:10.804019"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical Thoracoscopy with Pleural Biopsy and Talc. 78M. Indication staging. Right side. Findings: Inflammatory changes without nodularity. 6 biopsies obtained. Talc poudrage performed. Chest tube placed to suction.",
+    "note_text": "Medical Thoracoscopy with Pleural <PERSON> and Talc. 78M. Indication staging. Right side. Findings: Inflammatory changes without nodularity. 6 biopsies obtained. Talc poudrage performed. Chest tube placed to suction.",
     "cpt_codes": [
       32609,
       32650
@@ -4692,10 +4905,16 @@
       "style_type": 6,
       "generated_name": "Donald Torres",
       "generation_date": "2025-12-09T12:09:10.804045"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nStaging.\n[Anesthesia]\nModerate.\n[Description]\nInflammatory changes. 6 biopsies. Talc poudrage. Fluid drained.\n[Plan]\nAdmit. Suction.",
+    "note_text": "[Indication]\nStaging.\n[<LOCATION>]\nModerate.\n[Description]\nInflammatory changes. 6 biopsies. Talc poudrage. <PERSON> drained.\n[Plan]\nAdmit. Suction.",
     "cpt_codes": [
       32609,
       32650
@@ -4789,10 +5008,17 @@
       "style_type": 7,
       "generated_name": "Mark Peterson",
       "generation_date": "2025-12-09T12:09:10.804078"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We performed a procedure on Mr. Allen to stage his condition. The lining looked red and inflamed but didn't have the typical bumps of cancer. We took six samples just to be sure. We also sprayed talc to keep the fluid away. A tube was left in place.",
+    "note_text": "We performed a procedure on Mr. <PERSON> to stage his condition. The lining looked red and inflamed but didn't have the typical bumps of cancer. We took six samples just to be sure. We also sprayed talc to keep the fluid away. A tube was left in place.",
     "cpt_codes": [
       32609,
       32650
@@ -4886,6 +5112,12 @@
       "style_type": 8,
       "generated_name": "Paul Gray",
       "generation_date": "2025-12-09T12:09:10.804102"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5180,7 +5412,7 @@
     }
   },
   {
-    "note_text": "CPT: 32609, 32650.\nDetail: Biopsy of parietal pleura (x6) and separate diaphragmatic inspection showing mass. Talc insufflation for pleurodesis.",
+    "note_text": "CPT: 32609, 32650.\n<PERSON>: <LOCATION> of parietal pleura (x6) and separate diaphragmatic inspection showing mass. Talc insufflation for pleurodesis.",
     "cpt_codes": [
       32609,
       32650
@@ -5274,10 +5506,17 @@
       "style_type": 3,
       "generated_name": "Betty Brooks",
       "generation_date": "2025-12-09T12:09:10.804223"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Resident Note: Betty Jackson\n1. Left entry.\n2. Mass on diaphragm.\n3. Took 6 biopsies from wall.\n4. Talc sprayed.\n5. Tube in.\nStable.",
+    "note_text": "Resident Note: <PERSON>\n1. Left entry.\n2. Mass on diaphragm.\n3. Took 6 biopsies from wall.\n4. Talc sprayed.\n5. Tube in.\nStable.",
     "cpt_codes": [
       32609,
       32650
@@ -5371,10 +5610,16 @@
       "style_type": 4,
       "generated_name": "Helen Kelly",
       "generation_date": "2025-12-09T12:09:10.804272"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Betty Jackson procedure. She had that nodularity on CT. We went in left side. Found a mass right on the diaphragm. Took 6 biopsies from the parietal wall. Sprayed talc to fix the fluid. Chest tube placed no leaks.",
+    "note_text": "<PERSON> procedure. She had that nodularity on CT. We went in left side. Found a mass right on the diaphragm. Took 6 biopsies from the parietal wall. Sprayed talc to fix the fluid. Chest tube placed no leaks.",
     "cpt_codes": [
       32609,
       32650
@@ -5468,10 +5713,16 @@
       "style_type": 5,
       "generated_name": "Sandra Sanders",
       "generation_date": "2025-12-09T12:09:10.804302"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical Thoracoscopy with Pleural Biopsy. Indication pleural nodularity. Left side. Findings: Mass lesion on diaphragmatic pleura. 6 biopsies obtained from parietal pleura. Talc poudrage performed. Fluid drained. Tube to suction.",
+    "note_text": "Medical Thoracoscopy with Pleural Biopsy. Indication pleural nodularity. Left side. Findings: Mass lesion on diaphragmatic pleura. 6 biopsies obtained from parietal pleura. Talc poudrage performed. <PERSON> drained. Tube to suction.",
     "cpt_codes": [
       32609,
       32650
@@ -5565,10 +5816,16 @@
       "style_type": 6,
       "generated_name": "Donna Price",
       "generation_date": "2025-12-09T12:09:10.804328"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nPleural nodularity.\n[Anesthesia]\nModerate.\n[Description]\nDiaphragmatic mass. 6 parietal biopsies. Talc poudrage. Tube placed.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nPleural nodularity.\n[<LOCATION>]\nModerate.\n[Description]\nDiaphragmatic mass. 6 parietal biopsies. Talc poudrage. Tube placed.\n[Plan]\nAdmit.",
     "cpt_codes": [
       32609,
       32650
@@ -5662,10 +5919,16 @@
       "style_type": 7,
       "generated_name": "Carol Bennett",
       "generation_date": "2025-12-09T12:09:10.804356"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Jackson underwent thoracoscopy to investigate nodules seen on her scan. We found a mass on the diaphragm. We took six samples from the chest wall to test. We then used talc to prevent fluid from coming back and placed a chest tube.",
+    "note_text": "Ms. <PERSON> underwent thoracoscopy to investigate nodules seen on her scan. We found a mass on the diaphragm. We took six samples from the chest wall to test. We then used talc to prevent fluid from coming back and placed a chest tube.",
     "cpt_codes": [
       32609,
       32650
@@ -5759,6 +6022,12 @@
       "style_type": 8,
       "generated_name": "Ruth Wood",
       "generation_date": "2025-12-09T12:09:10.804419"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6033,7 +6302,7 @@
     }
   },
   {
-    "note_text": "Code: 32601 (Diagnostic Thoracoscopy).\nNote: No biopsy (32609) or talc (32650) performed as pleura appeared normal. Purely diagnostic inspection and drainage.",
+    "note_text": "Code: 32601 (Diagnostic Thoracoscopy).\nNote: No biopsy (<DATE_TIME>) or talc (<DATE_TIME>) performed as pleura appeared normal. Purely diagnostic inspection and drainage.",
     "cpt_codes": [
       32601
     ],
@@ -6117,10 +6386,17 @@
       "style_type": 3,
       "generated_name": "Debra Coleman",
       "generation_date": "2025-12-09T12:09:10.804527"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Resident Note: Kathleen Carter\nRight side.\n- Scope in.\n- Everything looks normal.\n- Drained fluid.\n- Chest tube placed.\n- No biopsy.",
+    "note_text": "Resident Note: <PERSON>\nRight side.\n- Scope in.\n- Everything looks normal.\n- Drained fluid.\n- Chest tube placed.\n- No biopsy.",
     "cpt_codes": [
       32601
     ],
@@ -6204,10 +6480,16 @@
       "style_type": 4,
       "generated_name": "Carolyn Jenkins",
       "generation_date": "2025-12-09T12:09:10.804551"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Kathleen Carter note. Undiagnosed fluid right side. Went in with the scope. Everything looked totally normal inside. Just drained the fluid and put a tube in. No biopsy needed.",
+    "note_text": "<PERSON> note. Undiagnosed fluid right side. Went in with the scope. Everything looked totally normal inside. Just drained the fluid and put a tube in. No biopsy needed.",
     "cpt_codes": [
       32601
     ],
@@ -6291,6 +6573,12 @@
       "style_type": 5,
       "generated_name": "Christine Perry",
       "generation_date": "2025-12-09T12:09:10.804654"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6381,7 +6669,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nUndiagnosed effusion.\n[Anesthesia]\nModerate.\n[Description]\nNormal pleura. Fluid drained. Tube placed.\n[Plan]\nAdmit. Water seal.",
+    "note_text": "[Indication]\nUndiagnosed effusion.\n[<LOCATION>]\nModerate.\n[Description]\nNormal pleura. <PERSON> drained. Tube placed.\n[Plan]\nAdmit. Water seal.",
     "cpt_codes": [
       32601
     ],
@@ -6465,10 +6753,17 @@
       "style_type": 7,
       "generated_name": "Pamela Long",
       "generation_date": "2025-12-09T12:09:10.804704"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We took a look inside Mrs. Carter's chest to see why she had fluid. Surprisingly, the lining looked completely healthy. We drained the fluid and put in a temporary tube, but we didn't see anything suspicious enough to biopsy.",
+    "note_text": "We took a look inside Mrs. <PERSON>'s chest to see why she had fluid. Surprisingly, the lining looked completely healthy. We drained the fluid and put in a temporary tube, but we didn't see anything suspicious enough to biopsy.",
     "cpt_codes": [
       32601
     ],
@@ -6552,6 +6847,12 @@
       "style_type": 8,
       "generated_name": "Virginia Patterson",
       "generation_date": "2025-12-09T12:09:10.804730"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6730,7 +7031,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: Medical Thoracoscopy with Biopsy.\nOBSERVATIONS: Inspection revealed a mass lesion on the diaphragmatic surface. Eleven biopsies were harvested from the parietal pleura for histopathologic evaluation. No pleurodesis was performed.\nOUTCOME: Successful sampling.",
+    "note_text": "OPERATIVE NARRATIVE: Medical Thoracoscopy with <LOCATION>.\nOBSERVATIONS: Inspection revealed a mass lesion on the diaphragmatic surface. Eleven biopsies were harvested from the parietal pleura for histopathologic evaluation. No pleurodesis was performed.\nOUTCOME: Successful sampling.",
     "cpt_codes": [
       32609
     ],
@@ -6815,10 +7116,16 @@
       "style_type": 2,
       "generated_name": "Kenneth Washington",
       "generation_date": "2025-12-09T12:09:10.804801"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "CPT: 32609.\nDetail: Targeted biopsy of parietal pleura (11 samples) in setting of diaphragmatic mass. No pleurodesis code applicable.",
+    "note_text": "CPT: 32609.\n<PERSON>: Targeted biopsy of parietal pleura (11 samples) in setting of diaphragmatic mass. No pleurodesis code applicable.",
     "cpt_codes": [
       32609
     ],
@@ -6903,10 +7210,16 @@
       "style_type": 3,
       "generated_name": "Andrew Butler",
       "generation_date": "2025-12-09T12:09:10.804828"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Resident Note: David Garcia\n1. Right entry.\n2. Mass on diaphragm.\n3. 11 biopsies taken (parietal).\n4. Drained fluid.\n5. Tube in.\nNo talc.",
+    "note_text": "Resident Note: <PERSON>\n1. Right entry.\n2. Mass on diaphragm.\n3. 11 biopsies taken (parietal).\n4. Drained fluid.\n5. Tube in.\nNo talc.",
     "cpt_codes": [
       32609
     ],
@@ -6991,10 +7304,16 @@
       "style_type": 4,
       "generated_name": "Edward Simmons",
       "generation_date": "2025-12-09T12:09:10.804851"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "David Garcia procedure. Nodules on imaging. Went in right side. Saw the mass on the diaphragm. Took a bunch of biopsies like 11 of them from the wall. Didn't do talc. Chest tube in.",
+    "note_text": "<PERSON> procedure. Nodules on imaging. Went in right side. Saw the mass on the diaphragm. Took a bunch of biopsies like 11 of them from the wall. Didn't do talc. Chest tube in.",
     "cpt_codes": [
       32609
     ],
@@ -7079,6 +7398,12 @@
       "style_type": 5,
       "generated_name": "Joshua Foster",
       "generation_date": "2025-12-09T12:09:10.804875"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7170,7 +7495,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPleural nodularity.\n[Anesthesia]\nModerate.\n[Description]\nDiaphragmatic mass. 11 parietal biopsies. Fluid drained. Tube placed.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nPleural nodularity.\n[<LOCATION>]\nModerate.\n[Description]\nDiaphragmatic mass. 11 parietal biopsies. <PERSON> drained. Tube placed.\n[Plan]\nAdmit.",
     "cpt_codes": [
       32609
     ],
@@ -7255,10 +7580,17 @@
       "style_type": 7,
       "generated_name": "Kevin Bryant",
       "generation_date": "2025-12-09T12:09:10.804922"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mr. Garcia had a scope to check on some nodules. We found a mass on the diaphragm. We took eleven samples from the chest wall to send to the lab. We drained the fluid and placed a tube to help the lung heal.",
+    "note_text": "Mr. <PERSON> had a scope to check on some nodules. We found a mass on the diaphragm. We took eleven samples from the chest wall to send to the lab. We drained the fluid and placed a tube to help the lung heal.",
     "cpt_codes": [
       32609
     ],
@@ -7343,6 +7675,12 @@
       "style_type": 8,
       "generated_name": "Ronald Alexander",
       "generation_date": "2025-12-09T12:09:10.804946"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7628,7 +7966,7 @@
     }
   },
   {
-    "note_text": "CPT: 32609, 32650.\nDetail: Extensive biopsy (n=12) of thickened parietal pleura. Separate therapeutic talc insufflation for effusion management.",
+    "note_text": "CPT: 32609, 32650.\n<PERSON>: Extensive biopsy (n=12) of thickened parietal pleura. Separate therapeutic talc insufflation for effusion management.",
     "cpt_codes": [
       32609,
       32650
@@ -7722,10 +8060,16 @@
       "style_type": 3,
       "generated_name": "Ryan Hayes",
       "generation_date": "2025-12-09T12:09:10.805050"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Resident Note: William Johnson\n1. Right entry.\n2. Thick pleura + nodules.\n3. 12 biopsies taken.\n4. Talc sprayed.\n5. Tube in.",
+    "note_text": "Resident Note: <PERSON>\n1. Right entry.\n2. Thick pleura + nodules.\n3. 12 biopsies taken.\n4. Talc sprayed.\n5. Tube in.",
     "cpt_codes": [
       32609,
       32650
@@ -7819,10 +8163,16 @@
       "style_type": 4,
       "generated_name": "Jacob Myers",
       "generation_date": "2025-12-09T12:09:10.805074"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "William Johnson note. Suspected cancer. Went in right side. Pleura looked thick with nodules. Took 12 biopsies. Sprayed talc to stop the fluid. Tube in and good.",
+    "note_text": "<PERSON> note. Suspected cancer. Went in right side. Pleura looked thick with nodules. Took 12 biopsies. Sprayed talc to stop the fluid. Tube in and good.",
     "cpt_codes": [
       32609,
       32650
@@ -7916,10 +8266,16 @@
       "style_type": 5,
       "generated_name": "Gary Ford",
       "generation_date": "2025-12-09T12:09:10.805102"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical Thoracoscopy with Pleural Biopsy. Indication biopsy-negative suspected malignancy. Right side. Findings: Thickened parietal pleura with nodules. 12 biopsies obtained. Talc poudrage performed. Fluid evacuated. Chest tube placed.",
+    "note_text": "Medical Thoracoscopy with Pleural Biopsy. Indication biopsy-negative suspected malignancy. Right side. Findings: Thickened parietal pleura with nodules. 12 biopsies obtained. Talc poudrage performed. <PERSON> evacuated. Chest tube placed.",
     "cpt_codes": [
       32609,
       32650
@@ -8013,10 +8369,16 @@
       "style_type": 6,
       "generated_name": "Nicholas Hamilton",
       "generation_date": "2025-12-09T12:09:10.805126"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSusp. malignancy.\n[Anesthesia]\nModerate.\n[Description]\nThickened pleura, nodules. 12 biopsies. Talc poudrage. Tube placed.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nSusp. malignancy.\n[<LOCATION>]\nModerate.\n[Description]\nThickened pleura, nodules. 12 biopsies. Talc poudrage. Tube placed.\n[Plan]\nAdmit.",
     "cpt_codes": [
       32609,
       32650
@@ -8110,10 +8472,16 @@
       "style_type": 7,
       "generated_name": "Eric Graham",
       "generation_date": "2025-12-09T12:09:10.805152"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a procedure on Mr. Johnson to investigate possible cancer. The lining of the chest wall was thick and bumpy. We took twelve samples to be sure we get a diagnosis. We also used talc powder to seal the space and prevent fluid return.",
+    "note_text": "We performed a procedure on Mr. <PERSON> to investigate possible cancer. The lining of the chest wall was thick and bumpy. We took twelve samples to be sure we get a diagnosis. We also used talc powder to seal the space and prevent fluid return.",
     "cpt_codes": [
       32609,
       32650
@@ -8207,6 +8575,12 @@
       "style_type": 8,
       "generated_name": "Stephen Sullivan",
       "generation_date": "2025-12-09T12:09:10.805177"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

@@ -91,7 +91,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Ms. Jones presented with significant airway compromise secondary to thyroid malignancy. Quantitative assessment revealed 79% tracheal stenosis.\nOPERATIVE NARRATIVE: Under general anesthesia utilizing jet ventilation, the airway was secured via rigid bronchoscopy. Mechanical dilation of the stenotic segment was performed to facilitate appliance delivery. A 12x60mm Novatech Silicone Dumon stent was precisely deployed within the trachea. Post-deployment endoscopic inspection confirmed restoration of airway caliber to near-physiologic dimensions (11% residual narrowing) and excellent stent apposition.\nPLAN: Admitted for observation.",
+    "note_text": "HISTORY: Ms. <PERSON> presented with significant airway compromise secondary to thyroid malignancy. Quantitative assessment revealed 79% tracheal stenosis.\nOPERATIVE NARRATIVE: Under general <LOCATION> utilizing jet ventilation, the airway was secured via rigid bronchoscopy. Mechanical dilation of the stenotic segment was performed to facilitate appliance delivery. A 12x60mm Novatech Silicone Dumon stent was precisely deployed within the trachea. Post-deployment endoscopic inspection confirmed restoration of airway caliber to near-physiologic dimensions (11% residual narrowing) and excellent stent apposition.\nPLAN: Admitted for observation.",
     "cpt_codes": [
       31631
     ],
@@ -179,6 +179,13 @@
       "style_type": 2,
       "generated_name": "Mary Johnson",
       "generation_date": "2025-12-09T12:06:13.436071"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -273,7 +280,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronchoscopy with Stent Placement\nAttending: Dr. Davis\nSteps:\n1. Time out performed.\n2. General anesthesia with jet ventilation.\n3. Rigid scope inserted.\n4. Tracheal stenosis identified and dilated.\n5. Stent (Dumon 12x60mm) placed in trachea.\n6. Position confirmed.\n7. Scope removed.\nNo complications encountered.",
+    "note_text": "Procedure: Rigid Bronchoscopy with <PERSON>\nAttending: Dr. Davis\nSteps:\n1. Time out performed.\n2. General <LOCATION> with jet ventilation.\n3. Rigid scope inserted.\n4. Tracheal stenosis identified and dilated.\n5. <PERSON> (Dumon 12x60mm) placed in trachea.\n6. Position confirmed.\n7. Scope removed.\nNo complications encountered.",
     "cpt_codes": [
       31631
     ],
@@ -361,10 +368,18 @@
       "style_type": 4,
       "generated_name": "Jennifer Brown",
       "generation_date": "2025-12-09T12:06:13.436131"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Patient Cynthia Jones here for the tracheal stent she has thyroid cancer compressing the airway about 80 percent blocked we used the rigid scope with jet vent dilated it open then put in a novatech dumon stent 12 by 60 millimeter right in the trachea looks good now wide open only maybe 10 percent blocked no bleeding really sent to recovery then admit thanks.",
+    "note_text": "Patient <PERSON> here for the tracheal stent she has thyroid cancer compressing the airway about 80 percent blocked we used the rigid scope with jet vent dilated it open then put in a novatech dumon stent 12 by 60 millimeter right in the trachea looks good now wide open only maybe 10 percent blocked no bleeding really sent to recovery then admit thanks.",
     "cpt_codes": [
       31631
     ],
@@ -452,10 +467,16 @@
       "style_type": 5,
       "generated_name": "Linda Jones",
       "generation_date": "2025-12-09T12:06:13.436158"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "The patient presented with thyroid cancer causing tracheal compression. Pre-procedure obstruction was estimated at 79%. Under general anesthesia with jet ventilation, rigid bronchoscopy was performed. Sequential balloon dilation of the tracheal stenosis was carried out. The airway was measured, and a Novatech Silicone Dumon stent (12x60mm) was deployed in the trachea. Stent position was confirmed with good expansion and patency. Post-procedure obstruction was reduced to approximately 11%. There were no complications, and EBL was minimal. The patient was sent to recovery and then admitted for overnight observation.",
+    "note_text": "The patient presented with thyroid cancer causing tracheal compression. Pre-procedure obstruction was estimated at 79%. Under general <LOCATION> with jet ventilation, rigid bronchoscopy was performed. Sequential balloon dilation of the tracheal stenosis was carried out. The airway was measured, and a Novatech Silicone Dumon stent (12x60mm) was deployed in the trachea. Stent position was confirmed with good expansion and patency. Post-procedure obstruction was reduced to approximately 11%. There were no complications, and EBL was minimal. The patient was sent to recovery and then admitted for <DATE_TIME> observation.",
     "cpt_codes": [
       31631
     ],
@@ -543,10 +564,17 @@
       "style_type": 6,
       "generated_name": "Elizabeth Miller",
       "generation_date": "2025-12-09T12:06:13.436185"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nThyroid cancer with 79% tracheal compression.\n[Anesthesia]\nGeneral with jet ventilation.\n[Description]\nRigid bronchoscopy performed. Stenosis dilated. Novatech Dumon stent (12x60mm) deployed in trachea. Patency restored (11% residual).\n[Plan]\nAdmit for observation. Clinic follow-up 4-6 weeks.",
+    "note_text": "[Indication]\nThyroid cancer with 79% tracheal compression.\n[<LOCATION>]\nGeneral with jet ventilation.\n[Description]\nRigid bronchoscopy performed. Stenosis dilated. Novatech Dumon stent (12x60mm) deployed in trachea. Patency restored (11% residual).\n[Plan]\nAdmit for observation. Clinic follow-up <DATE_TIME>.",
     "cpt_codes": [
       31631
     ],
@@ -634,10 +662,17 @@
       "style_type": 7,
       "generated_name": "Barbara Davis",
       "generation_date": "2025-12-09T12:06:13.436210"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Ms. Jones underwent a rigid bronchoscopy today to address her tracheal compression caused by thyroid cancer. We utilized general anesthesia and jet ventilation. After identifying the 79% stenosis, we performed sequential balloon dilation. Subsequently, a 12x60mm Novatech Silicone Dumon stent was deployed into the trachea. The stent expanded well, and we confirmed good patency with a residual obstruction of only 11%. She tolerated the procedure well with minimal blood loss.",
+    "note_text": "Ms. <PERSON> underwent a rigid bronchoscopy today to address her tracheal compression caused by thyroid cancer. We utilized general <LOCATION> and jet ventilation. After identifying the 79% stenosis, we performed sequential balloon dilation. Subsequently, a 12x60mm Novatech Silicone Dumon stent was deployed into the trachea. The stent expanded well, and we confirmed good patency with a residual obstruction of only 11%. She tolerated the procedure well with minimal blood loss.",
     "cpt_codes": [
       31631
     ],
@@ -725,10 +760,17 @@
       "style_type": 8,
       "generated_name": "Susan Garcia",
       "generation_date": "2025-12-09T12:06:13.436236"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Indication: Thyroid carcinoma with tracheal impingement.\nPre-procedure blockage: ~79% Trachea.\nPROCEDURE: Under general anesthesia, rigid bronchoscopy was executed. Sequential balloon expansion of the trachea stenosis was conducted. The airway was gauged and a Novatech Silicone - Dumon stent (12x60mm) was implanted in the Trachea. Stent seating was validated with good expansion and openness.\nPost-procedure blockage: ~11%.\nNo adverse events.",
+    "note_text": "Indication: Thyroid carcinoma with tracheal impingement.\nPre-procedure blockage: ~79% Trachea.\nPROCEDURE: Under general <LOCATION>, rigid bronchoscopy was executed. Sequential balloon expansion of the trachea stenosis was conducted. The airway was gauged and a Novatech Silicone - Dumon stent (12x60mm) was implanted in the Trachea. Stent seating was validated with good expansion and openness.\nPost-procedure blockage: ~11%.\nNo adverse events.",
     "cpt_codes": [
       31631
     ],
@@ -816,6 +858,12 @@
       "style_type": 9,
       "generated_name": "Jessica Rodriguez",
       "generation_date": "2025-12-09T12:06:13.436261"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -910,7 +958,7 @@
     }
   },
   {
-    "note_text": "INDICATION: Ms. Robinson, a 62-year-old female with squamous cell carcinoma, presented with critical right mainstem (RMS) stenosis.\nPROCEDURE: The patient was brought to the operating suite and placed under general anesthesia. Rigid bronchoscopy was initiated with jet ventilation. The RMS demonstrated severe 91% obstruction. Following balloon dilation to establish a working channel, a 20x50mm Novatech Silicone Dumon stent was delivered and deployed. Final inspection revealed excellent stent expansion and marked improvement in aeration (4% residual stenosis).\nDISPOSITION: The patient remained stable and was transferred to the floor.",
+    "note_text": "INDICATION: Ms. <PERSON>, a <DATE_TIME> female with squamous cell carcinoma, presented with critical right mainstem (RMS) stenosis.\nPROCEDURE: The patient was brought to the operating suite and placed under general <LOCATION>. Rigid bronchoscopy was initiated with jet ventilation. The RMS demonstrated severe 91% obstruction. Following balloon dilation to establish a working channel, a 20x50mm Novatech Silicone Dumon stent was delivered and deployed. Final inspection revealed excellent stent expansion and marked improvement in aeration (4% residual stenosis).\nDISPOSITION: The patient remained stable and was transferred to the floor.",
     "cpt_codes": [
       31636
     ],
@@ -998,10 +1046,18 @@
       "style_type": 2,
       "generated_name": "Karen Martinez",
       "generation_date": "2025-12-09T12:06:13.436312"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Service Performed: 31636 (Bronchoscopy with placement of bronchial stent).\nLocation: Right Mainstem Bronchus.\nDevice: Novatech Silicone Dumon Stent (20x50mm).\nDetails:\n- Rigid bronchoscopy used for access.\n- Stenosis (91%) dilated prior to insertion.\n- Stent positioned across the lesion in the RMS.\n- Confirmation of placement and patency documented.\nOutcome: Improvement from 91% to 4% obstruction.",
+    "note_text": "Service Performed: <DATE_TIME> (Bronchoscopy with placement of bronchial stent).\nLocation: Right Mainstem Bronchus.\nDevice: Novatech Silicone Dumon Stent (20x50mm).\nDetails:\n- Rigid bronchoscopy used for access.\n- Stenosis (91%) dilated prior to insertion.\n- Stent positioned across the lesion in the RMS.\n- Confirmation of placement and patency documented.\nOutcome: Improvement from 91% to 4% obstruction.",
     "cpt_codes": [
       31636
     ],
@@ -1089,10 +1145,16 @@
       "style_type": 3,
       "generated_name": "Nancy Anderson",
       "generation_date": "2025-12-09T12:06:13.436338"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronchoscopy, Stent Placement RMS\nPatient: Robinson, Barbara\nStaff: Dr. Anderson\nSteps:\n1. Patient intubated/rigid scope placed.\n2. RMS stenosis identified (91%).\n3. Dilation performed.\n4. Dumon stent 20x50mm placed in Right Mainstem.\n5. Airway patent post-procedure.\nComplications: None.\nPlan: Admit overnight.",
+    "note_text": "Procedure: Rigid Bronchoscopy, <PERSON> RMS\nPatient: <PERSON>\nStaff: Dr. Anderson\nSteps:\n1. Patient intubated/rigid scope placed.\n2. RMS stenosis identified (91%).\n3. Dilation performed.\n4. Dumon stent 20x50mm placed in Right Mainstem.\n5. Airway patent post-procedure.\nComplications: None.\nPlan: Admit overnight.",
     "cpt_codes": [
       31636
     ],
@@ -1180,10 +1242,17 @@
       "style_type": 4,
       "generated_name": "Lisa Taylor",
       "generation_date": "2025-12-09T12:06:13.436365"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure note for Barbara Robinson she has squamous cell cancer blocking the right mainstem almost completely 91 percent. We did a rigid bronch under GA dilated it up and then put in a silicone dumon stent size 20 by 50. It opened up beautifully down to like 4 percent obstruction. No issues minimal bleeding sending her to the floor for the night check on her in the morning.",
+    "note_text": "Procedure note for <PERSON> she has squamous cell cancer blocking the right mainstem almost completely 91 percent. We did a rigid bronch under GA dilated it up and then put in a silicone dumon stent size 20 by 50. It opened up beautifully down to like 4 percent obstruction. No issues minimal bleeding sending her to the floor for the <DATE_TIME> check on her in the morning.",
     "cpt_codes": [
       31636
     ],
@@ -1271,10 +1340,17 @@
       "style_type": 5,
       "generated_name": "Betty Thomas",
       "generation_date": "2025-12-09T12:06:13.436389"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Indication was squamous cell carcinoma with airway compromise, specifically a 91% obstruction of the right mainstem. Under general anesthesia with jet ventilation, rigid bronchoscopy was performed. Sequential balloon dilation of the RMS stenosis was completed. The airway was measured and a Novatech Silicone Dumon stent (20x50mm) was deployed in the Right mainstem. Stent position was confirmed with good expansion and patency, resulting in a post-procedure obstruction of 4%. There were no complications and EBL was minimal.",
+    "note_text": "Indication was squamous cell carcinoma with airway compromise, specifically a 91% obstruction of the right mainstem. Under general <LOCATION> with jet ventilation, rigid bronchoscopy was performed. Sequential balloon dilation of the RMS stenosis was completed. The airway was measured and a Novatech Silicone Dumon stent (20x50mm) was deployed in the Right mainstem. Stent position was confirmed with good expansion and patency, resulting in a post-procedure obstruction of 4%. There were no complications and EBL was minimal.",
     "cpt_codes": [
       31636
     ],
@@ -1362,10 +1438,16 @@
       "style_type": 6,
       "generated_name": "Margaret Hernandez",
       "generation_date": "2025-12-09T12:06:13.436412"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSCC with 91% Right Mainstem obstruction.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nRMS stenosis dilated. Novatech Dumon stent (20x50mm) deployed in RMS. Obstruction reduced to 4%.\n[Plan]\nAdmit overnight. Repeat bronch 4-6 weeks.",
+    "note_text": "[Indication]\nSCC with 91% Right Mainstem obstruction.\n[<LOCATION>]\nGeneral, Rigid Bronchoscopy.\n[Description]\nRMS stenosis dilated. Novatech Dumon stent (20x50mm) deployed in RMS. Obstruction reduced to 4%.\n[Plan]\nAdmit overnight. Repeat bronch <DATE_TIME>.",
     "cpt_codes": [
       31636
     ],
@@ -1453,10 +1535,17 @@
       "style_type": 7,
       "generated_name": "Sandra Moore",
       "generation_date": "2025-12-09T12:06:13.436442"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on Ms. Robinson to treat her airway compromise due to squamous cell carcinoma. The right mainstem bronchus was found to be 91% obstructed. We first dilated the area with a balloon and then deployed a 20x50mm Novatech Silicone Dumon stent. The stent sat perfectly, reducing the obstruction to approximately 4% and restoring airflow. The patient had no complications and recovery was uneventful.",
+    "note_text": "We performed a rigid bronchoscopy on Ms. <PERSON> to treat her airway compromise due to squamous cell carcinoma. The right mainstem bronchus was found to be 91% obstructed. We first dilated the area with a balloon and then deployed a 20x50mm Novatech Silicone Dumon stent. The stent sat perfectly, reducing the obstruction to approximately 4% and restoring airflow. The patient had no complications and recovery was uneventful.",
     "cpt_codes": [
       31636
     ],
@@ -1544,10 +1633,16 @@
       "style_type": 8,
       "generated_name": "Ashley Martin",
       "generation_date": "2025-12-09T12:06:13.436479"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Squamous cell carcinoma with airway restriction.\nPre-procedure occlusion: ~91% Right mainstem.\nPROCEDURE: Under general anesthesia with jet ventilation, rigid bronchoscopy was conducted. Sequential balloon expansion of RMS narrowing was performed. The airway was sized and a Novatech Silicone - Dumon stent (20x50mm) was installed in the Right mainstem. Stent location was verified with good opening and flow.\nPost-procedure occlusion: ~4%.\nNo mishaps.",
+    "note_text": "Indication: Squamous cell carcinoma with airway restriction.\nPre-procedure occlusion: ~91% Right mainstem.\nPROCEDURE: Under general <LOCATION> with jet ventilation, rigid bronchoscopy was conducted. <LOCATION> balloon expansion of RMS narrowing was performed. The airway was sized and a Novatech Silicone - Dumon stent (20x50mm) was installed in the Right mainstem. Stent location was verified with good opening and flow.\nPost-procedure occlusion: ~4%.\nNo mishaps.",
     "cpt_codes": [
       31636
     ],
@@ -1635,6 +1730,13 @@
       "style_type": 9,
       "generated_name": "Kimberly Jackson",
       "generation_date": "2025-12-09T12:06:13.436504"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -1729,7 +1831,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Ms. Green presented with central airway obstruction complicating primary lung adenocarcinoma.\nPROCEDURE: Rigid bronchoscopy was undertaken under general anesthesia. The right mainstem bronchus exhibited significant malignant stricture (72%). To restore airway patency, the lesion was dilated, followed by the deployment of a self-expanding metallic stent (Aero SEMS, covered, 16x30mm). The prosthesis expanded appropriately, reducing the obstruction to a clinically insignificant 8%.\nCONCLUSION: Successful palliation of RMS obstruction.",
+    "note_text": "HISTORY: Ms. <PERSON> presented with central airway obstruction complicating primary lung adenocarcinoma.\nPROCEDURE: Rigid bronchoscopy was undertaken under general <LOCATION>. The right mainstem bronchus exhibited significant malignant stricture (72%). To restore airway patency, the lesion was dilated, followed by the deployment of a self-expanding metallic stent (Aero SEMS, covered, 16x30mm). The prosthesis expanded appropriately, reducing the obstruction to a clinically insignificant 8%.\nCONCLUSION: Successful palliation of RMS obstruction.",
     "cpt_codes": [
       31636
     ],
@@ -1817,10 +1919,17 @@
       "style_type": 2,
       "generated_name": "Emily White",
       "generation_date": "2025-12-09T12:06:13.436559"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Coding Data:\n- Primary Code: 31636 (Bronchial Stent Placement).\n- Device: Aero SEMS (Covered).\n- Dimensions: 16mm x 30mm.\n- Site: Right Mainstem Bronchus.\n- Technique: Rigid bronchoscopy with balloon dilation facilitation.\n- Indication: Malignant airway obstruction (72% pre-op).\n- Outcome: Successful deployment, patent airway.",
+    "note_text": "Coding Data:\n- Primary Code: <DATE_TIME> (Bronchial Stent Placement).\n- Device: Aero SEMS (Covered).\n- Dimensions: 16mm x 30mm.\n- Site: Right Mainstem Bronchus.\n- Technique: Rigid bronchoscopy with balloon dilation facilitation.\n- Indication: Malignant airway obstruction (72% pre-op).\n- Outcome: Successful deployment, patent airway.",
     "cpt_codes": [
       31636
     ],
@@ -1908,6 +2017,12 @@
       "style_type": 3,
       "generated_name": "Michelle Lopez",
       "generation_date": "2025-12-09T12:06:13.436583"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -2002,7 +2117,7 @@
     }
   },
   {
-    "note_text": "Betty Green procedure note she has lung cancer blocking the right mainstem about 72 percent. Did the rigid bronch dilated it and put in an Aero covered stent 16 by 30. Looks really good opened up to 8 percent. No bleeding complications patient goes to the floor for observation thanks.",
+    "note_text": "<PERSON> procedure note she has lung cancer blocking the right mainstem about 72 percent. Did the rigid bronch dilated it and put in an Aero covered stent 16 by 30. Looks really good opened up to 8 percent. No bleeding complications patient goes to the floor for observation thanks.",
     "cpt_codes": [
       31636
     ],
@@ -2090,10 +2205,16 @@
       "style_type": 5,
       "generated_name": "Amanda Gonzalez",
       "generation_date": "2025-12-09T12:06:13.436633"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "The patient has primary lung adenocarcinoma with CAO, presenting with ~72% obstruction of the Right mainstem. Under general anesthesia with jet ventilation, rigid bronchoscopy was performed. Sequential balloon dilation of the RMS stenosis was performed. The airway was measured and an Aero SEMS Covered stent (16x30mm) was deployed in the Right mainstem. Stent position was confirmed with good expansion and patency. Post-procedure obstruction was ~8%. There were no complications and EBL was minimal.",
+    "note_text": "The patient has primary lung adenocarcinoma with CAO, presenting with ~72% obstruction of the Right mainstem. Under general <LOCATION> with jet ventilation, rigid bronchoscopy was performed. Sequential balloon dilation of the RMS stenosis was performed. The airway was measured and an Aero SEMS Covered stent (16x30mm) was deployed in the Right mainstem. Stent position was confirmed with good expansion and patency. Post-procedure obstruction was ~8%. There were no complications and EBL was minimal.",
     "cpt_codes": [
       31636
     ],
@@ -2181,10 +2302,16 @@
       "style_type": 6,
       "generated_name": "Melissa Harris",
       "generation_date": "2025-12-09T12:06:13.436658"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nLung adenocarcinoma, 72% RMS obstruction.\n[Anesthesia]\nGeneral, Rigid Bronch.\n[Description]\nRMS dilated. Aero SEMS Covered stent (16x30mm) placed. Obstruction reduced to 8%.\n[Plan]\nAdmit for observation. Follow up 4-6 weeks.",
+    "note_text": "[Indication]\nLung adenocarcinoma, 72% RMS obstruction.\n[<LOCATION>]\nGeneral, Rigid Bronch.\n[Description]\nRMS dilated. Aero SEMS Covered stent (16x30mm) placed. Obstruction reduced to 8%.\n[Plan]\nAdmit for observation. Follow up <DATE_TIME>.",
     "cpt_codes": [
       31636
     ],
@@ -2272,10 +2399,17 @@
       "style_type": 7,
       "generated_name": "Deborah Clark",
       "generation_date": "2025-12-09T12:06:13.436683"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Ms. Green was brought to the OR for management of her malignant airway obstruction. Using rigid bronchoscopy, we identified a 72% blockage in the right mainstem bronchus. We dilated the stricture and then placed a 16x30mm Aero covered SEMS. The stent expanded immediately, clearing the airway to near-normal patency (8% residual). She remained stable throughout and was transferred to the floor.",
+    "note_text": "Ms. <PERSON> was brought to the OR for management of her malignant airway obstruction. Using rigid bronchoscopy, we identified a 72% blockage in the right mainstem bronchus. We dilated the stricture and then placed a 16x30mm Aero covered SEMS. The stent expanded immediately, clearing the airway to near-normal patency (8% residual). She remained stable throughout and was transferred to the floor.",
     "cpt_codes": [
       31636
     ],
@@ -2363,10 +2497,16 @@
       "style_type": 8,
       "generated_name": "Stephanie Lewis",
       "generation_date": "2025-12-09T12:06:13.436708"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Primary lung adenocarcinoma with CAO.\nPre-procedure blockage: ~72% Right mainstem.\nPROCEDURE: Under general anesthesia, rigid bronchoscopy was executed. Sequential balloon widening of RMS stenosis was done. The airway was calibrated and an Aero SEMS - Covered stent (16x30mm) was inserted in the Right mainstem. Stent orientation was corroborated with good distension and openness.\nPost-procedure blockage: ~8%.\nNo complications.",
+    "note_text": "Indication: Primary lung adenocarcinoma with CAO.\nPre-procedure blockage: ~72% Right mainstem.\nPROCEDURE: Under general <LOCATION>, rigid bronchoscopy was executed. Sequential balloon widening of RMS stenosis was done. The airway was calibrated and an Aero SEMS - Covered stent (16x30mm) was inserted in the Right mainstem. Stent orientation was corroborated with good distension and openness.\nPost-procedure blockage: ~8%.\nNo complications.",
     "cpt_codes": [
       31636
     ],
@@ -2454,6 +2594,12 @@
       "style_type": 9,
       "generated_name": "Rebecca Robinson",
       "generation_date": "2025-12-09T12:06:13.436733"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -2545,7 +2691,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. Allen presented with malignant central airway obstruction at the right lower lobe (RLL) orifice. Under general anesthesia, rigid bronchoscopy revealed an endobronchial tumor causing 78% occlusion. Thermal ablation was performed utilizing Argon Plasma Coagulation (APC), followed by mechanical debulking. This sequence was repeated to maximize luminal gain. Post-intervention assessment showed a significant reduction in tumor burden with 18% residual obstruction. Hemostasis was secured via APC application to the tumor base.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented with malignant central airway obstruction at the right lower lobe (RLL) orifice. Under general <PERSON>, rigid bronchoscopy revealed an endobronchial tumor causing 78% occlusion. Thermal ablation was performed utilizing Argon Plasma Coagulation (APC), followed by mechanical debulking. This sequence was repeated to maximize luminal gain. Post-intervention assessment showed a significant reduction in tumor burden with 18% residual obstruction. Hemostasis was secured via APC application to the tumor base.",
     "cpt_codes": [
       31641
     ],
@@ -2630,6 +2776,13 @@
       "style_type": 2,
       "generated_name": "John Young",
       "generation_date": "2025-12-09T12:06:13.436781"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -2721,7 +2874,7 @@
     }
   },
   {
-    "note_text": "Procedure: Tumor Debulking (APC)\nPatient: Allen, Daniel\nSteps:\n1. Rigid bronchoscopy initiated.\n2. Tumor found at RLL orifice (78%).\n3. APC applied for destruction.\n4. Debris removed.\n5. Repeat until maximal debulking achieved (18% residual).\n6. Hemostasis confirmed.\nPlan: ICU observation.",
+    "note_text": "Procedure: Tumor Debulking (APC)\nPatient: <PERSON>\nSteps:\n1. Rigid bronchoscopy initiated.\n2. Tumor found at RLL orifice (78%).\n3. APC applied for destruction.\n4. <PERSON> removed.\n5. Repeat until maximal debulking achieved (18% residual).\n6. Hemostasis confirmed.\nPlan: ICU observation.",
     "cpt_codes": [
       31641
     ],
@@ -2806,10 +2959,17 @@
       "style_type": 4,
       "generated_name": "Michael King",
       "generation_date": "2025-12-09T12:06:13.436829"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Daniel Allen here for debulking of a tumor in the RLL it was blocking about 78 percent. We used the rigid scope and the APC argon plasma to burn and remove the tumor. Did a few passes and got it down to 18 percent. Bleeding was controlled about 50cc loss. Sending him to the ICU for tonight just to be safe.",
+    "note_text": "<PERSON> here for debulking of a tumor in the RLL it was blocking about 78 percent. We used the rigid scope and the APC argon plasma to burn and remove the tumor. Did a few passes and got it down to 18 percent. Bleeding was controlled about 50cc loss. Sending him to the ICU for <DATE_TIME> just to be safe.",
     "cpt_codes": [
       31641
     ],
@@ -2894,10 +3054,17 @@
       "style_type": 5,
       "generated_name": "William Wright",
       "generation_date": "2025-12-09T12:06:13.436854"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Indication: Malignant central airway obstruction with ~78% obstruction at RLL orifice. Under general anesthesia, rigid bronchoscopy was performed. Endobronchial tumor was identified at the RLL orifice. Argon plasma coagulation (APC) was performed with sequential tumor removal. Multiple passes were performed to achieve maximal debulking. Additional APC/laser was used for hemostasis and tumor base ablation. Post-procedure obstruction was ~18%. EBL was ~50mL and hemostasis was achieved. Specimens were sent for histology.",
+    "note_text": "Indication: Malignant central airway obstruction with ~78% obstruction at RLL orifice. Under general <PERSON>, rigid bronchoscopy was performed. Endobronchial tumor was identified at the RLL orifice. Argon plasma coagulation (APC) was performed with sequential tumor removal. Multiple passes were performed to achieve maximal debulking. Additional APC/laser was used for hemostasis and tumor base ablation. Post-procedure obstruction was ~18%. EBL was ~50mL and hemostasis was achieved. Specimens were sent for histology.",
     "cpt_codes": [
       31641
     ],
@@ -2982,10 +3149,16 @@
       "style_type": 6,
       "generated_name": "David Scott",
       "generation_date": "2025-12-09T12:06:13.436878"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nMalignant CAO, RLL orifice (78%).\n[Anesthesia]\nGeneral, Rigid Bronch.\n[Description]\nAPC destruction of tumor performed. Sequential removal. Hemostasis achieved. Residual obstruction 18%.\n[Plan]\nICU observation. Oncology follow-up.",
+    "note_text": "[Indication]\nMalignant CAO, RLL orifice (78%).\n[<LOCATION>]\nGeneral, Rigid Bronch.\n[Description]\nAPC destruction of tumor performed. Sequential removal. Hemostasis achieved. Residual obstruction 18%.\n[Plan]\nICU observation. Oncology follow-up.",
     "cpt_codes": [
       31641
     ],
@@ -3070,10 +3243,16 @@
       "style_type": 7,
       "generated_name": "Richard Torres",
       "generation_date": "2025-12-09T12:06:13.436901"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Allen underwent rigid bronchoscopy for a tumor obstructing his right lower lobe bronchus by about 78%. We used argon plasma coagulation to destroy the tumor tissue and removed it sequentially. After several passes, we successfully debulked the lesion down to an 18% residual obstruction. We ensured all bleeding was stopped using APC. He is going to the ICU for overnight monitoring.",
+    "note_text": "Mr. <PERSON> underwent rigid bronchoscopy for a tumor obstructing his right lower lobe bronchus by about 78%. We used argon plasma coagulation to destroy the tumor tissue and removed it sequentially. After several passes, we successfully debulked the lesion down to an 18% residual obstruction. We ensured all bleeding was stopped using APC. He is going to the ICU for <DATE_TIME> monitoring.",
     "cpt_codes": [
       31641
     ],
@@ -3158,10 +3337,17 @@
       "style_type": 8,
       "generated_name": "Charles Nguyen",
       "generation_date": "2025-12-09T12:06:13.436925"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Indication: Malignant central airway blockage.\nPre-procedure: ~78% occlusion at RLL orifice.\nPROCEDURE: Under general anesthesia, rigid bronchoscopy was conducted. Endobronchial neoplasm found at RLL orifice. APC (argon plasma coagulation) was utilized with sequential tumor extraction. Multiple passes were done to attain maximal volume reduction. Additional APC/laser used for hemostasis and tumor base cauterization.\nPost-procedure: ~18% residual occlusion.\nEBL: ~50mL.",
+    "note_text": "Indication: Malignant central airway blockage.\nPre-procedure: ~78% occlusion at RLL orifice.\nPROCEDURE: Under general <LOCATION>, rigid bronchoscopy was conducted. Endobronchial neoplasm found at RLL orifice. APC (argon plasma coagulation) was utilized with sequential tumor extraction. Multiple passes were done to attain maximal volume reduction. Additional APC/laser used for hemostasis and tumor base cauterization.\nPost-procedure: ~18% residual occlusion.\nEBL: ~50mL.",
     "cpt_codes": [
       31641
     ],
@@ -3246,6 +3432,12 @@
       "style_type": 9,
       "generated_name": "Joseph Hill",
       "generation_date": "2025-12-09T12:06:13.436951"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -3339,7 +3531,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Ms. Baker presented with near-total occlusion (93%) of the left mainstem (LMS) bronchus due to squamous cell carcinoma.\nPROCEDURE: Under general anesthesia with jet ventilation, the airway was accessed via rigid bronchoscopy. Given the severity of the stenosis, a covered self-expanding metallic stent (Aero SEMS, 16x30mm) was selected and deployed across the lesion. The stent demonstrated excellent radial force and expansion, restoring the airway lumen to 8% residual narrowing.\nIMPRESSION: Successful recanalization of the LMS.",
+    "note_text": "HISTORY: Ms. <PERSON> presented with near-total occlusion (93%) of the left mainstem (LMS) bronchus due to squamous cell carcinoma.\nPROCEDURE: Under general <LOCATION> with jet ventilation, the airway was accessed via rigid bronchoscopy. Given the severity of the stenosis, a covered self-expanding metallic stent (Aero SEMS, 16x30mm) was selected and deployed across the lesion. The stent demonstrated excellent radial force and expansion, restoring the airway lumen to 8% residual narrowing.\nIMPRESSION: Successful recanalization of the LMS.",
     "cpt_codes": [
       31636
     ],
@@ -3426,10 +3618,17 @@
       "style_type": 2,
       "generated_name": "Cynthia Green",
       "generation_date": "2025-12-09T12:06:13.437002"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Procedure Code: 31636 (Bronchial Stent).\nSite: Left Mainstem Bronchus.\nProsthesis: Aero SEMS (Covered), 16x30mm.\nJustification: 93% Malignant Obstruction.\nTechnique: Rigid bronchoscopy, measurement, deployment, verification.\nResult: Patent airway.",
+    "note_text": "Procedure Code: <DATE_TIME> (Bronchial Stent).\nSite: Left Mainstem Bronchus.\nProsthesis: Aero SEMS (Covered), 16x30mm.\nJustification: 93% Malignant Obstruction.\nTechnique: Rigid bronchoscopy, measurement, deployment, verification.\nResult: Patent airway.",
     "cpt_codes": [
       31636
     ],
@@ -3516,10 +3715,16 @@
       "style_type": 3,
       "generated_name": "Kathleen Adams",
       "generation_date": "2025-12-09T12:06:13.437026"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure: LMS Stent Placement\nPatient: Baker, Kathleen\nSteps:\n1. GA/Rigid scope.\n2. LMS obstruction 93%.\n3. Measured airway.\n4. Deployed Aero SEMS 16x30mm.\n5. Confirmed patency.\nNo complications.\nPlan: Admit.",
+    "note_text": "Procedure: LMS Stent Placement\nPatient: <PERSON>\nSteps:\n1. GA/Rigid scope.\n2. LMS obstruction 93%.\n3. Measured airway.\n4. Deployed Aero SEMS 16x30mm.\n5. Confirmed patency.\nNo complications.\nPlan: Admit.",
     "cpt_codes": [
       31636
     ],
@@ -3606,10 +3811,16 @@
       "style_type": 4,
       "generated_name": "Amy Nelson",
       "generation_date": "2025-12-09T12:06:13.437053"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Kathleen Baker procedure note she has squamous cell cancer blocking the left mainstem 93 percent really tight. We went in with the rigid scope measured it out and put in an Aero covered stent 16 by 30. Opened up great down to 8 percent. No bleeding no issues. Admit her for the night.",
+    "note_text": "<PERSON> procedure note she has squamous cell cancer blocking the left mainstem 93 percent really tight. We went in with the rigid scope measured it out and put in an Aero covered stent 16 by 30. Opened up great down to 8 percent. No bleeding no issues. Admit her for <DATE_TIME>.",
     "cpt_codes": [
       31636
     ],
@@ -3696,10 +3907,17 @@
       "style_type": 5,
       "generated_name": "Shirley Baker",
       "generation_date": "2025-12-09T12:06:13.437082"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Indication: Squamous cell carcinoma with airway compromise, ~93% Left mainstem obstruction. Under general anesthesia with jet ventilation, rigid bronchoscopy was performed. The airway was measured and an Aero SEMS Covered stent (16x30mm) was deployed in the Left mainstem. Stent position was confirmed with good expansion and patency. Post-procedure obstruction was ~8%. There were no complications and EBL was minimal.",
+    "note_text": "Indication: Squamous cell carcinoma with airway compromise, ~93% Left mainstem obstruction. Under general <LOCATION> with jet ventilation, rigid bronchoscopy was performed. The airway was measured and an Aero SEMS Covered stent (16x30mm) was deployed in the Left mainstem. Stent position was confirmed with good expansion and patency. Post-procedure obstruction was ~8%. There were no complications and EBL was minimal.",
     "cpt_codes": [
       31636
     ],
@@ -3786,10 +4004,16 @@
       "style_type": 6,
       "generated_name": "Angela Hall",
       "generation_date": "2025-12-09T12:06:13.437105"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSCC, 93% LMS obstruction.\n[Anesthesia]\nGeneral, Rigid Bronch.\n[Description]\nAero SEMS Covered stent (16x30mm) deployed in LMS. Good expansion. Obstruction reduced to 8%.\n[Plan]\nAdmit overnight. Follow up 4-6 weeks.",
+    "note_text": "[Indication]\nSCC, 93% LMS obstruction.\n[<LOCATION>]\nGeneral, Rigid Bronch.\n[Description]\nAero SEMS Covered stent (16x30mm) deployed in LMS. Good expansion. Obstruction reduced to 8%.\n[Plan]\nAdmit overnight. Follow up <DATE_TIME>.",
     "cpt_codes": [
       31636
     ],
@@ -3876,10 +4100,17 @@
       "style_type": 7,
       "generated_name": "Helen Rivera",
       "generation_date": "2025-12-09T12:06:13.437146"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Ms. Baker required urgent intervention for a 93% blockage of her left mainstem bronchus caused by squamous cell carcinoma. Using a rigid bronchoscope under general anesthesia, we placed a 16x30mm covered Aero SEMS. The stent expanded fully, immediately relieving the obstruction and leaving only an 8% residual narrowing. She tolerated the procedure well and was admitted for observation.",
+    "note_text": "Ms. <PERSON> required urgent intervention for a 93% blockage of her left mainstem bronchus caused by squamous cell carcinoma. Using a rigid bronchoscope under general <LOCATION>, we placed a 16x30mm covered Aero SEMS. The stent expanded fully, immediately relieving the obstruction and leaving only an 8% residual narrowing. She tolerated the procedure well and was admitted for observation.",
     "cpt_codes": [
       31636
     ],
@@ -3966,10 +4197,17 @@
       "style_type": 8,
       "generated_name": "Anna Campbell",
       "generation_date": "2025-12-09T12:06:13.437174"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Indication: Squamous cell carcinoma with airway impairment.\nPre-procedure blockage: ~93% Left mainstem.\nPROCEDURE: Under general anesthesia with jet ventilation, rigid bronchoscopy was performed. The airway was gauged and an Aero SEMS - Covered stent (16x30mm) was positioned in the Left mainstem. Stent placement was validated with good distension and openness.\nPost-procedure blockage: ~8%.\nNo complications.",
+    "note_text": "Indication: Squamous cell carcinoma with airway impairment.\nPre-procedure blockage: ~93% Left mainstem.\nPROCEDURE: Under general <LOCATION> with jet ventilation, rigid bronchoscopy was performed. The airway was gauged and an Aero SEMS - Covered stent (16x30mm) was positioned in the Left mainstem. Stent placement was validated with good distension and openness.\nPost-procedure blockage: ~8%.\nNo complications.",
     "cpt_codes": [
       31636
     ],
@@ -4056,6 +4294,12 @@
       "style_type": 9,
       "generated_name": "Brenda Mitchell",
       "generation_date": "2025-12-09T12:06:13.437198"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -4146,7 +4390,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Mr. Hernandez presented with a 74% obstruction of the bronchus intermedius (BI) due to lung adenocarcinoma. The patient was placed under general anesthesia. Rigid bronchoscopic inspection identified the exophytic tumor. Mechanical excision was performed utilizing rigid biopsy forceps. Sequential bites were taken to debulk the lesion until the airway lumen was satisfactorily restored (12% residual). Hemostasis was maintained throughout.\nPATHOLOGY: Tissue submitted for histological analysis.",
+    "note_text": "OPERATIVE SUMMARY: Mr. <PERSON> presented with a 74% obstruction of the bronchus intermedius (BI) due to lung adenocarcinoma. The patient was placed under general anesthesia. Rigid bronchoscopic inspection identified the exophytic tumor. Mechanical excision was performed utilizing rigid biopsy forceps. <LOCATION> bites were taken to debulk the lesion until the airway lumen was satisfactorily restored (12% residual). Hemostasis was maintained throughout.\nPATHOLOGY: Tissue submitted for histological analysis.",
     "cpt_codes": [
       31640
     ],
@@ -4230,6 +4474,13 @@
       "style_type": 2,
       "generated_name": "Christopher Roberts",
       "generation_date": "2025-12-09T12:06:13.437259"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -4320,7 +4571,7 @@
     }
   },
   {
-    "note_text": "Procedure: Tumor Excision (Forceps)\nPatient: Hernandez, Kevin\nSteps:\n1. Rigid scope inserted.\n2. Tumor at BI visualized.\n3. Used biopsy forceps for mechanical debulking.\n4. Removed tumor in pieces.\n5. Hemostasis achieved.\nPlan: ICU obs.",
+    "note_text": "Procedure: Tumor Excision (Forceps)\nPatient: <PERSON>\nSteps:\n1. Rigid scope inserted.\n2. Tumor at BI visualized.\n3. Used biopsy forceps for mechanical debulking.\n4. Removed tumor in pieces.\n5. Hemostasis achieved.\nPlan: ICU obs.",
     "cpt_codes": [
       31640
     ],
@@ -4404,10 +4655,16 @@
       "style_type": 4,
       "generated_name": "Paul Phillips",
       "generation_date": "2025-12-09T12:06:13.437306"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Kevin Hernandez here for tumor removal in the BI blocking 74 percent. We used the rigid scope and the big biopsy forceps to just grab and pull the tumor out. Did a bunch of passes got it down to 12 percent. Bleeding was okay about 75cc. Samples sent to lab. He goes to ICU tonight.",
+    "note_text": "<PERSON> here for tumor removal in the <LOCATION> blocking 74 percent. We used the rigid scope and the big biopsy forceps to just grab and pull the tumor out. Did a bunch of passes got it down to 12 percent. Bleeding was okay about 75cc. Samples sent to lab. He goes to ICU <DATE_TIME>.",
     "cpt_codes": [
       31640
     ],
@@ -4491,10 +4748,18 @@
       "style_type": 5,
       "generated_name": "Mark Evans",
       "generation_date": "2025-12-09T12:06:13.437330"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Indication: Primary lung adenocarcinoma with CAO, ~74% obstruction at BI. Under general anesthesia, rigid bronchoscopy was performed. Endobronchial tumor was identified at BI. Rigid bronchoscopy debulking with biopsy forceps was performed with sequential tumor removal. Multiple passes were performed to achieve maximal debulking. Post-procedure obstruction was ~12% residual obstruction. EBL was ~75mL and hemostasis was achieved. Specimens were sent for histology.",
+    "note_text": "Indication: Primary lung adenocarcinoma with CAO, ~74% obstruction at BI. Under general <PERSON>, rigid bronchoscopy was performed. Endobronchial tumor was identified at BI. Rigid bronchoscopy debulking with biopsy forceps was performed with sequential tumor removal. Multiple passes were performed to achieve maximal debulking. Post-procedure obstruction was ~12% residual obstruction. EBL was ~75mL and hemostasis was achieved. Specimens were sent for histology.",
     "cpt_codes": [
       31640
     ],
@@ -4578,10 +4843,16 @@
       "style_type": 6,
       "generated_name": "Donald Turner",
       "generation_date": "2025-12-09T12:06:13.437353"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nLung adenocarcinoma, BI obstruction (74%).\n[Anesthesia]\nGeneral, Rigid Bronch.\n[Description]\nMechanical debulking with forceps performed. Tumor excised. Residual obstruction 12%. EBL 75ml.\n[Plan]\nICU observation. Oncology follow-up.",
+    "note_text": "[Indication]\nLung adenocarcinoma, BI obstruction (74%).\n[<LOCATION>]\nGeneral, Rigid Bronch.\n[Description]\nMechanical debulking with forceps performed. Tumor excised. Residual obstruction 12%. EBL 75ml.\n[Plan]\nICU observation. Oncology follow-up.",
     "cpt_codes": [
       31640
     ],
@@ -4665,10 +4936,16 @@
       "style_type": 7,
       "generated_name": "George Diaz",
       "generation_date": "2025-12-09T12:06:13.437378"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on Mr. Hernandez to clear a tumor obstructing his bronchus intermedius. The blockage was approximately 74%. We used rigid biopsy forceps to mechanically excise the tumor tissue piece by piece. We continued this until the obstruction was reduced to 12%. The bleeding was controlled, and we collected sufficient samples for pathology. He was transferred to the ICU for recovery.",
+    "note_text": "We performed a rigid bronchoscopy on Mr. <PERSON> to clear a tumor obstructing his bronchus intermedius. The blockage was approximately 74%. We used rigid biopsy forceps to mechanically excise the tumor tissue piece by piece. We continued this until the obstruction was reduced to 12%. The bleeding was controlled, and we collected sufficient samples for pathology. He was transferred to the ICU for recovery.",
     "cpt_codes": [
       31640
     ],
@@ -4752,10 +5029,16 @@
       "style_type": 8,
       "generated_name": "Kenneth Parker",
       "generation_date": "2025-12-09T12:06:13.437401"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Primary lung adenocarcinoma with CAO.\nPre-procedure: ~74% occlusion at BI.\nPROCEDURE: Under general anesthesia, rigid bronchoscopy was conducted. Endobronchial neoplasm detected at BI. Rigid bronchoscopy resection with biopsy forceps was executed with sequential tumor extraction. Multiple passes were done to attain maximal debulking.\nPost-procedure: ~12% residual occlusion.\nEBL: ~75mL.",
+    "note_text": "Indication: Primary lung adenocarcinoma with CAO.\nPre-procedure: ~74% occlusion at <LOCATION>.\nPROCEDURE: Under general <LOCATION>, rigid bronchoscopy was conducted. Endobronchial neoplasm detected at BI. Rigid bronchoscopy resection with biopsy forceps was executed with sequential tumor extraction. Multiple passes were done to attain maximal debulking.\nPost-procedure: ~12% residual occlusion.\nEBL: ~75mL.",
     "cpt_codes": [
       31640
     ],
@@ -4839,6 +5122,13 @@
       "style_type": 9,
       "generated_name": "Steven Cruz",
       "generation_date": "2025-12-09T12:06:13.437424"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -4931,7 +5221,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. Baker presented with 66% malignant obstruction of the right mainstem (RMS). Rigid bronchoscopy was utilized. The tumor was addressed via cryoextraction, allowing for en bloc removal of significant tissue volume. Following cryodebulking, the tumor base was treated with APC for hemostasis and ablation. Residual stenosis was managed with balloon dilation. Final assessment showed 17% residual obstruction. Estimated blood loss was 200mL.\nDISPOSITION: ICU admission.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented with 66% malignant obstruction of the right mainstem (RMS). Rigid bronchoscopy was utilized. The tumor was addressed via cryoextraction, allowing for en bloc removal of significant tissue volume. Following cryodebulking, the tumor base was treated with APC for hemostasis and ablation. Residual stenosis was managed with balloon dilation. Final assessment showed 17% residual obstruction. Estimated blood loss was 200mL.\nDISPOSITION: ICU admission.",
     "cpt_codes": [
       31641
     ],
@@ -5017,6 +5307,12 @@
       "style_type": 2,
       "generated_name": "Brian Collins",
       "generation_date": "2025-12-09T12:06:13.437475"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5109,7 +5405,7 @@
     }
   },
   {
-    "note_text": "Procedure: Tumor Debulking (Cryo)\nPatient: Baker, Anthony\nSteps:\n1. Rigid scope to RMS.\n2. Tumor identified (66%).\n3. Cryoprobe used to extract tumor.\n4. APC used for clean up and bleeding.\n5. Balloon dilation for remaining narrowing.\n6. Hemostasis confirmed.\nPlan: ICU.",
+    "note_text": "Procedure: Tumor Debulking (Cryo)\nPatient: <PERSON>\nSteps:\n1. Rigid scope to RMS.\n2. Tumor identified (66%).\n3. Cryoprobe used to extract tumor.\n4. APC used for clean up and bleeding.\n5. Balloon dilation for remaining narrowing.\n6. Hemostasis confirmed.\nPlan: ICU.",
     "cpt_codes": [
       31641
     ],
@@ -5195,10 +5491,16 @@
       "style_type": 4,
       "generated_name": "Anthony Stewart",
       "generation_date": "2025-12-09T12:06:13.437524"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Anthony Baker for tumor debulking in the RMS blocking 66 percent. We used the cryo probe to freeze the tumor and pull it out in big chunks. Then used the APC to stop the bleeding and burn the base. Also dilated it a bit. Got it down to 17 percent. Lost about 200cc of blood but got it stopped. Sending him to ICU.",
+    "note_text": "<PERSON> for tumor debulking in the RMS blocking 66 percent. We used the cryo probe to freeze the tumor and pull it out in big chunks. Then used the APC to stop the bleeding and burn the base. Also dilated it a bit. Got it down to 17 percent. Lost about 200cc of blood but got it stopped. Sending him to ICU.",
     "cpt_codes": [
       31641
     ],
@@ -5284,10 +5586,16 @@
       "style_type": 5,
       "generated_name": "Kevin Morris",
       "generation_date": "2025-12-09T12:06:13.437548"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Malignant central airway obstruction, ~66% obstruction at RMS. Under general anesthesia, rigid bronchoscopy was performed. Endobronchial tumor identified at RMS. Cryoextraction performed with sequential tumor removal. Multiple passes performed to achieve maximal debulking. Additional APC/laser used for hemostasis and tumor base ablation. Balloon dilation performed for residual stenosis. Post-procedure obstruction was ~17% residual obstruction. EBL was ~200mL. Specimens sent for histology.",
+    "note_text": "Indication: Malignant central airway obstruction, ~66% obstruction at RMS. Under general <PERSON>, rigid bronchoscopy was performed. Endobronchial tumor identified at RMS. Cryoextraction performed with sequential tumor removal. Multiple passes performed to achieve maximal debulking. Additional APC/laser used for hemostasis and tumor base ablation. Balloon dilation performed for residual stenosis. Post-procedure obstruction was ~17% residual obstruction. EBL was ~200mL. Specimens sent for histology.",
     "cpt_codes": [
       31641
     ],
@@ -5373,10 +5681,16 @@
       "style_type": 6,
       "generated_name": "Jason Morales",
       "generation_date": "2025-12-09T12:06:13.437574"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nMalignant CAO, RMS (66%).\n[Anesthesia]\nGeneral, Rigid Bronch.\n[Description]\nCryoextraction of tumor performed. APC for hemostasis. Balloon dilation. Residual obstruction 17%. EBL 200ml.\n[Plan]\nICU observation.",
+    "note_text": "[Indication]\nMalignant CAO, RMS (66%).\n[<LOCATION>]\nGeneral, Rigid Bronch.\n[Description]\nCryoextraction of tumor performed. APC for hemostasis. Balloon dilation. Residual obstruction 17%. EBL 200ml.\n[Plan]\nICU observation.",
     "cpt_codes": [
       31641
     ],
@@ -5462,10 +5776,16 @@
       "style_type": 7,
       "generated_name": "Matthew Murphy",
       "generation_date": "2025-12-09T12:06:13.437598"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Baker underwent rigid bronchoscopy for a tumor in his right mainstem bronchus. We used cryoextraction to remove the tumor tissue efficiently. After the bulk of the tumor was removed, we used APC to treat the base and control bleeding. We also dilated the airway with a balloon to maximize patency. The obstruction was reduced from 66% to 17%. He lost about 200mL of blood, but hemostasis was achieved before finishing. He is heading to the ICU.",
+    "note_text": "Mr. <PERSON> underwent rigid bronchoscopy for a tumor in his right mainstem bronchus. We used cryoextraction to remove the tumor tissue efficiently. After the bulk of the tumor was removed, we used APC to treat the base and control bleeding. We also dilated the airway with a balloon to maximize patency. The obstruction was reduced from 66% to 17%. He lost about 200mL of blood, but hemostasis was achieved before finishing. He is heading to the ICU.",
     "cpt_codes": [
       31641
     ],
@@ -5551,10 +5871,16 @@
       "style_type": 8,
       "generated_name": "Gary Cook",
       "generation_date": "2025-12-09T12:06:13.437620"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Malignant central airway blockage.\nPre-procedure: ~66% occlusion at RMS.\nPROCEDURE: Under general anesthesia, rigid bronchoscopy was executed. Endobronchial neoplasm identified at RMS. Cryoextraction performed with sequential tumor withdrawal. Multiple passes were done to attain maximal debulking. Additional APC/laser utilized for hemostasis and tumor base cauterization. Balloon dilation executed for residual stenosis.\nPost-procedure: ~17% residual occlusion.\nEBL: ~200mL.",
+    "note_text": "Indication: Malignant central airway blockage.\nPre-procedure: ~66% occlusion at RMS.\nPROCEDURE: Under general <LOCATION>, rigid bronchoscopy was executed. Endobronchial neoplasm identified at RMS. Cryoextraction performed with sequential tumor withdrawal. Multiple passes were done to attain maximal debulking. Additional APC/laser utilized for hemostasis and tumor base cauterization. Balloon dilation executed for residual stenosis.\nPost-procedure: ~17% residual occlusion.\nEBL: ~200mL.",
     "cpt_codes": [
       31641
     ],
@@ -5640,6 +5966,12 @@
       "style_type": 9,
       "generated_name": "Timothy Rogers",
       "generation_date": "2025-12-09T12:06:13.437643"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -5734,7 +6066,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Ms. Rivera, with a history of esophageal carcinoma and tracheal invasion, presented with 86% stenosis of the right mainstem (RMS).\nPROCEDURE: General anesthesia with jet ventilation was established. Rigid bronchoscopy visualized the stenosis. Following mechanical dilation, a 20x30mm Novatech Silicone Dumon stent was deployed. The stent maintained airway patency against the extrinsic compression, resulting in a residual obstruction of 21%.\nOUTCOME: Satisfactory stent placement.",
+    "note_text": "HISTORY: Ms. <PERSON>, with a history of esophageal carcinoma and tracheal invasion, presented with 86% stenosis of the right mainstem (RMS).\nPROCEDURE: General <LOCATION> with jet ventilation was established. Rigid bronchoscopy visualized the stenosis. Following mechanical dilation, a 20x30mm Novatech Silicone Dumon stent was deployed. The stent maintained airway patency against the extrinsic compression, resulting in a residual obstruction of 21%.\nOUTCOME: Satisfactory stent placement.",
     "cpt_codes": [
       31636
     ],
@@ -5822,6 +6154,13 @@
       "style_type": 2,
       "generated_name": "Christina Peterson",
       "generation_date": "2025-12-09T12:06:13.437695"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -5916,7 +6255,7 @@
     }
   },
   {
-    "note_text": "Procedure: RMS Stent Placement\nPatient: Rivera, Lisa\nSteps:\n1. GA/Jet ventilation.\n2. Rigid scope inserted.\n3. RMS stenosis (86%) dilated.\n4. Dumon stent 20x30mm placed.\n5. Confirmed position.\nComplications: None.\nPlan: Admit.",
+    "note_text": "Procedure: RMS Stent Placement\nPatient: <PERSON>\nSteps:\n1. GA/Jet ventilation.\n2. Rigid scope inserted.\n3. RMS stenosis (86%) dilated.\n4. Dumon stent 20x30mm placed.\n5. Confirmed position.\nComplications: None.\nPlan: Admit.",
     "cpt_codes": [
       31636
     ],
@@ -6004,10 +6343,16 @@
       "style_type": 4,
       "generated_name": "Debra Reed",
       "generation_date": "2025-12-09T12:06:13.437746"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Lisa Rivera here for RMS stent she has esophageal cancer pushing in. Blocked 86 percent. We did the rigid bronch with jet vent dilated it open then put in a silicone dumon stent 20 by 30. Opened up to about 21 percent blocked. No bleeding. She goes to the floor.",
+    "note_text": "<PERSON> here for RMS stent she has esophageal cancer pushing in. Blocked 86 percent. We did the rigid bronch with jet vent dilated it open then put in a silicone dumon stent 20 by 30. Opened up to about 21 percent blocked. No bleeding. She goes to the floor.",
     "cpt_codes": [
       31636
     ],
@@ -6095,10 +6440,16 @@
       "style_type": 5,
       "generated_name": "Rachel Bailey",
       "generation_date": "2025-12-09T12:06:13.437771"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Esophageal cancer with tracheal invasion, ~86% Right mainstem obstruction. Under general anesthesia with jet ventilation, rigid bronchoscopy was performed. Sequential balloon dilation of RMS stenosis performed. Airway measured and Novatech Silicone - Dumon stent (20x30mm) deployed in Right mainstem. Stent position confirmed with good expansion and patency. Post-procedure obstruction was ~21%. No complications. EBL minimal.",
+    "note_text": "Indication: Esophageal cancer with tracheal invasion, ~86% Right mainstem obstruction. Under general <LOCATION> with jet ventilation, rigid bronchoscopy was performed. Sequential balloon dilation of RMS stenosis performed. Airway measured and Novatech Silicone - Dumon stent (20x30mm) deployed in Right mainstem. Stent position confirmed with good expansion and patency. Post-procedure obstruction was ~21%. No complications. EBL minimal.",
     "cpt_codes": [
       31636
     ],
@@ -6186,10 +6537,16 @@
       "style_type": 6,
       "generated_name": "Catherine Bell",
       "generation_date": "2025-12-09T12:06:13.437797"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nEsophageal cancer, 86% RMS obstruction.\n[Anesthesia]\nGeneral, Jet Ventilation.\n[Description]\nRMS dilated. Novatech Dumon stent (20x30mm) deployed. Residual obstruction 21%.\n[Plan]\nAdmit. Follow up 4-6 weeks.",
+    "note_text": "[Indication]\nEsophageal cancer, 86% RMS obstruction.\n[<LOCATION>]\nGeneral, <PERSON>.\n[Description]\nRMS dilated. Novatech Dumon stent (20x30mm) deployed. Residual obstruction 21%.\n[Plan]\nAdmit. Follow up <DATE_TIME>.",
     "cpt_codes": [
       31636
     ],
@@ -6277,10 +6634,18 @@
       "style_type": 7,
       "generated_name": "Maria Gomez",
       "generation_date": "2025-12-09T12:06:13.437904"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Ms. Rivera needed a stent for her right mainstem bronchus, which was being compressed by her esophageal cancer. Under general anesthesia, we dilated the 86% stenosis and deployed a 20x30mm Novatech Silicone Dumon stent. The stent held the airway open well, leaving a residual narrowing of about 21%. She did well and was admitted for observation.",
+    "note_text": "Ms. <PERSON> needed a stent for her right mainstem bronchus, which was being compressed by her esophageal cancer. Under general <LOCATION>, we dilated the 86% stenosis and deployed a 20x30mm Novatech Silicone Dumon stent. The stent held the airway open well, leaving a residual narrowing of about 21%. She did well and was admitted for observation.",
     "cpt_codes": [
       31636
     ],
@@ -6368,10 +6733,17 @@
       "style_type": 8,
       "generated_name": "Heather Kelly",
       "generation_date": "2025-12-09T12:06:13.437936"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Indication: Esophageal cancer with tracheal incursion.\nPre-procedure occlusion: ~86% Right mainstem.\nPROCEDURE: Under general anesthesia with jet ventilation, rigid bronchoscopy was conducted. Sequential balloon expansion of RMS narrowing was done. The airway was sized and a Novatech Silicone - Dumon stent (20x30mm) was installed in the Right mainstem. Stent location was verified with good expansion and flow.\nPost-procedure occlusion: ~21%.\nNo adverse events.",
+    "note_text": "Indication: Esophageal cancer with tracheal incursion.\nPre-procedure occlusion: ~86% Right mainstem.\nPROCEDURE: Under general <LOCATION> with jet ventilation, rigid bronchoscopy was conducted. <LOCATION> balloon expansion of RMS narrowing was done. The airway was sized and a Novatech Silicone - Dumon stent (20x30mm) was installed in the Right mainstem. Stent location was verified with good expansion and flow.\nPost-procedure occlusion: ~21%.\nNo adverse events.",
     "cpt_codes": [
       31636
     ],
@@ -6459,10 +6831,17 @@
       "style_type": 9,
       "generated_name": "Diane Howard",
       "generation_date": "2025-12-09T12:06:13.437965"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Indication: Malignant CAO RUL.\nFindings: 73% obstruction.\nProcedure:\n- Rigid bronch.\n- Laser ablation.\n- Sequential removal.\n- APC for hemostasis.\nResult: 39% residual.\nEBL: 150ml.\nPlan: ICU.",
+    "note_text": "Indication: Malignant CAO RUL.\nFindings: 73% obstruction.\nProcedure:\n- Rigid bronch.\n- Laser ablation.\n- <LOCATION> removal.\n- APC for hemostasis.\nResult: 39% residual.\nEBL: 150ml.\nPlan: ICU.",
     "cpt_codes": [
       31641
     ],
@@ -6547,10 +6926,16 @@
       "style_type": 1,
       "generated_name": "Jeffrey Ward",
       "generation_date": "2025-12-09T12:06:13.437991"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "OPERATIVE NOTE: Mr. Nguyen presented with a malignant obstruction of the right upper lobe (RUL) orifice estimated at 73%. Under general anesthesia, rigid bronchoscopy was performed. The Nd:YAG laser was utilized to coagulate and vaporize tumor tissue. Sequential mechanical debridement was performed. Additional hemostasis was achieved with APC. The airway caliber was improved, with a residual obstruction of 39%. EBL was 150mL.\nDISPOSITION: Transfer to ICU.",
+    "note_text": "OPERATIVE NOTE: Mr. <PERSON> presented with a malignant obstruction of the right upper lobe (RUL) orifice estimated at 73%. Under general <PERSON>, rigid bronchoscopy was performed. The Nd:YAG laser was utilized to coagulate and vaporize tumor tissue. <LOCATION> mechanical debridement was performed. Additional hemostasis was achieved with APC. The airway caliber was improved, with a residual obstruction of 39%. EBL was 150mL.\nDISPOSITION: Transfer to ICU.",
     "cpt_codes": [
       31641
     ],
@@ -6635,6 +7020,14 @@
       "style_type": 2,
       "generated_name": "Frank Cox",
       "generation_date": "2025-12-09T12:06:13.438015"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -6726,7 +7119,7 @@
     }
   },
   {
-    "note_text": "Procedure: Tumor Ablation (Laser)\nPatient: Nguyen, Daniel\nSteps:\n1. Rigid scope placed.\n2. Tumor at RUL (73%) identified.\n3. Laser ablation performed.\n4. Debris removed.\n5. Hemostasis confirmed.\nPlan: ICU.",
+    "note_text": "Procedure: Tumor Ablation (Laser)\nPatient: <PERSON>\nSteps:\n1. Rigid scope placed.\n2. Tumor at RUL (73%) identified.\n3. Laser ablation performed.\n4. <PERSON> removed.\n5. Hemostasis confirmed.\nPlan: ICU.",
     "cpt_codes": [
       31641
     ],
@@ -6811,10 +7204,17 @@
       "style_type": 4,
       "generated_name": "Eric Richardson",
       "generation_date": "2025-12-09T12:06:13.438067"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Daniel Nguyen procedure note he has a tumor blocking the RUL 73 percent. We used the rigid scope and the laser to burn it down. Removed the pieces. Used APC to stop bleeding. Got it down to 39 percent obstruction. Lost about 150cc blood. He is going to the ICU.",
+    "note_text": "<PERSON> procedure note he has a tumor blocking the RUL 73 percent. We used the rigid scope and the laser to burn it down. Removed the pieces. Used APC to stop bleeding. Got it down to 39 percent obstruction. Lost about 150cc blood. He is going to the ICU.",
     "cpt_codes": [
       31641
     ],
@@ -6899,10 +7299,16 @@
       "style_type": 5,
       "generated_name": "Stephen Wood",
       "generation_date": "2025-12-09T12:06:13.438094"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Malignant central airway obstruction, ~73% obstruction at RUL orifice. Under general anesthesia, rigid bronchoscopy was performed. Endobronchial tumor identified at RUL orifice. Laser ablation performed with sequential tumor removal. Multiple passes performed to achieve maximal debulking. Additional APC/laser used for hemostasis and tumor base ablation. Post-procedure obstruction was ~39% residual obstruction. EBL was ~150mL. Specimens sent for histology.",
+    "note_text": "Indication: Malignant central airway obstruction, <LOCATION> obstruction at RUL orifice. Under general <PERSON>, rigid bronchoscopy was performed. Endobronchial tumor identified at RUL orifice. Laser ablation performed with sequential tumor removal. Multiple passes performed to achieve maximal debulking. Additional APC/laser used for hemostasis and tumor base ablation. Post-procedure obstruction was ~39% residual obstruction. EBL was <PERSON> sent for histology.",
     "cpt_codes": [
       31641
     ],
@@ -6987,10 +7393,18 @@
       "style_type": 6,
       "generated_name": "Andrew Watson",
       "generation_date": "2025-12-09T12:06:13.438117"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nMalignant CAO, RUL orifice (73%).\n[Anesthesia]\nGeneral, Rigid Bronch.\n[Description]\nLaser ablation performed. Tumor debulked. Hemostasis with APC. Residual obstruction 39%. EBL 150ml.\n[Plan]\nICU observation.",
+    "note_text": "[Indication]\nMalignant CAO, RUL orifice (73%).\n[<LOCATION>]\nGeneral, Rigid Bronch.\n[Description]\nLaser ablation performed. Tumor debulked. Hemostasis with APC. Residual obstruction 39%. EBL 150ml.\n[Plan]\nICU observation.",
     "cpt_codes": [
       31641
     ],
@@ -7075,10 +7489,16 @@
       "style_type": 7,
       "generated_name": "Raymond Brooks",
       "generation_date": "2025-12-09T12:06:13.438140"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on Mr. Nguyen to treat a tumor obstructing his RUL orifice. We used laser ablation to destroy the tumor tissue and removed it in sequence. We achieved a significant reduction in tumor bulk, leaving a 39% residual obstruction. Bleeding was controlled with the laser and APC. He tolerated the procedure and was sent to the ICU for monitoring.",
+    "note_text": "We performed a rigid bronchoscopy on Mr. <PERSON> to treat a tumor obstructing his RUL orifice. We used laser ablation to destroy the tumor tissue and removed it in sequence. We achieved a significant reduction in tumor bulk, leaving a 39% residual obstruction. Bleeding was controlled with the laser and APC. He tolerated the procedure and was sent to the ICU for monitoring.",
     "cpt_codes": [
       31641
     ],
@@ -7163,10 +7583,16 @@
       "style_type": 8,
       "generated_name": "Gregory Bennett",
       "generation_date": "2025-12-09T12:06:13.438165"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Malignant central airway blockage.\nPre-procedure: ~73% occlusion at RUL orifice.\nPROCEDURE: Under general anesthesia, rigid bronchoscopy was executed. Endobronchial neoplasm detected at RUL orifice. Laser ablation conducted with sequential tumor extraction. Multiple passes were done to attain maximal debulking. Additional APC/laser utilized for hemostasis and tumor base cauterization.\nPost-procedure: ~39% residual occlusion.\nEBL: ~150mL.",
+    "note_text": "Indication: Malignant central airway blockage.\nPre-procedure: ~73% occlusion at RUL orifice.\nPROCEDURE: Under general <LOCATION>, rigid bronchoscopy was executed. Endobronchial neoplasm detected at RUL orifice. Laser ablation conducted with sequential tumor extraction. Multiple passes were done to attain maximal debulking. Additional APC/laser utilized for hemostasis and tumor base cauterization.\nPost-procedure: ~39% residual occlusion.\nEBL: ~150mL.",
     "cpt_codes": [
       31641
     ],
@@ -7251,6 +7677,12 @@
       "style_type": 9,
       "generated_name": "Joshua Gray",
       "generation_date": "2025-12-09T12:06:13.438188"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -7341,7 +7773,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Mr. Jackson presented with 60% obstruction of the right mainstem (RMS) bronchus. Under general anesthesia, rigid bronchoscopy was initiated. The tumor was addressed via laser photoresection and mechanical excision to facilitate removal. Multiple passes were required to debulk the lesion. Post-intervention, the obstruction was reduced to 35%. Hemostasis was secured. Specimens were submitted for pathologic evaluation.",
+    "note_text": "OPERATIVE SUMMARY: Mr. <PERSON> presented with 60% obstruction of the right mainstem (RMS) bronchus. Under general <PERSON>, rigid bronchoscopy was initiated. The tumor was addressed via laser photoresection and mechanical excision to facilitate removal. Multiple passes were required to debulk the lesion. Post-intervention, the obstruction was reduced to 35%. Hemostasis was secured. Specimens were submitted for pathologic evaluation.",
     "cpt_codes": [
       31640
     ],
@@ -7425,6 +7857,13 @@
       "style_type": 2,
       "generated_name": "Dennis Reyes",
       "generation_date": "2025-12-09T12:06:13.438237"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -7515,7 +7954,7 @@
     }
   },
   {
-    "note_text": "Procedure: Tumor Excision/Ablation\nPatient: Jackson, Daniel\nSteps:\n1. Rigid scope inserted.\n2. RMS tumor visualized (60%).\n3. Laser used to ablate/excise.\n4. Tumor removed.\n5. Hemostasis confirmed.\nPlan: ICU.",
+    "note_text": "Procedure: Tumor Excision/Ablation\nPatient: <PERSON>\nSteps:\n1. Rigid scope inserted.\n2. RMS tumor visualized (60%).\n3. Laser used to ablate/excise.\n4. Tumor removed.\n5. Hemostasis confirmed.\nPlan: ICU.",
     "cpt_codes": [
       31640
     ],
@@ -7599,10 +8038,16 @@
       "style_type": 4,
       "generated_name": "Patrick Hughes",
       "generation_date": "2025-12-09T12:06:13.438285"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Daniel Jackson here for tumor removal in the RMS blocking 60 percent. Used the rigid scope and the laser to cut it out. Did a few passes. Got it down to 35 percent. Bleeding was 150cc stopped it okay. Sending samples to lab and patient to ICU.",
+    "note_text": "<PERSON> here for tumor removal in the RMS blocking 60 percent. Used the rigid scope and the laser to cut it out. Did a few passes. Got it down to 35 percent. Bleeding was 150cc stopped it okay. Sending samples to lab and patient to ICU.",
     "cpt_codes": [
       31640
     ],
@@ -7686,10 +8131,16 @@
       "style_type": 5,
       "generated_name": "Peter Price",
       "generation_date": "2025-12-09T12:06:13.438323"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Malignant central airway obstruction, ~60% obstruction at RMS. Under general anesthesia, rigid bronchoscopy was performed. Endobronchial tumor identified at RMS. Laser ablation performed with sequential tumor removal. Multiple passes performed to achieve maximal debulking. Post-procedure obstruction was ~35% residual obstruction. EBL was ~150mL. Hemostasis achieved. Specimens sent for histology.",
+    "note_text": "Indication: Malignant central airway obstruction, ~60% obstruction at RMS. Under general <PERSON>, rigid bronchoscopy was performed. Endobronchial tumor identified at RMS. Laser ablation performed with sequential tumor removal. Multiple passes performed to achieve maximal debulking. Post-procedure obstruction was ~35% residual obstruction. EBL was <PERSON> achieved. Specimens sent for histology.",
     "cpt_codes": [
       31640
     ],
@@ -7773,10 +8224,17 @@
       "style_type": 6,
       "generated_name": "Harold Myers",
       "generation_date": "2025-12-09T12:06:13.438345"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nMalignant CAO, RMS (60%).\n[Anesthesia]\nGeneral, Rigid Bronch.\n[Description]\nLaser ablation and excision performed. Tumor removed. Residual obstruction 35%. EBL 150ml.\n[Plan]\nICU observation.",
+    "note_text": "[Indication]\nMalignant CAO, RMS (60%).\n[<LOCATION>]\nGeneral, Rigid Bronch.\n[Description]\nLaser ablation and excision performed. Tumor removed. Residual obstruction 35%. EBL 150ml.\n[Plan]\nICU observation.",
     "cpt_codes": [
       31640
     ],
@@ -7860,10 +8318,16 @@
       "style_type": 7,
       "generated_name": "Douglas Long",
       "generation_date": "2025-12-09T12:06:13.438369"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Jackson underwent rigid bronchoscopy for a tumor in the right mainstem bronchus causing 60% obstruction. We used the laser to ablate and excise the tumor tissue. After multiple passes, we reduced the obstruction to 35%. Bleeding was controlled, and the patient remained stable. He was transferred to the ICU for overnight care.",
+    "note_text": "Mr. <PERSON> underwent rigid bronchoscopy for a tumor in the right mainstem bronchus causing 60% obstruction. We used the laser to ablate and excise the tumor tissue. After multiple passes, we reduced the obstruction to 35%. Bleeding was controlled, and the patient remained stable. He was transferred to the ICU for overnight care.",
     "cpt_codes": [
       31640
     ],
@@ -7947,10 +8411,16 @@
       "style_type": 8,
       "generated_name": "Henry Foster",
       "generation_date": "2025-12-09T12:06:13.438393"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Malignant central airway blockage.\nPre-procedure: ~60% occlusion at RMS.\nPROCEDURE: Under general anesthesia, rigid bronchoscopy was conducted. Endobronchial neoplasm detected at RMS. Laser ablation executed with sequential tumor extraction. Multiple passes were done to attain maximal debulking.\nPost-procedure: ~35% residual occlusion.\nEBL: ~150mL.",
+    "note_text": "Indication: Malignant central airway blockage.\nPre-procedure: ~60% occlusion at RMS.\nPROCEDURE: Under general <LOCATION>, rigid bronchoscopy was conducted. Endobronchial neoplasm detected at RMS. Laser ablation executed with sequential tumor extraction. Multiple passes were done to attain maximal debulking.\nPost-procedure: ~35% residual occlusion.\nEBL: ~150mL.",
     "cpt_codes": [
       31640
     ],
@@ -8034,6 +8504,12 @@
       "style_type": 9,
       "generated_name": "Carl Sanders",
       "generation_date": "2025-12-09T12:06:13.438416"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   }
 ]

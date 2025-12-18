@@ -935,18 +935,34 @@ def derive_procedures_from_granular(
     procedures = dict(existing_procedures) if existing_procedures else {}
     warnings: list[str] = []
 
-    def _normalize_sampling_tool(tool: str) -> str:
+    def _normalize_sampling_tool(tool: str) -> str | None:
+        valid_tools = {"Needle", "Forceps", "Brush", "Cryoprobe", "NeedleInNeedle"}
+
         s = str(tool).strip()
+        if not s:
+            return None
         s_lower = s.lower()
-        if "needle" in s_lower or "tbna" in s_lower:
+
+        # Accept already-valid enum values (case-insensitive)
+        for valid in valid_tools:
+            if s_lower == valid.lower():
+                return valid
+
+        # Map common variations to schema enums
+        token = "".join(ch for ch in s_lower if ch.isalnum())
+        if token in {"needleinneedle", "nin"} or "needle-in-needle" in s_lower or "needle in needle" in s_lower:
+            return "NeedleInNeedle"
+        if "tbna" in s_lower or "needle" in s_lower:
             return "Needle"
-        if "forceps" in s_lower:
+        if "forceps" in s_lower or "forcep" in s_lower:
             return "Forceps"
         if "brush" in s_lower:
             return "Brush"
         if "cryo" in s_lower:
             return "Cryoprobe"
-        return s
+
+        # Unknown / invalid tools (e.g., "BAL") must not propagate into the strict enum field.
+        return None
 
     def _extract_station_tokens(text: str) -> list[str]:
         """Extract IASLC station tokens like 4R, 7, 11L from free text."""
@@ -1207,15 +1223,26 @@ def derive_procedures_from_granular(
         existing_tools = nav_bronch.get("sampling_tools_used") or []
 
         # Collect all tools from all targets and union with any existing list
-        all_tools: set[str] = {_normalize_sampling_tool(t) for t in existing_tools if t}
+        all_tools: set[str] = set()
+
+        for t in existing_tools:
+            if t:
+                norm = _normalize_sampling_tool(t)
+                if norm:
+                    all_tools.add(norm)
+
         for target in navigation_targets:
             tools = target.get("sampling_tools_used", []) or []
             for tool in tools:
                 if tool:
-                    all_tools.add(_normalize_sampling_tool(tool))
+                    norm = _normalize_sampling_tool(tool)
+                    if norm:
+                        all_tools.add(norm)
 
         if all_tools:
             nav_bronch["sampling_tools_used"] = sorted(all_tools)
+        else:
+            nav_bronch.pop("sampling_tools_used", None)
 
         procedures["navigational_bronchoscopy"] = nav_bronch
 

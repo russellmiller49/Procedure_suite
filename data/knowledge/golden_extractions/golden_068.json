@@ -263,7 +263,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: The patient was intubated and general anesthesia induced. The tracheobronchial tree was inspected and cleared of secretions via therapeutic aspiration. Utilizing the Ion robotic platform, the catheter was navigated to the Medial Segment of the Right Middle Lobe (RB5). Shape-sensing registration yielded an error of 1.9mm. Radial EBUS demonstrated an adjacent acoustic signature. 3D volumetric confirmation was achieved via the Cios Spin Cone Beam CT system. Subsequently, the lesion was sampled via 23G transbronchial needle aspiration (5 passes), 1.7mm transbronchial cryobiopsy (3 specimens, 5-second freeze), and protected cytologic brushing (2 passes). Rapid On-Site Evaluation (ROSE) indicated benign respiratory epithelium and macrophages. The procedure concluded without adverse events.",
+    "note_text": "OPERATIVE NARRATIVE: The patient was intubated and general <LOCATION> induced. The tracheobronchial tree was inspected and cleared of secretions via therapeutic aspiration. Utilizing the Ion robotic platform, the catheter was navigated to the Medial Segment of the Right Middle Lobe (RB5). Shape-sensing registration yielded an error of 1.9mm. Radial EBUS demonstrated an adjacent acoustic signature. 3D volumetric confirmation was achieved via the Cios Spin Cone Beam CT system. Subsequently, the lesion was sampled via 23G transbronchial needle aspiration (5 passes), 1.7mm transbronchial cryobiopsy (3 specimens, <DATE_TIME> freeze), and protected cytologic brushing (2 passes). Rapid On-Site Evaluation (ROSE) indicated benign respiratory epithelium and macrophages. The procedure concluded without adverse events.",
     "cpt_codes": [
       31629,
       31628,
@@ -523,10 +523,17 @@
       "style_type": 2,
       "generated_name": "Patricia Brown",
       "generation_date": "2025-12-09T12:07:45.785467"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Code Selection Justification:\n31629 (TBNA): Performed 5 passes with 23G needle in RML.\n31628 (Cryo): Performed 3 biopsies with 1.7mm probe.\n31623 (Brush): 2 protected brush samples obtained.\n31627 (Nav): Ion robotic platform used with 3D planning and registration (1.9mm error).\n31654 (REBUS): Radial probe used to confirm lesion adjacency.\nTechnique: Navigation to RML (RB5), confirmation via Cone Beam CT/rEBUS. Tool-in-lesion confirmed. No complications.",
+    "note_text": "Code Selection Justification:\n31629 (TBNA): Performed 5 passes with 23G needle in RML.\n<DATE_TIME> (Cryo): Performed 3 biopsies with 1.7mm probe.\n<DATE_TIME> (<PERSON>): 2 protected brush samples obtained.\n<DATE_TIME> (Nav): Ion robotic platform used with 3D planning and registration (1.9mm error).\n<DATE_TIME> (REBUS): Radial probe used to confirm lesion adjacency.\nTechnique: Navigation to RML (RB5), confirmation via Cone Beam CT/rEBUS. Tool-in-lesion confirmed. No complications.",
     "cpt_codes": [
       31629,
       31628,
@@ -786,10 +793,20 @@
       "style_type": 3,
       "generated_name": "Barbara Davis",
       "generation_date": "2025-12-09T12:07:45.785539"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 5,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME",
+        "PERSON",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Resident Procedure Note\nPatient: Mary Mitchell\nAttending: Dr. Wilson\nProcedure Steps:\n1. Time out/Anesthesia.\n2. Airway inspection (normal).\n3. Ion robot navigation to RML Medial Segment (RB5).\n4. rEBUS check: Adjacent view.\n5. Cone Beam CT spin for tool-in-lesion confirmation.\n6. Biopsies: 23G needle (x5), 1.7mm cryo (x3), Brush (x2).\n7. ROSE: Benign.\n8. Extubation. Stable.",
+    "note_text": "Resident Procedure Note\nPatient: <PERSON>\nAttending: Dr. Wilson\nProcedure Steps:\n1. Time out/<LOCATION>.\n2. Airway inspection (normal).\n3. Ion robot navigation to RML Medial Segment (RB5).\n4. rEBUS check: Adjacent view.\n5. Cone Beam CT spin for tool-in-lesion confirmation.\n6. Biopsies: 23G needle (x5), 1.7mm cryo (<PERSON>), <PERSON> (x2).\n7. ROSE: Benign.\n8. Extubation. Stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -1049,10 +1066,19 @@
       "style_type": 4,
       "generated_name": "Elizabeth Miller",
       "generation_date": "2025-12-09T12:07:45.785603"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 4,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure note pt mitchell mary here for lung nodule rml we used the ion robot anesthesia was general. Airway looked fine cleared some mucus out. Navigated to the medial segment RB5 got close 1.9mm error. Checked with radial ebus it was adjacent then did the spin ct to confirm. Took samples with 23g needle five times then the cryo probe 1.7mm three times five sec freeze also brushed it twice. Pathologist said benign cells. No bleeding patient woke up fine check xray for pneumo.",
+    "note_text": "Procedure note pt mitchell mary here for lung nodule rml we used the ion robot <LOCATION> was general. Airway looked fine cleared some mucus out. Navigated to the medial segment RB5 got close 1.9mm error. Checked with radial ebus it was adjacent then did the spin ct to confirm. Took samples with 23g needle five times then the cryo probe 1.7mm three times five sec freeze also brushed it twice. Pathologist said benign cells. No bleeding patient woke up fine check xray for pneumo.",
     "cpt_codes": [
       31629,
       31628,
@@ -1312,10 +1338,16 @@
       "style_type": 5,
       "generated_name": "Jennifer Wilson",
       "generation_date": "2025-12-09T12:07:45.785673"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mary Mitchell. 10/23/2025. Indication: Lung-RADS 4B nodule RML. General Anesthesia. Airway clear. Ion robotic bronchoscopy performed. Navigated to RML Medial segment. rEBUS: Adjacent. CBCT performed for confirmation. Samples: 5x 23G TBNA, 3x 1.7mm Cryo, 2x Brush. ROSE: Benign respiratory epithelium. No complications. Plan: Recovery/Discharge.",
+    "note_text": "<PERSON>. <DATE_TIME>. Indication: Lung-RADS 4B nodule RML. General <LOCATION>. Airway clear. Ion robotic bronchoscopy performed. Navigated to RML Medial segment. rEBUS: Adjacent. CBCT performed for confirmation. Samples: 5x 23G TBNA, 3x 1.7mm Cryo, 2x <PERSON>. ROSE: Benign respiratory epithelium. No complications. Plan: Recovery/Discharge.",
     "cpt_codes": [
       31629,
       31628,
@@ -1575,10 +1607,19 @@
       "style_type": 6,
       "generated_name": "Maria Moore",
       "generation_date": "2025-12-09T12:07:45.785739"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 4,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nLung-RADS 4B nodule, 35mm in RML.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nIon robotic navigation to RML (RB5). rEBUS (adjacent) and Cone Beam CT confirmation. 5 TBNA samples (23G), 3 Cryobiopsies (1.7mm), 2 Brushings. ROSE: Benign.\n[Plan]\nCXR, Discharge.",
+    "note_text": "[Indication]\nLung-RADS 4B nodule, 35mm in RML.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nIon robotic navigation to RML (RB5). rEBUS (adjacent) and Cone Beam CT confirmation. 5 TBNA samples (23G), 3 Cryobiopsies (1.7mm), 2 Brushings. ROSE: Benign.\n[Plan]\nCXR, Discharge.",
     "cpt_codes": [
       31629,
       31628,
@@ -1838,10 +1879,16 @@
       "style_type": 7,
       "generated_name": "Susan Taylor",
       "generation_date": "2025-12-09T12:07:45.785805"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Under general anesthesia, Mary Mitchell underwent a robotic bronchoscopy. The airway was inspected and found to be normal. We utilized the Ion platform to navigate to the 35mm target in the Medial Segment of the Right Middle Lobe. Confirmation was achieved using radial EBUS, which showed an adjacent view, and Cone Beam CT scans. We proceeded to collect samples using a 23G needle for five passes, a 1.7mm cryoprobe for three biopsies with a 5-second freeze time, and a cytology brush for two samples. The on-site pathology review showed benign cells. The patient tolerated the procedure well.",
+    "note_text": "Under general <LOCATION>, <PERSON> underwent a robotic bronchoscopy. The airway was inspected and found to be normal. We utilized the Ion platform to navigate to the 35mm target in the Medial Segment of the Right Middle Lobe. Confirmation was achieved using radial EBUS, which showed an adjacent view, and Cone Beam CT scans. We proceeded to collect samples using a 23G needle for five passes, a 1.7mm cryoprobe for three biopsies with a <DATE_TIME> freeze time, and a cytology brush for two samples. The on-site pathology review showed benign cells. The patient tolerated the procedure well.",
     "cpt_codes": [
       31629,
       31628,
@@ -2101,6 +2148,14 @@
       "style_type": 8,
       "generated_name": "Margaret Anderson",
       "generation_date": "2025-12-09T12:07:45.785871"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -2662,7 +2717,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Ms. White presented for evaluation of a screen-detected LLL nodule. Following induction, the Ion robotic catheter was navigated to the Anteromedial-Basal Segment (LB7+8). Radial EBUS demonstrated a concentric view, and Cone Beam CT 3D reconstruction confirmed tool-in-lesion. Extensive sampling was performed: 8 passes with a 21G needle, 6 cryobiopsies using a 1.7mm probe (5-second freeze), and 2 brushings. Additionally, a bronchoalveolar lavage was instilled. Preliminary ROSE analysis indicated benign respiratory epithelium. The patient remained hemodynamically stable.",
+    "note_text": "OPERATIVE SUMMARY: Ms. <PERSON> presented for evaluation of a screen-detected LLL nodule. Following induction, the Ion robotic catheter was navigated to the Anteromedial-Basal Segment (LB7+8). Radial EBUS demonstrated a concentric view, and Cone Beam CT 3D reconstruction confirmed tool-in-lesion. Extensive sampling was performed: 8 passes with a 21G needle, 6 cryobiopsies using a 1.7mm probe (<DATE_TIME> freeze), and 2 brushings. Additionally, a bronchoalveolar lavage was instilled. Preliminary ROSE analysis indicated benign respiratory epithelium. The patient remained hemodynamically stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -2954,10 +3009,17 @@
       "style_type": 2,
       "generated_name": "Nancy White",
       "generation_date": "2025-12-09T12:07:45.786085"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Billing Codes:\n31629: TBNA 21G x8.\n31628: Cryobiopsy 1.7mm x6.\n31624: BAL instilled/returned.\n31623: Brushing x2.\n31627: Robotic Nav (Ion) used.\n31654: rEBUS utilized.\nSpecifics: LLL LB7+8 target. 30mm lesion. CBCT verification used.",
+    "note_text": "Billing Codes:\n31629: TBNA 21G x8.\n<DATE_TIME>: <PERSON>.\n31624: BAL instilled/returned.\n<DATE_TIME>: Brushing x2.\n<DATE_TIME>: Robotic Nav (Ion) used.\n31654: rEBUS utilized.\nSpecifics: LLL LB7+8 target. 30mm lesion. CBCT verification used.",
     "cpt_codes": [
       31629,
       31628,
@@ -3249,10 +3311,19 @@
       "style_type": 3,
       "generated_name": "Karen Harris",
       "generation_date": "2025-12-09T12:07:45.786157"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 4,
+      "entity_types": [
+        "DATE_TIME",
+        "PERSON",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Fellow Note\nPatient: Dorothy White\nTarget: LLL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB7+8.\n3. rEBUS (concentric) + CBCT confirmation.\n4. TBNA: 21G x 8 passes.\n5. Cryo: 1.7mm x 6 biopsies.\n6. Brush: x 2.\n7. BAL: 60cc instilled.\n8. ROSE: Benign.\nNo complications.",
+    "note_text": "Fellow Note\nPatient: <PERSON>\nTarget: LLL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB7+8.\n3. rEBUS (concentric) + CBCT confirmation.\n4. TBNA: 21G x 8 passes.\n5. Cryo: 1.7mm x 6 biopsies.\n6. Brush: x 2.\n7. BAL: 60cc instilled.\n8. ROSE: Benign.\nNo complications.",
     "cpt_codes": [
       31629,
       31628,
@@ -3544,10 +3615,16 @@
       "style_type": 4,
       "generated_name": "Betty Martin",
       "generation_date": "2025-12-09T12:07:45.786229"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Dorothy White procedure note. We did the ion bronch for the LLL nodule 30mm. Anesthesia was fine tube in good position. Navigated to the anteromedial basal segment LB7+8 reg error 2.5mm. Used radial ebus saw it concentric then did the spin CT. Took a lot of samples 8 with the 21g needle 6 with the cryo probe and 2 brushes plus a lavage. Rose said benign cells. Patient did fine no bleeding.",
+    "note_text": "<PERSON> procedure note. We did the ion bronch for the LLL nodule 30mm. <LOCATION> was fine tube in good position. Navigated to the anteromedial basal segment LB7+8 reg error 2.5mm. Used radial ebus saw it concentric then did the spin CT. Took a lot of samples 8 with the 21g needle 6 with the cryo probe and 2 brushes plus a lavage. <PERSON> said benign cells. Patient did fine no bleeding.",
     "cpt_codes": [
       31629,
       31628,
@@ -3839,10 +3916,18 @@
       "style_type": 5,
       "generated_name": "Helen Thompson",
       "generation_date": "2025-12-09T12:07:45.786302"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Dorothy White. Ion Bronchoscopy. LLL Nodule (30mm). Navigation to LB7+8. rEBUS: Concentric. CBCT: Tool-in-lesion. Samples: 8x 21G TBNA, 6x 1.7mm Cryo, 2x Brush, BAL. ROSE: Benign. Disposition: Recovery.",
+    "note_text": "<PERSON>. Ion Bronchoscopy. LLL Nodule (30mm). Navigation to LB7+8. rEBUS: Concentric. CBCT: Tool-in-lesion. Samples: 8x <DATE_TIME>G TBNA, 6x 1.7mm Cryo, 2x <PERSON>, BAL. ROSE: Benign. Disposition: Recovery.",
     "cpt_codes": [
       31629,
       31628,
@@ -4134,10 +4219,18 @@
       "style_type": 6,
       "generated_name": "Sandra Garcia",
       "generation_date": "2025-12-09T12:07:45.786373"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nLung cancer screening nodule, LLL.\n[Anesthesia]\nGeneral.\n[Description]\nIon navigation to LB7+8. Verified with rEBUS (concentric) and CBCT. Sampled via 21G TBNA (x8), 1.7mm Cryo (x6), Brush (x2), and BAL. ROSE: Benign.\n[Plan]\nDischarge if stable.",
+    "note_text": "[Indication]\nLung cancer screening nodule, LLL.\n[<LOCATION>]\nGeneral.\n[Description]\nIon navigation to LB7+8. Verified with rEBUS (concentric) and CBCT. Sampled via 21G TBNA (x8), 1.7mm Cryo (x6), <PERSON> (x2), and BAL. ROSE: Benign.\n[Plan]\nDischarge if stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -4429,10 +4522,17 @@
       "style_type": 7,
       "generated_name": "Donna Martinez",
       "generation_date": "2025-12-09T12:07:45.786445"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ms. White underwent a robotic bronchoscopy targeting a 30mm nodule in the Left Lower Lobe. We used the Ion platform to navigate to the Anteromedial-Basal Segment. Once there, we confirmed the position with a concentric radial EBUS view and Cone Beam CT. We then performed extensive sampling, including eight needle aspirations with a 21G needle, six cryobiopsies, two brushings, and a bronchoalveolar lavage. The rapid on-site evaluation showed benign cells.",
+    "note_text": "Ms. <PERSON> underwent a robotic bronchoscopy targeting a 30mm nodule in the Left Lower Lobe. We used the Ion platform to navigate to the Anteromedial-Basal Segment. Once there, we confirmed the position with a concentric radial EBUS view and Cone Beam CT. We then performed extensive sampling, including eight needle aspirations with a 21G needle, six cryobiopsies, two brushings, and a bronchoalveolar lavage. The rapid on-site evaluation showed benign cells.",
     "cpt_codes": [
       31629,
       31628,
@@ -4724,6 +4824,12 @@
       "style_type": 8,
       "generated_name": "Carol Robinson",
       "generation_date": "2025-12-09T12:07:45.786557"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5286,7 +5392,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. Jackson, with a history of malignancy, presented for biopsy of an 11mm Lingula nodule. Using the Ion robotic platform, we navigated to the Inferior Lingula (LB5). Radial EBUS revealed an eccentric view. Following active locking of the robotic arm, sampling was performed utilizing both 21G and 23G needles (4 passes), a 1.7mm cryoprobe (6 biopsies), and a cytology brush (2 samples). ROSE confirmed malignancy consistent with adenocarcinoma. There were no immediate complications.",
+    "note_text": "PROCEDURE NOTE: Mr. <PERSON>, with a history of malignancy, presented for biopsy of an 11mm Lingula nodule. Using the Ion robotic platform, we navigated to the Inferior Lingula (LB5). Radial EBUS revealed an eccentric view. Following active locking of the robotic arm, sampling was performed utilizing both 21G and 23G needles (4 passes), a 1.7mm cryoprobe (6 biopsies), and a cytology brush (2 samples). ROSE confirmed malignancy consistent with adenocarcinoma. There were no immediate complications.",
     "cpt_codes": [
       31629,
       31628,
@@ -5547,10 +5653,16 @@
       "style_type": 2,
       "generated_name": "John Lewis",
       "generation_date": "2025-12-09T12:07:45.786788"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Coding Data:\n31629 (TBNA): 4 samples, 21G/23G.\n31628 (Cryo): 6 samples, 1.7mm.\n31623 (Brush): 2 samples.\n31627 (Nav): Ion platform.\n31654 (REBUS): Eccentric view.\nLocation: Lingula (LB5). Diagnosis: Adenocarcinoma confirmed on ROSE.",
+    "note_text": "Coding Data:\n31629 (TBNA): 4 samples, 21G/23G.\n31628 (Cryo): 6 samples, 1.7mm.\n<DATE_TIME> (<PERSON>): 2 samples.\n<DATE_TIME> (Nav): Ion platform.\n<DATE_TIME> (REBUS): Eccentric view.\nLocation: Lingula (LB5). Diagnosis: Adenocarcinoma confirmed on ROSE.",
     "cpt_codes": [
       31629,
       31628,
@@ -5811,10 +5923,19 @@
       "style_type": 3,
       "generated_name": "Robert Lee",
       "generation_date": "2025-12-09T12:07:45.786858"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 4,
+      "entity_types": [
+        "DATE_TIME",
+        "PERSON",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Resident Procedure Note\nPatient: Kevin Jackson\nTarget: Lingula Nodule\nSteps:\n1. Intubation.\n2. Ion Nav to LB5.\n3. rEBUS check: Eccentric.\n4. Biopsies: TBNA (x4), Cryo (x6), Brush (x2).\n5. ROSE: Malignant/Adenocarcinoma.\n6. Extubation.\nPlan: Oncology referral.",
+    "note_text": "Resident Procedure Note\nPatient: <PERSON>\nTarget: Lingula Nodule\nSteps:\n1. Intubation.\n2. Ion Nav to LB5.\n3. rEBUS check: Eccentric.\n4. Biopsies: TBNA (x4), Cryo (x6), <PERSON> (x2).\n5. ROSE: Malignant/Adenocarcinoma.\n6. Extubation.\nPlan: Oncology referral.",
     "cpt_codes": [
       31629,
       31628,
@@ -6075,10 +6196,17 @@
       "style_type": 4,
       "generated_name": "Michael Walker",
       "generation_date": "2025-12-09T12:07:45.786938"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure on Kevin Jackson for that lingula nodule 11mm. Anesthesia general. Ion robot used to get to inferior lingula LB5. Reg error was 2.5mm. Saw it eccentric on rebus. Locked the arm and took samples 4 needle passes 21 and 23g then 6 cryo and 2 brushes. Rose came back malignant adenocarcinoma. Patient woke up ok.",
+    "note_text": "Procedure on <PERSON> for that lingula nodule 11mm. <LOCATION> general. Ion robot used to get to inferior lingula LB5. <PERSON> error was 2.5mm. Saw it eccentric on rebus. Locked the arm and took samples 4 needle passes 21 and 23g then 6 cryo and 2 brushes. Rose came back malignant adenocarcinoma. Patient woke up ok.",
     "cpt_codes": [
       31629,
       31628,
@@ -6339,10 +6467,18 @@
       "style_type": 5,
       "generated_name": "William Hall",
       "generation_date": "2025-12-09T12:07:45.787003"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Kevin Jackson. Ion Bronchoscopy. Lingula Nodule (11mm). Nav to LB5. rEBUS: Eccentric. Samples: 4x TBNA (21/23G), 6x 1.7mm Cryo, 2x Brush. ROSE: Malignant (Adenocarcinoma). No complications.",
+    "note_text": "<PERSON>. Ion Bronchoscopy. Lingula Nodule (11mm). Nav to LB5. rEBUS: Eccentric. Samples: 4x TBNA (21/23G), 6x 1.7mm Cryo, 2x <PERSON>. ROSE: Malignant (Adenocarcinoma). No complications.",
     "cpt_codes": [
       31629,
       31628,
@@ -6603,10 +6739,17 @@
       "style_type": 6,
       "generated_name": "David Allen",
       "generation_date": "2025-12-09T12:07:45.787152"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nPulmonary nodule, prior malignancy.\n[Anesthesia]\nGeneral.\n[Description]\nIon navigation to Lingula (LB5). rEBUS eccentric. Sampled via TBNA (x4), Cryo (x6), Brush (x2). ROSE: Adenocarcinoma.\n[Plan]\nOncology follow-up.",
+    "note_text": "[Indication]\n<PERSON> nodule, prior malignancy.\n[<LOCATION>]\nGeneral.\n[Description]\nIon navigation to Lingula (LB5). rEBUS eccentric. Sampled via TBNA (x4), Cryo (x6), <PERSON> (x2). ROSE: Adenocarcinoma.\n[Plan]\nOncology follow-up.",
     "cpt_codes": [
       31629,
       31628,
@@ -6867,10 +7010,18 @@
       "style_type": 7,
       "generated_name": "Richard Young",
       "generation_date": "2025-12-09T12:07:45.787215"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mr. Jackson underwent a robotic bronchoscopy to biopsy an 11mm nodule in the Lingula. We navigated the Ion catheter to the Inferior Lingula segment. Radial EBUS confirmed the location with an eccentric view. We collected four needle aspirates, six cryobiopsies using a 1.7mm probe, and two brush samples. The on-site pathologist identified malignant cells consistent with adenocarcinoma. The patient tolerated the procedure well.",
+    "note_text": "Mr. <PERSON> underwent a robotic bronchoscopy to biopsy an 11mm nodule in the Lingula. We navigated the Ion catheter to the Inferior Lingula segment. Radial EBUS confirmed the location with an eccentric view. We collected four needle aspirates, six cryobiopsies using a 1.7mm probe, and two brush samples. The on-site pathologist identified malignant cells consistent with adenocarcinoma. The patient tolerated the procedure well.",
     "cpt_codes": [
       31629,
       31628,
@@ -7131,6 +7282,12 @@
       "style_type": 8,
       "generated_name": "Charles Hernandez",
       "generation_date": "2025-12-09T12:07:45.787282"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7662,7 +7819,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. Baker underwent robotic bronchoscopy for a suspected LLL malignancy. The Ion catheter was navigated to the Posterior-Basal Segment (LB10) with a 3.3mm registration error. Localization was confirmed via eccentric rEBUS and Cone Beam CT 3D reconstruction. Sampling included 3 passes with 21G/23G needles, 3 cryobiopsies using a 1.1mm probe (7-second freeze), and 2 brushings. ROSE evaluation showed lymphocytes and benign cells. The procedure was uncomplicated.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON> underwent robotic bronchoscopy for a suspected LLL malignancy. The Ion catheter was navigated to the Posterior-Basal Segment (LB10) with a 3.3mm registration error. Localization was confirmed via eccentric rEBUS and Cone Beam CT 3D reconstruction. Sampling included 3 passes with 21G/23G needles, 3 cryobiopsies using a 1.1mm probe (7-second freeze), and 2 brushings. ROSE evaluation showed lymphocytes and benign cells. The procedure was uncomplicated.",
     "cpt_codes": [
       31629,
       31628,
@@ -7923,10 +8080,16 @@
       "style_type": 2,
       "generated_name": "Christopher Lopez",
       "generation_date": "2025-12-09T12:07:45.787487"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "CPT Justification:\n31629: TBNA x3 (21G/23G).\n31628: Cryo x3 (1.1mm).\n31623: Brush x2.\n31627: Ion Navigation.\n31654: rEBUS.\nSite: LLL (LB10). Verification: CBCT/REBUS. Result: Benign/Adequate.",
+    "note_text": "CPT Justification:\n31629: TBNA x3 (21G/23G).\n31628: Cryo x3 (1.1mm).\n<DATE_TIME>: Brush x2.\n31627: Ion Navigation.\n31654: rEBUS.\nSite: LLL (LB10). Verification: CBCT/REBUS. Result: Benign/Adequate.",
     "cpt_codes": [
       31629,
       31628,
@@ -8187,10 +8350,16 @@
       "style_type": 3,
       "generated_name": "Daniel Hill",
       "generation_date": "2025-12-09T12:07:45.787553"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Fellow Note\nPatient: Charles Baker\nTarget: LLL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB10.\n3. rEBUS (eccentric) + CBCT confirmation.\n4. TBNA: x3 passes.\n5. Cryo: x3 biopsies (1.1mm probe).\n6. Brush: x2.\n7. ROSE: Benign lymphocytes.\nNo complications.",
+    "note_text": "Fellow Note\nPatient: <PERSON>\nTarget: LLL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB10.\n3. rEBUS (eccentric) + CBCT confirmation.\n4. TBNA: x3 passes.\n5. Cryo: <PERSON> biopsies (1.1mm probe).\n6. Brush: x2.\n7. ROSE: Benign lymphocytes.\nNo complications.",
     "cpt_codes": [
       31629,
       31628,
@@ -8451,10 +8620,17 @@
       "style_type": 4,
       "generated_name": "Paul Scott",
       "generation_date": "2025-12-09T12:07:45.787617"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Charles Baker procedure note. We did the LLL nodule 22mm today. General anesthesia. Used the Ion robot to get to the posterior basal segment LB10 error was 3.3mm. Eccentric on rebus and confirmed with spin ct. Did 3 needle passes mixed gauges and 3 cryo with the small 1.1 probe plus 2 brushes. Rose said benign lymphocytes. All good.",
+    "note_text": "<PERSON> procedure note. We did the LLL nodule 22mm today. General <LOCATION>. Used the Ion robot to get to the posterior basal segment LB10 error was 3.3mm. Eccentric on rebus and confirmed with spin ct. Did 3 needle passes mixed gauges and 3 cryo with the small 1.1 probe plus 2 brushes. <PERSON> said benign lymphocytes. All good.",
     "cpt_codes": [
       31629,
       31628,
@@ -8715,10 +8891,18 @@
       "style_type": 5,
       "generated_name": "Mark Green",
       "generation_date": "2025-12-09T12:07:45.787681"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Charles Baker. Ion Bronchoscopy. LLL Nodule (22mm). Nav to LB10. rEBUS: Eccentric. CBCT: Confirmed. Samples: 3x TBNA, 3x 1.1mm Cryo, 2x Brush. ROSE: Benign lymphocytes. Disposition: Stable.",
+    "note_text": "<PERSON>. Ion Bronchoscopy. LLL Nodule (22mm). Nav to LB10. rEBUS: Eccentric. CBCT: Confirmed. Samples: 3x TBNA, 3x 1.1mm Cryo, 2x <PERSON>. ROSE: Benign lymphocytes. Disposition: Stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -8979,10 +9163,17 @@
       "style_type": 6,
       "generated_name": "Donald Adams",
       "generation_date": "2025-12-09T12:07:45.787772"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected lung malignancy, LLL.\n[Anesthesia]\nGeneral.\n[Description]\nIon navigation to LB10. rEBUS eccentric + CBCT. Sampled via TBNA (x3), Cryo (x3), Brush (x2). ROSE: Benign lymphocytes.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nSuspected lung malignancy, LLL.\n[<LOCATION>]\nGeneral.\n[Description]\nIon navigation to LB10. rEBUS eccentric + CBCT. Sampled via TBNA (x3), Cryo (<PERSON>), <PERSON> (x2). ROSE: Benign lymphocytes.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31629,
       31628,
@@ -9243,10 +9434,18 @@
       "style_type": 7,
       "generated_name": "George Baker",
       "generation_date": "2025-12-09T12:07:45.787840"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mr. Baker underwent a robotic bronchoscopy for a 22mm nodule in the Left Lower Lobe. We navigated the Ion catheter to the Posterior-Basal Segment. We confirmed the location with an eccentric radial EBUS view and Cone Beam CT. We then collected three needle aspirates, three cryobiopsies using a 1.1mm probe, and two brush samples. The preliminary pathology showed lymphocytes and benign cells.",
+    "note_text": "Mr. <PERSON> underwent a robotic bronchoscopy for a 22mm nodule in the Left Lower Lobe. We navigated the Ion catheter to the Posterior-Basal Segment. We confirmed the location with an eccentric radial EBUS view and Cone Beam CT. We then collected three needle aspirates, three cryobiopsies using a 1.1mm probe, and two brush samples. The preliminary pathology showed lymphocytes and benign cells.",
     "cpt_codes": [
       31629,
       31628,
@@ -9507,6 +9706,12 @@
       "style_type": 8,
       "generated_name": "Kenneth Gonzalez",
       "generation_date": "2025-12-09T12:07:45.787906"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9774,7 +9979,7 @@
     }
   },
   {
-    "note_text": "Procedure: Ion Bronchoscopy LUL.\n- Target: 35mm nodule Apicoposterior (LB1+2).\n- Nav: Ion, 2.2mm error.\n- Verify: rEBUS (adjacent), CBCT.\n- Samples: 21G TBNA x6, Brush x2.\n- ROSE: Atypical cells.\n- Outcome: Stable.",
+    "note_text": "Procedure: Ion Bronchoscopy LUL.\n- Target: 35mm nodule <LOCATION> (LB1+2).\n- Nav: Ion, 2.2mm error.\n- Verify: rEBUS (adjacent), CBCT.\n- Samples: 21G TBNA x6, Brush x2.\n- ROSE: Atypical cells.\n- Outcome: Stable.",
     "cpt_codes": [
       31629,
       31627,
@@ -10009,10 +10214,16 @@
       "style_type": 1,
       "generated_name": "Sharon Carter",
       "generation_date": "2025-12-09T12:07:45.788033"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Ms. Garcia underwent robotic bronchoscopy for a 35mm LUL ground glass opacity. Navigation to the Apicoposterior Segment (LB1+2) was achieved using the Ion platform. Confirmation via adjacent rEBUS and Cone Beam CT was obtained. Sampling consisted of 6 passes with a 21G needle and 2 brushings. ROSE identified atypical cells, preventing exclusion of malignancy. No cryobiopsy was performed. The patient was extubated without issues.",
+    "note_text": "PROCEDURE NOTE: Ms. <PERSON> underwent robotic bronchoscopy for a 35mm LUL ground glass opacity. Navigation to the Apicoposterior Segment (LB1+2) was achieved using the Ion platform. Confirmation via adjacent rEBUS and Cone Beam CT was obtained. Sampling consisted of 6 passes with a 21G needle and 2 brushings. ROSE identified atypical cells, preventing exclusion of malignancy. No cryobiopsy was performed. The patient was extubated without issues.",
     "cpt_codes": [
       31629,
       31627,
@@ -10247,10 +10458,16 @@
       "style_type": 2,
       "generated_name": "Michelle Mitchell",
       "generation_date": "2025-12-09T12:07:45.788095"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Coding:\n31629: TBNA x6 (21G).\n31623: Brush x2.\n31627: Ion Navigation.\n31654: rEBUS.\nSite: LUL (LB1+2). Note: No cryobiopsy performed. CBCT used for verification.",
+    "note_text": "Coding:\n31629: TBNA x6 (21G).\n<DATE_TIME>: Brush x2.\n31627: Ion Navigation.\n31654: rEBUS.\nSite: LUL (LB1+2). Note: No cryobiopsy performed. CBCT used for verification.",
     "cpt_codes": [
       31629,
       31627,
@@ -10485,10 +10702,16 @@
       "style_type": 3,
       "generated_name": "Laura Perez",
       "generation_date": "2025-12-09T12:07:45.788155"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Kimberly Garcia\nTarget: LUL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB1+2.\n3. rEBUS (adjacent) + CBCT confirmation.\n4. TBNA: 21G x 6 passes.\n5. Brush: x 2.\n6. ROSE: Atypical cells.\nNo complications.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nTarget: LUL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB1+2.\n3. rEBUS (adjacent) + CBCT confirmation.\n4. TBNA: 21G x 6 passes.\n5. Brush: x 2.\n6. ROSE: Atypical cells.\nNo complications.",
     "cpt_codes": [
       31629,
       31627,
@@ -10723,10 +10946,16 @@
       "style_type": 4,
       "generated_name": "Sarah Roberts",
       "generation_date": "2025-12-09T12:07:45.788214"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Kimberly Garcia procedure note. LUL nodule 35mm ground glass. Anesthesia general. Ion robot used to get to apicoposterior segment. Rebus showed adjacent and we did the cone beam ct. Took 6 needle samples 21g and 2 brushes. Path said atypical cells. No bleeding patient fine.",
+    "note_text": "<PERSON> procedure note. LUL nodule 35mm ground glass. <LOCATION> general. Ion robot used to get to apicoposterior segment. Rebus showed adjacent and we did the cone beam ct. Took 6 needle samples 21g and 2 brushes. Path said atypical cells. No bleeding patient fine.",
     "cpt_codes": [
       31629,
       31627,
@@ -10961,10 +11190,17 @@
       "style_type": 5,
       "generated_name": "Kimberly Turner",
       "generation_date": "2025-12-09T12:07:45.788275"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Kimberly Garcia. Ion Bronchoscopy. LUL Nodule (35mm). Nav to LB1+2. rEBUS: Adjacent. CBCT: Confirmed. Samples: 6x 21G TBNA, 2x Brush. ROSE: Atypical cells. Disposition: Stable.",
+    "note_text": "<PERSON>. Ion Bronchoscopy. LUL Nodule (35mm). Nav to LB1+2. rEBUS: Adjacent. CBCT: Confirmed. Samples: 6x <DATE_TIME>G TBNA, 2x <PERSON>. ROSE: Atypical cells. Disposition: Stable.",
     "cpt_codes": [
       31629,
       31627,
@@ -11199,10 +11435,18 @@
       "style_type": 6,
       "generated_name": "Deborah Phillips",
       "generation_date": "2025-12-09T12:07:45.788336"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nGround glass opacity LUL.\n[Anesthesia]\nGeneral.\n[Description]\nIon navigation to LB1+2. rEBUS adjacent + CBCT. Sampled via 21G TBNA (x6), Brush (x2). ROSE: Atypical cells.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nGround glass opacity LUL.\n[<LOCATION>]\nGeneral.\n[Description]\nIon navigation to <LOCATION>+2. rEBUS adjacent + CBCT. Sampled via 21G TBNA (x6), <PERSON> (x2). ROSE: Atypical cells.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31629,
       31627,
@@ -11437,10 +11681,18 @@
       "style_type": 7,
       "generated_name": "Jessica Campbell",
       "generation_date": "2025-12-09T12:07:45.788394"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ms. Garcia underwent a robotic bronchoscopy for a 35mm nodule in the Left Upper Lobe. We navigated the Ion catheter to the Apicoposterior Segment. We confirmed the location with an adjacent radial EBUS view and Cone Beam CT. We collected six needle aspirates using a 21G needle and two brush samples. The on-site evaluation showed atypical cells.",
+    "note_text": "Ms. <PERSON> underwent a robotic bronchoscopy for a 35mm nodule in the Left Upper Lobe. We navigated the Ion catheter to the Apicoposterior Segment. We confirmed the location with an adjacent radial EBUS view and Cone Beam CT. We collected six needle aspirates using a 21G needle and two brush samples. The on-site evaluation showed atypical cells.",
     "cpt_codes": [
       31629,
       31627,
@@ -11675,10 +11927,16 @@
       "style_type": 8,
       "generated_name": "Shirley Parker",
       "generation_date": "2025-12-09T12:07:45.788451"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Robotic bronchoscopy.\nTarget: LUL nodule.\nTechnique: Guided Ion catheter to LB1+2. Verified with rEBUS and CBCT. Aspirated with 21G needle (6x). Brushed (2x). ROSE Result: Atypical. Patient stable.",
+    "note_text": "Procedure: Robotic bronchoscopy.\nTarget: LUL nodule.\nTechnique: Guided Ion catheter to <LOCATION>+2. Verified with rEBUS and CBCT. Aspirated with 21G needle (6x). Brushed (2x). ROSE Result: Atypical. Patient stable.",
     "cpt_codes": [
       31629,
       31627,
@@ -11913,6 +12171,12 @@
       "style_type": 9,
       "generated_name": "Cynthia Evans",
       "generation_date": "2025-12-09T12:07:45.788508"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -12162,7 +12426,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Ms. Campbell presented for biopsy of a 17mm Lingula nodule. The Ion robotic platform was used to navigate to the Inferior Lingula (LB5). Localization was confirmed with concentric rEBUS and Cone Beam CT. Sampling included 3 transbronchial needle aspirations (21G/23G) and a bronchoalveolar lavage. ROSE results were suspicious for malignancy due to the presence of atypical cells. The procedure was completed without complication.",
+    "note_text": "OPERATIVE SUMMARY: Ms. <PERSON> presented for biopsy of a 17mm Lingula nodule. The Ion robotic platform was used to navigate to the Inferior Lingula (LB5). Localization was confirmed with concentric rEBUS and Cone Beam CT. Sampling included 3 transbronchial needle aspirations (21G/23G) and a bronchoalveolar lavage. ROSE results were suspicious for malignancy due to the presence of atypical cells. The procedure was completed without complication.",
     "cpt_codes": [
       31629,
       31627,
@@ -12405,6 +12669,12 @@
       "style_type": 2,
       "generated_name": "Melissa Collins",
       "generation_date": "2025-12-09T12:07:45.788630"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12654,7 +12924,7 @@
     }
   },
   {
-    "note_text": "Fellow Note\nPatient: Amy Campbell\nTarget: Lingula Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB5.\n3. rEBUS (concentric) + CBCT confirmation.\n4. TBNA: x3 passes.\n5. BAL: 80cc instilled.\n6. ROSE: Atypical/Suspicious.\nNo complications.",
+    "note_text": "Fellow Note\nPatient: <PERSON>\nTarget: Lingula Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB5.\n3. rEBUS (concentric) + CBCT confirmation.\n4. TBNA: x3 passes.\n5. BAL: 80cc instilled.\n6. ROSE: Atypical/Suspicious.\nNo complications.",
     "cpt_codes": [
       31629,
       31627,
@@ -12897,10 +13167,16 @@
       "style_type": 4,
       "generated_name": "Amy Sanchez",
       "generation_date": "2025-12-09T12:07:45.788818"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Amy Campbell procedure note. Lingula nodule 17mm. General anesthesia. Ion robot used to get to inferior lingula LB5. Concentric view on rebus and confirmed with spin ct. Did 3 needle passes and a lavage. Rose said suspicious for malignancy. Patient woke up fine.",
+    "note_text": "<PERSON> procedure note. Lingula nodule 17mm. General <LOCATION>. Ion robot used to get to inferior lingula LB5. Concentric view on rebus and confirmed with spin ct. Did 3 needle passes and a lavage. <PERSON> said suspicious for malignancy. Patient woke up fine.",
     "cpt_codes": [
       31629,
       31627,
@@ -13143,10 +13419,18 @@
       "style_type": 5,
       "generated_name": "Anna Morris",
       "generation_date": "2025-12-09T12:07:45.788890"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Amy Campbell. Ion Bronchoscopy. Lingula Nodule (17mm). Nav to LB5. rEBUS: Concentric. CBCT: Confirmed. Samples: 3x TBNA, BAL. ROSE: Suspicious for malignancy. Disposition: Stable.",
+    "note_text": "<PERSON>. Ion Bronchoscopy. Lingula Nodule (17mm). Nav to LB5. rEBUS: Concentric. CBCT: Confirmed. Samples: 3x TBNA, BAL. ROSE: Suspicious for malignancy. Disposition: Stable.",
     "cpt_codes": [
       31629,
       31627,
@@ -13389,10 +13673,16 @@
       "style_type": 6,
       "generated_name": "Rebecca Rogers",
       "generation_date": "2025-12-09T12:07:45.788956"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected lung malignancy, Lingula.\n[Anesthesia]\nGeneral.\n[Description]\nIon navigation to LB5. rEBUS concentric + CBCT. Sampled via TBNA (x3), BAL. ROSE: Suspicious.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nSuspected lung malignancy, Lingula.\n[<LOCATION>]\nGeneral.\n[Description]\nIon navigation to LB5. rEBUS concentric + CBCT. Sampled via TBNA (<LOCATION>), BAL. ROSE: Suspicious.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31629,
       31627,
@@ -13635,10 +13925,17 @@
       "style_type": 7,
       "generated_name": "Virginia Reed",
       "generation_date": "2025-12-09T12:07:45.789019"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Campbell underwent a robotic bronchoscopy for a 17mm nodule in the Lingula. We navigated the Ion catheter to the Inferior Lingula segment. We confirmed the location with a concentric radial EBUS view and Cone Beam CT. We collected three needle aspirates and performed a bronchoalveolar lavage. The on-site evaluation showed atypical cells suspicious for malignancy.",
+    "note_text": "Ms. <PERSON> underwent a robotic bronchoscopy for a 17mm nodule in the Lingula. We navigated the Ion catheter to the Inferior Lingula segment. We confirmed the location with a concentric radial EBUS view and Cone Beam CT. We collected three needle aspirates and performed a bronchoalveolar lavage. The on-site evaluation showed atypical cells suspicious for malignancy.",
     "cpt_codes": [
       31629,
       31627,
@@ -13881,6 +14178,12 @@
       "style_type": 8,
       "generated_name": "Kathleen Cook",
       "generation_date": "2025-12-09T12:07:45.789091"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14375,7 +14678,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Ms. Martin underwent robotic bronchoscopy for an 18mm Lingula ground glass opacity. Navigation to the Inferior Lingula (LB5) was achieved via the Ion platform. Radial EBUS showed an adjacent view. The catheter was locked, and 4 transbronchial needle aspirations were performed with a 23G needle. A single gold fiducial marker was placed under fluoroscopic guidance. ROSE confirmed adenocarcinoma. No complications occurred.",
+    "note_text": "PROCEDURE NOTE: Ms. <PERSON> underwent robotic bronchoscopy for an 18mm Lingula ground glass opacity. Navigation to the Inferior Lingula (LB5) was achieved via the Ion platform. Radial EBUS showed an adjacent view. The catheter was locked, and 4 transbronchial needle aspirations were performed with a 23G needle. A single gold fiducial marker was placed under fluoroscopic guidance. ROSE confirmed adenocarcinoma. No complications occurred.",
     "cpt_codes": [
       31629,
       31627,
@@ -14617,10 +14920,16 @@
       "style_type": 2,
       "generated_name": "Debra Murphy",
       "generation_date": "2025-12-09T12:07:45.789283"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Coding:\n31629: TBNA x4 (23G).\n31626: Fiducial placement (1 marker).\n31627: Ion Navigation.\n31654: rEBUS.\nSite: Lingula (LB5). Result: Malignancy confirmed.",
+    "note_text": "Coding:\n31629: TBNA x4 (23G).\n<DATE_TIME>: Fiducial placement (1 marker).\n31627: Ion Navigation.\n31654: rEBUS.\nSite: Lingula (LB5). Result: <PERSON> confirmed.",
     "cpt_codes": [
       31629,
       31627,
@@ -14862,10 +15171,17 @@
       "style_type": 3,
       "generated_name": "Amanda Bailey",
       "generation_date": "2025-12-09T12:07:45.789343"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Sarah Martin\nTarget: Lingula Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB5.\n3. rEBUS (adjacent).\n4. TBNA: 23G x 4 passes.\n5. Fiducial placement: x1.\n6. ROSE: Malignant/Adenocarcinoma.\nNo complications.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nTarget: Lingula Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB5.\n3. rEBUS (adjacent).\n4. TBNA: 23G x 4 passes.\n5. Fiducial placement: x1.\n6. ROSE: Malignant/Adenocarcinoma.\nNo complications.",
     "cpt_codes": [
       31629,
       31627,
@@ -15107,10 +15423,16 @@
       "style_type": 4,
       "generated_name": "Stephanie Rivera",
       "generation_date": "2025-12-09T12:07:45.789408"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Sarah Martin procedure note. Lingula nodule 18mm. General anesthesia. Ion robot used to get to inferior lingula LB5. Adjacent view on rebus. Did 4 needle passes 23g. Put in a fiducial marker too. Rose said malignant adenocarcinoma. Patient fine.",
+    "note_text": "<PERSON> procedure note. Lingula nodule 18mm. General <LOCATION>. Ion robot used to get to inferior lingula LB5. Adjacent view on rebus. Did 4 needle passes 23g. Put in a fiducial marker too. <PERSON> said malignant adenocarcinoma. Patient fine.",
     "cpt_codes": [
       31629,
       31627,
@@ -15352,10 +15674,18 @@
       "style_type": 5,
       "generated_name": "Carolyn Cooper",
       "generation_date": "2025-12-09T12:07:45.789488"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Sarah Martin. Ion Bronchoscopy. Lingula Nodule (18mm). Nav to LB5. rEBUS: Adjacent. Samples: 4x 23G TBNA. Marker: 1 fiducial. ROSE: Malignant (Adenocarcinoma). Disposition: Stable.",
+    "note_text": "<PERSON>. Ion Bronchoscopy. Lingula Nodule (18mm). Nav to LB5. rEBUS: Adjacent. Samples: 4x 23G TBNA. <PERSON>: 1 fiducial. ROSE: Malignant (Adenocarcinoma). Disposition: Stable.",
     "cpt_codes": [
       31629,
       31627,
@@ -15597,10 +15927,17 @@
       "style_type": 6,
       "generated_name": "Christine Richardson",
       "generation_date": "2025-12-09T12:07:45.789550"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nGround glass opacity Lingula.\n[Anesthesia]\nGeneral.\n[Description]\nIon navigation to LB5. rEBUS adjacent. Sampled via 23G TBNA (x4). Placed 1 fiducial. ROSE: Adenocarcinoma.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nGround glass opacity Lingula.\n[<LOCATION>]\nGeneral.\n[Description]\nIon navigation to LB5. rEBUS adjacent. Sampled via 23G TBNA (x4). Placed 1 fiducial. ROSE: Adenocarcinoma.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31629,
       31627,
@@ -15842,10 +16179,16 @@
       "style_type": 7,
       "generated_name": "Marie Cox",
       "generation_date": "2025-12-09T12:07:45.789609"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Martin underwent a robotic bronchoscopy for an 18mm nodule in the Lingula. We navigated the Ion catheter to the Inferior Lingula segment. We confirmed the location with an adjacent radial EBUS view. We collected four needle aspirates using a 23G needle and placed one fiducial marker. The on-site evaluation confirmed malignant cells consistent with adenocarcinoma.",
+    "note_text": "Ms. <PERSON> underwent a robotic bronchoscopy for an 18mm nodule in the Lingula. We navigated the Ion catheter to the Inferior Lingula segment. We confirmed the location with an adjacent radial EBUS view. We collected four needle aspirates using a 23G needle and placed one fiducial marker. The on-site evaluation confirmed malignant cells consistent with adenocarcinoma.",
     "cpt_codes": [
       31629,
       31627,
@@ -16087,6 +16430,12 @@
       "style_type": 8,
       "generated_name": "Janet Howard",
       "generation_date": "2025-12-09T12:07:45.789669"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -16335,7 +16684,7 @@
     }
   },
   {
-    "note_text": "Procedure: Ion Bronchoscopy LUL.\n- Target: 27mm nodule Apicoposterior (LB1+2).\n- Nav: Ion, 2.0mm error.\n- Verify: rEBUS (concentric), CBCT.\n- Samples: 21G/23G TBNA x7, 1.7mm Cryo x6 (7s), BAL.\n- Marker: 1 fiducial placed.\n- ROSE: Malignant (Squamous Cell).\n- Outcome: Stable.",
+    "note_text": "Procedure: Ion Bronchoscopy LUL.\n- Target: 27mm nodule <LOCATION> (LB1+2).\n- Nav: Ion, 2.0mm error.\n- Verify: rEBUS (concentric), CBCT.\n- Samples: 21G/23G TBNA x7, 1.7mm Cryo x6 (7s), BAL.\n- Marker: 1 fiducial placed.\n- ROSE: Malignant (Squamous Cell).\n- Outcome: Stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -16631,10 +16980,16 @@
       "style_type": 1,
       "generated_name": "Edward Torres",
       "generation_date": "2025-12-09T12:07:45.789805"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. Young presented for biopsy of a 27mm LUL nodule. The Ion robotic platform was used to navigate to the Apicoposterior Segment (LB1+2). Localization was confirmed with concentric rEBUS and Cone Beam CT 3D reconstruction. Sampling included 7 needle passes (21G/23G), 6 cryobiopsies (1.7mm probe, 7-second freeze), and BAL. A gold fiducial marker was deployed for future localization. ROSE confirmed squamous cell carcinoma. The patient tolerated the procedure well.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented for biopsy of a 27mm LUL nodule. The Ion robotic platform was used to navigate to the Apicoposterior Segment (LB1+2). Localization was confirmed with concentric rEBUS and Cone Beam CT 3D reconstruction. Sampling included 7 needle passes (21G/23G), 6 cryobiopsies (1.7mm probe, 7-second freeze), and BAL. A gold fiducial marker was deployed for future localization. ROSE confirmed squamous cell carcinoma. The patient tolerated the procedure well.",
     "cpt_codes": [
       31629,
       31628,
@@ -16930,10 +17285,16 @@
       "style_type": 2,
       "generated_name": "Brian Peterson",
       "generation_date": "2025-12-09T12:07:45.789899"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "CPT Data:\n31629: TBNA x7.\n31628: Cryo x6 (1.7mm).\n31626: Fiducial placement.\n31624: BAL.\n31627: Ion Navigation.\n31654: rEBUS.\nSite: LUL (LB1+2). Result: Squamous Cell Carcinoma.",
+    "note_text": "CPT Data:\n31629: TBNA x7.\n<DATE_TIME>: Cryo x6 (1.7mm).\n<DATE_TIME>: Fiducial placement.\n31624: BAL.\n31627: Ion Navigation.\n31654: rEBUS.\nSite: LUL (LB1+2). Result: Squamous Cell Carcinoma.",
     "cpt_codes": [
       31629,
       31628,
@@ -17229,10 +17590,17 @@
       "style_type": 3,
       "generated_name": "Ronald Gray",
       "generation_date": "2025-12-09T12:07:45.789976"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Fellow Note\nPatient: Matthew Young\nTarget: LUL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB1+2.\n3. rEBUS (concentric) + CBCT confirmation.\n4. TBNA: x7 passes.\n5. Cryo: x6 biopsies (1.7mm).\n6. Fiducial placement: x1.\n7. BAL: 60cc instilled.\n8. ROSE: Malignant/Squamous Cell.\nNo complications.",
+    "note_text": "Fellow Note\nPatient: <PERSON>\nTarget: LUL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB1+2.\n3. rEBUS (concentric) + CBCT confirmation.\n4. TBNA: x7 passes.\n5. Cryo: x6 biopsies (1.7mm).\n6. Fiducial placement: x1.\n7. BAL: 60cc instilled.\n8. ROSE: Malignant/Squamous Cell.\nNo complications.",
     "cpt_codes": [
       31629,
       31628,
@@ -17528,10 +17896,16 @@
       "style_type": 4,
       "generated_name": "Anthony Ramirez",
       "generation_date": "2025-12-09T12:07:45.790051"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Matthew Young procedure note. LUL nodule 27mm. General anesthesia. Ion robot used to get to apicoposterior segment. Concentric view on rebus and confirmed with spin ct. Did 7 needle passes and 6 cryo biopsies. Put in a fiducial marker and did a lavage. Rose said squamous cell carcinoma. Patient woke up fine.",
+    "note_text": "<PERSON> procedure note. LUL nodule 27mm. General <LOCATION>. Ion robot used to get to apicoposterior segment. Concentric view on rebus and confirmed with spin ct. Did 7 needle passes and 6 cryo biopsies. Put in a fiducial marker and did a lavage. <PERSON> said squamous cell carcinoma. Patient woke up fine.",
     "cpt_codes": [
       31629,
       31628,
@@ -17827,10 +18201,18 @@
       "style_type": 5,
       "generated_name": "Kevin James",
       "generation_date": "2025-12-09T12:07:45.790127"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Matthew Young. Ion Bronchoscopy. LUL Nodule (27mm). Nav to LB1+2. rEBUS: Concentric. CBCT: Confirmed. Samples: 7x TBNA, 6x 1.7mm Cryo, BAL. Marker: 1 fiducial. ROSE: Malignant (Squamous Cell). Disposition: Stable.",
+    "note_text": "<PERSON>. Ion Bronchoscopy. LUL Nodule (27mm). Nav to LB1+2. rEBUS: Concentric. CBCT: Confirmed. Samples: 7x TBNA, 6x 1.7mm Cryo, BAL. <PERSON>: 1 fiducial. ROSE: Malignant (Squamous Cell). Disposition: Stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -18126,10 +18508,17 @@
       "style_type": 6,
       "generated_name": "Jason Watson",
       "generation_date": "2025-12-09T12:07:45.790201"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected lung malignancy, LUL.\n[Anesthesia]\nGeneral.\n[Description]\nIon navigation to LB1+2. rEBUS concentric + CBCT. Sampled via TBNA (x7), Cryo (x6), BAL. Placed 1 fiducial. ROSE: Squamous Cell Carcinoma.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nSuspected lung malignancy, LUL.\n[<LOCATION>]\nGeneral.\n[Description]\nIon navigation to <LOCATION>+2. rEBUS concentric + CBCT. Sampled via TBNA (x7), Cryo (x6), BAL. Placed 1 fiducial. ROSE: Squamous Cell Carcinoma.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31629,
       31628,
@@ -18425,10 +18814,17 @@
       "style_type": 7,
       "generated_name": "Matthew Brooks",
       "generation_date": "2025-12-09T12:07:45.790353"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Young underwent a robotic bronchoscopy for a 27mm nodule in the Left Upper Lobe. We navigated the Ion catheter to the Apicoposterior Segment. We confirmed the location with a concentric radial EBUS view and Cone Beam CT. We collected seven needle aspirates, six cryobiopsies, and performed a bronchoalveolar lavage. We also placed one fiducial marker. The on-site evaluation confirmed squamous cell carcinoma.",
+    "note_text": "Mr. <PERSON> underwent a robotic bronchoscopy for a 27mm nodule in the Left Upper Lobe. We navigated the Ion catheter to the Apicoposterior Segment. We confirmed the location with a concentric radial EBUS view and Cone Beam CT. We collected seven needle aspirates, six cryobiopsies, and performed a bronchoalveolar lavage. We also placed one fiducial marker. The on-site evaluation confirmed squamous cell carcinoma.",
     "cpt_codes": [
       31629,
       31628,
@@ -18724,10 +19120,16 @@
       "style_type": 8,
       "generated_name": "Gary Kelly",
       "generation_date": "2025-12-09T12:07:45.790435"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Robotic bronchoscopy.\nTarget: LUL nodule.\nTechnique: Steered Ion catheter to LB1+2. Verified with rEBUS and CBCT. Aspirated with needles (7x). Biopsied with 1.7mm cryoprobe (6x). Lavaged. Implanted fiducial. ROSE Result: Malignant. Patient stable.",
+    "note_text": "Procedure: Robotic bronchoscopy.\nTarget: LUL nodule.\nTechnique: Steered Ion catheter to <LOCATION>+2. Verified with rEBUS and CBCT. Aspirated with needles (7x). Biopsied with 1.7mm cryoprobe (6x). Lavaged. Implanted fiducial. ROSE Result: Malignant. Patient stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -19023,6 +19425,12 @@
       "style_type": 9,
       "generated_name": "Timothy Sanders",
       "generation_date": "2025-12-09T12:07:45.790541"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -19321,7 +19729,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Ms. Carter underwent robotic bronchoscopy for a 21mm LLL nodule. Navigation to the Posterior-Basal Segment (LB10) was achieved using the Ion platform. Confirmation via eccentric rEBUS and Cone Beam CT was obtained. Sampling consisted of 6 passes with a 23G needle, 3 cryobiopsies (1.7mm probe, 5-second freeze), 2 brushings, and BAL. ROSE identified benign lymphocytes. No complications occurred.",
+    "note_text": "PROCEDURE NOTE: Ms. <PERSON> underwent robotic bronchoscopy for a 21mm LLL nodule. Navigation to the Posterior-Basal Segment (LB10) was achieved using the Ion platform. Confirmation via eccentric rEBUS and Cone Beam CT was obtained. Sampling consisted of 6 passes with a 23G needle, 3 cryobiopsies (1.7mm probe, <DATE_TIME> freeze), 2 brushings, and BAL. ROSE identified benign lymphocytes. No complications occurred.",
     "cpt_codes": [
       31629,
       31628,
@@ -19613,10 +20021,17 @@
       "style_type": 2,
       "generated_name": "Alice Bennett",
       "generation_date": "2025-12-09T12:07:45.790720"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Billing Codes:\n31629: TBNA x6 (23G).\n31628: Cryo x3 (1.7mm).\n31624: BAL.\n31623: Brush x2.\n31627: Ion Navigation.\n31654: rEBUS.\nSite: LLL (LB10). Verification: CBCT/REBUS. Result: Benign.",
+    "note_text": "Billing Codes:\n31629: TBNA x6 (23G).\n31628: Cryo x3 (1.7mm).\n31624: BAL.\n<DATE_TIME>: Brush x2.\n31627: Ion Navigation.\n31654: rEBUS.\nSite: LLL (LB10). Verification: CBCT/REBUS. Result: Benign.",
     "cpt_codes": [
       31629,
       31628,
@@ -19908,10 +20323,16 @@
       "style_type": 3,
       "generated_name": "Julie Wood",
       "generation_date": "2025-12-09T12:07:45.790795"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Laura Carter\nTarget: LLL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB10.\n3. rEBUS (eccentric) + CBCT confirmation.\n4. TBNA: 23G x 6 passes.\n5. Cryo: 1.7mm x 3 biopsies.\n6. Brush: x 2.\n7. BAL: 80cc instilled.\n8. ROSE: Benign lymphocytes.\nNo complications.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nTarget: LLL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to LB10.\n3. rEBUS (eccentric) + CBCT confirmation.\n4. TBNA: 23G x 6 passes.\n5. Cryo: 1.7mm x 3 biopsies.\n6. Brush: x 2.\n7. BAL: 80cc instilled.\n8. ROSE: Benign lymphocytes.\nNo complications.",
     "cpt_codes": [
       31629,
       31628,
@@ -20203,10 +20624,16 @@
       "style_type": 4,
       "generated_name": "Heather Barnes",
       "generation_date": "2025-12-09T12:07:45.790870"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Laura Carter procedure note. LLL nodule 21mm. General anesthesia. Ion robot used to get to posterior basal segment. Eccentric view on rebus and confirmed with spin ct. Did 6 needle passes 23g 3 cryo and 2 brushes plus a lavage. Rose said benign lymphocytes. Patient fine.",
+    "note_text": "<PERSON> procedure note. LLL nodule 21mm. General <LOCATION>. Ion robot used to get to posterior basal segment. Eccentric view on rebus and confirmed with spin ct. Did 6 needle passes 23g 3 cryo and 2 brushes plus a lavage. <PERSON> said benign lymphocytes. Patient fine.",
     "cpt_codes": [
       31629,
       31628,
@@ -20498,10 +20925,18 @@
       "style_type": 5,
       "generated_name": "Teresa Ross",
       "generation_date": "2025-12-09T12:07:45.790948"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Laura Carter. Ion Bronchoscopy. LLL Nodule (21mm). Nav to LB10. rEBUS: Eccentric. CBCT: Confirmed. Samples: 6x 23G TBNA, 3x 1.7mm Cryo, 2x Brush, BAL. ROSE: Benign. Disposition: Stable.",
+    "note_text": "<PERSON>. Ion Bronchoscopy. LLL Nodule (21mm). Nav to LB10. rEBUS: Eccentric. CBCT: Confirmed. Samples: 6x 23G TBNA, 3x 1.7mm Cryo, 2x <PERSON>, BAL. ROSE: Benign. Disposition: Stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -20793,10 +21228,17 @@
       "style_type": 6,
       "generated_name": "Doris Henderson",
       "generation_date": "2025-12-09T12:07:45.791022"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nLung-RADS 4X nodule, LLL.\n[Anesthesia]\nGeneral.\n[Description]\nIon navigation to LB10. rEBUS eccentric + CBCT. Sampled via 23G TBNA (x6), 1.7mm Cryo (x3), Brush (x2), BAL. ROSE: Benign.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nLung-RADS 4X nodule, LLL.\n[<LOCATION>]\nGeneral.\n[Description]\nIon navigation to LB10. rEBUS eccentric + CBCT. Sampled via 23G TBNA (x6), 1.7mm Cryo (<PERSON>), <PERSON> (x2), BAL. ROSE: Benign.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31629,
       31628,
@@ -21088,10 +21530,18 @@
       "style_type": 7,
       "generated_name": "Gloria Coleman",
       "generation_date": "2025-12-09T12:07:45.791099"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ms. Carter underwent a robotic bronchoscopy for a 21mm nodule in the Left Lower Lobe. We navigated the Ion catheter to the Posterior-Basal Segment. We confirmed the location with an eccentric radial EBUS view and Cone Beam CT. We collected six needle aspirates, three cryobiopsies, two brush samples, and performed a bronchoalveolar lavage. The on-site evaluation showed benign lymphocytes.",
+    "note_text": "Ms. <PERSON> underwent a robotic bronchoscopy for a 21mm nodule in the Left Lower Lobe. We navigated the Ion catheter to the Posterior-Basal Segment. We confirmed the location with an eccentric radial EBUS view and Cone Beam CT. We collected six needle aspirates, three cryobiopsies, two brush samples, and performed a bronchoalveolar lavage. The on-site evaluation showed benign lymphocytes.",
     "cpt_codes": [
       31629,
       31628,
@@ -21383,6 +21833,12 @@
       "style_type": 8,
       "generated_name": "Evelyn Jenkins",
       "generation_date": "2025-12-09T12:07:45.791172"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -21952,7 +22408,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Ms. Williams presented for biopsy of a 27mm RUL nodule. The Ion robotic platform was used to navigate to the Anterior Segment (RB3). Localization was confirmed with eccentric rEBUS and Cone Beam CT 3D reconstruction. Sampling included 8 needle passes (21G/23G), 5 cryobiopsies using a 1.1mm probe, and a bronchoalveolar lavage. ROSE results indicated granulomatous inflammation. The procedure was uncomplicated.",
+    "note_text": "OPERATIVE SUMMARY: Ms. <PERSON> presented for biopsy of a 27mm RUL nodule. The Ion robotic platform was used to navigate to the Anterior Segment (RB3). Localization was confirmed with eccentric rEBUS and Cone Beam CT 3D reconstruction. Sampling included 8 needle passes (21G/23G), 5 cryobiopsies using a 1.1mm probe, and a bronchoalveolar lavage. ROSE results indicated granulomatous inflammation. The procedure was uncomplicated.",
     "cpt_codes": [
       31629,
       31628,
@@ -22220,10 +22676,16 @@
       "style_type": 2,
       "generated_name": "Judith Long",
       "generation_date": "2025-12-09T12:07:45.791401"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "CPT Justification:\n31629: TBNA x8 (21G/23G).\n31628: Cryo x5 (1.1mm).\n31624: BAL.\n31627: Ion Navigation.\n31654: rEBUS.\nSite: RUL (RB3). Verification: CBCT/REBUS. Result: Granulomatous inflammation.",
+    "note_text": "CPT Justification:\n31629: TBNA x8 (21G/23G).\n<DATE_TIME>: Cryo x5 (1.1mm).\n31624: BAL.\n31627: Ion Navigation.\n31654: rEBUS.\nSite: RUL (RB3). Verification: CBCT/REBUS. Result: Granulomatous inflammation.",
     "cpt_codes": [
       31629,
       31628,
@@ -22491,10 +22953,16 @@
       "style_type": 3,
       "generated_name": "Rosed Patterson",
       "generation_date": "2025-12-09T12:07:45.791468"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Fellow Note\nPatient: Ashley Williams\nTarget: RUL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to RB3.\n3. rEBUS (eccentric) + CBCT confirmation.\n4. TBNA: x8 passes.\n5. Cryo: 1.1mm x 5 biopsies.\n6. BAL: 40cc instilled.\n7. ROSE: Granulomatous inflammation.\nNo complications.",
+    "note_text": "Fellow Note\nPatient: <PERSON>\nTarget: RUL Nodule\nSteps:\n1. GA/ETT.\n2. Ion Nav to RB3.\n3. rEBUS (eccentric) + CBCT confirmation.\n4. TBNA: x8 passes.\n5. Cryo: 1.1mm x 5 biopsies.\n6. BAL: 40cc instilled.\n7. ROSE: Granulomatous inflammation.\nNo complications.",
     "cpt_codes": [
       31629,
       31628,
@@ -22762,10 +23230,16 @@
       "style_type": 4,
       "generated_name": "Beverly Hughes",
       "generation_date": "2025-12-09T12:07:45.791534"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ashley Williams procedure note. RUL nodule 27mm. General anesthesia. Ion robot used to get to anterior segment. Eccentric view on rebus and confirmed with spin ct. Did 8 needle passes and 5 cryo biopsies plus a lavage. Rose said granulomas. Patient woke up fine.",
+    "note_text": "<PERSON> procedure note. RUL nodule 27mm. General <LOCATION>. Ion robot used to get to anterior segment. Eccentric view on rebus and confirmed with spin ct. Did 8 needle passes and 5 cryo biopsies plus a lavage. <PERSON> said granulomas. Patient woke up fine.",
     "cpt_codes": [
       31629,
       31628,
@@ -23033,10 +23507,18 @@
       "style_type": 5,
       "generated_name": "Denise Flores",
       "generation_date": "2025-12-09T12:07:45.791600"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ashley Williams. Ion Bronchoscopy. RUL Nodule (27mm). Nav to RB3. rEBUS: Eccentric. CBCT: Confirmed. Samples: 8x TBNA, 5x 1.1mm Cryo, BAL. ROSE: Granulomatous inflammation. Disposition: Stable.",
+    "note_text": "<PERSON>. Ion Bronchoscopy. RUL Nodule (27mm). Nav to RB3. rEBUS: Eccentric. CBCT: Confirmed. Samples: 8x TBNA, 5x 1.1mm Cryo, BAL. ROSE: Granulomatous inflammation. Disposition: Stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -23304,10 +23786,16 @@
       "style_type": 6,
       "generated_name": "Marilyn Washington",
       "generation_date": "2025-12-09T12:07:45.791667"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspicious nodule RUL.\n[Anesthesia]\nGeneral.\n[Description]\nIon navigation to RB3. rEBUS eccentric + CBCT. Sampled via TBNA (x8), Cryo (x5), BAL. ROSE: Granulomatous inflammation.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nSuspicious nodule RUL.\n[<LOCATION>]\nGeneral.\n[Description]\nIon navigation to RB3. rEBUS eccentric + CBCT. Sampled via TBNA (x8), Cryo (x5), BAL. ROSE: Granulomatous inflammation.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31629,
       31628,
@@ -23575,10 +24063,16 @@
       "style_type": 7,
       "generated_name": "Amber Butler",
       "generation_date": "2025-12-09T12:07:45.791732"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Williams underwent a robotic bronchoscopy for a 27mm nodule in the Right Upper Lobe. We navigated the Ion catheter to the Anterior Segment. We confirmed the location with an eccentric radial EBUS view and Cone Beam CT. We collected eight needle aspirates, five cryobiopsies using a 1.1mm probe, and performed a bronchoalveolar lavage. The on-site evaluation showed granulomatous inflammation.",
+    "note_text": "Ms. <PERSON> underwent a robotic bronchoscopy for a 27mm nodule in the Right Upper Lobe. We navigated the Ion catheter to the Anterior Segment. We confirmed the location with an eccentric radial EBUS view and Cone Beam CT. We collected eight needle aspirates, five cryobiopsies using a 1.1mm probe, and performed a bronchoalveolar lavage. The on-site evaluation showed granulomatous inflammation.",
     "cpt_codes": [
       31629,
       31628,
@@ -23846,6 +24340,12 @@
       "style_type": 8,
       "generated_name": "Danielle Simmons",
       "generation_date": "2025-12-09T12:07:45.791798"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

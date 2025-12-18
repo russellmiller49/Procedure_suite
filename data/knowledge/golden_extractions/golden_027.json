@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Procedure: PleurX IPC placement Rt Hemithorax.\n- US guidance used.\n- Local anesthetic.\n- Seldinger technique: 18G needle -> wire -> dilators -> sheath.\n- Catheter tunneled 6cm.\n- Fluid: 1200mL serous.\n- No complications. CXR pending.",
+    "note_text": "Procedure: PleurX IPC placement Rt Hemithorax.\n- <LOCATION> guidance used.\n- Local anesthetic.\n- Seldinger technique: 18G needle -> wire -> dilators -> sheath.\n- Catheter tunneled 6cm.\n- Fluid: 1200mL serous.\n- No complications. CXR pending.",
     "cpt_codes": [
       32550
     ],
@@ -101,6 +101,12 @@
       "style_type": 1,
       "generated_name": "Mary Williams",
       "generation_date": "2025-12-09T09:19:32.453403"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -208,7 +214,7 @@
     }
   },
   {
-    "note_text": "Service: Insertion of Tunneled Pleural Catheter (32550).\nGuidance: Ultrasound (76942) for site selection and safety.\nDetails: Right hemithorax. Subcutaneous tunneling performed. Cuff positioned appropriately.\nDrainage: 1200 mL removed to confirm function.\nStatus: Successful placement.",
+    "note_text": "Service: Insertion of Tunneled Pleural Catheter (<DATE_TIME>).\nGuidance: Ultrasound (<DATE_TIME>) for site selection and safety.\nDetails: Right hemithorax. Subcutaneous tunneling performed. <PERSON> positioned appropriately.\nDrainage: 1200 mL removed to confirm function.\nStatus: Successful placement.",
     "cpt_codes": [
       32550
     ],
@@ -309,10 +315,18 @@
       "style_type": 3,
       "generated_name": "Patricia Jones",
       "generation_date": "2025-12-09T09:19:32.453479"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Resident Note\nProcedure: PleurX Placement\nAttending: Dr. Green\n1. US check - big effusion right side.\n2. Local lidocaine.\n3. Stick w/ needle, wire down.\n4. Tunneled catheter under skin.\n5. Peel-away sheath in.\n6. Catheter in, drained 1.2L.\n7. Stitched up.\nPlan: Home health teaching.",
+    "note_text": "Resident Note\nProcedure: PleurX Placement\nAttending: Dr. Green\n1. <LOCATION> check - big effusion right side.\n2. Local lidocaine.\n3. Stick w/ needle, wire down.\n4. Tunneled catheter under skin.\n5. <PERSON>-away sheath in.\n6. Catheter in, drained 1.2L.\n7. Stitched up.\nPlan: Home health teaching.",
     "cpt_codes": [
       32550
     ],
@@ -413,10 +427,17 @@
       "style_type": 4,
       "generated_name": "Barbara Miller",
       "generation_date": "2025-12-09T09:19:32.453507"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "ipc placement note pt patricia johnson. right side effusion recurrent cancer. did the ultrasound marked spot. numbed her up good with lido. put the wire in tunneled the catheter about 6cm. dilated track put sheath in. catheter went in easy drained 1200cc straw fluid. stitched it up dressing on. no issues.",
+    "note_text": "ipc placement note pt <PERSON>. right side effusion recurrent cancer. did the ultrasound marked spot. numbed her up good with lido. put the wire in tunneled the catheter about 6cm. dilated track put sheath in. catheter went in easy drained 1200cc straw fluid. stitched it up dressing on. no issues.",
     "cpt_codes": [
       32550
     ],
@@ -517,10 +538,16 @@
       "style_type": 5,
       "generated_name": "Elizabeth Davis",
       "generation_date": "2025-12-09T09:19:32.453537"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indwelling Tunneled Pleural Catheter Placement was performed on a 74-year-old female with metastatic breast cancer. Ultrasound guidance confirmed a large right pleural effusion. Under local anesthesia, the pleural space was accessed. A subcutaneous tunnel was created. The catheter was inserted and 1200 mL of serous fluid was drained. The procedure was uncomplicated.",
+    "note_text": "Indwelling Tunneled Pleural Catheter Placement was performed on a <DATE_TIME> female with metastatic breast cancer. Ultrasound guidance confirmed a large right pleural effusion. Under local <LOCATION>, the pleural space was accessed. A subcutaneous tunnel was created. The catheter was inserted and 1200 mL of serous fluid was drained. The procedure was uncomplicated.",
     "cpt_codes": [
       32550
     ],
@@ -621,10 +648,17 @@
       "style_type": 6,
       "generated_name": "Jennifer Garcia",
       "generation_date": "2025-12-09T09:19:32.453564"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent malignant pleural effusion, Right.\n[Anesthesia]\nLocal (Lidocaine 1%).\n[Description]\nUS-guided access. Subcutaneous tunnel created. PleurX catheter inserted. 1200mL drained. Cuff positioned. Incisions closed.\n[Plan]\nHome drainage education.",
+    "note_text": "[Indication]\nRecurrent malignant pleural effusion, Right.\n[<LOCATION>]\nLocal (Lidocaine 1%).\n[Description]\n<LOCATION>-guided access. Subcutaneous tunnel created. PleurX catheter inserted. 1200mL drained. Cuff positioned. Incisions closed.\n[Plan]\nHome drainage education.",
     "cpt_codes": [
       32550
     ],
@@ -725,10 +759,17 @@
       "style_type": 7,
       "generated_name": "Maria Rodriguez",
       "generation_date": "2025-12-09T09:19:32.453594"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Johnson was brought to the procedure room for management of her recurrent right pleural effusion. We utilized ultrasound to identify a safe pocket of fluid. After anesthetizing the area, we placed a tunneled PleurX catheter using the standard Seldinger technique. The catheter was tunneled subcutaneously before entering the pleural space. We drained 1200mL of fluid to verify patency. The patient remained stable throughout.",
+    "note_text": "Ms. <PERSON> was brought to the procedure room for management of her recurrent right pleural effusion. We utilized ultrasound to identify a safe pocket of fluid. After anesthetizing the area, we placed a tunneled PleurX catheter using the standard Seldinger technique. The catheter was tunneled subcutaneously before entering the pleural space. We drained 1200mL of fluid to verify patency. The patient remained stable throughout.",
     "cpt_codes": [
       32550
     ],
@@ -829,6 +870,12 @@
       "style_type": 8,
       "generated_name": "Susan Wilson",
       "generation_date": "2025-12-09T09:19:32.453623"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1115,7 +1162,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: The patient underwent robotic-assisted bronchoscopy utilizing the Intuitive Ion platform for a peripheral LLL lesion. Navigation was aided by shape-sensing technology. Target verification was achieved via radial EBUS (concentric view) and intraoperative Cone-Beam CT, confirming tool-in-lesion. Transbronchial biopsies and brushings were obtained. The patient remained stable.",
+    "note_text": "OPERATIVE REPORT: The patient underwent robotic-assisted bronchoscopy utilizing the Intuitive Ion platform for a peripheral LLL lesion. <PERSON> was aided by shape-sensing technology. Target verification was achieved via radial EBUS (concentric view) and intraoperative Cone-Beam CT, confirming tool-in-lesion. Transbronchial biopsies and brushings were obtained. The patient remained stable.",
     "cpt_codes": [
       31623,
       31654,
@@ -1291,10 +1338,16 @@
       "style_type": 2,
       "generated_name": "James Chen",
       "generation_date": "2025-12-09T09:19:32.453743"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Codes: 31627 (Nav), 31628 (Biopsy), 31623 (Brush), 31654 (REBUS).\nTarget: Left Lower Lobe (LB9).\nTech: Robotic platform, Fluoroscopy, CBCT, Radial EBUS.\nSamples: Histology and Cytology obtained.\nComplications: None.",
+    "note_text": "Codes: 31627 (Nav), 31628 (<LOCATION>), 31623 (<PERSON>), 31654 (REBUS).\nTarget: Left Lower Lobe (LB9).\nTech: Robotic platform, Fluoroscopy, CBCT, Radial EBUS.\nSamples: Histology and Cytology obtained.\nComplications: None.",
     "cpt_codes": [
       31623,
       31654,
@@ -1470,6 +1523,13 @@
       "style_type": 3,
       "generated_name": "Robert Wang",
       "generation_date": "2025-12-09T09:19:32.453787"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
@@ -2010,7 +2070,7 @@
     }
   },
   {
-    "note_text": "[Indication]\n1.8cm LLL Nodule.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nIon Robotic Navigation. REBUS/CBCT confirmation. Transbronchial biopsy x6. Brushing x2. No pneumothorax.\n[Plan]\nPathology pending.",
+    "note_text": "[Indication]\n1.8cm LLL Nodule.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nIon Robotic Navigation. REBUS/CBCT confirmation. Transbronchial biopsy x6. Brushing x2. No pneumothorax.\n[Plan]\nPathology pending.",
     "cpt_codes": [
       31623,
       31654,
@@ -2186,10 +2246,16 @@
       "style_type": 7,
       "generated_name": "Joseph Ng",
       "generation_date": "2025-12-09T09:19:32.453973"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a robotic bronchoscopy to biopsy a nodule in Mr. Chang's left lower lobe. Using the Ion platform, we navigated to the lateral basal segment. We confirmed our position with both radial EBUS and a cone-beam CT spin, ensuring the tool was right in the lesion. We then took multiple biopsies and brushings. The procedure went smoothly with no complications.",
+    "note_text": "We performed a robotic bronchoscopy to biopsy a nodule in Mr. <PERSON>'s left lower lobe. Using the Ion platform, we navigated to the lateral basal segment. We confirmed our position with both radial EBUS and a cone-beam CT spin, ensuring the tool was right in the lesion. We then took multiple biopsies and brushings. The procedure went smoothly with no complications.",
     "cpt_codes": [
       31623,
       31654,
@@ -2365,6 +2431,12 @@
       "style_type": 8,
       "generated_name": "Thomas Zhang",
       "generation_date": "2025-12-09T09:19:32.454017"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2757,7 +2829,7 @@
     }
   },
   {
-    "note_text": "Billing Code: 32650 (Thoracoscopy with pleurodesis). Note: Biopsies (32602) are bundled/included in the primary procedure when performed. Indication: Undiagnosed effusion/suspected malignancy. Technique: Rigid thoracoscope, Talc insufflation.",
+    "note_text": "Billing Code: <DATE_TIME> (Thoracoscopy with pleurodesis). Note: Biopsies (<DATE_TIME>) are bundled/included in the primary procedure when performed. Indication: Undiagnosed effusion/suspected malignancy. Technique: Rigid thoracoscope, Talc insufflation.",
     "cpt_codes": [
       32650
     ],
@@ -2859,6 +2931,13 @@
       "style_type": 3,
       "generated_name": "Robert Thomas",
       "generation_date": "2025-12-09T09:19:32.454144"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -3072,7 +3151,7 @@
     }
   },
   {
-    "note_text": "Medical thoracoscopy with pleural biopsies, talc pleurodesis, and chest tube placement was performed. The patient is a 66-year-old male with a large right pleural effusion. Rigid thoracoscopy revealed multiple nodules. Biopsies were taken. Talc slurry was insufflated. A 28Fr chest tube was inserted. The patient was transferred to the floor.",
+    "note_text": "Medical thoracoscopy with pleural biopsies, talc pleurodesis, and chest tube placement was performed. The patient is a <DATE_TIME> male with a large right pleural effusion. Rigid thoracoscopy revealed multiple nodules. Biopsies were taken. Talc slurry was insufflated. A 28Fr chest tube was inserted. The patient was transferred to the floor.",
     "cpt_codes": [
       32650
     ],
@@ -3174,10 +3253,16 @@
       "style_type": 6,
       "generated_name": "David Martin",
       "generation_date": "2025-12-09T09:19:32.454244"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nRight Pleural Effusion, suspected malignancy.\n[Anesthesia]\nMAC/Local.\n[Description]\nThoracoscopy performed. Nodules biopsied (x8). Trapped lung noted. Talc pleurodesis performed. Chest tube placed.\n[Plan]\nAdmit, suction.",
+    "note_text": "[Indication]\nRight Pleural Effusion, suspected malignancy.\n[<LOCATION>]\nMAC/Local.\n[Description]\nThoracoscopy performed. Nodules biopsied (x8). Trapped lung noted. Talc pleurodesis performed. Chest tube placed.\n[Plan]\nAdmit, suction.",
     "cpt_codes": [
       32650
     ],
@@ -3279,10 +3364,16 @@
       "style_type": 7,
       "generated_name": "Richard Jackson",
       "generation_date": "2025-12-09T09:19:32.454274"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Stevens underwent a medical thoracoscopy to investigate his right pleural effusion. After entering the chest, we found extensive nodules and a trapped lung. We took several biopsies for diagnosis and then performed a talc pleurodesis to prevent fluid recurrence. A chest tube was left in place to ensure drainage and facilitate lung re-expansion if possible.",
+    "note_text": "Mr. <PERSON> underwent a medical thoracoscopy to investigate his right pleural effusion. After entering the chest, we found extensive nodules and a trapped lung. We took several biopsies for diagnosis and then performed a talc pleurodesis to prevent fluid recurrence. A chest tube was left in place to ensure drainage and facilitate lung re-expansion if possible.",
     "cpt_codes": [
       32650
     ],
@@ -3384,6 +3475,12 @@
       "style_type": 8,
       "generated_name": "Joseph Thompson",
       "generation_date": "2025-12-09T09:19:32.454301"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3492,7 +3589,7 @@
     }
   },
   {
-    "note_text": "Procedure: Flex Bronch, Tracheal Dilation.\n- Dx: Post-intubation stenosis (Subglottic).\n- Action: CRE Balloon (8-12mm). 3 inflations.\n- Result: Patency increased 40% -> 75%.\n- Plan: IV Decadron, Obs overnight.",
+    "note_text": "Procedure: <PERSON>, Tracheal Dilation.\n- Dx: Post-intubation stenosis (Subglottic).\n- Action: CRE Balloon (<DATE_TIME>). 3 inflations.\n- Result: Patency increased 40% -> 75%.\n- Plan: IV Decadron, <DATE_TIME>.",
     "cpt_codes": [
       31630
     ],
@@ -3589,6 +3686,14 @@
       "style_type": 1,
       "generated_name": "Juan Martinez",
       "generation_date": "2025-12-09T09:19:32.454359"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -3692,7 +3797,7 @@
     }
   },
   {
-    "note_text": "CPT: 31630 (Bronchoscopy with dilation). Diagnosis: Tracheal Stenosis (J95.5). Technique: Balloon dilation via flexible scope. Anesthesia: General.",
+    "note_text": "CPT: 31630 (Bronchoscopy with dilation). Diagnosis: Tracheal Stenosis (J95.5). Technique: Balloon dilation via flexible scope. <LOCATION>: General.",
     "cpt_codes": [
       31630
     ],
@@ -3789,6 +3894,12 @@
       "style_type": 3,
       "generated_name": "Luis Lopez",
       "generation_date": "2025-12-09T09:19:32.454412"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -3892,7 +4003,7 @@
     }
   },
   {
-    "note_text": "bronchoscopy for roberto garcia tracheal stenosis. used the cre balloon to dilate it. went up to 12mm. opened up pretty good from 40 percent to 75 percent. gave some dexamethasone. watching him overnight.",
+    "note_text": "bronchoscopy for roberto garcia tracheal stenosis. used the cre balloon to dilate it. went up to 12mm. opened up pretty good from 40 percent to 75 percent. gave some dexamethasone. watching him <DATE_TIME>.",
     "cpt_codes": [
       31630
     ],
@@ -3989,6 +4100,12 @@
       "style_type": 5,
       "generated_name": "Jorge Perez",
       "generation_date": "2025-12-09T09:19:32.454465"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -4092,7 +4209,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nTracheal Stenosis.\n[Anesthesia]\nGeneral.\n[Description]\nFlexible bronchoscopy. Balloon dilation (8mm-12mm). Stenosis relieved.\n[Plan]\nOvernight observation.",
+    "note_text": "[Indication]\nTracheal Stenosis.\n[<LOCATION>]\nGeneral.\n[Description]\nFlexible bronchoscopy. Balloon dilation (<PERSON>). Stenosis relieved.\n[Plan]\n<DATE_TIME> observation.",
     "cpt_codes": [
       31630
     ],
@@ -4189,10 +4306,18 @@
       "style_type": 7,
       "generated_name": "Antonio Ramirez",
       "generation_date": "2025-12-09T09:19:32.454521"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "We brought Mr. Garcia to the OR to address his tracheal stenosis. Using a flexible bronchoscope, we identified the narrowed segment and used a balloon catheter to dilate it. We performed three inflations, gradually increasing the size to 12mm. The airway opened up significantly, and he tolerated the procedure well. We'll keep him overnight to ensure no swelling develops.",
+    "note_text": "We brought Mr. <PERSON> to the OR to address his tracheal stenosis. Using a flexible bronchoscope, we identified the narrowed segment and used a balloon catheter to dilate it. We performed three inflations, gradually increasing the size to 12mm. The airway opened up significantly, and he tolerated the procedure well. We'll keep him overnight to ensure no swelling develops.",
     "cpt_codes": [
       31630
     ],
@@ -4289,6 +4414,12 @@
       "style_type": 8,
       "generated_name": "Jose Torres",
       "generation_date": "2025-12-09T09:19:32.454548"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4510,7 +4641,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: The patient presented for removal of endobronchial valves due to infectious complications. Under general anesthesia, the Right Upper Lobe was interrogated. Three Zephyr valves were identified. Each valve was sequentially grasped and retrieved without incident. Significant mucous plugging distal to the valves was aspirated. The airway was patent at the conclusion of the procedure.",
+    "note_text": "OPERATIVE REPORT: The patient presented for removal of endobronchial valves due to infectious complications. Under general <LOCATION>, the Right Upper Lobe was interrogated. Three Zephyr valves were identified. Each valve was sequentially grasped and retrieved without incident. Significant mucous plugging distal to the valves was aspirated. The airway was patent at the conclusion of the procedure.",
     "cpt_codes": [
       31648
     ],
@@ -4625,6 +4756,12 @@
       "style_type": 2,
       "generated_name": "Paul Clark",
       "generation_date": "2025-12-09T09:19:32.454639"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -4864,7 +5001,7 @@
     }
   },
   {
-    "note_text": "taking out valves for michael torres. he keeps getting pneumonia. went in saw the three valves in the rul. pulled them out one by one. tons of junk behind them suctioned it all out. airway looks open now. done.",
+    "note_text": "taking out valves for <PERSON> torres. he keeps getting pneumonia. went in saw the three valves in the rul. pulled them out one by one. tons of junk behind them suctioned it all out. airway looks open now. done.",
     "cpt_codes": [
       31648
     ],
@@ -4979,6 +5116,12 @@
       "style_type": 5,
       "generated_name": "George Perez",
       "generation_date": "2025-12-09T09:19:32.454789"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5100,7 +5243,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nInfected BLVR / Pneumonia.\n[Anesthesia]\nGeneral.\n[Description]\nRemoval of 3 Zephyr valves from RUL. Airway clearance of mucus.\n[Plan]\nObservation, antibiotics.",
+    "note_text": "[Indication]\nInfected BLVR / Pneumonia.\n[<LOCATION>]\nGeneral.\n[Description]\nRemoval of 3 Zephyr valves from RUL. Airway clearance of mucus.\n[Plan]\nObservation, antibiotics.",
     "cpt_codes": [
       31648
     ],
@@ -5215,10 +5358,16 @@
       "style_type": 7,
       "generated_name": "Steven Young",
       "generation_date": "2025-12-09T09:19:32.454925"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Torres required removal of his lung volume reduction valves due to recurrent infections. We went in bronchoscopically and removed all three valves from the right upper lobe. There was a lot of mucus trapped behind them, which we cleared out. The procedure was successful and should help clear up his infection.",
+    "note_text": "Mr. <PERSON> required removal of his lung volume reduction valves due to recurrent infections. We went in bronchoscopically and removed all three valves from the right upper lobe. There was a lot of mucus trapped behind them, which we cleared out. The procedure was successful and should help clear up his infection.",
     "cpt_codes": [
       31648
     ],
@@ -5333,6 +5482,12 @@
       "style_type": 8,
       "generated_name": "Edward Allen",
       "generation_date": "2025-12-09T09:19:32.454958"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5454,7 +5609,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy (Stent Check).\n- Findings: LMS stent in good position. Mucus plugging.\n- Action: Toilet/suction. Mild granulation (no tx needed).\n- Plan: Antibiotics, f/u 4 weeks.",
+    "note_text": "Procedure: Bronchoscopy (<PERSON>).\n- Findings: LMS stent in good position. Mucus plugging.\n- Action: Toilet/suction. Mild granulation (no tx needed).\n- Plan: Antibiotics, f/u 4 weeks.",
     "cpt_codes": [
       31645
     ],
@@ -5556,6 +5711,12 @@
       "style_type": 1,
       "generated_name": "Lisa Chang",
       "generation_date": "2025-12-09T09:19:32.455019"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5769,7 +5930,7 @@
     }
   },
   {
-    "note_text": "Stent Check Note\n1. Flex scope via trach.\n2. LMS stent looks good, not moving.\n3. Suctioned thick secretions.\n4. Mild granulation, left alone.\n5. Airway patent.\nPlan: Azithromycin.",
+    "note_text": "<PERSON>\n1. Flex scope via trach.\n2. LMS stent looks good, not moving.\n3. Suctioned thick secretions.\n4. Mild granulation, left alone.\n5. Airway patent.\nPlan: <PERSON>.",
     "cpt_codes": [
       31645
     ],
@@ -5871,10 +6032,17 @@
       "style_type": 4,
       "generated_name": "Betty Yang",
       "generation_date": "2025-12-09T09:19:32.455106"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "checking ms wu's stent today. went in through the trach. stent is sitting fine. lot of mucus though so i spent some time cleaning it out. little bit of granulation tissue but not blocking anything. gave her some antibiotics.",
+    "note_text": "checking ms <PERSON>'s stent today. went in through the trach. stent is sitting fine. lot of mucus though so i spent some time cleaning it out. little bit of granulation tissue but not blocking anything. gave her some antibiotics.",
     "cpt_codes": [
       31645
     ],
@@ -5976,6 +6144,12 @@
       "style_type": 5,
       "generated_name": "Helen Zhao",
       "generation_date": "2025-12-09T09:19:32.455132"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6084,7 +6258,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nAirway Stent Surveillance.\n[Anesthesia]\nModerate.\n[Description]\nLMS stent inspected. Secretions cleared (Therapeutic Aspiration). Position stable.\n[Plan]\nFollow up 4 weeks.",
+    "note_text": "[Indication]\nAirway Stent Surveillance.\n[<LOCATION>]\nModerate.\n[Description]\nLMS stent inspected. Secretions cleared (Therapeutic Aspiration). Position stable.\n[Plan]\nFollow up 4 weeks.",
     "cpt_codes": [
       31645
     ],
@@ -6186,10 +6360,16 @@
       "style_type": 7,
       "generated_name": "Donna Park",
       "generation_date": "2025-12-09T09:19:32.455189"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Wu came in for a check-up on her airway stent. We took a look with the bronchoscope and found the stent was holding its position well, but there was a fair amount of mucus built up inside. We cleaned that out thoroughly. There's a little bit of granulation tissue forming, but it's not causing a problem yet, so we'll just watch it.",
+    "note_text": "Ms. <PERSON> came in for a check-up on her airway stent. We took a look with the bronchoscope and found the stent was holding its position well, but there was a fair amount of mucus built up inside. We cleaned that out thoroughly. There's a little bit of granulation tissue forming, but it's not causing a problem yet, so we'll just watch it.",
     "cpt_codes": [
       31645
     ],
@@ -6291,6 +6471,12 @@
       "style_type": 8,
       "generated_name": "Carol Kim",
       "generation_date": "2025-12-09T09:19:32.455213"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6399,7 +6585,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy w/ Cryobiopsy (RLL).\n- Target: ILD (UIP pattern).\n- Tech: 2.4mm probe, 5 samples.\n- Bleeding control: Arndt blocker.\n- Complications: None.\n- Plan: Discharge.",
+    "note_text": "Procedure: Bronchoscopy w/ <PERSON> (RLL).\n- Target: ILD (UIP pattern).\n- Tech: 2.4mm probe, 5 samples.\n- Bleeding control: Arndt blocker.\n- Complications: None.\n- Plan: Discharge.",
     "cpt_codes": [
       31628,
       31654
@@ -6511,6 +6697,12 @@
       "style_type": 1,
       "generated_name": "Deborah Wright",
       "generation_date": "2025-12-09T09:19:32.455271"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6629,7 +6821,7 @@
     }
   },
   {
-    "note_text": "Billing: 31628 (Biopsy single lobe), 31654 (REBUS). Note: Cryoprobe used for parenchymal biopsy. Balloon blocker used for hemostasis (not separately billable). Indication: ILD.",
+    "note_text": "Billing: <DATE_TIME> (<LOCATION> single lobe), <DATE_TIME> (REBUS). Note: Cryoprobe used for parenchymal biopsy. Balloon blocker used for hemostasis (not separately billable). Indication: ILD.",
     "cpt_codes": [
       31628,
       31654
@@ -6741,6 +6933,14 @@
       "style_type": 3,
       "generated_name": "Virginia Green",
       "generation_date": "2025-12-09T09:19:32.455333"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "DATE_TIME",
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -6859,7 +7059,7 @@
     }
   },
   {
-    "note_text": "did a cryo biopsy on k davis for her lung disease. went to the rll. froze 5 pieces of lung. used the balloon blocker to stop the bleeding worked great. no pneumothorax. sending her home.",
+    "note_text": "did a cryo biopsy on <PERSON> for her lung disease. went to the rll. froze 5 pieces of lung. used the balloon blocker to stop the bleeding worked great. no pneumothorax. sending her home.",
     "cpt_codes": [
       31628,
       31654
@@ -6971,6 +7171,12 @@
       "style_type": 5,
       "generated_name": "Sharon Adams",
       "generation_date": "2025-12-09T09:19:32.455394"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7089,7 +7295,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nInterstitial Lung Disease.\n[Anesthesia]\nGeneral.\n[Description]\nCryobiopsy RLL x5. Balloon occlusion for hemostasis. No PTX.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nInterstitial Lung Disease.\n[<LOCATION>]\nGeneral.\n[Description]\nCryobiopsy RLL x5. Balloon occlusion for hemostasis. No PTX.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31628,
       31654
@@ -7201,10 +7407,16 @@
       "style_type": 7,
       "generated_name": "Kathleen Hill",
       "generation_date": "2025-12-09T09:19:32.455450"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a cryobiopsy to get a tissue diagnosis for Ms. Davis's lung disease. We targeted the right lower lobe, verifying the site with ultrasound. We took five good-sized samples using the freezing probe. We used a balloon blocker to manage any bleeding, which worked perfectly. She is recovering well with no signs of collapsed lung.",
+    "note_text": "We performed a cryobiopsy to get a tissue diagnosis for Ms. <PERSON>'s lung disease. We targeted the right lower lobe, verifying the site with ultrasound. We took five good-sized samples using the freezing probe. We used a balloon blocker to manage any bleeding, which worked perfectly. She is recovering well with no signs of collapsed lung.",
     "cpt_codes": [
       31628,
       31654
@@ -7316,6 +7528,12 @@
       "style_type": 8,
       "generated_name": "Shirley Campbell",
       "generation_date": "2025-12-09T09:19:32.455480"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7434,7 +7652,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bedside Pleurodesis.\n- Access: Existing chest tube.\n- Agent: 4g Talc slurry + 200mg Lidocaine.\n- Method: Instill -> Clamp -> Rotate.\n- Result: Tolerated well.\n- Plan: Suction, remove tube in 48h.",
+    "note_text": "Procedure: Bedside Pleurodesis.\n- Access: Existing chest tube.\n- Agent: 4g Talc slurry + 200mg Lidocaine.\n- Method: Instill -> Clamp -> Rotate.\n- Result: Tolerated well.\n- Plan: Suction, remove tube in <DATE_TIME>.",
     "cpt_codes": [
       32560
     ],
@@ -7534,6 +7752,12 @@
       "style_type": 1,
       "generated_name": "Martha Carter",
       "generation_date": "2025-12-09T09:19:32.455538"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -7846,7 +8070,7 @@
     }
   },
   {
-    "note_text": "bedside pleurodesis for rebecca martinez. she has that cancer effusion. lung was up so we put in lidocaine then the talc slurry. rolled her around for an hour. put the tube back on suction. she had some pain but morphine helped.",
+    "note_text": "bedside pleurodesis for <PERSON>. she has that cancer effusion. lung was up so we put in lidocaine then the talc slurry. rolled her around for <DATE_TIME>. put the tube back on suction. she had some pain but morphine helped.",
     "cpt_codes": [
       32560
     ],
@@ -7946,6 +8170,13 @@
       "style_type": 5,
       "generated_name": "Katherine Turner",
       "generation_date": "2025-12-09T09:19:32.455646"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -8052,7 +8283,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMalignant Pleural Effusion.\n[Anesthesia]\nLocal/Intrapleural Lidocaine.\n[Description]\n4g Talc slurry instilled via chest tube. Patient rotated. Suction resumed.\n[Plan]\nRemove tube when drainage decreases.",
+    "note_text": "[Indication]\nMalignant Pleural Effusion.\n[<LOCATION>]\nLocal/Intrapleural Lidocaine.\n[Description]\n4g Talc slurry instilled via chest tube. Patient rotated. Suction resumed.\n[Plan]\nRemove tube when drainage decreases.",
     "cpt_codes": [
       32560
     ],
@@ -8152,10 +8383,16 @@
       "style_type": 7,
       "generated_name": "Debra Parker",
       "generation_date": "2025-12-09T09:19:32.455709"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Martinez underwent a bedside pleurodesis to treat her recurring pleural fluid. Since her lung was fully expanded, we injected a mixture of talc and saline through her chest tube. We had her change positions for an hour to coat the lining of the lung. She experienced some discomfort but is comfortable now. We'll leave the tube in for a couple of days to make sure the lung sticks.",
+    "note_text": "Ms. <PERSON> underwent a bedside pleurodesis to treat her recurring pleural fluid. Since her lung was fully expanded, we injected a mixture of talc and saline through her chest tube. We had her change positions for <DATE_TIME> to coat the lining of the lung. She experienced some discomfort but is comfortable now. We'll leave the tube in for <DATE_TIME> to make sure the lung sticks.",
     "cpt_codes": [
       32560
     ],
@@ -8255,6 +8492,14 @@
       "style_type": 8,
       "generated_name": "Diane Collins",
       "generation_date": "2025-12-09T09:19:32.455736"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -8761,7 +9006,7 @@
     }
   },
   {
-    "note_text": "emergency bronch for marcus johnson bleeding out from the lul. massive amount of blood. tried iced saline didnt work. put a fogarty balloon up there and inflated it. that finally stopped the bleeding. ir is coming to coil the vessel.",
+    "note_text": "emergency bronch for marcus <PERSON> bleeding out from the lul. massive amount of blood. tried iced saline didnt work. put a fogarty balloon up there and inflated it. that finally stopped the bleeding. ir is coming to coil the vessel.",
     "cpt_codes": [
       31634
     ],
@@ -8858,6 +9103,12 @@
       "style_type": 5,
       "generated_name": "Mark Rivera",
       "generation_date": "2025-12-09T09:19:32.455895"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8961,7 +9212,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMassive Hemoptysis.\n[Anesthesia]\nSedation (Intubated).\n[Description]\nLUL bleeding source identified. Balloon tamponade performed. Hemostasis achieved.\n[Plan]\nAngiography/Embolization.",
+    "note_text": "[Indication]\nMassive Hemoptysis.\n[<LOCATION>]\nSedation (Intubated).\n[Description]\nLUL bleeding source identified. Balloon tamponade performed. Hemostasis achieved.\n[Plan]\nAngiography/Embolization.",
     "cpt_codes": [
       31634
     ],
@@ -9058,10 +9309,16 @@
       "style_type": 7,
       "generated_name": "Paul Rogers",
       "generation_date": "2025-12-09T09:19:32.455948"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "I was called to the ICU for Mr. Johnson who was having massive bleeding from his lungs. I performed an emergency bronchoscopy and found the blood coming from the left upper lobe. Washing with cold saline didn't stop it, so I inserted a balloon catheter and inflated it to block the airway. This stopped the bleeding. He is now stable and heading to IR for a permanent fix.",
+    "note_text": "I was called to the ICU for Mr. <PERSON> who was having massive bleeding from his lungs. I performed an emergency bronchoscopy and found the blood coming from the left upper lobe. Washing with cold saline didn't stop it, so I inserted a balloon catheter and inflated it to block the airway. This stopped the bleeding. He is now stable and heading to IR for a permanent fix.",
     "cpt_codes": [
       31634
     ],
@@ -9158,6 +9415,12 @@
       "style_type": 8,
       "generated_name": "Steven Morgan",
       "generation_date": "2025-12-09T09:19:32.455974"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9261,7 +9524,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch, Stent, Pericardial Window, IPC.\n- Airway: RMS obstruction debulked, stent placed.\n- Cardiac: Window created, tamponade resolved.\n- Pleural: IPC placed Rt.\n- Plan: ICU.",
+    "note_text": "Procedure: Rigid Bronch, <PERSON>, Pericardial Window, IPC.\n- Airway: RMS obstruction debulked, stent placed.\n- Cardiac: Window created, tamponade resolved.\n- Pleural: IPC placed Rt.\n- Plan: ICU.",
     "cpt_codes": [
       31641,
       31631,
@@ -9457,6 +9720,12 @@
       "style_type": 1,
       "generated_name": "Sarah Reed",
       "generation_date": "2025-12-09T09:19:32.456051"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9858,7 +10127,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Combined Case\n1. Rigid bronch -> Open RMS -> Stent.\n2. CT Surgery did pericardial window.\n3. Placed PleurX catheter right side.\n4. Long case but pt stable.\nPlan: ICU.",
+    "note_text": "Resident Note: Combined Case\n1. Rigid bronch -> Open RMS -> Stent.\n2. <PERSON> did pericardial window.\n3. Placed PleurX catheter right side.\n4. Long case but pt stable.\nPlan: ICU.",
     "cpt_codes": [
       31641,
       31631,
@@ -10054,6 +10323,12 @@
       "style_type": 4,
       "generated_name": "Michelle Richardson",
       "generation_date": "2025-12-09T09:19:32.456192"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10256,7 +10531,7 @@
     }
   },
   {
-    "note_text": "Multidisciplinary procedure performed for 65-year-old female. Rigid bronchoscopy with tumor debridement and stent placement in right mainstem. Subxiphoid pericardial window for tamponade. Tunneled pleural catheter placement for effusion. Patient stable and transferred to ICU.",
+    "note_text": "Multidisciplinary procedure performed for <DATE_TIME> female. Rigid bronchoscopy with tumor debridement and stent placement in right mainstem. Subxiphoid pericardial window for tamponade. Tunneled pleural catheter placement for effusion. Patient stable and transferred to ICU.",
     "cpt_codes": [
       31641,
       31631,
@@ -10452,10 +10727,16 @@
       "style_type": 6,
       "generated_name": "Emily Howard",
       "generation_date": "2025-12-09T09:19:32.456307"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nRMS Obstruction, Tamponade, Pleural Effusion.\n[Anesthesia]\nGeneral.\n[Description]\n1. Airway Stent RMS. 2. Pericardial Window. 3. IPC Right.\n[Plan]\nICU Care.",
+    "note_text": "[Indication]\nRMS Obstruction, Tamponade, Pleural Effusion.\n[<LOCATION>]\nGeneral.\n[Description]\n1. Airway Stent RMS. 2. Pericardial Window. 3. IPC Right.\n[Plan]\nICU Care.",
     "cpt_codes": [
       31641,
       31631,
@@ -10651,10 +10932,16 @@
       "style_type": 7,
       "generated_name": "Melissa Ward",
       "generation_date": "2025-12-09T09:19:32.456355"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a combined procedure to help Mrs. Okafor's breathing and heart function. First, we opened up her blocked airway with a stent. Then, the cardiac surgeons drained the fluid around her heart. Finally, we placed a permanent drain for the fluid around her lung. It was a long surgery, but treating all three problems at once gives her the best chance at feeling better.",
+    "note_text": "We performed a combined procedure to help Mrs. <PERSON>'s breathing and heart function. First, we opened up her blocked airway with a stent. Then, the cardiac surgeons drained the fluid around her heart. Finally, we placed a permanent drain for the fluid around her lung. It was a long surgery, but treating all three problems at once gives her the best chance at feeling better.",
     "cpt_codes": [
       31641,
       31631,
@@ -10850,6 +11137,12 @@
       "style_type": 8,
       "generated_name": "Stephanie Peterson",
       "generation_date": "2025-12-09T09:19:32.456403"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

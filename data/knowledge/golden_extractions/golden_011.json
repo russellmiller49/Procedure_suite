@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Indication: Severe homogeneous emphysema.\nAnesthesia: Mod Sedation. 4% Lido.\nProcedure:\n- Airway inspected: mild malacia.\n- RUL: 10 RepneuCoils placed (4 Ant, 3 Apic, 3 Post). Fluoroscopy confirmed.\n- LUL: 10 RepneuCoils placed (4 Apicopost, 3 Ant, 3 Ling). Fluoroscopy confirmed.\nFindings: 20 coils total. No pneumothorax. EBL <10ml.\nPlan: Admit. CXR. Antibiotics.",
+    "note_text": "Indication: Severe homogeneous emphysema.\n<LOCATION>: Mod Sedation. 4% Lido.\nProcedure:\n- Airway inspected: mild malacia.\n- RUL: 10 RepneuCoils placed (4 Ant, 3 Apic, 3 Post). Fluoroscopy confirmed.\n- LUL: 10 RepneuCoils placed (4 Apicopost, 3 Ant, 3 <PERSON>). Fluoroscopy confirmed.\nFindings: 20 coils total. No pneumothorax. EBL <10ml.\nPlan: Admit. CXR. Antibiotics.",
     "cpt_codes": [
       31647
     ],
@@ -209,10 +209,17 @@
       "style_type": 1,
       "generated_name": "Mary Jones",
       "generation_date": "2025-12-09T10:33:39.697228"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "HISTORY: The patient, a 72-year-old female with GOLD Stage IV homogeneous emphysema, presented for bronchoscopic lung volume reduction. \nOPERATIVE NARRATIVE: Under moderate sedation and standard monitoring, the airway was interrogated, revealing mild tracheomalacia. The procedure targeted bilateral upper lobes for coil implantation. Utilizing fluoroscopic guidance, ten 125mm RepneuCoils were deployed into the Right Upper Lobe segments. Subsequently, the Left Upper Lobe was cannulated, and an additional ten coils were deployed. \nIMPRESSION: Successful deployment of 20 endobronchial coils total. Radiographic evaluation confirmed appropriate parenchymal compression without pneumothorax.",
+    "note_text": "HISTORY: The patient, a <DATE_TIME> female with GOLD Stage IV homogeneous emphysema, presented for bronchoscopic lung volume reduction. \nOPERATIVE NARRATIVE: Under moderate sedation and standard monitoring, the airway was interrogated, revealing mild tracheomalacia. The procedure targeted bilateral upper lobes for coil implantation. Utilizing fluoroscopic guidance, ten 125mm RepneuCoils were deployed into the Right Upper Lobe segments. Subsequently, the Left Upper Lobe was cannulated, and an additional ten coils were deployed. \nIMPRESSION: Successful deployment of 20 endobronchial coils total. Radiographic evaluation confirmed appropriate parenchymal compression without pneumothorax.",
     "cpt_codes": [
       31647
     ],
@@ -421,10 +428,16 @@
       "style_type": 2,
       "generated_name": "Linda Williams",
       "generation_date": "2025-12-09T10:33:39.697296"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Code Selection: 31647 (Bronchoscopy with valve/coil placement).\nTechnique: Bilateral treatment.\nDevice: RepneuCoils (125mm).\nQuantity: 20 coils total (10 Right / 10 Left).\nGuidance: Fluoroscopy (18 min).\nJustification: Patient has homogeneous emphysema unsuitable for valves. Coils used to restore elastic recoil. Procedure performed under moderate sedation. Post-procedure CXR confirms device position.",
+    "note_text": "Code Selection: <DATE_TIME> (Bronchoscopy with valve/coil placement).\nTechnique: Bilateral treatment.\nDevice: RepneuCoils (125mm).\nQuantity: 20 coils total (10 Right / 10 Left).\nGuidance: Fluoroscopy (18 min).\nJustification: Patient has homogeneous emphysema unsuitable for valves. Coils used to restore elastic recoil. Procedure performed under moderate sedation. Post-procedure CXR confirms device position.",
     "cpt_codes": [
       31647
     ],
@@ -633,10 +646,16 @@
       "style_type": 3,
       "generated_name": "Barbara Brown",
       "generation_date": "2025-12-09T10:33:39.697354"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure Note\nPt: Patricia Thompson\nStaff: Dr. Miller\nSteps:\n1. Moderate sedation (Versed/Fentanyl).\n2. Scope introduced. Airways patent.\n3. RUL selected. 10 coils placed (Zephyr/Repneu type) under fluoro.\n4. LUL selected. 10 coils placed.\n5. Total 20 coils.\nComplications: None.\nPlan: Admit for obs.",
+    "note_text": "Procedure Note\nPt: <PERSON>\nStaff: Dr. Miller\nSteps:\n1. Moderate sedation (Versed/Fentanyl).\n2. Scope introduced. Airways patent.\n3. RUL selected. 10 coils placed (Zephyr/Repneu type) under fluoro.\n4. LUL selected. 10 coils placed.\n5. Total 20 coils.\nComplications: None.\nPlan: Admit for obs.",
     "cpt_codes": [
       31647
     ],
@@ -845,10 +864,16 @@
       "style_type": 4,
       "generated_name": "Susan Miller",
       "generation_date": "2025-12-09T10:33:39.697407"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "patient here for coils for emphysema she has the homogeneous type anesthesia was moderate sedation. Scope went in fine mild malacia in the trachea. We did the right side first put in 10 coils in the RUL used fluoro to see them open up like pigtails. Then went to the left side put 10 more in the LUL. 20 coils all together no bleeding really patient tolerated it good. Chest xray looks fine no pneumothorax sending her to the floor thanks.",
+    "note_text": "patient here for coils for emphysema she has the homogeneous type <LOCATION> was moderate sedation. Scope went in fine mild malacia in the trachea. We did the right side first put in 10 coils in the RUL used fluoro to see them open up like pigtails. Then went to the left side put 10 more in the LUL. 20 coils all together no bleeding really patient tolerated it good. Chest xray looks fine no pneumothorax sending her to the floor thanks.",
     "cpt_codes": [
       31647
     ],
@@ -1057,10 +1082,16 @@
       "style_type": 5,
       "generated_name": "Margaret Davis",
       "generation_date": "2025-12-09T10:33:39.697461"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Bronchoscopic lung volume reduction via endobronchial coil placement. 72-year-old female with severe homogeneous emphysema. Moderate sedation. 10 RepneuCoils were placed in the Right Upper Lobe (RUL) segments using fluoroscopic guidance. 10 RepneuCoils were subsequently placed in the Left Upper Lobe (LUL) segments. Total of 20 coils deployed. Fluoroscopy time 18 minutes. No immediate complications. Post-procedure chest radiograph negative for pneumothorax.",
+    "note_text": "Bronchoscopic lung volume reduction via endobronchial coil placement. <DATE_TIME> female with severe homogeneous emphysema. Moderate sedation. 10 RepneuCoils were placed in the Right Upper Lobe (RUL) segments using fluoroscopic guidance. 10 RepneuCoils were subsequently placed in the Left Upper Lobe (LUL) segments. Total of 20 coils deployed. Fluoroscopy time 18 minutes. No immediate complications. Post-procedure chest radiograph negative for pneumothorax.",
     "cpt_codes": [
       31647
     ],
@@ -1269,10 +1300,16 @@
       "style_type": 6,
       "generated_name": "Dorothy Garcia",
       "generation_date": "2025-12-09T10:33:39.697511"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSevere homogeneous emphysema, GOLD IV.\n[Anesthesia]\nModerate Sedation (Midazolam/Fentanyl).\n[Description]\nBilateral coil placement. 10 coils deployed in RUL. 10 coils deployed in LUL. Fluoroscopic confirmation of pigtail formation. Minimal blood loss.\n[Plan]\nAdmit overnight. Levofloxacin prophylaxis. Follow up 2 weeks.",
+    "note_text": "[Indication]\nSevere homogeneous emphysema, GOLD IV.\n[<LOCATION>]\nModerate Sedation (Midazolam/Fentanyl).\n[Description]\nBilateral coil placement. 10 coils deployed in RUL. 10 coils deployed in LUL. Fluoroscopic confirmation of pigtail formation. Minimal blood loss.\n[Plan]\nAdmit overnight. <PERSON>. Follow up 2 weeks.",
     "cpt_codes": [
       31647
     ],
@@ -1481,6 +1518,13 @@
       "style_type": 7,
       "generated_name": "Lisa Rodriguez",
       "generation_date": "2025-12-09T10:33:39.697564"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
@@ -1696,7 +1740,7 @@
     }
   },
   {
-    "note_text": "Operation: Bronchoscopy with implantation of endobronchial coils.\nSubject: 72-year-old female.\nAction: Under moderate sedation, the scope was navigated to the RUL. Ten RepneuCoils were deposited. The scope was then navigated to the LUL, where ten additional coils were deposited.\nResult: 20 coils implanted total. Radiography verified positions.",
+    "note_text": "Operation: Bronchoscopy with implantation of endobronchial coils.\nSubject: <DATE_TIME> female.\nAction: Under moderate sedation, the scope was navigated to the RUL. Ten RepneuCoils were deposited. The scope was then navigated to the LUL, where ten additional coils were deposited.\nResult: 20 coils implanted total. Radiography verified positions.",
     "cpt_codes": [
       31647
     ],
@@ -1905,10 +1949,16 @@
       "style_type": 9,
       "generated_name": "Betty Martinez",
       "generation_date": "2025-12-09T10:33:39.697666"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Dx: Alpha-1 Emphysema. LLL target.\nProcedure: Chartis LLL -> CV Negative (<30mL/min).\nImplants: 2 Zephyr valves (LB6, LB8-10).\nDetails: LB6 valve repositioned once. Complete occlusion confirmed.\nComplications: None.\nPlan: Admit. Monitor for pneumo.",
+    "note_text": "Dx: Alpha-1 <PERSON>. LLL target.\nProcedure: Chartis LLL -> CV Negative (<30mL/min).\nImplants: 2 Zephyr valves (LB6, LB8-10).\nDetails: LB6 valve repositioned once. Complete occlusion confirmed.\nComplications: None.\nPlan: Admit. Monitor for pneumo.",
     "cpt_codes": [
       31647
     ],
@@ -2109,10 +2159,16 @@
       "style_type": 1,
       "generated_name": "Helen Anderson",
       "generation_date": "2025-12-09T10:33:39.697720"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "CASE SUMMARY: Ms. Kim, a 69-year-old female with Alpha-1 Antitrypsin Deficiency, presented for LLL valve therapy.\nPROCEDURE: The airway was examined utilizing a flexible bronchoscope. The Chartis system assessed the LLL, demonstrating a negative collateral ventilation phenotype (flow decay to zero). Based on CT sizing, a 5.5mm valve was selected for LB6 and a 4.0mm valve for the basilar trunk. The LB6 valve required initial repositioning to ensure an airtight seal. Final inspection confirmed total lobar isolation.\nOUTCOME: Successful LLL BLVR. Patient stable.",
+    "note_text": "CASE SUMMARY: Ms. <PERSON>, a <DATE_TIME> female with Alpha-1 <PERSON>, presented for LLL valve therapy.\nPROCEDURE: The airway was examined utilizing a flexible bronchoscope. The Chartis system assessed the LLL, demonstrating a negative collateral ventilation phenotype (flow decay to zero). Based on CT sizing, a 5.5mm valve was selected for LB6 and a 4.0mm valve for the basilar trunk. The LB6 valve required initial repositioning to ensure an airtight seal. Final inspection confirmed total lobar isolation.\nOUTCOME: Successful LLL BLVR. Patient stable.",
     "cpt_codes": [
       31647
     ],
@@ -2313,6 +2369,14 @@
       "style_type": 2,
       "generated_name": "Sandra Taylor",
       "generation_date": "2025-12-09T10:33:39.697773"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME",
+        "PERSON"
+      ]
     }
   },
   {
@@ -2520,7 +2584,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Sharon Kim\nAttending: Dr. Williams\nProcedure: BLVR LLL\nSteps:\n1. Airway exam.\n2. Chartis LLL: Negative CV.\n3. Measured bronchi. Picked valve sizes.\n4. Deployed valve in LB6 (had to adjust it once).\n5. Deployed valve in LB8-10.\n6. Occlusion confirmed.\nPlan: Admit per protocol.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nAttending: Dr. Williams\nProcedure: BLVR LLL\nSteps:\n1. Airway exam.\n2. Chartis LLL: Negative CV.\n3. Measured bronchi. Picked valve sizes.\n4. Deployed valve in LB6 (had to adjust it once).\n5. Deployed valve in <LOCATION>-10.\n6. Occlusion confirmed.\nPlan: Admit per protocol.",
     "cpt_codes": [
       31647
     ],
@@ -2721,10 +2785,17 @@
       "style_type": 4,
       "generated_name": "Carol Hernandez",
       "generation_date": "2025-12-09T10:33:39.697877"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Sharon has alpha 1 we are doing the valves in the lower left lobe today. Chartis showed no flow so good to go. Put a valve in the superior segment and one in the basilar segment. The first one needed to be moved a bit to seal right but we got it. Two valves total both zephyr. No bleeding patient woke up fine admitting for observation.",
+    "note_text": "<PERSON> has alpha 1 we are doing the valves in the lower left lobe today. Chartis showed no flow so good to go. Put a valve in the superior segment and one in the basilar segment. The first one needed to be moved a bit to seal right but we got it. Two valves total both zephyr. No bleeding patient woke up fine admitting for observation.",
     "cpt_codes": [
       31647
     ],
@@ -2925,10 +2996,16 @@
       "style_type": 5,
       "generated_name": "Ruth Moore",
       "generation_date": "2025-12-09T10:33:39.697927"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Bronchoscopic lung volume reduction left lower lobe. Patient with Alpha-1 antitrypsin deficiency. Chartis assessment of LLL confirmed absence of collateral ventilation. Two Zephyr valves were deployed. One 5.5mm valve in LB6 and one 4.0mm valve in LB8-10. Complete lobar occlusion was verified visually. Patient tolerated procedure well.",
+    "note_text": "Bronchoscopic lung volume reduction left lower lobe. Patient with Alpha-1 antitrypsin deficiency. Chartis assessment of LLL confirmed absence of collateral ventilation. Two Zephyr valves were deployed. One 5.5mm valve in <LOCATION> and one 4.0mm valve in <LOCATION>-10. Complete lobar occlusion was verified visually. Patient tolerated procedure well.",
     "cpt_codes": [
       31647
     ],
@@ -3129,10 +3206,17 @@
       "style_type": 6,
       "generated_name": "Sharon Martin",
       "generation_date": "2025-12-09T10:33:39.697978"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nAlpha-1 Antitrypsin Emphysema, LLL predominant.\n[Anesthesia]\nModerate Sedation.\n[Description]\nChartis LLL: CV Negative. Valves placed in LB6 and LB8-10. LB6 valve repositioned for better seal. Total 2 valves. Occlusion achieved.\n[Plan]\nAdmit. Steroids/Antibiotics.",
+    "note_text": "[Indication]\nAlpha-1 <PERSON>, LLL predominant.\n[<LOCATION>]\nModerate Sedation.\n[Description]\nChartis LLL: CV Negative. Valves placed in <LOCATION> and <LOCATION>-10. LB6 valve repositioned for better seal. Total 2 valves. Occlusion achieved.\n[Plan]\nAdmit. Steroids/Antibiotics.",
     "cpt_codes": [
       31647
     ],
@@ -3333,10 +3417,19 @@
       "style_type": 7,
       "generated_name": "Michelle Jackson",
       "generation_date": "2025-12-09T10:33:39.698029"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 4,
+      "entity_types": [
+        "PERSON",
+        "LOCATION",
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a bronchoscopy to place valves in Ms. Kim's left lower lobe. After confirming the fissure was complete using the Chartis system, we sized the airways. We placed one valve in the superior segment and one in the basilars. The superior valve needed a slight adjustment to get a perfect seal. Once both were in, the lobe was completely closed off.",
+    "note_text": "We performed a bronchoscopy to place valves in Ms. <PERSON>'s left lower lobe. After confirming the fissure was complete using the Chartis system, we sized the airways. We placed one valve in the superior segment and one in the basilars. The superior valve needed a slight adjustment to get a perfect seal. Once both were in, the lobe was completely closed off.",
     "cpt_codes": [
       31647
     ],
@@ -3537,6 +3630,12 @@
       "style_type": 8,
       "generated_name": "Laura Thompson",
       "generation_date": "2025-12-09T10:33:39.698078"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4290,7 +4389,7 @@
     }
   },
   {
-    "note_text": "Coding Data:\n- 31625: Endobronchial biopsy (RUL mass).\n- 31629: TBNA (RUL mass).\n- 31628: Transbronchial biopsy (LLL lesion).\n- 31633: TBNA add'l lobe (LLL lesion - *correction: usually 31629 covers multiple, check edits*).\n- 31654: Radial EBUS (LLL guidance).\n- 31624: BAL (LLL).\nJustification: Distinct lesions in separate lobes requiring different sampling techniques.",
+    "note_text": "Coding Data:\n- 31625: Endobronchial biopsy (RUL mass).\n- 31629: TBNA (RUL mass).\n- 31628: Transbronchial biopsy (LLL lesion).\n- <DATE_TIME>: TBNA add'l lobe (LLL lesion - *correction: usually 31629 covers multiple, check edits*).\n- 31654: Radial EBUS (LLL guidance).\n- 31624: BAL (LLL).\nJustification: Distinct lesions in separate lobes requiring different sampling techniques.",
     "cpt_codes": [
       31625,
       31629,
@@ -4560,10 +4659,16 @@
       "style_type": 3,
       "generated_name": "Jessica Gonzalez",
       "generation_date": "2025-12-09T10:33:39.698343"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy w/ Biopsy\nPatient: Chloe Whitford\nSteps:\n1. ETT 8.5.\n2. RUL mass seen -> Biopsied (forceps + needle).\n3. LLL lesion found with Radial EBUS -> Biopsied (forceps + needle).\n4. BAL done in LLL.\n5. Bleeding controlled with epi.\nPathology: RUL looks malignant.",
+    "note_text": "Procedure: Bronchoscopy w/ Biopsy\nPatient: <PERSON>\nSteps:\n1. ETT 8.5.\n2. RUL mass seen -> Biopsied (forceps + needle).\n3. LLL lesion found with Radial EBUS -> Biopsied (forceps + needle).\n4. BAL done in LLL.\n5. Bleeding controlled with epi.\nPathology: RUL looks malignant.",
     "cpt_codes": [
       31625,
       31629,
@@ -4833,6 +4938,12 @@
       "style_type": 4,
       "generated_name": "Shirley Harris",
       "generation_date": "2025-12-09T10:33:39.698466"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5382,7 +5493,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSuspected malignancy, bilateral masses.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nRUL fungating mass biopsied (forceps, TBNA). LLL lesion located with Radial EBUS, biopsied (TBLB, TBNA). BAL LLL. Moderate bleeding controlled.\n[Plan]\nPathology pending. CXR.",
+    "note_text": "[Indication]\nSuspected malignancy, bilateral masses.\n[<LOCATION>]\nGeneral, 8.5 ETT.\n[Description]\nRUL fungating mass biopsied (forceps, TBNA). LLL lesion located with Radial EBUS, biopsied (TBLB, TBNA). BAL LLL. Moderate bleeding controlled.\n[Plan]\nPathology pending. CXR.",
     "cpt_codes": [
       31625,
       31629,
@@ -5652,10 +5763,16 @@
       "style_type": 7,
       "generated_name": "Melissa Robinson",
       "generation_date": "2025-12-09T10:33:39.698671"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We examined Ms. Whitford's airways and found a large mass blocking the right upper lobe segments. We took several samples using both needles and forceps. Then we moved to the left lower lobe, where we used the ultrasound probe to find a second lesion and sampled that as well. We also did a lavage. There was a fair amount of bleeding, but we stopped it with epinephrine.",
+    "note_text": "We examined Ms. <PERSON>'s airways and found a large mass blocking the right upper lobe segments. We took several samples using both needles and forceps. Then we moved to the left lower lobe, where we used the ultrasound probe to find a second lesion and sampled that as well. We also did a lavage. There was a fair amount of bleeding, but we stopped it with epinephrine.",
     "cpt_codes": [
       31625,
       31629,
@@ -5925,6 +6042,12 @@
       "style_type": 8,
       "generated_name": "Brenda Walker",
       "generation_date": "2025-12-09T10:33:39.698734"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6403,7 +6526,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. Anderson presented for LUL volume reduction. Following Chartis confirmation of fissure integrity (absence of collateral ventilation), the target lobe was treated. Four Zephyr endobronchial valves were deployed: one 5.5mm unit in the lingula and three 4.0mm units in the upper division. Visual inspection confirmed adequate seating and lobar occlusion. The patient remained stable throughout.",
+    "note_text": "PROCEDURE NOTE: Mr. <PERSON> presented for LUL volume reduction. Following Chartis confirmation of fissure integrity (absence of collateral ventilation), the target lobe was treated. Four Zephyr endobronchial valves were deployed: one 5.5mm unit in the lingula and three 4.0mm units in the upper division. Visual inspection confirmed adequate seating and lobar occlusion. The patient remained stable throughout.",
     "cpt_codes": [
       31647
     ],
@@ -6602,6 +6725,12 @@
       "style_type": 2,
       "generated_name": "John Young",
       "generation_date": "2025-12-09T10:33:39.698904"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6807,7 +6936,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Bill Anderson\nProcedure: BLVR LUL\nSteps:\n1. Chartis check: No CV.\n2. Measured segments.\n3. Placed 4 valves total (Zephyr).\n4. Checked placement with fluoro.\n5. No issues.\nPlan: Monitor for pneumo.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: BLVR LUL\nSteps:\n1. Chartis check: No CV.\n2. Measured segments.\n3. Placed 4 valves total (Zephyr).\n4. Checked placement with fluoro.\n5. No issues.\nPlan: Monitor for pneumo.",
     "cpt_codes": [
       31647
     ],
@@ -7006,10 +7135,16 @@
       "style_type": 4,
       "generated_name": "Michael Sanchez",
       "generation_date": "2025-12-09T10:33:39.699007"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Dr Kim here doing a valve procedure on Mr Anderson. LUL emphysema. We checked with chartis and it was negative for collateral ventilation. Put in four valves total mixed sizes 5.5 and 4.0s. They look good fluoro shows them working. No complications patient woke up fine.",
+    "note_text": "Dr Kim here doing a valve procedure on Mr <PERSON>. LUL emphysema. We checked with chartis and it was negative for collateral ventilation. Put in four valves total mixed sizes 5.5 and 4.0s. They look good fluoro shows them working. No complications patient woke up fine.",
     "cpt_codes": [
       31647
     ],
@@ -7208,6 +7343,12 @@
       "style_type": 5,
       "generated_name": "William Wright",
       "generation_date": "2025-12-09T10:33:39.699059"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7413,7 +7554,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nEnd-stage COPD, LUL hyperinflation.\n[Anesthesia]\nModerate Sedation.\n[Description]\nChartis LUL: No CV. 4 Zephyr valves deployed. Complete occlusion. Stable.\n[Plan]\nObservation. Serial CXRs.",
+    "note_text": "[Indication]\nEnd-stage COPD, LUL hyperinflation.\n[<LOCATION>]\nModerate Sedation.\n[Description]\nChartis LUL: No CV. 4 Zephyr valves deployed. Complete occlusion. Stable.\n[Plan]\nObservation. Serial CXRs.",
     "cpt_codes": [
       31647
     ],
@@ -7612,10 +7753,16 @@
       "style_type": 7,
       "generated_name": "Richard Scott",
       "generation_date": "2025-12-09T10:33:39.699161"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Anderson came in for his lung volume reduction. We confirmed that his left upper lobe was a good target using the Chartis balloon. We then placed four valves into the airway segments of that lobe. Everything fit perfectly, and we could see the lobe starting to shrink on the x-ray right away.",
+    "note_text": "Mr. <PERSON> came in for his lung volume reduction. We confirmed that his left upper lobe was a good target using the Chartis balloon. We then placed four valves into the airway segments of that lobe. Everything fit perfectly, and we could see the lobe starting to shrink on the x-ray right away.",
     "cpt_codes": [
       31647
     ],
@@ -7814,6 +7961,12 @@
       "style_type": 8,
       "generated_name": "Charles Green",
       "generation_date": "2025-12-09T10:33:39.699210"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8019,7 +8172,7 @@
     }
   },
   {
-    "note_text": "Indication: Migrated valve RB2, incomplete occlusion.\nProcedure:\n- RB2 valve removed (forceps).\n- Debridement of granulation.\n- New 5.5mm Zephyr valve placed RB2.\n- RB1/RB3 valves checked, good.\nResult: RUL occluded.\nPlan: Discharge in 4hrs.",
+    "note_text": "Indication: Migrated valve RB2, incomplete occlusion.\nProcedure:\n- RB2 valve removed (forceps).\n- Debridement of granulation.\n- New 5.5mm Zephyr valve placed <LOCATION>.\n- RB1/RB3 valves checked, good.\nResult: RUL occluded.\nPlan: Discharge in 4hrs.",
     "cpt_codes": [
       31647,
       31648
@@ -8249,10 +8402,16 @@
       "style_type": 1,
       "generated_name": "Thomas Adams",
       "generation_date": "2025-12-09T10:33:39.699321"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "OPERATIVE NOTE: Mr. Peterson presented for revision of RUL valves due to migration. Inspection revealed the RB2 valve distally migrated with paravalvular leak. This device was extracted using removal forceps. The airway was prepped, and a larger 5.5mm Zephyr valve was deployed proximally to secure the segment. The remaining valves in RB1 and RB3 were stable. Complete lobar occlusion was re-established.",
+    "note_text": "OPERATIVE NOTE: Mr. <PERSON> presented for revision of RUL valves due to migration. Inspection revealed the <LOCATION> valve distally migrated with paravalvular leak. This device was extracted using removal forceps. The airway was prepped, and a larger 5.5mm Zephyr valve was deployed proximally to secure the segment. The remaining valves in RB1 and RB3 were stable. Complete lobar occlusion was re-established.",
     "cpt_codes": [
       31647,
       31648
@@ -8482,10 +8641,17 @@
       "style_type": 2,
       "generated_name": "Christopher Nelson",
       "generation_date": "2025-12-09T10:33:39.699379"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Coding:\n- 31648: Removal of bronchial valve (Migrated RB2 valve).\n- 31647: Insertion of bronchial valve (Replacement valve in RB2).\nRationale: Correction of complication (migration) requiring removal of hardware and placement of new hardware in the initial target lobe.",
+    "note_text": "Coding:\n- 31648: Removal of bronchial valve (Migrated RB2 valve).\n- 31647: Insertion of bronchial valve (Replacement valve in <LOCATION>).\nRationale: Correction of complication (migration) requiring removal of hardware and placement of new hardware in the initial target lobe.",
     "cpt_codes": [
       31647,
       31648
@@ -8715,10 +8881,16 @@
       "style_type": 3,
       "generated_name": "Daniel Hill",
       "generation_date": "2025-12-09T10:33:39.699544"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Valve Revision\nPatient: Don Peterson\nIssue: Valve in RB2 moved.\nSteps:\n1. Scope in.\n2. Pulled out the migrated valve (RB2).\n3. Cleaned up some tissue.\n4. Put in a bigger valve (5.5mm) in the same spot.\n5. Sealed up now.\nPlan: Home today.",
+    "note_text": "Procedure: Valve Revision\nPatient: <PERSON>\nIssue: Valve in RB2 moved.\nSteps:\n1. Scope in.\n2. Pulled out the migrated valve (RB2).\n3. Cleaned up some tissue.\n4. Put in a bigger valve (5.5mm) in the same spot.\n5. Sealed up now.\nPlan: Home today.",
     "cpt_codes": [
       31647,
       31648
@@ -8948,10 +9120,16 @@
       "style_type": 4,
       "generated_name": "Paul Ramirez",
       "generation_date": "2025-12-09T10:33:39.699610"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Don is back his valve moved in the right upper lobe. We went in and saw the RB2 valve way down there. Pulled it out with the grabbers. Put a new bigger one in its place. Now it looks tight no air getting through. The other valves looked fine. sending him home later.",
+    "note_text": "<PERSON> is back his valve moved in the right upper lobe. We went in and saw the <LOCATION> valve way down there. Pulled it out with the grabbers. Put a new bigger one in its place. Now it looks tight no air getting through. The other valves looked fine. sending him home later.",
     "cpt_codes": [
       31647,
       31648
@@ -9181,10 +9359,17 @@
       "style_type": 5,
       "generated_name": "Mark Campbell",
       "generation_date": "2025-12-09T10:33:39.699672"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Bronchoscopic revision of right upper lobe valves. Indication: Valve migration RB2. The migrated valve was grasped and removed. The airway was inspected and cleared of mild granulation. A new 5.5mm Zephyr valve was deployed in the RB2 bronchus. Complete RUL occlusion was confirmed bronchoscopically.",
+    "note_text": "Bronchoscopic revision of right upper lobe valves. Indication: Valve migration RB2. The migrated valve was grasped and removed. The airway was inspected and cleared of mild granulation. A new 5.5mm Zephyr valve was deployed in the <LOCATION> bronchus. Complete RUL occlusion was confirmed bronchoscopically.",
     "cpt_codes": [
       31647,
       31648
@@ -9414,10 +9599,16 @@
       "style_type": 6,
       "generated_name": "Donald Mitchell",
       "generation_date": "2025-12-09T10:33:39.699736"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nValve migration, RUL.\n[Anesthesia]\nModerate Sedation.\n[Description]\nMigrated RB2 valve removed. New 5.5mm valve placed in RB2. RUL occlusion restored.\n[Plan]\nDischarge. Antibiotics x5 days.",
+    "note_text": "[Indication]\nValve migration, RUL.\n[<LOCATION>]\nModerate Sedation.\n[Description]\nMigrated RB2 valve removed. New 5.5mm valve placed in <LOCATION>. RUL occlusion restored.\n[Plan]\nDischarge. <DATE_TIME>.",
     "cpt_codes": [
       31647,
       31648
@@ -9647,10 +9838,18 @@
       "style_type": 7,
       "generated_name": "George Roberts",
       "generation_date": "2025-12-09T10:33:39.699797"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION",
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Mr. Peterson's follow-up CT showed one of his valves had slipped. We went back in and removed the loose valve from the anterior segment. We replaced it with a larger size to make sure it stays put this time. The other valves were fine, so we left them alone. The lobe is completely blocked off again.",
+    "note_text": "Mr. <PERSON>'s follow-up CT showed one of his valves had slipped. We went back in and removed the loose valve from the anterior segment. We replaced it with a larger size to make sure it stays put this time. The other valves were fine, so we left them alone. The lobe is completely blocked off again.",
     "cpt_codes": [
       31647,
       31648
@@ -9880,10 +10079,16 @@
       "style_type": 8,
       "generated_name": "Kenneth Carter",
       "generation_date": "2025-12-09T10:33:39.699850"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Revision of endobronchial valves.\nProblem: Device migration.\nAction: The migrated valve in RB2 was extracted. A replacement Zephyr valve of larger dimension was implanted. \nOutcome: Restoration of lobar atelectasis.",
+    "note_text": "Procedure: Revision of endobronchial valves.\nProblem: Device migration.\nAction: The migrated valve in <LOCATION> was extracted. A replacement Zephyr valve of larger dimension was implanted. \nOutcome: Restoration of lobar atelectasis.",
     "cpt_codes": [
       31647,
       31648
@@ -10113,6 +10318,12 @@
       "style_type": 9,
       "generated_name": "Steven Phillips",
       "generation_date": "2025-12-09T10:33:39.699907"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -10716,7 +10927,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Ilene Ortiez\nProcedure: Pleuroscopy\nSteps:\n1. Local/Sedation.\n2. Trocar in left 8th rib space.\n3. Drained fluid.\n4. Saw nodules -> Biopsied x5.\n5. Put in Pigtail catheter.\nComplications: None.\nPath: Sent fluid and tissue.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: Pleuroscopy\nSteps:\n1. Local/Sedation.\n2. Trocar in left 8th rib space.\n3. Drained fluid.\n4. Saw nodules -> Biopsied x5.\n5. Put in Pigtail catheter.\nComplications: None.\nPath: Sent fluid and tissue.",
     "cpt_codes": [
       32609
     ],
@@ -10913,10 +11124,16 @@
       "style_type": 4,
       "generated_name": "Kathleen Parker",
       "generation_date": "2025-12-09T10:33:39.700136"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Doing a thoracoscopy on Ms Ortiez for her effusion. Put the port in the left side drained a liter of bloody fluid. The lung looked stuck down and there were bumps everywhere. Took 5 biopsies of the bumps. Put a pigtail chest tube in at the end. Biopsies went to pathology.",
+    "note_text": "Doing a thoracoscopy on <PERSON> for her effusion. Put the port in the left side drained a liter of bloody fluid. The lung looked stuck down and there were bumps everywhere. Took 5 biopsies of the bumps. Put a pigtail chest tube in at the end. Biopsies went to pathology.",
     "cpt_codes": [
       32609
     ],
@@ -11113,10 +11330,16 @@
       "style_type": 5,
       "generated_name": "Pamela Collins",
       "generation_date": "2025-12-09T10:33:39.700190"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Medical Thoracoscopy (Pleuroscopy), left side. Indication: Malignant pleural effusion. 1275cc fluid removed. Diffuse carcinomatosis noted. Multiple biopsies of parietal pleura performed. 14Fr Wayne pigtail catheter placed. Lung re-expansion confirmed on post-procedure CXR.",
+    "note_text": "Medical Thoracoscopy (Pleuroscopy), left side. Indication: Malignant pleural effusion. 1275cc fluid removed. Diffuse carcinomatosis noted. Multiple biopsies of parietal pleura performed. 14Fr <PERSON> pigtail catheter placed. Lung re-expansion confirmed on post-procedure CXR.",
     "cpt_codes": [
       32609
     ],
@@ -11313,10 +11536,16 @@
       "style_type": 6,
       "generated_name": "Martha Edwards",
       "generation_date": "2025-12-09T10:33:39.700243"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nMalignant pleural effusion.\n[Anesthesia]\nModerate Sedation + Local.\n[Description]\nLeft thoracoscopy. 1275cc drained. Diffuse mets seen. Biopsies taken. Pigtail placed.\n[Plan]\nPathology pending. Suture removal 2 weeks.",
+    "note_text": "[Indication]\nMalignant pleural effusion.\n[<LOCATION>]\nModerate Sedation + Local.\n[Description]\nLeft thoracoscopy. 1275cc drained. Diffuse mets seen. Biopsies taken. Pigtail placed.\n[Plan]\nPathology pending. Suture removal 2 weeks.",
     "cpt_codes": [
       32609
     ],
@@ -11513,10 +11742,16 @@
       "style_type": 7,
       "generated_name": "Debra Stewart",
       "generation_date": "2025-12-09T10:33:39.700296"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a procedure to look inside Ms. Ortiez's chest cavity. We drained the fluid and saw extensive signs of cancer on the lining of the lung. We took several biopsy samples for the lab. We left a small chest tube in place to keep the fluid from building up again.",
+    "note_text": "We performed a procedure to look inside Ms. <PERSON>'s chest cavity. We drained the fluid and saw extensive signs of cancer on the lining of the lung. We took several biopsy samples for the lab. We left a small chest tube in place to keep the fluid from building up again.",
     "cpt_codes": [
       32609
     ],
@@ -11713,6 +11948,12 @@
       "style_type": 8,
       "generated_name": "Amanda Flores",
       "generation_date": "2025-12-09T10:33:39.700346"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12322,7 +12563,7 @@
     }
   },
   {
-    "note_text": "Code: 31636 (Stent placement, initial bronchus).\nDevice: Aero Stent 12x40mm.\nLocation: Left Mainstem Bronchus.\nTechnique: Deployment over guidewire with fluoroscopy. Balloon dilation post-deployment. Note: Rigid bronchoscopy attempted but aborted; procedure completed via therapeutic flexible scope through ETT.",
+    "note_text": "Code: 31636 (Stent placement, initial bronchus).\nDevice: Aero <PERSON>.\nLocation: Left Mainstem Bronchus.\nTechnique: Deployment over guidewire with fluoroscopy. Balloon dilation post-deployment. Note: Rigid bronchoscopy attempted but aborted; procedure completed via therapeutic flexible scope through ETT.",
     "cpt_codes": [
       31636
     ],
@@ -12522,10 +12763,16 @@
       "style_type": 3,
       "generated_name": "Marie Rivera",
       "generation_date": "2025-12-09T10:33:39.700552"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Airway Stenting\nPatient: Tena Hughes\nSteps:\n1. GA. Tried rigid, couldn't vent. Intubated.\n2. Scope passed lesion in LMS.\n3. Dropped guidewire.\n4. Deployed Aero stent (12x40).\n5. Ballooned it open.\n6. Airway open now.\nPlan: Saline nebs.",
+    "note_text": "Procedure: Airway Stenting\nPatient: <PERSON>\nSteps:\n1. GA. Tried rigid, couldn't vent. Intubated.\n2. Scope passed lesion in LMS.\n3. Dropped guidewire.\n4. Deployed Aero stent (12x40).\n5. Ballooned it open.\n6. Airway open now.\nPlan: Saline nebs.",
     "cpt_codes": [
       31636
     ],
@@ -12725,6 +12972,12 @@
       "style_type": 4,
       "generated_name": "Janet Cook",
       "generation_date": "2025-12-09T10:33:39.700604"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -13134,7 +13387,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nEsophageal cancer, LMS obstruction.\n[Anesthesia]\nGeneral.\n[Description]\nRigid bronch failed. Converted to ETT. Aero stent 12x40mm placed in LMS. Balloon dilated. Patency improved.\n[Plan]\nSaline nebs. CXR.",
+    "note_text": "[Indication]\nEsophageal cancer, LMS obstruction.\n[<LOCATION>]\nGeneral.\n[Description]\nRigid bronch failed. Converted to ETT. Aero stent 12x40mm placed in LMS. Balloon dilated. Patency improved.\n[Plan]\nSaline nebs. CXR.",
     "cpt_codes": [
       31636
     ],
@@ -13334,10 +13587,16 @@
       "style_type": 7,
       "generated_name": "Ann Peterson",
       "generation_date": "2025-12-09T10:33:39.700761"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Ms. Hughes had a tumor pushing on her left main airway. We had to switch from the rigid scope to a breathing tube, but we successfully placed a stent to hold the airway open. We used a balloon to expand the stent fully. She is breathing much better now with the airway reopened.",
+    "note_text": "Ms. <PERSON> had a tumor pushing on her left main airway. We had to switch from the rigid scope to a breathing tube, but we successfully placed a stent to hold the airway open. We used a balloon to expand the stent fully. She is breathing much better now with the airway reopened.",
     "cpt_codes": [
       31636
     ],
@@ -13537,6 +13796,12 @@
       "style_type": 8,
       "generated_name": "Joyce Cooper",
       "generation_date": "2025-12-09T10:33:39.700811"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14373,7 +14638,7 @@
     }
   },
   {
-    "note_text": "Research Procedure\nPatient: Robert Berg\nStudy: Combo-Ablate\nSteps:\n1. Navigated to LUL tumor.\n2. Did Cryo freeze (2 cycles).\n3. Waited 15 mins.\n4. Did Microwave burn (75W).\n5. Checked with EBUS.\nEverything went per protocol.",
+    "note_text": "Research Procedure\nPatient: <PERSON>\nStudy: Combo-Ablate\nSteps:\n1. Navigated to LUL tumor.\n2. Did Cryo freeze (2 cycles).\n3. Waited 15 mins.\n4. Did Microwave burn (75W).\n5. Checked with EBUS.\nEverything went per protocol.",
     "cpt_codes": [
       31641
     ],
@@ -14580,10 +14845,16 @@
       "style_type": 4,
       "generated_name": "Anthony Kelly",
       "generation_date": "2025-12-09T10:33:39.701070"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mr Berg is in the ablation study. We did the double whammy on his LUL tumor. First the cryo freeze for two cycles got a good ice ball. Then the microwave for 7 minutes to cook it. Looks like we got the whole thing plus margin. No bleeding no pneumo. He is doing fine.",
+    "note_text": "Mr <PERSON> is in the ablation study. We did the double whammy on his LUL tumor. First the cryo freeze for two cycles got a good ice ball. Then the microwave for 7 minutes to cook it. Looks like we got the whole thing plus margin. No bleeding no pneumo. He is doing fine.",
     "cpt_codes": [
       31641
     ],
@@ -14790,6 +15061,12 @@
       "style_type": 5,
       "generated_name": "Kevin Howard",
       "generation_date": "2025-12-09T10:33:39.701124"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15003,7 +15280,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLUL Adenocarcinoma, Research Protocol.\n[Anesthesia]\nModerate Sedation.\n[Description]\nCryoablation x2 cycles. Microwave Ablation 75W. Target ablated with margins.\n[Plan]\nCT follow-up per protocol.",
+    "note_text": "[Indication]\nLUL Adenocarcinoma, Research Protocol.\n[<LOCATION>]\nModerate Sedation.\n[Description]\nCryoablation x2 cycles. Microwave Ablation 75W. Target ablated with margins.\n[Plan]\nCT follow-up per protocol.",
     "cpt_codes": [
       31641
     ],
@@ -15210,10 +15487,16 @@
       "style_type": 7,
       "generated_name": "Matthew Cox",
       "generation_date": "2025-12-09T10:33:39.701226"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Mr. Berg is participating in a study for his lung tumor. We treated the tumor in his left upper lobe using two methods: freezing it first with a cryo probe, and then heating it with microwaves. The combination created a large treatment zone that covered the whole tumor. He handled the procedure very well.",
+    "note_text": "Mr. <PERSON> is participating in a study for his lung tumor. We treated the tumor in his left upper lobe using two methods: freezing it first with a cryo probe, and then heating it with microwaves. The combination created a large treatment zone that covered the whole tumor. He handled the procedure very well.",
     "cpt_codes": [
       31641
     ],
@@ -15420,10 +15703,16 @@
       "style_type": 8,
       "generated_name": "Gary Diaz",
       "generation_date": "2025-12-09T10:33:39.701277"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy with tumor destruction.\nMethod: Sequential cryotherapy and thermal ablation.\nTarget: Left Upper Lobe lesion.\nAction: The lesion was frozen and subsequently heated to achieve necrosis.\nResult: Satisfactory ablation zone.",
+    "note_text": "Procedure: Bronchoscopy with tumor destruction.\nMethod: <LOCATION> cryotherapy and thermal ablation.\nTarget: Left Upper Lobe lesion.\nAction: The lesion was frozen and subsequently heated to achieve necrosis.\nResult: Satisfactory ablation zone.",
     "cpt_codes": [
       31641
     ],
@@ -15630,6 +15919,12 @@
       "style_type": 9,
       "generated_name": "Timothy Richardson",
       "generation_date": "2025-12-09T10:33:39.701330"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -16031,7 +16326,7 @@
     }
   },
   {
-    "note_text": "Code: 31635 (Removal of foreign body/stent).\nTechnique: Rigid Bronchoscopy.\nDetails: Tracheal stent identified and removed intact. Fragment in LMS removed. \nComplication: Post-op Laryngospasm managed by anesthesia.",
+    "note_text": "Code: 31635 (Removal of foreign body/stent).\nTechnique: Rigid Bronchoscopy.\nDetails: Tracheal stent identified and removed intact. Fragment in LMS removed. \nComplication: Post-op Laryngospasm managed by <LOCATION>.",
     "cpt_codes": [
       31635
     ],
@@ -16227,10 +16522,16 @@
       "style_type": 3,
       "generated_name": "Scott Brooks",
       "generation_date": "2025-12-09T10:33:39.701482"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Stent Removal\nPatient: Tyler Benfield\nSteps:\n1. Rigid scope in.\n2. Grabbed stent, twisted, pulled it out.\n3. Found a piece left in the LMS, got that too.\n4. Patient had laryngospasm after, had to re-intubate briefly.\n5. Stable now.",
+    "note_text": "Procedure: <PERSON>\nPatient: <PERSON>\nSteps:\n1. Rigid scope in.\n2. Grabbed stent, twisted, pulled it out.\n3. Found a piece left in the LMS, got that too.\n4. Patient had laryngospasm after, had to re-intubate briefly.\n5. Stable now.",
     "cpt_codes": [
       31635
     ],
@@ -16426,10 +16727,17 @@
       "style_type": 4,
       "generated_name": "Eric Bennett",
       "generation_date": "2025-12-09T10:33:39.701533"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Tyler is here to get his stent out. We used the rigid scope. Grabbed the Y stent and pulled the whole thing out. There was a little piece broken off in the left side we got that too. He had a spasm when we woke him up had to put the tube back in for a sec but he is okay now. Sending to PACU.",
+    "note_text": "Tyler is here to get his stent out. We used the rigid scope. Grabbed the Y stent and pulled the whole thing out. There was a little piece broken off in the left side we got that too. He had a spasm when we woke him up had to put the tube back in for a sec but he is okay now. Sending to <LOCATION>.",
     "cpt_codes": [
       31635
     ],
@@ -16625,6 +16933,12 @@
       "style_type": 5,
       "generated_name": "Stephen Gray",
       "generation_date": "2025-12-09T10:33:39.701581"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -16827,7 +17141,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nStent removal.\n[Anesthesia]\nGeneral.\n[Description]\nRigid bronch. Y-stent removed. Fragment in LMS removed. Airway patent.\n[Complications]\nLaryngospasm, re-intubated.\n[Plan]\nPACU/ICU.",
+    "note_text": "[Indication]\nStent removal.\n[<LOCATION>]\nGeneral.\n[Description]\nRigid bronch. Y-stent removed. Fragment in LMS removed. Airway patent.\n[Complications]\nLaryngospasm, re-intubated.\n[Plan]\nPACU/ICU.",
     "cpt_codes": [
       31635
     ],
@@ -17023,10 +17337,16 @@
       "style_type": 7,
       "generated_name": "Raymond Reyes",
       "generation_date": "2025-12-09T10:33:39.701681"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We brought Mr. Benfield in to remove his airway stent since his mass has shrunk. We used a rigid tube to pull the stent out in one piece. We also found and removed a small broken piece. He had some trouble breathing right after the tube came out due to a spasm, so we had to help him breathe for a few minutes, but he recovered well.",
+    "note_text": "We brought Mr. <PERSON> in to remove his airway stent since his mass has shrunk. We used a rigid tube to pull the stent out in one piece. We also found and removed a small broken piece. He had some trouble breathing right after the tube came out due to a spasm, so we had to help him breathe for a few minutes, but he recovered well.",
     "cpt_codes": [
       31635
     ],
@@ -17222,6 +17542,12 @@
       "style_type": 8,
       "generated_name": "Gregory Cruz",
       "generation_date": "2025-12-09T10:33:39.701732"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17424,7 +17750,7 @@
     }
   },
   {
-    "note_text": "Indication: LAD.\nProcedure: EBUS-TBNA.\nStations: 4R, 4L, 7, 11R.\nROSE: Granulomas (Sarcoid).\nPlan: Path pending.",
+    "note_text": "Indication: LAD.\nProcedure: EBUS-TBNA.\nStations: 4R, 4L, 7, 11R.\nROSE: <PERSON> (<PERSON>).\nPlan: Path pending.",
     "cpt_codes": [
       31653
     ],
@@ -17638,6 +17964,13 @@
       "style_type": 1,
       "generated_name": "Jerry Price",
       "generation_date": "2025-12-09T10:33:39.701835"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -17858,7 +18191,7 @@
     }
   },
   {
-    "note_text": "Code: 31653 (EBUS sampling 3 or more stations).\nStations Sampled: 4R, 4L, 7, 11R (4 stations).\nPathology: Granulomas.\nJustification: Evaluation of mediastinal lymphadenopathy.",
+    "note_text": "Code: 31653 (EBUS sampling 3 or more stations).\nStations Sampled: 4R, 4L, 7, 11R (4 stations).\nPathology: <PERSON>.\nJustification: Evaluation of mediastinal lymphadenopathy.",
     "cpt_codes": [
       31653
     ],
@@ -18072,10 +18405,16 @@
       "style_type": 3,
       "generated_name": "Walter Long",
       "generation_date": "2025-12-09T10:33:39.701943"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPatient: Andrew Thompson\nStations:\n- 4R: 4 passes\n- 4L: 4 passes\n- 7: 4 passes\n- 11R: 3 passes\nROSE says Sarcoid. \nNo complications.",
+    "note_text": "Procedure: EBUS\nPatient: <PERSON>\nStations:\n- 4R: 4 passes\n- 4L: 4 passes\n- 7: 4 passes\n- 11R: 3 passes\nROSE says <PERSON>. \nNo complications.",
     "cpt_codes": [
       31653
     ],
@@ -18289,10 +18628,17 @@
       "style_type": 4,
       "generated_name": "Patrick Foster",
       "generation_date": "2025-12-09T10:33:39.701996"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Did an EBUS on Andrew today for the lymph nodes. Poked 4R 4L 7 and 11R. The pathologist in the room said it looks like sarcoid lots of granulomas. Sent everything for culture too just in case. Patient went home fine.",
+    "note_text": "Did an EBUS on <PERSON> today for the lymph nodes. Poked 4R 4L 7 and 11R. The pathologist in the room said it looks like sarcoid lots of granulomas. Sent everything for culture too just in case. Patient went home fine.",
     "cpt_codes": [
       31653
     ],
@@ -18506,6 +18852,12 @@
       "style_type": 5,
       "generated_name": "Peter Sanders",
       "generation_date": "2025-12-09T10:33:39.702051"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -18726,7 +19078,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLymphadenopathy, R/O Sarcoid.\n[Anesthesia]\nModerate.\n[Description]\nEBUS-TBNA stations 4R, 4L, 7, 11R. ROSE: Granulomas.\n[Plan]\nDischarge. Follow up path.",
+    "note_text": "[Indication]\nLymphadenopathy, R/O Sarcoid.\n[<LOCATION>]\nModerate.\n[Description]\nEBUS-TBNA stations 4R, 4L, 7, 11R. ROSE: <PERSON>.\n[Plan]\nDischarge. Follow up path.",
     "cpt_codes": [
       31653
     ],
@@ -18940,10 +19292,17 @@
       "style_type": 7,
       "generated_name": "Douglas Morales",
       "generation_date": "2025-12-09T10:33:39.702177"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We performed an ultrasound bronchoscopy to sample the swollen lymph nodes in Mr. Thompson's chest. We took samples from four different areas. The preliminary results strongly suggest sarcoidosis, which is what we suspected. We will wait for the final report to confirm.",
+    "note_text": "We performed an ultrasound bronchoscopy to sample the swollen lymph nodes in Mr. <PERSON>'s chest. We took samples from four different areas. The preliminary results strongly suggest sarcoidosis, which is what we suspected. We will wait for the final report to confirm.",
     "cpt_codes": [
       31653
     ],
@@ -19157,6 +19516,12 @@
       "style_type": 8,
       "generated_name": "Henry Powell",
       "generation_date": "2025-12-09T10:33:39.702229"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
