@@ -33,7 +33,6 @@ EXCLUDED_SOURCE_PREFIXES = {
     "recovered_metadata",             # Recovery artifacts
 }
 
-
 def _is_valid_source(source_file: str) -> bool:
     """Check if an entry's source_file indicates high-quality golden data.
 
@@ -128,7 +127,6 @@ EXCLUDED_CODES = {
     "33015",  # Pericardiocentesis - cardiac
 }
 
-
 def _extract_registry_booleans(entry: Dict[str, Any]) -> Dict[str, int]:
     """Map a V2 'Golden Extraction' registry entry to V3-style procedure flags.
 
@@ -145,7 +143,6 @@ def _extract_registry_booleans(entry: Dict[str, Any]) -> Dict[str, int]:
         All fields are guaranteed to be present with integer values.
     """
     return _extract_v2_booleans_impl(entry)
-
 
 def _filter_rare_registry_labels(
     labels: List[List[int]],
@@ -186,7 +183,6 @@ def _filter_rare_registry_labels(
 
     return filtered_labels, kept_field_names
 
-
 def _clean_code(code: str) -> str | None:
     """
     Clean and validate a single CPT code.
@@ -212,7 +208,6 @@ def _clean_code(code: str) -> str | None:
     # Unknown code - exclude
     return None
 
-
 def _clean_codes(codes: List[str]) -> List[str]:
     """Clean and validate a list of CPT codes."""
     cleaned = []
@@ -222,11 +217,11 @@ def _clean_codes(codes: List[str]) -> List[str]:
             cleaned.append(clean)
     return cleaned
 
-
 def _iter_golden_files() -> List[Path]:
     """Iterate over golden extraction JSON files."""
-    # Support both old consolidated format and new synthetic format
+    # Support both old consolidated format, new synthetic format, and current golden format
     patterns = [
+        str(GOLDEN_DIR / "golden_*.json"),  # <--- ADD THIS LINE
         str(GOLDEN_DIR / "consolidated_verified_notes_v2_8_part_*.json"),
         str(GOLDEN_DIR / "synthetic_*.json"),
     ]
@@ -234,7 +229,9 @@ def _iter_golden_files() -> List[Path]:
     for pattern in patterns:
         files.extend([Path(p) for p in glob.glob(pattern)])
     return files
-
+    for pattern in patterns:
+        files.extend([Path(p) for p in glob.glob(pattern)])
+    return files
 
 def _extract_codes(entry: Dict[str, Any]) -> List[str]:
     """
@@ -279,7 +276,6 @@ def _extract_codes(entry: Dict[str, Any]) -> List[str]:
 
     return []
 
-
 def _flatten_entries(data: Any) -> List[Dict[str, Any]]:
     """Flatten entries from various JSON structures.
 
@@ -299,7 +295,6 @@ def _flatten_entries(data: Any) -> List[Dict[str, Any]]:
                 entries.extend([e for e in value if isinstance(e, dict)])
         return entries
     return []
-
 
 def _build_dataframe() -> pd.DataFrame:
     """Build a DataFrame from all golden extraction files."""
@@ -333,7 +328,6 @@ def _build_dataframe() -> pd.DataFrame:
     df = pd.DataFrame(rows)
     return df
 
-
 def _build_label_matrix(df: pd.DataFrame) -> Tuple[np.ndarray, List[str]]:
     """Build multi-hot encoding matrix of verified_cpt_codes."""
     all_codes = sorted({c for csv in df["verified_cpt_codes"] for c in csv.split(",")})
@@ -345,7 +339,6 @@ def _build_label_matrix(df: pd.DataFrame) -> Tuple[np.ndarray, List[str]]:
             y[i, code_index[c]] = 1
 
     return y, all_codes
-
 
 def _enforce_encounter_grouping(
     df: pd.DataFrame,
@@ -387,7 +380,6 @@ def _enforce_encounter_grouping(
     test_idx = np.array(sorted(test_set)).reshape(-1, 1)
     return train_idx, test_idx
 
-
 def stratified_split(
     df: pd.DataFrame, test_size: float = 0.2
 ) -> Tuple[np.ndarray, np.ndarray, List[str]]:
@@ -417,7 +409,6 @@ def stratified_split(
 
     X_train, X_test = _enforce_encounter_grouping(df, X_train, X_test)
     return X_train.flatten(), X_test.flatten(), all_codes
-
 
 def prepare_training_and_eval_splits(
     output_dir: Path = Path("data/ml_training"),
@@ -456,7 +447,6 @@ def prepare_training_and_eval_splits(
     print(f"Edge case holdout samples: {len(df_edge)}")
     print(f"Total codes: {len(all_codes)}")
     print(f"Output written to: {output_dir}")
-
 
 def _build_registry_dataframe() -> pd.DataFrame:
     """Build a DataFrame from golden extractions with registry boolean labels.
@@ -497,7 +487,6 @@ def _build_registry_dataframe() -> pd.DataFrame:
     df = pd.DataFrame(rows)
     return df
 
-
 def _build_registry_label_matrix(
     df: pd.DataFrame, fields: List[str]
 ) -> np.ndarray:
@@ -515,7 +504,6 @@ def _build_registry_label_matrix(
         if field in df.columns:
             y[:, i] = df[field].fillna(0).astype(int).values
     return y
-
 
 def _registry_stratified_split(
     df: pd.DataFrame,
@@ -551,7 +539,6 @@ def _registry_stratified_split(
     # Enforce encounter grouping to prevent data leakage
     X_train, X_test = _enforce_encounter_grouping(df, X_train, X_test)
     return X_train.flatten(), X_test.flatten()
-
 
 def prepare_registry_training_splits(
     output_dir: Path = Path("data/ml_training"),
@@ -640,6 +627,7 @@ def prepare_registry_training_splits(
     for field, count in zip(kept_fields, train_counts):
         print(f"  {field}: {count}")
 
-
 if __name__ == "__main__":
     prepare_training_and_eval_splits()
+
+
