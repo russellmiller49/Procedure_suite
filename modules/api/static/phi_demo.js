@@ -1,90 +1,87 @@
 // Minimal PHI demo client (synthetic data only). No logging of raw PHI.
+//
+// IMPORTANT: This page is intended to be served by the FastAPI app at /ui/phi_demo.html.
+// If someone opens the HTML file directly (file://...), relative fetch() calls will fail.
+// We defensively fall back to http://localhost:8000 in that case.
+
+const API_BASE =
+    (typeof window !== "undefined" &&
+        window.location &&
+        window.location.origin &&
+        window.location.origin !== "null")
+        ? window.location.origin
+        : "http://localhost:8000";
+
+async function fetchJson(url, options) {
+    const resp = await fetch(url, options);
+    if (resp.ok) return resp.json();
+    const err = await resp.json().catch(() => ({}));
+    const detail = err.detail || err.message || `${resp.status} ${resp.statusText}`.trim();
+    throw new Error(detail || "Request failed");
+}
 
 const api = {
     async preview(text, document_type = null, specialty = null) {
-        const resp = await fetch("/v1/phi/scrub/preview", {
+        return fetchJson(`${API_BASE}/v1/phi/scrub/preview`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text, document_type, specialty }),
         });
-        if (!resp.ok) throw new Error("Preview failed");
-        return resp.json();
     },
     async submit(text, submitted_by = "demo_physician", document_type = null, specialty = null, confirmed_entities = null) {
         const payload = { text, submitted_by, document_type, specialty };
         if (confirmed_entities) {
             payload.confirmed_entities = confirmed_entities;
         }
-        const resp = await fetch("/v1/phi/submit", {
+        return fetchJson(`${API_BASE}/v1/phi/submit`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
-        if (!resp.ok) throw new Error("Submit failed");
-        return resp.json();
     },
     async status(procedure_id) {
-        const resp = await fetch(`/v1/phi/status/${procedure_id}`);
-        if (!resp.ok) throw new Error("Status lookup failed");
-        return resp.json();
+        return fetchJson(`${API_BASE}/v1/phi/status/${procedure_id}`);
     },
     async procedure(procedure_id) {
-        const resp = await fetch(`/v1/phi/procedure/${procedure_id}`);
-        if (!resp.ok) throw new Error("Procedure lookup failed");
-        return resp.json();
+        return fetchJson(`${API_BASE}/v1/phi/procedure/${procedure_id}`);
     },
     async feedback(procedure_id, payload) {
-        const resp = await fetch(`/v1/phi/procedure/${procedure_id}/feedback`, {
+        return fetchJson(`${API_BASE}/v1/phi/procedure/${procedure_id}/feedback`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
-        if (!resp.ok) throw new Error("Feedback failed");
-        return resp.json();
     },
     async extract(procedure_id, include_financials = true) {
-        const resp = await fetch(`/api/v1/procedures/${procedure_id}/extract`, {
+        return fetchJson(`${API_BASE}/api/v1/procedures/${procedure_id}/extract`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ include_financials, explain: true }),
         });
-        if (!resp.ok) {
-            const err = await resp.json().catch(() => ({}));
-            throw new Error(err.detail || "Extraction failed");
-        }
-        return resp.json();
     },
     async reidentify(procedure_id) {
-        const resp = await fetch("/v1/phi/reidentify", {
+        return fetchJson(`${API_BASE}/v1/phi/reidentify`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ procedure_id, user_id: "phi_demo_user" }),
         });
-        if (!resp.ok) throw new Error("Reidentify failed");
-        return resp.json();
     },
     async listCases() {
-        const resp = await fetch("/api/v1/phi-demo/cases");
-        if (!resp.ok) throw new Error("Case list failed");
-        return resp.json();
+        return fetchJson(`${API_BASE}/api/v1/phi-demo/cases`);
     },
     async createCase(payload) {
-        const resp = await fetch("/api/v1/phi-demo/cases", {
+        return fetchJson(`${API_BASE}/api/v1/phi-demo/cases`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
-        if (!resp.ok) throw new Error("Create case failed");
-        return resp.json();
     },
     async attachProcedure(case_id, procedure_id) {
-        const resp = await fetch(`/api/v1/phi-demo/cases/${case_id}/procedure`, {
+        return fetchJson(`${API_BASE}/api/v1/phi-demo/cases/${case_id}/procedure`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ procedure_id }),
         });
-        if (!resp.ok) throw new Error("Attach procedure failed");
-        return resp.json();
     },
 };
 
@@ -365,7 +362,8 @@ async function handlePreview() {
         $("btn-submit").disabled = false;
         setStatus("Preview complete", "bg-success");
     } catch (err) {
-        setStatus("Preview failed", "bg-danger");
+        console.error("PHI preview failed:", err);
+        setStatus(`Preview failed`, "bg-danger");
     }
 }
 
