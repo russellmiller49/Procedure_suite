@@ -309,7 +309,7 @@
     }
   },
   {
-    "note_text": "Resident Procedure Note\nPatient: Betty K. Wilson\nAttending: Dr. Rodriguez\nDiagnosis: Subglottic stenosis\nSteps:\n1. Time out. GA/Jet vent.\n2. Scope inserted. Saw 70% stenosis subglottic.\n3. Dilation performed: Used CRE balloon. Sizes 10, 12, 14mm.\n4. Held for 60s at 8atm.\n5. Checked airway: Looks good, 90% open.\nPlan: PPIs, follow up 2 months.",
+    "note_text": "Resident Procedure Note\nPatient: <PERSON>\nAttending: Dr. Rodriguez\nDiagnosis: Subglottic stenosis\nSteps:\n1. Time out. GA/Jet vent.\n2. Scope inserted. Saw 70% stenosis subglottic.\n3. Dilation performed: Used CRE balloon. Sizes 10, 12, 14mm.\n4. Held for 60s at 8atm.\n5. Checked airway: Looks good, 90% open.\nPlan: PPIs, follow up 2 months.",
     "cpt_codes": [
       31630
     ],
@@ -409,10 +409,16 @@
       "style_type": 4,
       "generated_patient_name": "Betty K. Wilson",
       "generation_date": "2025-12-09T14:15:20.382286"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure note for Dorothy Evans for the tracheal stenosis dilation used jet ventilation patient asleep. Went in with the flexible scope saw the narrowing about 70 percent block. Did the balloon dilation started at 10 went up to 14 millimeters held it for a minute each time at 8 atmospheres. Opened up nice to about 90 percent no tearing really just a little blood. Woke up fine sending to recovery plan for repeat scope later.",
+    "note_text": "Procedure note for <PERSON> for the tracheal stenosis dilation used jet ventilation patient asleep. Went in with the flexible scope saw the narrowing about 70 percent block. Did the balloon dilation started at 10 went up to 14 millimeters held it for a minute each time at 8 atmospheres. Opened up nice to about 90 percent no tearing really just a little blood. Woke up fine sending to recovery plan for repeat scope later.",
     "cpt_codes": [
       31630
     ],
@@ -512,6 +518,12 @@
       "style_type": 5,
       "generated_patient_name": "Dorothy Evans",
       "generation_date": "2025-12-09T14:15:20.382316"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -721,7 +733,7 @@
     }
   },
   {
-    "note_text": "Ms. Shirley Wright was brought to the suite for management of her subglottic stenosis. Under general anesthesia with jet ventilation, we advanced the bronchoscope and visualized the stricture, which was narrowing the airway by about 70%. We used a CRE balloon to dilate the area, sequentially increasing the size from 10mm to 14mm. We held the inflations for 60 seconds at 8 atmospheres. The airway opened up significantly to about 90% patency. There was only minimal bleeding which stopped on its own.",
+    "note_text": "Ms. <PERSON> was brought to the suite for management of her subglottic stenosis. Under general anesthesia with jet ventilation, we advanced the bronchoscope and visualized the stricture, which was narrowing the airway by about 70%. We used a CRE balloon to dilate the area, sequentially increasing the size from 10mm to 14mm. We held the inflations for 60 seconds at 8 atmospheres. The airway opened up significantly to about 90% patency. There was only minimal bleeding which stopped on its own.",
     "cpt_codes": [
       31630
     ],
@@ -821,6 +833,12 @@
       "style_type": 8,
       "generated_patient_name": "Shirley Wright",
       "generation_date": "2025-12-09T14:15:20.382399"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1233,7 +1251,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Michael S. Campbell\nDx: Transplant stenosis RMS\nProcedure: Rigid dilation\nSteps:\n1. GA, ETT placed.\n2. Looked with flex scope, saw tight RMS stenosis.\n3. Put in rigid scope.\n4. Used rigid dilators 7, 9, 11 mm.\n5. Opened up to ~12mm.\n6. No bleeding.\nPlan: Obs, surveillance bronch in a month.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nDx: Transplant stenosis RMS\nProcedure: Rigid dilation\nSteps:\n1. GA, ETT placed.\n2. Looked with flex scope, saw tight RMS stenosis.\n3. Put in rigid scope.\n4. Used rigid dilators 7, 9, 11 mm.\n5. Opened up to ~12mm.\n6. No bleeding.\nPlan: Obs, surveillance bronch in a month.",
     "cpt_codes": [
       31630
     ],
@@ -1332,10 +1350,16 @@
       "style_type": 4,
       "generated_patient_name": "Michael S. Campbell",
       "generation_date": "2025-12-09T14:15:20.382629"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure note for Richard A. Parker lung transplant patient with the RMS stenosis. General anesthesia tube size 8. Looked with the flex scope confirmed the web about 80 percent blocked. Switched to rigid bronchoscopy and did the dilation with the rigid tubes 7 9 and 11 millimeters. Got it open to about 12 millimeters looks good. Mild swelling no real bleeding. Watch him overnight thanks.",
+    "note_text": "Procedure note for <PERSON> lung transplant patient with the RMS stenosis. General anesthesia tube size 8. Looked with the flex scope confirmed the web about 80 percent blocked. Switched to rigid bronchoscopy and did the dilation with the rigid tubes 7 9 and 11 millimeters. Got it open to about 12 millimeters looks good. Mild swelling no real bleeding. Watch him overnight thanks.",
     "cpt_codes": [
       31630
     ],
@@ -1434,6 +1458,12 @@
       "style_type": 5,
       "generated_patient_name": "Richard A. Parker",
       "generation_date": "2025-12-09T14:15:20.382659"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1641,7 +1671,7 @@
     }
   },
   {
-    "note_text": "Mr. Charles B. Collins underwent a dilation of his right mainstem bronchus today due to a narrowing at his transplant connection. We started with general anesthesia and a standard breathing tube. After confirming the 80% blockage with a flexible scope, we switched to a rigid bronchoscope. We used a series of rigid dilators, increasing in size from 7mm to 11mm, to mechanically open the airway. By the end, we achieved a 12mm opening. There was some swelling but no bleeding.",
+    "note_text": "Mr. <PERSON> underwent a dilation of his right mainstem bronchus today due to a narrowing at his transplant connection. We started with general anesthesia and a standard breathing tube. After confirming the 80% blockage with a flexible scope, we switched to a rigid bronchoscope. We used a series of rigid dilators, increasing in size from 7mm to 11mm, to mechanically open the airway. By the end, we achieved a 12mm opening. There was some swelling but no bleeding.",
     "cpt_codes": [
       31630
     ],
@@ -1740,6 +1770,12 @@
       "style_type": 8,
       "generated_patient_name": "Charles B. Collins",
       "generation_date": "2025-12-09T14:15:20.382737"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2580,7 +2616,7 @@
     }
   },
   {
-    "note_text": "Mrs. Isabel R. Ramirez underwent a bronchoscopy to treat scar tissue narrowing her left main airway. Under general anesthesia, we found the granulation tissue was blocking about 60% of the airway. We used a 12mm balloon to dilate the area, inflating it three times at 6 atmospheres of pressure. This successfully opened the airway to about 85% normal size. There was a tiny tear in the lining, which is common, and it did not bleed significantly.",
+    "note_text": "Mrs. <PERSON> underwent a bronchoscopy to treat scar tissue narrowing her left main airway. Under general anesthesia, we found the granulation tissue was blocking about 60% of the airway. We used a 12mm balloon to dilate the area, inflating it three times at 6 atmospheres of pressure. This successfully opened the airway to about 85% normal size. There was a tiny tear in the lining, which is common, and it did not bleed significantly.",
     "cpt_codes": [
       31630
     ],
@@ -2682,6 +2718,12 @@
       "style_type": 8,
       "generated_patient_name": "Isabel R. Ramirez",
       "generation_date": "2025-12-09T14:15:20.382985"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3214,7 +3256,7 @@
     }
   },
   {
-    "note_text": "Mr Richard P. Price here for the tracheal stenosis dilation. He had a trach before. Used the rigid scope general anesthesia. Saw the narrowing about 75 percent block granulation and scar. Dilated with the rigid tube then used the big 15 millimeter balloon. Inflated it three times. Looks much better about 80 percent open. No bleeding. Thinking maybe a t-tube if it comes back.",
+    "note_text": "Mr <PERSON> here for the tracheal stenosis dilation. He had a trach before. Used the rigid scope general anesthesia. Saw the narrowing about 75 percent block granulation and scar. Dilated with the rigid tube then used the big 15 millimeter balloon. Inflated it three times. Looks much better about 80 percent open. No bleeding. Thinking maybe a t-tube if it comes back.",
     "cpt_codes": [
       31630
     ],
@@ -3317,6 +3359,12 @@
       "style_type": 5,
       "generated_patient_name": "Richard P. Price",
       "generation_date": "2025-12-09T14:15:20.383147"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3426,7 +3474,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPost-tracheostomy tracheal stenosis (75%).\n[Anesthesia]\nGeneral, Rigid Bronchoscope.\n[Description]\nComplex stenosis at stoma site. Mechanical dilation with rigid scope (size 9). Balloon dilation (15mm) x3 at 10 ATM. Patency improved to 80%.\n[Plan]\nInpatient obs. Pulmonary rehab. Re-eval 4-6 weeks.",
+    "note_text": "[Indication]\nPost-tracheostomy tracheal stenosis (75%).\n[Anesthesia]\nGeneral, Rigid Bronchoscope.\n[Description]\nComplex stenosis at stoma site. Mechanical dilation with rigid scope (size 9). Balloon dilation (15mm) x3 at 10 ATM. Patency improved to 80%.\n[Plan]\nInpatient obs. <PERSON> rehab. Re-eval 4-6 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -3529,10 +3577,16 @@
       "style_type": 7,
       "generated_patient_name": "Charles H. Wood",
       "generation_date": "2025-12-09T14:15:20.383202"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We treated Mr. Thomas J. Barnes for narrowing of his windpipe at his old tracheostomy site. Using a rigid bronchoscope under general anesthesia, we saw the airway was 75% blocked by scar tissue. We used the rigid scope itself to gently stretch the area, followed by a 15mm balloon which we inflated to high pressure to fully dilate the stricture. The airway is now about 80% open, which is a good result.",
+    "note_text": "We treated Mr. <PERSON> for narrowing of his windpipe at his old tracheostomy site. Using a rigid bronchoscope under general anesthesia, we saw the airway was 75% blocked by scar tissue. We used the rigid scope itself to gently stretch the area, followed by a 15mm balloon which we inflated to high pressure to fully dilate the stricture. The airway is now about 80% open, which is a good result.",
     "cpt_codes": [
       31630
     ],
@@ -3635,6 +3689,12 @@
       "style_type": 8,
       "generated_patient_name": "Thomas J. Barnes",
       "generation_date": "2025-12-09T14:15:20.383229"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4180,7 +4240,7 @@
     }
   },
   {
-    "note_text": "Procedure on Bich N. Do for the bronchus intermedius stenosis she had that sleeve surgery. Moderate sedation used midaz and fentanyl. Went in through the nose saw the narrowing about 70 percent. Used the balloons started small 8mm went to 10 then 12. Held them for a minute. Opened up real nice can see the lower lobe now. Little bleeding stopped on its own. antibiotics and follow up.",
+    "note_text": "Procedure on <PERSON> for the bronchus intermedius stenosis she had that sleeve surgery. Moderate sedation used <PERSON> and fentanyl. Went in through the nose saw the narrowing about 70 percent. Used the balloons started small 8mm went to 10 then 12. Held them for a minute. Opened up real nice can see the lower lobe now. Little bleeding stopped on its own. antibiotics and follow up.",
     "cpt_codes": [
       31630
     ],
@@ -4286,6 +4346,13 @@
       "style_type": 5,
       "generated_patient_name": "Bich N. Do",
       "generation_date": "2025-12-09T14:15:20.383476"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -4398,7 +4465,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPost-surgical anastomotic stenosis, Bronchus Intermedius (70%).\n[Anesthesia]\nModerate Sedation.\n[Description]\nSequential balloon dilation performed (8mm, 10mm, 12mm). Max pressure 6 ATM. Lumen restored to 85%. RLL visualized. Minimal bleeding.\n[Plan]\nContinue antibiotics. Surveillance bronchoscopy 8 weeks.",
+    "note_text": "[Indication]\nPost-surgical anastomotic stenosis, Bronchus Intermedius (70%).\n[Anesthesia]\nModerate Sedation.\n[Description]\nSequential balloon dilation performed (8mm, 10mm, 12mm). <PERSON> pressure 6 ATM. Lumen restored to 85%. RLL visualized. Minimal bleeding.\n[Plan]\nContinue antibiotics. Surveillance bronchoscopy 8 weeks.",
     "cpt_codes": [
       31630
     ],
@@ -4504,10 +4571,16 @@
       "style_type": 7,
       "generated_patient_name": "Hue M. Dang",
       "generation_date": "2025-12-09T14:15:20.383538"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ms. Phuong T. Vo required dilation of her airway due to scar tissue from her previous lung surgery. Using moderate sedation, we passed a scope through her nose and found the intermediate bronchus was 70% narrowed. We successfully stretched this open using a series of balloons, ending with a 12mm size. The airway is now about 85% open and we can clearly see the lower lung segments.",
+    "note_text": "Ms. <PERSON> required dilation of her airway due to scar tissue from her previous lung surgery. Using moderate sedation, we passed a scope through her nose and found the intermediate bronchus was 70% narrowed. We successfully stretched this open using a series of balloons, ending with a 12mm size. The airway is now about 85% open and we can clearly see the lower lung segments.",
     "cpt_codes": [
       31630
     ],
@@ -4613,6 +4686,12 @@
       "style_type": 8,
       "generated_patient_name": "Phuong T. Vo",
       "generation_date": "2025-12-09T14:15:20.383568"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5049,7 +5128,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Pedro S. Reyes\nDx: RUL SCC tumor\nProcedure: Cryo debulking\nSteps:\n1. GA, Rigid scope.\n2. Big tumor in RUL/BI.\n3. Used cryo probe to freeze it (7 cycles).\n4. Pulled out dead tissue.\n5. Bleeding controlled with cold saline.\n6. Airway looks better.\nPlan: Do it again next week.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nDx: RUL SCC tumor\nProcedure: Cryo debulking\nSteps:\n1. GA, Rigid scope.\n2. Big tumor in RUL/BI.\n3. Used cryo probe to freeze it (7 cycles).\n4. Pulled out dead tissue.\n5. Bleeding controlled with cold saline.\n6. Airway looks better.\nPlan: Do it again next week.",
     "cpt_codes": [
       31641
     ],
@@ -5154,10 +5233,16 @@
       "style_type": 4,
       "generated_patient_name": "Pedro S. Reyes",
       "generation_date": "2025-12-09T14:15:20.383718"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure for Manuel O. Morales palliative debulking for the cancer. Rigid bronchoscopy general anesthesia. Big tumor blocking the right upper lobe. Used the cryo probe froze it a bunch of times about 30 seconds each. Pulled out the dead pieces. Some bleeding about 75cc but stopped it with epinephrine. Got the airway open a bit more. Will bring him back next week for more.",
+    "note_text": "Procedure for <PERSON> palliative debulking for the cancer. Rigid bronchoscopy general anesthesia. Big tumor blocking the right upper lobe. Used the cryo probe froze it a bunch of times about 30 seconds each. Pulled out the dead pieces. Some bleeding about 75cc but stopped it with epinephrine. Got the airway open a bit more. Will bring him back next week for more.",
     "cpt_codes": [
       31641
     ],
@@ -5262,10 +5347,16 @@
       "style_type": 5,
       "generated_patient_name": "Manuel O. Morales",
       "generation_date": "2025-12-09T14:15:20.383748"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Rigid bronchoscopy with cryotherapy ablation. 66 y/o male with advanced squamous cell lung cancer. Progressive dyspnea with near-complete RUL obstruction. Large exophytic tumor at RUL orifice causing 80% obstruction with extension into bronchus intermedius. Cryotherapy performed using Erbe Erbokryo CA unit with flexible cryoprobe. Multiple freeze-thaw cycles applied to tumor surface. Significant tumor necrosis achieved. Necrotic tissue debrided with rigid suction. Post-procedure patency improved to approximately 50% at RUL, BI now 80% patent.",
+    "note_text": "Rigid bronchoscopy with cryotherapy ablation. 66 y/o male with advanced squamous cell lung cancer. Progressive dyspnea with near-complete RUL obstruction. Large exophytic tumor at RUL orifice causing 80% obstruction with extension into bronchus intermedius. Cryotherapy performed using Erbe Erbokryo CA unit with flexible cryoprobe. Multiple freeze-thaw cycles applied to tumor surface. Significant tumor necrosis achieved. Necrotic tissue debrided with rigid suction. Post-procedure patency improved to approximately 50% at RUL, <LOCATION> now 80% patent.",
     "cpt_codes": [
       31641
     ],
@@ -5370,10 +5461,16 @@
       "style_type": 6,
       "generated_patient_name": "Antonio R. Ortiz",
       "generation_date": "2025-12-09T14:15:20.383776"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nMalignant airway obstruction (SCC), RUL (80%).\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nCryotherapy ablation performed (7 cycles, 30s). Necrotic tissue debrided. RUL patency improved to 50%, BI to 80%. Moderate bleeding controlled.\n[Plan]\nRepeat bronchoscopy 1 week. Rad Onc consult.",
+    "note_text": "[Indication]\nMalignant airway obstruction (SCC), RUL (80%).\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nCryotherapy ablation performed (7 cycles, 30s). Necrotic tissue debrided. RUL patency improved to 50%, <LOCATION> to 80%. Moderate bleeding controlled.\n[Plan]\nRepeat bronchoscopy 1 week. Rad Onc consult.",
     "cpt_codes": [
       31641
     ],
@@ -5478,10 +5575,16 @@
       "style_type": 7,
       "generated_patient_name": "Jorge L. Gutierrez",
       "generation_date": "2025-12-09T14:15:20.383803"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a palliative procedure on Mr. Ricardo E. Chavez to clear the tumor blocking his right lung. Using a rigid bronchoscope, we applied freezing therapy (cryotherapy) to the tumor mass in the right upper lobe. This killed the surface tissue which we then removed. We managed to open the airway significantly, though some blockage remains. There was some bleeding which we controlled during the case.",
+    "note_text": "We performed a palliative procedure on Mr. <PERSON> to clear the tumor blocking his right lung. Using a rigid bronchoscope, we applied freezing therapy (cryotherapy) to the tumor mass in the right upper lobe. This killed the surface tissue which we then removed. We managed to open the airway significantly, though some blockage remains. There was some bleeding which we controlled during the case.",
     "cpt_codes": [
       31641
     ],
@@ -5586,6 +5689,12 @@
       "style_type": 8,
       "generated_patient_name": "Ricardo E. Chavez",
       "generation_date": "2025-12-09T14:15:20.383834"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6018,7 +6127,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Jennifer L. Davis\nDx: LMS Carcinoid\nProcedure: Cryo ablation\nSteps:\n1. GA, ETT.\n2. Saw tumor in LMS (pink, vascular).\n3. Used cryo probe.\n4. Froze it 5 times.\n5. Tumor turned white (dead).\n6. No bleeding.\nPlan: Home today, check back in 6 weeks.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nDx: LMS Carcinoid\nProcedure: Cryo ablation\nSteps:\n1. GA, ETT.\n2. Saw tumor in LMS (pink, vascular).\n3. Used cryo probe.\n4. Froze it 5 times.\n5. Tumor turned white (dead).\n6. No bleeding.\nPlan: Home today, check back in 6 weeks.",
     "cpt_codes": [
       31641
     ],
@@ -6122,10 +6231,16 @@
       "style_type": 4,
       "generated_patient_name": "Jennifer L. Davis",
       "generation_date": "2025-12-09T14:15:20.383981"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Note for Maria C. Miller treating the carcinoid in the left main. General anesthesia. Saw the tumor about 40 percent block. Used the cryo probe on it did 5 freezes. Turned white looks dead. No bleeding really. She can go home today check it again in a month and a half.",
+    "note_text": "Note for <PERSON> treating the carcinoid in the left main. General anesthesia. Saw the tumor about 40 percent block. Used the cryo probe on it did 5 freezes. Turned white looks dead. No bleeding really. She can go home today check it again in a month and a half.",
     "cpt_codes": [
       31641
     ],
@@ -6229,6 +6344,12 @@
       "style_type": 5,
       "generated_patient_name": "Maria C. Miller",
       "generation_date": "2025-12-09T14:15:20.384010"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6446,7 +6567,7 @@
     }
   },
   {
-    "note_text": "Mrs. Dorothy A. Taylor came in for treatment of a carcinoid tumor in her left main airway. We used a freezing probe (cryotherapy) to treat the tumor without needing surgery. We applied the freezing cycles five times to the base of the tumor. We could see the tissue turn white, indicating the treatment was effective. She tolerated it well with no bleeding.",
+    "note_text": "Mrs. <PERSON> came in for treatment of a carcinoid tumor in her left main airway. We used a freezing probe (cryotherapy) to treat the tumor without needing surgery. We applied the freezing cycles five times to the base of the tumor. We could see the tissue turn white, indicating the treatment was effective. She tolerated it well with no bleeding.",
     "cpt_codes": [
       31641
     ],
@@ -6550,6 +6671,12 @@
       "style_type": 8,
       "generated_patient_name": "Dorothy A. Taylor",
       "generation_date": "2025-12-09T14:15:20.384095"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7088,7 +7215,7 @@
     }
   },
   {
-    "note_text": "Procedure for David P. White granulation tissue in the RMS from that old stent. Used moderate sedation propofol. Went in saw the tissue blocking half the airway. Used the spray cryo machine TrueFreeze. Did about 10 sprays 5 seconds each. Froze it good looks white now. Should fall off in a couple weeks. Recheck him then.",
+    "note_text": "Procedure for <PERSON> granulation tissue in the RMS from that old stent. Used moderate sedation propofol. Went in saw the tissue blocking half the airway. Used the spray cryo machine TrueFreeze. Did about 10 sprays 5 seconds each. Froze it good looks white now. Should fall off in a couple weeks. Recheck him then.",
     "cpt_codes": [
       31641
     ],
@@ -7192,6 +7319,12 @@
       "style_type": 5,
       "generated_patient_name": "David P. White",
       "generation_date": "2025-12-09T14:15:20.384290"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7409,7 +7542,7 @@
     }
   },
   {
-    "note_text": "Mr. Thomas S. Thompson had some scar tissue growing back where his stent used to be. We treated this using a spray cryotherapy device, which sprays liquid nitrogen to freeze the tissue without touching it. We treated the entire circle of the airway. The tissue turned white as expected, and it should slough off over the next week or two, opening the airway further.",
+    "note_text": "Mr. <PERSON> had some scar tissue growing back where his stent used to be. We treated this using a spray cryotherapy device, which sprays liquid nitrogen to freeze the tissue without touching it. We treated the entire circle of the airway. The tissue turned white as expected, and it should slough off over the next week or two, opening the airway further.",
     "cpt_codes": [
       31641
     ],
@@ -7513,6 +7646,12 @@
       "style_type": 8,
       "generated_patient_name": "Thomas S. Thompson",
       "generation_date": "2025-12-09T14:15:20.384379"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7623,7 +7762,7 @@
     }
   },
   {
-    "note_text": "Dx: RUL SCLC obstruction.\nAnesthesia: GA, Rigid.\nAction: Cryo-adhesion/Debridement. 10 cycles. Tumor core removed.\nResult: RUL 40% open (was 0%). BI 90% open. 100mL blood loss (controlled).\nPlan: ICU. Antibiotics. Repeat 5-7 days.",
+    "note_text": "Dx: RUL SCLC obstruction.\nAnesthesia: GA, Rigid.\nAction: Cryo-adhesion/Debridement. 10 cycles. Tumor core removed.\nResult: RUL 40% open (was 0%). <LOCATION> 90% open. 100mL blood loss (controlled).\nPlan: ICU. Antibiotics. Repeat 5-7 days.",
     "cpt_codes": [
       31641
     ],
@@ -7730,6 +7869,12 @@
       "style_type": 1,
       "generated_patient_name": "Patricia L. Davis",
       "generation_date": "2025-12-09T14:15:20.384442"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -7843,7 +7988,7 @@
     }
   },
   {
-    "note_text": "CPT: 31641 (Tumor destruction, cryotherapy).\nMethod: Rigid bronchoscopy.\nTarget: RUL and Bronchus Intermedius.\nTechnique: Cryo-debridement (Freezing and manual extraction).\nFindings: Complete RUL occlusion resolved to partial patency.\nComplications: 100mL hemorrhage, managed intraoperatively.\nDisposition: ICU for monitoring.",
+    "note_text": "CPT: 31641 (Tumor destruction, cryotherapy).\nMethod: Rigid bronchoscopy.\nTarget: RUL and Bronchus Intermedius.\nTechnique: Cryo-debridement (<PERSON> and manual extraction).\nFindings: Complete RUL occlusion resolved to partial patency.\nComplications: 100mL hemorrhage, managed intraoperatively.\nDisposition: ICU for monitoring.",
     "cpt_codes": [
       31641
     ],
@@ -7950,10 +8095,16 @@
       "style_type": 3,
       "generated_patient_name": "Barbara J. Taylor",
       "generation_date": "2025-12-09T14:15:20.384500"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Elizabeth A. Moore\nDx: SCLC RUL block\nProcedure: Cryo / Rigid\nSteps:\n1. Rigid scope in.\n2. Tumor blocking RUL completely.\n3. Used cryo to freeze and pull chunks out.\n4. Got a big core out.\n5. RUL is open a bit now (40%).\n6. Bleeding was moderate, used saline.\nPlan: ICU, antibiotics, come back next week.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nDx: SCLC RUL block\nProcedure: Cryo / Rigid\nSteps:\n1. Rigid scope in.\n2. Tumor blocking RUL completely.\n3. Used cryo to freeze and pull chunks out.\n4. Got a big core out.\n5. RUL is open a bit now (40%).\n6. Bleeding was moderate, used saline.\nPlan: ICU, antibiotics, come back next week.",
     "cpt_codes": [
       31641
     ],
@@ -8060,10 +8211,16 @@
       "style_type": 4,
       "generated_patient_name": "Elizabeth A. Moore",
       "generation_date": "2025-12-09T14:15:20.384529"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Note for Jennifer S. Jackson small cell cancer blocking the right lung. General anesthesia rigid bronch. Tumor was totally blocking the RUL. Used the cryo probe to freeze and pull. Got a lot of it out. RUL is open now maybe 40 percent. Bleeding was about 100cc but we stopped it. Sending her to ICU to watch. Needs chemo.",
+    "note_text": "Note for <PERSON> small cell cancer blocking the right lung. General anesthesia rigid bronch. Tumor was totally blocking the RUL. Used the cryo probe to freeze and pull. Got a lot of it out. RUL is open now maybe 40 percent. Bleeding was about 100cc but we stopped it. Sending her to ICU to watch. Needs chemo.",
     "cpt_codes": [
       31641
     ],
@@ -8170,6 +8327,12 @@
       "style_type": 5,
       "generated_patient_name": "Jennifer S. Jackson",
       "generation_date": "2025-12-09T14:15:20.384643"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8393,7 +8556,7 @@
     }
   },
   {
-    "note_text": "Ms. Margaret K. Martin needed an urgent procedure to open her right upper lung which was blocked by tumor. Using a rigid bronchoscope, we used a freezing probe to grab and pull out large pieces of the tumor. We successfully opened the airway from 0% to about 40%. There was some bleeding which we washed out. She is going to the ICU for close monitoring.",
+    "note_text": "Ms. <PERSON> needed an urgent procedure to open her right upper lung which was blocked by tumor. Using a rigid bronchoscope, we used a freezing probe to grab and pull out large pieces of the tumor. We successfully opened the airway from 0% to about 40%. There was some bleeding which we washed out. She is going to the ICU for close monitoring.",
     "cpt_codes": [
       31641
     ],
@@ -8500,6 +8663,12 @@
       "style_type": 8,
       "generated_patient_name": "Margaret K. Martin",
       "generation_date": "2025-12-09T14:15:20.384736"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8934,7 +9103,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: John W. Chen\nDx: Tracheal Papillomas\nProcedure: Cryo ablation\nSteps:\n1. LMA placed.\n2. Saw 6 papillomas in trachea.\n3. Used cryo probe on all of them.\n4. Froze each one 2-3 times.\n5. They turned white.\n6. No bleeding.\nPlan: Steroids, see ENT, come back in 2 months.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nDx: Tracheal Papillomas\nProcedure: Cryo ablation\nSteps:\n1. LMA placed.\n2. Saw 6 papillomas in trachea.\n3. Used cryo probe on all of them.\n4. Froze each one 2-3 times.\n5. They turned white.\n6. No bleeding.\nPlan: Steroids, see ENT, come back in 2 months.",
     "cpt_codes": [
       31641
     ],
@@ -9038,10 +9207,16 @@
       "style_type": 4,
       "generated_patient_name": "John W. Chen",
       "generation_date": "2025-12-09T14:15:20.384887"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mr William D. Wang here for the papillomas in the trachea. Recurrent issue. General anesthesia LMA. Saw about 6 of them in the middle of the trachea. Used the cryo probe to freeze them. Did about 15 freezes total. They look treated. No bleeding. Steroids for swelling and follow up in a few months.",
+    "note_text": "Mr <PERSON> here for the papillomas in the trachea. Recurrent issue. General anesthesia LMA. Saw about 6 of them in the middle of the trachea. Used the cryo probe to freeze them. Did about 15 freezes total. They look treated. No bleeding. Steroids for swelling and follow up in a few months.",
     "cpt_codes": [
       31641
     ],
@@ -9145,6 +9320,12 @@
       "style_type": 5,
       "generated_patient_name": "William D. Wang",
       "generation_date": "2025-12-09T14:15:20.384915"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9362,7 +9543,7 @@
     }
   },
   {
-    "note_text": "Mr. Thomas L. Yang has a history of papillomas in his airway. Today we treated new growths in his windpipe. Using a flexible scope, we froze each of the six small growths using a cryotherapy probe. This kills the tissue and helps keep the airway open. The procedure went very smoothly with no bleeding.",
+    "note_text": "Mr. <PERSON> has a history of papillomas in his airway. Today we treated new growths in his windpipe. Using a flexible scope, we froze each of the six small growths using a cryotherapy probe. This kills the tissue and helps keep the airway open. The procedure went very smoothly with no bleeding.",
     "cpt_codes": [
       31641
     ],
@@ -9466,6 +9647,12 @@
       "style_type": 8,
       "generated_patient_name": "Thomas L. Yang",
       "generation_date": "2025-12-09T14:15:20.384998"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

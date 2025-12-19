@@ -21278,7 +21278,7 @@
     }
   },
   {
-    "note_text": "Indication: Pulmonary nodules.\nProcedure: Guided bronchoscopic sampling.\nDetails: Airways cleared of secretions. Lavage performed in RUL. Using electromagnetic guidance and radial ultrasound verification, we located the Lingular lesion. The target was sampled via needle aspiration, brushing, and biopsy forceps. Histology suggests benign granulomatous disease.",
+    "note_text": "Indication: <PERSON> nodules.\nProcedure: Guided bronchoscopic sampling.\nDetails: Airways cleared of secretions. Lavage performed in RUL. Using electromagnetic guidance and radial ultrasound verification, we located the Lingular lesion. The target was sampled via needle aspiration, brushing, and biopsy forceps. Histology suggests benign granulomatous disease.",
     "cpt_codes": [
       31629,
       31628,
@@ -21939,6 +21939,12 @@
       "style_type": 9,
       "generated_name": "Lydia Rodarte-Quayle",
       "generation_date": "2025-12-18T19:14:30.888951"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -23050,7 +23056,7 @@
     }
   },
   {
-    "note_text": "doing staging for nodule. propofol anesthesia. ebus first hit 11l 7 10r 11r all negative. switched scopes went to rml found nodule with radial probe took biopsies. after we finished patient threw up everywhere maybe aspirated desatted for a bit. xray showed small pneumo on the right and some infiltrates. admitting for observation.",
+    "note_text": "doing staging for nodule. propofol anesthesia. ebus first hit 11l 7 10r 11r all negative. switched scopes went to rml found nodule with radial probe took biopsies. after we finished patient threw up everywhere maybe aspirated desatted for a bit. <PERSON> showed small pneumo on the right and some infiltrates. admitting for observation.",
     "cpt_codes": [
       31653,
       31628,
@@ -23324,10 +23330,16 @@
       "style_type": 5,
       "generated_name": "Clancy Wiggum",
       "generation_date": "2025-12-18T19:14:30.889795"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Pulmonary nodule staging. General anesthesia. EBUS-TBNA performed on stations 11L, 7, 10R, and 11R (ROSE negative). Ultrathin bronchoscopy to RML nodule; Radial EBUS confirmed concentric view. Sampled with needle, forceps, brush. Post-procedure emesis with aspiration and hypoxia. CXR confirmed aspiration pneumonitis and small right apical pneumothorax. Admitted for observation.",
+    "note_text": "<PERSON> nodule staging. General anesthesia. EBUS-TBNA performed on stations 11L, 7, 10R, and 11R (ROSE negative). <PERSON> bronchoscopy to RML nodule; Radial EBUS confirmed concentric view. Sampled with needle, forceps, brush. Post-procedure emesis with aspiration and hypoxia. CXR confirmed aspiration pneumonitis and small right apical pneumothorax. Admitted for observation.",
     "cpt_codes": [
       31653,
       31628,
@@ -23601,10 +23613,17 @@
       "style_type": 6,
       "generated_name": "Moe Szyslak",
       "generation_date": "2025-12-18T19:14:30.889882"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nPulmonary nodule.\n\n[Anesthesia]\nGeneral (Propofol).\n\n[Description]\nEBUS-TBNA: Stations 11L, 7, 10R, 11R. Peripheral Bronchoscopy: RML nodule (Radial EBUS confirmed). Biopsies taken.\n\n[Complications]\nAspiration event. Small right pneumothorax.\n\n[Plan]\nAdmit. Serial CXRs. Antibiotics held.",
+    "note_text": "[Indication]\n<PERSON> nodule.\n\n[Anesthesia]\nGeneral (Propofol).\n\n[Description]\nEBUS-TBNA: Stations 11L, 7, 10R, 11R. Peripheral Bronchoscopy: RML nodule (Radial EBUS confirmed). Biopsies taken.\n\n[Complications]\nAspiration event. Small right pneumothorax.\n\n[Plan]\nAdmit. Serial CXRs. Antibiotics held.",
     "cpt_codes": [
       31653,
       31628,
@@ -23878,6 +23897,12 @@
       "style_type": 7,
       "generated_name": "Waylon Smithers",
       "generation_date": "2025-12-18T19:14:30.889949"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

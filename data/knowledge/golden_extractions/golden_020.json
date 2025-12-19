@@ -3070,7 +3070,7 @@
     }
   },
   {
-    "note_text": "procedure note for angela white we used the monarch robot to get to that rml nodule 14mm. radial ebus was concentric which is good. did cone beam to check. took 4 cryo and 4 forceps biopsies rose looks like adeno. unfortunately she popped a lung small pneumo so we put in a pigtail chest tube. admitting her for observation.",
+    "note_text": "procedure note for <PERSON> white we used the monarch robot to get to that rml nodule 14mm. radial ebus was concentric which is good. did cone beam to check. took 4 cryo and 4 forceps biopsies rose looks like adeno. unfortunately she popped a lung small pneumo so we put in a pigtail chest tube. admitting her for observation.",
     "cpt_codes": [
       31627,
       31629,
@@ -3317,6 +3317,12 @@
       "style_type": 5,
       "generated_name": "Jennifer White",
       "generation_date": "2025-12-09T09:19:11.807235"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6711,7 +6717,7 @@
     }
   },
   {
-    "note_text": "Procedure Note: Ms. Davis underwent rigid bronchoscopy for a complete malignant obstruction of the left mainstem bronchus. The lesion was friable and occlusive. Mechanical recanalization was achieved via the rigid barrel and forceps, supplemented by APC. To prevent restenosis, a 12 x 40 mm covered self-expanding metallic stent (SEMS) was deployed under fluoroscopic guidance. Post-operative imaging confirmed left lung re-expansion.",
+    "note_text": "Procedure Note: Ms. <PERSON> underwent rigid bronchoscopy for a complete malignant obstruction of the left mainstem bronchus. The lesion was friable and occlusive. Mechanical recanalization was achieved via the rigid barrel and forceps, supplemented by APC. To prevent restenosis, a 12 x 40 mm covered self-expanding metallic stent (SEMS) was deployed under fluoroscopic guidance. Post-operative imaging confirmed left lung re-expansion.",
     "cpt_codes": [
       31641,
       31636
@@ -6939,6 +6945,12 @@
       "style_type": 2,
       "generated_name": "Patricia Phillips",
       "generation_date": "2025-12-09T09:19:11.808184"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7173,7 +7185,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronchoscopy w/ Stent\nPt: Linda Davis, 69F.\n1. Rigid scope #11 passed.\n2. LMS completely blocked.\n3. Debulked with suction/forceps/APC.\n4. 12x40mm covered metal stent placed.\n5. CXR shows lung up.\nPlan: PACU, nasal cannula.",
+    "note_text": "Procedure: Rigid Bronchoscopy w/ Stent\nPt: <PERSON>, 69F.\n1. Rigid scope #11 passed.\n2. LMS completely blocked.\n3. Debulked with suction/forceps/APC.\n4. 12x40mm covered metal stent placed.\n5. CXR shows lung up.\nPlan: PACU, <PERSON>.",
     "cpt_codes": [
       31641,
       31636
@@ -7401,10 +7413,17 @@
       "style_type": 4,
       "generated_name": "Barbara Parker",
       "generation_date": "2025-12-09T09:19:11.808352"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "dictation for linda davis rigid bronch she had that left lung collapse from the tumor in the left main. we opened it up with the rigid scope and apc. put in a metal stent covered 12 by 40. bleeding was minimal. she woke up fine extubated her. xray looks good lung is up.",
+    "note_text": "dictation for <PERSON> rigid bronch she had that left lung collapse from the tumor in the left main. we opened it up with the rigid scope and apc. put in a metal stent covered 12 by 40. bleeding was minimal. she woke up fine extubated her. <PERSON> looks good lung is up.",
     "cpt_codes": [
       31641,
       31636
@@ -7632,6 +7651,13 @@
       "style_type": 5,
       "generated_name": "Elizabeth Evans",
       "generation_date": "2025-12-09T09:19:11.808480"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -8761,7 +8787,7 @@
     }
   },
   {
-    "note_text": "Operative Note: Mr. Ortiz presented with a polypoid tumor obstructing the right mainstem bronchus. Flexible bronchoscopy was initiated. The cryotherapy probe was utilized to perform cryoadhesion and extraction of tumor tissue. This was supplemented by mechanical debridement. The airway caliber was significantly improved from 70% to 20% obstruction. Hemostasis was secured with epinephrine.",
+    "note_text": "Operative Note: Mr. <PERSON> presented with a polypoid tumor obstructing the right mainstem bronchus. Flexible bronchoscopy was initiated. The cryotherapy probe was utilized to perform cryoadhesion and extraction of tumor tissue. This was supplemented by mechanical debridement. The airway caliber was significantly improved from 70% to 20% obstruction. Hemostasis was secured with epinephrine.",
     "cpt_codes": [
       31641
     ],
@@ -8960,6 +8986,12 @@
       "style_type": 2,
       "generated_name": "Christopher Rogers",
       "generation_date": "2025-12-09T09:19:11.808843"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10597,7 +10629,7 @@
     }
   },
   {
-    "note_text": "Procedure Note: Ms. Young, a candidate for lung volume reduction, underwent flexible bronchoscopy. The left upper lobe was targeted. Chartis assessment confirmed the absence of collateral ventilation. Subsequently, three Zephyr endobronchial valves were deployed into the LB1+2 and LB3 segments. Visual inspection confirmed appropriate seating and occlusion. There were no immediate complications.",
+    "note_text": "Procedure Note: Ms. <PERSON>, a candidate for lung volume reduction, underwent flexible bronchoscopy. The left upper lobe was targeted. Chartis assessment confirmed the absence of collateral ventilation. Subsequently, three Zephyr endobronchial valves were deployed into the LB1+2 and LB3 segments. Visual inspection confirmed appropriate seating and occlusion. There were no immediate complications.",
     "cpt_codes": [
       31647,
       31651
@@ -10814,10 +10846,16 @@
       "style_type": 2,
       "generated_name": "Karen Richardson",
       "generation_date": "2025-12-09T09:19:11.809334"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Billing: 31647 (Initial lobe BLVR), 31651 (Addl segments). Device: Zephyr Valves x3. Location: LUL. Indication: Severe Emphysema. Diagnostic: Chartis assessment (bundled). Disposition: Inpatient observation.",
+    "note_text": "Billing: 31647 (Initial lobe BLVR), 31651 (<PERSON> segments). Device: Zephyr Valves x3. Location: LUL. Indication: Severe Emphysema. Diagnostic: Chartis assessment (bundled). Disposition: Inpatient observation.",
     "cpt_codes": [
       31647,
       31651
@@ -11034,6 +11072,12 @@
       "style_type": 3,
       "generated_name": "Lisa Cox",
       "generation_date": "2025-12-09T09:19:11.809385"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12566,7 +12610,7 @@
     }
   },
   {
-    "note_text": "Operative Report: Mr. Baker underwent bronchoscopic lung volume reduction targeting the Right Upper Lobe. Target selection was based on radiographic fissure integrity; physiologic mapping was not performed. Two Spiration valves were deployed into the apical (RB1) and posterior/anterior (RB2+3) segments. Bronchoscopic evaluation demonstrated effective airway occlusion and distal collapse.",
+    "note_text": "Operative Report: Mr. <PERSON> underwent bronchoscopic lung volume reduction targeting the Right Upper Lobe. Target selection was based on radiographic fissure integrity; physiologic mapping was not performed. Two Spiration valves were deployed into the apical (RB1) and posterior/anterior (RB2+3) segments. Bronchoscopic evaluation demonstrated effective airway occlusion and distal collapse.",
     "cpt_codes": [
       31647,
       31651
@@ -12772,6 +12816,12 @@
       "style_type": 2,
       "generated_name": "Kenneth Watson",
       "generation_date": "2025-12-09T09:19:11.810007"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -13820,7 +13870,7 @@
     }
   },
   {
-    "note_text": "We performed lung volume reduction on Mr. Baker using Spiration valves in the right upper lobe. We relied on CT analysis for target selection. Under MAC sedation, we placed two valves into the segmental bronchi of the RUL. Immediate bronchoscopic inspection showed good collapse of the distal airways. He was admitted for overnight observation to monitor for pneumothorax.",
+    "note_text": "We performed lung volume reduction on Mr. <PERSON> using Spiration valves in the right upper lobe. We relied on CT analysis for target selection. Under MAC sedation, we placed two valves into the segmental bronchi of the RUL. Immediate bronchoscopic inspection showed good collapse of the distal airways. He was admitted for overnight observation to monitor for pneumothorax.",
     "cpt_codes": [
       31647,
       31651
@@ -14026,6 +14076,12 @@
       "style_type": 8,
       "generated_name": "Ronald Wood",
       "generation_date": "2025-12-09T09:19:11.810348"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14458,7 +14514,7 @@
     }
   },
   {
-    "note_text": "Procedure Note: Ms. Rogers underwent BLVR targeting the Left Lower Lobe. Chartis assessment revealed low but persistent airflow, indicative of borderline collateral ventilation; however, the decision was made to proceed. Two Zephyr valves were deployed. Although there was a transient desaturation event, it resolved with oxygen therapy. Valve seating appeared adequate.",
+    "note_text": "Procedure Note: Ms. <PERSON> underwent BLVR targeting the Left Lower Lobe. Chartis assessment revealed low but persistent airflow, indicative of borderline collateral ventilation; however, the decision was made to proceed. Two Zephyr valves were deployed. Although there was a transient desaturation event, it resolved with oxygen therapy. Valve seating appeared adequate.",
     "cpt_codes": [
       31647,
       31651
@@ -14675,10 +14731,16 @@
       "style_type": 2,
       "generated_name": "Michelle Henderson",
       "generation_date": "2025-12-09T09:19:11.810507"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Billing: 31647 (Initial), 31651 (Addl). Device: Zephyr. Location: LLL. Indication: Heterogeneous Emphysema. Note: Borderline CV status noted. Complication: Hypoxia (transient).",
+    "note_text": "Billing: 31647 (Initial), 31651 (<PERSON>). Device: Zephyr. Location: LLL. Indication: Heterogeneous Emphysema. Note: Borderline CV status noted. Complication: Hypoxia (transient).",
     "cpt_codes": [
       31647,
       31651
@@ -14895,6 +14957,12 @@
       "style_type": 3,
       "generated_name": "Laura Coleman",
       "generation_date": "2025-12-09T09:19:11.810561"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15778,7 +15846,7 @@
     }
   },
   {
-    "note_text": "Ms. Rogers underwent a BLVR procedure for her left lower lobe emphysema. The Chartis assessment was equivocal, showing some low collateral flow, but we proceeded with valve placement. Two Zephyr valves were implanted in the LLL. The patient experienced a brief period of desaturation which resolved quickly with increased oxygen. We admitted her to a monitored bed out of an abundance of caution.",
+    "note_text": "Ms. <PERSON> underwent a BLVR procedure for her left lower lobe emphysema. The Chartis assessment was equivocal, showing some low collateral flow, but we proceeded with valve placement. Two Zephyr valves were implanted in the LLL. The patient experienced a brief period of desaturation which resolved quickly with increased oxygen. We admitted her to a monitored bed out of an abundance of caution.",
     "cpt_codes": [
       31647,
       31651
@@ -15995,6 +16063,12 @@
       "style_type": 8,
       "generated_name": "Shirley Patterson",
       "generation_date": "2025-12-09T09:19:11.810840"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -16419,7 +16493,7 @@
     }
   },
   {
-    "note_text": "Operative Report: Mr. Scott, diagnosed with pulmonary alveolar proteinosis, underwent therapeutic whole lung lavage of the left lung. A double-lumen endotracheal tube was utilized for isolation. We instilled a total of 30 liters of warmed saline in aliquots, retrieving 25 liters. The effluent transitioned from opaque/milky to clear. Hemodynamics were supported with vasopressors during the procedure. The patient was transferred to the ICU intubated.",
+    "note_text": "Operative Report: Mr. <PERSON>, diagnosed with pulmonary alveolar proteinosis, underwent therapeutic whole lung lavage of the left lung. A double-lumen endotracheal tube was utilized for isolation. We instilled a total of 30 liters of warmed saline in aliquots, retrieving 25 liters. The effluent transitioned from opaque/milky to clear. Hemodynamics were supported with vasopressors during the procedure. The patient was transferred to the ICU intubated.",
     "cpt_codes": [
       32997
     ],
@@ -16617,6 +16691,12 @@
       "style_type": 2,
       "generated_name": "Jeffrey Washington",
       "generation_date": "2025-12-09T09:19:11.810996"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17022,7 +17102,7 @@
     }
   },
   {
-    "note_text": "doing a whole lung lavage on brian scott for his pap. left side today. put in a dlt. ran about 30 liters of saline through him got 25 back. looked like milk at first then clear. blood pressure got soft so anesthesia gave him some pressors. going to the icu intubated.",
+    "note_text": "doing a whole lung lavage on <PERSON> for his pap. left side today. put in a dlt. ran about 30 liters of saline through him got 25 back. looked like milk at first then clear. blood pressure got soft so anesthesia gave him some pressors. going to the icu intubated.",
     "cpt_codes": [
       32997
     ],
@@ -17220,6 +17300,12 @@
       "style_type": 5,
       "generated_name": "Gary Foster",
       "generation_date": "2025-12-09T09:19:11.811143"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17625,7 +17711,7 @@
     }
   },
   {
-    "note_text": "We performed a therapeutic whole lung lavage on the left lung for Mr. Scott's alveolar proteinosis. Using a double-lumen tube, we ventilated the right lung while lavaging the left with 30 liters of warm saline. The return fluid (25L total) cleared significantly by the end. He experienced some hypotension which was managed by anesthesia. He remains intubated for transport to the ICU.",
+    "note_text": "We performed a therapeutic whole lung lavage on the left lung for Mr. <PERSON>'s alveolar proteinosis. Using a double-lumen tube, we ventilated the right lung while lavaging the left with 30 liters of warm saline. The return fluid (25L total) cleared significantly by the end. He experienced some hypotension which was managed by anesthesia. He remains intubated for transport to the ICU.",
     "cpt_codes": [
       32997
     ],
@@ -17823,6 +17909,12 @@
       "style_type": 8,
       "generated_name": "Stephen Alexander",
       "generation_date": "2025-12-09T09:19:11.811291"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -18228,7 +18320,7 @@
     }
   },
   {
-    "note_text": "Procedure Note: Ms. Perez returned for the second stage of her treatment for PAP, undergoing right whole lung lavage. A double-lumen tube was placed. The right lung was lavaged with 36 liters of saline, yielding 30 liters of effluent which cleared progressively. A desaturation event occurred during a dwell cycle but resolved with recruitment maneuvers. She was successfully extubated and transferred to the ICU.",
+    "note_text": "Procedure Note: Ms. <PERSON> returned for the second stage of her treatment for PAP, undergoing right whole lung lavage. A double-lumen tube was placed. The right lung was lavaged with 36 liters of saline, yielding 30 liters of effluent which cleared progressively. A desaturation event occurred during a dwell cycle but resolved with recruitment maneuvers. She was successfully extubated and transferred to the ICU.",
     "cpt_codes": [
       32997
     ],
@@ -18426,6 +18518,12 @@
       "style_type": 2,
       "generated_name": "Brenda Diaz",
       "generation_date": "2025-12-09T09:19:11.811458"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -19434,7 +19532,7 @@
     }
   },
   {
-    "note_text": "Ms. Perez underwent the planned right-sided whole lung lavage today. We used a double-lumen tube to isolate the lung and instilled 36 liters of saline, recovering 30 liters. The fluid cleared as expected. She had one episode of desaturation that required us to pause and recruit the lung, but she recovered well. We were able to extubate her in the operating room before transfer to the ICU.",
+    "note_text": "Ms. <PERSON> underwent the planned right-sided whole lung lavage today. We used a double-lumen tube to isolate the lung and instilled 36 liters of saline, recovering 30 liters. The fluid cleared as expected. She had one episode of desaturation that required us to pause and recruit the lung, but she recovered well. We were able to extubate her in the operating room before transfer to the ICU.",
     "cpt_codes": [
       32997
     ],
@@ -19632,6 +19730,12 @@
       "style_type": 8,
       "generated_name": "Pamela Sullivan",
       "generation_date": "2025-12-09T09:19:11.811769"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

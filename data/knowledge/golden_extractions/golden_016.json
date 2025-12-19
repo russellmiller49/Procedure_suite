@@ -229,7 +229,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Combined Endobronchial Ultrasound and Fiberoptic Bronchoscopy.\nCLINICAL SUMMARY: Ms. Wang presented with a right upper lobe neoplasm and bulky mediastinal adenopathy. \nOPERATIVE FINDINGS: Systematic EBUS evaluation (N3-N1) was conducted. Transbronchial needle aspiration of stations 2R, 4R, 7, and 10R was performed. Cytopathology confirmed malignancy in the mediastinal stations. Subsequently, the RUL endobronchial component was interrogated, revealing partial obstruction. Forceps biopsies and brushings were obtained.\nIMPRESSION: Stage IIIB Non-Small Cell Lung Carcinoma.",
+    "note_text": "PROCEDURE: Combined Endobronchial Ultrasound and Fiberoptic Bronchoscopy.\nCLINICAL SUMMARY: Ms. <PERSON> presented with a right upper lobe neoplasm and bulky mediastinal adenopathy. \nOPERATIVE FINDINGS: Systematic EBUS evaluation (N3-N1) was conducted. Transbronchial needle aspiration of stations 2R, 4R, 7, and 10R was performed. Cytopathology confirmed malignancy in the mediastinal stations. Subsequently, the RUL endobronchial component was interrogated, revealing partial obstruction. Forceps biopsies and brushings were obtained.\nIMPRESSION: Stage IIIB Non-Small Cell Lung Carcinoma.",
     "cpt_codes": [
       31653,
       31625
@@ -455,6 +455,12 @@
       "style_type": 2,
       "generated_name": "Karen Chen",
       "generation_date": "2025-12-09T09:19:00.760110"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -687,7 +693,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPt: Jennifer Wang\nAttending: Dr. X\nSteps:\n1. Mod sedation.\n2. EBUS scope inserted.\n3. Sampled 2R, 4R, 7, 10R. 4R sent for molecular.\n4. Switched to standard scope.\n5. Biopsied RUL mass (forceps/brush).\n6. Hemostasis achieved with cold saline/epi.\nPlan: Tumor board.",
+    "note_text": "Procedure Note\nPt: <PERSON>\nAttending: Dr. X\nSteps:\n1. Mod sedation.\n2. EBUS scope inserted.\n3. Sampled 2R, 4R, 7, 10R. 4R sent for molecular.\n4. Switched to standard scope.\n5. Biopsied RUL mass (forceps/brush).\n6. Hemostasis achieved with cold saline/epi.\nPlan: Tumor board.",
     "cpt_codes": [
       31653,
       31625
@@ -913,10 +919,16 @@
       "style_type": 4,
       "generated_name": "Helen Zhang",
       "generation_date": "2025-12-09T09:19:00.760224"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Jennifer Wang here for the staging and biopsy RUL mass. We gave midazolam and fentanyl she did okay. Did the EBUS first hit 2R 4R 7 and 10R. ROSE said cancer in the first three. Then went to the RUL saw the tumor blocking the airway a bit took 6 biopsies and brushed it. Bled a fair amount had to use epi and iced saline but it stopped. Recovering now.",
+    "note_text": "<PERSON> here for the staging and biopsy RUL mass. We gave midazolam and fentanyl she did okay. Did the EBUS first hit 2R 4R 7 and 10R. ROSE said cancer in the first three. Then went to the RUL saw the tumor blocking the airway a bit took 6 biopsies and brushed it. Bled a fair amount had to use epi and iced saline but it stopped. Recovering now.",
     "cpt_codes": [
       31653,
       31625
@@ -1142,10 +1154,16 @@
       "style_type": 5,
       "generated_name": "Margaret Liu",
       "generation_date": "2025-12-09T09:19:00.760280"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Bronchoscopy with EBUS performed for Jennifer Wang 10/22/2024. Indication RUL mass staging. Moderate sedation. EBUS-TBNA of stations 2R 4R 7 10R performed. Malignancy confirmed on ROSE for 2R 4R 7. Endobronchial biopsy of RUL mass performed x6 plus brushing. Moderate bleeding controlled intraoperatively. Patient stable.",
+    "note_text": "Bronchoscopy with EBUS performed for <PERSON> <DATE_TIME>. Indication RUL mass staging. Moderate sedation. EBUS-TBNA of stations 2R 4R 7 10R performed. Malignancy confirmed on ROSE for 2R 4R 7. Endobronchial biopsy of RUL mass performed x6 plus brushing. Moderate bleeding controlled intraoperatively. Patient stable.",
     "cpt_codes": [
       31653,
       31625
@@ -1371,6 +1389,13 @@
       "style_type": 6,
       "generated_name": "Patricia Yang",
       "generation_date": "2025-12-09T09:19:00.760334"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -1603,7 +1628,7 @@
     }
   },
   {
-    "note_text": "Ms. Wang was brought to the bronchoscopy suite for evaluation of her right upper lobe mass. Under moderate sedation, we initiated the procedure with EBUS-TBNA for staging. We systematically sampled stations 2R, 4R, 7, and 10R. Rapid on-site evaluation confirmed malignant cells in the mediastinal nodes. We then proceeded to direct bronchoscopy, visualizing the tumor in the right upper lobe bronchus. Forceps biopsies and brushings were collected. Moderate bleeding was noted but successfully managed with topical epinephrine.",
+    "note_text": "Ms. <PERSON> was brought to the bronchoscopy suite for evaluation of her right upper lobe mass. Under moderate sedation, we initiated the procedure with EBUS-TBNA for staging. We systematically sampled stations 2R, 4R, 7, and 10R. Rapid on-site evaluation confirmed malignant cells in the mediastinal nodes. We then proceeded to direct bronchoscopy, visualizing the tumor in the right upper lobe bronchus. Forceps biopsies and brushings were collected. Moderate bleeding was noted but successfully managed with topical epinephrine.",
     "cpt_codes": [
       31653,
       31625
@@ -1829,10 +1854,16 @@
       "style_type": 8,
       "generated_name": "Lisa Lin",
       "generation_date": "2025-12-09T09:19:00.760441"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Indication: Pulmonary lesion and adenopathy.\nAction: Sonographic interrogation of mediastinum (EBUS).\nSampling: Aspirated stations 2R, 4R, 7, 10R. Harvested tissue from RUL mass via forceps and brush.\nResult: Malignancy confirmed. Hemostasis secured.",
+    "note_text": "Indication: <PERSON> lesion and adenopathy.\nAction: Sonographic interrogation of mediastinum (EBUS).\nSampling: Aspirated stations 2R, 4R, 7, 10R. Harvested tissue from RUL mass via forceps and brush.\nResult: Malignancy confirmed. Hemostasis secured.",
     "cpt_codes": [
       31653,
       31625
@@ -2058,6 +2089,12 @@
       "style_type": 9,
       "generated_name": "Nancy Wang",
       "generation_date": "2025-12-09T09:19:00.760493"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2730,7 +2767,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: Mark Thompson\nIndication: RLL nodule\n1. Sedation (Versed/Fent).\n2. Scope to RLL.\n3. Found bronchus leading to nodule.\n4. Confirmed with Radial EBUS (eccentric).\n5. TBNA x3.\n6. Biopsies x8 and Brush x2 under fluoro.\n7. No pneumo on post-procedure CXR.",
+    "note_text": "Resident Note\nPt: <PERSON>\nIndication: RLL nodule\n1. Sedation (Versed/Fent).\n2. Scope to RLL.\n3. Found bronchus leading to nodule.\n4. Confirmed with Radial EBUS (eccentric).\n5. TBNA x3.\n6. Biopsies x8 and Brush x2 under fluoro.\n7. No pneumo on post-procedure CXR.",
     "cpt_codes": [
       31628,
       31629,
@@ -2950,10 +2987,16 @@
       "style_type": 4,
       "generated_name": "Steven Robinson",
       "generation_date": "2025-12-09T09:19:00.760713"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mark Thompson 64M RLL nodule. We didn't use the robot or nav just regular scope cause there was a clear airway to it. Put the radial probe in saw the lesion eccentric. Did needle aspirates then biopsies and brushing. Little bit of bleeding stopped quick. Xray showed no pneumothorax.",
+    "note_text": "<PERSON> 64M RLL nodule. We didn't use the robot or nav just regular scope cause there was a clear airway to it. Put the radial probe in saw the lesion eccentric. Did needle aspirates then biopsies and brushing. Little bit of bleeding stopped quick. <PERSON> showed no pneumothorax.",
     "cpt_codes": [
       31628,
       31629,
@@ -3173,10 +3216,17 @@
       "style_type": 5,
       "generated_name": "Edward Walker",
       "generation_date": "2025-12-09T09:19:00.760764"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "RLL nodule biopsy for Mark Thompson. Moderate sedation. Traditional bronchoscopy used. Lesion localized via bronchus sign and confirmed with Radial EBUS (eccentric) and Fluoroscopy. TBNA x3, TBBx x8, Brush x2 performed. Minor bleeding controlled. Post-proc CXR negative for PTX.",
+    "note_text": "RLL nodule biopsy for <PERSON>. Moderate sedation. Traditional bronchoscopy used. Lesion localized via bronchus sign and confirmed with Radial EBUS (eccentric) and Fluoroscopy. TBNA x3, TBBx x8, Brush x2 performed. Minor bleeding controlled. Post-proc CXR negative for PTX.",
     "cpt_codes": [
       31628,
       31629,
@@ -3396,6 +3446,12 @@
       "style_type": 6,
       "generated_name": "Brian Young",
       "generation_date": "2025-12-09T09:19:00.760816"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3622,7 +3678,7 @@
     }
   },
   {
-    "note_text": "Mr. Thompson presented for biopsy of a right lower lobe nodule. Due to the presence of a clear bronchus sign, we utilized traditional bronchoscopy with fluoroscopy and radial EBUS verification rather than electromagnetic navigation. The radial probe demonstrated an eccentric view of the lesion. We obtained diagnostic tissue using a combination of needle aspiration, forceps biopsy, and brushing. The patient tolerated the procedure well with only minor bleeding.",
+    "note_text": "Mr. <PERSON> presented for biopsy of a right lower lobe nodule. Due to the presence of a clear bronchus sign, we utilized traditional bronchoscopy with fluoroscopy and radial EBUS verification rather than electromagnetic navigation. The radial probe demonstrated an eccentric view of the lesion. We obtained diagnostic tissue using a combination of needle aspiration, forceps biopsy, and brushing. The patient tolerated the procedure well with only minor bleeding.",
     "cpt_codes": [
       31628,
       31629,
@@ -3842,6 +3898,12 @@
       "style_type": 8,
       "generated_name": "Anthony Allen",
       "generation_date": "2025-12-09T09:19:00.760921"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4686,7 +4748,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPt: Sandra Lopez\nIndication: Staging/Dx (Hx Breast CA)\nSteps:\n1. Mod sedation.\n2. EBUS scope passed.\n3. Sampled 2R, 4R, 7.\n4. ROSE: Mets from breast.\n5. Stable, no complications.\nPlan: Refer to onc.",
+    "note_text": "Procedure: EBUS\nPt: <PERSON>\nIndication: Staging/Dx (Hx Breast CA)\nSteps:\n1. Mod sedation.\n2. EBUS scope passed.\n3. Sampled 2R, 4R, 7.\n4. ROSE: Mets from breast.\n5. Stable, no complications.\nPlan: <PERSON> to onc.",
     "cpt_codes": [
       31653
     ],
@@ -4889,10 +4951,17 @@
       "style_type": 4,
       "generated_name": "Michelle Wilson",
       "generation_date": "2025-12-09T09:19:00.761189"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Sandra Lopez history of breast cancer came in for nodes. We did EBUS used midazolam fentanyl careful with the kidneys. Sampled 2R 4R and 7. They all came back positive for breast cancer recurrence on the rapid read. No complications sending her back to nephrology and oncology.",
+    "note_text": "<PERSON> history of breast cancer came in for nodes. We did EBUS used midazolam fentanyl careful with the kidneys. Sampled 2R 4R and 7. They all came back positive for breast cancer recurrence on the rapid read. No complications sending her back to nephrology and oncology.",
     "cpt_codes": [
       31653
     ],
@@ -5095,6 +5164,12 @@
       "style_type": 5,
       "generated_name": "Laura Anderson",
       "generation_date": "2025-12-09T09:19:00.761237"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5510,7 +5585,7 @@
     }
   },
   {
-    "note_text": "Ms. Lopez, with a known history of breast cancer, underwent EBUS-TBNA to investigate new mediastinal lymphadenopathy. Despite her chronic kidney disease, she tolerated moderate sedation well. We identified and sampled nodes at stations 2R, 4R, and 7. All stations yielded positive results for metastatic breast adenocarcinoma on preliminary evaluation. We have referred her back to oncology.",
+    "note_text": "Ms. <PERSON>, with a known history of breast cancer, underwent EBUS-TBNA to investigate new mediastinal lymphadenopathy. Despite her chronic kidney disease, she tolerated moderate sedation well. We identified and sampled nodes at stations 2R, 4R, and 7. All stations yielded positive results for metastatic breast adenocarcinoma on preliminary evaluation. We have referred her back to oncology.",
     "cpt_codes": [
       31653
     ],
@@ -5713,6 +5788,12 @@
       "style_type": 8,
       "generated_name": "Deborah Moore",
       "generation_date": "2025-12-09T09:19:00.761382"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6504,7 +6585,7 @@
     }
   },
   {
-    "note_text": "Fellow Procedure Note\nAttending: Present\nPt: Donald Martinez\nIndication: Staging\n1. Time out.\n2. EBUS scope inserted.\n3. Systematic exam performed.\n4. Multiple stations sampled (Learning points: needle angle, sheath management).\n5. ROSE review.\n6. Pt tolerated well.",
+    "note_text": "Fellow Procedure Note\nAttending: Present\nPt: <PERSON>\nIndication: Staging\n1. Time out.\n2. EBUS scope inserted.\n3. Systematic exam performed.\n4. Multiple stations sampled (Learning points: needle angle, sheath management).\n5. ROSE review.\n6. Pt tolerated well.",
     "cpt_codes": [
       31653
     ],
@@ -6695,10 +6776,16 @@
       "style_type": 4,
       "generated_name": "Larry Thompson",
       "generation_date": "2025-12-09T09:19:00.761704"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Teaching case Donald Martinez LUL cancer staging. Fellow did most of the work I supervised. We checked all the stations N3 back to N1. Sampled the relevant ones ROSE was there to check the slides. Good educational case no issues.",
+    "note_text": "Teaching case <PERSON> LUL cancer staging. Fellow did most of the work I supervised. We checked all the stations N3 back to N1. Sampled the relevant ones ROSE was there to check the slides. Good educational case no issues.",
     "cpt_codes": [
       31653
     ],
@@ -6889,10 +6976,16 @@
       "style_type": 5,
       "generated_name": "Scott Garcia",
       "generation_date": "2025-12-09T09:19:00.761755"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "EBUS-TBNA Staging for Donald Martinez. Teaching case with fellow. Systematic N3->N2->N1 evaluation performed. Multiple mediastinal stations sampled with ROSE confirmation. No complications.",
+    "note_text": "EBUS-TBNA Staging for <PERSON>. Teaching case with fellow. Systematic N3->N2->N1 evaluation performed. Multiple mediastinal stations sampled with ROSE confirmation. No complications.",
     "cpt_codes": [
       31653
     ],
@@ -7083,6 +7176,12 @@
       "style_type": 6,
       "generated_name": "Stephen Martinez",
       "generation_date": "2025-12-09T09:19:00.761802"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7280,7 +7379,7 @@
     }
   },
   {
-    "note_text": "Mr. Martinez underwent an EBUS-TBNA for staging of his LUL adenocarcinoma. This was a teaching case involving an interventional pulmonology fellow. We performed a systematic evaluation of the mediastinum, progressing from N3 to N1 stations. Multiple lymph node stations were sampled with the guidance of rapid on-site evaluation to ensure adequate tissue acquisition.",
+    "note_text": "Mr. <PERSON> underwent an EBUS-TBNA for staging of his LUL adenocarcinoma. This was a teaching case involving an interventional pulmonology fellow. We performed a systematic evaluation of the mediastinum, progressing from N3 to N1 stations. Multiple lymph node stations were sampled with the guidance of rapid on-site evaluation to ensure adequate tissue acquisition.",
     "cpt_codes": [
       31653
     ],
@@ -7471,6 +7570,12 @@
       "style_type": 8,
       "generated_name": "Raymond Clark",
       "generation_date": "2025-12-09T09:19:00.761897"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7884,7 +7989,7 @@
     }
   },
   {
-    "note_text": "COMMUNICATION: Telephone consultation regarding procedure results.\nPATIENT: Kevin Brown.\nSUMMARY: The patient underwent EBUS-TBNA and endobronchial biopsy. EBUS confirmed N2 disease with malignant involvement of stations 4R and 7; station 10R was benign. The primary RUL mass was also biopsied. Samples have been sent for molecular profiling. \nRECOMMENDATION: Tumor board discussion regarding definitive chemoradiation.",
+    "note_text": "COMMUNICATION: Telephone consultation regarding procedure results.\nPATIENT: <PERSON>\nSUMMARY: The patient underwent EBUS-TBNA and endobronchial biopsy. EBUS confirmed N2 disease with malignant involvement of stations 4R and 7; station 10R was benign. The primary RUL mass was also biopsied. Samples have been sent for molecular profiling. \nRECOMMENDATION: Tumor board discussion regarding definitive chemoradiation.",
     "cpt_codes": [
       31653,
       31625
@@ -8097,6 +8202,12 @@
       "style_type": 2,
       "generated_name": "Ryan Lee",
       "generation_date": "2025-12-09T09:19:00.762069"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8316,7 +8427,7 @@
     }
   },
   {
-    "note_text": "Resident Phone Note\nCalled Dr. Adams re: Kevin Brown.\nWe did the EBUS and bronch today.\n- EBUS: 4R and 7 positive for cancer. 10R neg.\n- RUL Mass: Biopsied.\nLooks like N2 disease / Stage IIIB.\nSent for molecular. F/U next week.",
+    "note_text": "Resident Phone Note\nCalled Dr. Adams re: <PERSON>.\nWe did the EBUS and bronch today.\n- EBUS: 4R and 7 positive for cancer. 10R neg.\n- RUL Mass: Biopsied.\nLooks like N2 disease / Stage IIIB.\nSent for molecular. F/U next week.",
     "cpt_codes": [
       31653,
       31625
@@ -8529,10 +8640,16 @@
       "style_type": 4,
       "generated_name": "Gary Hall",
       "generation_date": "2025-12-09T09:19:00.762176"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Phone note for Kevin Brown called Dr Adams. Told him we found cancer in the mediastinum stations 4R and 7 were positive on ROSE. 10R was clear. We also took chunks of the main tumor in the RUL. No complications sending for genetic testing.",
+    "note_text": "Phone note for <PERSON> called Dr Adams. Told him we found cancer in the mediastinum stations 4R and 7 were positive on ROSE. 10R was clear. We also took chunks of the main tumor in the RUL. No complications sending for genetic testing.",
     "cpt_codes": [
       31653,
       31625
@@ -8745,10 +8862,16 @@
       "style_type": 5,
       "generated_name": "Nicholas Allen",
       "generation_date": "2025-12-09T09:19:00.762228"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Tele-consult note: Kevin Brown. DOS 10/27/2024. EBUS-TBNA performed at 4R, 7, 10R. 4R/7 positive for adenocarcinoma. RUL endobronchial mass biopsied. N2 disease confirmed. Molecular testing pending. No complications.",
+    "note_text": "Tele-consult note: <PERSON>. DOS <DATE_TIME>. EBUS-TBNA performed at 4R, 7, 10R. 4R/7 positive for adenocarcinoma. RUL endobronchial mass biopsied. N2 disease confirmed. Molecular testing pending. No complications.",
     "cpt_codes": [
       31653,
       31625
@@ -8961,6 +9084,13 @@
       "style_type": 6,
       "generated_name": "Eric Young",
       "generation_date": "2025-12-09T09:19:00.762288"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -9180,7 +9310,7 @@
     }
   },
   {
-    "note_text": "I called Dr. Adams to discuss Mr. Brown's bronchoscopy results. We performed an EBUS and endobronchial biopsy today. The EBUS sampling of stations 4R and 7 was positive for adenocarcinoma, confirming N2 disease, while station 10R was negative. We also obtained adequate biopsies from the primary RUL mass. We have ordered molecular testing and recommend a tumor board review.",
+    "note_text": "I called Dr. Adams to discuss Mr. <PERSON>'s bronchoscopy results. We performed an EBUS and endobronchial biopsy today. The EBUS sampling of stations 4R and 7 was positive for adenocarcinoma, confirming N2 disease, while station 10R was negative. We also obtained adequate biopsies from the primary RUL mass. We have ordered molecular testing and recommend a tumor board review.",
     "cpt_codes": [
       31653,
       31625
@@ -9393,6 +9523,12 @@
       "style_type": 8,
       "generated_name": "Stephen Wright",
       "generation_date": "2025-12-09T09:19:00.762389"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10218,7 +10354,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPt: Nancy Rodriguez\nIndication: Staging RLL CA\n1. Sedation.\n2. EBUS scope.\n3. Sampled 4R, 7, 10R.\n4. 4R/7 Positive on ROSE.\n5. 10R Negative.\nPlan: Chemo/Rad eval.",
+    "note_text": "Procedure Note\nPt: <PERSON>\nIndication: Staging RLL CA\n1. Sedation.\n2. EBUS scope.\n3. Sampled 4R, 7, 10R.\n4. 4R/7 Positive on ROSE.\n5. 10R Negative.\nPlan: Chemo/Rad eval.",
     "cpt_codes": [
       31653
     ],
@@ -10417,10 +10553,16 @@
       "style_type": 4,
       "generated_name": "Angela Nelson",
       "generation_date": "2025-12-09T09:19:00.762712"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Nancy Rodriguez staging EBUS. We checked 4R 7 and 10R. 4R and 7 were positive for the cancer. 10R was just reactive. Good samples sent for testing. Patient woke up fine.",
+    "note_text": "<PERSON> staging EBUS. We checked 4R 7 and 10R. 4R and 7 were positive for the cancer. 10R was just reactive. Good samples sent for testing. Patient woke up fine.",
     "cpt_codes": [
       31653
     ],
@@ -10619,10 +10761,16 @@
       "style_type": 5,
       "generated_name": "Helen Hill",
       "generation_date": "2025-12-09T09:19:00.762766"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "EBUS-TBNA for Nancy Rodriguez. Indication: RLL adenocarcinoma staging. Sampled stations 4R (positive), 7 (positive), 10R (negative). ROSE utilized. No complications. N2 disease confirmed.",
+    "note_text": "EBUS-TBNA for <PERSON>. Indication: RLL adenocarcinoma staging. Sampled stations 4R (positive), 7 (positive), 10R (negative). ROSE utilized. No complications. N2 disease confirmed.",
     "cpt_codes": [
       31653
     ],
@@ -10821,6 +10969,12 @@
       "style_type": 6,
       "generated_name": "Anna Ramirez",
       "generation_date": "2025-12-09T09:19:00.762823"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11026,7 +11180,7 @@
     }
   },
   {
-    "note_text": "Ms. Rodriguez underwent EBUS-TBNA for staging of her right lower lobe adenocarcinoma. We sampled three stations: 4R, 7, and 10R. The samples from 4R and 7 were positive for malignancy on-site, while 10R appeared benign. This confirms multi-station N2 involvement.",
+    "note_text": "Ms. <PERSON> underwent EBUS-TBNA for staging of her right lower lobe adenocarcinoma. We sampled three stations: 4R, 7, and 10R. The samples from 4R and 7 were positive for malignancy on-site, while 10R appeared benign. This confirms multi-station N2 involvement.",
     "cpt_codes": [
       31653
     ],
@@ -11225,6 +11379,12 @@
       "style_type": 8,
       "generated_name": "Pamela Mitchell",
       "generation_date": "2025-12-09T09:19:00.762923"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

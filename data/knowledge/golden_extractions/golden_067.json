@@ -187,7 +187,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: INTRA-PLEURAL FIBRINOLYTIC THERAPY\nINDICATION: Mr. Washington, a 38-year-old male with a loculated left-sided empyema, required therapeutic instillation of fibrinolytic agents to facilitate drainage.\nIMAGING: Real-time thoracic ultrasonography of the left hemithorax demonstrated a moderate volume pleural effusion characterized by hyperechogenicity and thickened septations, consistent with the diagnosis of empyema.\nINTERVENTION: Through the pre-existing left chest tube, a solution containing 10 mg of tissue plasminogen activator (tPA) and 5 mg of deoxyribonuclease (DNase) was instilled using aseptic technique.\nPLAN: The catheter will remain clamped for 60 minutes to maximize therapeutic effect before returning to suction.",
+    "note_text": "PROCEDURE NOTE: INTRA-PLEURAL FIBRINOLYTIC THERAPY\nINDICATION: Mr. <PERSON>, a 38-year-old male with a loculated left-sided empyema, required therapeutic instillation of fibrinolytic agents to facilitate drainage.\nIMAGING: Real-time thoracic ultrasonography of the left hemithorax demonstrated a moderate volume pleural effusion characterized by hyperechogenicity and thickened septations, consistent with the diagnosis of empyema.\nINTERVENTION: Through the pre-existing left chest tube, a solution containing 10 mg of tissue plasminogen activator (tPA) and 5 mg of deoxyribonuclease (DNase) was instilled using aseptic technique.\nPLAN: The catheter will remain clamped for 60 minutes to maximize therapeutic effect before returning to suction.",
     "cpt_codes": [
       32561,
       76604
@@ -371,6 +371,12 @@
       "style_type": 2,
       "generated_name": "David King",
       "generation_date": "2025-12-18T19:20:28.791364"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -935,7 +941,7 @@
     }
   },
   {
-    "note_text": "Jamal Washington 38M with empyema presented for fibrinolytic therapy. Ultrasound of the left chest was performed revealing a moderate hyperechoic effusion with thick loculations. Through the existing left chest tube, 10 mg tPA and 5 mg DNase were instilled for the initial treatment. There were no complications. The tube was clamped for a dwell time of one hour.",
+    "note_text": "<LOCATION> <LOCATION> 38M with empyema presented for fibrinolytic therapy. Ultrasound of the left chest was performed revealing a moderate hyperechoic effusion with thick loculations. Through the existing left chest tube, 10 mg tPA and 5 mg DNase were instilled for the initial treatment. There were no complications. The tube was clamped for a dwell time of one hour.",
     "cpt_codes": [
       32561,
       76604
@@ -1119,6 +1125,13 @@
       "style_type": 6,
       "generated_name": "William Bennett",
       "generation_date": "2025-12-18T19:20:28.791556"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {
@@ -1309,7 +1322,7 @@
     }
   },
   {
-    "note_text": "Mr. Washington underwent bedside ultrasound and fibrinolytic instillation for his left-sided empyema today. The ultrasound examination of the left hemithorax revealed a moderate-sized effusion that appeared hyperechoic with thick internal loculations, confirming the need for therapy. Subsequently, we instilled 10 mg of tPA and 5 mg of DNase through his existing left chest tube without difficulty. He tolerated the procedure well, and the tube was clamped to allow the medication to dwell.",
+    "note_text": "Mr. <PERSON> underwent bedside ultrasound and fibrinolytic instillation for his left-sided empyema today. The ultrasound examination of the left hemithorax revealed a moderate-sized effusion that appeared hyperechoic with thick internal loculations, confirming the need for therapy. Subsequently, we instilled 10 mg of tPA and 5 mg of DNase through his existing left chest tube without difficulty. He tolerated the procedure well, and the tube was clamped to allow the medication to dwell.",
     "cpt_codes": [
       32561,
       76604
@@ -1493,6 +1506,12 @@
       "style_type": 8,
       "generated_name": "Thomas Reed",
       "generation_date": "2025-12-18T19:20:28.791644"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1865,7 +1884,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: Mrs. Perry, a 72-year-old female with an organizing right hemithorax, underwent ultrasonic evaluation and intrapleural fibrinolytic therapy. Bedside thoracic ultrasound of the right hemithorax revealed a moderate pleural fluid collection with complex, hyperechoic echotexture and significant loculation. Consequently, 10 mg of tPA and 5 mg of DNase were instilled via the indwelling right thoracostomy tube to promote lysis of the organized hematoma. The patient remained hemodynamically stable throughout.",
+    "note_text": "OPERATIVE NARRATIVE: Mrs. <PERSON>, a 72-year-old female with an organizing right hemithorax, underwent ultrasonic evaluation and intrapleural fibrinolytic therapy. Bedside thoracic ultrasound of the right hemithorax revealed a moderate pleural fluid collection with complex, hyperechoic echotexture and significant loculation. Consequently, 10 mg of tPA and 5 mg of DNase were instilled via the indwelling right thoracostomy tube to promote lysis of the organized hematoma. The patient remained hemodynamically stable throughout.",
     "cpt_codes": [
       32561,
       76604
@@ -2044,6 +2063,12 @@
       "style_type": 2,
       "generated_name": "Mei Lin",
       "generation_date": "2025-12-18T19:20:28.791811"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2229,7 +2254,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPt: Priya Perry\nAttending: Dr. Van Dyke\nProcedure: US Chest and tPA/DNase instillation.\nSteps:\n1. Positioned patient L lateral decubitus.\n2. US Right chest: Moderate effusion, looks like blood (hyperechoic), loculated.\n3. Instilled lytics (10 tPA/5 DNase) into right tube.\n4. Flushed line.\n5. Clamped.\nPatient tolerated well.",
+    "note_text": "Procedure Note\nPt: <PERSON>\nAttending: Dr. Van Dyke\nProcedure: US Chest and tPA/DNase instillation.\nSteps:\n1. Positioned patient L lateral decubitus.\n2. US Right chest: Moderate effusion, looks like blood (hyperechoic), loculated.\n3. Instilled lytics (10 tPA/5 DNase) into right tube.\n4. Flushed line.\n5. Clamped.\nPatient tolerated well.",
     "cpt_codes": [
       32561,
       76604
@@ -2408,6 +2433,12 @@
       "style_type": 4,
       "generated_name": "Linda Davis",
       "generation_date": "2025-12-18T19:20:28.791899"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2957,7 +2988,7 @@
     }
   },
   {
-    "note_text": "Ms. Perry was seen for management of her organizing right hemothorax. We performed a bedside chest ultrasound which visualized a moderate, hyperechoic effusion with thick loculations on the right side. Based on these findings, we proceeded to instill 10 mg of tPA and 5 mg of DNase through her right chest tube to help break up the clot. The procedure was uncomplicated.",
+    "note_text": "Ms. <PERSON> was seen for management of her organizing right hemothorax. We performed a bedside chest ultrasound which visualized a moderate, hyperechoic effusion with thick loculations on the right side. Based on these findings, we proceeded to instill 10 mg of tPA and 5 mg of DNase through her right chest tube to help break up the clot. The procedure was uncomplicated.",
     "cpt_codes": [
       32561,
       76604
@@ -3136,6 +3167,12 @@
       "style_type": 8,
       "generated_name": "Betty Taylor",
       "generation_date": "2025-12-18T19:20:28.792086"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4236,7 +4273,7 @@
     }
   },
   {
-    "note_text": "Sean O'Malley 50M with complex septated left effusion. Ultrasound chest performed left side showing large isoechoic effusion with thick loculations and diminished diaphragmatic motion. Instilled 10 mg tPA and 5 mg DNase via left chest tube. No complications. Dwell time 1 hour.",
+    "note_text": "<PERSON> 50M with complex septated left effusion. Ultrasound chest performed left side showing large isoechoic effusion with thick loculations and diminished diaphragmatic motion. Instilled 10 mg tPA and 5 mg DNase via left chest tube. No complications. Dwell time 1 hour.",
     "cpt_codes": [
       32561,
       76604
@@ -4416,6 +4453,12 @@
       "style_type": 6,
       "generated_name": "Daniel Walsh",
       "generation_date": "2025-12-18T19:20:28.792411"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4602,7 +4645,7 @@
     }
   },
   {
-    "note_text": "We evaluated Mr. O'Malley for his complex left-sided effusion. Bedside ultrasound of the left chest was significant for a large volume effusion that was isoechoic with thick loculations, indicating a complex process. We then instilled 10 mg of tPA and 5 mg of DNase into the left chest tube to facilitate drainage. The patient tolerated the procedure without any adverse events.",
+    "note_text": "We evaluated Mr. <PERSON> for his complex left-sided effusion. Bedside ultrasound of the left chest was significant for a large volume effusion that was isoechoic with thick loculations, indicating a complex process. We then instilled 10 mg of tPA and 5 mg of DNase into the left chest tube to facilitate drainage. The patient tolerated the procedure without any adverse events.",
     "cpt_codes": [
       32561,
       76604
@@ -4782,6 +4825,12 @@
       "style_type": 8,
       "generated_name": "Joseph Kennedy",
       "generation_date": "2025-12-18T19:20:28.792500"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5635,7 +5684,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Ms. Hill presented for therapeutic bronchoscopy due to airway stenosis. Under general anesthesia, the airway was inspected. Significant mucus burden was noted and therapeutically aspirated from the right mainstem, bronchus intermedius, and left mainstem. The bronchus intermedius was biopsied under NBI guidance. Inspection of previously placed iCAST stents in the RLL and RML revealed good positioning. Bronchoalveolar lavage was obtained from the RLL. The RB2 orifice stenosis was addressed via balloon dilation using a 5mm Mustang balloon, inflated three times for 60 seconds each to a diameter of 5mm.",
+    "note_text": "OPERATIVE REPORT: Ms. <PERSON> presented for therapeutic bronchoscopy due to airway stenosis. Under general anesthesia, the airway was inspected. Significant mucus burden was noted and therapeutically aspirated from the right mainstem, bronchus intermedius, and left mainstem. The bronchus intermedius was biopsied under NBI guidance. Inspection of previously placed iCAST stents in the RLL and RML revealed good positioning. Bronchoalveolar lavage was obtained from the RLL. The RB2 orifice stenosis was addressed via balloon dilation using a 5mm Mustang balloon, inflated three times for 60 seconds each to a diameter of 5mm.",
     "cpt_codes": [
       31630,
       31625,
@@ -6299,6 +6348,12 @@
       "style_type": 2,
       "generated_name": "Florence White",
       "generation_date": "2025-12-18T19:20:28.792881"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9637,7 +9692,7 @@
     }
   },
   {
-    "note_text": "Ms. Hill underwent a complex bronchoscopy today for airway stenosis. We began by performing therapeutic aspiration to clear significant mucus from the right mainstem, bronchus intermedius, and left mainstem. We then took endobronchial biopsies from the bronchus intermedius. We inspected her existing stents in the RLL and RML, which appeared well-positioned. A BAL was performed in the RLL for microbiology. Finally, we treated the stenosis at the RB2 orifice using a 5mm balloon, dilating it three times for 60 seconds each. She tolerated the procedure well.",
+    "note_text": "Ms. <PERSON> underwent a complex bronchoscopy today for airway stenosis. We began by performing therapeutic aspiration to clear significant mucus from the right mainstem, bronchus intermedius, and left mainstem. We then took endobronchial biopsies from the bronchus intermedius. We inspected her existing stents in the RLL and RML, which appeared well-positioned. A BAL was performed in the RLL for microbiology. Finally, we treated the stenosis at the RB2 orifice using a 5mm balloon, dilating it three times for 60 seconds each. She tolerated the procedure well.",
     "cpt_codes": [
       31630,
       31625,
@@ -10301,6 +10356,12 @@
       "style_type": 8,
       "generated_name": "Rose Wright",
       "generation_date": "2025-12-18T19:20:28.793847"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10971,7 +11032,7 @@
     }
   },
   {
-    "note_text": "Indication: RPP / Airway obstruction.\nAnesthesia: GA, LMA.\nProcedure:\n- Flex bronch: Papillomas at larynx, trachea.\n- Cryo/Cautery: Ablated papillomas vocal cords/trachea.\n- Rigid Bronch: Cored/dilated proximal trachea to 12mm.\n- Debridement: Removed debris.\nResult: Patency improved 40% -> 90%.",
+    "note_text": "Indication: RPP / Airway obstruction.\nAnesthesia: GA, LMA.\nProcedure:\n- Flex bronch: <PERSON> at larynx, trachea.\n- Cryo/Cautery: Ablated papillomas vocal cords/trachea.\n- Rigid Bronch: Cored/dilated proximal trachea to 12mm.\n- Debridement: Removed debris.\nResult: Patency improved 40% -> 90%.",
     "cpt_codes": [
       31641
     ],
@@ -11241,10 +11302,16 @@
       "style_type": 1,
       "generated_name": "Kenji Sato",
       "generation_date": "2025-12-18T19:20:28.794074"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. Hsu presented with recurrent respiratory papillomatosis causing significant airway obstruction. A multimodal approach was utilized. Laryngeal and tracheal papillomas were treated with cryotherapy and electrocautery. A rigid tracheoscope was employed to mechanically debulk and dilate the proximal tracheal stenosis from an initial 40% patency to 12mm diameter. Extensive debridement of coagulated tissue was performed to ensure airway clearance. Post-procedure patency was estimated at 90%.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented with recurrent respiratory papillomatosis causing significant airway obstruction. A multimodal approach was utilized. Laryngeal and tracheal papillomas were treated with cryotherapy and electrocautery. A rigid tracheoscope was employed to mechanically debulk and dilate the proximal tracheal stenosis from an initial 40% patency to 12mm diameter. Extensive debridement of coagulated tissue was performed to ensure airway clearance. Post-procedure patency was estimated at 90%.",
     "cpt_codes": [
       31641
     ],
@@ -11514,6 +11581,12 @@
       "style_type": 2,
       "generated_name": "Wei Chen",
       "generation_date": "2025-12-18T19:20:28.794142"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11790,7 +11863,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: Arvin Hsu\nDx: RPP\nProcedure: Bronch w/ ablation, rigid dilation.\nSteps:\n1. LMA placed.\n2. Flex scope: Papillomas everywhere (VCs, trachea).\n3. Froze them (cryo) and burned them (cautery).\n4. Used rigid scope to core out the trachea and dilate to 12mm.\n5. Cleaned up all the debris.\nAirway looks much better (90% open).",
+    "note_text": "Resident Note\nPt: <PERSON>\nDx: RPP\nProcedure: Bronch w/ ablation, rigid dilation.\nSteps:\n1. LMA placed.\n2. Flex scope: <PERSON> everywhere (VCs, trachea).\n3. Froze them (cryo) and burned them (cautery).\n4. Used rigid scope to core out the trachea and dilate to 12mm.\n5. Cleaned up all the debris.\nAirway looks much better (90% open).",
     "cpt_codes": [
       31641
     ],
@@ -12060,10 +12133,17 @@
       "style_type": 4,
       "generated_name": "Minh Tran",
       "generation_date": "2025-12-18T19:20:28.794272"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "arvin hsu with rpp and airway obstruction. we did a rigid and flex bronch. lots of papillomas on the cords and trachea. used cryo and cautery to kill them. then used the rigid to core it out and dilate the trachea to 12mm. took a while but we got it open from 40 percent to 90 percent. no bleeding. sent tissue to path.",
+    "note_text": "<PERSON> with rpp and airway obstruction. we did a rigid and flex bronch. lots of papillomas on the cords and trachea. used cryo and cautery to kill them. then used the rigid to core it out and dilate the trachea to 12mm. took a while but we got it open from 40 percent to 90 percent. no bleeding. sent tissue to path.",
     "cpt_codes": [
       31641
     ],
@@ -12333,6 +12413,12 @@
       "style_type": 5,
       "generated_name": "Hiroshi Tanaka",
       "generation_date": "2025-12-18T19:20:28.794339"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12882,7 +12968,7 @@
     }
   },
   {
-    "note_text": "Mr. Hsu underwent a therapeutic bronchoscopy for his recurrent respiratory papillomatosis. We identified extensive papillomas on the vocal cords and in the proximal trachea causing stenosis. We treated these lesions using a combination of cryospray and electrocautery. We then utilized the rigid bronchoscope to mechanically core through the tracheal tumor and dilate the airway to 12mm. After removing the debris, the airway patency improved significantly from 40% to 90%.",
+    "note_text": "Mr. <PERSON> underwent a therapeutic bronchoscopy for his recurrent respiratory papillomatosis. We identified extensive papillomas on the vocal cords and in the proximal trachea causing stenosis. We treated these lesions using a combination of cryospray and electrocautery. We then utilized the rigid bronchoscope to mechanically core through the tracheal tumor and dilate the airway to 12mm. After removing the debris, the airway patency improved significantly from 40% to 90%.",
     "cpt_codes": [
       31641
     ],
@@ -13152,6 +13238,12 @@
       "style_type": 8,
       "generated_name": "Takeshi Yamamoto",
       "generation_date": "2025-12-18T19:20:28.794551"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

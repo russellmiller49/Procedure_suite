@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Pre-op: Recurrent RUL SCC. Plan: HDR brachy.\nAnesthesia: Mod sed.\nProcedure: Scope passed. Tumor RUL 75% occlusion. 5F catheter placed 2cm distal to lesion. Fluoro confirm. Dummy check done. Rx length 4.5cm.\nPlan: Transport to RadOnc for 10Gy. f/u 4-6wks.",
+    "note_text": "Pre-op: Recurrent RUL SCC. Plan: HDR brachy.\nAnesthesia: Mod sed.\nProcedure: Scope passed. Tumor RUL 75% occlusion. 5F catheter placed 2cm distal to lesion. Fluoro confirm. <PERSON> check done. Rx length 4.5cm.\nPlan: Transport to RadOnc for 10Gy. f/u 4-6wks.",
     "cpt_codes": [
       31643
     ],
@@ -222,10 +222,16 @@
       "style_type": 1,
       "generated_name": "James Black",
       "generation_date": "2025-12-11T12:42:18.976192"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "HISTORY: Mr. Brown, a 72-year-old gentleman with recurrent endobronchial squamous cell carcinoma, presented for high-dose-rate (HDR) brachytherapy. The lesion in the right upper lobe (RUL) bronchus demonstrated significant obstruction.\nPROCEDURE: Under moderate sedation, flexible bronchoscopy identified an infiltrative tumor. A 5-French flexible catheter was navigated through the working channel, extending 2 cm distal to the tumor margin. Fluoroscopic verification ensured optimal positioning for the 4.5 cm treatment length. The patient was transferred to Radiation Oncology for the administration of 10.0 Gy.",
+    "note_text": "HISTORY: Mr. <PERSON>, a 72-year-old gentleman with recurrent endobronchial squamous cell carcinoma, presented for high-dose-rate (HDR) brachytherapy. The lesion in the right upper lobe (RUL) bronchus demonstrated significant obstruction.\nPROCEDURE: Under moderate sedation, flexible bronchoscopy identified an infiltrative tumor. A 5-French flexible catheter was navigated through the working channel, extending 2 cm distal to the tumor margin. Fluoroscopic verification ensured optimal positioning for the 4.5 cm treatment length. The patient was transferred to Radiation Oncology for the administration of 10.0 Gy.",
     "cpt_codes": [
       31643
     ],
@@ -447,6 +453,12 @@
       "style_type": 2,
       "generated_name": "John White",
       "generation_date": "2025-12-11T12:42:18.976264"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -900,7 +912,7 @@
     }
   },
   {
-    "note_text": "patient joseph brown here for brachytherapy session 3 for his rul cancer we used moderate sedation scope went in fine saw the tumor blocking the rul bronchus put the 5f catheter in past it checked with fluoro looks good taped it to his nose sending him to radiation now no complications thanks",
+    "note_text": "patient <PERSON> here for brachytherapy session 3 for his rul cancer we used moderate sedation scope went in fine saw the tumor blocking the rul bronchus put the 5f catheter in past it checked with fluoro looks good taped it to his nose sending him to radiation now no complications thanks",
     "cpt_codes": [
       31643
     ],
@@ -1122,6 +1134,12 @@
       "style_type": 5,
       "generated_name": "Thomas Brown",
       "generation_date": "2025-12-11T12:42:18.976438"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1575,7 +1593,7 @@
     }
   },
   {
-    "note_text": "We brought Mr. Brown to the bronchoscopy suite for his scheduled brachytherapy session. After inducing moderate sedation, we inserted the scope transnasally. We visualized the infiltrative tumor at the RUL bronchus causing significant obstruction. We then passed a 5F catheter through the scope, placing it carefully past the tumor. We used fluoroscopy to confirm the tip was 2 cm distal to the lesion. Once satisfied, we taped the catheter and sent him for radiation treatment.",
+    "note_text": "We brought Mr. <PERSON> to the bronchoscopy suite for his scheduled brachytherapy session. After inducing moderate sedation, we inserted the scope transnasally. We visualized the infiltrative tumor at the RUL bronchus causing significant obstruction. We then passed a 5F catheter through the scope, placing it carefully past the tumor. We used fluoroscopy to confirm the tip was 2 cm distal to the lesion. Once satisfied, we taped the catheter and sent him for radiation treatment.",
     "cpt_codes": [
       31643
     ],
@@ -1797,6 +1815,12 @@
       "style_type": 8,
       "generated_name": "David Gold",
       "generation_date": "2025-12-11T12:42:18.976604"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2700,7 +2724,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy + Brachy Cath\nPatient: W. Rodriguez\nSteps:\n1. Sedation (Mod).\n2. Scope to LMS.\n3. Visualize tumor (60% occlusion).\n4. Insert 6F catheter.\n5. Fluoro check.\n6. Mark and tape.\nPlan: Session 2/2 today.",
+    "note_text": "Procedure: Bronchoscopy + Brachy Cath\nPatient: <PERSON>\nSteps:\n1. Sedation (Mod).\n2. Scope to LMS.\n3. Visualize tumor (60% occlusion).\n4. Insert 6F catheter.\n5. Fluoro check.\n6. Mark and tape.\nPlan: Session 2/2 today.",
     "cpt_codes": [
       31643
     ],
@@ -2922,10 +2946,16 @@
       "style_type": 4,
       "generated_name": "Luis Lopez",
       "generation_date": "2025-12-11T12:42:18.976889"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "dr stevens note for mr rodriguez he has that left main stem tumor causing stridor we did the brachy cath placement today using mod sedation scope went down saw the tumor its about 60 percent blocked put the 6f catheter in checked it on fluoro taped it up he went to radiation for his 10gy treatment no issues during the procedure",
+    "note_text": "<PERSON> note for mr rodriguez he has that left main stem tumor causing stridor we did the brachy cath placement today using mod sedation scope went down saw the tumor its about 60 percent blocked put the 6f catheter in checked it on fluoro taped it up he went to radiation for his 10gy treatment no issues during the procedure",
     "cpt_codes": [
       31643
     ],
@@ -3147,6 +3177,12 @@
       "style_type": 5,
       "generated_name": "Miguel Gonzalez",
       "generation_date": "2025-12-11T12:42:18.976943"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3600,7 +3636,7 @@
     }
   },
   {
-    "note_text": "Mr. Rodriguez presented with severe dyspnea due to his left main stem tumor. We performed a bronchoscopy to place a catheter for his final brachytherapy session. The tumor was visible in the LMS. We threaded a 6F catheter past the obstruction and checked its position on the fluoroscope. It looked good, so we taped it in place. He went directly to radiation oncology to receive his 10 Gy dose.",
+    "note_text": "Mr. <PERSON> presented with severe dyspnea due to his left main stem tumor. We performed a bronchoscopy to place a catheter for his final brachytherapy session. The tumor was visible in the LMS. We threaded a 6F catheter past the obstruction and checked its position on the fluoroscope. It looked good, so we taped it in place. He went directly to radiation oncology to receive his 10 Gy dose.",
     "cpt_codes": [
       31643
     ],
@@ -3822,6 +3858,12 @@
       "style_type": 8,
       "generated_name": "Antonio Ramirez",
       "generation_date": "2025-12-11T12:42:18.977105"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4050,7 +4092,7 @@
     }
   },
   {
-    "note_text": "Indication: BI malignancy, pneumonia.\nAnesthesia: GA, ETT.\nFindings: BI 80% obstructed.\nProcedure: 6F catheter placed past tumor. Fluoro confirm. Dummy check.\nPlan: 6Gy x 4 weekly. Admit/Obs.",
+    "note_text": "Indication: BI malignancy, pneumonia.\nAnesthesia: GA, ETT.\nFindings: BI 80% obstructed.\nProcedure: 6F catheter placed past tumor. Fluoro confirm. <PERSON> check.\nPlan: 6Gy x 4 weekly. Admit/Obs.",
     "cpt_codes": [
       31643
     ],
@@ -4272,10 +4314,16 @@
       "style_type": 1,
       "generated_name": "Mary Smith",
       "generation_date": "2025-12-11T12:42:18.977213"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "CLINICAL SUMMARY: Ms. Jones, an 80-year-old female with NSCLC involving the bronchus intermedius (BI), underwent bronchoscopic catheter placement for palliative HDR brachytherapy. The BI was 80% obstructed by an infiltrative mass. Under general anesthesia, a 6-French afterloading catheter was positioned trans-bronchially. Verification via fluoroscopy ensured the catheter extended sufficiently distal to the 3.0 cm lesion. The patient was transferred for the first of four weekly fractions.",
+    "note_text": "CLINICAL SUMMARY: Ms. <PERSON>, an 80-year-old female with NSCLC involving the bronchus intermedius (BI), underwent bronchoscopic catheter placement for palliative HDR brachytherapy. The BI was 80% obstructed by an infiltrative mass. Under general anesthesia, a 6-French afterloading catheter was positioned trans-bronchially. Verification via fluoroscopy ensured the catheter extended sufficiently distal to the 3.0 cm lesion. The patient was transferred for the first of four weekly fractions.",
     "cpt_codes": [
       31643
     ],
@@ -4497,6 +4545,12 @@
       "style_type": 2,
       "generated_name": "Patricia Johnson",
       "generation_date": "2025-12-11T12:42:18.977267"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5625,7 +5679,7 @@
     }
   },
   {
-    "note_text": "Ms. Jones was brought to the OR for brachytherapy catheter placement to treat her bronchus intermedius tumor. Because of her pneumonia and age, we used general anesthesia. We found the tumor causing significant blockage. We carefully guided a 6F catheter past the narrowing. We used the fluoroscope to make sure it was in the right spot before taping it down. She is scheduled for four weekly sessions starting today.",
+    "note_text": "Ms. <PERSON> was brought to the OR for brachytherapy catheter placement to treat her bronchus intermedius tumor. Because of her pneumonia and age, we used general anesthesia. We found the tumor causing significant blockage. We carefully guided a 6F catheter past the narrowing. We used the fluoroscope to make sure it was in the right spot before taping it down. She is scheduled for four weekly sessions starting today.",
     "cpt_codes": [
       31643
     ],
@@ -5847,6 +5901,12 @@
       "style_type": 8,
       "generated_name": "Susan Garcia",
       "generation_date": "2025-12-11T12:42:18.977685"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6307,7 +6367,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. Anderson presented with recurrent hemoptysis secondary to a typical carcinoid tumor in the right middle lobe (RML). Under general anesthesia, the airway was inspected, revealing an exophytic lesion obstructing the RML bronchus. A 5-French flexible catheter was advanced 2 cm beyond the tumor margin. Positioning was authenticated via fluoroscopy. The patient was prepared for the first of three weekly HDR brachytherapy fractions (5.0 Gy).",
+    "note_text": "PROCEDURE NOTE: Mr. <PERSON> presented with recurrent hemoptysis secondary to a typical carcinoid tumor in the right middle lobe (RML). Under general anesthesia, the airway was inspected, revealing an exophytic lesion obstructing the RML bronchus. A 5-French flexible catheter was advanced 2 cm beyond the tumor margin. Positioning was authenticated via fluoroscopy. The patient was prepared for the first of three weekly HDR brachytherapy fractions (5.0 Gy).",
     "cpt_codes": [
       31643
     ],
@@ -6536,10 +6596,16 @@
       "style_type": 2,
       "generated_name": "John Moore",
       "generation_date": "2025-12-11T12:42:18.977861"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Primary Code: 31643 (Catheter placement).\nSecondary Code: 31622 (Washings - Bundled/Not billed separately if NCCI applies).\nLocation: RML Bronchus.\nDevice: 5F Flexible Catheter.\nImaging: Fluoroscopy verification.\nIndication: Recurrent carcinoid with hemoptysis.",
+    "note_text": "Primary Code: 31643 (Catheter placement).\nSecondary Code: 31622 (Washings - Bundled/Not billed separately if <LOCATION> applies).\nLocation: RML Bronchus.\nDevice: 5F Flexible Catheter.\nImaging: Fluoroscopy verification.\nIndication: Recurrent carcinoid with hemoptysis.",
     "cpt_codes": [
       31643
     ],
@@ -6768,10 +6834,16 @@
       "style_type": 3,
       "generated_name": "Robert Taylor",
       "generation_date": "2025-12-11T12:42:18.977921"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy w/ Brachy Cath\nPt: T. Anderson\nSteps:\n1. GA/ETT.\n2. Scope to RML.\n3. Washings for cytology.\n4. Place 5F catheter.\n5. Verify with fluoro.\n6. Secure device.\nPlan: RadOnc 5Gy.",
+    "note_text": "Procedure: Bronchoscopy w/ Brachy Cath\nPt: <PERSON>\nSteps:\n1. GA/ETT.\n2. Scope to RML.\n3. Washings for cytology.\n4. Place 5F catheter.\n5. Verify with fluoro.\n6. Secure device.\nPlan: RadOnc 5Gy.",
     "cpt_codes": [
       31643
     ],
@@ -7000,10 +7072,16 @@
       "style_type": 4,
       "generated_name": "William Anderson",
       "generation_date": "2025-12-11T12:42:18.977979"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "dr nguyen note for thomas anderson he has that carcinoid in the rml bleeding again so we are doing brachytherapy anesthesia was ga scope went down washed the area first then put the 5f catheter in checked it with the x ray machine looks fine taped it up hes going for his first treatment today",
+    "note_text": "<PERSON> note for <PERSON> he has that carcinoid in the rml bleeding again so we are doing brachytherapy anesthesia was ga scope went down washed the area first then put the 5f catheter in checked it with the x ray machine looks fine taped it up hes going for his first treatment today",
     "cpt_codes": [
       31643
     ],
@@ -7232,6 +7310,13 @@
       "style_type": 5,
       "generated_name": "Thomas Thomas",
       "generation_date": "2025-12-11T12:42:18.978038"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -7699,7 +7784,7 @@
     }
   },
   {
-    "note_text": "We performed a bronchoscopy on Mr. Anderson to treat his recurring carcinoid tumor in the right middle lobe. After putting him under general anesthesia, we inspected the airway and took some washings. We then placed a 5F catheter through the scope, guiding it past the tumor. We double-checked the position with fluoroscopy. He's set to get 5 Gy of radiation today.",
+    "note_text": "We performed a bronchoscopy on Mr. <PERSON> to treat his recurring carcinoid tumor in the right middle lobe. After putting him under general anesthesia, we inspected the airway and took some washings. We then placed a 5F catheter through the scope, guiding it past the tumor. We double-checked the position with fluoroscopy. He's set to get 5 Gy of radiation today.",
     "cpt_codes": [
       31643
     ],
@@ -7928,6 +8013,12 @@
       "style_type": 8,
       "generated_name": "David Harris",
       "generation_date": "2025-12-11T12:42:18.978213"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8388,7 +8479,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. Johnson, a 65-year-old male with squamous cell carcinoma of the distal trachea, underwent flexible bronchoscopy. The lesion presented with 55% obstruction. A 5-French flexible catheter was successfully navigated past the distal margin of the tumor. Fluoroscopic imaging confirmed the catheter position relative to the 4.0 cm treatment length. The patient was transported for HDR brachytherapy delivery.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON>, a 65-year-old male with squamous cell carcinoma of the distal trachea, underwent flexible bronchoscopy. The lesion presented with 55% obstruction. A 5-French flexible catheter was successfully navigated past the distal margin of the tumor. Fluoroscopic imaging confirmed the catheter position relative to the 4.0 cm treatment length. The patient was transported for HDR brachytherapy delivery.",
     "cpt_codes": [
       31643
     ],
@@ -8610,6 +8701,12 @@
       "style_type": 2,
       "generated_name": "John Garcia",
       "generation_date": "2025-12-11T12:42:18.978388"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8838,7 +8935,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: R. Johnson\nStaff: Dr. Patel\nSteps:\n1. Mod sed start.\n2. Scope to distal trachea.\n3. Tumor ID'd.\n4. 5F cath placed.\n5. Fluoro check.\n6. Secure.\nPlan: Session 1/4 today.",
+    "note_text": "Resident Note\nPt: <PERSON>\nStaff: Dr. Patel\nSteps:\n1. Mod sed start.\n2. Scope to distal trachea.\n3. Tumor ID'd.\n4. 5F cath placed.\n5. Fluoro check.\n6. Secure.\nPlan: Session 1/4 today.",
     "cpt_codes": [
       31643
     ],
@@ -9060,10 +9157,16 @@
       "style_type": 4,
       "generated_name": "William Robinson",
       "generation_date": "2025-12-11T12:42:18.978644"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "note for mr johnson distal trachea tumor causing wheezing we did the brachy cath placement moderate sedation was used scope went in saw the tumor put the 5f catheter past it fluoro confirmed it was in the right spot taped it to his nose sending him for 6gy radiation",
+    "note_text": "note for mr <PERSON> distal trachea tumor causing wheezing we did the brachy cath placement moderate sedation was used scope went in saw the tumor put the 5f catheter past it fluoro confirmed it was in the right spot taped it to his nose sending him for 6gy radiation",
     "cpt_codes": [
       31643
     ],
@@ -9285,6 +9388,12 @@
       "style_type": 5,
       "generated_name": "Thomas Clark",
       "generation_date": "2025-12-11T12:42:18.978704"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9738,7 +9847,7 @@
     }
   },
   {
-    "note_text": "Mr. Johnson came in for his first brachytherapy session for a tracheal tumor. We kept him comfortable with moderate sedation. The scope showed the tumor in the lower windpipe. We slid a 5F catheter down past the blockage and used the fluoroscope to make sure it was sitting right. We taped it securely so he could go get his radiation treatment.",
+    "note_text": "Mr. <PERSON> came in for his first brachytherapy session for a tracheal tumor. We kept him comfortable with moderate sedation. The scope showed the tumor in the lower windpipe. We slid a 5F catheter down past the blockage and used the fluoroscope to make sure it was sitting right. We taped it securely so he could go get his radiation treatment.",
     "cpt_codes": [
       31643
     ],
@@ -9960,6 +10069,12 @@
       "style_type": 8,
       "generated_name": "David Lee",
       "generation_date": "2025-12-11T12:42:18.978876"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10413,7 +10528,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. Garcia presented for his final fraction of endobronchial brachytherapy for a metastatic renal cell carcinoma lesion in the LUL. Under moderate sedation, the 2.2 cm tumor was identified. A 6-French afterloading catheter was positioned 2 cm distal to the lesion. Verification was accomplished via fluoroscopy. The patient proceeded to Radiation Oncology for the terminal 5.0 Gy dose.",
+    "note_text": "PROCEDURE NOTE: Mr. <PERSON> presented for his final fraction of endobronchial brachytherapy for a metastatic renal cell carcinoma lesion in the LUL. Under moderate sedation, the 2.2 cm tumor was identified. A 6-French afterloading catheter was positioned 2 cm distal to the lesion. Verification was accomplished via fluoroscopy. The patient proceeded to Radiation Oncology for the terminal 5.0 Gy dose.",
     "cpt_codes": [
       31643
     ],
@@ -10635,6 +10750,12 @@
       "style_type": 2,
       "generated_name": "Juan Allen",
       "generation_date": "2025-12-11T12:42:18.979049"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10863,7 +10984,7 @@
     }
   },
   {
-    "note_text": "Procedure: Brachy Cath Placement (Final)\nPt: J. Garcia\nSteps:\n1. Sedation.\n2. Scope LUL.\n3. 6F cath placed.\n4. Fluoro confirm.\n5. Secure.\nPlan: Final tx today.",
+    "note_text": "Procedure: Brachy Cath Placement (Final)\nPt: <PERSON>\nSteps:\n1. Sedation.\n2. Scope LUL.\n3. 6F cath placed.\n4. Fluoro confirm.\n5. Secure.\nPlan: Final tx today.",
     "cpt_codes": [
       31643
     ],
@@ -11085,10 +11206,16 @@
       "style_type": 4,
       "generated_name": "Luis Hernandez",
       "generation_date": "2025-12-11T12:42:18.979209"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "dr nguyen note for joseph garcia he has that kidney cancer met in his lung lul doing the last brachy session today sedation was fine put the 6f catheter in checked it on the screen looks good taped it sending him for radiation then we pull the catheter",
+    "note_text": "<PERSON> note for <PERSON> he has that kidney cancer met in his lung lul doing the last brachy session today sedation was fine put the 6f catheter in checked it on the screen looks good taped it sending him for radiation then we pull the catheter",
     "cpt_codes": [
       31643
     ],
@@ -11310,6 +11437,13 @@
       "style_type": 5,
       "generated_name": "Miguel King",
       "generation_date": "2025-12-11T12:42:18.979289"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -11763,7 +11897,7 @@
     }
   },
   {
-    "note_text": "We did the final catheter placement for Mr. Garcia's lung metastasis today. Using moderate sedation, we guided the scope to the LUL and threaded the 6F catheter past the tumor. Fluoroscopy showed it was in a good spot. He's off to get his last dose of radiation, and then the catheter comes out.",
+    "note_text": "We did the final catheter placement for Mr. <PERSON>'s lung metastasis today. Using moderate sedation, we guided the scope to the LUL and threaded the 6F catheter past the tumor. Fluoroscopy showed it was in a good spot. He's off to get his last dose of radiation, and then the catheter comes out.",
     "cpt_codes": [
       31643
     ],
@@ -11985,6 +12119,12 @@
       "style_type": 8,
       "generated_name": "Antonio Hill",
       "generation_date": "2025-12-11T12:42:18.979467"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12445,7 +12585,7 @@
     }
   },
   {
-    "note_text": "CLINICAL RECORD: Mr. White, a 74-year-old male with roentgenographically occult squamous cell carcinoma of the RUL (B3), presented for curative-intent brachytherapy. Flexible bronchoscopy under moderate sedation revealed the 0.8 cm lesion. A 5-French polyethylene catheter was placed across the tumor bed. Fluoroscopic verification confirmed appropriate positioning. The patient was transferred for the first of four fractions.",
+    "note_text": "CLINICAL RECORD: Mr. <PERSON>, a 74-year-old male with roentgenographically occult squamous cell carcinoma of the RUL (B3), presented for curative-intent brachytherapy. Flexible bronchoscopy under moderate sedation revealed the 0.8 cm lesion. A 5-French polyethylene catheter was placed across the tumor bed. Fluoroscopic verification confirmed appropriate positioning. The patient was transferred for the first of four fractions.",
     "cpt_codes": [
       31643
     ],
@@ -12674,6 +12814,12 @@
       "style_type": 2,
       "generated_name": "John Adams",
       "generation_date": "2025-12-11T12:42:18.979647"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -13141,7 +13287,7 @@
     }
   },
   {
-    "note_text": "charles white here for his early lung cancer treatment rul b3 segment we did the scope with sedation took some washings then put the 5f catheter in checked it with fluoro taped it up he goes for 6gy radiation now",
+    "note_text": "<PERSON> here for his early lung cancer treatment rul b3 segment we did the scope with sedation took some washings then put the 5f catheter in checked it with fluoro taped it up he goes for 6gy radiation now",
     "cpt_codes": [
       31643
     ],
@@ -13370,6 +13516,12 @@
       "style_type": 5,
       "generated_name": "Thomas Nelson",
       "generation_date": "2025-12-11T12:42:18.979822"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -13837,7 +13989,7 @@
     }
   },
   {
-    "note_text": "Mr. White has a very early stage cancer in his right upper lobe. We are treating it with brachytherapy. Today was session one. We sedated him, checked the airway, and took some washings. Then we put a 5F catheter right past the small tumor in the B3 segment. Fluoroscopy confirmed it was perfect. He's getting 6 Gy today.",
+    "note_text": "Mr. <PERSON> has a very early stage cancer in his right upper lobe. We are treating it with brachytherapy. Today was session one. We sedated him, checked the airway, and took some washings. Then we put a 5F catheter right past the small tumor in the B3 segment. Fluoroscopy confirmed it was perfect. He's getting 6 Gy today.",
     "cpt_codes": [
       31643
     ],
@@ -14066,6 +14218,12 @@
       "style_type": 8,
       "generated_name": "David Perez",
       "generation_date": "2025-12-11T12:42:18.979990"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14526,7 +14684,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Ms. Smith, presenting with recurrent NSCLC and RLL collapse, underwent the final session of palliative brachytherapy. Under general anesthesia, the near-complete obstruction of the RLL bronchus was visualized. A 5-French polyethylene catheter was navigated distally. Fluoroscopy confirmed the tip position relative to the 4.8 cm treatment length. The patient was transported for the final 7.5 Gy fraction.",
+    "note_text": "OPERATIVE SUMMARY: Ms. <PERSON>, presenting with recurrent NSCLC and RLL collapse, underwent the final session of palliative brachytherapy. Under general anesthesia, the near-complete obstruction of the RLL bronchus was visualized. A 5-French polyethylene catheter was navigated distally. Fluoroscopy confirmed the tip position relative to the 4.8 cm treatment length. The patient was transported for the final 7.5 Gy fraction.",
     "cpt_codes": [
       31643
     ],
@@ -14748,6 +14906,12 @@
       "style_type": 2,
       "generated_name": "Patricia Phillips",
       "generation_date": "2025-12-11T12:42:18.980154"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15201,7 +15365,7 @@
     }
   },
   {
-    "note_text": "maria smith note for final brachy session rll tumor causing collapse she was under ga scope went down saw the blockage put the 5f catheter past it checked on fluoro taped it up sending her for radiation then catheter out",
+    "note_text": "<PERSON> note for final brachy session rll tumor causing collapse she was under ga scope went down saw the blockage put the 5f catheter past it checked on fluoro taped it up sending her for radiation then catheter out",
     "cpt_codes": [
       31643
     ],
@@ -15423,6 +15587,12 @@
       "style_type": 5,
       "generated_name": "Elizabeth Evans",
       "generation_date": "2025-12-11T12:42:18.980337"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15876,7 +16046,7 @@
     }
   },
   {
-    "note_text": "Ms. Smith is here for her last brachytherapy treatment for that RLL tumor. Because of the lung collapse, we used general anesthesia. We got the 5F catheter past the blockage in the RLL bronchus and checked it with fluoroscopy. She's going for her 7.5 Gy dose now, and we'll take the catheter out afterwards.",
+    "note_text": "Ms. <PERSON> is here for her last brachytherapy treatment for that RLL tumor. Because of the lung collapse, we used general anesthesia. We got the 5F catheter past the blockage in the RLL bronchus and checked it with fluoroscopy. She's going for her 7.5 Gy dose now, and we'll take the catheter out afterwards.",
     "cpt_codes": [
       31643
     ],
@@ -16098,6 +16268,12 @@
       "style_type": 8,
       "generated_name": "Susan Stewart",
       "generation_date": "2025-12-11T12:42:18.980499"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -16575,7 +16751,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Ms. Martinez, with central small cell lung cancer recurrence at the main carina, presented for brachytherapy. Moderate sedation was utilized. The lesion caused 40% obstruction. Endobronchial biopsies were obtained for confirmation. Subsequently, a 6-French afterloading catheter was positioned across the carina. Fluoroscopy verified the 3.5 cm treatment length. The patient proceeded to Session 1 of 4.",
+    "note_text": "PROCEDURE NOTE: Ms. <PERSON>, with central small cell lung cancer recurrence at the main carina, presented for brachytherapy. Moderate sedation was utilized. The lesion caused 40% obstruction. Endobronchial biopsies were obtained for confirmation. Subsequently, a 6-French afterloading catheter was positioned across the carina. Fluoroscopy verified the 3.5 cm treatment length. The patient proceeded to Session 1 of 4.",
     "cpt_codes": [
       31643,
       31625
@@ -16821,6 +16997,12 @@
       "style_type": 2,
       "generated_name": "Patricia Rogers",
       "generation_date": "2025-12-11T12:42:18.980680"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17322,7 +17504,7 @@
     }
   },
   {
-    "note_text": "margaret martinez here for carinal tumor sclc recurrence we did moderate sedation took some biopsies first then put the 6f catheter in for the radiation checked it with fluoro looks good shes going for treatment now 1 of 4",
+    "note_text": "<PERSON> here for carinal tumor sclc recurrence we did moderate sedation took some biopsies first then put the 6f catheter in for the radiation checked it with fluoro looks good shes going for treatment now 1 of 4",
     "cpt_codes": [
       31643,
       31625
@@ -17568,6 +17750,12 @@
       "style_type": 5,
       "generated_name": "Elizabeth Morgan",
       "generation_date": "2025-12-11T12:42:18.981023"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -18069,7 +18257,7 @@
     }
   },
   {
-    "note_text": "Ms. Martinez has a recurrence of SCLC at her main carina. We sedated her and took three biopsy samples first. Then we placed a 6F catheter across the area for her radiation treatment. Fluoroscopy showed it was in the right place. She's starting her weekly sessions today.",
+    "note_text": "Ms. <PERSON> has a recurrence of SCLC at her main carina. We sedated her and took three biopsy samples first. Then we placed a 6F catheter across the area for her radiation treatment. Fluoroscopy showed it was in the right place. She's starting her weekly sessions today.",
     "cpt_codes": [
       31643,
       31625
@@ -18315,6 +18503,12 @@
       "style_type": 8,
       "generated_name": "Susan Bailey",
       "generation_date": "2025-12-11T12:42:18.981202"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -18792,7 +18986,7 @@
     }
   },
   {
-    "note_text": "CLINICAL REPORT: Mr. Williams, a 72-year-old male with adenoid cystic carcinoma of the mid-trachea, underwent bronchoscopic catheter placement. The exophytic tumor caused 45% obstruction. A 5-French flexible catheter was advanced distally to cover the 3.6 cm treatment length. Fluoroscopic verification was documented. The patient was transferred for the first of four weekly HDR fractions.",
+    "note_text": "CLINICAL REPORT: Mr. <PERSON>, a 72-year-old male with adenoid cystic carcinoma of the mid-trachea, underwent bronchoscopic catheter placement. The exophytic tumor caused 45% obstruction. A 5-French flexible catheter was advanced distally to cover the 3.6 cm treatment length. Fluoroscopic verification was documented. The patient was transferred for the first of four weekly HDR fractions.",
     "cpt_codes": [
       31643
     ],
@@ -19014,6 +19208,12 @@
       "style_type": 2,
       "generated_name": "John Richardson",
       "generation_date": "2025-12-11T12:42:18.981444"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -19242,7 +19442,7 @@
     }
   },
   {
-    "note_text": "Procedure: Brachy Cath #1\nPt: T. Williams\nSteps:\n1. Mod sed.\n2. Scope trachea.\n3. 5F cath placed.\n4. Fluoro check.\n5. Secure.\nPlan: RadOnc 6Gy.",
+    "note_text": "Procedure: Brachy Cath #1\nPt: <PERSON>\nSteps:\n1. Mod sed.\n2. Scope trachea.\n3. 5F cath placed.\n4. Fluoro check.\n5. Secure.\nPlan: RadOnc 6Gy.",
     "cpt_codes": [
       31643
     ],
@@ -19464,10 +19664,16 @@
       "style_type": 4,
       "generated_name": "William Howard",
       "generation_date": "2025-12-11T12:42:18.981554"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "mr williams has that trachea tumor acc we did the cath placement today moderate sedation scope went in saw the tumor mid trachea put the 5f catheter past it checked with fluoro taped it up hes going for radiation now",
+    "note_text": "mr <PERSON> has that trachea tumor acc we did the cath placement today moderate sedation scope went in saw the tumor mid trachea put the 5f catheter past it checked with fluoro taped it up hes going for radiation now",
     "cpt_codes": [
       31643
     ],
@@ -19689,6 +19895,12 @@
       "style_type": 5,
       "generated_name": "Thomas Ward",
       "generation_date": "2025-12-11T12:42:18.981612"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -20142,7 +20354,7 @@
     }
   },
   {
-    "note_text": "Mr. Williams is starting brachytherapy for his tracheal tumor. We used moderate sedation. The scope showed the tumor in the middle of the windpipe. We slid the 5F catheter past it and checked the position on the screen. It looked good, so we secured it. He's heading to radiation for his first dose.",
+    "note_text": "Mr. <PERSON> is starting brachytherapy for his tracheal tumor. We used moderate sedation. The scope showed the tumor in the middle of the windpipe. We slid the 5F catheter past it and checked the position on the screen. It looked good, so we secured it. He's heading to radiation for his first dose.",
     "cpt_codes": [
       31643
     ],
@@ -20364,6 +20576,12 @@
       "style_type": 8,
       "generated_name": "David Gray",
       "generation_date": "2025-12-11T12:42:18.981895"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

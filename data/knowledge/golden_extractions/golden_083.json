@@ -468,7 +468,7 @@
     }
   },
   {
-    "note_text": "patient michael brown here for cough he has granulation tissue at the old trach site so we did a bronchoscopy under sedation. saw the tissue narrowing the trachea about 60 percent. used forceps to pull it out piece by piece and a snare for the big part just mechanical removal no laser or anything. stopped the bleeding with cold saline patient did fine discharging him home thanks",
+    "note_text": "patient <PERSON> here for cough he has granulation tissue at the old trach site so we did a bronchoscopy under sedation. saw the tissue narrowing the trachea about 60 percent. used forceps to pull it out piece by piece and a snare for the big part just mechanical removal no laser or anything. stopped the bleeding with cold saline patient did fine discharging him home thanks",
     "cpt_codes": [
       31640
     ],
@@ -582,10 +582,16 @@
       "style_type": 5,
       "generated_name": "Richard Jones",
       "generation_date": "2025-12-09T12:09:32.607225"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Michael Brown, 70M. Chronic cough and wheeze from tracheal granulation. Flexible bronchoscopy with mechanical debulking performed. Moderate sedation used. Findings included irregular granulation tissue circumferentially at the mid-trachea narrowing lumen to 60%. Multiple passes of forceps debulking were performed to remove tissue. Snare resection used for pedunculated portion. No ablation. Minor oozing controlled. Patient discharged home.",
+    "note_text": "<PERSON>, 70M. Chronic cough and wheeze from tracheal granulation. Flexible bronchoscopy with mechanical debulking performed. Moderate sedation used. Findings included irregular granulation tissue circumferentially at the mid-trachea narrowing lumen to 60%. Multiple passes of forceps debulking were performed to remove tissue. Snare resection used for pedunculated portion. No ablation. Minor oozing controlled. Patient discharged home.",
     "cpt_codes": [
       31640
     ],
@@ -699,6 +705,12 @@
       "style_type": 6,
       "generated_name": "Joseph Garcia",
       "generation_date": "2025-12-09T12:09:32.607256"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1404,7 +1416,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronchoscopy / Debulking\nPatient: Hannah Lee\nStaff: Dr. Chang\nSteps:\n1. GA induced. Rigid scope inserted.\n2. Tumor seen in Bronchus Intermedius (90% blocked).\n3. Rigid coring performed to debulk.\n4. Forceps used for cleanup.\n5. Epi used for bleeding.\nDisposition: ICU intubated.",
+    "note_text": "Procedure: Rigid Bronchoscopy / Debulking\nPatient: <PERSON>\nStaff: Dr. Chang\nSteps:\n1. GA induced. Rigid scope inserted.\n2. Tumor seen in Bronchus Intermedius (90% blocked).\n3. Rigid coring performed to debulk.\n4. Forceps used for cleanup.\n5. Epi used for bleeding.\nDisposition: ICU intubated.",
     "cpt_codes": [
       31640
     ],
@@ -1518,10 +1530,16 @@
       "style_type": 4,
       "generated_name": "Linda Gonzalez",
       "generation_date": "2025-12-09T12:09:32.607474"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Op note for hannah lee she has small cell lung cancer and a blocked lung. took her to the OR for rigid bronch. saw the tumor blocking the bronchus intermedius almost completely. used the rigid scope to core it out and forceps to grab the rest. opened it up to maybe 60 percent. bleeding was a bit moderate used epi and cold saline. kept her intubated for the ICU.",
+    "note_text": "Op note for <PERSON> she has small cell lung cancer and a blocked lung. took her to the OR for rigid bronch. saw the tumor blocking the bronchus intermedius almost completely. used the rigid scope to core it out and forceps to grab the rest. opened it up to maybe 60 percent. bleeding was a bit moderate used epi and cold saline. kept her intubated for the ICU.",
     "cpt_codes": [
       31640
     ],
@@ -1635,6 +1653,12 @@
       "style_type": 5,
       "generated_name": "Elizabeth Wilson",
       "generation_date": "2025-12-09T12:09:32.607502"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1872,7 +1896,7 @@
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on Ms. Lee to address the collapse of her right lower lobe. Upon inserting the rigid scope, we encountered a large tumor obstructing the bronchus intermedius. We used the beveled tip of the scope to mechanically core through the tumor mass. Following this, large forceps were used to remove the debris. We successfully reopened the airway to about 60% patency without needing any laser or heat therapy.",
+    "note_text": "We performed a rigid bronchoscopy on Ms. <PERSON> to address the collapse of her right lower lobe. Upon inserting the rigid scope, we encountered a large tumor obstructing the bronchus intermedius. We used the beveled tip of the scope to mechanically core through the tumor mass. Following this, large forceps were used to remove the debris. We successfully reopened the airway to about 60% patency without needing any laser or heat therapy.",
     "cpt_codes": [
       31640
     ],
@@ -1986,6 +2010,12 @@
       "style_type": 8,
       "generated_name": "Jessica Taylor",
       "generation_date": "2025-12-09T12:09:32.607593"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2925,7 +2955,7 @@
     }
   },
   {
-    "note_text": "Mr. Adams required urgent airway intervention due to a tumor at his carina. We utilized a rigid bronchoscope under general anesthesia. The tumor was obstructing the distal trachea significantly. We mechanically removed the tissue by coring with the scope and pulling the tissue free with forceps. A snare was also utilized. By the end of the procedure, we had established good airflow to both lungs.",
+    "note_text": "Mr. <PERSON> required urgent airway intervention due to a tumor at his carina. We utilized a rigid bronchoscope under general anesthesia. The tumor was obstructing the distal trachea significantly. We mechanically removed the tissue by coring with the scope and pulling the tissue free with forceps. A snare was also utilized. By the end of the procedure, we had established good airflow to both lungs.",
     "cpt_codes": [
       31640
     ],
@@ -3039,6 +3069,12 @@
       "style_type": 8,
       "generated_name": "Edward Sanchez",
       "generation_date": "2025-12-09T12:09:32.607857"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3510,7 +3546,7 @@
     }
   },
   {
-    "note_text": "Procedure: RUL Tumor Debulking\nPatient: Aisha Khan\nSteps:\n1. LMA placed. Propofol sedation.\n2. Scope to RUL.\n3. Polypoid tumor seen.\n4. Snared the tumor and removed pieces with forceps.\n5. RUL opened up.\n6. Minimal bleeding.\nPlan: CT in 6 weeks.",
+    "note_text": "Procedure: RUL Tumor Debulking\nPatient: <PERSON>\nSteps:\n1. LMA placed. Propofol sedation.\n2. Scope to RUL.\n3. Polypoid tumor seen.\n4. Snared the tumor and removed pieces with forceps.\n5. RUL opened up.\n6. Minimal bleeding.\nPlan: CT in 6 weeks.",
     "cpt_codes": [
       31640
     ],
@@ -3624,10 +3660,16 @@
       "style_type": 4,
       "generated_name": "Betty Walker",
       "generation_date": "2025-12-09T12:09:32.608007"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure note for Aisha Khan she has that collapsed right upper lobe from a tumor. Went in with the flexible scope through an LMA. Found the tumor blocking the RUL almost totally. Used the snare to cut it and forceps to clear it out. Did not use the laser or APC. Just mechanical removal. Bleeding stopped with saline. She went home fine.",
+    "note_text": "Procedure note for <PERSON> she has that collapsed right upper lobe from a tumor. Went in with the flexible scope through an LMA. Found the tumor blocking the RUL almost totally. Used the snare to cut it and forceps to clear it out. Did not use the laser or APC. Just mechanical removal. Bleeding stopped with saline. She went home fine.",
     "cpt_codes": [
       31640
     ],
@@ -3741,6 +3783,12 @@
       "style_type": 5,
       "generated_name": "Margaret Young",
       "generation_date": "2025-12-09T12:09:32.608035"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3978,7 +4026,7 @@
     }
   },
   {
-    "note_text": "Ms. Khan presented with a collapsed lung lobe due to a tumor blockage. We performed a flexible bronchoscopy to clear the airway. Upon reaching the right upper lobe, we found the tumor blocking the entrance. We used a snare to loop around the tumor and cut it, and forceps to pull the pieces out. We continued this until the airway was open again. No heat therapy was needed.",
+    "note_text": "Ms. <PERSON> presented with a collapsed lung lobe due to a tumor blockage. We performed a flexible bronchoscopy to clear the airway. Upon reaching the right upper lobe, we found the tumor blocking the entrance. We used a snare to loop around the tumor and cut it, and forceps to pull the pieces out. We continued this until the airway was open again. No heat therapy was needed.",
     "cpt_codes": [
       31640
     ],
@@ -4092,6 +4140,12 @@
       "style_type": 8,
       "generated_name": "Kimberly Wright",
       "generation_date": "2025-12-09T12:09:32.608124"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4680,7 +4734,7 @@
     }
   },
   {
-    "note_text": "Robert Wilson 73 male with bad lung cancer blocking the main airway. Did a rigid bronch today. Tumor was huge at the carina and right mainstem. We cored through it with the rigid tube and used the microdebrider to shave it down. No burning used just cutting. He desatted for a minute but came back up. Leaving him intubated for the ICU.",
+    "note_text": "<PERSON> 73 male with bad lung cancer blocking the main airway. Did a rigid bronch today. Tumor was huge at the carina and right mainstem. We cored through it with the rigid tube and used the microdebrider to shave it down. No burning used just cutting. He desatted for a minute but came back up. Leaving him intubated for the ICU.",
     "cpt_codes": [
       31640
     ],
@@ -4794,6 +4848,12 @@
       "style_type": 5,
       "generated_name": "Matthew Green",
       "generation_date": "2025-12-09T12:09:32.608301"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5031,7 +5091,7 @@
     }
   },
   {
-    "note_text": "We took Mr. Wilson to the OR for a rigid bronchoscopy to help him breathe. The cancer was blocking his right main airway and the carina. We used the rigid scope to mechanically core out the center of the tumor. Then, we used a microdebrider tool to shave away the remaining tissue and smooth the airway walls. We managed to open the airway significantly without using any heat ablation.",
+    "note_text": "We took Mr. <PERSON> to the OR for a rigid bronchoscopy to help him breathe. The cancer was blocking his right main airway and the carina. We used the rigid scope to mechanically core out the center of the tumor. Then, we used a microdebrider tool to shave away the remaining tissue and smooth the airway walls. We managed to open the airway significantly without using any heat ablation.",
     "cpt_codes": [
       31640
     ],
@@ -5145,6 +5205,12 @@
       "style_type": 8,
       "generated_name": "Jose Baker",
       "generation_date": "2025-12-09T12:09:32.608386"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5616,7 +5682,7 @@
     }
   },
   {
-    "note_text": "Procedure: LLL Debulking\nPatient: Emily Garcia\nSteps:\n1. Propofol sedation.\n2. Scope down. LLL blocked by mass.\n3. Suctioned pus.\n4. Snared the mass.\n5. Picked out pieces with forceps.\n6. No complications.\nPlan: Antibiotics and follow-up.",
+    "note_text": "Procedure: LLL Debulking\nPatient: <PERSON>\nSteps:\n1. Propofol sedation.\n2. Scope down. LLL blocked by mass.\n3. Suctioned pus.\n4. Snared the mass.\n5. Picked out pieces with forceps.\n6. No complications.\nPlan: Antibiotics and follow-up.",
     "cpt_codes": [
       31640
     ],
@@ -5730,10 +5796,16 @@
       "style_type": 4,
       "generated_name": "Carol Carter",
       "generation_date": "2025-12-09T12:09:32.608565"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Emily Garcia is here for the LLL mass causing pneumonia. Did the bronch with an LMA. Saw the tumor blocking the LLL about 75 percent. Used a snare to cut it off and forceps to clean it up. Sucked out a lot of pus too. Didn't use any fancy ablation just mechanical tools. Bleeding was minimal. Sending her home with antibiotics.",
+    "note_text": "<PERSON> is here for the LLL mass causing pneumonia. Did the bronch with an LMA. Saw the tumor blocking the LLL about 75 percent. Used a snare to cut it off and forceps to clean it up. Sucked out a lot of pus too. Didn't use any fancy ablation just mechanical tools. Bleeding was minimal. Sending her home with antibiotics.",
     "cpt_codes": [
       31640
     ],
@@ -5847,6 +5919,12 @@
       "style_type": 5,
       "generated_name": "Amanda Roberts",
       "generation_date": "2025-12-09T12:09:32.608593"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6084,7 +6162,7 @@
     }
   },
   {
-    "note_text": "Ms. Garcia has been suffering from pneumonia due to a tumor blocking her lower left lung. We performed a bronchoscopy to clear the blockage. We found the tumor and used a snare loop to cut it away, followed by forceps to remove the pieces. We also washed out the infection behind the blockage. The airway is now open.",
+    "note_text": "Ms. <PERSON> has been suffering from pneumonia due to a tumor blocking her lower left lung. We performed a bronchoscopy to clear the blockage. We found the tumor and used a snare loop to cut it away, followed by forceps to remove the pieces. We also washed out the infection behind the blockage. The airway is now open.",
     "cpt_codes": [
       31640
     ],
@@ -6198,6 +6276,12 @@
       "style_type": 8,
       "generated_name": "Stephanie Evans",
       "generation_date": "2025-12-09T12:09:32.608688"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6318,7 +6402,7 @@
     }
   },
   {
-    "note_text": "Indication: Critical distal tracheal obstruction (SCC).\nProc: Rigid bronch, mechanical debulking.\nTech: Rigid coring, forceps, microdebrider.\nFindings: Pinpoint lumen.\nAction: Mechanical excision only. No ablation.\nComplication: Desat to 80s -> resolved.\nDisp: ICU.",
+    "note_text": "Indication: Critical distal tracheal obstruction (SCC).\nProc: Rigid bronch, mechanical debulking.\nTech: Rigid coring, forceps, microdebrider.\nFindings: Pinpoint lumen.\nAction: Mechanical excision only. No ablation.\nComplication: <PERSON> to 80s -> resolved.\nDisp: ICU.",
     "cpt_codes": [
       31640
     ],
@@ -6432,6 +6516,12 @@
       "style_type": 1,
       "generated_name": "Frank Diaz",
       "generation_date": "2025-12-09T12:09:32.608752"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6669,7 +6759,7 @@
     }
   },
   {
-    "note_text": "Procedure: Emergency Rigid Bronch\nPatient: Steven Park\nSteps:\n1. GA. Rigid scope inserted.\n2. Distal trachea almost closed off.\n3. Cored through with scope.\n4. Used microdebrider to widen it.\n5. Pulled out pieces with forceps.\n6. Sats dropped but came back up.\nPlan: ICU intubated.",
+    "note_text": "Procedure: Emergency Rigid Bronch\nPatient: <PERSON>\nSteps:\n1. GA. Rigid scope inserted.\n2. Distal trachea almost closed off.\n3. Cored through with scope.\n4. Used microdebrider to widen it.\n5. Pulled out pieces with forceps.\n6. Sats dropped but came back up.\nPlan: ICU intubated.",
     "cpt_codes": [
       31640
     ],
@@ -6783,6 +6873,12 @@
       "style_type": 4,
       "generated_name": "Stephen Edwards",
       "generation_date": "2025-12-09T12:09:32.608845"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7137,7 +7233,7 @@
     }
   },
   {
-    "note_text": "Mr. Park was in critical condition with a tumor nearly closing off his windpipe. We performed an emergency rigid bronchoscopy. We used the metal tube of the scope to mechanically core a path through the tumor. We then used a shaving tool called a microdebrider to widen the opening further. We successfully restored the airway without using laser or heat, though his oxygen levels dipped briefly during the procedure.",
+    "note_text": "Mr. <PERSON> was in critical condition with a tumor nearly closing off his windpipe. We performed an emergency rigid bronchoscopy. We used the metal tube of the scope to mechanically core a path through the tumor. We then used a shaving tool called a microdebrider to widen the opening further. We successfully restored the airway without using laser or heat, though his oxygen levels dipped briefly during the procedure.",
     "cpt_codes": [
       31640
     ],
@@ -7251,6 +7347,12 @@
       "style_type": 8,
       "generated_name": "Joshua Morris",
       "generation_date": "2025-12-09T12:09:32.609033"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7722,7 +7824,7 @@
     }
   },
   {
-    "note_text": "Procedure: Tracheal Debulking\nPatient: Laura Perez\nSteps:\n1. Moderate sedation.\n2. Scope inserted.\n3. Scar tissue seen in trachea.\n4. Used forceps to grab granulation.\n5. Snared a ridge of scar.\n6. Airway looks better.\nPlan: Home.",
+    "note_text": "Procedure: Tracheal Debulking\nPatient: <PERSON>\nSteps:\n1. Moderate sedation.\n2. Scope inserted.\n3. Scar tissue seen in trachea.\n4. Used forceps to grab granulation.\n5. Snared a ridge of scar.\n6. Airway looks better.\nPlan: Home.",
     "cpt_codes": [
       31640
     ],
@@ -7836,10 +7938,16 @@
       "style_type": 4,
       "generated_name": "Helen Morgan",
       "generation_date": "2025-12-09T12:09:32.609189"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Laura Perez here for that tracheal scar from her breathing tube last year. Went in with the flex scope. Saw the narrowing about 65 percent. Used forceps to pick away the granulation and a snare to cut the scar band. Didn't use a balloon this time just mechanical removal. Bleeding was minimal. She can go home.",
+    "note_text": "<PERSON> here for that tracheal scar from her breathing tube last year. Went in with the flex scope. Saw the narrowing about 65 percent. Used forceps to pick away the granulation and a snare to cut the scar band. Didn't use a balloon this time just mechanical removal. Bleeding was minimal. She can go home.",
     "cpt_codes": [
       31640
     ],
@@ -7953,6 +8061,12 @@
       "style_type": 5,
       "generated_name": "Amy Peterson",
       "generation_date": "2025-12-09T12:09:32.609217"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8190,7 +8304,7 @@
     }
   },
   {
-    "note_text": "Ms. Perez has scarring in her trachea from a previous intubation. We went in with a bronchoscope and found the scar tissue narrowing her airway. We used small forceps to remove the granulation tissue and a snare loop to cut away a ridge of scar. We didn't need to stretch it with a balloon or burn it; simple mechanical removal opened it up nicely.",
+    "note_text": "Ms. <PERSON> has scarring in her trachea from a previous intubation. We went in with a bronchoscope and found the scar tissue narrowing her airway. We used small forceps to remove the granulation tissue and a snare loop to cut away a ridge of scar. We didn't need to stretch it with a balloon or burn it; simple mechanical removal opened it up nicely.",
     "cpt_codes": [
       31640
     ],
@@ -8304,6 +8418,12 @@
       "style_type": 8,
       "generated_name": "Anna Bailey",
       "generation_date": "2025-12-09T12:09:32.609310"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8775,7 +8895,7 @@
     }
   },
   {
-    "note_text": "Procedure: Left Main Debulking\nPatient: Daniel Scott\nSteps:\n1. GA / Rigid Scope.\n2. Left main is 85% blocked.\n3. Cored it out with the scope.\n4. Grabbed pieces with forceps.\n5. Can see lobes now.\n6. Bleeding stopped with cold saline.\nDisposition: Floor.",
+    "note_text": "Procedure: Left Main Debulking\nPatient: <PERSON>\nSteps:\n1. GA / Rigid Scope.\n2. Left main is 85% blocked.\n3. Cored it out with the scope.\n4. Grabbed pieces with forceps.\n5. Can see lobes now.\n6. Bleeding stopped with cold saline.\nDisposition: Floor.",
     "cpt_codes": [
       31640
     ],
@@ -8889,6 +9009,12 @@
       "style_type": 4,
       "generated_name": "Peter Ward",
       "generation_date": "2025-12-09T12:09:32.609466"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9243,7 +9369,7 @@
     }
   },
   {
-    "note_text": "Mr. Scott had a tumor blocking his left main airway. We used a rigid bronchoscope to fix this. We physically cored out the tumor using the end of the scope and used forceps to remove the pieces. We didn't use any lasers. We managed to open the airway enough to see the branches going to the upper and lower lobes.",
+    "note_text": "Mr. <PERSON> had a tumor blocking his left main airway. We used a rigid bronchoscope to fix this. We physically cored out the tumor using the end of the scope and used forceps to remove the pieces. We didn't use any lasers. We managed to open the airway enough to see the branches going to the upper and lower lobes.",
     "cpt_codes": [
       31640
     ],
@@ -9357,6 +9483,12 @@
       "style_type": 8,
       "generated_name": "Carl Wood",
       "generation_date": "2025-12-09T12:09:32.609590"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9828,7 +9960,7 @@
     }
   },
   {
-    "note_text": "Procedure: BI Tumor Debulking\nPatient: Isabel Ramos\nSteps:\n1. GA / Rigid.\n2. Mass in Bronchus Intermedius.\n3. Cored it and pulled pieces with forceps.\n4. No laser used.\n5. Airway is 60% open now.\nPlan: Floor obs.",
+    "note_text": "Procedure: BI Tumor Debulking\nPatient: <PERSON>\nSteps:\n1. GA / Rigid.\n2. Mass in Bronchus Intermedius.\n3. Cored it and pulled pieces with forceps.\n4. No laser used.\n5. Airway is 60% open now.\nPlan: Floor obs.",
     "cpt_codes": [
       31640
     ],
@@ -9942,6 +10074,12 @@
       "style_type": 4,
       "generated_name": "Katherine James",
       "generation_date": "2025-12-09T12:09:32.609746"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10296,7 +10434,7 @@
     }
   },
   {
-    "note_text": "Ms. Ramos had a polyp-like tumor blocking her intermediate bronchus. We performed a rigid bronchoscopy to remove it. We used the sharp edge of the rigid scope to cut the tumor and forceps to remove it in pieces. We opened the airway to about 60% of its normal size without needing to use any burning tools.",
+    "note_text": "Ms. <PERSON> had a polyp-like tumor blocking her intermediate bronchus. We performed a rigid bronchoscopy to remove it. We used the sharp edge of the rigid scope to cut the tumor and forceps to remove it in pieces. We opened the airway to about 60% of its normal size without needing to use any burning tools.",
     "cpt_codes": [
       31640
     ],
@@ -10410,6 +10548,12 @@
       "style_type": 8,
       "generated_name": "Virginia Price",
       "generation_date": "2025-12-09T12:09:32.609946"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

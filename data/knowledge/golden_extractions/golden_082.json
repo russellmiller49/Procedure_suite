@@ -2457,7 +2457,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronchoscopy\nPatient: David Nguyen\nSteps:\n1. GA/Jet vent.\n2. Scope to carina.\n3. Tumor coring with rigid scope.\n4. Forceps removal of chunks.\n5. Microdebrider cleanup.\n6. Hemostasis with epi/balloon.\n7. Airway patent.\nPlan: ICU admission.",
+    "note_text": "Procedure: Rigid Bronchoscopy\nPatient: <PERSON>\nSteps:\n1. GA/Jet vent.\n2. Scope to carina.\n3. Tumor coring with rigid scope.\n4. Forceps removal of chunks.\n5. Microdebrider cleanup.\n6. Hemostasis with epi/balloon.\n7. Airway patent.\nPlan: ICU admission.",
     "cpt_codes": [
       31640
     ],
@@ -2571,6 +2571,12 @@
       "style_type": 4,
       "generated_name": "Donald Perez",
       "generation_date": "2025-12-09T12:09:29.584246"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3627,7 +3633,7 @@
     }
   },
   {
-    "note_text": "Procedure note sarah ibrahim... renal cell met to the right mainstem... rigid bronch used... tumor was pretty vascular... we cored it with the scope and used forceps to pull pieces out... microdebrider finished it off... bleeding wasnt too bad used some epi... airway looks open now about 80 percent... extubated and sent to recovery.",
+    "note_text": "Procedure note <PERSON>... renal cell met to the right mainstem... rigid bronch used... tumor was pretty vascular... we cored it with the scope and used forceps to pull pieces out... microdebrider finished it off... bleeding wasnt too bad used some epi... airway looks open now about 80 percent... extubated and sent to recovery.",
     "cpt_codes": [
       31640
     ],
@@ -3741,6 +3747,12 @@
       "style_type": 5,
       "generated_name": "Margaret Young",
       "generation_date": "2025-12-09T12:09:29.584539"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5616,7 +5628,7 @@
     }
   },
   {
-    "note_text": "Resident Note: BI Debulking\nPatient: Evelyn Brooks\n1. Rigid scope inserted.\n2. BI tumor found.\n3. Cored with scope.\n4. Microdebrider used for cleanup.\n5. Secretions suctioned.\n6. Bleeding controlled.\n7. Extubated.",
+    "note_text": "Resident Note: BI Debulking\nPatient: <PERSON>\n1. Rigid scope inserted.\n2. BI tumor found.\n3. Cored with scope.\n4. Microdebrider used for cleanup.\n5. Secretions suctioned.\n6. Bleeding controlled.\n7. Extubated.",
     "cpt_codes": [
       31640
     ],
@@ -5730,6 +5742,12 @@
       "style_type": 4,
       "generated_name": "Carol Carter",
       "generation_date": "2025-12-09T12:09:29.585088"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5967,7 +5985,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nBronchus Intermedius obstruction, Adenocarcinoma.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nMechanical debulking using rigid coring and microdebrider. Airway opened. Secretions cleared.\n[Plan]\nIV Antibiotics, Floor admit.",
+    "note_text": "[Indication]\nBronchus Intermedius obstruction, Adenocarcinoma.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nMechanical debulking using rigid coring and microdebrider. Airway opened. Secretions cleared.\n[Plan]\nIV Antibiotics, <PERSON> admit.",
     "cpt_codes": [
       31640
     ],
@@ -6081,6 +6099,12 @@
       "style_type": 7,
       "generated_name": "Deborah Phillips",
       "generation_date": "2025-12-09T12:09:29.585180"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6786,7 +6810,7 @@
     }
   },
   {
-    "note_text": "Note for omar hassan... has that carcinoid in the LLL... did a flex bronch with lma... used a snare to cut it off at the base... then grabbed the rest with forceps... came out nicely... airway is open... no complications... going home today.",
+    "note_text": "Note for <PERSON>... has that carcinoid in the LLL... did a flex bronch with lma... used a snare to cut it off at the base... then grabbed the rest with forceps... came out nicely... airway is open... no complications... going home today.",
     "cpt_codes": [
       31640
     ],
@@ -6900,6 +6924,12 @@
       "style_type": 5,
       "generated_name": "Stephen Collins",
       "generation_date": "2025-12-09T12:09:29.585396"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7722,7 +7752,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Emergency Debulking\nPatient: Lin Chen\n1. GA/Rigid scope.\n2. LMS 95% blocked.\n3. Cored with scope.\n4. Removed chunks with forceps.\n5. Microdebrider used.\n6. Lung re-expanded on fluoro/cxr.\n7. To ICU intubated.",
+    "note_text": "Resident Note: Emergency Debulking\nPatient: <PERSON>\n1. GA/Rigid scope.\n2. LMS 95% blocked.\n3. Cored with scope.\n4. Removed chunks with forceps.\n5. Microdebrider used.\n6. Lung re-expanded on fluoro/cxr.\n7. To ICU intubated.",
     "cpt_codes": [
       31640
     ],
@@ -7836,10 +7866,16 @@
       "style_type": 4,
       "generated_name": "Helen Morgan",
       "generation_date": "2025-12-09T12:09:29.585711"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Emergency bronch for lin chen... hypoxic failure from lms tumor... rigid scope used... cored out the tumor aggressively... pulled pieces with forceps... used microdebrider... no laser... bleeding controlled... lung popped back up... sent to icu on vent.",
+    "note_text": "Emergency bronch for <PERSON>... hypoxic failure from lms tumor... rigid scope used... cored out the tumor aggressively... pulled pieces with forceps... used microdebrider... no laser... bleeding controlled... lung popped back up... sent to icu on vent.",
     "cpt_codes": [
       31640
     ],
@@ -7953,6 +7989,12 @@
       "style_type": 5,
       "generated_name": "Amy Peterson",
       "generation_date": "2025-12-09T12:09:29.585741"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8892,7 +8934,7 @@
     }
   },
   {
-    "note_text": "Jacob morales procedure note... right mainstem tumor bleeding... rigid bronch... sucked out the blood... cored the tumor with the scope... grabbed pieces with forceps... microdebrider used to smooth it... bleeding stopped with epi... airway open now... step down unit.",
+    "note_text": "<PERSON> morales procedure note... right mainstem tumor bleeding... rigid bronch... sucked out the blood... cored the tumor with the scope... grabbed pieces with forceps... microdebrider used to smooth it... bleeding stopped with epi... airway open now... step down unit.",
     "cpt_codes": [
       31640
     ],
@@ -9006,6 +9048,12 @@
       "style_type": 5,
       "generated_name": "Harold Cox",
       "generation_date": "2025-12-09T12:09:29.586056"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10179,7 +10227,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLMS obstruction, Metastatic Breast Cancer.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nMechanical excision of tumor using rigid bevel, forceps, and snare. Lumen patent. No thermal energy.\n[Plan]\nOncology admission.",
+    "note_text": "[Indication]\nLMS obstruction, <PERSON>.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nMechanical excision of tumor using rigid bevel, forceps, and snare. Lumen patent. No thermal energy.\n[Plan]\nOncology admission.",
     "cpt_codes": [
       31640
     ],
@@ -10293,6 +10341,12 @@
       "style_type": 7,
       "generated_name": "Debra Hughes",
       "generation_date": "2025-12-09T12:09:29.586381"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

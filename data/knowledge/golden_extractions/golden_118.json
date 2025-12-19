@@ -876,7 +876,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nAttending: [Attending Name]\nResident: [Resident Name]\nProcedure: Rigid Bronch + Debulking\n\nSteps:\n1. Time out. GA induced.\n2. 12mm rigid scope -> distal trachea. Jet vent attached.\n3. Flex scope inserted. Tumor seen at LC2 carina (LUL 100% blocked, LLL 95%).\n4. Biopsies taken.\n5. APC used to burn. Cryo/forceps used to debulk.\n6. Fogarty balloon used in LLL to pull out pus.\n7. Complication: Desat to 50s. Suctioned clots, gave O2. Recovered.\n8. Hemostasis achieved.\n\nPlan: ICU admit.",
+    "note_text": "Procedure Note\nAttending: [Attending Name]\nResident: [Resident Name]\nProcedure: Rigid Bronch + Debulking\n\nSteps:\n1. Time out. GA induced.\n2. 12mm rigid scope -> distal trachea. Jet vent attached.\n3. Flex scope inserted. Tumor seen at LC2 carina (LUL 100% blocked, LLL 95%).\n4. Biopsies taken.\n5. APC used to burn. Cryo/forceps used to debulk.\n6. Fogarty balloon used in LLL to pull out pus.\n7. Complication: <PERSON> to 50s. Suctioned clots, gave O2. Recovered.\n8. Hemostasis achieved.\n\nPlan: ICU admit.",
     "cpt_codes": [
       31641
     ],
@@ -1165,6 +1165,12 @@
       "style_type": 4,
       "generated_name": "David Miller",
       "generation_date": "2025-12-18T19:14:59.957913"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3467,7 +3473,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE PERFORMED: Rigid bronchoscopy with tumor debulking and Endobronchial Ultrasound (EBUS) staging.\nFINDINGS: Initial inspection via LMA revealed an endobronchial tumor obstructing the distal left mainstem (85%). EBUS-guided TBNA was performed at stations 4R, 2R, 7, and 4L; rapid on-site evaluation showed lymphocytes without malignancy. The airway was then secured with a 12 mm rigid bronchoscope. The tumor was devascularized using Argon Plasma Coagulation (APC) and debulked using a 'burn and shave' technique with cryotherapy assistance. A Fogarty balloon catheter was utilized to clear purulent secretions from the left lower lobe. Despite these efforts, distal tumor extension prevented complete recanalization.",
+    "note_text": "PROCEDURE PERFORMED: Rigid bronchoscopy with tumor debulking and <PERSON> (EBUS) staging.\nFINDINGS: Initial inspection via LMA revealed an endobronchial tumor obstructing the distal left mainstem (85%). EBUS-guided TBNA was performed at stations 4R, 2R, 7, and 4L; rapid on-site evaluation showed lymphocytes without malignancy. The airway was then secured with a 12 mm rigid bronchoscope. The tumor was devascularized using Argon Plasma Coagulation (APC) and debulked using a 'burn and shave' technique with cryotherapy assistance. A Fogarty balloon catheter was utilized to clear purulent secretions from the left lower lobe. Despite these efforts, distal tumor extension prevented complete recanalization.",
     "cpt_codes": [
       31641,
       31653,
@@ -4303,6 +4309,12 @@
       "style_type": 2,
       "generated_name": "John Harris",
       "generation_date": "2025-12-18T19:14:59.958679"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

@@ -94,7 +94,7 @@
   },
   {
     "note_id": "poor_01",
-    "note_text": "HISTORY: Ms. Okafor presented with severe dyspnea secondary to malignant central airway obstruction and recurrent pleural effusion.\nOPERATIVE SUMMARY: Under general anesthesia with rigid and flexible bronchoscopy, a near-total obstruction of the right mainstem bronchus was visualized. Multimodal recanalization was achieved utilizing argon plasma coagulation and mechanical debulking, restoring 90% patency. A malpositioned metallic stent was revised, and a new self-expanding metallic stent was deployed. Subsequently, ultrasound-guided placement of a tunneled indwelling pleural catheter was performed on the right, yielding 1200mL of exudative fluid. The patient remained stable.",
+    "note_text": "HISTORY: Ms. <PERSON> presented with severe dyspnea secondary to malignant central airway obstruction and recurrent pleural effusion.\nOPERATIVE SUMMARY: Under general anesthesia with rigid and flexible bronchoscopy, a near-total obstruction of the right mainstem bronchus was visualized. Multimodal recanalization was achieved utilizing argon plasma coagulation and mechanical debulking, restoring 90% patency. A malpositioned metallic stent was revised, and a new self-expanding metallic stent was deployed. Subsequently, ultrasound-guided placement of a tunneled indwelling pleural catheter was performed on the right, yielding 1200mL of exudative fluid. The patient remained stable.",
     "cpt_codes": [
       31641,
       31636,
@@ -183,6 +183,12 @@
       "style_type": 2,
       "generated_name": "Evelyn Okafor",
       "generation_date": "2025-12-09T09:21:11.274758"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -466,7 +472,7 @@
   },
   {
     "note_id": "poor_01",
-    "note_text": "E Okafor 65F came in with bad SOB big R main branch tumor and fluid on R chest. Plan was airway clean out and pleur cath. General anesthesia by gas team 8.0 ETT in I did flex rigid bronch. Lots of junk and endobronch mass almost full block in RMS. Used scope and tools scraped and APC probably 80 90 percent open after. Old metal stent looked bent in pulled adjusted new SEMS put in same area post view ok. Tons of thick clots mucus suctioned no real big bleed just ooz cold saline once. Then turned pt a bit US on R side big effusn. Cut down 5th space mid ax tunneled cath pleurx type in sutured hooked to vac. Straw colored fluid out about 1200. No obvious air leak. Post small apical pneumo R on CXR stable no chest tube. Pt to stepdown.",
+    "note_text": "E Okafor 65F came in with bad SOB big R main branch tumor and fluid on R chest. Plan was airway clean out and pleur cath. General anesthesia by gas team 8.0 ETT in I did flex rigid bronch. Lots of junk and endobronch mass almost full block in RMS. Used scope and tools scraped and APC probably 80 90 percent open after. Old metal stent looked bent in pulled adjusted new SEMS put in same area post view ok. <PERSON> of thick clots mucus suctioned no real big bleed just ooz cold saline once. Then turned pt a bit US on R side big effusn. Cut down 5th space mid ax tunneled cath pleurx type in sutured hooked to vac. Straw colored fluid out about 1200. No obvious air leak. Post small apical pneumo R on CXR stable no chest tube. Pt to stepdown.",
     "cpt_codes": [
       31641,
       31636,
@@ -555,6 +561,12 @@
       "style_type": 6,
       "generated_name": "Eliza Okafor",
       "generation_date": "2025-12-09T09:21:11.274867"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1572,7 +1584,7 @@
   },
   {
     "note_id": "poor_03",
-    "note_text": "CPT: 31653 (Bronchoscopy with EBUS-TBNA, 3 or more stations).\nStations Sampled: 4R, 7, 11L.\nTechnique: Ultrasound localization, Doppler avoidance of vessels, needle aspiration.\nPathology: ROSE positive at 4R.\nSetting: Bronchoscopy suite, moderate sedation.",
+    "note_text": "CPT: 31653 (Bronchoscopy with EBUS-TBNA, 3 or more stations).\nStations Sampled: 4R, 7, 11L.\nTechnique: Ultrasound localization, <PERSON> avoidance of vessels, needle aspiration.\nPathology: ROSE positive at 4R.\nSetting: Bronchoscopy suite, moderate sedation.",
     "cpt_codes": [
       31653
     ],
@@ -1638,6 +1650,12 @@
       "style_type": 3,
       "generated_name": "Leia Organa",
       "generation_date": "2025-12-09T09:21:11.275166"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1992,7 +2010,7 @@
   },
   {
     "note_id": "poor_03",
-    "note_text": "Procedure: Endobronchial ultrasound-guided transbronchial needle aspiration.\nAction: The mediastinum was scanned. Nodes at 4R, 7, and 11L were punctured and aspirated. Doppler verified vascular safety.\nResult: Cytopathology identified malignant cells at station 4R. Hemostasis was achieved with cold saline.",
+    "note_text": "Procedure: Endobronchial ultrasound-guided transbronchial needle aspiration.\nAction: The mediastinum was scanned. Nodes at 4R, 7, and 11L were punctured and aspirated. <PERSON> verified vascular safety.\nResult: Cytopathology identified malignant cells at station 4R. Hemostasis was achieved with cold saline.",
     "cpt_codes": [
       31653
     ],
@@ -2058,6 +2076,12 @@
       "style_type": 9,
       "generated_name": "Beatrix Kiddo",
       "generation_date": "2025-12-09T09:21:11.275281"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2326,7 +2350,7 @@
   },
   {
     "note_id": "poor_04",
-    "note_text": "Operative note for Rosa she has that nasty tumor in the left main lung. Put her to sleep with a big tube. Used the rigid scope and the flexible one. Burned the tumor with APC and pulled big chunks out with the cryo probe and forceps. Got it mostly open. Didnt put a stent in this time. She bled a bit but the epi stopped it. Going to ICU.",
+    "note_text": "Operative note for <PERSON> she has that nasty tumor in the left main lung. Put her to sleep with a big tube. Used the rigid scope and the flexible one. Burned the tumor with APC and pulled big chunks out with the cryo probe and forceps. Got it mostly open. Didnt put a stent in this time. She bled a bit but the epi stopped it. Going to ICU.",
     "cpt_codes": [
       31641
     ],
@@ -2388,6 +2412,12 @@
       "style_type": 5,
       "generated_name": "Rosa Medina",
       "generation_date": "2025-12-09T09:21:11.275371"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3985,7 +4015,7 @@
   },
   {
     "note_id": "poor_06",
-    "note_text": "Bronch note nav case w fid markr sorry spelling pt Marcus T 69 y o M w RLL spiculr nodule about 2.4cm plan SBRT but need path and fiducials. No GA just mod sed fent and versed by RN under my sup nasal canula O2 airway native no tube. Used EM nav system superD type w pre loaded CT drove scope to RLL basilar seg. Radial e bus probe showed eccent view of lesion in airway left guide sheath parked there. Thru sheath did several TBBx 4 bites w forceps. Then loaded fiducial needle and dropped 2 gold markrs just distal to lesion under fluoro looked ok not in pleura. Small oozing bleed cleared with suction and iced saline. No linear EBUS no BAL no stent no ablation. Pt woke up chatty sats fine CXR after showed no pneumo.",
+    "note_text": "Bronch note nav case w fid markr sorry spelling pt Marcus T 69 y o M w RLL spiculr nodule about 2.4cm plan SBRT but need path and fiducials. No GA just mod sed fent and versed by RN under my sup nasal canula O2 airway native no tube. Used <PERSON> nav system superD type w pre loaded CT drove scope to RLL basilar seg. Radial e bus probe showed eccent view of lesion in airway left guide sheath parked there. Thru sheath did several TBBx 4 bites w forceps. Then loaded fiducial needle and dropped 2 gold markrs just distal to lesion under fluoro looked ok not in pleura. Small oozing bleed cleared with suction and iced saline. No linear EBUS no BAL no stent no ablation. Pt woke up chatty sats fine CXR after showed no pneumo.",
     "cpt_codes": [
       31627,
       31654,
@@ -4074,6 +4104,12 @@
       "style_type": 6,
       "generated_name": "Marcus Tucker",
       "generation_date": "2025-12-09T09:21:11.275794"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5316,7 +5352,7 @@
   },
   {
     "note_id": "poor_08",
-    "note_text": "Juan has a trach and needs his nodes checked. Went in through the trach with the EBUS scope. Poked 4R 4L 7 and 11R. Got good samples. 4R is cancer. He's back on the vent in the ICU.",
+    "note_text": "<PERSON> has a trach and needs his nodes checked. Went in through the trach with the EBUS scope. Poked 4R 4L 7 and 11R. Got good samples. 4R is cancer. He's back on the vent in the ICU.",
     "cpt_codes": [
       31653
     ],
@@ -5383,11 +5419,17 @@
       "style_type": 5,
       "generated_name": "Juan Claudio Ruiz",
       "generation_date": "2025-12-09T09:21:11.276200"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
     "note_id": "poor_08",
-    "note_text": "EBUS thru trach rough dictation pt Juan C R long term trach for COPD now big mediast nodes on CT need staging for suspected lung cancer. In OR gen anes via existing cuffed trach. I put EBUS scope right thru trach quick look in trachea and main bronchi no endobronch mass. Using linear EBUS sampled 4R 4L 7 and 11R nodes multiple passes two to three each. Doplar check ok each time. ROSE from 4R said cancer others mostly lympy cells. No radial probe no robot nav no periph lung bx no BAL nothing pleural. Pt back to ICU on vent same settings as pre op stable.",
+    "note_text": "EBUS thru trach rough dictation pt <PERSON> R long term trach for COPD now big mediast nodes on CT need staging for suspected lung cancer. In OR gen anes via existing cuffed trach. I put EBUS scope right thru trach quick look in trachea and main bronchi no endobronch mass. Using linear EBUS sampled 4R 4L 7 and 11R nodes multiple passes two to three each. Doplar check ok each time. ROSE from 4R said cancer others mostly lympy cells. No radial probe no robot nav no periph lung bx no BAL nothing pleural. Pt back to ICU on vent same settings as pre op stable.",
     "cpt_codes": [
       31653
     ],
@@ -5454,6 +5496,12 @@
       "style_type": 6,
       "generated_name": "Juan Cesar Romero",
       "generation_date": "2025-12-09T09:21:11.276218"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5529,7 +5577,7 @@
   },
   {
     "note_id": "poor_08",
-    "note_text": "Mr. R, who has a chronic tracheostomy, required staging for suspected lung cancer. We performed the EBUS procedure through his trach under general anesthesia. We sampled lymph nodes at stations 4R, 4L, 7, and 11R. The preliminary results from the 4R node showed cancer cells. He was returned to the ICU on his previous ventilator settings.",
+    "note_text": "Mr. <PERSON>, who has a chronic tracheostomy, required staging for suspected lung cancer. We performed the EBUS procedure through his trach under general anesthesia. We sampled lymph nodes at stations 4R, 4L, 7, and 11R. The preliminary results from the 4R node showed cancer cells. He was returned to the ICU on his previous ventilator settings.",
     "cpt_codes": [
       31653
     ],
@@ -5596,6 +5644,12 @@
       "style_type": 8,
       "generated_name": "Juan Castillo Rios",
       "generation_date": "2025-12-09T09:21:11.276255"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6622,7 +6676,7 @@
   },
   {
     "note_id": "poor_10",
-    "note_text": "Thoracentasis bedside note scribbled 60 yo guy L lung mass w big L effusn very dyspnic just talking. Did consent verbal and paper. Pt on NC 2L. No GA just local lido plus tiny amnt fentanyl not full sed kinda light mod sed. Sat on edge of bed leaning fwd. US chest big free fluid left posterior. Picked spot mid scap line 8th space. Cleaned skin w chlorhex numbed skin and pleura pt says stingy. Cath needle in nice straw or amber fluid. Hooked to bottle drained about 1500 cc no blood no pus. Stopped when pt cough more and pressure drop on manom not recorded great. Post US showed only small resid effusn no pnx. Band aid on. Spec sent for labs including cell ct protien LDH and cyto.",
+    "note_text": "Thoracentasis bedside note scribbled 60 yo guy L lung mass w big <LOCATION> very dyspnic just talking. Did consent verbal and paper. Pt on <LOCATION> 2L. No GA just local lido plus tiny amnt fentanyl not full sed kinda light mod sed. Sat on edge of bed leaning fwd. US chest big free fluid left posterior. Picked spot mid scap line 8th space. Cleaned skin w chlorhex numbed skin and pleura pt says stingy. Cath needle in nice straw or amber fluid. Hooked to bottle drained about 1500 cc no blood no pus. Stopped when pt cough more and pressure drop on manom not recorded great. Post US showed only small resid effusn no pnx. Band aid on. Spec sent for labs including cell ct protien LDH and cyto.",
     "cpt_codes": [
       32555
     ],
@@ -6684,6 +6738,13 @@
       "style_type": 6,
       "generated_name": "Clint Barton",
       "generation_date": "2025-12-09T09:21:11.276569"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "LOCATION"
+      ]
     }
   },
   {

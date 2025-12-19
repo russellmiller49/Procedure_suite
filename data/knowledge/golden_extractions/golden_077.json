@@ -87,7 +87,7 @@
     }
   },
   {
-    "note_text": "HISTORY: A 55-year-old female presented with unilateral pleural effusion suspicious for malignant mesothelioma.\nPROCEDURE: Medical thoracoscopy was performed under moderate sedation. The pleural space was accessed via the sixth intercostal space. Detailed inspection of the parietal and visceral surfaces revealed normal mesothelial architecture without evidence of gross neoplasia.\nOUTCOME: Complete evacuation of effusion. A thoracostomy tube was secured. The patient was admitted for observation.",
+    "note_text": "HISTORY: A 55-year-old female presented with unilateral pleural effusion suspicious for malignant mesothelioma.\nPROCEDURE: Medical thoracoscopy was performed under moderate sedation. The pleural space was accessed via the sixth intercostal space. Detailed inspection of the parietal and visceral surfaces revealed normal mesothelial architecture without evidence of gross <LOCATION>.\nOUTCOME: Complete evacuation of effusion. A thoracostomy tube was secured. The patient was admitted for observation.",
     "cpt_codes": [
       32601
     ],
@@ -171,6 +171,12 @@
       "style_type": 2,
       "generated_name": "Jessica Miller",
       "generation_date": "2025-12-09T12:09:10.802807"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -348,7 +354,7 @@
     }
   },
   {
-    "note_text": "Procedure note for Jennifer Allen doing the diagnostic scope today left side suspected meso. We went in at the 6th intercostal space mild sedation used. Looked around everything looked surprisingly normal no bumps no masses. We sucked out the rest of the fluid put in a chest tube. No air leak really. Sending her to the floor check path in a few days.",
+    "note_text": "Procedure note for <PERSON> doing the diagnostic scope today left side suspected meso. We went in at the 6th intercostal space mild sedation used. Looked around everything looked surprisingly normal no bumps no masses. We sucked out the rest of the fluid put in a chest tube. No air leak really. Sending her to the floor check path in a few days.",
     "cpt_codes": [
       32601
     ],
@@ -432,6 +438,12 @@
       "style_type": 5,
       "generated_name": "Amanda Wilson",
       "generation_date": "2025-12-09T12:09:10.802894"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1074,7 +1086,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Medical Thoracoscopy\nPatient: Sharon Lee\n1. Trocar entry 6th ICS.\n2. Saw tumor implants on lung.\n3. Took 11 biopsies (parietal).\n4. Sprayed Talc for pleurodesis.\n5. Chest tube placed.\nPatient stable.",
+    "note_text": "Resident Note: Medical Thoracoscopy\nPatient: <PERSON>\n1. Trocar entry 6th ICS.\n2. Saw tumor implants on lung.\n3. Took 11 biopsies (parietal).\n4. Sprayed Talc for pleurodesis.\n5. Chest tube placed.\nPatient stable.",
     "cpt_codes": [
       32609,
       32650
@@ -1168,10 +1180,16 @@
       "style_type": 4,
       "generated_name": "Diane Green",
       "generation_date": "2025-12-09T12:09:10.803098"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Note for Sharon Lee doing the scope for staging. Went in left side mod sedation. Yeah there were tumor implants everywhere on the visceral pleura. We grabbed like 11 biopsies from the chest wall side. Decided to do the talc while we were there to stop the fluid coming back. Chest tube in no air leak sending to floor.",
+    "note_text": "Note for <PERSON> doing the scope for staging. Went in left side mod sedation. Yeah there were tumor implants everywhere on the visceral pleura. We grabbed like 11 biopsies from the chest wall side. Decided to do the talc while we were there to stop the fluid coming back. Chest tube in no air leak sending to floor.",
     "cpt_codes": [
       32609,
       32650
@@ -1265,6 +1283,12 @@
       "style_type": 5,
       "generated_name": "Martha Adams",
       "generation_date": "2025-12-09T12:09:10.803124"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1462,7 +1486,7 @@
     }
   },
   {
-    "note_text": "Ms. Lee underwent a procedure to check her lung lining for cancer spread. Using a camera, we inspected the space and unfortunately saw spots on the lung surface consistent with tumor. We took eleven samples from the chest wall for the lab. Because of the fluid buildup, we also sprayed medical talc into the space to seal it up. She is recovering with a tube in place.",
+    "note_text": "Ms. <PERSON> underwent a procedure to check her lung lining for cancer spread. Using a camera, we inspected the space and unfortunately saw spots on the lung surface consistent with tumor. We took eleven samples from the chest wall for the lab. Because of the fluid buildup, we also sprayed medical talc into the space to seal it up. She is recovering with a tube in place.",
     "cpt_codes": [
       32609,
       32650
@@ -1556,6 +1580,12 @@
       "style_type": 8,
       "generated_name": "Virginia Carter",
       "generation_date": "2025-12-09T12:09:10.803201"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2335,7 +2365,7 @@
     }
   },
   {
-    "note_text": "We performed a scope procedure on Mrs. Green to investigate why her fluid keeps coming back. We saw some abnormal spots on the lung and took eight small samples to test. To stop the fluid, we sprayed talc powder inside the chest cavity. We left a tube in to help the lung expand fully.",
+    "note_text": "We performed a scope procedure on Mrs. <PERSON> to investigate why her fluid keeps coming back. We saw some abnormal spots on the lung and took eight small samples to test. To stop the fluid, we sprayed talc powder inside the chest cavity. We left a tube in to help the lung expand fully.",
     "cpt_codes": [
       32609,
       32650
@@ -2429,6 +2459,12 @@
       "style_type": 8,
       "generated_name": "Carolyn Stewart",
       "generation_date": "2025-12-09T12:09:10.803429"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2793,7 +2829,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Kevin Allen\nIndication: Effusion.\nSteps:\n1. Scope in.\n2. Saw diffuse nodules.\n3. Sprayed Talc.\n4. Drained fluid.\n5. Chest tube in.",
+    "note_text": "Resident Note: <PERSON>\nIndication: Effusion.\nSteps:\n1. Scope in.\n2. Saw diffuse nodules.\n3. Sprayed Talc.\n4. Drained fluid.\n5. Chest tube in.",
     "cpt_codes": [
       32650
     ],
@@ -2878,10 +2914,16 @@
       "style_type": 4,
       "generated_name": "Michael Evans",
       "generation_date": "2025-12-09T12:09:10.803554"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure for Kevin Allen undiagnosed effusion. Went in left side. Saw a lot of nodules everywhere on the pleura. Did the talc poudrage to treat the fluid. Drained it all out put a chest tube in. Water seal. Done.",
+    "note_text": "Procedure for <PERSON> undiagnosed effusion. Went in left side. Saw a lot of nodules everywhere on the pleura. Did the talc poudrage to treat the fluid. Drained it all out put a chest tube in. Water seal. Done.",
     "cpt_codes": [
       32650
     ],
@@ -2966,6 +3008,12 @@
       "style_type": 5,
       "generated_name": "William Turner",
       "generation_date": "2025-12-09T12:09:10.803575"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3145,7 +3193,7 @@
     }
   },
   {
-    "note_text": "Mr. Allen underwent a thoracoscopy for his fluid buildup. We saw distinct bumpiness (nodularity) along the lining. We proceeded to treat the fluid buildup by spraying talc into the space. The fluid was drained, and he is resting comfortably.",
+    "note_text": "Mr. <PERSON> underwent a thoracoscopy for his fluid buildup. We saw distinct bumpiness (nodularity) along the lining. We proceeded to treat the fluid buildup by spraying talc into the space. The fluid was drained, and he is resting comfortably.",
     "cpt_codes": [
       32650
     ],
@@ -3230,6 +3278,12 @@
       "style_type": 8,
       "generated_name": "Joseph Edwards",
       "generation_date": "2025-12-09T12:09:10.803646"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3585,7 +3639,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Patricia Taylor\n1. Left chest entry.\n2. Visceral implants seen.\n3. Biopsied parietal pleura (6 pieces).\n4. Drained fluid.\n5. Chest tube placed.\nPlan: Path pending.",
+    "note_text": "Resident Note: <PERSON>\n1. Left chest entry.\n2. Visceral implants seen.\n3. Biopsied parietal pleura (6 pieces).\n4. Drained fluid.\n5. Chest tube placed.\nPlan: Path pending.",
     "cpt_codes": [
       32609
     ],
@@ -3670,10 +3724,16 @@
       "style_type": 4,
       "generated_name": "Susan Cook",
       "generation_date": "2025-12-09T12:09:10.803767"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Note for Patricia Taylor. Suspected cancer. We went in with the scope left side. Saw implants on the lung itself. Took 6 biopsies from the wall instead. Drained the fluid put a tube in. No talc this time.",
+    "note_text": "Note for <PERSON>. Suspected cancer. We went in with the scope left side. Saw implants on the lung itself. Took 6 biopsies from the wall instead. Drained the fluid put a tube in. No talc this time.",
     "cpt_codes": [
       32609
     ],
@@ -3758,6 +3818,12 @@
       "style_type": 5,
       "generated_name": "Jennifer Morgan",
       "generation_date": "2025-12-09T12:09:10.803793"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3937,7 +4003,7 @@
     }
   },
   {
-    "note_text": "Ms. Taylor had a scope procedure to investigate suspicious findings. We saw implants on the lung surface. We carefully took six samples from the chest wall lining to figure out what it is. We drained the fluid and placed a tube, but did not use talc today.",
+    "note_text": "Ms. <PERSON> had a scope procedure to investigate suspicious findings. We saw implants on the lung surface. We carefully took six samples from the chest wall lining to figure out what it is. We drained the fluid and placed a tube, but did not use talc today.",
     "cpt_codes": [
       32609
     ],
@@ -4022,6 +4088,12 @@
       "style_type": 8,
       "generated_name": "Dorothy Bailey",
       "generation_date": "2025-12-09T12:09:10.803863"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4404,7 +4476,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Brian Allen\nRight side staging.\n- Entry 6th ICS.\n- Looks inflammatory, no nodules.\n- Biopsied anyway (6x).\n- Talc sprayed.\n- Chest tube in.",
+    "note_text": "Resident Note: <PERSON>\nRight side staging.\n- Entry 6th ICS.\n- Looks inflammatory, no nodules.\n- Biopsied anyway (6x).\n- Talc sprayed.\n- Chest tube in.",
     "cpt_codes": [
       32609,
       32650
@@ -4498,6 +4570,12 @@
       "style_type": 4,
       "generated_name": "Matthew Howard",
       "generation_date": "2025-12-09T12:09:10.803990"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4792,7 +4870,7 @@
     }
   },
   {
-    "note_text": "We performed a procedure on Mr. Allen to stage his condition. The lining looked red and inflamed but didn't have the typical bumps of cancer. We took six samples just to be sure. We also sprayed talc to keep the fluid away. A tube was left in place.",
+    "note_text": "We performed a procedure on Mr. <PERSON> to stage his condition. The lining looked red and inflamed but didn't have the typical bumps of cancer. We took six samples just to be sure. We also sprayed talc to keep the fluid away. A tube was left in place.",
     "cpt_codes": [
       32609,
       32650
@@ -4886,6 +4964,12 @@
       "style_type": 8,
       "generated_name": "Paul Gray",
       "generation_date": "2025-12-09T12:09:10.804102"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5277,7 +5361,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Betty Jackson\n1. Left entry.\n2. Mass on diaphragm.\n3. Took 6 biopsies from wall.\n4. Talc sprayed.\n5. Tube in.\nStable.",
+    "note_text": "Resident Note: <PERSON>\n1. Left entry.\n2. Mass on diaphragm.\n3. Took 6 biopsies from wall.\n4. Talc sprayed.\n5. Tube in.\nStable.",
     "cpt_codes": [
       32609,
       32650
@@ -5371,6 +5455,12 @@
       "style_type": 4,
       "generated_name": "Helen Kelly",
       "generation_date": "2025-12-09T12:09:10.804272"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5665,7 +5755,7 @@
     }
   },
   {
-    "note_text": "Ms. Jackson underwent thoracoscopy to investigate nodules seen on her scan. We found a mass on the diaphragm. We took six samples from the chest wall to test. We then used talc to prevent fluid from coming back and placed a chest tube.",
+    "note_text": "Ms. <PERSON> underwent thoracoscopy to investigate nodules seen on her scan. We found a mass on the diaphragm. We took six samples from the chest wall to test. We then used talc to prevent fluid from coming back and placed a chest tube.",
     "cpt_codes": [
       32609,
       32650
@@ -5759,6 +5849,12 @@
       "style_type": 8,
       "generated_name": "Ruth Wood",
       "generation_date": "2025-12-09T12:09:10.804419"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6120,7 +6216,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Kathleen Carter\nRight side.\n- Scope in.\n- Everything looks normal.\n- Drained fluid.\n- Chest tube placed.\n- No biopsy.",
+    "note_text": "Resident Note: <PERSON>\nRight side.\n- Scope in.\n- Everything looks normal.\n- Drained fluid.\n- Chest tube placed.\n- No biopsy.",
     "cpt_codes": [
       32601
     ],
@@ -6204,10 +6300,16 @@
       "style_type": 4,
       "generated_name": "Carolyn Jenkins",
       "generation_date": "2025-12-09T12:09:10.804551"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Kathleen Carter note. Undiagnosed fluid right side. Went in with the scope. Everything looked totally normal inside. Just drained the fluid and put a tube in. No biopsy needed.",
+    "note_text": "<PERSON> note. Undiagnosed fluid right side. Went in with the scope. Everything looked totally normal inside. Just drained the fluid and put a tube in. No biopsy needed.",
     "cpt_codes": [
       32601
     ],
@@ -6291,6 +6393,12 @@
       "style_type": 5,
       "generated_name": "Christine Perry",
       "generation_date": "2025-12-09T12:09:10.804654"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6468,7 +6576,7 @@
     }
   },
   {
-    "note_text": "We took a look inside Mrs. Carter's chest to see why she had fluid. Surprisingly, the lining looked completely healthy. We drained the fluid and put in a temporary tube, but we didn't see anything suspicious enough to biopsy.",
+    "note_text": "We took a look inside Mrs. <PERSON>'s chest to see why she had fluid. Surprisingly, the lining looked completely healthy. We drained the fluid and put in a temporary tube, but we didn't see anything suspicious enough to biopsy.",
     "cpt_codes": [
       32601
     ],
@@ -6552,6 +6660,12 @@
       "style_type": 8,
       "generated_name": "Virginia Patterson",
       "generation_date": "2025-12-09T12:09:10.804730"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6906,7 +7020,7 @@
     }
   },
   {
-    "note_text": "Resident Note: David Garcia\n1. Right entry.\n2. Mass on diaphragm.\n3. 11 biopsies taken (parietal).\n4. Drained fluid.\n5. Tube in.\nNo talc.",
+    "note_text": "Resident Note: <PERSON>\n1. Right entry.\n2. Mass on diaphragm.\n3. 11 biopsies taken (parietal).\n4. Drained fluid.\n5. Tube in.\nNo talc.",
     "cpt_codes": [
       32609
     ],
@@ -6991,6 +7105,12 @@
       "style_type": 4,
       "generated_name": "Edward Simmons",
       "generation_date": "2025-12-09T12:09:10.804851"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7258,7 +7378,7 @@
     }
   },
   {
-    "note_text": "Mr. Garcia had a scope to check on some nodules. We found a mass on the diaphragm. We took eleven samples from the chest wall to send to the lab. We drained the fluid and placed a tube to help the lung heal.",
+    "note_text": "Mr. <PERSON> had a scope to check on some nodules. We found a mass on the diaphragm. We took eleven samples from the chest wall to send to the lab. We drained the fluid and placed a tube to help the lung heal.",
     "cpt_codes": [
       32609
     ],
@@ -7343,6 +7463,12 @@
       "style_type": 8,
       "generated_name": "Ronald Alexander",
       "generation_date": "2025-12-09T12:09:10.804946"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7725,7 +7851,7 @@
     }
   },
   {
-    "note_text": "Resident Note: William Johnson\n1. Right entry.\n2. Thick pleura + nodules.\n3. 12 biopsies taken.\n4. Talc sprayed.\n5. Tube in.",
+    "note_text": "Resident Note: <PERSON>\n1. Right entry.\n2. Thick pleura + nodules.\n3. 12 biopsies taken.\n4. Talc sprayed.\n5. Tube in.",
     "cpt_codes": [
       32609,
       32650
@@ -7819,10 +7945,16 @@
       "style_type": 4,
       "generated_name": "Jacob Myers",
       "generation_date": "2025-12-09T12:09:10.805074"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "William Johnson note. Suspected cancer. Went in right side. Pleura looked thick with nodules. Took 12 biopsies. Sprayed talc to stop the fluid. Tube in and good.",
+    "note_text": "<PERSON> note. Suspected cancer. Went in right side. Pleura looked thick with nodules. Took 12 biopsies. Sprayed talc to stop the fluid. Tube in and good.",
     "cpt_codes": [
       32609,
       32650
@@ -7916,6 +8048,12 @@
       "style_type": 5,
       "generated_name": "Gary Ford",
       "generation_date": "2025-12-09T12:09:10.805102"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8113,7 +8251,7 @@
     }
   },
   {
-    "note_text": "We performed a procedure on Mr. Johnson to investigate possible cancer. The lining of the chest wall was thick and bumpy. We took twelve samples to be sure we get a diagnosis. We also used talc powder to seal the space and prevent fluid return.",
+    "note_text": "We performed a procedure on Mr. <PERSON> to investigate possible cancer. The lining of the chest wall was thick and bumpy. We took twelve samples to be sure we get a diagnosis. We also used talc powder to seal the space and prevent fluid return.",
     "cpt_codes": [
       32609,
       32650
@@ -8207,6 +8345,12 @@
       "style_type": 8,
       "generated_name": "Stephen Sullivan",
       "generation_date": "2025-12-09T12:09:10.805177"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

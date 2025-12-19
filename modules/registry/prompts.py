@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import os
+from functools import lru_cache
 from pathlib import Path
 
 PROMPT_HEADER = """
@@ -806,6 +808,47 @@ def _load_schema() -> dict:
     return json.loads(_SCHEMA_PATH.read_text())
 
 
+def _env_flag(name: str, default: bool = False) -> bool:
+    return os.getenv(name, "1" if default else "0").strip().lower() in {"1", "true", "yes", "y"}
+
+
+def _normalize_active_families(value: object) -> set[str] | None:
+    """Normalize context-provided active families into a set.
+
+    - None -> None (meaning "don't gate")
+    - "" -> empty set
+    """
+    if value is None:
+        return None
+    if isinstance(value, (set, frozenset)):
+        return {str(x) for x in value if str(x)}
+    if isinstance(value, list):
+        return {str(x) for x in value if str(x)}
+    if isinstance(value, str):
+        v = value.strip()
+        if not v:
+            return set()
+        return {p.strip() for p in v.split(",") if p.strip()}
+    return None
+
+
+def _build_field_instructions(schema_properties: dict[str, dict]) -> dict[str, str]:
+    """Build per-field instruction text from schema properties."""
+    instructions: dict[str, str] = {}
+    for name, prop in schema_properties.items():
+        desc = str(prop.get("description", "") or "").strip()
+        enum = prop.get("enum")
+        enum_text = f" Allowed values: {', '.join(enum)}." if enum else ""
+        text = f"{desc}{enum_text} Use null if not documented."
+        instructions[name] = text.strip()
+
+    # Apply curated overrides for fields with frequent errors (only for included fields)
+    for k, v in _FIELD_INSTRUCTION_OVERRIDES.items():
+        if k in schema_properties:
+            instructions[k] = v
+    return instructions
+
+
 def _load_field_instructions() -> dict[str, str]:
     """Build per-field instruction text from the schema description and enums."""
 
@@ -814,16 +857,7 @@ def _load_field_instructions() -> dict[str, str]:
         return _FIELD_INSTRUCTIONS_CACHE
 
     schema = _load_schema()
-    instructions: dict[str, str] = {}
-    for name, prop in schema.get("properties", {}).items():
-        desc = prop.get("description", "").strip()
-        enum = prop.get("enum")
-        enum_text = f" Allowed values: {', '.join(enum)}." if enum else ""
-        text = f"{desc}{enum_text} Use null if not documented."
-        instructions[name] = text.strip()
-
-    # Apply curated overrides for fields with frequent errors
-    instructions.update(_FIELD_INSTRUCTION_OVERRIDES)
+    instructions = _build_field_instructions(schema.get("properties", {}))
 
     _FIELD_INSTRUCTIONS_CACHE = instructions
     return instructions
@@ -848,6 +882,29 @@ def _load_registry_prompt() -> str:
     return _PROMPT_CACHE
 
 
+@lru_cache(maxsize=64)
+def _load_registry_prompt_for_families(active_families_frozen: frozenset[str] | None) -> str:
+    """Optional procedure-family gated prompt (disabled by default).
+
+    Enable by setting: REGISTRY_PROMPT_FILTER_BY_FAMILY=1
+    """
+    if active_families_frozen is None:
+        return _load_registry_prompt()
+
+    schema = _load_schema()
+    properties = schema.get("properties", {})
+
+    from modules.registry.schema_filter import filter_schema_properties
+
+    filtered_properties = filter_schema_properties(properties, set(active_families_frozen))
+    instructions = _build_field_instructions(filtered_properties)
+
+    lines = ["Return JSON with the following fields (use null if missing):"]
+    for name, text in instructions.items():
+        lines.append(f'- "{name}": {text}')
+    return f"{PROMPT_HEADER}\n\n" + "\n".join(lines)
+
+
 def build_registry_prompt(note_text: str, context: dict | None = None) -> str:
     """Build the registry extraction prompt with optional CPT context.
 
@@ -862,7 +919,13 @@ def build_registry_prompt(note_text: str, context: dict | None = None) -> str:
         Complete prompt string for the LLM.
     """
     context = context or {}
-    prompt_text = _load_registry_prompt()
+    active_families = None
+    if _env_flag("REGISTRY_PROMPT_FILTER_BY_FAMILY", False):
+        active_families = _normalize_active_families(context.get("active_families"))
+
+    prompt_text = _load_registry_prompt_for_families(
+        frozenset(active_families) if active_families is not None else None
+    )
 
     # Build verified CPT section if codes are provided
     verified_section = ""

@@ -444,7 +444,7 @@
     }
   },
   {
-    "note_text": "Procedure: Robotic Bronchoscopy (Bilateral)\nPatient: Anjali Patel\nSteps:\n1. General anesthesia, ETT.\n2. Ion registration complete.\n3. Navigated to RUL nodule -> REBUS confirmed -> Biopsied.\n4. Navigated to LUL nodule -> REBUS confirmed -> Biopsied.\n5. ROSE: Adeno in both.\nPlan: Staging workup.",
+    "note_text": "Procedure: Robotic Bronchoscopy (Bilateral)\nPatient: <PERSON>\nSteps:\n1. General anesthesia, ETT.\n2. Ion registration complete.\n3. Navigated to RUL nodule -> REBUS confirmed -> Biopsied.\n4. Navigated to LUL nodule -> REBUS confirmed -> Biopsied.\n5. ROSE: Adeno in both.\nPlan: Staging workup.",
     "cpt_codes": [
       31627,
       31654,
@@ -589,10 +589,16 @@
       "style_type": 4,
       "generated_name": "Nina Patel",
       "generation_date": "2025-12-09T10:42:32.398186"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Anjali has nodules on both sides so we used the robot. Registered the ion system error was good under 1mm. Went to the right upper lobe first radial probe showed the lesion took biopsies and brushings. Then went to the left upper lobe and did the same thing. Rose said adenocarcinoma for both of them. She woke up fine no pneumothorax on the xray.",
+    "note_text": "Anjali has nodules on both sides so we used the robot. Registered the ion system error was good under 1mm. Went to the right upper lobe first radial probe showed the lesion took biopsies and brushings. Then went to the left upper lobe and did the same thing. <PERSON> said adenocarcinoma for both of them. She woke up fine no pneumothorax on the xray.",
     "cpt_codes": [
       31627,
       31654,
@@ -737,6 +743,12 @@
       "style_type": 5,
       "generated_name": "Zara Ali",
       "generation_date": "2025-12-09T10:42:32.398223"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1036,7 +1048,7 @@
     }
   },
   {
-    "note_text": "Ms. Patel underwent a robotic bronchoscopy to biopsy nodules in both her right and left lungs. We used the Ion robot to precisely navigate to each spot, confirming our location with ultrasound. We took tissue samples from both the right upper lobe and left upper lobe. The preliminary results suggests cancer in both spots, likely adenocarcinoma. She tolerated the procedure well and had no complications like a collapsed lung.",
+    "note_text": "Ms. <PERSON> underwent a robotic bronchoscopy to biopsy nodules in both her right and left lungs. We used the Ion robot to precisely navigate to each spot, confirming our location with ultrasound. We took tissue samples from both the right upper lobe and left upper lobe. The preliminary results suggests cancer in both spots, likely adenocarcinoma. She tolerated the procedure well and had no complications like a collapsed lung.",
     "cpt_codes": [
       31627,
       31654,
@@ -1181,6 +1193,12 @@
       "style_type": 8,
       "generated_name": "Fatima Ahmed",
       "generation_date": "2025-12-09T10:42:32.398334"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2007,7 +2025,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: Robert Williams\nIndication: LLL mass.\nSteps:\n1. SuperDimension registration.\n2. Navigated to LLL superior segment.\n3. Confirmed with REBUS (concentric view).\n4. Biopsies (forceps x6) and brushings x3.\n5. ROSE positive for Adeno.\n6. No bleeding.\nPlan: D/C if CXR clear.",
+    "note_text": "Procedure Note\nPatient: <PERSON>\nIndication: LLL mass.\nSteps:\n1. SuperDimension registration.\n2. Navigated to LLL superior segment.\n3. Confirmed with REBUS (concentric view).\n4. Biopsies (forceps x6) and brushings x3.\n5. ROSE positive for Adeno.\n6. No bleeding.\nPlan: D/C if CXR clear.",
     "cpt_codes": [
       31652,
       31627,
@@ -2229,10 +2247,16 @@
       "style_type": 4,
       "generated_name": "Michael Johnson",
       "generation_date": "2025-12-09T10:42:32.398579"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Robert has a LLL nodule used the superdimension to get there. Radial probe showed it nicely concentric view. Took 6 biopsies and some brushes. Cytotech said it looks like adenocarcinoma. No bleeding patient did great. checking cxr before discharge.",
+    "note_text": "<PERSON> has a LLL nodule used the superdimension to get there. Radial probe showed it nicely concentric view. Took 6 biopsies and some brushes. Cytotech said it looks like adenocarcinoma. No bleeding patient did great. checking cxr before discharge.",
     "cpt_codes": [
       31652,
       31627,
@@ -2454,6 +2478,12 @@
       "style_type": 5,
       "generated_name": "William Davis",
       "generation_date": "2025-12-09T10:42:32.398630"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2907,7 +2937,7 @@
     }
   },
   {
-    "note_text": "We performed a navigational bronchoscopy on Mr. Williams to biopsy a nodule in his left lower lung. Using the electromagnetic navigation system, we guided a catheter to the lesion and confirmed its position with ultrasound. We then took several biopsies and brush samples. The immediate analysis in the room showed cancer cells, likely adenocarcinoma. He recovered well and is being discharged.",
+    "note_text": "We performed a navigational bronchoscopy on Mr. <PERSON> to biopsy a nodule in his left lower lung. Using the electromagnetic navigation system, we guided a catheter to the lesion and confirmed its position with ultrasound. We then took several biopsies and brush samples. The immediate analysis in the room showed cancer cells, likely adenocarcinoma. He recovered well and is being discharged.",
     "cpt_codes": [
       31652,
       31627,
@@ -3129,6 +3159,12 @@
       "style_type": 8,
       "generated_name": "Thomas Moore",
       "generation_date": "2025-12-09T10:42:32.398778"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3831,7 +3867,7 @@
     }
   },
   {
-    "note_text": "Combined EBUS/Robotic Bronch\nPatient: Michelle Chen\nIndication: RLL mass + nodes\nSteps:\n1. EBUS: Sampled 4L (neg) and 10R (pos).\n2. Ion Robot: Navigated to RLL mass.\n3. Confirmed with REBUS + CBCT.\n4. Biopsies: Forceps and Cryo.\n5. Bleeding controlled with blocker.\nResult: Stage IIIA Adeno (T1cN1).",
+    "note_text": "Combined EBUS/Robotic Bronch\nPatient: <PERSON>\nIndication: RLL mass + nodes\nSteps:\n1. EBUS: Sampled 4L (neg) and 10R (pos).\n2. <PERSON>: Navigated to RLL mass.\n3. Confirmed with REBUS + CBCT.\n4. Biopsies: Forceps and Cryo.\n5. Bleeding controlled with blocker.\nResult: Stage IIIA Adeno (T1cN1).",
     "cpt_codes": [
       31653,
       31627,
@@ -3986,10 +4022,17 @@
       "style_type": 4,
       "generated_name": "Margaret Hall",
       "generation_date": "2025-12-09T10:42:32.398987"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Michelle needs staging for her RLL mass. Did EBUS first sampled 4L and 10R. 10R was positive for adeno. Then switched to the Ion robot found the RLL mass with rebus and cone beam. Took forceps biopsies and then two cryo biopsies for molecular. Had some bleeding used a blocker and iced saline. Patient stable.",
+    "note_text": "<PERSON> needs staging for her RLL mass. Did EBUS first sampled 4L and 10R. 10R was positive for adeno. Then switched to the Ion robot found the RLL mass with rebus and cone beam. Took forceps biopsies and then two cryo biopsies for molecular. Had some bleeding used a blocker and iced saline. Patient stable.",
     "cpt_codes": [
       31653,
       31627,
@@ -4144,6 +4187,12 @@
       "style_type": 5,
       "generated_name": "Dorothy Lewis",
       "generation_date": "2025-12-09T10:42:32.399025"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4305,7 +4354,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRLL mass, mediastinal adenopathy.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nEBUS-TBNA (4L, 10R). Ion Nav to RLL. REBUS/CBCT confirmation. Forceps and Cryobiopsy of mass. 10R and Mass positive for Adenocarcinoma.\n[Plan]\nMolecular testing. Oncology consult.",
+    "note_text": "[Indication]\nRLL mass, mediastinal adenopathy.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nEBUS-TBNA (4L, 10R). <PERSON> to RLL. REBUS/CBCT confirmation. Forceps and Cryobiopsy of mass. 10R and Mass positive for Adenocarcinoma.\n[Plan]\nMolecular testing. Oncology consult.",
     "cpt_codes": [
       31653,
       31627,
@@ -4460,10 +4509,16 @@
       "style_type": 7,
       "generated_name": "Shirley King",
       "generation_date": "2025-12-09T10:42:32.399098"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We performed a comprehensive staging procedure for Ms. Chen. First, we used EBUS to sample lymph nodes; the right hilar node tested positive for cancer. Then, using the robotic bronchoscope, we biopsied the main tumor in the right lower lobe using both standard forceps and a freezing probe to get a large sample for genetic testing. She is diagnosed with Stage IIIA adenocarcinoma and will need further treatment planning.",
+    "note_text": "We performed a comprehensive staging procedure for Ms. <PERSON>. First, we used EBUS to sample lymph nodes; the right hilar node tested positive for cancer. Then, using the robotic bronchoscope, we biopsied the main tumor in the right lower lobe using both standard forceps and a freezing probe to get a large sample for genetic testing. She is diagnosed with Stage IIIA adenocarcinoma and will need further treatment planning.",
     "cpt_codes": [
       31653,
       31627,
@@ -4618,6 +4673,12 @@
       "style_type": 8,
       "generated_name": "Barbara Wright",
       "generation_date": "2025-12-09T10:42:32.399139"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5133,7 +5194,7 @@
     }
   },
   {
-    "note_text": "Staging Bronchoscopy\nPatient: Carlos Rodriguez\nSteps:\n1. EBUS: Sampled 5 stations. All pos for Squamous.\n2. Standard Bronch: Saw tumor in LLL airway. Biopsied (Endobronchial).\n3. EMN: Navigated past tumor to distal lung. Biopsied.\nDiagnosis: Extensive Squamous Cell CA.\nPlan: Chemo/Rad.",
+    "note_text": "Staging Bronchoscopy\nPatient: <PERSON>\nSteps:\n1. EBUS: Sampled 5 stations. All pos for Squamous.\n2. Standard Bronch: Saw tumor in LLL airway. Biopsied (Endobronchial).\n3. EMN: Navigated past tumor to distal lung. Biopsied.\nDiagnosis: Extensive Squamous Cell CA.\nPlan: Chemo/Rad.",
     "cpt_codes": [
       31652,
       31627,
@@ -5248,10 +5309,16 @@
       "style_type": 4,
       "generated_name": "Jorge Lopez",
       "generation_date": "2025-12-09T10:42:32.399303"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Carlos has a big LLL mass and nodes everywhere. EBUS showed cancer in 4R 4L 7 10L 11L. Its squamous cell. Looked in the airway and the tumor is blocking the LLL so i took biopsies there too. Then tried to navigate to the far part of the tumor with superdimension to get more tissue. Got good samples. He has stage 3B or maybe 4.",
+    "note_text": "<PERSON> has a big LLL mass and nodes everywhere. EBUS showed cancer in 4R 4L 7 10L 11L. Its squamous cell. Looked in the airway and the tumor is blocking the LLL so i took biopsies there too. Then tried to navigate to the far part of the tumor with superdimension to get more tissue. Got good samples. He has stage 3B or maybe 4.",
     "cpt_codes": [
       31652,
       31627,
@@ -5366,6 +5433,12 @@
       "style_type": 5,
       "generated_name": "Antonio Gonzalez",
       "generation_date": "2025-12-09T10:42:32.399332"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5605,7 +5678,7 @@
     }
   },
   {
-    "note_text": "Mr. Rodriguez underwent a major staging procedure. We found that his lung cancer (squamous cell) has spread to lymph nodes on both sides of his chest. We also found the tumor growing into his airway, which we biopsied. We also navigated deeper into the lung to get more tissue for testing. He has advanced stage disease and will need chemotherapy and radiation.",
+    "note_text": "Mr. <PERSON> underwent a major staging procedure. We found that his lung cancer (squamous cell) has spread to lymph nodes on both sides of his chest. We also found the tumor growing into his airway, which we biopsied. We also navigated deeper into the lung to get more tissue for testing. He has advanced stage disease and will need chemotherapy and radiation.",
     "cpt_codes": [
       31652,
       31627,
@@ -5720,6 +5793,12 @@
       "style_type": 8,
       "generated_name": "Ricardo Ramirez",
       "generation_date": "2025-12-09T10:42:32.399421"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5841,7 +5920,7 @@
     }
   },
   {
-    "note_text": "Indication: RUL nodule, 4R node.\nProcedures: EBUS (4R+, 10R-). Ion Nav to RUL. Cryobiopsy.\nROSE: Adenocarcinoma (4R & RUL).\nResult: Stage IIIA.\nPlan: Molecular testing, Tumor board.",
+    "note_text": "Indication: RUL nodule, 4R node.\nProcedures: EBUS (4R+, 10R-). <PERSON> to RUL. Cryobiopsy.\nROSE: Adenocarcinoma (4R & RUL).\nResult: Stage IIIA.\nPlan: Molecular testing, Tumor board.",
     "cpt_codes": [
       31653,
       31627,
@@ -5959,6 +6038,12 @@
       "style_type": 1,
       "generated_name": "Linda Kim",
       "generation_date": "2025-12-09T10:42:32.399482"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6204,7 +6289,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS + Ion\nPatient: Jennifer Wu\nIndication: RUL nodule, N2 suspicion.\nSteps:\n1. EBUS: 4R pos, 10R neg.\n2. Ion Nav to RUL nodule.\n3. REBUS/CBCT verification.\n4. Cryobiopsy x2 for molecular.\n5. Hemostasis with blocker.\nDx: Stage IIIA Adeno.",
+    "note_text": "Procedure: EBUS + Ion\nPatient: <PERSON>\nIndication: RUL nodule, N2 suspicion.\nSteps:\n1. EBUS: 4R pos, 10R neg.\n2. Ion Nav to RUL nodule.\n3. REBUS/CBCT verification.\n4. Cryobiopsy x2 for molecular.\n5. Hemostasis with blocker.\nDx: Stage IIIA Adeno.",
     "cpt_codes": [
       31653,
       31627,
@@ -6322,10 +6407,16 @@
       "style_type": 4,
       "generated_name": "Lisa Choi",
       "generation_date": "2025-12-09T10:42:32.399573"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Jennifer has a growing RUL nodule and a suspicious node. Did EBUS first 4R was positive for adeno 10R was negative. Then used the Ion robot to biopsy the lung nodule. Used the cryo probe to get big pieces for genetic testing. She bled a bit so we used the balloon. Everything stopped fine.",
+    "note_text": "<PERSON> has a growing RUL nodule and a suspicious node. Did EBUS first 4R was positive for adeno 10R was negative. Then used the Ion robot to biopsy the lung nodule. Used the cryo probe to get big pieces for genetic testing. She bled a bit so we used the balloon. Everything stopped fine.",
     "cpt_codes": [
       31653,
       31627,
@@ -6443,6 +6534,12 @@
       "style_type": 5,
       "generated_name": "Sandra Chang",
       "generation_date": "2025-12-09T10:42:32.399704"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6567,7 +6664,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRUL nodule, mediastinal adenopathy.\n[Anesthesia]\nGeneral.\n[Description]\nEBUS-TBNA (4R, 10R). Ion Nav to RUL. Cryobiopsy performed. 4R and RUL positive for adenocarcinoma.\n[Plan]\nBrain MRI. Tumor board.",
+    "note_text": "[Indication]\nRUL nodule, mediastinal adenopathy.\n[Anesthesia]\nGeneral.\n[Description]\nEBUS-TBNA (4R, 10R). <PERSON> to RUL. Cryobiopsy performed. 4R and RUL positive for adenocarcinoma.\n[Plan]\nBrain MRI. Tumor board.",
     "cpt_codes": [
       31653,
       31627,
@@ -6685,10 +6782,16 @@
       "style_type": 7,
       "generated_name": "Carol Yang",
       "generation_date": "2025-12-09T10:42:32.399782"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We performed a procedure to stage and diagnose Ms. Wu's lung cancer. First, we sampled lymph nodes; the right paratracheal node was positive, but the hilar node was clear. Then, we used the robot to biopsy the main tumor in the right upper lobe, using a freezing technique to get good tissue samples for genetic analysis. She has Stage IIIA cancer.",
+    "note_text": "We performed a procedure to stage and diagnose Ms. <PERSON>'s lung cancer. First, we sampled lymph nodes; the right paratracheal node was positive, but the hilar node was clear. Then, we used the robot to biopsy the main tumor in the right upper lobe, using a freezing technique to get good tissue samples for genetic analysis. She has Stage IIIA cancer.",
     "cpt_codes": [
       31653,
       31627,
@@ -6806,6 +6909,12 @@
       "style_type": 8,
       "generated_name": "Sharon Lim",
       "generation_date": "2025-12-09T10:42:32.399811"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7215,7 +7324,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS + EMN\nPatient: Robert Thompson\nFindings:\n- EBUS: Stations 5, 7, 10L all positive for Adeno.\n- EMN: LLL mass biopsied, positive for Adeno.\nImpression: Stage IIIB Lung CA.\nPlan: Refer for chemo/immuno.",
+    "note_text": "Procedure: EBUS + EMN\nPatient: <PERSON>\nFindings:\n- EBUS: Stations 5, 7, 10L all positive for Adeno.\n- EMN: LLL mass biopsied, positive for Adeno.\nImpression: Stage IIIB Lung CA.\nPlan: Refer for chemo/immuno.",
     "cpt_codes": [
       32550
     ],
@@ -7307,10 +7416,16 @@
       "style_type": 4,
       "generated_name": "George White",
       "generation_date": "2025-12-09T10:42:32.399963"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Robert has a LLL mass and big nodes. Did EBUS first sampled 5 7 and 10L all cancer. Then used superdimension to find the LLL mass and biopsied it. It's all adenocarcinoma. He is stage 3B because of the N3 node. No surgery for him.",
+    "note_text": "<PERSON> has a LLL mass and big nodes. Did EBUS first sampled 5 7 and 10L all cancer. Then used superdimension to find the LLL mass and biopsied it. It's all adenocarcinoma. He is stage 3B because of the N3 node. No surgery for him.",
     "cpt_codes": [
       32550
     ],
@@ -7402,6 +7517,12 @@
       "style_type": 5,
       "generated_name": "Kenneth Harris",
       "generation_date": "2025-12-09T10:42:32.399989"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7595,7 +7716,7 @@
     }
   },
   {
-    "note_text": "We performed a biopsy and staging procedure on Mr. Thompson. We found that his lung cancer had spread to lymph nodes on both the left and right sides of his chest (N3 disease). We also confirmed the main tumor in the left lower lobe is adenocarcinoma. Because of the extent of the spread, surgery isn't an option, and he will need chemotherapy and immunotherapy.",
+    "note_text": "We performed a biopsy and staging procedure on Mr. <PERSON>. We found that his lung cancer had spread to lymph nodes on both the left and right sides of his chest (N3 disease). We also confirmed the main tumor in the left lower lobe is adenocarcinoma. Because of the extent of the spread, surgery isn't an option, and he will need chemotherapy and immunotherapy.",
     "cpt_codes": [
       32550
     ],
@@ -7687,6 +7808,12 @@
       "style_type": 8,
       "generated_name": "Brian Garcia",
       "generation_date": "2025-12-09T10:42:32.400059"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8202,7 +8329,7 @@
     }
   },
   {
-    "note_text": "EMN Bronch + Fiducial\nPatient: Patricia Johnson\nSteps:\n1. Navigated to RUL nodule.\n2. Confirmed with REBUS.\n3. Biopsied (forceps, brush, needle).\n4. ROSE positive for cancer.\n5. Placed gold fiducial for SBRT.\nPlan: Rad Onc consult.",
+    "note_text": "EMN Bronch + Fiducial\nPatient: <PERSON>\nSteps:\n1. Navigated to RUL nodule.\n2. Confirmed with REBUS.\n3. Biopsied (forceps, brush, needle).\n4. ROSE positive for cancer.\n5. Placed gold fiducial for SBRT.\nPlan: Rad Onc consult.",
     "cpt_codes": [
       31653
     ],
@@ -8338,10 +8465,16 @@
       "style_type": 4,
       "generated_name": "Barbara Lewis",
       "generation_date": "2025-12-09T10:42:32.400222"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Patricia has a RUL nodule we think is cancer. Used superdimension to find it. Took biopsies and aspirates. ROSE said adenocarcinoma. Put a gold seed in for radiation tracking. She did fine.",
+    "note_text": "<PERSON> has a RUL nodule we think is cancer. Used superdimension to find it. Took biopsies and aspirates. ROSE said adenocarcinoma. Put a gold seed in for radiation tracking. She did fine.",
     "cpt_codes": [
       31653
     ],
@@ -8477,6 +8610,12 @@
       "style_type": 5,
       "generated_name": "Elizabeth Lee",
       "generation_date": "2025-12-09T10:42:32.400255"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8758,7 +8897,7 @@
     }
   },
   {
-    "note_text": "We biopsied a nodule in Ms. Johnson's right upper lung using the navigation system. The preliminary results show it is lung cancer. Since she might need focused radiation treatment, we also placed a small gold marker (fiducial) near the tumor to help the radiation doctors target it precisely.",
+    "note_text": "We biopsied a nodule in Ms. <PERSON>'s right upper lung using the navigation system. The preliminary results show it is lung cancer. Since she might need focused radiation treatment, we also placed a small gold marker (fiducial) near the tumor to help the radiation doctors target it precisely.",
     "cpt_codes": [
       31653
     ],
@@ -8894,6 +9033,12 @@
       "style_type": 8,
       "generated_name": "Susan Allen",
       "generation_date": "2025-12-09T10:42:32.400357"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9522,7 +9667,7 @@
     }
   },
   {
-    "note_text": "Procedure: EMN Bronch\nPatient: Manuel Garcia\nQuery: Met vs Primary\nSteps:\n1. Nav to LLL.\n2. REBUS confirm.\n3. Biopsy x7, Brush x3.\n4. ROSE pos.\nPlan: Wait for IHC.",
+    "note_text": "Procedure: EMN Bronch\nPatient: <PERSON>\nQuery: Met vs Primary\nSteps:\n1. Nav to LLL.\n2. REBUS confirm.\n3. Biopsy x7, Brush x3.\n4. ROSE pos.\nPlan: Wait for IHC.",
     "cpt_codes": [
       31627,
       31654,
@@ -9681,10 +9826,16 @@
       "style_type": 4,
       "generated_name": "Jesus Perez",
       "generation_date": "2025-12-09T10:42:32.400550"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Manuel has a history of colon cancer and a new lung spot. Did the navigation bronch. Found the spot in the LLL. Biopsied it a bunch of times. Cytology says its cancer but need stains to know if its lung or colon. No complications.",
+    "note_text": "<PERSON> has a history of colon cancer and a new lung spot. Did the navigation bronch. Found the spot in the LLL. Biopsied it a bunch of times. Cytology says its cancer but need stains to know if its lung or colon. No complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -9843,6 +9994,12 @@
       "style_type": 5,
       "generated_name": "Angel Sanchez",
       "generation_date": "2025-12-09T10:42:32.400588"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10170,7 +10327,7 @@
     }
   },
   {
-    "note_text": "Mr. Garcia underwent a biopsy of a nodule in his left lower lung. Given his history of colon cancer, we need to know if this is a new lung cancer or spread from his colon. We successfully navigated to the spot and took samples. The preliminary check shows cancer cells, but we need special tests to tell exactly which type it is.",
+    "note_text": "Mr. <PERSON> underwent a biopsy of a nodule in his left lower lung. Given his history of colon cancer, we need to know if this is a new lung cancer or spread from his colon. We successfully navigated to the spot and took samples. The preliminary check shows cancer cells, but we need special tests to tell exactly which type it is.",
     "cpt_codes": [
       31627,
       31654,
@@ -10329,10 +10486,16 @@
       "style_type": 8,
       "generated_name": "Juan Flores",
       "generation_date": "2025-12-09T10:42:32.400705"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: EMN-guided pulmonary sampling.\nContext: Pulmonary nodule with history of colorectal malignancy.\nTechnique: Navigational localization with REBUS verification.\nFindings: Malignant cytology. \nDisposition: Discharge pending final diagnosis.",
+    "note_text": "Procedure: EMN-guided pulmonary sampling.\nContext: <PERSON> nodule with history of colorectal malignancy.\nTechnique: Navigational localization with REBUS verification.\nFindings: Malignant cytology. \nDisposition: Discharge pending final diagnosis.",
     "cpt_codes": [
       31627,
       31654,
@@ -10491,6 +10654,12 @@
       "style_type": 9,
       "generated_name": "Pedro Rivera",
       "generation_date": "2025-12-09T10:42:32.400742"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10734,7 +10903,7 @@
     }
   },
   {
-    "note_text": "EMN + Cryo\nPatient: Jennifer Taylor\nTarget: RML nodule\nSteps:\n1. Navigated to RML.\n2. REBUS confirm.\n3. Forceps biopsy -> ROSE pos.\n4. Cryobiopsy for molecular.\n5. Blocker used.\nPlan: D/C.",
+    "note_text": "EMN + Cryo\nPatient: <PERSON>\nTarget: RML nodule\nSteps:\n1. Navigated to RML.\n2. REBUS confirm.\n3. Forceps biopsy -> ROSE pos.\n4. Cryobiopsy for molecular.\n5. Blocker used.\nPlan: D/C.",
     "cpt_codes": [
       32601
     ],
@@ -10811,10 +10980,16 @@
       "style_type": 4,
       "generated_name": "Nancy Green",
       "generation_date": "2025-12-09T10:42:32.400831"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Jennifer has a RML nodule. Used superdimension. Found it with EBUS. Took regular biopsies and then cryo biopsies to get more tissue for gene testing. ROSE said adenocarcinoma. No bleeding problems.",
+    "note_text": "<PERSON> has a RML nodule. Used superdimension. Found it with EBUS. Took regular biopsies and then cryo biopsies to get more tissue for gene testing. ROSE said adenocarcinoma. No bleeding problems.",
     "cpt_codes": [
       32601
     ],
@@ -10891,6 +11066,12 @@
       "style_type": 5,
       "generated_name": "Betty Baker",
       "generation_date": "2025-12-09T10:42:32.400853"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11054,7 +11235,7 @@
     }
   },
   {
-    "note_text": "Ms. Taylor had a biopsy of a nodule in her right middle lung. We used navigation to find it and took standard biopsies. Because it looked like cancer, we also used a special freezing probe to get larger pieces of tissue for genetic testing, which will help guide her treatment. She is doing well.",
+    "note_text": "Ms. <PERSON> had a biopsy of a nodule in her right middle lung. We used navigation to find it and took standard biopsies. Because it looked like cancer, we also used a special freezing probe to get larger pieces of tissue for genetic testing, which will help guide her treatment. She is doing well.",
     "cpt_codes": [
       32601
     ],
@@ -11131,6 +11312,12 @@
       "style_type": 8,
       "generated_name": "Donna Carter",
       "generation_date": "2025-12-09T10:42:32.400919"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11469,7 +11656,7 @@
     }
   },
   {
-    "note_text": "Robotic Bronch\nPatient: Catherine Lee\nTarget: RML nodule\nSteps:\n1. Ion registration.\n2. Nav to RML medial segment.\n3. Confirmed with REBUS/CBCT.\n4. Biopsies taken.\n5. ROSE indeterminate/benign?\nPlan: Wait for final.",
+    "note_text": "Robotic Bronch\nPatient: <PERSON>\nTarget: RML nodule\nSteps:\n1. Ion registration.\n2. Nav to RML medial segment.\n3. Confirmed with REBUS/CBCT.\n4. Biopsies taken.\n5. ROSE indeterminate/benign?\nPlan: Wait for final.",
     "cpt_codes": [
       31600
     ],
@@ -11551,10 +11738,16 @@
       "style_type": 4,
       "generated_name": "Elizabeth Turner",
       "generation_date": "2025-12-09T10:42:32.401052"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Catherine has a spot in the RML and breast cancer history. Used the Ion robot. Found the spot easily. Took biopsies. Rose didn't show obvious cancer but we will see what the final path says. She went home.",
+    "note_text": "<PERSON> has a spot in the RML and breast cancer history. Used the Ion robot. Found the spot easily. Took biopsies. Rose didn't show obvious cancer but we will see what the final path says. She went home.",
     "cpt_codes": [
       31600
     ],
@@ -11636,6 +11829,12 @@
       "style_type": 5,
       "generated_name": "Margaret Torres",
       "generation_date": "2025-12-09T10:42:32.401075"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11809,7 +12008,7 @@
     }
   },
   {
-    "note_text": "We used the robotic bronchoscope to check a nodule in Ms. Lee's right middle lung. We navigated to the site and took samples. The initial look at the cells didn't show cancer, but we need to wait for the full report to be sure. It could be benign or related to her history, but for now, it looks reassuring.",
+    "note_text": "We used the robotic bronchoscope to check a nodule in Ms. <PERSON>'s right middle lung. We navigated to the site and took samples. The initial look at the cells didn't show cancer, but we need to wait for the full report to be sure. It could be benign or related to her history, but for now, it looks reassuring.",
     "cpt_codes": [
       31600
     ],
@@ -11891,6 +12090,12 @@
       "style_type": 8,
       "generated_name": "Alice Edwards",
       "generation_date": "2025-12-09T10:42:32.401146"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

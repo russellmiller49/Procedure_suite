@@ -285,7 +285,7 @@
     }
   },
   {
-    "note_text": "Procedure: Pleuroscopy\nPatient: John Doe\nSteps:\n1. Local/Sedation.\n2. Trocar in.\n3. Drained fluid.\n4. Saw nodules everywhere.\n5. Biopsied.\n6. Poured in talc.\n7. Chest tube in.\nPlan: Pain control.",
+    "note_text": "Procedure: Pleuroscopy\nPatient: <PERSON>\nSteps:\n1. Local/Sedation.\n2. Trocar in.\n3. Drained fluid.\n4. Saw nodules everywhere.\n5. Biopsied.\n6. Poured in talc.\n7. Chest tube in.\nPlan: Pain control.",
     "cpt_codes": [
       32650
     ],
@@ -377,6 +377,12 @@
       "style_type": 4,
       "generated_name": "David Jones",
       "generation_date": "2025-12-09T09:19:20.781368"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1116,7 +1122,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronch Dilation\nPatient: Jane Smith\nSteps:\n1. Scope in.\n2. Found stenosis in trachea.\n3. Balloon up to 3ATM then 5ATM.\n4. Opened up good.\n5. No bleeding.\nPlan: Decadron, observe.",
+    "note_text": "Procedure: Bronch Dilation\nPatient: <PERSON>\nSteps:\n1. Scope in.\n2. Found stenosis in trachea.\n3. Balloon up to 3ATM then 5ATM.\n4. Opened up good.\n5. No bleeding.\nPlan: Decadron, observe.",
     "cpt_codes": [
       31630
     ],
@@ -1200,6 +1206,12 @@
       "style_type": 4,
       "generated_name": "Linda Davis",
       "generation_date": "2025-12-09T09:19:20.781776"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1638,7 +1650,7 @@
     }
   },
   {
-    "note_text": "Indication: Endobronchial SCC (LMS).\nProc: PDT Light Application.\nDetails: Photofrin given 48h prior. Light diffuser placed. 200J/cm applied.\nResult: Tumor treatment complete.\nPlan: Clean-up bronch 48h.",
+    "note_text": "Indication: Endobronchial SCC (LMS).\nProc: PDT Light Application.\nDetails: <LOCATION> given 48h prior. Light diffuser placed. 200J/cm applied.\nResult: Tumor treatment complete.\nPlan: Clean-up bronch 48h.",
     "cpt_codes": [
       31641
     ],
@@ -1717,6 +1729,12 @@
       "style_type": 1,
       "generated_name": "Michael Thomas",
       "generation_date": "2025-12-09T09:19:20.781919"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -1802,7 +1820,7 @@
     }
   },
   {
-    "note_text": "Code: 31641 (Tumor destruction via PDT).\nAgent: Porfimer sodium (Photofrin) administered previously.\nAction: Light application via bronchoscope.\nTarget: Left Mainstem Bronchus.",
+    "note_text": "Code: 31641 (Tumor destruction via PDT).\nAgent: Porfimer sodium (<LOCATION>) administered previously.\nAction: Light application via bronchoscope.\nTarget: Left Mainstem Bronchus.",
     "cpt_codes": [
       31641
     ],
@@ -1881,10 +1899,16 @@
       "style_type": 3,
       "generated_name": "Paul White",
       "generation_date": "2025-12-09T09:19:20.781965"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Procedure: PDT\nPatient: Robert Brown\nSteps:\n1. Meds given 2 days ago.\n2. Scope to LMS.\n3. Put light fiber in.\n4. Turned on laser for prescribed time.\n5. No issues.\nPlan: Come back for necrotic debris removal.",
+    "note_text": "Procedure: PDT\nPatient: <PERSON>\nSteps:\n1. Meds given 2 days ago.\n2. Scope to LMS.\n3. Put light fiber in.\n4. Turned on laser for prescribed time.\n5. No issues.\nPlan: Come back for necrotic debris removal.",
     "cpt_codes": [
       31641
     ],
@@ -1963,6 +1987,12 @@
       "style_type": 4,
       "generated_name": "Mark Harris",
       "generation_date": "2025-12-09T09:19:20.781988"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2649,7 +2679,7 @@
     }
   },
   {
-    "note_text": "Procedure: Valve Removal\nPatient: Michael Wilson\nSteps:\n1. GA.\n2. Scope to RUL.\n3. Pulled 3 valves out.\n4. Sucked out a lot of mucus behind them.\n5. Airway open.\nPlan: Recovery.",
+    "note_text": "Procedure: Valve Removal\nPatient: <PERSON>\nSteps:\n1. GA.\n2. Scope to RUL.\n3. Pulled 3 valves out.\n4. Sucked out a lot of mucus behind them.\n5. Airway open.\nPlan: Recovery.",
     "cpt_codes": [
       31648
     ],
@@ -2737,6 +2767,12 @@
       "style_type": 4,
       "generated_name": "Kevin Walker",
       "generation_date": "2025-12-09T09:19:20.782199"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3438,7 +3474,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronch/Suction\nPatient: Sarah Davis\nSteps:\n1. Through trach.\n2. Looked at stent in LMS.\n3. Full of goo.\n4. Suctioned it all out.\n5. Stent looks okay now.\nPlan: Continue humidity.",
+    "note_text": "Procedure: Bronch/Suction\nPatient: <PERSON>\nSteps:\n1. Through trach.\n2. Looked at stent in LMS.\n3. Full of goo.\n4. Suctioned it all out.\n5. Stent looks okay now.\nPlan: Continue humidity.",
     "cpt_codes": [
       31645
     ],
@@ -3516,6 +3552,12 @@
       "style_type": 4,
       "generated_name": "Betty Scott",
       "generation_date": "2025-12-09T09:19:20.782407"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3681,7 +3723,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nStent surveillance, secretion retention.\n[Anesthesia]\nLocal/Ventilator support.\n[Description]\nDumon stent inspected. Extensive secretions cleared from LMS. Stent patent.\n[Plan]\nPulmonary hygiene.",
+    "note_text": "[Indication]\nStent surveillance, secretion retention.\n[Anesthesia]\nLocal/Ventilator support.\n[Description]\nDumon stent inspected. Extensive secretions cleared from LMS. Stent patent.\n[Plan]\n<PERSON> hygiene.",
     "cpt_codes": [
       31645
     ],
@@ -3759,6 +3801,12 @@
       "style_type": 7,
       "generated_name": "Ashley Baker",
       "generation_date": "2025-12-09T09:19:20.782480"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4224,7 +4272,7 @@
     }
   },
   {
-    "note_text": "Procedure: Cryobiopsy\nPatient: Emily White\nSteps:\n1. GA/ETT.\n2. Blocker in RLL.\n3. REBUS checked area.\n4. Freeze biopsy x5.\n5. Inflated blocker each time.\n6. No bleeding.\nResult: ILD tissue.",
+    "note_text": "Procedure: Cryobiopsy\nPatient: <PERSON>\nSteps:\n1. GA/ETT.\n2. Blocker in RLL.\n3. REBUS checked area.\n4. Freeze biopsy x5.\n5. Inflated blocker each time.\n6. No bleeding.\nResult: ILD tissue.",
     "cpt_codes": [
       31628,
       31654
@@ -4321,6 +4369,12 @@
       "style_type": 4,
       "generated_name": "Melissa Roberts",
       "generation_date": "2025-12-09T09:19:20.782626"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4910,7 +4964,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Chemical Pleurodesis via Thoracostomy Tube.\nINDICATION: Recurrent malignant pleural effusion.\nNARRATIVE: The existing right-sided chest tube was assessed and found to be functional. A slurry containing 4 grams of sterile talc was instilled through the tube. The tube was clamped, and the patient was repositioned to ensure adequate distribution. The tube was then returned to suction.\nIMPRESSION: Talc pleurodesis administered.",
+    "note_text": "PROCEDURE: Chemical Pleurodesis via <PERSON>.\nINDICATION: Recurrent malignant pleural effusion.\nNARRATIVE: The existing right-sided chest tube was assessed and found to be functional. A slurry containing 4 grams of sterile talc was instilled through the tube. The tube was clamped, and the patient was repositioned to ensure adequate distribution. The tube was then returned to suction.\nIMPRESSION: Talc pleurodesis administered.",
     "cpt_codes": [
       32560
     ],
@@ -4993,6 +5047,12 @@
       "style_type": 2,
       "generated_name": "Scott Collins",
       "generation_date": "2025-12-09T09:19:20.782894"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5082,7 +5142,7 @@
     }
   },
   {
-    "note_text": "Procedure: Talc Slurry\nPatient: William Green\nSteps:\n1. Mixed talc.\n2. Pushed into chest tube.\n3. Clamped tube.\n4. Rolled patient around.\n5. Unclamped.\nPlan: Remove tube when output drops.",
+    "note_text": "Procedure: Talc Slurry\nPatient: <PERSON>\nSteps:\n1. Mixed talc.\n2. Pushed into chest tube.\n3. Clamped tube.\n4. Rolled patient around.\n5. Unclamped.\nPlan: Remove tube when output drops.",
     "cpt_codes": [
       32560
     ],
@@ -5165,6 +5225,12 @@
       "style_type": 4,
       "generated_name": "Stephen Sanchez",
       "generation_date": "2025-12-09T09:19:20.783003"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5844,7 +5910,7 @@
     }
   },
   {
-    "note_text": "Procedure: Hemoptysis Control\nPatient: James Black\nSteps:\n1. Emergent scope.\n2. Blood everywhere.\n3. Found source LUL.\n4. Tried saline/epi - didn't work.\n5. Put balloon in and blew it up.\n6. Stopped the bleed.\nPlan: ICU, IR embolization?",
+    "note_text": "Procedure: Hemoptysis Control\nPatient: <PERSON>\nSteps:\n1. Emergent scope.\n2. Blood everywhere.\n3. Found source LUL.\n4. Tried saline/epi - didn't work.\n5. Put balloon in and blew it up.\n6. Stopped the bleed.\nPlan: ICU, IR embolization?",
     "cpt_codes": [
       31634
     ],
@@ -5923,6 +5989,12 @@
       "style_type": 4,
       "generated_name": "Peter Rivera",
       "generation_date": "2025-12-09T09:19:20.783233"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6254,7 +6326,7 @@
     }
   },
   {
-    "note_text": "Procedure: Emergent endoscopic hemostasis.\nIndication: Pulmonary hemorrhage.\nAction: The bleeding source was isolated to the LUL. Pharmacologic lavage was attempted. Mechanical tamponade was achieved via balloon inflation.\nResult: Hemorrhage containment.",
+    "note_text": "Procedure: Emergent endoscopic hemostasis.\nIndication: <PERSON> hemorrhage.\nAction: The bleeding source was isolated to the LUL. Pharmacologic lavage was attempted. Mechanical tamponade was achieved via balloon inflation.\nResult: Hemorrhage containment.",
     "cpt_codes": [
       31634
     ],
@@ -6333,6 +6405,12 @@
       "style_type": 9,
       "generated_name": "Arthur Ward",
       "generation_date": "2025-12-09T09:19:20.783345"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6446,7 +6524,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Combined Hybrid Airway and Pleural Intervention.\nNARRATIVE: Rigid bronchoscopy addressed the right mainstem tumor. Debulking and dilation facilitated the placement of a metallic stent. Post-obstructive secretions were cleared. Concurrently, a pericardial window was performed by the surgical team (separate note). Finally, a tunneled indwelling pleural catheter (PleurX) was inserted for management of the malignant effusion.\nIMPRESSION: Palliation of airway and pleural disease.",
+    "note_text": "PROCEDURE: Combined <PERSON> and Pleural Intervention.\nNARRATIVE: Rigid bronchoscopy addressed the right mainstem tumor. Debulking and dilation facilitated the placement of a metallic stent. Post-obstructive secretions were cleared. Concurrently, a pericardial window was performed by the surgical team (separate note). Finally, a tunneled indwelling pleural catheter (PleurX) was inserted for management of the malignant effusion.\nIMPRESSION: Palliation of airway and pleural disease.",
     "cpt_codes": [
       31636,
       31641,
@@ -6553,6 +6631,12 @@
       "style_type": 2,
       "generated_name": "Roger Peterson",
       "generation_date": "2025-12-09T09:19:20.783400"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6666,7 +6750,7 @@
     }
   },
   {
-    "note_text": "Procedure: Hybrid Case\nPatient: Thomas Grey\nSteps:\n1. Rigid scope.\n2. Cleaned out RMS tumor.\n3. Put metal stent in RMS.\n4. Cleaned out pus.\n5. Surgery did their window.\n6. I put in a PleurX drain.\nPlan: Chemo.",
+    "note_text": "Procedure: Hybrid Case\nPatient: <PERSON>\nSteps:\n1. Rigid scope.\n2. Cleaned out RMS tumor.\n3. Put metal stent in RMS.\n4. Cleaned out pus.\n5. Surgery did their window.\n6. I put in a PleurX drain.\nPlan: Chemo.",
     "cpt_codes": [
       31636,
       31641,
@@ -6773,6 +6857,12 @@
       "style_type": 4,
       "generated_name": "Juan Ramirez",
       "generation_date": "2025-12-09T09:19:20.783456"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7587,7 +7677,7 @@
     }
   },
   {
-    "note_text": "Procedure: BAL\nPatient: Linda Clark\nSteps:\n1. Scope down.\n2. Lungs look clear.\n3. Wedged LLL.\n4. Washed with saline.\n5. Sucked it back.\nPlan: Antibiotics pending cultures.",
+    "note_text": "Procedure: BAL\nPatient: <PERSON>\nSteps:\n1. Scope down.\n2. Lungs look clear.\n3. Wedged LLL.\n4. Washed with saline.\n5. Sucked it back.\nPlan: Antibiotics pending cultures.",
     "cpt_codes": [
       31624
     ],
@@ -7671,6 +7761,12 @@
       "style_type": 4,
       "generated_name": "Angela Barnes",
       "generation_date": "2025-12-09T09:19:20.783766"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

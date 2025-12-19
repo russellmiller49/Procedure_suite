@@ -1452,7 +1452,7 @@
     }
   },
   {
-    "note_text": "Indications Left upper lobe mass Medications Propofol infusion via anesthesia assistance Medications General Anesthesia Procedure risks benefits and alternatives were explained to the patient All questions were answered and informed consent was documented as per institutional protocol A history and physical were performed and updated in the pre procedure assessment record Laboratory studies and radiographs were reviewed A time out was performed prior to the intervention Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree the Q190 video bronchoscope was introduced through the mouth via laryngeal mask airway and advanced to the tracheobronchial tree The laryngeal mask airway was in good position The vocal cords appeared normal The subglottic space was normal The trachea was of normal caliber The carina was sharp The tracheobronchial tree was examined to at least the first subsegmental level Bronchial mucosa and anatomy were normal there are no endobronchial lesions We then removed the diagnostic Q190 bronchoscopy and the super dimension navigational catheter was inserted through the T190 therapeutic bronchoscope and advanced into the airway Using navigational map we attempted to advance the 90 degree edge catheter into the proximity of the lesion within the left upper lobe Confirmation of placement once at the point of interest with radial ultrasound showed a concentric view within the lesion Biopsies were then performed with a variety of instruments to include peripheral needle brush triple needle brush and forceps under fluoroscopic visualization After adequate samples were obtained the bronchoscope was removed and the procedure completed Complications No immediate complications Estimated Blood Loss Less than 5 cc",
+    "note_text": "Indications Left upper lobe mass <PERSON> infusion via anesthesia assistance Medications General Anesthesia Procedure risks benefits and alternatives were explained to the patient All questions were answered and informed consent was documented as per institutional protocol A history and physical were performed and updated in the pre procedure assessment record Laboratory studies and radiographs were reviewed A time out was performed prior to the intervention Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree the Q190 video bronchoscope was introduced through the mouth via laryngeal mask airway and advanced to the tracheobronchial tree The laryngeal mask airway was in good position The vocal cords appeared normal The subglottic space was normal The trachea was of normal caliber The carina was sharp The tracheobronchial tree was examined to at least the first subsegmental level Bronchial mucosa and anatomy were normal there are no endobronchial lesions We then removed the diagnostic Q190 bronchoscopy and the super dimension navigational catheter was inserted through the T190 therapeutic bronchoscope and advanced into the airway Using navigational map we attempted to advance the 90 degree edge catheter into the proximity of the lesion within the left upper lobe Confirmation of placement once at the point of interest with radial ultrasound showed a concentric view within the lesion Biopsies were then performed with a variety of instruments to include peripheral needle brush triple needle brush and forceps under fluoroscopic visualization After adequate samples were obtained the bronchoscope was removed and the procedure completed Complications No immediate complications Estimated Blood Loss Less than 5 cc",
     "cpt_codes": [
       31629,
       31623,
@@ -1741,6 +1741,12 @@
       "style_type": 6,
       "generated_name": "Joseph Garcia",
       "generation_date": "2025-12-18T19:14:20.685046"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3300,7 +3306,7 @@
     }
   },
   {
-    "note_text": "CPT Coding Analysis:\n- 31652: EBUS-TBNA performed on 2 distinct stations (11R and 4L).\n- 31628: Transbronchial lung biopsy of the LUL mass (separate lesion).\n- 31627: Navigational bronchoscopy used for target planning and guidance.\n- 31654: Radial EBUS used for peripheral lesion confirmation.\nNote: Peripheral TBNA and brushing of the mass are bundled into 31628 per NCCI edits for the same lesion.",
+    "note_text": "CPT Coding Analysis:\n- 31652: EBUS-TBNA performed on 2 distinct stations (11R and 4L).\n- 31628: Transbronchial lung biopsy of the LUL mass (separate lesion).\n- 31627: Navigational bronchoscopy used for target planning and guidance.\n- 31654: Radial EBUS used for peripheral lesion confirmation.\nNote: Peripheral TBNA and brushing of the mass are bundled into 31628 per <LOCATION> edits for the same lesion.",
     "cpt_codes": [
       31652,
       31628,
@@ -3637,6 +3643,12 @@
       "style_type": 3,
       "generated_name": "Barbara Lopez",
       "generation_date": "2025-12-18T19:14:20.685491"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -4320,7 +4332,7 @@
     }
   },
   {
-    "note_text": "Indications Left upper lobe mass Medications Propofol infusion via anesthesia assistance Procedure risks benefits and alternatives were explained to the patient Following intravenous medications as per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree the Q190 video bronchoscope was introduced through the mouth The vocal cords appeared normal The subglottic space was normal The trachea is of normal caliber The carina was sharp All left and right sided airways were normal without endobronchial disease The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth and advanced to the tracheobronchial tree A systematic hilar and mediastinal lymph node survey was carried out Sampling criteria 5mm short axis diameter were met in station 11Ri 50 mm and 11Rs 66 mm Additionally the 4L was 49 mm but slightly hypoechoic and decision was made to sample this node as well Sampling by transbronchial needle aspiration was performed in these lymph nodes using an Olympus Visioshot 2 EBUSTBNA 21 gauge needle All samples were sent for routine cytology We then removed the EBUS bronchoscopy and the super dimension navigational catheter was inserted through the therapeutic bronchoscope and advanced into the airway Using navigational map we advanced the 180 degree edge catheter into the proximity of the lesion within the left upper lobe Confirmation of placement once at the point of interest with radial ultrasound showed a concentric view Biopsies were then performed with a variety of instruments to include peripheral needle triple needle brush and forceps under fluoroscopic visualization After adequate samples were obtained the bronchoscope was removed Fluoroscopic inspection was performed and no pneumothorax was visualized at the conclusion of the procedure",
+    "note_text": "Indications Left upper lobe mass <PERSON> infusion via anesthesia assistance Procedure risks benefits and alternatives were explained to the patient Following intravenous medications as per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree the Q190 video bronchoscope was introduced through the mouth The vocal cords appeared normal The subglottic space was normal The trachea is of normal caliber The carina was sharp All left and right sided airways were normal without endobronchial disease The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth and advanced to the tracheobronchial tree A systematic hilar and mediastinal lymph node survey was carried out Sampling criteria 5mm short axis diameter were met in station 11Ri 50 mm and 11Rs 66 mm Additionally the 4L was 49 mm but slightly hypoechoic and decision was made to sample this node as well Sampling by transbronchial needle aspiration was performed in these lymph nodes using an Olympus Visioshot 2 EBUSTBNA 21 gauge needle All samples were sent for routine cytology We then removed the EBUS bronchoscopy and the super dimension navigational catheter was inserted through the therapeutic bronchoscope and advanced into the airway Using navigational map we advanced the 180 degree edge catheter into the proximity of the lesion within the left upper lobe Confirmation of placement once at the point of interest with radial ultrasound showed a concentric view Biopsies were then performed with a variety of instruments to include peripheral needle triple needle brush and forceps under fluoroscopic visualization After adequate samples were obtained the bronchoscope was removed Fluoroscopic inspection was performed and no pneumothorax was visualized at the conclusion of the procedure",
     "cpt_codes": [
       31652,
       31628,
@@ -4657,6 +4669,12 @@
       "style_type": 6,
       "generated_name": "Maria Anderson",
       "generation_date": "2025-12-18T19:14:20.685797"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9145,7 +9163,7 @@
     }
   },
   {
-    "note_text": "Indications Left upper lobe mass Medications Propofol infusion via anesthesia assistance Procedure risks benefits and alternatives were explained to the patient Following intravenous medications as per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree the Q190 video bronchoscope was introduced through the mouth The vocal cords appeared normal The subglottic space was normal The trachea is of normal caliber The carina was sharp All left and right sided airways were normal without endobronchial disease Endobronchial brushing was performed at the takeoff of the right upper lobe followed by endobronchial biopsies within the right upper right middle and left upper lobe for research purposes as per standard DECAMP protocol The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth and advanced to the tracheobronchial tree A systematic hilar and mediastinal lymph node survey was carried out Sampling criteria 5mm short axis diameter were met in station 11Rs and station 711L lymph nodes Sampling by transbronchial needle aspiration was performed in these lymph nodes using an Olympus EBUSTBNA 22 gauge needle Further details regarding nodal size and number of samples are included in the attached EBUS procedural sheet All samples were sent for routine cytology We then removed the EBUS bronchoscopy and the super dimension navigational catheter was inserted through the therapeutic bronchoscope and advanced into the airway Using navigational map we attempted to advance the 45 degree edge catheter into the proximity of the lesion within the left upper lobe Confirmation of placement once at the point of interest with radial ultrasound failed to confirm location on multiple attempts and we subsequently removed the ENB catheter and were able to locate the lesion based on anatomical knowledge with the white light bronchoscope and confirm target with radial EBUS Biopsies were then performed with a variety of instruments to include peripheral needle and forceps under fluoroscopic visualization followed by BAL of the segment ROSE showed malignancy within the target lesion in the left upper lobe",
+    "note_text": "Indications Left upper lobe mass <PERSON> infusion via anesthesia assistance Procedure risks benefits and alternatives were explained to the patient Following intravenous medications as per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree the Q190 video bronchoscope was introduced through the mouth The vocal cords appeared normal The subglottic space was normal The trachea is of normal caliber The carina was sharp All left and right sided airways were normal without endobronchial disease Endobronchial brushing was performed at the takeoff of the right upper lobe followed by endobronchial biopsies within the right upper right middle and left upper lobe for research purposes as per standard DECAMP protocol The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth and advanced to the tracheobronchial tree A systematic hilar and mediastinal lymph node survey was carried out Sampling criteria 5mm short axis diameter were met in station 11Rs and station 711L lymph nodes Sampling by transbronchial needle aspiration was performed in these lymph nodes using an Olympus EBUSTBNA 22 gauge needle Further details regarding nodal size and number of samples are included in the attached EBUS procedural sheet All samples were sent for routine cytology We then removed the EBUS bronchoscopy and the super dimension navigational catheter was inserted through the therapeutic bronchoscope and advanced into the airway Using navigational map we attempted to advance the 45 degree edge catheter into the proximity of the lesion within the left upper lobe Confirmation of placement once at the point of interest with radial ultrasound failed to confirm location on multiple attempts and we subsequently removed the ENB catheter and were able to locate the lesion based on anatomical knowledge with the white light bronchoscope and confirm target with radial EBUS Biopsies were then performed with a variety of instruments to include peripheral needle and forceps under fluoroscopic visualization followed by BAL of the segment ROSE showed malignancy within the target lesion in the left upper lobe",
     "cpt_codes": [
       31653,
       31628,
@@ -9835,6 +9853,12 @@
       "style_type": 6,
       "generated_name": "David White",
       "generation_date": "2025-12-18T19:14:20.687020"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -16895,7 +16919,7 @@
     }
   },
   {
-    "note_text": "did a staging ebus for a lul tumor. airway looked okay except some compression in the lll. ebus survey found lots of nodes. we stuck 11r 7 4r 2r and 11l. rose said 4r and 2r were cancer so that's n3. got a bunch of extra passes from the big 11l node for the molecular labs. patient did fine minimal bleeding.",
+    "note_text": "did a staging ebus for a lul tumor. airway looked okay except some compression in the lll. ebus survey found lots of nodes. we stuck 11r 7 4r 2r and 11l. <PERSON> said 4r and 2r were cancer so that's n3. got a bunch of extra passes from the big 11l node for the molecular labs. patient did fine minimal bleeding.",
     "cpt_codes": [
       31653
     ],
@@ -17466,6 +17490,12 @@
       "style_type": 5,
       "generated_name": "Donald Adams",
       "generation_date": "2025-12-18T19:14:20.688817"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

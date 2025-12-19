@@ -2142,7 +2142,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS-TBNA\n- Airway inspected: Tracheomalacia noted.\n- Stations sampled: 11L (5.4mm), 4R (5.5mm).\n- Needle: 22G Olympus.\n- Results: 11L non-diagnostic, 4R benign lymphocytes.\n- No complications.",
+    "note_text": "Procedure: EBUS-TBNA\n- Airway inspected: <PERSON> noted.\n- Stations sampled: 11L (5.4mm), 4R (5.5mm).\n- Needle: 22G Olympus.\n- Results: 11L non-diagnostic, 4R benign lymphocytes.\n- No complications.",
     "cpt_codes": [
       31652
     ],
@@ -2329,6 +2329,12 @@
       "style_type": 1,
       "generated_name": "Mary Johnson",
       "generation_date": "2025-12-18T19:14:08.505244"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2902,7 +2908,7 @@
     }
   },
   {
-    "note_text": "patient here for staging we put them to sleep general anesthesia... used the Q190 scope first saw some tracheomalacia but otherwise normal. switched to the ebus scope found nodes at 11L and 4R sampled them with the 22 gauge needle... ROSE said 11L was nothing but 4R had lymphocytes so we stopped there sent everything to cytology no bleeding really 5cc blood loss okay thanks",
+    "note_text": "patient here for staging we put them to sleep general anesthesia... used the Q190 scope first saw some tracheomalacia but otherwise normal. switched to the ebus scope found nodes at 11L and 4R sampled them with the 22 gauge needle... <PERSON> said 11L was nothing but 4R had lymphocytes so we stopped there sent everything to cytology no bleeding really 5cc blood loss okay thanks",
     "cpt_codes": [
       31652
     ],
@@ -3089,10 +3095,16 @@
       "style_type": 5,
       "generated_name": "Elizabeth Lopez",
       "generation_date": "2025-12-18T19:14:08.505428"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the ET tube into the tracheobronchial tree. Tracheomalacia was noted in the trachea. The carina was sharp. The right-sided airway anatomy was normal. The left sided airway anatomy was normal. No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 11L (5.4mm) and 4R (5.5mm) lymph nodes. Sampling by transbronchial needle aspiration was performed beginning with the 11L Lymph node, followed by 4R lymph nodes using an Olympus Visioshot EBUSTBNA 22 gauge needle. ROSE showed non-diagnostic tissue in the low probability 11L lymph node and benign lymphocytes in the 4Rs. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+    "note_text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the ET tube into the tracheobronchial tree. <PERSON> was noted in the trachea. The carina was sharp. The right-sided airway anatomy was normal. The left sided airway anatomy was normal. No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 11L (5.4mm) and 4R (5.5mm) lymph nodes. Sampling by transbronchial needle aspiration was performed beginning with the 11L Lymph node, followed by 4R lymph nodes using an Olympus Visioshot EBUSTBNA 22 gauge needle. ROSE showed non-diagnostic tissue in the low probability 11L lymph node and benign lymphocytes in the 4Rs. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
     "cpt_codes": [
       31652
     ],
@@ -3279,6 +3291,12 @@
       "style_type": 6,
       "generated_name": "Jennifer Gonzalez",
       "generation_date": "2025-12-18T19:14:08.505474"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3662,7 +3680,7 @@
     }
   },
   {
-    "note_text": "Indication: Staging presumed malignancy.\nAction: The bronchoscope was navigated into the airway. Tracheomalacia was observed. EBUS interrogation located nodes at 11L and 4R. These were aspirated using a 22G needle. Specimens were submitted for cytology. The airway was cleared of secretions.",
+    "note_text": "Indication: Staging presumed malignancy.\nAction: The bronchoscope was navigated into the airway. <PERSON> was observed. EBUS interrogation located nodes at 11L and 4R. These were aspirated using a 22G needle. Specimens were submitted for cytology. The airway was cleared of secretions.",
     "cpt_codes": [
       31652
     ],
@@ -3849,6 +3867,12 @@
       "style_type": 9,
       "generated_name": "Margaret Clark",
       "generation_date": "2025-12-18T19:14:08.505609"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

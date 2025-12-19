@@ -732,7 +732,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Elena Rodriguez\nAttending: Dr. Watson\nProcedure: BLVR RUL\nSteps:\n1. Intubation (8.5 ETT).\n2. Chartis check of RUL -> Negative for collateral ventilation.\n3. Valves placed: 4 total (Zephyr) in RUL segments.\n4. Complication: Drop in sats/breath sounds. CXR showed pneumo.\n5. Pigtail chest tube placed.\nPlan: Admit, watch air leak.",
+    "note_text": "Resident Note\nPatient: <PERSON>\nAttending: Dr. Watson\nProcedure: BLVR RUL\nSteps:\n1. Intubation (8.5 ETT).\n2. Chartis check of RUL -> Negative for collateral ventilation.\n3. Valves placed: 4 total (Zephyr) in RUL segments.\n4. Complication: <PERSON> in sats/breath sounds. CXR showed pneumo.\n5. Pigtail chest tube placed.\nPlan: Admit, watch air leak.",
     "cpt_codes": [
       31647,
       32557
@@ -973,6 +973,13 @@
       "style_type": 4,
       "generated_name": "Isabella Martinez",
       "generation_date": "2025-12-09T09:19:06.049448"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -1708,7 +1715,7 @@
     }
   },
   {
-    "note_text": "Ms. Diaz presented for RUL lung volume reduction to treat her severe emphysema. After inducing anesthesia, we confirmed the right upper lobe was a suitable target using the Chartis system, which showed no airflow between lobes. We then placed four Zephyr valves to block off the diseased segments. Unfortunately, the immediate post-procedure x-ray showed a collapsed lung (pneumothorax). We immediately placed a small chest tube to re-expand the lung. She is being admitted to the step-down unit for close observation.",
+    "note_text": "Ms. <PERSON> presented for RUL lung volume reduction to treat her severe emphysema. After inducing anesthesia, we confirmed the right upper lobe was a suitable target using the Chartis system, which showed no airflow between lobes. We then placed four Zephyr valves to block off the diseased segments. Unfortunately, the immediate post-procedure x-ray showed a collapsed lung (pneumothorax). We immediately placed a small chest tube to re-expand the lung. She is being admitted to the step-down unit for close observation.",
     "cpt_codes": [
       31647,
       32557
@@ -1949,10 +1956,16 @@
       "style_type": 8,
       "generated_name": "Ana Torres",
       "generation_date": "2025-12-09T09:19:06.050019"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Endobronchial valve implantation in right upper lobe.\nSubject: Maria Lopez.\nMethod: Under general anesthesia, the RUL was isolated. Collateral ventilation was ruled out. Four Zephyr prostheses were deployed to obstruct the RUL segments. Visual confirmation of blockage was obtained.\nAdverse Event: Immediate pneumothorax detected radiographically.\nRemedy: Insertion of 14 Fr pleural drain.\nDisposition: Step-down unit admission.",
+    "note_text": "Procedure: Endobronchial valve implantation in right upper lobe.\nSubject: <PERSON>.\nMethod: Under general anesthesia, the RUL was isolated. Collateral ventilation was ruled out. Four Zephyr prostheses were deployed to obstruct the RUL segments. Visual confirmation of blockage was obtained.\nAdverse Event: Immediate pneumothorax detected radiographically.\nRemedy: Insertion of 14 Fr pleural drain.\nDisposition: Step-down unit admission.",
     "cpt_codes": [
       31647,
       32557
@@ -2193,6 +2206,12 @@
       "style_type": 9,
       "generated_name": "Paula Diaz",
       "generation_date": "2025-12-09T09:19:06.050081"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3722,7 +3741,7 @@
     }
   },
   {
-    "note_text": "Mr. Wilson came in hoping to have valves placed in his left upper lung to help with his emphysema. We put him under anesthesia and used the Chartis balloon to test the lung first. Unfortunately, the test showed that air was leaking in from other parts of the lung (collateral ventilation), which means the valves wouldn't work. We decided not to put them in to avoid unnecessary risk. He woke up fine and went home the same day.",
+    "note_text": "Mr. <PERSON> came in hoping to have valves placed in his left upper lung to help with his emphysema. We put him under anesthesia and used the Chartis balloon to test the lung first. Unfortunately, the test showed that air was leaking in from other parts of the lung (collateral ventilation), which means the valves wouldn't work. We decided not to put them in to avoid unnecessary risk. He woke up fine and went home the same day.",
     "cpt_codes": [
       31634
     ],
@@ -3937,6 +3956,12 @@
       "style_type": 8,
       "generated_name": "Charles Thompson",
       "generation_date": "2025-12-09T09:19:06.050508"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5014,7 +5039,7 @@
     }
   },
   {
-    "note_text": "jason phillips here for right lung lavage he has PAP. used a big double lumen tube 39 french left side. ventilated the left washed the right. used about 32 liters of saline draining out the milky stuff until it got clear. got back 27 liters. blood pressure got soft for a minute but fixed it with meds. keeping him on the vent taking him to icu.",
+    "note_text": "<PERSON> here for right lung lavage he has PAP. used a big double lumen tube 39 french left side. ventilated the left washed the right. used about 32 liters of saline draining out the milky stuff until it got clear. got back 27 liters. blood pressure got soft for a minute but fixed it with meds. keeping him on the vent taking him to icu.",
     "cpt_codes": [
       32997
     ],
@@ -5225,6 +5250,12 @@
       "style_type": 5,
       "generated_name": "Jeffrey Roberts",
       "generation_date": "2025-12-09T09:19:06.050822"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5656,7 +5687,7 @@
     }
   },
   {
-    "note_text": "Mr. Roberts underwent a whole lung washing (lavage) of his right lung today to treat his proteinosis condition. We used a special breathing tube to breathe for his left lung while we filled and emptied his right lung with saline. We used a total of 32 liters of fluid, and by the end, the fluid coming out looked much clearer than the milky fluid at the start. His blood pressure dipped once but recovered quickly. He is going to the ICU on a ventilator to recover.",
+    "note_text": "Mr. <PERSON> underwent a whole lung washing (lavage) of his right lung today to treat his proteinosis condition. We used a special breathing tube to breathe for his left lung while we filled and emptied his right lung with saline. We used a total of 32 liters of fluid, and by the end, the fluid coming out looked much clearer than the milky fluid at the start. His blood pressure dipped once but recovered quickly. He is going to the ICU on a ventilator to recover.",
     "cpt_codes": [
       32997
     ],
@@ -5867,6 +5898,12 @@
       "style_type": 8,
       "generated_name": "Ryan Hall",
       "generation_date": "2025-12-09T09:19:06.050978"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6940,7 +6977,7 @@
     }
   },
   {
-    "note_text": "lauren young for left lung wash she has bad PAP. used a right sided dlt. started washing the left but she didnt tolerate it well. after 10 liters she desatted to 82 and pressures went high. had to stop. sucked out what we could total 8.4 out. switched to both lungs and she got better. extubated to high flow sending to icu.",
+    "note_text": "<PERSON> for left lung wash she has bad PAP. used a right sided dlt. started washing the left but she didnt tolerate it well. after 10 liters she desatted to 82 and pressures went high. had to stop. sucked out what we could total 8.4 out. switched to both lungs and she got better. extubated to high flow sending to icu.",
     "cpt_codes": [
       32997
     ],
@@ -7151,6 +7188,12 @@
       "style_type": 5,
       "generated_name": "Amanda Baker",
       "generation_date": "2025-12-09T09:19:06.051358"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7582,7 +7625,7 @@
     }
   },
   {
-    "note_text": "Ms. Adams has severe protein buildup in her lungs and her oxygen levels are already low, so we had to be careful. We tried to wash her left lung today. We managed to wash it with 10 liters of saline, but we had to stop earlier than planned because her oxygen levels dropped and the pressure in her lungs got too high. We woke her up in the operating room and put her on high-flow oxygen. She is going to the ICU for close watching.",
+    "note_text": "Ms. <PERSON> has severe protein buildup in her lungs and her oxygen levels are already low, so we had to be careful. We tried to wash her left lung today. We managed to wash it with 10 liters of saline, but we had to stop earlier than planned because her oxygen levels dropped and the pressure in her lungs got too high. We woke her up in the operating room and put her on high-flow oxygen. She is going to the ICU for close watching.",
     "cpt_codes": [
       32997
     ],
@@ -7793,6 +7836,12 @@
       "style_type": 8,
       "generated_name": "Jessica Mitchell",
       "generation_date": "2025-12-09T09:19:06.051518"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8010,7 +8059,7 @@
     }
   },
   {
-    "note_text": "Indication: Foreign body aspiration (Chicken bone).\nProc: Rigid Bronchoscopy.\nFindings: Bone in LLL superior segment.\nAction: Removed piecemeal w/ rigid forceps + basket. APC to granulation.\nComplication: Transient desat -> Bagged.\nDisposition: Extubated. Obs 4 hrs.",
+    "note_text": "Indication: Foreign body aspiration (<PERSON> bone).\nProc: Rigid Bronchoscopy.\nFindings: Bone in LLL superior segment.\nAction: Removed piecemeal w/ rigid forceps + basket. APC to granulation.\nComplication: Transient desat -> Bagged.\nDisposition: Extubated. Obs 4 hrs.",
     "cpt_codes": [
       31635
     ],
@@ -8225,6 +8274,12 @@
       "style_type": 1,
       "generated_name": "David Turner",
       "generation_date": "2025-12-09T09:19:06.051664"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8882,7 +8937,7 @@
     }
   },
   {
-    "note_text": "michael james ate a chicken wing and choked. ct showed a bone in the left lung. we took him to OR used the rigid scope. found the bone in the LLL superior segment stuck in granulation. pulled it out in pieces with the forceps. burned the granulation with apc. he desatted a bit but came right back up. extubated fine going home later.",
+    "note_text": "<PERSON> ate a chicken wing and choked. ct showed a bone in the left lung. we took him to OR used the rigid scope. found the bone in the LLL superior segment stuck in granulation. pulled it out in pieces with the forceps. burned the granulation with apc. he desatted a bit but came right back up. extubated fine going home later.",
     "cpt_codes": [
       31635
     ],
@@ -9097,6 +9152,12 @@
       "style_type": 5,
       "generated_name": "Joseph Stewart",
       "generation_date": "2025-12-09T09:19:06.051989"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9536,7 +9597,7 @@
     }
   },
   {
-    "note_text": "Mr. Sanchez swallowed a chicken bone that went down the wrong pipe. We took him to the operating room and used a rigid metal tube to look into his lungs. We found the bone stuck in the lower left lung. We carefully broke it up and pulled it out using special grabbers. We also treated the irritated tissue around it. He had a short dip in oxygen levels but recovered quickly. He will go home today.",
+    "note_text": "Mr. <PERSON> swallowed a chicken bone that went down the wrong pipe. We took him to the operating room and used a rigid metal tube to look into his lungs. We found the bone stuck in the lower left lung. We carefully broke it up and pulled it out using special grabbers. We also treated the irritated tissue around it. He had a short dip in oxygen levels but recovered quickly. He will go home today.",
     "cpt_codes": [
       31635
     ],
@@ -9751,6 +9812,12 @@
       "style_type": 8,
       "generated_name": "Christopher Rogers",
       "generation_date": "2025-12-09T09:19:06.052163"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9972,7 +10039,7 @@
     }
   },
   {
-    "note_text": "Indication: FB Aspiration (Pen cap).\nProc: Pediatric Rigid Bronchoscopy.\nFindings: Cap in Right Mainstem.\nAction: Removed intact w/ optical forceps.\nResult: Airway patent. RUL/RML cleared.\nDisposition: Extubated. Pediatric recovery. D/C home.",
+    "note_text": "Indication: FB Aspiration (Pen cap).\nProc: Pediatric Rigid Bronchoscopy.\nFindings: <PERSON> in Right Mainstem.\nAction: Removed intact w/ optical forceps.\nResult: Airway patent. RUL/RML cleared.\nDisposition: Extubated. Pediatric recovery. D/C home.",
     "cpt_codes": [
       31635
     ],
@@ -10187,6 +10254,12 @@
       "style_type": 1,
       "generated_name": "Mia Johnson",
       "generation_date": "2025-12-09T09:19:06.052392"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11934,7 +12007,7 @@
     }
   },
   {
-    "note_text": "Indication: Severe Asthma. BT Session 2 (LLL).\nProc: Bronchial Thermoplasty.\nAction: 50 activations delivered to LLL segments/subsegments via Alair catheter.\nEvent: Mild bronchospasm -> Albuterol.\nDisposition: Home on prednisone taper.",
+    "note_text": "Indication: Severe Asthma. <LOCATION> Session 2 (LLL).\nProc: Bronchial Thermoplasty.\nAction: 50 activations delivered to LLL segments/subsegments via Alair catheter.\nEvent: Mild bronchospasm -> Albuterol.\nDisposition: Home on prednisone taper.",
     "cpt_codes": [
       31660
     ],
@@ -12149,10 +12222,16 @@
       "style_type": 1,
       "generated_name": "Emily Robinson",
       "generation_date": "2025-12-09T09:19:06.052889"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Bronchial Thermoplasty, Session 2. Under deep sedation, a flexible bronchoscope was navigated to the Left Lower Lobe. The Alair system was utilized to deliver radiofrequency energy to the airway smooth muscle. A systematic treatment of all accessible segmental and subsegmental airways was completed, totaling 50 activations. The patient experienced mild reactive bronchospasm which responded promptly to bronchodilator therapy.",
+    "note_text": "PROCEDURE NOTE: Bronchial <PERSON>, Session 2. Under deep sedation, a flexible bronchoscope was navigated to the Left Lower Lobe. The Alair system was utilized to deliver radiofrequency energy to the airway smooth muscle. A systematic treatment of all accessible segmental and subsegmental airways was completed, totaling 50 activations. The patient experienced mild reactive bronchospasm which responded promptly to bronchodilator therapy.",
     "cpt_codes": [
       31660
     ],
@@ -12367,6 +12446,12 @@
       "style_type": 2,
       "generated_name": "Laura Wood",
       "generation_date": "2025-12-09T09:19:06.052942"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12588,7 +12673,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: Emily Robinson\nProcedure: Bronchial Thermoplasty (LLL)\n1. Deep sedation.\n2. Scope to LLL.\n3. Used BT catheter to burn airways. 50 hits total.\n4. Patient got a little tight (wheezy), gave albuterol.\n5. Better now.\nPlan: D/C home, prednisone.",
+    "note_text": "Resident Note\nPatient: Emily Robinson\nProcedure: Bronchial <PERSON> (LLL)\n1. Deep sedation.\n2. Scope to LLL.\n3. Used BT catheter to burn airways. 50 hits total.\n4. Patient got a little tight (wheezy), gave albuterol.\n5. Better now.\nPlan: D/C home, prednisone.",
     "cpt_codes": [
       31660
     ],
@@ -12803,10 +12888,16 @@
       "style_type": 4,
       "generated_name": "Kimberly Lewis",
       "generation_date": "2025-12-09T09:19:06.053053"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "sarah mitchell here for her second thermoplasty session left lower lobe. she has bad asthma. deep sedation. went to the LLL and did the RF treatments. got 50 activations done. she got a bit wheezy so we gave albuterol and she opened up. watched her for 6 hours then sent her home with steroids.",
+    "note_text": "<PERSON> here for her second thermoplasty session left lower lobe. she has bad asthma. deep sedation. went to the LLL and did the RF treatments. got 50 activations done. she got a bit wheezy so we gave albuterol and she opened up. watched her for 6 hours then sent her home with steroids.",
     "cpt_codes": [
       31660
     ],
@@ -13021,6 +13112,12 @@
       "style_type": 5,
       "generated_name": "Michelle Harris",
       "generation_date": "2025-12-09T09:19:06.053108"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -13460,7 +13557,7 @@
     }
   },
   {
-    "note_text": "Ms. Walker came in for her second bronchial thermoplasty treatment for her asthma, focusing on the lower left lung. We used a special catheter to apply heat to the airway walls to reduce the muscle thickness. We performed 50 treatments in that area. She had a little bit of asthma tightening during the procedure, but a nebulizer treatment fixed it right away. She went home after a few hours of monitoring.",
+    "note_text": "Ms. <PERSON> came in for her second bronchial thermoplasty treatment for her asthma, focusing on the lower left lung. We used a special catheter to apply heat to the airway walls to reduce the muscle thickness. We performed 50 treatments in that area. She had a little bit of asthma tightening during the procedure, but a nebulizer treatment fixed it right away. She went home after a few hours of monitoring.",
     "cpt_codes": [
       31660
     ],
@@ -13675,6 +13772,12 @@
       "style_type": 8,
       "generated_name": "Angela Hall",
       "generation_date": "2025-12-09T09:19:06.053273"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14768,7 +14871,7 @@
     }
   },
   {
-    "note_text": "david nguyen here for first thermoplasty RLL. started the procedure got about 12 burns done and then he just locked up. severe bronchospasm sats dropped. we tried everything but had to intubate him. stopped the procedure obviously. taking him to the icu to manage the asthma attack.",
+    "note_text": "<PERSON> here for first thermoplasty RLL. started the procedure got about 12 burns done and then he just locked up. severe bronchospasm sats dropped. we tried everything but had to intubate him. stopped the procedure obviously. taking him to the icu to manage the asthma attack.",
     "cpt_codes": [
       31660
     ],
@@ -14983,6 +15086,12 @@
       "style_type": 5,
       "generated_name": "Andrew Vu",
       "generation_date": "2025-12-09T09:19:06.053713"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15422,7 +15531,7 @@
     }
   },
   {
-    "note_text": "Mr. Vo came in for his first heat treatment for asthma. We started on the right lower lung, but after only 12 treatments, his lungs had a severe spasm and clamped shut. We couldn't get them to open with just medicine, so we had to put a breathing tube in and stop the procedure to keep him safe. He is currently in the ICU on a ventilator.",
+    "note_text": "Mr. <PERSON> came in for his first heat treatment for asthma. We started on the right lower lung, but after only 12 treatments, his lungs had a severe spasm and clamped shut. We couldn't get them to open with just medicine, so we had to put a breathing tube in and stop the procedure to keep him safe. He is currently in the ICU on a ventilator.",
     "cpt_codes": [
       31660
     ],
@@ -15637,6 +15746,12 @@
       "style_type": 8,
       "generated_name": "Kevin Vo",
       "generation_date": "2025-12-09T09:19:06.053911"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -16714,7 +16829,7 @@
     }
   },
   {
-    "note_text": "patricia foster here for scope of the pleural space right side. effusions keep coming back. we drained 1200cc straw fluid. looked inside with the flex scope saw a lot of fibrin and nodules. took a bunch of biopsies sent for TB and cancer. didnt talc her yet. chest tube in place sending to floor.",
+    "note_text": "<PERSON> here for scope of the pleural space right side. effusions keep coming back. we drained 1200cc straw fluid. looked inside with the flex scope saw a lot of fibrin and nodules. took a bunch of biopsies sent for TB and cancer. didnt talc her yet. chest tube in place sending to floor.",
     "cpt_codes": [
       32602
     ],
@@ -16925,6 +17040,12 @@
       "style_type": 5,
       "generated_name": "Nancy Wood",
       "generation_date": "2025-12-09T09:19:06.054237"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17356,7 +17477,7 @@
     }
   },
   {
-    "note_text": "Mrs. Barnes has fluid around her right lung that we haven't been able to diagnose. Today we did a procedure to look inside the chest cavity with a camera. We drained over a liter of fluid and saw some small bumps and inflammation on the lining of the lung. We took several samples (biopsies) of these bumps to test for tuberculosis or cancer. We decided not to seal the lung (talc) until we know exactly what we are treating. She has a tube in her side to drain any leftover fluid.",
+    "note_text": "Mrs. <PERSON> has fluid around her right lung that we haven't been able to diagnose. Today we did a procedure to look inside the chest cavity with a camera. We drained over a liter of fluid and saw some small bumps and inflammation on the lining of the lung. We took several samples (biopsies) of these bumps to test for tuberculosis or cancer. We decided not to seal the lung (talc) until we know exactly what we are treating. She has a tube in her side to drain any leftover fluid.",
     "cpt_codes": [
       32602
     ],
@@ -17567,6 +17688,12 @@
       "style_type": 8,
       "generated_name": "Donna Henderson",
       "generation_date": "2025-12-09T09:19:06.054396"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17784,7 +17911,7 @@
     }
   },
   {
-    "note_text": "Indication: Recurrent Left effusion, CHF.\nProc: US-Guided Thoracentesis.\nResult: 1100mL clear fluid removed.\nComplication: Post-proc chest pain -> CXR showed small apical PTX.\nAction: No chest tube needed. Oxygen started.\nDisposition: Admit for observation.",
+    "note_text": "Indication: Recurrent Left effusion, CHF.\nProc: US-Guided Thoracentesis.\nResult: 1100mL clear fluid removed.\nComplication: Post-proc chest pain -> CXR showed small apical PTX.\nAction: No chest tube needed. <PERSON> started.\nDisposition: Admit for observation.",
     "cpt_codes": [
       32555
     ],
@@ -18000,6 +18127,12 @@
       "style_type": 1,
       "generated_name": "Robert Hughes",
       "generation_date": "2025-12-09T09:19:06.054511"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -18660,7 +18793,7 @@
     }
   },
   {
-    "note_text": "william carter heart failure patient with fluid on left lung again. did a tap with ultrasound. got 1100 out. he started coughing and having pain. ultrasound looked like maybe lung down. cxr confirmed small pneumo. its small so no tube just watching him overnight with oxygen.",
+    "note_text": "<PERSON> heart failure patient with fluid on left lung again. did a tap with ultrasound. got 1100 out. he started coughing and having pain. ultrasound looked like maybe lung down. cxr confirmed small pneumo. its small so no tube just watching him overnight with oxygen.",
     "cpt_codes": [
       32555
     ],
@@ -18876,6 +19009,12 @@
       "style_type": 5,
       "generated_name": "William Bryant",
       "generation_date": "2025-12-09T09:19:06.054729"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -19098,7 +19237,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSymptomatic left pleural effusion (CHF).\n[Anesthesia]\nLocal (Lidocaine).\n[Description]\n1100mL fluid removed via US-guided thoracentesis. Complicated by iatrogenic apical pneumothorax.\n[Plan]\nConservative management (Oxygen). Admit for observation. No chest tube currently indicated.",
+    "note_text": "[Indication]\nSymptomatic left pleural effusion (CHF).\n[Anesthesia]\nLocal (Lidocaine).\n[Description]\n1100mL fluid removed via US-guided thoracentesis. Complicated by iatrogenic apical pneumothorax.\n[Plan]\nConservative management (<PERSON>). Admit for observation. No chest tube currently indicated.",
     "cpt_codes": [
       32555
     ],
@@ -19314,10 +19453,16 @@
       "style_type": 7,
       "generated_name": "Richard Russell",
       "generation_date": "2025-12-09T09:19:06.054853"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mr. Patterson needed fluid drained from around his left lung again due to his heart failure. We successfully drained about a liter of fluid. Towards the end, he had some coughing and pain. Unfortunately, the x-ray showed a small pocket of air (pneumothorax) outside the lung. It is small enough that we don't think he needs a tube to drain the air right now, but we are going to keep him in the hospital overnight on oxygen to be safe.",
+    "note_text": "Mr. <PERSON> needed fluid drained from around his left lung again due to his heart failure. We successfully drained about a liter of fluid. Towards the end, he had some coughing and pain. Unfortunately, the x-ray showed a small pocket of air (pneumothorax) outside the lung. It is small enough that we don't think he needs a tube to drain the air right now, but we are going to keep him in the hospital overnight on oxygen to be safe.",
     "cpt_codes": [
       32555
     ],
@@ -19533,6 +19678,12 @@
       "style_type": 8,
       "generated_name": "Joseph Griffin",
       "generation_date": "2025-12-09T09:19:06.054915"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

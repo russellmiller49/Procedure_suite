@@ -94,6 +94,22 @@ class RawMLAuditor:
     def __init__(self, predictor: MLCoderPredictor | None = None) -> None:
         self._predictor = predictor or MLCoderPredictor()
 
+    def is_loaded(self) -> bool:
+        """Return True if the auditor is ready to serve predictions."""
+        # MLCoderPredictor is instantiated in __init__; any heavy loads are internal.
+        return True
+
+    def warm(self) -> "RawMLAuditor":
+        """Eagerly warm underlying artifacts if any are lazily loaded."""
+        try:
+            # If the predictor has its own warm method, use it.
+            warm = getattr(self._predictor, "warm", None)
+            if callable(warm):
+                warm()
+        except Exception:  # noqa: BLE001
+            pass
+        return self
+
     def classify(self, raw_note_text: str) -> CaseClassification:
         return self._predictor.classify_case(raw_note_text)
 
@@ -255,6 +271,15 @@ class RegistryFlagAuditor:
             logger.info("PyTorch/transformers not available - using thresholds-only mode")
 
         self._loaded = True
+
+    def is_loaded(self) -> bool:
+        """Return True if artifacts have been loaded (even if model weights are unavailable)."""
+        return self._loaded
+
+    def warm(self) -> "RegistryFlagAuditor":
+        """Eagerly load artifacts (tokenizer/model/thresholds) so first request is fast."""
+        self._load_artifacts()
+        return self
 
     def classify(self, raw_note_text: str) -> RegistryFlagClassification:
         """Classify procedure note text to predict registry flags.

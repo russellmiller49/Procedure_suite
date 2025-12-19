@@ -2762,7 +2762,7 @@
   },
   {
     "note_id": "TBA-008",
-    "note_text": "Indication: Juxta-diaphragmatic lesion.\nProcedure: Guided endoscopy with thermal ablation.\nAction: 3D fluoroscopy verified probe placement. Energy was delivered in two phases. The ablation zone excluded the diaphragm.\nOutcome: Safe lesion necrosis.",
+    "note_text": "Indication: <PERSON>-diaphragmatic lesion.\nProcedure: Guided endoscopy with thermal ablation.\nAction: 3D fluoroscopy verified probe placement. Energy was delivered in two phases. The ablation zone excluded the diaphragm.\nOutcome: Safe lesion necrosis.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -2796,6 +2796,12 @@
       "style_type": 9,
       "generated_name": "Robbie Robertson",
       "generation_date": "2025-12-09T09:22:27.329587"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2952,7 +2958,7 @@
   },
   {
     "note_id": "TBA-009",
-    "note_text": "patient has only one lung. nodule in the lingula. carefully navigated there. used the cone beam. did one 8 minute burn didn't want to overdo it. scan showed we got it with a 5mm rim. oxygen stayed good. step down unit for watch.",
+    "note_text": "patient has only one lung. nodule in the lingula. carefully navigated there. used the cone beam. did one 8 minute burn didn't want to overdo it. <PERSON> showed we got it with a 5mm rim. oxygen stayed good. step down unit for watch.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -2986,6 +2992,12 @@
       "style_type": 5,
       "generated_name": "Marie Schrader",
       "generation_date": "2025-12-09T09:22:27.329641"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3645,7 +3657,7 @@
   },
   {
     "note_id": "TBA-011",
-    "note_text": "colorectal met in rll. used the nav system to get there. put the rfa catheter in. did a 12 minute burn with the cooling on. scan after showed a nice sharp circle around the tumor. no bleeding. sending home later.",
+    "note_text": "colorectal met in rll. used the nav system to get there. put the rfa catheter in. did a 12 minute burn with the cooling on. <PERSON> after showed a nice sharp circle around the tumor. no bleeding. sending home later.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3679,6 +3691,12 @@
       "style_type": 5,
       "generated_name": "Glenn Rhee",
       "generation_date": "2025-12-09T09:22:27.329843"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4365,7 +4383,7 @@
   },
   {
     "note_id": "TBA-013",
-    "note_text": "patient in the pef trial. rll nodule. got there with nav. put the special cath in. fired the pulses. no heat generated. scan showed a clean ablation zone. heart rhythm stayed fine. admit for telemetry per protocol.",
+    "note_text": "patient in the <PERSON> trial. rll nodule. got there with nav. put the special cath in. fired the pulses. no heat generated. scan showed a clean ablation zone. heart rhythm stayed fine. admit for telemetry per protocol.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -4399,6 +4417,12 @@
       "style_type": 5,
       "generated_name": "Andy Dwyer",
       "generation_date": "2025-12-09T09:22:27.330036"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4719,7 +4743,7 @@
   },
   {
     "note_id": "TBA-014",
-    "note_text": "two spots to treat rul and rll. did the upper one first 8 minutes. moved down to the lower one did 6 minutes. scan showed good burns on both. no bleeding. admitting overnight since we did two spots.",
+    "note_text": "two spots to treat rul and rll. did the upper one first 8 minutes. moved down to the lower one did 6 minutes. <PERSON> showed good burns on both. no bleeding. admitting overnight since we did two spots.",
     "cpt_codes": [
       "31641",
       "31641",
@@ -4756,6 +4780,12 @@
       "style_type": 5,
       "generated_name": "Molly Hooper",
       "generation_date": "2025-12-09T09:22:27.330149"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

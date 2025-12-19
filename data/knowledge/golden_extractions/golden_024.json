@@ -1986,7 +1986,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRLL Mass, Staging.\n[Anesthesia]\nGA.\n[Description]\nEBUS 4R/7. Ion Nav to RLL. REBUS confirm. TBBx performed.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nRLL Mass, Staging.\n[Anesthesia]\nGA.\n[Description]\nEBUS 4R/7. <PERSON> to RLL. REBUS confirm. TBBx performed.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31652,
       31654,
@@ -2080,6 +2080,12 @@
       "style_type": 7,
       "generated_name": "Daniel Hall",
       "generation_date": "2025-12-09T09:19:23.866727"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

@@ -2960,7 +2960,7 @@
     }
   },
   {
-    "note_text": "The procedure was performed in the bronchoscopy suite under moderate sedation. Following intravenous medications as per the record and topical anesthesia to the upper airway, the Q190 video bronchoscope was introduced through the nose, into the oropharynx. The oropharynx and larynx were well visualized and normal. Topical anesthesia with 1% lidocaine was applied to the vocal cords and the flexible bronchoscope was then advanced through the larynx into the trachea. The patient\u2019s Y stent was well placed. There was thick purulent mucous throughout the stent which was suctioned. At the distal aspect of the right mainstem limb there was granulation tissue causing about 50% obstruction and at the distal aspect of the left mainstem limb there was granulation tissue causing about 60% after bypassing the granulation tissue there were thick copious purulent secretions through the lower lobes which were suctioned. During the procedure, the patient did develop some intermittent hypoxia, requiring attachment of the oxygen supply to the bronchoscope working channel for direct tracheal oxygen administration which resolved the hypoxia. Once we were satisfied that there was no active bleeding, the bronchoscope was removed and the procedure completed.",
+    "note_text": "The procedure was performed in the bronchoscopy suite under moderate sedation. Following intravenous medications as per the record and topical anesthesia to the upper airway, the Q190 video bronchoscope was introduced through the nose, into the oropharynx. The oropharynx and larynx were well visualized and normal. Topical anesthesia with 1% lidocaine was applied to the vocal cords and the flexible bronchoscope was then advanced through the larynx into the trachea. The patient’s Y stent was well placed. There was thick purulent mucous throughout the stent which was suctioned. At the distal aspect of the right mainstem limb there was granulation tissue causing about 50% obstruction and at the distal aspect of the left mainstem limb there was granulation tissue causing about 60% after bypassing the granulation tissue there were thick copious purulent secretions through the lower lobes which were suctioned. During the procedure, the patient did develop some intermittent hypoxia, requiring attachment of the oxygen supply to the bronchoscope working channel for direct tracheal oxygen administration which resolved the hypoxia. Once we were satisfied that there was no active bleeding, the bronchoscope was removed and the procedure completed.",
     "cpt_codes": [
       31645
     ],
@@ -7377,7 +7377,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: [Patient Name]\nDiagnosis: TBM\nProcedure: Bronchoscopy with Stent Placement\nSteps:\n1. GA/LMA. Flex scope verified severe collapse.\n2. Suctioned pus from LLL/RLL.\n3. Placed Dynamic Y-stent. Checked with rigid scope.\n4. In PACU, xray showed stent moved. Brought back to OR.\n5. Rigid bronch inserted. Old stent removed.\n6. New Dumon Y-stent placed. Fits better.\n7. Final check showed good airway patency.\nPlan: Admit, saline nebs.",
+    "note_text": "Procedure Note\nPatient: [Patient Name]\nDiagnosis: TBM\nProcedure: Bronchoscopy with Stent Placement\nSteps:\n1. GA/LMA. Flex scope verified severe collapse.\n2. Suctioned pus from LLL/RLL.\n3. Placed Dynamic Y-stent. Checked with rigid scope.\n4. In PACU, <PERSON> showed stent moved. Brought back to OR.\n5. Rigid bronch inserted. Old stent removed.\n6. New Dumon Y-stent placed. Fits better.\n7. Final check showed good airway patency.\nPlan: Admit, saline nebs.",
     "cpt_codes": [
       31631,
       31638,
@@ -8057,6 +8057,12 @@
       "style_type": 4,
       "generated_name": "Karen Smith",
       "generation_date": "2025-12-18T19:14:45.725427"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8743,7 +8749,7 @@
     }
   },
   {
-    "note_text": "The procedure was performed in the main operating room. After administration of sedatives an LMA was inserted and the Q190 flexible bronchoscope was passed through the vocal cords and into the trachea. Approximately 4 cm proximal to the main carina there was near complete expiratory collapse of the airway which extended into the bilateral mainstem bronchi and bronchus intermedius. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa was boggy throughout, with the exception of the severe dynamic collapse anatomy were otherwise normal with no endobronchial lesions seen to at least the first sub-segments. There was thick purulent secretions within the bilateral lower lobes (likely secondary to chronic post-obstructive pneumonia from severe airway collapse) which were suctioned. Measurements of the collapsible central airways were obtained. We then removed the LMA. A MAC 3 video laryngoscope (C-MAC) was then used to expose the larynx with a grade 1 view obtained. The customized 15x12x12 Dynamic Y-stent with a tracheal length of 80mm, right mainstem limb of 10mm and left mainstem limb which was collapsed and secured with Freitag forceps was then passed through the vocal cords and into the trachea. The forceps were opened and once resistance was met indicating the stent had reached the main carina the forceps were removed. Subsequently a 12mm rigid non-ventilating tracheoscope was inserted into the subglottic space and attached to the jet ventilator. The flexible bronchoscope was inserted through the rigid tracheoscope and the stent required minimal adjustment to seat in the desired location. Once this was completed the rigid bronchoscope was removed and the procedure completed. Patient was recovering without issues in the PACU and post-procedure chest x-ray was performed which showed some proximal stent migration and the right sided limb appeared to be of inadequate length to ensure stability. CT was then performed which confirmed the inadequate length f the right sided limb. The patient was then subsequently taken back to the operating room where after induction and administration of paralytics a 12 mm non-ventilating rigid bronchoscope was inserted through the mouth into the subglottic space and attached to the jet ventilation. Using optical forceps we attempted to remove the original Y-stent however the size of the tracheoscope was inadequate and we converted to a 14 mm ventilating rigid bronchoscope which allowed us to easily removed the stent with optical forceps. After-resizing the airways an 18x14x14 Dumon tracheal Y-stent was customized to a tracheal length of 80mm right mainstem length of 30mm and left mainstem limb of 40mm. The stent was then loaded into the Novatech Ton stent deployment device. The rigid bronchoscope was then advanced into the left mainstem and the stent was deployed. Through the use of flexible forceps, and manipulation with the tip of the flexible bronchoscope we were able to adequately position the limbs within the proper airways resulting in successful stabilization of the airway. At this point inspection was performed a flexible bronchoscopic inspection to evaluate for any bleeding or other complications and none was seen. The rigid bronchoscope was then removed and an LMA was inserted. A repeat inspection was performed with the flexible bronchoscope and showed the stent well placed with near complete resolution of central airway collapse. The bronchoscope was then removed and once the patient was awake and protecting airway the LMA was removed and the procedure was completed.",
+    "note_text": "The procedure was performed in the main operating room. After administration of sedatives an LMA was inserted and the Q190 flexible bronchoscope was passed through the vocal cords and into the trachea. Approximately 4 cm proximal to the main carina there was near complete expiratory collapse of the airway which extended into the bilateral mainstem bronchi and bronchus intermedius. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa was boggy throughout, with the exception of the severe dynamic collapse anatomy were otherwise normal with no endobronchial lesions seen to at least the first sub-segments. There was thick purulent secretions within the bilateral lower lobes (likely secondary to chronic post-obstructive pneumonia from severe airway collapse) which were suctioned. Measurements of the collapsible central airways were obtained. We then removed the LMA. A MAC 3 video <PERSON> (C-MAC) was then used to expose the larynx with a grade 1 view obtained. The customized 15x12x12 Dynamic Y-stent with a tracheal length of 80mm, right mainstem limb of 10mm and left mainstem limb which was collapsed and secured with Freitag forceps was then passed through the vocal cords and into the trachea. The forceps were opened and once resistance was met indicating the stent had reached the main carina the forceps were removed. Subsequently a 12mm rigid non-ventilating tracheoscope was inserted into the subglottic space and attached to the jet ventilator. The flexible bronchoscope was inserted through the rigid tracheoscope and the stent required minimal adjustment to seat in the desired location. Once this was completed the rigid bronchoscope was removed and the procedure completed. Patient was recovering without issues in the PACU and post-procedure chest x-ray was performed which showed some proximal stent migration and the right sided limb appeared to be of inadequate length to ensure stability. CT was then performed which confirmed the inadequate length f the right sided limb. The patient was then subsequently taken back to the operating room where after induction and administration of paralytics a 12 mm non-ventilating rigid bronchoscope was inserted through the mouth into the subglottic space and attached to the jet ventilation. Using optical forceps we attempted to remove the original Y-stent however the size of the tracheoscope was inadequate and we converted to a 14 mm ventilating rigid bronchoscope which allowed us to easily removed the stent with optical forceps. After-resizing the airways an 18x14x14 Dumon tracheal Y-stent was customized to a tracheal length of 80mm right mainstem length of 30mm and left mainstem limb of 40mm. The stent was then loaded into the Novatech Ton stent deployment device. The rigid bronchoscope was then advanced into the left mainstem and the stent was deployed. Through the use of flexible forceps, and manipulation with the tip of the flexible bronchoscope we were able to adequately position the limbs within the proper airways resulting in successful stabilization of the airway. At this point inspection was performed a flexible bronchoscopic inspection to evaluate for any bleeding or other complications and none was seen. The rigid bronchoscope was then removed and an LMA was inserted. A repeat inspection was performed with the flexible bronchoscope and showed the stent well placed with near complete resolution of central airway collapse. The bronchoscope was then removed and once the patient was awake and protecting airway the LMA was removed and the procedure was completed.",
     "cpt_codes": [
       31631,
       31638,
@@ -9434,6 +9440,12 @@
       "style_type": 6,
       "generated_name": "Mary Ann Davidson",
       "generation_date": "2025-12-18T19:14:45.725774"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15689,7 +15701,7 @@
     }
   },
   {
-    "note_text": "Indication: Left mainstem obstruction (Wegener's).\nProcedure: Rigid bronchoscopy, APC, Balloon Dilation, Fibrin Glue, Chest Tube.\nFindings: LMS 90-100% stenosed. Attempted recanalization (knife, balloon, APC, coring).\nComplication: Visualization of pulsatile vessel (PA) via false lumen. No rupture.\nAction: Fibrin glue applied. Procedure aborted. Patient intubated. Chest tube (14F) placed for pneumothorax.\nPlan: ICU. CT Surgery consult. CT Chest.",
+    "note_text": "Indication: Left mainstem obstruction (Wegener's).\nProcedure: Rigid bronchoscopy, APC, Balloon Dilation, <PERSON>, Chest Tube.\nFindings: LMS 90-100% stenosed. Attempted recanalization (knife, balloon, APC, coring).\nComplication: Visualization of pulsatile vessel (PA) via false lumen. No rupture.\nAction: Fibrin glue applied. Procedure aborted. Patient intubated. Chest tube (14F) placed for pneumothorax.\nPlan: ICU. CT Surgery consult. CT Chest.",
     "cpt_codes": [
       31641,
       31630,
@@ -16429,10 +16441,16 @@
       "style_type": 1,
       "generated_name": "Marie Hall",
       "generation_date": "2025-12-18T19:14:45.727460"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: The patient underwent attempted rigid bronchoscopic recanalization of a complete left mainstem stenosis secondary to granulomatosis with polyangiitis. Despite methodical dissection using radial cuts, balloon dilation, and APC, the distal lumen could not be identified. At 3cm depth, a pulsatile structure consistent with the pulmonary artery was visualized through a false lumen. The procedure was immediately aborted. Fibrin sealant was applied. A subsequent pneumothorax necessitated tube thoracostomy. The patient remains intubated for critical care management and surgical evaluation.",
+    "note_text": "OPERATIVE SUMMARY: The patient underwent attempted rigid bronchoscopic recanalization of a complete left mainstem stenosis secondary to granulomatosis with polyangiitis. Despite methodical dissection using radial cuts, balloon dilation, and APC, the distal lumen could not be identified. At 3cm depth, a pulsatile structure consistent with the pulmonary artery was visualized through a false lumen. The procedure was immediately aborted. <PERSON> sealant was applied. A subsequent pneumothorax necessitated tube thoracostomy. The patient remains intubated for critical care management and surgical evaluation.",
     "cpt_codes": [
       31641,
       31630,
@@ -17172,6 +17190,12 @@
       "style_type": 2,
       "generated_name": "Patricia Campbell",
       "generation_date": "2025-12-18T19:14:45.727648"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -21633,7 +21657,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Rigid bronchoscopy with attempted recanalization and tube thoracostomy. INDICATION: Left mainstem stenosis. FINDINGS: Complete occlusion. ACTION: Recanalization attempted via electrocautery, dilation, and APC. A false lumen revealing the pulmonary artery was encountered. The procedure was terminated. Fibrin sealant was instilled. A chest tube was inserted for subsequent pneumothorax. DISPOSITION: ICU.",
+    "note_text": "PROCEDURE: Rigid bronchoscopy with attempted recanalization and tube thoracostomy. INDICATION: Left mainstem stenosis. FINDINGS: Complete occlusion. ACTION: Recanalization attempted via electrocautery, dilation, and APC. A false lumen revealing the pulmonary artery was encountered. The procedure was terminated. <PERSON> sealant was instilled. A chest tube was inserted for subsequent pneumothorax. DISPOSITION: ICU.",
     "cpt_codes": [
       31641,
       31630,
@@ -22373,6 +22397,12 @@
       "style_type": 9,
       "generated_name": "Carol Green",
       "generation_date": "2025-12-18T19:14:45.728890"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   }
 ]

@@ -744,7 +744,7 @@
     }
   },
   {
-    "note_text": "patient came in for aspiration 32 yo female we did the scope with midaz and fent went down to the right lung found a pistachio nut in the RML medial part looks like it was stuck used the basket to get it out took two tries to get it all but we got it no bleeding patient did fine going home today.",
+    "note_text": "patient came in for aspiration 32 yo female we did the scope with <PERSON> and fent went down to the right lung found a pistachio nut in the RML medial part looks like it was stuck used the basket to get it out took two tries to get it all but we got it no bleeding patient did fine going home today.",
     "cpt_codes": [
       31635
     ],
@@ -927,6 +927,12 @@
       "style_type": 5,
       "generated_name": "Amanda Taylor",
       "generation_date": "2025-12-08T14:08:53.092418"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1674,7 +1680,7 @@
     }
   },
   {
-    "note_text": "Dx: Denture aspiration.\nAx: Moderate sedation. Flexible bronch.\nFindings: Metal denture clasp RLL basal segment.\nIntervention: Alligator forceps used under fluoro. Clasp grasped and removed.\nResult: Clear airway. Mucosa erythematous.\nPlan: Admit for obs (COPD).",
+    "note_text": "Dx: Denture aspiration.\nAx: Moderate sedation. Flexible bronch.\nFindings: Metal denture clasp RLL basal segment.\nIntervention: Alligator forceps used under fluoro. Clasp grasped and removed.\nResult: Clear airway. <PERSON> erythematous.\nPlan: Admit for obs (COPD).",
     "cpt_codes": [
       31635
     ],
@@ -1856,6 +1862,12 @@
       "style_type": 1,
       "generated_name": "Robert Smith",
       "generation_date": "2025-12-08T14:08:53.092650"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2969,7 +2981,7 @@
     }
   },
   {
-    "note_text": "Mr. Jones swallowed a piece of his denture while lying down, so we brought him in for a bronchoscopy. We found the metal clasp stuck in the bottom part of his right lung. Using alligator forceps and a quick look with the x-ray machine (fluoroscopy) to guide us, we grabbed the edge of the clasp and pulled it out. We checked again to make sure we got it all and didn't cause any bleeding. He's doing fine but we'll keep him overnight because of his COPD.",
+    "note_text": "Mr. <PERSON> swallowed a piece of his denture while lying down, so we brought him in for a bronchoscopy. We found the metal clasp stuck in the bottom part of his right lung. Using alligator forceps and a quick look with the x-ray machine (fluoroscopy) to guide us, we grabbed the edge of the clasp and pulled it out. We checked again to make sure we got it all and didn't cause any bleeding. He's doing fine but we'll keep him overnight because of his COPD.",
     "cpt_codes": [
       31635
     ],
@@ -3151,6 +3163,12 @@
       "style_type": 8,
       "generated_name": "Thomas Davis",
       "generation_date": "2025-12-08T14:08:53.093010"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8748,7 +8766,7 @@
     }
   },
   {
-    "note_text": "[Indication]\n2.0 cm RLL adenocarcinoma, limited reserve.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nNavigation to RLL superior segment. EBUS eccentric. CBCT confirmation. RFA: 3 cycles, 50W, 5 mins. Max temp 105C. Ablation zone verified.\n[Plan]\nAdmit for observation.",
+    "note_text": "[Indication]\n2.0 cm RLL adenocarcinoma, limited reserve.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nNavigation to RLL superior segment. EBUS eccentric. CBCT confirmation. RFA: 3 cycles, 50W, 5 mins. <PERSON> temp 105C. Ablation zone verified.\n[Plan]\nAdmit for observation.",
     "cpt_codes": [
       31641,
       31627,
@@ -8994,6 +9012,12 @@
       "style_type": 7,
       "generated_name": "Joseph Scott",
       "generation_date": "2025-12-08T14:08:53.094488"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

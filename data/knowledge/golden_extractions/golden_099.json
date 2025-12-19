@@ -2272,7 +2272,7 @@
     }
   },
   {
-    "note_text": "DATE OF PROCEDURE: 12/15/2025\nINDICATION: Tracheal narrowing.\nPROCEDURE: \n- Suctioning of airways (initial episode).\n- Ablation of tissue/relief of narrowing via cryotherapy.\nDETAILS: Under GA, the scope was navigated. Stent observed with overgrowth. Airways were cleared of phlegm via suction. The overgrowth was frozen and extracted using the cryoprobe (4 cycles). The airway was opened. Patient stable.",
+    "note_text": "DATE OF PROCEDURE: <DATE_TIME>\nINDICATION: Tracheal narrowing.\nPROCEDURE: \n- Suctioning of airways (initial episode).\n- Ablation of tissue/relief of narrowing via cryotherapy.\nDETAILS: Under GA, the scope was navigated. Stent observed with overgrowth. Airways were cleared of phlegm via suction. The overgrowth was frozen and extracted using the cryoprobe (4 cycles). The airway was opened. Patient stable.",
     "cpt_codes": [
       31641,
       31645
@@ -2553,10 +2553,16 @@
       "style_type": 9,
       "generated_name": "Gary Wright",
       "generation_date": "2025-12-18T19:20:31.592678"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
-    "note_text": "Indication: Tumor obstruction LMS.\nProc: Rigid Bronch, Flex Bronch.\n- Mucus suctioned (RMS, Left Main).\n- LMS 100% obstructed by tumor.\n- Electrocautery knife and Microwave ablation (90C, 2 min) applied.\n- Patency restored to 100%.\n- Stent (Bonastent 10x20) placed in LLL basal segment.\n- BAL Lingula.\nComp: None.",
+    "note_text": "Indication: Tumor obstruction LMS.\nProc: Rigid Bronch, Flex Bronch.\n- Mucus suctioned (RMS, <PERSON>).\n- LMS 100% obstructed by tumor.\n- Electrocautery knife and Microwave ablation (90C, 2 min) applied.\n- Patency restored to 100%.\n- Stent (Bonastent 10x20) placed in LLL basal segment.\n- BAL Lingula.\nComp: None.",
     "cpt_codes": [
       31641,
       31636,
@@ -2858,6 +2864,12 @@
       "style_type": 1,
       "generated_name": "Sarah Jenkins",
       "generation_date": "2025-12-18T19:20:31.592747"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5359,7 +5371,7 @@
         "cpt_codes": [
           {
             "code": "31600",
-            "description": "Planned tracheostomy, stand-alone open airway creation (age \u2265 2 years)",
+            "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
             "modifier": "22",
             "units": 1
           },
@@ -5524,7 +5536,7 @@
         "cpt_codes": [
           {
             "code": "31600",
-            "description": "Planned tracheostomy, stand-alone open airway creation (age \u2265 2 years)",
+            "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
             "modifier": "22",
             "units": 1
           },
@@ -5689,7 +5701,7 @@
         "cpt_codes": [
           {
             "code": "31600",
-            "description": "Planned tracheostomy, stand-alone open airway creation (age \u2265 2 years)",
+            "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
             "modifier": "22",
             "units": 1
           },
@@ -5854,7 +5866,7 @@
         "cpt_codes": [
           {
             "code": "31600",
-            "description": "Planned tracheostomy, stand-alone open airway creation (age \u2265 2 years)",
+            "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
             "modifier": "22",
             "units": 1
           },
@@ -6019,7 +6031,7 @@
         "cpt_codes": [
           {
             "code": "31600",
-            "description": "Planned tracheostomy, stand-alone open airway creation (age \u2265 2 years)",
+            "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
             "modifier": "22",
             "units": 1
           },
@@ -6184,7 +6196,7 @@
         "cpt_codes": [
           {
             "code": "31600",
-            "description": "Planned tracheostomy, stand-alone open airway creation (age \u2265 2 years)",
+            "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
             "modifier": "22",
             "units": 1
           },
@@ -6349,7 +6361,7 @@
         "cpt_codes": [
           {
             "code": "31600",
-            "description": "Planned tracheostomy, stand-alone open airway creation (age \u2265 2 years)",
+            "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
             "modifier": "22",
             "units": 1
           },
@@ -6514,7 +6526,7 @@
         "cpt_codes": [
           {
             "code": "31600",
-            "description": "Planned tracheostomy, stand-alone open airway creation (age \u2265 2 years)",
+            "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
             "modifier": "22",
             "units": 1
           },
@@ -6679,7 +6691,7 @@
         "cpt_codes": [
           {
             "code": "31600",
-            "description": "Planned tracheostomy, stand-alone open airway creation (age \u2265 2 years)",
+            "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
             "modifier": "22",
             "units": 1
           },

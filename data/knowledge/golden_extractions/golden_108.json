@@ -2873,7 +2873,7 @@
     }
   },
   {
-    "note_text": "ebus for mediastinal mass unclear cause... airway was kinda tight on the right side like 85 percent compressed. put the ultrasound scope down and saw a huge node at 4r measuring almost 5cm. stuck it 6 times with the big 19g needle. path guy in the room said looks like lymphoma so we sent flow. suctioned some blood out and finished up.",
+    "note_text": "ebus for mediastinal mass unclear cause... airway was <LOCATION> tight on the right side like 85 percent compressed. put the ultrasound scope down and saw a huge node at 4r measuring almost 5cm. stuck it 6 times with the big 19g needle. path guy in the room said looks like lymphoma so we sent flow. suctioned some blood out and finished up.",
     "cpt_codes": [
       31652
     ],
@@ -3055,6 +3055,12 @@
       "style_description": "Sloppy Dictation",
       "generated_name": "Mia Wilson",
       "generation_date": "2025-12-18T19:48:50.915111"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -8338,7 +8344,7 @@
     }
   },
   {
-    "note_text": "doing ebus for adenopathy today... patient asleep lma in. looked down airway clean. found a node at 2L just past the cricoid. stuck it 8 times with different needles 19 and 22 gauge. path saw lymphocytes sent for flow. no bleeding all good.",
+    "note_text": "doing ebus for adenopathy today... patient <PERSON>. looked down airway clean. found a node at 2L just past the cricoid. stuck it 8 times with different needles 19 and 22 gauge. path saw lymphocytes sent for flow. no bleeding all good.",
     "cpt_codes": [
       31652
     ],
@@ -8516,6 +8522,12 @@
       "style_description": "Sloppy Dictation",
       "generated_name": "Scarlett Young",
       "generation_date": "2025-12-18T19:48:50.916541"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

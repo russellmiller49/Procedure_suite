@@ -536,7 +536,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: The patient, presenting with a known malignant pleural process, underwent ultrasound-guided thoracostomy. Thoracic ultrasonography of the right hemithorax delineated a moderate, free-flowing, anechoic effusion with nodular pleural thickening consistent with metastatic disease. Under local anesthesia and aseptic conditions, a 12 French pigtail catheter was introduced into the right pleural space at the 8th intercostal space utilizing the Seldinger technique. A volume of 450 mL of hemorrhagic fluid was evacuated. The catheter was secured and connected to a Pneumostat valve. The patient tolerated the intervention without hemodynamic compromise.",
+    "note_text": "OPERATIVE NARRATIVE: The patient, presenting with a known malignant pleural process, underwent ultrasound-guided thoracostomy. Thoracic ultrasonography of the right hemithorax delineated a moderate, free-flowing, anechoic effusion with nodular pleural thickening consistent with metastatic disease. Under local anesthesia and aseptic conditions, a 12 French pigtail catheter was introduced into the right pleural space at the 8th intercostal space utilizing the Seldinger technique. A volume of 450 mL of hemorrhagic fluid was evacuated. The catheter was secured and connected to a <PERSON> valve. The patient tolerated the intervention without hemodynamic compromise.",
     "cpt_codes": [
       32557
     ],
@@ -1069,6 +1069,12 @@
       "style_type": 2,
       "generated_name": "Emily Blunt",
       "generation_date": "2025-12-18T19:20:23.130688"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2144,7 +2150,7 @@
     }
   },
   {
-    "note_text": "date 12/16/25 procedure chest tube placement right side pt has malignant effusion ultrasound showed moderate fluid no septations used lidocaine for numb 12 french pigtail put in mid scapular line got back 450 of bloody fluid no complications patient did fine chest tube secured hook to pneumostat plan cxr check placement signed dr smith",
+    "note_text": "date 12/16/25 procedure chest tube placement right side pt has malignant effusion ultrasound showed moderate fluid no septations used lidocaine for numb 12 french pigtail put in mid scapular line got back 450 of bloody fluid no complications patient did fine chest tube secured hook to pneumostat plan cxr check placement signed <PERSON>",
     "cpt_codes": [
       32557
     ],
@@ -2677,10 +2683,16 @@
       "style_type": 5,
       "generated_name": "Elaine Benes",
       "generation_date": "2025-12-18T19:20:23.131094"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "On 12/16/2025 a bedside chest tube placement was performed for a right malignant pleural effusion. Ultrasound of the right chest demonstrated a moderate anechoic effusion with nodular pleura. The site was prepped. 1% lidocaine was used. A 12 Fr pigtail catheter was inserted into the right 8th intercostal space using the Seldinger technique. 450 ml of bloody fluid was drained. The catheter was sutured in place and attached to a Pneumostat. There were no complications. Post-procedure plan includes a chest xray.",
+    "note_text": "On <DATE_TIME> a bedside chest tube placement was performed for a right malignant pleural effusion. Ultrasound of the right chest demonstrated a moderate anechoic effusion with nodular pleura. The site was prepped. 1% lidocaine was used. A 12 Fr pigtail catheter was inserted into the right 8th intercostal space using the Seldinger technique. 450 ml of bloody fluid was drained. The catheter was sutured in place and attached to a <PERSON>. There were no complications. Post-procedure plan includes a chest xray.",
     "cpt_codes": [
       32557
     ],
@@ -3213,6 +3225,13 @@
       "style_type": 6,
       "generated_name": "Eleanor Roosevelt",
       "generation_date": "2025-12-18T19:20:23.131220"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "PERSON"
+      ]
     }
   },
   {
@@ -7589,7 +7608,7 @@
     }
   },
   {
-    "note_text": "A left-sided chest tube insertion was performed on 12/16/2025. Ultrasound guidance demonstrated a moderate loculated hyperechoic effusion on the left. The left mid-axillary line at the 4-5th intercostal space was selected. 15 mL of lidocaine was infiltrated. A 24 Fr catheter was placed. 550 mL of turbid/purulent fluid was drained. The tube was sutured and placed on -20cmH2O suction. Samples were sent for analysis.",
+    "note_text": "A left-sided chest tube insertion was performed on <DATE_TIME>. Ultrasound guidance demonstrated a moderate loculated hyperechoic effusion on the left. The left mid-axillary line at the 4-5th intercostal space was selected. 15 mL of lidocaine was infiltrated. A 24 Fr catheter was placed. 550 mL of turbid/purulent fluid was drained. The tube was sutured and placed on -20cmH2O suction. Samples were sent for analysis.",
     "cpt_codes": [
       32557,
       76604
@@ -8139,6 +8158,12 @@
       "style_type": 6,
       "generated_name": "Kevin Durant",
       "generation_date": "2025-12-18T19:20:23.132409"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -11913,7 +11938,7 @@
     }
   },
   {
-    "note_text": "patient linda kim 81 female has large effusion right side chf likely ultrasound confirmed big fluid pocket anechoic did the chest tube 14 french right mid axillary drained a lot 1850 ml serous looks like transudate patient breathing better now tube secured no issues",
+    "note_text": "patient <PERSON> 81 female has large effusion right side chf likely ultrasound confirmed big fluid pocket anechoic did the chest tube 14 french right mid axillary drained a lot 1850 ml serous looks like transudate patient breathing better now tube secured no issues",
     "cpt_codes": [
       32557
     ],
@@ -12438,10 +12463,16 @@
       "style_type": 5,
       "generated_name": "Jane Fonda",
       "generation_date": "2025-12-18T19:20:23.133459"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "On 12/16/2025 a 14 Fr pigtail catheter was inserted into the right pleural space for a large pleural effusion. Ultrasound guidance was used to identify the fluid pocket. The entry site was the 6-7th intercostal space at the mid-axillary line. 1850 ml of serous fluid was removed. The patient tolerated the procedure well. There were no complications.",
+    "note_text": "On <DATE_TIME> a 14 Fr pigtail catheter was inserted into the right pleural space for a large pleural effusion. Ultrasound guidance was used to identify the fluid pocket. The entry site was the 6-7th intercostal space at the mid-axillary line. 1850 ml of serous fluid was removed. The patient tolerated the procedure well. There were no complications.",
     "cpt_codes": [
       32557
     ],
@@ -12966,6 +12997,12 @@
       "style_type": 6,
       "generated_name": "Lily Tomlin",
       "generation_date": "2025-12-18T19:20:23.133590"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -13497,7 +13534,7 @@
     }
   },
   {
-    "note_text": "Ms. Kim was positioned supine for the procedure. We used ultrasound to locate a large fluid collection on her right side, which appeared clear and anechoic. After prepping the area, we inserted a 14 French pigtail catheter. The procedure went smoothly, and we were able to drain 1850ml of straw-colored fluid. The patient reported feeling immediate relief. We secured the tube and ordered a follow-up chest x-ray.",
+    "note_text": "Ms. <PERSON> was positioned supine for the procedure. We used ultrasound to locate a large fluid collection on her right side, which appeared clear and anechoic. After prepping the area, we inserted a 14 French pigtail catheter. The procedure went smoothly, and we were able to drain 1850ml of straw-colored fluid. The patient reported feeling immediate relief. We secured the tube and ordered a follow-up chest x-ray.",
     "cpt_codes": [
       32557
     ],
@@ -14022,6 +14059,12 @@
       "style_type": 8,
       "generated_name": "Glenn Close",
       "generation_date": "2025-12-18T19:20:23.133839"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15349,7 +15392,7 @@
     }
   },
   {
-    "note_text": "mark henderson 62 male with the complex effusion right side chest tube was put in yesterday today we started lytics ultrasound shows its still pretty loculated so gave tpa 10 and dnase 5 clamped the tube nurse to open in an hour no pain or bleeding noted",
+    "note_text": "<PERSON> 62 male with the complex effusion right side chest tube was put in yesterday today we started lytics ultrasound shows its still pretty loculated so gave tpa 10 and dnase 5 clamped the tube nurse to open in an hour no pain or bleeding noted",
     "cpt_codes": [
       32561,
       76604
@@ -15545,10 +15588,16 @@
       "style_type": 5,
       "generated_name": "Harrison Ford",
       "generation_date": "2025-12-18T19:20:23.134384"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "On 12/17/2025 intrapleural lytic therapy was administered for a right sided complicated parapneumonic effusion. Ultrasound confirmed thick loculations. 10 mg of tPA and 5 mg of DNase were instilled through the existing chest tube. This represents the initial day of therapy. The tube was clamped for a dwell time of one hour.",
+    "note_text": "On <DATE_TIME> intrapleural lytic therapy was administered for a right sided complicated parapneumonic effusion. Ultrasound confirmed thick loculations. 10 mg of tPA and 5 mg of DNase were instilled through the existing chest tube. This represents the initial day of therapy. The tube was clamped for a dwell time of one hour.",
     "cpt_codes": [
       32561,
       76604
@@ -15744,6 +15793,12 @@
       "style_type": 6,
       "generated_name": "Robert De Niro",
       "generation_date": "2025-12-18T19:20:23.134541"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -15946,7 +16001,7 @@
     }
   },
   {
-    "note_text": "We evaluated Mr. Henderson today for fibrinolytic therapy. His right-sided effusion remains loculated on ultrasound. We proceeded to instill tPA and DNase through his chest tube to help break up the septations. He tolerated the injection well without any pain. The tube has been clamped, and the nursing staff will open it back to suction in one hour.",
+    "note_text": "We evaluated Mr. <PERSON> today for fibrinolytic therapy. His right-sided effusion remains loculated on ultrasound. We proceeded to instill tPA and DNase through his chest tube to help break up the septations. He tolerated the injection well without any pain. The tube has been clamped, and the nursing staff will open it back to suction in one hour.",
     "cpt_codes": [
       32561,
       76604
@@ -16142,6 +16197,12 @@
       "style_type": 8,
       "generated_name": "Morgan Freeman",
       "generation_date": "2025-12-18T19:20:23.134663"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17279,7 +17340,7 @@
     }
   },
   {
-    "note_text": "Fibrinolytic therapy was initiated on 12/18/2025 for a loculated left pleural effusion. Diagnostic ultrasound was performed showing a large volume of loculated fluid. 10mg of tPA and 5mg of DNase were instilled via the left chest tube. The patient tolerated the procedure without complications.",
+    "note_text": "Fibrinolytic therapy was initiated on <DATE_TIME> for a loculated left pleural effusion. Diagnostic ultrasound was performed showing a large volume of loculated fluid. 10mg of tPA and 5mg of DNase were instilled via the left chest tube. The patient tolerated the procedure without complications.",
     "cpt_codes": [
       32561,
       76604
@@ -17463,6 +17524,12 @@
       "style_type": 6,
       "generated_name": "Rosario Dawson",
       "generation_date": "2025-12-18T19:20:23.135003"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -17653,7 +17720,7 @@
     }
   },
   {
-    "note_text": "We visited Ms. Rodriguez to start the enzyme treatment for her trapped fluid. The ultrasound of her left chest confirmed that the fluid is stuck in pockets (loculated). We injected the tPA and DNase medication through her chest tube. She didn't feel any discomfort. We've clamped the tube to let the medicine work for an hour.",
+    "note_text": "We visited Ms. <PERSON> to start the enzyme treatment for her trapped fluid. The ultrasound of her left chest confirmed that the fluid is stuck in pockets (loculated). We injected the tPA and DNase medication through her chest tube. She didn't feel any discomfort. We've clamped the tube to let the medicine work for an hour.",
     "cpt_codes": [
       32561,
       76604
@@ -17837,6 +17904,12 @@
       "style_type": 8,
       "generated_name": "Michelle Rodriguez",
       "generation_date": "2025-12-18T19:20:23.135097"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

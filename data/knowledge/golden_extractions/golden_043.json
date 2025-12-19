@@ -4540,7 +4540,7 @@
     }
   },
   {
-    "note_text": "Linear EBUS bronchoscopy performed under general anesthesia via oral ETT. The 4R lymph node measured approximately 12 mm short axis with heterogeneous echotexture and no Doppler vessels. Using a 22-gauge EBUS needle, three passes were obtained from station 4R with good cytologic material seen on ROSE, consistent with malignant cells. No additional nodal stations were sampled.",
+    "note_text": "Linear EBUS bronchoscopy performed under general anesthesia via oral ETT. The 4R lymph node measured approximately 12 mm short axis with heterogeneous echotexture and no <PERSON> vessels. Using a 22-gauge EBUS needle, three passes were obtained from station 4R with good cytologic material seen on ROSE, consistent with malignant cells. No additional nodal stations were sampled.",
     "cpt_codes": [
       31652
     ],
@@ -4725,6 +4725,12 @@
       "style_type": 6,
       "generated_name": "Xander Reynolds",
       "generation_date": "2025-12-09T09:20:28.599781"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7299,7 +7305,7 @@
     }
   },
   {
-    "note_text": "Indication: CAO, post-obstructive pneumonia.\nAction:\n- Suctioned copious pus (Therapeutic asp).\n- Balloon dilation.\n- Placed covered metal stent RMS.\nResult: Airway patent. Pus cleared.",
+    "note_text": "Indication: CAO, post-obstructive pneumonia.\nAction:\n- Suctioned copious pus (Therapeutic asp).\n- Balloon dilation.\n- Placed covered metal stent RMS.\nResult: Airway patent. <PERSON> cleared.",
     "cpt_codes": [
       31636,
       31645
@@ -7518,6 +7524,12 @@
       "style_type": 1,
       "generated_name": "Brian Hill",
       "generation_date": "2025-12-09T09:20:28.600651"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15180,7 +15192,7 @@
     }
   },
   {
-    "note_text": "Procedure Note:\n1. US guidance.\n2. Tunnel created.\n3. IPC inserted R chest.\n4. Drained 800cc.\n5. Instilled tPA/DNase.\n6. Cap placed.",
+    "note_text": "Procedure Note:\n1. US guidance.\n2. Tunnel created.\n3. IPC inserted R chest.\n4. Drained 800cc.\n5. Instilled tPA/DNase.\n6. <PERSON> placed.",
     "cpt_codes": [
       32550,
       32561
@@ -15389,6 +15401,12 @@
       "style_type": 4,
       "generated_name": "Oliver Rodriguez",
       "generation_date": "2025-12-09T09:20:28.602682"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

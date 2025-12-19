@@ -609,7 +609,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: Gilbert Barkley\nAttending: Dr. Gallegos\nProcedure: Rigid bronchoscopy with stenting.\nSteps:\n1. Patient intubated with rigid scope.\n2. Right side inspected; RML/RLL obstructed.\n3. Attempted to clear with saline/forceps.\n4. Placed 10x20mm stent in RLL - too big, removed.\n5. Placed 8x20mm stent in RLL.\n6. Placed 8x15mm stent in RML.\n7. Dilated both with balloon.\n8. Extubated and stable.",
+    "note_text": "Procedure Note\nPatient: <PERSON>\nAttending: Dr. Gallegos\nProcedure: Rigid bronchoscopy with stenting.\nSteps:\n1. Patient intubated with rigid scope.\n2. Right side inspected; RML/RLL obstructed.\n3. Attempted to clear with saline/forceps.\n4. Placed 10x20mm stent in RLL - too big, removed.\n5. Placed 8x20mm stent in RLL.\n6. Placed 8x15mm stent in RML.\n7. Dilated both with balloon.\n8. Extubated and stable.",
     "cpt_codes": [
       31641,
       31636,
@@ -809,10 +809,16 @@
       "style_type": 4,
       "generated_name": "William O'Connor",
       "generation_date": "2025-12-09T09:18:57.575348"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "We did a rigid bronchoscopy on Gilbert Barkley yesterday for bronchial obstruction anesthesia was general. We put the rigid scope down and saw the right side was blocked by granulation tissue. Tried to clean it out but needed stents. Put a 10mm one in first but it was too big so we took it out and put in an 8x20mm in the lower lobe and a 8x15mm in the middle lobe. Dilated them both and they opened up good. Patient went to recovery no issues.",
+    "note_text": "We did a rigid bronchoscopy on <PERSON> yesterday for bronchial obstruction anesthesia was general. We put the rigid scope down and saw the right side was blocked by granulation tissue. Tried to clean it out but needed stents. Put a 10mm one in first but it was too big so we took it out and put in an 8x20mm in the lower lobe and a 8x15mm in the middle lobe. Dilated them both and they opened up good. Patient went to recovery no issues.",
     "cpt_codes": [
       31641,
       31636,
@@ -1012,6 +1018,12 @@
       "style_type": 5,
       "generated_name": "James P. Miller",
       "generation_date": "2025-12-09T09:18:57.575402"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1624,7 +1636,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid bronchoscopy with prosthetic positioning.\nFindings: Blockage of RML and RLL.\nAction: The airway was cannulated with a rigid scope. Debris was purged. An 8x20mm stent was deposited in the RLL after a larger trial stent was extracted. An 8x15mm stent was implanted in the RML. Both were expanded via balloon.\nOutcome: Airways recanalized.",
+    "note_text": "Procedure: Rigid bronchoscopy with prosthetic positioning.\nFindings: Blockage of RML and RLL.\nAction: The airway was cannulated with a rigid scope. <PERSON> was purged. An 8x20mm stent was deposited in the RLL after a larger trial stent was extracted. An 8x15mm stent was implanted in the RML. Both were expanded via balloon.\nOutcome: Airways recanalized.",
     "cpt_codes": [
       31641,
       31636,
@@ -1824,6 +1836,12 @@
       "style_type": 9,
       "generated_name": "Gary Wright",
       "generation_date": "2025-12-09T09:18:57.575593"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2412,7 +2430,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: Oscar Godsey\nStaff: Dr. Parks\nProcedure: Stent removal, cryo, rigid bronch.\nSteps:\n1. LMA induction.\n2. Cryo used to clear granulation tissue in LLL.\n3. Switched to Rigid Bronchoscope.\n4. Grasped and removed left main stent.\n5. Dilated LLL airways with balloon.\n6. Injected Kenalog into granulation tissue.\n7. Extubated.",
+    "note_text": "Procedure Note\nPatient: <PERSON>\nStaff: Dr. Parks\nProcedure: Stent removal, cryo, rigid bronch.\nSteps:\n1. LMA induction.\n2. Cryo used to clear granulation tissue in LLL.\n3. Switched to Rigid Bronchoscope.\n4. Grasped and removed left main stent.\n5. Dilated LLL airways with balloon.\n6. Injected Kenalog into granulation tissue.\n7. Extubated.",
     "cpt_codes": [
       31641,
       31631
@@ -2604,10 +2622,16 @@
       "style_type": 4,
       "generated_name": "Karen Smith",
       "generation_date": "2025-12-09T09:18:57.575785"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Oscar Godsey 5/15/2019 preop dx stent obstruction. We went in with the LMA first and saw the stent was open but the LLL was blocked by tissue. Used the cryo to freeze and remove it. Then we switched to the rigid scope to take the stent out because we didn't think it was helping anymore. Pulled it out fine. Dilated the airways with a balloon and injected some Kenalog to stop the swelling. Patient went back to ICU.",
+    "note_text": "<PERSON> <DATE_TIME> preop dx stent obstruction. We went in with the LMA first and saw the stent was open but the LLL was blocked by tissue. Used the cryo to freeze and remove it. Then we switched to the rigid scope to take the stent out because we didn't think it was helping anymore. Pulled it out fine. Dilated the airways with a balloon and injected some Kenalog to stop the swelling. Patient went back to ICU.",
     "cpt_codes": [
       31641,
       31631
@@ -2799,6 +2823,13 @@
       "style_type": 5,
       "generated_name": "Barbara Lopez",
       "generation_date": "2025-12-09T09:18:57.575832"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -2997,7 +3028,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLeft lower lobe obstruction secondary to granulation tissue; indwelling stent.\n[Anesthesia]\nGeneral Anesthesia (LMA converted to Rigid).\n[Description]\nGranulation tissue at LLL orifice debulked via cryotherapy. Rigid bronchoscope inserted. Left mainstem stent identified and removed. LLL bronchus dilated with CRE balloon. Kenalog injected into mucosa.\n[Plan]\nICU admission. Repeat bronchoscopy in 1 week.",
+    "note_text": "[Indication]\nLeft lower lobe obstruction secondary to granulation tissue; indwelling stent.\n[Anesthesia]\nGeneral Anesthesia (LMA converted to Rigid).\n[Description]\nGranulation tissue at LLL orifice debulked via cryotherapy. Rigid bronchoscope inserted. Left mainstem stent identified and removed. LLL bronchus dilated with CRE balloon. Kenalog injected into <LOCATION>.\n[Plan]\nICU admission. Repeat bronchoscopy in 1 week.",
     "cpt_codes": [
       31641,
       31631
@@ -3189,10 +3220,16 @@
       "style_type": 7,
       "generated_name": "Susan White",
       "generation_date": "2025-12-09T09:18:57.575961"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on Mr. Godsey to address his airway obstruction. Initial inspection showed the left mainstem stent was clear, but tissue overgrowth had blocked the left lower lobe. We cleared this tissue using a cryoprobe. We then decided to remove the stent entirely, which was done successfully using the rigid scope. To ensure the airways remained open, we dilated the lower lobe bronchi with a balloon and injected steroids into the tissue.",
+    "note_text": "We performed a rigid bronchoscopy on Mr. <PERSON> to address his airway obstruction. Initial inspection showed the left mainstem stent was clear, but tissue overgrowth had blocked the left lower lobe. We cleared this tissue using a cryoprobe. We then decided to remove the stent entirely, which was done successfully using the rigid scope. To ensure the airways remained open, we dilated the lower lobe bronchi with a balloon and injected steroids into the tissue.",
     "cpt_codes": [
       31641,
       31631
@@ -3384,6 +3421,12 @@
       "style_type": 8,
       "generated_name": "Margaret Lewis",
       "generation_date": "2025-12-09T09:18:57.576010"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4358,7 +4401,7 @@
     }
   },
   {
-    "note_text": "We did an EBUS on Gregory Martinez today he has some nodes we needed to check. Gave him midaz and fentanyl. Looked at 4R 7 and 11R. Poked them all a few times and the pathologist in the room said we got good samples. Everything went fine no bleeding or anything. Woke him up and sent him home.",
+    "note_text": "We did an EBUS on <PERSON> today he has some nodes we needed to check. Gave him midaz and fentanyl. Looked at 4R 7 and 11R. Poked them all a few times and the pathologist in the room said we got good samples. Everything went fine no bleeding or anything. Woke him up and sent him home.",
     "cpt_codes": [
       31653
     ],
@@ -4549,6 +4592,12 @@
       "style_type": 5,
       "generated_name": "Frank Mitchell",
       "generation_date": "2025-12-09T09:18:57.576309"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4940,7 +4989,7 @@
     }
   },
   {
-    "note_text": "Mr. Martinez underwent an EBUS-TBNA procedure for staging. After achieving moderate sedation, we advanced the scope and systematically evaluated the lymph nodes. We identified enlarged nodes at stations 4R, 7, and 11R. Using ultrasound guidance, we successfully aspirated samples from all three stations. On-site pathology confirmed that the samples were adequate for diagnosis. The patient remained stable throughout.",
+    "note_text": "Mr. <PERSON> underwent an EBUS-TBNA procedure for staging. After achieving moderate sedation, we advanced the scope and systematically evaluated the lymph nodes. We identified enlarged nodes at stations 4R, 7, and 11R. Using ultrasound guidance, we successfully aspirated samples from all three stations. On-site pathology confirmed that the samples were adequate for diagnosis. The patient remained stable throughout.",
     "cpt_codes": [
       31653
     ],
@@ -5131,6 +5180,12 @@
       "style_type": 8,
       "generated_name": "Kenneth Roberts",
       "generation_date": "2025-12-09T09:18:57.576446"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6064,7 +6119,7 @@
     }
   },
   {
-    "note_text": "Janet Williams here for the lung study protocol PULSE-LUNG. She has a cancer in the LUL. We put her under GA and used the navigation system to get there. Put the special PFA catheter in and zapped it with the electrical pulses. Didn't use heat so no burning. Everything looked good on the ultrasound after. She is in the registry now for follow up.",
+    "note_text": "<PERSON> here for the lung study protocol PULSE-LUNG. She has a cancer in the LUL. We put her under GA and used the navigation system to get there. Put the special PFA catheter in and zapped it with the electrical pulses. Didn't use heat so no burning. Everything looked good on the ultrasound after. She is in the registry now for follow up.",
     "cpt_codes": [
       31641
     ],
@@ -6245,6 +6300,12 @@
       "style_type": 5,
       "generated_name": "Linda Hernandez",
       "generation_date": "2025-12-09T09:18:57.576718"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6616,7 +6677,7 @@
     }
   },
   {
-    "note_text": "Ms. Williams underwent an investigational pulsed field ablation for her lung tumor. We used electromagnetic navigation to reach the nodule in her left upper lobe. Once confirmed, we used the study catheter to deliver electrical pulses that destroy cancer cells without heat. The procedure went exactly as planned, and we saw signs of tumor destruction on the ultrasound immediately afterwards. She will be followed closely as part of the study.",
+    "note_text": "Ms. <PERSON> underwent an investigational pulsed field ablation for her lung tumor. We used electromagnetic navigation to reach the nodule in her left upper lobe. Once confirmed, we used the study catheter to deliver electrical pulses that destroy cancer cells without heat. The procedure went exactly as planned, and we saw signs of tumor destruction on the ultrasound immediately afterwards. She will be followed closely as part of the study.",
     "cpt_codes": [
       31641
     ],
@@ -6797,6 +6858,12 @@
       "style_type": 8,
       "generated_name": "Helen Scott",
       "generation_date": "2025-12-09T09:18:57.576855"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7760,7 +7827,7 @@
     }
   },
   {
-    "note_text": "Elizabeth Chen here for RML collapse. We looked down with the scope she was awake just some numbing meds. RML was totally blocked by a tumor looked necrotic. We grabbed like 6 biopsies from it. It bled a fair bit so we used epi and cold saline to stop it. Did a wash too. She did fine oxygen stayed up.",
+    "note_text": "<PERSON> here for RML collapse. We looked down with the scope she was awake just some numbing meds. RML was totally blocked by a tumor looked necrotic. We grabbed like 6 biopsies from it. It bled a fair bit so we used epi and cold saline to stop it. Did a wash too. She did fine oxygen stayed up.",
     "cpt_codes": [
       31625,
       31624
@@ -7951,6 +8018,12 @@
       "style_type": 5,
       "generated_name": "Donald Thompson",
       "generation_date": "2025-12-09T09:18:57.577149"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8342,7 +8415,7 @@
     }
   },
   {
-    "note_text": "We performed a bronchoscopy on Ms. Chen to investigate her collapsed lung. While the upper and left airways looked normal, the right middle lobe was blocked by a large, irregular tumor. We took several biopsies of this mass and collected a fluid sample. There was some bleeding from the biopsy site, which we stopped with medication and cold water. The patient remained comfortable throughout.",
+    "note_text": "We performed a bronchoscopy on Ms. <PERSON> to investigate her collapsed lung. While the upper and left airways looked normal, the right middle lobe was blocked by a large, irregular tumor. We took several biopsies of this mass and collected a fluid sample. There was some bleeding from the biopsy site, which we stopped with medication and cold water. The patient remained comfortable throughout.",
     "cpt_codes": [
       31625,
       31624
@@ -8533,6 +8606,12 @@
       "style_type": 8,
       "generated_name": "George Robinson",
       "generation_date": "2025-12-09T09:18:57.577287"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10116,7 +10195,7 @@
     }
   },
   {
-    "note_text": "We performed a therapeutic bronchoscopy on Ms. Kim to treat a tumor blocking her airway. During the removal of the tumor using heat therapy, she experienced severe bleeding. We managed to stop the bleeding using a blocker and cold saline. To ensure the airway stayed open and to help prevent further bleeding, we placed a silicone stent. She will remain on the ventilator in the ICU overnight for safety.",
+    "note_text": "We performed a therapeutic bronchoscopy on Ms. <PERSON> to treat a tumor blocking her airway. During the removal of the tumor using heat therapy, she experienced severe bleeding. We managed to stop the bleeding using a blocker and cold saline. To ensure the airway stayed open and to help prevent further bleeding, we placed a silicone stent. She will remain on the ventilator in the ICU overnight for safety.",
     "cpt_codes": [
       31641,
       31636
@@ -10311,6 +10390,12 @@
       "style_type": 8,
       "generated_name": "Deborah Evans",
       "generation_date": "2025-12-09T09:18:57.577756"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

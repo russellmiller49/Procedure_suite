@@ -221,17 +221,23 @@ def _iter_golden_files() -> List[Path]:
     """Iterate over golden extraction JSON files."""
     # Support both old consolidated format, new synthetic format, and current golden format
     patterns = [
-        str(GOLDEN_DIR / "golden_*.json"),  # <--- ADD THIS LINE
+        str(GOLDEN_DIR / "golden_*.json"),
         str(GOLDEN_DIR / "consolidated_verified_notes_v2_8_part_*.json"),
         str(GOLDEN_DIR / "synthetic_*.json"),
     ]
-    files = []
+    files: List[Path] = []
     for pattern in patterns:
-        files.extend([Path(p) for p in glob.glob(pattern)])
-    return files
-    for pattern in patterns:
-        files.extend([Path(p) for p in glob.glob(pattern)])
-    return files
+        files.extend(Path(p) for p in glob.glob(pattern))
+
+    # De-duplicate while preserving order (multiple patterns can overlap)
+    seen: set[Path] = set()
+    unique: List[Path] = []
+    for p in files:
+        if p in seen:
+            continue
+        seen.add(p)
+        unique.append(p)
+    return unique
 
 def _extract_codes(entry: Dict[str, Any]) -> List[str]:
     """

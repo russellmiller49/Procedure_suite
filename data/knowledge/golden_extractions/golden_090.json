@@ -1959,7 +1959,7 @@
     }
   },
   {
-    "note_text": "Codes submitted: 31629 (TBNA), 31628 (Forceps Biopsy), 31627 (Navigation), 31654 (EBUS), 31624 (BAL). Tools: Monarch Platform, 19G Needle, Standard Forceps. Target: LLL Anteromedial-Basal segment. Verification: Continuous visualization maintained.",
+    "note_text": "Codes submitted: 31629 (TBNA), 31628 (Forceps Biopsy), 31627 (Navigation), 31654 (EBUS), 31624 (BAL). Tools: <PERSON>, 19G Needle, Standard Forceps. Target: LLL Anteromedial-Basal segment. Verification: Continuous visualization maintained.",
     "cpt_codes": [
       31629,
       31628,
@@ -2148,10 +2148,16 @@
       "style_type": 3,
       "generated_name": "Nancy Jackson",
       "generation_date": "2025-12-09T12:09:57.822582"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Fellow Note\nPt: Lee.\nProc: Monarch LLL Biopsy.\n1. ETT placed.\n2. Navigated to LB7+8.\n3. rEBUS: Adjacent.\n4. TBNA 19G (7 passes).\n5. Forceps (6 bites).\n6. BAL.\nROSE: Benign so far.\nPlan: PACU.",
+    "note_text": "Fellow Note\nPt: <PERSON>.\nProc: Monarch LLL Biopsy.\n1. ETT placed.\n2. Navigated to LB7+8.\n3. rEBUS: Adjacent.\n4. TBNA 19G (7 passes).\n5. Forceps (6 bites).\n6. BAL.\nROSE: Benign so far.\nPlan: PACU.",
     "cpt_codes": [
       31629,
       31628,
@@ -2340,6 +2346,12 @@
       "style_type": 4,
       "generated_name": "Karen White",
       "generation_date": "2025-12-09T12:09:57.822628"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4071,7 +4083,7 @@
     }
   },
   {
-    "note_text": "ryan williams bronchoscopy robotic lll nodule 14mm navigated to lb10 error 2.2mm rebus adjacent used 22g needle 6 times then the brush bal done rose says suspicious for cancer no bleeding pt did great.",
+    "note_text": "<PERSON> bronchoscopy robotic lll nodule 14mm navigated to lb10 error 2.2mm rebus adjacent used 22g needle 6 times then the brush bal done rose says suspicious for cancer no bleeding pt did great.",
     "cpt_codes": [
       31629,
       31627,
@@ -4260,6 +4272,12 @@
       "style_type": 5,
       "generated_name": "Frank Lee",
       "generation_date": "2025-12-09T12:09:57.823103"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7451,7 +7469,7 @@
     }
   },
   {
-    "note_text": "brian hernandez 35mm lingula mass biopsy with monarch robot navigation ok 3mm error saw it on rebus adjacent 19g needle 7 times forceps 6 times brush and bal rose looks like nscc patient did fine.",
+    "note_text": "<PERSON> 35mm lingula mass biopsy with monarch robot navigation ok 3mm error saw it on rebus adjacent 19g needle 7 times forceps 6 times brush and bal rose looks like nscc patient did fine.",
     "cpt_codes": [
       31629,
       31628,
@@ -7657,6 +7675,12 @@
       "style_type": 5,
       "generated_name": "Gary Perez",
       "generation_date": "2025-12-09T12:09:57.824029"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14525,7 +14549,7 @@
     }
   },
   {
-    "note_text": "stephen taylor rll nodule 20mm monarch robot used registration 4.8mm error navigated to rb8 rebus concentric 21g needle 6 times forceps 7 times brush and bal rose suspicious for cancer.",
+    "note_text": "<PERSON> rll nodule 20mm monarch robot used registration 4.8mm error navigated to rb8 rebus concentric 21g needle 6 times forceps 7 times brush and bal rose suspicious for cancer.",
     "cpt_codes": [
       31629,
       31628,
@@ -14731,6 +14755,12 @@
       "style_type": 5,
       "generated_name": "Douglas Wood",
       "generation_date": "2025-12-09T12:09:57.825774"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -16342,7 +16372,7 @@
     }
   },
   {
-    "note_text": "rebecca johnson rml nodule 33mm robotic bronch monarch used navigated to rb4 rebus concentric 19g needle 5 passes forceps 7 passes brush rose benign no bal done.",
+    "note_text": "<PERSON> rml nodule 33mm robotic bronch monarch used navigated to rb4 rebus concentric 19g needle 5 passes forceps 7 passes brush rose benign no bal done.",
     "cpt_codes": [
       31629,
       31628,
@@ -16532,6 +16562,12 @@
       "style_type": 5,
       "generated_name": "Deborah Patterson",
       "generation_date": "2025-12-09T12:09:57.826324"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

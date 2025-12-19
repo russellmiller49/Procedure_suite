@@ -1476,7 +1476,7 @@
     }
   },
   {
-    "note_text": "dictation for patient vance unkown mrn date 11/08/2025... we did a rigid bronchoscopy for the esophageal cancer patient she had a fistula... trachea looked ok but left main was blocked 80 percent... used apc and forceps to clear it out... then we put in a silicone y stent had some trouble with the freitag forceps so we used the rigid scope to push it down... stent looks good covers the hole... oh yeah she bit her tongue a bit small cut... plan is hypertonic saline and follow up in a month.",
+    "note_text": "dictation for patient <PERSON> date <DATE_TIME>... we did a rigid bronchoscopy for the esophageal cancer patient she had a fistula... trachea looked ok but left main was blocked 80 percent... used apc and forceps to clear it out... then we put in a silicone y stent had some trouble with the freitag forceps so we used the rigid scope to push it down... stent looks good covers the hole... oh yeah she bit her tongue a bit small cut... plan is hypertonic saline and follow up in a month.",
     "cpt_codes": [
       31641,
       31631
@@ -1842,6 +1842,13 @@
       "style_type": 5,
       "generated_name": "Janet Miller",
       "generation_date": "2025-12-18T19:14:51.819357"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -4453,7 +4460,7 @@
     }
   },
   {
-    "note_text": "op note for mr anderson... he had collapse of the left lung... went in with the scope and saw tumor in both the upper and lower lobes... used the snare to cut the top one out worked great... bottom one was harder used the cryo probe and apc to burn it... got it open maybe 70 percent but it goes deep... moderate bleeding used txa... patient stable to recovery.",
+    "note_text": "op note for mr <PERSON>... he had collapse of the left lung... went in with the scope and saw tumor in both the upper and lower lobes... used the snare to cut the top one out worked great... bottom one was harder used the cryo probe and apc to burn it... got it open maybe 70 percent but it goes deep... moderate bleeding used txa... patient stable to recovery.",
     "cpt_codes": [
       31641,
       31640
@@ -4733,6 +4740,12 @@
       "style_type": 5,
       "generated_name": "James P. Sullivan",
       "generation_date": "2025-12-18T19:14:51.820098"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5302,7 +5315,7 @@
     }
   },
   {
-    "note_text": "Mr. Anderson underwent a flexible bronchoscopy to address a left lung collapse. We identified tumors blocking both the upper and lower lobes. For the upper lobe, we used a snare and APC to remove the mass, fully opening the airway. The lower lobe was more challenging; we used a cryoprobe and APC to remove as much tissue as possible, but the tumor extended deep into the airways. We managed to open it to about 70%. Bleeding was controlled, and the patient was sent to recovery.",
+    "note_text": "Mr. <PERSON> underwent a flexible bronchoscopy to address a left lung collapse. We identified tumors blocking both the upper and lower lobes. For the upper lobe, we used a snare and APC to remove the mass, fully opening the airway. The lower lobe was more challenging; we used a cryoprobe and APC to remove as much tissue as possible, but the tumor extended deep into the airways. We managed to open it to about 70%. Bleeding was controlled, and the patient was sent to recovery.",
     "cpt_codes": [
       31641,
       31640
@@ -5582,6 +5595,12 @@
       "style_type": 8,
       "generated_name": "Thomas Crown",
       "generation_date": "2025-12-18T19:14:51.820295"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9008,7 +9027,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: The patient presented with a complex obstruction of the Bronchus Intermedius (BI) and Right Upper Lobe (RUL) complicated by post-obstructive pneumonia. Rigid bronchoscopy was utilized. Initial incision with an electrocautery knife released copious purulent material, which was cultured. Mechanical debulking and APC were employed to remove tumor tissue. Subsequent CRE balloon dilation achieved 70% patency in the BI and 85% in the RUL. Stenting was deferred due to extensive distal tumor infiltration.",
+    "note_text": "OPERATIVE REPORT: The patient presented with a complex obstruction of the Bronchus Intermedius (BI) and Right Upper Lobe (RUL) complicated by post-obstructive pneumonia. Rigid bronchoscopy was utilized. Initial incision with an electrocautery knife released copious purulent material, which was cultured. Mechanical debulking and APC were employed to remove tumor tissue. Subsequent CRE balloon dilation achieved 70% patency in the <LOCATION> and 85% in the RUL. Stenting was deferred due to extensive distal tumor infiltration.",
     "cpt_codes": [
       31641,
       31640,
@@ -9643,6 +9662,12 @@
       "style_type": 2,
       "generated_name": "Havelock Vetinari",
       "generation_date": "2025-12-18T19:14:51.821279"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -10284,7 +10309,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronchoscopy\nPatient: Samuel Vimes\n1. General Anesthesia/Paralytics.\n2. Rigid scope inserted.\n3. Found tumor/pus in BI.\n4. Drained pus (culture sent).\n5. Debulked BI and RUL using APC and Forceps.\n6. Dilated with CRE balloon.\n7. Hemostasis w/ APC.\nPlan: Augmentin, CT chest.",
+    "note_text": "Procedure: Rigid Bronchoscopy\nPatient: <PERSON>\n1. General Anesthesia/Paralytics.\n2. Rigid scope inserted.\n3. Found tumor/pus in BI.\n4. Drained pus (culture sent).\n5. Debulked BI and RUL using APC and Forceps.\n6. Dilated with CRE balloon.\n7. Hemostasis w/ APC.\nPlan: Augmentin, CT chest.",
     "cpt_codes": [
       31641,
       31640,
@@ -10919,6 +10944,12 @@
       "style_type": 4,
       "generated_name": "Gytha Ogg",
       "generation_date": "2025-12-18T19:14:51.821594"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11560,7 +11591,7 @@
     }
   },
   {
-    "note_text": "Rigid bronchoscopy was performed for right-sided airway obstruction. Large volume purulent fluid was drained from the distal airways following incision of the tumor in the bronchus intermedius. The tumor was debulked using APC and forceps, followed by CRE balloon dilation. We achieved 70% patency in the BI and 85% in the RUL. Stenting was contraindicated due to distal disease extension. The patient was treated for post-obstructive pneumonia.",
+    "note_text": "Rigid bronchoscopy was performed for right-sided airway obstruction. Large volume purulent fluid was drained from the distal airways following incision of the tumor in the bronchus intermedius. The tumor was debulked using APC and forceps, followed by CRE balloon dilation. We achieved 70% patency in the <LOCATION> and 85% in the RUL. Stenting was contraindicated due to distal disease extension. The patient was treated for post-obstructive pneumonia.",
     "cpt_codes": [
       31641,
       31640,
@@ -12195,6 +12226,12 @@
       "style_type": 6,
       "generated_name": "Ponder Stibbons",
       "generation_date": "2025-12-18T19:14:51.821889"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -12836,7 +12873,7 @@
     }
   },
   {
-    "note_text": "Mr. Vimes had a rigid bronchoscopy to clear a tumor blocking his right lung. When we opened the blockage, we found a lot of infection (pus) behind it, which we drained. We used heat (APC) and balloons to widen the airways in the bronchus intermedius and the right upper lobe. We got them mostly open, but we couldn't put a stent in because the tumor goes too far down. We started him on antibiotics for the infection.",
+    "note_text": "Mr. <PERSON> had a rigid bronchoscopy to clear a tumor blocking his right lung. When we opened the blockage, we found a lot of infection (pus) behind it, which we drained. We used heat (APC) and balloons to widen the airways in the bronchus intermedius and the right upper lobe. We got them mostly open, but we couldn't put a stent in because the tumor goes too far down. We started him on antibiotics for the infection.",
     "cpt_codes": [
       31641,
       31640,
@@ -13471,6 +13508,12 @@
       "style_type": 8,
       "generated_name": "Carrot Ironfoundersson",
       "generation_date": "2025-12-18T19:14:51.822184"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14919,7 +14962,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch + Laser\nPatient: Jean-Luc Picard\nSteps:\n1. General Anesthesia/Paralytics.\n2. Rigid scope (11mm).\n3. Nd:YAG laser to BI tumor.\n4. Coring with rigid scope bevel.\n5. Removed mass en-bloc.\n6. APC for residual.\n7. RUL debulked similarly.\nPlan: CXR, Oncology consult.",
+    "note_text": "Procedure: Rigid Bronch + Laser\nPatient: <PERSON>\nSteps:\n1. General Anesthesia/Paralytics.\n2. Rigid scope (11mm).\n3. Nd:YAG laser to BI tumor.\n4. Coring with rigid scope bevel.\n5. Removed mass en-bloc.\n6. APC for residual.\n7. RUL debulked similarly.\nPlan: CXR, Oncology consult.",
     "cpt_codes": [
       31641,
       31640
@@ -15185,6 +15228,12 @@
       "style_type": 4,
       "generated_name": "Worf Rozhenko",
       "generation_date": "2025-12-18T19:14:51.822601"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15995,7 +16044,7 @@
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on Mr. Picard to remove a large tumor blocking his breathing passage. We used a laser to shrink the tumor and then used the metal tube of the scope to core it out. We removed the main chunk of the tumor and used cautery to clean up the rest. The airway is much more open now. We decided against a stent for now, as he prefers to avoid it if possible.",
+    "note_text": "We performed a rigid bronchoscopy on Mr. <PERSON> to remove a large tumor blocking his breathing passage. We used a laser to shrink the tumor and then used the metal tube of the scope to core it out. We removed the main chunk of the tumor and used cautery to clean up the rest. The airway is much more open now. We decided against a stent for now, as he prefers to avoid it if possible.",
     "cpt_codes": [
       31641,
       31640
@@ -16261,6 +16310,12 @@
       "style_type": 8,
       "generated_name": "Miles O'Brien",
       "generation_date": "2025-12-18T19:14:51.822852"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

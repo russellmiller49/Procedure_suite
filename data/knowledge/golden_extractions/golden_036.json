@@ -763,7 +763,7 @@
     }
   },
   {
-    "note_text": "We brought Ms. Rodriguez to the procedure room for her scheduled valve placement. After achieving moderate sedation, we advanced the bronchoscope. The left lower lobe showed significant disease. We proceeded to place valves in the LB6, LB8, and LB9-10 segments. We were able to confirm a good seal on all valves, resulting in complete occlusion of the lobe. She tolerated the procedure well.",
+    "note_text": "We brought Ms. <PERSON> to the procedure room for her scheduled valve placement. After achieving moderate sedation, we advanced the bronchoscope. The left lower lobe showed significant disease. We proceeded to place valves in the LB6, LB8, and LB9-10 segments. We were able to confirm a good seal on all valves, resulting in complete occlusion of the lobe. She tolerated the procedure well.",
     "cpt_codes": [
       31647
     ],
@@ -869,6 +869,12 @@
       "style_type": 8,
       "generated_name": "Martina Reyes",
       "generation_date": "2025-12-09T09:20:11.793982"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1661,7 +1667,7 @@
     }
   },
   {
-    "note_text": "Patient Emma Carlisle underwent Rigid bronchoscopy, Silicone Y-stent placement, and bronchoscopic intubation for Respiratory failure secondary to extrinsic tracheal compression. Under General Anesthesia, inflammation and 90% obstruction were visualized in the mid trachea. A 14 mm rigid bronchoscope was inserted. A customized 16x13x13 silicone Y-stent was deployed. Inspection showed the stent well placed with near complete resolution of obstruction. Recommendations include Transfer to ICU and TID hypertonic nebulizers.",
+    "note_text": "Patient <PERSON> underwent Rigid bronchoscopy, Silicone Y-stent placement, and bronchoscopic intubation for Respiratory failure secondary to extrinsic tracheal compression. Under General Anesthesia, inflammation and 90% obstruction were visualized in the mid trachea. A 14 mm rigid bronchoscope was inserted. A customized 16x13x13 silicone Y-stent was deployed. Inspection showed the stent well placed with near complete resolution of obstruction. Recommendations include <PERSON> to ICU and TID hypertonic nebulizers.",
     "cpt_codes": [
       31631,
       31630
@@ -1794,10 +1800,17 @@
       "style_type": 6,
       "generated_name": "Abigail Butler",
       "generation_date": "2025-12-09T09:20:11.794448"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "[Indication]\nSevere extrinsic tracheal compression, respiratory failure.\n[Anesthesia]\nGeneral Anesthesia.\n[Description]\nRigid bronchoscopy performed. 90% tracheal obstruction noted. Silicone Y-stent customized and deployed. Airway stabilized and patent.\n[Plan]\nICU admission, Post-proc CXR, Nebulizers.",
+    "note_text": "[Indication]\nSevere extrinsic tracheal compression, respiratory failure.\n[Anesthesia]\nGeneral Anesthesia.\n[Description]\nRigid bronchoscopy performed. 90% tracheal obstruction noted. Silicone Y-stent customized and deployed. Airway stabilized and patent.\n[Plan]\nICU admission, Post-proc CXR, <PERSON>.",
     "cpt_codes": [
       31631,
       31630
@@ -1930,10 +1943,16 @@
       "style_type": 7,
       "generated_name": "Emily Russell",
       "generation_date": "2025-12-09T09:20:11.794545"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Ms. Carlisle was brought to the OR for management of her severe tracheal compression. We started with a flexible scope which confirmed a critical 90% blockage. We then switched to the rigid bronchoscope for better control. We measured and cut a silicone Y-stent to fit her specific anatomy and deployed it successfully. The airway looked much better immediately, with the obstruction largely resolved.",
+    "note_text": "Ms. <PERSON> was brought to the OR for management of her severe tracheal compression. We started with a flexible scope which confirmed a critical 90% blockage. We then switched to the rigid bronchoscope for better control. We measured and cut a silicone Y-stent to fit her specific anatomy and deployed it successfully. The airway looked much better immediately, with the obstruction largely resolved.",
     "cpt_codes": [
       31631,
       31630
@@ -2066,6 +2085,12 @@
       "style_type": 8,
       "generated_name": "Elizabeth Cole",
       "generation_date": "2025-12-09T09:20:11.794598"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3080,7 +3105,7 @@
     }
   },
   {
-    "note_text": "We took Mr. Shepherd back for debulking of his tracheal tumor. The blockage was severe, about 90%. We used the rigid scope to access the tumor and then removed the bulk of it using a snare. We finished up with APC to handle the smaller lesions and control bleeding. The airway looks much better now. We decided against a stent for now based on his preference.",
+    "note_text": "We took Mr. <PERSON> back for debulking of his tracheal tumor. The blockage was severe, about 90%. We used the rigid scope to access the tumor and then removed the bulk of it using a snare. We finished up with APC to handle the smaller lesions and control bleeding. The airway looks much better now. We decided against a stent for now based on his preference.",
     "cpt_codes": [
       31622,
       31641
@@ -3202,6 +3227,12 @@
       "style_type": 8,
       "generated_name": "Lucas Perry",
       "generation_date": "2025-12-09T09:20:11.794960"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3741,7 +3772,7 @@
     }
   },
   {
-    "note_text": "Procedure: BLVR\nPatient: Thomas O'Brien\nSteps:\n1. Mod sedation.\n2. Airway inspection.\n3. Chartis check of LUL: Negative.\n4. Placed 4 valves in LUL.\n5. Checked for leaks: None.\nPlan: Admit.",
+    "note_text": "Procedure: BLVR\nPatient: <PERSON>\nSteps:\n1. Mod sedation.\n2. Airway inspection.\n3. Chartis check of LUL: Negative.\n4. Placed 4 valves in LUL.\n5. Checked for leaks: None.\nPlan: Admit.",
     "cpt_codes": [
       31647,
       31634
@@ -3875,6 +3906,12 @@
       "style_type": 4,
       "generated_name": "Daniel O'Connor",
       "generation_date": "2025-12-09T09:20:11.795144"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4015,7 +4052,7 @@
     }
   },
   {
-    "note_text": "BLVR PROCEDURE 10/29/2024. Patient Thomas O'Brien with severe LUL emphysema. Chartis (-) CV in LUL. Candidate for EBV placement. Procedure included FB under mod sedation, LUL visualization, and placement of 4 Zephyr valves (LB1+2, LB3, lingula). Complete occlusion confirmed. Disposition: Admit, stable.",
+    "note_text": "BLVR PROCEDURE <DATE_TIME>. Patient <PERSON> with severe LUL emphysema. Chartis (-) CV in LUL. Candidate for EBV placement. Procedure included FB under mod sedation, LUL visualization, and placement of 4 Zephyr valves (LB1+2, LB3, lingula). Complete occlusion confirmed. Disposition: Admit, stable.",
     "cpt_codes": [
       31647,
       31634
@@ -4149,6 +4186,13 @@
       "style_type": 6,
       "generated_name": "Patrick Walsh",
       "generation_date": "2025-12-09T09:20:11.795216"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "PERSON"
+      ]
     }
   },
   {
@@ -4289,7 +4333,7 @@
     }
   },
   {
-    "note_text": "We performed a lung volume reduction on Mr. O'Brien today. We targeted the left upper lobe. First, we checked for collateral ventilation using the Chartis balloon, which was negative. Then we placed four valves into the LUL airways. Everything looks sealed off perfectly. He's heading to recovery now.",
+    "note_text": "We performed a lung volume reduction on Mr. <PERSON> today. We targeted the left upper lobe. First, we checked for collateral ventilation using the Chartis balloon, which was negative. Then we placed four valves into the LUL airways. Everything looks sealed off perfectly. He's heading to recovery now.",
     "cpt_codes": [
       31647,
       31634
@@ -4423,6 +4467,12 @@
       "style_type": 8,
       "generated_name": "Liam Doherty",
       "generation_date": "2025-12-09T09:20:11.795282"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5217,7 +5267,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Robotic Bronch\nPatient: Logan Pierce\nSteps:\n1. GA / ETT.\n2. Ion robot setup and nav to RUL target.\n3. Spin CT confirm.\n4. Biopsies: Needle and Cryo.\n5. BAL performed.\n6. Chartis check on LUL (for COPD).\n7. ROSE: Atypical.\nPlan: Recovery.",
+    "note_text": "Resident Note: Robotic Bronch\nPatient: <PERSON>\nSteps:\n1. GA / ETT.\n2. Ion robot setup and nav to RUL target.\n3. Spin CT confirm.\n4. Biopsies: Needle and Cryo.\n5. BAL performed.\n6. Chartis check on LUL (for COPD).\n7. ROSE: Atypical.\nPlan: Recovery.",
     "cpt_codes": [
       31629,
       31628,
@@ -5432,6 +5482,12 @@
       "style_type": 4,
       "generated_name": "Michael West",
       "generation_date": "2025-12-09T09:20:11.795594"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5653,7 +5709,7 @@
     }
   },
   {
-    "note_text": "DATE OF PROCEDURE: 2/11/2025. INDICATION: RUL nodule and COPD. Flexible Therapeutic Bronchoscope and Ion Robotic Bronchoscope used. Navigation to Anterior Segment RUL (RB3). Cone Beam CT confirmed tool placement. TBNA and Transbronchial Cryobiopsy performed. BAL performed. ROSE revealed Atypical cells. Chartis Evaluation of LUL confirmed absence of collateral ventilation. Patient tolerated well.",
+    "note_text": "DATE OF PROCEDURE: <DATE_TIME>. INDICATION: RUL nodule and COPD. Flexible Therapeutic Bronchoscope and Ion Robotic Bronchoscope used. Navigation to Anterior Segment RUL (RB3). Cone Beam CT confirmed tool placement. TBNA and Transbronchial Cryobiopsy performed. BAL performed. ROSE revealed Atypical cells. <PERSON> of LUL confirmed absence of collateral ventilation. Patient tolerated well.",
     "cpt_codes": [
       31629,
       31628,
@@ -5868,6 +5924,13 @@
       "style_type": 6,
       "generated_name": "Matthew Fisher",
       "generation_date": "2025-12-09T09:20:11.795700"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "PERSON"
+      ]
     }
   },
   {
@@ -6089,7 +6152,7 @@
     }
   },
   {
-    "note_text": "We used the robotic bronchoscope to biopsy Mr. Pierce's lung nodule today. We navigated to the right upper lobe and confirmed our position with a 3D spin scan. We took several needle and cryo biopsies. While we were there, we also washed the area (BAL) and checked his left lung with the Chartis balloon to see if he's a candidate for valves later—looks like he is.",
+    "note_text": "We used the robotic bronchoscope to biopsy Mr. <PERSON>'s lung nodule today. We navigated to the right upper lobe and confirmed our position with a 3D spin scan. We took several needle and cryo biopsies. While we were there, we also washed the area (BAL) and checked his left lung with the Chartis balloon to see if he's a candidate for valves later—looks like he is.",
     "cpt_codes": [
       31629,
       31628,
@@ -6304,6 +6367,12 @@
       "style_type": 8,
       "generated_name": "Andrew Harrison",
       "generation_date": "2025-12-09T09:20:11.795805"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6966,7 +7035,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBV & Chest Tube\nPatient: Hal Johnson\nSteps:\n1. Sedation.\n2. Found air leak RB1.\n3. Valve placed.\n4. Patient desatted, tension pneumo.\n5. Chest tube placed stat.\n6. Placed one more valve in RB3.\nPlan: ICU.",
+    "note_text": "Procedure: EBV & Chest Tube\nPatient: <PERSON>\nSteps:\n1. Sedation.\n2. Found air leak RB1.\n3. Valve placed.\n4. Patient desatted, tension pneumo.\n5. Chest tube placed stat.\n6. Placed one more valve in RB3.\nPlan: ICU.",
     "cpt_codes": [
       31647,
       32551
@@ -7110,10 +7179,16 @@
       "style_type": 4,
       "generated_name": "Charles Davis",
       "generation_date": "2025-12-09T09:20:11.796035"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "hal johnson here for the air leak. tried to put a valve in rb1 and he blew a pneumo right away. tension physiology so we put a chest tube in fast. stabilized him. put another valve in rb3 to help seal it. messy case but he is stable now. icu admit.",
+    "note_text": "<PERSON> here for the air leak. tried to put a valve in rb1 and he blew a pneumo right away. tension physiology so we put a chest tube in fast. stabilized him. put another valve in rb3 to help seal it. messy case but he is stable now. icu admit.",
     "cpt_codes": [
       31647,
       32551
@@ -7257,6 +7332,12 @@
       "style_type": 5,
       "generated_name": "George Miller",
       "generation_date": "2025-12-09T09:20:11.796072"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7554,7 +7635,7 @@
     }
   },
   {
-    "note_text": "Mr. Johnson had a rough time during the valve placement. We found the leak in the right upper lobe, but right after we put the first valve in, his lung collapsed causing a tension pneumothorax. We had to put a chest tube in immediately to re-expand the lung. Once he was stable, we put one more valve in a different segment to try and slow the leak down. He's going to the ICU.",
+    "note_text": "Mr. <PERSON> had a rough time during the valve placement. We found the leak in the right upper lobe, but right after we put the first valve in, his lung collapsed causing a tension pneumothorax. We had to put a chest tube in immediately to re-expand the lung. Once he was stable, we put one more valve in a different segment to try and slow the leak down. He's going to the ICU.",
     "cpt_codes": [
       31647,
       32551
@@ -7698,10 +7779,16 @@
       "style_type": 8,
       "generated_name": "Thomas Taylor",
       "generation_date": "2025-12-09T09:20:11.796183"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Operation: FB with EBV deployment and Tube Thoracostomy.\nComplication: Iatrogenic pneumothorax.\nAction: Immediate insertion of drainage catheter. Stabilization achieved. Secondary valve implanted in RB3.\nOutcome: Air leak attenuated.",
+    "note_text": "Operation: FB with EBV deployment and <PERSON>.\nComplication: Iatrogenic pneumothorax.\nAction: Immediate insertion of drainage catheter. Stabilization achieved. Secondary valve implanted in RB3.\nOutcome: Air leak attenuated.",
     "cpt_codes": [
       31647,
       32551
@@ -7845,6 +7932,12 @@
       "style_type": 9,
       "generated_name": "Richard Anderson",
       "generation_date": "2025-12-09T09:20:11.796221"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8548,7 +8641,7 @@
     }
   },
   {
-    "note_text": "jacob renfield has the lung mass blocking the left side. we did a rigid bronch. ebus first to biopsy the nodes under the carina. then went after the tumor in the left main. chopped it out with forceps and burned it with apc. dilated it open. looks better about half open now. needs radiation asap.",
+    "note_text": "<PERSON> has the lung mass blocking the left side. we did a rigid bronch. ebus first to biopsy the nodes under the carina. then went after the tumor in the left main. chopped it out with forceps and burned it with apc. dilated it open. looks better about half open now. needs radiation asap.",
     "cpt_codes": [
       31653,
       31630,
@@ -8720,10 +8813,16 @@
       "style_type": 5,
       "generated_name": "Thomas Turner",
       "generation_date": "2025-12-09T09:20:11.796458"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "DATE OF PROCEDURE: December 17 2018. PROCEDURE PERFORMED: Rigid bronchoscopy. Indication: left mainstem obstruction. Findings: Left mainstem completely obstructed. EBUS bronchoscope inserted, subcarinal mass biopsied. Tumor debulked using APC, electrocautery, cryotherapy. Left mainstem dilated with balloon. Argon plasma coagulation used for hemostasis. Recommendations: Radiation oncology consultation.",
+    "note_text": "DATE OF PROCEDURE: <DATE_TIME>. PROCEDURE PERFORMED: Rigid bronchoscopy. Indication: left mainstem obstruction. Findings: Left mainstem completely obstructed. EBUS bronchoscope inserted, subcarinal mass biopsied. Tumor debulked using APC, electrocautery, cryotherapy. Left mainstem dilated with balloon. Argon plasma coagulation used for hemostasis. Recommendations: Radiation oncology consultation.",
     "cpt_codes": [
       31653,
       31630,
@@ -8895,6 +8994,12 @@
       "style_type": 6,
       "generated_name": "Christopher Campbell",
       "generation_date": "2025-12-09T09:20:11.796500"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -9073,7 +9178,7 @@
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on Mr. Renfield to open up his airway. The tumor was blocking the left main bronchus. We biopsied the lymph nodes first, then spent time chipping away at the tumor with forceps and cautery. We dilated it with a balloon and got it about 50% open. He's going to need radiation to keep it that way.",
+    "note_text": "We performed a rigid bronchoscopy on Mr. <PERSON> to open up his airway. The tumor was blocking the left main bronchus. We biopsied the lymph nodes first, then spent time chipping away at the tumor with forceps and cautery. We dilated it with a balloon and got it about 50% open. He's going to need radiation to keep it that way.",
     "cpt_codes": [
       31653,
       31630,
@@ -9245,6 +9350,12 @@
       "style_type": 8,
       "generated_name": "Matthew Collins",
       "generation_date": "2025-12-09T09:20:11.796587"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9423,7 +9534,7 @@
     }
   },
   {
-    "note_text": "Indication: Severe Homogeneous Emphysema.\nProc: Bilateral Coil Placement.\nActions:\n- RUL: 10 Coils (125mm).\n- LUL: 10 Coils (125mm).\n- Fluoro guidance.\nResult: No complications. Good coil configuration.\nPlan: Admit, Prednisone taper.",
+    "note_text": "Indication: Severe Homogeneous Emphysema.\nProc: Bilateral Coil Placement.\nActions:\n- RUL: 10 Coils (125mm).\n- LUL: 10 Coils (125mm).\n- Fluoro guidance.\nResult: No complications. Good coil configuration.\nPlan: Admit, <PERSON> taper.",
     "cpt_codes": [
       31622
     ],
@@ -9531,6 +9642,12 @@
       "style_type": 1,
       "generated_name": "Linda Harris",
       "generation_date": "2025-12-09T09:20:11.796659"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9756,7 +9873,7 @@
     }
   },
   {
-    "note_text": "Procedure: Coils (LVR)\nPatient: Pat Thompson\nSteps:\n1. Mod sedation.\n2. Scope in.\n3. RUL: 10 coils placed.\n4. LUL: 10 coils placed.\n5. Fluoro check: Good.\nPlan: Admit, antibiotics, steroids.",
+    "note_text": "Procedure: Coils (LVR)\nPatient: <PERSON>\nSteps:\n1. Mod sedation.\n2. Scope in.\n3. RUL: 10 coils placed.\n4. LUL: 10 coils placed.\n5. Fluoro check: Good.\nPlan: Admit, antibiotics, steroids.",
     "cpt_codes": [
       31622
     ],
@@ -9864,10 +9981,16 @@
       "style_type": 4,
       "generated_name": "Jennifer Garcia",
       "generation_date": "2025-12-09T09:20:11.796750"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "patricia thompson here for coils. she has diffuse emphysema. we put 10 coils in the right upper and 10 in the left upper using the scope and fluoro. went smooth no bleeding. chest xray looks good. admit for observation start prednisone.",
+    "note_text": "<PERSON> here for coils. she has diffuse emphysema. we put 10 coils in the right upper and 10 in the left upper using the scope and fluoro. went smooth no bleeding. chest xray looks good. admit for observation start prednisone.",
     "cpt_codes": [
       31622
     ],
@@ -9975,10 +10098,16 @@
       "style_type": 5,
       "generated_name": "Maria Martinez",
       "generation_date": "2025-12-09T09:20:11.796780"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE REPORT. Bronchoscopic Lung Volume Reduction via Endobronchial Coil Placement. Patient: Patricia Thompson. Indication: Severe homogeneous emphysema. Procedure: RUL Coil Placement (10 coils), LUL Coil Placement (10 coils). Fluoroscopy used. Complications: None. Assessment: Successful bilateral endobronchial coil placement. Plan: Admit, Prednisone taper.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE REPORT. Bronchoscopic Lung Volume Reduction via Endobronchial Coil Placement. Patient: <PERSON>. Indication: Severe homogeneous emphysema. Procedure: RUL Coil Placement (10 coils), LUL Coil Placement (10 coils). Fluoroscopy used. Complications: None. Assessment: Successful bilateral endobronchial coil placement. Plan: Admit, <PERSON> taper.",
     "cpt_codes": [
       31622
     ],
@@ -10086,6 +10215,13 @@
       "style_type": 6,
       "generated_name": "Susan Robinson",
       "generation_date": "2025-12-09T09:20:11.796809"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -10200,7 +10336,7 @@
     }
   },
   {
-    "note_text": "Ms. Thompson came in for her coil procedure today. Since her emphysema is spread out evenly, coils are the best option. We placed 10 coils in the right top lobe and 10 in the left top lobe. We used x-ray guidance to make sure they were sitting right. Everything went perfectly, no issues at all.",
+    "note_text": "Ms. <PERSON> came in for her coil procedure today. Since her emphysema is spread out evenly, coils are the best option. We placed 10 coils in the right top lobe and 10 in the left top lobe. We used x-ray guidance to make sure they were sitting right. Everything went perfectly, no issues at all.",
     "cpt_codes": [
       31622
     ],
@@ -10308,6 +10444,12 @@
       "style_type": 8,
       "generated_name": "Dorothy Rodriguez",
       "generation_date": "2025-12-09T09:20:11.796868"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11018,7 +11160,7 @@
     }
   },
   {
-    "note_text": "sharon kim here for valves she has alpha 1. i let the fellow dr lee do the procedure. we checked the lll with chartis it was good. fellow had a little trouble with the first valve had to move it but got it eventually. second one was fine. lobe is sealed up. good teaching case.",
+    "note_text": "<PERSON> here for valves she has alpha 1. i let the fellow dr lee do the procedure. we checked the lll with chartis it was good. fellow had a little trouble with the first valve had to move it but got it eventually. second one was fine. lobe is sealed up. good teaching case.",
     "cpt_codes": [
       31622,
       31634,
@@ -11164,10 +11306,16 @@
       "style_type": 5,
       "generated_name": "Amanda Yoon",
       "generation_date": "2025-12-09T09:20:11.797084"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure Date: 01/17/2025. Patient: Sharon Kim. Procedure: BLVR LLL. Teaching case with Fellow. Chartis Assessment: Target LLL, NEGATIVE CV. Valve Deployment: LB6 (5.5mm), LB8-10 (4.0mm). First valve required repositioning. Final bronchoscopy: Both valves well-positioned, complete occlusion confirmed. Patient Outcome: Tolerated well.",
+    "note_text": "Procedure Date: <DATE_TIME>. Patient: <PERSON>. Procedure: BLVR LLL. Teaching case with Fellow. Chartis Assessment: Target LLL, NEGATIVE CV. Valve Deployment: LB6 (5.5mm), LB8-10 (4.0mm). First valve required repositioning. Final bronchoscopy: Both valves well-positioned, complete occlusion confirmed. Patient Outcome: Tolerated well.",
     "cpt_codes": [
       31622,
       31634,
@@ -11313,6 +11461,13 @@
       "style_type": 6,
       "generated_name": "Stephanie Kang",
       "generation_date": "2025-12-09T09:20:11.797122"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "PERSON"
+      ]
     }
   },
   {
@@ -11465,7 +11620,7 @@
     }
   },
   {
-    "note_text": "This was a teaching case with Dr. Lee. We treated Ms. Kim for her Alpha-1 emphysema. We confirmed the left lower lobe was a good target with the Chartis system. Dr. Lee placed the valves. We had to adjust the first one to get a perfect seal, but the second one went in easily. The lobe is completely blocked off now.",
+    "note_text": "This was a teaching case with Dr. Lee. We treated Ms. <PERSON> for her Alpha-1 emphysema. We confirmed the left lower lobe was a good target with the Chartis system. Dr. Lee placed the valves. We had to adjust the first one to get a perfect seal, but the second one went in easily. The lobe is completely blocked off now.",
     "cpt_codes": [
       31622,
       31634,
@@ -11611,6 +11766,12 @@
       "style_type": 8,
       "generated_name": "Nicole Hwang",
       "generation_date": "2025-12-09T09:20:11.797196"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12336,7 +12497,7 @@
     }
   },
   {
-    "note_text": "Procedure: Diagnostic Bronch\nPatient: Chloe Whitford\nSteps:\n1. GA / 8.5 ETT.\n2. Saw mass in RUL -> Biopsied (Needle & Forceps).\n3. Radial EBUS for LLL nodule -> Biopsied.\n4. BAL LLL.\n5. ROSE said RUL is cancer.\nPlan: Wait for final path.",
+    "note_text": "Procedure: Diagnostic Bronch\nPatient: <PERSON>\nSteps:\n1. GA / 8.5 ETT.\n2. Saw mass in RUL -> Biopsied (Needle & Forceps).\n3. Radial EBUS for LLL nodule -> Biopsied.\n4. BAL LLL.\n5. ROSE said RUL is cancer.\nPlan: Wait for final path.",
     "cpt_codes": [
       31629,
       31625,
@@ -12524,10 +12685,16 @@
       "style_type": 4,
       "generated_name": "Janice Hosenstein",
       "generation_date": "2025-12-09T09:20:11.797419"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "chloe whitford has bilateral masses. we went in with the scope. big fungating thing in the rul took a bunch of bites and needle passes. rose says cancer. then went to the lll used the radial ebus to find the spot and biopsied that too. washed the lll. shes stable.",
+    "note_text": "<PERSON> has bilateral masses. we went in with the scope. big fungating thing in the rul took a bunch of bites and needle passes. rose says cancer. then went to the lll used the radial ebus to find the spot and biopsied that too. washed the lll. shes stable.",
     "cpt_codes": [
       31629,
       31625,
@@ -12715,10 +12882,16 @@
       "style_type": 5,
       "generated_name": "Carol Willick",
       "generation_date": "2025-12-09T09:20:11.797469"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Chloe Whitford. Date: 3/20/24. Indications: Bilateral lung masses. Initial Airway Inspection: Endobronchial fungating mass RUL. Tissue Sampling: RUL Endobronchial Biopsy (TBNA, Forceps). LLL Lesion Biopsy (Radial EBUS, TBNA, Forceps). BAL LLL. ROSE: RUL malignant. Final Airway Re-Inspection: No active bleeding. Disposition: PACU.",
+    "note_text": "<PERSON>. Date: 3/20/24. Indications: Bilateral lung masses. Initial Airway Inspection: Endobronchial fungating mass RUL. Tissue Sampling: RUL Endobronchial Biopsy (TBNA, Forceps). LLL Lesion Biopsy (Radial EBUS, TBNA, Forceps). BAL LLL. ROSE: RUL malignant. Final Airway Re-Inspection: No active bleeding. Disposition: PACU.",
     "cpt_codes": [
       31629,
       31625,
@@ -12906,6 +13079,12 @@
       "style_type": 6,
       "generated_name": "Susan Bunch",
       "generation_date": "2025-12-09T09:20:11.797518"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -13100,7 +13279,7 @@
     }
   },
   {
-    "note_text": "Ms. Whitford has masses in both lungs. We did a bronchoscopy to find out what they are. The one in the right upper lobe was visible inside the airway, so we biopsied it directly—the preliminary result is cancer. The one in the left lower lobe was deeper, so we used a special ultrasound (radial EBUS) to find it and get samples. We also washed the area. We'll wait for the full report.",
+    "note_text": "Ms. <PERSON> has masses in both lungs. We did a bronchoscopy to find out what they are. The one in the right upper lobe was visible inside the airway, so we biopsied it directly—the preliminary result is cancer. The one in the left lower lobe was deeper, so we used a special ultrasound (radial EBUS) to find it and get samples. We also washed the area. We'll wait for the full report.",
     "cpt_codes": [
       31629,
       31625,
@@ -13288,6 +13467,12 @@
       "style_type": 8,
       "generated_name": "Ursula Buffay",
       "generation_date": "2025-12-09T09:20:11.797614"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

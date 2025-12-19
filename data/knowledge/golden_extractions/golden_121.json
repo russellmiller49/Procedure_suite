@@ -3207,7 +3207,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPt: Unk\nStaff: Unk\nProcedure: EBUS/Bronch.\n1. Inspect: RML lateral seg vascular tumor.\n2. TBNA of tumor x6. Bleeding -> TXA 40mg.\n3. EBUS: 4L, 7, 4R, 11R sampled. ROSE neg.\n4. Forceps Bx: RML tumor x5. Moderate bleeding -> Tamponade.\n5. Hemostasis achieved.",
+    "note_text": "Procedure Note\nPt: Unk\nStaff: Unk\nProcedure: EBUS/Bronch.\n1. Inspect: RML lateral seg vascular tumor.\n2. TBNA of tumor x6. Bleeding -> TXA 40mg.\n3. EBUS: 4L, 7, 4R, 11R sampled. <PERSON>.\n4. Forceps Bx: RML tumor x5. Moderate bleeding -> Tamponade.\n5. Hemostasis achieved.",
     "cpt_codes": [
       31653,
       31629
@@ -3490,6 +3490,12 @@
       "style_description": "Trainee/Resident",
       "generated_name": "Bishop Android",
       "generation_date": "2025-12-18T19:15:08.654446"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4065,7 +4071,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRML Pulmonary Nodule.\n[Anesthesia]\nMAC (Propofol).\n[Description]\nRML lateral segment: Vascular tumor. TBNA x6. Hemostasis w/ TXA. EBUS: 4L, 7, 4R, 11R (neg). Forceps Bx RML x5. Hemostasis w/ tamponade.\n[Plan]\nMonitor for hemoptysis. Discharge criteria met.",
+    "note_text": "[Indication]\nRML <PERSON>.\n[Anesthesia]\nMAC (Propofol).\n[Description]\nRML lateral segment: Vascular tumor. TBNA x6. Hemostasis w/ TXA. EBUS: 4L, 7, 4R, 11R (neg). Forceps Bx RML x5. Hemostasis w/ tamponade.\n[Plan]\nMonitor for hemoptysis. Discharge criteria met.",
     "cpt_codes": [
       31653,
       31629
@@ -4348,6 +4354,12 @@
       "style_description": "Templated",
       "generated_name": "Scott Gorman",
       "generation_date": "2025-12-18T19:15:08.654654"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11457,7 +11469,7 @@
     }
   },
   {
-    "note_text": "Indication: Pulmonary nodule.\nProcedure: Bronchoscopy, rEBUS, TBNA, TBBx.\nFindings: Fused LUL/Lingula. Lesion in LUL.\nrEBUS: Concentric view.\nSampling: TBNA (ROSE: Malignant). Forceps bx x6.\nComp: None. No pneumo.",
+    "note_text": "Indication: <PERSON> nodule.\nProcedure: Bronchoscopy, rEBUS, TBNA, TBBx.\nFindings: Fused LUL/Lingula. Lesion in LUL.\nrEBUS: Concentric view.\nSampling: TBNA (ROSE: Malignant). Forceps bx x6.\nComp: None. No pneumo.",
     "cpt_codes": [
       31628,
       31654
@@ -11653,6 +11665,12 @@
       "style_description": "Terse Surgeon",
       "generated_name": "Marty McFly",
       "generation_date": "2025-12-18T19:15:08.656460"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12651,7 +12669,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPulmonary nodule.\n[Anesthesia]\nGeneral.\n[Description]\nAnatomy: Fused LUL/Lingula. rEBUS: Concentric. TBNA: Malignant. TBBx: x6 samples.\n[Plan]\nAwait final pathology.",
+    "note_text": "[Indication]\n<PERSON> nodule.\n[Anesthesia]\nGeneral.\n[Description]\nAnatomy: Fused LUL/Lingula. rEBUS: Concentric. TBNA: Malignant. TBBx: x6 samples.\n[Plan]\nAwait final pathology.",
     "cpt_codes": [
       31628,
       31654
@@ -12847,6 +12865,12 @@
       "style_description": "Templated",
       "generated_name": "Dave McFly",
       "generation_date": "2025-12-18T19:15:08.656776"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

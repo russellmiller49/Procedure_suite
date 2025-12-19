@@ -59,6 +59,14 @@ _DYNAMIC_HEADER_RE = re.compile(
     re.MULTILINE
 )
 
+# Context-aware check for ROSE (Rapid On-Site Evaluation) to avoid flagging as Person "Rose"
+# Looks for "ROSE" followed by clinical findings or status
+_ROSE_CONTEXT_RE = re.compile(
+    r"\bROSE(?:\s+|:)\s*(?:suspicious|consistent|positive|negative|pos|neg|performed|"
+    r"collected|sample|specimen|analysis|evaluation|procedure|review|findings?)\b",
+    re.IGNORECASE,
+)
+
 # Terms that the Biomedical Shield should NOT protect (prevent un-redacting actual people)
 BIOMEDICAL_SHIELD_BLOCKLIST = {
     "patient", "pt", "dr", "doctor", "mr", "ms", "mrs", "male", "female", 
@@ -159,7 +167,11 @@ CLINICAL_ALLOW_LIST = {
     "debulking", "mech debulking", "mechanical debulking", "brachy", "brachy cath",
     "cath", "chartis", "seldinger", "cooled rfa", "sprayed talc",
     "emphysema", "adenopathy", "adeno", "carcinoid", "sarcoid", "laryngospasm",
-    "mesothelioma", "oligometastatic", "telemetry", "path", "wash",
+    "mesothelioma", "oligometastatic", "telemetry", "path", "wash", "nasal",
+    "dye", "marking", "mark", "tattoo", "clip", "fiducial", "drainage", "drng",
+    "papilloma", "papa lima", "novatech", "silicone", "aerostent", "lavage",
+    "brushing", "trap", "lukens", "pathology", "cytology", "histology", "biopsy",
+    "frozen", "permanent", "section", "mod", "sed", "general", "local", "topical",
     "augmentin", "decadron", "breast", "vessel", "myer-cotton", "endotek",
     # Institution / IT Terms to prevent False Positive Location redaction
     "ucsd", "nmcsd", "balboa", "navy", "va", "veterans affairs", "scripps", 
@@ -301,7 +313,10 @@ _SECTION_HEADER_WORDS: frozenset[str] = frozenset(
 )
 
 _LOCATION_WORKFLOW_WORDS: frozenset[str] = frozenset(
-    {"await", "awaiting", "pending", "scheduled", "sequential", "symptomatic", "asymptomatic"}
+    {
+        "await", "awaiting", "pending", "scheduled", "sequential", "symptomatic",
+        "asymptomatic", "discharge", "recurrent", "telemetry", "observe",
+    }
 )
 _PERSON_NAME_PUNCT_RE = re.compile(r"[^\w\s\-'. ,]")
 _CLINICAL_CONTEXT_RE = re.compile(
@@ -310,7 +325,7 @@ _CLINICAL_CONTEXT_RE = re.compile(
     r"sed(?:ation)?|mod\s+sed|abx|decadron|augmentin|ebus|bal|blvr|"
     r"thoracoscopy|debulking|rigid|carcinoid|adenopath(?:y|ic)|adeno|sarcoid|"
     r"laryngospasm|mesothelioma|seldinger|apc|rfa|jet\s+vent(?:ilation)?|"
-    r"telemetry|discharge|recurrent|monitoring|description|wash|path)\b",
+    r"telemetry|discharge|recurrent|monitoring|description|wash|path|re-?expanded)\b",
     re.IGNORECASE,
 )
 
@@ -321,7 +336,7 @@ _CLINICAL_ABBREV_TOKENS: frozenset[str] = frozenset(
     {
         "bal", "ebus", "blvr", "ptx", "rfa", "apc", "mac", "abx", "epi", "peds",
         "onco", "lul", "lll", "rml", "rll", "rul", "lingula", "lml", "mod", "sed",
-        "ipc",
+        "ipc", "loc", "drng", "dx", "hx", "tx", "fx", "sx", "iv", "po", "prn",
     }
 )
 _NON_NAME_TOKENS: frozenset[str] = frozenset(
@@ -331,6 +346,8 @@ _NON_NAME_TOKENS: frozenset[str] = frozenset(
         "description", "unknown", "insert", "found", "looked", "frozen",
         "resultant", "subsequent", "sprayed", "wedged", "sampled", "employed",
         "combined", "superior", "large", "small", "path", "telemetry", "wash",
+        "suite", "stuck", "decay", "cancer", "reg", "neg", "pos", "pro", "pre",
+        "post", "intra",
     }
 )
 _NON_NAME_LEADERS: frozenset[str] = frozenset(
@@ -338,7 +355,8 @@ _NON_NAME_LEADERS: frozenset[str] = frozenset(
         "continue", "determine", "complete", "start", "insert", "found", "employed",
         "combined", "subsequent", "resultant", "monitoring", "description",
         "unknown", "discharge", "recurrent", "observe", "observed", "looked",
-        "sprayed", "wedged", "frozen", "moderate", "standard",
+        "sprayed", "wedged", "frozen", "moderate", "standard", "nodes", "large",
+        "small", "superior",
     }
 )
 _LOBE_ABBREV_RE = re.compile(r"\b(?:rul|rml|rll|lul|lll|lml|lingula)\b", re.IGNORECASE)
@@ -381,9 +399,14 @@ _ADDRESS_MAILCODE_RE = re.compile(r"\bMC\s*\d{3,6}\b", re.IGNORECASE)
 _CPT_HINT_RE = re.compile(r"\b(?:CPT|HCPCS|ICD-?10|ICD)\b", re.IGNORECASE)
 _CPT_CODE_RE = re.compile(r"\b(?<!/)\d{5}[A-Z0-9]{0,4}\b", re.IGNORECASE)
 _PROCEDURE_CONTEXT_RE = re.compile(
-    r"\b(?:bronch(?:o(?:scope|scopy))?|biopsy|lavage|ablation|catheter|stent|"
-    r"anesth(?:esia)?|sedat(?:ion)?|procedure|surg(?:ery)?|resection|scope|"
-    r"radiology|pathology|specimen|culture)\b",
+    r"\b(?:bronch(?:o(?:scope|scopy))?|bronchoscopic|biopsy|lavage|ablation|"
+    r"catheter|stent|anesth(?:esia)?|sedat(?:ion)?|mod\s+sed|procedure|"
+    r"surg(?:ery)?|resection|scope|radiology|pathology|specimen|culture|"
+    r"bal|ebus|blvr|ptx|rfa|apc|talc|spray(?:ed)?|thoracoscopy|debulking|"
+    r"rigid|carcinoid|adenopath(?:y|ic)|sarcoid|laryngospasm|mesothelioma|"
+    r"seldinger|augmentin|decadron|emphysema|jet\s+vent(?:ilation)?|"
+    r"telemetry|discharge|recurrent|wash|hemostasis|forceps|cryo|nodes?|"
+    r"sampled|sample|mod)\b",
     re.IGNORECASE,
 )
 
@@ -1023,9 +1046,25 @@ def filter_person_location_sanity(text: str, results: list) -> list:
         if not token:
             continue
         token_lower = token.lower()
+        token_words = re.findall(r"[A-Za-z]+", token_lower)
         context = _context_window(text, int(getattr(res, "start")), int(getattr(res, "end")), window=40).lower()
 
         if token_lower in BIOMEDICAL_SHIELD_BLOCKLIST:
+            continue
+        if token_lower in _NON_NAME_TOKENS:
+            continue
+        # SPECIAL HANDLING: ROSE (Rapid On-Site Evaluation)
+        if token.upper().startswith("ROSE"):
+            rose_context = text[int(res.start) : int(res.end) + 50].lower()
+            if _ROSE_CONTEXT_RE.search(rose_context):
+                continue
+        if any(token_lower.startswith(f"{leader} ") for leader in _NON_NAME_LEADERS):
+            continue
+        if any(word in _SHORT_CLINICAL_TOKENS or word in _CLINICAL_ABBREV_TOKENS for word in token_words):
+            continue
+        if len(token_words) > 1 and any(word in {"lung", "pleura", "pleural"} for word in token_words):
+            continue
+        if _BAL_LOBE_RE.search(token_lower) or _LOBE_BAL_RE.search(token_lower):
             continue
         if _PROCEDURE_CONTEXT_RE.search(token_lower) or _CLINICAL_CONTEXT_RE.search(token_lower):
             continue
@@ -1088,6 +1127,7 @@ def filter_datetime_exclusions(text: str, results: list, relative_phrases: Itera
         r"(?:post-?op\s+)?day\s+\d+)\b",
         re.IGNORECASE,
     )
+    short_numeric_date_re = re.compile(r"^\s*\d{1,2}[-/]\d{1,2}[-/]\d{1,2}\s*$")
     relative_res = [re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE) for p in relative_phrases]
     filtered = []
     for res in results:
@@ -1095,6 +1135,8 @@ def filter_datetime_exclusions(text: str, results: list, relative_phrases: Itera
             filtered.append(res)
             continue
         token = text[int(getattr(res, "start")) : int(getattr(res, "end"))]
+        if short_numeric_date_re.match(token):
+            continue
         if duration_re.search(token): continue
         if any(r.search(token) for r in relative_res): continue
         filtered.append(res)

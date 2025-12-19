@@ -226,7 +226,7 @@
     }
   },
   {
-    "note_text": "HISTORY OF PRESENT ILLNESS: Mr. Higgins, a 66-year-old gentleman with severe heterogeneous emphysema characterized by marked left upper lobe hyperinflation, presented for elective bronchoscopic lung volume reduction. Preoperative evaluation revealed an intact left oblique fissure and quantitative perfusion demonstrating preservation of the contralateral lung.\nOPERATIVE NARRATIVE: Following the induction of general anesthesia and placement of an 8.0 mm endotracheal tube, the airway was examined. The left bronchial tree was systematically interrogated. A Chartis balloon catheter assessment of the LUL bronchus yielded a CV-negative phenotype (rapid flow decay to zero). Consequently, four Zephyr endobronchial valves were sequentially deployed into the apicoposterior, anterior, and lingular segments. Post-deployment inspection confirmed complete lobar occlusion. Immediate physiological response was noted via improved excursion of the left hemidiaphragm.\nIMPRESSION: Successful LUL BLVR. The patient remained hemodynamically stable and was transferred to the step-down unit for close pneumothorax surveillance.",
+    "note_text": "HISTORY OF PRESENT ILLNESS: Mr. <PERSON>, a 66-year-old gentleman with severe heterogeneous emphysema characterized by marked left upper lobe hyperinflation, presented for elective bronchoscopic lung volume reduction. Preoperative evaluation revealed an intact left oblique fissure and quantitative perfusion demonstrating preservation of the contralateral lung.\nOPERATIVE NARRATIVE: Following the induction of general anesthesia and placement of an 8.0 mm endotracheal tube, the airway was examined. The left bronchial tree was systematically interrogated. A Chartis balloon catheter assessment of the LUL bronchus yielded a CV-negative phenotype (rapid flow decay to zero). Consequently, four Zephyr endobronchial valves were sequentially deployed into the apicoposterior, anterior, and lingular segments. Post-deployment inspection confirmed complete lobar occlusion. Immediate physiological response was noted via improved excursion of the left hemidiaphragm.\nIMPRESSION: Successful LUL BLVR. The patient remained hemodynamically stable and was transferred to the step-down unit for close pneumothorax surveillance.",
     "cpt_codes": [
       31647
     ],
@@ -449,6 +449,12 @@
       "style_type": 2,
       "generated_name": "Arthur Higgins",
       "generation_date": "2025-12-08T13:49:01.863741"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1130,7 +1136,7 @@
     }
   },
   {
-    "note_text": "Bronchoscopic lung volume reduction with endobronchial valve placement, left upper lobe was performed on Edward Stone, a 68-year-old male with severe heterogeneous emphysema. General anesthesia with endotracheal intubation (8.0 mm ETT) was utilized. High-resolution CT showed severe LUL-predominant emphysema and intact left oblique fissure. Chartis balloon catheter deployed in the left upper lobe bronchus showed rapid flow decay to zero with plateau, consistent with absence of collateral ventilation. Under general anesthesia, a therapeutic flexible bronchoscope was advanced. Four Zephyr endobronchial valves were placed sequentially in the apicoposterior, anterior, and lingular segmental bronchi to completely occlude the LUL. Valve positions were confirmed bronchoscopically and with fluoroscopy. Minimal self-limited oozing occurred. The patient was extubated and transferred to the step-down unit for post-BLVR monitoring.",
+    "note_text": "Bronchoscopic lung volume reduction with endobronchial valve placement, left upper lobe was performed on <PERSON>, a 68-year-old male with severe heterogeneous emphysema. General anesthesia with endotracheal intubation (8.0 mm ETT) was utilized. High-resolution CT showed severe LUL-predominant emphysema and intact left oblique fissure. Chartis balloon catheter deployed in the left upper lobe bronchus showed rapid flow decay to zero with plateau, consistent with absence of collateral ventilation. Under general anesthesia, a therapeutic flexible bronchoscope was advanced. Four Zephyr endobronchial valves were placed sequentially in the apicoposterior, anterior, and lingular segmental bronchi to completely occlude the LUL. Valve positions were confirmed bronchoscopically and with fluoroscopy. Minimal self-limited oozing occurred. The patient was extubated and transferred to the step-down unit for post-BLVR monitoring.",
     "cpt_codes": [
       31647
     ],
@@ -1353,6 +1359,12 @@
       "style_type": 6,
       "generated_name": "Edward Stone",
       "generation_date": "2025-12-08T13:49:01.863977"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1808,7 +1820,7 @@
     }
   },
   {
-    "note_text": "Operation: Bronchoscopic lung volume reduction with endobronchial valve implantation, left upper lobe.\nSubject: Gary Wright, 69-year-old male.\nDetails: Under general anesthesia, the scope was navigated through the ETT. The LUL bronchus was isolated. Chartis evaluation indicated a lack of collateral ventilation. A delivery system was then inserted, and four Zephyr endobronchial valves were deposited sequentially in the apicoposterior, anterior, and lingular segmental bronchi to seal the LUL. Valve locations were verified bronchoscopically. There was visible diminution in LUL ventilation.\nAftermath: Minimal oozing managed with cold saline. No immediate pneumothorax.\nStrategy: Observe for post-procedure pneumothorax.",
+    "note_text": "Operation: Bronchoscopic lung volume reduction with endobronchial valve implantation, left upper lobe.\nSubject: <PERSON>, 69-year-old male.\nDetails: Under general anesthesia, the scope was navigated through the ETT. The LUL bronchus was isolated. Chartis evaluation indicated a lack of collateral ventilation. A delivery system was then inserted, and four Zephyr endobronchial valves were deposited sequentially in the apicoposterior, anterior, and lingular segmental bronchi to seal the LUL. Valve locations were verified bronchoscopically. There was visible diminution in LUL ventilation.\nAftermath: Minimal oozing managed with cold saline. No immediate pneumothorax.\nStrategy: Observe for post-procedure pneumothorax.",
     "cpt_codes": [
       31647
     ],
@@ -2031,6 +2043,12 @@
       "style_type": 9,
       "generated_name": "Gary Wright",
       "generation_date": "2025-12-08T13:49:01.864200"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2260,7 +2278,7 @@
     }
   },
   {
-    "note_text": "INDICATION: Mrs. Carter, a 62-year-old female with severe, refractory COPD and RUL-predominant emphysematous changes, presented for intervention.\nPROCEDURE: The patient was placed under general anesthesia using a laryngeal mask airway. The right bronchial tree was systematically mapped. Collateral ventilation was assessed via the Chartis system in the RUL, demonstrating a 'low flow/no plateau' phenotype consistent with fissure integrity. Subsequently, three Zephyr endobronchial valves were deployed in the apical, posterior, and anterior segments.\nOUTCOME: Post-deployment fluoroscopy confirmed appropriate valve positioning. Clinical examination revealed decreased ventilation to the target lobe. A transient episode of hypoxemia occurred intraoperatively, which responded promptly to recruitment maneuvers and increased fraction of inspired oxygen.",
+    "note_text": "INDICATION: Mrs. <PERSON>, a 62-year-old female with severe, refractory COPD and RUL-predominant emphysematous changes, presented for intervention.\nPROCEDURE: The patient was placed under general anesthesia using a laryngeal mask airway. The right bronchial tree was systematically mapped. Collateral ventilation was assessed via the Chartis system in the RUL, demonstrating a 'low flow/no plateau' phenotype consistent with fissure integrity. Subsequently, three Zephyr endobronchial valves were deployed in the apical, posterior, and anterior segments.\nOUTCOME: Post-deployment fluoroscopy confirmed appropriate valve positioning. Clinical examination revealed decreased ventilation to the target lobe. A transient episode of hypoxemia occurred intraoperatively, which responded promptly to recruitment maneuvers and increased fraction of inspired oxygen.",
     "cpt_codes": [
       31647
     ],
@@ -2483,6 +2501,12 @@
       "style_type": 2,
       "generated_name": "Linda Carter",
       "generation_date": "2025-12-08T13:49:01.864352"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2938,7 +2962,7 @@
     }
   },
   {
-    "note_text": "Procedure note for Barbara Lopez she has bad emphysema RUL predominant we did the valve placement today anesthesia was general with an LMA size 4. Went into the right lung RUL chartis showed no collateral ventilation so good candidate. Put in three valves total apical posterior anterior zephyr type. She desatted a bit in the middle there but we bagged her and turned up the oxygen and she was fine. Valves look good fluoro confirmed it no bleeding really. Sending her to monitored bed check cxr for pneumothorax thanks.",
+    "note_text": "Procedure note for <PERSON> she has bad emphysema RUL predominant we did the valve placement today anesthesia was general with an LMA size 4. Went into the right lung RUL chartis showed no collateral ventilation so good candidate. Put in three valves total apical posterior anterior zephyr type. She desatted a bit in the middle there but we bagged her and turned up the oxygen and she was fine. Valves look good fluoro confirmed it no bleeding really. Sending her to monitored bed check cxr for pneumothorax thanks.",
     "cpt_codes": [
       31647
     ],
@@ -3161,6 +3185,12 @@
       "style_type": 5,
       "generated_name": "Barbara Lopez",
       "generation_date": "2025-12-08T13:49:01.864522"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3616,7 +3646,7 @@
     }
   },
   {
-    "note_text": "Mrs. Lewis underwent RUL lung volume reduction today. After securing the airway with an LMA, we advanced the bronchoscope and confirmed the absence of collateral ventilation in the right upper lobe using the Chartis system. We then proceeded to place three Zephyr valves in the segmental bronchi. Visual and fluoroscopic inspection confirmed the valves were well-seated. During the deployment, the patient experienced mild transient hypoxemia, but this was quickly corrected by adjusting the oxygen levels and performing recruitment maneuvers. The patient recovered well in the PACU.",
+    "note_text": "Mrs. <PERSON> underwent RUL lung volume reduction today. After securing the airway with an LMA, we advanced the bronchoscope and confirmed the absence of collateral ventilation in the right upper lobe using the Chartis system. We then proceeded to place three Zephyr valves in the segmental bronchi. Visual and fluoroscopic inspection confirmed the valves were well-seated. During the deployment, the patient experienced mild transient hypoxemia, but this was quickly corrected by adjusting the oxygen levels and performing recruitment maneuvers. The patient recovered well in the PACU.",
     "cpt_codes": [
       31647
     ],
@@ -3839,10 +3869,16 @@
       "style_type": 8,
       "generated_name": "Margaret Lewis",
       "generation_date": "2025-12-08T13:49:01.864684"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure: Flexible bronchoscopy with installation of endobronchial valves, right upper lobe.\nPatient: Betty King.\nDetails: A therapeutic flexible bronchoscope was guided via the LMA. The right bronchial tree was examined and the RUL bronchus entered. Chartis analysis confirmed appropriateness for BLVR. Three Zephyr endobronchial valves were then positioned in the apical, posterior, and anterior segmental bronchi. Valve locations were authenticated bronchoscopically. There was diminished ventilation to the RUL.\nAdverse Events: Temporary mild hypoxemia during valve insertion, rectified with increased FiO2.",
+    "note_text": "Procedure: Flexible bronchoscopy with installation of endobronchial valves, right upper lobe.\nPatient: <PERSON>\nDetails: A therapeutic flexible bronchoscope was guided via the LMA. The right bronchial tree was examined and the RUL bronchus entered. Chartis analysis confirmed appropriateness for BLVR. Three Zephyr endobronchial valves were then positioned in the apical, posterior, and anterior segmental bronchi. Valve locations were authenticated bronchoscopically. There was diminished ventilation to the RUL.\nAdverse Events: Temporary mild hypoxemia during valve insertion, rectified with increased FiO2.",
     "cpt_codes": [
       31647
     ],
@@ -4065,6 +4101,12 @@
       "style_type": 9,
       "generated_name": "Betty King",
       "generation_date": "2025-12-08T13:49:01.864739"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4294,7 +4336,7 @@
     }
   },
   {
-    "note_text": "REASON FOR PROCEDURE: Mr. Turner, status post RUL BLVR, developed a significant right-sided pneumothorax with a persistent bronchopleural fistula despite thoracostomy drainage.\nPROCEDURE NOTE: Under general anesthesia, the airway was re-accessed. The previously placed Zephyr valves in the RUL were identified. Given the clinical failure to resolve the pneumothorax, the decision was made to abort the volume reduction. All three valves were sequentially grasped and extracted utilizing valve retrieval forceps. Inspection of the bronchial mucosa revealed mild inflammatory changes but no trauma.\nPOST-PROCEDURE COURSE: The air leak volume diminished significantly following extraction. The patient was returned to the step-down unit for continued chest tube management.",
+    "note_text": "REASON FOR PROCEDURE: Mr. <PERSON>, status post RUL BLVR, developed a significant right-sided pneumothorax with a persistent bronchopleural fistula despite thoracostomy drainage.\nPROCEDURE NOTE: Under general anesthesia, the airway was re-accessed. The previously placed Zephyr valves in the RUL were identified. Given the clinical failure to resolve the pneumothorax, the decision was made to abort the volume reduction. All three valves were sequentially grasped and extracted utilizing valve retrieval forceps. Inspection of the bronchial mucosa revealed mild inflammatory changes but no trauma.\nPOST-PROCEDURE COURSE: The air leak volume diminished significantly following extraction. The patient was returned to the step-down unit for continued chest tube management.",
     "cpt_codes": [
       31648
     ],
@@ -4517,6 +4559,12 @@
       "style_type": 2,
       "generated_name": "Robert G. Turner",
       "generation_date": "2025-12-08T13:49:01.864852"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4972,7 +5020,7 @@
     }
   },
   {
-    "note_text": "Mr Mitchell is here for valve removal he had the procedure last week and got a pneumothorax chest tube isnt fixing the air leak so we took them out. General anesthesia tube in. Went in saw the three valves in the RUL. Grabbed them with the forceps and pulled them out one by one no problem. Little bit of bleeding put some epinephrine on it. Air leak looked better on the vac. Sending him back to step down keep the chest tube in for now thanks.",
+    "note_text": "Mr <PERSON> is here for valve removal he had the procedure last week and got a pneumothorax chest tube isnt fixing the air leak so we took them out. General anesthesia tube in. Went in saw the three valves in the RUL. Grabbed them with the forceps and pulled them out one by one no problem. Little bit of bleeding put some epinephrine on it. Air leak looked better on the vac. Sending him back to step down keep the chest tube in for now thanks.",
     "cpt_codes": [
       31648
     ],
@@ -5195,6 +5243,12 @@
       "style_type": 5,
       "generated_name": "Frank Mitchell",
       "generation_date": "2025-12-08T13:49:01.865018"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5650,7 +5704,7 @@
     }
   },
   {
-    "note_text": "Because Mr. Roberts suffered a persistent pneumothorax following his recent BLVR, we proceeded with valve removal today. Under general anesthesia, we visualized the three Zephyr valves in the right upper lobe. Using forceps, we carefully removed each valve. The airways looked a bit swollen but were otherwise fine. We noted a decrease in the air leak almost immediately after the valves were out. We controlled a small amount of bleeding with epinephrine and sent him to recovery with his chest tube still in place.",
+    "note_text": "Because Mr. <PERSON> suffered a persistent pneumothorax following his recent BLVR, we proceeded with valve removal today. Under general anesthesia, we visualized the three Zephyr valves in the right upper lobe. Using forceps, we carefully removed each valve. The airways looked a bit swollen but were otherwise fine. We noted a decrease in the air leak almost immediately after the valves were out. We controlled a small amount of bleeding with epinephrine and sent him to recovery with his chest tube still in place.",
     "cpt_codes": [
       31648
     ],
@@ -5873,6 +5927,12 @@
       "style_type": 8,
       "generated_name": "Kenneth Roberts",
       "generation_date": "2025-12-08T13:49:01.865185"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6328,7 +6388,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Mrs. Campbell presented with a delayed pneumothorax two weeks following LLL valve placement. Despite chest tube thoracostomy, the lung failed to fully re-expand, suggesting a valvular mechanism or persistent parenchymal leak.\nPROCEDURE: The patient was intubated. Bronchoscopic inspection revealed four Zephyr valves seated in the LLL. To facilitate lung re-expansion, the decision was made to retrieve the devices. All four valves were successfully extracted without complication. Inspection of the bronchial mucosa showed expected post-implantation inflammatory changes but no purulence.\nCONCLUSION: Successful retrieval of LLL valves. Post-procedure imaging demonstrates improved aeration of the left lower lobe.",
+    "note_text": "HISTORY: Mrs. <PERSON> presented with a delayed pneumothorax two weeks following LLL valve placement. Despite chest tube thoracostomy, the lung failed to fully re-expand, suggesting a valvular mechanism or persistent parenchymal leak.\nPROCEDURE: The patient was intubated. Bronchoscopic inspection revealed four Zephyr valves seated in the LLL. To facilitate lung re-expansion, the decision was made to retrieve the devices. All four valves were successfully extracted without complication. Inspection of the bronchial mucosa showed expected post-implantation inflammatory changes but no purulence.\nCONCLUSION: Successful retrieval of LLL valves. Post-procedure imaging demonstrates improved aeration of the left lower lobe.",
     "cpt_codes": [
       31648
     ],
@@ -6551,6 +6611,12 @@
       "style_type": 2,
       "generated_name": "Patricia Campbell",
       "generation_date": "2025-12-08T13:49:01.865384"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7006,7 +7072,7 @@
     }
   },
   {
-    "note_text": "Patient is Renee Thompson no wait Linda Hernandez 61 female. She had valves put in the LLL two weeks ago came back with a pneumo. Chest tube not working great so we took the valves out today. Four of them total using the grasp forceps. No bleeding really. Lung looks better on the xray chest tube still in. Will try water seal later when the air leak stops.",
+    "note_text": "Patient is <PERSON> no wait <PERSON> 61 female. She had valves put in the LLL two weeks ago came back with a pneumo. Chest tube not working great so we took the valves out today. Four of them total using the grasp forceps. No bleeding really. Lung looks better on the xray chest tube still in. Will try water seal later when the air leak stops.",
     "cpt_codes": [
       31648
     ],
@@ -7229,6 +7295,13 @@
       "style_type": 5,
       "generated_name": "Linda Hernandez",
       "generation_date": "2025-12-08T13:49:01.865552"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -7684,7 +7757,7 @@
     }
   },
   {
-    "note_text": "Ms. Scott came in with a collapsed lung two weeks after her valve procedure. The chest tube wasn't clearing the air leak, so we went in to take the valves out. Under general anesthesia, we found all four valves in the left lower lobe. We used forceps to remove them one by one. There wasn't any bleeding, and the x-ray right after showed the lung was already expanding better. She's back on the floor with the chest tube for now.",
+    "note_text": "Ms. <PERSON> came in with a collapsed lung two weeks after her valve procedure. The chest tube wasn't clearing the air leak, so we went in to take the valves out. Under general anesthesia, we found all four valves in the left lower lobe. We used forceps to remove them one by one. There wasn't any bleeding, and the x-ray right after showed the lung was already expanding better. She's back on the floor with the chest tube for now.",
     "cpt_codes": [
       31648
     ],
@@ -7907,6 +7980,12 @@
       "style_type": 8,
       "generated_name": "Helen Scott",
       "generation_date": "2025-12-08T13:49:01.865719"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8383,7 +8462,7 @@
     }
   },
   {
-    "note_text": "INDICATION: Mr. Edwards presented for revision bronchoscopy due to incomplete lobar atelectasis six weeks following RUL valve placement. Radiographic review suggested a paravalvular leak in the posterior segment.\nPROCEDURE: Under monitored anesthesia care, the RUL was interrogated. The posterior valve was noted to be malpositioned proximally, allowing collateral airflow. This valve was extracted. A resized, larger Zephyr valve was deployed more distally to ensure a seal. Additionally, the apical valve was repositioned to optimize occlusion.\nIMPRESSION: Successful revision of RUL BLVR. Total lobar occlusion is now visually confirmed.",
+    "note_text": "INDICATION: Mr. <PERSON> presented for revision bronchoscopy due to incomplete lobar atelectasis six weeks following RUL valve placement. Radiographic review suggested a paravalvular leak in the posterior segment.\nPROCEDURE: Under monitored anesthesia care, the RUL was interrogated. The posterior valve was noted to be malpositioned proximally, allowing collateral airflow. This valve was extracted. A resized, larger Zephyr valve was deployed more distally to ensure a seal. Additionally, the apical valve was repositioned to optimize occlusion.\nIMPRESSION: Successful revision of RUL BLVR. Total lobar occlusion is now visually confirmed.",
     "cpt_codes": [
       31648,
       31647
@@ -8627,6 +8706,12 @@
       "style_type": 2,
       "generated_name": "William Edwards",
       "generation_date": "2025-12-08T13:49:01.865896"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9124,7 +9209,7 @@
     }
   },
   {
-    "note_text": "Marcus Hill no sorry Donald Thompson here for valve check. He had them put in 6 weeks ago but the lung didnt collapse all the way. We went in with MAC anesthesia. Saw the posterior valve was slipping air getting around it. Pulled it out put a new one in deeper larger size. Also moved the apical one a bit. Looks good now tight seal. No bleeding patient woke up fine. Check CT in a couple months.",
+    "note_text": "Marcus Hill no sorry <PERSON> here for valve check. He had them put in 6 weeks ago but the lung didnt collapse all the way. We went in with MAC anesthesia. Saw the posterior valve was slipping air getting around it. Pulled it out put a new one in deeper larger size. Also moved the apical one a bit. Looks good now tight seal. No bleeding patient woke up fine. Check CT in a couple months.",
     "cpt_codes": [
       31648,
       31647
@@ -9368,6 +9453,12 @@
       "style_type": 5,
       "generated_name": "Donald Thompson",
       "generation_date": "2025-12-08T13:49:01.866169"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9865,7 +9956,7 @@
     }
   },
   {
-    "note_text": "Mr. Robinson came back because his right upper lobe didn't shrink as much as we hoped after the first procedure. We took a look and saw the valve in the posterior segment wasn't sitting right—air was getting around it. We took that one out and put in a bigger one, placing it a bit deeper to get a better seal. We also adjusted the valve in the top segment just to be safe. Everything looks totally blocked off now, which is what we want.",
+    "note_text": "Mr. <PERSON> came back because his right upper lobe didn't shrink as much as we hoped after the first procedure. We took a look and saw the valve in the posterior segment wasn't sitting right—air was getting around it. We took that one out and put in a bigger one, placing it a bit deeper to get a better seal. We also adjusted the valve in the top segment just to be safe. Everything looks totally blocked off now, which is what we want.",
     "cpt_codes": [
       31648,
       31647
@@ -10109,6 +10200,12 @@
       "style_type": 8,
       "generated_name": "George Robinson",
       "generation_date": "2025-12-08T13:49:01.866358"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10359,7 +10456,7 @@
     }
   },
   {
-    "note_text": "Indication: Patient coughed up valve. Symptoms returned.\nSedation: Moderate (Midazolam/Fentanyl).\nFindings: Apicoposterior segment open (valve missing). Anterior valve loose.\nAction: Removed loose anterior valve -> Replaced with new valve. Placed new valve in empty Apicoposterior segment.\nResult: LUL fully occluded (3 valves total).\nPlan: D/C home. Clinic f/u 4-6 wks.",
+    "note_text": "Indication: Patient coughed up valve. Symptoms returned.\nSedation: Moderate (Midazolam/Fentanyl).\nFindings: Apicoposterior segment open (valve missing). Anterior valve loose.\nAction: Removed loose anterior valve -> Replaced with new valve. Placed new valve in empty <LOCATION> segment.\nResult: LUL fully occluded (3 valves total).\nPlan: D/C home. Clinic f/u 4-6 wks.",
     "cpt_codes": [
       31648,
       31647
@@ -10602,10 +10699,16 @@
       "style_type": 1,
       "generated_name": "Betty Adams",
       "generation_date": "2025-12-08T13:49:01.866480"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "HISTORY: Ms. Nelson reported expectoration of an endobronchial prosthesis followed by worsening dyspnea 3 months post-LUL BLVR.\nPROCEDURE: Bronchoscopic inspection confirmed the absence of the valve in the apicoposterior segment. Additionally, the anterior segmental valve was noted to be migrating proximally with peri-valvular leak. The anterior valve was retrieved and replaced with a correctly sized unit. A de novo valve was deployed into the patent apicoposterior segment.\nCONCLUSION: Restoration of complete lobar occlusion.",
+    "note_text": "HISTORY: Ms. <PERSON> reported expectoration of an endobronchial prosthesis followed by worsening dyspnea 3 months post-LUL BLVR.\nPROCEDURE: Bronchoscopic inspection confirmed the absence of the valve in the apicoposterior segment. Additionally, the anterior segmental valve was noted to be migrating proximally with peri-valvular leak. The anterior valve was retrieved and replaced with a correctly sized unit. A de novo valve was deployed into the patent apicoposterior segment.\nCONCLUSION: Restoration of complete lobar occlusion.",
     "cpt_codes": [
       31648,
       31647
@@ -10848,6 +10951,12 @@
       "style_type": 2,
       "generated_name": "Sandra Nelson",
       "generation_date": "2025-12-08T13:49:01.866543"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11097,7 +11206,7 @@
     }
   },
   {
-    "note_text": "Procedure: LUL Valve Replacement\nPatient: Carol Mitchell, 61F\nHx: Coughed up valve at home.\nSteps:\n1. Mod sed.\n2. Scope in. Saw apicoposterior bronchus was empty.\n3. Anterior valve looked loose, so we pulled it out (31648).\n4. Put new valves in Anterior and Apicoposterior segments (31647).\n5. Good seal on all 3 segments now.\nPlan: Home today.",
+    "note_text": "Procedure: LUL Valve Replacement\nPatient: Carol Mitchell, 61F\nHx: Coughed up valve at home.\nSteps:\n1. Mod sed.\n2. Scope in. Saw apicoposterior bronchus was empty.\n3. Anterior valve looked loose, so we pulled it out (31648).\n4. Put new valves in Anterior and <PERSON> segments (31647).\n5. Good seal on all 3 segments now.\nPlan: Home today.",
     "cpt_codes": [
       31648,
       31647
@@ -11340,10 +11449,16 @@
       "style_type": 4,
       "generated_name": "Carol Mitchell",
       "generation_date": "2025-12-08T13:49:01.866667"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Alison Reed or wait Sharon Roberts here. She coughed up a valve last week feeling short of breath. We took a look with the scope under moderate sedation. The apicoposterior segment was wide open valve gone. The anterior one looked loose too so we took that out. Put two new valves in one for the anterior one for the apicoposterior. Looks tight now. No bleeding. She can go home today thanks.",
+    "note_text": "<PERSON> or wait <PERSON> here. She coughed up a valve last week feeling short of breath. We took a look with the scope under moderate sedation. The apicoposterior segment was wide open valve gone. The anterior one looked loose too so we took that out. Put two new valves in one for the anterior one for the apicoposterior. Looks tight now. No bleeding. She can go home today thanks.",
     "cpt_codes": [
       31648,
       31647
@@ -11586,6 +11701,13 @@
       "style_type": 5,
       "generated_name": "Sharon Roberts",
       "generation_date": "2025-12-08T13:49:01.866726"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
@@ -12081,7 +12203,7 @@
     }
   },
   {
-    "note_text": "Ms. Evans came in because she actually coughed up one of her valves at home and started feeling short of breath again. We went in with the scope and saw that the valve for the top back part of the lung was indeed missing. We also noticed the one in the front part was loose, so we decided to replace that one too while we were there. We put two brand new valves in, and now everything is sealed up tight again. She did great and went home the same day.",
+    "note_text": "Ms. <PERSON> came in because she actually coughed up one of her valves at home and started feeling short of breath again. We went in with the scope and saw that the valve for the top back part of the lung was indeed missing. We also noticed the one in the front part was loose, so we decided to replace that one too while we were there. We put two brand new valves in, and now everything is sealed up tight again. She did great and went home the same day.",
     "cpt_codes": [
       31648,
       31647
@@ -12324,6 +12446,12 @@
       "style_type": 8,
       "generated_name": "Deborah Evans",
       "generation_date": "2025-12-08T13:49:01.866909"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

@@ -6376,7 +6376,7 @@
     }
   },
   {
-    "note_text": "Indication: Pulmonary mass.\nAction: Deployed Ion catheter to RUL. Verified location via CBCT. Acquired tissue via aspiration and cryo-adhesion. Lavaged the segment. Assessed collateral airflow in LUL.\nResult: Samples secured. LUL isolated.\nOutcome: Uncomplicated.",
+    "note_text": "Indication: <PERSON> mass.\nAction: Deployed Ion catheter to RUL. Verified location via CBCT. Acquired tissue via aspiration and cryo-adhesion. Lavaged the segment. Assessed collateral airflow in LUL.\nResult: Samples secured. LUL isolated.\nOutcome: Uncomplicated.",
     "cpt_codes": [
       31629,
       31627,
@@ -7170,6 +7170,12 @@
       "style_type": 9,
       "generated_name": "Henry Pym",
       "generation_date": "2025-12-18T19:14:03.089650"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11862,7 +11868,7 @@
     }
   },
   {
-    "note_text": "Indication: Bronchus intermedius obstruction.\nProcedure: Rigid Bronchoscopy (12mm). Therapeutic Aspiration.\nFindings:\n- Polypoid mass in BI.\n- Soft, pulsatile, brisk bleeding on touch.\n- EBUS: Vascular, no tumor.\nAction: Suctioned purulent secretions. Aborted debulking due to hemorrhage risk.\nDx: Broncholith (CT confirmed).\nComplication: Small PTX.",
+    "note_text": "Indication: Bronchus intermedius obstruction.\nProcedure: Rigid Bronchoscopy (12mm). Therapeutic Aspiration.\nFindings:\n- Polypoid mass in <LOCATION>.\n- Soft, pulsatile, brisk bleeding on touch.\n- EBUS: Vascular, no tumor.\nAction: Suctioned purulent secretions. Aborted debulking due to hemorrhage risk.\nDx: Broncholith (CT confirmed).\nComplication: Small PTX.",
     "cpt_codes": [
       31645
     ],
@@ -12305,6 +12311,12 @@
       "style_type": 1,
       "generated_name": "Robert Smith",
       "generation_date": "2025-12-18T19:14:03.090903"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
@@ -15876,7 +15888,7 @@
     }
   },
   {
-    "note_text": "Indication: Adenopathy, nodules.\nProcedure: EBUS-TBNA (4R, 11R, 7). Ultrathin bronchoscopy RML.\nFindings: Normal central airway. RML nodule visualized w/ Radial EBUS.\nAction: TBNA nodes. Forceps/Brush RML.\nEBL: <5cc.\nComplications: None.",
+    "note_text": "Indication: Adenopathy, nodules.\nProcedure: EBUS-TBNA (4R, 11R, 7). <PERSON> bronchoscopy RML.\nFindings: Normal central airway. RML nodule visualized w/ Radial EBUS.\nAction: TBNA nodes. Forceps/Brush RML.\nEBL: <5cc.\nComplications: None.",
     "cpt_codes": [
       31653,
       31625,
@@ -16212,6 +16224,12 @@
       "style_type": 1,
       "generated_name": "Sarah Connor",
       "generation_date": "2025-12-18T19:14:03.091867"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17910,7 +17928,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nAdenopathy, Pulmonary Nodule.\n[Anesthesia]\nPropofol (Anesthesia managed).\n[Description]\n- EBUS-TBNA: 4R, 11R, 7.\n- RML Nodule: Localized w/ REBUS.\n- Samples: Biopsy, Brush.\n[Plan]\nPathology follow-up.",
+    "note_text": "[Indication]\nAdenopathy, <PERSON>.\n[Anesthesia]\nPropofol (Anesthesia managed).\n[Description]\n- EBUS-TBNA: 4R, 11R, 7.\n- RML Nodule: Localized w/ REBUS.\n- Samples: Biopsy, Brush.\n[Plan]\nPathology follow-up.",
     "cpt_codes": [
       31653,
       31625,
@@ -18246,6 +18264,12 @@
       "style_type": 7,
       "generated_name": "Sidney Prescott",
       "generation_date": "2025-12-18T19:14:03.092340"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -19812,7 +19836,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronch + BAL\nIndication: BMT patient with cough.\nSedation: Fent/Versed.\nFindings: Boggy airways, lots of pus. No tumors.\nIntervention: BAL RML, Wash RLL.\nPlan: Await cultures, start saline nebs.",
+    "note_text": "Procedure: Bronch + BAL\nIndication: BMT patient with cough.\nSedation: Fent/Versed.\nFindings: <PERSON> airways, lots of pus. No tumors.\nIntervention: BAL RML, Wash RLL.\nPlan: Await cultures, start saline nebs.",
     "cpt_codes": [
       31624,
       99152
@@ -20104,6 +20128,12 @@
       "style_type": 4,
       "generated_name": "Clu",
       "generation_date": "2025-12-18T19:14:03.092797"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

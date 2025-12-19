@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Pre-op: 14mm LUL nodule. \nAnesthesia: GA, 8.0 ETT.\nProcedure:\n- Monarch robot nav to LB1+2.\n- rEBUS: Adjacent view.\n- Sampling: 21G TBNA (x6), Forceps (x6), Protected Brush.\n- ROSE: No malignancy.\nComplications: None.\nPlan: Recovery, D/C if stable.",
+    "note_text": "Pre-op: 14mm LUL nodule. \nAnesthesia: GA, 8.0 ETT.\nProcedure:\n- Monarch robot nav to LB1+2.\n- rEBUS: Adjacent view.\n- Sampling: 21G TBNA (x6), Forceps (x6), <PERSON>.\n- ROSE: No malignancy.\nComplications: None.\nPlan: Recovery, D/C if stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -190,6 +190,12 @@
       "style_type": 1,
       "generated_name": "Thomas Moore",
       "generation_date": "2025-12-09T12:09:53.364178"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -579,7 +585,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: Wilson.\nProc: Robotic Bronch LUL.\nSteps:\n1. Time out. GA induced. ETT 8.0.\n2. Monarch scope inserted. Registration 4.6mm error.\n3. Navigated to LUL (Apicoposterior).\n4. rEBUS confirmed lesion (adjacent).\n5. TBNA x6, Bx x6, Brush x1.\n6. ROSE: No malignancy.\n7. Pt tolerated well.\nPlan: CXR, D/C.",
+    "note_text": "Resident Note\nPt: <PERSON>.\nProc: Robotic Bronch LUL.\nSteps:\n1. Time out. GA induced. ETT 8.0.\n2. Monarch scope inserted. Registration 4.6mm error.\n3. Navigated to LUL (Apicoposterior).\n4. rEBUS confirmed lesion (adjacent).\n5. TBNA x6, Bx x6, Brush x1.\n6. ROSE: No malignancy.\n7. Pt tolerated well.\nPlan: CXR, D/C.",
     "cpt_codes": [
       31629,
       31628,
@@ -769,10 +775,16 @@
       "style_type": 4,
       "generated_name": "Michael Jackson",
       "generation_date": "2025-12-09T12:09:53.364338"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Procedure note for Mr Wilson we did the robotic bronch today for that LUL nodule. General anesthesia tube size 8.0 registration was okay 4.6mm. Went out to the apicoposterior segment found it with rebus adjacent view. Did the needle biopsy 21 gauge then the forceps then the brush. ROSE said no cancer seen. No bleeding really. Extubated fine sent to recovery check a chest xray.",
+    "note_text": "Procedure note for Mr <PERSON> we did the robotic bronch today for that LUL nodule. General anesthesia tube size 8.0 registration was okay 4.6mm. Went out to the apicoposterior segment found it with rebus adjacent view. Did the needle biopsy 21 gauge then the forceps then the brush. ROSE said no cancer seen. No bleeding really. Extubated fine sent to recovery check a chest xray.",
     "cpt_codes": [
       31629,
       31628,
@@ -962,6 +974,12 @@
       "style_type": 5,
       "generated_name": "William White",
       "generation_date": "2025-12-09T12:09:53.364385"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1158,7 +1176,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPeripheral pulmonary nodule, LUL (14mm).\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nMonarch robotic navigation to LB1+2. rEBUS: Adjacent. Sampling performed: 21G TBNA, Forceps biopsy, Protected Brush. Continuous visualization confirmed tool exit. ROSE: No evidence of malignant neoplasm.\n[Plan]\nPost-procedure CXR. Discharge if stable.",
+    "note_text": "[Indication]\nPeripheral pulmonary nodule, LUL (14mm).\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nMonarch robotic navigation to LB1+2. rEBUS: Adjacent. Sampling performed: 21G TBNA, Forceps biopsy, <PERSON>. Continuous visualization confirmed tool exit. ROSE: No evidence of malignant neoplasm.\n[Plan]\nPost-procedure CXR. Discharge if stable.",
     "cpt_codes": [
       31629,
       31628,
@@ -1348,10 +1366,16 @@
       "style_type": 7,
       "generated_name": "Richard Martin",
       "generation_date": "2025-12-09T12:09:53.364490"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mr. Wilson presented for biopsy of a 14mm nodule in the left upper lobe. We induced general anesthesia and secured the airway. Using the Monarch robotic system, we navigated to the apicoposterior segment. We confirmed the location with radial EBUS, which showed the lesion adjacent to the airway. We then proceeded to sample the area using a 21-gauge needle, followed by standard forceps biopsies and a brush. The on-site pathologist saw no evidence of malignancy in the preliminary review. The procedure was completed without any immediate complications.",
+    "note_text": "Mr. <PERSON> presented for biopsy of a 14mm nodule in the left upper lobe. We induced general anesthesia and secured the airway. Using the Monarch robotic system, we navigated to the apicoposterior segment. We confirmed the location with radial EBUS, which showed the lesion adjacent to the airway. We then proceeded to sample the area using a 21-gauge needle, followed by standard forceps biopsies and a brush. The on-site pathologist saw no evidence of malignancy in the preliminary review. The procedure was completed without any immediate complications.",
     "cpt_codes": [
       31629,
       31628,
@@ -1541,6 +1565,12 @@
       "style_type": 8,
       "generated_name": "Joseph Thompson",
       "generation_date": "2025-12-09T12:09:53.364535"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2850,7 +2880,7 @@
     }
   },
   {
-    "note_text": "We brought Mr. Hernandez back to the operating room to biopsy a 15mm nodule in his right lower lobe. Once he was asleep, we inserted the Monarch robotic scope and navigated to the target in the anterior-basal segment. The radial EBUS confirmed we were right next to the lesion. We decided to use a 22-gauge needle for aspiration and completed six passes. The preliminary results were atypical, so we couldn't rule out cancer yet. He handled the procedure well.",
+    "note_text": "We brought Mr. <PERSON> back to the operating room to biopsy a 15mm nodule in his right lower lobe. Once he was asleep, we inserted the Monarch robotic scope and navigated to the target in the anterior-basal segment. The radial EBUS confirmed we were right next to the lesion. We decided to use a 22-gauge needle for aspiration and completed six passes. The preliminary results were atypical, so we couldn't rule out cancer yet. He handled the procedure well.",
     "cpt_codes": [
       31629,
       31627,
@@ -3006,6 +3036,12 @@
       "style_type": 8,
       "generated_name": "Steven Hall",
       "generation_date": "2025-12-09T12:09:53.364898"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3393,7 +3429,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. Rodriguez presented with a suspicious 34mm RUL mass. Following induction of general anesthesia, the Monarch robotic system was introduced. Navigation to the Posterior Segment of the RUL was successful (Registration error 4.0mm). Radial EBUS demonstrated a concentric view. We performed extensive sampling including TBNA (21G), forceps biopsy, and protected brushing. A bronchoalveolar lavage was performed at the target segment. Finally, a gold fiducial marker was deployed for future radiation planning. ROSE was suspicious for non-small cell carcinoma.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented with a suspicious 34mm RUL mass. Following induction of general anesthesia, the Monarch robotic system was introduced. Navigation to the Posterior Segment of the RUL was successful (Registration error 4.0mm). Radial EBUS demonstrated a concentric view. We performed extensive sampling including TBNA (21G), forceps biopsy, and protected brushing. A bronchoalveolar lavage was performed at the target segment. Finally, a gold fiducial marker was deployed for future radiation planning. ROSE was suspicious for non-small cell carcinoma.",
     "cpt_codes": [
       31629,
       31628,
@@ -3615,6 +3651,12 @@
       "style_type": 2,
       "generated_name": "George Hernandez",
       "generation_date": "2025-12-09T12:09:53.365043"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4068,7 +4110,7 @@
     }
   },
   {
-    "note_text": "Procedure note for Steven Rodriguez big nodule 34mm in the RUL. We used the monarch system navigated to RB2. EBUS was concentric so good hit. Did the works needle 21g forceps brush and a lavage. Also put in a gold marker for radiation. Pathology says suspicious for non small cell. No bleeding patient woke up fine.",
+    "note_text": "Procedure note for <PERSON> big nodule 34mm in the RUL. We used the monarch system navigated to RB2. EBUS was concentric so good hit. Did the works needle 21g forceps brush and a lavage. Also put in a gold marker for radiation. Pathology says suspicious for non small cell. No bleeding patient woke up fine.",
     "cpt_codes": [
       31629,
       31628,
@@ -4290,6 +4332,12 @@
       "style_type": 5,
       "generated_name": "Brian Lopez",
       "generation_date": "2025-12-09T12:09:53.365198"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4743,7 +4791,7 @@
     }
   },
   {
-    "note_text": "Mr. Rodriguez was scheduled for biopsy of a large 34mm mass in the right upper lobe. Under general anesthesia, we used the Monarch robot to find the lesion in the posterior segment. The EBUS view was concentric, confirming we were inside the lesion. We took multiple samples with a needle, forceps, and brush, and also washed the area (BAL). Since radiation might be needed, we placed a fiducial marker. The preliminary path read was suspicious for non-small cell cancer.",
+    "note_text": "Mr. <PERSON> was scheduled for biopsy of a large 34mm mass in the right upper lobe. Under general anesthesia, we used the Monarch robot to find the lesion in the posterior segment. The EBUS view was concentric, confirming we were inside the lesion. We took multiple samples with a needle, forceps, and brush, and also washed the area (BAL). Since radiation might be needed, we placed a fiducial marker. The preliminary path read was suspicious for non-small cell cancer.",
     "cpt_codes": [
       31629,
       31628,
@@ -4965,6 +5013,12 @@
       "style_type": 8,
       "generated_name": "Timothy Green",
       "generation_date": "2025-12-09T12:09:53.365349"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5817,7 +5871,7 @@
     }
   },
   {
-    "note_text": "Trainee Note\nPt: Rivera, R.\nTarget: RUL nodule.\nSteps:\n1. Intubation.\n2. Monarch nav to RB1.\n3. rEBUS concentric.\n4. 21G TBNA x7.\n5. Brush cytology.\n6. BAL.\n7. Fiducial placed.\nROSE: Atypical/Suspicious.\nPlan: D/C after CXR.",
+    "note_text": "Trainee Note\nPt: <LOCATION>, R.\nTarget: RUL nodule.\nSteps:\n1. Intubation.\n2. Monarch nav to RB1.\n3. rEBUS concentric.\n4. 21G TBNA x7.\n5. Brush cytology.\n6. BAL.\n7. Fiducial placed.\nROSE: Atypical/Suspicious.\nPlan: D/C after CXR.",
     "cpt_codes": [
       31629,
       31627,
@@ -6022,10 +6076,16 @@
       "style_type": 4,
       "generated_name": "Gary Carter",
       "generation_date": "2025-12-09T12:09:53.365674"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "LOCATION"
+      ]
     }
   },
   {
-    "note_text": "Robert Rivera here for the RUL nodule 17mm. Used the monarch robot registered well. Went to the apical segment RB1. rEBUS was concentric. Did needle 21 gauge and brush no forceps this time. Did a lavage too. Put in a gold marker. ROSE said atypical suspicious. No bleeding.",
+    "note_text": "<PERSON> here for the RUL nodule 17mm. Used the monarch robot registered well. Went to the apical segment RB1. rEBUS was concentric. Did needle 21 gauge and brush no forceps this time. Did a lavage too. Put in a gold marker. ROSE said atypical suspicious. No bleeding.",
     "cpt_codes": [
       31629,
       31627,
@@ -6230,6 +6290,12 @@
       "style_type": 5,
       "generated_name": "Nicholas Mitchell",
       "generation_date": "2025-12-09T12:09:53.365724"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6649,7 +6715,7 @@
     }
   },
   {
-    "note_text": "We performed a biopsy on Mr. Rivera's 17mm right upper lobe nodule today. Using the robotic system, we navigated to the apical segment and confirmed the lesion with concentric EBUS. We decided to sample using the needle and the brush, and we also washed the airway. We placed a fiducial marker to help with future treatment planning. The on-site path evaluation showed atypical cells that look suspicious for cancer.",
+    "note_text": "We performed a biopsy on Mr. <PERSON>'s 17mm right upper lobe nodule today. Using the robotic system, we navigated to the apical segment and confirmed the lesion with concentric EBUS. We decided to sample using the needle and the brush, and we also washed the airway. We placed a fiducial marker to help with future treatment planning. The on-site path evaluation showed atypical cells that look suspicious for cancer.",
     "cpt_codes": [
       31629,
       31627,
@@ -6854,6 +6920,12 @@
       "style_type": 8,
       "generated_name": "Stephen Turner",
       "generation_date": "2025-12-09T12:09:53.365969"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7274,7 +7346,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: Ms. White presented with a PET-avid 33mm nodule in the Medial Segment of the RML. Under general anesthesia, we utilized the Monarch robotic endoscope. Navigation was registered (4.0mm error). We confirmed the lesion location with concentric radial EBUS. Transbronchial needle aspiration (21G), forceps biopsies, and brushings were obtained. A fiducial marker was placed for radiation planning. ROSE was negative for malignant neoplasm.",
+    "note_text": "OPERATIVE NARRATIVE: Ms. <PERSON> presented with a PET-avid 33mm nodule in the Medial Segment of the RML. Under general anesthesia, we utilized the Monarch robotic endoscope. Navigation was registered (4.0mm error). We confirmed the lesion location with concentric radial EBUS. Transbronchial needle aspiration (21G), forceps biopsies, and brushings were obtained. A fiducial marker was placed for radiation planning. ROSE was negative for malignant neoplasm.",
     "cpt_codes": [
       31629,
       31628,
@@ -7480,6 +7552,12 @@
       "style_type": 2,
       "generated_name": "Jennifer Parker",
       "generation_date": "2025-12-09T12:09:53.366120"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7901,7 +7979,7 @@
     }
   },
   {
-    "note_text": "Emily White RML nodule 33mm. We used the monarch robot today. Navigated to the medial segment RB5. Concentric view on rEBUS. Did the needle biopsy 21g then forceps then brush. Dropped a fiducial marker in there too. Cytology says no cancer seen so far. No bleeding patient fine.",
+    "note_text": "<PERSON> RML nodule 33mm. We used the monarch robot today. Navigated to the medial segment RB5. Concentric view on rEBUS. Did the needle biopsy 21g then forceps then brush. Dropped a fiducial marker in there too. Cytology says no cancer seen so far. No bleeding patient fine.",
     "cpt_codes": [
       31629,
       31628,
@@ -8107,6 +8185,12 @@
       "style_type": 5,
       "generated_name": "Barbara Collins",
       "generation_date": "2025-12-09T12:09:53.366287"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -8528,7 +8612,7 @@
     }
   },
   {
-    "note_text": "Ms. White came in for a biopsy of her right middle lobe nodule. We used the robotic scope to get to the medial segment. The EBUS confirmed we were right in the center of the lesion. We took plenty of samples using a needle, forceps, and a brush. We also placed a marker for radiation therapy just in case. The preliminary results didn't show any cancer, which is good news, but we'll wait for the final report.",
+    "note_text": "Ms. <PERSON> came in for a biopsy of her right middle lobe nodule. We used the robotic scope to get to the medial segment. The EBUS confirmed we were right in the center of the lesion. We took plenty of samples using a needle, forceps, and a brush. We also placed a marker for radiation therapy just in case. The preliminary results didn't show any cancer, which is good news, but we'll wait for the final report.",
     "cpt_codes": [
       31629,
       31628,
@@ -8734,6 +8818,12 @@
       "style_type": 8,
       "generated_name": "Sarah Morris",
       "generation_date": "2025-12-09T12:09:53.366435"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -9650,7 +9740,7 @@
     }
   },
   {
-    "note_text": "Stephanie White 16mm nodule in the RLL lateral basal. Used the monarch robot registration 3.6mm. Navigated down to RB9 rEBUS concentric. Did needle 21 gauge and forceps biopsies 8 passes. ROSE came back adenocarcinoma. No bleeding patient tolerated well.",
+    "note_text": "<PERSON> 16mm nodule in the RLL lateral basal. Used the monarch robot registration 3.6mm. Navigated down to RB9 rEBUS concentric. Did needle 21 gauge and forceps biopsies 8 passes. ROSE came back adenocarcinoma. No bleeding patient tolerated well.",
     "cpt_codes": [
       31629,
       31628,
@@ -9823,6 +9913,12 @@
       "style_type": 5,
       "generated_name": "Sandra Murphy",
       "generation_date": "2025-12-09T12:09:53.366708"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10178,7 +10274,7 @@
     }
   },
   {
-    "note_text": "Ms. White underwent a biopsy for a nodule in her right lower lobe. We used the Monarch robot to navigate to the lateral-basal segment. Once the EBUS confirmed we were centered in the lesion, we used a 21-gauge needle and forceps to take samples. The pathologist in the room confirmed it was adenocarcinoma. We finished the procedure without any issues.",
+    "note_text": "Ms. <PERSON> underwent a biopsy for a nodule in her right lower lobe. We used the Monarch robot to navigate to the lateral-basal segment. Once the EBUS confirmed we were centered in the lesion, we used a 21-gauge needle and forceps to take samples. The pathologist in the room confirmed it was adenocarcinoma. We finished the procedure without any issues.",
     "cpt_codes": [
       31629,
       31628,
@@ -10351,6 +10447,12 @@
       "style_type": 8,
       "generated_name": "Emily Cooper",
       "generation_date": "2025-12-09T12:09:53.366832"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -10723,7 +10825,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Ms. Lopez presented for evaluation of a 20mm LUL nodule. Under general anesthesia, the Monarch robotic system was navigated to the Apicoposterior Segment. Registration error was 4.5mm. Radial EBUS confirmed a concentric view of the lesion. We performed sampling with a 19G aspiration needle, standard forceps, and a cytology brush. ROSE showed benign respiratory epithelium and macrophages. No immediate complications were noted.",
+    "note_text": "OPERATIVE REPORT: Ms. <PERSON> presented for evaluation of a 20mm LUL nodule. Under general anesthesia, the Monarch robotic system was navigated to the Apicoposterior Segment. Registration error was 4.5mm. Radial EBUS confirmed a concentric view of the lesion. We performed sampling with a 19G aspiration needle, standard forceps, and a cytology brush. ROSE showed benign respiratory epithelium and macrophages. No immediate complications were noted.",
     "cpt_codes": [
       31629,
       31628,
@@ -10913,6 +11015,12 @@
       "style_type": 2,
       "generated_name": "Dorothy Howard",
       "generation_date": "2025-12-09T12:09:53.366967"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -11881,7 +11989,7 @@
     }
   },
   {
-    "note_text": "We performed a biopsy on Ms. Lopez's left upper lobe nodule. Using the robotic scope, we navigated to the apicoposterior segment and confirmed the location with EBUS. We used a 19-gauge needle, forceps, and a brush to get good samples. The preliminary check showed only benign cells. She did well and was sent to recovery.",
+    "note_text": "We performed a biopsy on Ms. <PERSON>'s left upper lobe nodule. Using the robotic scope, we navigated to the apicoposterior segment and confirmed the location with EBUS. We used a 19-gauge needle, forceps, and a brush to get good samples. The preliminary check showed only benign cells. She did well and was sent to recovery.",
     "cpt_codes": [
       31629,
       31628,
@@ -12071,6 +12179,12 @@
       "style_type": 8,
       "generated_name": "Rebecca James",
       "generation_date": "2025-12-09T12:09:53.367265"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -12894,7 +13008,7 @@
     }
   },
   {
-    "note_text": "Trainee Note\nPt: Rivera, A.\nLoc: LLL.\nSteps:\n1. GA.\n2. Nav to LB10 (Monarch).\n3. rEBUS concentric.\n4. 22G TBNA.\n5. Forceps.\n6. Brush.\n7. BAL.\nROSE: Suspicious.\nComplications: None.",
+    "note_text": "Trainee Note\nPt: <LOCATION>, <PERSON>\nLoc: LLL.\nSteps:\n1. GA.\n2. Nav to LB10 (Monarch).\n3. rEBUS concentric.\n4. 22G TBNA.\n5. Forceps.\n6. Brush.\n7. BAL.\nROSE: Suspicious.\nComplications: None.",
     "cpt_codes": [
       31629,
       31628,
@@ -13100,6 +13214,13 @@
       "style_type": 4,
       "generated_name": "Amy Price",
       "generation_date": "2025-12-09T12:09:53.367512"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "LOCATION",
+        "PERSON"
+      ]
     }
   },
   {
@@ -13730,7 +13851,7 @@
     }
   },
   {
-    "note_text": "Ms. Rivera came in for a biopsy of a nodule in her left lower lobe. We used the robotic system to reach the posterior-basal segment. The EBUS showed we were right on target. We took samples with a needle, forceps, and brush, and also washed the area. The initial results look suspicious for cancer. She recovered well.",
+    "note_text": "Ms. <PERSON> came in for a biopsy of a nodule in her left lower lobe. We used the robotic system to reach the posterior-basal segment. The EBUS showed we were right on target. We took samples with a needle, forceps, and brush, and also washed the area. The initial results look suspicious for cancer. She recovered well.",
     "cpt_codes": [
       31629,
       31628,
@@ -13936,6 +14057,12 @@
       "style_type": 8,
       "generated_name": "Anna Ross",
       "generation_date": "2025-12-09T12:09:53.367709"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14341,7 +14468,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: Ms. Nelson presented with a 33mm nodule in the Superior Lingula. Under general anesthesia, the Monarch robotic system was deployed. Navigation to LB4 was achieved (4.8mm error). Radial EBUS showed an eccentric view. We performed 22G TBNA, forceps biopsies, and brushings. Preliminary pathology (ROSE) revealed granulomatous inflammation, consistent with a benign etiology.",
+    "note_text": "OPERATIVE NARRATIVE: Ms. <PERSON> presented with a 33mm nodule in the Superior Lingula. Under general anesthesia, the Monarch robotic system was deployed. Navigation to LB4 was achieved (4.8mm error). Radial EBUS showed an eccentric view. We performed 22G TBNA, forceps biopsies, and brushings. Preliminary pathology (ROSE) revealed granulomatous inflammation, consistent with a benign etiology.",
     "cpt_codes": [
       31629,
       31628,
@@ -14531,6 +14658,12 @@
       "style_type": 2,
       "generated_name": "Nicole Jenkins",
       "generation_date": "2025-12-09T12:09:53.367856"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -14727,7 +14860,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: Nelson.\nTarget: Lingula 33mm.\nSteps:\n1. GA.\n2. Nav to LB4.\n3. rEBUS eccentric.\n4. 22G TBNA x4.\n5. Forceps x7.\n6. Brush.\nROSE: Granuloma.\nPlan: D/C.",
+    "note_text": "Resident Note\nPt: <PERSON>.\nTarget: Lingula 33mm.\nSteps:\n1. GA.\n2. Nav to LB4.\n3. rEBUS eccentric.\n4. 22G TBNA x4.\n5. Forceps x7.\n6. Brush.\nROSE: Granuloma.\nPlan: D/C.",
     "cpt_codes": [
       31629,
       31628,
@@ -14917,10 +15050,16 @@
       "style_type": 4,
       "generated_name": "Katherine Powell",
       "generation_date": "2025-12-09T12:09:53.367945"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Angela Nelson 33mm nodule in the Lingula. Robotic bronch today. Went to LB4 superior lingula. rEBUS was eccentric but we adjusted. Did needle 22g forceps brush. ROSE shows granulomas so probably not cancer. No bleeding.",
+    "note_text": "<PERSON> 33mm nodule in the Lingula. Robotic bronch today. Went to LB4 superior lingula. rEBUS was eccentric but we adjusted. Did needle 22g forceps brush. ROSE shows granulomas so probably not cancer. No bleeding.",
     "cpt_codes": [
       31629,
       31628,
@@ -15110,6 +15249,12 @@
       "style_type": 5,
       "generated_name": "Christine Long",
       "generation_date": "2025-12-09T12:09:53.368010"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15499,7 +15644,7 @@
     }
   },
   {
-    "note_text": "Ms. Nelson had a biopsy of her Lingula nodule today. We navigated the robot to the superior segment. The EBUS view was eccentric, meaning the probe was next to the lesion, but we got good samples using the needle, forceps, and brush. The pathologist saw granulomas, which is a good sign. There were no complications.",
+    "note_text": "Ms. <PERSON> had a biopsy of her Lingula nodule today. We navigated the robot to the superior segment. The EBUS view was eccentric, meaning the probe was next to the lesion, but we got good samples using the needle, forceps, and brush. The pathologist saw granulomas, which is a good sign. There were no complications.",
     "cpt_codes": [
       31629,
       31628,
@@ -15689,6 +15834,12 @@
       "style_type": 8,
       "generated_name": "Carolyn Flores",
       "generation_date": "2025-12-09T12:09:53.368155"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -16094,7 +16245,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. Adams underwent robotic bronchoscopy for a 10mm ground glass opacity in the Anterior Segment of the LUL. Navigation was performed via the Monarch platform to LB3. Radial EBUS demonstrated an adjacent view. We utilized a 19G needle for TBNA, followed by forceps biopsies and protected brushings. A BAL was performed. ROSE showed benign respiratory epithelium and macrophages.",
+    "note_text": "PROCEDURE NOTE: Mr. <PERSON> underwent robotic bronchoscopy for a 10mm ground glass opacity in the Anterior Segment of the LUL. Navigation was performed via the Monarch platform to LB3. Radial EBUS demonstrated an adjacent view. We utilized a 19G needle for TBNA, followed by forceps biopsies and protected brushings. A BAL was performed. ROSE showed benign respiratory epithelium and macrophages.",
     "cpt_codes": [
       31629,
       31628,
@@ -16300,6 +16451,12 @@
       "style_type": 2,
       "generated_name": "Frank Simmons",
       "generation_date": "2025-12-09T12:09:53.368304"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -17348,7 +17505,7 @@
     }
   },
   {
-    "note_text": "Mr. Adams came in for a biopsy of a small 10mm nodule in his left upper lobe. We used the robotic system to navigate to the anterior segment. EBUS confirmed we were adjacent to the lesion. We took samples with a 19-gauge needle, forceps, and brush, and also washed the area. The preliminary results were benign. He recovered well.",
+    "note_text": "Mr. <PERSON> came in for a biopsy of a small 10mm nodule in his left upper lobe. We used the robotic system to navigate to the anterior segment. EBUS confirmed we were adjacent to the lesion. We took samples with a 19-gauge needle, forceps, and brush, and also washed the area. The preliminary results were benign. He recovered well.",
     "cpt_codes": [
       31629,
       31628,
@@ -17554,6 +17711,12 @@
       "style_type": 8,
       "generated_name": "Benjamin Griffin",
       "generation_date": "2025-12-09T12:09:53.368638"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

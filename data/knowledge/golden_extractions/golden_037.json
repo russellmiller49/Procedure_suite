@@ -76,7 +76,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Mr. Anderson, a 68-year-old male with severe emphysema, presented for bronchoscopic lung volume reduction. \nPROCEDURE: Under general anesthesia, the airway was secured. The left upper lobe was identified as the target. Collateral ventilation was excluded via Chartis assessment. Subsequently, four Zephyr endobronchial valves were deployed into the LUL segmental bronchi. \nOUTCOME: Immediate reduction in lobar volume was observed. The patient remained hemodynamically stable throughout.",
+    "note_text": "HISTORY: Mr. <PERSON>, a 68-year-old male with severe emphysema, presented for bronchoscopic lung volume reduction. \nPROCEDURE: Under general anesthesia, the airway was secured. The left upper lobe was identified as the target. Collateral ventilation was excluded via Chartis assessment. Subsequently, four Zephyr endobronchial valves were deployed into the LUL segmental bronchi. \nOUTCOME: Immediate reduction in lobar volume was observed. The patient remained hemodynamically stable throughout.",
     "cpt_codes": [
       31647
     ],
@@ -149,6 +149,12 @@
       "style_type": 2,
       "generated_name": "Arthur P. Henderson",
       "generation_date": "2025-12-09T09:20:14.725414"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -304,7 +310,7 @@
     }
   },
   {
-    "note_text": "bill anderson here for the lung volume reduction left side we put him to sleep tube down looked at the left upper lobe chartis said no collateral vent so we put in four zephyr valves one big one three small ones looks good lung is smaller now no bleeding waking him up sent to recovery thanks.",
+    "note_text": "<PERSON> here for the lung volume reduction left side we put him to sleep tube down looked at the left upper lobe chartis said no collateral vent so we put in four zephyr valves one big one three small ones looks good lung is smaller now no bleeding waking him up sent to recovery thanks.",
     "cpt_codes": [
       31647
     ],
@@ -377,6 +383,12 @@
       "style_type": 5,
       "generated_name": "william anderson",
       "generation_date": "2025-12-09T09:20:14.725488"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -532,7 +544,7 @@
     }
   },
   {
-    "note_text": "Mr. Anderson underwent a left upper lobe BLVR procedure today. After induction of anesthesia, we examined the airways and confirmed the target lobe. Using the Chartis system, we verified the absence of collateral ventilation. Following this, we sequentially placed four Zephyr valves into the segmental bronchi of the left upper lobe. We confirmed the position of each valve and noted a reduction in lobar volume. The patient was extubated without incident.",
+    "note_text": "Mr. <PERSON> underwent a left upper lobe BLVR procedure today. After induction of anesthesia, we examined the airways and confirmed the target lobe. Using the Chartis system, we verified the absence of collateral ventilation. Following this, we sequentially placed four Zephyr valves into the segmental bronchi of the left upper lobe. We confirmed the position of each valve and noted a reduction in lobar volume. The patient was extubated without incident.",
     "cpt_codes": [
       31647
     ],
@@ -605,6 +617,12 @@
       "style_type": 8,
       "generated_name": "Mr. Anderson",
       "generation_date": "2025-12-09T09:20:14.725569"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -762,7 +780,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. Peterson returned for revision of RUL valves due to radiographic evidence of migration. Under moderate sedation, the airway was inspected. The valve in the RB2 segment was found to be displaced distally. This valve was extracted using removal forceps. The bronchus was prepared, and a larger (5.5mm) Zephyr valve was deployed to ensure stability. Total lobar occlusion was re-established.",
+    "note_text": "OPERATIVE REPORT: Mr. <PERSON> returned for revision of RUL valves due to radiographic evidence of migration. Under moderate sedation, the airway was inspected. The valve in the RB2 segment was found to be displaced distally. This valve was extracted using removal forceps. The bronchus was prepared, and a larger (5.5mm) Zephyr valve was deployed to ensure stability. Total lobar occlusion was re-established.",
     "cpt_codes": [
       31647
     ],
@@ -837,6 +855,12 @@
       "style_type": 2,
       "generated_name": "Thomas R. Davies",
       "generation_date": "2025-12-09T09:20:14.725642"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -918,7 +942,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Valve Revision\nPatient: Donald Peterson\nAttending: Dr. Sullivan\n1. Sedation start.\n2. Scope inserted.\n3. RB2 valve migrated. Removed with forceps.\n4. New valve (5.5mm) placed in RB2.\n5. RB1/RB3 valves checking out okay.\n6. RUL is sealed.\n7. Pt stable.",
+    "note_text": "Resident Note: Valve Revision\nPatient: <PERSON>\nAttending: Dr. Sullivan\n1. Sedation start.\n2. Scope inserted.\n3. RB2 valve migrated. Removed with forceps.\n4. New valve (5.5mm) placed in RB2.\n5. RB1/RB3 valves checking out okay.\n6. RUL is sealed.\n7. Pt stable.",
     "cpt_codes": [
       31647
     ],
@@ -993,10 +1017,16 @@
       "style_type": 4,
       "generated_name": "Don P.",
       "generation_date": "2025-12-09T09:20:14.725687"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "donald peterson back for a check on his valves in the right upper lobe the ct showed one moved so we went in there and yeah the rb2 valve slipped down we pulled it out with the grabbers cleaned it up a bit and put a bigger one in there fits tight now no air leak sending him home later today.",
+    "note_text": "<PERSON> back for a check on his valves in the right upper lobe the ct showed one moved so we went in there and yeah the rb2 valve slipped down we pulled it out with the grabbers cleaned it up a bit and put a bigger one in there fits tight now no air leak sending him home later today.",
     "cpt_codes": [
       31647
     ],
@@ -1071,6 +1101,12 @@
       "style_type": 5,
       "generated_name": "donald peterson",
       "generation_date": "2025-12-09T09:20:14.725708"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1230,7 +1266,7 @@
     }
   },
   {
-    "note_text": "We performed a revision bronchoscopy on Mr. Peterson to address a migrated valve in his right upper lobe. After achieving moderate sedation, we entered the airway and located the displaced valve in the RB2 segment. We carefully removed this valve and replaced it with a larger size to prevent future migration. The other valves in the lobe were secure. Final check showed the lobe was completely blocked off.",
+    "note_text": "We performed a revision bronchoscopy on Mr. <PERSON> to address a migrated valve in his right upper lobe. After achieving moderate sedation, we entered the airway and located the displaced valve in the RB2 segment. We carefully removed this valve and replaced it with a larger size to prevent future migration. The other valves in the lobe were secure. Final check showed the lobe was completely blocked off.",
     "cpt_codes": [
       31647
     ],
@@ -1305,6 +1341,12 @@
       "style_type": 8,
       "generated_name": "Mr. Peterson",
       "generation_date": "2025-12-09T09:20:14.725770"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1611,7 +1653,7 @@
     }
   },
   {
-    "note_text": "Procedure: Pleuroscopy\nPatient: Ilene Ortiez\n1. Lat decubitus position.\n2. US guidance -> access 8th ICS.\n3. Trocar placed.\n4. Drained fluid.\n5. Saw nodules on pleura -> Biopsied x5.\n6. Chest tube placed.\n7. Closed up.",
+    "note_text": "Procedure: Pleuroscopy\nPatient: <PERSON>\n1. Lat decubitus position.\n2. US guidance -> access 8th ICS.\n3. Trocar placed.\n4. Drained fluid.\n5. Saw nodules on pleura -> Biopsied x5.\n6. Chest tube placed.\n7. Closed up.",
     "cpt_codes": [
       32601
     ],
@@ -1683,6 +1725,12 @@
       "style_type": 4,
       "generated_name": "Ilene O.",
       "generation_date": "2025-12-09T09:20:14.725873"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1911,7 +1959,7 @@
     }
   },
   {
-    "note_text": "Ms. Ortiez underwent a medical thoracoscopy to investigate her pleural effusion. We accessed the pleural space on the left side and drained the fluid. Upon visualization, the pleura appeared abnormal with nodules, so we took five biopsies from the chest wall lining. We then placed a small chest tube to drain any remaining fluid and help the lung re-expand.",
+    "note_text": "Ms. <PERSON> underwent a medical thoracoscopy to investigate her pleural effusion. We accessed the pleural space on the left side and drained the fluid. Upon visualization, the pleura appeared abnormal with nodules, so we took five biopsies from the chest wall lining. We then placed a small chest tube to drain any remaining fluid and help the lung re-expand.",
     "cpt_codes": [
       32601
     ],
@@ -1983,6 +2031,12 @@
       "style_type": 8,
       "generated_name": "Ms. Ortiez",
       "generation_date": "2025-12-09T09:20:14.725996"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2140,7 +2194,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Ms. Hughes presented with critical left mainstem bronchus stenosis secondary to extrinsic esophageal carcinoma. Rigid bronchoscopy was utilized to secure the airway. A 12x40mm Aero tracheobronchial stent was deployed across the stenosis under fluoroscopic guidance. Subsequent balloon dilation resulted in significant restoration of airway patency.",
+    "note_text": "OPERATIVE SUMMARY: Ms. <PERSON> presented with critical left mainstem bronchus stenosis secondary to extrinsic esophageal carcinoma. Rigid bronchoscopy was utilized to secure the airway. A 12x40mm Aero tracheobronchial stent was deployed across the stenosis under fluoroscopic guidance. Subsequent balloon dilation resulted in significant restoration of airway patency.",
     "cpt_codes": [
       31636
     ],
@@ -2216,6 +2270,12 @@
       "style_type": 2,
       "generated_name": "Margaret H. Thatcher",
       "generation_date": "2025-12-09T09:20:14.726095"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2298,7 +2358,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch + Stent\nPatient: Tena Hughes\n1. General Anesthesia.\n2. Rigid scope inserted.\n3. L mainstem tight (90%).\n4. Guidewire passed.\n5. Deployed 12x40mm Aero stent.\n6. Ballooned it open.\n7. Airway looks much better.",
+    "note_text": "Procedure: Rigid Bronch + Stent\nPatient: <PERSON>\n1. General Anesthesia.\n2. Rigid scope inserted.\n3. L mainstem tight (90%).\n4. Guidewire passed.\n5. Deployed 12x40mm Aero stent.\n6. Ballooned it open.\n7. Airway looks much better.",
     "cpt_codes": [
       31636
     ],
@@ -2374,6 +2434,12 @@
       "style_type": 4,
       "generated_name": "Tena H.",
       "generation_date": "2025-12-09T09:20:14.726138"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2614,7 +2680,7 @@
     }
   },
   {
-    "note_text": "Ms. Hughes had a stent placed in her left main airway today. The tumor from her esophagus was crushing the airway closed. We used a rigid tube to access the airway and then placed a metal and silicone stent to hold the airway open. After placing it, we used a balloon to expand it fully. She is breathing much better now through that lung.",
+    "note_text": "Ms. <PERSON> had a stent placed in her left main airway today. The tumor from her esophagus was crushing the airway closed. We used a rigid tube to access the airway and then placed a metal and silicone stent to hold the airway open. After placing it, we used a balloon to expand it fully. She is breathing much better now through that lung.",
     "cpt_codes": [
       31636
     ],
@@ -2690,6 +2756,12 @@
       "style_type": 8,
       "generated_name": "Ms. Hughes",
       "generation_date": "2025-12-09T09:20:14.726223"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2863,7 +2935,7 @@
     }
   },
   {
-    "note_text": "CLINICAL SUMMARY: Mr. Berg was treated per the COMBO-ABLATE protocol for a 3.2 cm LUL adenocarcinoma. The procedure involved sequential application of cryoablation followed by microwave ablation to achieve synergistic tumor destruction. Real-time monitoring confirmed adequate thermal spread and an ablation margin encompassing the lesion.",
+    "note_text": "CLINICAL SUMMARY: Mr. <PERSON> was treated per the COMBO-ABLATE protocol for a 3.2 cm LUL adenocarcinoma. The procedure involved sequential application of cryoablation followed by microwave ablation to achieve synergistic tumor destruction. Real-time monitoring confirmed adequate thermal spread and an ablation margin encompassing the lesion.",
     "cpt_codes": [
       31641,
       31654
@@ -2951,6 +3023,12 @@
       "style_type": 2,
       "generated_name": "Richard B. Hayes",
       "generation_date": "2025-12-09T09:20:14.726296"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3045,7 +3123,7 @@
     }
   },
   {
-    "note_text": "Research Case: Robert Berg\nTarget: LUL Apicoposterior\n1. Navigated to lesion.\n2. Confirmed w/ r-EBUS.\n3. Cryo x2 cycles.\n4. Wait 15 mins.\n5. Microwave 75W 7 mins.\n6. Post-op EBUS: big ablation zone.\n7. Stable.",
+    "note_text": "Research Case: <PERSON>\nTarget: LUL Apicoposterior\n1. Navigated to lesion.\n2. Confirmed w/ r-EBUS.\n3. Cryo x2 cycles.\n4. Wait 15 mins.\n5. Microwave 75W 7 mins.\n6. Post-op EBUS: big ablation zone.\n7. Stable.",
     "cpt_codes": [
       31641,
       31654
@@ -3133,10 +3211,16 @@
       "style_type": 4,
       "generated_name": "Bob B.",
       "generation_date": "2025-12-09T09:20:14.726342"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "robert berg in the combo study today left upper lobe tumor big one 3cm. we did the cryo freezing first two rounds got a good ice ball. waited the 15 minutes then hit it with the microwave probe 75 watts. cooked it good. total zone looks huge on the ultrasound. patient did fine no issues.",
+    "note_text": "<PERSON> in the combo study today left upper lobe tumor big one 3cm. we did the cryo freezing first two rounds got a good ice ball. waited the 15 minutes then hit it with the microwave probe 75 watts. cooked it good. total zone looks huge on the ultrasound. patient did fine no issues.",
     "cpt_codes": [
       31641,
       31654
@@ -3224,6 +3308,12 @@
       "style_type": 5,
       "generated_name": "robert berg",
       "generation_date": "2025-12-09T09:20:14.726367"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3409,7 +3499,7 @@
     }
   },
   {
-    "note_text": "Mr. Berg underwent a combination ablation procedure for his lung tumor today. We navigated to the tumor in the left upper lobe and confirmed its location with ultrasound. We first froze the tumor using a cryoprobe, then after a short break, we heated it using a microwave probe. This combination created a large treatment zone that completely covered the tumor.",
+    "note_text": "Mr. <PERSON> underwent a combination ablation procedure for his lung tumor today. We navigated to the tumor in the left upper lobe and confirmed its location with ultrasound. We first froze the tumor using a cryoprobe, then after a short break, we heated it using a microwave probe. This combination created a large treatment zone that completely covered the tumor.",
     "cpt_codes": [
       31641,
       31654
@@ -3497,6 +3587,12 @@
       "style_type": 8,
       "generated_name": "Mr. Berg",
       "generation_date": "2025-12-09T09:20:14.726440"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3665,7 +3761,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NOTE: Mr. Benfield underwent rigid bronchoscopy for removal of a tracheal Y-stent following resolution of mediastinal compression. The stent was successfully extracted en-bloc. A residual fragment in the left mainstem was retrieved via flexible bronchoscopy. Post-extubation laryngospasm was managed successfully.",
+    "note_text": "OPERATIVE NOTE: Mr. <PERSON> underwent rigid bronchoscopy for removal of a tracheal Y-stent following resolution of mediastinal compression. The stent was successfully extracted en-bloc. A residual fragment in the left mainstem was retrieved via flexible bronchoscopy. Post-extubation laryngospasm was managed successfully.",
     "cpt_codes": [
       31635
     ],
@@ -3736,6 +3832,12 @@
       "style_type": 2,
       "generated_name": "William T. Riker",
       "generation_date": "2025-12-09T09:20:14.726506"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3813,7 +3915,7 @@
     }
   },
   {
-    "note_text": "Procedure: Stent Removal\nPatient: Tyler Benfield\n1. Rigid scope in.\n2. Grabbed Y-stent with forceps.\n3. Twisting motion, pulled it out.\n4. Checked airway with flex scope.\n5. Found piece in L main, removed it.\n6. Pt had spasm after, re-intubated briefly, then ok.",
+    "note_text": "Procedure: Stent Removal\nPatient: <PERSON>\n1. Rigid scope in.\n2. Grabbed Y-stent with forceps.\n3. Twisting motion, pulled it out.\n4. Checked airway with flex scope.\n5. Found piece in L main, removed it.\n6. Pt had spasm after, re-intubated briefly, then ok.",
     "cpt_codes": [
       31635
     ],
@@ -3884,10 +3986,16 @@
       "style_type": 4,
       "generated_name": "Ty B.",
       "generation_date": "2025-12-09T09:20:14.726564"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "tyler benfield here to get his stent out mediastinal mass is gone. used the rigid scope grabbed the stent twisted it pulled it out. then looked with the flex scope found a little piece broke off in the left lung grabbed that too. he clamped down after we woke him up laryngospasm had to tube him again for a sec but hes fine now.",
+    "note_text": "<PERSON> benfield here to get his stent out mediastinal mass is gone. used the rigid scope grabbed the stent twisted it pulled it out. then looked with the flex scope found a little piece broke off in the left lung grabbed that too. he clamped down after we woke him up laryngospasm had to tube him again for a sec but hes fine now.",
     "cpt_codes": [
       31635
     ],
@@ -3958,6 +4066,12 @@
       "style_type": 5,
       "generated_name": "tyler benfield",
       "generation_date": "2025-12-09T09:20:14.726587"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4109,7 +4223,7 @@
     }
   },
   {
-    "note_text": "We removed Mr. Benfield's tracheal stent today as his condition has improved. We used a rigid tube to grasp the main stent and pull it out. We then double-checked with a flexible camera and found a small piece left behind in the left lung, which we also removed. He had a brief spasm of his vocal cords waking up but recovered quickly.",
+    "note_text": "We removed Mr. <PERSON>'s tracheal stent today as his condition has improved. We used a rigid tube to grasp the main stent and pull it out. We then double-checked with a flexible camera and found a small piece left behind in the left lung, which we also removed. He had a brief spasm of his vocal cords waking up but recovered quickly.",
     "cpt_codes": [
       31635
     ],
@@ -4180,6 +4294,12 @@
       "style_type": 8,
       "generated_name": "Mr. Benfield",
       "generation_date": "2025-12-09T09:20:14.726652"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4518,7 +4638,7 @@
     }
   },
   {
-    "note_text": "EBUS Note\nPatient: Andrew Thompson\n1. 4R: 4 passes, granulomas.\n2. 4L: 4 passes, sarcoid-like.\n3. 7: 4 passes, granulomas.\n4. 11R: 3 passes, adequate.\nDx: Sarcoidosis likely.",
+    "note_text": "EBUS Note\nPatient: <PERSON>\n1. 4R: 4 passes, granulomas.\n2. 4L: 4 passes, sarcoid-like.\n3. 7: 4 passes, granulomas.\n4. 11R: 3 passes, adequate.\nDx: Sarcoidosis likely.",
     "cpt_codes": [
       31653
     ],
@@ -4602,10 +4722,16 @@
       "style_type": 4,
       "generated_name": "Andy T.",
       "generation_date": "2025-12-09T09:20:14.726843"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "andrew thompson lymph nodes swollen rule out lymphoma sarcoid. did the ebus sampled 4r 4l 7 and 11r. rose guy said looks like granulomas probably sarcoid. took good samples sent for stains. no issues patient went home.",
+    "note_text": "<PERSON> lymph nodes swollen rule out lymphoma sarcoid. did the ebus sampled 4r 4l 7 and 11r. rose guy said looks like granulomas probably sarcoid. took good samples sent for stains. no issues patient went home.",
     "cpt_codes": [
       31653
     ],
@@ -4689,6 +4815,12 @@
       "style_type": 5,
       "generated_name": "andrew thompson",
       "generation_date": "2025-12-09T09:20:14.726868"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4866,7 +4998,7 @@
     }
   },
   {
-    "note_text": "Mr. Thompson had an EBUS procedure to check the lymph nodes in his chest. We sampled nodes from four different areas: right and left upper chest, center chest, and right lung root. The preliminary results in the room suggest sarcoidosis, as we saw granulomas. We sent the samples for full testing to confirm.",
+    "note_text": "Mr. <PERSON> had an EBUS procedure to check the lymph nodes in his chest. We sampled nodes from four different areas: right and left upper chest, center chest, and right lung root. The preliminary results in the room suggest sarcoidosis, as we saw granulomas. We sent the samples for full testing to confirm.",
     "cpt_codes": [
       31653
     ],
@@ -4950,6 +5082,12 @@
       "style_type": 8,
       "generated_name": "Mr. Thompson",
       "generation_date": "2025-12-09T09:20:14.726948"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5139,7 +5277,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mrs. Rodriguez underwent electromagnetic navigation bronchoscopy with cryoablation for a biopsy-proven adenocarcinoma in the left lower lobe. The lesion was localized using the Veran system and confirmed with radial EBUS. A cryoprobe was advanced, and three freeze-thaw cycles were administered to ensure oncologic margins. Post-ablation EBUS demonstrated complete coverage of the target.",
+    "note_text": "OPERATIVE REPORT: Mrs. <PERSON> underwent electromagnetic navigation bronchoscopy with cryoablation for a biopsy-proven adenocarcinoma in the left lower lobe. The lesion was localized using the Veran system and confirmed with radial EBUS. A cryoprobe was advanced, and three freeze-thaw cycles were administered to ensure oncologic margins. Post-ablation EBUS demonstrated complete coverage of the target.",
     "cpt_codes": [
       31641,
       31627,
@@ -5235,6 +5373,12 @@
       "style_type": 2,
       "generated_name": "Sarah J. Connor",
       "generation_date": "2025-12-09T09:20:14.727024"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5337,7 +5481,7 @@
     }
   },
   {
-    "note_text": "Procedure: Cryoablation\nPatient: Maria Rodriguez\n1. Navigated to LLL lateral basal.\n2. Confirmed w/ R-EBUS (2.6cm lesion).\n3. Inserted cryoprobe.\n4. Freezing x3 cycles (modified for size).\n5. Ice ball seen on EBUS.\n6. No bleeding.\nPlan: Admit.",
+    "note_text": "Procedure: Cryoablation\nPatient: <PERSON>\n1. Navigated to LLL lateral basal.\n2. Confirmed w/ R-EBUS (2.6cm lesion).\n3. Inserted cryoprobe.\n4. Freezing x3 cycles (modified for size).\n5. Ice ball seen on EBUS.\n6. No bleeding.\nPlan: Admit.",
     "cpt_codes": [
       31641,
       31627,
@@ -5433,6 +5577,12 @@
       "style_type": 4,
       "generated_name": "Maria R.",
       "generation_date": "2025-12-09T09:20:14.727079"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5634,7 +5784,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLLL Adenocarcinoma, nonsurgical.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to LLL. REBUS confirmed. Cryoablation x3 cycles. Margins confirmed.\n[Plan]\nAdmit. Resume apixaban 24h.",
+    "note_text": "[Indication]\nLLL Adenocarcinoma, nonsurgical.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to LLL. REBUS confirmed. Cryoablation x3 cycles. Margins confirmed.\n[Plan]\nAdmit. <PERSON> apixaban 24h.",
     "cpt_codes": [
       31641,
       31627,
@@ -5730,10 +5880,16 @@
       "style_type": 7,
       "generated_name": "Maria Rodriguez",
       "generation_date": "2025-12-09T09:20:14.727152"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Mrs. Rodriguez had a procedure to freeze a lung tumor in her left lower lobe. We used a navigation system to guide a catheter to the tumor, confirmed it was the right spot with ultrasound, and then used a cryoprobe to freeze the tumor three times. The ultrasound showed the ice ball covered the whole tumor.",
+    "note_text": "Mrs. <PERSON> had a procedure to freeze a lung tumor in her left lower lobe. We used a navigation system to guide a catheter to the tumor, confirmed it was the right spot with ultrasound, and then used a cryoprobe to freeze the tumor three times. The ultrasound showed the ice ball covered the whole tumor.",
     "cpt_codes": [
       31641,
       31627,
@@ -5829,6 +5985,12 @@
       "style_type": 8,
       "generated_name": "Mrs. Rodriguez",
       "generation_date": "2025-12-09T09:20:14.727176"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6019,7 +6181,7 @@
     }
   },
   {
-    "note_text": "EMERGENT PROCEDURE: Mr. Brooks required urgent bronchoscopic intervention for hemorrhage following transthoracic biopsy. Navigation was used to localize the bleeding site within the RUL tumor. Radiofrequency ablation was applied first for hemostasis, followed by a full ablation protocol to treat the underlying malignancy. Hemostasis was achieved.",
+    "note_text": "EMERGENT PROCEDURE: Mr. <PERSON> required urgent bronchoscopic intervention for hemorrhage following transthoracic biopsy. Navigation was used to localize the bleeding site within the RUL tumor. Radiofrequency ablation was applied first for hemostasis, followed by a full ablation protocol to treat the underlying malignancy. Hemostasis was achieved.",
     "cpt_codes": [
       31641,
       31627
@@ -6104,6 +6266,12 @@
       "style_type": 2,
       "generated_name": "James B. Bond",
       "generation_date": "2025-12-09T09:20:14.727249"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6195,7 +6363,7 @@
     }
   },
   {
-    "note_text": "Urgent Bronch: Timothy Brooks\nIndication: Bleeding after IR biopsy.\n1. Intubated.\n2. Navigated to RUL bleeding site.\n3. RFA probe in.\n4. Cauterized bleeding (stopped).\n5. Burned the tumor while we were there.\n6. Chest tube output dropped.",
+    "note_text": "Urgent Bronch: <PERSON>\nIndication: Bleeding after IR biopsy.\n1. Intubated.\n2. Navigated to RUL bleeding site.\n3. RFA probe in.\n4. Cauterized bleeding (stopped).\n5. Burned the tumor while we were there.\n6. Chest tube output dropped.",
     "cpt_codes": [
       31641,
       31627
@@ -6280,10 +6448,16 @@
       "style_type": 4,
       "generated_name": "Tim B.",
       "generation_date": "2025-12-09T09:20:14.727296"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "timothy brooks bleeding from that biopsy yesterday chest tube putting out blood. went in with the scope navigated to the spot in the right upper lobe. used the rfa probe to stop the bleeding worked great. then just decided to ablate the tumor too since we were there. bleeding stopped chest tube looks good.",
+    "note_text": "<PERSON> bleeding from that biopsy yesterday chest tube putting out blood. went in with the scope navigated to the spot in the right upper lobe. used the rfa probe to stop the bleeding worked great. then just decided to ablate the tumor too since we were there. bleeding stopped chest tube looks good.",
     "cpt_codes": [
       31641,
       31627
@@ -6368,6 +6542,12 @@
       "style_type": 5,
       "generated_name": "timothy brooks",
       "generation_date": "2025-12-09T09:20:14.727319"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6547,7 +6727,7 @@
     }
   },
   {
-    "note_text": "Mr. Brooks had bleeding after his biopsy yesterday. We performed a bronchoscopy to stop the bleeding. We navigated to the spot in his right lung and used heat (radiofrequency) to seal the bleeding vessels. Once the bleeding stopped, we continued the heat treatment to destroy the tumor itself.",
+    "note_text": "Mr. <PERSON> had bleeding after his biopsy yesterday. We performed a bronchoscopy to stop the bleeding. We navigated to the spot in his right lung and used heat (radiofrequency) to seal the bleeding vessels. Once the bleeding stopped, we continued the heat treatment to destroy the tumor itself.",
     "cpt_codes": [
       31641,
       31627
@@ -6632,6 +6812,12 @@
       "style_type": 8,
       "generated_name": "Mr. Brooks",
       "generation_date": "2025-12-09T09:20:14.727387"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6820,7 +7006,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Mr. Chen underwent bronchoscopic microwave ablation for an inoperable RUL adenocarcinoma. Electromagnetic navigation and radial EBUS were used to localize the lesion. A microwave antenna was deployed, and ablation was performed at 60 Watts for 6 minutes. Post-ablation imaging confirmed adequate treatment volume.",
+    "note_text": "OPERATIVE SUMMARY: Mr. <PERSON> underwent bronchoscopic microwave ablation for an inoperable RUL adenocarcinoma. Electromagnetic navigation and radial EBUS were used to localize the lesion. A microwave antenna was deployed, and ablation was performed at 60 Watts for 6 minutes. Post-ablation imaging confirmed adequate treatment volume.",
     "cpt_codes": [
       31641,
       31627,
@@ -6914,6 +7100,12 @@
       "style_type": 2,
       "generated_name": "Clark K. Kent",
       "generation_date": "2025-12-09T09:20:14.727463"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7014,7 +7206,7 @@
     }
   },
   {
-    "note_text": "Procedure: Microwave Ablation\nPatient: Robert Chen\n1. Navigated to RUL anterior.\n2. Radial EBUS check.\n3. Microwave probe in.\n4. 60W for 6 mins.\n5. No complications.\n6. Extubated.",
+    "note_text": "Procedure: Microwave Ablation\nPatient: <PERSON>\n1. Navigated to RUL anterior.\n2. Radial EBUS check.\n3. Microwave probe in.\n4. 60W for 6 mins.\n5. No complications.\n6. Extubated.",
     "cpt_codes": [
       31641,
       31627,
@@ -7108,10 +7300,16 @@
       "style_type": 4,
       "generated_name": "Rob C.",
       "generation_date": "2025-12-09T09:20:14.727514"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "robert chen right upper lobe cancer. did the navigation found it with the ultrasound. put the microwave probe in cooked it for 6 minutes at 60 watts. looks good on the scan afterwards. sending him to pacu.",
+    "note_text": "<PERSON> right upper lobe cancer. did the navigation found it with the ultrasound. put the microwave probe in cooked it for 6 minutes at 60 watts. looks good on the scan afterwards. sending him to pacu.",
     "cpt_codes": [
       31641,
       31627,
@@ -7205,6 +7403,12 @@
       "style_type": 5,
       "generated_name": "robert chen",
       "generation_date": "2025-12-09T09:20:14.727538"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7402,7 +7606,7 @@
     }
   },
   {
-    "note_text": "Mr. Chen had a microwave ablation procedure for his lung cancer today. We guided a catheter to the tumor in the right upper lobe, checked the position with ultrasound, and used microwave energy to heat and destroy the tumor. The procedure went smoothly without issues.",
+    "note_text": "Mr. <PERSON> had a microwave ablation procedure for his lung cancer today. We guided a catheter to the tumor in the right upper lobe, checked the position with ultrasound, and used microwave energy to heat and destroy the tumor. The procedure went smoothly without issues.",
     "cpt_codes": [
       31641,
       31627,
@@ -7496,6 +7700,12 @@
       "style_type": 8,
       "generated_name": "Mr. Chen",
       "generation_date": "2025-12-09T09:20:14.727610"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

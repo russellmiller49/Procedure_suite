@@ -294,7 +294,7 @@
     }
   },
   {
-    "note_text": "Procedure Note (Resident)\nPatient: John Anderson\nAttending: Dr. Chen\nProcedure: MWA of RUL nodule.\nSteps:\n1. Intubated 8.5 ETT.\n2. Navigated to RUL posterior segment.\n3. Confirmed with Radial EBUS (hypoechoic lesion).\n4. Microwave probe inserted.\n5. Burned at 65 Watts for 5 mins.\n6. Re-checked: good ablation zone.\nPlan: Post-op CT.",
+    "note_text": "Procedure Note (Resident)\nPatient: <PERSON>\nAttending: Dr. Chen\nProcedure: MWA of RUL nodule.\nSteps:\n1. Intubated 8.5 ETT.\n2. Navigated to RUL posterior segment.\n3. Confirmed with Radial EBUS (hypoechoic lesion).\n4. Microwave probe inserted.\n5. Burned at 65 Watts for 5 mins.\n6. Re-checked: good ablation zone.\nPlan: Post-op CT.",
     "cpt_codes": [
       31641,
       31654,
@@ -389,10 +389,16 @@
       "style_type": 4,
       "generated_name": "Richard Moore",
       "generation_date": "2025-12-09T09:20:17.515773"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "dictation for mr anderson... we did the microwave ablation today right upper lobe... navigation went well used the superdimension... radial ebus saw the lesion clearly... put the emprint probe in and cooked it at 65 watts for five minutes... temp got up to 85... no bleeding noted after... extubated fine sending to pacu.",
+    "note_text": "dictation for mr <PERSON>... we did the microwave ablation today right upper lobe... navigation went well used the superdimension... radial ebus saw the lesion clearly... put the emprint probe in and cooked it at 65 watts for five minutes... temp got up to 85... no bleeding noted after... extubated fine sending to pacu.",
     "cpt_codes": [
       31641,
       31654,
@@ -487,6 +493,12 @@
       "style_type": 5,
       "generated_name": "Joseph Taylor",
       "generation_date": "2025-12-09T09:20:17.515800"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -686,7 +698,7 @@
     }
   },
   {
-    "note_text": "John underwent a bronchoscopy to treat a lung cancer nodule in his right upper lobe using heat energy. Because his lungs are too weak for surgery, we used microwave ablation. We navigated a small catheter to the tumor using a GPS-like system and confirmed its location with ultrasound. We then inserted the microwave probe and treated the area for 5 minutes at high heat. The follow-up ultrasound showed the tumor was effectively treated.",
+    "note_text": "<PERSON> underwent a bronchoscopy to treat a lung cancer nodule in his right upper lobe using heat energy. Because his lungs are too weak for surgery, we used microwave ablation. We navigated a small catheter to the tumor using a GPS-like system and confirmed its location with ultrasound. We then inserted the microwave probe and treated the area for 5 minutes at high heat. The follow-up ultrasound showed the tumor was effectively treated.",
     "cpt_codes": [
       31641,
       31654,
@@ -781,6 +793,12 @@
       "style_type": 8,
       "generated_name": "Christopher Jackson",
       "generation_date": "2025-12-09T09:20:17.515877"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1161,7 +1179,7 @@
     }
   },
   {
-    "note_text": "Procedure: RFA Lung\nPt: David Thompson\nSteps:\n1. GA, 8.5 Tube.\n2. Veran nav to RLL (RB9).\n3. REBUS + Spin CT to confirm.\n4. RFA probe in.\n5. Burn 1: 8 mins @ 90C.\n6. Pull back 5mm.\n7. Burn 2: 6 mins @ 90C.\n8. Extubated stable.\nPlan: Admit.",
+    "note_text": "Procedure: RFA Lung\nPt: <PERSON>\nSteps:\n1. GA, 8.5 Tube.\n2. Veran nav to RLL (RB9).\n3. REBUS + Spin CT to confirm.\n4. RFA probe in.\n5. Burn 1: 8 mins @ 90C.\n6. Pull back 5mm.\n7. Burn 2: 6 mins @ 90C.\n8. Extubated stable.\nPlan: Admit.",
     "cpt_codes": [
       31641,
       31654,
@@ -1251,10 +1269,16 @@
       "style_type": 4,
       "generated_name": "Donald Garcia",
       "generation_date": "2025-12-09T09:20:17.516002"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "procedure note david thompson... rll radiofrequency ablation... used the veran system navigated to the lateral basal segment... confirmed with radial ebus and the cone beam ct... put the rfa probe in did two burns first one 8 mins second one 6 mins both at 90 degrees... impedance looked good... patient did great no pneumothorax on the table.",
+    "note_text": "procedure note <PERSON>... rll radiofrequency ablation... used the veran system navigated to the lateral basal segment... confirmed with radial ebus and the cone beam ct... put the rfa probe in did two burns first one 8 mins second one 6 mins both at 90 degrees... impedance looked good... patient did great no pneumothorax on the table.",
     "cpt_codes": [
       31641,
       31654,
@@ -1344,6 +1368,12 @@
       "style_type": 5,
       "generated_name": "George Martinez",
       "generation_date": "2025-12-09T09:20:17.516025"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1533,7 +1563,7 @@
     }
   },
   {
-    "note_text": "We performed a procedure to burn a tumor in Mr. Thompson's right lower lung using radiofrequency energy. We used a navigation system and a special CT scan in the operating room to place the probe exactly in the center of the tumor. We heated the tumor to 90 degrees Celsius for a total of 14 minutes. The ultrasound afterwards showed the tumor had been successfully treated.",
+    "note_text": "We performed a procedure to burn a tumor in Mr. <PERSON>'s right lower lung using radiofrequency energy. We used a navigation system and a special CT scan in the operating room to place the probe exactly in the center of the tumor. We heated the tumor to 90 degrees Celsius for a total of 14 minutes. The ultrasound afterwards showed the tumor had been successfully treated.",
     "cpt_codes": [
       31641,
       31654,
@@ -1623,6 +1653,12 @@
       "style_type": 8,
       "generated_name": "Edward Rodriguez",
       "generation_date": "2025-12-09T09:20:17.516098"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2103,7 +2139,7 @@
     }
   },
   {
-    "note_text": "bronch note david kim... lul ggo 9mm... used the navigation system got right to it... radial ebus confirmed concentric view... took a bunch of samples tbna biopsy brush... patient tolerated it well no bleeding no pneumothorax... path pending.",
+    "note_text": "bronch note <PERSON>... lul ggo 9mm... used the navigation system got right to it... radial ebus confirmed concentric view... took a bunch of samples tbna biopsy brush... patient tolerated it well no bleeding no pneumothorax... path pending.",
     "cpt_codes": [
       31623,
       31629,
@@ -2196,6 +2232,12 @@
       "style_type": 5,
       "generated_name": "Jeffrey Young",
       "generation_date": "2025-12-09T09:20:17.516248"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2391,7 +2433,7 @@
     }
   },
   {
-    "note_text": "Mr. Kim underwent a navigation bronchoscopy to biopsy a small, hazy nodule in his left upper lung. We kept him awake with just numbing medicine. Using a computerized guidance system, we steered a catheter to the nodule and confirmed we were in the right spot with ultrasound. We took needle samples, biopsies, and brushings. He did well with no collapsed lung.",
+    "note_text": "Mr. <PERSON> underwent a navigation bronchoscopy to biopsy a small, hazy nodule in his left upper lung. We kept him awake with just numbing medicine. Using a computerized guidance system, we steered a catheter to the nodule and confirmed we were in the right spot with ultrasound. We took needle samples, biopsies, and brushings. He did well with no collapsed lung.",
     "cpt_codes": [
       31623,
       31629,
@@ -2484,6 +2526,12 @@
       "style_type": 8,
       "generated_name": "Gary Wright",
       "generation_date": "2025-12-09T09:20:17.516319"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2832,7 +2880,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPt: Susan Taylor\nSteps:\n1. Scope in.\n2. Sampled 2R, 4R, 4L, 7, 11R.\n3. ROSE positive in 4R and 7.\n4. Others benign.\n5. Stable.\nPlan: Staging.",
+    "note_text": "Procedure: EBUS\nPt: <PERSON>\nSteps:\n1. Scope in.\n2. Sampled 2R, 4R, 4L, 7, 11R.\n3. ROSE positive in 4R and 7.\n4. Others benign.\n5. Stable.\nPlan: Staging.",
     "cpt_codes": [
       31653
     ],
@@ -2912,10 +2960,16 @@
       "style_type": 4,
       "generated_name": "Barbara Adams",
       "generation_date": "2025-12-09T09:20:17.516430"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "ebus note for susan taylor... did the full staging... hit 5 stations 2r 4r 4l 7 and 11r... rose said cancer in 4r and 7... rest looked reactive... patient did fine conscious sedation used... send for molecular markers.",
+    "note_text": "ebus note for <PERSON>... did the full staging... hit 5 stations 2r 4r 4l 7 and 11r... rose said cancer in 4r and 7... rest looked reactive... patient did fine conscious sedation used... send for molecular markers.",
     "cpt_codes": [
       31653
     ],
@@ -2995,6 +3049,12 @@
       "style_type": 5,
       "generated_name": "Elizabeth Baker",
       "generation_date": "2025-12-09T09:20:17.516449"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3164,7 +3224,7 @@
     }
   },
   {
-    "note_text": "Susan underwent an EBUS procedure to investigate enlarged lymph nodes. Since she couldn't have a PET scan, we sampled five different areas in her chest to be thorough. The pathologist in the room found cancer cells in the right paratracheal and subcarinal nodes. The other nodes were benign. We sent the samples for further genetic testing.",
+    "note_text": "<PERSON> underwent an EBUS procedure to investigate enlarged lymph nodes. Since she couldn't have a PET scan, we sampled five different areas in her chest to be thorough. The pathologist in the room found cancer cells in the right paratracheal and subcarinal nodes. The other nodes were benign. We sent the samples for further genetic testing.",
     "cpt_codes": [
       31653
     ],
@@ -3244,6 +3304,12 @@
       "style_type": 8,
       "generated_name": "Susan Carter",
       "generation_date": "2025-12-09T09:20:17.516512"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3618,7 +3684,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: Lisa Anderson\nProc: EMN Bronch\nSteps:\n1. Navigated to LLL.\n2. Radial probe: concentric view.\n3. 3 needle passes.\n4. 4 biopsies.\n5. 2 brushes.\n6. No pneumo on CXR.\nPlan: Clinic f/u.",
+    "note_text": "Resident Note\nPt: <PERSON>\nProc: EMN Bronch\nSteps:\n1. Navigated to LLL.\n2. Radial probe: concentric view.\n3. 3 needle passes.\n4. 4 biopsies.\n5. 2 brushes.\n6. No pneumo on CXR.\nPlan: Clinic f/u.",
     "cpt_codes": [
       31623,
       31629,
@@ -3711,10 +3777,16 @@
       "style_type": 4,
       "generated_name": "Karen Phillips",
       "generation_date": "2025-12-09T09:20:17.516630"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "nav bronch for lisa anderson... lll nodule 19mm... got there with the electromagnetic system... radial ebus looked good concentric... took needle biopsy and brush samples... fluoro used about 5 mins... patient stable no pneumothorax... discharge home.",
+    "note_text": "nav bronch for <PERSON>... lll nodule 19mm... got there with the electromagnetic system... radial ebus looked good concentric... took needle biopsy and brush samples... fluoro used about 5 mins... patient stable no pneumothorax... discharge home.",
     "cpt_codes": [
       31623,
       31629,
@@ -3807,6 +3879,12 @@
       "style_type": 5,
       "generated_name": "Betty Campbell",
       "generation_date": "2025-12-09T09:20:17.516701"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4002,7 +4080,7 @@
     }
   },
   {
-    "note_text": "Lisa had a navigation bronchoscopy for a spot in her lower left lung. We successfully guided our tools to the 19mm nodule and confirmed the location with ultrasound. We took multiple samples using a needle, forceps, and a brush. She recovered well and the chest x-ray showed no lung collapse.",
+    "note_text": "<PERSON> had a navigation bronchoscopy for a spot in her lower left lung. We successfully guided our tools to the 19mm nodule and confirmed the location with ultrasound. We took multiple samples using a needle, forceps, and a brush. She recovered well and the chest x-ray showed no lung collapse.",
     "cpt_codes": [
       31623,
       31629,
@@ -4095,6 +4173,12 @@
       "style_type": 8,
       "generated_name": "Donna Edwards",
       "generation_date": "2025-12-09T09:20:17.516790"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4419,7 +4503,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS (Targeted)\nPt: Linda Thompson\nSteps:\n1. Scope to Stn 7.\n2. 5 needle passes.\n3. ROSE said adequate.\n4. Done.\nPlan: Path results.",
+    "note_text": "Procedure: EBUS (Targeted)\nPt: <PERSON>\nSteps:\n1. Scope to Stn 7.\n2. 5 needle passes.\n3. ROSE said adequate.\n4. Done.\nPlan: Path results.",
     "cpt_codes": [
       31652
     ],
@@ -4491,10 +4575,16 @@
       "style_type": 4,
       "generated_name": "Laura Rogers",
       "generation_date": "2025-12-09T09:20:17.516904"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "targeted ebus for linda thompson... just went for station 7 big node 31mm... took 5 samples rose said it was good... didn't check other nodes per oncology... patient tolerated fine.",
+    "note_text": "targeted ebus for <PERSON>... just went for station 7 big node 31mm... took 5 samples rose said it was good... didn't check other nodes per oncology... patient tolerated fine.",
     "cpt_codes": [
       31652
     ],
@@ -4566,6 +4656,12 @@
       "style_type": 5,
       "generated_name": "Sarah Reed",
       "generation_date": "2025-12-09T09:20:17.516924"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4719,7 +4815,7 @@
     }
   },
   {
-    "note_text": "Linda came in for a biopsy of a specific lymph node under her windpipe (Station 7). We focused only on this node as requested by her oncologist. It was large (31mm) and active on PET. We took 5 samples to ensure we have enough for genetic testing. The procedure went smoothly.",
+    "note_text": "<PERSON> came in for a biopsy of a specific lymph node under her windpipe (Station 7). We focused only on this node as requested by her oncologist. It was large (31mm) and active on PET. We took 5 samples to ensure we have enough for genetic testing. The procedure went smoothly.",
     "cpt_codes": [
       31652
     ],
@@ -4791,6 +4887,12 @@
       "style_type": 8,
       "generated_name": "Jessica Bell",
       "generation_date": "2025-12-09T09:20:17.516981"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5121,7 +5223,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS & Lung Biopsy\nPt: Frank Wilson\nSteps:\n1. EBUS: Sampled 4R and 7.\n2. RUL lesion: Forceps biopsy and brush.\n3. ROSE + for nodes.\n4. Stable.\nPlan: Oncology.",
+    "note_text": "Procedure: EBUS & Lung Biopsy\nPt: <PERSON>\nSteps:\n1. EBUS: Sampled 4R and 7.\n2. RUL lesion: Forceps biopsy and brush.\n3. ROSE + for nodes.\n4. Stable.\nPlan: Oncology.",
     "cpt_codes": [
       31652,
       31628,
@@ -5202,10 +5304,16 @@
       "style_type": 4,
       "generated_name": "Justin Richardson",
       "generation_date": "2025-12-09T09:20:17.517096"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "frank wilson bronch... did ebus first hit 4r and 7 both positive... then went to the rul lesion took biopsies and brushes... patient did fine ramsay 3... waiting on final path.",
+    "note_text": "<PERSON> bronch... did ebus first hit 4r and 7 both positive... then went to the rul lesion took biopsies and brushes... patient did fine ramsay 3... waiting on final path.",
     "cpt_codes": [
       31652,
       31628,
@@ -5286,6 +5394,12 @@
       "style_type": 5,
       "generated_name": "Brandon Cox",
       "generation_date": "2025-12-09T09:20:17.517119"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5373,7 +5487,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLung mass + Adenopathy.\n[Anesthesia]\nModerate Sedation.\n[Description]\n1. EBUS: 4R, 7 sampled (Positive).\n2. RUL Lesion: Biopsied and Brushed.\n[Plan]\nFollow-up.",
+    "note_text": "[Indication]\nLung mass + Adenopathy.\n[Anesthesia]\nModerate Sedation.\n[Description]\n1. EBUS: 4R, 7 sampled (Positive).\n2. RUL Lesion: Biopsied and <PERSON>.\n[Plan]\nFollow-up.",
     "cpt_codes": [
       31652,
       31628,
@@ -5454,10 +5568,16 @@
       "style_type": 7,
       "generated_name": "Gregory Ward",
       "generation_date": "2025-12-09T09:20:17.517161"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Frank underwent a combined procedure. We first used EBUS to check his lymph nodes; samples from stations 4R and 7 both looked like cancer on the preliminary check. We then moved the scope to biopsy the main mass in his right upper lung using forceps and a brush.",
+    "note_text": "<PERSON> underwent a combined procedure. We first used EBUS to check his lymph nodes; samples from stations 4R and 7 both looked like cancer on the preliminary check. We then moved the scope to biopsy the main mass in his right upper lung using forceps and a brush.",
     "cpt_codes": [
       31652,
       31628,
@@ -5538,6 +5658,12 @@
       "style_type": 8,
       "generated_name": "Samuel Torres",
       "generation_date": "2025-12-09T09:20:17.517183"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5702,7 +5828,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Rigid Bronchoscopy with Stent Extraction.\nINDICATION: Obstructed tracheal Y-stent.\nPROCEDURE: Significant granulation tissue was noted at the distal limbs of the Y-stent. Using rigid optical forceps, the stent was grasped and extracted intact. Following removal, cryotherapy was applied to the residual granulation tissue to restore airway patency. Significant tracheobronchomalacia was noted post-removal.",
+    "note_text": "OPERATIVE REPORT: Rigid Bronchoscopy with Stent Extraction.\nINDICATION: Obstructed tracheal Y-stent.\nPROCEDURE: Significant granulation tissue was noted at the distal limbs of the Y-stent. Using rigid optical forceps, the stent was grasped and extracted intact. Following removal, cryotherapy was applied to the residual granulation tissue to restore airway patency. Significant <PERSON> was noted post-removal.",
     "cpt_codes": [
       31638,
       31641
@@ -5776,6 +5902,12 @@
       "style_type": 2,
       "generated_name": "Jack Ramirez",
       "generation_date": "2025-12-09T09:20:17.517331"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5856,7 +5988,7 @@
     }
   },
   {
-    "note_text": "Procedure: Stent Removal\nPt: Robert Wiggins\nSteps:\n1. Rigid bronch in.\n2. Saw blocked stent (granulation).\n3. Pulled stent out with forceps.\n4. Froze the granulation tissue (Cryo).\n5. Airway floppy (TBM).\nPlan: Ward.",
+    "note_text": "Procedure: Stent Removal\nPt: <PERSON>\nSteps:\n1. Rigid bronch in.\n2. Saw blocked stent (granulation).\n3. Pulled stent out with forceps.\n4. Froze the granulation tissue (Cryo).\n5. Airway floppy (TBM).\nPlan: Ward.",
     "cpt_codes": [
       31638,
       31641
@@ -5930,10 +6062,16 @@
       "style_type": 4,
       "generated_name": "Jerry Watson",
       "generation_date": "2025-12-09T09:20:17.517377"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "op note for robert wiggins... stent removal... rigid scope used... granulation tissue blocking the stent ends... pulled the whole y stent out intact... then used cryo to treat the granulation tissue... airway collapses a lot without the stent... sending to pacu.",
+    "note_text": "op note for <PERSON>... stent removal... rigid scope used... granulation tissue blocking the stent ends... pulled the whole y stent out intact... then used cryo to treat the granulation tissue... airway collapses a lot without the stent... sending to pacu.",
     "cpt_codes": [
       31638,
       31641
@@ -6007,6 +6145,12 @@
       "style_type": 5,
       "generated_name": "Tyler Brooks",
       "generation_date": "2025-12-09T09:20:17.517400"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6164,7 +6308,7 @@
     }
   },
   {
-    "note_text": "Robert needed his airway stent removed because tissue was growing over the ends and blocking it. We used a rigid scope to carefully pull the Y-shaped stent out. After it was out, we used a freezing probe (cryotherapy) to treat the overgrowth tissue. His airway is very floppy without the stent, but we are giving him a break from the device to let things heal.",
+    "note_text": "<PERSON> needed his airway stent removed because tissue was growing over the ends and blocking it. We used a rigid scope to carefully pull the Y-shaped stent out. After it was out, we used a freezing probe (cryotherapy) to treat the overgrowth tissue. His airway is very floppy without the stent, but we are giving him a break from the device to let things heal.",
     "cpt_codes": [
       31638,
       31641
@@ -6238,6 +6382,12 @@
       "style_type": 8,
       "generated_name": "Douglas Price",
       "generation_date": "2025-12-09T09:20:17.517461"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6609,7 +6759,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: Jennifer Lee\nProc: Nav Bronch\nSteps:\n1. Nav to RLL.\n2. REBUS: Concentric.\n3. Samples: Needle, Bx, Brush.\n4. CXR: Small pneumo.\n5. Pt stable.\nPlan: Obs x4hr then home.",
+    "note_text": "Resident Note\nPt: <PERSON>\nProc: Nav Bronch\nSteps:\n1. Nav to RLL.\n2. REBUS: Concentric.\n3. Samples: Needle, Bx, Brush.\n4. CXR: Small pneumo.\n5. Pt stable.\nPlan: Obs x4hr then home.",
     "cpt_codes": [
       31623,
       31629,
@@ -6703,10 +6853,16 @@
       "style_type": 4,
       "generated_name": "Brenda Henderson",
       "generation_date": "2025-12-09T09:20:17.517579"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "nav bronch jennifer lee... rll nodule... took a while to find it had to reposition... eventually got concentric view... took all the samples... patient got a small pneumothorax about 10 percent... watched her for 4 hours she was fine... discharged.",
+    "note_text": "nav bronch <PERSON>... rll nodule... took a while to find it had to reposition... eventually got concentric view... took all the samples... patient got a small pneumothorax about 10 percent... watched her for 4 hours she was fine... discharged.",
     "cpt_codes": [
       31623,
       31629,
@@ -6800,6 +6956,12 @@
       "style_type": 5,
       "generated_name": "Amy Coleman",
       "generation_date": "2025-12-09T09:20:17.517609"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6997,7 +7159,7 @@
     }
   },
   {
-    "note_text": "Jennifer underwent a navigation procedure for a nodule in her right lower lung. It took a couple of tries to align the catheter perfectly, but we eventually got a good ultrasound view. We took multiple samples. Afterward, the x-ray showed a small lung collapse (pneumothorax), but it was minor enough that she didn't need a chest tube and went home after a few hours of monitoring.",
+    "note_text": "<PERSON> underwent a navigation procedure for a nodule in her right lower lung. It took a couple of tries to align the catheter perfectly, but we eventually got a good ultrasound view. We took multiple samples. Afterward, the x-ray showed a small lung collapse (pneumothorax), but it was minor enough that she didn't need a chest tube and went home after a few hours of monitoring.",
     "cpt_codes": [
       31623,
       31629,
@@ -7091,6 +7253,12 @@
       "style_type": 8,
       "generated_name": "Virginia Powell",
       "generation_date": "2025-12-09T09:20:17.517678"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7434,7 +7602,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS (Lymphoma)\nPt: Barbara Wilson\nSteps:\n1. Sampled 4R, 4L, 7, 10R.\n2. Put samples in pink fluid (Flow).\n3. ROSE said lymphoma.\n4. No issues.\nPlan: Heme/Onc.",
+    "note_text": "Procedure: EBUS (Lymphoma)\nPt: <PERSON>\nSteps:\n1. Sampled 4R, 4L, 7, 10R.\n2. Put samples in pink fluid (Flow).\n3. ROSE said lymphoma.\n4. No issues.\nPlan: Heme/Onc.",
     "cpt_codes": [
       31653
     ],
@@ -7512,10 +7680,16 @@
       "style_type": 4,
       "generated_name": "Amanda Washington",
       "generation_date": "2025-12-09T09:20:17.517782"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "ebus for barbara wilson... new lymphoma dx... need tissue for flow... hit 4 nodes 4r 4l 7 and 10r... sent everything fresh... rose saw the big cells... patient did fine.",
+    "note_text": "ebus for <PERSON>... new lymphoma dx... need tissue for flow... hit 4 nodes 4r 4l 7 and 10r... sent everything fresh... rose saw the big cells... patient did fine.",
     "cpt_codes": [
       31653
     ],
@@ -7593,6 +7767,12 @@
       "style_type": 5,
       "generated_name": "Stephanie Butler",
       "generation_date": "2025-12-09T09:20:17.517820"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7758,7 +7938,7 @@
     }
   },
   {
-    "note_text": "Barbara needed an EBUS to stage her Hodgkin lymphoma. We sampled lymph nodes on both sides of the trachea and under the carina. Because it's lymphoma, we had to handle the samples carefully, putting them in a special solution for flow cytometry testing. The preliminary look in the room confirmed the presence of lymphoma cells.",
+    "note_text": "<PERSON> needed an EBUS to stage her Hodgkin lymphoma. We sampled lymph nodes on both sides of the trachea and under the carina. Because it's lymphoma, we had to handle the samples carefully, putting them in a special solution for flow cytometry testing. The preliminary look in the room confirmed the presence of lymphoma cells.",
     "cpt_codes": [
       31653
     ],
@@ -7836,6 +8016,12 @@
       "style_type": 8,
       "generated_name": "Marie Gonzales",
       "generation_date": "2025-12-09T09:20:17.517883"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

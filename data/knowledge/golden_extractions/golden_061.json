@@ -11451,7 +11451,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: Leticia Rayos.\nProc: Ion Bronchoscopy + EBUS.\n1. EBUS-TBNA of stations 11L, 7, 11Rs.\n2. Navigation to RLL (RB10). rEBUS concentric.\n3. Samples: Needle, Forceps, Cryo, Brush.\n4. Fiducial placed.\n5. ROSE: Suspicious for malignancy.",
+    "note_text": "Procedure Note\nPatient: <PERSON>\nProc: Ion Bronchoscopy + EBUS.\n1. EBUS-TBNA of stations 11L, 7, 11Rs.\n2. Navigation to RLL (RB10). rEBUS concentric.\n3. Samples: Needle, Forceps, Cryo, Brush.\n4. Fiducial placed.\n5. ROSE: Suspicious for malignancy.",
     "cpt_codes": [
       31653,
       31626,
@@ -12274,10 +12274,16 @@
       "style_type": 4,
       "generated_name": "Josephine March",
       "generation_date": "2025-12-18T19:20:18.057062"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Leticia came in for a lung nodule on the right side we used the robot to get there found it with the radar and the spinny CT scan took a bunch of samples needle forceps cryo brush and put a seed in there for radiation later then we did the ebus and sampled lymph nodes 7 11L and 11R everything went fine patient woke up okay.",
+    "note_text": "<PERSON> came in for a lung nodule on the right side we used the robot to get there found it with the radar and the spinny CT scan took a bunch of samples needle forceps cryo brush and put a seed in there for radiation later then we did the ebus and sampled lymph nodes 7 11L and 11R everything went fine patient woke up okay.",
     "cpt_codes": [
       31653,
       31626,
@@ -13100,6 +13106,12 @@
       "style_type": 5,
       "generated_name": "Francine Smith",
       "generation_date": "2025-12-18T19:20:18.057261"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -15581,7 +15593,7 @@
     }
   },
   {
-    "note_text": "Indication: Pulmonary nodule.\nProcedure: Robotic navigation and nodal staging.\nActions: We navigated to the RLL lesion. The lesion was sampled via needle, forceps, cryo, and brush. A marker was deployed. We then staged the mediastinum by aspirating nodes at stations 7, 11L, and 11Rs.",
+    "note_text": "Indication: <PERSON> nodule.\nProcedure: Robotic navigation and nodal staging.\nActions: We navigated to the RLL lesion. The lesion was sampled via needle, forceps, cryo, and brush. A marker was deployed. We then staged the mediastinum by aspirating nodes at stations 7, 11L, and 11Rs.",
     "cpt_codes": [
       31653,
       31626,
@@ -16404,6 +16416,12 @@
       "style_type": 9,
       "generated_name": "Stephanie Tanner",
       "generation_date": "2025-12-18T19:20:18.058027"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -19787,7 +19805,7 @@
     }
   },
   {
-    "note_text": "Young guy Rick Smith here for infiltrates maybe sarcoid we put him to sleep looked inside airways looked bumpy with the special light so we biopsied the carinas on both sides did a wash in the middle lobe then went down to the left lower lobe used the radar probe found the spot took biopsies then used the ebus scope to sample the subcarinal lymph node station 7 others looked okay so we left them alone.",
+    "note_text": "Young guy <PERSON> here for infiltrates maybe sarcoid we put him to sleep looked inside airways looked bumpy with the special light so we biopsied the carinas on both sides did a wash in the middle lobe then went down to the left lower lobe used the radar probe found the spot took biopsies then used the ebus scope to sample the subcarinal lymph node station 7 others looked okay so we left them alone.",
     "cpt_codes": [
       31652,
       31628,
@@ -20629,6 +20647,12 @@
       "style_type": 5,
       "generated_name": "Liam Neeson",
       "generation_date": "2025-12-18T19:20:18.059021"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -22322,7 +22346,7 @@
     }
   },
   {
-    "note_text": "Mr. Smith underwent bronchoscopy for evaluation of lung infiltrates. We noted nodular mucosal changes and performed endobronchial biopsies at multiple carinas. A bronchoalveolar lavage was conducted in the right middle lobe. We then directed our attention to the left lower lobe, using radial EBUS to guide transbronchial biopsies. Finally, we performed EBUS staging, sampling the subcarinal node (station 7) while inspecting other stations which did not require biopsy.",
+    "note_text": "Mr. <PERSON> underwent bronchoscopy for evaluation of lung infiltrates. We noted nodular mucosal changes and performed endobronchial biopsies at multiple carinas. A bronchoalveolar lavage was conducted in the right middle lobe. We then directed our attention to the left lower lobe, using radial EBUS to guide transbronchial biopsies. Finally, we performed EBUS staging, sampling the subcarinal node (station 7) while inspecting other stations which did not require biopsy.",
     "cpt_codes": [
       31652,
       31628,
@@ -23164,6 +23188,12 @@
       "style_type": 8,
       "generated_name": "Harry Potter",
       "generation_date": "2025-12-18T19:20:18.059626"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -24358,7 +24388,7 @@
     }
   },
   {
-    "note_text": "Billing Code: 32561 (Instillation of fibrinolytic agent, initial day).\nDate of Service: 12/16/2025.\nMedication: tPA 10mg / DNase 5mg.\nAccess: Existing chest tube (placed 12/15/2025).\nDiagnosis: Complicated pleural effusion.",
+    "note_text": "Billing Code: 32561 (Instillation of fibrinolytic agent, initial day).\nDate of Service: <DATE_TIME>.\nMedication: tPA 10mg / DNase 5mg.\nAccess: Existing chest tube (placed <DATE_TIME>).\nDiagnosis: Complicated pleural effusion.",
     "cpt_codes": [
       32561
     ],
@@ -24528,6 +24558,13 @@
       "style_type": 3,
       "generated_name": "Thomas Anderson",
       "generation_date": "2025-12-18T19:20:18.059969"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
     }
   },
   {
@@ -25223,7 +25260,7 @@
     }
   },
   {
-    "note_text": "Mr. Jordan requires fibrinolytic therapy for a loculated pleural effusion. We visited him at the bedside today to administer the first dose. We instilled tPA and DNase through his existing right chest tube without difficulty. The patient denied discomfort. We will continue with the fibrinolysis protocol.",
+    "note_text": "Mr. <PERSON> requires fibrinolytic therapy for a loculated pleural effusion. We visited him at the bedside today to administer the first dose. We instilled tPA and DNase through his existing right chest tube without difficulty. The patient denied discomfort. We will continue with the fibrinolysis protocol.",
     "cpt_codes": [
       32561
     ],
@@ -25393,6 +25430,12 @@
       "style_type": 8,
       "generated_name": "George Costanza",
       "generation_date": "2025-12-18T19:20:18.060302"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

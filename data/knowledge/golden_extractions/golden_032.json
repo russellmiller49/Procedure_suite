@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Procedure: EBUS-TBNA + Forceps Biopsy.\n- Stations 4R and 7 sampled.\n- 4R: 21G needle x3, Mini-forceps x4.\n- 7: Mini-forceps x3.\n- ROSE: Granulomatous inflammation.\n- No complications.",
+    "note_text": "Procedure: EBUS-TBNA + Forceps Biopsy.\n- Stations 4R and 7 sampled.\n- 4R: 21G needle x3, <PERSON>-forceps x4.\n- 7: Mini-forceps x3.\n- ROSE: Granulomatous inflammation.\n- No complications.",
     "cpt_codes": [
       31652
     ],
@@ -90,6 +90,12 @@
       "style_type": 1,
       "generated_name": "Robert Smith",
       "generation_date": "2025-12-09T09:20:01.597362"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -651,7 +657,7 @@
     }
   },
   {
-    "note_text": "Mr. Anderson was brought to the bronchoscopy suite for investigation of his mediastinal adenopathy. We used an EBUS scope to localize stations 4R and 7. Because standard needle aspiration was inconclusive, we utilized a mini-forceps technique to obtain larger tissue cores from inside the nodes. This successfully yielded diagnostic tissue showing granulomas.",
+    "note_text": "Mr. <PERSON> was brought to the bronchoscopy suite for investigation of his mediastinal adenopathy. We used an EBUS scope to localize stations 4R and 7. Because standard needle aspiration was inconclusive, we utilized a mini-forceps technique to obtain larger tissue cores from inside the nodes. This successfully yielded diagnostic tissue showing granulomas.",
     "cpt_codes": [
       31652
     ],
@@ -741,6 +747,12 @@
       "style_type": 8,
       "generated_name": "Joseph Davis",
       "generation_date": "2025-12-09T09:20:01.597559"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -1425,7 +1437,7 @@
     }
   },
   {
-    "note_text": "Ms. O'Sullivan presented with worsening dyspnea due to a large right pleural effusion. We performed an ultrasound-guided thoracentesis. The fluid was serosanguinous, likely due to her anticoagulation status, but we successfully drained 1.4 liters. She felt much better immediately after.",
+    "note_text": "Ms. <PERSON> presented with worsening dyspnea due to a large right pleural effusion. We performed an ultrasound-guided thoracentesis. The fluid was serosanguinous, likely due to her anticoagulation status, but we successfully drained 1.4 liters. She felt much better immediately after.",
     "cpt_codes": [
       32555
     ],
@@ -1506,6 +1518,12 @@
       "style_type": 8,
       "generated_name": "Jessica Taylor",
       "generation_date": "2025-12-09T09:20:01.597779"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -2188,7 +2206,7 @@
     }
   },
   {
-    "note_text": "Mr. Thompson had severe tumor ingrowth blocking his windpipe and main airways. We performed a rigid bronchoscopy. After clearing out the tumor with heat and freezing probes, we placed a silicone Y-shaped stent. This successfully propped his airways open.",
+    "note_text": "Mr. <PERSON> had severe tumor ingrowth blocking his windpipe and main airways. We performed a rigid bronchoscopy. After clearing out the tumor with heat and freezing probes, we placed a silicone Y-shaped stent. This successfully propped his airways open.",
     "cpt_codes": [
       31631,
       31641
@@ -2270,6 +2288,12 @@
       "style_type": 8,
       "generated_name": "Steven Sanchez",
       "generation_date": "2025-12-09T09:20:01.597981"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3107,7 +3131,7 @@
     }
   },
   {
-    "note_text": "We used the Ion robot to navigate to Mr. Anderson's lung nodule. Once we reached the spot in the right upper lobe, we used ultrasound to confirm we were in the lesion. We took several samples, and the pathologist in the room confirmed it was cancer.",
+    "note_text": "We used the Ion robot to navigate to Mr. <PERSON>'s lung nodule. Once we reached the spot in the right upper lobe, we used ultrasound to confirm we were in the lesion. We took several samples, and the pathologist in the room confirmed it was cancer.",
     "cpt_codes": [
       31628,
       31627,
@@ -3211,6 +3235,12 @@
       "style_type": 8,
       "generated_name": "Kimberly Wright",
       "generation_date": "2025-12-09T09:20:01.598217"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -3860,7 +3890,7 @@
     }
   },
   {
-    "note_text": "Mr. Bradford has a recurring fluid buildup due to mesothelioma. To help him breathe better at home, we placed a permanent PleurX drainage tube. We drained over a liter of fluid during the procedure, and he will now be managed by hospice nurses.",
+    "note_text": "Mr. <PERSON> has a recurring fluid buildup due to mesothelioma. To help him breathe better at home, we placed a permanent PleurX drainage tube. We drained over a liter of fluid during the procedure, and he will now be managed by hospice nurses.",
     "cpt_codes": [
       32550
     ],
@@ -3934,6 +3964,12 @@
       "style_type": 8,
       "generated_name": "Ronald Baker",
       "generation_date": "2025-12-09T09:20:01.598411"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -4665,7 +4701,7 @@
     }
   },
   {
-    "note_text": "We performed a pleuroscopy to look inside Mr. Torres's chest cavity. We found some suspicious thickened areas on the lining of the chest wall and took biopsies. To prevent the fluid from coming back, we sprayed talc powder inside and left a chest tube in place.",
+    "note_text": "We performed a pleuroscopy to look inside Mr. <PERSON>'s chest cavity. We found some suspicious thickened areas on the lining of the chest wall and took biopsies. To prevent the fluid from coming back, we sprayed talc powder inside and left a chest tube in place.",
     "cpt_codes": [
       32650
     ],
@@ -4755,6 +4791,12 @@
       "style_type": 8,
       "generated_name": "Stephanie Evans",
       "generation_date": "2025-12-09T09:20:01.598709"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5537,7 +5579,7 @@
     }
   },
   {
-    "note_text": "Ms. Garcia needed staging for her lung cancer. We used EBUS to check the lymph nodes in the center of her chest. Unfortunately, we found cancer cells in lymph nodes on both sides of the chest (stations 7, 4L, 10L, 11L), which confirms advanced stage disease.",
+    "note_text": "Ms. <PERSON> needed staging for her lung cancer. We used EBUS to check the lymph nodes in the center of her chest. Unfortunately, we found cancer cells in lymph nodes on both sides of the chest (stations 7, 4L, 10L, 11L), which confirms advanced stage disease.",
     "cpt_codes": [
       31653
     ],
@@ -5632,6 +5674,12 @@
       "style_type": 8,
       "generated_name": "Jonathan Morris",
       "generation_date": "2025-12-09T09:20:01.599019"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -6636,7 +6684,7 @@
     }
   },
   {
-    "note_text": "We used the Ion robot to biopsy a nodule in Mr. Rodriguez's right lower lobe. We confirmed the location with ultrasound and took several samples. The preliminary results were suspicious, so we are waiting for the final pathology report.",
+    "note_text": "We used the Ion robot to biopsy a nodule in Mr. <PERSON>'s right lower lobe. We confirmed the location with ultrasound and took several samples. The preliminary results were suspicious, so we are waiting for the final pathology report.",
     "cpt_codes": [
       31647
     ],
@@ -6762,6 +6810,12 @@
       "style_type": 8,
       "generated_name": "Anna Bailey",
       "generation_date": "2025-12-09T09:20:01.599303"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -7398,7 +7452,7 @@
     }
   },
   {
-    "note_text": "Mr. Harris underwent a valve procedure to help his emphysema. We tested his left upper lobe and found it was a good target. We placed three one-way valves to block off that diseased part of the lung. He is breathing well and we are watching for a collapsed lung.",
+    "note_text": "Mr. <PERSON> underwent a valve procedure to help his emphysema. We tested his left upper lobe and found it was a good target. We placed three one-way valves to block off that diseased part of the lung. He is breathing well and we are watching for a collapsed lung.",
     "cpt_codes": [
       31622,
       31647
@@ -7467,6 +7521,12 @@
       "style_type": 8,
       "generated_name": "Benjamin Wood",
       "generation_date": "2025-12-09T09:20:01.599506"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
