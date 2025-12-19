@@ -240,7 +240,7 @@
     }
   },
   {
-    "note_text": "Service: Bronchoscopy with tumor excision (CPT 31640).\nMethod: Mechanical debulking only.\nTools: <PERSON>, Biopsy Forceps.\nTarget: Right Middle Lobe (RML) bronchus.\nDetails: Visualized obstructing mass. Used snare to resect bulk of tumor. Residual tissue removed with forceps. No laser or APC used. Hemostasis maintained with saline.\nJustification: Removal of obstructing tumor to restore airway patency.",
+    "note_text": "Service: Bronchoscopy with tumor excision (CPT 31640).\nMethod: Mechanical debulking only.\nTools: Polypectomy Snare, Biopsy Forceps.\nTarget: Right Middle Lobe (RML) bronchus.\nDetails: Visualized obstructing mass. Used snare to resect bulk of tumor. Residual tissue removed with forceps. No laser or APC used. Hemostasis maintained with saline.\nJustification: Removal of obstructing tumor to restore airway patency.",
     "cpt_codes": [
       31640
     ],
@@ -354,12 +354,6 @@
       "style_type": 3,
       "generated_name": "Patient_Var_0_3",
       "generation_date": "2025-12-09T12:09:35.681833"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -480,7 +474,7 @@
     }
   },
   {
-    "note_text": "patient is <PERSON> 38 female here for debulking of that carcinoid in the RML we used moderate sedation and an lma scope went down saw the tumor blocking about 70 percent used the snare to chop it out and then forceps to grab the rest no ablation or heat used just mechanical removing bleeding was minimal 20ml or so stopped with cold saline discharged home same day followup in a month",
+    "note_text": "patient is jessica williams 38 female here for debulking of that carcinoid in the RML we used moderate sedation and an lma scope went down saw the tumor blocking about 70 percent used the snare to chop it out and then forceps to grab the rest no ablation or heat used just mechanical removing bleeding was minimal 20ml or so stopped with cold saline discharged home same day followup in a month",
     "cpt_codes": [
       31640
     ],
@@ -594,16 +588,10 @@
       "style_type": 5,
       "generated_name": "Jessica Williams",
       "generation_date": "2025-12-09T12:09:35.681953"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY MECHANICAL DEBULKING OF CARCINOID Patient Amanda Brown 39-year-old female Date <DATE_TIME> Facility Lakeshore University Hospital Indication Endobronchial typical carcinoid in right middle lobe bronchus causing recurrent pneumonia Procedure Flexible bronchoscopy with mechanical debulking excision of carcinoid CPT 31640 Anesthesia Moderate sedation with propofol and fentanyl <PERSON> vascular mass at RML bronchus origin with 70% obstruction Interventions Snare resection and forceps debulking were used to mechanically excise and debulk the tumor No thermal ablation performed Hemostasis Controlled with cold saline short application of topical epinephrine EBL 20 mL Disposition Discharged home.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY MECHANICAL DEBULKING OF CARCINOID Patient <PERSON> 39-year-old female Date <DATE_TIME> Facility Lakeshore University Hospital Indication Endobronchial typical carcinoid in right middle lobe bronchus causing recurrent pneumonia Procedure Flexible bronchoscopy with mechanical debulking excision of carcinoid CPT 31640 Anesthesia Moderate sedation with propofol and fentanyl Findings Rounded vascular mass at RML bronchus origin with 70% obstruction Interventions Snare resection and forceps debulking were used to mechanically excise and debulk the tumor No thermal ablation performed Hemostasis Controlled with cold saline short application of topical epinephrine EBL 20 mL Disposition Discharged home.",
     "cpt_codes": [
       31640
     ],
@@ -721,8 +709,8 @@
     "scrub_metadata": {
       "entities_redacted": 2,
       "entity_types": [
-        "DATE_TIME",
-        "PERSON"
+        "PERSON",
+        "DATE_TIME"
       ]
     }
   },
@@ -844,7 +832,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> presented for bronchoscopic management of her RML carcinoid. Under moderate sedation, we advanced the flexible bronchoscope and located the tumor, which was causing significant obstruction. We proceeded to remove the tumor mechanically. First, we used a snare to resect the bulk of the mass, followed by forceps to clean up the remaining tissue. We did not use any thermal ablation devices. The bleeding was minor and easily managed with cold saline. She tolerated the procedure well.",
+    "note_text": "Ms. Ashley Wilson presented for bronchoscopic management of her RML carcinoid. Under moderate sedation, we advanced the flexible bronchoscope and located the tumor, which was causing significant obstruction. We proceeded to remove the tumor mechanically. First, we used a snare to resect the bulk of the mass, followed by forceps to clean up the remaining tissue. We did not use any thermal ablation devices. The bleeding was minor and easily managed with cold saline. She tolerated the procedure well.",
     "cpt_codes": [
       31640
     ],
@@ -958,12 +946,6 @@
       "style_type": 8,
       "generated_name": "Ashley Wilson",
       "generation_date": "2025-12-09T12:09:35.682058"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1201,7 +1183,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. <PERSON>, presenting with stridor secondary to a proximal tracheal neoplasm, underwent rigid bronchoscopy. The airway was secured, and the lesion—a sessile mass occluding 70% of the lumen—was visualized. Mechanical resection was executed utilizing the rigid bronchoscope barrel for coring, supplemented by forceps extraction and snare resection of pedunculated elements. Thermal modalities were strictly avoided. Hemostasis was spontaneous or assisted by cold saline lavage.",
+    "note_text": "OPERATIVE REPORT: Mr. James Anderson, presenting with stridor secondary to a proximal tracheal neoplasm, underwent rigid bronchoscopy. The airway was secured, and the lesion—a sessile mass occluding 70% of the lumen—was visualized. Mechanical resection was executed utilizing the rigid bronchoscope barrel for coring, supplemented by forceps extraction and snare resection of pedunculated elements. Thermal modalities were strictly avoided. Hemostasis was spontaneous or assisted by cold saline lavage.",
     "cpt_codes": [
       31640
     ],
@@ -1315,12 +1297,6 @@
       "style_type": 2,
       "generated_name": "James Anderson",
       "generation_date": "2025-12-09T12:09:35.682153"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1558,7 +1534,7 @@
     }
   },
   {
-    "note_text": "Procedure note for <PERSON> he has that tracheal tumor causing noisy breathing we took him to the OR for rigid bronchoscopy did the mechanical debulking used the rigid scope to core it out and forceps to grab the pieces also used a snare for a hanging part no balloons or burning used just mechanical removal bleeding was minimal 15ml he did fine extubated sent to pacu then home later",
+    "note_text": "Procedure note for William Taylor he has that tracheal tumor causing noisy breathing we took him to the OR for rigid bronchoscopy did the mechanical debulking used the rigid scope to core it out and forceps to grab the pieces also used a snare for a hanging part no balloons or burning used just mechanical removal bleeding was minimal 15ml he did fine extubated sent to pacu then home later",
     "cpt_codes": [
       31640
     ],
@@ -1672,16 +1648,10 @@
       "style_type": 5,
       "generated_name": "William Taylor",
       "generation_date": "2025-12-09T12:09:35.682246"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE MECHANICAL DEBULKING OF TRACHEAL TUMOR Patient <PERSON> 56-year-old male Date <DATE_TIME> Location Capital Regional Hospital Indication Proximal tracheal tumor with noisy breathing and exertional dyspnea Procedure Rigid bronchoscopy with mechanical debulking excision of proximal tracheal mass CPT 31640 Anesthesia General anesthesia with rigid tracheoscope ASA class III Findings Sessile tumor on anterior proximal tracheal wall narrowing lumen to 70% Interventions Rigid coring and forceps debulking removed most of the lesion Snare resection used to excise a pedunculated portion No ablation or balloon used Hemostasis Minimal controlled with cold saline EBL 15 mL.",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE MECHANICAL DEBULKING OF TRACHEAL TUMOR Patient David Thomas 56-year-old male Date <DATE_TIME> Location Capital Regional Hospital Indication Proximal tracheal tumor with noisy breathing and exertional dyspnea Procedure Rigid bronchoscopy with mechanical debulking excision of proximal tracheal mass CPT 31640 Anesthesia General anesthesia with rigid tracheoscope ASA class III Findings Sessile tumor on anterior proximal tracheal wall narrowing lumen to 70% Interventions Rigid coring and forceps debulking removed most of the lesion Snare resection used to excise a pedunculated portion No ablation or balloon used Hemostasis Minimal controlled with cold saline EBL 15 mL.",
     "cpt_codes": [
       31640
     ],
@@ -1797,9 +1767,8 @@
       "generation_date": "2025-12-09T12:09:35.682279"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
         "DATE_TIME"
       ]
     }
@@ -1922,7 +1891,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent rigid bronchoscopy to treat a tumor in his windpipe. Once he was asleep, we inserted the rigid scope and saw the mass blocking about 70% of the airway. We used the sharp edge of the scope to core through the tumor and forceps to pull the pieces out. We also used a snare to cut off a hanging piece. We didn't use any heat or balloons. The bleeding was very light and stopped with some cold saltwater. He went home the same day.",
+    "note_text": "Mr. Richard Hernandez underwent rigid bronchoscopy to treat a tumor in his windpipe. Once he was asleep, we inserted the rigid scope and saw the mass blocking about 70% of the airway. We used the sharp edge of the scope to core through the tumor and forceps to pull the pieces out. We also used a snare to cut off a hanging piece. We didn't use any heat or balloons. The bleeding was very light and stopped with some cold saltwater. He went home the same day.",
     "cpt_codes": [
       31640
     ],
@@ -2036,12 +2005,6 @@
       "style_type": 8,
       "generated_name": "Richard Hernandez",
       "generation_date": "2025-12-09T12:09:35.682337"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2279,7 +2242,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Therapeutic Rigid Bronchoscopy.\nINDICATION: Mr. <PERSON> presented with significant right mainstem bronchial obstruction secondary to non-small cell lung carcinoma.\nTECHNIQUE: Under general anesthesia, the rigid bronchoscope was introduced. The right mainstem bronchus was found to be 85% compromised by tumor burden. Mechanical recanalization was achieved via rigid coring and biopsy forceps excision. No thermal ablation or balloon dilation was required. Hemostasis was achieved with topical epinephrine and cold saline.",
+    "note_text": "PROCEDURE: Therapeutic Rigid Bronchoscopy.\nINDICATION: Mr. Charles Moore presented with significant right mainstem bronchial obstruction secondary to non-small cell lung carcinoma.\nTECHNIQUE: Under general anesthesia, the rigid bronchoscope was introduced. The right mainstem bronchus was found to be 85% compromised by tumor burden. Mechanical recanalization was achieved via rigid coring and biopsy forceps excision. No thermal ablation or balloon dilation was required. Hemostasis was achieved with topical epinephrine and cold saline.",
     "cpt_codes": [
       31640
     ],
@@ -2393,12 +2356,6 @@
       "style_type": 2,
       "generated_name": "Charles Moore",
       "generation_date": "2025-12-09T12:09:35.682437"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2636,7 +2593,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for the debulking of the right mainstem tumor its nsclc blocking about 85 percent used the rigid scope under general anesthesia to core it out and forceps to pull the rest we didnt use any ablation or balloons just mechanical debulking bleeding was moderate about 50ml controlled with epi and saline patient extubated and going to oncology floor",
+    "note_text": "Thomas White here for the debulking of the right mainstem tumor its nsclc blocking about 85 percent used the rigid scope under general anesthesia to core it out and forceps to pull the rest we didnt use any ablation or balloons just mechanical debulking bleeding was moderate about 50ml controlled with epi and saline patient extubated and going to oncology floor",
     "cpt_codes": [
       31640
     ],
@@ -2750,16 +2707,10 @@
       "style_type": 5,
       "generated_name": "Thomas White",
       "generation_date": "2025-12-09T12:09:35.682530"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT MECHANICAL DEBULKING Patient <PERSON> 67-year-old male Date <DATE_TIME> Hospital Pacific Coast Cancer Center Indication Malignant obstruction of right mainstem bronchus from non small cell lung cancer Procedure Rigid bronchoscopy with mechanical debulking of right mainstem tumor CPT 31640 Anesthesia General anesthesia rigid bronchoscope ASA class III <PERSON> narrowing right mainstem lumen by 85% with retained secretions Interventions Rigid coring and forceps debulking used to mechanically debulk and excise the tumor No ablation or balloon dilation employed Hemostasis Moderate oozing controlled with cold saline and epinephrine EBL 50 mL.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT MECHANICAL DEBULKING Patient <PERSON> 67-year-old male Date <DATE_TIME> Hospital Pacific Coast Cancer Center Indication Malignant obstruction of right mainstem bronchus from non small cell lung cancer Procedure Rigid bronchoscopy with mechanical debulking of right mainstem tumor CPT 31640 Anesthesia General anesthesia rigid bronchoscope ASA class III Findings Tumor narrowing right mainstem lumen by 85% with retained secretions Interventions Rigid coring and forceps debulking used to mechanically debulk and excise the tumor No ablation or balloon dilation employed Hemostasis Moderate oozing controlled with cold saline and epinephrine EBL 50 mL.",
     "cpt_codes": [
       31640
     ],
@@ -2875,11 +2826,10 @@
       "generation_date": "2025-12-09T12:09:35.682562"
     },
     "scrub_metadata": {
-      "entities_redacted": 3,
+      "entities_redacted": 2,
       "entity_types": [
         "PERSON",
-        "DATE_TIME",
-        "PERSON"
+        "DATE_TIME"
       ]
     }
   },
@@ -3001,7 +2951,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> needed a procedure to open up his right main airway, which was blocked by lung cancer. We used a rigid bronchoscope under general anesthesia. We mechanically cored out the tumor using the scope itself and removed the pieces with large forceps. We didn't need to burn or freeze anything. There was some oozing, but we stopped it with medication and cold water. He is being admitted to the oncology floor for recovery.",
+    "note_text": "Mr. Daniel Martin needed a procedure to open up his right main airway, which was blocked by lung cancer. We used a rigid bronchoscope under general anesthesia. We mechanically cored out the tumor using the scope itself and removed the pieces with large forceps. We didn't need to burn or freeze anything. There was some oozing, but we stopped it with medication and cold water. He is being admitted to the oncology floor for recovery.",
     "cpt_codes": [
       31640
     ],
@@ -3115,12 +3065,6 @@
       "style_type": 8,
       "generated_name": "Daniel Martin",
       "generation_date": "2025-12-09T12:09:35.682626"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3358,7 +3302,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Mrs. <PERSON>, a 62-year-old female with a tracheostomy, presented with dyspnea due to granulation tissue and tumor recurrence at the stoma site.\nPROCEDURE: Flexible bronchoscopy was performed through the tracheostomy. Inspection revealed nodular tumor and granulation tissue encroaching on the tracheal lumen. Mechanical excision was performed utilizing forceps and snare resection techniques. Thermal ablation was withheld. The airway caliber was significantly improved post-debulking.",
+    "note_text": "HISTORY: Mrs. Patricia Thompson, a 62-year-old female with a tracheostomy, presented with dyspnea due to granulation tissue and tumor recurrence at the stoma site.\nPROCEDURE: Flexible bronchoscopy was performed through the tracheostomy. Inspection revealed nodular tumor and granulation tissue encroaching on the tracheal lumen. Mechanical excision was performed utilizing forceps and snare resection techniques. Thermal ablation was withheld. The airway caliber was significantly improved post-debulking.",
     "cpt_codes": [
       31640
     ],
@@ -3472,12 +3416,6 @@
       "style_type": 2,
       "generated_name": "Patricia Thompson",
       "generation_date": "2025-12-09T12:09:35.682721"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3715,7 +3653,7 @@
     }
   },
   {
-    "note_text": "<PERSON> needing the bronchoscopy through her trach she has granulation and tumor growing there blocking the airway we used the flexible scope with moderate sedation used forceps to grab the tissue and a snare to cut it out mechanical removal only no ablation used bleeding was mild stopped with saline shes going back to the floor on her vent settings",
+    "note_text": "barbara martinez needing the bronchoscopy through her trach she has granulation and tumor growing there blocking the airway we used the flexible scope with moderate sedation used forceps to grab the tissue and a snare to cut it out mechanical removal only no ablation used bleeding was mild stopped with saline shes going back to the floor on her vent settings",
     "cpt_codes": [
       31640
     ],
@@ -3829,16 +3767,10 @@
       "style_type": 5,
       "generated_name": "Barbara Martinez",
       "generation_date": "2025-12-09T12:09:35.682816"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE MECHANICAL DEBULKING IN PATIENT WITH TRACHEOSTOMY Patient <PERSON> 63-year-old female Date <DATE_TIME> Location Coastal Veterans Hospital Indication Granulation tissue and tumor regrowth around tracheostomy stoma extending into tracheal lumen with dyspnea Procedure Flexible bronchoscopy via tracheostomy with mechanical debulking of granulation tumor CPT 31640 Anesthesia Sedation Moderate sedation midazolam fentanyl and topical lidocaine via tracheostomy Findings Granulation tissue and nodular tumor at distal tracheostomy site protruding into tracheal lumen 60% obstruction Interventions Forceps debulking and snare resection were used to mechanically excise granulation and tumor tissue No ablation used.",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE MECHANICAL DEBULKING IN PATIENT WITH TRACHEOSTOMY Patient Elizabeth Robinson 63-year-old female Date <DATE_TIME> Location Coastal Veterans Hospital Indication Granulation tissue and tumor regrowth around tracheostomy stoma extending into tracheal lumen with dyspnea Procedure Flexible bronchoscopy via tracheostomy with mechanical debulking of granulation tumor CPT 31640 Anesthesia Sedation Moderate sedation midazolam fentanyl and topical lidocaine via tracheostomy Findings Granulation tissue and nodular tumor at distal tracheostomy site protruding into tracheal lumen 60% obstruction Interventions Forceps debulking and snare resection were used to mechanically excise granulation and tumor tissue No ablation used.",
     "cpt_codes": [
       31640
     ],
@@ -3954,9 +3886,8 @@
       "generation_date": "2025-12-09T12:09:35.682846"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
         "DATE_TIME"
       ]
     }
@@ -4079,7 +4010,7 @@
     }
   },
   {
-    "note_text": "Mrs. <PERSON> has a tracheostomy and developed tissue growth blocking her windpipe. We went in with a flexible scope through her trach tube. We found a mix of tumor and granulation tissue blocking about 60% of the airway. We used forceps and a snare to mechanically cut and pull the tissue out. We didn't use any heat treatment. There was very little bleeding. She went back to her room on her usual ventilator settings.",
+    "note_text": "Mrs. Jennifer Clark has a tracheostomy and developed tissue growth blocking her windpipe. We went in with a flexible scope through her trach tube. We found a mix of tumor and granulation tissue blocking about 60% of the airway. We used forceps and a snare to mechanically cut and pull the tissue out. We didn't use any heat treatment. There was very little bleeding. She went back to her room on her usual ventilator settings.",
     "cpt_codes": [
       31640
     ],
@@ -4193,12 +4124,6 @@
       "style_type": 8,
       "generated_name": "Jennifer Clark",
       "generation_date": "2025-12-09T12:09:35.682908"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4436,7 +4361,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Ms. <PERSON> presented with near-complete obstruction of the left mainstem bronchus. Rigid bronchoscopy was undertaken. The bulky tumor was mechanically debulked utilizing the beveled tip of the rigid bronchoscope for coring, followed by forceps extraction. Final airway contouring was achieved with a microdebrider. No thermal energy was applied. Hemostasis was secured with epinephrine and saline lavage.",
+    "note_text": "OPERATIVE SUMMARY: Ms. Maria Rodriguez presented with near-complete obstruction of the left mainstem bronchus. Rigid bronchoscopy was undertaken. The bulky tumor was mechanically debulked utilizing the beveled tip of the rigid bronchoscope for coring, followed by forceps extraction. Final airway contouring was achieved with a microdebrider. No thermal energy was applied. Hemostasis was secured with epinephrine and saline lavage.",
     "cpt_codes": [
       31640
     ],
@@ -4550,12 +4475,6 @@
       "style_type": 2,
       "generated_name": "Maria Rodriguez",
       "generation_date": "2025-12-09T12:09:35.682999"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4793,7 +4712,7 @@
     }
   },
   {
-    "note_text": "procedure note for <PERSON> she has that left mainstem mass blocking almost everything 90 percent we did a rigid bronch under GA used the rigid scope to core through it and forceps to get the bulk then used the microdebrider to finish up mechanical removal only no burning or balloons bleeding was about 55ml controlled with meds shes going to step down",
+    "note_text": "procedure note for margaret lee she has that left mainstem mass blocking almost everything 90 percent we did a rigid bronch under GA used the rigid scope to core through it and forceps to get the bulk then used the microdebrider to finish up mechanical removal only no burning or balloons bleeding was about 55ml controlled with meds shes going to step down",
     "cpt_codes": [
       31640
     ],
@@ -4907,16 +4826,10 @@
       "style_type": 5,
       "generated_name": "Margaret Lee",
       "generation_date": "2025-12-09T12:09:35.683116"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY MECHANICAL DEBULKING OF LMS MASS Patient <PERSON> 65-year-old female Date <DATE_TIME> Hospital Seaside Oncology Center Indication Left mainstem endobronchial mass with near complete obstruction and dyspnea at rest Procedure Rigid bronchoscopy with mechanical debulking of left mainstem tumor CPT 31640 Anesthesia General anesthesia rigid bronchoscope ASA class III Findings Bulky tumor at left mainstem origin narrowing lumen 90% Interventions Rigid coring and forceps debulking were used to mechanically remove tumor Microdebrider used for final debulking No ablation Hemostasis Moderate oozing controlled with cold saline and epinephrine.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY MECHANICAL DEBULKING OF LMS MASS Patient Dorothy Walker 65-year-old female Date <DATE_TIME> Hospital Seaside Oncology Center Indication Left mainstem endobronchial mass with near complete obstruction and dyspnea at rest Procedure Rigid bronchoscopy with mechanical debulking of left mainstem tumor CPT 31640 Anesthesia General anesthesia rigid bronchoscope ASA class III Findings Bulky tumor at left mainstem origin narrowing lumen 90% Interventions Rigid coring and forceps debulking were used to mechanically remove tumor Microdebrider used for final debulking No ablation Hemostasis Moderate oozing controlled with cold saline and epinephrine.",
     "cpt_codes": [
       31640
     ],
@@ -5032,9 +4945,8 @@
       "generation_date": "2025-12-09T12:09:35.683148"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
         "DATE_TIME"
       ]
     }
@@ -5157,7 +5069,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> had a large tumor blocking her left main airway almost completely. We performed a rigid bronchoscopy to clear it. We mechanically cored out the tumor and removed large pieces with forceps. We also used a microdebrider tool to smooth out the airway. We didn't use any lasers or heat. The bleeding was moderate but we stopped it with medicine. She is going to the step-down unit for monitoring.",
+    "note_text": "Ms. Lisa Hall had a large tumor blocking her left main airway almost completely. We performed a rigid bronchoscopy to clear it. We mechanically cored out the tumor and removed large pieces with forceps. We also used a microdebrider tool to smooth out the airway. We didn't use any lasers or heat. The bleeding was moderate but we stopped it with medicine. She is going to the step-down unit for monitoring.",
     "cpt_codes": [
       31640
     ],
@@ -5271,12 +5183,6 @@
       "style_type": 8,
       "generated_name": "Lisa Hall",
       "generation_date": "2025-12-09T12:09:35.683209"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5514,7 +5420,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. <PERSON> underwent therapeutic flexible bronchoscopy for a polypoid endobronchial lesion within the superior segment of the right lower lobe bronchus. Mechanical excision was performed utilizing a wire snare for en bloc resection, followed by forceps debulking of the base. Thermal ablation was not required. The airway patency was successfully restored.",
+    "note_text": "PROCEDURE NOTE: Mr. Kenneth Young underwent therapeutic flexible bronchoscopy for a polypoid endobronchial lesion within the superior segment of the right lower lobe bronchus. Mechanical excision was performed utilizing a wire snare for en bloc resection, followed by forceps debulking of the base. Thermal ablation was not required. The airway patency was successfully restored.",
     "cpt_codes": [
       31640
     ],
@@ -5628,12 +5534,6 @@
       "style_type": 2,
       "generated_name": "Kenneth Young",
       "generation_date": "2025-12-09T12:09:35.683308"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5871,7 +5771,7 @@
     }
   },
   {
-    "note_text": "patient is <PERSON> 58 male here for that rll lesion causing pneumonia we did a flex bronch with moderate sedation used a snare to cut the polyp and forceps to grab the rest mechanical removal only no burning or balloons minimal bleeding 10cc discharged home follow up with ct later",
+    "note_text": "patient is edward king 58 male here for that rll lesion causing pneumonia we did a flex bronch with moderate sedation used a snare to cut the polyp and forceps to grab the rest mechanical removal only no burning or balloons minimal bleeding 10cc discharged home follow up with ct later",
     "cpt_codes": [
       31640
     ],
@@ -5985,16 +5885,10 @@
       "style_type": 5,
       "generated_name": "Edward King",
       "generation_date": "2025-12-09T12:09:35.683400"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE MECHANICAL DEBULKING OF RLL BRONCHUS LESION Patient <PERSON> 59-year-old male Date <DATE_TIME> Institution Highland Pulmonary Center Indication Right lower lobe endobronchial lesion with recurrent post obstructive pneumonia Procedure Flexible bronchoscopy with mechanical debulking excision of RLL bronchus lesion CPT 31640 Anesthesia Sedation Moderate sedation propofol fentanyl via LMA Findings Polypoid lesion at superior segment RLL bronchus with 70% obstruction Interventions Snare resection and forceps debulking used to mechanically remove the lesion No thermal ablation or balloon dilation Hemostasis Minimal controlled with cold saline.",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE MECHANICAL DEBULKING OF RLL BRONCHUS LESION <PERSON> 59-year-old male Date <DATE_TIME> Institution Highland Pulmonary Center Indication Right lower lobe endobronchial lesion with recurrent post obstructive pneumonia Procedure Flexible bronchoscopy with mechanical debulking excision of RLL bronchus lesion CPT 31640 Anesthesia Sedation Moderate sedation propofol fentanyl via LMA Findings Polypoid lesion at superior segment RLL bronchus with 70% obstruction Interventions Snare resection and forceps debulking used to mechanically remove the lesion No thermal ablation or balloon dilation Hemostasis Minimal controlled with cold saline.",
     "cpt_codes": [
       31640
     ],
@@ -6235,7 +6129,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> came in for a lesion in his right lower lung that was causing pneumonia. We used a flexible scope and moderate sedation. We mechanically removed the growth using a snare loop and forceps. We didn't need to use any heat to burn it. There was barely any bleeding. He went home after we watched him for a bit.",
+    "note_text": "Mr. Ronald Lopez came in for a lesion in his right lower lung that was causing pneumonia. We used a flexible scope and moderate sedation. We mechanically removed the growth using a snare loop and forceps. We didn't need to use any heat to burn it. There was barely any bleeding. He went home after we watched him for a bit.",
     "cpt_codes": [
       31640
     ],
@@ -6349,12 +6243,6 @@
       "style_type": 8,
       "generated_name": "Ronald Lopez",
       "generation_date": "2025-12-09T12:09:35.683488"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6592,7 +6480,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Ms. <PERSON> presented with a central airway obstruction involving the carina and left mainstem bronchus. Rigid bronchoscopy was performed. The tumor was mechanically debrided using the rigid coring technique and forceps excision to restore airway patency. No thermal ablation was utilized during this intervention. Hemostasis was adequate.",
+    "note_text": "OPERATIVE REPORT: Ms. Nancy Scott presented with a central airway obstruction involving the carina and left mainstem bronchus. Rigid bronchoscopy was performed. The tumor was mechanically debrided using the rigid coring technique and forceps excision to restore airway patency. No thermal ablation was utilized during this intervention. Hemostasis was adequate.",
     "cpt_codes": [
       31640
     ],
@@ -6706,12 +6594,6 @@
       "style_type": 2,
       "generated_name": "Nancy Scott",
       "generation_date": "2025-12-09T12:09:35.683584"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6949,7 +6831,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for the carinal tumor rigid bronchoscopy under general anesthesia saw the tumor blocking the left side and carina about 80 percent used the rigid scope to core it and forceps to pull it out mechanical debulking only no heat used bleeding was 40ml controlled well shes going to step down",
+    "note_text": "betty adams here for the carinal tumor rigid bronchoscopy under general anesthesia saw the tumor blocking the left side and carina about 80 percent used the rigid scope to core it and forceps to pull it out mechanical debulking only no heat used bleeding was 40ml controlled well shes going to step down",
     "cpt_codes": [
       31640
     ],
@@ -7063,16 +6945,10 @@
       "style_type": 5,
       "generated_name": "Betty Adams",
       "generation_date": "2025-12-09T12:09:35.683675"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING Patient <PERSON> 51-year-old female Date <DATE_TIME> Hospital Union Square Medical Center Indication Mixed carinal and left mainstem obstruction from endobronchial lung cancer Procedure Rigid bronchoscopy with mechanical debulking of carinal LMS tumor CPT 31640 Anesthesia General anesthesia rigid bronchoscope ASA class III <PERSON> projecting from left side of carina into LMS with 80% obstruction Interventions Rigid coring and forceps debulking to mechanically debulk tumor at carina and LMS No thermal ablation Hemostasis Controlled with cold saline and epinephrine EBL 40 mL.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING Patient Helen Baker 51-year-old female Date <DATE_TIME> Hospital Union Square Medical Center Indication Mixed carinal and left mainstem obstruction from endobronchial lung cancer Procedure Rigid bronchoscopy with mechanical debulking of carinal LMS tumor CPT 31640 Anesthesia General anesthesia rigid bronchoscope ASA class III Findings Tumor projecting from left side of carina into LMS with 80% obstruction Interventions Rigid coring and forceps debulking to mechanically debulk tumor at carina and LMS No thermal ablation Hemostasis Controlled with cold saline and epinephrine EBL 40 mL.",
     "cpt_codes": [
       31640
     ],
@@ -7188,11 +7064,9 @@
       "generation_date": "2025-12-09T12:09:35.683705"
     },
     "scrub_metadata": {
-      "entities_redacted": 3,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "PERSON"
+        "DATE_TIME"
       ]
     }
   },
@@ -7314,7 +7188,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> had a tumor growing at the split of her windpipe going into the left lung. We performed a rigid bronchoscopy to clear it out. We used the metal scope to core through the tumor and forceps to grab the chunks. We did this mechanically without using any heat or lasers. We controlled the bleeding with medicine and she is recovering in the step-down unit.",
+    "note_text": "Ms. Sandra Nelson had a tumor growing at the split of her windpipe going into the left lung. We performed a rigid bronchoscopy to clear it out. We used the metal scope to core through the tumor and forceps to grab the chunks. We did this mechanically without using any heat or lasers. We controlled the bleeding with medicine and she is recovering in the step-down unit.",
     "cpt_codes": [
       31640
     ],
@@ -7428,12 +7302,6 @@
       "style_type": 8,
       "generated_name": "Sandra Nelson",
       "generation_date": "2025-12-09T12:09:35.683840"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7671,7 +7539,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. <PERSON> presented with post-intubation tracheal stenosis. Flexible bronchoscopy revealed a circumferential ring of granulation tissue in the distal trachea. Mechanical excision was performed utilizing biopsy forceps and snare resection to restore luminal patency. No balloon dilation or thermal ablation was employed.",
+    "note_text": "PROCEDURE NOTE: Mr. Donald Carter presented with post-intubation tracheal stenosis. Flexible bronchoscopy revealed a circumferential ring of granulation tissue in the distal trachea. Mechanical excision was performed utilizing biopsy forceps and snare resection to restore luminal patency. No balloon dilation or thermal ablation was employed.",
     "cpt_codes": [
       31640
     ],
@@ -7785,12 +7653,6 @@
       "style_type": 2,
       "generated_name": "Donald Carter",
       "generation_date": "2025-12-09T12:09:35.683933"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8028,7 +7890,7 @@
     }
   },
   {
-    "note_text": "<PERSON> has that tracheal narrowing from his tube before we went in with the flex scope saw the granulation tissue blocking it used forceps and a snare to cut it out mechanical only no balloon or burning used bleeding was nothing really 5ml sent him home",
+    "note_text": "george perez has that tracheal narrowing from his tube before we went in with the flex scope saw the granulation tissue blocking it used forceps and a snare to cut it out mechanical only no balloon or burning used bleeding was nothing really 5ml sent him home",
     "cpt_codes": [
       31640
     ],
@@ -8142,16 +8004,10 @@
       "style_type": 5,
       "generated_name": "George Perez",
       "generation_date": "2025-12-09T12:09:35.684026"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE MECHANICAL DEBULKING Patient <PERSON> 73-year-old male Date <DATE_TIME> Facility Riverbend Community Hospital Indication Post intubation tracheal stenosis with progressive dyspnea Procedure Flexible bronchoscopy with mechanical debulking of granulation tissue CPT 31640 Anesthesia Sedation Moderate sedation with midazolam and fentanyl topical lidocaine <PERSON> circumferential granulation ring in distal trachea causing 60 to 70% narrowing Interventions Forceps debulking and snare resection used to mechanically excise granulation tissue No balloon or ablation Hemostasis Minimal controlled with cold saline.",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE MECHANICAL DEBULKING Patient <PERSON> 73-year-old male Date <DATE_TIME> Facility Riverbend Community Hospital Indication Post intubation tracheal stenosis with progressive dyspnea Procedure Flexible bronchoscopy with mechanical debulking of granulation tissue CPT 31640 Anesthesia Sedation Moderate sedation with midazolam and fentanyl topical lidocaine Findings Short circumferential granulation ring in distal trachea causing 60 to 70% narrowing Interventions Forceps debulking and snare resection used to mechanically excise granulation tissue No balloon or ablation Hemostasis Minimal controlled with cold saline.",
     "cpt_codes": [
       31640
     ],
@@ -8267,11 +8123,10 @@
       "generation_date": "2025-12-09T12:09:35.684056"
     },
     "scrub_metadata": {
-      "entities_redacted": 3,
+      "entities_redacted": 2,
       "entity_types": [
         "PERSON",
-        "DATE_TIME",
-        "PERSON"
+        "DATE_TIME"
       ]
     }
   },
@@ -8393,7 +8248,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had scar tissue growing in his windpipe from a previous breathing tube. We used a flexible scope to go down and remove it. We used small forceps and a snare to mechanically cut away the tissue. We didn't use a balloon or any heat. The airway opened up nicely, and there was hardly any bleeding. He went home the same day.",
+    "note_text": "Mr. Edward Turner had scar tissue growing in his windpipe from a previous breathing tube. We used a flexible scope to go down and remove it. We used small forceps and a snare to mechanically cut away the tissue. We didn't use a balloon or any heat. The airway opened up nicely, and there was hardly any bleeding. He went home the same day.",
     "cpt_codes": [
       31640
     ],
@@ -8507,12 +8362,6 @@
       "style_type": 8,
       "generated_name": "Edward Turner",
       "generation_date": "2025-12-09T12:09:35.684115"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8750,7 +8599,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Mr. <PERSON> underwent rigid bronchoscopy for a symptomatic left mainstem neoplasm. The lesion was friable and occlusive. Mechanical debulking was executed via rigid coring, forceps resection, and microdebrider application. Thermal ablation modalities were not utilized. Hemostasis was achieved pharmacologically and with lavage.",
+    "note_text": "OPERATIVE SUMMARY: Mr. Brian Campbell underwent rigid bronchoscopy for a symptomatic left mainstem neoplasm. The lesion was friable and occlusive. Mechanical debulking was executed via rigid coring, forceps resection, and microdebrider application. Thermal ablation modalities were not utilized. Hemostasis was achieved pharmacologically and with lavage.",
     "cpt_codes": [
       31640
     ],
@@ -8864,12 +8713,6 @@
       "style_type": 2,
       "generated_name": "Brian Campbell",
       "generation_date": "2025-12-09T12:09:35.684206"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9107,7 +8950,7 @@
     }
   },
   {
-    "note_text": "<PERSON> has the left mainstem tumor causing pneumonia we did the rigid bronchoscopy under GA cored it out with the scope used forceps and the microdebrider too mechanical only no heat used bleeding was 60ml controlled with epi admitted to the ward",
+    "note_text": "jason parker has the left mainstem tumor causing pneumonia we did the rigid bronchoscopy under GA cored it out with the scope used forceps and the microdebrider too mechanical only no heat used bleeding was 60ml controlled with epi admitted to the ward",
     "cpt_codes": [
       31640
     ],
@@ -9221,16 +9064,10 @@
       "style_type": 5,
       "generated_name": "Jason Parker",
       "generation_date": "2025-12-09T12:09:35.684293"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING Patient <PERSON> 64-year-old male Date <DATE_TIME> Hospital Meridian Cancer Institute Indication Left mainstem endobronchial tumor with recurrent post obstructive pneumonia and weight loss Procedure Rigid bronchoscopy with mechanical debulking excision of left mainstem tumor CPT 31640 Anesthesia General anesthesia rigid bronchoscope ASA class III Findings Friable LMS mass causing 80 to 85% obstruction Interventions Rigid coring forceps debulking and microdebrider used for mechanical debulking and excision No thermal methods Hemostasis Moderate oozing controlled with cold saline and epinephrine EBL 60 mL.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING Patient Kevin Evans 64-year-old male Date <DATE_TIME> Hospital Meridian Cancer Institute Indication Left mainstem endobronchial tumor with recurrent post obstructive pneumonia and weight loss Procedure Rigid bronchoscopy with mechanical debulking excision of left mainstem tumor CPT 31640 Anesthesia General anesthesia rigid bronchoscope ASA class III Findings Friable LMS mass causing 80 to 85% obstruction Interventions Rigid coring forceps debulking and microdebrider used for mechanical debulking and excision No thermal methods Hemostasis Moderate oozing controlled with cold saline and epinephrine EBL 60 mL.",
     "cpt_codes": [
       31640
     ],
@@ -9346,9 +9183,8 @@
       "generation_date": "2025-12-09T12:09:35.684326"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
         "DATE_TIME"
       ]
     }
@@ -9471,7 +9307,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a tumor blocking his left lung airway. We did a procedure with a rigid tube while he was asleep. We mechanically removed the tumor by coring it, pulling pieces out with forceps, and using a microdebrider tool. We avoided using any heat treatments. There was some bleeding which we stopped with medication. He is staying in the hospital for recovery.",
+    "note_text": "Mr. Jeffrey Edwards had a tumor blocking his left lung airway. We did a procedure with a rigid tube while he was asleep. We mechanically removed the tumor by coring it, pulling pieces out with forceps, and using a microdebrider tool. We avoided using any heat treatments. There was some bleeding which we stopped with medication. He is staying in the hospital for recovery.",
     "cpt_codes": [
       31640
     ],
@@ -9585,12 +9421,6 @@
       "style_type": 8,
       "generated_name": "Jeffrey Edwards",
       "generation_date": "2025-12-09T12:09:35.684385"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10308,7 +10138,7 @@
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE MECHANICAL DEBULKING IN PATIENT WITH MALIGNANT TRACHEAL TUMOR Patient <PERSON> 49-year-old female Date <DATE_TIME> Facility Horizon Academic Medical Center Indication Proximal mid tracheal tumor with progressive stridor and exertional dyspnea Procedure Rigid bronchoscopy with mechanical debulking excision of tracheal tumor CPT 31640 Anesthesia General anesthesia rigid bronchoscope ASA class III <PERSON> involving anterior and lateral walls of mid trachea causing 75% narrowing Interventions Rigid coring and forceps debulking used to mechanically debulk and excise tumor tissue Snare resection of a pedunculated component No thermal ablation Hemostasis Mild controlled with cold saline EBL 20 mL.",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE MECHANICAL DEBULKING IN PATIENT WITH MALIGNANT TRACHEAL TUMOR Patient Ashley Sanchez 49-year-old female Date <DATE_TIME> Facility Horizon Academic Medical Center Indication Proximal mid tracheal tumor with progressive stridor and exertional dyspnea Procedure Rigid bronchoscopy with mechanical debulking excision of tracheal tumor CPT 31640 Anesthesia General anesthesia rigid bronchoscope ASA class III Findings Tumor involving anterior and lateral walls of mid trachea causing 75% narrowing Interventions Rigid coring and forceps debulking used to mechanically debulk and excise tumor tissue Snare resection of a pedunculated component No thermal ablation Hemostasis Mild controlled with cold saline EBL 20 mL.",
     "cpt_codes": [
       31640
     ],
@@ -10424,11 +10254,9 @@
       "generation_date": "2025-12-09T12:09:35.684594"
     },
     "scrub_metadata": {
-      "entities_redacted": 3,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "PERSON"
+        "DATE_TIME"
       ]
     }
   },
@@ -10550,7 +10378,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> had a tumor in her windpipe causing difficulty breathing. We used a rigid scope to remove it while she was under anesthesia. We cut the tumor out mechanically using the scope edge, forceps, and a snare. We didn't use any heat. The bleeding was minor. She is breathing much better and will stay overnight in the step-down unit.",
+    "note_text": "Ms. Kimberly Rogers had a tumor in her windpipe causing difficulty breathing. We used a rigid scope to remove it while she was under anesthesia. We cut the tumor out mechanically using the scope edge, forceps, and a snare. We didn't use any heat. The bleeding was minor. She is breathing much better and will stay overnight in the step-down unit.",
     "cpt_codes": [
       31640
     ],
@@ -10664,12 +10492,6 @@
       "style_type": 8,
       "generated_name": "Kimberly Rogers",
       "generation_date": "2025-12-09T12:09:35.684651"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

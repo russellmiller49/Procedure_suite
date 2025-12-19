@@ -187,7 +187,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Mr. <PERSON>, a 73-year-old gentleman with metastatic adenocarcinoma, presented for management of a recalcitrant left pleural effusion.\nPROCEDURE: Under ultrasound guidance, the left hemithorax was accessed. A subcutaneous tunnel was fashioned to the anterior chest wall. A 15.5 French tunneled indwelling pleural catheter was advanced into the pleural space. Fluoroscopic verification demonstrated appropriate catheter lie. Spontaneous drainage of 1,350 mL of serous fluid was achieved without re-expansion edema.\nIMPRESSION: Successful IPC placement for palliative effusion management.",
+    "note_text": "HISTORY: Mr. Chen, a 73-year-old gentleman with metastatic adenocarcinoma, presented for management of a recalcitrant left pleural effusion.\nPROCEDURE: Under ultrasound guidance, the left hemithorax was accessed. A subcutaneous tunnel was fashioned to the anterior chest wall. A 15.5 French tunneled indwelling pleural catheter was advanced into the pleural space. Fluoroscopic verification demonstrated appropriate catheter lie. Spontaneous drainage of 1,350 mL of serous fluid was achieved without re-expansion edema.\nIMPRESSION: Successful IPC placement for palliative effusion management.",
     "cpt_codes": [
       32550
     ],
@@ -371,12 +371,6 @@
       "style_type": 2,
       "generated_name": "James Chen",
       "generation_date": "2025-12-09T10:33:33.703630"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -754,7 +748,7 @@
     }
   },
   {
-    "note_text": "Procedure note for mr <PERSON> needing the pleurx catheter left side lung cancer recurrent fluid. We marked it with ultrasound 5th intercostal space prepped with chlorhexidine numbed it up good tunnel made about 8 cm. Put the needle in got fluid wire went in easy. Dilated it up put the sheath in then the 15.5 french catheter. <PERSON> is in the tunnel good. Drained like 1350 of yellow fluid no blood. Patient tolerated it fine vitals stable. Spoke to wife about how to drain it at home.",
+    "note_text": "Procedure note for mr chen needing the pleurx catheter left side lung cancer recurrent fluid. We marked it with ultrasound 5th intercostal space prepped with chlorhexidine numbed it up good tunnel made about 8 cm. Put the needle in got fluid wire went in easy. Dilated it up put the sheath in then the 15.5 french catheter. Cuff is in the tunnel good. Drained like 1350 of yellow fluid no blood. Patient tolerated it fine vitals stable. Spoke to wife about how to drain it at home.",
     "cpt_codes": [
       32550
     ],
@@ -938,17 +932,10 @@
       "style_type": 5,
       "generated_name": "Thomas Wang",
       "generation_date": "2025-12-09T10:33:33.703783"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Left-sided indwelling pleural catheter placement was performed on <PERSON>. The patient has metastatic lung adenocarcinoma with recurrent effusion. Ultrasound confirmed a large free-flowing effusion. Under local anesthesia, a subcutaneous tunnel was created. A 15.5 French PleurX catheter was inserted using the Seldinger technique under ultrasound and fluoroscopic guidance. 1,350 mL of straw-colored fluid was drained. The catheter cuff was positioned within the tunnel. The patient tolerated the procedure well with no immediate complications.",
+    "note_text": "Left-sided indwelling pleural catheter placement was performed on Robert Chen. The patient has metastatic lung adenocarcinoma with recurrent effusion. Ultrasound confirmed a large free-flowing effusion. Under local anesthesia, a subcutaneous tunnel was created. A 15.5 French PleurX catheter was inserted using the Seldinger technique under ultrasound and fluoroscopic guidance. 1,350 mL of straw-colored fluid was drained. The catheter cuff was positioned within the tunnel. The patient tolerated the procedure well with no immediate complications.",
     "cpt_codes": [
       32550
     ],
@@ -1132,12 +1119,6 @@
       "style_type": 6,
       "generated_name": "Richard Yang",
       "generation_date": "2025-12-09T10:33:33.703830"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2272,7 +2253,7 @@
     }
   },
   {
-    "note_text": "Procedure: Right Medical Thoracoscopy\nPatient: <PERSON>\nSteps:\n1. MAC anesthesia. Left lat decubitus.\n2. US guidance -> 6th ICS access.\n3. Trocar placed. Scope inserted.\n4. Findings: extensive nodules.\n5. Biopsies: 12 total taken.\n6. Talc: 5g sprayed.\n7. Chest tube: 28Fr placed.\nPlan: Admit, watch chest tube output.",
+    "note_text": "Procedure: Right Medical Thoracoscopy\nPatient: Sandra Martinez\nSteps:\n1. MAC anesthesia. Left lat decubitus.\n2. US guidance -> 6th ICS access.\n3. Trocar placed. Scope inserted.\n4. Findings: extensive nodules.\n5. Biopsies: 12 total taken.\n6. Talc: 5g sprayed.\n7. Chest tube: 28Fr placed.\nPlan: Admit, watch chest tube output.",
     "cpt_codes": [
       32650
     ],
@@ -2459,16 +2440,10 @@
       "style_type": 4,
       "generated_name": "Ana Hernandez",
       "generation_date": "2025-12-09T10:33:33.704163"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for the scope procedure right side shes got breast cancer history. We went in with the camera right side 6th space saw tons of nodules everywhere looks like mets. took a bunch of biopsies to be sure. drained the fluid about 1.4 liters it was bloody. put in 5 grams of talc for the pleurodesis since the lung looked like it expanded okay. chest tube in 28 french secured with silk. she desatted a little bit during drainage but came right back up with oxygen.",
+    "note_text": "sandra martinez here for the scope procedure right side shes got breast cancer history. We went in with the camera right side 6th space saw tons of nodules everywhere looks like mets. took a bunch of biopsies to be sure. drained the fluid about 1.4 liters it was bloody. put in 5 grams of talc for the pleurodesis since the lung looked like it expanded okay. chest tube in 28 french secured with silk. she desatted a little bit during drainage but came right back up with oxygen.",
     "cpt_codes": [
       32650
     ],
@@ -2655,12 +2630,6 @@
       "style_type": 5,
       "generated_name": "Sofia Gonzalez",
       "generation_date": "2025-12-09T10:33:33.704209"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3044,7 +3013,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a right-sided pleuroscopy today. We accessed the chest wall and drained the fluid, which was bloody. Upon inserting the scope, it was immediately apparent that there were extensive nodules covering the lining of the lung and chest wall, consistent with her history of breast cancer. We took multiple biopsies for confirmation. Since the lung expanded well, we decided to proceed with talc pleurodesis to prevent the fluid from coming back. We sprayed 5 grams of talc and left a chest tube in place.",
+    "note_text": "Ms. Martinez underwent a right-sided pleuroscopy today. We accessed the chest wall and drained the fluid, which was bloody. Upon inserting the scope, it was immediately apparent that there were extensive nodules covering the lining of the lung and chest wall, consistent with her history of breast cancer. We took multiple biopsies for confirmation. Since the lung expanded well, we decided to proceed with talc pleurodesis to prevent the fluid from coming back. We sprayed 5 grams of talc and left a chest tube in place.",
     "cpt_codes": [
       32650
     ],
@@ -3231,12 +3200,6 @@
       "style_type": 8,
       "generated_name": "Rosa Ramirez",
       "generation_date": "2025-12-09T10:33:33.704370"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3991,7 +3954,7 @@
     }
   },
   {
-    "note_text": "Resident Note: Thoracentesis\nPatient: <PERSON>\nSide: Right\nSteps:\n1. Consent/Timeout.\n2. US check: fluid found 8th ICS.\n3. Lidocaine local.\n4. Needle in -> fluid return.\n5. Drained 1200cc via gravity.\n6. Stopped when patient felt pain.\n7. Bandage applied.\nPlan: Send fluid for cytology/cx.",
+    "note_text": "Resident Note: Thoracentesis\nPatient: Sarah Chen\nSide: Right\nSteps:\n1. Consent/Timeout.\n2. US check: fluid found 8th ICS.\n3. Lidocaine local.\n4. Needle in -> fluid return.\n5. Drained 1200cc via gravity.\n6. Stopped when patient felt pain.\n7. Bandage applied.\nPlan: Send fluid for cytology/cx.",
     "cpt_codes": [
       32550
     ],
@@ -4175,16 +4138,10 @@
       "style_type": 4,
       "generated_name": "Susan Zhang",
       "generation_date": "2025-12-09T10:33:33.704601"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure note <PERSON> 66 female right effusion. We did the tap at the bedside used ultrasound to find the spot 8th rib space. Numbed it up put the catheter in. Pulled off about 1200 mls of clear yellow fluid. She started saying her chest hurt a little so we stopped there. Ultrasound after showed lung sliding no pneumo. Sent fluid to lab.",
+    "note_text": "Procedure note sarah chen 66 female right effusion. We did the tap at the bedside used ultrasound to find the spot 8th rib space. Numbed it up put the catheter in. Pulled off about 1200 mls of clear yellow fluid. She started saying her chest hurt a little so we stopped there. Ultrasound after showed lung sliding no pneumo. Sent fluid to lab.",
     "cpt_codes": [
       32550
     ],
@@ -4368,12 +4325,6 @@
       "style_type": 5,
       "generated_name": "Margaret Wang",
       "generation_date": "2025-12-09T10:33:33.704647"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4751,7 +4702,7 @@
     }
   },
   {
-    "note_text": "We performed a thoracentesis on Ms. <PERSON> to relieve her shortness of breath. Using ultrasound, we found a large pocket of fluid on the right side. We were able to drain 1.2 liters of clear fluid. Towards the end, she mentioned some chest discomfort, which is common when the lung re-expands, so we decided to stop there. She felt better breathing-wise immediately after. We checked with ultrasound and didn't see any complications.",
+    "note_text": "We performed a thoracentesis on Ms. Chen to relieve her shortness of breath. Using ultrasound, we found a large pocket of fluid on the right side. We were able to drain 1.2 liters of clear fluid. Towards the end, she mentioned some chest discomfort, which is common when the lung re-expands, so we decided to stop there. She felt better breathing-wise immediately after. We checked with ultrasound and didn't see any complications.",
     "cpt_codes": [
       32550
     ],
@@ -4935,12 +4886,6 @@
       "style_type": 8,
       "generated_name": "Lisa Lin",
       "generation_date": "2025-12-09T10:33:33.704802"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5533,7 +5478,7 @@
     }
   },
   {
-    "note_text": "Code: 31653 (Bronchoscopy with EBUS sampling 3+ stations).\nStations Sampled: 2R, 4R, 7 (Total 3 distinct mediastinal stations).\nTechnique: Linear EBUS, 22G needle, multiple passes per station.\nResults: Malignancy confirmed in 4R. Benign/<LOCATION> in others.\nJustification: Staging of mediastinal adenopathy.",
+    "note_text": "Code: 31653 (Bronchoscopy with EBUS sampling 3+ stations).\nStations Sampled: 2R, 4R, 7 (Total 3 distinct mediastinal stations).\nTechnique: Linear EBUS, 22G needle, multiple passes per station.\nResults: Malignancy confirmed in 4R. Benign/Atypia in others.\nJustification: Staging of mediastinal adenopathy.",
     "cpt_codes": [
       31653
     ],
@@ -5731,16 +5676,10 @@
       "style_type": 3,
       "generated_name": "Luis Lopez",
       "generation_date": "2025-12-09T10:33:33.704994"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Procedure: EBUS-TBNA\nPatient: <PERSON>\nStations:\n- 2R: 5 passes (atypia)\n- 4R: 4 passes (Adeno CA)\n- 7: 3 passes (Benign)\nEquipment: 22G needle.\nComplications: None.\nPlan: Consult Onc.",
+    "note_text": "Procedure: EBUS-TBNA\nPatient: Roberto Martinez\nStations:\n- 2R: 5 passes (atypia)\n- 4R: 4 passes (Adeno CA)\n- 7: 3 passes (Benign)\nEquipment: 22G needle.\nComplications: None.\nPlan: Consult Onc.",
     "cpt_codes": [
       31653
     ],
@@ -5938,12 +5877,6 @@
       "style_type": 4,
       "generated_name": "Miguel Hernandez",
       "generation_date": "2025-12-09T10:33:33.705041"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6550,7 +6483,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent an EBUS procedure to investigate the enlarged lymph nodes in his chest. We focused on station 4R, which was quite large. The pathologist in the room confirmed cancer cells (adenocarcinoma) from that node. We also sampled stations 2R and 7 to complete the staging; those looked less concerning. The procedure went smoothly with no complications.",
+    "note_text": "Mr. Martinez underwent an EBUS procedure to investigate the enlarged lymph nodes in his chest. We focused on station 4R, which was quite large. The pathologist in the room confirmed cancer cells (adenocarcinoma) from that node. We also sampled stations 2R and 7 to complete the staging; those looked less concerning. The procedure went smoothly with no complications.",
     "cpt_codes": [
       31653
     ],
@@ -6748,16 +6681,10 @@
       "style_type": 8,
       "generated_name": "Manuel Ramirez",
       "generation_date": "2025-12-09T10:33:33.705229"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Endosonographic mediastinal staging.\nAction: Targeted needle aspiration of nodal stations 2R, 4R, and 7.\nFindings: Station 4R yielded malignant cells (Adenocarcinoma). Station 2R showed <LOCATION>. Station 7 appeared benign.\nOutcome: Confirmed malignancy in mediastinum.",
+    "note_text": "Procedure: Endosonographic mediastinal staging.\nAction: Targeted needle aspiration of nodal stations 2R, 4R, and 7.\nFindings: Station 4R yielded malignant cells (Adenocarcinoma). Station 2R showed atypia. Station 7 appeared benign.\nOutcome: Confirmed malignancy in mediastinum.",
     "cpt_codes": [
       31653
     ],
@@ -6955,12 +6882,6 @@
       "style_type": 9,
       "generated_name": "Pedro Torres",
       "generation_date": "2025-12-09T10:33:33.705276"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -8350,7 +8271,7 @@
     }
   },
   {
-    "note_text": "Little <PERSON> was brought to the OR because of the peanut she inhaled. We used a rigid bronchoscope to look into her lungs while she was asleep. We found the peanut piece stuck in the main tube leading to her right lung. Using special forceps, we were able to grab it and pull it out in one piece without it breaking apart. We checked again to make sure we got it all, and the airway looked clear.",
+    "note_text": "Little Emma was brought to the OR because of the peanut she inhaled. We used a rigid bronchoscope to look into her lungs while she was asleep. We found the peanut piece stuck in the main tube leading to her right lung. Using special forceps, we were able to grab it and pull it out in one piece without it breaking apart. We checked again to make sure we got it all, and the airway looked clear.",
     "cpt_codes": [
       31653
     ],
@@ -8545,12 +8466,6 @@
       "style_type": 8,
       "generated_name": "Harper Garcia",
       "generation_date": "2025-12-09T10:33:33.705660"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8752,7 +8667,7 @@
     }
   },
   {
-    "note_text": "Indication: Persistent R effusion, pneumonia.\nProc: US guided thoracentesis.\nFindings: Turbid fluid, loculations on US.\nAction: 420mL drained. pH 7.18, <PERSON> 32.\nAssessment: Complicated parapneumonic effusion.\nPlan: Consult Thoracic Surgery for VATS/Chest tube.",
+    "note_text": "Indication: Persistent R effusion, pneumonia.\nProc: US guided thoracentesis.\nFindings: Turbid fluid, loculations on US.\nAction: 420mL drained. pH 7.18, Glucose 32.\nAssessment: Complicated parapneumonic effusion.\nPlan: Consult Thoracic Surgery for VATS/Chest tube.",
     "cpt_codes": [
       31635
     ],
@@ -8941,12 +8856,6 @@
       "style_type": 1,
       "generated_name": "Priya Sharma",
       "generation_date": "2025-12-09T10:33:33.705755"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9334,7 +9243,7 @@
     }
   },
   {
-    "note_text": "Procedure: Thoracentesis\nPatient: <PERSON>\nSteps:\n1. US: complex fluid.\n2. Local numbing.\n3. Needle in.\n4. Fluid very thick/cloudy.\n5. Only got 420cc out.\n6. Labs: pH 7.18 (Bad).\nPlan: Needs chest tube or surgery. Admitting.",
+    "note_text": "Procedure: Thoracentesis\nPatient: Aisha Patel\nSteps:\n1. US: complex fluid.\n2. Local numbing.\n3. Needle in.\n4. Fluid very thick/cloudy.\n5. Only got 420cc out.\n6. Labs: pH 7.18 (Bad).\nPlan: Needs chest tube or surgery. Admitting.",
     "cpt_codes": [
       31635
     ],
@@ -9523,16 +9432,10 @@
       "style_type": 4,
       "generated_name": "Sana Khan",
       "generation_date": "2025-12-09T10:33:33.705895"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Did a tap on <PERSON> she has that pneumonia that wont go away. Fluid on the right side looked gross on ultrasound thick stuff. Put the needle in and it was cloudy yellow hard to pull out. Only got about 400 mls. Ran the pH right away it was 7.18 so thats an empyema or complicated effusion. She needs a tube or surgery cant just tap this. Admitting her.",
+    "note_text": "Did a tap on Ms Patel she has that pneumonia that wont go away. Fluid on the right side looked gross on ultrasound thick stuff. Put the needle in and it was cloudy yellow hard to pull out. Only got about 400 mls. Ran the pH right away it was 7.18 so thats an empyema or complicated effusion. She needs a tube or surgery cant just tap this. Admitting her.",
     "cpt_codes": [
       31635
     ],
@@ -9721,12 +9624,6 @@
       "style_type": 5,
       "generated_name": "Fatima Ali",
       "generation_date": "2025-12-09T10:33:33.705942"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10114,7 +10011,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> has a fluid collection that looks infected. We tried to drain it with a needle, but the fluid was very thick and cloudy. We only got a little bit out. The tests on the fluid confirm it's a complicated infection (low pH), so a simple needle drain isn't enough. She is going to need a chest tube or maybe a small surgery to clean it out properly.",
+    "note_text": "Ms. Patel has a fluid collection that looks infected. We tried to drain it with a needle, but the fluid was very thick and cloudy. We only got a little bit out. The tests on the fluid confirm it's a complicated infection (low pH), so a simple needle drain isn't enough. She is going to need a chest tube or maybe a small surgery to clean it out properly.",
     "cpt_codes": [
       31635
     ],
@@ -10303,12 +10200,6 @@
       "style_type": 8,
       "generated_name": "Kavita Patel",
       "generation_date": "2025-12-09T10:33:33.706087"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10692,7 +10583,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: The patient underwent rigid bronchoscopy for high-grade left mainstem stenosis secondary to granulomatosis with polyangiitis. Mechanical dilation and APC recanalization were attempted. During the procedure, a false lumen communicating with the pulmonary artery interface was suspected, and a pneumothorax developed. <PERSON> sealant was applied endobronchially. A left-sided thoracostomy tube was placed immediately for pneumothorax management. The patient was transferred to the ICU intubated.",
+    "note_text": "OPERATIVE SUMMARY: The patient underwent rigid bronchoscopy for high-grade left mainstem stenosis secondary to granulomatosis with polyangiitis. Mechanical dilation and APC recanalization were attempted. During the procedure, a false lumen communicating with the pulmonary artery interface was suspected, and a pneumothorax developed. Fibrin sealant was applied endobronchially. A left-sided thoracostomy tube was placed immediately for pneumothorax management. The patient was transferred to the ICU intubated.",
     "cpt_codes": [
       32555
     ],
@@ -10877,12 +10768,6 @@
       "style_type": 2,
       "generated_name": "Joshua Jackson",
       "generation_date": "2025-12-09T10:33:33.706230"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12787,7 +12672,7 @@
     }
   },
   {
-    "note_text": "Procedure: Right Pleuroscopy\nPatient: <PERSON>\nSteps:\n1. Local/MAC.\n2. Port placed 6th ICS.\n3. Drained 1250cc.\n4. Saw nodules everywhere.\n5. Biopsied (sent for flow).\n6. Sprayed Talc.\n7. Chest tube in.\nPlan: Ward, pain control, watch drainage.",
+    "note_text": "Procedure: Right Pleuroscopy\nPatient: Elizabeth Thompson\nSteps:\n1. Local/MAC.\n2. Port placed 6th ICS.\n3. Drained 1250cc.\n4. Saw nodules everywhere.\n5. Biopsied (sent for flow).\n6. Sprayed Talc.\n7. Chest tube in.\nPlan: Ward, pain control, watch drainage.",
     "cpt_codes": [
       31641,
       32551
@@ -12979,12 +12864,6 @@
       "style_type": 4,
       "generated_name": "Linda Brown",
       "generation_date": "2025-12-09T10:33:33.706866"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13573,7 +13452,7 @@
     }
   },
   {
-    "note_text": "Mrs. <PERSON> has had fluid come back multiple times, so we looked inside with a scope today. We found many small bumps on the lung surface and chest wall. We took samples of these to check for cancer or lymphoma. Since we were already there, we drained the fluid and put in talc powder to seal the space and prevent the fluid from coming back. She has a chest tube now and is recovering comfortably.",
+    "note_text": "Mrs. Thompson has had fluid come back multiple times, so we looked inside with a scope today. We found many small bumps on the lung surface and chest wall. We took samples of these to check for cancer or lymphoma. Since we were already there, we drained the fluid and put in talc powder to seal the space and prevent the fluid from coming back. She has a chest tube now and is recovering comfortably.",
     "cpt_codes": [
       31641,
       32551
@@ -13765,12 +13644,6 @@
       "style_type": 8,
       "generated_name": "Jessica Garcia",
       "generation_date": "2025-12-09T10:33:33.707058"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14542,7 +14415,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPatient: <PERSON>\nIndication: Staging RUL mass.\nNodes Sampled:\n1. 4R: Positive\n2. 7: Positive\n3. 10R: Benign\n4. 11R: Benign\nROSE: Adenocarcinoma.\nPlan: Chemo/Rad referral (N2 positive).",
+    "note_text": "Procedure: EBUS\nPatient: Michael Brown\nIndication: Staging RUL mass.\nNodes Sampled:\n1. 4R: Positive\n2. 7: Positive\n3. 10R: Benign\n4. 11R: Benign\nROSE: Adenocarcinoma.\nPlan: Chemo/Rad referral (N2 positive).",
     "cpt_codes": [
       32650
     ],
@@ -14730,12 +14603,6 @@
       "style_type": 4,
       "generated_name": "Michael Anderson",
       "generation_date": "2025-12-09T10:33:33.707299"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -15312,7 +15179,7 @@
     }
   },
   {
-    "note_text": "We performed an ultrasound bronchoscopy to see if Mr. <PERSON>'s lung cancer had spread to the lymph nodes in the center of his chest. Unfortunately, we found cancer cells in both the nodes near the windpipe (4R) and under the airway split (7). This places him at a more advanced stage than localized disease. We sampled some other nodes further out which were clear. We will set him up with the cancer doctors for chemotherapy and radiation.",
+    "note_text": "We performed an ultrasound bronchoscopy to see if Mr. Brown's lung cancer had spread to the lymph nodes in the center of his chest. Unfortunately, we found cancer cells in both the nodes near the windpipe (4R) and under the airway split (7). This places him at a more advanced stage than localized disease. We sampled some other nodes further out which were clear. We will set him up with the cancer doctors for chemotherapy and radiation.",
     "cpt_codes": [
       32650
     ],
@@ -15500,12 +15367,6 @@
       "style_type": 8,
       "generated_name": "Joseph Harris",
       "generation_date": "2025-12-09T10:33:33.707487"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

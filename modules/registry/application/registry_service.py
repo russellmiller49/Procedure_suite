@@ -144,6 +144,8 @@ class RegistryExtractionResult:
         coder_difficulty: Case difficulty (HIGH_CONF/GRAY_ZONE/LOW_CONF).
         coder_source: Where codes came from (ml_rules_fastpath/hybrid_llm_fallback).
         mapped_fields: Registry fields derived from CPT mapping.
+        code_rationales: Deterministic derivation rationales keyed by CPT code.
+        derivation_warnings: Warnings emitted during deterministic CPT derivation.
         warnings: Non-blocking warnings about the extraction.
         needs_manual_review: Whether this case requires human review.
         validation_errors: List of validation errors found during reconciliation.
@@ -155,6 +157,8 @@ class RegistryExtractionResult:
     coder_difficulty: str
     coder_source: str
     mapped_fields: dict[str, Any]
+    code_rationales: dict[str, str] = field(default_factory=dict)
+    derivation_warnings: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     needs_manual_review: bool = False
     validation_errors: list[str] = field(default_factory=list)
@@ -208,8 +212,8 @@ class RegistryService:
         """Get registry ML predictor with lazy initialization.
 
         Behavior:
-        - If MODEL_BACKEND is set to "pytorch" or "onnx", prefer that backend and
-          fall back to sklearn if unavailable.
+        - If MODEL_BACKEND is set to "onnx", require ONNX and fail fast if unavailable.
+        - If MODEL_BACKEND is set to "pytorch", prefer Torch and fall back to sklearn if unavailable.
         - Otherwise ("auto"), keep legacy behavior: try ONNX first (if available),
           then sklearn TF-IDF.
 
@@ -290,9 +294,14 @@ class RegistryService:
                 return self._registry_ml_predictor
         elif backend == "onnx":
             predictor = _try_onnx()
-            if predictor is not None:
-                self._registry_ml_predictor = predictor
-                return self._registry_ml_predictor
+            if predictor is None:
+                model_path = runtime_dir / "registry_model_int8.onnx"
+                raise RuntimeError(
+                    "MODEL_BACKEND=onnx but ONNXRegistryPredictor failed to initialize. "
+                    f"Expected model at {model_path}."
+                )
+            self._registry_ml_predictor = predictor
+            return self._registry_ml_predictor
         else:
             predictor = _try_onnx()
             if predictor is not None:
@@ -645,6 +654,16 @@ class RegistryService:
 
         return final_result
 
+    def extract_fields_extraction_first(self, note_text: str) -> RegistryExtractionResult:
+        """Extract registry fields using extraction-first flow.
+
+        This bypasses the hybrid-first pipeline and always runs:
+        1) Registry extraction
+        2) Deterministic Registry→CPT derivation
+        3) RAW-ML audit (if enabled)
+        """
+        return self._extract_fields_extraction_first(note_text)
+
     # -------------------------------------------------------------------------
     # Extraction-First Registry → Deterministic CPT → RAW-ML Audit
     # -------------------------------------------------------------------------
@@ -931,13 +950,17 @@ class RegistryService:
                     "but deterministic derivation missed it"
                 )
 
-        warnings = list(base_warnings) + list(derivation.warnings) + list(self_correct_warnings)
+        derivation_warnings = list(derivation.warnings)
+        warnings = list(base_warnings) + derivation_warnings + list(self_correct_warnings)
+        code_rationales = {c.code: c.rationale for c in derivation.codes}
         return RegistryExtractionResult(
             record=record,
             cpt_codes=derived_codes,
             coder_difficulty=coder_difficulty,
             coder_source="extraction_first",
             mapped_fields={},
+            code_rationales=code_rationales,
+            derivation_warnings=derivation_warnings,
             warnings=warnings,
             needs_manual_review=needs_manual_review,
             validation_errors=[],

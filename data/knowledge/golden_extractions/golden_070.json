@@ -300,7 +300,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronchial <PERSON>, single lobe (CPT 31660).\nTarget: Right Lower Lobe (RLL).\nTechnique: Flexible bronchoscopy. Alair catheter positioned in distal segmental bronchi. RF energy applied.\nUtilization: 52 distinct activations delivered to treat airway smooth muscle.\nMedical Necessity: Severe persistent asthma (J45.50) refractory to maximal medical therapy.\nOutcome: Procedure completed without significant adverse event.",
+    "note_text": "Procedure: Bronchial Thermoplasty, single lobe (CPT 31660).\nTarget: Right Lower Lobe (RLL).\nTechnique: Flexible bronchoscopy. Alair catheter positioned in distal segmental bronchi. RF energy applied.\nUtilization: 52 distinct activations delivered to treat airway smooth muscle.\nMedical Necessity: Severe persistent asthma (J45.50) refractory to maximal medical therapy.\nOutcome: Procedure completed without significant adverse event.",
     "cpt_codes": [
       31660
     ],
@@ -444,16 +444,10 @@
       "style_type": 3,
       "generated_name": "Susan Clark",
       "generation_date": "2025-12-08T14:00:31.018249"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Bronchial <PERSON> (RLL)\nAttending: Dr. Grant\nSteps:\n1. Time out. Mod sedation.\n2. Airway inspection: clear.\n3. Catheter to RLL.\n4. 52 activations delivered to segments/subsegments.\n5. Suctioned secretions.\nComplications: Mild cough.\nPlan: Discharge, return for LLL in 3 weeks.",
+    "note_text": "Procedure: Bronchial Thermoplasty (RLL)\nAttending: Dr. Grant\nSteps:\n1. Time out. Mod sedation.\n2. Airway inspection: clear.\n3. Catheter to RLL.\n4. 52 activations delivered to segments/subsegments.\n5. Suctioned secretions.\nComplications: Mild cough.\nPlan: Discharge, return for LLL in 3 weeks.",
     "cpt_codes": [
       31660
     ],
@@ -597,12 +591,6 @@
       "style_type": 4,
       "generated_name": "Jennifer Hall",
       "generation_date": "2025-12-08T14:00:31.018288"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1047,7 +1035,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> presented for her first bronchial thermoplasty session targeting the right lower lobe. After inducing moderate sedation, we advanced the bronchoscope and inspected the airway. We then utilized the thermoplasty catheter to treat the segmental and subsegmental airways of the RLL, delivering a total of 52 activations. We observed good tissue effect with blanching. The patient experienced some mild coughing during the energy delivery but remained stable throughout. She was discharged after a period of observation.",
+    "note_text": "Ms. Green presented for her first bronchial thermoplasty session targeting the right lower lobe. After inducing moderate sedation, we advanced the bronchoscope and inspected the airway. We then utilized the thermoplasty catheter to treat the segmental and subsegmental airways of the RLL, delivering a total of 52 activations. We observed good tissue effect with blanching. The patient experienced some mild coughing during the energy delivery but remained stable throughout. She was discharged after a period of observation.",
     "cpt_codes": [
       31660
     ],
@@ -1191,12 +1179,6 @@
       "style_type": 8,
       "generated_name": "Betty Scott",
       "generation_date": "2025-12-08T14:00:31.018443"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1494,7 +1476,7 @@
     }
   },
   {
-    "note_text": "INDICATION: Mr. <PERSON> presents with severe, biologic-refractory asthma for RLL bronchial thermoplasty.\nOPERATIVE REPORT: General anesthesia was induced and the airway secured. The right lower lobe bronchi were systematically treated utilizing the Alair thermoplasty system. A total of 49 activations were successfully delivered to the segmental and subsegmental airways, adhering to standard temperature and duration parameters. Post-treatment inspection revealed patent airways.\nCONCLUSION: Uncomplicated RLL thermoplasty.\nPLAN: Steroid taper and scheduled follow-up for the left side.",
+    "note_text": "INDICATION: Mr. King presents with severe, biologic-refractory asthma for RLL bronchial thermoplasty.\nOPERATIVE REPORT: General anesthesia was induced and the airway secured. The right lower lobe bronchi were systematically treated utilizing the Alair thermoplasty system. A total of 49 activations were successfully delivered to the segmental and subsegmental airways, adhering to standard temperature and duration parameters. Post-treatment inspection revealed patent airways.\nCONCLUSION: Uncomplicated RLL thermoplasty.\nPLAN: Steroid taper and scheduled follow-up for the left side.",
     "cpt_codes": [
       31660
     ],
@@ -1638,12 +1620,6 @@
       "style_type": 2,
       "generated_name": "William Baker",
       "generation_date": "2025-12-08T14:00:31.018615"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2088,7 +2064,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note. Procedure: Bronchial thermoplasty session 1 treating right lower lobe. Patient: <PERSON>, 50-year-old male. Anesthesia: General anesthesia with endotracheal intubation. Flexible bronchoscope passed through endotracheal tube. Bronchial thermoplasty catheter sequentially positioned in segmental and subsegmental right lower lobe bronchi. Forty-nine activations delivered respecting manufacturer-specified temperature. Airways inspected post-treatment and noted to be patent. No significant intra-procedural bronchospasm. Extubated and discharged.",
+    "note_text": "Interventional Pulmonology Procedure Note. Procedure: Bronchial thermoplasty session 1 treating right lower lobe. Patient: Noah King, 50-year-old male. Anesthesia: General anesthesia with endotracheal intubation. Flexible bronchoscope passed through endotracheal tube. Bronchial thermoplasty catheter sequentially positioned in segmental and subsegmental right lower lobe bronchi. Forty-nine activations delivered respecting manufacturer-specified temperature. Airways inspected post-treatment and noted to be patent. No significant intra-procedural bronchospasm. Extubated and discharged.",
     "cpt_codes": [
       31660
     ],
@@ -2232,12 +2208,6 @@
       "style_type": 6,
       "generated_name": "David Roberts",
       "generation_date": "2025-12-08T14:00:31.018764"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2388,7 +2358,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent his first bronchial thermoplasty session today for the right lower lobe. We placed him under general anesthesia for patient comfort and airway control. Using the flexible bronchoscope, we targeted the RLL segments and delivered 49 separate activations of radiofrequency energy. The airways looked good immediately after treatment with no signs of trauma. He was extubated in the room and will go home today with a steroid taper.",
+    "note_text": "Mr. King underwent his first bronchial thermoplasty session today for the right lower lobe. We placed him under general anesthesia for patient comfort and airway control. Using the flexible bronchoscope, we targeted the RLL segments and delivered 49 separate activations of radiofrequency energy. The airways looked good immediately after treatment with no signs of trauma. He was extubated in the room and will go home today with a steroid taper.",
     "cpt_codes": [
       31660
     ],
@@ -2532,16 +2502,10 @@
       "style_type": 8,
       "generated_name": "Charles Campbell",
       "generation_date": "2025-12-08T14:00:31.018839"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Bronchial thermoplasty, phase 1, right lower lobe.\nPatient: <PERSON>\nMethod: Under general anesthesia, the scope was guided through the ETT. The thermal probe was sequentially placed in the RLL bronchi. Forty-nine pulses were discharged. Airways were examined and found open.\nComplications: Nil.\nDisposition: Extubated and released.",
+    "note_text": "Procedure: Bronchial thermoplasty, phase 1, right lower lobe.\nPatient: Noah King.\nMethod: Under general anesthesia, the scope was guided through the ETT. The thermal probe was sequentially placed in the RLL bronchi. Forty-nine pulses were discharged. Airways were examined and found open.\nComplications: Nil.\nDisposition: Extubated and released.",
     "cpt_codes": [
       31660
     ],
@@ -2685,12 +2649,6 @@
       "style_type": 9,
       "generated_name": "Joseph Anderson",
       "generation_date": "2025-12-08T14:00:31.018892"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2994,7 +2952,7 @@
     }
   },
   {
-    "note_text": "Service: Bronchoscopy with Bronchial <PERSON> (31660).\nAnatomy: Left Lower Lobe (1 lobe treated).\nDosimetry: 48 activations.\nAnesthesia: MAC.\nNote: This represents the second session in the standard 3-session protocol (RLL -> LLL -> Bilateral Upper).",
+    "note_text": "Service: Bronchoscopy with Bronchial Thermoplasty (31660).\nAnatomy: Left Lower Lobe (1 lobe treated).\nDosimetry: 48 activations.\nAnesthesia: MAC.\nNote: This represents the second session in the standard 3-session protocol (RLL -> LLL -> Bilateral Upper).",
     "cpt_codes": [
       31660
     ],
@@ -3138,16 +3096,10 @@
       "style_type": 3,
       "generated_name": "Susan Clark",
       "generation_date": "2025-12-08T14:00:31.019013"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: BT Session 2 (LLL)\nPatient: <PERSON>\nSteps:\n1. MAC sedation.\n2. Scope to LLL.\n3. Treated all accessible LLL segments.\n4. Count: 48 activations.\n5. No trauma noted.\nPlan: Home today. S/p 4 hours obs.",
+    "note_text": "Procedure: BT Session 2 (LLL)\nPatient: Amelia Green\nSteps:\n1. MAC sedation.\n2. Scope to LLL.\n3. Treated all accessible LLL segments.\n4. Count: 48 activations.\n5. No trauma noted.\nPlan: Home today. S/p 4 hours obs.",
     "cpt_codes": [
       31660
     ],
@@ -3291,12 +3243,6 @@
       "style_type": 4,
       "generated_name": "Jennifer Hall",
       "generation_date": "2025-12-08T14:00:31.019050"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3741,7 +3687,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> returned today for the treatment of her left lower lobe, having recovered well from the first session. Under MAC sedation, we navigated to the left side and treated the LLL segments. We delivered a total of 48 activations. The procedure went smoothly with no coughing or bleeding. She is set to return in a few weeks for the final session treating the upper lobes.",
+    "note_text": "Ms. Green returned today for the treatment of her left lower lobe, having recovered well from the first session. Under MAC sedation, we navigated to the left side and treated the LLL segments. We delivered a total of 48 activations. The procedure went smoothly with no coughing or bleeding. She is set to return in a few weeks for the final session treating the upper lobes.",
     "cpt_codes": [
       31660
     ],
@@ -3885,16 +3831,10 @@
       "style_type": 8,
       "generated_name": "Betty Scott",
       "generation_date": "2025-12-08T14:00:31.019197"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Operation: Bronchial thermoplasty, second stage, left lower lobe.\nPatient: <PERSON>\nAction: The scope was directed to the LLL. The RF catheter was inserted into the subsegments. 48 energy pulses were applied. No additional maneuvers performed.\nOutcome: No bronchospasm.\nPlan: Release to home.",
+    "note_text": "Operation: Bronchial thermoplasty, second stage, left lower lobe.\nPatient: Amelia Green.\nAction: The scope was directed to the LLL. The RF catheter was inserted into the subsegments. 48 energy pulses were applied. No additional maneuvers performed.\nOutcome: No bronchospasm.\nPlan: Release to home.",
     "cpt_codes": [
       31660
     ],
@@ -4038,12 +3978,6 @@
       "style_type": 9,
       "generated_name": "Sandra Green",
       "generation_date": "2025-12-08T14:00:31.019234"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4194,7 +4128,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Bronchial <PERSON>, Session 2 (Left Lower Lobe).\nPATIENT: Mr. King, 50M.\nTECHNIQUE: Following induction of general anesthesia, the bronchoscope was advanced. The left lower lobe was systematically treated. Fifty activations were delivered to the basilar and superior segments. Post-treatment bronchoscopic inspection revealed no evidence of thermal injury beyond expected blanching. No bleeding or edema was observed.\nDISPOSITION: The patient was extubated and transferred to recovery in stable condition.",
+    "note_text": "PROCEDURE NOTE: Bronchial Thermoplasty, Session 2 (Left Lower Lobe).\nPATIENT: Mr. King, 50M.\nTECHNIQUE: Following induction of general anesthesia, the bronchoscope was advanced. The left lower lobe was systematically treated. Fifty activations were delivered to the basilar and superior segments. Post-treatment bronchoscopic inspection revealed no evidence of thermal injury beyond expected blanching. No bleeding or edema was observed.\nDISPOSITION: The patient was extubated and transferred to recovery in stable condition.",
     "cpt_codes": [
       31660
     ],
@@ -4338,16 +4272,10 @@
       "style_type": 2,
       "generated_name": "William Baker",
       "generation_date": "2025-12-08T14:00:31.019310"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "CPT: 31660 (<PERSON>, 1 lobe).\nSite: Left Lower Lobe.\nQuantity: 50 activations.\nModality: Radiofrequency energy ablation of airway smooth muscle.\nContext: Session 2 of 3.\nComplications: None reported.",
+    "note_text": "CPT: 31660 (Thermoplasty, 1 lobe).\nSite: Left Lower Lobe.\nQuantity: 50 activations.\nModality: Radiofrequency energy ablation of airway smooth muscle.\nContext: Session 2 of 3.\nComplications: None reported.",
     "cpt_codes": [
       31660
     ],
@@ -4491,12 +4419,6 @@
       "style_type": 3,
       "generated_name": "James Nelson",
       "generation_date": "2025-12-08T14:00:31.019345"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4941,7 +4863,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSevere asthma, Session 2 (LLL).\n[Anesthesia]\nGeneral, ETT.\n[Description]\n50 activations delivered to LLL. Catheter contact good. No injury.\n[Plan]\nDischarge. Return for final session (<PERSON>).",
+    "note_text": "[Indication]\nSevere asthma, Session 2 (LLL).\n[Anesthesia]\nGeneral, ETT.\n[Description]\n50 activations delivered to LLL. Catheter contact good. No injury.\n[Plan]\nDischarge. Return for final session (Upper Lobes).",
     "cpt_codes": [
       31660
     ],
@@ -5085,16 +5007,10 @@
       "style_type": 7,
       "generated_name": "Richard Phillips",
       "generation_date": "2025-12-08T14:00:31.019542"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent the second stage of his thermoplasty treatment today, focusing on the left lower lobe. Under general anesthesia, we treated the LLL airways with 50 activations of the device. We saw the expected whitening of the airway walls but no charring or bleeding. He woke up with a mild cough but is otherwise doing well and will go home today.",
+    "note_text": "Mr. King underwent the second stage of his thermoplasty treatment today, focusing on the left lower lobe. Under general anesthesia, we treated the LLL airways with 50 activations of the device. We saw the expected whitening of the airway walls but no charring or bleeding. He woke up with a mild cough but is otherwise doing well and will go home today.",
     "cpt_codes": [
       31660
     ],
@@ -5238,16 +5154,10 @@
       "style_type": 8,
       "generated_name": "Charles Campbell",
       "generation_date": "2025-12-08T14:00:31.019580"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Bronchial thermoplasty, session two, left lower lobe.\nSubject: <PERSON>.\nTechnique: Under general anesthesia, the probe was situated in the LLL. Fifty discharges of RF energy were completed. Airways were reviewed and found patent.\nResult: Minor cough.\nPlan: Outpatient release.",
+    "note_text": "Procedure: Bronchial thermoplasty, session two, left lower lobe.\nSubject: Noah King.\nTechnique: Under general anesthesia, the probe was situated in the LLL. Fifty discharges of RF energy were completed. Airways were reviewed and found patent.\nResult: Minor cough.\nPlan: Outpatient release.",
     "cpt_codes": [
       31660
     ],
@@ -5391,12 +5301,6 @@
       "style_type": 9,
       "generated_name": "Joseph Anderson",
       "generation_date": "2025-12-08T14:00:31.019617"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5558,7 +5462,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Completion Bronchial Thermoplasty (Bilateral Upper Lobes).\nCLINICAL SUMMARY: Ms. <PERSON> presents for the final session targeting the RUL and LUL.\nOPERATIVE DETAILS: A laryngeal mask airway was placed. The bronchoscope was advanced to the right upper lobe, where approximately 30 activations were delivered. Attention was turned to the left upper lobe, where an additional 30 activations were performed (Total: 60). Airway inspection showed expected blanching with no excessive edema.\nDISPOSITION: The patient was admitted to the pulmonary floor for routine overnight observation given the extent of the treated area (2 lobes).",
+    "note_text": "PROCEDURE: Completion Bronchial Thermoplasty (Bilateral Upper Lobes).\nCLINICAL SUMMARY: Ms. Green presents for the final session targeting the RUL and LUL.\nOPERATIVE DETAILS: A laryngeal mask airway was placed. The bronchoscope was advanced to the right upper lobe, where approximately 30 activations were delivered. Attention was turned to the left upper lobe, where an additional 30 activations were performed (Total: 60). Airway inspection showed expected blanching with no excessive edema.\nDISPOSITION: The patient was admitted to the pulmonary floor for routine overnight observation given the extent of the treated area (2 lobes).",
     "cpt_codes": [
       31661
     ],
@@ -5713,12 +5617,6 @@
       "style_type": 2,
       "generated_name": "Margaret Davis",
       "generation_date": "2025-12-08T14:00:31.019703"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6512,7 +6410,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for her final thermoplasty session. We treated both the right and left upper lobes today under general anesthesia. We did about 30 activations on each side for a total of 60. The procedure went very smoothly with no breathing issues noted. Because we treated two lobes, we are keeping her in the hospital overnight for observation as per protocol.",
+    "note_text": "Ms. Green came in for her final thermoplasty session. We treated both the right and left upper lobes today under general anesthesia. We did about 30 activations on each side for a total of 60. The procedure went very smoothly with no breathing issues noted. Because we treated two lobes, we are keeping her in the hospital overnight for observation as per protocol.",
     "cpt_codes": [
       31661
     ],
@@ -6667,16 +6565,10 @@
       "style_type": 8,
       "generated_name": "Betty Scott",
       "generation_date": "2025-12-08T14:00:31.019944"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Operation: Bronchial thermoplasty, final stage, bilateral upper lobes.\nPatient: <PERSON>\nMethod: Via LMA, the catheter was deployed in the RUL and LUL. 60 energy pulses were administered in total. No airway trauma observed.\nOutcome: Minor cough.\nStrategy: Inpatient monitoring.",
+    "note_text": "Operation: Bronchial thermoplasty, final stage, bilateral upper lobes.\nPatient: Amelia Green.\nMethod: Via LMA, the catheter was deployed in the RUL and LUL. 60 energy pulses were administered in total. No airway trauma observed.\nOutcome: Minor cough.\nStrategy: Inpatient monitoring.",
     "cpt_codes": [
       31661
     ],
@@ -6831,12 +6723,6 @@
       "style_type": 9,
       "generated_name": "Sandra Green",
       "generation_date": "2025-12-08T14:00:31.019998"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7630,7 +7516,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note. Procedure: Bronchial thermoplasty session 3 treating bilateral upper lobes. Patient: <PERSON>. General anesthesia with endotracheal intubation. Flexible bronchoscopy performed via endotracheal tube. Bronchial thermoplasty catheter sequentially deployed in the right and left upper lobe segmental bronchi. Fifty-eight activations delivered. Airways re-inspected and remained hemostatic and patent. Admitted overnight to the step-down unit.",
+    "note_text": "Interventional Pulmonology Procedure Note. Procedure: Bronchial thermoplasty session 3 treating bilateral upper lobes. Patient: Noah King. General anesthesia with endotracheal intubation. Flexible bronchoscopy performed via endotracheal tube. Bronchial thermoplasty catheter sequentially deployed in the right and left upper lobe segmental bronchi. Fifty-eight activations delivered. Airways re-inspected and remained hemostatic and patent. Admitted overnight to the step-down unit.",
     "cpt_codes": [
       31661
     ],
@@ -7785,12 +7671,6 @@
       "style_type": 6,
       "generated_name": "David Roberts",
       "generation_date": "2025-12-08T14:00:31.020246"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7952,7 +7832,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> finished his thermoplasty treatment today with the upper lobes. Under general anesthesia, we treated segments in both the right and left upper lobes, delivering 58 activations in total. He tolerated it well with no bronchospasm. We are admitting him to the step-down unit for tonight just to be safe and will start his steroid taper.",
+    "note_text": "Mr. King finished his thermoplasty treatment today with the upper lobes. Under general anesthesia, we treated segments in both the right and left upper lobes, delivering 58 activations in total. He tolerated it well with no bronchospasm. We are admitting him to the step-down unit for tonight just to be safe and will start his steroid taper.",
     "cpt_codes": [
       31661
     ],
@@ -8107,16 +7987,10 @@
       "style_type": 8,
       "generated_name": "Charles Campbell",
       "generation_date": "2025-12-08T14:00:31.020403"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Bronchial thermoplasty, conclusion, bilateral upper lobes.\nSubject: <PERSON>.\nAction: Using an ETT, the probe was positioned in the RUL and LUL. 58 RF discharges were completed. Airways remained open.\nResult: No immediate bronchospasm.\nDisposition: Step-down unit admission.",
+    "note_text": "Procedure: Bronchial thermoplasty, conclusion, bilateral upper lobes.\nSubject: Noah King.\nAction: Using an ETT, the probe was positioned in the RUL and LUL. 58 RF discharges were completed. Airways remained open.\nResult: No immediate bronchospasm.\nDisposition: Step-down unit admission.",
     "cpt_codes": [
       31661
     ],
@@ -8271,12 +8145,6 @@
       "style_type": 9,
       "generated_name": "Joseph Anderson",
       "generation_date": "2025-12-08T14:00:31.020444"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8427,7 +8295,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Bronchial <PERSON> (Left Lower Lobe).\nCOMPLICATION: The procedure was complicated by moderate intra-operative bronchospasm after 45 activations. The patient desaturated to 88%. The procedure was paused. Pharmacologic rescue with nebulized albuterol, IV magnesium, and IV methylprednisolone was successful in restoring baseline saturation without the need for invasive ventilation.\nDISPOSITION: The patient was admitted to the pulmonary floor for close observation.",
+    "note_text": "PROCEDURE: Bronchial Thermoplasty (Left Lower Lobe).\nCOMPLICATION: The procedure was complicated by moderate intra-operative bronchospasm after 45 activations. The patient desaturated to 88%. The procedure was paused. Pharmacologic rescue with nebulized albuterol, IV magnesium, and IV methylprednisolone was successful in restoring baseline saturation without the need for invasive ventilation.\nDISPOSITION: The patient was admitted to the pulmonary floor for close observation.",
     "cpt_codes": [
       31660
     ],
@@ -8571,12 +8439,6 @@
       "style_type": 2,
       "generated_name": "Sophia Rodriguez",
       "generation_date": "2025-12-08T14:00:31.020528"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8874,7 +8736,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for LLL thermoplasty. shes pretty brittle. we got through 45 activations and she clamped down hard. sats dropped into the 80s. had to stop. gave her everything albuterol mag steroids. she opened up eventually didnt have to tube her. keeping her on the floor tonight definitely.",
+    "note_text": "sofia martinez here for LLL thermoplasty. shes pretty brittle. we got through 45 activations and she clamped down hard. sats dropped into the 80s. had to stop. gave her everything albuterol mag steroids. she opened up eventually didnt have to tube her. keeping her on the floor tonight definitely.",
     "cpt_codes": [
       31660
     ],
@@ -9018,12 +8880,6 @@
       "style_type": 5,
       "generated_name": "Gabriella Sanchez",
       "generation_date": "2025-12-08T14:00:31.020644"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9327,7 +9183,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> had a rough time with her LLL thermoplasty today. We managed to deliver 45 activations, but then she developed significant bronchospasm and her oxygen levels dropped. We had to stop and treat her aggressively with nebs and IV meds. Fortunately, she turned around and we didn't have to intubate her. We are admitting her to the floor to keep a close eye on her breathing.",
+    "note_text": "Ms. Martinez had a rough time with her LLL thermoplasty today. We managed to deliver 45 activations, but then she developed significant bronchospasm and her oxygen levels dropped. We had to stop and treat her aggressively with nebs and IV meds. Fortunately, she turned around and we didn't have to intubate her. We are admitting her to the floor to keep a close eye on her breathing.",
     "cpt_codes": [
       31660
     ],
@@ -9471,12 +9327,6 @@
       "style_type": 8,
       "generated_name": "Camila Ramirez",
       "generation_date": "2025-12-08T14:00:31.020754"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10374,7 +10224,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note. Procedure: Bronchial thermoplasty session 3 treating bilateral upper lobes (aborted early). Patient: <PERSON>. General anesthesia with endotracheal intubation. Bronchial thermoplasty catheter positioned in right and left upper lobe segmental bronchi. Thirty-four activations delivered before abrupt increase in airway pressures and severe wheeze prompted early termination. Severe bronchospasm with acute hypoxemic respiratory failure. Procedure aborted; patient transported intubated to the ICU.",
+    "note_text": "Interventional Pulmonology Procedure Note. Procedure: Bronchial thermoplasty session 3 treating bilateral upper lobes (aborted early). Patient: Liam Patel. General anesthesia with endotracheal intubation. Bronchial thermoplasty catheter positioned in right and left upper lobe segmental bronchi. Thirty-four activations delivered before abrupt increase in airway pressures and severe wheeze prompted early termination. Severe bronchospasm with acute hypoxemic respiratory failure. Procedure aborted; patient transported intubated to the ICU.",
     "cpt_codes": [
       31660
     ],
@@ -10518,12 +10368,6 @@
       "style_type": 6,
       "generated_name": "Jacob Shah",
       "generation_date": "2025-12-08T14:00:31.021028"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10674,7 +10518,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON>'s procedure had to be stopped early today. We were treating the upper lobes and had delivered 34 activations when he went into severe bronchospasm. His airway pressures spiked and we couldn't ventilate him well. We stopped the thermoplasty immediately and focused on stabilizing him. He is currently intubated and sedated in the ICU.",
+    "note_text": "Mr. Patel's procedure had to be stopped early today. We were treating the upper lobes and had delivered 34 activations when he went into severe bronchospasm. His airway pressures spiked and we couldn't ventilate him well. We stopped the thermoplasty immediately and focused on stabilizing him. He is currently intubated and sedated in the ICU.",
     "cpt_codes": [
       31660
     ],
@@ -10818,16 +10662,10 @@
       "style_type": 8,
       "generated_name": "Benjamin Jain",
       "generation_date": "2025-12-08T14:00:31.021102"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Bronchial thermoplasty, final stage, upper lobes (Terminated).\nPatient: <PERSON>\nEvent: During the 34th pulse, acute airway obstruction occurred. The operation was ceased.\nAction: Deepened sedation, administered epinephrine.\nOutcome: Patient remains mechanically ventilated.\nDisposition: Intensive Care Unit.",
+    "note_text": "Procedure: Bronchial thermoplasty, final stage, upper lobes (Terminated).\nPatient: Liam Patel.\nEvent: During the 34th pulse, acute airway obstruction occurred. The operation was ceased.\nAction: Deepened sedation, administered epinephrine.\nOutcome: Patient remains mechanically ventilated.\nDisposition: Intensive Care Unit.",
     "cpt_codes": [
       31660
     ],
@@ -10971,12 +10809,6 @@
       "style_type": 9,
       "generated_name": "Alexander Mehta",
       "generation_date": "2025-12-08T14:00:31.021139"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   }
 ]

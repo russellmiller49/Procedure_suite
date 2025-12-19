@@ -2328,7 +2328,7 @@
     }
   },
   {
-    "note_text": "Procedure note patient came in with RLL obstruction we gave fentanyl and versed for sedation scope went in fine saw a lot of thick yellow mucus everywhere diffuse bronchitis really <PERSON>. We spent time suctioning out all the plugs to clear the airways and then did a wash in the RLL lateral segment couldn't get a wedge cause he was coughing. No bleeding toleratd well send cultures.",
+    "note_text": "Procedure note patient came in with RLL obstruction we gave fentanyl and versed for sedation scope went in fine saw a lot of thick yellow mucus everywhere diffuse bronchitis really boggy mucosa. We spent time suctioning out all the plugs to clear the airways and then did a wash in the RLL lateral segment couldn't get a wedge cause he was coughing. No bleeding toleratd well send cultures.",
     "cpt_codes": [
       31645
     ],
@@ -2907,12 +2907,6 @@
       "style_type": 5,
       "generated_name": "Richard Taylor",
       "generation_date": "2025-12-18T19:14:42.782977"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5244,7 +5238,7 @@
     }
   },
   {
-    "note_text": "Dx: Esophageal stent migration to airway.\nAnesthesia: GA.\nProcedure:\n- Flex bronch: Stent visualized blocking distal trachea/LMS. <PERSON> suctioned.\n- Rigid bronch (14mm): <PERSON>.\n- Removal: Migrated esophageal stent and clips removed piecemeal (forceps/scissors).\n- Repair: TE fistula identified. 13x10x10 Dynamic Y-stent placed to cover defect.\n- Airway secured with ETT.\nComplications: TE fistula extension.",
+    "note_text": "Dx: Esophageal stent migration to airway.\nAnesthesia: GA.\nProcedure:\n- Flex bronch: Stent visualized blocking distal trachea/LMS. Pus suctioned.\n- Rigid bronch (14mm): Inserted.\n- Removal: Migrated esophageal stent and clips removed piecemeal (forceps/scissors).\n- Repair: TE fistula identified. 13x10x10 Dynamic Y-stent placed to cover defect.\n- Airway secured with ETT.\nComplications: TE fistula extension.",
     "cpt_codes": [
       31636,
       31637,
@@ -5542,13 +5536,6 @@
       "style_type": 1,
       "generated_name": "Daniel White",
       "generation_date": "2025-12-18T19:14:42.783580"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -17212,7 +17199,7 @@
     }
   },
   {
-    "note_text": "Under general anesthesia a rigid tracheoscope was inserted. Flexible inspection revealed purulent secretions which were aspirated from the lower lobes. The tracheal Y-stent was removed intact using rigid forceps. Granulation tissue causing stenosis in the right and left mainstems was treated with cryotherapy. Significant <PERSON> was observed following stent removal. The patient was transferred to the ward for a stent holiday.",
+    "note_text": "Under general anesthesia a rigid tracheoscope was inserted. Flexible inspection revealed purulent secretions which were aspirated from the lower lobes. The tracheal Y-stent was removed intact using rigid forceps. Granulation tissue causing stenosis in the right and left mainstems was treated with cryotherapy. Significant tracheobronchomalacia was observed following stent removal. The patient was transferred to the ward for a stent holiday.",
     "cpt_codes": [
       31641,
       31635,
@@ -17542,12 +17529,6 @@
       "style_type": 6,
       "generated_name": "Jamie Mitchell",
       "generation_date": "2025-12-18T19:14:42.786386"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

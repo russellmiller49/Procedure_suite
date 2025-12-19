@@ -15,7 +15,7 @@ dependencies = [
   "medspacy>=1.0,<2",
   "sqlalchemy>=2.0,<3",
   "alembic>=1.13,<2",
-  "scikit-learn>=1.5,<2.0",
+  "scikit-learn>=1.5.2,<2.0",
   "scikit-multilearn>=0.2.0,<1",
   "pandas>=2.0,<3",
   "psycopg[binary,pool]>=3.2,<4",
@@ -106,7 +106,7 @@ explicit_package_bases = true
 
 [[tool.mypy.overrides]]
 module = "modules.*"
-ignore_errors = true
+ignore_errors = false
 
 [[tool.mypy.overrides]]
 module = "modules.api.*"

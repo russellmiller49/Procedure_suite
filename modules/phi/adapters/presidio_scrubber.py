@@ -79,6 +79,15 @@ BIOMEDICAL_ENTITY_LABELS: frozenset[str] = frozenset(
 BIOMEDICAL_SHIELD_TARGET_TYPES: frozenset[str] = frozenset(
     {"PERSON", "LOCATION", "ORGANIZATION"}
 )
+US_STATE_ABBREVS: frozenset[str] = frozenset(
+    {
+        "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID",
+        "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
+        "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK",
+        "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV",
+        "WI", "WY", "DC",
+    }
+)
 
 ANATOMICAL_ALLOW_LIST = {
     "larynx", "pharynx", "oropharynx", "nasopharynx", "glottis", "subglottis",
@@ -95,6 +104,7 @@ ANATOMICAL_ALLOW_LIST = {
     "mediastinal", "hilum", "hilar", "paratracheal", "subcarinal", "lymph node",
     "lymph nodes", "node", "nodes", "ebus", "eus", "tbna", "bal", "bronchoscopy",
     "left", "right", "bilateral", "unilateral",
+    "apicoposterior", "left main", "single lobe", "upper lobes",
     # Lymph Node Stations (1-14 with variants)
     "station", "stations",
     "1r", "1l", "2r", "2l", "3a", "3p", "4r", "4l", "5", "6", "7", "8", "9",
@@ -169,9 +179,30 @@ CLINICAL_ALLOW_LIST = {
     "emphysema", "adenopathy", "adeno", "carcinoid", "sarcoid", "laryngospasm",
     "mesothelioma", "oligometastatic", "telemetry", "path", "wash", "nasal",
     "dye", "marking", "mark", "tattoo", "clip", "fiducial", "drainage", "drng",
-    "papilloma", "papa lima", "novatech", "silicone", "aerostent", "lavage",
+    "papilloma", "papa lima", "novatech", "novatech silicone", "silicone", "aerostent", "lavage",
     "brushing", "trap", "lukens", "pathology", "cytology", "histology", "biopsy",
     "frozen", "permanent", "section", "mod", "sed", "general", "local", "topical",
+    "antibiotics",
+    # Devices, equipment, and procedures
+    "airway stenting", "cuff", "deployed aero", "aero sems", "diode laser",
+    "doppler", "fibrin glue", "fibrin", "glidescope", "hurricane", "ion nav",
+    "ion robot", "karl storz", "storz", "laryngoscope", "monarch platform",
+    "photofrin", "pleurx", "pneumostat", "polypectomy snare", "protected brush",
+    "surgicel", "thermoplasty", "thoracostomy tube", "tube thoracostomy",
+    "ultrathin", "veran", "volumetric", "volumetric ct", "em nav",
+    "em navigation", "electromagnetic navigation",
+    # Clinical findings/pathology
+    "atypia", "boggy", "debris", "desat", "dyspnea", "gastric ca", "glucose",
+    "hemorrhagic hilar", "lymphocytes", "melanoma", "metastatic breast cancer",
+    "mucosa", "neoplasia", "nsclc", "ovarian ca", "papillomas", "pus",
+    "schwannoma", "squamous cell carcinoma", "stridor", "thymoma",
+    "tracheomalacia", "tracheobronchomalacia",
+    # Medications
+    "alteplase", "azithromycin", "bicarb", "dornase", "levofloxacin",
+    "levofloxacin prophylaxis", "lido", "midaz", "oxygen", "prednisone",
+    "temoporfin",
+    # Administrative and common phrases
+    "electronically signed", "findings rounded", "findings short", "findings tumor",
     "augmentin", "decadron", "breast", "vessel", "myer-cotton", "endotek",
     # Institution / IT Terms to prevent False Positive Location redaction
     "ucsd", "nmcsd", "balboa", "navy", "va", "veterans affairs", "scripps", 
@@ -337,6 +368,7 @@ _CLINICAL_ABBREV_TOKENS: frozenset[str] = frozenset(
         "bal", "ebus", "blvr", "ptx", "rfa", "apc", "mac", "abx", "epi", "peds",
         "onco", "lul", "lll", "rml", "rll", "rul", "lingula", "lml", "mod", "sed",
         "ipc", "loc", "drng", "dx", "hx", "tx", "fx", "sx", "iv", "po", "prn",
+        "nav", "em", "er", "ncci",
     }
 )
 _NON_NAME_TOKENS: frozenset[str] = frozenset(
@@ -347,7 +379,11 @@ _NON_NAME_TOKENS: frozenset[str] = frozenset(
         "resultant", "subsequent", "sprayed", "wedged", "sampled", "employed",
         "combined", "superior", "large", "small", "path", "telemetry", "wash",
         "suite", "stuck", "decay", "cancer", "reg", "neg", "pos", "pro", "pre",
-        "post", "intra",
+        "post", "intra", "antibiotics",
+        "addl", "debulk", "drop", "due", "freezing", "guidance", "inserted",
+        "juxta", "kinda", "loaded", "marker", "max", "messy", "mgmt", "mini",
+        "obs", "primary", "refer", "resume", "scan", "screening", "sequential",
+        "sputum", "transfer", "wean", "withdrew", "signed", "rounded", "short",
     }
 )
 _NON_NAME_LEADERS: frozenset[str] = frozenset(
@@ -356,12 +392,14 @@ _NON_NAME_LEADERS: frozenset[str] = frozenset(
         "combined", "subsequent", "resultant", "monitoring", "description",
         "unknown", "discharge", "recurrent", "observe", "observed", "looked",
         "sprayed", "wedged", "frozen", "moderate", "standard", "nodes", "large",
-        "small", "superior",
+        "small", "superior", "findings", "electronically", "inserted", "loaded",
+        "withdrew", "resume", "refer",
     }
 )
 _LOBE_ABBREV_RE = re.compile(r"\b(?:rul|rml|rll|lul|lll|lml|lingula)\b", re.IGNORECASE)
 _BAL_LOBE_RE = re.compile(r"\b(?:bal|lavage)\s+(?:rul|rml|rll|lul|lll|lml|lingula)\b", re.IGNORECASE)
 _LOBE_BAL_RE = re.compile(r"\b(?:rul|rml|rll|lul|lll|lml|lingula)\s+bal\b", re.IGNORECASE)
+_PROVIDER_TOKEN_RE = re.compile(r"\b(md|do|rn|pa|np|phd)\b", re.IGNORECASE)
 
 _ALLOWLIST_BOUNDARY_RE = re.compile(
     r"(?i)\b(?:"
@@ -406,7 +444,10 @@ _PROCEDURE_CONTEXT_RE = re.compile(
     r"rigid|carcinoid|adenopath(?:y|ic)|sarcoid|laryngospasm|mesothelioma|"
     r"seldinger|augmentin|decadron|emphysema|jet\s+vent(?:ilation)?|"
     r"telemetry|discharge|recurrent|wash|hemostasis|forceps|cryo|nodes?|"
-    r"sampled|sample|mod)\b",
+    r"sampled|sample|mod|thermoplasty|thoracostomy|stenting|fibrin|"
+    r"glidescope|doppler|laryngoscope|ultrathin|volumetric|ion|monarch|"
+    r"storz|photofrin|temoporfin|pleurx|pneumostat|surgicel|"
+    r"tracheomalacia|tracheobronchomalacia|melanoma|thymoma|schwannoma)\b",
     re.IGNORECASE,
 )
 
@@ -1072,11 +1113,17 @@ def filter_person_location_sanity(text: str, results: list) -> list:
         if entity_type == "PERSON":
             if _PERSON_NAME_PUNCT_RE.search(token):
                 continue
+            if token_lower.startswith("dr ") or token_lower.startswith("doctor "):
+                continue
+            if _PROVIDER_TOKEN_RE.search(token):
+                continue
             if token.isupper() and len(token) <= 4:
                 if _PROCEDURE_CONTEXT_RE.search(context) or _CLINICAL_CONTEXT_RE.search(context):
                     continue
         else:
             if token_lower in _LOCATION_WORKFLOW_WORDS:
+                continue
+            if token.isupper() and len(token) == 2 and token in US_STATE_ABBREVS:
                 continue
             if token.islower() and (
                 _PROCEDURE_CONTEXT_RE.search(context) or _CLINICAL_CONTEXT_RE.search(context)

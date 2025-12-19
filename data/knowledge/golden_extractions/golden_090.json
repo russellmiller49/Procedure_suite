@@ -1959,7 +1959,7 @@
     }
   },
   {
-    "note_text": "Codes submitted: 31629 (TBNA), 31628 (Forceps Biopsy), 31627 (Navigation), 31654 (EBUS), 31624 (BAL). Tools: <PERSON>, 19G Needle, Standard Forceps. Target: LLL Anteromedial-Basal segment. Verification: Continuous visualization maintained.",
+    "note_text": "Codes submitted: 31629 (TBNA), 31628 (Forceps Biopsy), 31627 (Navigation), 31654 (EBUS), 31624 (BAL). Tools: Monarch Platform, 19G Needle, Standard Forceps. Target: LLL Anteromedial-Basal segment. Verification: Continuous visualization maintained.",
     "cpt_codes": [
       31629,
       31628,
@@ -2148,12 +2148,6 @@
       "style_type": 3,
       "generated_name": "Nancy Jackson",
       "generation_date": "2025-12-09T12:09:57.822582"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4083,7 +4077,7 @@
     }
   },
   {
-    "note_text": "<PERSON> bronchoscopy robotic lll nodule 14mm navigated to lb10 error 2.2mm rebus adjacent used 22g needle 6 times then the brush bal done rose says suspicious for cancer no bleeding pt did great.",
+    "note_text": "ryan williams bronchoscopy robotic lll nodule 14mm navigated to lb10 error 2.2mm rebus adjacent used 22g needle 6 times then the brush bal done rose says suspicious for cancer no bleeding pt did great.",
     "cpt_codes": [
       31629,
       31627,
@@ -4272,12 +4266,6 @@
       "style_type": 5,
       "generated_name": "Frank Lee",
       "generation_date": "2025-12-09T12:09:57.823103"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7469,7 +7457,7 @@
     }
   },
   {
-    "note_text": "<PERSON> 35mm lingula mass biopsy with monarch robot navigation ok 3mm error saw it on rebus adjacent 19g needle 7 times forceps 6 times brush and bal rose looks like nscc patient did fine.",
+    "note_text": "brian hernandez 35mm lingula mass biopsy with monarch robot navigation ok 3mm error saw it on rebus adjacent 19g needle 7 times forceps 6 times brush and bal rose looks like nscc patient did fine.",
     "cpt_codes": [
       31629,
       31628,
@@ -7675,12 +7663,6 @@
       "style_type": 5,
       "generated_name": "Gary Perez",
       "generation_date": "2025-12-09T12:09:57.824029"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9224,7 +9206,7 @@
     }
   },
   {
-    "note_text": "carol clark lul nodule 27mm monarch robot used registration 4.2mm error navigated to lb3 rebus adjacent 19g needle 4 times forceps 6 times rose says granuloma no bal bleeding stopped easily.",
+    "note_text": "<PERSON> lul nodule 27mm monarch robot used registration 4.2mm error navigated to lb3 rebus adjacent 19g needle 4 times forceps 6 times rose says granuloma no bal bleeding stopped easily.",
     "cpt_codes": [
       31629,
       31628,
@@ -9397,6 +9379,12 @@
       "style_type": 5,
       "generated_name": "Sandra Stewart",
       "generation_date": "2025-12-09T12:09:57.824454"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {

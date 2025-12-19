@@ -648,7 +648,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nAttending: Dr. Allen\nSteps:\n1. Moderate sedation administered.\n2. Airway inspected; cobblestoning seen.\n3. BAL performed in RML.\n4. Transbronchial biopsies taken from RLL (medial basal) under fluoro.\n5. Hemostasis achieved.\n6. Post-op CXR negative.",
+    "note_text": "Procedure Note\nPatient: Ms. King\nAttending: Dr. Allen\nSteps:\n1. Moderate sedation administered.\n2. Airway inspected; cobblestoning seen.\n3. BAL performed in RML.\n4. Transbronchial biopsies taken from RLL (medial basal) under fluoro.\n5. Hemostasis achieved.\n6. Post-op CXR negative.",
     "cpt_codes": [
       31624,
       31628
@@ -861,16 +861,10 @@
       "style_type": 4,
       "generated_name": "Diana Prince",
       "generation_date": "2025-12-09T09:19:08.778363"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "diag bronch for charlene king she has hilar adenopathy so we looked for sarcoid. sedation was midaz and fent. airways looked bumpy cobblestone pattern. did a wash in the rml and then took biopsies from the rll medial basal segment using the forceps. no bleeding really. <PERSON> showed no lung collapse she went home after.",
+    "note_text": "diag bronch for charlene king she has hilar adenopathy so we looked for sarcoid. sedation was midaz and fent. airways looked bumpy cobblestone pattern. did a wash in the rml and then took biopsies from the rll medial basal segment using the forceps. no bleeding really. xray showed no lung collapse she went home after.",
     "cpt_codes": [
       31624,
       31628
@@ -1083,12 +1077,6 @@
       "style_type": 5,
       "generated_name": "Carol Danvers",
       "generation_date": "2025-12-09T09:19:08.778417"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1524,7 +1512,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> arrived for a diagnostic bronchoscopy to investigate her hilar adenopathy. We used moderate sedation to ensure her comfort. Upon entering the airways, we noticed cobblestoning, which is often a sign of sarcoidosis. We washed the right middle lobe to collect cells and then moved to the right lower lobe to take six small tissue samples using forceps under X-ray guidance. She did very well, had no bleeding, and her chest X-ray afterwards was clear.",
+    "note_text": "Ms. King arrived for a diagnostic bronchoscopy to investigate her hilar adenopathy. We used moderate sedation to ensure her comfort. Upon entering the airways, we noticed cobblestoning, which is often a sign of sarcoidosis. We washed the right middle lobe to collect cells and then moved to the right lower lobe to take six small tissue samples using forceps under X-ray guidance. She did very well, had no bleeding, and her chest X-ray afterwards was clear.",
     "cpt_codes": [
       31624,
       31628
@@ -1737,12 +1725,6 @@
       "style_type": 8,
       "generated_name": "Hope Van Dyne",
       "generation_date": "2025-12-09T09:19:08.778570"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3362,7 +3344,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> was struggling with oxygenation in the ICU due to a collapsed right lower lobe. We performed a bedside bronchoscopy and found thick mucus plugging up the airways. We used saline lavage to break up the mucus and suctioned it out, clearing the blockage. His oxygen levels dipped briefly during the washing but recovered quickly once the airways were open.",
+    "note_text": "Mr. Rogers was struggling with oxygenation in the ICU due to a collapsed right lower lobe. We performed a bedside bronchoscopy and found thick mucus plugging up the airways. We used saline lavage to break up the mucus and suctioned it out, clearing the blockage. His oxygen levels dipped briefly during the washing but recovered quickly once the airways were open.",
     "cpt_codes": [
       31624
     ],
@@ -3559,12 +3541,6 @@
       "style_type": 8,
       "generated_name": "Bucky Barnes",
       "generation_date": "2025-12-09T09:19:08.779036"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4636,7 +4612,7 @@
     }
   },
   {
-    "note_text": "<PERSON> needs a diagnosis for her fibrosis so we did the cryo biopsy today. put her to sleep with a big tube 8.5. went to the left lower lobe used the radial ebus to make sure no vessels were there. took three freeze biopsies and one regular one. blocked the airway with a balloon for bleeding which was mild. no pneumothorax on the xray sending her to the floor.",
+    "note_text": "Jennifer needs a diagnosis for her fibrosis so we did the cryo biopsy today. put her to sleep with a big tube 8.5. went to the left lower lobe used the radial ebus to make sure no vessels were there. took three freeze biopsies and one regular one. blocked the airway with a balloon for bleeding which was mild. no pneumothorax on the xray sending her to the floor.",
     "cpt_codes": [
       31628,
       31654
@@ -4850,12 +4826,6 @@
       "style_type": 5,
       "generated_name": "Gamora",
       "generation_date": "2025-12-09T09:19:08.779370"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5293,7 +5263,7 @@
     }
   },
   {
-    "note_text": "We performed a cryobiopsy on Ms. <PERSON> today to figure out the cause of her lung fibrosis. Under general anesthesia, we navigated to the left lower lobe. We used ultrasound to check the area first, then used a freezing probe to grab three distinct tissue samples, plus one with standard forceps. We used a balloon to stop a little bit of bleeding, and the post-procedure X-ray showed her lungs were still fully inflated.",
+    "note_text": "We performed a cryobiopsy on Ms. Adams today to figure out the cause of her lung fibrosis. Under general anesthesia, we navigated to the left lower lobe. We used ultrasound to check the area first, then used a freezing probe to grab three distinct tissue samples, plus one with standard forceps. We used a balloon to stop a little bit of bleeding, and the post-procedure X-ray showed her lungs were still fully inflated.",
     "cpt_codes": [
       31628,
       31654
@@ -5507,12 +5477,6 @@
       "style_type": 8,
       "generated_name": "Okoye",
       "generation_date": "2025-12-09T09:19:08.779524"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6405,7 +6369,7 @@
     }
   },
   {
-    "note_text": "Robotic Bronch RFA\nPatient: <PERSON>\nTarget: RLL nodule\nSteps:\n1. Ion robot registration (CT-to-body).\n2. Navigated to RLL.\n3. Confirmed with REBUS and Spin (CBCT).\n4. RFA catheter in. Burned at 40W for 8 mins.\n5. Re-spun. Good margins.\n6. Minor bleeding.\nPlan: Admit.",
+    "note_text": "Robotic Bronch RFA\nPatient: Kevin White\nTarget: RLL nodule\nSteps:\n1. Ion robot registration (CT-to-body).\n2. Navigated to RLL.\n3. Confirmed with REBUS and Spin (CBCT).\n4. RFA catheter in. Burned at 40W for 8 mins.\n5. Re-spun. Good margins.\n6. Minor bleeding.\nPlan: Admit.",
     "cpt_codes": [
       31641,
       31627,
@@ -6626,16 +6590,10 @@
       "style_type": 4,
       "generated_name": "Peter Quill",
       "generation_date": "2025-12-09T09:19:08.779793"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> has a met in the RLL we treated it with the robot today. Ion system worked well registration was 2mm. Found it with the radial probe and the cone beam ct. Cooked it with the RF catheter 40 watts for almost 10 minutes. Got a good burn zone on the scan after. Little bit of bleeding but stopped on its own. Admitting to telemetry.",
+    "note_text": "Kevin has a met in the RLL we treated it with the robot today. Ion system worked well registration was 2mm. Found it with the radial probe and the cone beam ct. Cooked it with the RF catheter 40 watts for almost 10 minutes. Got a good burn zone on the scan after. Little bit of bleeding but stopped on its own. Admitting to telemetry.",
     "cpt_codes": [
       31641,
       31627,
@@ -6856,12 +6814,6 @@
       "style_type": 5,
       "generated_name": "Drax",
       "generation_date": "2025-12-09T09:19:08.779845"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7089,7 +7041,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nOligometastatic colorectal cancer, RLL nodule.\n[Anesthesia]\nGeneral.\n[Description]\n<PERSON> navigation to RLL. REBUS/CBCT confirmation. RF Ablation (40W/480s). Margin confirmed.\n[Plan]\nAdmit to telemetry. CT in 3 months.",
+    "note_text": "[Indication]\nOligometastatic colorectal cancer, RLL nodule.\n[Anesthesia]\nGeneral.\n[Description]\nIon Robot navigation to RLL. REBUS/CBCT confirmation. RF Ablation (40W/480s). Margin confirmed.\n[Plan]\nAdmit to telemetry. CT in 3 months.",
     "cpt_codes": [
       31641,
       31627,
@@ -7310,16 +7262,10 @@
       "style_type": 7,
       "generated_name": "Groot",
       "generation_date": "2025-12-09T09:19:08.779952"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a robotic procedure to treat a tumor in his right lower lung. We used the Ion robot to steer a catheter directly to the spot, confirming the location with both ultrasound and a CT scan right in the room. We then used radiofrequency energy to heat and destroy the tumor. The final scan showed we covered the whole area well. There was a tiny bit of bleeding, but he remained stable.",
+    "note_text": "Mr. White underwent a robotic procedure to treat a tumor in his right lower lung. We used the Ion robot to steer a catheter directly to the spot, confirming the location with both ultrasound and a CT scan right in the room. We then used radiofrequency energy to heat and destroy the tumor. The final scan showed we covered the whole area well. There was a tiny bit of bleeding, but he remained stable.",
     "cpt_codes": [
       31641,
       31627,
@@ -7540,12 +7486,6 @@
       "style_type": 8,
       "generated_name": "Nick Fury",
       "generation_date": "2025-12-09T09:19:08.780005"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9459,7 +9399,7 @@
     }
   },
   {
-    "note_text": "We treated Ms. <PERSON>'s lung nodule using microwave energy today. We guided the catheter to the left upper lobe using the navigation system and confirmed it with a CT scan. The ablation went well, but she developed a small air leak (pneumothorax) afterwards. We placed a small tube in her chest to drain the air, and she is stable and being admitted for observation.",
+    "note_text": "We treated Ms. Murphy's lung nodule using microwave energy today. We guided the catheter to the left upper lobe using the navigation system and confirmed it with a CT scan. The ablation went well, but she developed a small air leak (pneumothorax) afterwards. We placed a small tube in her chest to drain the air, and she is stable and being admitted for observation.",
     "cpt_codes": [
       31641,
       31627,
@@ -9696,12 +9636,6 @@
       "style_type": 8,
       "generated_name": "Valkyrie",
       "generation_date": "2025-12-09T09:19:08.780529"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10617,7 +10551,7 @@
     }
   },
   {
-    "note_text": "Procedure: Robotic Cryoablation\nPatient: <PERSON>\nSteps:\n1. Monarch robot to RUL.\n2. Verified with EBUS/CT.\n3. Used cryoprobe to freeze tumor x2 cycles.\n4. Saw ice ball on <LOCATION>.\n5. Little bit of blood, stopped on its own.\nPlan: Admit overnight.",
+    "note_text": "Procedure: Robotic Cryoablation\nPatient: Brian Edwards\nSteps:\n1. Monarch robot to RUL.\n2. Verified with EBUS/CT.\n3. Used cryoprobe to freeze tumor x2 cycles.\n4. Saw ice ball on scan.\n5. Little bit of blood, stopped on its own.\nPlan: Admit overnight.",
     "cpt_codes": [
       31641,
       31627,
@@ -10838,17 +10772,10 @@
       "style_type": 4,
       "generated_name": "Thanos",
       "generation_date": "2025-12-09T09:19:08.780896"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> has severe copd so we did cryoablation on his cancer. used the monarch robot found the spot in the RUL. put the cryo probe in and froze it twice for 6 minutes each time. saw the ice ball on the ct spin. he bled a little but it stopped. sending him to the floor.",
+    "note_text": "Brian has severe copd so we did cryoablation on his cancer. used the monarch robot found the spot in the RUL. put the cryo probe in and froze it twice for 6 minutes each time. saw the ice ball on the ct spin. he bled a little but it stopped. sending him to the floor.",
     "cpt_codes": [
       31641,
       31627,
@@ -11069,12 +10996,6 @@
       "style_type": 5,
       "generated_name": "Erik Killmonger",
       "generation_date": "2025-12-09T09:19:08.780949"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11526,7 +11447,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a robotic procedure to freeze a small tumor in his right lung. Because of his COPD, this was safer than surgery. We used the robot to get there, checked our spot with ultrasound, and then froze the tumor twice to make sure it was destroyed. We could actually see the ice ball on the scanner. He had a tiny bit of coughing up blood, but it stopped quickly.",
+    "note_text": "Mr. Edwards had a robotic procedure to freeze a small tumor in his right lung. Because of his COPD, this was safer than surgery. We used the robot to get there, checked our spot with ultrasound, and then froze the tumor twice to make sure it was destroyed. We could actually see the ice ball on the scanner. He had a tiny bit of coughing up blood, but it stopped quickly.",
     "cpt_codes": [
       31641,
       31627,
@@ -11747,12 +11668,6 @@
       "style_type": 8,
       "generated_name": "Red Skull",
       "generation_date": "2025-12-09T09:19:08.781179"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12616,7 +12531,7 @@
     }
   },
   {
-    "note_text": "EBUS Note\nPatient: <PERSON>\nIndication: RUL mass staging\nStations sampled: 4R, 7, 11R\nNeedle: 21G\nResults: 4R positive for cancer. Others neg.\nPlan: Oncology referral.",
+    "note_text": "EBUS Note\nPatient: James Carter\nIndication: RUL mass staging\nStations sampled: 4R, 7, 11R\nNeedle: 21G\nResults: 4R positive for cancer. Others neg.\nPlan: Oncology referral.",
     "cpt_codes": [
       31653
     ],
@@ -12825,16 +12740,10 @@
       "style_type": 4,
       "generated_name": "Pietro Maximoff",
       "generation_date": "2025-12-09T09:19:08.781459"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> is here for staging of his RUL mass. We did the EBUS under GA. Poked nodes at 4R 7 and 11R. Used the 21 gauge needle. Pathologist said 4R looks like cancer. The others were just lymph cells. No bleeding no issues. Going home today.",
+    "note_text": "James is here for staging of his RUL mass. We did the EBUS under GA. Poked nodes at 4R 7 and 11R. Used the 21 gauge needle. Pathologist said 4R looks like cancer. The others were just lymph cells. No bleeding no issues. Going home today.",
     "cpt_codes": [
       31653
     ],
@@ -13043,12 +12952,6 @@
       "style_type": 5,
       "generated_name": "Hank Pym",
       "generation_date": "2025-12-09T09:19:08.781549"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13476,7 +13379,7 @@
     }
   },
   {
-    "note_text": "We performed an EBUS procedure on Mr. <PERSON> to stage his lung cancer. We sampled three different lymph node areas: the high right mediastinum, the subcarinal area, and the right hilar area. Unfortunately, the preliminary results show cancer in the 4R lymph node, but the other two spots looked clear. He recovered well and is going home.",
+    "note_text": "We performed an EBUS procedure on Mr. Carter to stage his lung cancer. We sampled three different lymph node areas: the high right mediastinum, the subcarinal area, and the right hilar area. Unfortunately, the preliminary results show cancer in the 4R lymph node, but the other two spots looked clear. He recovered well and is going home.",
     "cpt_codes": [
       31653
     ],
@@ -13685,12 +13588,6 @@
       "style_type": 8,
       "generated_name": "Yondu",
       "generation_date": "2025-12-09T09:19:08.781707"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14542,7 +14439,7 @@
     }
   },
   {
-    "note_text": "EBUS Staging\nPatient: <PERSON>\nDx: LUL Adeno\nStations: 4L, 7, 11L\nPasses: 3-4 per station.\nROSE: Neg for malignancy.\nPlan: Home, wait for final path.",
+    "note_text": "EBUS Staging\nPatient: Maria Hernandez\nDx: LUL Adeno\nStations: 4L, 7, 11L\nPasses: 3-4 per station.\nROSE: Neg for malignancy.\nPlan: Home, wait for final path.",
     "cpt_codes": [
       31653
     ],
@@ -14751,12 +14648,6 @@
       "style_type": 4,
       "generated_name": "Kamala Khan",
       "generation_date": "2025-12-09T09:19:08.781966"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -15396,7 +15287,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for staging of her left lung cancer. Using the EBUS scope, we sampled lymph nodes in three areas: 4L, 7, and 11L. The preliminary check in the room didn't show any cancer in those nodes, which is a good sign, but we have to wait for the final results. She woke up quickly and went home.",
+    "note_text": "Ms. Hernandez came in for staging of her left lung cancer. Using the EBUS scope, we sampled lymph nodes in three areas: 4L, 7, and 11L. The preliminary check in the room didn't show any cancer in those nodes, which is a good sign, but we have to wait for the final results. She woke up quickly and went home.",
     "cpt_codes": [
       31653
     ],
@@ -15605,12 +15496,6 @@
       "style_type": 8,
       "generated_name": "Maya Lopez",
       "generation_date": "2025-12-09T09:19:08.782170"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -16465,7 +16350,7 @@
     }
   },
   {
-    "note_text": "EBUS Note\nPatient: <PERSON>\nQuery: Recurrent SCLC\nStations: 2R, 4R, 7, 10R\nROSE: Pos for SCLC at station 7.\nPlan: Admit to Onc.",
+    "note_text": "EBUS Note\nPatient: Robert Lee\nQuery: Recurrent SCLC\nStations: 2R, 4R, 7, 10R\nROSE: Pos for SCLC at station 7.\nPlan: Admit to Onc.",
     "cpt_codes": [
       31653
     ],
@@ -16675,16 +16560,10 @@
       "style_type": 4,
       "generated_name": "Kaecilius",
       "generation_date": "2025-12-09T09:19:08.782436"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> is back with possible recurrence of small cell. Did EBUS in the OR. Sampled 2R 4R 7 and 10R. Station 7 came back positive for small cell on the rapid read. Others looked okay. Admitting him for chemo eval.",
+    "note_text": "Robert is back with possible recurrence of small cell. Did EBUS in the OR. Sampled 2R 4R 7 and 10R. Station 7 came back positive for small cell on the rapid read. Others looked okay. Admitting him for chemo eval.",
     "cpt_codes": [
       31653
     ],
@@ -16894,12 +16773,6 @@
       "style_type": 5,
       "generated_name": "Dormammu",
       "generation_date": "2025-12-09T09:19:08.782488"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -17329,7 +17202,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent an EBUS procedure to check for recurring cancer. We sampled four different lymph node stations: 2R, 4R, 7, and 10R. The sample from station 7 unfortunately showed small cell cancer cells. We admitted him to the hospital to start planning his treatment with the oncology team.",
+    "note_text": "Mr. Lee underwent an EBUS procedure to check for recurring cancer. We sampled four different lymph node stations: 2R, 4R, 7, and 10R. The sample from station 7 unfortunately showed small cell cancer cells. We admitted him to the hospital to start planning his treatment with the oncology team.",
     "cpt_codes": [
       31653
     ],
@@ -17539,12 +17412,6 @@
       "style_type": 8,
       "generated_name": "Collector",
       "generation_date": "2025-12-09T09:19:08.782642"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18487,7 +18354,7 @@
     }
   },
   {
-    "note_text": "Robotic Bronch\nPatient: <PERSON>\nTarget: RLL superior segment\nSteps:\n1. Ion nav to target.\n2. REBUS confirmed.\n3. Needle aspirate (TBNA).\n4. Forceps biopsies x6.\n5. Brush x2.\nROSE: NSCLC.\nPlan: D/C, Onc referral.",
+    "note_text": "Robotic Bronch\nPatient: Patricia Nguyen\nTarget: RLL superior segment\nSteps:\n1. Ion nav to target.\n2. REBUS confirmed.\n3. Needle aspirate (TBNA).\n4. Forceps biopsies x6.\n5. Brush x2.\nROSE: NSCLC.\nPlan: D/C, Onc referral.",
     "cpt_codes": [
       31629,
       31628,
@@ -18726,16 +18593,10 @@
       "style_type": 4,
       "generated_name": "Felicia Hardy",
       "generation_date": "2025-12-09T09:19:08.782972"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> has a spot in the RLL used the ion robot to get there. Radial probe showed it nicely. Did a needle stick and then grabbed some biopsies with the forceps and a brush. Pathologist thinks its cancer. No bleeding or popped lung. She went home.",
+    "note_text": "Patricia has a spot in the RLL used the ion robot to get there. Radial probe showed it nicely. Did a needle stick and then grabbed some biopsies with the forceps and a brush. Pathologist thinks its cancer. No bleeding or popped lung. She went home.",
     "cpt_codes": [
       31629,
       31628,
@@ -18974,12 +18835,6 @@
       "style_type": 5,
       "generated_name": "Elektra",
       "generation_date": "2025-12-09T09:19:08.783031"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -19467,7 +19322,7 @@
     }
   },
   {
-    "note_text": "We used the robotic bronchoscope to biopsy a nodule in Ms. <PERSON>'s right lower lung. Once the robot guided us there, we used ultrasound to confirm we were in the right spot. We took samples using a needle, small forceps, and a brush. The preliminary results look like lung cancer. She tolerated the procedure well and went home.",
+    "note_text": "We used the robotic bronchoscope to biopsy a nodule in Ms. Nguyen's right lower lung. Once the robot guided us there, we used ultrasound to confirm we were in the right spot. We took samples using a needle, small forceps, and a brush. The preliminary results look like lung cancer. She tolerated the procedure well and went home.",
     "cpt_codes": [
       31629,
       31628,
@@ -19706,12 +19561,6 @@
       "style_type": 8,
       "generated_name": "Trish Walker",
       "generation_date": "2025-12-09T09:19:08.783204"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

@@ -388,7 +388,7 @@
     }
   },
   {
-    "note_text": "did a right thoracoscopy on mr <PERSON> saw a lot of nodules on the pleura took about 7 biopsies from the wall and some from the diaphragm sent for path then we did talc poudrage to stop the fluid chest tube is in place no air leak patient fine",
+    "note_text": "did a right thoracoscopy on mr taylor saw a lot of nodules on the pleura took about 7 biopsies from the wall and some from the diaphragm sent for path then we did talc poudrage to stop the fluid chest tube is in place no air leak patient fine",
     "cpt_codes": [
       32609,
       32650
@@ -482,12 +482,6 @@
       "style_type": 5,
       "generated_name": "Marvin Android",
       "generation_date": "2025-12-09T12:08:50.794944"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -685,7 +679,7 @@
     }
   },
   {
-    "note_text": "We performed a right medical thoracoscopy on Mr. <PERSON>. Upon entering the pleural space, we observed diffuse nodularity throughout. We proceeded to obtain seven biopsies from the parietal pleura and additional samples from the diaphragm. Following the biopsies, we performed talc poudrage for pleurodesis. The fluid was evacuated and a chest tube was inserted.",
+    "note_text": "We performed a right medical thoracoscopy on Mr. Taylor. Upon entering the pleural space, we observed diffuse nodularity throughout. We proceeded to obtain seven biopsies from the parietal pleura and additional samples from the diaphragm. Following the biopsies, we performed talc poudrage for pleurodesis. The fluid was evacuated and a chest tube was inserted.",
     "cpt_codes": [
       32609,
       32650
@@ -779,12 +773,6 @@
       "style_type": 8,
       "generated_name": "Vogon Jeltz",
       "generation_date": "2025-12-09T12:08:50.795026"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1501,7 +1489,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a right medical thoracoscopy. The inspection revealed inflammatory changes but no distinct nodularity. We obtained twelve biopsies from the parietal pleura and additional samples from the diaphragm to ensure a comprehensive evaluation. All fluid was evacuated, and a chest tube was placed. No pleurodesis was performed.",
+    "note_text": "Ms. Rivera underwent a right medical thoracoscopy. The inspection revealed inflammatory changes but no distinct nodularity. We obtained twelve biopsies from the parietal pleura and additional samples from the diaphragm to ensure a comprehensive evaluation. All fluid was evacuated, and a chest tube was placed. No pleurodesis was performed.",
     "cpt_codes": [
       32609
     ],
@@ -1586,12 +1574,6 @@
       "style_type": 8,
       "generated_name": "Furiosa Road",
       "generation_date": "2025-12-09T12:08:50.795268"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2362,7 +2344,7 @@
     }
   },
   {
-    "note_text": "We performed a right medical thoracoscopy on Mr. <PERSON>. We visualized a mass on the diaphragmatic pleura. To ensure accurate staging, we took twelve biopsies from the parietal pleura and additional samples from the diaphragm. Given the appearance, we proceeded with talc poudrage for pleurodesis before placing the chest tube.",
+    "note_text": "We performed a right medical thoracoscopy on Mr. Wilson. We visualized a mass on the diaphragmatic pleura. To ensure accurate staging, we took twelve biopsies from the parietal pleura and additional samples from the diaphragm. Given the appearance, we proceeded with talc poudrage for pleurodesis before placing the chest tube.",
     "cpt_codes": [
       32609,
       32650
@@ -2456,12 +2438,6 @@
       "style_type": 8,
       "generated_name": "Leonard McCoy",
       "generation_date": "2025-12-09T12:08:50.795501"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3171,7 +3147,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a right diagnostic medical thoracoscopy. Upon inspection, we noted thickened parietal pleura with nodules. We visualized the visceral and diaphragmatic surfaces as well. We evacuated all remaining fluid under direct visualization and placed a chest tube. The lung expanded appropriately.",
+    "note_text": "Mr. Jones underwent a right diagnostic medical thoracoscopy. Upon inspection, we noted thickened parietal pleura with nodules. We visualized the visceral and diaphragmatic surfaces as well. We evacuated all remaining fluid under direct visualization and placed a chest tube. The lung expanded appropriately.",
     "cpt_codes": [
       32601
     ],
@@ -3255,12 +3231,6 @@
       "style_type": 8,
       "generated_name": "Peregrin Took",
       "generation_date": "2025-12-09T12:08:50.795719"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4030,7 +4000,7 @@
     }
   },
   {
-    "note_text": "We performed a right medical thoracoscopy on Ms. <PERSON>. The pleura showed inflammatory changes. We collected eleven biopsies from the parietal pleura and additional samples from the diaphragm. We then performed talc poudrage for pleurodesis and placed a chest tube.",
+    "note_text": "We performed a right medical thoracoscopy on Ms. Moore. The pleura showed inflammatory changes. We collected eleven biopsies from the parietal pleura and additional samples from the diaphragm. We then performed talc poudrage for pleurodesis and placed a chest tube.",
     "cpt_codes": [
       32609,
       32650
@@ -4124,12 +4094,6 @@
       "style_type": 8,
       "generated_name": "Sally Albright",
       "generation_date": "2025-12-09T12:08:50.795953"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4839,7 +4803,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a left diagnostic medical thoracoscopy. We observed fibrinous adhesions and evidence of trapped lung. We visualized the pleural surfaces and evacuated the remaining fluid. A chest tube was placed, and the lung expanded without air leak.",
+    "note_text": "Mr. Lopez underwent a left diagnostic medical thoracoscopy. We observed fibrinous adhesions and evidence of trapped lung. We visualized the pleural surfaces and evacuated the remaining fluid. A chest tube was placed, and the lung expanded without air leak.",
     "cpt_codes": [
       32601
     ],
@@ -4923,12 +4887,6 @@
       "style_type": 8,
       "generated_name": "Phil Coulson",
       "generation_date": "2025-12-09T12:08:50.796198"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5698,7 +5656,7 @@
     }
   },
   {
-    "note_text": "We performed a right medical thoracoscopy on Ms. <PERSON>. The pleura showed multiple malignant-appearing nodules. We collected ten biopsies from the parietal pleura and additional samples from the diaphragm. We then performed talc poudrage for pleurodesis and placed a chest tube.",
+    "note_text": "We performed a right medical thoracoscopy on Ms. Smith. The pleura showed multiple malignant-appearing nodules. We collected ten biopsies from the parietal pleura and additional samples from the diaphragm. We then performed talc poudrage for pleurodesis and placed a chest tube.",
     "cpt_codes": [
       32609,
       32650
@@ -5792,12 +5750,6 @@
       "style_type": 8,
       "generated_name": "Aerith Gainsborough",
       "generation_date": "2025-12-09T12:08:50.796436"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6577,7 +6529,7 @@
     }
   },
   {
-    "note_text": "We performed a left medical thoracoscopy on Ms. <PERSON>. We observed visceral pleural tumor implants. We collected eleven biopsies from the parietal pleura and additional samples from the diaphragm. We then performed talc poudrage for pleurodesis and placed a chest tube.",
+    "note_text": "We performed a left medical thoracoscopy on Ms. Lee. We observed visceral pleural tumor implants. We collected eleven biopsies from the parietal pleura and additional samples from the diaphragm. We then performed talc poudrage for pleurodesis and placed a chest tube.",
     "cpt_codes": [
       32609,
       32650
@@ -6671,12 +6623,6 @@
       "style_type": 8,
       "generated_name": "Tara Maclay",
       "generation_date": "2025-12-09T12:08:50.796790"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7129,7 +7075,7 @@
     }
   },
   {
-    "note_text": "left thoracoscopy for <PERSON> inflammation seen no nodules took 12 biopsies from the wall and some from diaphragm drained fluid chest tube in no talc",
+    "note_text": "left thoracoscopy for william inflammation seen no nodules took 12 biopsies from the wall and some from diaphragm drained fluid chest tube in no talc",
     "cpt_codes": [
       32609
     ],
@@ -7214,12 +7160,6 @@
       "style_type": 5,
       "generated_name": "Cigarette Man",
       "generation_date": "2025-12-09T12:08:50.796948"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7399,7 +7339,7 @@
     }
   },
   {
-    "note_text": "We performed a left medical thoracoscopy on Mr. <PERSON>. The pleura showed inflammatory changes. We collected twelve biopsies from the parietal pleura and additional samples from the diaphragm. We evacuated the fluid and placed a chest tube. No pleurodesis was done.",
+    "note_text": "We performed a left medical thoracoscopy on Mr. Lee. The pleura showed inflammatory changes. We collected twelve biopsies from the parietal pleura and additional samples from the diaphragm. We evacuated the fluid and placed a chest tube. No pleurodesis was done.",
     "cpt_codes": [
       32609
     ],
@@ -7484,12 +7424,6 @@
       "style_type": 8,
       "generated_name": "Lone Gunman",
       "generation_date": "2025-12-09T12:08:50.797020"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8197,7 +8131,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a right medical thoracoscopy. We observed inflammatory changes but no nodules. We performed talc poudrage for pleurodesis after draining the fluid. A chest tube was placed, and the lung expanded.",
+    "note_text": "Mr. Young underwent a right medical thoracoscopy. We observed inflammatory changes but no nodules. We performed talc poudrage for pleurodesis after draining the fluid. A chest tube was placed, and the lung expanded.",
     "cpt_codes": [
       32650
     ],
@@ -8282,12 +8216,6 @@
       "style_type": 8,
       "generated_name": "Sirius Black",
       "generation_date": "2025-12-09T12:08:50.797255"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

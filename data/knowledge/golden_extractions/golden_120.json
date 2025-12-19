@@ -2115,7 +2115,7 @@
     }
   },
   {
-    "note_text": "Dx: Post-pneumonectomy BPF.\nAnesthesia: GA, 8.5 ETT.\nFindings: Right tree normal. Left stump has pinpoint fistula.\nAction: Glue applied via <PERSON>-seal catheter.\nResult: Fistula sealed visually.\n complications: None.",
+    "note_text": "Dx: Post-pneumonectomy BPF.\nAnesthesia: GA, 8.5 ETT.\nFindings: Right tree normal. Left stump has pinpoint fistula.\nAction: Glue applied via Veno-seal catheter.\nResult: Fistula sealed visually.\n complications: None.",
     "cpt_codes": [
       31622
     ],
@@ -2264,16 +2264,10 @@
       "style_type": 1,
       "generated_name": "Mary Johnson",
       "generation_date": "2025-12-18T19:15:06.030939"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: The patient, status post-pneumonectomy, presented with a broncho-pleural fistula. Following induction of general anesthesia and placement of an 8.5 mm endotracheal tube, the airway was inspected. The right hemithorax was unremarkable. Examination of the left mainstem stump revealed a pinpoint fistulous tract. A <PERSON>-seal delivery catheter was navigated to the site, and cyanoacrylate sealant was instilled. Visual confirmation suggested successful occlusion of the defect without propagation of the fistula.",
+    "note_text": "OPERATIVE NARRATIVE: The patient, status post-pneumonectomy, presented with a broncho-pleural fistula. Following induction of general anesthesia and placement of an 8.5 mm endotracheal tube, the airway was inspected. The right hemithorax was unremarkable. Examination of the left mainstem stump revealed a pinpoint fistulous tract. A Veno-seal delivery catheter was navigated to the site, and cyanoacrylate sealant was instilled. Visual confirmation suggested successful occlusion of the defect without propagation of the fistula.",
     "cpt_codes": [
       31622
     ],
@@ -2422,16 +2416,10 @@
       "style_type": 2,
       "generated_name": "Patricia Williams",
       "generation_date": "2025-12-18T19:15:06.030976"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Service: Bronchoscopy (CPT 31622). Note: Therapeutic intervention (glue) performed but billed as diagnostic due to coding limitations.\nFindings: Visualization of left mainstem bronchial stump revealed a pinpoint broncho-pleural fistula.\nIntervention: Endobronchial glue instillation using <PERSON>-seal system. Fistula sealed. Right airways inspected and normal.",
+    "note_text": "Service: Bronchoscopy (CPT 31622). Note: Therapeutic intervention (glue) performed but billed as diagnostic due to coding limitations.\nFindings: Visualization of left mainstem bronchial stump revealed a pinpoint broncho-pleural fistula.\nIntervention: Endobronchial glue instillation using Veno-seal system. Fistula sealed. Right airways inspected and normal.",
     "cpt_codes": [
       31622
     ],
@@ -2580,12 +2568,6 @@
       "style_type": 3,
       "generated_name": "Jennifer Davis",
       "generation_date": "2025-12-18T19:15:06.031012"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3045,7 +3027,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPost-pneumonectomy broncho-pleural fistula.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nRight airways normal. Left stump visualized with pinpoint fistula. Sealed with endobronchial glue via <PERSON>-seal catheter.\n[Plan]\nObserve.",
+    "note_text": "[Indication]\nPost-pneumonectomy broncho-pleural fistula.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nRight airways normal. Left stump visualized with pinpoint fistula. Sealed with endobronchial glue via Veno-seal catheter.\n[Plan]\nObserve.",
     "cpt_codes": [
       31622
     ],
@@ -3194,16 +3176,10 @@
       "style_type": 7,
       "generated_name": "Susan Lopez",
       "generation_date": "2025-12-18T19:15:06.031160"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We proceeded with the bronchoscopy to address the patient's post-pneumonectomy fistula. After establishing an airway with an 8.5 ETT, we navigated the bronchoscope to the carina. The right lung was clear. We carefully inspected the left stump and found a small, pinpoint fistula. Using the <PERSON>-seal system, we applied glue directly to the defect. The fistula appeared to close completely upon inspection.",
+    "note_text": "We proceeded with the bronchoscopy to address the patient's post-pneumonectomy fistula. After establishing an airway with an 8.5 ETT, we navigated the bronchoscope to the carina. The right lung was clear. We carefully inspected the left stump and found a small, pinpoint fistula. Using the Veno-seal system, we applied glue directly to the defect. The fistula appeared to close completely upon inspection.",
     "cpt_codes": [
       31622
     ],
@@ -3352,12 +3328,6 @@
       "style_type": 8,
       "generated_name": "Jessica Hernandez",
       "generation_date": "2025-12-18T19:15:06.031196"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4749,7 +4719,7 @@
     }
   },
   {
-    "note_text": "[Indication]\n<PERSON> nodule staging.\n[Anesthesia]\nPropofol, LMA.\n[Description]\nEBUS-TBNA of Station 7 (Benign). <PERSON> bronchoscopy to LUL Apical-posterior segment. Nodule visualized. Micro-forceps biopsy performed (Malignant).\n[Plan]\nAwait final path.",
+    "note_text": "[Indication]\nPulmonary nodule staging.\n[Anesthesia]\nPropofol, LMA.\n[Description]\nEBUS-TBNA of Station 7 (Benign). Ultrathin bronchoscopy to LUL Apical-posterior segment. Nodule visualized. Micro-forceps biopsy performed (Malignant).\n[Plan]\nAwait final path.",
     "cpt_codes": [
       31652,
       31625
@@ -4952,13 +4922,6 @@
       "style_type": 7,
       "generated_name": "Richard Walker",
       "generation_date": "2025-12-18T19:15:06.031581"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {

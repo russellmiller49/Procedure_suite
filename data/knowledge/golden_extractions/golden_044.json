@@ -2547,7 +2547,7 @@
     }
   },
   {
-    "note_text": "procedure note for mrs <PERSON> or whatever name we use she has that nodule in the right middle lobe and a node under the carina. we put her to sleep with propofol tube in. did the ebus first on the 7 node got good cores. then switched scopes went to the rml used the fluoro to see where we were going took 4 bites with the forceps. no pneumo seen after. patient woke up good.",
+    "note_text": "procedure note for mrs alvarez or whatever name we use she has that nodule in the right middle lobe and a node under the carina. we put her to sleep with propofol tube in. did the ebus first on the 7 node got good cores. then switched scopes went to the rml used the fluoro to see where we were going took 4 bites with the forceps. no pneumo seen after. patient woke up good.",
     "cpt_codes": [
       31652,
       31628
@@ -2760,12 +2760,6 @@
       "style_type": 5,
       "generated_name": "Dana Scully",
       "generation_date": "2025-12-09T09:20:32.386581"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6412,7 +6406,7 @@
     }
   },
   {
-    "note_text": "did the robotic bronch today on <PERSON> used the ion system. navigated out to that rll nodule radial ebus showed we were right in it. took biopsies. then we pulled the robot and put the ebus scope down to check the nodes. hit 4r 7 and 10r. minimal bleeding.",
+    "note_text": "did the robotic bronch today on corey daniels used the ion system. navigated out to that rll nodule radial ebus showed we were right in it. took biopsies. then we pulled the robot and put the ebus scope down to check the nodes. hit 4r 7 and 10r. minimal bleeding.",
     "cpt_codes": [
       31653,
       31627,
@@ -6683,12 +6677,6 @@
       "style_type": 5,
       "generated_name": "Clint Barton",
       "generation_date": "2025-12-09T09:20:32.387691"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8884,7 +8872,7 @@
     }
   },
   {
-    "note_text": "<PERSON> came in for fiducials and biopsy. used the superdimension or illumisite whatever we have. navigated to the lul. radial probe showed the lesion. took some bites. then put in 3 gold seeds for the radiation doctors. no issues.",
+    "note_text": "david cho came in for fiducials and biopsy. used the superdimension or illumisite whatever we have. navigated to the lul. radial probe showed the lesion. took some bites. then put in 3 gold seeds for the radiation doctors. no issues.",
     "cpt_codes": [
       "31626",
       "31628",
@@ -9155,12 +9143,6 @@
       "style_type": 5,
       "generated_name": "Mace Windu",
       "generation_date": "2025-12-09T09:20:32.388345"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14867,7 +14849,7 @@
     }
   },
   {
-    "note_text": "<PERSON> had a blocked airway and fluid on the lung. we fixed the airway first with the rigid scope apc and a stent in the right main. then we put in a pleurx catheter on the right side for the fluid. drained a lot. shes breathing better now.",
+    "note_text": "sheryl lyons had a blocked airway and fluid on the lung. we fixed the airway first with the rigid scope apc and a stent in the right main. then we put in a pleurx catheter on the right side for the fluid. drained a lot. shes breathing better now.",
     "cpt_codes": [
       31641,
       31636,
@@ -15109,12 +15091,6 @@
       "style_type": 5,
       "generated_name": "Beverly Crusher",
       "generation_date": "2025-12-09T09:20:32.389918"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18535,7 +18511,7 @@
     }
   },
   {
-    "note_text": "<PERSON> needs a drain for her fluid. put in a pleurx catheter on the left side using the ultrasound. tunneled it under the skin so it stays in. drained about a liter and a half. discharge home with nurse.",
+    "note_text": "aisha khan needs a drain for her fluid. put in a pleurx catheter on the left side using the ultrasound. tunneled it under the skin so it stays in. drained about a liter and a half. discharge home with nurse.",
     "cpt_codes": [
       32550
     ],
@@ -18719,12 +18695,6 @@
       "style_type": 5,
       "generated_name": "Ellen Tigh",
       "generation_date": "2025-12-09T09:20:32.390942"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

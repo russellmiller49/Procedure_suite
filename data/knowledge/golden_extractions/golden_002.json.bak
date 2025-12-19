@@ -987,7 +987,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nAttending: Dr. Kim\nSteps:\n1. Time out. GA induced. Rigid scope inserted.\n2. Saw tumor in Right Main. Debulked with scope tip and APC.\n3. Dilated with balloon.\n4. Placed metal stent (14x60). Good position.\n5. Did PleurX catheter on the right side. Got 850cc fluid.\n6. Extubated/Stable.",
+    "note_text": "Procedure Note\nPatient: Beatrice Arthur\nAttending: Dr. Kim\nSteps:\n1. Time out. GA induced. Rigid scope inserted.\n2. Saw tumor in Right Main. Debulked with scope tip and APC.\n3. Dilated with balloon.\n4. Placed metal stent (14x60). Good position.\n5. Did PleurX catheter on the right side. Got 850cc fluid.\n6. Extubated/Stable.",
     "cpt_codes": [
       31641,
       31636,
@@ -1313,16 +1313,10 @@
       "style_type": 4,
       "generated_name": "Beatrice Arthur",
       "generation_date": "2025-12-09T09:18:26.749913"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "we did a rigid bronch today on <PERSON> for that airway tumor right side. used the storz scope cored out the tumor and burned the rest with APC. put a stent in there looks wide open now. also put in a pleurx catheter for the fluid on the right side. no issues really patient stable to recovery.",
+    "note_text": "we did a rigid bronch today on Clara Oswin for that airway tumor right side. used the storz scope cored out the tumor and burned the rest with APC. put a stent in there looks wide open now. also put in a pleurx catheter for the fluid on the right side. no issues really patient stable to recovery.",
     "cpt_codes": [
       31641,
       31636,
@@ -1648,12 +1642,6 @@
       "style_type": 5,
       "generated_name": "Clara Oswin",
       "generation_date": "2025-12-09T09:18:26.749990"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2315,7 +2303,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> was taken to the OR for airway management. We utilized a rigid bronchoscope to access the airway. A large tumor in the right mainstem was effectively removed using mechanical coring and heat therapy. To prevent re-obstruction, we deployed a metallic stent. While she was under, we also addressed her fluid buildup by placing a tunneled PleurX catheter in the right chest. She tolerated all distinct procedures well.",
+    "note_text": "Ms. Rose Tyler was taken to the OR for airway management. We utilized a rigid bronchoscope to access the airway. A large tumor in the right mainstem was effectively removed using mechanical coring and heat therapy. To prevent re-obstruction, we deployed a metallic stent. While she was under, we also addressed her fluid buildup by placing a tunneled PleurX catheter in the right chest. She tolerated all distinct procedures well.",
     "cpt_codes": [
       31641,
       31636,
@@ -2641,12 +2629,6 @@
       "style_type": 8,
       "generated_name": "Rose Tyler",
       "generation_date": "2025-12-09T09:18:26.750226"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3738,7 +3720,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: <PERSON>\nPre-op Dx: Pneumonia\nSteps:\n1. Vitals stable. Lidocaine spray.\n2. Scope inserted nare.\n3. Inspection: Normal anatomy, some secretions.\n4. BAL LLL: Good return.\n5. Scope out.\nPlan: Wait for culture results.",
+    "note_text": "Resident Note\nPatient: Betty White\nPre-op Dx: Pneumonia\nSteps:\n1. Vitals stable. Lidocaine spray.\n2. Scope inserted nare.\n3. Inspection: Normal anatomy, some secretions.\n4. BAL LLL: Good return.\n5. Scope out.\nPlan: Wait for culture results.",
     "cpt_codes": [
       31624
     ],
@@ -3988,12 +3970,6 @@
       "style_type": 4,
       "generated_name": "Betty White",
       "generation_date": "2025-12-09T09:18:26.750550"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4756,7 +4732,7 @@
     }
   },
   {
-    "note_text": "We performed a bronchoscopy on Ms. <PERSON> to investigate her persistent pneumonia. After numbing the nose and throat, the scope was passed easily. We didn't see any tumors or blockages, just some thick mucus. We washed the left lower lobe with saline and collected the fluid to check for specific bacteria. She did great during the procedure.",
+    "note_text": "We performed a bronchoscopy on Ms. Jessica Fletcher to investigate her persistent pneumonia. After numbing the nose and throat, the scope was passed easily. We didn't see any tumors or blockages, just some thick mucus. We washed the left lower lobe with saline and collected the fluid to check for specific bacteria. She did great during the procedure.",
     "cpt_codes": [
       31624
     ],
@@ -5006,12 +4982,6 @@
       "style_type": 8,
       "generated_name": "Jessica Fletcher",
       "generation_date": "2025-12-09T09:18:26.750801"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6048,7 +6018,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPatient: <PERSON>\nAttending: Dr. Chen\nSteps:\n1. Airway inspection: Normal.\n2. EBUS scope in.\n3. Biopsied 4R (4 passes).\n4. Biopsied 7 (4 passes).\n5. Biopsied 10R (3 passes).\nROSE: Positive for malignancy.\nPlan: Oncology referral.",
+    "note_text": "Procedure: EBUS\nPatient: Leia Organa\nAttending: Dr. Chen\nSteps:\n1. Airway inspection: Normal.\n2. EBUS scope in.\n3. Biopsied 4R (4 passes).\n4. Biopsied 7 (4 passes).\n5. Biopsied 10R (3 passes).\nROSE: Positive for malignancy.\nPlan: Oncology referral.",
     "cpt_codes": [
       31653
     ],
@@ -6305,12 +6275,6 @@
       "style_type": 4,
       "generated_name": "Leia Organa",
       "generation_date": "2025-12-09T09:18:26.751139"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7094,7 +7058,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent EBUS staging today. We specifically targeted the lymph nodes in the center of the chest. Using the ultrasound needle, we took samples from station 4R, station 7, and station 10R. The preliminary results from the pathologist in the room showed cancer cells in the lymph nodes, confirming Stage IIIB disease.",
+    "note_text": "Ms. Deanna Troi underwent EBUS staging today. We specifically targeted the lymph nodes in the center of the chest. Using the ultrasound needle, we took samples from station 4R, station 7, and station 10R. The preliminary results from the pathologist in the room showed cancer cells in the lymph nodes, confirming Stage IIIB disease.",
     "cpt_codes": [
       31653
     ],
@@ -7351,12 +7315,6 @@
       "style_type": 8,
       "generated_name": "Deanna Troi",
       "generation_date": "2025-12-09T09:18:26.751483"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8373,7 +8331,7 @@
     }
   },
   {
-    "note_text": "Cryoablation Note\nPatient: <PERSON>\nLesion: LUL nodule.\nSteps:\n1. Navigate to lesion.\n2. Confirm with REBUS.\n3. Insert cryoprobe.\n4. Freeze x 5 mins, Thaw, Freeze x 5 mins.\n5. Check for bleeding - none.\nPlan: DC if CXR ok.",
+    "note_text": "Cryoablation Note\nPatient: Six Caprica\nLesion: LUL nodule.\nSteps:\n1. Navigate to lesion.\n2. Confirm with REBUS.\n3. Insert cryoprobe.\n4. Freeze x 5 mins, Thaw, Freeze x 5 mins.\n5. Check for bleeding - none.\nPlan: DC if CXR ok.",
     "cpt_codes": [
       31641
     ],
@@ -8621,16 +8579,10 @@
       "style_type": 4,
       "generated_name": "Six Caprica",
       "generation_date": "2025-12-09T09:18:26.751807"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here procedure for <PERSON> she has that small cancer in the LUL. We went in with the scope navigated to the spot. Used the cryo probe to freeze it twice. Saw the ice ball on the fluoro. No bleeding. She goes home today.",
+    "note_text": "Dr Patterson here procedure for Ellen Tigh she has that small cancer in the LUL. We went in with the scope navigated to the spot. Used the cryo probe to freeze it twice. Saw the ice ball on the fluoro. No bleeding. She goes home today.",
     "cpt_codes": [
       31641
     ],
@@ -8878,13 +8830,6 @@
       "style_type": 5,
       "generated_name": "Ellen Tigh",
       "generation_date": "2025-12-09T09:18:26.751869"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -10996,7 +10941,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS + Ion\nPatient: <PERSON>\nSteps:\n1. EBUS scope. Sampled 4R and 7. ROSE positive.\n2. Switch to Ion scope.\n3. Navigate to RLL mass.\n4. Radial EBUS check.\n5. Biopsy x 8.\nROSE: Adenocarcinoma.\nPlan: Stage IIIA.",
+    "note_text": "Procedure: EBUS + Ion\nPatient: Carol Danvers\nSteps:\n1. EBUS scope. Sampled 4R and 7. ROSE positive.\n2. Switch to Ion scope.\n3. Navigate to RLL mass.\n4. Radial EBUS check.\n5. Biopsy x 8.\nROSE: Adenocarcinoma.\nPlan: Stage IIIA.",
     "cpt_codes": [
       31652,
       31627,
@@ -11361,16 +11306,10 @@
       "style_type": 4,
       "generated_name": "Carol Danvers",
       "generation_date": "2025-12-09T09:18:26.752500"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Dr Foster note for Hope <PERSON>. Did the staging first EBUS showed cancer in 4R and 7 so N2 disease. Then used the robot to get the main mass in the RLL. Biopsies positive there too. No pneumothorax. Patient needs chemo/rads.",
+    "note_text": "Dr Foster note for Hope Van Dyne. Did the staging first EBUS showed cancer in 4R and 7 so N2 disease. Then used the robot to get the main mass in the RLL. Biopsies positive there too. No pneumothorax. Patient needs chemo/rads.",
     "cpt_codes": [
       31652,
       31627,
@@ -11735,12 +11674,6 @@
       "style_type": 5,
       "generated_name": "Hope Van Dyne",
       "generation_date": "2025-12-09T09:18:26.752587"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12480,7 +12413,7 @@
     }
   },
   {
-    "note_text": "We started Ms. <PERSON>'s procedure with EBUS to check the lymph nodes. Unfortunately, stations 4R and 7 were positive for cancer. We then switched to the robotic scope to biopsy the main mass in the right lower lobe. The navigation was accurate, and we got good samples which also showed adenocarcinoma. She will need a multidisciplinary treatment approach.",
+    "note_text": "We started Ms. Mantis Empath's procedure with EBUS to check the lymph nodes. Unfortunately, stations 4R and 7 were positive for cancer. We then switched to the robotic scope to biopsy the main mass in the right lower lobe. The navigation was accurate, and we got good samples which also showed adenocarcinoma. She will need a multidisciplinary treatment approach.",
     "cpt_codes": [
       31652,
       31627,
@@ -12845,12 +12778,6 @@
       "style_type": 8,
       "generated_name": "Mantis Empath",
       "generation_date": "2025-12-09T09:18:26.752848"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -15616,7 +15543,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> is a candidate for radiation therapy for his left lung mass. We used the robotic bronchoscope to biopsy the mass first to confirm the type of cancer. Then, we placed gold fiducial markers around the tumor. These will help the radiation team target the tumor precisely during his treatments.",
+    "note_text": "Mr. Sam Wilson is a candidate for radiation therapy for his left lung mass. We used the robotic bronchoscope to biopsy the mass first to confirm the type of cancer. Then, we placed gold fiducial markers around the tumor. These will help the radiation team target the tumor precisely during his treatments.",
     "cpt_codes": [
       31627,
       31654,
@@ -15955,12 +15882,6 @@
       "style_type": 8,
       "generated_name": "Sam Wilson",
       "generation_date": "2025-12-09T09:18:26.753646"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -17428,7 +17349,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS + SuperD\nPatient: <PERSON>\nHx: Breast cancer.\nSteps:\n1. EBUS Station 7 -> Positive.\n2. Nav to RLL nodule -> Positive.\n3. Sent for stains (TTF1, GATA3).\nPlan: Wait for path to decide treatment.",
+    "note_text": "Procedure: EBUS + SuperD\nPatient: Kitty Pryde\nHx: Breast cancer.\nSteps:\n1. EBUS Station 7 -> Positive.\n2. Nav to RLL nodule -> Positive.\n3. Sent for stains (TTF1, GATA3).\nPlan: Wait for path to decide treatment.",
     "cpt_codes": [
       31652,
       31628,
@@ -17799,16 +17720,10 @@
       "style_type": 4,
       "generated_name": "Kitty Pryde",
       "generation_date": "2025-12-09T09:18:26.754073"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Consult for <PERSON> she has breast cancer history but now lung spots. We did EBUS on the subcarinal node and nav bronch on the RLL spot. Both look like adeno. We need the stains to tell if its breast or lung cancer. No complications.",
+    "note_text": "Consult for Emma Frost she has breast cancer history but now lung spots. We did EBUS on the subcarinal node and nav bronch on the RLL spot. Both look like adeno. We need the stains to tell if its breast or lung cancer. No complications.",
     "cpt_codes": [
       31652,
       31628,
@@ -18179,12 +18094,6 @@
       "style_type": 5,
       "generated_name": "Emma Frost",
       "generation_date": "2025-12-09T09:18:26.754159"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18936,7 +18845,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> has a history of breast cancer and presented with a new lung nodule and lymph node. We sampled both the lymph node (using EBUS) and the lung nodule (using navigation). Both show cancer, but we can't tell if it's lung cancer or breast cancer spread without special stains. We ordered those tests and will know in a few days.",
+    "note_text": "Ms. Betsy Braddock has a history of breast cancer and presented with a new lung nodule and lymph node. We sampled both the lymph node (using EBUS) and the lung nodule (using navigation). Both show cancer, but we can't tell if it's lung cancer or breast cancer spread without special stains. We ordered those tests and will know in a few days.",
     "cpt_codes": [
       31652,
       31628,
@@ -19307,12 +19216,6 @@
       "style_type": 8,
       "generated_name": "Betsy Braddock",
       "generation_date": "2025-12-09T09:18:26.754419"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -20545,7 +20448,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPatient: <PERSON>\nSteps:\n1. Scope in.\n2. Sampled 7 (Subcarinal) - Pos.\n3. Sampled 4R (Paratracheal) - Pos.\n4. Sampled 10R/11R - Neg.\nImpression: Stage IIIB (N2 disease).\nPlan: Chemo/Rad referral.",
+    "note_text": "Procedure: EBUS\nPatient: Barry Allen\nSteps:\n1. Scope in.\n2. Sampled 7 (Subcarinal) - Pos.\n3. Sampled 4R (Paratracheal) - Pos.\n4. Sampled 10R/11R - Neg.\nImpression: Stage IIIB (N2 disease).\nPlan: Chemo/Rad referral.",
     "cpt_codes": [
       31653
     ],
@@ -20827,16 +20730,10 @@
       "style_type": 4,
       "generated_name": "Barry Allen",
       "generation_date": "2025-12-09T09:18:26.754826"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "EBUS for <PERSON>. We looked at all the nodes. Poked 7, 4R, 10R and 11R. The big ones in the middle 7 and 4R have cancer. The others looked okay. So he has N2 disease. Needs oncology.",
+    "note_text": "EBUS for Arthur Curry. We looked at all the nodes. Poked 7, 4R, 10R and 11R. The big ones in the middle 7 and 4R have cancer. The others looked okay. So he has N2 disease. Needs oncology.",
     "cpt_codes": [
       31653
     ],
@@ -21118,12 +21015,6 @@
       "style_type": 5,
       "generated_name": "Arthur Curry",
       "generation_date": "2025-12-09T09:18:26.754905"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -21697,7 +21588,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent staging for his lung cancer. We used the ultrasound scope to sample lymph nodes in four different areas of his chest. Unfortunately, the cancer has spread to the lymph nodes in the mediastinum (N2 nodes), which means surgery isn't the first option. He will likely need chemotherapy and radiation.",
+    "note_text": "Mr. Oliver Queen underwent staging for his lung cancer. We used the ultrasound scope to sample lymph nodes in four different areas of his chest. Unfortunately, the cancer has spread to the lymph nodes in the mediastinum (N2 nodes), which means surgery isn't the first option. He will likely need chemotherapy and radiation.",
     "cpt_codes": [
       31653
     ],
@@ -21979,12 +21870,6 @@
       "style_type": 8,
       "generated_name": "Oliver Queen",
       "generation_date": "2025-12-09T09:18:26.755129"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

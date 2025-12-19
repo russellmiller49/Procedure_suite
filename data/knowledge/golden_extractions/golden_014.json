@@ -202,7 +202,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Mr. <PERSON>, a 66-year-old male with newly diagnosed right upper lobe adenocarcinoma, presented for mediastinal staging. \nPROCEDURE: Moderate sedation was induced. A linear EBUS scope was introduced. A systematic nodal evaluation was performed. Transbronchial needle aspiration (TBNA) was conducted at stations 4R, 7, 10R, and 11R. Rapid On-Site Evaluation (ROSE) confirmed malignancy in stations 4R and 7. \nCONCLUSION: N2 disease confirmed. The patient tolerated the procedure well.",
+    "note_text": "HISTORY: Mr. Martinez, a 66-year-old male with newly diagnosed right upper lobe adenocarcinoma, presented for mediastinal staging. \nPROCEDURE: Moderate sedation was induced. A linear EBUS scope was introduced. A systematic nodal evaluation was performed. Transbronchial needle aspiration (TBNA) was conducted at stations 4R, 7, 10R, and 11R. Rapid On-Site Evaluation (ROSE) confirmed malignancy in stations 4R and 7. \nCONCLUSION: N2 disease confirmed. The patient tolerated the procedure well.",
     "cpt_codes": [
       31653
     ],
@@ -401,12 +401,6 @@
       "style_type": 2,
       "generated_name": "David Johnson",
       "generation_date": "2025-12-09T09:18:54.288405"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1022,7 +1016,7 @@
     }
   },
   {
-    "note_text": "Patient <PERSON> undergoing EBUS-TBNA for RUL adenocarcinoma staging under moderate sedation. Systematic evaluation performed. Station 4R (12mm) sampled x4, ROSE positive. Station 7 (18mm) sampled x4, ROSE positive. Station 10R and 11R sampled x3 each, ROSE negative/adequate. No complications occurred. Plan for oncology follow-up.",
+    "note_text": "Patient Robert Martinez undergoing EBUS-TBNA for RUL adenocarcinoma staging under moderate sedation. Systematic evaluation performed. Station 4R (12mm) sampled x4, ROSE positive. Station 7 (18mm) sampled x4, ROSE positive. Station 10R and 11R sampled x3 each, ROSE negative/adequate. No complications occurred. Plan for oncology follow-up.",
     "cpt_codes": [
       31653
     ],
@@ -1221,12 +1215,6 @@
       "style_type": 6,
       "generated_name": "William Garcia",
       "generation_date": "2025-12-09T09:18:54.288610"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2049,7 +2037,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Diagnostic flexible bronchoscopy.\nCLINICAL SUMMARY: Ms. <PERSON> presented for evaluation of a persistent left lower lobe infiltrate. \nFINDINGS: The airway examination revealed moderate mucosal erythema and edema within the basilar segments of the left lower lobe. No endobronchial masses were appreciated.\nINTERVENTION: Bronchoalveolar lavage and bronchial brushings were obtained from the affected segments for microbiologic and cytologic analysis. Transbronchial biopsies were deferred.\nIMPRESSION: Inflammatory changes LLL, ruled out visible endobronchial lesion.",
+    "note_text": "PROCEDURE: Diagnostic flexible bronchoscopy.\nCLINICAL SUMMARY: Ms. Davis presented for evaluation of a persistent left lower lobe infiltrate. \nFINDINGS: The airway examination revealed moderate mucosal erythema and edema within the basilar segments of the left lower lobe. No endobronchial masses were appreciated.\nINTERVENTION: Bronchoalveolar lavage and bronchial brushings were obtained from the affected segments for microbiologic and cytologic analysis. Transbronchial biopsies were deferred.\nIMPRESSION: Inflammatory changes LLL, ruled out visible endobronchial lesion.",
     "cpt_codes": [
       31623,
       31624
@@ -2259,12 +2247,6 @@
       "style_type": 2,
       "generated_name": "Patricia Martinez",
       "generation_date": "2025-12-09T09:18:54.288857"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2914,7 +2896,7 @@
     }
   },
   {
-    "note_text": "Evaluation of LLL infiltrate for <PERSON>. Topical anesthesia used. Inspection revealed erythema and edema in LLL basilar segments. No masses. BAL performed with 50cc aliquots x3. Brushings x2 obtained from the same area. No complications. Procedure time 18 mins.",
+    "note_text": "Evaluation of LLL infiltrate for Angela Davis. Topical anesthesia used. Inspection revealed erythema and edema in LLL basilar segments. No masses. BAL performed with 50cc aliquots x3. Brushings x2 obtained from the same area. No complications. Procedure time 18 mins.",
     "cpt_codes": [
       31623,
       31624
@@ -3124,12 +3106,6 @@
       "style_type": 6,
       "generated_name": "Barbara Hernandez",
       "generation_date": "2025-12-09T09:18:54.289053"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3346,7 +3322,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a flexible bronchoscopy to investigate a left lower lobe infiltrate. We utilized topical anesthesia only. Upon inspection, the left lower lobe basilar segments appeared inflamed with edema, though no discrete mass was visible. We performed a bronchoalveolar lavage and bronchial brushings in this area. She tolerated the procedure well and was discharged shortly after.",
+    "note_text": "Ms. Davis underwent a flexible bronchoscopy to investigate a left lower lobe infiltrate. We utilized topical anesthesia only. Upon inspection, the left lower lobe basilar segments appeared inflamed with edema, though no discrete mass was visible. We performed a bronchoalveolar lavage and bronchial brushings in this area. She tolerated the procedure well and was discharged shortly after.",
     "cpt_codes": [
       31623,
       31624
@@ -3556,12 +3532,6 @@
       "style_type": 8,
       "generated_name": "Jessica Martin",
       "generation_date": "2025-12-09T09:18:54.289147"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4369,7 +4339,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProc: EBUS\nSteps:\n1. Moderate sedation.\n2. EBUS scope passed.\n3. Nodal survey completed.\n4. Sampled 4R, 7, 11R.\n5. Path confirmed cancer in 4R and 7.\n6. Pt stable.\nPlan: Oncology.",
+    "note_text": "Procedure Note\nPatient: James Wilson\nProc: EBUS\nSteps:\n1. Moderate sedation.\n2. EBUS scope passed.\n3. Nodal survey completed.\n4. Sampled 4R, 7, 11R.\n5. Path confirmed cancer in 4R and 7.\n6. Pt stable.\nPlan: Oncology.",
     "cpt_codes": [
       31653
     ],
@@ -4563,16 +4533,10 @@
       "style_type": 4,
       "generated_name": "Christopher Gonzalez",
       "generation_date": "2025-12-09T09:18:54.289389"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "James Wilson EBUS procedure note. We used moderate sedation he was comfortable. Checked the nodes systematic way. 4R and 7 were positive for cancer on the rapid read. 11R was sampled too looked ok. No complications at all. Saved the images.",
+    "note_text": "<PERSON> EBUS procedure note. We used moderate sedation he was comfortable. Checked the nodes systematic way. 4R and 7 were positive for cancer on the rapid read. 11R was sampled too looked ok. No complications at all. Saved the images.",
     "cpt_codes": [
       31653
     ],
@@ -4766,10 +4730,16 @@
       "style_type": 5,
       "generated_name": "Daniel Harris",
       "generation_date": "2025-12-09T09:18:54.289436"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "EBUS-TBNA for <PERSON>. Staging indication. Moderate sedation. Systematic N3-N1 exam. Sampled 4R (10mm, positive), 7 (14mm, positive), and 11R (7mm, adequate). Molecular samples sent. No complications recorded.",
+    "note_text": "EBUS-TBNA for James Wilson. Staging indication. Moderate sedation. Systematic N3-N1 exam. Sampled 4R (10mm, positive), 7 (14mm, positive), and 11R (7mm, adequate). Molecular samples sent. No complications recorded.",
     "cpt_codes": [
       31653
     ],
@@ -4963,12 +4933,6 @@
       "style_type": 6,
       "generated_name": "Matthew Clark",
       "generation_date": "2025-12-09T09:18:54.289483"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5169,7 +5133,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent EBUS-TBNA for staging purposes. Under moderate sedation, we identified and sampled nodes at stations 4R, 7, and 11R. Rapid on-site evaluation showed malignant cells in stations 4R and 7. Station 11R was sampled and found adequate but negative. There were no complications.",
+    "note_text": "Mr. Wilson underwent EBUS-TBNA for staging purposes. Under moderate sedation, we identified and sampled nodes at stations 4R, 7, and 11R. Rapid on-site evaluation showed malignant cells in stations 4R and 7. Station 11R was sampled and found adequate but negative. There were no complications.",
     "cpt_codes": [
       31653
     ],
@@ -5363,12 +5327,6 @@
       "style_type": 8,
       "generated_name": "Mark Robinson",
       "generation_date": "2025-12-09T09:18:54.289610"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5569,7 +5527,7 @@
     }
   },
   {
-    "note_text": "Indication: Restaging post-chemo (N2).\nProc: EBUS-TBNA Station 7.\nFindings: Station 7 now 8mm (was 18mm).\nAction: 4 passes. <PERSON>.\nOther: 4R/4L/10R benign/small, not sampled.\nImpression: Downstaging.",
+    "note_text": "Indication: Restaging post-chemo (N2).\nProc: EBUS-TBNA Station 7.\nFindings: Station 7 now 8mm (was 18mm).\nAction: 4 passes. ROSE Neg.\nOther: 4R/4L/10R benign/small, not sampled.\nImpression: Downstaging.",
     "cpt_codes": [
       31652
     ],
@@ -5767,16 +5725,10 @@
       "style_type": 1,
       "generated_name": "Paul Perez",
       "generation_date": "2025-12-09T09:18:54.289707"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "HISTORY: Mr. <PERSON> presented for restaging EBUS following chemotherapy for N2 (Station 7) disease. \nPROCEDURE: Under conscious sedation, the subcarinal station (7) was re-evaluated. The node measured 8mm, significantly reduced from prior imaging. Transbronchial needle aspiration was performed. ROSE was negative for malignancy, demonstrating anthracotic macrophages. \nCONCLUSION: <PERSON> and pathologic downstaging of mediastinal disease.",
+    "note_text": "HISTORY: Mr. Jackson presented for restaging EBUS following chemotherapy for N2 (Station 7) disease. \nPROCEDURE: Under conscious sedation, the subcarinal station (7) was re-evaluated. The node measured 8mm, significantly reduced from prior imaging. Transbronchial needle aspiration was performed. ROSE was negative for malignancy, demonstrating anthracotic macrophages. \nCONCLUSION: Radiologic and pathologic downstaging of mediastinal disease.",
     "cpt_codes": [
       31652
     ],
@@ -5974,13 +5926,6 @@
       "style_type": 2,
       "generated_name": "Steven Hall",
       "generation_date": "2025-12-09T09:18:54.289758"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -6185,7 +6130,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: <PERSON>\nProc: Restaging EBUS\n1. Sedation started.\n2. Examined mediastinum.\n3. Station 7 (target) sampled x4.\n4. ROSE negative.\n5. Other nodes looked benign.\nPlan: Surgical consult.",
+    "note_text": "Resident Note\nPt: Thomas Jackson\nProc: Restaging EBUS\n1. Sedation started.\n2. Examined mediastinum.\n3. Station 7 (target) sampled x4.\n4. ROSE negative.\n5. Other nodes looked benign.\nPlan: Surgical consult.",
     "cpt_codes": [
       31652
     ],
@@ -6383,12 +6328,6 @@
       "style_type": 4,
       "generated_name": "Kenneth Allen",
       "generation_date": "2025-12-09T09:18:54.289854"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6599,7 +6538,7 @@
     }
   },
   {
-    "note_text": "Restaging EBUS for <PERSON>. Conscious sedation. Station 7 reassessed; size reduced to 8mm. 4 passes TBNA performed. ROSE negative. Stations 4R, 4L, 10R surveyed and deemed benign/small, not sampled. No complications.",
+    "note_text": "Restaging EBUS for Thomas Jackson. Conscious sedation. Station 7 reassessed; size reduced to 8mm. 4 passes TBNA performed. ROSE negative. Stations 4R, 4L, 10R surveyed and deemed benign/small, not sampled. No complications.",
     "cpt_codes": [
       31652
     ],
@@ -6797,12 +6736,6 @@
       "style_type": 6,
       "generated_name": "Kevin Wright",
       "generation_date": "2025-12-09T09:18:54.289967"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7007,7 +6940,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent an EBUS procedure to restage his mediastinal disease after chemotherapy. We focused on station 7, which had previously been positive. It was smaller in size, and sampling revealed no malignant cells. We inspected other stations but did not feel sampling was necessary due to their benign appearance.",
+    "note_text": "Mr. Jackson underwent an EBUS procedure to restage his mediastinal disease after chemotherapy. We focused on station 7, which had previously been positive. It was smaller in size, and sampling revealed no malignant cells. We inspected other stations but did not feel sampling was necessary due to their benign appearance.",
     "cpt_codes": [
       31652
     ],
@@ -7205,12 +7138,6 @@
       "style_type": 8,
       "generated_name": "George Scott",
       "generation_date": "2025-12-09T09:18:54.290067"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7681,7 +7608,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. <PERSON> underwent a multimodal bronchoscopic procedure. \n1) EBUS Staging: Stations 4R, 10R, and 11R were sampled, confirming malignancy. Station 7 was inaccessible. \n2) Therapeutic Bronchoscopy: The RML bronchus was 80% occluded by tumor. This was debulked using forceps and APC, followed by placement of a 12x30mm metallic stent. \n3) Navigation: Electromagnetic navigation guided biopsy of a LUL apical-posterior nodule.\nIMPRESSION: Advanced malignancy with airway palliation and nodule sampling.",
+    "note_text": "OPERATIVE REPORT: Mr. Brown underwent a multimodal bronchoscopic procedure. \n1) EBUS Staging: Stations 4R, 10R, and 11R were sampled, confirming malignancy. Station 7 was inaccessible. \n2) Therapeutic Bronchoscopy: The RML bronchus was 80% occluded by tumor. This was debulked using forceps and APC, followed by placement of a 12x30mm metallic stent. \n3) Navigation: Electromagnetic navigation guided biopsy of a LUL apical-posterior nodule.\nIMPRESSION: Advanced malignancy with airway palliation and nodule sampling.",
     "cpt_codes": [
       31653,
       31636,
@@ -7944,12 +7871,6 @@
       "style_type": 2,
       "generated_name": "Timothy Adams",
       "generation_date": "2025-12-09T09:18:54.290264"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8219,7 +8140,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPt: <PERSON>\n1. GA induced.\n2. EBUS: Sampled 4R, 10R, 11R (Pos).\n3. RML Tumor: Debulked and stented (Metal 12x30).\n4. LUL Nodule: Navigated and biopsied.\nEvents: Bleeding in RML (stopped w/ APC), desat during stent (fixed).\nPlan: Admit.",
+    "note_text": "Procedure Note\nPt: Richard Brown\n1. GA induced.\n2. EBUS: Sampled 4R, 10R, 11R (Pos).\n3. RML Tumor: Debulked and stented (Metal 12x30).\n4. LUL Nodule: Navigated and biopsied.\nEvents: Bleeding in RML (stopped w/ APC), desat during stent (fixed).\nPlan: Admit.",
     "cpt_codes": [
       31653,
       31636,
@@ -8482,12 +8403,6 @@
       "style_type": 4,
       "generated_name": "Jeffrey Hill",
       "generation_date": "2025-12-09T09:18:54.290404"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8763,7 +8678,7 @@
     }
   },
   {
-    "note_text": "<PERSON>. GA/ETT. 1) EBUS: 4R, 10R, 11R sampled (positive). 2) RML: Exophytic tumor debulked (forceps/APC), 12x30mm stent placed. 3) LUL: EM navigation to 16mm nodule, radial EBUS confirmation, TBBx x3. Complications: Moderate bleeding RML, transient hypoxia.",
+    "note_text": "Richard Brown. GA/ETT. 1) EBUS: 4R, 10R, 11R sampled (positive). 2) RML: Exophytic tumor debulked (forceps/APC), 12x30mm stent placed. 3) LUL: EM navigation to 16mm nodule, radial EBUS confirmation, TBBx x3. Complications: Moderate bleeding RML, transient hypoxia.",
     "cpt_codes": [
       31653,
       31636,
@@ -9026,12 +8941,6 @@
       "style_type": 6,
       "generated_name": "Jacob Campbell",
       "generation_date": "2025-12-09T09:18:54.290534"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9301,7 +9210,7 @@
     }
   },
   {
-    "note_text": "This was a complex case for Mr. <PERSON> involving staging, debulking, and biopsy. We started with EBUS, confirming malignancy in multiple stations. We then addressed the RML obstruction by debulking the tumor and placing a stent to keep the airway open. Finally, we used electromagnetic navigation to locate and biopsy a peripheral nodule in the left upper lobe.",
+    "note_text": "This was a complex case for Mr. Brown involving staging, debulking, and biopsy. We started with EBUS, confirming malignancy in multiple stations. We then addressed the RML obstruction by debulking the tumor and placing a stent to keep the airway open. Finally, we used electromagnetic navigation to locate and biopsy a peripheral nodule in the left upper lobe.",
     "cpt_codes": [
       31653,
       31636,
@@ -9564,12 +9473,6 @@
       "style_type": 8,
       "generated_name": "Nicholas Roberts",
       "generation_date": "2025-12-09T09:18:54.290655"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10490,7 +10393,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: <PERSON>\n1. ETT placed.\n2. EBUS: 4 stations sampled. 4R malignant.\n3. Bronchoscopy: RUL mass seen.\n4. Biopsied mass x6.\n5. Bleeding occurred, stopped w/ epi.\nPlan: Wait for path.",
+    "note_text": "Resident Note\nPt: Patricia Anderson\n1. ETT placed.\n2. EBUS: 4 stations sampled. 4R malignant.\n3. Bronchoscopy: RUL mass seen.\n4. Biopsied mass x6.\n5. Bleeding occurred, stopped w/ epi.\nPlan: Wait for path.",
     "cpt_codes": [
       31653,
       31625
@@ -10704,12 +10607,6 @@
       "style_type": 4,
       "generated_name": "Betty Torres",
       "generation_date": "2025-12-09T09:18:54.291024"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10930,7 +10827,7 @@
     }
   },
   {
-    "note_text": "<PERSON>. GA/ETT. EBUS-TBNA performed at 2R, 4R, 7, 10R. 4R positive. RUL endobronchial mass biopsied x6. Moderate bleeding controlled with epinephrine. Transient hypoxia resolved. Plan: Oncology referral.",
+    "note_text": "Patricia Anderson. GA/ETT. EBUS-TBNA performed at 2R, 4R, 7, 10R. 4R positive. RUL endobronchial mass biopsied x6. Moderate bleeding controlled with epinephrine. Transient hypoxia resolved. Plan: Oncology referral.",
     "cpt_codes": [
       31653,
       31625
@@ -11144,12 +11041,6 @@
       "style_type": 6,
       "generated_name": "Sandra Collins",
       "generation_date": "2025-12-09T09:18:54.291126"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11370,7 +11261,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a bronchoscopy under general anesthesia. We first performed EBUS staging, sampling four stations, with station 4R returning positive for cancer. We then turned our attention to the RUL endobronchial mass and obtained multiple biopsies. There was some bleeding and a brief drop in oxygen levels, but both were managed successfully.",
+    "note_text": "Ms. Anderson underwent a bronchoscopy under general anesthesia. We first performed EBUS staging, sampling four stations, with station 4R returning positive for cancer. We then turned our attention to the RUL endobronchial mass and obtained multiple biopsies. There was some bleeding and a brief drop in oxygen levels, but both were managed successfully.",
     "cpt_codes": [
       31653,
       31625
@@ -11584,12 +11475,6 @@
       "style_type": 8,
       "generated_name": "Kimberly Stewart",
       "generation_date": "2025-12-09T09:18:54.291232"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

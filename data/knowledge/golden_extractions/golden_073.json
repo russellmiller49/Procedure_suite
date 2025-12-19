@@ -222,7 +222,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Mr. <PERSON>, a 68-year-old male with a right lower lobe mass and PET-avid subcarinal adenopathy, presented for diagnostic bronchoscopy.\nPROCEDURE: Under moderate sedation, a flexible bronchoscope was introduced. Inspection of the tracheobronchial tree revealed no endobronchial lesions. Utilizing conventional transbronchial needle aspiration (TBNA) techniques based on anatomic landmarks, the subcarinal lymph node (Station 7) was sampled with a 21-gauge Wang needle. Four passes were obtained. Rapid on-site evaluation (ROSE) confirmed the presence of malignant epithelial cells consistent with metastatic carcinoma.\nIMPRESSION: Successful staging bronchoscopy confirming N2 disease.",
+    "note_text": "HISTORY: Mr. Ortiz, a 68-year-old male with a right lower lobe mass and PET-avid subcarinal adenopathy, presented for diagnostic bronchoscopy.\nPROCEDURE: Under moderate sedation, a flexible bronchoscope was introduced. Inspection of the tracheobronchial tree revealed no endobronchial lesions. Utilizing conventional transbronchial needle aspiration (TBNA) techniques based on anatomic landmarks, the subcarinal lymph node (Station 7) was sampled with a 21-gauge Wang needle. Four passes were obtained. Rapid on-site evaluation (ROSE) confirmed the presence of malignant epithelial cells consistent with metastatic carcinoma.\nIMPRESSION: Successful staging bronchoscopy confirming N2 disease.",
     "cpt_codes": [
       31629
     ],
@@ -441,12 +441,6 @@
       "style_type": 2,
       "generated_name": "Carlos Gomez",
       "generation_date": "2025-12-08T14:09:32.472134"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -672,7 +666,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nAttending: Dr. Desai\nProcedure: Flex Bronch, Conventional TBNA\n\nSteps:\n1. Time out performed.\n2. Moderate sedation administered.\n3. Scope inserted; airway inspection normal.\n4. Wang needle passed to Station 7 (subcarinal).\n5. 4 passes performed using landmark guidance.\n6. ROSE positive for carcinoma.\n7. Scope withdrawn.\n\nComplications: None.\nPlan: Discharge home.",
+    "note_text": "Procedure Note\nPatient: Samuel Ortiz\nAttending: Dr. Desai\nProcedure: Flex Bronch, Conventional TBNA\n\nSteps:\n1. Time out performed.\n2. Moderate sedation administered.\n3. Scope inserted; airway inspection normal.\n4. Wang needle passed to Station 7 (subcarinal).\n5. 4 passes performed using landmark guidance.\n6. ROSE positive for carcinoma.\n7. Scope withdrawn.\n\nComplications: None.\nPlan: Discharge home.",
     "cpt_codes": [
       31629
     ],
@@ -891,16 +885,10 @@
       "style_type": 4,
       "generated_name": "Jose Martinez",
       "generation_date": "2025-12-08T14:09:32.472252"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "procedure note for <PERSON> 68m we did a bronchoscopy today for staging of that lung mass sedation was fine used midazolam and fentanyl scope went down easy airway looked clear except for some compression near the carina used the wang needle 21 gauge on station 7 subcarinal node did 4 passes got good samples rose said it was cancer so we stopped bleeding was minimal patient tolerating well plan is oncology referral",
+    "note_text": "procedure note for samuel ortiz 68m we did a bronchoscopy today for staging of that lung mass sedation was fine used midazolam and fentanyl scope went down easy airway looked clear except for some compression near the carina used the wang needle 21 gauge on station 7 subcarinal node did 4 passes got good samples rose said it was cancer so we stopped bleeding was minimal patient tolerating well plan is oncology referral",
     "cpt_codes": [
       31629
     ],
@@ -1119,12 +1107,6 @@
       "style_type": 5,
       "generated_name": "Luis Fernandez",
       "generation_date": "2025-12-08T14:09:32.472311"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2239,7 +2221,7 @@
     }
   },
   {
-    "note_text": "INDICATION: Mrs. <PERSON>, a 62-year-old female with a central left upper lobe mass, underwent mediastinal staging.\nPROCEDURE: The patient was placed under general anesthesia with endotracheal intubation. A flexible bronchoscope was advanced. The tracheobronchial tree was patent. Conventional transbronchial needle aspiration (TBNA) of the subcarinal lymph node (Station 7) was performed using a 22-gauge Wang needle and anatomic landmarks. Three passes yielded diagnostic material confirmed by rapid on-site evaluation to be metastatic non-small cell lung carcinoma.\nCONCLUSION: Positive mediastinal staging (N2 disease).",
+    "note_text": "INDICATION: Mrs. Benson, a 62-year-old female with a central left upper lobe mass, underwent mediastinal staging.\nPROCEDURE: The patient was placed under general anesthesia with endotracheal intubation. A flexible bronchoscope was advanced. The tracheobronchial tree was patent. Conventional transbronchial needle aspiration (TBNA) of the subcarinal lymph node (Station 7) was performed using a 22-gauge Wang needle and anatomic landmarks. Three passes yielded diagnostic material confirmed by rapid on-site evaluation to be metastatic non-small cell lung carcinoma.\nCONCLUSION: Positive mediastinal staging (N2 disease).",
     "cpt_codes": [
       31629
     ],
@@ -2459,12 +2441,6 @@
       "style_type": 2,
       "generated_name": "Emily Davis",
       "generation_date": "2025-12-08T14:09:32.472729"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2914,7 +2890,7 @@
     }
   },
   {
-    "note_text": "note for <PERSON> 62f procedure bronchoscopy with tbna indication lung mass subcarinal node anesthesia general with ett tube scope went in fine airway normal used 22g wang needle on station 7 did 3 passes rose showed cancer cells no bleeding patient stable extubated in or sent to recovery",
+    "note_text": "note for laura benson 62f procedure bronchoscopy with tbna indication lung mass subcarinal node anesthesia general with ett tube scope went in fine airway normal used 22g wang needle on station 7 did 3 passes rose showed cancer cells no bleeding patient stable extubated in or sent to recovery",
     "cpt_codes": [
       31629
     ],
@@ -3134,16 +3110,10 @@
       "style_type": 5,
       "generated_name": "Amanda Anderson",
       "generation_date": "2025-12-08T14:09:32.472900"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON>, a 62-year-old female, underwent flexible bronchoscopy with conventional TBNA for mediastinal staging of a central lung mass. General anesthesia was used. A bronchoscope was passed through the endotracheal tube. The airway was inspected and found to be normal. A 22-gauge Wang needle was used to aspirate the subcarinal lymph node (Station 7) using anatomic landmarks. Three passes were performed. Rapid on-site evaluation showed malignant cells. No complications occurred. The patient was extubated and transferred to the PACU.",
+    "note_text": "Laura Benson, a 62-year-old female, underwent flexible bronchoscopy with conventional TBNA for mediastinal staging of a central lung mass. General anesthesia was used. A bronchoscope was passed through the endotracheal tube. The airway was inspected and found to be normal. A 22-gauge Wang needle was used to aspirate the subcarinal lymph node (Station 7) using anatomic landmarks. Three passes were performed. Rapid on-site evaluation showed malignant cells. No complications occurred. The patient was extubated and transferred to the PACU.",
     "cpt_codes": [
       31629
     ],
@@ -3363,12 +3333,6 @@
       "style_type": 6,
       "generated_name": "Jennifer Thomas",
       "generation_date": "2025-12-08T14:09:32.472954"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4266,7 +4230,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Mr. <PERSON> presented with isolated left lower paratracheal lymphadenopathy for tissue diagnosis.\nPROCEDURE: Under moderate sedation, flexible bronchoscopy was performed. The airway examination was unremarkable. Conventional transbronchial needle aspiration (TBNA) of the Station 4L lymph node was executed using a 21-gauge Wang needle based on anatomic landmarks. Four passes were obtained. Rapid on-site evaluation revealed non-necrotizing granulomas consistent with sarcoidosis, ruling out lymphoma.\nIMPRESSION: TBNA consistent with granulomatous inflammation.",
+    "note_text": "HISTORY: Mr. Rahman presented with isolated left lower paratracheal lymphadenopathy for tissue diagnosis.\nPROCEDURE: Under moderate sedation, flexible bronchoscopy was performed. The airway examination was unremarkable. Conventional transbronchial needle aspiration (TBNA) of the Station 4L lymph node was executed using a 21-gauge Wang needle based on anatomic landmarks. Four passes were obtained. Rapid on-site evaluation revealed non-necrotizing granulomas consistent with sarcoidosis, ruling out lymphoma.\nIMPRESSION: TBNA consistent with granulomatous inflammation.",
     "cpt_codes": [
       31629
     ],
@@ -4488,12 +4452,6 @@
       "style_type": 2,
       "generated_name": "Hassan Ahmed",
       "generation_date": "2025-12-08T14:09:32.473227"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4722,7 +4680,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nAttending: Dr. Grant\nProcedure: Bronchoscopy, TBNA 4L\n\nSteps:\n1. Time out.\n2. Sedation (Versed/Fentanyl).\n3. Scope inserted.\n4. Exam normal.\n5. Wang needle used for 4L node.\n6. 4 passes.\n7. ROSE: Granulomas.\n8. Cultures sent.\n\nPlan: Discharge, Rheum consult.",
+    "note_text": "Procedure Note\nPatient: Omar Rahman\nAttending: Dr. Grant\nProcedure: Bronchoscopy, TBNA 4L\n\nSteps:\n1. Time out.\n2. Sedation (Versed/Fentanyl).\n3. Scope inserted.\n4. Exam normal.\n5. Wang needle used for 4L node.\n6. 4 passes.\n7. ROSE: Granulomas.\n8. Cultures sent.\n\nPlan: Discharge, Rheum consult.",
     "cpt_codes": [
       31629
     ],
@@ -4944,12 +4902,6 @@
       "style_type": 4,
       "generated_name": "Ibrahim Sayed",
       "generation_date": "2025-12-08T14:09:32.473352"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6980,7 +6932,7 @@
     }
   },
   {
-    "note_text": "proc note <PERSON> 71f hx breast cancer now has 4l node went in with general anesthesia ett tube scope looks good airway normal used 22g wang needle on 4l did 3 passes rose said cancer cells suspicious for breast met no bleeding extubated fine plan oncology",
+    "note_text": "proc note <PERSON> howard 71f hx breast cancer now has 4l node went in with general anesthesia ett tube scope looks good airway normal used 22g wang needle on 4l did 3 passes rose said cancer cells suspicious for breast met no bleeding extubated fine plan oncology",
     "cpt_codes": [
       31629
     ],
@@ -7210,7 +7162,7 @@
     }
   },
   {
-    "note_text": "<PERSON> underwent flexible bronchoscopy with conventional TBNA to evaluate a PET-avid 4L node. General anesthesia was used. The bronchoscope was introduced through the ETT. A 22-gauge Wang needle was used to sample the left lower paratracheal node (Station 4L) using anatomic landmarks. Three passes were performed. On-site cytology showed malignant cells. No complications occurred. The patient was transferred to the PACU.",
+    "note_text": "Brenda Howard underwent flexible bronchoscopy with conventional TBNA to evaluate a PET-avid 4L node. General anesthesia was used. The bronchoscope was introduced through the ETT. A 22-gauge Wang needle was used to sample the left lower paratracheal node (Station 4L) using anatomic landmarks. Three passes were performed. On-site cytology showed malignant cells. No complications occurred. The patient was transferred to the PACU.",
     "cpt_codes": [
       31629
     ],
@@ -7431,12 +7383,6 @@
       "style_type": 6,
       "generated_name": "Jennifer Garcia",
       "generation_date": "2025-12-08T14:09:32.473974"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8335,7 +8281,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Mr. <PERSON> presented with a right upper lobe mass and ipsilateral mediastinal adenopathy.\nPROCEDURE: Under moderate sedation, flexible bronchoscopy was performed. Conventional TBNA of the right lower paratracheal (Station 4R) lymph node was executed using a 21-gauge Wang needle and anatomic landmarks. Three passes yielded diagnostic material. ROSE confirmed non-small cell lung carcinoma.\nIMPRESSION: N2 positive NSCLC.",
+    "note_text": "HISTORY: Mr. Lin presented with a right upper lobe mass and ipsilateral mediastinal adenopathy.\nPROCEDURE: Under moderate sedation, flexible bronchoscopy was performed. Conventional TBNA of the right lower paratracheal (Station 4R) lymph node was executed using a 21-gauge Wang needle and anatomic landmarks. Three passes yielded diagnostic material. ROSE confirmed non-small cell lung carcinoma.\nIMPRESSION: N2 positive NSCLC.",
     "cpt_codes": [
       31629
     ],
@@ -8555,12 +8501,6 @@
       "style_type": 2,
       "generated_name": "Michael Wang",
       "generation_date": "2025-12-08T14:09:32.474347"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8787,7 +8727,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nAttending: Dr. Moore\nProcedure: TBNA Station 4R\n\nSteps:\n1. Moderate sedation.\n2. Scope inserted.\n3. 4R node identified.\n4. Wang needle used for 3 passes.\n5. ROSE: Positive for NSCLC.\n6. No complications.\n\nPlan: Discharge, Tumor Board.",
+    "note_text": "Procedure Note\nPatient: Victor Lin\nAttending: Dr. Moore\nProcedure: TBNA Station 4R\n\nSteps:\n1. Moderate sedation.\n2. Scope inserted.\n3. 4R node identified.\n4. Wang needle used for 3 passes.\n5. ROSE: Positive for NSCLC.\n6. No complications.\n\nPlan: Discharge, Tumor Board.",
     "cpt_codes": [
       31629
     ],
@@ -9007,16 +8947,10 @@
       "style_type": 4,
       "generated_name": "John Liu",
       "generation_date": "2025-12-08T14:09:32.474460"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "bronch note victor <PERSON> 64m lung mass 4r node sedation moderate scope down airway ok used wang needle 21g on station 4r did 3 passes rose showed <PERSON> bleeding stopped on its own patient stable discharge home",
+    "note_text": "bronch note victor lin 64m lung mass 4r node sedation moderate scope down airway ok used wang needle 21g on station 4r did 3 passes rose showed nsclc minimal bleeding stopped on its own patient stable discharge home",
     "cpt_codes": [
       31629
     ],
@@ -9236,17 +9170,10 @@
       "style_type": 5,
       "generated_name": "Robert Zhang",
       "generation_date": "2025-12-08T14:09:32.474521"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON>, a 64-year-old male, underwent flexible bronchoscopy with conventional TBNA for staging of a right upper lobe mass. Moderate sedation was administered. The bronchoscope was inserted orally. A 21-gauge Wang needle was used to sample the right lower paratracheal node (Station 4R) using anatomic landmarks. Three passes were obtained. On-site cytology confirmed non-small cell lung carcinoma. The procedure was uncomplicated.",
+    "note_text": "Victor Lin, a 64-year-old male, underwent flexible bronchoscopy with conventional TBNA for staging of a right upper lobe mass. Moderate sedation was administered. The bronchoscope was inserted orally. A 21-gauge Wang needle was used to sample the right lower paratracheal node (Station 4R) using anatomic landmarks. Three passes were obtained. On-site cytology confirmed non-small cell lung carcinoma. The procedure was uncomplicated.",
     "cpt_codes": [
       31629
     ],
@@ -9466,12 +9393,6 @@
       "style_type": 6,
       "generated_name": "William Yang",
       "generation_date": "2025-12-08T14:09:32.474588"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

@@ -80,7 +80,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> presented for elective explantation of an indwelling tunneled pleural catheter. Following sterile preparation and infiltration of lidocaine, the subcutaneous cuff was meticulously dissected. The catheter was withdrawn without complication, and the tract was closed with a purse-string suture.",
+    "note_text": "Ms. Rigby presented for elective explantation of an indwelling tunneled pleural catheter. Following sterile preparation and infiltration of lidocaine, the subcutaneous cuff was meticulously dissected. The catheter was withdrawn without complication, and the tract was closed with a purse-string suture.",
     "cpt_codes": [
       32552
     ],
@@ -157,12 +157,6 @@
       "style_type": 2,
       "generated_name": "Brenda Scott",
       "generation_date": "2025-12-09T10:33:50.041884"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -566,7 +560,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> arrived for removal of her PleurX catheter. We prepped the site and used local anesthetic. I made an incision and dissected the cuff free from the tissue. The catheter slid out easily. We closed the site with a suture.",
+    "note_text": "Ms. Rigby arrived for removal of her PleurX catheter. We prepped the site and used local anesthetic. I made an incision and dissected the cuff free from the tissue. The catheter slid out easily. We closed the site with a suture.",
     "cpt_codes": [
       32552
     ],
@@ -643,12 +637,6 @@
       "style_type": 8,
       "generated_name": "Helen Adams",
       "generation_date": "2025-12-09T10:33:50.042021"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -814,7 +802,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent rigid bronchoscopy for foreign body retrieval. The jagged osseous fragment was visualized within the right lower lobe. Utilizing optical forceps, the object was grasped and extracted en bloc with the rigid barrel to prevent glottic trauma.",
+    "note_text": "Mr. Chen underwent rigid bronchoscopy for foreign body retrieval. The jagged osseous fragment was visualized within the right lower lobe. Utilizing optical forceps, the object was grasped and extracted en bloc with the rigid barrel to prevent glottic trauma.",
     "cpt_codes": [
       31635
     ],
@@ -893,12 +881,6 @@
       "style_type": 2,
       "generated_name": "Michael Wu",
       "generation_date": "2025-12-09T10:33:50.042093"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1318,7 +1300,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> was brought to the OR for a rigid bronchoscopy to remove a chicken bone. We inserted the rigid scope and found the bone in the right lower lobe. We grabbed it with forceps and pulled everything out together. The airway looked fine afterwards.",
+    "note_text": "Mr. Chen was brought to the OR for a rigid bronchoscopy to remove a chicken bone. We inserted the rigid scope and found the bone in the right lower lobe. We grabbed it with forceps and pulled everything out together. The airway looked fine afterwards.",
     "cpt_codes": [
       31635
     ],
@@ -1397,12 +1379,6 @@
       "style_type": 8,
       "generated_name": "Joseph Lin",
       "generation_date": "2025-12-09T10:33:50.042224"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1567,7 +1543,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent the third and final session of bronchial thermoplasty. The Alair catheter was systematically deployed in the RUL and LUL. A total of 62 radiofrequency activations were delivered to the distal airways, completing the treatment protocol.",
+    "note_text": "Ms. Connors underwent the third and final session of bronchial thermoplasty. The Alair catheter was systematically deployed in the RUL and LUL. A total of 62 radiofrequency activations were delivered to the distal airways, completing the treatment protocol.",
     "cpt_codes": [
       31661
     ],
@@ -1643,12 +1619,6 @@
       "style_type": 2,
       "generated_name": "Jessica Miller",
       "generation_date": "2025-12-09T10:33:50.042327"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1810,7 +1780,7 @@
     }
   },
   {
-    "note_text": "3rd thermoplasty session for <PERSON> did the upper lobes today rul and lul lots of activations 62 total she did fine no issues with the airway extubated in room.",
+    "note_text": "3rd thermoplasty session for sarah did the upper lobes today rul and lul lots of activations 62 total she did fine no issues with the airway extubated in room.",
     "cpt_codes": [
       31661
     ],
@@ -1886,12 +1856,6 @@
       "style_type": 5,
       "generated_name": "Amanda Anderson",
       "generation_date": "2025-12-09T10:33:50.042391"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2053,7 +2017,7 @@
     }
   },
   {
-    "note_text": "We performed the final thermoplasty session for Ms. <PERSON>. We targeted both upper lobes this time. We delivered a series of activations to the RUL and then the LUL, totaling 62. The patient woke up well.",
+    "note_text": "We performed the final thermoplasty session for Ms. Connors. We targeted both upper lobes this time. We delivered a series of activations to the RUL and then the LUL, totaling 62. The patient woke up well.",
     "cpt_codes": [
       31661
     ],
@@ -2129,12 +2093,6 @@
       "style_type": 8,
       "generated_name": "Stephanie White",
       "generation_date": "2025-12-09T10:33:50.042453"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2333,7 +2291,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent bronchoscopic lung volume reduction targeting the left upper lobe. Chartis assessment confirmed the absence of collateral ventilation. Four Zephyr endobronchial valves were sequentially deployed, achieving complete lobar atelectasis.",
+    "note_text": "Mr. Dent underwent bronchoscopic lung volume reduction targeting the left upper lobe. Chartis assessment confirmed the absence of collateral ventilation. Four Zephyr endobronchial valves were sequentially deployed, achieving complete lobar atelectasis.",
     "cpt_codes": [
       31647
     ],
@@ -2446,12 +2404,6 @@
       "style_type": 2,
       "generated_name": "George Baker",
       "generation_date": "2025-12-09T10:33:50.042537"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3035,7 +2987,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> came in for his valve procedure. We checked the LUL with the Chartis balloon and found no collateral ventilation. We then placed four valves to block off the lobe completely. He did well and went to recovery.",
+    "note_text": "Mr. Dent came in for his valve procedure. We checked the LUL with the Chartis balloon and found no collateral ventilation. We then placed four valves to block off the lobe completely. He did well and went to recovery.",
     "cpt_codes": [
       31647
     ],
@@ -3148,12 +3100,6 @@
       "style_type": 8,
       "generated_name": "Mark Campbell",
       "generation_date": "2025-12-09T10:33:50.042723"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3767,7 +3713,7 @@
     }
   },
   {
-    "note_text": "bronch for <PERSON> doe did ebus first hit 7 and 4r then switched scopes for the nodule in the rul used the radar probe found it eccentric took 5 biopsies and a brush rose said inflammation.",
+    "note_text": "bronch for john doe did ebus first hit 7 and 4r then switched scopes for the nodule in the rul used the radar probe found it eccentric took 5 biopsies and a brush rose said inflammation.",
     "cpt_codes": [
       31652,
       31654,
@@ -3886,12 +3832,6 @@
       "style_type": 5,
       "generated_name": "David Garcia",
       "generation_date": "2025-12-09T10:33:50.042923"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

@@ -763,7 +763,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> is a 67-year-old female suffering from a right-sided pneumonia that has developed into a complex, loculated effusion. Today, we proceeded with the first day of intrapleural fibrinolytic therapy. Using her existing 14Fr chest tube, we instilled a mixture of 10mg tPA and 5mg DNase. We clamped the tube for two hours to allow the medication to work, then opened it back up for drainage. She handled it very well.",
+    "note_text": "Ms. Chen is a 67-year-old female suffering from a right-sided pneumonia that has developed into a complex, loculated effusion. Today, we proceeded with the first day of intrapleural fibrinolytic therapy. Using her existing 14Fr chest tube, we instilled a mixture of 10mg tPA and 5mg DNase. We clamped the tube for two hours to allow the medication to work, then opened it back up for drainage. She handled it very well.",
     "cpt_codes": [
       32561
     ],
@@ -869,12 +869,6 @@
       "style_type": 8,
       "generated_name": "Helen Yang",
       "generation_date": "2025-12-09T14:15:33.942226"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1701,7 +1695,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> has a complicated empyema that isn't draining well with just the catheter. Today we started fibrinolytic therapy to break up the loculations. We injected tPA and DNase through his chest tube and let it sit for two hours. Afterward, we opened the tube back up to the water seal. He didn't have any pain or fever during the process.",
+    "note_text": "Mr. Williams has a complicated empyema that isn't draining well with just the catheter. Today we started fibrinolytic therapy to break up the loculations. We injected tPA and DNase through his chest tube and let it sit for two hours. Afterward, we opened the tube back up to the water seal. He didn't have any pain or fever during the process.",
     "cpt_codes": [
       32561
     ],
@@ -1800,12 +1794,6 @@
       "style_type": 8,
       "generated_name": "Peter Hall",
       "generation_date": "2025-12-09T14:15:33.942477"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2571,7 +2559,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLoculated malignant pleural effusion.\n[Anesthesia]\nNone.\n[Description]\nInstilled 10mg Alteplase via left <PERSON> 90 mins. Drained 450mL.\n[Plan]\nDaily instillations.",
+    "note_text": "[Indication]\nLoculated malignant pleural effusion.\n[Anesthesia]\nNone.\n[Description]\nInstilled 10mg Alteplase via left PleurX. Clamped 90 mins. Drained 450mL.\n[Plan]\nDaily instillations.",
     "cpt_codes": [
       32561
     ],
@@ -2677,16 +2665,10 @@
       "style_type": 7,
       "generated_name": "Ximena Ramos",
       "generation_date": "2025-12-09T14:15:33.942720"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> has a malignant effusion that has become loculated, reducing the effectiveness of her PleurX catheter. Today we treated this by injecting 10mg of alteplase through the catheter. We clamped it for about an hour and a half to let the medicine work. When we opened it back up, we were able to drain 450mL of fluid, which is a good result.",
+    "note_text": "Ms. Martinez has a malignant effusion that has become loculated, reducing the effectiveness of her PleurX catheter. Today we treated this by injecting 10mg of alteplase through the catheter. We clamped it for about an hour and a half to let the medicine work. When we opened it back up, we were able to drain 450mL of fluid, which is a good result.",
     "cpt_codes": [
       32561
     ],
@@ -2792,12 +2774,6 @@
       "style_type": 8,
       "generated_name": "Yolanda Flores",
       "generation_date": "2025-12-09T14:15:33.942754"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3435,7 +3411,7 @@
     }
   },
   {
-    "note_text": "Intrapleural fibrinolytic administration Day 1. Organized hemothorax post-trauma. Confirmed tube patency. Instilled <PERSON> 10mg and <PERSON> alfa 5mg. <PERSON> instillation. Catheter clamped for 2 hours total dwell. Opened to -20cmH2O suction. Immediate output 200mL dark bloody fluid. Patient hemodynamically stable.",
+    "note_text": "Intrapleural fibrinolytic administration Day 1. Organized hemothorax post-trauma. Confirmed tube patency. Instilled Alteplase 10mg and Dornase alfa 5mg. Sequential instillation. Catheter clamped for 2 hours total dwell. Opened to -20cmH2O suction. Immediate output 200mL dark bloody fluid. Patient hemodynamically stable.",
     "cpt_codes": [
       32561
     ],
@@ -3537,14 +3513,6 @@
       "style_type": 6,
       "generated_name": "Frank O'Connor",
       "generation_date": "2025-12-09T14:15:33.942953"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -3653,7 +3621,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> is dealing with a retained hemothorax from his car accident. To help clear the blood clots, we administered tPA and DNase through his chest tube today. We let the medication sit for two hours before turning the suction back on. This resulted in the drainage of 200mL of dark, bloody fluid, indicating it's breaking up the clot.",
+    "note_text": "Mr. O'Brien is dealing with a retained hemothorax from his car accident. To help clear the blood clots, we administered tPA and DNase through his chest tube today. We let the medication sit for two hours before turning the suction back on. This resulted in the drainage of 200mL of dark, bloody fluid, indicating it's breaking up the clot.",
     "cpt_codes": [
       32561
     ],
@@ -3755,12 +3723,6 @@
       "style_type": 8,
       "generated_name": "Henry Doyle",
       "generation_date": "2025-12-09T14:15:33.943009"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4313,7 +4275,7 @@
     }
   },
   {
-    "note_text": "<PERSON> lung cancer patient with the pleurx that stopped draining we put in tpa and dnase today clamped it moved her around a bit after two hours got out huge amount 850ml she feels way better sats up.",
+    "note_text": "Jennifer Walsh lung cancer patient with the pleurx that stopped draining we put in tpa and dnase today clamped it moved her around a bit after two hours got out huge amount 850ml she feels way better sats up.",
     "cpt_codes": [
       32561
     ],
@@ -4421,12 +4383,6 @@
       "style_type": 5,
       "generated_name": "Nicole Miller",
       "generation_date": "2025-12-09T14:15:33.943183"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4652,7 +4608,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> has a malignant effusion that wasn't draining due to loculations. We treated this by injecting tPA and DNase into her PleurX catheter. We asked her to move side-to-side while the tube was clamped for two hours to spread the medicine. This was very effective, draining 850mL of fluid and significantly improving her oxygen levels and breathing.",
+    "note_text": "Ms. Walsh has a malignant effusion that wasn't draining due to loculations. We treated this by injecting tPA and DNase into her PleurX catheter. We asked her to move side-to-side while the tube was clamped for two hours to spread the medicine. This was very effective, draining 850mL of fluid and significantly improving her oxygen levels and breathing.",
     "cpt_codes": [
       32561
     ],
@@ -4760,12 +4716,6 @@
       "style_type": 8,
       "generated_name": "Quinn Rodriguez",
       "generation_date": "2025-12-09T14:15:33.943295"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5128,7 +5078,7 @@
     }
   },
   {
-    "note_text": "CPT 32662: VATS excision of mediastinal cyst, tumor, or mass.\nApproach: 3-port VATS.\nPathology: <PERSON> (4.5cm).\nWork: Complete dissection from pericardium and innominate vein; extraction via bag; chest tube placement.",
+    "note_text": "CPT 32662: VATS excision of mediastinal cyst, tumor, or mass.\nApproach: 3-port VATS.\nPathology: Thymoma (4.5cm).\nWork: Complete dissection from pericardium and innominate vein; extraction via bag; chest tube placement.",
     "cpt_codes": [
       "32662"
     ],
@@ -5249,12 +5199,6 @@
       "style_type": 3,
       "generated_name": "Ulysses Nelson",
       "generation_date": "2025-12-09T14:15:33.943448"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5754,7 +5698,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a VATS procedure to remove a suspicious mass in his chest. We used three small incisions to access the space. The mass, located in the anterior mediastinum, was carefully separated from the heart and major veins. We were able to remove it completely in a retrieval bag. A chest tube was left in place to drain any fluid or air.",
+    "note_text": "Mr. Anderson underwent a VATS procedure to remove a suspicious mass in his chest. We used three small incisions to access the space. The mass, located in the anterior mediastinum, was carefully separated from the heart and major veins. We were able to remove it completely in a retrieval bag. A chest tube was left in place to drain any fluid or air.",
     "cpt_codes": [
       "32662"
     ],
@@ -5875,12 +5819,6 @@
       "style_type": 8,
       "generated_name": "Zachary Mitchell",
       "generation_date": "2025-12-09T14:15:33.943704"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6008,7 +5946,7 @@
     }
   },
   {
-    "note_text": "Indication: Post. mediastinal mass (<PERSON>).\nProc: VATS excision.\n- 3 ports.\n- Mass at T6-T7.\n- Dissected from nerve root.\n- Nerve transected.\n- Specimen extracted.\n- 28Fr tube.",
+    "note_text": "Indication: Post. mediastinal mass (Schwannoma).\nProc: VATS excision.\n- 3 ports.\n- Mass at T6-T7.\n- Dissected from nerve root.\n- Nerve transected.\n- Specimen extracted.\n- 28Fr tube.",
     "cpt_codes": [
       "32662"
     ],
@@ -6111,12 +6049,6 @@
       "style_type": 1,
       "generated_name": "Bella Ivanov",
       "generation_date": "2025-12-09T14:15:33.943771"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6438,7 +6370,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the nerve tumor in the back chest vats 3 ports found the mass at t6 t7 dissected it out cut the nerve pulled it out in a bag checked for leaks none chest tube in.",
+    "note_text": "Linda Petrova with the nerve tumor in the back chest vats 3 ports found the mass at t6 t7 dissected it out cut the nerve pulled it out in a bag checked for leaks none chest tube in.",
     "cpt_codes": [
       "32662"
     ],
@@ -6541,12 +6473,6 @@
       "style_type": 5,
       "generated_name": "Fay Popov",
       "generation_date": "2025-12-09T14:15:33.943891"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6656,7 +6582,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPosterior mediastinal mass (<PERSON>).\n[Anesthesia]\nGeneral, DLT.\n[Description]\n3-port VATS. Mass dissected from T6-T7 intercostal nerve. Nerve transected. Mass removed.\n[Plan]\nAdmit, monitor for CSF leak (none seen).",
+    "note_text": "[Indication]\nPosterior mediastinal mass (Schwannoma).\n[Anesthesia]\nGeneral, DLT.\n[Description]\n3-port VATS. Mass dissected from T6-T7 intercostal nerve. Nerve transected. Mass removed.\n[Plan]\nAdmit, monitor for CSF leak (none seen).",
     "cpt_codes": [
       "32662"
     ],
@@ -6759,16 +6685,10 @@
       "style_type": 7,
       "generated_name": "Hope Lebedev",
       "generation_date": "2025-12-09T14:15:33.943947"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> had a tumor on a nerve near her spine. We used video-assisted surgery to remove it. Through three small ports, we located the mass and carefully separated it from the nerve, which had to be cut to remove the tumor completely. We checked to make sure there was no fluid leaking from the spine area and then closed up, leaving a chest tube.",
+    "note_text": "Ms. Petrova had a tumor on a nerve near her spine. We used video-assisted surgery to remove it. Through three small ports, we located the mass and carefully separated it from the nerve, which had to be cut to remove the tumor completely. We checked to make sure there was no fluid leaking from the spine area and then closed up, leaving a chest tube.",
     "cpt_codes": [
       "32662"
     ],
@@ -6871,12 +6791,6 @@
       "style_type": 8,
       "generated_name": "Iris Novikov",
       "generation_date": "2025-12-09T14:15:33.943975"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7644,7 +7558,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a large cyst pressing on his esophagus. We performed a VATS procedure to remove it. Once we were inside, we drained the fluid from the cyst to make it smaller, then carefully peeled the cyst wall off of the esophagus and the main airway. We got the whole thing out without damaging any organs.",
+    "note_text": "Mr. Nakamura had a large cyst pressing on his esophagus. We performed a VATS procedure to remove it. Once we were inside, we drained the fluid from the cyst to make it smaller, then carefully peeled the cyst wall off of the esophagus and the main airway. We got the whole thing out without damaging any organs.",
     "cpt_codes": [
       "32662"
     ],
@@ -7735,12 +7649,6 @@
       "style_type": 8,
       "generated_name": "Ray Kobayashi",
       "generation_date": "2025-12-09T14:15:33.944207"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8274,7 +8182,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the mediastinal mass suspected lymphoma vats 3 ports found the mass anteriorly 5.5cm stuck to thymus and svc peeled it off sent for frozen came back hodgkins drain in closed up.",
+    "note_text": "Sandra Kowalski with the mediastinal mass suspected lymphoma vats 3 ports found the mass anteriorly 5.5cm stuck to thymus and svc peeled it off sent for frozen came back hodgkins drain in closed up.",
     "cpt_codes": [
       "32662"
     ],
@@ -8380,12 +8288,6 @@
       "style_type": 5,
       "generated_name": "Xena Wozniak",
       "generation_date": "2025-12-09T14:15:33.944382"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8607,7 +8509,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a VATS procedure to diagnose and remove a mass in her chest. We found a large mass in the front part of the mediastinum attached to the thymus. We carefully separated it from the heart sac and the large vein draining the head. The pathologist confirmed it was Hodgkin's lymphoma while we were still in the OR. We placed a drain and finished the surgery.",
+    "note_text": "Ms. Kowalski underwent a VATS procedure to diagnose and remove a mass in her chest. We found a large mass in the front part of the mediastinum attached to the thymus. We carefully separated it from the heart sac and the large vein draining the head. The pathologist confirmed it was Hodgkin's lymphoma while we were still in the OR. We placed a drain and finished the surgery.",
     "cpt_codes": [
       "32662"
     ],
@@ -8713,12 +8615,6 @@
       "style_type": 8,
       "generated_name": "Abby Jankowski",
       "generation_date": "2025-12-09T14:15:33.944484"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9199,7 +9095,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the lipoma pushing on his svc vats right side found the big fatty tumor 7cm peeled it off the vein vein opened up nicely mass out in a bag chest tube placed.",
+    "note_text": "Henry Okonkwo with the lipoma pushing on his svc vats right side found the big fatty tumor 7cm peeled it off the vein vein opened up nicely mass out in a bag chest tube placed.",
     "cpt_codes": [
       "32662"
     ],
@@ -9288,12 +9184,6 @@
       "style_type": 5,
       "generated_name": "Gabriel Obi",
       "generation_date": "2025-12-09T14:15:33.944678"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9481,7 +9371,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a benign fatty tumor pressing on his superior vena cava, causing swelling. We used VATS to remove it. The tumor was large, about 7cm, and sitting right on the vein. We carefully dissected it away. Once it was removed, we could see the vein expand back to its normal size. We placed a chest tube and closed.",
+    "note_text": "Mr. Okonkwo had a benign fatty tumor pressing on his superior vena cava, causing swelling. We used VATS to remove it. The tumor was large, about 7cm, and sitting right on the vein. We carefully dissected it away. Once it was removed, we could see the vein expand back to its normal size. We placed a chest tube and closed.",
     "cpt_codes": [
       "32662"
     ],
@@ -9570,12 +9460,6 @@
       "style_type": 8,
       "generated_name": "Jamal Abdullahi",
       "generation_date": "2025-12-09T14:15:33.944752"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10215,7 +10099,7 @@
     }
   },
   {
-    "note_text": "<PERSON> for mediastinal nodes biopsy medical thoracoscopy single port found the nodes station 7 and ap window took a bunch of biopsies sent for everything chest tube in tolerated well.",
+    "note_text": "Barbara Mitchell for mediastinal nodes biopsy medical thoracoscopy single port found the nodes station 7 and ap window took a bunch of biopsies sent for everything chest tube in tolerated well.",
     "cpt_codes": [
       "32606"
     ],
@@ -10348,12 +10232,6 @@
       "style_type": 5,
       "generated_name": "Gina Turner",
       "generation_date": "2025-12-09T14:15:33.944962"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10629,7 +10507,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> needed a biopsy of her lymph nodes. We performed a medical thoracoscopy with sedation. Through a small cut in her side, we used a camera to see the nodes in the center of her chest. We opened the lining covering them and took several samples from two different areas. We left a small tube in her chest to drain air and fluid.",
+    "note_text": "Ms. Mitchell needed a biopsy of her lymph nodes. We performed a medical thoracoscopy with sedation. Through a small cut in her side, we used a camera to see the nodes in the center of her chest. We opened the lining covering them and took several samples from two different areas. We left a small tube in her chest to drain air and fluid.",
     "cpt_codes": [
       "32606"
     ],
@@ -10762,12 +10640,6 @@
       "style_type": 8,
       "generated_name": "Joan Edwards",
       "generation_date": "2025-12-09T14:15:33.945063"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11851,7 +11723,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a thoracoscopy to biopsy enlarged lymph nodes in his chest. We used a flexible scope through a single incision. We identified large nodes near his windpipe and under the airway split. We took multiple samples from both areas to ensure a good diagnosis. A small pigtail tube was left in place.",
+    "note_text": "Mr. Freeman underwent a thoracoscopy to biopsy enlarged lymph nodes in his chest. We used a flexible scope through a single incision. We identified large nodes near his windpipe and under the airway split. We took multiple samples from both areas to ensure a good diagnosis. A small pigtail tube was left in place.",
     "cpt_codes": [
       "32606"
     ],
@@ -11982,12 +11854,6 @@
       "style_type": 8,
       "generated_name": "Scott Bailey",
       "generation_date": "2025-12-09T14:15:33.945418"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12605,7 +12471,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the anterior mediastinal mass for biopsy vats single port 4th ics found the mass took 8 bites frozen said thymoma maybe chest tube in patient extubated fine.",
+    "note_text": "Maria Santos with the anterior mediastinal mass for biopsy vats single port 4th ics found the mass took 8 bites frozen said thymoma maybe chest tube in patient extubated fine.",
     "cpt_codes": [
       "32606"
     ],
@@ -12722,12 +12588,6 @@
       "style_type": 5,
       "generated_name": "Eva Sanders",
       "generation_date": "2025-12-09T14:15:33.945658"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12971,7 +12831,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> has a mass in the front of her chest that might be a thymoma. We performed a thoracoscopy under general anesthesia to biopsy it. Through a small incision, we took eight samples of the mass. The preliminary results point to a thymus tumor. We left a small chest tube in to help the lung stay expanded.",
+    "note_text": "Ms. Santos has a mass in the front of her chest that might be a thymoma. We performed a thoracoscopy under general anesthesia to biopsy it. Through a small incision, we took eight samples of the mass. The preliminary results point to a thymus tumor. We left a small chest tube in to help the lung stay expanded.",
     "cpt_codes": [
       "32606"
     ],
@@ -13088,12 +12948,6 @@
       "style_type": 8,
       "generated_name": "Hilda Wood",
       "generation_date": "2025-12-09T14:15:33.945786"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13737,7 +13591,7 @@
     }
   },
   {
-    "note_text": "<PERSON> sarcoid workup medical thoracoscopy right side 5th ics normal pleura biopsied 4r and 7 good cores sent for cultures too 16fr tube in done.",
+    "note_text": "Robert Jackson sarcoid workup medical thoracoscopy right side 5th ics normal pleura biopsied 4r and 7 good cores sent for cultures too 16fr tube in done.",
     "cpt_codes": [
       "32606"
     ],
@@ -13864,12 +13718,6 @@
       "style_type": 5,
       "generated_name": "Earl Perry",
       "generation_date": "2025-12-09T14:15:33.945992"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14133,7 +13981,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> needed tissue confirmation for suspected sarcoidosis. We performed a thoracoscopy with sedation. We found enlarged lymph nodes in the chest and took several samples from two different locations. These will be tested for sarcoidosis and infections. A chest tube was placed at the end.",
+    "note_text": "Mr. Jackson needed tissue confirmation for suspected sarcoidosis. We performed a thoracoscopy with sedation. We found enlarged lymph nodes in the chest and took several samples from two different locations. These will be tested for sarcoidosis and infections. A chest tube was placed at the end.",
     "cpt_codes": [
       "32606"
     ],
@@ -14260,12 +14108,6 @@
       "style_type": 8,
       "generated_name": "Hank Patterson",
       "generation_date": "2025-12-09T14:15:33.946136"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -15336,7 +15178,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> had swollen lymph nodes in her chest that needed a diagnosis. We did a 3-port VATS procedure under general anesthesia. We found large lymph node masses and took many samples to make sure the lab has enough for all the tests, including for lymphoma. We left a chest tube in to drain the chest.",
+    "note_text": "Ms. Torres had swollen lymph nodes in her chest that needed a diagnosis. We did a 3-port VATS procedure under general anesthesia. We found large lymph node masses and took many samples to make sure the lab has enough for all the tests, including for lymphoma. We left a chest tube in to drain the chest.",
     "cpt_codes": [
       "32606"
     ],
@@ -15466,12 +15308,6 @@
       "style_type": 8,
       "generated_name": "Qiana Alexander",
       "generation_date": "2025-12-09T14:15:33.946468"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -16048,7 +15884,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the big right effusion put in a 14fr catheter today marked with us drained 1.8 liters fluid looks serosanguinous patient breathing better now catheter stayed in.",
+    "note_text": "William Turner with the big right effusion put in a 14fr catheter today marked with us drained 1.8 liters fluid looks serosanguinous patient breathing better now catheter stayed in.",
     "cpt_codes": [
       32556
     ],
@@ -16155,12 +15991,6 @@
       "style_type": 5,
       "generated_name": "Will Hamilton",
       "generation_date": "2025-12-09T14:15:33.946712"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -16384,7 +16214,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a large amount of fluid around his right lung causing shortness of breath. We used ultrasound to find the best spot, then inserted a small tube (catheter) to drain it. We removed 1800mL of fluid, which helped his breathing right away. We left the tube in to continue draining.",
+    "note_text": "Mr. Turner had a large amount of fluid around his right lung causing shortness of breath. We used ultrasound to find the best spot, then inserted a small tube (catheter) to drain it. We removed 1800mL of fluid, which helped his breathing right away. We left the tube in to continue draining.",
     "cpt_codes": [
       32556
     ],
@@ -16491,12 +16321,6 @@
       "style_type": 8,
       "generated_name": "Zack Wallace",
       "generation_date": "2025-12-09T14:15:33.946796"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -17050,7 +16874,7 @@
     }
   },
   {
-    "note_text": "<PERSON> recurrent hydrothorax drained it again today put in a 12fr pigtail got out 2.1 liters she started coughing so we stopped pulled the tube fluid clear.",
+    "note_text": "Dorothy Williams recurrent hydrothorax drained it again today put in a 12fr pigtail got out 2.1 liters she started coughing so we stopped pulled the tube fluid clear.",
     "cpt_codes": [
       32556
     ],
@@ -17157,12 +16981,6 @@
       "style_type": 5,
       "generated_name": "Florence Reynolds",
       "generation_date": "2025-12-09T14:15:33.946986"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -17386,7 +17204,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> has recurrent fluid buildup due to her liver condition. She needed another drainage today. We inserted a small pigtail catheter into her left chest and drained over 2 liters of fluid. We removed the catheter right after the procedure. She felt much better afterward.",
+    "note_text": "Ms. Williams has recurrent fluid buildup due to her liver condition. She needed another drainage today. We inserted a small pigtail catheter into her left chest and drained over 2 liters of fluid. We removed the catheter right after the procedure. She felt much better afterward.",
     "cpt_codes": [
       32556
     ],
@@ -17493,12 +17311,6 @@
       "style_type": 8,
       "generated_name": "Irene Harrison",
       "generation_date": "2025-12-09T14:15:33.947072"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18052,7 +17864,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the empyema put in a pigtail 14fr right side landmark guided drained 900cc pus hooked it up to atrium for drainage.",
+    "note_text": "James Morrison with the empyema put in a pigtail 14fr right side landmark guided drained 900cc pus hooked it up to atrium for drainage.",
     "cpt_codes": [
       32556
     ],
@@ -18159,12 +17971,6 @@
       "style_type": 5,
       "generated_name": "Owen Murray",
       "generation_date": "2025-12-09T14:15:33.947306"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18388,7 +18194,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> has an infected fluid collection around his lung. We placed a pigtail catheter to drain it continuously. We drained 900mL of cloudy fluid initially and hooked the tube up to a drainage system to keep the lung clear.",
+    "note_text": "Mr. Morrison has an infected fluid collection around his lung. We placed a pigtail catheter to drain it continuously. We drained 900mL of cloudy fluid initially and hooked the tube up to a drainage system to keep the lung clear.",
     "cpt_codes": [
       32556
     ],
@@ -18495,12 +18301,6 @@
       "style_type": 8,
       "generated_name": "Rick Webb",
       "generation_date": "2025-12-09T14:15:33.947421"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -19054,7 +18854,7 @@
     }
   },
   {
-    "note_text": "<PERSON> mesothelioma patient large effusion drained 1.5L today using a 12fr kit catheter fluid bloody patient coughed so we stopped pulled line.",
+    "note_text": "Catherine Brown mesothelioma patient large effusion drained 1.5L today using a 12fr kit catheter fluid bloody patient coughed so we stopped pulled line.",
     "cpt_codes": [
       32556
     ],
@@ -19161,12 +18961,6 @@
       "style_type": 5,
       "generated_name": "Eve Hicks",
       "generation_date": "2025-12-09T14:15:33.947605"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -19390,7 +19184,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> has mesothelioma and a large fluid buildup. We drained it today using a temporary catheter. We removed 1.5 liters of bloody fluid, which helped her breathing a lot. We took the catheter out once we were done.",
+    "note_text": "Ms. Brown has mesothelioma and a large fluid buildup. We drained it today using a temporary catheter. We removed 1.5 liters of bloody fluid, which helped her breathing a lot. We took the catheter out once we were done.",
     "cpt_codes": [
       32556
     ],
@@ -19497,12 +19291,6 @@
       "style_type": 8,
       "generated_name": "Helen Boyd",
       "generation_date": "2025-12-09T14:15:33.947696"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -20064,7 +19852,7 @@
     }
   },
   {
-    "note_text": "<PERSON> post cabg effusion drained it with a pigtail 14fr checked pressures lung expanded fine got out over 2 liters 2350 total left it to bulb suction.",
+    "note_text": "Richard Hernandez post cabg effusion drained it with a pigtail 14fr checked pressures lung expanded fine got out over 2 liters 2350 total left it to bulb suction.",
     "cpt_codes": [
       32556
     ],
@@ -20173,12 +19961,6 @@
       "style_type": 5,
       "generated_name": "Nat Ramos",
       "generation_date": "2025-12-09T14:15:33.947876"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -20406,7 +20188,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a large fluid collection after his heart surgery. We placed a pigtail catheter to drain it. We checked the pressures in his chest while draining, which showed his lung was expanding well. We drained over 2 liters of fluid and left the tube in with a suction bulb to get the rest out.",
+    "note_text": "Mr. Hernandez had a large fluid collection after his heart surgery. We placed a pigtail catheter to drain it. We checked the pressures in his chest while draining, which showed his lung was expanding well. We drained over 2 liters of fluid and left the tube in with a suction bulb to get the rest out.",
     "cpt_codes": [
       32556
     ],
@@ -20515,12 +20297,6 @@
       "style_type": 8,
       "generated_name": "Quincy Gordon",
       "generation_date": "2025-12-09T14:15:33.947982"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

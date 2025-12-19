@@ -1290,7 +1290,7 @@
     }
   },
   {
-    "note_text": "Pt: <PERSON>, <PERSON>. DOB: <DATE_TIME>. Date: <DATE_TIME>. Dx: RLL nodule 2.2cm, squamous cell CA. Procedure: Bronch w/ RFA. Under GA, bronchoscopy performed. ENB to RLL superior segment. R-EBUS confirmed target. RFA probe placed (RITA 1500X, 2cm tines). Treatment: 105C x 10min. Good ablation zone. No bleeding, no complications. Extubated, stable. CXR today. CT tomorrow. D/C if OK. F/U 1mo.",
+    "note_text": "Pt: <LOCATION>. DOB: <DATE_TIME>. Date: <DATE_TIME>. Dx: RLL nodule 2.2cm, squamous cell CA. Procedure: Bronch w/ RFA. Under GA, bronchoscopy performed. ENB to RLL superior segment. R-EBUS confirmed target. RFA probe placed (RITA 1500X, 2cm tines). Treatment: 105C x 10min. Good ablation zone. No bleeding, no complications. Extubated, stable. CXR today. CT tomorrow. D/C if OK. F/U 1mo.",
     "cpt_codes": [
       31641,
       31627,
@@ -1547,10 +1547,9 @@
       "generation_date": "2025-12-09T09:18:16.912322"
     },
     "scrub_metadata": {
-      "entities_redacted": 4,
+      "entities_redacted": 3,
       "entity_types": [
-        "PERSON",
-        "PERSON",
+        "LOCATION",
         "DATE_TIME",
         "DATE_TIME"
       ]
@@ -1815,7 +1814,7 @@
     }
   },
   {
-    "note_text": "The patient, Mr. <PERSON>, underwent a therapeutic bronchoscopy for his RLL squamous cell carcinoma. Under general anesthesia, we utilized electromagnetic navigation to reach the target in the superior segment. We verified the location with radial EBUS. Subsequently, we applied radiofrequency energy at 105 degrees Celsius for ten minutes to ablate the lesion. The procedure was uncomplicated, and the patient was stable upon extubation.",
+    "note_text": "The patient, Mr. Jackson, underwent a therapeutic bronchoscopy for his RLL squamous cell carcinoma. Under general anesthesia, we utilized electromagnetic navigation to reach the target in the superior segment. We verified the location with radial EBUS. Subsequently, we applied radiofrequency energy at 105 degrees Celsius for ten minutes to ablate the lesion. The procedure was uncomplicated, and the patient was stable upon extubation.",
     "cpt_codes": [
       31641,
       31627,
@@ -2070,12 +2069,6 @@
       "style_type": 8,
       "generated_name": "Joseph Martinez",
       "generation_date": "2025-12-09T09:18:16.912640"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2799,7 +2792,7 @@
     }
   },
   {
-    "note_text": "CPT 32550: Insertion of indwelling tunneled pleural catheter with cuff.\nDocumentation of Medical Necessity: Recurrent malignant effusion refractory to thoracentesis.\nDetails: Ultrasound guidance used. Subcutaneous tunneling performed (>5cm). <PERSON> anchored. Catheter left in situ for intermittent drainage.",
+    "note_text": "CPT 32550: Insertion of indwelling tunneled pleural catheter with cuff.\nDocumentation of Medical Necessity: Recurrent malignant effusion refractory to thoracentesis.\nDetails: Ultrasound guidance used. Subcutaneous tunneling performed (>5cm). Cuff anchored. Catheter left in situ for intermittent drainage.",
     "cpt_codes": [
       32550
     ],
@@ -3027,12 +3020,6 @@
       "style_type": 3,
       "generated_name": "Barbara Thomas",
       "generation_date": "2025-12-09T09:18:16.913134"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3729,7 +3716,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent malignant pleural effusion (Breast CA).\n[Anesthesia]\nLocal (Lidocaine 1%).\n[Description]\nUltrasound guided access. Subcutaneous tunnel created. Tunneled catheter placed. 1200mL fluid drained. <PERSON> seated.\n[Plan]\nHome health teaching for drainage.",
+    "note_text": "[Indication]\nRecurrent malignant pleural effusion (Breast CA).\n[Anesthesia]\nLocal (Lidocaine 1%).\n[Description]\nUltrasound guided access. Subcutaneous tunnel created. Tunneled catheter placed. 1200mL fluid drained. Cuff seated.\n[Plan]\nHome health teaching for drainage.",
     "cpt_codes": [
       32550
     ],
@@ -3957,16 +3944,10 @@
       "style_type": 7,
       "generated_name": "Karen Jackson",
       "generation_date": "2025-12-09T09:18:16.913370"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> presented with a recurrent malignant pleural effusion necessitating durable drainage. We proceeded with the placement of a tunneled pleural catheter. Under ultrasound guidance and local anesthesia, we accessed the pleural space and created a subcutaneous tunnel. The catheter was inserted, and we drained 1200 mL of fluid. The device was secured, and the patient was instructed on home drainage protocols.",
+    "note_text": "Ms. Johnson presented with a recurrent malignant pleural effusion necessitating durable drainage. We proceeded with the placement of a tunneled pleural catheter. Under ultrasound guidance and local anesthesia, we accessed the pleural space and created a subcutaneous tunnel. The catheter was inserted, and we drained 1200 mL of fluid. The device was secured, and the patient was instructed on home drainage protocols.",
     "cpt_codes": [
       32550
     ],
@@ -4194,16 +4175,10 @@
       "style_type": 8,
       "generated_name": "Nancy Thompson",
       "generation_date": "2025-12-09T09:18:16.913428"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent successful implantation of a right-sided tunneled pleural catheter for recurrent malignant effusion. Operation concluded without sequelae. Patient and family instructed on catheter maintenance and home drainage protocol. Drainage every other day initially. Follow-up visit in 2 weeks.",
+    "note_text": "Ms. Johnson underwent successful implantation of a right-sided tunneled pleural catheter for recurrent malignant effusion. Operation concluded without sequelae. Patient and family instructed on catheter maintenance and home drainage protocol. Drainage every other day initially. Follow-up visit in 2 weeks.",
     "cpt_codes": [
       32550
     ],
@@ -4431,12 +4406,6 @@
       "style_type": 9,
       "generated_name": "Lisa White",
       "generation_date": "2025-12-09T09:18:16.913482"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5271,7 +5240,7 @@
     }
   },
   {
-    "note_text": "Procedure: Robotic Bronchoscopy (Ion).\nPatient: <PERSON>\nSteps:\n1. GA induced.\n2. Registered to CT.\n3. Navigated to LLL lateral basal.\n4. REBUS check: positive.\n5. CBCT spin: tool in lesion.\n6. Biopsies and brushings taken.\nComplications: None.",
+    "note_text": "Procedure: Robotic Bronchoscopy (Ion).\nPatient: Michael Chang.\nSteps:\n1. GA induced.\n2. Registered to CT.\n3. Navigated to LLL lateral basal.\n4. REBUS check: positive.\n5. CBCT spin: tool in lesion.\n6. Biopsies and brushings taken.\nComplications: None.",
     "cpt_codes": [
       31627,
       31654,
@@ -5545,12 +5514,6 @@
       "style_type": 4,
       "generated_name": "Mark Clark",
       "generation_date": "2025-12-09T09:18:16.913753"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6385,7 +6348,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a robotic navigational bronchoscopy to biopsy a 1.8cm nodule in his left lower lobe. We used the Ion system to navigate to the lateral basal segment. Once in position, we confirmed the target with radial EBUS and Cone Beam CT. We successfully obtained six biopsy specimens and two brushings. There were no immediate complications, and he was discharged the same day.",
+    "note_text": "Mr. Chang underwent a robotic navigational bronchoscopy to biopsy a 1.8cm nodule in his left lower lobe. We used the Ion system to navigate to the lateral basal segment. Once in position, we confirmed the target with radial EBUS and Cone Beam CT. We successfully obtained six biopsy specimens and two brushings. There were no immediate complications, and he was discharged the same day.",
     "cpt_codes": [
       31627,
       31654,
@@ -6659,16 +6622,10 @@
       "style_type": 8,
       "generated_name": "Steven Perez",
       "generation_date": "2025-12-09T09:18:16.914009"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent successful robotic navigational bronchoscopy with sampling of LLL nodule. Operation finished without sequelae. Post-procedure CXR shows no pneumothorax. Patient released home same day with instructions to follow up in 1 week for pathology results.",
+    "note_text": "Mr. Chang underwent successful robotic navigational bronchoscopy with sampling of LLL nodule. Operation finished without sequelae. Post-procedure CXR shows no pneumothorax. Patient released home same day with instructions to follow up in 1 week for pathology results.",
     "cpt_codes": [
       31627,
       31654,
@@ -6942,12 +6899,6 @@
       "style_type": 9,
       "generated_name": "Edward Hall",
       "generation_date": "2025-12-09T09:18:16.914075"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8540,7 +8491,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a medical thoracoscopy to investigate a right-sided effusion. Upon entering the pleural space, we noted significant nodularity and a trapped lung. We obtained eight biopsies for analysis. To manage the effusion, we performed a talc pleurodesis. A chest tube was secured at the end of the procedure.",
+    "note_text": "Mr. Stevens underwent a medical thoracoscopy to investigate a right-sided effusion. Upon entering the pleural space, we noted significant nodularity and a trapped lung. We obtained eight biopsies for analysis. To manage the effusion, we performed a talc pleurodesis. A chest tube was secured at the end of the procedure.",
     "cpt_codes": [
       32650
     ],
@@ -8764,12 +8715,6 @@
       "style_type": 8,
       "generated_name": "Timothy Hill",
       "generation_date": "2025-12-09T09:18:16.914657"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9462,7 +9407,7 @@
     }
   },
   {
-    "note_text": "CPT 31630: Bronchoscopy with tracheal/bronchial dilation.\nTechnique: Balloon dilation of tracheal stenosis.\nSpecifics: 3 inflations (<PERSON> 12mm). Stenosis treated therapeutically. No stent placed.",
+    "note_text": "CPT 31630: Bronchoscopy with tracheal/bronchial dilation.\nTechnique: Balloon dilation of tracheal stenosis.\nSpecifics: 3 inflations (max 12mm). Stenosis treated therapeutically. No stent placed.",
     "cpt_codes": [
       31630
     ],
@@ -9690,12 +9635,6 @@
       "style_type": 3,
       "generated_name": "Frank Nelson",
       "generation_date": "2025-12-09T09:18:16.914959"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10161,7 +10100,7 @@
     }
   },
   {
-    "note_text": "PT: <PERSON>, <PERSON>. INDICATION: Post-intubation tracheal stenosis. PROCEDURE: Flexible bronchoscopy + Balloon dilation. FINDINGS: Stenosis 3cm below cords. INTERVENTION: CRE balloon dilations 8mm, 10mm, 12mm. Patency improved to 75%. No significant bleeding. DISPOSITION: Admit overnight.",
+    "note_text": "PT: Garcia, Roberto. INDICATION: Post-intubation tracheal stenosis. PROCEDURE: Flexible bronchoscopy + Balloon dilation. FINDINGS: Stenosis 3cm below cords. INTERVENTION: CRE balloon dilations 8mm, 10mm, 12mm. Patency improved to 75%. No significant bleeding. DISPOSITION: Admit overnight.",
     "cpt_codes": [
       31630
     ],
@@ -10389,17 +10328,10 @@
       "style_type": 6,
       "generated_name": "Stephen Rivera",
       "generation_date": "2025-12-09T09:18:16.915246"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSymptomatic tracheal stenosis, post-intubation.\n[Anesthesia]\nGeneral.\n[Description]\nBronchoscopy showed 40% stenosis. CRE Balloon dilation x3 (<PERSON> 12mm). Patency improved to 75%.\n[Plan]\nIV Steroids, <LOCATION>.",
+    "note_text": "[Indication]\nSymptomatic tracheal stenosis, post-intubation.\n[Anesthesia]\nGeneral.\n[Description]\nBronchoscopy showed 40% stenosis. CRE Balloon dilation x3 (max 12mm). Patency improved to 75%.\n[Plan]\nIV Steroids, Obs.",
     "cpt_codes": [
       31630
     ],
@@ -10627,17 +10559,10 @@
       "style_type": 7,
       "generated_name": "Andrew Campbell",
       "generation_date": "2025-12-09T09:18:16.915340"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> presented with stridor due to tracheal stenosis. We performed a bronchoscopy under general anesthesia and identified the stricture. Using a balloon catheter, we dilated the area in steps up to 12mm. The airway diameter improved significantly, and the patient tolerated the procedure well.",
+    "note_text": "Mr. Garcia presented with stridor due to tracheal stenosis. We performed a bronchoscopy under general anesthesia and identified the stricture. Using a balloon catheter, we dilated the area in steps up to 12mm. The airway diameter improved significantly, and the patient tolerated the procedure well.",
     "cpt_codes": [
       31630
     ],
@@ -10865,12 +10790,6 @@
       "style_type": 8,
       "generated_name": "Raymond Mitchell",
       "generation_date": "2025-12-09T09:18:16.915410"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11597,7 +11516,7 @@
     }
   },
   {
-    "note_text": "Billing: 31641 (Bronchoscopy with destruction of tumor).\nTechnique: Photodynamic therapy (PDT).\nSpecifics: Laser light delivery to photosensitized tissue (<LOCATION>). Left mainstem bronchus. Non-thermal ablation.",
+    "note_text": "Billing: 31641 (Bronchoscopy with destruction of tumor).\nTechnique: Photodynamic therapy (PDT).\nSpecifics: Laser light delivery to photosensitized tissue (Photofrin). Left mainstem bronchus. Non-thermal ablation.",
     "cpt_codes": [
       31641
     ],
@@ -11840,12 +11759,6 @@
       "style_type": 3,
       "generated_name": "Sandra Evans",
       "generation_date": "2025-12-09T09:18:16.915657"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -12095,7 +12008,7 @@
     }
   },
   {
-    "note_text": "pdt light treatment for mrs <PERSON>... she got the photofrin 2 days ago... went in with the scope left main tumor is there... put the laser fiber in cooked it for 500 seconds... no bleeding patient ok... remind her about the sunlight precautions.",
+    "note_text": "pdt light treatment for mrs anderson... she got the photofrin 2 days ago... went in with the scope left main tumor is there... put the laser fiber in cooked it for 500 seconds... no bleeding patient ok... remind her about the sunlight precautions.",
     "cpt_codes": [
       31641
     ],
@@ -12338,12 +12251,6 @@
       "style_type": 5,
       "generated_name": "Kimberly Diaz",
       "generation_date": "2025-12-09T09:18:16.915785"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12839,7 +12746,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> returned 48 hours after <LOCATION> injection for light activation. We positioned the diffuser fiber within the left mainstem bronchus tumor. We delivered the calculated light dose of 200 J/cm2. The procedure went smoothly, and she was reminded of strict light precautions upon discharge.",
+    "note_text": "Ms. Anderson returned 48 hours after Photofrin injection for light activation. We positioned the diffuser fiber within the left mainstem bronchus tumor. We delivered the calculated light dose of 200 J/cm2. The procedure went smoothly, and she was reminded of strict light precautions upon discharge.",
     "cpt_codes": [
       31641
     ],
@@ -13082,13 +12989,6 @@
       "style_type": 8,
       "generated_name": "Michelle Edwards",
       "generation_date": "2025-12-09T09:18:16.915960"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -14007,7 +13907,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy/Stent Check.\nSteps:\n1. Moderate sedation.\n2. Scope via trach.\n3. Stent visualized in LMS.\n4. Suctioned thick secretions (therapeutic).\n5. Checked positioning.\nPlan: <PERSON>.",
+    "note_text": "Procedure: Bronchoscopy/Stent Check.\nSteps:\n1. Moderate sedation.\n2. Scope via trach.\n3. Stent visualized in LMS.\n4. Suctioned thick secretions (therapeutic).\n5. Checked positioning.\nPlan: Azithromycin.",
     "cpt_codes": [
       31645
     ],
@@ -14227,12 +14127,6 @@
       "style_type": 4,
       "generated_name": "Stephanie Rogers",
       "generation_date": "2025-12-09T09:18:16.916251"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14905,7 +14799,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for a routine check of her left mainstem stent. Upon inspection, we found significant mucous buildup. We performed a therapeutic aspiration to clear the airway. The stent itself remains in good position, and the distal airways are open. We will see her back in a month.",
+    "note_text": "Ms. Wu came in for a routine check of her left mainstem stent. Upon inspection, we found significant mucous buildup. We performed a therapeutic aspiration to clear the airway. The stent itself remains in good position, and the distal airways are open. We will see her back in a month.",
     "cpt_codes": [
       31645
     ],
@@ -15125,12 +15019,6 @@
       "style_type": 8,
       "generated_name": "Cynthia Bell",
       "generation_date": "2025-12-09T09:18:16.916493"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -16578,7 +16466,7 @@
     }
   },
   {
-    "note_text": "PT: <PERSON>, K. DX: ILD. PROC: Bronch w/ transbronchial cryobiopsy RLL. REBUS to RLL lateral basal. 2.4mm cryoprobe. Freeze 6sec x 5 samples. Arndt blocker utilized. Samples 5-8mm. Minimal bleeding. No PTX. IMP: Successful cryobx.",
+    "note_text": "PT: Davis, K. DX: ILD. PROC: Bronch w/ transbronchial cryobiopsy RLL. REBUS to RLL lateral basal. 2.4mm cryoprobe. Freeze 6sec x 5 samples. Arndt blocker utilized. Samples 5-8mm. Minimal bleeding. No PTX. IMP: Successful cryobx.",
     "cpt_codes": [
       31628,
       31654
@@ -16818,12 +16706,6 @@
       "style_type": 6,
       "generated_name": "Brenda Howard",
       "generation_date": "2025-12-09T09:18:16.916911"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -17070,7 +16952,7 @@
     }
   },
   {
-    "note_text": "Mrs. <PERSON> underwent a cryobiopsy to evaluate her interstitial lung disease. We targeted the right lower lobe, using radial EBUS to ensure safety. Five large biopsies were taken using the cryoprobe. Bleeding was controlled with a balloon blocker. Post-procedure imaging ruled out pneumothorax.",
+    "note_text": "Mrs. Davis underwent a cryobiopsy to evaluate her interstitial lung disease. We targeted the right lower lobe, using radial EBUS to ensure safety. Five large biopsies were taken using the cryoprobe. Bleeding was controlled with a balloon blocker. Post-procedure imaging ruled out pneumothorax.",
     "cpt_codes": [
       31628,
       31654
@@ -17310,12 +17192,6 @@
       "style_type": 8,
       "generated_name": "Nicole Torres",
       "generation_date": "2025-12-09T09:18:16.917033"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18968,7 +18844,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent bedside pleurodesis for her malignant effusion. Using her existing chest tube, we instilled a talc slurry. She was rotated to distribute the agent. The tube was clamped for an hour and then returned to suction. Pain was managed with IV morphine.",
+    "note_text": "Ms. Martinez underwent bedside pleurodesis for her malignant effusion. Using her existing chest tube, we instilled a talc slurry. She was rotated to distribute the agent. The tube was clamped for an hour and then returned to suction. Pain was managed with IV morphine.",
     "cpt_codes": [
       32560
     ],
@@ -19165,12 +19041,6 @@
       "style_type": 8,
       "generated_name": "Carolyn Price",
       "generation_date": "2025-12-09T09:18:16.917564"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -20349,7 +20219,7 @@
     }
   },
   {
-    "note_text": "Pt: <PERSON>. CALLED FOR: Massive hemoptysis. Findings: Active bleeding LUL. Measures: Iced saline, Epi, TXA - failed. Balloon Tamponade: Fogarty to LUL. Inflated. Bleeding ceased. Plan: IR for embolization.",
+    "note_text": "Pt: Marcus Johnson. CALLED FOR: Massive hemoptysis. Findings: Active bleeding LUL. Measures: Iced saline, Epi, TXA - failed. Balloon Tamponade: Fogarty to LUL. Inflated. Bleeding ceased. Plan: IR for embolization.",
     "cpt_codes": [
       31634
     ],
@@ -20541,12 +20411,6 @@
       "style_type": 6,
       "generated_name": "Henry Jenkins",
       "generation_date": "2025-12-09T09:18:16.917916"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -20745,7 +20609,7 @@
     }
   },
   {
-    "note_text": "We performed an emergency bronchoscopy on Mr. <PERSON> for massive hemoptysis. The source was localized to the left upper lobe. Standard lavage measures failed to control the hemorrhage. We successfully deployed a balloon catheter to tamponade the bleeding vessel. He is currently stable and awaiting IR intervention.",
+    "note_text": "We performed an emergency bronchoscopy on Mr. Johnson for massive hemoptysis. The source was localized to the left upper lobe. Standard lavage measures failed to control the hemorrhage. We successfully deployed a balloon catheter to tamponade the bleeding vessel. He is currently stable and awaiting IR intervention.",
     "cpt_codes": [
       31634
     ],
@@ -20937,12 +20801,6 @@
       "style_type": 8,
       "generated_name": "Peter Powell",
       "generation_date": "2025-12-09T09:18:16.918015"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

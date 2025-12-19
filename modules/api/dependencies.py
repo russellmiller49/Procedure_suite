@@ -140,6 +140,7 @@ def get_coding_service() -> CodingService:
     # The phi_scrubber parameter on CodingService is deprecated.
 
     # 7. Build CodingService
+    registry_service = get_registry_service()
     service = CodingService(
         kb_repo=kb_repo,
         keyword_repo=keyword_repo,
@@ -148,6 +149,7 @@ def get_coding_service() -> CodingService:
         llm_advisor=llm_advisor,
         config=config,
         # phi_scrubber omitted - now handled at route level
+        registry_service=registry_service,
     )
 
     logger.info("CodingService initialized successfully")

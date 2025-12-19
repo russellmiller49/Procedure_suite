@@ -749,7 +749,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a flexible bronchoscopy today to investigate her persistent pneumonia. We sedated her comfortably and advanced the scope. Upon reaching the right lower lobe, we encountered a significant amount of mucopurulent secretion, which we cleared. We then performed a bronchoalveolar lavage in the posterior segment to get a sample for culture. The return was turbid. There were no tumors or foreign bodies seen.",
+    "note_text": "Ms. Flores underwent a flexible bronchoscopy today to investigate her persistent pneumonia. We sedated her comfortably and advanced the scope. Upon reaching the right lower lobe, we encountered a significant amount of mucopurulent secretion, which we cleared. We then performed a bronchoalveolar lavage in the posterior segment to get a sample for culture. The return was turbid. There were no tumors or foreign bodies seen.",
     "cpt_codes": [
       31624
     ],
@@ -853,12 +853,6 @@
       "style_type": 8,
       "generated_name": "Martina Flores",
       "generation_date": "2025-12-09T09:20:42.628797"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1075,7 +1069,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Therapeutic Bronchoscopy for Atelectasis.\nMr. <PERSON>, a 71-year-old male with severe COPD, presented with complete left lower lobe collapse. Bronchoscopy revealed extensive mucus plugging obstructing the left mainstem and LLL bronchi. Therapeutic aspiration was performed using saline instillation and suction, successfully removing multiple large mucus casts. Post-procedure inspection confirmed re-establishment of patency to the subsegmental airways.",
+    "note_text": "PROCEDURE: Therapeutic Bronchoscopy for Atelectasis.\nMr. Black, a 71-year-old male with severe COPD, presented with complete left lower lobe collapse. Bronchoscopy revealed extensive mucus plugging obstructing the left mainstem and LLL bronchi. Therapeutic aspiration was performed using saline instillation and suction, successfully removing multiple large mucus casts. Post-procedure inspection confirmed re-establishment of patency to the subsegmental airways.",
     "cpt_codes": [
       31645
     ],
@@ -1178,12 +1172,6 @@
       "style_type": 2,
       "generated_name": "Robert Black",
       "generation_date": "2025-12-09T09:20:42.628891"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2371,7 +2359,7 @@
     }
   },
   {
-    "note_text": "<PERSON> came in choking on a peanut did a rigid bronch in the or under anesthesia saw the peanut in the right lung pulled it out with the grabbers took a few tries to get it all pieces came out fine airway looks clear now no bleeding sending him to recovery.",
+    "note_text": "liam came in choking on a peanut did a rigid bronch in the or under anesthesia saw the peanut in the right lung pulled it out with the grabbers took a few tries to get it all pieces came out fine airway looks clear now no bleeding sending him to recovery.",
     "cpt_codes": [
       31635
     ],
@@ -2477,12 +2465,6 @@
       "style_type": 5,
       "generated_name": "Mason Davis",
       "generation_date": "2025-12-09T09:20:42.629252"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3029,7 +3011,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA).\nMr. <PERSON> underwent mediastinal staging for LLL adenocarcinoma. Using the linear EBUS scope, systematic nodal survey was performed. Lymph node stations 7 (subcarinal) and 4R (right lower paratracheal) were identified and sampled (3 passes each). Rapid On-Site Evaluation (ROSE) confirmed malignancy in station 7. Procedure concluded without complication.",
+    "note_text": "PROCEDURE: Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA).\nMr. Hunter underwent mediastinal staging for LLL adenocarcinoma. Using the linear EBUS scope, systematic nodal survey was performed. Lymph node stations 7 (subcarinal) and 4R (right lower paratracheal) were identified and sampled (3 passes each). Rapid On-Site Evaluation (ROSE) confirmed malignancy in station 7. Procedure concluded without complication.",
     "cpt_codes": [
       31652
     ],
@@ -3133,12 +3115,6 @@
       "style_type": 2,
       "generated_name": "Mark Hunter",
       "generation_date": "2025-12-09T09:20:42.629431"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3249,7 +3225,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS Staging\nPatient: <PERSON>\nSteps:\n1. GA/ETT.\n2. EBUS scope down.\n3. Sampled 4R: Neg.\n4. Sampled 7: Pos (Adeno).\n5. No other sites.\nPlan: Tumor board.",
+    "note_text": "Procedure: EBUS Staging\nPatient: George Wright\nSteps:\n1. GA/ETT.\n2. EBUS scope down.\n3. Sampled 4R: Neg.\n4. Sampled 7: Pos (Adeno).\n5. No other sites.\nPlan: Tumor board.",
     "cpt_codes": [
       31652
     ],
@@ -3353,16 +3329,10 @@
       "style_type": 4,
       "generated_name": "George Wright",
       "generation_date": "2025-12-09T09:20:42.629489"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "did an ebus on mr <PERSON> for his lung cancer staging general anesthesia tube was already in checked the nodes sampled 4r and 7 with the needle cytology said 7 was positive for cancer cells 4r was clear stopped there patient did fine extubated in room.",
+    "note_text": "did an ebus on mr brooks for his lung cancer staging general anesthesia tube was already in checked the nodes sampled 4r and 7 with the needle cytology said 7 was positive for cancer cells 4r was clear stopped there patient did fine extubated in room.",
     "cpt_codes": [
       31652
     ],
@@ -3466,12 +3436,6 @@
       "style_type": 5,
       "generated_name": "Kenneth Lopez",
       "generation_date": "2025-12-09T09:20:42.629517"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3689,7 +3653,7 @@
     }
   },
   {
-    "note_text": "We performed an EBUS procedure to stage Mr. <PERSON>' lung cancer. After he was asleep, we used the ultrasound scope to look at the lymph nodes in the center of his chest. We took samples from the subcarinal node (station 7) and the right paratracheal node (station 4R). The pathologist in the room confirmed cancer in the subcarinal node. We didn't sample any other areas.",
+    "note_text": "We performed an EBUS procedure to stage Mr. Green' lung cancer. After he was asleep, we used the ultrasound scope to look at the lymph nodes in the center of his chest. We took samples from the subcarinal node (station 7) and the right paratracheal node (station 4R). The pathologist in the room confirmed cancer in the subcarinal node. We didn't sample any other areas.",
     "cpt_codes": [
       31652
     ],
@@ -3793,12 +3757,6 @@
       "style_type": 8,
       "generated_name": "Brian Green",
       "generation_date": "2025-12-09T09:20:42.629607"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4308,7 +4266,7 @@
     }
   },
   {
-    "note_text": "Procedure: Robotic Bronch/Biopsy\nPatient: <PERSON>\nSteps:\n1. GA/ETT.\n2. Ion robot registered.\n3. Navigated to RUL nodule.\n4. Radial EBUS confirmation.\n5. CBCT spin.\n6. Biopsies taken.\nPlan: Wait for path.",
+    "note_text": "Procedure: Robotic Bronch/Biopsy\nPatient: Lillian Mitchell\nSteps:\n1. GA/ETT.\n2. Ion robot registered.\n3. Navigated to RUL nodule.\n4. Radial EBUS confirmation.\n5. CBCT spin.\n6. Biopsies taken.\nPlan: Wait for path.",
     "cpt_codes": [
       31628,
       31654,
@@ -4436,16 +4394,10 @@
       "style_type": 4,
       "generated_name": "Lillian Mitchell",
       "generation_date": "2025-12-09T09:20:42.629794"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "robotic bronch for ms <PERSON> she has that spot in the right upper lobe used the ion system drove out to the nodule radial ebus showed it nicely did a spin with the ct to be sure took a bunch of biopsies and a brush rose said it looks like cancer woke her up no issues.",
+    "note_text": "robotic bronch for ms martin she has that spot in the right upper lobe used the ion system drove out to the nodule radial ebus showed it nicely did a spin with the ct to be sure took a bunch of biopsies and a brush rose said it looks like cancer woke her up no issues.",
     "cpt_codes": [
       31628,
       31654,
@@ -4573,12 +4525,6 @@
       "style_type": 5,
       "generated_name": "Alice Roberts",
       "generation_date": "2025-12-09T09:20:42.629828"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4844,7 +4790,7 @@
     }
   },
   {
-    "note_text": "We used the robotic bronchoscope to biopsy Ms. <PERSON>'s lung nodule. Once the robot guided us to the right upper lobe spot, we double-checked the location with the radial ultrasound probe and the CT spinner. Everything lined up perfectly. We took several biopsies and a brush sample. The preliminary check by the pathologist looked suspicious for cancer.",
+    "note_text": "We used the robotic bronchoscope to biopsy Ms. Parker's lung nodule. Once the robot guided us to the right upper lobe spot, we double-checked the location with the radial ultrasound probe and the CT spinner. Everything lined up perfectly. We took several biopsies and a brush sample. The preliminary check by the pathologist looked suspicious for cancer.",
     "cpt_codes": [
       31628,
       31654,
@@ -4972,12 +4918,6 @@
       "style_type": 8,
       "generated_name": "Edith Parker",
       "generation_date": "2025-12-09T09:20:42.629931"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5217,7 +5157,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Bronchoscopic Assessment of Collateral Ventilation.\nMrs. <PERSON> underwent evaluation for endobronchial valve candidacy. The Chartis system was deployed in the target segments of the left lung. Measurements in both the LUL and LLL demonstrated persistent expiratory flow without cessation, indicative of collateral ventilation. Consequently, valve placement was not performed.",
+    "note_text": "PROCEDURE: Bronchoscopic Assessment of Collateral Ventilation.\nMrs. Reyes underwent evaluation for endobronchial valve candidacy. The Chartis system was deployed in the target segments of the left lung. Measurements in both the LUL and LLL demonstrated persistent expiratory flow without cessation, indicative of collateral ventilation. Consequently, valve placement was not performed.",
     "cpt_codes": [
       31634
     ],
@@ -5319,12 +5259,6 @@
       "style_type": 2,
       "generated_name": "Frances Reyes",
       "generation_date": "2025-12-09T09:20:42.630027"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5433,7 +5367,7 @@
     }
   },
   {
-    "note_text": "Procedure: Chartis Eval\nPatient: <PERSON>\nSteps:\n1. GA/ETT.\n2. Chartis catheter to LUL then LLL.\n3. Measured flow.\n4. Result: CV positive (flow didn't stop).\nPlan: No valves. <PERSON> rehab.",
+    "note_text": "Procedure: Chartis Eval\nPatient: Jean Gutierrez\nSteps:\n1. GA/ETT.\n2. Chartis catheter to LUL then LLL.\n3. Measured flow.\n4. Result: CV positive (flow didn't stop).\nPlan: No valves. Pulmonary rehab.",
     "cpt_codes": [
       31634
     ],
@@ -5535,13 +5469,6 @@
       "style_type": 4,
       "generated_name": "Jean Gutierrez",
       "generation_date": "2025-12-09T09:20:42.630090"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -5860,7 +5787,7 @@
     }
   },
   {
-    "note_text": "We brought Mrs. <PERSON> in to see if she could get valves for her emphysema. We used a special balloon catheter to block her airways and measure airflow. Unfortunately, the air kept flowing even when we blocked the bronchus, which means her lung sections are connected (collateral ventilation). Because of this, valves wouldn't work, so we didn't put any in.",
+    "note_text": "We brought Mrs. Alvarez in to see if she could get valves for her emphysema. We used a special balloon catheter to block her airways and measure airflow. Unfortunately, the air kept flowing even when we blocked the bronchus, which means her lung sections are connected (collateral ventilation). Because of this, valves wouldn't work, so we didn't put any in.",
     "cpt_codes": [
       31634
     ],
@@ -5962,12 +5889,6 @@
       "style_type": 8,
       "generated_name": "Julie Alvarez",
       "generation_date": "2025-12-09T09:20:42.630211"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6185,7 +6106,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Endobronchial Valve Placement.\nMr. <PERSON> presented for bronchoscopic lung volume reduction of the left upper lobe. Following induction, the LUL was inspected. Three Zephyr valves were deployed into the segmental bronchi. Occlusion was verified visually. No immediate complications were observed. Patient admitted for pneumothorax monitoring.",
+    "note_text": "PROCEDURE: Endobronchial Valve Placement.\nMr. Jackson presented for bronchoscopic lung volume reduction of the left upper lobe. Following induction, the LUL was inspected. Three Zephyr valves were deployed into the segmental bronchi. Occlusion was verified visually. No immediate complications were observed. Patient admitted for pneumothorax monitoring.",
     "cpt_codes": [
       31647
     ],
@@ -6291,12 +6212,6 @@
       "style_type": 2,
       "generated_name": "Frank Jackson",
       "generation_date": "2025-12-09T09:20:42.630356"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6409,7 +6324,7 @@
     }
   },
   {
-    "note_text": "Procedure: BLVR LUL\nPatient: <PERSON>\nSteps:\n1. GA/ETT.\n2. Scope to LUL.\n3. Placed 3 Zephyr valves.\n4. Checked fit.\nPlan: Admit, serial CXRs.",
+    "note_text": "Procedure: BLVR LUL\nPatient: Arthur Harris\nSteps:\n1. GA/ETT.\n2. Scope to LUL.\n3. Placed 3 Zephyr valves.\n4. Checked fit.\nPlan: Admit, serial CXRs.",
     "cpt_codes": [
       31647
     ],
@@ -6515,12 +6430,6 @@
       "style_type": 4,
       "generated_name": "Arthur Harris",
       "generation_date": "2025-12-09T09:20:42.630508"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6857,7 +6766,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had his valve procedure today. We placed three valves in his left upper lobe to help shrink the emphysema. The valves went in smoothly and blocked the airways as intended. We'll keep him in the hospital for a few days to make sure his lung doesn't collapse (pneumothorax) as it shrinks.",
+    "note_text": "Mr. Martinez had his valve procedure today. We placed three valves in his left upper lobe to help shrink the emphysema. The valves went in smoothly and blocked the airways as intended. We'll keep him in the hospital for a few days to make sure his lung doesn't collapse (pneumothorax) as it shrinks.",
     "cpt_codes": [
       31647
     ],
@@ -6963,12 +6872,6 @@
       "style_type": 8,
       "generated_name": "Raymond Martinez",
       "generation_date": "2025-12-09T09:20:42.630641"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7828,7 +7731,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> needed a permanent drain for the fluid around her lung. We used ultrasound to guide us and placed a tunneled catheter on her right side. We drained about 1.5 liters of fluid during the procedure. We'll set her up with home nursing to help her drain it daily at home.",
+    "note_text": "Ms. Young needed a permanent drain for the fluid around her lung. We used ultrasound to guide us and placed a tunneled catheter on her right side. We drained about 1.5 liters of fluid during the procedure. We'll set her up with home nursing to help her drain it daily at home.",
     "cpt_codes": [
       32550
     ],
@@ -7930,12 +7833,6 @@
       "style_type": 8,
       "generated_name": "Carol Young",
       "generation_date": "2025-12-09T09:20:42.630923"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8149,7 +8046,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Therapeutic Thoracentesis.\nMr. <PERSON> presented with a symptomatic left pleural effusion. Bedside ultrasound confirmed a safe pocket. Under local anesthesia, a catheter was introduced into the pleural space. 1.2 liters of straw-colored fluid were evacuated. The catheter was withdrawn without complication. Post-procedure imaging showed improvement.",
+    "note_text": "PROCEDURE: Therapeutic Thoracentesis.\nMr. King presented with a symptomatic left pleural effusion. Bedside ultrasound confirmed a safe pocket. Under local anesthesia, a catheter was introduced into the pleural space. 1.2 liters of straw-colored fluid were evacuated. The catheter was withdrawn without complication. Post-procedure imaging showed improvement.",
     "cpt_codes": [
       32555
     ],
@@ -8251,12 +8148,6 @@
       "style_type": 2,
       "generated_name": "Kevin King",
       "generation_date": "2025-12-09T09:20:42.631013"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8365,7 +8256,7 @@
     }
   },
   {
-    "note_text": "Procedure: Thoracentesis\nPatient: <PERSON>\nSteps:\n1. US marked site.\n2. Lidocaine.\n3. Catheter in.\n4. Drained 1.2L.\n5. Bandage applied.\nPlan: Check labs.",
+    "note_text": "Procedure: Thoracentesis\nPatient: Jeff Green\nSteps:\n1. US marked site.\n2. Lidocaine.\n3. Catheter in.\n4. Drained 1.2L.\n5. Bandage applied.\nPlan: Check labs.",
     "cpt_codes": [
       32555
     ],
@@ -8467,12 +8358,6 @@
       "style_type": 4,
       "generated_name": "Jeff Green",
       "generation_date": "2025-12-09T09:20:42.631070"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8791,7 +8676,7 @@
     }
   },
   {
-    "note_text": "We performed a thoracentesis on Mr. <PERSON> to help his breathing. Using ultrasound, we found the fluid on the left side. We numbed the skin and inserted a small tube, draining 1.2 liters of fluid. He felt immediate relief. We sent the fluid to the lab to see if it's from an infection.",
+    "note_text": "We performed a thoracentesis on Mr. Hill to help his breathing. Using ultrasound, we found the fluid on the left side. We numbed the skin and inserted a small tube, draining 1.2 liters of fluid. He felt immediate relief. We sent the fluid to the lab to see if it's from an infection.",
     "cpt_codes": [
       32555
     ],
@@ -8893,12 +8778,6 @@
       "style_type": 8,
       "generated_name": "Frank Hill",
       "generation_date": "2025-12-09T09:20:42.631184"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9112,7 +8991,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Medical Thoracoscopy with Pleurodesis.\nMr. <PERSON> underwent rigid thoracoscopy for a recurrent malignant effusion. Inspection of the left pleural space revealed diffuse parietal nodularity. Biopsies were obtained. To prevent recurrence, talc poudrage (4 grams) was performed under direct visualization. A 24 Fr chest tube was placed.",
+    "note_text": "PROCEDURE: Medical Thoracoscopy with Pleurodesis.\nMr. Roberts underwent rigid thoracoscopy for a recurrent malignant effusion. Inspection of the left pleural space revealed diffuse parietal nodularity. Biopsies were obtained. To prevent recurrence, talc poudrage (4 grams) was performed under direct visualization. A 24 Fr chest tube was placed.",
     "cpt_codes": [
       32650
     ],
@@ -9214,12 +9093,6 @@
       "style_type": 2,
       "generated_name": "Benjamin Roberts",
       "generation_date": "2025-12-09T09:20:42.631275"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9328,7 +9201,7 @@
     }
   },
   {
-    "note_text": "Procedure: Thoracoscopy/Talc\nPatient: <PERSON>\nSteps:\n1. GA/Double lumen tube.\n2. Trocar in.\n3. Drained fluid.\n4. Biopsied nodules.\n5. Sprayed Talc.\n6. Chest tube placed.\nPlan: Admit.",
+    "note_text": "Procedure: Thoracoscopy/Talc\nPatient: Dennis Evans\nSteps:\n1. GA/Double lumen tube.\n2. Trocar in.\n3. Drained fluid.\n4. Biopsied nodules.\n5. Sprayed Talc.\n6. Chest tube placed.\nPlan: Admit.",
     "cpt_codes": [
       32650
     ],
@@ -9430,12 +9303,6 @@
       "style_type": 4,
       "generated_name": "Dennis Evans",
       "generation_date": "2025-12-09T09:20:42.631334"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9754,7 +9621,7 @@
     }
   },
   {
-    "note_text": "We took Mr. <PERSON> to the OR for a thoracoscopy. We put a camera into his chest cavity, drained the fluid, and saw widespread cancer nodules on the lining of the chest wall. We took samples of these. Then, we sprayed sterile talc powder everywhere inside to glue the lung to the wall and stop the fluid from coming back.",
+    "note_text": "We took Mr. Edwards to the OR for a thoracoscopy. We put a camera into his chest cavity, drained the fluid, and saw widespread cancer nodules on the lining of the chest wall. We took samples of these. Then, we sprayed sterile talc powder everywhere inside to glue the lung to the wall and stop the fluid from coming back.",
     "cpt_codes": [
       32650
     ],
@@ -9856,12 +9723,6 @@
       "style_type": 8,
       "generated_name": "Henry Edwards",
       "generation_date": "2025-12-09T09:20:42.631451"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

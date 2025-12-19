@@ -937,7 +937,7 @@
   },
   {
     "note_id": "RAB001",
-    "note_text": "Indication: LLL mass.\nTechnique: Robotic guidance (Ion), ultrasonic localization (REBUS), tissue sampling (forceps, brush).\nFindings: 18mm concentric abnormality.\nVerification: <PERSON> imaging (CBCT).\nOutcome: Specimens harvested. Hemostasis achieved. No pneumothorax.",
+    "note_text": "Indication: LLL mass.\nTechnique: Robotic guidance (Ion), ultrasonic localization (REBUS), tissue sampling (forceps, brush).\nFindings: 18mm concentric abnormality.\nVerification: Volumetric imaging (CBCT).\nOutcome: Specimens harvested. Hemostasis achieved. No pneumothorax.",
     "cpt_codes": [
       31627,
       31654,
@@ -1050,12 +1050,6 @@
       "style_type": 9,
       "generated_name": "Charles Anderson",
       "generation_date": "2025-12-09T12:07:14.108092"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8135,7 +8129,7 @@
   },
   {
     "note_id": "RAB008",
-    "note_text": "Indication: RLL nodule.\nTechnique: Monarch robotic piloting, ultrasonic scanning, tissue acquisition.\nFindings: 14mm concentric target.\nVerification: <PERSON>.\nAction: Harvested tissue. No hemorrhage.",
+    "note_text": "Indication: RLL nodule.\nTechnique: Monarch robotic piloting, ultrasonic scanning, tissue acquisition.\nFindings: 14mm concentric target.\nVerification: Volumetric CT.\nAction: Harvested tissue. No hemorrhage.",
     "cpt_codes": [
       31627,
       31654,
@@ -8247,12 +8241,6 @@
       "style_type": 9,
       "generated_name": "Henry Cox",
       "generation_date": "2025-12-09T12:07:14.109936"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10157,7 +10145,7 @@
   },
   {
     "note_id": "RAB010",
-    "note_text": "Indication: RUL tumor.\nTechnique: Monarch robotic piloting, ultrasonic scanning, lavage, tissue harvesting.\nFindings: 3cm mass.\nVerification: <PERSON>.\nAction: Collected tissue and washings. Hemostasis confirmed.",
+    "note_text": "Indication: RUL tumor.\nTechnique: Monarch robotic piloting, ultrasonic scanning, lavage, tissue harvesting.\nFindings: 3cm mass.\nVerification: Volumetric CT.\nAction: Collected tissue and washings. Hemostasis confirmed.",
     "cpt_codes": [
       31627,
       31654,
@@ -10269,12 +10257,6 @@
       "style_type": 9,
       "generated_name": "Jonathan Coleman",
       "generation_date": "2025-12-09T12:07:14.110489"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13223,7 +13205,7 @@
   },
   {
     "note_id": "RAB013",
-    "note_text": "Indication: RML neoplasm.\nTechnique: Monarch robotic piloting, ultrasonic scanning, tissue acquisition.\nFindings: 20mm eccentric target.\nVerification: <PERSON>.\nAction: Collected specimens. No hemorrhage.",
+    "note_text": "Indication: RML neoplasm.\nTechnique: Monarch robotic piloting, ultrasonic scanning, tissue acquisition.\nFindings: 20mm eccentric target.\nVerification: Volumetric CT.\nAction: Collected specimens. No hemorrhage.",
     "cpt_codes": [
       31627,
       31654,
@@ -13335,12 +13317,6 @@
       "style_type": 9,
       "generated_name": "Judith West",
       "generation_date": "2025-12-09T12:07:14.111520"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

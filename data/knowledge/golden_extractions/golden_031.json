@@ -1637,7 +1637,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> was brought to the bronchoscopy suite for evaluation of bilateral lung masses. We utilized general anesthesia and an 8.5 ETT. Upon inspection, a large mass was found blocking the RUL segments, which we sampled extensively. We then turned our attention to the left lung, using radial EBUS to locate a lesion in the LLL superior segment for additional sampling. A lavage was also done in this area. Bleeding was controlled, and the patient tolerated the procedure well.",
+    "note_text": "Mr. Kim was brought to the bronchoscopy suite for evaluation of bilateral lung masses. We utilized general anesthesia and an 8.5 ETT. Upon inspection, a large mass was found blocking the RUL segments, which we sampled extensively. We then turned our attention to the left lung, using radial EBUS to locate a lesion in the LLL superior segment for additional sampling. A lavage was also done in this area. Bleeding was controlled, and the patient tolerated the procedure well.",
     "cpt_codes": [
       31629,
       31628,
@@ -1867,12 +1867,6 @@
       "style_type": 8,
       "generated_name": "Thomas Liu",
       "generation_date": "2025-12-09T09:19:57.013225"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3061,7 +3055,7 @@
     }
   },
   {
-    "note_text": "<PERSON> diaz 74m copd rul nodule used the ion robot navigated to the anterior segment nodule used cone beam to check position took tbna and cryo samples then did a bal went to the left side for chartis check balloon up no flow so cv negative good for valves maybe later patient woke up fine.",
+    "note_text": "douglas diaz 74m copd rul nodule used the ion robot navigated to the anterior segment nodule used cone beam to check position took tbna and cryo samples then did a bal went to the left side for chartis check balloon up no flow so cv negative good for valves maybe later patient woke up fine.",
     "cpt_codes": [
       31629,
       31628,
@@ -3296,12 +3290,6 @@
       "style_type": 5,
       "generated_name": "George Lopez",
       "generation_date": "2025-12-09T09:19:57.013585"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3781,7 +3769,7 @@
     }
   },
   {
-    "note_text": "We performed a robotic bronchoscopy on Mr. <PERSON>. Using the Ion system and Cone Beam CT, we precisely targeted a nodule in his right upper lobe and obtained multiple biopsies using needle and cryoprobe. Following the biopsy, we assessed his left upper lobe for collateral ventilation using the Chartis system, which indicated he might be a good candidate for valves in the future.",
+    "note_text": "We performed a robotic bronchoscopy on Mr. Diaz. Using the Ion system and Cone Beam CT, we precisely targeted a nodule in his right upper lobe and obtained multiple biopsies using needle and cryoprobe. Following the biopsy, we assessed his left upper lobe for collateral ventilation using the Chartis system, which indicated he might be a good candidate for valves in the future.",
     "cpt_codes": [
       31629,
       31628,
@@ -4016,12 +4004,6 @@
       "style_type": 8,
       "generated_name": "Albert Sanchez",
       "generation_date": "2025-12-09T09:19:57.013758"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4822,7 +4804,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent EBUS-TBNA to stage his lung cancer. We sampled five lymph node stations across the mediastinum. Unfortunately, the rapid pathology results showed cancer cells in lymph nodes on both sides of the chest (N3 disease), indicating advanced stage IIIB squamous cell carcinoma.",
+    "note_text": "Mr. Cooper underwent EBUS-TBNA to stage his lung cancer. We sampled five lymph node stations across the mediastinum. Unfortunately, the rapid pathology results showed cancer cells in lymph nodes on both sides of the chest (N3 disease), indicating advanced stage IIIB squamous cell carcinoma.",
     "cpt_codes": [
       31653
     ],
@@ -4898,12 +4880,6 @@
       "style_type": 8,
       "generated_name": "Gabriel Cook",
       "generation_date": "2025-12-09T09:19:57.013983"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6689,7 +6665,7 @@
     }
   },
   {
-    "note_text": "<PERSON> pleurx catheter right side ovarian cancer met effusion ultrasound used numbed skin tunneled the line put it in drained about a liter of fluid patient relieved chest xray looks good.",
+    "note_text": "linda harrison pleurx catheter right side ovarian cancer met effusion ultrasound used numbed skin tunneled the line put it in drained about a liter of fluid patient relieved chest xray looks good.",
     "cpt_codes": [
       31653
     ],
@@ -6808,12 +6784,6 @@
       "style_type": 5,
       "generated_name": "Sarah Morris",
       "generation_date": "2025-12-09T09:19:57.014553"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7061,7 +7031,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent the placement of a PleurX catheter to manage her recurrent pleural effusion. We used ultrasound to find the best spot on her right side, created a small tunnel under the skin, and inserted the drainage tube. We removed over a liter of fluid, which should help her breathing significantly.",
+    "note_text": "Ms. Harrison underwent the placement of a PleurX catheter to manage her recurrent pleural effusion. We used ultrasound to find the best spot on her right side, created a small tunnel under the skin, and inserted the drainage tube. We removed over a liter of fluid, which should help her breathing significantly.",
     "cpt_codes": [
       31653
     ],
@@ -7180,12 +7150,6 @@
       "style_type": 8,
       "generated_name": "Dorothy Cook",
       "generation_date": "2025-12-09T09:19:57.014645"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8220,7 +8184,7 @@
     }
   },
   {
-    "note_text": "We performed a pleuroscopy on Mr. <PERSON> to diagnose his pleural effusion. Inside the chest, we found extensive nodules covering the lining of the lung and chest wall, which looks suspicious for mesothelioma. Because the lung was trapped and wouldn't expand, we didn't perform a pleurodesis. We took many biopsies and left a chest tube in place.",
+    "note_text": "We performed a pleuroscopy on Mr. Johnson to diagnose his pleural effusion. Inside the chest, we found extensive nodules covering the lining of the lung and chest wall, which looks suspicious for mesothelioma. Because the lung was trapped and wouldn't expand, we didn't perform a pleurodesis. We took many biopsies and left a chest tube in place.",
     "cpt_codes": [
       32997
     ],
@@ -8346,12 +8310,6 @@
       "style_type": 8,
       "generated_name": "Austin Howard",
       "generation_date": "2025-12-09T09:19:57.014986"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9638,7 +9596,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent EBUS staging for her lung cancer. We sampled nodes throughout the mediastinum. Unfortunately, the subcarinal node (Station 7) tested positive for cancer cells, indicating the disease has spread to the lymph nodes (N2 disease).",
+    "note_text": "Ms. Taylor underwent EBUS staging for her lung cancer. We sampled nodes throughout the mediastinum. Unfortunately, the subcarinal node (Station 7) tested positive for cancer cells, indicating the disease has spread to the lymph nodes (N2 disease).",
     "cpt_codes": [
       31641,
       31652
@@ -9799,12 +9757,6 @@
       "style_type": 8,
       "generated_name": "Amy Kelly",
       "generation_date": "2025-12-09T09:19:57.015353"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10595,7 +10547,7 @@
     }
   },
   {
-    "note_text": "We performed a whole lung lavage on Ms. <PERSON>'s left lung to treat her PAP. We used a double-lumen tube to isolate the lungs, then washed the left lung with 6 liters of saline until the fluid ran clear, removing the protein build-up.",
+    "note_text": "We performed a whole lung lavage on Ms. Rodriguez's left lung to treat her PAP. We used a double-lumen tube to isolate the lungs, then washed the left lung with 6 liters of saline until the fluid ran clear, removing the protein build-up.",
     "cpt_codes": [
       31652,
       31630
@@ -10681,12 +10633,6 @@
       "style_type": 8,
       "generated_name": "Virginia Jenkins",
       "generation_date": "2025-12-09T09:19:57.015589"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10967,7 +10913,7 @@
     }
   },
   {
-    "note_text": "<PERSON> rigid bronchoscopy left mainstem blocked by tumor we cored it out used apc and cryo then balloon dilated it opened up pretty good also biopsied a node under the carina with ebus.",
+    "note_text": "brian foster rigid bronchoscopy left mainstem blocked by tumor we cored it out used apc and cryo then balloon dilated it opened up pretty good also biopsied a node under the carina with ebus.",
     "cpt_codes": [
       31622
     ],
@@ -11011,12 +10957,6 @@
       "style_type": 5,
       "generated_name": "Larry Flores",
       "generation_date": "2025-12-09T09:19:57.015685"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11114,7 +11054,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a rigid bronchoscopy to open his blocked left main airway. We used a combination of heat (APC), cold (cryo), and mechanical tools to remove the tumor, followed by a balloon to stretch the airway open. We also biopsied a lymph node for diagnosis.",
+    "note_text": "Mr. Foster underwent a rigid bronchoscopy to open his blocked left main airway. We used a combination of heat (APC), cold (cryo), and mechanical tools to remove the tumor, followed by a balloon to stretch the airway open. We also biopsied a lymph node for diagnosis.",
     "cpt_codes": [
       31622
     ],
@@ -11158,12 +11098,6 @@
       "style_type": 8,
       "generated_name": "Stephen Simmons",
       "generation_date": "2025-12-09T09:19:57.015726"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

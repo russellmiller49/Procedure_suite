@@ -14,7 +14,6 @@ os.environ.setdefault("DISABLE_STATIC_FILES", "1")
 import pytest
 from dataclasses import dataclass, field
 from typing import Optional, Any
-from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
@@ -24,8 +23,9 @@ from modules.api.dependencies import (
     reset_coding_service_cache,
 )
 from modules.coder.application.coding_service import CodingService
-from modules.coder.application.smart_hybrid_policy import HybridDecision
 from config.settings import CoderSettings
+from modules.registry.application.registry_service import RegistryExtractionResult
+from modules.registry.schema import RegistryRecord
 
 
 # ============================================================================
@@ -232,6 +232,36 @@ class MockRuleEngine:
         )
 
 
+class MockRegistryService:
+    def __init__(self, rule_engine: MockRuleEngine | None = None) -> None:
+        self._rule_engine = rule_engine or MockRuleEngine()
+        self._codes_override: dict[str, float] | None = None
+
+    def set_codes(self, codes_to_return: dict[str, float]) -> None:
+        self._codes_override = codes_to_return
+
+    def extract_fields_extraction_first(self, note_text: str) -> RegistryExtractionResult:
+        if self._codes_override is not None:
+            codes = list(self._codes_override.keys())
+        else:
+            result = self._rule_engine.generate_candidates(note_text)
+            codes = result.codes
+        code_rationales = {code: "mock_registry_rationale" for code in codes}
+        return RegistryExtractionResult(
+            record=RegistryRecord(),
+            cpt_codes=codes,
+            coder_difficulty="HIGH_CONF",
+            coder_source="extraction_first",
+            mapped_fields={},
+            code_rationales=code_rationales,
+            derivation_warnings=[],
+            warnings=[],
+            needs_manual_review=False,
+            validation_errors=[],
+            audit_warnings=[],
+        )
+
+
 @dataclass
 class MockLLMSuggestion:
     """Mock LLM suggestion."""
@@ -293,13 +323,17 @@ def mock_apply_mer_rules(codes: list[str], kb_repo: Any) -> MockComplianceResult
 # ============================================================================
 
 
-def create_mock_coding_service(llm_advisor: MockLLMAdvisor | None = None) -> CodingService:
+def create_mock_coding_service(
+    llm_advisor: MockLLMAdvisor | None = None,
+    registry_service: MockRegistryService | None = None,
+) -> CodingService:
     """Create a CodingService with all dependencies mocked."""
     kb_repo = MockKnowledgeBaseRepository()
     keyword_repo = MockKeywordMappingRepository()
     negation_detector = MockNegationDetector()
     rule_engine = MockRuleEngine()
     advisor = llm_advisor or MockLLMAdvisor(codes_to_return={})
+    registry_service = registry_service or MockRegistryService(rule_engine)
 
     config = CoderSettings(
         advisor_confidence_auto_accept=0.85,
@@ -314,6 +348,7 @@ def create_mock_coding_service(llm_advisor: MockLLMAdvisor | None = None) -> Cod
         rule_engine=rule_engine,
         llm_advisor=advisor,
         config=config,
+        registry_service=registry_service,
     )
 
     return service
@@ -337,10 +372,7 @@ def client(mock_llm_advisor):
     # Use FastAPI's dependency_overrides for proper injection
     app.dependency_overrides[get_coding_service] = lambda: mock_service
 
-    # Patch the NCCI/MER functions
-    with patch("modules.coder.application.coding_service.apply_ncci_edits", mock_apply_ncci_edits), \
-         patch("modules.coder.application.coding_service.apply_mer_rules", mock_apply_mer_rules):
-        yield TestClient(app), mock_llm_advisor
+    yield TestClient(app), mock_llm_advisor
 
     # Clean up after test
     app.dependency_overrides.clear()
@@ -758,4 +790,4 @@ class TestCoderRunEndpointQASandbox:
             assert coder_output["kb_version"] == "test_kb_v1"
 
         if "policy_version" in coder_output:
-            assert "smart_hybrid" in coder_output["policy_version"]
+            assert "extraction_first" in coder_output["policy_version"]

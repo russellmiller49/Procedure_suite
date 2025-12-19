@@ -107,7 +107,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Mr. <PERSON> presented for mediastinal restaging following induction chemotherapy for N2 disease. Previous EBUS demonstrated malignant involvement of the subcarinal station.\nPROCEDURE: Under conscious sedation, the station 7 lymph node was re-evaluated. It measured 8mm, significantly reduced from 18mm. Four transbronchial needle aspirations were performed. Rapid On-Site Evaluation confirmed the presence of lymphocytes and anthracotic pigment without malignant cells. Stations 4R, 4L, and 10R were sonographically benign and not sampled.\nCONCLUSION: Significant radiographic and pathologic response to therapy.",
+    "note_text": "HISTORY: Mr. Jackson presented for mediastinal restaging following induction chemotherapy for N2 disease. Previous EBUS demonstrated malignant involvement of the subcarinal station.\nPROCEDURE: Under conscious sedation, the station 7 lymph node was re-evaluated. It measured 8mm, significantly reduced from 18mm. Four transbronchial needle aspirations were performed. Rapid On-Site Evaluation confirmed the presence of lymphocytes and anthracotic pigment without malignant cells. Stations 4R, 4L, and 10R were sonographically benign and not sampled.\nCONCLUSION: Significant radiographic and pathologic response to therapy.",
     "cpt_codes": [
       31652
     ],
@@ -211,12 +211,6 @@
       "style_type": 2,
       "generated_name": "James Johnson",
       "generation_date": "2025-12-09T10:33:45.672510"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -434,7 +428,7 @@
     }
   },
   {
-    "note_text": "pt <PERSON> here for ebus restaging used midazolam and fentanyl. looked at station 7 it shrunk down to 8mm took 4 samples rose said negative just pigment. looked at 4r and 4l and 10r they looked fine didnt stick them. patient did ok no issues. impression is chemo worked good downstaging.",
+    "note_text": "<PERSON> here for ebus restaging used midazolam and fentanyl. looked at station 7 it shrunk down to 8mm took 4 samples rose said negative just pigment. looked at 4r and 4l and 10r they looked fine didnt stick them. patient did ok no issues. impression is chemo worked good downstaging.",
     "cpt_codes": [
       31652
     ],
@@ -547,7 +541,7 @@
     }
   },
   {
-    "note_text": "Patient Thomas Jackson MRN LM-9283 DOB <DATE_TIME> History Initial EBUS 4 months ago showed N2 disease station 7 Now post-chemo restaging requested CONSCIOUS SEDATION Midazolam 2mg Fentanyl 50mcg patient calm Ramsay 2 BP checked q10min continuous SpO2 monitoring EBUS RESTAGING Previously positive station 7 reassessed Station 7 Now 8mm prior 18mm 4 passes obtained ROSE Negative for malignant cells shows anthracotic pigmented macrophages PET now negative at this station Adequate sampling achieved Additional stations surveyed for complete restaging Station 4R 6mm benign appearance not sampled previously negative Station 4L No discrete nodes visualized Station 10R Small 5mm node not sampled Photodocumentation completed No complications during or after procedure INTERPRETATION Excellent response to chemotherapy with downstaging of previously malignant N2 station Adequate negative sampling obtained for surgical planning",
+    "note_text": "Patient <PERSON> LM-9283 DOB <DATE_TIME> History Initial EBUS 4 months ago showed N2 disease station 7 Now post-chemo restaging requested CONSCIOUS SEDATION Midazolam 2mg Fentanyl 50mcg patient calm Ramsay 2 BP checked q10min continuous SpO2 monitoring EBUS RESTAGING Previously positive station 7 reassessed Station 7 Now 8mm prior 18mm 4 passes obtained ROSE Negative for malignant cells shows anthracotic pigmented macrophages PET now negative at this station Adequate sampling achieved Additional stations surveyed for complete restaging Station 4R 6mm benign appearance not sampled previously negative Station 4L No discrete nodes visualized Station 10R Small 5mm node not sampled Photodocumentation completed No complications during or after procedure INTERPRETATION Excellent response to chemotherapy with downstaging of previously malignant N2 station Adequate negative sampling obtained for surgical planning",
     "cpt_codes": [
       31652
     ],
@@ -653,8 +647,9 @@
       "generation_date": "2025-12-09T10:33:45.672635"
     },
     "scrub_metadata": {
-      "entities_redacted": 1,
+      "entities_redacted": 2,
       "entity_types": [
+        "PERSON",
         "DATE_TIME"
       ]
     }
@@ -767,7 +762,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent EBUS restaging today to assess his response to chemotherapy. We focused on the previously positive Station 7, which has decreased in size to 8mm. We performed four needle passes, and the on-site pathologist saw no cancer cells, only benign pigmented macrophages. We also surveyed the surrounding stations like 4R and 10R, but they looked small and benign, so we didn't sample them. The procedure went smoothly without any complications.",
+    "note_text": "Mr. Jackson underwent EBUS restaging today to assess his response to chemotherapy. We focused on the previously positive Station 7, which has decreased in size to 8mm. We performed four needle passes, and the on-site pathologist saw no cancer cells, only benign pigmented macrophages. We also surveyed the surrounding stations like 4R and 10R, but they looked small and benign, so we didn't sample them. The procedure went smoothly without any complications.",
     "cpt_codes": [
       31652
     ],
@@ -871,12 +866,6 @@
       "style_type": 8,
       "generated_name": "Thomas Garcia",
       "generation_date": "2025-12-09T10:33:45.672692"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1932,7 +1921,7 @@
     }
   },
   {
-    "note_text": "PT RICHARD BROWN ID MD-8472-K DOB <DATE_TIME> MULTIFACETED CASE Bulky mediastinal disease RML stenosis LUL peripheral nodule GENERAL ANESTHESIA ETT propofol remi infusion <PERSON> 6 A-line monitoring BP continuous PHASE 1 STAGING EBUS Attempted systematic evaluation challenging due to bulky disease Station 4R 28mm conglomerate mass 5 passes ROSE malignant PET molecular sent Station 7 Unable to access compressed by tumor Station 10R 11mm 3 passes ROSE malignant PET Station 11R Difficult anatomy 2 passes obtained ROSE adequate Photodoc limited by distorted anatomy PHASE 2 ENDOBRONCHIAL DISEASE RML bronchus has exophytic tumor causing 80% stenosis Biopsy 6 forceps confirmed same malignancy Argon plasma coagulation applied for debulking 12mm 30mm metallic stent placed for symptom relief PHASE 3 NAVIGATION FOR LUL NODULE EM navigation performed LUL apical posterior nodule 16mm targeted Tool in lesion confirmed radial EBUS Fluoro 5.2 min DAP 201 cGycm2 Sampling needle x2 biopsy x3 COMPLICATIONS Moderate bleeding from endobronchial tumor biopsy site controlled with epi APC Transient hypoxia to 85% during stent deployment resolved with ventilator adjustment Procedure duration 98 minutes Patient recovered well extubated ICU observation overnight",
+    "note_text": "PT RICHARD BROWN ID MD-8472-K DOB <DATE_TIME> MULTIFACETED CASE Bulky mediastinal disease RML stenosis LUL peripheral nodule GENERAL ANESTHESIA ETT propofol remi infusion Ramsay 6 A-line monitoring BP continuous PHASE 1 STAGING EBUS Attempted systematic evaluation challenging due to bulky disease Station 4R 28mm conglomerate mass 5 passes ROSE malignant PET molecular sent Station 7 Unable to access compressed by tumor Station 10R 11mm 3 passes ROSE malignant PET Station 11R Difficult anatomy 2 passes obtained ROSE adequate Photodoc limited by distorted anatomy PHASE 2 ENDOBRONCHIAL DISEASE RML bronchus has exophytic tumor causing 80% stenosis Biopsy 6 forceps confirmed same malignancy Argon plasma coagulation applied for debulking 12mm 30mm metallic stent placed for symptom relief PHASE 3 NAVIGATION FOR LUL NODULE EM navigation performed LUL apical posterior nodule 16mm targeted Tool in lesion confirmed radial EBUS Fluoro 5.2 min DAP 201 cGycm2 Sampling needle x2 biopsy x3 COMPLICATIONS Moderate bleeding from endobronchial tumor biopsy site controlled with epi APC Transient hypoxia to 85% during stent deployment resolved with ventilator adjustment Procedure duration 98 minutes Patient recovered well extubated ICU observation overnight",
     "cpt_codes": [
       31653,
       31631,
@@ -2120,10 +2109,9 @@
       "generation_date": "2025-12-09T10:33:45.673023"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "DATE_TIME",
-        "PERSON"
+        "DATE_TIME"
       ]
     }
   },
@@ -2317,7 +2305,7 @@
     }
   },
   {
-    "note_text": "We performed a multi-stage procedure on Mr. <PERSON>. First, we used EBUS to stage the mediastinum, finding malignancy in stations 4R, 10R, and 11R, though station 7 was unreachable. Next, we addressed the symptomatic RML stenosis by debulking the tumor with APC and placing a 12mm metallic stent. Finally, we used electromagnetic navigation to locate and biopsy a 16mm nodule in the left upper lobe. There was some bleeding and transient hypoxia, but both were managed successfully.",
+    "note_text": "We performed a multi-stage procedure on Mr. Brown. First, we used EBUS to stage the mediastinum, finding malignancy in stations 4R, 10R, and 11R, though station 7 was unreachable. Next, we addressed the symptomatic RML stenosis by debulking the tumor with APC and placing a 12mm metallic stent. Finally, we used electromagnetic navigation to locate and biopsy a 16mm nodule in the left upper lobe. There was some bleeding and transient hypoxia, but both were managed successfully.",
     "cpt_codes": [
       31653,
       31631,
@@ -2503,12 +2491,6 @@
       "style_type": 8,
       "generated_name": "Andrew Martin",
       "generation_date": "2025-12-09T10:33:45.673125"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2815,7 +2797,7 @@
     }
   },
   {
-    "note_text": "CLINICAL SUMMARY: Ms. <PERSON> has post-obstructive pneumonia secondary to an RUL endobronchial lesion. Staging was required.\nEBUS STAGING: Systematic evaluation was performed. Stations 2R, 7, and 10R were negative/adequate on ROSE. Station 4R (13mm) was positive for malignancy.\nDIAGNOSTIC BRONCHOSCOPY: The RUL bronchus was 70% occluded by mass. Forceps biopsies and brushings were obtained. Hemostasis was achieved with epinephrine and iced saline lavage.",
+    "note_text": "CLINICAL SUMMARY: Ms. Anderson has post-obstructive pneumonia secondary to an RUL endobronchial lesion. Staging was required.\nEBUS STAGING: Systematic evaluation was performed. Stations 2R, 7, and 10R were negative/adequate on ROSE. Station 4R (13mm) was positive for malignancy.\nDIAGNOSTIC BRONCHOSCOPY: The RUL bronchus was 70% occluded by mass. Forceps biopsies and brushings were obtained. Hemostasis was achieved with epinephrine and iced saline lavage.",
     "cpt_codes": [
       31653,
       31625
@@ -2926,12 +2908,6 @@
       "style_type": 2,
       "generated_name": "Elizabeth White",
       "generation_date": "2025-12-09T10:33:45.673233"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3283,7 +3259,7 @@
     }
   },
   {
-    "note_text": "NAME PATRICIA ANDERSON ID MR-K8374 DOB <DATE_TIME> INDICATION RUL endobronchial lesion causing post obstructive pneumonia mediastinal LAD ANESTHESIA General via ETT maintained on sevoflurane fentanyl Ramsay 6 Arterial line placed continuous BP SpO2 ETCO2 monitoring PART A STAGING EBUS Systematic evaluation N3 N2 N1 2R 8mm 3 passes ROSE negative for malignancy 4R 13mm 4 passes ROSE positive malignant PET molecular sent 7 9mm 3 passes ROSE negative 10R 7mm 3 passes ROSE adequate <PERSON> of all accessible stations completed PART B TUMOR BIOPSY RUL endobronchial mass causing 70% luminal narrowing Multiple forceps biopsies obtained 6 Brush cytology 2 Moderate bleeding controlled with epi 1 20 000 iced saline COMPLICATIONS Transient hypoxia to 88% during tumor manipulation resolved with increased FiO2 and suctioning Moderate bleeding as noted controlled intraprocedurally PLAN Awaiting path for treatment planning May need repeat bronch for stent if airway compromise worsens",
+    "note_text": "NAME PATRICIA ANDERSON ID MR-K8374 DOB <DATE_TIME> INDICATION RUL endobronchial lesion causing post obstructive pneumonia mediastinal LAD ANESTHESIA General via ETT maintained on sevoflurane fentanyl Ramsay 6 Arterial line placed continuous BP SpO2 ETCO2 monitoring PART A STAGING EBUS Systematic evaluation N3 N2 N1 2R 8mm 3 passes ROSE negative for malignancy 4R 13mm 4 passes ROSE positive malignant PET molecular sent 7 9mm 3 passes ROSE negative 10R 7mm 3 passes ROSE adequate Photodoc of all accessible stations completed PART B TUMOR BIOPSY RUL endobronchial mass causing 70% luminal narrowing Multiple forceps biopsies obtained 6 Brush cytology 2 Moderate bleeding controlled with epi 1 20 000 iced saline COMPLICATIONS Transient hypoxia to 88% during tumor manipulation resolved with increased FiO2 and suctioning Moderate bleeding as noted controlled intraprocedurally PLAN Awaiting path for treatment planning May need repeat bronch for stent if airway compromise worsens",
     "cpt_codes": [
       31653,
       31625
@@ -3396,10 +3372,9 @@
       "generation_date": "2025-12-09T10:33:45.673354"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "DATE_TIME",
-        "PERSON"
+        "DATE_TIME"
       ]
     }
   },
@@ -3518,7 +3493,7 @@
     }
   },
   {
-    "note_text": "We performed a staging EBUS and tumor biopsy on Ms. <PERSON>. Using the EBUS scope, we systematically sampled stations 2R, 4R, 7, and 10R. Unfortunately, station 4R confirmed malignancy on the rapid onsite eval. We then switched to the standard scope to biopsy the RUL mass causing the obstruction. We took multiple samples and a brush. There was some moderate bleeding which we controlled with epinephrine and iced saline.",
+    "note_text": "We performed a staging EBUS and tumor biopsy on Ms. Anderson. Using the EBUS scope, we systematically sampled stations 2R, 4R, 7, and 10R. Unfortunately, station 4R confirmed malignancy on the rapid onsite eval. We then switched to the standard scope to biopsy the RUL mass causing the obstruction. We took multiple samples and a brush. There was some moderate bleeding which we controlled with epinephrine and iced saline.",
     "cpt_codes": [
       31653,
       31625
@@ -3629,12 +3604,6 @@
       "style_type": 8,
       "generated_name": "Lisa Lewis",
       "generation_date": "2025-12-09T10:33:45.673414"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4228,7 +4197,7 @@
     }
   },
   {
-    "note_text": "Christoper Moore 72M here for SCLC staging. Used the pentax ebus scope. found huge nodes everywhere especially station 7 was 42mm. stuck 7 4r 4l and 10r. rose guy said its small cell for sure. extensive disease n2 n3. patient woke up fine.",
+    "note_text": "<PERSON> 72M here for SCLC staging. Used the pentax ebus scope. found huge nodes everywhere especially station 7 was 42mm. stuck 7 4r 4l and 10r. <PERSON> said its small cell for sure. extensive disease n2 n3. patient woke up fine.",
     "cpt_codes": [
       31653
     ],
@@ -4344,10 +4313,17 @@
       "style_type": 5,
       "generated_name": "Ronald Allen",
       "generation_date": "2025-12-09T10:33:45.673609"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "PERSON",
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "Patient Moore Christopher ID MR4729384 Age 72 M Service Date <DATE_TIME> Start Time 0745 Physician Dr Patel Anjali Attending Dr Kim Susan Fellow Endobronchial Ultrasound Bronchoscopy Indication Small cell lung cancer staging enlarged mediastinal lymph nodes on imaging Pre op diagnosis Small cell lung cancer clinical stage Post op diagnosis Pending final pathology Anesthesia General anesthesia provided by anesthesia team Dr Martinez Equipment Pentax EB 1970UK linear EBUS scope Procedure narrative After successful intubation and adequate depth of anesthesia timeout performed EBUS bronchoscope inserted via ETT Initial inspection showed normal trachea sharp carina Systematic ultrasound examination Lymph node stations evaluated 2R 11mm normal echogenicity 4R 31mm ENLARGED loss of normal architecture 4L 24mm ENLARGED hypoechoic 7 42mm MARKEDLY ENLARGED heterogeneous 10R 18mm prominent 10L 16mm prominent 11R 21mm abnormal appearance TBNA sampling Station 7 42mm Needle 22G Pass 1 0758 visible tissue core Pass 2 0801 additional sample Pass 3 0803 for molecular studies Pass 4 0805 microbiology ROSE Result MALIGNANT small cell morphology identified Station 4R 31mm 3 passes performed ROSE Small cell carcinoma confirmed Station 4L 24mm 3 passes performed ROSE Malignant cells present Station 10R 18mm 2 passes performed ROSE Atypical cells Procedure completed 0822 Total time 37 minutes EBL 5mL Patient extubated to recovery in stable condition Preliminary findings Extensive N2 N3 disease confirmed Specimens to pathology Cytology cell block molecular testing Patient counseled post procedure regarding findings Next steps Oncology consult PET CT for full staging Signed Dr Anjali Patel MD FCCP Time <DATE_TIME>",
+    "note_text": "Patient <PERSON> ID MR4729384 Age 72 M Service Date <DATE_TIME> Start Time 0745 Physician Dr Patel Anjali Attending Dr Kim Susan Fellow Endobronchial Ultrasound Bronchoscopy Indication Small cell lung cancer staging enlarged mediastinal lymph nodes on imaging Pre op diagnosis Small cell lung cancer clinical stage Post op diagnosis Pending final pathology Anesthesia General anesthesia provided by anesthesia team Dr Martinez Equipment Pentax EB 1970UK linear EBUS scope Procedure narrative After successful intubation and adequate depth of anesthesia timeout performed EBUS bronchoscope inserted via ETT Initial inspection showed normal trachea sharp carina Systematic ultrasound examination Lymph node stations evaluated 2R 11mm normal echogenicity 4R 31mm ENLARGED loss of normal architecture 4L 24mm ENLARGED hypoechoic 7 42mm MARKEDLY ENLARGED heterogeneous 10R 18mm prominent 10L 16mm prominent 11R 21mm abnormal appearance TBNA sampling Station 7 42mm Needle 22G Pass 1 0758 visible tissue core Pass 2 0801 additional sample Pass 3 0803 for molecular studies Pass 4 0805 microbiology ROSE Result MALIGNANT small cell morphology identified Station 4R 31mm 3 passes performed ROSE Small cell carcinoma confirmed Station 4L 24mm 3 passes performed ROSE Malignant cells present Station 10R 18mm 2 passes performed ROSE Atypical cells Procedure completed 0822 Total time 37 minutes EBL 5mL Patient extubated to recovery in stable condition Preliminary findings Extensive N2 N3 disease confirmed Specimens to pathology Cytology cell block molecular testing Patient counseled post procedure regarding findings Next steps Oncology consult PET CT for full staging Signed Dr Anjali Patel MD FCCP Time <DATE_TIME>",
     "cpt_codes": [
       31653
     ],
@@ -4465,8 +4441,9 @@
       "generation_date": "2025-12-09T10:33:45.673638"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 3,
       "entity_types": [
+        "PERSON",
         "DATE_TIME",
         "DATE_TIME"
       ]
@@ -4592,7 +4569,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> came in for staging of his small cell lung cancer. Under general anesthesia, we performed a systematic EBUS. We found markedly enlarged nodes, particularly at station 7 which was over 4cm. We sampled station 7, as well as 4R, 4L, and 10R. The rapid onsite evaluation confirmed small cell carcinoma. This confirms extensive N2/N3 disease.",
+    "note_text": "Mr. Moore came in for staging of his small cell lung cancer. Under general anesthesia, we performed a systematic EBUS. We found markedly enlarged nodes, particularly at station 7 which was over 4cm. We sampled station 7, as well as 4R, 4L, and 10R. The rapid onsite evaluation confirmed small cell carcinoma. This confirms extensive N2/N3 disease.",
     "cpt_codes": [
       31653
     ],
@@ -4708,12 +4685,6 @@
       "style_type": 8,
       "generated_name": "Jeffrey King",
       "generation_date": "2025-12-09T10:33:45.673717"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5550,7 +5521,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSCLC Staging.\n[Anesthesia]\nGA.\n[Description]\nEBUS performed. Sampled 7, 4R, 4L, 10R. All enlarged. ROSE positive for SCLC.\n[Plan]\n<PERSON> to Onco.",
+    "note_text": "[Indication]\nSCLC Staging.\n[Anesthesia]\nGA.\n[Description]\nEBUS performed. Sampled 7, 4R, 4L, 10R. All enlarged. ROSE positive for SCLC.\n[Plan]\nRefer to Onco.",
     "cpt_codes": [
       31653
     ],
@@ -5666,16 +5637,10 @@
       "style_type": 7,
       "generated_name": "Justin Campbell",
       "generation_date": "2025-12-09T10:33:45.674041"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We carried out the EBUS staging for Mr. <PERSON> today. The ultrasound revealed significantly enlarged nodes in the subcarinal and paratracheal regions. We took samples from stations 7, 4R, 4L, and 10R. The onsite pathologist confirmed small cell carcinoma. The patient tolerated the procedure well.",
+    "note_text": "We carried out the EBUS staging for Mr. Moore today. The ultrasound revealed significantly enlarged nodes in the subcarinal and paratracheal regions. We took samples from stations 7, 4R, 4L, and 10R. The onsite pathologist confirmed small cell carcinoma. The patient tolerated the procedure well.",
     "cpt_codes": [
       31653
     ],
@@ -5791,12 +5756,6 @@
       "style_type": 8,
       "generated_name": "Scott Mitchell",
       "generation_date": "2025-12-09T10:33:45.674070"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6483,7 +6442,7 @@
     }
   },
   {
-    "note_text": "james wilson 12/18/52. rml tumor blocking airway. went in with general lma. removed tumor with snare and cryo. bled a lot like 200ml. had to put a blocker in and use ice. finally stopped. put a silicone stent in 14 by 40. scary moment but hes ok now.",
+    "note_text": "<PERSON> 12/18/52. rml tumor blocking airway. went in with general lma. removed tumor with snare and cryo. bled a lot like 200ml. had to put a blocker in and use ice. finally stopped. put a silicone stent in 14 by 40. scary moment but hes ok now.",
     "cpt_codes": [
       31640,
       31631,
@@ -6621,10 +6580,16 @@
       "style_type": 5,
       "generated_name": "Raymond Torres",
       "generation_date": "2025-12-09T10:33:45.674322"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
-    "note_text": "PT <PERSON> A92 555 DOB <DATE_TIME> Indication Central airway obstruction from endobronchial tumor RML bronchus Sedation protocol General anesthesia via LMA propofol remifentanil infusion Monitoring Continuous arterial line SpO2 ETCO2 BP q3min Procedure narrative Inspection revealed near complete obstruction of RML bronchus by exophytic tumor with friable surface Tumor debulking performed using Electrocautery snare for bulk removal Argon plasma coagulation for hemostasis Cryotherapy x2 freeze thaw cycles Massive hemorrhage encountered during debulking estimated 200mL Bleeding controlled with Topical epinephrine 1 10 000 Iced saline lavage Bronchial blocker placement temporarily Silicone stent 14mm x 40mm placed in RML bronchus for airway patency Complications Major airway bleeding moderate severity controlled during procedure Patient stable Plan Follow up bronchoscopy in 4 6 weeks for stent assessment and tumor surveillance",
+    "note_text": "PT James Wilson ID MRN A92 555 DOB <DATE_TIME> Indication Central airway obstruction from endobronchial tumor RML bronchus Sedation protocol General anesthesia via LMA propofol remifentanil infusion Monitoring Continuous arterial line SpO2 ETCO2 BP q3min Procedure narrative Inspection revealed near complete obstruction of RML bronchus by exophytic tumor with friable surface Tumor debulking performed using Electrocautery snare for bulk removal Argon plasma coagulation for hemostasis Cryotherapy x2 freeze thaw cycles Massive hemorrhage encountered during debulking estimated 200mL Bleeding controlled with Topical epinephrine 1 10 000 Iced saline lavage Bronchial blocker placement temporarily Silicone stent 14mm x 40mm placed in RML bronchus for airway patency Complications Major airway bleeding moderate severity controlled during procedure Patient stable Plan Follow up bronchoscopy in 4 6 weeks for stent assessment and tumor surveillance",
     "cpt_codes": [
       31640,
       31631,
@@ -6764,9 +6729,8 @@
       "generation_date": "2025-12-09T10:33:45.674360"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
         "DATE_TIME"
       ]
     }
@@ -6913,7 +6877,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a large tumor blocking his right middle lobe bronchus. We went in to debulk it using a snare, APC, and cryotherapy. During the removal, we encountered significant bleeding, about 200mL. We had to place a bronchial blocker and use iced saline to stop it. Once it was under control, we placed a silicone stent to keep the airway open. He is stable now.",
+    "note_text": "Mr. Wilson had a large tumor blocking his right middle lobe bronchus. We went in to debulk it using a snare, APC, and cryotherapy. During the removal, we encountered significant bleeding, about 200mL. We had to place a bronchial blocker and use iced saline to stop it. Once it was under control, we placed a silicone stent to keep the airway open. He is stable now.",
     "cpt_codes": [
       31640,
       31631,
@@ -7051,12 +7015,6 @@
       "style_type": 8,
       "generated_name": "Jack Edwards",
       "generation_date": "2025-12-09T10:33:45.674437"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7543,7 +7501,7 @@
     }
   },
   {
-    "note_text": "Procedure: Stent Removal\nPt: <PERSON>\nSteps:\n1. Rigid bronch.\n2. RML stent pulled. Granulation treated with cryo.\n3. RLL stent pulled. Mucous cleared. Granulation treated with cryo.\n4. CRE balloon dilation for both.\n5. No complications.",
+    "note_text": "Procedure: Stent Removal\nPt: Gilbert Barkley\nSteps:\n1. Rigid bronch.\n2. RML stent pulled. Granulation treated with cryo.\n3. RLL stent pulled. Mucous cleared. Granulation treated with cryo.\n4. CRE balloon dilation for both.\n5. No complications.",
     "cpt_codes": [
       31638,
       31641
@@ -7654,16 +7612,10 @@
       "style_type": 4,
       "generated_name": "Henry Murphy",
       "generation_date": "2025-12-09T10:33:45.674600"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here to get his stents out. 11/30/23. used rigid scope. pulled the rml stent then the rll stent. lot of granulation tissue underneath. used the cryo probe to freeze it off and the balloon to stretch it open. everything looks open now. discharge when ready.",
+    "note_text": "gilbert barkley here to get his stents out. 11/30/23. used rigid scope. pulled the rml stent then the rll stent. lot of granulation tissue underneath. used the cryo probe to freeze it off and the balloon to stretch it open. everything looks open now. discharge when ready.",
     "cpt_codes": [
       31638,
       31641
@@ -7774,16 +7726,10 @@
       "style_type": 5,
       "generated_name": "Douglas Rivera",
       "generation_date": "2025-12-09T10:33:45.674632"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "DATE OF PROCEDURE <DATE_TIME> NAME <PERSON> PREOPERATIVE DIAGNOSIS Bronchial obstruction POSTOPERATIVE DIAGNOSIS Bronchial obstruction PROCEDURE s PERFORMED SURGEON <PERSON> ASSISTANT s Stephen Pressly M D Nicholas Vance M D INDICATIONS Airway stent removal Consent was obtained SEDATION General Anesthesia DESCRIPTION OF PROCEDURE The procedure was performed in the main operating room Following intravenous medications as per the record a 12 mm ventilating rigid bronchoscope was inserted Using the flexible bronchoscope airway inspection was performed The right middle bronchi had stent in place with minimal mucous but granulation tissue the distal edge causing 50% obstruction The right middle lobe stent was then grasped with flexible forceps by the proximal string and retracted The stent was easily removed The Right lower lobe stent was then removed in a similar fashion Excessive debris and granulation tissue were debulked with a combination of cryoprobe and flexible forceps Finally using an 8 9 10 CRE dilatational balloon we were able to gently dilate the effected bronchi to increased luminal diameter RESULTS Successful removal of bronchial stents within the right middle and right lower lobe bronchi with significant residual granulation tissue COMPLICATIONS None",
+    "note_text": "DATE OF PROCEDURE <DATE_TIME> NAME Gilbert Barkley PREOPERATIVE DIAGNOSIS Bronchial obstruction POSTOPERATIVE DIAGNOSIS Bronchial obstruction PROCEDURE s PERFORMED SURGEON Mikie Gallegos MD ASSISTANT s Stephen Pressly M D Nicholas Vance M D INDICATIONS Airway stent removal Consent was obtained SEDATION General Anesthesia DESCRIPTION OF PROCEDURE The procedure was performed in the main operating room Following intravenous medications as per the record a 12 mm ventilating rigid bronchoscope was inserted Using the flexible bronchoscope airway inspection was performed The right middle bronchi had stent in place with minimal mucous but granulation tissue the distal edge causing 50% obstruction The right middle lobe stent was then grasped with flexible forceps by the proximal string and retracted The stent was easily removed The Right lower lobe stent was then removed in a similar fashion Excessive debris and granulation tissue were debulked with a combination of cryoprobe and flexible forceps Finally using an 8 9 10 CRE dilatational balloon we were able to gently dilate the effected bronchi to increased luminal diameter RESULTS Successful removal of bronchial stents within the right middle and right lower lobe bronchi with significant residual granulation tissue COMPLICATIONS None",
     "cpt_codes": [
       31638,
       31641
@@ -7896,11 +7842,9 @@
       "generation_date": "2025-12-09T10:33:45.674660"
     },
     "scrub_metadata": {
-      "entities_redacted": 3,
+      "entities_redacted": 1,
       "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "PERSON"
+        "DATE_TIME"
       ]
     }
   },
@@ -8019,7 +7963,7 @@
     }
   },
   {
-    "note_text": "We brought Mr. <PERSON> back to the OR to remove his stents. We used a rigid bronchoscope. The RML and RLL stents were removed without too much trouble, but there was a lot of granulation tissue underneath causing obstruction. We cleaned that up using cryotherapy and forceps, and then dilated the airways with a balloon to ensure they stayed open.",
+    "note_text": "We brought Mr. Barkley back to the OR to remove his stents. We used a rigid bronchoscope. The RML and RLL stents were removed without too much trouble, but there was a lot of granulation tissue underneath causing obstruction. We cleaned that up using cryotherapy and forceps, and then dilated the airways with a balloon to ensure they stayed open.",
     "cpt_codes": [
       31638,
       31641
@@ -8130,12 +8074,6 @@
       "style_type": 8,
       "generated_name": "Nathan Morgan",
       "generation_date": "2025-12-09T10:33:45.674719"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8369,7 +8307,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: <PERSON>.\nINDICATION: Obstruction of RML/RLL from granulation/tears.\nPROCEDURE: Rigid bronchoscopy. Attempted placement of 10x20mm stent in RLL failed (malposition). Subsequently, an 8x20mm Aero stent was successfully deployed in the RLL and dilated. An 8x15mm Aero stent was deployed in the RML and dilated. '<PERSON>' configuration achieved without carinal compression.\nCONCLUSION: Recanalization of RML and RLL.",
+    "note_text": "OPERATIVE REPORT: Airway Stenting.\nINDICATION: Obstruction of RML/RLL from granulation/tears.\nPROCEDURE: Rigid bronchoscopy. Attempted placement of 10x20mm stent in RLL failed (malposition). Subsequently, an 8x20mm Aero stent was successfully deployed in the RLL and dilated. An 8x15mm Aero stent was deployed in the RML and dilated. 'Kissing' configuration achieved without carinal compression.\nCONCLUSION: Recanalization of RML and RLL.",
     "cpt_codes": [
       31636,
       31637
@@ -8482,13 +8420,6 @@
       "style_type": 2,
       "generated_name": "Kyle Reed",
       "generation_date": "2025-12-09T10:33:45.674813"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -8608,7 +8539,7 @@
     }
   },
   {
-    "note_text": "Procedure: Stent Placement\nPt: <PERSON>\nSteps:\n1. Rigid bronch.\n2. RML/RLL blocked by granulation.\n3. Tried 10x20 in RLL - didn't fit.\n4. Put 8x20 in RLL instead.\n5. Put 8x15 in RML.\n6. Balloon dilated both.\n7. Good flow.",
+    "note_text": "Procedure: Stent Placement\nPt: Gilbert Barkley\nSteps:\n1. Rigid bronch.\n2. RML/RLL blocked by granulation.\n3. Tried 10x20 in RLL - didn't fit.\n4. Put 8x20 in RLL instead.\n5. Put 8x15 in RML.\n6. Balloon dilated both.\n7. Good flow.",
     "cpt_codes": [
       31636,
       31637
@@ -8721,16 +8652,10 @@
       "style_type": 4,
       "generated_name": "Carl Bell",
       "generation_date": "2025-12-09T10:33:45.674875"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> 11/15/23. airways blocked by granulation from yesterday. decided to stent. tried a 10x20 in the rll but it was too big and stuck distal. managed to switch it for an 8x20. then put an 8x15 in the rml. kissing stents. dilated both. open now. admit him.",
+    "note_text": "gilbert barkley 11/15/23. airways blocked by granulation from yesterday. decided to stent. tried a 10x20 in the rll but it was too big and stuck distal. managed to switch it for an 8x20. then put an 8x15 in the rml. kissing stents. dilated both. open now. admit him.",
     "cpt_codes": [
       31636,
       31637
@@ -8843,16 +8768,10 @@
       "style_type": 5,
       "generated_name": "Arthur Gomez",
       "generation_date": "2025-12-09T10:33:45.674905"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "DATE OF PROCEDURE <DATE_TIME> NAME <PERSON> PREOPERATIVE DIAGNOSIS Bronchial obstruction POSTOPERATIVE DIAGNOSIS Bronchial obstruction PROCEDURE s PERFORMED SURGEON <PERSON> ASSISTANT s Stephen Pressly M D Nicholas Vance M D INDICATIONS right middle lobe and right lower lobe stenosis SEDATION General Anesthesia DESCRIPTION OF PROCEDURE The right middle and right lower lobe bronchi were completely obstructed by granulation tissue and debris from previous bronchoscopy yesterday Decision was made to place bronchial stents Aero 10 x 20 mm covered self expandable metallic stent was advanced over the guidewire and positioned within the right lower lobe bronchi The stent was deployed however slightly distal Attempts to retract the stent by grasping the proximal string were unsuccessful and it became obvious that the stent was oversized Using rigid forceps we are unable to remove the inappropriately sized stent and using a similar technique placed a 8 x 20 mm arrow fully covered self expanding metallic stent within the area of stenosis Subsequently CRE balloon dilatation of the stent was performed Using a similar technique we then placed a 8 x 15 mm m arrow fully covered self expanding metallic stent within the area of stenosis In the right middle lobe RESULTS Successful insertion of bronchial stents",
+    "note_text": "DATE OF PROCEDURE <DATE_TIME> NAME Gilbert Barkley PREOPERATIVE DIAGNOSIS Bronchial obstruction POSTOPERATIVE DIAGNOSIS Bronchial obstruction PROCEDURE s PERFORMED SURGEON Mikie Gallegos MD ASSISTANT s Stephen Pressly M D Nicholas Vance M D INDICATIONS right middle lobe and right lower lobe stenosis SEDATION General Anesthesia DESCRIPTION OF PROCEDURE The right middle and right lower lobe bronchi were completely obstructed by granulation tissue and debris from previous bronchoscopy yesterday Decision was made to place bronchial stents Aero 10 x 20 mm covered self expandable metallic stent was advanced over the guidewire and positioned within the right lower lobe bronchi The stent was deployed however slightly distal Attempts to retract the stent by grasping the proximal string were unsuccessful and it became obvious that the stent was oversized Using rigid forceps we are unable to remove the inappropriately sized stent and using a similar technique placed a 8 x 20 mm arrow fully covered self expanding metallic stent within the area of stenosis Subsequently CRE balloon dilatation of the stent was performed Using a similar technique we then placed a 8 x 15 mm m arrow fully covered self expanding metallic stent within the area of stenosis In the right middle lobe RESULTS Successful insertion of bronchial stents",
     "cpt_codes": [
       31636,
       31637
@@ -8967,11 +8886,9 @@
       "generation_date": "2025-12-09T10:33:45.674937"
     },
     "scrub_metadata": {
-      "entities_redacted": 3,
+      "entities_redacted": 1,
       "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "PERSON"
+        "DATE_TIME"
       ]
     }
   },
@@ -9092,7 +9009,7 @@
     }
   },
   {
-    "note_text": "Because of the obstruction in Mr. <PERSON>'s lower airways, we decided to place stents. We initially tried a 10mm stent in the right lower lobe, but it was too big. We swapped it for an 8x20mm stent which fit well. Then we placed an 8x15mm stent in the right middle lobe. We dilated both with a balloon, and the airways are now open.",
+    "note_text": "Because of the obstruction in Mr. Barkley's lower airways, we decided to place stents. We initially tried a 10mm stent in the right lower lobe, but it was too big. We swapped it for an 8x20mm stent which fit well. Then we placed an 8x15mm stent in the right middle lobe. We dilated both with a balloon, and the airways are now open.",
     "cpt_codes": [
       31636,
       31637
@@ -9205,12 +9122,6 @@
       "style_type": 8,
       "generated_name": "Jeremy Ward",
       "generation_date": "2025-12-09T10:33:45.674997"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9675,7 +9586,7 @@
     }
   },
   {
-    "note_text": "Procedure: Stent Removal + Cryo\nPt: <PERSON>\nSteps:\n1. GA/LMA -> Rigid.\n2. LMS stent looked ok but LLL blocked.\n3. Removed LMS stent.\n4. Cryo'd the LLL granulation.\n5. Balloon dilated.\n6. Injected steroids.\n7. Better flow.",
+    "note_text": "Procedure: Stent Removal + Cryo\nPt: Oscar Godsey\nSteps:\n1. GA/LMA -> Rigid.\n2. LMS stent looked ok but LLL blocked.\n3. Removed LMS stent.\n4. Cryo'd the LLL granulation.\n5. Balloon dilated.\n6. Injected steroids.\n7. Better flow.",
     "cpt_codes": [
       31638,
       31641
@@ -9787,12 +9698,6 @@
       "style_type": 4,
       "generated_name": "Albert Watson",
       "generation_date": "2025-12-09T10:33:45.675153"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9911,7 +9816,7 @@
     }
   },
   {
-    "note_text": "Patient Godsey <PERSON> DATE OF PROCEDURE 5 15 2019 PREOPERATIVE DIAGNOSIS left mainstem stent obstruction POSTOPERATIVE DIAGNOSIS Distal granulation tissue causing left lower lobe obstruction PROCEDURE PERFORMED Rigid bronchoscopy with cryodebulking cryotherapy of obstructive granulation tissue endobronchial submucosal steroid injection left mainstem bronchial stent removal SURGEON Jordan Parks MD ASSISTANT <PERSON> fellow DESCRIPTION OF PROCEDURE The left mainstem stent was widely patent without evidence of stent obstruction At the distal edge of the stent there was some minor granulation tissue which was nonobstructive Distal to the stent there was complete obstruction of the left lower lobe orifice secondary to granulation tissue Using the 1.9 mm cryoprobe we are able to extract granulation tissue to visualize the segmental stenosis in the left lower lobe At this point we decided to remove the left mainstem stent for a few reasons Using flexible forceps to grasp the proximal string on the stent we were able to gently retract the stent and remove it without difficulty Then using a 8 9 10 millimeter CRE balloon dilated each of the left lower lobe subsegments Cryotherapy was then performed Finally using the super dimension 21 gauge needle we injected a total of 5 mL of Kenalog 10 mg milliliter solution into the submucosa",
+    "note_text": "Patient Godsey Oscar DATE OF PROCEDURE 5 15 2019 PREOPERATIVE DIAGNOSIS left mainstem stent obstruction POSTOPERATIVE DIAGNOSIS Distal granulation tissue causing left lower lobe obstruction PROCEDURE PERFORMED Rigid bronchoscopy with cryodebulking cryotherapy of obstructive granulation tissue endobronchial submucosal steroid injection left mainstem bronchial stent removal SURGEON Jordan Parks MD ASSISTANT Michael Manson DO fellow DESCRIPTION OF PROCEDURE The left mainstem stent was widely patent without evidence of stent obstruction At the distal edge of the stent there was some minor granulation tissue which was nonobstructive Distal to the stent there was complete obstruction of the left lower lobe orifice secondary to granulation tissue Using the 1.9 mm cryoprobe we are able to extract granulation tissue to visualize the segmental stenosis in the left lower lobe At this point we decided to remove the left mainstem stent for a few reasons Using flexible forceps to grasp the proximal string on the stent we were able to gently retract the stent and remove it without difficulty Then using a 8 9 10 millimeter CRE balloon dilated each of the left lower lobe subsegments Cryotherapy was then performed Finally using the super dimension 21 gauge needle we injected a total of 5 mL of Kenalog 10 mg milliliter solution into the submucosa",
     "cpt_codes": [
       31638,
       31641
@@ -10023,13 +9928,6 @@
       "style_type": 6,
       "generated_name": "Ethan Bennett",
       "generation_date": "2025-12-09T10:33:45.675283"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -10148,7 +10046,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a stent in his left main airway. We found that the stent was fine, but tissue had grown past it, blocking the lower lobe. We decided to take the stent out. We used a cryoprobe to freeze and remove the blocking tissue, then stretched the airway with a balloon. We also injected some steroids to help prevent it from growing back.",
+    "note_text": "Mr. Godsey had a stent in his left main airway. We found that the stent was fine, but tissue had grown past it, blocking the lower lobe. We decided to take the stent out. We used a cryoprobe to freeze and remove the blocking tissue, then stretched the airway with a balloon. We also injected some steroids to help prevent it from growing back.",
     "cpt_codes": [
       31638,
       31641
@@ -10260,12 +10158,6 @@
       "style_type": 8,
       "generated_name": "Jesse James",
       "generation_date": "2025-12-09T10:33:45.675351"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10384,7 +10276,7 @@
     }
   },
   {
-    "note_text": "Checklist: EBUS-TBNA\n- Pt: <PERSON>.\n- 4R, 7, 11R sampled.\n- ROSE: Positive.\n- Sedation: Midaz/Fentanyl. Ramsay 3.\n- No complications.\n- Quality: 100%.",
+    "note_text": "Checklist: EBUS-TBNA\n- Pt: Gregory Martinez.\n- 4R, 7, 11R sampled.\n- ROSE: Positive.\n- Sedation: Midaz/Fentanyl. Ramsay 3.\n- No complications.\n- Quality: 100%.",
     "cpt_codes": [
       31653
     ],
@@ -10487,12 +10379,6 @@
       "style_type": 1,
       "generated_name": "Billy Cruz",
       "generation_date": "2025-12-09T10:33:45.675412"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10708,7 +10594,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPt: <PERSON>\nChecklist:\n- Consent: Yes.\n- Time out: Yes.\n- 4R: Sampled (+).\n- 7: Sampled (+).\n- 11R: Sampled.\n- Sedation: Tolerate well.\n- Complications: None.",
+    "note_text": "Procedure: EBUS\nPt: Gregory Martinez\nChecklist:\n- Consent: Yes.\n- Time out: Yes.\n- 4R: Sampled (+).\n- 7: Sampled (+).\n- 11R: Sampled.\n- Sedation: Tolerate well.\n- Complications: None.",
     "cpt_codes": [
       31653
     ],
@@ -10811,16 +10697,10 @@
       "style_type": 4,
       "generated_name": "Jordan Myers",
       "generation_date": "2025-12-09T10:33:45.675519"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "checklist for gregory martinez. ebus tbna. checked 4r 7 and 11r. all sampled. 4r and 7 were positive on rose. 11r was just adequate. used <PERSON> and fentanyl. patient did fine. checklist complete.",
+    "note_text": "checklist for gregory martinez. ebus tbna. checked 4r 7 and 11r. all sampled. 4r and 7 were positive on rose. 11r was just adequate. used midaz and fentanyl. patient did fine. checklist complete.",
     "cpt_codes": [
       31653
     ],
@@ -10923,12 +10803,6 @@
       "style_type": 5,
       "generated_name": "Ralph Long",
       "generation_date": "2025-12-09T10:33:45.675547"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11038,7 +10912,7 @@
     }
   },
   {
-    "note_text": "[Patient]\n<PERSON>.\n[Procedure]\nEBUS-TBNA.\n[Stations]\n4R (Pos), 7 (Pos), 11R (Adequate).\n[Safety]\nChecklist complete. No complications.",
+    "note_text": "[Patient]\nGregory Martinez.\n[Procedure]\nEBUS-TBNA.\n[Stations]\n4R (Pos), 7 (Pos), 11R (Adequate).\n[Safety]\nChecklist complete. No complications.",
     "cpt_codes": [
       31653
     ],
@@ -11141,16 +11015,10 @@
       "style_type": 7,
       "generated_name": "Louis Sanders",
       "generation_date": "2025-12-09T10:33:45.675607"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "This is the safety checklist for Mr. <PERSON>'s EBUS procedure. We verified his identity and consent. We sampled stations 4R, 7, and 11R. Stations 4R and 7 were positive on the rapid test. The patient was sedated with Midazolam and Fentanyl and tolerated it well. All quality indicators were met.",
+    "note_text": "This is the safety checklist for Mr. Martinez's EBUS procedure. We verified his identity and consent. We sampled stations 4R, 7, and 11R. Stations 4R and 7 were positive on the rapid test. The patient was sedated with Midazolam and Fentanyl and tolerated it well. All quality indicators were met.",
     "cpt_codes": [
       31653
     ],
@@ -11253,12 +11121,6 @@
       "style_type": 8,
       "generated_name": "Eugene Ross",
       "generation_date": "2025-12-09T10:33:45.675637"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

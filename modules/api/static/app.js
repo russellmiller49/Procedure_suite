@@ -1692,7 +1692,8 @@ async function runRegistryViaPHI(text, options) {
     });
     if (!registryResp.ok) {
         const err = await registryResp.json().catch(() => ({}));
-        throw new Error(`Registry failed: ${err.detail || registryResp.statusText}`);
+        const hint = registryResp.status >= 500 ? " Retry extraction or switch to manual mode." : "";
+        throw new Error(`Registry failed: ${err.detail || registryResp.statusText}.${hint}`);
     }
 
     return registryResp.json();
@@ -1727,7 +1728,8 @@ async function runUnifiedViaPHI(text, options) {
     });
     if (!extractResp.ok) {
         const err = await extractResp.json().catch(() => ({}));
-        throw new Error(`Extraction failed: ${err.detail || extractResp.statusText}`);
+        const hint = extractResp.status >= 500 ? " Retry extraction or switch to manual mode." : "";
+        throw new Error(`Extraction failed: ${err.detail || extractResp.statusText}.${hint}`);
     }
 
     return extractResp.json();
@@ -1787,7 +1789,8 @@ async function runUnifiedWithConfirmedEntities(options) {
     });
     if (!extractResp.ok) {
         const err = await extractResp.json().catch(() => ({}));
-        throw new Error(`Extraction failed: ${err.detail || extractResp.statusText}`);
+        const hint = extractResp.status >= 500 ? " Retry extraction or switch to manual mode." : "";
+        throw new Error(`Extraction failed: ${err.detail || extractResp.statusText}.${hint}`);
     }
 
     // Reset PHI state after successful extraction

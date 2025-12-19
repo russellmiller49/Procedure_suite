@@ -10834,7 +10834,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: Lung Ca recurrence?\nIssue: LMA unstable -> Intubated.\nTarget: LLL accessory segment.\nSteps:\n1. Radial EBUS -> Concentric view.\n2. Forceps -> Too hard/scant.\n3. <PERSON> (21G/19G) -> 6 passes.\n4. Samples adequate.\nPlan: Path pending.",
+    "note_text": "Resident Note\nPt: Lung Ca recurrence?\nIssue: LMA unstable -> Intubated.\nTarget: LLL accessory segment.\nSteps:\n1. Radial EBUS -> Concentric view.\n2. Forceps -> Too hard/scant.\n3. Needles (21G/19G) -> 6 passes.\n4. Samples adequate.\nPlan: Path pending.",
     "cpt_codes": [
       31629,
       31654
@@ -11082,12 +11082,6 @@
       "style_description": "Trainee/Resident",
       "generated_name": "Julian Walker",
       "generation_date": "2025-12-18T19:15:03.109703"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

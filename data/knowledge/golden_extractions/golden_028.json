@@ -318,7 +318,7 @@
     }
   },
   {
-    "note_text": "Resident Procedure Note\nAttending: Dr. Kim\nProcedure: Rigid Bronch, Stent, PleurX.\nSteps:\n1. TFBC showed 90% RMS obstruction.\n2. Switched to Rigid Bronch (<PERSON> 13mm).\n3. Debrided tumor manually and with APC.\n4. Placed stent (14x60mm) in RMS. Confirmed patency to all right segments.\n5. CT surgery did pericardial window.\n6. We placed PleurX tube in right chest using standard Seldinger technique.\nPlan: ICU for airway monitoring.",
+    "note_text": "Resident Procedure Note\nAttending: Dr. Kim\nProcedure: Rigid Bronch, Stent, PleurX.\nSteps:\n1. TFBC showed 90% RMS obstruction.\n2. Switched to Rigid Bronch (Storz 13mm).\n3. Debrided tumor manually and with APC.\n4. Placed stent (14x60mm) in RMS. Confirmed patency to all right segments.\n5. CT surgery did pericardial window.\n6. We placed PleurX tube in right chest using standard Seldinger technique.\nPlan: ICU for airway monitoring.",
     "cpt_codes": [
       31641,
       31636,
@@ -421,16 +421,10 @@
       "style_type": 4,
       "generated_name": "Patricia Brown",
       "generation_date": "2025-12-09T09:19:34.780785"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure note for <PERSON> we did the rigid bronchoscopy today for that large mass in the right mainstem patient was intubated then we switched to the rigid scope used the tip to core out the tumor lots of bleeding but controlled with iced saline and APC. Put in a stent 14 by 60 covered metal one looks wide open now. Also put in a pleurx catheter for the fluid in the lung drained about 850 cc. Oh and surgery did the heart window thing. Patient stable sent to ICU.",
+    "note_text": "Procedure note for Mrs Okafor we did the rigid bronchoscopy today for that large mass in the right mainstem patient was intubated then we switched to the rigid scope used the tip to core out the tumor lots of bleeding but controlled with iced saline and APC. Put in a stent 14 by 60 covered metal one looks wide open now. Also put in a pleurx catheter for the fluid in the lung drained about 850 cc. Oh and surgery did the heart window thing. Patient stable sent to ICU.",
     "cpt_codes": [
       31641,
       31636,
@@ -533,12 +527,6 @@
       "style_type": 5,
       "generated_name": "Barbara Jones",
       "generation_date": "2025-12-09T09:19:34.780812"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -754,7 +742,7 @@
     }
   },
   {
-    "note_text": "Mrs. <PERSON> was taken to the operating room for multimodal palliation. We began with the airway intervention, utilizing a rigid bronchoscope to address the critical obstruction in the right mainstem bronchus. Through a combination of mechanical coring and argon plasma coagulation, we successfully debulked the tumor. To maintain patency, we deployed a covered metallic stent. Once the airway was secure, we turned our attention to the pleural space, inserting a tunneled indwelling catheter to manage her recurrent effusion. The procedure concluded successfully with improved aeration of the right lung.",
+    "note_text": "Mrs. Okafor was taken to the operating room for multimodal palliation. We began with the airway intervention, utilizing a rigid bronchoscope to address the critical obstruction in the right mainstem bronchus. Through a combination of mechanical coring and argon plasma coagulation, we successfully debulked the tumor. To maintain patency, we deployed a covered metallic stent. Once the airway was secure, we turned our attention to the pleural space, inserting a tunneled indwelling catheter to manage her recurrent effusion. The procedure concluded successfully with improved aeration of the right lung.",
     "cpt_codes": [
       31641,
       31636,
@@ -857,12 +845,6 @@
       "style_type": 8,
       "generated_name": "Maria Davis",
       "generation_date": "2025-12-09T09:19:34.780894"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1230,7 +1212,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS\nResident: Dr. Rogers\nPatient: <PERSON>\nSteps:\n1. Moderate sedation.\n2. Airway exam normal.\n3. EBUS scope down. Found nodes at 4R, 7, 10R.\n4. Biopsied all three with 22G needle.\n5. ROSE said cancer (adeno).\nPlan: Oncology referral.",
+    "note_text": "Procedure: EBUS\nResident: Dr. Rogers\nPatient: Sarah Martinez\nSteps:\n1. Moderate sedation.\n2. Airway exam normal.\n3. EBUS scope down. Found nodes at 4R, 7, 10R.\n4. Biopsied all three with 22G needle.\n5. ROSE said cancer (adeno).\nPlan: Oncology referral.",
     "cpt_codes": [
       31653
     ],
@@ -1313,16 +1295,10 @@
       "style_type": 4,
       "generated_name": "Betty Taylor",
       "generation_date": "2025-12-09T09:19:34.781020"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We did the EBUS on <PERSON> today indication was staging. Sedation was fine versed fentanyl. Looked at the nodes 4R was big so we stuck it 4 times came back cancer. Station 7 also big stuck that one too cancer. 10R also positive. So looks like stage III disease. No bleeding patient woke up fine.",
+    "note_text": "We did the EBUS on Sarah Martinez today indication was staging. Sedation was fine versed fentanyl. Looked at the nodes 4R was big so we stuck it 4 times came back cancer. Station 7 also big stuck that one too cancer. 10R also positive. So looks like stage III disease. No bleeding patient woke up fine.",
     "cpt_codes": [
       31653
     ],
@@ -1405,12 +1381,6 @@
       "style_type": 5,
       "generated_name": "Helen Thomas",
       "generation_date": "2025-12-09T09:19:34.781043"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1586,7 +1556,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent an EBUS procedure today to stage her lung cancer. After checking her airways, which looked clear, we used the ultrasound scope to locate enlarged lymph nodes in the middle of her chest. We took samples from the right paratracheal, subcarinal, and right hilar nodes. Unfortunately, the preliminary results from the pathologist in the room showed cancer cells in all three areas, indicating the disease has spread to the lymph nodes.",
+    "note_text": "Ms. Martinez underwent an EBUS procedure today to stage her lung cancer. After checking her airways, which looked clear, we used the ultrasound scope to locate enlarged lymph nodes in the middle of her chest. We took samples from the right paratracheal, subcarinal, and right hilar nodes. Unfortunately, the preliminary results from the pathologist in the room showed cancer cells in all three areas, indicating the disease has spread to the lymph nodes.",
     "cpt_codes": [
       31653
     ],
@@ -1669,12 +1639,6 @@
       "style_type": 8,
       "generated_name": "Carol Martin",
       "generation_date": "2025-12-09T09:19:34.781111"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2449,7 +2413,7 @@
     }
   },
   {
-    "note_text": "Because Ms. <PERSON> wasn't a candidate for surgery, we proceeded with cryoablation of her lung nodule. We navigated a bronchoscope to the small tumor in her left upper lobe and confirmed its location with ultrasound. We then inserted a specialized freezing probe and performed two freezing cycles to destroy the tumor tissue. We could see the ice ball forming on the x-ray monitor, ensuring we treated the whole area.",
+    "note_text": "Because Ms. Martinez wasn't a candidate for surgery, we proceeded with cryoablation of her lung nodule. We navigated a bronchoscope to the small tumor in her left upper lobe and confirmed its location with ultrasound. We then inserted a specialized freezing probe and performed two freezing cycles to destroy the tumor tissue. We could see the ice ball forming on the x-ray monitor, ensuring we treated the whole area.",
     "cpt_codes": [
       31641,
       31627,
@@ -2543,12 +2507,6 @@
       "style_type": 8,
       "generated_name": "Shirley Lewis",
       "generation_date": "2025-12-09T09:19:34.781335"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3012,7 +2970,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: <PERSON>, <PERSON>\nProc: EBUS + Ion\nSteps:\n1. EBUS first. Biopsied 4R and 7. Both malignant.\n2. Switched to Ion robot.\n3. Navigated to RLL mass.\n4. rEBUS showed we were in the lesion.\n5. Took biopsies.\nImpression: Stage 3 Lung Cancer.",
+    "note_text": "Resident Note\nPt: Morrison, Elizabeth\nProc: EBUS + Ion\nSteps:\n1. EBUS first. Biopsied 4R and 7. Both malignant.\n2. Switched to Ion robot.\n3. Navigated to RLL mass.\n4. rEBUS showed we were in the lesion.\n5. Took biopsies.\nImpression: Stage 3 Lung Cancer.",
     "cpt_codes": [
       31652,
       31628,
@@ -3130,13 +3088,6 @@
       "style_type": 4,
       "generated_name": "Amy Young",
       "generation_date": "2025-12-09T09:19:34.781495"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -3503,7 +3454,7 @@
     }
   },
   {
-    "note_text": "Mrs. <PERSON> underwent a diagnostic bronchoscopy today. We started by checking the lymph nodes in the center of her chest using the EBUS scope. Unfortunately, the samples from nodes 4R and 7 showed cancer cells. We then used the robotic system to navigate to the main tumor in her lower right lung and took a biopsy of that as well, which matched the lymph nodes. This confirms the cancer has spread to the lymph nodes, placing her at Stage IIIA.",
+    "note_text": "Mrs. Morrison underwent a diagnostic bronchoscopy today. We started by checking the lymph nodes in the center of her chest using the EBUS scope. Unfortunately, the samples from nodes 4R and 7 showed cancer cells. We then used the robotic system to navigate to the main tumor in her lower right lung and took a biopsy of that as well, which matched the lymph nodes. This confirms the cancer has spread to the lymph nodes, placing her at Stage IIIA.",
     "cpt_codes": [
       31652,
       31628,
@@ -3621,12 +3572,6 @@
       "style_type": 8,
       "generated_name": "Kathleen King",
       "generation_date": "2025-12-09T09:19:34.781607"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4054,7 +3999,7 @@
     }
   },
   {
-    "note_text": "Procedure: Ion + Fiducials\nResident: Dr. Mitchell\nPatient: <PERSON>\nSteps:\n1. Navigated to LLL mass with <PERSON>.\n2. Confirmed with rEBUS.\n3. Took biopsies.\n4. Dropped fiducials for Rad Onc.\n5. Fluoro showed good placement.",
+    "note_text": "Procedure: Ion + Fiducials\nResident: Dr. Mitchell\nPatient: Marcus Thompson\nSteps:\n1. Navigated to LLL mass with Robot.\n2. Confirmed with rEBUS.\n3. Took biopsies.\n4. Dropped fiducials for Rad Onc.\n5. Fluoro showed good placement.",
     "cpt_codes": [
       31626,
       31628,
@@ -4152,17 +4097,10 @@
       "style_type": 4,
       "generated_name": "Michael Nelson",
       "generation_date": "2025-12-09T09:19:34.781739"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Mr <PERSON> is here for markers. He has that LLL mass. We used the robot to get there. Biopsied it first to be sure then put in the gold markers for the radiation doctors. Put in four of them. Looks good on the screen. No pneumothorax.",
+    "note_text": "Mr Thompson is here for markers. He has that LLL mass. We used the robot to get there. Biopsied it first to be sure then put in the gold markers for the radiation doctors. Put in four of them. Looks good on the screen. No pneumothorax.",
     "cpt_codes": [
       31626,
       31628,
@@ -4260,12 +4198,6 @@
       "style_type": 5,
       "generated_name": "William Hill",
       "generation_date": "2025-12-09T09:19:34.781769"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4471,7 +4403,7 @@
     }
   },
   {
-    "note_text": "We performed a procedure on Mr. <PERSON> to prepare him for radiation therapy. Using the robotic bronchoscope, we navigated to the tumor in his left lower lung. We took a sample to confirm the diagnosis and then placed several small gold markers, or fiducials, directly into the tumor. These will act as targets for the radiation machine to treat the cancer precisely.",
+    "note_text": "We performed a procedure on Mr. Thompson to prepare him for radiation therapy. Using the robotic bronchoscope, we navigated to the tumor in his left lower lung. We took a sample to confirm the diagnosis and then placed several small gold markers, or fiducials, directly into the tumor. These will act as targets for the radiation machine to treat the cancer precisely.",
     "cpt_codes": [
       31626,
       31628,
@@ -4569,12 +4501,6 @@
       "style_type": 8,
       "generated_name": "Joseph Mitchell",
       "generation_date": "2025-12-09T09:19:34.781844"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

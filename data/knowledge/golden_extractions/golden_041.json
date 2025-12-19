@@ -66,7 +66,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: Ms. <PERSON>, a 58-year-old female enrolled in the PULSE-LUNG Phase II trial, underwent bronchoscopic Pulsed Field Ablation (PFA) for a biopsy-proven squamous cell carcinoma in the left upper lobe. Under general anesthesia, the lesion was localized via electromagnetic navigation and radial EBUS. The investigational FarapulsePulm catheter was deployed. Irreversible electroporation was delivered in three cycles of 1500V pulses. Post-ablation imaging demonstrated cellular disruption consistent with successful non-thermal ablation. The patient tolerated the procedure without arrhythmia or hemodynamic instability.",
+    "note_text": "OPERATIVE NARRATIVE: Ms. Williams, a 58-year-old female enrolled in the PULSE-LUNG Phase II trial, underwent bronchoscopic Pulsed Field Ablation (PFA) for a biopsy-proven squamous cell carcinoma in the left upper lobe. Under general anesthesia, the lesion was localized via electromagnetic navigation and radial EBUS. The investigational FarapulsePulm catheter was deployed. Irreversible electroporation was delivered in three cycles of 1500V pulses. Post-ablation imaging demonstrated cellular disruption consistent with successful non-thermal ablation. The patient tolerated the procedure without arrhythmia or hemodynamic instability.",
     "cpt_codes": [
       31641,
       31654,
@@ -129,12 +129,6 @@
       "generated_name": "Martha Jones",
       "generated_age": 55,
       "generation_date": "2025-12-09T09:20:23.237990"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -270,7 +264,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for the research study pulsed field ablation. she has squamous cell in the lul. we put her to sleep used the nav system to find the spot. put the special catheter in and zapped it 3 times with the electric pulses. no heat damage which is good. heart rhythm stayed fine. patient woke up ok going to follow the study protocol for scans.",
+    "note_text": "janet williams here for the research study pulsed field ablation. she has squamous cell in the lul. we put her to sleep used the nav system to find the spot. put the special catheter in and zapped it 3 times with the electric pulses. no heat damage which is good. heart rhythm stayed fine. patient woke up ok going to follow the study protocol for scans.",
     "cpt_codes": [
       31641,
       31654,
@@ -333,16 +327,10 @@
       "generated_name": "Diane Wilson",
       "generated_age": 57,
       "generation_date": "2025-12-09T09:20:23.238053"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: Williams, Janet S. || MRN: <MRN> || DOB: <DATE_TIME> DATE OF PROCEDURE: <DATE_TIME> INSTITUTION: Cleveland Clinic Foundation, OH OPERATOR: Dr. <PERSON>, MD (Director, Thoracic Innovation Laboratory) PRE-PROCEDURE DIAGNOSIS: Left upper lobe peripheral nodule, 1.9 cm, proven squamous cell carcinoma PROCEDURE: Bronchoscopic Pulsed Field Ablation (PFA) of pulmonary nodule - INVESTIGATIONAL... [Rest of text follows]",
+    "note_text": "PATIENT: Williams, Janet S. || MRN: <MRN> || DOB: <DATE_TIME> DATE OF PROCEDURE: <DATE_TIME> INSTITUTION: Cleveland Clinic Foundation, OH OPERATOR: Dr. Richard Patel, MD (Director, Thoracic Innovation Laboratory) PRE-PROCEDURE DIAGNOSIS: Left upper lobe peripheral nodule, 1.9 cm, proven squamous cell carcinoma PROCEDURE: Bronchoscopic Pulsed Field Ablation (PFA) of pulmonary nodule - INVESTIGATIONAL... [Rest of text follows]",
     "cpt_codes": [
       31641,
       31654,
@@ -407,12 +395,11 @@
       "generation_date": "2025-12-09T09:20:23.238071"
     },
     "scrub_metadata": {
-      "entities_redacted": 4,
+      "entities_redacted": 3,
       "entity_types": [
         "MRN",
         "DATE_TIME",
-        "DATE_TIME",
-        "PERSON"
+        "DATE_TIME"
       ]
     }
   },
@@ -483,7 +470,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> participated in our PFA clinical trial today to treat her left upper lobe tumor. We used electromagnetic navigation to guide the specialized catheter to the site. Instead of heat, we used high-voltage electrical pulses to destroy the tumor cells. The procedure went perfectly according to protocol, and we saw immediate signs on the ultrasound that the tissue was treated. Her heart rhythm remained stable throughout.",
+    "note_text": "Ms. Williams participated in our PFA clinical trial today to treat her left upper lobe tumor. We used electromagnetic navigation to guide the specialized catheter to the site. Instead of heat, we used high-voltage electrical pulses to destroy the tumor cells. The procedure went perfectly according to protocol, and we saw immediate signs on the ultrasound that the tissue was treated. Her heart rhythm remained stable throughout.",
     "cpt_codes": [
       31641,
       31654,
@@ -546,16 +533,10 @@
       "generated_name": "Evelyn Anderson",
       "generated_age": 57,
       "generation_date": "2025-12-09T09:20:23.238107"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Subject: <PERSON>, Janet S. Procedure: Bronchoscopic Pulsed Field Ablation (PFA). Methodology: General anesthesia. ENB performed. Target: LUL apicoposterior segment. Radial EBUS verification. Novel PFA catheter advanced. Ablation Parameters: Voltage 1500 V. Energy delivery: Non-thermal. Outcomes: Successfully completed per protocol. No arrhythmias observed. Disposition: Research protocol follow-up.",
+    "note_text": "Subject: Williams, Janet S. Procedure: Bronchoscopic Pulsed Field Ablation (PFA). Methodology: General anesthesia. ENB performed. Target: LUL apicoposterior segment. Radial EBUS verification. Novel PFA catheter advanced. Ablation Parameters: Voltage 1500 V. Energy delivery: Non-thermal. Outcomes: Successfully completed per protocol. No arrhythmias observed. Disposition: Research protocol follow-up.",
     "cpt_codes": [
       31641,
       31654,
@@ -618,12 +599,6 @@
       "generated_name": "Rose Thomas",
       "generated_age": 57,
       "generation_date": "2025-12-09T09:20:23.238124"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -873,7 +848,7 @@
     }
   },
   {
-    "note_text": "patient <PERSON> date of birth 1962. indication rml collapse. topical lidocaine used patient awake. rml is blocked by a tumor looks necrotic. took about 6 biopsies bleeding was moderate so we used epinephrine and cold saline. rll and left side looked normal. lavage sent for cytology. tolerated well.",
+    "note_text": "patient elizabeth chen date of birth 1962. indication rml collapse. topical lidocaine used patient awake. rml is blocked by a tumor looks necrotic. took about 6 biopsies bleeding was moderate so we used epinephrine and cold saline. rll and left side looked normal. lavage sent for cytology. tolerated well.",
     "cpt_codes": [
       31625
     ],
@@ -930,16 +905,10 @@
       "generated_name": "Karen Huang",
       "generated_age": 63,
       "generation_date": "2025-12-09T09:20:23.238213"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[START RECORDING 14:32] Patient name is Elizabeth Chen, medical record Papa Lima dash four eight two nine dash <LOCATION>, date of birth November twenty-third nineteen sixty-two. [14:33] Indication is evaluation of right middle lobe collapse with concern for endobronchial obstruction. [14:34] Topical anesthesia achieved with nebulized lidocaine four percent followed by transtracheal injection of two percent lidocaine... [Rest of text]",
+    "note_text": "[START RECORDING 14:32] Patient name is Elizabeth Chen, medical record Papa Lima dash four eight two nine dash Quebec, date of birth November twenty-third nineteen sixty-two. [14:33] Indication is evaluation of right middle lobe collapse with concern for endobronchial obstruction. [14:34] Topical anesthesia achieved with nebulized lidocaine four percent followed by transtracheal injection of two percent lidocaine... [Rest of text]",
     "cpt_codes": [
       31625
     ],
@@ -996,12 +965,6 @@
       "generated_name": "Betty Lin",
       "generated_age": 63,
       "generation_date": "2025-12-09T09:20:23.238228"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1065,7 +1028,7 @@
     }
   },
   {
-    "note_text": "We examined Ms. <PERSON>'s airways to investigate why her right middle lung was collapsed. We found a tumor blocking the airway to that section. We took six biopsy samples from the mass. There was some bleeding, which is common with these tumors, but we stopped it with medication. We also washed the area to collect cells for analysis.",
+    "note_text": "We examined Ms. Chen's airways to investigate why her right middle lung was collapsed. We found a tumor blocking the airway to that section. We took six biopsy samples from the mass. There was some bleeding, which is common with these tumors, but we stopped it with medication. We also washed the area to collect cells for analysis.",
     "cpt_codes": [
       31625
     ],
@@ -1122,16 +1085,10 @@
       "generated_name": "Sandra Xu",
       "generated_age": 60,
       "generation_date": "2025-12-09T09:20:23.238263"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Patient name is <PERSON>. Indication is evaluation of right middle lobe collapse. Right middle lobe bronchus displays near complete obstruction by an exophytic tumor. Multiple forceps biopsies acquired from the tumor. Moderate hemorrhage encountered, controlled with topical epinephrine. Bronchial lavage acquired from RML. Patient tolerated well.",
+    "note_text": "Patient name is Elizabeth Chen. Indication is evaluation of right middle lobe collapse. Right middle lobe bronchus displays near complete obstruction by an exophytic tumor. Multiple forceps biopsies acquired from the tumor. Moderate hemorrhage encountered, controlled with topical epinephrine. Bronchial lavage acquired from RML. Patient tolerated well.",
     "cpt_codes": [
       31625
     ],
@@ -1188,12 +1145,6 @@
       "generated_name": "Donna Ho",
       "generated_age": 65,
       "generation_date": "2025-12-09T09:20:23.238280"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1503,7 +1454,7 @@
     }
   },
   {
-    "note_text": "Pt: <PERSON> | MR: PP-8473 | DOB: <DATE_TIME> | AGE: 69 PROCEDURE: Therapeutic bronchoscopy - central airway obstruction AIRWAY: General anesthesia, ETT 7.5, maintained throughout INTERVENTION PERFORMED: - RML tumor debulking (electrocautery + APC) - Massive hemoptysis during procedure (est. 300mL) - Controlled with: epi, iced saline, blocker in RML - Silicone stent 14x40mm placed... [Rest of text]",
+    "note_text": "Pt: Barbara Kim | MR: PP-8473 | DOB: <DATE_TIME> | AGE: 69 PROCEDURE: Therapeutic bronchoscopy - central airway obstruction AIRWAY: General anesthesia, ETT 7.5, maintained throughout INTERVENTION PERFORMED: - RML tumor debulking (electrocautery + APC) - Massive hemoptysis during procedure (est. 300mL) - Controlled with: epi, iced saline, blocker in RML - Silicone stent 14x40mm placed... [Rest of text]",
     "cpt_codes": [
       31641,
       31636
@@ -1562,9 +1513,8 @@
       "generation_date": "2025-12-09T09:20:23.238382"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
         "DATE_TIME"
       ]
     }
@@ -1630,7 +1580,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON>'s procedure was intended to clear a tumor blocking her right middle airway. During the removal process, she experienced severe bleeding. We acted quickly to block the area and apply cold saline to stop the flow. We then placed a silicone stent to keep the airway open and put pressure on the bleeding site. She is currently stable but remains on a ventilator in the ICU for close watching.",
+    "note_text": "Ms. Kim's procedure was intended to clear a tumor blocking her right middle airway. During the removal process, she experienced severe bleeding. We acted quickly to block the area and apply cold saline to stop the flow. We then placed a silicone stent to keep the airway open and put pressure on the bleeding site. She is currently stable but remains on a ventilator in the ICU for close watching.",
     "cpt_codes": [
       31641,
       31636
@@ -1687,16 +1637,10 @@
       "generated_name": "Deborah Shin",
       "generated_age": 72,
       "generation_date": "2025-12-09T09:20:23.238413"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Pt: <PERSON>. PROCEDURE: Therapeutic bronchoscopy. INTERVENTION EXECUTED: RML tumor debulking. Massive hemoptysis during procedure. Controlled with: epi, iced saline, blocker in RML. Silicone stent 14x40mm deployed. COMPLICATION: MAJOR AIRWAY HEMORRHAGE. CURRENT STATUS: Still intubated, sedated. TRANSFERRED TO: MICU.",
+    "note_text": "Pt: Barbara Kim. PROCEDURE: Therapeutic bronchoscopy. INTERVENTION EXECUTED: RML tumor debulking. Massive hemoptysis during procedure. Controlled with: epi, iced saline, blocker in RML. Silicone stent 14x40mm deployed. COMPLICATION: MAJOR AIRWAY HEMORRHAGE. CURRENT STATUS: Still intubated, sedated. TRANSFERRED TO: MICU.",
     "cpt_codes": [
       31641,
       31636
@@ -1753,12 +1697,6 @@
       "generated_name": "Jessica Lim",
       "generated_age": 70,
       "generation_date": "2025-12-09T09:20:23.238438"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1824,7 +1762,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Ms. <PERSON> underwent attempted electromagnetic navigation for a small LLL nodule. Despite extensive maneuvering and fluoroscopy (12.4 min), the radial EBUS probe failed to confirm a tool-in-lesion position. The navigation component was aborted. Blind transbronchial biopsies were obtained from the anatomical segment of interest. The patient was advised regarding the low likelihood of diagnostic yield.",
+    "note_text": "PROCEDURE NOTE: Ms. White underwent attempted electromagnetic navigation for a small LLL nodule. Despite extensive maneuvering and fluoroscopy (12.4 min), the radial EBUS probe failed to confirm a tool-in-lesion position. The navigation component was aborted. Blind transbronchial biopsies were obtained from the anatomical segment of interest. The patient was advised regarding the low likelihood of diagnostic yield.",
     "cpt_codes": [
       31628,
       31654,
@@ -1883,12 +1821,6 @@
       "generated_name": "Kathleen Green",
       "generated_age": 61,
       "generation_date": "2025-12-09T09:20:23.238470"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2215,7 +2147,7 @@
     }
   },
   {
-    "note_text": "We tried to biopsy Ms. <PERSON>'s small lung nodule using the navigation system. Unfortunately, the anatomy was difficult, and we couldn't confirm the exact location with our ultrasound probe despite trying for 45 minutes. We took some samples from the general area, but we explained to her that we might not have hit the target. We may need to consider a needle biopsy or surgery next.",
+    "note_text": "We tried to biopsy Ms. White's small lung nodule using the navigation system. Unfortunately, the anatomy was difficult, and we couldn't confirm the exact location with our ultrasound probe despite trying for 45 minutes. We took some samples from the general area, but we explained to her that we might not have hit the target. We may need to consider a needle biopsy or surgery next.",
     "cpt_codes": [
       31628,
       31654,
@@ -2274,12 +2206,6 @@
       "generated_name": "Brenda Hall",
       "generated_age": 62,
       "generation_date": "2025-12-09T09:20:23.238568"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2651,7 +2577,7 @@
     }
   },
   {
-    "note_text": "<PERSON> 67 female smoker rll mass and nodes. deep sedation propofol. did ebus first 4r and 7 both positive for cancer. then did navigation to the rll mass. radial ebus confirmed it. took 2 needle passes 3 biopsies and 2 brushes. moderate bleeding stopped with epi. discharged stable.",
+    "note_text": "sarah chen 67 female smoker rll mass and nodes. deep sedation propofol. did ebus first 4r and 7 both positive for cancer. then did navigation to the rll mass. radial ebus confirmed it. took 2 needle passes 3 biopsies and 2 brushes. moderate bleeding stopped with epi. discharged stable.",
     "cpt_codes": [
       31652,
       31629,
@@ -2723,12 +2649,6 @@
       "generated_name": "Elizabeth Chen",
       "generated_age": 62,
       "generation_date": "2025-12-09T09:20:23.238682"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3114,7 +3034,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. <PERSON> underwent electromagnetic navigation bronchoscopy for a 17mm LLL nodule. Localization was achieved after repositioning, confirmed by a concentric rEBUS view. Systematic sampling included TBNA, forceps biopsy, and brushing. Post-procedure radiography revealed a 15% apical pneumothorax. The patient remained asymptomatic with stable vitals. Conservative management was elected, and the patient was discharged with close radiographic follow-up.",
+    "note_text": "PROCEDURE NOTE: Mr. Lee underwent electromagnetic navigation bronchoscopy for a 17mm LLL nodule. Localization was achieved after repositioning, confirmed by a concentric rEBUS view. Systematic sampling included TBNA, forceps biopsy, and brushing. Post-procedure radiography revealed a 15% apical pneumothorax. The patient remained asymptomatic with stable vitals. Conservative management was elected, and the patient was discharged with close radiographic follow-up.",
     "cpt_codes": [
       31629,
       31654,
@@ -3174,12 +3094,6 @@
       "generated_name": "David Park",
       "generated_age": 65,
       "generation_date": "2025-12-09T09:20:23.238792"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3309,7 +3223,7 @@
     }
   },
   {
-    "note_text": "case c-847 <PERSON>. enb for lll nodule 17mm. used superdimension system. had to reposition to get good ebus view but got it eventually. took needle biopsy forceps and brush. <PERSON> showed a small pneumothorax about 15 percent. he felt fine so we didnt put a tube in. sent him home will check xray tomorrow.",
+    "note_text": "case c-847 martin lee. enb for lll nodule 17mm. used superdimension system. had to reposition to get good ebus view but got it eventually. took needle biopsy forceps and brush. xray showed a small pneumothorax about 15 percent. he felt fine so we didnt put a tube in. sent him home will check xray tomorrow.",
     "cpt_codes": [
       31629,
       31654,
@@ -3369,13 +3283,6 @@
       "generated_name": "William Han",
       "generated_age": 67,
       "generation_date": "2025-12-09T09:20:23.238841"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -3512,7 +3419,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a navigation bronchoscopy for a spot in his lower left lung. We successfully located the 17mm nodule using the electromagnetic system and confirmed it with ultrasound. We took multiple samples. Afterward, the chest x-ray showed a small lung collapse (pneumothorax). Since he had no symptoms and his oxygen levels were good, we decided he didn't need a chest tube and could go home with a follow-up x-ray scheduled.",
+    "note_text": "Mr. Lee underwent a navigation bronchoscopy for a spot in his lower left lung. We successfully located the 17mm nodule using the electromagnetic system and confirmed it with ultrasound. We took multiple samples. Afterward, the chest x-ray showed a small lung collapse (pneumothorax). Since he had no symptoms and his oxygen levels were good, we decided he didn't need a chest tube and could go home with a follow-up x-ray scheduled.",
     "cpt_codes": [
       31629,
       31654,
@@ -3572,12 +3479,6 @@
       "generated_name": "Thomas Yoon",
       "generated_age": 65,
       "generation_date": "2025-12-09T09:20:23.238893"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3707,7 +3608,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Ms. <PERSON> underwent EBUS-TBNA for staging of LLL adenocarcinoma. Lymph node stations 4R and 7 were sampled and confirmed malignant (N3 disease relative to LLL primary). Station 10L was benign. In the recovery phase, the patient exhibited prolonged sedation and bradypnea. Flumazenil was administered with immediate positive effect. She was monitored for an extended period before discharge.",
+    "note_text": "PROCEDURE NOTE: Ms. Garcia underwent EBUS-TBNA for staging of LLL adenocarcinoma. Lymph node stations 4R and 7 were sampled and confirmed malignant (N3 disease relative to LLL primary). Station 10L was benign. In the recovery phase, the patient exhibited prolonged sedation and bradypnea. Flumazenil was administered with immediate positive effect. She was monitored for an extended period before discharge.",
     "cpt_codes": [
       31653
     ],
@@ -3767,12 +3668,6 @@
       "generated_name": "Dorothy Martinez",
       "generated_age": 67,
       "generation_date": "2025-12-09T09:20:23.238946"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3902,7 +3797,7 @@
     }
   },
   {
-    "note_text": "<PERSON> for ebus staging. gave midazolam and fentanyl. did the exam 4r and 7 were positive for cancer 10l negative. after the procedure she was really groggy breathing slow. had to give flumazenil to wake her up. she came around quick. kept her a bit longer to make sure she didnt get sleepy again.",
+    "note_text": "helen garcia for ebus staging. gave midazolam and fentanyl. did the exam 4r and 7 were positive for cancer 10l negative. after the procedure she was really groggy breathing slow. had to give flumazenil to wake her up. she came around quick. kept her a bit longer to make sure she didnt get sleepy again.",
     "cpt_codes": [
       31653
     ],
@@ -3962,12 +3857,6 @@
       "generated_name": "Karen Gonzalez",
       "generated_age": 69,
       "generation_date": "2025-12-09T09:20:23.238995"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4103,7 +3992,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent staging for her lung cancer. We found that the cancer had spread to the lymph nodes on the right side (4R) and the center (7), which is important for her treatment plan. After the procedure, she was very slow to wake up and her breathing was shallow, so we gave her a medication called Flumazenil to reverse the sedation. She woke up immediately and went home safely after extra monitoring.",
+    "note_text": "Ms. Garcia underwent staging for her lung cancer. We found that the cancer had spread to the lymph nodes on the right side (4R) and the center (7), which is important for her treatment plan. After the procedure, she was very slow to wake up and her breathing was shallow, so we gave her a medication called Flumazenil to reverse the sedation. She woke up immediately and went home safely after extra monitoring.",
     "cpt_codes": [
       31653
     ],
@@ -4163,12 +4052,6 @@
       "generated_name": "Sandra Ramirez",
       "generated_age": 68,
       "generation_date": "2025-12-09T09:20:23.239044"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4305,7 +4188,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Ms. <PERSON> presented for diagnostic and staging bronchoscopy. EBUS-TBNA confirmed multi-station N2/N3 disease (Stations 2R, 4R, 7 positive). The bronchoscope was then used to visualize and biopsy a large RUL mass causing partial obstruction. Adequate tissue was obtained for molecular profiling. Hemostasis was secured with topical epinephrine.",
+    "note_text": "OPERATIVE REPORT: Ms. Wang presented for diagnostic and staging bronchoscopy. EBUS-TBNA confirmed multi-station N2/N3 disease (Stations 2R, 4R, 7 positive). The bronchoscope was then used to visualize and biopsy a large RUL mass causing partial obstruction. Adequate tissue was obtained for molecular profiling. Hemostasis was secured with topical epinephrine.",
     "cpt_codes": [
       31653,
       31625
@@ -4372,12 +4255,6 @@
       "generated_name": "Ruth Zhou",
       "generated_age": 64,
       "generation_date": "2025-12-09T09:20:23.239102"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4744,7 +4621,7 @@
     }
   },
   {
-    "note_text": "We performed a comprehensive procedure for Ms. <PERSON> to diagnose her lung mass and check the lymph nodes. The EBUS portion showed extensive spread to the lymph nodes (2R, 4R, and 7). We also biopsied the main tumor in the right upper lobe. This confirms advanced stage disease (IIIB). We managed some bleeding during the biopsy, and she recovered well.",
+    "note_text": "We performed a comprehensive procedure for Ms. Wang to diagnose her lung mass and check the lymph nodes. The EBUS portion showed extensive spread to the lymph nodes (2R, 4R, and 7). We also biopsied the main tumor in the right upper lobe. This confirms advanced stage disease (IIIB). We managed some bleeding during the biopsy, and she recovered well.",
     "cpt_codes": [
       31653,
       31625
@@ -4811,12 +4688,6 @@
       "generated_name": "Deborah Lin",
       "generated_age": 59,
       "generation_date": "2025-12-09T09:20:23.239218"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4951,7 +4822,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. <PERSON> underwent diagnostic bronchoscopy for an RLL nodule. Due to a positive bronchus sign, traditional thin bronchoscopy was utilized without electromagnetic navigation. The lesion was visualized endobronchially and confirmed with radial EBUS. Transbronchial needle aspiration and forceps biopsies were performed under fluoroscopic guidance. Tolerance was excellent.",
+    "note_text": "PROCEDURE NOTE: Mr. Thompson underwent diagnostic bronchoscopy for an RLL nodule. Due to a positive bronchus sign, traditional thin bronchoscopy was utilized without electromagnetic navigation. The lesion was visualized endobronchially and confirmed with radial EBUS. Transbronchial needle aspiration and forceps biopsies were performed under fluoroscopic guidance. Tolerance was excellent.",
     "cpt_codes": [
       31629,
       31654
@@ -5009,12 +4880,6 @@
       "generated_name": "Daniel Clark",
       "generated_age": 62,
       "generation_date": "2025-12-09T09:20:23.239273"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5330,7 +5195,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a nodule in his right lower lung that had a clear airway leading to it, so we didn't need the advanced navigation system. We guided the scope directly to the spot, confirmed it with ultrasound, and took samples with a needle and forceps. He had a little bleeding that stopped on its own, and he went home shortly after.",
+    "note_text": "Mr. Thompson had a nodule in his right lower lung that had a clear airway leading to it, so we didn't need the advanced navigation system. We guided the scope directly to the spot, confirmed it with ultrasound, and took samples with a needle and forceps. He had a little bleeding that stopped on its own, and he went home shortly after.",
     "cpt_codes": [
       31629,
       31654
@@ -5388,12 +5253,6 @@
       "generated_name": "Steven King",
       "generated_age": 60,
       "generation_date": "2025-12-09T09:20:23.239458"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5523,7 +5382,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE REPORT: Ms. <PERSON>, with a history of breast cancer and CKD, presented for evaluation of mediastinal lymphadenopathy. EBUS-TBNA was performed on stations 2R, 4R, and 7. Rapid on-site evaluation was consistent with metastatic adenocarcinoma of breast origin in all sampled stations. Sedation was titrated carefully due to renal dysfunction. The patient remained stable.",
+    "note_text": "PROCEDURE REPORT: Ms. Lopez, with a history of breast cancer and CKD, presented for evaluation of mediastinal lymphadenopathy. EBUS-TBNA was performed on stations 2R, 4R, and 7. Rapid on-site evaluation was consistent with metastatic adenocarcinoma of breast origin in all sampled stations. Sedation was titrated carefully due to renal dysfunction. The patient remained stable.",
     "cpt_codes": [
       31653
     ],
@@ -5585,12 +5444,6 @@
       "generated_name": "Martha Hernandez",
       "generated_age": 70,
       "generation_date": "2025-12-09T09:20:23.239513"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5724,7 +5577,7 @@
     }
   },
   {
-    "note_text": "<PERSON> lopez 70 female hx breast cancer. kidney disease so no pet scan. did ebus to check lymph nodes. 2r 4r and 7 all looked like cancer on the slide breast origin. reduced fentanyl dose for her kidneys. vitals good. referred back to oncology for chemo.",
+    "note_text": "sandra lopez 70 female hx breast cancer. kidney disease so no pet scan. did ebus to check lymph nodes. 2r 4r and 7 all looked like cancer on the slide breast origin. reduced fentanyl dose for her kidneys. vitals good. referred back to oncology for chemo.",
     "cpt_codes": [
       31653
     ],
@@ -5786,12 +5639,6 @@
       "generated_name": "Diane Perez",
       "generated_age": 71,
       "generation_date": "2025-12-09T09:20:23.239568"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5932,7 +5779,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> has a history of breast cancer and kidney disease. We performed an EBUS to check swollen lymph nodes in her chest. We sampled stations 2R, 4R, and 7. Unfortunately, all showed cells consistent with breast cancer returning. We used a lower dose of sedation because of her kidneys, and she tolerated the procedure very well.",
+    "note_text": "Ms. Lopez has a history of breast cancer and kidney disease. We performed an EBUS to check swollen lymph nodes in her chest. We sampled stations 2R, 4R, and 7. Unfortunately, all showed cells consistent with breast cancer returning. We used a lower dose of sedation because of her kidneys, and she tolerated the procedure very well.",
     "cpt_codes": [
       31653
     ],
@@ -5994,12 +5841,6 @@
       "generated_name": "Evelyn Torres",
       "generated_age": 70,
       "generation_date": "2025-12-09T09:20:23.239619"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

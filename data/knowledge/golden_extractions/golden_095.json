@@ -127,7 +127,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: The patient was brought to the bronchoscopy suite for evaluation of a right upper lobe endobronchial abnormality suggestive of <LOCATION>. Upon endoscopic visualization, a polypoid, friable tissue mass was observed nearly obstructing the RB1 segment. Utilizing standard cold forceps, four biopsies were procured to ensure adequate histopathologic characterization. Hemostasis was secured via lavage with cold saline.",
+    "note_text": "OPERATIVE REPORT: The patient was brought to the bronchoscopy suite for evaluation of a right upper lobe endobronchial abnormality suggestive of neoplasia. Upon endoscopic visualization, a polypoid, friable tissue mass was observed nearly obstructing the RB1 segment. Utilizing standard cold forceps, four biopsies were procured to ensure adequate histopathologic characterization. Hemostasis was secured via lavage with cold saline.",
     "cpt_codes": [
       31625
     ],
@@ -251,12 +251,6 @@
       "style_description": "Academic Attending",
       "generated_name": "Robert Carter",
       "generation_date": "2025-12-09T14:20:16.524324"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -387,7 +381,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nResident: Dr. Chen\nPatient: <PERSON>\nIndication: RUL Mass\nSteps:\n1. Moderate sedation initiated.\n2. Scope inserted orally.\n3. Airway inspection: Mass at RB1.\n4. Biopsy: 4 samples taken from RUL mass.\n5. Hemostasis: Cold saline used.\n6. Scope withdrawn.\nPlan: Follow pathology.",
+    "note_text": "Procedure Note\nResident: Dr. Chen\nPatient: William Harrison\nIndication: RUL Mass\nSteps:\n1. Moderate sedation initiated.\n2. Scope inserted orally.\n3. Airway inspection: Mass at RB1.\n4. Biopsy: 4 samples taken from RUL mass.\n5. Hemostasis: Cold saline used.\n6. Scope withdrawn.\nPlan: Follow pathology.",
     "cpt_codes": [
       31625
     ],
@@ -511,16 +505,10 @@
       "style_description": "Trainee/Resident",
       "generated_name": "William Hayes",
       "generation_date": "2025-12-09T14:20:16.524399"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "pt is <PERSON> here for bronchoscopy found that rul mass looked like cancer red and friable at rb1 took four biopsies bleeding was moderate so we used cold saline to stop it washings sent too patient did fine going home 5 days for path results.",
+    "note_text": "pt is william harrison here for bronchoscopy found that rul mass looked like cancer red and friable at rb1 took four biopsies bleeding was moderate so we used cold saline to stop it washings sent too patient did fine going home 5 days for path results.",
     "cpt_codes": [
       31625
     ],
@@ -644,12 +632,6 @@
       "style_description": "Sloppy Dictation",
       "generated_name": "David Stone",
       "generation_date": "2025-12-09T14:20:16.524435"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -907,7 +889,7 @@
     }
   },
   {
-    "note_text": "The patient, Mr. <PERSON>, presented for a bronchoscopy due to a suspected RUL mass. After achieving moderate sedation, we advanced the scope and identified a polypoid mass occluding the RB1 segment. We proceeded to take four biopsies using cold forceps. There was some moderate bleeding, which we successfully managed with cold saline. The patient remained stable throughout.",
+    "note_text": "The patient, Mr. Harrison, presented for a bronchoscopy due to a suspected RUL mass. After achieving moderate sedation, we advanced the scope and identified a polypoid mass occluding the RB1 segment. We proceeded to take four biopsies using cold forceps. There was some moderate bleeding, which we successfully managed with cold saline. The patient remained stable throughout.",
     "cpt_codes": [
       31625
     ],
@@ -1031,12 +1013,6 @@
       "style_description": "Narrative Flow",
       "generated_name": "Charles Cole",
       "generation_date": "2025-12-09T14:20:16.524539"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1605,7 +1581,7 @@
     }
   },
   {
-    "note_text": "Resident Procedure Note\nPatient: <PERSON>\nSteps:\n1. Scope passed. Mucosa looked like cobblestones.\n2. Biopsies taken: 3 from carina, 2 RMS, 1 LMS.\n3. BAL done in RML. 100cc in, 55cc out.\n4. Patient tolerated well.\nPlan: Clinic f/u 2 weeks.",
+    "note_text": "Resident Procedure Note\nPatient: S. Martinez\nSteps:\n1. Scope passed. Mucosa looked like cobblestones.\n2. Biopsies taken: 3 from carina, 2 RMS, 1 LMS.\n3. BAL done in RML. 100cc in, 55cc out.\n4. Patient tolerated well.\nPlan: Clinic f/u 2 weeks.",
     "cpt_codes": [
       31625,
       31624
@@ -1748,12 +1724,6 @@
       "style_description": "Trainee/Resident",
       "generated_name": "Sofia Garcia",
       "generation_date": "2025-12-09T14:20:16.524718"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2195,7 +2165,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a bronchoscopy to investigate suspected sarcoidosis. We observed the classic cobblestone appearance of the mucosa in the central airways. To confirm the diagnosis, we took six biopsies from the carina and mainstem bronchi. We also performed a lavage in the right middle lobe. She tolerated the procedure well with minimal bleeding.",
+    "note_text": "Ms. Martinez underwent a bronchoscopy to investigate suspected sarcoidosis. We observed the classic cobblestone appearance of the mucosa in the central airways. To confirm the diagnosis, we took six biopsies from the carina and mainstem bronchi. We also performed a lavage in the right middle lobe. She tolerated the procedure well with minimal bleeding.",
     "cpt_codes": [
       31625,
       31624
@@ -2338,12 +2308,6 @@
       "style_description": "Narrative Flow",
       "generated_name": "Martina Reyes",
       "generation_date": "2025-12-09T14:20:16.524861"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3354,7 +3318,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a bronchoscopy to evaluate a suspicious lesion in his left lower lobe. We found a necrotic mass blocking about half of the LB6 segment. We took five biopsy samples. Because of moderate bleeding afterwards, we used Argon Plasma Coagulation to cauterize the area and stop the bleeding. He is discharged to follow up with oncology.",
+    "note_text": "Mr. Thompson underwent a bronchoscopy to evaluate a suspicious lesion in his left lower lobe. We found a necrotic mass blocking about half of the LB6 segment. We took five biopsy samples. Because of moderate bleeding afterwards, we used Argon Plasma Coagulation to cauterize the area and stop the bleeding. He is discharged to follow up with oncology.",
     "cpt_codes": [
       31625
     ],
@@ -3474,12 +3438,6 @@
       "style_description": "Narrative Flow",
       "generated_name": "Jack Campbell",
       "generation_date": "2025-12-09T14:20:16.525192"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3963,7 +3921,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy\nPatient: <PERSON>\nSteps:\n1. Nasal approach.\n2. Suctioned clot from RML.\n3. Saw lesion at RB4.\n4. Biopsied x3.\n5. Brisk bleeding -> Epi/Ice saline used.\n6. Bleeding stopped.",
+    "note_text": "Procedure: Bronchoscopy\nPatient: K. O'Brien\nSteps:\n1. Nasal approach.\n2. Suctioned clot from RML.\n3. Saw lesion at RB4.\n4. Biopsied x3.\n5. Brisk bleeding -> Epi/Ice saline used.\n6. Bleeding stopped.",
     "cpt_codes": [
       31625
     ],
@@ -4079,12 +4037,6 @@
       "style_description": "Trainee/Resident",
       "generated_name": "Linda Walsh",
       "generation_date": "2025-12-09T14:20:16.525357"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4451,7 +4403,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for hemoptysis. During the bronchoscopy, we cleared a clot from the right middle lobe and found a reddish lesion underneath. We took three biopsies. This caused some brisk bleeding, but we controlled it effectively with ice saline and epinephrine. She is stable with no further bleeding.",
+    "note_text": "Ms. O'Brien came in for hemoptysis. During the bronchoscopy, we cleared a clot from the right middle lobe and found a reddish lesion underneath. We took three biopsies. This caused some brisk bleeding, but we controlled it effectively with ice saline and epinephrine. She is stable with no further bleeding.",
     "cpt_codes": [
       31625
     ],
@@ -4567,12 +4519,6 @@
       "style_description": "Narrative Flow",
       "generated_name": "Margaret Lynch",
       "generation_date": "2025-12-09T14:20:16.525487"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5091,7 +5037,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: <PERSON>\nFindings: Purple lesions everywhere (Trachea, RMS, LMS).\nAction:\n- Biopsy RMS x2\n- Biopsy LMS x2\n- Wash LLL (PCP check)\n bleeding mild.",
+    "note_text": "Resident Note\nPt: T. Nguyen\nFindings: Purple lesions everywhere (Trachea, RMS, LMS).\nAction:\n- Biopsy RMS x2\n- Biopsy LMS x2\n- Wash LLL (PCP check)\n bleeding mild.",
     "cpt_codes": [
       31625
     ],
@@ -5220,12 +5166,6 @@
       "style_description": "Trainee/Resident",
       "generated_name": "Khoa Vu",
       "generation_date": "2025-12-09T14:20:16.525667"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5631,7 +5571,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a bronchoscopy due to his history of HIV and lung lesions. We saw purple plaques typical of Kaposi sarcoma in his windpipe and main airways. We biopsied lesions on both the right and left sides and did a wash in the lower lung to check for infections. He is discharged to follow up with his specialists.",
+    "note_text": "Mr. Nguyen underwent a bronchoscopy due to his history of HIV and lung lesions. We saw purple plaques typical of Kaposi sarcoma in his windpipe and main airways. We biopsied lesions on both the right and left sides and did a wash in the lower lung to check for infections. He is discharged to follow up with his specialists.",
     "cpt_codes": [
       31625
     ],
@@ -5760,12 +5700,6 @@
       "style_description": "Narrative Flow",
       "generated_name": "Phuc Do",
       "generation_date": "2025-12-09T14:20:16.525875"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6021,7 +5955,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: The patient was placed under general anesthesia with jet ventilation. A 12mm <PERSON> rigid bronchoscope was introduced. A large, well-vascularized, pedunculated mass was visualized on the posterior tracheal wall, significantly obstructing the airway. Four biopsies were obtained using rigid cup forceps. Hemostasis was achieved via direct pressure and suction.",
+    "note_text": "OPERATIVE REPORT: The patient was placed under general anesthesia with jet ventilation. A 12mm Karl Storz rigid bronchoscope was introduced. A large, well-vascularized, pedunculated mass was visualized on the posterior tracheal wall, significantly obstructing the airway. Four biopsies were obtained using rigid cup forceps. Hemostasis was achieved via direct pressure and suction.",
     "cpt_codes": [
       31625
     ],
@@ -6138,12 +6072,6 @@
       "style_description": "Academic Attending",
       "generated_name": "Benjamin Lewis",
       "generation_date": "2025-12-09T14:20:16.525984"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6267,7 +6195,7 @@
     }
   },
   {
-    "note_text": "Fellow Note\nPt: <PERSON>\nProc: Rigid Bronch\n1. Rigid scope inserted.\n2. Mass seen in trachea (70% blockage).\n3. Biopsied x4 with cup forceps.\n4. Bleeding controlled with pressure.\n5. Intubated for transport to PACU.",
+    "note_text": "Fellow Note\nPt: R. Davis\nProc: Rigid Bronch\n1. Rigid scope inserted.\n2. Mass seen in trachea (70% blockage).\n3. Biopsied x4 with cup forceps.\n4. Bleeding controlled with pressure.\n5. Intubated for transport to PACU.",
     "cpt_codes": [
       31625
     ],
@@ -6384,12 +6312,6 @@
       "style_description": "Trainee/Resident",
       "generated_name": "Matthew Hall",
       "generation_date": "2025-12-09T14:20:16.526049"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6759,7 +6681,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> required a rigid bronchoscopy for a large mass in his trachea causing breathing difficulty. Using a rigid scope under general anesthesia, we found the mass blocking about 70% of the airway. We took four biopsy samples. We controlled the bleeding with pressure and decided to wait for results before removing the mass. He remains intubated for safety.",
+    "note_text": "Mr. Davis required a rigid bronchoscopy for a large mass in his trachea causing breathing difficulty. Using a rigid scope under general anesthesia, we found the mass blocking about 70% of the airway. We took four biopsy samples. We controlled the bleeding with pressure and decided to wait for results before removing the mass. He remains intubated for safety.",
     "cpt_codes": [
       31625
     ],
@@ -6876,12 +6798,6 @@
       "style_description": "Narrative Flow",
       "generated_name": "Steven Wright",
       "generation_date": "2025-12-09T14:20:16.526178"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7404,7 +7320,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy\nPt: <PERSON>\n1. Scope to RUL.\n2. RB1 looks irregular/invaded.\n3. Biopsy x5.\n4. Brush x1.\n5. ROSE: Positive for cancer cells.\nPlan: Oncology referral.",
+    "note_text": "Procedure: Bronchoscopy\nPt: L. Anderson\n1. Scope to RUL.\n2. RB1 looks irregular/invaded.\n3. Biopsy x5.\n4. Brush x1.\n5. ROSE: Positive for cancer cells.\nPlan: Oncology referral.",
     "cpt_codes": [
       31625
     ],
@@ -7534,16 +7450,10 @@
       "style_description": "Trainee/Resident",
       "generated_name": "Betty Garcia",
       "generation_date": "2025-12-09T14:20:16.526351"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> rul mass on pet scan went in and saw rb1 looking bad mucosa irregular took 5 biopsies and a brush rose guy said it looks like cancer no bleeding going to tumor board.",
+    "note_text": "linda anderson rul mass on pet scan went in and saw rb1 looking bad mucosa irregular took 5 biopsies and a brush rose guy said it looks like cancer no bleeding going to tumor board.",
     "cpt_codes": [
       31625
     ],
@@ -7673,12 +7583,6 @@
       "style_description": "Sloppy Dictation",
       "generated_name": "Helen Martinez",
       "generation_date": "2025-12-09T14:20:16.526385"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7948,7 +7852,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent bronchoscopy for a PET-positive mass in the right upper lobe. We saw irregular tissue invading the airway at RB1. We took five biopsies and a brush sample. The pathologist in the room confirmed suspicious cells immediately. We will discuss her case at the tumor board.",
+    "note_text": "Ms. Anderson underwent bronchoscopy for a PET-positive mass in the right upper lobe. We saw irregular tissue invading the airway at RB1. We took five biopsies and a brush sample. The pathologist in the room confirmed suspicious cells immediately. We will discuss her case at the tumor board.",
     "cpt_codes": [
       31625
     ],
@@ -8078,12 +7982,6 @@
       "style_description": "Narrative Flow",
       "generated_name": "Carol Rodriguez",
       "generation_date": "2025-12-09T14:20:16.526493"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8578,7 +8476,7 @@
     }
   },
   {
-    "note_text": "Coding: 31628 (TBBx RLL), 31632 (TBBx LLL), 31625-XS (EBBx Anastomosis), 31624-XS (BAL RML). Procedure involved distinct techniques (forceps vs TBBx) and distinct locations (<PERSON> vs lobes vs lavage site).",
+    "note_text": "Coding: 31628 (TBBx RLL), 31632 (TBBx LLL), 31625-XS (EBBx Anastomosis), 31624-XS (BAL RML). Procedure involved distinct techniques (forceps vs TBBx) and distinct locations (Anastomosis vs lobes vs lavage site).",
     "cpt_codes": [
       31625,
       31628,
@@ -8754,12 +8652,6 @@
       "style_description": "Billing Coder",
       "generated_name": "Brian Hall",
       "generation_date": "2025-12-09T14:20:16.526667"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9485,7 +9377,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had his routine post-transplant bronchoscopy. We found some granulation tissue at the connection points and biopsied it. We also took deep lung biopsies from the lower lobes to check for rejection and washed the middle lobe. He had minimal bleeding and will follow up with the transplant team.",
+    "note_text": "Mr. Wilson had his routine post-transplant bronchoscopy. We found some granulation tissue at the connection points and biopsied it. We also took deep lung biopsies from the lower lobes to check for rejection and washed the middle lobe. He had minimal bleeding and will follow up with the transplant team.",
     "cpt_codes": [
       31625,
       31628,
@@ -9661,12 +9553,6 @@
       "style_description": "Narrative Flow",
       "generated_name": "Jacob Wright",
       "generation_date": "2025-12-09T14:20:16.526954"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10309,7 +10195,7 @@
     }
   },
   {
-    "note_text": "<PERSON> rml narrowing on ct went in and rml opening is tight red swollen took 4 biopsies to see what it is maybe carcinoid or just inflammation bleeding was scant patient went home.",
+    "note_text": "maria garcia cough rml narrowing on ct went in and rml opening is tight red swollen took 4 biopsies to see what it is maybe carcinoid or just inflammation bleeding was scant patient went home.",
     "cpt_codes": [
       31625
     ],
@@ -10421,12 +10307,6 @@
       "style_description": "Sloppy Dictation",
       "generated_name": "Teresa Diaz",
       "generation_date": "2025-12-09T14:20:16.527203"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10660,7 +10540,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for a cough and narrowing of her airway seen on CT. We found the opening to the right middle lobe was swollen and narrowed. We took four biopsies to figure out if it's inflammation or a tumor. There was barely any bleeding, and she went home safely.",
+    "note_text": "Ms. Garcia came in for a cough and narrowing of her airway seen on CT. We found the opening to the right middle lobe was swollen and narrowed. We took four biopsies to figure out if it's inflammation or a tumor. There was barely any bleeding, and she went home safely.",
     "cpt_codes": [
       31625
     ],
@@ -10772,12 +10652,6 @@
       "style_description": "Narrative Flow",
       "generated_name": "Gloria Ortega",
       "generation_date": "2025-12-09T14:20:16.527298"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11259,7 +11133,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: <PERSON>\nDx: <LOCATION>\n1. LMA/GA.\n2. Black nodules seen in trachea/bronchi.\n3. Biopsied 5 spots.\n4. Bleeding mild.\n5. Extubated.",
+    "note_text": "Resident Note\nPt: C. Brown\nDx: Melanoma\n1. LMA/GA.\n2. Black nodules seen in trachea/bronchi.\n3. Biopsied 5 spots.\n4. Bleeding mild.\n5. Extubated.",
     "cpt_codes": [
       31625
     ],
@@ -11377,17 +11251,10 @@
       "style_description": "Trainee/Resident",
       "generated_name": "Stephen Wilson",
       "generation_date": "2025-12-09T14:20:16.527458"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> metastatic melanoma coughing ct showed nodules went in and saw black spots everywhere trachea mainstems took 5 biopsies to confirm bleeding mild referral to palliative and oncology.",
+    "note_text": "charles brown metastatic melanoma coughing ct showed nodules went in and saw black spots everywhere trachea mainstems took 5 biopsies to confirm bleeding mild referral to palliative and oncology.",
     "cpt_codes": [
       31625
     ],
@@ -11505,12 +11372,6 @@
       "style_description": "Sloppy Dictation",
       "generated_name": "Eric Taylor",
       "generation_date": "2025-12-09T14:20:16.527488"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11756,7 +11617,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent bronchoscopy for metastatic melanoma. We found multiple dark, nodular lesions throughout his windpipe and main airways. We took five biopsies to confirm the diagnosis. He had mild bleeding but is otherwise stable. We are referring him to oncology and palliative care.",
+    "note_text": "Mr. Brown underwent bronchoscopy for metastatic melanoma. We found multiple dark, nodular lesions throughout his windpipe and main airways. We took five biopsies to confirm the diagnosis. He had mild bleeding but is otherwise stable. We are referring him to oncology and palliative care.",
     "cpt_codes": [
       31625
     ],
@@ -11874,12 +11735,6 @@
       "style_description": "Narrative Flow",
       "generated_name": "Joshua Jackson",
       "generation_date": "2025-12-09T14:20:16.527585"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

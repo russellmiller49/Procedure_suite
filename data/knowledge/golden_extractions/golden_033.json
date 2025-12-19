@@ -686,7 +686,7 @@
     }
   },
   {
-    "note_text": "We brought Ms. <PERSON> to the suite to address her airway stenosis caused by GPA. After inducing anesthesia, we visualized a significant tracheal narrowing and multiple bronchial strictures. We used a radial knife to incise the scar tissue and then performed serial balloon dilations to expand the airways. The result was excellent, with good patency restored.",
+    "note_text": "We brought Ms. Morgan to the suite to address her airway stenosis caused by GPA. After inducing anesthesia, we visualized a significant tracheal narrowing and multiple bronchial strictures. We used a radial knife to incise the scar tissue and then performed serial balloon dilations to expand the airways. The result was excellent, with good patency restored.",
     "cpt_codes": [
       31641
     ],
@@ -781,12 +781,6 @@
       "style_type": 8,
       "generated_name": "Veronica Mars",
       "generation_date": "2025-12-09T09:20:04.386548"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1812,7 +1806,7 @@
     }
   },
   {
-    "note_text": "[Indication] RUL mass, staging.\n[Anesthesia] General.\n[Description] EBUS-TBNA stations 4R, 7, 10R (31653). <PERSON> (31627) to RUL mass. REBUS (31654). TBBX (31628).\n[Plan] Oncology/Rad Onc.",
+    "note_text": "[Indication] RUL mass, staging.\n[Anesthesia] General.\n[Description] EBUS-TBNA stations 4R, 7, 10R (31653). Ion Nav (31627) to RUL mass. REBUS (31654). TBBX (31628).\n[Plan] Oncology/Rad Onc.",
     "cpt_codes": [
       31653,
       31628,
@@ -1963,16 +1957,10 @@
       "style_type": 7,
       "generated_name": "Frodo Baggins",
       "generation_date": "2025-12-09T09:20:04.386841"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We performed a staging EBUS followed by a robotic biopsy for Mr. <PERSON>. The EBUS confirmed cancer in the mediastinal and hilar lymph nodes. We then used the Ion robot to biopsy the main tumor in the right upper lobe. The diagnosis is squamous cell carcinoma.",
+    "note_text": "We performed a staging EBUS followed by a robotic biopsy for Mr. Jackson. The EBUS confirmed cancer in the mediastinal and hilar lymph nodes. We then used the Ion robot to biopsy the main tumor in the right upper lobe. The diagnosis is squamous cell carcinoma.",
     "cpt_codes": [
       31653,
       31628,
@@ -2123,12 +2111,6 @@
       "style_type": 8,
       "generated_name": "Luke Skywalker",
       "generation_date": "2025-12-09T09:20:04.386877"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3147,7 +3129,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent an EBUS procedure to stage her lung cancer. We sampled lymph nodes from six different areas in her chest. Unfortunately, the results showed cancer has spread to lymph nodes on both sides of her chest, confirming Stage IIIC adenocarcinoma.",
+    "note_text": "Ms. Russell underwent an EBUS procedure to stage her lung cancer. We sampled lymph nodes from six different areas in her chest. Unfortunately, the results showed cancer has spread to lymph nodes on both sides of her chest, confirming Stage IIIC adenocarcinoma.",
     "cpt_codes": [
       31653
     ],
@@ -3267,12 +3249,6 @@
       "style_type": 8,
       "generated_name": "Louise Sawyer",
       "generation_date": "2025-12-09T09:20:04.387198"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4211,7 +4187,7 @@
     }
   },
   {
-    "note_text": "We performed an EBUS procedure on Mr. <PERSON> to check his lymph nodes. We sampled four nodes: 7, 4R, 10R, and 11R. Three of them contained cancer cells, confirming that the disease has spread to the mediastinum (N2 disease).",
+    "note_text": "We performed an EBUS procedure on Mr. Mills to check his lymph nodes. We sampled four nodes: 7, 4R, 10R, and 11R. Three of them contained cancer cells, confirming that the disease has spread to the mediastinum (N2 disease).",
     "cpt_codes": [
       31653
     ],
@@ -4324,12 +4300,6 @@
       "style_type": 8,
       "generated_name": "Marie Schrader",
       "generation_date": "2025-12-09T09:20:04.387836"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5009,7 +4979,7 @@
     }
   },
   {
-    "note_text": "rigid bronch for <PERSON>. she had a lot of blood and tumor blocking the airway. suctioned it out. used apc and the rigid scope to core out the tumor. also did an ebus on the subcarinal node. airway looks much better now.",
+    "note_text": "rigid bronch for sarah martinez. she had a lot of blood and tumor blocking the airway. suctioned it out. used apc and the rigid scope to core out the tumor. also did an ebus on the subcarinal node. airway looks much better now.",
     "cpt_codes": [
       31641,
       31640,
@@ -5146,12 +5116,6 @@
       "style_type": 5,
       "generated_name": "George O'Malley",
       "generation_date": "2025-12-09T09:20:04.388142"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5435,7 +5399,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> required an urgent rigid bronchoscopy due to a tumor blocking her airways. We cleared a significant amount of blood and then debulked the tumor using cautery and mechanical tools, opening up her breathing passages. We also sampled the tumor and a nearby lymph node for diagnosis.",
+    "note_text": "Ms. Martinez required an urgent rigid bronchoscopy due to a tumor blocking her airways. We cleared a significant amount of blood and then debulked the tumor using cautery and mechanical tools, opening up her breathing passages. We also sampled the tumor and a nearby lymph node for diagnosis.",
     "cpt_codes": [
       31641,
       31640,
@@ -5572,12 +5536,6 @@
       "style_type": 8,
       "generated_name": "Derek Shepherd",
       "generation_date": "2025-12-09T09:20:04.388244"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6743,7 +6701,7 @@
     }
   },
   {
-    "note_text": "We performed an EBUS on Ms. <PERSON> to stage her lung cancer. We sampled five lymph nodes. Three of them tested positive for cancer, indicating it has spread to the mediastinum.",
+    "note_text": "We performed an EBUS on Ms. Henderson to stage her lung cancer. We sampled five lymph nodes. Three of them tested positive for cancer, indicating it has spread to the mediastinum.",
     "cpt_codes": [
       31641,
       31652,
@@ -6886,12 +6844,6 @@
       "style_type": 8,
       "generated_name": "Janice Litman",
       "generation_date": "2025-12-09T09:20:04.388551"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7866,7 +7818,7 @@
     }
   },
   {
-    "note_text": "We placed a permanent drainage catheter (PleurX) in Mr. <PERSON>'s chest to help manage his fluid buildup. We used ultrasound to guide the placement and created a tunnel under the skin for the catheter. We drained over a liter of fluid, and he is breathing much better.",
+    "note_text": "We placed a permanent drainage catheter (PleurX) in Mr. Chen's chest to help manage his fluid buildup. We used ultrasound to guide the placement and created a tunnel under the skin for the catheter. We drained over a liter of fluid, and he is breathing much better.",
     "cpt_codes": [
       31653
     ],
@@ -7980,12 +7932,6 @@
       "style_type": 8,
       "generated_name": "Bobby Baccalieri",
       "generation_date": "2025-12-09T09:20:04.388819"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8826,7 +8772,7 @@
     }
   },
   {
-    "note_text": "We performed a pleuroscopy on Ms. <PERSON>. We found extensive cancer spread on the lining of her lung and chest wall. We took multiple biopsies for testing and then sprayed talc to prevent the fluid from coming back (pleurodesis). A chest tube was left in place.",
+    "note_text": "We performed a pleuroscopy on Ms. Martinez. We found extensive cancer spread on the lining of her lung and chest wall. We took multiple biopsies for testing and then sprayed talc to prevent the fluid from coming back (pleurodesis). A chest tube was left in place.",
     "cpt_codes": [
       32550
     ],
@@ -8925,12 +8871,6 @@
       "style_type": 8,
       "generated_name": "Harry Goldenblatt",
       "generation_date": "2025-12-09T09:20:04.389062"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

@@ -157,6 +157,17 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
     settings = get_infra_settings()
     logger = logging.getLogger(__name__)
+    from modules.registry.model_runtime import get_registry_runtime_dir, resolve_model_backend
+
+    def _verify_registry_onnx_bundle() -> None:
+        if resolve_model_backend() != "onnx":
+            return
+        runtime_dir = get_registry_runtime_dir()
+        model_path = runtime_dir / "registry_model_int8.onnx"
+        if not model_path.exists():
+            raise RuntimeError(
+                f"MODEL_BACKEND=onnx but missing registry model at {model_path}."
+            )
 
     # Readiness state (liveness vs readiness)
     app.state.model_ready = False
@@ -183,6 +194,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         logger.info("PHI database tables verified/created")
     except Exception as e:
         logger.warning(f"Could not initialize PHI tables: {e}")
+
+    _verify_registry_onnx_bundle()
 
     loop = asyncio.get_running_loop()
 
@@ -599,20 +612,11 @@ async def registry_run(
     note_text = redaction.text
 
     eng = RegistryEngine()
-    # For interactive/demo usage, best-effort extraction should return 200 whenever possible.
-    # RegistryEngine.run now attempts internal pruning on validation issues; if something still
-    # raises, fall back to an empty record rather than failing the request.
-    try:
-        result = await run_cpu(request.app, eng.run, note_text, explain=req.explain)
-    except Exception as exc:
-        _logger.warning("registry_run failed; returning empty record", exc_info=True)
-        record = RegistryResponse()
-        evidence = {}
+    result = await run_cpu(request.app, eng.run, note_text, explain=req.explain)
+    if isinstance(result, tuple):
+        record, evidence = result
     else:
-        if isinstance(result, tuple):
-            record, evidence = result
-        else:
-            record, evidence = result, getattr(result, "evidence", {})
+        record, evidence = result, getattr(result, "evidence", {})
 
     payload = _shape_registry_payload(record, evidence)
     return JSONResponse(content=payload)

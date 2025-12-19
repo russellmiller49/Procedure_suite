@@ -762,7 +762,7 @@
     }
   },
   {
-    "note_text": "We performed a pleural intervention on Mr. <PERSON>. Initially, we inserted a small catheter for diagnostic purposes, which revealed <PERSON>. Consequently, we immediately proceeded to place a 14 French chest tube in the same location to establish drainage. We drained 450cc of fluid. Given the loculations seen on ultrasound, we instilled fibrinolytics (tPA and DNase) directly into the tube before clamping it.",
+    "note_text": "We performed a pleural intervention on Mr. Howlett. Initially, we inserted a small catheter for diagnostic purposes, which revealed frank pus. Consequently, we immediately proceeded to place a 14 French chest tube in the same location to establish drainage. We drained 450cc of fluid. Given the loculations seen on ultrasound, we instilled fibrinolytics (tPA and DNase) directly into the tube before clamping it.",
     "cpt_codes": [
       32551,
       32561
@@ -867,13 +867,6 @@
       "style_type": 8,
       "generated_name": "Old Man Logan",
       "generation_date": "2025-12-09T09:21:03.532349"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -1413,7 +1406,7 @@
     }
   },
   {
-    "note_text": "Emergency bronch for <PERSON> massive bleeding. Rigid scope. Tube was full of blood sucked out like 400cc just to see. Bleeding coming from RUL tumor. Put a balloon in there to block it for a bit then hit it with APC. Used iced saline too. Stopped bleeding. Extubated in room.",
+    "note_text": "Emergency bronch for Logan Roy massive bleeding. Rigid scope. Tube was full of blood sucked out like 400cc just to see. Bleeding coming from RUL tumor. Put a balloon in there to block it for a bit then hit it with APC. Used iced saline too. Stopped bleeding. Extubated in room.",
     "cpt_codes": [
       31641,
       31645
@@ -1517,12 +1510,6 @@
       "style_type": 5,
       "generated_name": "L. Roy",
       "generation_date": "2025-12-09T09:21:03.532524"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1740,7 +1727,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> required emergency rigid bronchoscopy for massive hemoptysis. We first cleared the airway of approximately 400cc of clot to ventilate him. Identifying the bleeding source at the RUL tumor, we deployed a Fogarty balloon for tamponade. Subsequently, we applied APC to the tumor bed to cauterize the vessels and instilled iced saline. These measures successfully halted the bleeding.",
+    "note_text": "Mr. Roy required emergency rigid bronchoscopy for massive hemoptysis. We first cleared the airway of approximately 400cc of clot to ventilate him. Identifying the bleeding source at the RUL tumor, we deployed a Fogarty balloon for tamponade. Subsequently, we applied APC to the tumor bed to cauterize the vessels and instilled iced saline. These measures successfully halted the bleeding.",
     "cpt_codes": [
       31641,
       31645
@@ -1844,12 +1831,6 @@
       "style_type": 8,
       "generated_name": "Logan R.",
       "generation_date": "2025-12-09T09:21:03.532604"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2467,7 +2448,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS / Ion / Resection\nPatient: <PERSON>\nSteps:\n1. EBUS TBNA 7, 4R.\n2. Ion nav to LUL. Radial EBUS verify. Cryobiopsy x3.\n3. Found RMB polyp. Snared and APC'd it.\nNo issues.",
+    "note_text": "Procedure: EBUS / Ion / Resection\nPatient: Wade Wilson\nSteps:\n1. EBUS TBNA 7, 4R.\n2. Ion nav to LUL. Radial EBUS verify. Cryobiopsy x3.\n3. Found RMB polyp. Snared and APC'd it.\nNo issues.",
     "cpt_codes": [
       31652,
       31627,
@@ -2633,16 +2614,10 @@
       "style_type": 4,
       "generated_name": "Merc Mouth",
       "generation_date": "2025-12-09T09:21:03.532805"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Busy case for Mr <PERSON>. Started with EBUS 7 and 4R negative. Then used the robot to get the LUL nodule froze it 3 times. On the way out saw a huge polyp in the right main. Snared it off and APCd the base. 3 separate procedures basically. Patient fine.",
+    "note_text": "Busy case for Mr Wilson. Started with EBUS 7 and 4R negative. Then used the robot to get the LUL nodule froze it 3 times. On the way out saw a huge polyp in the right main. Snared it off and APCd the base. 3 separate procedures basically. Patient fine.",
     "cpt_codes": [
       31652,
       31627,
@@ -2808,12 +2783,6 @@
       "style_type": 5,
       "generated_name": "Wade W.",
       "generation_date": "2025-12-09T09:21:03.532844"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3155,7 +3124,7 @@
     }
   },
   {
-    "note_text": "We performed a complex procedure on Mr. <PERSON>. First, we staged the mediastinum using EBUS. Next, we used the Ion robot to navigate to and cryobiopsy a nodule in the LUL. Unexpectedly, we found a separate tumor obstructing the Right Mainstem Bronchus. We resected this central tumor using a snare and APC. All three targets were distinct.",
+    "note_text": "We performed a complex procedure on Mr. Wilson. First, we staged the mediastinum using EBUS. Next, we used the Ion robot to navigate to and cryobiopsy a nodule in the LUL. Unexpectedly, we found a separate tumor obstructing the Right Mainstem Bronchus. We resected this central tumor using a snare and APC. All three targets were distinct.",
     "cpt_codes": [
       31652,
       31627,
@@ -3321,12 +3290,6 @@
       "style_type": 8,
       "generated_name": "Weapon XI",
       "generation_date": "2025-12-09T09:21:03.532966"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

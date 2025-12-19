@@ -9,6 +9,8 @@ from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDe
 from modules.coder.application.coding_service import CodingService
 from modules.coder.rules_engine import CodingRulesEngine
 from modules.coder.types import CodeCandidate
+from modules.registry.application.registry_service import RegistryExtractionResult
+from modules.registry.schema import RegistryRecord
 
 
 def test_rules_engine_noop_does_not_change_candidates():
@@ -92,6 +94,14 @@ class StubKeywordMappingRepository:
         return list(self._mappings.keys())
 
 
+class StubRegistryService:
+    def __init__(self, result: RegistryExtractionResult) -> None:
+        self._result = result
+
+    def extract_fields_extraction_first(self, note_text: str) -> RegistryExtractionResult:
+        return self._result
+
+
 class StubRuleEngineResult:
     def __init__(self, codes_to_return: dict[str, float]):
         self.codes = list(codes_to_return.keys())
@@ -115,6 +125,24 @@ def test_coding_service_generates_suggestions_with_new_pipeline():
     rule_engine = StubRuleEngine({"31624": 0.9, "31652": 0.88})
     config = CoderSettings()
 
+    extraction_result = RegistryExtractionResult(
+        record=RegistryRecord(),
+        cpt_codes=["31624", "31652"],
+        coder_difficulty="HIGH_CONF",
+        coder_source="extraction_first",
+        mapped_fields={},
+        code_rationales={
+            "31624": "bal.performed=true",
+            "31652": "linear_ebus.performed=true",
+        },
+        derivation_warnings=[],
+        warnings=[],
+        needs_manual_review=False,
+        validation_errors=[],
+        audit_warnings=[],
+    )
+    registry_service = StubRegistryService(extraction_result)
+
     service = CodingService(
         kb_repo=kb_repo,
         keyword_repo=keyword_repo,
@@ -122,6 +150,7 @@ def test_coding_service_generates_suggestions_with_new_pipeline():
         rule_engine=rule_engine,
         llm_advisor=None,
         config=config,
+        registry_service=registry_service,
     )
 
     note_text = (

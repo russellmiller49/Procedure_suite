@@ -266,7 +266,7 @@
     }
   },
   {
-    "note_text": "Coding Justification:\n31627 (Navigational Bronchoscopy): Ion robot used for path planning/navigation.\n31628 (Biopsy, <PERSON>): Transbronchial biopsy of RUL nodule.\n+31632 (Biopsy, <PERSON>): Transbronchial biopsy of LUL nodule.\n+31654 (REBUS): Radial EBUS probe used to verify tool-in-lesion for peripheral targets.\nMedical Necessity: Bilateral PET-avid nodules.",
+    "note_text": "Coding Justification:\n31627 (Navigational Bronchoscopy): Ion robot used for path planning/navigation.\n31628 (Biopsy, Single Lobe): Transbronchial biopsy of RUL nodule.\n+31632 (Biopsy, Add'l Lobe): Transbronchial biopsy of LUL nodule.\n+31654 (REBUS): Radial EBUS probe used to verify tool-in-lesion for peripheral targets.\nMedical Necessity: Bilateral PET-avid nodules.",
     "cpt_codes": [
       "31628",
       "31632",
@@ -396,13 +396,6 @@
       "style_type": 3,
       "generated_name": "Robert Frost",
       "generation_date": "2025-12-09T09:19:29.553902"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -5452,7 +5445,7 @@
     }
   },
   {
-    "note_text": "[Indication] RUL nodule, never-smoker.\n[Anesthesia] General.\n[Description] EBUS-TBNA 4R/10R (31652). <PERSON> (31627) to RUL. Radial EBUS (31654). Cryobiopsy (31628).\n[Plan] Molecular panel if positive.",
+    "note_text": "[Indication] RUL nodule, never-smoker.\n[Anesthesia] General.\n[Description] EBUS-TBNA 4R/10R (31652). Ion Nav (31627) to RUL. Radial EBUS (31654). Cryobiopsy (31628).\n[Plan] Molecular panel if positive.",
     "cpt_codes": [
       "31652",
       "31628",
@@ -5587,12 +5580,6 @@
       "style_type": 7,
       "generated_name": "Arthur Schnitzler",
       "generation_date": "2025-12-09T09:19:29.555430"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10158,7 +10145,7 @@
     }
   },
   {
-    "note_text": "Operative Report: Under general anesthesia, Mr. <PERSON> underwent bronchoscopic ablation of an RLL squamous cell carcinoma. Electromagnetic navigation bronchoscopy (ENB) was used to localize the superior segment lesion. Radial EBUS confirmed the target. A radiofrequency ablation (RFA) catheter was deployed, and treatment was delivered at 105 degrees Celsius for 10 minutes. No immediate complications were observed.",
+    "note_text": "Operative Report: Under general anesthesia, Mr. Jackson underwent bronchoscopic ablation of an RLL squamous cell carcinoma. Electromagnetic navigation bronchoscopy (ENB) was used to localize the superior segment lesion. Radial EBUS confirmed the target. A radiofrequency ablation (RFA) catheter was deployed, and treatment was delivered at 105 degrees Celsius for 10 minutes. No immediate complications were observed.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -10292,12 +10279,6 @@
       "style_type": 2,
       "generated_name": "Dennis P. Jackson",
       "generation_date": "2025-12-09T09:19:29.556689"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10438,7 +10419,7 @@
     }
   },
   {
-    "note_text": "Resident Note:\n- Patient: <PERSON>.\n- Dx: RLL SCC.\n- ENB to RLL.\n- REBUS confirmed.\n- RFA probe placed.\n- Burned at 105C x 10m.\n- Stable.",
+    "note_text": "Resident Note:\n- Patient: Dennis Jackson.\n- Dx: RLL SCC.\n- ENB to RLL.\n- REBUS confirmed.\n- RFA probe placed.\n- Burned at 105C x 10m.\n- Stable.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -10572,16 +10553,10 @@
       "style_type": 4,
       "generated_name": "Mr. Jackson",
       "generation_date": "2025-12-09T09:19:29.556759"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for rfa of his lung tumor. used the navigation and the ultrasound to find the rll nodule. cooked it with the rfa probe for 10 mins. everything looks good cxr tomorrow.",
+    "note_text": "dennis jackson here for rfa of his lung tumor. used the navigation and the ultrasound to find the rll nodule. cooked it with the rfa probe for 10 mins. everything looks good cxr tomorrow.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -10715,12 +10690,6 @@
       "style_type": 5,
       "generated_name": "Dennis Jackson Jr.",
       "generation_date": "2025-12-09T09:19:29.556794"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10861,7 +10830,7 @@
     }
   },
   {
-    "note_text": "[Indication] RLL SCC (2.2cm).\n[Anesthesia] General.\n[Description] ENB (31627) to RLL. REBUS (31654) confirmed. RFA (31641) performed 105C/10min. No bleeding.\n[Plan] CXR, <LOCATION> if stable.",
+    "note_text": "[Indication] RLL SCC (2.2cm).\n[Anesthesia] General.\n[Description] ENB (31627) to RLL. REBUS (31654) confirmed. RFA (31641) performed 105C/10min. No bleeding.\n[Plan] CXR, DC if stable.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -10995,16 +10964,10 @@
       "style_type": 7,
       "generated_name": "D.L. Jackson",
       "generation_date": "2025-12-09T09:19:29.556861"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a bronchoscopy for radiofrequency ablation of his right lower lobe tumor. We used electromagnetic navigation and radial EBUS to precisely locate the cancer. We then inserted the RFA probe and treated the lesion at 105 degrees for 10 minutes. There were no complications.",
+    "note_text": "Mr. Jackson underwent a bronchoscopy for radiofrequency ablation of his right lower lobe tumor. We used electromagnetic navigation and radial EBUS to precisely locate the cancer. We then inserted the RFA probe and treated the lesion at 105 degrees for 10 minutes. There were no complications.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -11138,12 +11101,6 @@
       "style_type": 8,
       "generated_name": "Dennis R. Jackson",
       "generation_date": "2025-12-09T09:19:29.556894"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

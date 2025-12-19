@@ -41,7 +41,27 @@ echo "[devserver] =============================================="
 echo "[devserver] PORT=${PORT:-8000}"
 echo "[devserver] MODEL_BACKEND=${MODEL_BACKEND}"
 echo "[devserver] PSUITE_KNOWLEDGE_FILE=${PSUITE_KNOWLEDGE_FILE}"
-echo "[devserver] ENABLE_UMLS_LINKER=${ENABLE_UMLS_LINKER:-true}"
+# NOTE:
+# - The FastAPI app loads `.env` via python-dotenv (see `modules/api/fastapi_app.py`).
+# - This script prints from the *shell* environment, so if ENABLE_UMLS_LINKER isn't exported,
+#   it would misleadingly show the default ("true") even if `.env` sets it to "false".
+# To reduce confusion, we also peek at `.env` for display purposes when the variable isn't set.
+dotenv_enable_umls=""
+if [[ -z "${ENABLE_UMLS_LINKER+x}" ]] && [[ -f ".env" ]]; then
+  dotenv_enable_umls="$(
+    awk -F= '
+      /^[[:space:]]*ENABLE_UMLS_LINKER[[:space:]]*=/ {
+        sub(/^[^=]*=/, "", $0)
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", $0)
+        gsub(/^"|"$/, "", $0)
+        val=$0
+      }
+      END { if (val != "") print val }
+    ' .env
+  )"
+fi
+enable_umls_display="${ENABLE_UMLS_LINKER-${dotenv_enable_umls:-true}}"
+echo "[devserver] ENABLE_UMLS_LINKER=${enable_umls_display}"
 echo "[devserver] OMP_NUM_THREADS=${OMP_NUM_THREADS}"
 echo "[devserver] =============================================="
 

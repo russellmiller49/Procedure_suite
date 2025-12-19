@@ -198,7 +198,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: The patient, Mr. <PERSON>, was identified and a time-out was performed. Under general anesthesia with propofol and fentanyl infusions, a bronchoscopic-assisted percutaneous dilatational tracheostomy was undertaken. The bronchoscope was introduced via the existing endotracheal tube, withdrawing to the subglottic space to visualize the anterior tracheal wall. A puncture site was selected between the first and second tracheal rings. Following local anesthetic infiltration, the introducer needle was advanced into the tracheal lumen under direct bronchoscopic visualization. The Seldinger technique was utilized to place a J-wire, followed by serial dilation using a 14 French dilator and the Ciaglia Blue Rhino single-stage dilator. A Shiley 8.0 cuffed tracheostomy tube was smoothly inserted. Placement was confirmed bronchoscopically and via capnography. The device was sutured in place without incident.",
+    "note_text": "OPERATIVE SUMMARY: The patient, Mr. Robert Miller, was identified and a time-out was performed. Under general anesthesia with propofol and fentanyl infusions, a bronchoscopic-assisted percutaneous dilatational tracheostomy was undertaken. The bronchoscope was introduced via the existing endotracheal tube, withdrawing to the subglottic space to visualize the anterior tracheal wall. A puncture site was selected between the first and second tracheal rings. Following local anesthetic infiltration, the introducer needle was advanced into the tracheal lumen under direct bronchoscopic visualization. The Seldinger technique was utilized to place a J-wire, followed by serial dilation using a 14 French dilator and the Ciaglia Blue Rhino single-stage dilator. A Shiley 8.0 cuffed tracheostomy tube was smoothly inserted. Placement was confirmed bronchoscopically and via capnography. The device was sutured in place without incident.",
     "cpt_codes": [
       31600
     ],
@@ -393,12 +393,6 @@
       "style_type": 2,
       "generated_name": "William Davis",
       "generation_date": "2025-12-09T09:18:34.238542"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -798,7 +792,7 @@
     }
   },
   {
-    "note_text": "op note for mr <PERSON> he needed a trach for prolonged vent stuff covid ards. we did the percutaneous one with the blue rhino kit. scope went in <PERSON> was watching. i poked the needle in got air put the wire in. dilated it up big then put the shiley 8 in. looked good on the scope after. took the ett out. stitched the trach with nylon. minimal bleeding just a little surgicel needed. patient tolerated it fine thanks.",
+    "note_text": "op note for mr davis he needed a trach for prolonged vent stuff covid ards. we did the percutaneous one with the blue rhino kit. scope went in dr taylor was watching. i poked the needle in got air put the wire in. dilated it up big then put the shiley 8 in. looked good on the scope after. took the ett out. stitched the trach with nylon. minimal bleeding just a little surgicel needed. patient tolerated it fine thanks.",
     "cpt_codes": [
       31600
     ],
@@ -993,13 +987,6 @@
       "style_type": 5,
       "generated_name": "Thomas Wilson",
       "generation_date": "2025-12-09T09:18:34.238722"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -1405,7 +1392,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a planned tracheostomy today due to his inability to be weaned from the ventilator. We positioned him with a shoulder roll and used the bronchoscope to guide the entire procedure. After numbing the neck, we inserted the needle into the trachea, watching from the inside to make sure it was perfectly centered. We then used the dilators to open the path and slid the tracheostomy tube in. Everything went smoothly, and we confirmed the tube was in the right spot before sewing it in place.",
+    "note_text": "Mr. Daniel Anderson underwent a planned tracheostomy today due to his inability to be weaned from the ventilator. We positioned him with a shoulder roll and used the bronchoscope to guide the entire procedure. After numbing the neck, we inserted the needle into the trachea, watching from the inside to make sure it was perfectly centered. We then used the dilators to open the path and slid the tracheostomy tube in. Everything went smoothly, and we confirmed the tube was in the right spot before sewing it in place.",
     "cpt_codes": [
       31600
     ],
@@ -1600,12 +1587,6 @@
       "style_type": 8,
       "generated_name": "Matthew Taylor",
       "generation_date": "2025-12-09T09:18:34.238865"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2029,7 +2010,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. <PERSON> presented for diagnostic bronchoscopy regarding bilateral pulmonary opacities. The airway was secured with an 8.5 ETT. Inspection revealed a fungating endobronchial lesion obstructing the RUL superior segment; this was extensively sampled via forceps biopsy and transbronchial needle aspiration (TBNA), yielding a malignant diagnosis on ROSE. Attention was turned to the LLL, where a peripheral lesion was localized utilizing radial EBUS. Transbronchial biopsies and needle aspirations were obtained. Hemostasis was achieved with topical epinephrine. The patient remained stable.",
+    "note_text": "PROCEDURE NOTE: Mr. James Lee presented for diagnostic bronchoscopy regarding bilateral pulmonary opacities. The airway was secured with an 8.5 ETT. Inspection revealed a fungating endobronchial lesion obstructing the RUL superior segment; this was extensively sampled via forceps biopsy and transbronchial needle aspiration (TBNA), yielding a malignant diagnosis on ROSE. Attention was turned to the LLL, where a peripheral lesion was localized utilizing radial EBUS. Transbronchial biopsies and needle aspirations were obtained. Hemostasis was achieved with topical epinephrine. The patient remained stable.",
     "cpt_codes": [
       31625,
       31629,
@@ -2242,12 +2223,6 @@
       "style_type": 2,
       "generated_name": "John Park",
       "generation_date": "2025-12-09T09:18:34.239013"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2683,7 +2658,7 @@
     }
   },
   {
-    "note_text": "Bronch for <PERSON> he has spots on both lungs. Put him to sleep tube in. Right upper lobe had a big ugly mass blocking the airway so we took bites with the forceps and poked it with the needle rose said cancer. Then went to the left lower lobe used the radar probe thing radial ebus found the spot and biopsied that too. Was bleeding a bit in the right side used epi. Woke up fine sending him home.",
+    "note_text": "Bronch for Robert Kim he has spots on both lungs. Put him to sleep tube in. Right upper lobe had a big ugly mass blocking the airway so we took bites with the forceps and poked it with the needle rose said cancer. Then went to the left lower lobe used the radar probe thing radial ebus found the spot and biopsied that too. Was bleeding a bit in the right side used epi. Woke up fine sending him home.",
     "cpt_codes": [
       31625,
       31629,
@@ -2896,12 +2871,6 @@
       "style_type": 5,
       "generated_name": "William Wong",
       "generation_date": "2025-12-09T09:18:34.239155"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3343,7 +3312,7 @@
     }
   },
   {
-    "note_text": "We performed a bronchoscopy on Mr. <PERSON> today to investigate masses in both his right and left lungs. Upon entering the right upper lobe, we immediately saw a large mass blocking the airway, which we biopsied. The pathologist in the room confirmed it was cancer. We then moved to the left lower lobe and used a special ultrasound probe to find a smaller spot deeper in the lung. We took samples of that as well. He had some bleeding, but we stopped it with medication. He is waking up now.",
+    "note_text": "We performed a bronchoscopy on Mr. David Nguyen today to investigate masses in both his right and left lungs. Upon entering the right upper lobe, we immediately saw a large mass blocking the airway, which we biopsied. The pathologist in the room confirmed it was cancer. We then moved to the left lower lobe and used a special ultrasound probe to find a smaller spot deeper in the lung. We took samples of that as well. He had some bleeding, but we stopped it with medication. He is waking up now.",
     "cpt_codes": [
       31625,
       31629,
@@ -3556,16 +3525,10 @@
       "style_type": 8,
       "generated_name": "Joseph Liu",
       "generation_date": "2025-12-09T09:18:34.239299"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Operation: Fiberoptic bronchoscopy with multisite sampling.\nSubject: <PERSON>.\nFindings: An endobronchial tumor was obstructing the RUL. This was sampled via forceps and needle aspiration. A secondary lesion in the LLL was targeted utilizing radial endobronchial ultrasound. Transbronchial specimens were acquired. Bronchoalveolar lavage was executed in the LLL. Hemostasis was secured.",
+    "note_text": "Operation: Fiberoptic bronchoscopy with multisite sampling.\nSubject: Richard Tran.\nFindings: An endobronchial tumor was obstructing the RUL. This was sampled via forceps and needle aspiration. A secondary lesion in the LLL was targeted utilizing radial endobronchial ultrasound. Transbronchial specimens were acquired. Bronchoalveolar lavage was executed in the LLL. Hemostasis was secured.",
     "cpt_codes": [
       31625,
       31629,
@@ -3778,12 +3741,6 @@
       "style_type": 9,
       "generated_name": "Charles Chang",
       "generation_date": "2025-12-09T09:18:34.239347"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4003,7 +3960,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Robotic-Assisted Navigational Bronchoscopy (Ion Platform).\nPATIENT: <PERSON>\nNARRATIVE: Following general anesthesia, the Ion catheter was navigated to a 1.4 cm nodule in the RUL anterior segment. Local alignment was verified via 3D spin (Cone Beam CT). Transbronchial needle aspiration and cryobiopsies were obtained under fluoroscopic and virtual guidance. Subsequently, a Chartis assessment of the LLL was performed to evaluate collateral ventilation for potential future valve therapy; CV was absent. The patient tolerated the procedure well.",
+    "note_text": "PROCEDURE: Robotic-Assisted Navigational Bronchoscopy (Ion Platform).\nPATIENT: Mr. Richard Perez.\nNARRATIVE: Following general anesthesia, the Ion catheter was navigated to a 1.4 cm nodule in the RUL anterior segment. Local alignment was verified via 3D spin (Cone Beam CT). Transbronchial needle aspiration and cryobiopsies were obtained under fluoroscopic and virtual guidance. Subsequently, a Chartis assessment of the LLL was performed to evaluate collateral ventilation for potential future valve therapy; CV was absent. The patient tolerated the procedure well.",
     "cpt_codes": [
       31627,
       31629,
@@ -4216,12 +4173,6 @@
       "style_type": 2,
       "generated_name": "Joseph Sanchez",
       "generation_date": "2025-12-09T09:18:34.239448"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4441,7 +4392,7 @@
     }
   },
   {
-    "note_text": "Procedure: Ion Bronch\nPatient: <PERSON>\nSteps:\n1. Time out. GA.\n2. Set up Ion robot.\n3. Drove to RUL nodule. Spun the C-arm (CIOS) to check spot. Perfect.\n4. <PERSON> and cryo biopsies taken.\n5. Went to LLL with regular scope and did Chartis check. No flow = good for valves later.\n6. Extubated. All good.",
+    "note_text": "Procedure: Ion Bronch\nPatient: Joseph Sanchez\nSteps:\n1. Time out. GA.\n2. Set up Ion robot.\n3. Drove to RUL nodule. Spun the C-arm (CIOS) to check spot. Perfect.\n4. Needles and cryo biopsies taken.\n5. Went to LLL with regular scope and did Chartis check. No flow = good for valves later.\n6. Extubated. All good.",
     "cpt_codes": [
       31627,
       31629,
@@ -4654,13 +4605,6 @@
       "style_type": 4,
       "generated_name": "Charles Torres",
       "generation_date": "2025-12-09T09:18:34.239567"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -5318,7 +5262,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a robotic bronchoscopy today. We successfully navigated the robotic catheter to the small nodule in his right upper lung. To be absolutely sure of our location, we took a 3D CT scan right there in the room, which showed we were right on target. We took several biopsies. Since he also has severe COPD, we tested his left lung to see if he might be a candidate for valves in the future, and the test looked promising.",
+    "note_text": "Mr. Christopher Ramirez underwent a robotic bronchoscopy today. We successfully navigated the robotic catheter to the small nodule in his right upper lung. To be absolutely sure of our location, we took a 3D CT scan right there in the room, which showed we were right on target. We took several biopsies. Since he also has severe COPD, we tested his left lung to see if he might be a candidate for valves in the future, and the test looked promising.",
     "cpt_codes": [
       31627,
       31629,
@@ -5531,12 +5475,6 @@
       "style_type": 8,
       "generated_name": "Anthony Gomez",
       "generation_date": "2025-12-09T09:18:34.239765"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5972,7 +5910,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA).\nPATIENT: <PERSON>\nCLINICAL SUMMARY: Evaluation of mediastinal lymphadenopathy in the setting of a LUL mass. A systematic EBUS survey was conducted. Lymph node stations 4R, 4L, 7, 10L, and 11L were visualized and sampled. Rapid On-Site Evaluation (ROSE) confirmed squamous cell carcinoma in the subcarinal (7) and contralateral (4R) stations, confirming N3 disease. The procedure was uncomplicated.",
+    "note_text": "PROCEDURE: Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA).\nPATIENT: Mr. William Turner.\nCLINICAL SUMMARY: Evaluation of mediastinal lymphadenopathy in the setting of a LUL mass. A systematic EBUS survey was conducted. Lymph node stations 4R, 4L, 7, 10L, and 11L were visualized and sampled. Rapid On-Site Evaluation (ROSE) confirmed squamous cell carcinoma in the subcarinal (7) and contralateral (4R) stations, confirming N3 disease. The procedure was uncomplicated.",
     "cpt_codes": [
       31653
     ],
@@ -6179,12 +6117,6 @@
       "style_type": 2,
       "generated_name": "Joseph Parker",
       "generation_date": "2025-12-09T09:18:34.239915"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6398,7 +6330,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPatient: <PERSON>\nSteps:\n1. Scope in. Airway exam normal.\n2. Ultrasound survey: 4R, 4L, 7 big.\n3. Needles into 7, 4R, 4L, 10L, 11L.\n4. Pathologist in room said its cancer (Squamous).\n5. No bleeding.\nPlan: Oncology referral.",
+    "note_text": "Procedure: EBUS\nPatient: Joseph Parker\nSteps:\n1. Scope in. Airway exam normal.\n2. Ultrasound survey: 4R, 4L, 7 big.\n3. Needles into 7, 4R, 4L, 10L, 11L.\n4. Pathologist in room said its cancer (Squamous).\n5. No bleeding.\nPlan: Oncology referral.",
     "cpt_codes": [
       31653
     ],
@@ -6605,16 +6537,10 @@
       "style_type": 4,
       "generated_name": "Thomas Edwards",
       "generation_date": "2025-12-09T09:18:34.240013"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "note for <PERSON> doing ebus for staging. he has lul mass. we poked a bunch of nodes station 7 4r 4l 10l 11l. rose said squamous cell ca. looks like stage 3b at least since both sides positive. no issues during case minimal blood. woke up fine.",
+    "note_text": "note for Charles Evans doing ebus for staging. he has lul mass. we poked a bunch of nodes station 7 4r 4l 10l 11l. rose said squamous cell ca. looks like stage 3b at least since both sides positive. no issues during case minimal blood. woke up fine.",
     "cpt_codes": [
       31653
     ],
@@ -6821,16 +6747,10 @@
       "style_type": 5,
       "generated_name": "Christopher Collins",
       "generation_date": "2025-12-09T09:18:34.240058"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "EBUS-TBNA. Patient: <PERSON>. Stations Sampled: 4R (21mm), 4L (27mm), 7 (33mm), 10L (15mm), 11L (18mm). Needle: 22G. Passes: 14 total. ROSE Results: Squamous cell carcinoma confirmed in Station 7 and 4L. Diagnosis: N3 Malignancy. Complications: None.",
+    "note_text": "EBUS-TBNA. Patient: Thomas Edwards. Stations Sampled: 4R (21mm), 4L (27mm), 7 (33mm), 10L (15mm), 11L (18mm). Needle: 22G. Passes: 14 total. ROSE Results: Squamous cell carcinoma confirmed in Station 7 and 4L. Diagnosis: N3 Malignancy. Complications: None.",
     "cpt_codes": [
       31653
     ],
@@ -7037,12 +6957,6 @@
       "style_type": 6,
       "generated_name": "Daniel Stewart",
       "generation_date": "2025-12-09T09:18:34.240106"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7256,7 +7170,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent an EBUS procedure to check the lymph nodes in the center of his chest. We found enlarged nodes on both the left and right sides. We used a special needle to take samples from five different areas. Unfortunately, the preliminary results show that the cancer has spread to these nodes, which is an important finding for determining the best treatment. We will have the final report in a few days.",
+    "note_text": "Mr. Christopher Collins underwent an EBUS procedure to check the lymph nodes in the center of his chest. We found enlarged nodes on both the left and right sides. We used a special needle to take samples from five different areas. Unfortunately, the preliminary results show that the cancer has spread to these nodes, which is an important finding for determining the best treatment. We will have the final report in a few days.",
     "cpt_codes": [
       31653
     ],
@@ -7463,12 +7377,6 @@
       "style_type": 8,
       "generated_name": "Anthony Morris",
       "generation_date": "2025-12-09T09:18:34.240203"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7874,7 +7782,7 @@
     }
   },
   {
-    "note_text": "CLINICAL ABSTRACT: This is a summary record for Mr. <PERSON>. An EBUS-TBNA was performed sampling stations 4R, 4L, 7, 10L, and 11L. Pathologic evaluation confirmed <PERSON>. The findings are consistent with Stage IIIB (N3) disease.",
+    "note_text": "CLINICAL ABSTRACT: This is a summary record for Mr. Robert Reed. An EBUS-TBNA was performed sampling stations 4R, 4L, 7, 10L, and 11L. Pathologic evaluation confirmed Squamous Cell Carcinoma. The findings are consistent with Stage IIIB (N3) disease.",
     "cpt_codes": [
       31653
     ],
@@ -8057,13 +7965,6 @@
       "style_type": 2,
       "generated_name": "William Cook",
       "generation_date": "2025-12-09T09:18:34.240415"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -8451,7 +8352,7 @@
     }
   },
   {
-    "note_text": "short note for <PERSON> ebus done today. hit nodes 7 4r 4l 10l 11l. came back squamous cell. stage 3b. <PERSON> signing off.",
+    "note_text": "short note for <PERSON> ebus done today. hit nodes 7 4r 4l 10l 11l. came back squamous cell. stage 3b. dr harris signing off.",
     "cpt_codes": [
       31653
     ],
@@ -8636,15 +8537,14 @@
       "generation_date": "2025-12-09T09:18:34.240573"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
         "PERSON"
       ]
     }
   },
   {
-    "note_text": "EBUS-TBNA Summary. Patient: <PERSON>. Stations: 4R, 4L, 7, 10L, 11L. Pathology: Squamous Cell Carcinoma. Stage: IIIB.",
+    "note_text": "EBUS-TBNA Summary. Patient: Charles Bell. Stations: 4R, 4L, 7, 10L, 11L. Pathology: Squamous Cell Carcinoma. Stage: IIIB.",
     "cpt_codes": [
       31653
     ],
@@ -8827,12 +8727,6 @@
       "style_type": 6,
       "generated_name": "Christopher Bailey",
       "generation_date": "2025-12-09T09:18:34.240624"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9022,7 +8916,7 @@
     }
   },
   {
-    "note_text": "This is a brief record for Mr. <PERSON>. We performed an EBUS and sampled five lymph node stations. The results confirm squamous cell carcinoma spread to the mediastinum.",
+    "note_text": "This is a brief record for Mr. Thomas Murphy. We performed an EBUS and sampled five lymph node stations. The results confirm squamous cell carcinoma spread to the mediastinum.",
     "cpt_codes": [
       31653
     ],
@@ -9205,16 +9099,10 @@
       "style_type": 8,
       "generated_name": "Matthew Cooper",
       "generation_date": "2025-12-09T09:18:34.240719"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Operation: EBUS-TBNA.\nSubject: <PERSON>.\nOutcome: Aspiration of mediastinal nodes confirmed Squamous Cell Carcinoma. N3 disease established.",
+    "note_text": "Operation: EBUS-TBNA.\nSubject: Christopher Bailey.\nOutcome: Aspiration of mediastinal nodes confirmed Squamous Cell Carcinoma. N3 disease established.",
     "cpt_codes": [
       31653
     ],
@@ -9397,12 +9285,6 @@
       "style_type": 9,
       "generated_name": "Anthony Richardson",
       "generation_date": "2025-12-09T09:18:34.240765"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9616,7 +9498,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA).\nPATIENT: <PERSON>\nCLINICAL SUMMARY: Evaluation of mediastinal lymphadenopathy in the setting of a LUL mass. A systematic EBUS survey was conducted. Lymph node stations 4R, 4L, 7, 10L, and 11L were visualized and sampled. Rapid On-Site Evaluation (ROSE) confirmed squamous cell carcinoma in the subcarinal (7) and contralateral (4R) stations, confirming N3 disease. The procedure was uncomplicated.",
+    "note_text": "PROCEDURE: Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA).\nPATIENT: Mr. Kenneth Campbell.\nCLINICAL SUMMARY: Evaluation of mediastinal lymphadenopathy in the setting of a LUL mass. A systematic EBUS survey was conducted. Lymph node stations 4R, 4L, 7, 10L, and 11L were visualized and sampled. Rapid On-Site Evaluation (ROSE) confirmed squamous cell carcinoma in the subcarinal (7) and contralateral (4R) stations, confirming N3 disease. The procedure was uncomplicated.",
     "cpt_codes": [
       31653
     ],
@@ -9823,12 +9705,6 @@
       "style_type": 2,
       "generated_name": "Kenneth Campbell",
       "generation_date": "2025-12-09T09:18:34.240877"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10042,7 +9918,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPatient: <PERSON>\nSteps:\n1. Scope in. Airway exam normal.\n2. Ultrasound survey: 4R, 4L, 7 big.\n3. Needles into 7, 4R, 4L, 10L, 11L.\n4. Pathologist in room said its cancer (Squamous).\n5. No bleeding.\nPlan: Oncology referral.",
+    "note_text": "Procedure: EBUS\nPatient: George Mitchell\nSteps:\n1. Scope in. Airway exam normal.\n2. Ultrasound survey: 4R, 4L, 7 big.\n3. Needles into 7, 4R, 4L, 10L, 11L.\n4. Pathologist in room said its cancer (Squamous).\n5. No bleeding.\nPlan: Oncology referral.",
     "cpt_codes": [
       31653
     ],
@@ -10249,16 +10125,10 @@
       "style_type": 4,
       "generated_name": "Steven Roberts",
       "generation_date": "2025-12-09T09:18:34.240980"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "note for <PERSON> doing ebus for staging. he has lul mass. we poked a bunch of nodes station 7 4r 4l 10l 11l. rose said squamous cell ca. looks like stage 3b at least since both sides positive. no issues during case minimal blood. woke up fine.",
+    "note_text": "note for Steven Roberts doing ebus for staging. he has lul mass. we poked a bunch of nodes station 7 4r 4l 10l 11l. rose said squamous cell ca. looks like stage 3b at least since both sides positive. no issues during case minimal blood. woke up fine.",
     "cpt_codes": [
       31653
     ],
@@ -10465,16 +10335,10 @@
       "style_type": 5,
       "generated_name": "Edward Carter",
       "generation_date": "2025-12-09T09:18:34.241031"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "EBUS-TBNA. Patient: <PERSON>. Stations Sampled: 4R (21mm), 4L (27mm), 7 (33mm), 10L (15mm), 11L (18mm). Needle: 22G. Passes: 14 total. ROSE Results: Squamous cell carcinoma confirmed in Station 7 and 4L. Diagnosis: N3 Malignancy. Complications: None.",
+    "note_text": "EBUS-TBNA. Patient: Edward Carter. Stations Sampled: 4R (21mm), 4L (27mm), 7 (33mm), 10L (15mm), 11L (18mm). Needle: 22G. Passes: 14 total. ROSE Results: Squamous cell carcinoma confirmed in Station 7 and 4L. Diagnosis: N3 Malignancy. Complications: None.",
     "cpt_codes": [
       31653
     ],
@@ -10681,12 +10545,6 @@
       "style_type": 6,
       "generated_name": "Brian Phillips",
       "generation_date": "2025-12-09T09:18:34.241082"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10900,7 +10758,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent an EBUS procedure to check the lymph nodes in the center of his chest. We found enlarged nodes on both the left and right sides. We used a special needle to take samples from five different areas. Unfortunately, the preliminary results show that the cancer has spread to these nodes, which is an important finding for determining the best treatment. We will have the final report in a few days.",
+    "note_text": "Mr. Kevin Evans underwent an EBUS procedure to check the lymph nodes in the center of his chest. We found enlarged nodes on both the left and right sides. We used a special needle to take samples from five different areas. Unfortunately, the preliminary results show that the cancer has spread to these nodes, which is an important finding for determining the best treatment. We will have the final report in a few days.",
     "cpt_codes": [
       31653
     ],
@@ -11107,16 +10965,10 @@
       "style_type": 8,
       "generated_name": "Ronald Turner",
       "generation_date": "2025-12-09T09:18:34.241279"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Operation: Endobronchial ultrasound with transbronchial needle aspiration.\nSubject: <PERSON>.\nFindings: Enlarged lymph nodes identified at stations 7, 4R, and 4L. These were aspirated along with 10L and 11L. Cytology confirmed malignancy (Squamous cell). This establishes N3 nodal involvement.",
+    "note_text": "Operation: Endobronchial ultrasound with transbronchial needle aspiration.\nSubject: Ronald Turner.\nFindings: Enlarged lymph nodes identified at stations 7, 4R, and 4L. These were aspirated along with 10L and 11L. Cytology confirmed malignancy (Squamous cell). This establishes N3 nodal involvement.",
     "cpt_codes": [
       31653
     ],
@@ -11323,12 +11175,6 @@
       "style_type": 9,
       "generated_name": "Jason Torres",
       "generation_date": "2025-12-09T09:18:34.241334"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12118,7 +11964,7 @@
     }
   },
   {
-    "note_text": "<PERSON> needed a pleurx for her cancer fluid. right side. prepped the skin used ultrasound. tunneled it under the skin put the tube in. drained about a liter. patient got a little coughing but ok. catheter works good. home health to follow up.",
+    "note_text": "Linda Ward needed a pleurx for her cancer fluid. right side. prepped the skin used ultrasound. tunneled it under the skin put the tube in. drained about a liter. patient got a little coughing but ok. catheter works good. home health to follow up.",
     "cpt_codes": [
       32550
     ],
@@ -12310,16 +12156,10 @@
       "style_type": 5,
       "generated_name": "Elizabeth Peterson",
       "generation_date": "2025-12-09T09:18:34.241618"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Tunneled Pleural Catheter Insertion (Right). Patient: <PERSON>. Indication: Malignant effusion (Ovarian Ca). Technique: Ultrasound guided access, 6th ICS. 7cm tunnel. 15.5Fr PleurX placed. Output: 1,100mL clear yellow. Complications: None. Disposition: Discharge.",
+    "note_text": "Procedure: Tunneled Pleural Catheter Insertion (Right). Patient: Barbara Torres. Indication: Malignant effusion (Ovarian Ca). Technique: Ultrasound guided access, 6th ICS. 7cm tunnel. 15.5Fr PleurX placed. Output: 1,100mL clear yellow. Complications: None. Disposition: Discharge.",
     "cpt_codes": [
       32550
     ],
@@ -12511,12 +12351,6 @@
       "style_type": 6,
       "generated_name": "Jennifer Gray",
       "generation_date": "2025-12-09T09:18:34.241664"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12715,7 +12549,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> is suffering from fluid buildup around her lung due to her cancer. To help her breathe better at home, we placed a PleurX drain today. We numbed the area on her right side, created a small tunnel under the skin for the tube, and inserted it into the fluid pocket. We drained over a liter of fluid immediately, which should give her relief. We taught her family how to use the bottles.",
+    "note_text": "Ms. Elizabeth Peterson is suffering from fluid buildup around her lung due to her cancer. To help her breathe better at home, we placed a PleurX drain today. We numbed the area on her right side, created a small tunnel under the skin for the tube, and inserted it into the fluid pocket. We drained over a liter of fluid immediately, which should give her relief. We taught her family how to use the bottles.",
     "cpt_codes": [
       32550
     ],
@@ -12907,12 +12741,6 @@
       "style_type": 8,
       "generated_name": "Susan James",
       "generation_date": "2025-12-09T09:18:34.241760"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13314,7 +13142,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: Mr. <PERSON> presented for diagnostic pleuroscopy. Under MAC, the left hemithorax was accessed. Inspection revealed diffuse, confluent nodularity of the parietal and visceral pleura, suggestive of malignancy. Multiple biopsies were obtained. Due to extensive visceral restriction (trapped lung), pleurodesis was contraindicated. A 24 Fr chest tube was placed for drainage. The clinical picture strongly favors malignant pleural mesothelioma.",
+    "note_text": "OPERATIVE NARRATIVE: Mr. James Brooks presented for diagnostic pleuroscopy. Under MAC, the left hemithorax was accessed. Inspection revealed diffuse, confluent nodularity of the parietal and visceral pleura, suggestive of malignancy. Multiple biopsies were obtained. Due to extensive visceral restriction (trapped lung), pleurodesis was contraindicated. A 24 Fr chest tube was placed for drainage. The clinical picture strongly favors malignant pleural mesothelioma.",
     "cpt_codes": [
       32609
     ],
@@ -13508,12 +13336,6 @@
       "style_type": 2,
       "generated_name": "John Kelly",
       "generation_date": "2025-12-09T09:18:34.241904"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13911,7 +13733,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for the scope of the pleural space. fluid on the left side. went in with the rigid scope. looks bad lots of nodules all over the pleura probably mesothelioma. lung is trapped so it wont expand. took a bunch of biopsies sent for path. put a chest tube in cant glue it shut if the lung dont expand. admitting him.",
+    "note_text": "Robert Sanders here for the scope of the pleural space. fluid on the left side. went in with the rigid scope. looks bad lots of nodules all over the pleura probably mesothelioma. lung is trapped so it wont expand. took a bunch of biopsies sent for path. put a chest tube in cant glue it shut if the lung dont expand. admitting him.",
     "cpt_codes": [
       32609
     ],
@@ -14105,16 +13927,10 @@
       "style_type": 5,
       "generated_name": "William Bennett",
       "generation_date": "2025-12-09T09:18:34.242053"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Medical Thoracoscopy. Patient: <PERSON>. Findings: Diffuse pleural thickening/nodularity. Trapped lung. Action: Parietal and visceral pleural biopsies (n=13). Drainage of 1,350mL fluid. Chest tube placement (24Fr). Diagnosis: Suspicious for Mesothelioma.",
+    "note_text": "Procedure: Medical Thoracoscopy. Patient: Michael Price. Findings: Diffuse pleural thickening/nodularity. Trapped lung. Action: Parietal and visceral pleural biopsies (n=13). Drainage of 1,350mL fluid. Chest tube placement (24Fr). Diagnosis: Suspicious for Mesothelioma.",
     "cpt_codes": [
       32609
     ],
@@ -14308,12 +14124,6 @@
       "style_type": 6,
       "generated_name": "David Wood",
       "generation_date": "2025-12-09T09:18:34.242117"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14514,7 +14324,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a procedure to look inside his chest cavity today. We drained the fluid and saw extensive thickening and nodules on the lining of the lung and chest wall. We are very suspicious this is mesothelioma. Because the lung is trapped by this tissue and cannot expand, we could not seal the space today. Instead, we took biopsies and placed a chest tube to keep the fluid drained while we wait for results.",
+    "note_text": "Mr. William Bennett underwent a procedure to look inside his chest cavity today. We drained the fluid and saw extensive thickening and nodules on the lining of the lung and chest wall. We are very suspicious this is mesothelioma. Because the lung is trapped by this tissue and cannot expand, we could not seal the space today. Instead, we took biopsies and placed a chest tube to keep the fluid drained while we wait for results.",
     "cpt_codes": [
       32609
     ],
@@ -14708,12 +14518,6 @@
       "style_type": 8,
       "generated_name": "Joseph Ross",
       "generation_date": "2025-12-09T09:18:34.242221"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -15104,7 +14908,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Ms. <PERSON> underwent EBUS staging for T2aN0M0 RLL adenocarcinoma. Assessment of the mediastinum revealed an enlarged subcarinal node (Station 7). TBNA of Station 7 yielded adenocarcinoma on ROSE, confirming N2 disease. Contralateral station 4L was negative. The patient is upstaged to IIIA.",
+    "note_text": "PROCEDURE NOTE: Ms. Patricia Coleman underwent EBUS staging for T2aN0M0 RLL adenocarcinoma. Assessment of the mediastinum revealed an enlarged subcarinal node (Station 7). TBNA of Station 7 yielded adenocarcinoma on ROSE, confirming N2 disease. Contralateral station 4L was negative. The patient is upstaged to IIIA.",
     "cpt_codes": [
       31653
     ],
@@ -15285,12 +15089,6 @@
       "style_type": 2,
       "generated_name": "Linda Jenkins",
       "generation_date": "2025-12-09T09:18:34.242361"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -15662,7 +15460,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for staging ebus. she has a cancer in the right lower lobe. checked the middle nodes station 7 was big. poked it and it is cancer. poked the other ones 4r 4l 10r 11r mostly benign. so she has n2 disease now. needs oncology.",
+    "note_text": "Barbara Perry here for staging ebus. she has a cancer in the right lower lobe. checked the middle nodes station 7 was big. poked it and it is cancer. poked the other ones 4r 4l 10r 11r mostly benign. so she has n2 disease now. needs oncology.",
     "cpt_codes": [
       31653
     ],
@@ -15843,16 +15641,10 @@
       "style_type": 5,
       "generated_name": "Jennifer Long",
       "generation_date": "2025-12-09T09:18:34.242494"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "EBUS-TBNA Staging. Patient: <PERSON>. <PERSON>: RLL Adeno. Stations Sampled: 7 (Pos), 4R, 4L, 10R, 11R. Findings: N2 disease confirmed at Station 7 (28mm). Complications: None.",
+    "note_text": "EBUS-TBNA Staging. Patient: Elizabeth Powell. Primary: RLL Adeno. Stations Sampled: 7 (Pos), 4R, 4L, 10R, 11R. Findings: N2 disease confirmed at Station 7 (28mm). Complications: None.",
     "cpt_codes": [
       31653
     ],
@@ -16033,13 +15825,6 @@
       "style_type": 6,
       "generated_name": "Maria Patterson",
       "generation_date": "2025-12-09T09:18:34.242545"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -16227,7 +16012,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for staging of her lung cancer. We used the EBUS scope to sample lymph nodes in the center of her chest. Unfortunately, the lymph node under the main airway (Station 7) tested positive for cancer cells. This changes her stage to IIIA. We sampled other nodes to be thorough, but they were negative. We will discuss the next steps with oncology.",
+    "note_text": "Ms. Jennifer Long came in for staging of her lung cancer. We used the EBUS scope to sample lymph nodes in the center of her chest. Unfortunately, the lymph node under the main airway (Station 7) tested positive for cancer cells. This changes her stage to IIIA. We sampled other nodes to be thorough, but they were negative. We will discuss the next steps with oncology.",
     "cpt_codes": [
       31653
     ],
@@ -16408,16 +16193,10 @@
       "style_type": 8,
       "generated_name": "Margaret Flores",
       "generation_date": "2025-12-09T09:18:34.242631"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Operation: EBUS mediastinal staging.\nSubject: <PERSON>.\nOutcome: Transbronchial aspiration of the subcarinal node (St 7) demonstrated adenocarcinoma. This confirms mediastinal nodal involvement (N2). Other stations were sampled for completeness.",
+    "note_text": "Operation: EBUS mediastinal staging.\nSubject: Maria Patterson.\nOutcome: Transbronchial aspiration of the subcarinal node (St 7) demonstrated adenocarcinoma. This confirms mediastinal nodal involvement (N2). Other stations were sampled for completeness.",
     "cpt_codes": [
       31653
     ],
@@ -16598,12 +16377,6 @@
       "style_type": 9,
       "generated_name": "Dorothy Washington",
       "generation_date": "2025-12-09T09:18:34.242673"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   }
 ]

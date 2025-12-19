@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Indication: <PERSON>, stent migration. \nProc: Rigid Bronch, Stent Exchange, Laser.\n- 14mm Rigid inserted.\n- Migrated stent in RMB removed with forceps.\n- 70% mid-tracheal obstruction (tumor ingrowth).\n- Tx: Nd:YAG laser (40W), mechanical coring, 12mm CRE balloon dilation.\n- New 16x50mm Dumon stent deployed.\n- Final: Airway patent. EBL 50cc.",
+    "note_text": "Indication: Stridor, stent migration. \nProc: Rigid Bronch, Stent Exchange, Laser.\n- 14mm Rigid inserted.\n- Migrated stent in RMB removed with forceps.\n- 70% mid-tracheal obstruction (tumor ingrowth).\n- Tx: Nd:YAG laser (40W), mechanical coring, 12mm CRE balloon dilation.\n- New 16x50mm Dumon stent deployed.\n- Final: Airway patent. EBL 50cc.",
     "cpt_codes": [
       31638,
       31641
@@ -175,12 +175,6 @@
       "style_type": 1,
       "generated_name": "Mary Shelley",
       "generation_date": "2025-12-09T09:20:59.762479"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2088,7 +2082,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: <PERSON>\nProc: EBUS + ENB\n1. EBUS scope in. Sampled 7, 4R, 4L. ROSE: Benign.\n2. Switched to therapeutic scope.\n3. <PERSON> map. Navigated to RUL.\n4. Could not confirm target with REBUS.\n5. Stopped procedure without biopsy of nodule.\nPlan: Follow up or alternative biopsy method.",
+    "note_text": "Resident Note\nPt: <PERSON>\nProc: EBUS + ENB\n1. EBUS scope in. Sampled 7, 4R, 4L. ROSE: Benign.\n2. Switched to therapeutic scope.\n3. Loaded Veran map. Navigated to RUL.\n4. Could not confirm target with REBUS.\n5. Stopped procedure without biopsy of nodule.\nPlan: Follow up or alternative biopsy method.",
     "cpt_codes": [
       31653,
       31627
@@ -2247,9 +2241,8 @@
       "generation_date": "2025-12-09T09:20:59.763035"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
         "PERSON"
       ]
     }
@@ -3511,7 +3504,7 @@
     }
   },
   {
-    "note_text": "Mr <LOCATION> needed his chest drained again recurrent effusion left side. used the ultrasound. tried one spot with the needle and got nothing dry tap. moved down a couple ribs and got it. put the wire in then the 8 french pigtail catheter. drained about 1400cc of yellow fluid. leaving the tube in for now sending fluid to lab.",
+    "note_text": "Mr Washington needed his chest drained again recurrent effusion left side. used the ultrasound. tried one spot with the needle and got nothing dry tap. moved down a couple ribs and got it. put the wire in then the 8 french pigtail catheter. drained about 1400cc of yellow fluid. leaving the tube in for now sending fluid to lab.",
     "cpt_codes": [
       32557
     ],
@@ -3622,12 +3615,6 @@
       "style_type": 5,
       "generated_name": "John Quincy Adams",
       "generation_date": "2025-12-09T09:20:59.763381"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -5312,7 +5299,7 @@
     }
   },
   {
-    "note_text": "Dr. Halpert performed the bronchoscopy and administered the sedation for Mr. <PERSON>, which lasted 48 minutes. Using Fentanyl and Versed, we achieved moderate sedation. Upon inspection, we found a mucous plug in the right middle lobe. We proceeded to suction the airway and collect both BAL and brush samples from the RML. The patient's vitals were stable throughout.",
+    "note_text": "Dr. Halpert performed the bronchoscopy and administered the sedation for Mr. Scott, which lasted 48 minutes. Using Fentanyl and Versed, we achieved moderate sedation. Upon inspection, we found a mucous plug in the right middle lobe. We proceeded to suction the airway and collect both BAL and brush samples from the RML. The patient's vitals were stable throughout.",
     "cpt_codes": [
       31623,
       31624,
@@ -5484,12 +5471,6 @@
       "style_type": 8,
       "generated_name": "Oscar Martinez",
       "generation_date": "2025-12-09T09:20:59.763836"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6843,7 +6824,7 @@
     }
   },
   {
-    "note_text": "We performed a cryobiopsy to evaluate Mr. <PERSON>'s ILD. After placing an LMA, we used radial EBUS to ensure the biopsy sites in the right lower lobe were safe. We then advanced the cryoprobe and obtained biopsies from the posterior and lateral basal segments, freezing for 5 seconds each time. We used a Fogarty balloon to manage potential bleeding. We retrieved two large lung samples and confirmed there was no pneumothorax before finishing.",
+    "note_text": "We performed a cryobiopsy to evaluate Mr. Wayne's ILD. After placing an LMA, we used radial EBUS to ensure the biopsy sites in the right lower lobe were safe. We then advanced the cryoprobe and obtained biopsies from the posterior and lateral basal segments, freezing for 5 seconds each time. We used a Fogarty balloon to manage potential bleeding. We retrieved two large lung samples and confirmed there was no pneumothorax before finishing.",
     "cpt_codes": [
       31628,
       31654
@@ -7007,16 +6988,10 @@
       "style_type": 8,
       "generated_name": "Billy Batson",
       "generation_date": "2025-12-09T09:20:59.764243"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Transbronchial cryo-sampling of parenchyma.\nContext: <PERSON> fibrosis.\nMethod: Under LMA anesthesia, sonographic clearance was obtained. The cryo-instrument was applied to the RLL basilar segments. Freezing activation yielded two substantial tissue aggregates. Prophylactic balloon occlusion was employed.\nResult: Hemostasis secured. Lung intact.",
+    "note_text": "Procedure: Transbronchial cryo-sampling of parenchyma.\nContext: Pulmonary fibrosis.\nMethod: Under LMA anesthesia, sonographic clearance was obtained. The cryo-instrument was applied to the RLL basilar segments. Freezing activation yielded two substantial tissue aggregates. Prophylactic balloon occlusion was employed.\nResult: Hemostasis secured. Lung intact.",
     "cpt_codes": [
       31628,
       31654
@@ -7180,12 +7155,6 @@
       "style_type": 9,
       "generated_name": "Carter Hall",
       "generation_date": "2025-12-09T09:20:59.764284"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   }
 ]

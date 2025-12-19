@@ -1057,7 +1057,7 @@
     }
   },
   {
-    "note_text": "Dr. Holloway performed a bedside bronchoscopy on Ms. <PERSON> to address her dropping oxygen levels. We passed the scope through her breathing tube and immediately found heavy mucus blocking the right lung. We spent significant time suctioning and washing the area with saline until the breathing tubes were clear. The left side looked much better. Afterward, her ventilator pressures went down, which is a good sign.",
+    "note_text": "Dr. Holloway performed a bedside bronchoscopy on Ms. Lopez to address her dropping oxygen levels. We passed the scope through her breathing tube and immediately found heavy mucus blocking the right lung. We spent significant time suctioning and washing the area with saline until the breathing tubes were clear. The left side looked much better. Afterward, her ventilator pressures went down, which is a good sign.",
     "cpt_codes": [
       31645
     ],
@@ -1205,12 +1205,6 @@
       "style_type": 8,
       "generated_name": "Mrs. Lopez",
       "generation_date": "2025-12-09T09:20:39.366188"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1525,7 +1519,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented with symptomatic migration of a left mainstem bronchial stent. Under general anesthesia, bronchoscopy revealed the covered metal stent protruding into the distal trachea. The stent was manipulated distally using alligator forceps and repositioned into the appropriate anatomic location. Balloon dilation was performed to ensure apposition to the bronchial wall. The airway is now patent.",
+    "note_text": "OPERATIVE REPORT: Mr. Norris presented with symptomatic migration of a left mainstem bronchial stent. Under general anesthesia, bronchoscopy revealed the covered metal stent protruding into the distal trachea. The stent was manipulated distally using alligator forceps and repositioned into the appropriate anatomic location. Balloon dilation was performed to ensure apposition to the bronchial wall. The airway is now patent.",
     "cpt_codes": [
       31638
     ],
@@ -1682,12 +1676,6 @@
       "style_type": 2,
       "generated_name": "Arthur P. Henderson",
       "generation_date": "2025-12-09T09:20:39.366390"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2503,7 +2491,7 @@
     }
   },
   {
-    "note_text": "We took Mr. <PERSON> to the OR to fix his lung stent. It had slipped up into his windpipe. We put him to sleep and used a scope to carefully push the stent back down into the left lung airway where it belongs. We used a balloon to widen it so it stays put. He is breathing better now.",
+    "note_text": "We took Mr. Norris to the OR to fix his lung stent. It had slipped up into his windpipe. We put him to sleep and used a scope to carefully push the stent back down into the left lung airway where it belongs. We used a balloon to widen it so it stays put. He is breathing better now.",
     "cpt_codes": [
       31638
     ],
@@ -2660,12 +2648,6 @@
       "style_type": 8,
       "generated_name": "Mr. Norris",
       "generation_date": "2025-12-09T09:20:39.366810"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3439,7 +3421,7 @@
     }
   },
   {
-    "note_text": "<PERSON> has that tracheal stenosis again hard to breathe. put her to sleep dilated it with the balloon 8 10 then 12 millimeters. opened up nice looks like 80 percent open now little bit of bleeding but stopped. sending her home.",
+    "note_text": "hannah keller has that tracheal stenosis again hard to breathe. put her to sleep dilated it with the balloon 8 10 then 12 millimeters. opened up nice looks like 80 percent open now little bit of bleeding but stopped. sending her home.",
     "cpt_codes": [
       31630
     ],
@@ -3587,12 +3569,6 @@
       "style_type": 5,
       "generated_name": "hannah keller",
       "generation_date": "2025-12-09T09:20:39.367249"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3898,7 +3874,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> had her windpipe dilated today. She has a narrowing just below her vocal cords. We used a special balloon that we inflated inside the narrow part to stretch it open. We did this three times with increasing pressure. The airway is much wider now, which should help her breathing.",
+    "note_text": "Ms. Keller had her windpipe dilated today. She has a narrowing just below her vocal cords. We used a special balloon that we inflated inside the narrow part to stretch it open. We did this three times with increasing pressure. The airway is much wider now, which should help her breathing.",
     "cpt_codes": [
       31630
     ],
@@ -4046,12 +4022,6 @@
       "style_type": 8,
       "generated_name": "Ms. Keller",
       "generation_date": "2025-12-09T09:20:39.367466"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4844,7 +4814,7 @@
     }
   },
   {
-    "note_text": "<PERSON> choked on a peanut ems intubated him. right lung down. went in with the scope giant peanut mess in the right main. used the basket and grabbers took a while to get it all out in pieces. cleaned it up nicely lung is up now on xray.",
+    "note_text": "jacob carter choked on a peanut ems intubated him. right lung down. went in with the scope giant peanut mess in the right main. used the basket and grabbers took a while to get it all out in pieces. cleaned it up nicely lung is up now on xray.",
     "cpt_codes": [
       31635
     ],
@@ -4999,12 +4969,6 @@
       "style_type": 5,
       "generated_name": "jacob carter",
       "generation_date": "2025-12-09T09:20:39.367942"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5166,7 +5130,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nForeign body aspiration, respiratory failure.\n[Anesthesia]\nGeneral (Propofol/Fentanyl).\n[Description]\nFB identified (<PERSON>) R lung. Removal via basket/forceps. Airways patent post-removal.\n[Plan]\nWean vent. CXR.",
+    "note_text": "[Indication]\nForeign body aspiration, respiratory failure.\n[Anesthesia]\nGeneral (Propofol/Fentanyl).\n[Description]\nFB identified (Peanut) R lung. Removal via basket/forceps. Airways patent post-removal.\n[Plan]\nWean vent. CXR.",
     "cpt_codes": [
       31635
     ],
@@ -5321,16 +5285,10 @@
       "style_type": 7,
       "generated_name": "Jacob Carter",
       "generation_date": "2025-12-09T09:20:39.368077"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We performed an emergency procedure on Mr. <PERSON> to remove a peanut he inhaled. It was blocking his right lung. Using a small basket and grippers through the scope, we removed the peanut in several pieces. Once it was all out, we suctioned the airway clean, and his lung re-expanded.",
+    "note_text": "We performed an emergency procedure on Mr. Carter to remove a peanut he inhaled. It was blocking his right lung. Using a small basket and grippers through the scope, we removed the peanut in several pieces. Once it was all out, we suctioned the airway clean, and his lung re-expanded.",
     "cpt_codes": [
       31635
     ],
@@ -5485,12 +5443,6 @@
       "style_type": 8,
       "generated_name": "Mr. Carter",
       "generation_date": "2025-12-09T09:20:39.368143"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6318,7 +6270,7 @@
     }
   },
   {
-    "note_text": "<PERSON> reyes for ebus checking for sarcoid. lymph nodes looked big at 7 and 11r. poked them with the needle got good samples rose said granulomas. didn't see anything else weird. patient woke up fine going home.",
+    "note_text": "linda reyes for ebus checking for sarcoid. lymph nodes looked big at 7 and 11r. poked them with the needle got good samples rose said granulomas. didn't see anything else weird. patient woke up fine going home.",
     "cpt_codes": [
       31652
     ],
@@ -6480,12 +6432,6 @@
       "style_type": 5,
       "generated_name": "linda reyes",
       "generation_date": "2025-12-09T09:20:39.368769"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6819,7 +6765,7 @@
     }
   },
   {
-    "note_text": "Dr. Cole performed an EBUS procedure on Ms. <PERSON> to investigate her swollen lymph nodes. We used a special ultrasound scope to guide a needle into nodes in the center of her chest and the right side. The preliminary results show granulomas, which points towards sarcoidosis. We sampled two areas total.",
+    "note_text": "Dr. Cole performed an EBUS procedure on Ms. Reyes to investigate her swollen lymph nodes. We used a special ultrasound scope to guide a needle into nodes in the center of her chest and the right side. The preliminary results show granulomas, which points towards sarcoidosis. We sampled two areas total.",
     "cpt_codes": [
       31652
     ],
@@ -6981,12 +6927,6 @@
       "style_type": 8,
       "generated_name": "Mrs. Reyes",
       "generation_date": "2025-12-09T09:20:39.368923"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7308,7 +7248,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NOTE: Bronchial <PERSON>, Session 2.\nINDICATION: Refractory asthma.\nPROCEDURE: The lower lobes were targeted for this session. The Alair catheter was deployed systematically in the segmental and subsegmental bronchi of the right and left lower lobes. A total of 92 radiofrequency activations were delivered. The patient tolerated the procedure with only mild, transient bronchospasm managed pharmacologically.",
+    "note_text": "OPERATIVE NOTE: Bronchial Thermoplasty, Session 2.\nINDICATION: Refractory asthma.\nPROCEDURE: The lower lobes were targeted for this session. The Alair catheter was deployed systematically in the segmental and subsegmental bronchi of the right and left lower lobes. A total of 92 radiofrequency activations were delivered. The patient tolerated the procedure with only mild, transient bronchospasm managed pharmacologically.",
     "cpt_codes": [
       31661
     ],
@@ -7458,12 +7398,6 @@
       "style_type": 2,
       "generated_name": "Ripley Alien",
       "generation_date": "2025-12-09T09:20:39.369106"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7779,7 +7713,7 @@
     }
   },
   {
-    "note_text": "<LOCATION> morgan back for her second thermoplasty session doing the lower lobes today. went smoothly did about 90 burns total in the right and left lower lobes. she got a little tight during the case gave some nebs and steroids she opened up. going home today.",
+    "note_text": "danielle morgan back for her second thermoplasty session doing the lower lobes today. went smoothly did about 90 burns total in the right and left lower lobes. she got a little tight during the case gave some nebs and steroids she opened up. going home today.",
     "cpt_codes": [
       31661
     ],
@@ -7929,12 +7863,6 @@
       "style_type": 5,
       "generated_name": "danielle morgan",
       "generation_date": "2025-12-09T09:20:39.369250"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -8244,7 +8172,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for her second bronchial thermoplasty treatment for her asthma. Today we treated the bottom sections of both lungs. We used a special catheter to warm the airway walls to reduce muscle thickness. We did 92 treatments in total. She had a little asthma flare during the procedure but we treated it quickly and she is doing fine now.",
+    "note_text": "Ms. Morgan came in for her second bronchial thermoplasty treatment for her asthma. Today we treated the bottom sections of both lungs. We used a special catheter to warm the airway walls to reduce muscle thickness. We did 92 treatments in total. She had a little asthma flare during the procedure but we treated it quickly and she is doing fine now.",
     "cpt_codes": [
       31661
     ],
@@ -8394,12 +8322,6 @@
       "style_type": 8,
       "generated_name": "Ms. Morgan",
       "generation_date": "2025-12-09T09:20:39.369434"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9632,7 +9554,7 @@
     }
   },
   {
-    "note_text": "Dr. Simmons performed a procedure to drain fluid from around Mr. <PERSON>'s left lung. Using ultrasound to guide the needle, we removed 1.3 liters of fluid. This helped his breathing immediately. We sent the fluid to the lab to make sure there is no infection.",
+    "note_text": "Dr. Simmons performed a procedure to drain fluid from around Mr. Patel's left lung. Using ultrasound to guide the needle, we removed 1.3 liters of fluid. This helped his breathing immediately. We sent the fluid to the lab to make sure there is no infection.",
     "cpt_codes": [
       32555
     ],
@@ -9781,12 +9703,6 @@
       "style_type": 8,
       "generated_name": "Mr. Patel",
       "generation_date": "2025-12-09T09:20:39.369970"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10092,7 +10008,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Tube Thoracostomy.\nINDICATION: <PERSON> spontaneous pneumothorax.\nPROCEDURE: The right hemithorax was prepped. Local anesthesia was infiltrated. A 28 French chest tube was inserted via blunt dissection at the 5th intercostal space. Significant air release was confirmed. The tube was secured and placed to suction. Post-procedure imaging confirmed lung re-expansion.",
+    "note_text": "PROCEDURE NOTE: Tube Thoracostomy.\nINDICATION: Primary spontaneous pneumothorax.\nPROCEDURE: The right hemithorax was prepped. Local anesthesia was infiltrated. A 28 French chest tube was inserted via blunt dissection at the 5th intercostal space. Significant air release was confirmed. The tube was secured and placed to suction. Post-procedure imaging confirmed lung re-expansion.",
     "cpt_codes": [
       32551
     ],
@@ -10239,12 +10155,6 @@
       "style_type": 2,
       "generated_name": "Bruce Wayne",
       "generation_date": "2025-12-09T09:20:39.370235"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10554,7 +10464,7 @@
     }
   },
   {
-    "note_text": "<PERSON> young guy spontaneous pneumo right side. pigtail didn't work so put in a real chest tube. 28 french right side 5th intercostal. big rush of air lung came up nicely on the xray. hooked to suction admitting him.",
+    "note_text": "<PERSON> spontaneous pneumo right side. pigtail didn't work so put in a real chest tube. 28 french right side 5th intercostal. big rush of air lung came up nicely on the xray. hooked to suction admitting him.",
     "cpt_codes": [
       32551
     ],
@@ -11010,7 +10920,7 @@
     }
   },
   {
-    "note_text": "We placed a chest tube in Mr. <PERSON>'s right side to treat his collapsed lung. We numbed the area and inserted a large tube between the ribs. A lot of air came out, and his breathing improved. The X-ray showed the lung is back up. He is admitted to the hospital.",
+    "note_text": "We placed a chest tube in Mr. Nguyen's right side to treat his collapsed lung. We numbed the area and inserted a large tube between the ribs. A lot of air came out, and his breathing improved. The X-ray showed the lung is back up. He is admitted to the hospital.",
     "cpt_codes": [
       32551
     ],
@@ -11157,12 +11067,6 @@
       "style_type": 8,
       "generated_name": "Mr. Nguyen",
       "generation_date": "2025-12-09T09:20:39.370476"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11942,7 +11846,7 @@
     }
   },
   {
-    "note_text": "<PERSON> on the right lung looks like cancer. did the thoracoscopy looked inside nodules all over the wall. took a bunch of biopsies like 10 of them. drained the fluid out. didn't leave a chest tube just stitched it up. waiting on path.",
+    "note_text": "evelyn sanders fluid on the right lung looks like cancer. did the thoracoscopy looked inside nodules all over the wall. took a bunch of biopsies like 10 of them. drained the fluid out. didn't leave a chest tube just stitched it up. waiting on path.",
     "cpt_codes": [
       32604
     ],
@@ -12094,12 +11998,6 @@
       "style_type": 5,
       "generated_name": "evelyn sanders",
       "generation_date": "2025-12-09T09:20:39.370716"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12413,7 +12311,7 @@
     }
   },
   {
-    "note_text": "Dr. Rahman performed a thoracoscopy on Ms. <PERSON>. We made a small cut in her side and put a camera into the chest cavity. We drained the fluid and saw many small lumps on the lining of the chest wall. We took samples of these lumps to test for cancer. We didn't need to leave a tube in.",
+    "note_text": "Dr. Rahman performed a thoracoscopy on Ms. Sanders. We made a small cut in her side and put a camera into the chest cavity. We drained the fluid and saw many small lumps on the lining of the chest wall. We took samples of these lumps to test for cancer. We didn't need to leave a tube in.",
     "cpt_codes": [
       32604
     ],
@@ -12565,12 +12463,6 @@
       "style_type": 8,
       "generated_name": "Mrs. Sanders",
       "generation_date": "2025-12-09T09:20:39.370834"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13787,7 +13679,7 @@
     }
   },
   {
-    "note_text": "teresa <PERSON> two spots on the lung right side. used the robot to get out there. found the top one with the ultrasound took some bites. then went to the bottom one found that too took more bites. everything went smooth no bleeding patient went home.",
+    "note_text": "teresa johnson two spots on the lung right side. used the robot to get out there. found the top one with the ultrasound took some bites. then went to the bottom one found that too took more bites. everything went smooth no bleeding patient went home.",
     "cpt_codes": [
       31628,
       31632,
@@ -14047,12 +13939,6 @@
       "style_type": 5,
       "generated_name": "teresa johnson",
       "generation_date": "2025-12-09T09:20:39.371226"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14582,7 +14468,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> had a robotic bronchoscopy today to biopsy two spots in her right lung. We used the robot to steer the camera deep into the lung to reach the spots in the upper and lower lobes. We confirmed we were in the right place with ultrasound and took biopsies from both. She did very well.",
+    "note_text": "Ms. Johnson had a robotic bronchoscopy today to biopsy two spots in her right lung. We used the robot to steer the camera deep into the lung to reach the spots in the upper and lower lobes. We confirmed we were in the right place with ultrasound and took biopsies from both. She did very well.",
     "cpt_codes": [
       31628,
       31632,
@@ -14842,12 +14728,6 @@
       "style_type": 8,
       "generated_name": "Ms. Johnson",
       "generation_date": "2025-12-09T09:20:39.371419"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

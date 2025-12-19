@@ -980,7 +980,7 @@
     }
   },
   {
-    "note_text": "We did the lung volume reduction on Mr <PERSON> today for his emphysema right upper lobe. Chartis balloon showed no collateral ventilation so we proceeded. Put in three valves total two 4s and one 5.5. They fit good no leaks. RUL looks closed off. Patient woke up fine sending to recovery.",
+    "note_text": "We did the lung volume reduction on Mr Chen today for his emphysema right upper lobe. Chartis balloon showed no collateral ventilation so we proceeded. Put in three valves total two 4s and one 5.5. They fit good no leaks. RUL looks closed off. Patient woke up fine sending to recovery.",
     "cpt_codes": [
       31622,
       31647
@@ -1045,12 +1045,6 @@
       "style_type": 5,
       "generated_name": "Robert Adams",
       "generation_date": "2025-12-09T09:20:09.498604"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1190,7 +1184,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a procedure to help with his severe emphysema. We targeted the right upper lobe of his lung. After confirming that the lobe was isolated using a balloon catheter, we placed three one-way valves into the airways leading to that lobe. These valves will allow air to escape but not enter, hopefully reducing the size of the lobe and helping him breathe better. Everything went smoothly and the valves are sitting perfectly.",
+    "note_text": "Mr. Chen underwent a procedure to help with his severe emphysema. We targeted the right upper lobe of his lung. After confirming that the lobe was isolated using a balloon catheter, we placed three one-way valves into the airways leading to that lobe. These valves will allow air to escape but not enter, hopefully reducing the size of the lobe and helping him breathe better. Everything went smoothly and the valves are sitting perfectly.",
     "cpt_codes": [
       31622,
       31647
@@ -1255,12 +1249,6 @@
       "style_type": 8,
       "generated_name": "Joseph Ramirez",
       "generation_date": "2025-12-09T09:20:09.498661"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1530,7 +1518,7 @@
     }
   },
   {
-    "note_text": "Procedure: Airway Dilation\nResident: Dr. Miller\nPatient: <PERSON>\nSteps:\n1. Identified long tracheal stenosis.\n2. Dilated with CRE balloon.\n3. Used cautery knife to cut scar bands.\n4. Dilated RLL and LLL segments.\n5. Airway looks much better now.\nPlan: PACU.",
+    "note_text": "Procedure: Airway Dilation\nResident: Dr. Miller\nPatient: Ava Harrington\nSteps:\n1. Identified long tracheal stenosis.\n2. Dilated with CRE balloon.\n3. Used cautery knife to cut scar bands.\n4. Dilated RLL and LLL segments.\n5. Airway looks much better now.\nPlan: PACU.",
     "cpt_codes": [
       31630
     ],
@@ -1593,16 +1581,10 @@
       "style_type": 4,
       "generated_name": "Ashley Phillips",
       "generation_date": "2025-12-09T09:20:09.498752"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for her tracheal stenosis she has wegeners. We looked down and saw the narrowing about 3cm below cords. Used the balloon to stretch it out then the knife to cut the tight bands. Also did some work on the lower lobes right and left. Everything is open now scope goes through easy. No bleeding.",
+    "note_text": "Ava Harrington here for her tracheal stenosis she has wegeners. We looked down and saw the narrowing about 3cm below cords. Used the balloon to stretch it out then the knife to cut the tight bands. Also did some work on the lower lobes right and left. Everything is open now scope goes through easy. No bleeding.",
     "cpt_codes": [
       31630
     ],
@@ -1665,12 +1647,6 @@
       "style_type": 5,
       "generated_name": "Michelle Evans",
       "generation_date": "2025-12-09T09:20:09.498772"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1806,7 +1782,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for treatment of her airway narrowing caused by her autoimmune condition. Under general anesthesia, we found a significant narrowing in her windpipe and lower airways. We used a combination of a small knife to make relief cuts in the scar tissue and balloons to stretch the airways open. By the end of the procedure, the airways were significantly more open, which should improve her breathing.",
+    "note_text": "Ms. Harrington came in for treatment of her airway narrowing caused by her autoimmune condition. Under general anesthesia, we found a significant narrowing in her windpipe and lower airways. We used a combination of a small knife to make relief cuts in the scar tissue and balloons to stretch the airways open. By the end of the procedure, the airways were significantly more open, which should improve her breathing.",
     "cpt_codes": [
       31630
     ],
@@ -1869,12 +1845,6 @@
       "style_type": 8,
       "generated_name": "Stephanie Parker",
       "generation_date": "2025-12-09T09:20:09.498827"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2181,7 +2151,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch + Y-Stent\nPt: <PERSON>\nSteps:\n1. 12mm Rigid scope inserted.\n2. Tumor debulked with APC and suction.\n3. Measured for Y-stent.\n4. Inserted silicone Y-stent (blind pass technique).\n5. Adjusted with forceps.\n6. Airway open now.\nPlan: ICU, humidified air.",
+    "note_text": "Procedure: Rigid Bronch + Y-Stent\nPt: Ethan Calder\nSteps:\n1. 12mm Rigid scope inserted.\n2. Tumor debulked with APC and suction.\n3. Measured for Y-stent.\n4. Inserted silicone Y-stent (blind pass technique).\n5. Adjusted with forceps.\n6. Airway open now.\nPlan: ICU, humidified air.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -2257,16 +2227,10 @@
       "style_type": 4,
       "generated_name": "Mark Morris",
       "generation_date": "2025-12-09T09:20:09.498951"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> with the esophageal cancer compressing the airway. We took him to the OR for a stent. Rigid scope went in. Debulked a lot of tumor at the carina left side was totally shut. Put in a Y stent silicone type. Had to push it past cords blindly then grab it with forceps. It sat perfectly. Airways look great now. ICU for monitoring.",
+    "note_text": "Ethan Calder with the esophageal cancer compressing the airway. We took him to the OR for a stent. Rigid scope went in. Debulked a lot of tumor at the carina left side was totally shut. Put in a Y stent silicone type. Had to push it past cords blindly then grab it with forceps. It sat perfectly. Airways look great now. ICU for monitoring.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -2342,12 +2306,6 @@
       "style_type": 5,
       "generated_name": "Donald Nguyen",
       "generation_date": "2025-12-09T09:20:09.498971"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2509,7 +2467,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> was suffering from severe difficulty breathing due to a tumor blocking his main airways. We performed a rigid bronchoscopy to clear the blockage. After removing a significant amount of tumor tissue using heat and freezing probes, we placed a Y-shaped silicone stent. This stent props open his windpipe and branches to both lungs. We were very pleased to see his airways were 90% open after the stent was in place.",
+    "note_text": "Mr. Calder was suffering from severe difficulty breathing due to a tumor blocking his main airways. We performed a rigid bronchoscopy to clear the blockage. After removing a significant amount of tumor tissue using heat and freezing probes, we placed a Y-shaped silicone stent. This stent props open his windpipe and branches to both lungs. We were very pleased to see his airways were 90% open after the stent was in place.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -2585,12 +2543,6 @@
       "style_type": 8,
       "generated_name": "Andrew Cook",
       "generation_date": "2025-12-09T09:20:09.499034"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2871,7 +2823,7 @@
     }
   },
   {
-    "note_text": "Procedure: Stent Removal\nResident: Dr. Gallegos\nSteps:\n1. Rigid scope inserted.\n2. Stent found migrated into RMS.\n3. <PERSON> of pus behind it.\n4. Grabbed stent with rigid forceps.\n5. Pulled everything out.\n6. Cleaned up the airway.\nPlan: Antibiotics for pneumonia.",
+    "note_text": "Procedure: Stent Removal\nResident: Dr. Gallegos\nSteps:\n1. Rigid scope inserted.\n2. Stent found migrated into RMS.\n3. Tons of pus behind it.\n4. Grabbed stent with rigid forceps.\n5. Pulled everything out.\n6. Cleaned up the airway.\nPlan: Antibiotics for pneumonia.",
     "cpt_codes": [
       31638
     ],
@@ -2934,16 +2886,10 @@
       "style_type": 4,
       "generated_name": "Eric Ross",
       "generation_date": "2025-12-09T09:20:09.499141"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for stent removal. The old stent slid down and blocked the left lung. It was nasty full of pus. We went in with the rigid scope grabbed the edge of the stent and pulled the whole thing out. Suctioned out a lot of infection. The fistula looks covered by the esophageal stent so thats good. Sending him to PACU.",
+    "note_text": "Daniel Conley here for stent removal. The old stent slid down and blocked the left lung. It was nasty full of pus. We went in with the rigid scope grabbed the edge of the stent and pulled the whole thing out. Suctioned out a lot of infection. The fistula looks covered by the esophageal stent so thats good. Sending him to PACU.",
     "cpt_codes": [
       31638
     ],
@@ -3006,12 +2952,6 @@
       "style_type": 5,
       "generated_name": "Stephen Henderson",
       "generation_date": "2025-12-09T09:20:09.499160"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3147,7 +3087,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> needed his airway stent removed because it had moved out of place and caused an infection. Using a rigid metal tube, we reached the stent which had slipped into his right lung. We carefully pulled it out. Once it was gone, we were able to clear out a lot of infected fluid from his left lung, which had been blocked. His airways look irritated but open now.",
+    "note_text": "Mr. Conley needed his airway stent removed because it had moved out of place and caused an infection. Using a rigid metal tube, we reached the stent which had slipped into his right lung. We carefully pulled it out. Once it was gone, we were able to clear out a lot of infected fluid from his left lung, which had been blocked. His airways look irritated but open now.",
     "cpt_codes": [
       31638
     ],
@@ -3210,12 +3150,6 @@
       "style_type": 8,
       "generated_name": "Scott Perry",
       "generation_date": "2025-12-09T09:20:09.499213"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3625,7 +3559,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for the vapor treatment for his COPD. We did the RUL today. Used the steam catheter put 8 calories in the front segment and 6 in the top one. Vapor went in good seen on xray. Patient is stable. He needs antibiotics and prednisone for the inflammation coming up.",
+    "note_text": "George Martinez here for the vapor treatment for his COPD. We did the RUL today. Used the steam catheter put 8 calories in the front segment and 6 in the top one. Vapor went in good seen on xray. Patient is stable. He needs antibiotics and prednisone for the inflammation coming up.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -3707,12 +3641,6 @@
       "style_type": 5,
       "generated_name": "Jack Diaz",
       "generation_date": "2025-12-09T09:20:09.499362"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3801,7 +3729,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSevere Emphysema, RUL target (CV+).\n[Anesthesia]\nMAC/LMA.\n[Description]\nBTVA to RUL. RB3: 8 cal. RB1: 6 cal. Vapor delivery confirmed.\n[Plan]\nICU, <LOCATION>, Antibiotics.",
+    "note_text": "[Indication]\nSevere Emphysema, RUL target (CV+).\n[Anesthesia]\nMAC/LMA.\n[Description]\nBTVA to RUL. RB3: 8 cal. RB1: 6 cal. Vapor delivery confirmed.\n[Plan]\nICU, Prednisone, Antibiotics.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -3883,16 +3811,10 @@
       "style_type": 7,
       "generated_name": "Jerry Myers",
       "generation_date": "2025-12-09T09:20:09.499409"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a steam treatment for his emphysema today. Since his lung anatomy wasn't right for valves, we used thermal vapor to treat the diseased parts of his right upper lung. We delivered the vapor to two specific segments. This will cause that tissue to scar down and shrink over the next few months, which should help him breathe better. He needs to stay in the hospital for monitoring as this causes a deliberate inflammation.",
+    "note_text": "Mr. Martinez underwent a steam treatment for his emphysema today. Since his lung anatomy wasn't right for valves, we used thermal vapor to treat the diseased parts of his right upper lung. We delivered the vapor to two specific segments. This will cause that tissue to scar down and shrink over the next few months, which should help him breathe better. He needs to stay in the hospital for monitoring as this causes a deliberate inflammation.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -3974,12 +3896,6 @@
       "style_type": 8,
       "generated_name": "Tyler Ford",
       "generation_date": "2025-12-09T09:20:09.499431"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

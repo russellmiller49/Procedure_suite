@@ -11,7 +11,7 @@ en-core-sci-sm @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.
 medspacy>=1.0,<2
 sqlalchemy>=2.0,<3
 alembic>=1.13,<2
-scikit-learn>=1.7,<1.8
+scikit-learn>=1.5.2,<2.0
 scikit-multilearn>=0.2.0,<1
 pandas>=2.0,<3
 psycopg[binary,pool]>=3.2,<4

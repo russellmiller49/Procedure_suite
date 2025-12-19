@@ -1686,7 +1686,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> presented for evaluation of bilateral pulmonary nodules. We proceeded with a robotic-assisted bronchoscopy targeting the largest lesion in the right lower lobe. Under general anesthesia, the scope was successfully navigated to the target in the posterior segment. Confirmation was achieved using radial EBUS, which showed a clear concentric view of the 24mm lesion. We then obtained seven biopsy samples and three cytology brushings, followed by a bronchoalveolar lavage. The preliminary on-site pathology review showed atypical cells. The patient tolerated the procedure well with minimal blood loss.",
+    "note_text": "Mr. Morales presented for evaluation of bilateral pulmonary nodules. We proceeded with a robotic-assisted bronchoscopy targeting the largest lesion in the right lower lobe. Under general anesthesia, the scope was successfully navigated to the target in the posterior segment. Confirmation was achieved using radial EBUS, which showed a clear concentric view of the 24mm lesion. We then obtained seven biopsy samples and three cytology brushings, followed by a bronchoalveolar lavage. The preliminary on-site pathology review showed atypical cells. The patient tolerated the procedure well with minimal blood loss.",
     "cpt_codes": [
       31627,
       31654,
@@ -1923,12 +1923,6 @@
       "style_type": 8,
       "generated_name": "Ricardo Morales",
       "generation_date": "2025-12-09T09:18:39.657416"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3036,7 +3030,7 @@
     }
   },
   {
-    "note_text": "Mr <PERSON> here for the valve procedure severe emphysema left upper lobe. We put him to sleep tube in. Checked the LUL with the chartis balloon it stopped flowing so no collateral ventilation good to go. Put in three zephyr valves total one in the apicoposterior one anterior one superior. They look seated well no air getting through. Patient woke up fine no issues sending to floor for monitoring.",
+    "note_text": "Mr Harris here for the valve procedure severe emphysema left upper lobe. We put him to sleep tube in. Checked the LUL with the chartis balloon it stopped flowing so no collateral ventilation good to go. Put in three zephyr valves total one in the apicoposterior one anterior one superior. They look seated well no air getting through. Patient woke up fine no issues sending to floor for monitoring.",
     "cpt_codes": [
       31634,
       31647
@@ -3249,12 +3243,6 @@
       "style_type": 5,
       "generated_name": "Edward Hall",
       "generation_date": "2025-12-09T09:18:39.657733"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3690,7 +3678,7 @@
     }
   },
   {
-    "note_text": "We performed an elective lung volume reduction for Mr. <PERSON> today. After placing the breathing tube, we navigated to the left upper lobe. The Chartis balloon test confirmed that there was no airflow between the lobes, making him a good candidate. We then proceeded to place three valves in the upper lobe segments. We verified that each valve was sitting correctly and that the airway was fully blocked. He tolerated the procedure well and is now recovering.",
+    "note_text": "We performed an elective lung volume reduction for Mr. Allen today. After placing the breathing tube, we navigated to the left upper lobe. The Chartis balloon test confirmed that there was no airflow between the lobes, making him a good candidate. We then proceeded to place three valves in the upper lobe segments. We verified that each valve was sitting correctly and that the airway was fully blocked. He tolerated the procedure well and is now recovering.",
     "cpt_codes": [
       31634,
       31647
@@ -3903,12 +3891,6 @@
       "style_type": 8,
       "generated_name": "Henry King",
       "generation_date": "2025-12-09T09:18:39.657883"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4896,7 +4878,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for airway stenosis she has wegeners granulomatosis. We put in an lma and went down with the scope. Trachea was tight so we ballooned it open. Then the right lower lobe and lingula were basically shut so we used the electrocautery knife to make cuts and then ballooned them too. Opened up nicely no bleeding. Patient woke up fine going to pacu.",
+    "note_text": "Lisa morgan here for airway stenosis she has wegeners granulomatosis. We put in an lma and went down with the scope. Trachea was tight so we ballooned it open. Then the right lower lobe and lingula were basically shut so we used the electrocautery knife to make cuts and then ballooned them too. Opened up nicely no bleeding. Patient woke up fine going to pacu.",
     "cpt_codes": [
       31641
     ],
@@ -5085,12 +5067,6 @@
       "style_type": 5,
       "generated_name": "Sandra Watson",
       "generation_date": "2025-12-09T09:18:39.658170"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5478,7 +5454,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a therapeutic bronchoscopy to treat her airway narrowing caused by her autoimmune condition. We found significant narrowing in her windpipe and several branches of her lungs. We first used a balloon to stretch open the main windpipe. For the smaller branches in the right and left lungs, we used a special heated knife to carefully cut the scar tissue before stretching them open with a smaller balloon. The airways looked much more open by the end of the procedure.",
+    "note_text": "Ms. Hughes underwent a therapeutic bronchoscopy to treat her airway narrowing caused by her autoimmune condition. We found significant narrowing in her windpipe and several branches of her lungs. We first used a balloon to stretch open the main windpipe. For the smaller branches in the right and left lungs, we used a special heated knife to carefully cut the scar tissue before stretching them open with a smaller balloon. The airways looked much more open by the end of the procedure.",
     "cpt_codes": [
       31641
     ],
@@ -5667,12 +5643,6 @@
       "style_type": 8,
       "generated_name": "Helen Sanders",
       "generation_date": "2025-12-09T09:18:39.658333"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7568,7 +7538,7 @@
     }
   },
   {
-    "note_text": "We brought Mr. <PERSON> in to biopsy a mass in his right lung and check his lymph nodes. We started with the ultrasound scope to check the nodes in the center of his chest. Unfortunately, the samples from three different areas all showed cancer. We then used the robotic system to navigate out to the main mass in the lung and took samples from there as well, which matched the lymph nodes. This confirms the cancer has spread to the lymph nodes, so we will proceed with chemotherapy and radiation rather than surgery.",
+    "note_text": "We brought Mr. Jenkins in to biopsy a mass in his right lung and check his lymph nodes. We started with the ultrasound scope to check the nodes in the center of his chest. Unfortunately, the samples from three different areas all showed cancer. We then used the robotic system to navigate out to the main mass in the lung and took samples from there as well, which matched the lymph nodes. This confirms the cancer has spread to the lymph nodes, so we will proceed with chemotherapy and radiation rather than surgery.",
     "cpt_codes": [
       31653,
       31627,
@@ -7807,12 +7777,6 @@
       "style_type": 8,
       "generated_name": "Xavier Perry",
       "generation_date": "2025-12-09T09:18:39.658843"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9750,7 +9714,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for EBUS staging. She has a lung nodule and swollen nodes. We sampled station 7 4R 10R and 11R. The pathologist in the room said 7 4R and 10R were all cancer adenocarcinoma. 11R was just reactive. So she has stage 3 disease extensive. We will send for molecular testing and get her to oncology asap.",
+    "note_text": "Patricia Henderson here for EBUS staging. She has a lung nodule and swollen nodes. We sampled station 7 4R 10R and 11R. The pathologist in the room said 7 4R and 10R were all cancer adenocarcinoma. 11R was just reactive. So she has stage 3 disease extensive. We will send for molecular testing and get her to oncology asap.",
     "cpt_codes": [
       31653
     ],
@@ -10170,12 +10134,6 @@
       "style_type": 5,
       "generated_name": "Michelle K. Rogers",
       "generation_date": "2025-12-09T09:18:39.659296"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

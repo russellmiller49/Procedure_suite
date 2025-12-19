@@ -1302,7 +1302,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nAttending: Dr. Johnson\nSteps:\n1. Time out. GA induced.\n2. Therapeutic suctioning of extensive mucus from Right Mainstem, Bronchus Intermedius, and Left Mainstem.\n3. Navigated to RML lateral segment.\n4. Radial EBUS confirmed concentric view.\n5. TBBX x6 and TBNA x6 obtained. BAL performed.\n6. Linear EBUS staging: Stations 11L, 7, 11Rs sampled with 22G needle.\n7. ROSE positive.\n8. Extubated stable.",
+    "note_text": "Procedure Note\nPatient: Agnes Skinner\nAttending: Dr. Johnson\nSteps:\n1. Time out. GA induced.\n2. Therapeutic suctioning of extensive mucus from Right Mainstem, Bronchus Intermedius, and Left Mainstem.\n3. Navigated to RML lateral segment.\n4. Radial EBUS confirmed concentric view.\n5. TBBX x6 and TBNA x6 obtained. BAL performed.\n6. Linear EBUS staging: Stations 11L, 7, 11Rs sampled with 22G needle.\n7. ROSE positive.\n8. Extubated stable.",
     "cpt_codes": [
       31653,
       31645,
@@ -1733,12 +1733,6 @@
       "style_type": 4,
       "generated_name": "Agnes Skinner",
       "generation_date": "2025-12-18T19:20:20.483246"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11628,7 +11622,7 @@
     }
   },
   {
-    "note_text": "Bedside procedure note for <PERSON> we did a chest tube on the right side today for that effusion ultrasound showed a lot of fluid large amount no septations used lidocaine for numbess put in a 14 french pigtail using the kit wire went in easy tube followed got back over a liter of serous fluid sutured it in place patient did fine chest xray pending.",
+    "note_text": "Bedside procedure note for Sarah Jenkins we did a chest tube on the right side today for that effusion ultrasound showed a lot of fluid large amount no septations used lidocaine for numbess put in a 14 french pigtail using the kit wire went in easy tube followed got back over a liter of serous fluid sutured it in place patient did fine chest xray pending.",
     "cpt_codes": [
       32557
     ],
@@ -12213,12 +12207,6 @@
       "style_type": 5,
       "generated_name": "Sylvia Plath",
       "generation_date": "2025-12-18T19:20:20.485786"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13398,7 +13386,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> required drainage of a right pleural effusion. We performed a bedside ultrasound which confirmed a large, free-flowing fluid collection. After sterilizing the site and injecting local anesthetic, we placed a 14 French chest tube using the Seldinger technique. We successfully drained 1250ml of fluid. The tube was secured with sutures, and the patient was left in stable condition pending a follow-up X-ray.",
+    "note_text": "Ms. Jenkins required drainage of a right pleural effusion. We performed a bedside ultrasound which confirmed a large, free-flowing fluid collection. After sterilizing the site and injecting local anesthetic, we placed a 14 French chest tube using the Seldinger technique. We successfully drained 1250ml of fluid. The tube was secured with sutures, and the patient was left in stable condition pending a follow-up X-ray.",
     "cpt_codes": [
       32557
     ],
@@ -13983,12 +13971,6 @@
       "style_type": 8,
       "generated_name": "Sigourney Weaver",
       "generation_date": "2025-12-18T19:20:20.486211"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -16092,7 +16074,7 @@
     }
   },
   {
-    "note_text": "<PERSON> was here for his airway check today 12/16 stent looks fine but he had regrowth in the trachea and both mainstems about 90 percent blocked so we used the APC to burn it back opened it up to 100 percent also had to suction out a lot of mucus from the lower airways specifically the Right Mainstem, Bronchus Intermedius, and Left Mainstem patient did great extubated in room come back in a month or so.",
+    "note_text": "Vince was here for his airway check today 12/16 stent looks fine but he had regrowth in the trachea and both mainstems about 90 percent blocked so we used the APC to burn it back opened it up to 100 percent also had to suction out a lot of mucus from the lower airways specifically the Right Mainstem, Bronchus Intermedius, and Left Mainstem patient did great extubated in room come back in a month or so.",
     "cpt_codes": [
       31641,
       31645
@@ -16389,12 +16371,6 @@
       "style_type": 6,
       "generated_name": "Viggo Mortensen",
       "generation_date": "2025-12-18T19:20:20.486789"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -16998,7 +16974,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a therapeutic bronchoscopy to address his airway obstruction. We found the previously placed stent in the RML was functioning well, but there was significant tumor regrowth occluding the trachea and mainstem bronchi. We utilized Argon Plasma Coagulation to ablate this tissue, successfully restoring full airway patency. We also suctioned a significant amount of mucus from the Right Mainstem, Bronchus Intermedius, and Left Mainstem to further optimize his airway. He recovered well and will return for follow-up.",
+    "note_text": "Mr. Yound underwent a therapeutic bronchoscopy to address his airway obstruction. We found the previously placed stent in the RML was functioning well, but there was significant tumor regrowth occluding the trachea and mainstem bronchi. We utilized Argon Plasma Coagulation to ablate this tissue, successfully restoring full airway patency. We also suctioned a significant amount of mucus from the Right Mainstem, Bronchus Intermedius, and Left Mainstem to further optimize his airway. He recovered well and will return for follow-up.",
     "cpt_codes": [
       31641,
       31645
@@ -17295,12 +17271,6 @@
       "style_type": 9,
       "generated_name": "Vito Corleone",
       "generation_date": "2025-12-18T19:20:20.487000"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -19888,7 +19858,7 @@
     }
   },
   {
-    "note_text": "<PERSON> needed a chest tube for that recurrent fluid on the left side ultrasound showed it was a bit complex with some septations used the 16 french tube this time went in mid axillary line drained about 650 of bloody looking fluid put it on suction 20 cm checking the xray later.",
+    "note_text": "Michael Jackson needed a chest tube for that recurrent fluid on the left side ultrasound showed it was a bit complex with some septations used the 16 french tube this time went in mid axillary line drained about 650 of bloody looking fluid put it on suction 20 cm checking the xray later.",
     "cpt_codes": [
       32557
     ],
@@ -20531,12 +20501,6 @@
       "style_type": 5,
       "generated_name": "Martin Sheen",
       "generation_date": "2025-12-18T19:20:20.487801"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -21832,7 +21796,7 @@
     }
   },
   {
-    "note_text": "We performed a bedside chest tube placement for Mr. <PERSON> to manage his recurrent left pleural effusion. Ultrasound revealed a complex fluid collection. We inserted a 16 French catheter into the left chest using the Seldinger technique, draining 650ml of serosanguinous fluid. The catheter was connected to suction, and we will monitor the output and fluid studies.",
+    "note_text": "We performed a bedside chest tube placement for Mr. Jackson to manage his recurrent left pleural effusion. Ultrasound revealed a complex fluid collection. We inserted a 16 French catheter into the left chest using the Seldinger technique, draining 650ml of serosanguinous fluid. The catheter was connected to suction, and we will monitor the output and fluid studies.",
     "cpt_codes": [
       32557
     ],
@@ -22475,12 +22439,6 @@
       "style_type": 8,
       "generated_name": "Macaulay Culkin",
       "generation_date": "2025-12-18T19:20:20.488287"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

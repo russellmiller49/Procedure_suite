@@ -2457,7 +2457,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronchoscopy\nPatient: <PERSON>\nSteps:\n1. GA/Jet vent.\n2. Scope to carina.\n3. Tumor coring with rigid scope.\n4. Forceps removal of chunks.\n5. Microdebrider cleanup.\n6. Hemostasis with epi/balloon.\n7. Airway patent.\nPlan: ICU admission.",
+    "note_text": "Procedure: Rigid Bronchoscopy\nPatient: David Nguyen\nSteps:\n1. GA/Jet vent.\n2. Scope to carina.\n3. Tumor coring with rigid scope.\n4. Forceps removal of chunks.\n5. Microdebrider cleanup.\n6. Hemostasis with epi/balloon.\n7. Airway patent.\nPlan: ICU admission.",
     "cpt_codes": [
       31640
     ],
@@ -2571,12 +2571,6 @@
       "style_type": 4,
       "generated_name": "Donald Perez",
       "generation_date": "2025-12-09T12:09:29.584246"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3633,7 +3627,7 @@
     }
   },
   {
-    "note_text": "Procedure note <PERSON>... renal cell met to the right mainstem... rigid bronch used... tumor was pretty vascular... we cored it with the scope and used forceps to pull pieces out... microdebrider finished it off... bleeding wasnt too bad used some epi... airway looks open now about 80 percent... extubated and sent to recovery.",
+    "note_text": "Procedure note sarah ibrahim... renal cell met to the right mainstem... rigid bronch used... tumor was pretty vascular... we cored it with the scope and used forceps to pull pieces out... microdebrider finished it off... bleeding wasnt too bad used some epi... airway looks open now about 80 percent... extubated and sent to recovery.",
     "cpt_codes": [
       31640
     ],
@@ -3747,12 +3741,6 @@
       "style_type": 5,
       "generated_name": "Margaret Young",
       "generation_date": "2025-12-09T12:09:29.584539"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4692,7 +4680,7 @@
     }
   },
   {
-    "note_text": "Dictation for james patel... proximal tracheal tumor... did a rigid bronch... used the forceps to grab and remove pieces... then used the scope to shave it down flush... also used a snare to cut off a piece... no laser or anything... airway looks good now... extubated in OR... path sent.",
+    "note_text": "Dictation for <PERSON>... proximal tracheal tumor... did a rigid bronch... used the forceps to grab and remove pieces... then used the scope to shave it down flush... also used a snare to cut off a piece... no laser or anything... airway looks good now... extubated in OR... path sent.",
     "cpt_codes": [
       31640
     ],
@@ -4806,6 +4794,12 @@
       "style_type": 5,
       "generated_name": "Matthew Green",
       "generation_date": "2025-12-09T12:09:29.584803"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5751,7 +5745,7 @@
     }
   },
   {
-    "note_text": "Procedure note evelyn brooks... bronchus intermedius tumor causing pneumonia... went in with rigid scope... cored out the tumor with the bevel... used the microdebrider to get the rest... cleaned out the pus... airway is open now can see the lower lobes... bleeding stopped with tamponade... admitted for antibiotics.",
+    "note_text": "Procedure note <PERSON>... bronchus intermedius tumor causing pneumonia... went in with rigid scope... cored out the tumor with the bevel... used the microdebrider to get the rest... cleaned out the pus... airway is open now can see the lower lobes... bleeding stopped with tamponade... admitted for antibiotics.",
     "cpt_codes": [
       31640
     ],
@@ -5865,6 +5859,12 @@
       "style_type": 5,
       "generated_name": "Amanda Roberts",
       "generation_date": "2025-12-09T12:09:29.585120"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
     }
   },
   {
@@ -5985,7 +5985,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nBronchus Intermedius obstruction, Adenocarcinoma.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nMechanical debulking using rigid coring and microdebrider. Airway opened. Secretions cleared.\n[Plan]\nIV Antibiotics, <PERSON> admit.",
+    "note_text": "[Indication]\nBronchus Intermedius obstruction, Adenocarcinoma.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nMechanical debulking using rigid coring and microdebrider. Airway opened. Secretions cleared.\n[Plan]\nIV Antibiotics, Floor admit.",
     "cpt_codes": [
       31640
     ],
@@ -6099,12 +6099,6 @@
       "style_type": 7,
       "generated_name": "Deborah Phillips",
       "generation_date": "2025-12-09T12:09:29.585180"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6810,7 +6804,7 @@
     }
   },
   {
-    "note_text": "Note for <PERSON>... has that carcinoid in the LLL... did a flex bronch with lma... used a snare to cut it off at the base... then grabbed the rest with forceps... came out nicely... airway is open... no complications... going home today.",
+    "note_text": "Note for omar hassan... has that carcinoid in the LLL... did a flex bronch with lma... used a snare to cut it off at the base... then grabbed the rest with forceps... came out nicely... airway is open... no complications... going home today.",
     "cpt_codes": [
       31640
     ],
@@ -6924,12 +6918,6 @@
       "style_type": 5,
       "generated_name": "Stephen Collins",
       "generation_date": "2025-12-09T12:09:29.585396"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7875,7 +7863,7 @@
     }
   },
   {
-    "note_text": "Emergency bronch for <PERSON>... hypoxic failure from lms tumor... rigid scope used... cored out the tumor aggressively... pulled pieces with forceps... used microdebrider... no laser... bleeding controlled... lung popped back up... sent to icu on vent.",
+    "note_text": "Emergency bronch for <PERSON> hypoxic failure from lms tumor... rigid scope used... cored out the tumor aggressively... pulled pieces with forceps... used microdebrider... no laser... bleeding controlled... lung popped back up... sent to icu on vent.",
     "cpt_codes": [
       31640
     ],
@@ -8934,7 +8922,7 @@
     }
   },
   {
-    "note_text": "<PERSON> morales procedure note... right mainstem tumor bleeding... rigid bronch... sucked out the blood... cored the tumor with the scope... grabbed pieces with forceps... microdebrider used to smooth it... bleeding stopped with epi... airway open now... step down unit.",
+    "note_text": "Jacob morales procedure note... right mainstem tumor bleeding... rigid bronch... sucked out the blood... cored the tumor with the scope... grabbed pieces with forceps... microdebrider used to smooth it... bleeding stopped with epi... airway open now... step down unit.",
     "cpt_codes": [
       31640
     ],
@@ -9048,12 +9036,6 @@
       "style_type": 5,
       "generated_name": "Harold Cox",
       "generation_date": "2025-12-09T12:09:29.586056"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10227,7 +10209,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLMS obstruction, <PERSON>.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nMechanical excision of tumor using rigid bevel, forceps, and snare. Lumen patent. No thermal energy.\n[Plan]\nOncology admission.",
+    "note_text": "[Indication]\nLMS obstruction, Metastatic Breast Cancer.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nMechanical excision of tumor using rigid bevel, forceps, and snare. Lumen patent. No thermal energy.\n[Plan]\nOncology admission.",
     "cpt_codes": [
       31640
     ],
@@ -10341,12 +10323,6 @@
       "style_type": 7,
       "generated_name": "Debra Hughes",
       "generation_date": "2025-12-09T12:09:29.586381"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

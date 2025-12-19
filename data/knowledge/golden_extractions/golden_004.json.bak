@@ -642,7 +642,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nAttending: Dr. Anderson\nDiagnosis: Malignant Airway Obstruction\nSteps:\n1. Time out done. GA induced.\n2. Rigid scope to trachea.\n3. LMS 90% blocked by tumor.\n4. Mechanical debulking and APC used to clear airway.\n5. Silicone stent (14x60) placed in LMS.\n6. Airway patent at end of case.\nPlan: ICU for monitoring.",
+    "note_text": "Procedure Note\nPatient: Linda Chen\nAttending: Dr. Anderson\nDiagnosis: Malignant Airway Obstruction\nSteps:\n1. Time out done. GA induced.\n2. Rigid scope to trachea.\n3. LMS 90% blocked by tumor.\n4. Mechanical debulking and APC used to clear airway.\n5. Silicone stent (14x60) placed in LMS.\n6. Airway patent at end of case.\nPlan: ICU for monitoring.",
     "cpt_codes": [
       31640,
       31654,
@@ -853,16 +853,10 @@
       "style_type": 4,
       "generated_name": "Betty Liu",
       "generation_date": "2025-12-09T09:18:31.605843"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "procedure note for ms <PERSON> she has the squamous cell ca with stridor we did the rigid bronch today anesthesia gave the propofol. went down with the 14mm scope left main was tight like 90 percent blocked. used the coring technique and some apc to burn the base got it open pretty good. put a dumon stent in there 14 by 60 fits nice. no bleeding stopped with epi. woke up fine sent to recovery.",
+    "note_text": "procedure note for ms chen she has the squamous cell ca with stridor we did the rigid bronch today anesthesia gave the propofol. went down with the 14mm scope left main was tight like 90 percent blocked. used the coring technique and some apc to burn the base got it open pretty good. put a dumon stent in there 14 by 60 fits nice. no bleeding stopped with epi. woke up fine sent to recovery.",
     "cpt_codes": [
       31640,
       31654,
@@ -1073,16 +1067,10 @@
       "style_type": 5,
       "generated_name": "Helen Wu",
       "generation_date": "2025-12-09T09:18:31.605914"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> is a 72-year-old female with known squamous cell lung cancer presenting with worsening dyspnea and stridor. CT chest shows near-complete obstruction of the left mainstem bronchus by endobronchial tumor. A rigid bronchoscope (14mm) was introduced via the mouth under direct visualization. High-frequency jet ventilation (HFJV) was utilized. Left mainstem was 90% obstructed by friable, hemorrhagic endobronchial tumor. The tumor was cored using the rigid bronchoscope with mechanical debridement. Residual tumor base was treated with electrocautery and Argon Plasma Coagulation. A 14mm x 60mm Dumon silicone stent was deployed in the left mainstem bronchus. Prior to treatment, left mainstem bronchus was 10% patent. After treatment, the airway was 70% patent.",
+    "note_text": "Ms. Chen is a 72-year-old female with known squamous cell lung cancer presenting with worsening dyspnea and stridor. CT chest shows near-complete obstruction of the left mainstem bronchus by endobronchial tumor. A rigid bronchoscope (14mm) was introduced via the mouth under direct visualization. High-frequency jet ventilation (HFJV) was utilized. Left mainstem was 90% obstructed by friable, hemorrhagic endobronchial tumor. The tumor was cored using the rigid bronchoscope with mechanical debridement. Residual tumor base was treated with electrocautery and Argon Plasma Coagulation. A 14mm x 60mm Dumon silicone stent was deployed in the left mainstem bronchus. Prior to treatment, left mainstem bronchus was 10% patent. After treatment, the airway was 70% patent.",
     "cpt_codes": [
       31640,
       31654,
@@ -1293,12 +1281,6 @@
       "style_type": 6,
       "generated_name": "Nancy Chen",
       "generation_date": "2025-12-09T09:18:31.605975"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2610,7 +2592,7 @@
     }
   },
   {
-    "note_text": "Procedure: Ion Bronchoscopy\nPatient: <PERSON>\nStaff: Dr. Hayes\nSteps:\n1. ETT placed. Ion registered (auto).\n2. Drove to RUL nodule. REBUS concentric. Biopsied.\n3. Drove to LUL nodule. REBUS concentric. Biopsied.\n4. ROSE read: Adeno for both.\n5. No bleeding. Extubated.\nPlan: Staging w/ PET/MRI. Tumor board.",
+    "note_text": "Procedure: Ion Bronchoscopy\nPatient: Anjali Patel\nStaff: Dr. Hayes\nSteps:\n1. ETT placed. Ion registered (auto).\n2. Drove to RUL nodule. REBUS concentric. Biopsied.\n3. Drove to LUL nodule. REBUS concentric. Biopsied.\n4. ROSE read: Adeno for both.\n5. No bleeding. Extubated.\nPlan: Staging w/ PET/MRI. Tumor board.",
     "cpt_codes": [
       31627,
       31654,
@@ -2829,12 +2811,6 @@
       "style_type": 4,
       "generated_name": "Sunita Kumar",
       "generation_date": "2025-12-09T09:18:31.606363"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3504,7 +3480,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> presented for biopsy of bilateral lung nodules. We utilized the Ion robotic platform to navigate to the lesions in the right upper and left upper lobes. Once navigation was complete, we used radial EBUS to confirm we were centered in the lesions. Biopsies were taken from both sites, and the pathologist in the room felt both showed adenocarcinoma. The procedure went smoothly, and she was woken up and taken to recovery.",
+    "note_text": "Ms. Patel presented for biopsy of bilateral lung nodules. We utilized the Ion robotic platform to navigate to the lesions in the right upper and left upper lobes. Once navigation was complete, we used radial EBUS to confirm we were centered in the lesions. Biopsies were taken from both sites, and the pathologist in the room felt both showed adenocarcinoma. The procedure went smoothly, and she was woken up and taken to recovery.",
     "cpt_codes": [
       31627,
       31654,
@@ -3723,12 +3699,6 @@
       "style_type": 8,
       "generated_name": "Tara Malik",
       "generation_date": "2025-12-09T09:18:31.606577"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4722,7 +4692,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS + Ion\nPatient: <PERSON>\nSteps:\n1. EBUS scope in. Sampled 4L (neg) and 10R (pos).\n2. Switched to Ion robot.\n3. Navigated to RLL mass.\n4. REBUS check.\n5. Took forceps bx and cryo bx (used blocker).\n6. No bleeding issues.\nResult: Adeno in lung and hilar node.",
+    "note_text": "Procedure: EBUS + Ion\nPatient: Michelle Chen\nSteps:\n1. EBUS scope in. Sampled 4L (neg) and 10R (pos).\n2. Switched to Ion robot.\n3. Navigated to RLL mass.\n4. REBUS check.\n5. Took forceps bx and cryo bx (used blocker).\n6. No bleeding issues.\nResult: Adeno in lung and hilar node.",
     "cpt_codes": [
       31653,
       31627,
@@ -4975,12 +4945,6 @@
       "style_type": 4,
       "generated_name": "Jennifer Zhang",
       "generation_date": "2025-12-09T09:18:31.606871"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5496,7 +5460,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRLL mass, hilar adenopathy.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nEBUS-TBNA performed: 10R positive for malignancy. Ion navigation to RLL mass. REBUS confirmed position. Forceps and <PERSON> obtained. Primary lesion confirmed adenocarcinoma.\n[Plan]\nMolecular testing. Oncology consult for Stage IIIA.",
+    "note_text": "[Indication]\nRLL mass, hilar adenopathy.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nEBUS-TBNA performed: 10R positive for malignancy. Ion navigation to RLL mass. REBUS confirmed position. Forceps and Cryobiopsies obtained. Primary lesion confirmed adenocarcinoma.\n[Plan]\nMolecular testing. Oncology consult for Stage IIIA.",
     "cpt_codes": [
       31653,
       31627,
@@ -5749,16 +5713,10 @@
       "style_type": 7,
       "generated_name": "Susan Tran",
       "generation_date": "2025-12-09T09:18:31.607041"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We performed a combined staging and diagnostic procedure for Ms. <PERSON>. First, using the EBUS scope, we sampled the lymph nodes; the right hilar node was positive for cancer. We then switched to the robotic system to biopsy the main mass in the right lower lobe. We used a cryoprobe to get large tissue samples for genetic testing, utilizing a balloon blocker to safely manage any bleeding. The preliminary results show adenocarcinoma spread to the nearby lymph nodes.",
+    "note_text": "We performed a combined staging and diagnostic procedure for Ms. Chen. First, using the EBUS scope, we sampled the lymph nodes; the right hilar node was positive for cancer. We then switched to the robotic system to biopsy the main mass in the right lower lobe. We used a cryoprobe to get large tissue samples for genetic testing, utilizing a balloon blocker to safely manage any bleeding. The preliminary results show adenocarcinoma spread to the nearby lymph nodes.",
     "cpt_codes": [
       31653,
       31627,
@@ -6011,12 +5969,6 @@
       "style_type": 8,
       "generated_name": "Margaret Kim",
       "generation_date": "2025-12-09T09:18:31.607100"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6930,7 +6882,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS & EMN\nPatient: <PERSON>\nSteps:\n1. EBUS: Sampled 4R, 4L, 7, 10L, 11L. All positive.\n2. White light: Saw tumor in LLL airway. Biopsied.\n3. EMN: Navigated to distal part of mass for more tissue.\n4. Bleeding controlled w/ epi.\nDiagnosis: Squamous cell CA, Stage IIIB.",
+    "note_text": "Procedure: EBUS & EMN\nPatient: Carlos Rodriguez\nSteps:\n1. EBUS: Sampled 4R, 4L, 7, 10L, 11L. All positive.\n2. White light: Saw tumor in LLL airway. Biopsied.\n3. EMN: Navigated to distal part of mass for more tissue.\n4. Bleeding controlled w/ epi.\nDiagnosis: Squamous cell CA, Stage IIIB.",
     "cpt_codes": [
       31627,
       31654,
@@ -7145,12 +7097,6 @@
       "style_type": 4,
       "generated_name": "Miguel Lopez",
       "generation_date": "2025-12-09T09:18:31.607374"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7808,7 +7754,7 @@
     }
   },
   {
-    "note_text": "We performed a comprehensive staging procedure on Mr. <PERSON>. The ultrasound showed cancer in lymph nodes on both sides of the chest (N3 disease). We also found the tumor growing into the main airway of the left lower lobe, which we biopsied directly. To ensure we had enough tissue for testing, we also navigated to the deeper part of the tumor. The diagnosis is squamous cell carcinoma, and he will need chemotherapy and radiation.",
+    "note_text": "We performed a comprehensive staging procedure on Mr. Rodriguez. The ultrasound showed cancer in lymph nodes on both sides of the chest (N3 disease). We also found the tumor growing into the main airway of the left lower lobe, which we biopsied directly. To ensure we had enough tissue for testing, we also navigated to the deeper part of the tumor. The diagnosis is squamous cell carcinoma, and he will need chemotherapy and radiation.",
     "cpt_codes": [
       31627,
       31654,
@@ -8023,12 +7969,6 @@
       "style_type": 8,
       "generated_name": "Ricardo Ramirez",
       "generation_date": "2025-12-09T09:18:31.607609"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8250,7 +8190,7 @@
     }
   },
   {
-    "note_text": "Indication: RUL nodule (2.4cm), Node 4R.\nProc: EBUS (4R+, 10R-), <PERSON>, Cryobiopsy.\nDetails: 4R pos for Adeno. 10R neg. Ion nav to RUL posterior seg. REBUS concentric. Cryo x2 taken.\nROSE: Adenocarcinoma.\nStage: IIIA (N2).\nPlan: Tumor board, likely neoadjuvant.",
+    "note_text": "Indication: RUL nodule (2.4cm), Node 4R.\nProc: EBUS (4R+, 10R-), Ion Nav, Cryobiopsy.\nDetails: 4R pos for Adeno. 10R neg. Ion nav to RUL posterior seg. REBUS concentric. Cryo x2 taken.\nROSE: Adenocarcinoma.\nStage: IIIA (N2).\nPlan: Tumor board, likely neoadjuvant.",
     "cpt_codes": [
       31631,
       31633,
@@ -8451,12 +8391,6 @@
       "style_type": 1,
       "generated_name": "Sarah Chang",
       "generation_date": "2025-12-09T09:18:31.607715"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8868,7 +8802,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS/Ion/Cryo\nPatient: <PERSON>\nSteps:\n1. EBUS: 4R pos, 10R neg.\n2. Ion: Navigated to RUL nodule.\n3. Confirmed with REBUS and CBCT.\n4. Cryobiopsy x2 with blocker.\n5. Bleeding minimal.\nResult: Adeno, N2 disease.",
+    "note_text": "Procedure: EBUS/Ion/Cryo\nPatient: Jennifer Wu\nSteps:\n1. EBUS: 4R pos, 10R neg.\n2. Ion: Navigated to RUL nodule.\n3. Confirmed with REBUS and CBCT.\n4. Cryobiopsy x2 with blocker.\n5. Bleeding minimal.\nResult: Adeno, N2 disease.",
     "cpt_codes": [
       31631,
       31633,
@@ -9069,16 +9003,10 @@
       "style_type": 4,
       "generated_name": "Amanda Wang",
       "generation_date": "2025-12-09T09:18:31.607867"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for the RUL spot. EBUS showed the 4R node was cancer so shes stage 3. 10R was clear. Used the ion robot to get to the lung nodule. Radial probe looked concentric. Did the cryo biopsy to get good tissue for the mutation testing. Everything is adenocarcinoma. She needs chemo before surgery probably.",
+    "note_text": "Jennifer Wu here for the RUL spot. EBUS showed the 4R node was cancer so shes stage 3. 10R was clear. Used the ion robot to get to the lung nodule. Radial probe looked concentric. Did the cryo biopsy to get good tissue for the mutation testing. Everything is adenocarcinoma. She needs chemo before surgery probably.",
     "cpt_codes": [
       31631,
       31633,
@@ -9279,12 +9207,6 @@
       "style_type": 5,
       "generated_name": "Melissa Chen",
       "generation_date": "2025-12-09T09:18:31.607919"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9696,7 +9618,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a combined procedure to diagnose her lung nodule and check her lymph nodes. The EBUS showed cancer in the lymph nodes in the middle of her chest (Station 4R), but the node closer to the lung (10R) was clear. We then used the robot to biopsy the lung nodule itself, using a freezing probe to get a large sample. The diagnosis is adenocarcinoma, and because it has spread to the mediastinal nodes, we will discuss chemotherapy options.",
+    "note_text": "Ms. Wu underwent a combined procedure to diagnose her lung nodule and check her lymph nodes. The EBUS showed cancer in the lymph nodes in the middle of her chest (Station 4R), but the node closer to the lung (10R) was clear. We then used the robot to biopsy the lung nodule itself, using a freezing probe to get a large sample. The diagnosis is adenocarcinoma, and because it has spread to the mediastinal nodes, we will discuss chemotherapy options.",
     "cpt_codes": [
       31631,
       31633,
@@ -9897,12 +9819,6 @@
       "style_type": 8,
       "generated_name": "Heather Wu",
       "generation_date": "2025-12-09T09:18:31.608092"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10665,7 +10581,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS & EMN\nPatient: <PERSON>\nSteps:\n1. EBUS: 5, 7, 10L all positive for cancer.\n2. Navigated to LLL mass with SuperDimension.\n3. REBUS showed concentric view.\n4. Taken 8 biopsies and BAL.\n5. No complications.\nDx: Stage IIIB Adeno.",
+    "note_text": "Procedure: EBUS & EMN\nPatient: Robert Thompson\nSteps:\n1. EBUS: 5, 7, 10L all positive for cancer.\n2. Navigated to LLL mass with SuperDimension.\n3. REBUS showed concentric view.\n4. Taken 8 biopsies and BAL.\n5. No complications.\nDx: Stage IIIB Adeno.",
     "cpt_codes": [
       32550
     ],
@@ -10847,16 +10763,10 @@
       "style_type": 4,
       "generated_name": "William Thomas",
       "generation_date": "2025-12-09T09:18:31.608419"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> 61 male LLL mass. EBUS showed cancer everywhere station 5 7 and 10L so its N3. Went after the lung mass with the navigation system. Found it with the ultrasound probe. Took a bunch of biopsies and a lavage. Its adenocarcinoma. Hes not a surgical candidate so referred to oncology.",
+    "note_text": "Robert Thompson 61 male LLL mass. EBUS showed cancer everywhere station 5 7 and 10L so its N3. Went after the lung mass with the navigation system. Found it with the ultrasound probe. Took a bunch of biopsies and a lavage. Its adenocarcinoma. Hes not a surgical candidate so referred to oncology.",
     "cpt_codes": [
       32550
     ],
@@ -11038,12 +10948,6 @@
       "style_type": 5,
       "generated_name": "David Moore",
       "generation_date": "2025-12-09T09:18:31.608558"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11417,7 +11321,7 @@
     }
   },
   {
-    "note_text": "We performed a staging bronchoscopy for Mr. <PERSON>. The ultrasound sampling of his lymph nodes showed extensive spread, including to the other side of his chest (Station 5) and the subcarinal area (Station 7). We also biopsied the main tumor in the left lower lobe using the navigation system. The results confirm advanced adenocarcinoma (Stage IIIB), so surgery is not an option. We will coordinate with oncology for systemic therapy.",
+    "note_text": "We performed a staging bronchoscopy for Mr. Thompson. The ultrasound sampling of his lymph nodes showed extensive spread, including to the other side of his chest (Station 5) and the subcarinal area (Station 7). We also biopsied the main tumor in the left lower lobe using the navigation system. The results confirm advanced adenocarcinoma (Stage IIIB), so surgery is not an option. We will coordinate with oncology for systemic therapy.",
     "cpt_codes": [
       32550
     ],
@@ -11599,12 +11503,6 @@
       "style_type": 8,
       "generated_name": "Joseph Harris",
       "generation_date": "2025-12-09T09:18:31.608713"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12429,7 +12327,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch & Stent\nPatient: <PERSON>\nSteps:\n1. GA/Paralytics. Rigid scope inserted.\n2. Saw 90% compression of trachea.\n3. Measured for stent.\n4. Deployed Y-stent (Silicone).\n5. Check with flex scope: Good position.\n6. LMA placed for wake up.\nPlan: ICU.",
+    "note_text": "Procedure: Rigid Bronch & Stent\nPatient: Emily Richardson\nSteps:\n1. GA/Paralytics. Rigid scope inserted.\n2. Saw 90% compression of trachea.\n3. Measured for stent.\n4. Deployed Y-stent (Silicone).\n5. Check with flex scope: Good position.\n6. LMA placed for wake up.\nPlan: ICU.",
     "cpt_codes": [
       31653
     ],
@@ -12638,16 +12536,10 @@
       "style_type": 4,
       "generated_name": "Barbara Brown",
       "generation_date": "2025-12-09T09:18:31.608983"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for the airway stent she has compression from outside. rigid bronch went in trachea was crushed flat. Put in a Y stent silicone type into the trachea and both main bronchi. Opened it up nicely. No bleeding. Swapped to LMA and woke her up. ICU for monitoring.",
+    "note_text": "Emily Richardson here for the airway stent she has compression from outside. rigid bronch went in trachea was crushed flat. Put in a Y stent silicone type into the trachea and both main bronchi. Opened it up nicely. No bleeding. Swapped to LMA and woke her up. ICU for monitoring.",
     "cpt_codes": [
       31653
     ],
@@ -12856,12 +12748,6 @@
       "style_type": 5,
       "generated_name": "Elizabeth Jones",
       "generation_date": "2025-12-09T09:18:31.609039"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13289,7 +13175,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> was in respiratory failure due to her windpipe being compressed from the outside. We took her to the OR and used a rigid bronchoscope to open the airway. We placed a silicone Y-shaped stent that sits in the trachea and branches into both lungs. This immediately propped the airway open. She is breathing much better now and will go to the ICU.",
+    "note_text": "Ms. Richardson was in respiratory failure due to her windpipe being compressed from the outside. We took her to the OR and used a rigid bronchoscope to open the airway. We placed a silicone Y-shaped stent that sits in the trachea and branches into both lungs. This immediately propped the airway open. She is breathing much better now and will go to the ICU.",
     "cpt_codes": [
       31653
     ],
@@ -13498,12 +13384,6 @@
       "style_type": 8,
       "generated_name": "Susan Garcia",
       "generation_date": "2025-12-09T09:18:31.609195"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14439,7 +14319,7 @@
     }
   },
   {
-    "note_text": "Procedure: IPC Placement\nPatient: <PERSON>\nSteps:\n1. US marked site (Rt chest).\n2. Lidocaine. Incision.\n3. Tunneled catheter.\n4. Inserted into pleural space.\n5. Drained 1.4L fluid.\n6. CXR checked.\nPlan: Discharge with home health.",
+    "note_text": "Procedure: IPC Placement\nPatient: Maria Gonzalez\nSteps:\n1. US marked site (Rt chest).\n2. Lidocaine. Incision.\n3. Tunneled catheter.\n4. Inserted into pleural space.\n5. Drained 1.4L fluid.\n6. CXR checked.\nPlan: Discharge with home health.",
     "cpt_codes": [
       31627,
       31654,
@@ -14676,16 +14556,10 @@
       "style_type": 4,
       "generated_name": "Elena Perez",
       "generation_date": "2025-12-09T09:18:31.609487"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> needs a pleurx for her effusion breast cancer history. Did the ultrasound marked the spot. Numbed it up tunnelled the catheter put it in the right chest. Drained about a liter and a half yellow fluid. Catheter works good. CXR looks okay. Teaching her how to use the bottles.",
+    "note_text": "Maria Gonzalez needs a pleurx for her effusion breast cancer history. Did the ultrasound marked the spot. Numbed it up tunnelled the catheter put it in the right chest. Drained about a liter and a half yellow fluid. Catheter works good. CXR looks okay. Teaching her how to use the bottles.",
     "cpt_codes": [
       31627,
       31654,
@@ -14922,12 +14796,6 @@
       "style_type": 5,
       "generated_name": "Teresa Sanchez",
       "generation_date": "2025-12-09T09:18:31.609568"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -15411,7 +15279,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> has fluid building up around her lung due to her breast cancer. Since the lung is trapped and won't stick to the chest wall, we placed a permanent drain (PleurX catheter). We used ultrasound to find the safe spot, numbed the skin, and tunneled the tube under the skin before putting it into the fluid pocket. We drained over a liter of fluid, which should help her breathing. She will go home and drain it as needed.",
+    "note_text": "Ms. Gonzalez has fluid building up around her lung due to her breast cancer. Since the lung is trapped and won't stick to the chest wall, we placed a permanent drain (PleurX catheter). We used ultrasound to find the safe spot, numbed the skin, and tunneled the tube under the skin before putting it into the fluid pocket. We drained over a liter of fluid, which should help her breathing. She will go home and drain it as needed.",
     "cpt_codes": [
       31627,
       31654,
@@ -15648,12 +15516,6 @@
       "style_type": 8,
       "generated_name": "Silvia Flores",
       "generation_date": "2025-12-09T09:18:31.609759"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -16521,7 +16383,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPatient: <PERSON>\nSteps:\n1. EBUS scope in.\n2. 4R and 7 were huge. Sampled them.\n3. ROSE said cancer.\n4. Also sampled 10R and 11R.\n5. No complications.\nDx: N2 Lung Cancer.",
+    "note_text": "Procedure: EBUS\nPatient: Lisa Marie Thompson\nSteps:\n1. EBUS scope in.\n2. 4R and 7 were huge. Sampled them.\n3. ROSE said cancer.\n4. Also sampled 10R and 11R.\n5. No complications.\nDx: N2 Lung Cancer.",
     "cpt_codes": [
       32550
     ],
@@ -16726,16 +16588,10 @@
       "style_type": 4,
       "generated_name": "Ashley Marie Brown",
       "generation_date": "2025-12-09T09:18:31.610070"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for staging right hilar mass. EBUS findings station 7 was massive like 4cm also 4R was big. Stuck them both ROSE said cancer. also checked the hilar nodes. So she has N2 disease. Needs chemo rads probably. No bleeding.",
+    "note_text": "Lisa Thompson here for staging right hilar mass. EBUS findings station 7 was massive like 4cm also 4R was big. Stuck them both ROSE said cancer. also checked the hilar nodes. So she has N2 disease. Needs chemo rads probably. No bleeding.",
     "cpt_codes": [
       32550
     ],
@@ -16940,12 +16796,6 @@
       "style_type": 5,
       "generated_name": "Amanda Sue Jones",
       "generation_date": "2025-12-09T09:18:31.610126"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -17365,7 +17215,7 @@
     }
   },
   {
-    "note_text": "We performed an ultrasound bronchoscopy to stage Ms. <PERSON>'s cancer. We found large lymph nodes in the center of the chest (stations 7 and 4R) that looked suspicious. We took samples with a needle, and the pathologist in the room confirmed they contain cancer cells. This means the cancer has spread to the mediastinal lymph nodes (N2 disease).",
+    "note_text": "We performed an ultrasound bronchoscopy to stage Ms. Thompson's cancer. We found large lymph nodes in the center of the chest (stations 7 and 4R) that looked suspicious. We took samples with a needle, and the pathologist in the room confirmed they contain cancer cells. This means the cancer has spread to the mediastinal lymph nodes (N2 disease).",
     "cpt_codes": [
       32550
     ],
@@ -17570,12 +17420,6 @@
       "style_type": 8,
       "generated_name": "Nicole Marie Wilson",
       "generation_date": "2025-12-09T09:18:31.610291"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18348,7 +18192,7 @@
     }
   },
   {
-    "note_text": "Procedure: Pleuroscopy\nPatient: <PERSON>\nSteps:\n1. Trocar in.\n2. Scope in. Saw nodules everywhere.\n3. Took 10 biopsies.\n4. Lung looked trapped so didn't talc.\n5. Put in chest tube 24Fr.\nResult: Looks like cancer/meso.",
+    "note_text": "Procedure: Pleuroscopy\nPatient: Patricia Williams\nSteps:\n1. Trocar in.\n2. Scope in. Saw nodules everywhere.\n3. Took 10 biopsies.\n4. Lung looked trapped so didn't talc.\n5. Put in chest tube 24Fr.\nResult: Looks like cancer/meso.",
     "cpt_codes": [
       32550
     ],
@@ -18532,16 +18376,10 @@
       "style_type": 4,
       "generated_name": "Susan Miller",
       "generation_date": "2025-12-09T09:18:31.610552"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> 64 female with the effusion. Did the pleuroscopy. looked bad nodules all over the pleura. Took a bunch of biopsies. Lung looks trapped so we couldnt do the talc. Just put a chest tube in to drain. sending fluid and tissue. Probably mesothelioma or metastatic adeno.",
+    "note_text": "Patricia Williams 64 female with the effusion. Did the pleuroscopy. looked bad nodules all over the pleura. Took a bunch of biopsies. Lung looks trapped so we couldnt do the talc. Just put a chest tube in to drain. sending fluid and tissue. Probably mesothelioma or metastatic adeno.",
     "cpt_codes": [
       32550
     ],
@@ -18725,12 +18563,6 @@
       "style_type": 5,
       "generated_name": "Margaret Davis",
       "generation_date": "2025-12-09T09:18:31.610602"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -19108,7 +18940,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a procedure to look inside her chest cavity. We found widespread nodules on the lining of the lung and chest wall, which is very suspicious for cancer. Because the lung is 'trapped' by disease and won't fully expand, we couldn't seal the space with talc. Instead, we took biopsies and placed a chest tube to keep the fluid drained while we wait for the pathology results.",
+    "note_text": "Ms. Williams underwent a procedure to look inside her chest cavity. We found widespread nodules on the lining of the lung and chest wall, which is very suspicious for cancer. Because the lung is 'trapped' by disease and won't fully expand, we couldn't seal the space with talc. Instead, we took biopsies and placed a chest tube to keep the fluid drained while we wait for the pathology results.",
     "cpt_codes": [
       32550
     ],
@@ -19292,12 +19124,6 @@
       "style_type": 8,
       "generated_name": "Nancy Wilson",
       "generation_date": "2025-12-09T09:18:31.610754"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

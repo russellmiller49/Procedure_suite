@@ -579,7 +579,7 @@
     }
   },
   {
-    "note_text": "Procedure Note - Pulmonary\nPatient: <PERSON>\nAttending: Dr. Zhang\n\nSteps:\n1. Time out. GA induced. 8.0 ETT placed.\n2. Scope passed. Airways patent.\n3. Veran navigation to LLL lateral basal nodule.\n4. Radial EBUS confirmed lesion (26mm).\n5. Cryoprobe placed. 3 freeze cycles performed.\n6. No bleeding. Extubated.\n\nPlan: Admit for obs.",
+    "note_text": "Procedure Note - Pulmonary\nPatient: Isabella Torres\nAttending: Dr. Zhang\n\nSteps:\n1. Time out. GA induced. 8.0 ETT placed.\n2. Scope passed. Airways patent.\n3. Veran navigation to LLL lateral basal nodule.\n4. Radial EBUS confirmed lesion (26mm).\n5. Cryoprobe placed. 3 freeze cycles performed.\n6. No bleeding. Extubated.\n\nPlan: Admit for obs.",
     "cpt_codes": [
       31641
     ],
@@ -769,16 +769,10 @@
       "style_type": 4,
       "generated_name": "Isabella Torres",
       "generation_date": "2025-12-09T09:18:49.009645"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "cryo ablation procedure for <PERSON> today for that LLL cancer shes not a surgery candidate. used general anesthesia intubated. used the veran system to get out there took a while cause of the angle. radial ebus confirmed it solid mass. stuck the cryo probe in froze it three times just to be sure cause its big. saw the ice ball on fluoro looks good. no bleeding really pulled everything out woke her up sent to pacu.",
+    "note_text": "cryo ablation procedure for Lucia Morales today for that LLL cancer shes not a surgery candidate. used general anesthesia intubated. used the veran system to get out there took a while cause of the angle. radial ebus confirmed it solid mass. stuck the cryo probe in froze it three times just to be sure cause its big. saw the ice ball on fluoro looks good. no bleeding really pulled everything out woke her up sent to pacu.",
     "cpt_codes": [
       31641
     ],
@@ -968,12 +962,6 @@
       "style_type": 5,
       "generated_name": "Lucia Morales",
       "generation_date": "2025-12-09T09:18:49.009694"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1363,7 +1351,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> presented for treatment of her left lung cancer. Because surgery wasn't safe for her, we proceeded with a bronchoscopic ablation. After she was asleep, we used a navigation system to guide a catheter out to the tumor in the lower part of her left lung. We double-checked the position with ultrasound. Then, we inserted a freezing probe right into the tumor and ran three cycles of extreme cold to destroy the cancer cells. Everything went smoothly, and she woke up well.",
+    "note_text": "Ms. Martina Flores presented for treatment of her left lung cancer. Because surgery wasn't safe for her, we proceeded with a bronchoscopic ablation. After she was asleep, we used a navigation system to guide a catheter out to the tumor in the lower part of her left lung. We double-checked the position with ultrasound. Then, we inserted a freezing probe right into the tumor and ran three cycles of extreme cold to destroy the cancer cells. Everything went smoothly, and she woke up well.",
     "cpt_codes": [
       31641
     ],
@@ -1553,12 +1541,6 @@
       "style_type": 8,
       "generated_name": "Martina Flores",
       "generation_date": "2025-12-09T09:18:49.009841"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2331,7 +2313,7 @@
     }
   },
   {
-    "note_text": "Procedure: Urgent RFA\nPatient: <PERSON>\nIndication: Bleeding after IR biopsy.\nSteps:\n1. Intubated. Bronch to RUL.\n2. Navigated to biopsy site.\n3. Inserted RFA probe.\n4. Cauterized bleeding (40W).\n5. Ablated tumor (90C).\n6. Bleeding stopped.\nPlan: ICU, keep chest tube.",
+    "note_text": "Procedure: Urgent RFA\nPatient: Richard Coleman\nIndication: Bleeding after IR biopsy.\nSteps:\n1. Intubated. Bronch to RUL.\n2. Navigated to biopsy site.\n3. Inserted RFA probe.\n4. Cauterized bleeding (40W).\n5. Ablated tumor (90C).\n6. Bleeding stopped.\nPlan: ICU, keep chest tube.",
     "cpt_codes": [
       31641
     ],
@@ -2520,12 +2502,6 @@
       "style_type": 4,
       "generated_name": "Richard Coleman",
       "generation_date": "2025-12-09T09:18:49.010085"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3111,7 +3087,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a complication from his lung biopsy yesterday and was bleeding into his chest. We took him to the bronchoscopy suite urgently. Using a special navigation system, we guided a radiofrequency probe to the bleeding tumor. We used the heat from the probe first to seal the bleeding vessels and then to destroy the tumor itself. It worked perfectly, and the bleeding stopped immediately.",
+    "note_text": "Mr. Joseph Black had a complication from his lung biopsy yesterday and was bleeding into his chest. We took him to the bronchoscopy suite urgently. Using a special navigation system, we guided a radiofrequency probe to the bleeding tumor. We used the heat from the probe first to seal the bleeding vessels and then to destroy the tumor itself. It worked perfectly, and the bleeding stopped immediately.",
     "cpt_codes": [
       31641
     ],
@@ -3300,12 +3276,6 @@
       "style_type": 8,
       "generated_name": "Joseph Black",
       "generation_date": "2025-12-09T09:18:49.010271"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4053,7 +4023,7 @@
     }
   },
   {
-    "note_text": "Procedure: Microwave Ablation\nPatient: <PERSON>\nLocation: RUL anterior.\nSteps:\n1. Navigated to lesion (SuperDimension).\n2. Confirmed with Radial EBUS.\n3. Inserted Microwave catheter.\n4. Ablated 60W for 6 mins.\n5. Checked airway - clear.\nPlan: Post-op CT.",
+    "note_text": "Procedure: Microwave Ablation\nPatient: Minh Nguyen\nLocation: RUL anterior.\nSteps:\n1. Navigated to lesion (SuperDimension).\n2. Confirmed with Radial EBUS.\n3. Inserted Microwave catheter.\n4. Ablated 60W for 6 mins.\n5. Checked airway - clear.\nPlan: Post-op CT.",
     "cpt_codes": [
       31641
     ],
@@ -4234,16 +4204,10 @@
       "style_type": 4,
       "generated_name": "Minh Nguyen",
       "generation_date": "2025-12-09T09:18:49.010512"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "done by <PERSON> for <PERSON>. RUL cancer. used the superD to get there and radial ebus to see it. put the microwave needle in. burned it for 6 mins at 60 watts. looks like we got it all based on the scan after. patient woke up fine no pneumo.",
+    "note_text": "done by Dr Foster for <LOCATION> Sato. RUL cancer. used the superD to get there and radial ebus to see it. put the microwave needle in. burned it for 6 mins at 60 watts. looks like we got it all based on the scan after. patient woke up fine no pneumo.",
     "cpt_codes": [
       31641
     ],
@@ -4426,10 +4390,9 @@
       "generation_date": "2025-12-09T09:18:49.010560"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
-        "PERSON"
+        "LOCATION"
       ]
     }
   },
@@ -4802,7 +4765,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> came in for ablation of his right upper lobe lung cancer. We used a microwave probe inserted through the bronchoscope. After finding the tumor with navigation and ultrasound, we applied microwave energy for 6 minutes. This heated the tumor enough to destroy it. He is recovering well.",
+    "note_text": "Mr. Kevin Lee came in for ablation of his right upper lobe lung cancer. We used a microwave probe inserted through the bronchoscope. After finding the tumor with navigation and ultrasound, we applied microwave energy for 6 minutes. This heated the tumor enough to destroy it. He is recovering well.",
     "cpt_codes": [
       31641
     ],
@@ -4983,12 +4946,6 @@
       "style_type": 8,
       "generated_name": "Kevin Lee",
       "generation_date": "2025-12-09T09:18:49.010697"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5176,7 +5133,7 @@
     }
   },
   {
-    "note_text": "Indication: RUL posterior nodule (2.3cm). High risk surgical candidate.\nProcedure: EMN Bronchoscopy + Microwave Ablation.\nEquipment: SuperDimension, Emprint 2.0 probe.\nAction: Navigated to RB1. Confirmed w/ R-EBUS & Cone Beam. Ablated 65W x 5 min (<PERSON> temp 85C).\nResult: Hyperechoic zone on R-EBUS (necrosis).\nPlan: Admit, CT 6h.",
+    "note_text": "Indication: RUL posterior nodule (2.3cm). High risk surgical candidate.\nProcedure: EMN Bronchoscopy + Microwave Ablation.\nEquipment: SuperDimension, Emprint 2.0 probe.\nAction: Navigated to RB1. Confirmed w/ R-EBUS & Cone Beam. Ablated 65W x 5 min (Max temp 85C).\nResult: Hyperechoic zone on R-EBUS (necrosis).\nPlan: Admit, CT 6h.",
     "cpt_codes": [
       31641
     ],
@@ -5377,12 +5334,6 @@
       "style_type": 1,
       "generated_name": "Michael Peterson",
       "generation_date": "2025-12-09T09:18:49.010793"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5794,7 +5745,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nAttending: Dr. Chen\nSteps:\n1. GA/Intubation.\n2. Navigated to RUL posterior nodule.\n3. Confirmed with REBUS and Cone Beam CT.\n4. Microwave ablation: 65W for 5 mins.\n5. Re-imaged: Good ablation zone.\n6. Extubated.\nPlan: Admit.",
+    "note_text": "Procedure Note\nPatient: Christopher Davis\nAttending: Dr. Chen\nSteps:\n1. GA/Intubation.\n2. Navigated to RUL posterior nodule.\n3. Confirmed with REBUS and Cone Beam CT.\n4. Microwave ablation: 65W for 5 mins.\n5. Re-imaged: Good ablation zone.\n6. Extubated.\nPlan: Admit.",
     "cpt_codes": [
       31641
     ],
@@ -5995,12 +5946,6 @@
       "style_type": 4,
       "generated_name": "Christopher Davis",
       "generation_date": "2025-12-09T09:18:49.010940"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6622,7 +6567,7 @@
     }
   },
   {
-    "note_text": "We treated Mr. <PERSON>'s lung cancer today using a microwave ablation catheter. Because of his COPD, surgery wasn't an option. We navigated a small catheter to the tumor in his right upper lobe and confirmed its position with a 3D X-ray spin. We then heated the tumor to 85 degrees Celsius for 5 minutes to kill the cancer cells. The procedure was successful.",
+    "note_text": "We treated Mr. Richard Taylor's lung cancer today using a microwave ablation catheter. Because of his COPD, surgery wasn't an option. We navigated a small catheter to the tumor in his right upper lobe and confirmed its position with a 3D X-ray spin. We then heated the tumor to 85 degrees Celsius for 5 minutes to kill the cancer cells. The procedure was successful.",
     "cpt_codes": [
       31641
     ],
@@ -6823,12 +6768,6 @@
       "style_type": 8,
       "generated_name": "Richard Taylor",
       "generation_date": "2025-12-09T09:18:49.011135"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8450,7 +8389,7 @@
     }
   },
   {
-    "note_text": "We performed a radiofrequency ablation on Mr. <PERSON> today. Using a special navigation system and a 3D X-ray, we guided a heat probe right into the tumor in his right lower lung. We heated the tumor to 90 degrees Celsius in two separate steps to make sure we got the whole thing plus a safety margin. He tolerated it well.",
+    "note_text": "We performed a radiofrequency ablation on Mr. Prosser Vogon today. Using a special navigation system and a 3D X-ray, we guided a heat probe right into the tumor in his right lower lung. We heated the tumor to 90 degrees Celsius in two separate steps to make sure we got the whole thing plus a safety margin. He tolerated it well.",
     "cpt_codes": [
       31641
     ],
@@ -8649,12 +8588,6 @@
       "style_type": 8,
       "generated_name": "Prosser Vogon",
       "generation_date": "2025-12-09T09:18:49.011663"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9732,7 +9665,7 @@
     }
   },
   {
-    "note_text": "diagnostic bronch for <PERSON> small GGO in the LUL. used the nav system got right to it. radial ebus showed we were in the middle. took a bunch of samples needle biopsy brush. patient did fine no pneumothorax.",
+    "note_text": "diagnostic bronch for Jun-Ho Jung small GGO in the LUL. used the nav system got right to it. radial ebus showed we were in the middle. took a bunch of samples needle biopsy brush. patient did fine no pneumothorax.",
     "cpt_codes": [
       31627,
       31654,
@@ -9947,12 +9880,6 @@
       "style_type": 5,
       "generated_name": "Jun-Ho Jung",
       "generation_date": "2025-12-09T09:18:49.011981"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10392,7 +10319,7 @@
     }
   },
   {
-    "note_text": "We performed a biopsy on Mr. <PERSON> Yoon's small lung nodule today. Using a navigation system like a GPS for the lungs, we found the 9mm spot in the left upper lobe. We confirmed we were in the right place with ultrasound and took several samples using a needle, forceps, and a brush. He handled the sedation well.",
+    "note_text": "We performed a biopsy on Mr. Kyung-Soo Yoon's small lung nodule today. Using a navigation system like a GPS for the lungs, we found the 9mm spot in the left upper lobe. We confirmed we were in the right place with ultrasound and took several samples using a needle, forceps, and a brush. He handled the sedation well.",
     "cpt_codes": [
       31627,
       31654,
@@ -10607,12 +10534,6 @@
       "style_type": 8,
       "generated_name": "Kyung-Soo Yoon",
       "generation_date": "2025-12-09T09:18:49.012154"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11620,7 +11541,7 @@
     }
   },
   {
-    "note_text": "EBUS for <PERSON>. We sampled everything 2R 4R 4L 7 and 11R. 4R and 7 were cancer the rest were fine. No PET to guide us so we did them all. Patient okay.",
+    "note_text": "EBUS for Pamela Isley. We sampled everything 2R 4R 4L 7 and 11R. 4R and 7 were cancer the rest were fine. No PET to guide us so we did them all. Patient okay.",
     "cpt_codes": [
       31653
     ],
@@ -11812,12 +11733,6 @@
       "style_type": 5,
       "generated_name": "Pamela Isley",
       "generation_date": "2025-12-09T09:18:49.012660"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12211,7 +12126,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a full lymph node staging procedure today. Since we didn't have a PET scan, we sampled five different lymph node stations in her chest (2R, 4R, 4L, 7, 11R) to be thorough. We found cancer cells in the station 4R and 7 nodes, but the others appeared clear. This helps us accurately stage her disease.",
+    "note_text": "Ms. Cassandra Cain underwent a full lymph node staging procedure today. Since we didn't have a PET scan, we sampled five different lymph node stations in her chest (2R, 4R, 4L, 7, 11R) to be thorough. We found cancer cells in the station 4R and 7 nodes, but the others appeared clear. This helps us accurately stage her disease.",
     "cpt_codes": [
       31653
     ],
@@ -12403,12 +12318,6 @@
       "style_type": 8,
       "generated_name": "Cassandra Cain",
       "generation_date": "2025-12-09T09:18:49.012807"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14140,7 +14049,7 @@
     }
   },
   {
-    "note_text": "We performed a navigational bronchoscopy on <PERSON> to biopsy a 19mm nodule in the left lower lung. We successfully reached the nodule and confirmed it with ultrasound. We took multiple samples using different tools to ensure we get a diagnosis. There were no complications.",
+    "note_text": "We performed a navigational bronchoscopy on Samantha Carter to biopsy a 19mm nodule in the left lower lung. We successfully reached the nodule and confirmed it with ultrasound. We took multiple samples using different tools to ensure we get a diagnosis. There were no complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -14356,12 +14265,6 @@
       "style_type": 8,
       "generated_name": "Samantha Carter",
       "generation_date": "2025-12-09T09:18:49.013301"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -15885,7 +15788,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> needed a biopsy of a large lymph node under her windpipe (station 7). We performed an EBUS procedure and focused solely on that node as requested by her oncologist. We took five good samples and the pathologist confirmed we had enough tissue for testing.",
+    "note_text": "Ms. Elinor Dashwood needed a biopsy of a large lymph node under her windpipe (station 7). We performed an EBUS procedure and focused solely on that node as requested by her oncologist. We took five good samples and the pathologist confirmed we had enough tissue for testing.",
     "cpt_codes": [
       31652
     ],
@@ -16067,12 +15970,6 @@
       "style_type": 8,
       "generated_name": "Elinor Dashwood",
       "generation_date": "2025-12-09T09:18:49.013740"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -16867,7 +16764,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS + RUL Bx\nPatient: <PERSON>\nSteps:\n1. EBUS 4R (Pos).\n2. EBUS 7 (Pos).\n3. Standard bronch RUL.\n4. Biopsied mass x 4.\n5. Brush x 2.\nPlan: Discharge.",
+    "note_text": "Procedure: EBUS + RUL Bx\nPatient: Newman Post\nSteps:\n1. EBUS 4R (Pos).\n2. EBUS 7 (Pos).\n3. Standard bronch RUL.\n4. Biopsied mass x 4.\n5. Brush x 2.\nPlan: Discharge.",
     "cpt_codes": [
       31652,
       31625,
@@ -17066,16 +16963,10 @@
       "style_type": 4,
       "generated_name": "Newman Post",
       "generation_date": "2025-12-09T09:18:49.014049"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "bronch for <PERSON>. did ebus first. 4R and 7 both cancer. then went to the RUL saw the tumor there took bites and a brush. systematic check done. no bleeding.",
+    "note_text": "bronch for Frank Costanza. did ebus first. 4R and 7 both cancer. then went to the RUL saw the tumor there took bites and a brush. systematic check done. no bleeding.",
     "cpt_codes": [
       31652,
       31625,
@@ -17274,12 +17165,6 @@
       "style_type": 5,
       "generated_name": "Frank Costanza",
       "generation_date": "2025-12-09T09:18:49.014096"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

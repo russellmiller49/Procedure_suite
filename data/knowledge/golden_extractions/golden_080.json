@@ -796,7 +796,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a left medical thoracoscopy today to manage his recurrent pleural effusion. After putting him under general anesthesia and securing the airway, we used ultrasound to find the best spot for entry in the sixth intercostal space. We drained about 1.8 liters of bloody fluid. The camera showed widespread nodules on the lining of the chest wall, which we biopsied. To prevent the fluid from coming back, we coated the area with a talc slurry. He tolerated the procedure well, aside from a brief drop in blood pressure that responded to fluids.",
+    "note_text": "Mr. Carter underwent a left medical thoracoscopy today to manage his recurrent pleural effusion. After putting him under general anesthesia and securing the airway, we used ultrasound to find the best spot for entry in the sixth intercostal space. We drained about 1.8 liters of bloody fluid. The camera showed widespread nodules on the lining of the chest wall, which we biopsied. To prevent the fluid from coming back, we coated the area with a talc slurry. He tolerated the procedure well, aside from a brief drop in blood pressure that responded to fluids.",
     "cpt_codes": [
       32650
     ],
@@ -905,12 +905,6 @@
       "style_type": 8,
       "generated_name": "Thomas Davis",
       "generation_date": "2025-12-09T12:09:23.249916"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1138,7 +1132,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE PERFORMED: Right medical thoracoscopy with mechanical pleurodesis and chemical sclerosis (Doxycycline).\nINDICATION: Mrs. <PERSON>, a 73-year-old female with known epithelioid mesothelioma, presented with intractable dyspnea secondary to a large recurrent effusion.\nDESCRIPTION: Under general anesthesia with bronchial blocker isolation, the right hemithorax was entered at the 5th intercostal space. Evacuation yielded 1.2 Liters of serous fluid. Inspection verified circumferential pleural thickening typical of mesothelioma. Therapeutic pleurodesis was achieved via mechanical abrasion of the parietal pleura followed by the instillation of 500 mg Doxycycline. A 28-French thoracostomy tube was placed.",
+    "note_text": "PROCEDURE PERFORMED: Right medical thoracoscopy with mechanical pleurodesis and chemical sclerosis (Doxycycline).\nINDICATION: Mrs. Lopez, a 73-year-old female with known epithelioid mesothelioma, presented with intractable dyspnea secondary to a large recurrent effusion.\nDESCRIPTION: Under general anesthesia with bronchial blocker isolation, the right hemithorax was entered at the 5th intercostal space. Evacuation yielded 1.2 Liters of serous fluid. Inspection verified circumferential pleural thickening typical of mesothelioma. Therapeutic pleurodesis was achieved via mechanical abrasion of the parietal pleura followed by the instillation of 500 mg Doxycycline. A 28-French thoracostomy tube was placed.",
     "cpt_codes": [
       32650
     ],
@@ -1247,12 +1241,6 @@
       "style_type": 2,
       "generated_name": "Jennifer Hernandez",
       "generation_date": "2025-12-09T12:09:23.250036"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1368,7 +1356,7 @@
     }
   },
   {
-    "note_text": "Resident Note / Thoracic Surgery\nPt: <PERSON>\nDx: Mesothelioma\nProc: Right Thoracoscopy + Pleurodesis\n\n1. Lat decubitus. GA.\n2. Incision 5th ICS.\n3. Drained 1.2L serous fluid.\n4. Scratched pleura (mechanical pleurodesis).\n5. Added Doxycycline 500mg.\n6. Placed 28Fr chest tube.\n\nEst Blood Loss: 40cc. No issues.",
+    "note_text": "Resident Note / Thoracic Surgery\nPt: Maria Lopez\nDx: Mesothelioma\nProc: Right Thoracoscopy + Pleurodesis\n\n1. Lat decubitus. GA.\n2. Incision 5th ICS.\n3. Drained 1.2L serous fluid.\n4. Scratched pleura (mechanical pleurodesis).\n5. Added Doxycycline 500mg.\n6. Placed 28Fr chest tube.\n\nEst Blood Loss: 40cc. No issues.",
     "cpt_codes": [
       32650
     ],
@@ -1477,16 +1465,10 @@
       "style_type": 4,
       "generated_name": "Elizabeth Gonzalez",
       "generation_date": "2025-12-09T12:09:23.250198"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> 73 female has mesothelioma and the fluid keeps coming back on the right so we did the scope today. General anesthesia with a blocker. Opened the 5th space drained 1.2 liters of yellow fluid. Inside looked thick like tumor. Scratched up the lining for mechanical pleurodesis and also put in doxycycline 500 milligrams to be sure. Chest tube is a 28 french. Bleeding was minor controlled with cautery.",
+    "note_text": "Maria Lopez 73 female has mesothelioma and the fluid keeps coming back on the right so we did the scope today. General anesthesia with a blocker. Opened the 5th space drained 1.2 liters of yellow fluid. Inside looked thick like tumor. Scratched up the lining for mechanical pleurodesis and also put in doxycycline 500 milligrams to be sure. Chest tube is a 28 french. Bleeding was minor controlled with cautery.",
     "cpt_codes": [
       32650
     ],
@@ -1595,12 +1577,6 @@
       "style_type": 5,
       "generated_name": "Barbara Wilson",
       "generation_date": "2025-12-09T12:09:23.250257"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1828,7 +1804,7 @@
     }
   },
   {
-    "note_text": "We took Mrs. <PERSON> to the OR for her right-sided <PERSON> caused by mesothelioma. We drained 1.2 liters of fluid using the thoracoscope. The lining of the lung looked thickened as expected. To seal the space, we used a two-step approach: first, we mechanically abraded the pleural surface with a gauze pad, and then we instilled doxycycline. We left a large chest tube in place to ensure everything drains well.",
+    "note_text": "We took Mrs. Lopez to the OR for her right-sided fluid buildup caused by mesothelioma. We drained 1.2 liters of fluid using the thoracoscope. The lining of the lung looked thickened as expected. To seal the space, we used a two-step approach: first, we mechanically abraded the pleural surface with a gauze pad, and then we instilled doxycycline. We left a large chest tube in place to ensure everything drains well.",
     "cpt_codes": [
       32650
     ],
@@ -1937,13 +1913,6 @@
       "style_type": 8,
       "generated_name": "Sarah Taylor",
       "generation_date": "2025-12-09T12:09:23.250419"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -2395,7 +2364,7 @@
     }
   },
   {
-    "note_text": "Procedure: Right Thoracoscopy\nPatient: <PERSON>\nSteps:\n1. MAC sedation.\n2. Local anesthetic 7th ICS.\n3. Trocar in -> 1.4L fluid out.\n4. Saw nodules -> Biopsy.\n5. Talc slurry 4g put in.\n6. 20Fr tube placed.\n\nPatient stable. EBL 15mL.",
+    "note_text": "Procedure: Right Thoracoscopy\nPatient: Hannah Nguyen\nSteps:\n1. MAC sedation.\n2. Local anesthetic 7th ICS.\n3. Trocar in -> 1.4L fluid out.\n4. Saw nodules -> Biopsy.\n5. Talc slurry 4g put in.\n6. 20Fr tube placed.\n\nPatient stable. EBL 15mL.",
     "cpt_codes": [
       32650
     ],
@@ -2504,16 +2473,10 @@
       "style_type": 4,
       "generated_name": "Margaret Perez",
       "generation_date": "2025-12-09T12:09:23.250663"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Did a thoracoscopy on <PERSON> for her breast cancer fluid on the right side. We used MAC sedation so she was breathing on her own. Drained about 1.4 liters of fluid. Saw some spots on the diaphragm and took samples. Put in the talc 4 grams to stick the lung. Chest tube is in. No complications really just admitted her for the night.",
+    "note_text": "Did a thoracoscopy on Ms Nguyen for her breast cancer fluid on the right side. We used MAC sedation so she was breathing on her own. Drained about 1.4 liters of fluid. Saw some spots on the diaphragm and took samples. Put in the talc 4 grams to stick the lung. Chest tube is in. No complications really just admitted her for the night.",
     "cpt_codes": [
       32650
     ],
@@ -2622,12 +2585,6 @@
       "style_type": 5,
       "generated_name": "Sandra Thompson",
       "generation_date": "2025-12-09T12:09:23.250692"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2855,7 +2812,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for a procedure to help with the fluid on her right lung caused by her breast cancer. We kept her comfortable with sedation but didn't need general anesthesia. We drained 1.4 liters of fluid and saw some small nodules which we biopsied. We then put in a talc mixture to seal the space. She tolerated it well and has a small chest tube in place now.",
+    "note_text": "Ms. Nguyen came in for a procedure to help with the fluid on her right lung caused by her breast cancer. We kept her comfortable with sedation but didn't need general anesthesia. We drained 1.4 liters of fluid and saw some small nodules which we biopsied. We then put in a talc mixture to seal the space. She tolerated it well and has a small chest tube in place now.",
     "cpt_codes": [
       32650
     ],
@@ -2964,12 +2921,6 @@
       "style_type": 8,
       "generated_name": "Emily Sanchez",
       "generation_date": "2025-12-09T12:09:23.250810"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3085,7 +3036,7 @@
     }
   },
   {
-    "note_text": "Indication: Refractory hepatic hydrothorax (Cirrhosis).\nProc: Right Med Thoracoscopy.\nFindings: 2.1L straw-colored fluid. Smooth pleura (no nodules).\nAction: Mechanical abrasion + 4g Talc slurry.\nPlan: Albumin replacement. <PERSON> (TIPS evaluation).",
+    "note_text": "Indication: Refractory hepatic hydrothorax (Cirrhosis).\nProc: Right Med Thoracoscopy.\nFindings: 2.1L straw-colored fluid. Smooth pleura (no nodules).\nAction: Mechanical abrasion + 4g Talc slurry.\nPlan: Albumin replacement. Consult Hepatology (TIPS evaluation).",
     "cpt_codes": [
       32650
     ],
@@ -3194,12 +3145,6 @@
       "style_type": 1,
       "generated_name": "Daniel Ramirez",
       "generation_date": "2025-12-09T12:09:23.250886"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3545,7 +3490,7 @@
     }
   },
   {
-    "note_text": "Mr <PERSON> has bad liver disease and fluid in the right lung we did the scope today to try and stick it. Drained a lot of fluid 2.1 liters. The lining looked smooth no cancer. We rubbed it with the pad mechanical pleurodesis and also put in talc. Gave him albumin because his pressure dropped a little. Chest tube is in place sending him to step down.",
+    "note_text": "Mr Ortiz has bad liver disease and fluid in the right lung we did the scope today to try and stick it. Drained a lot of fluid 2.1 liters. The lining looked smooth no cancer. We rubbed it with the pad mechanical pleurodesis and also put in talc. Gave him albumin because his pressure dropped a little. Chest tube is in place sending him to step down.",
     "cpt_codes": [
       32650
     ],
@@ -3654,12 +3599,6 @@
       "style_type": 5,
       "generated_name": "George Young",
       "generation_date": "2025-12-09T12:09:23.251008"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3887,7 +3826,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON>, who suffers from liver cirrhosis, had a large amount of fluid around his right lung. We performed a thoracoscopy to drain it and try to prevent it from coming back. We removed 2.1 liters of fluid. Since the lung lining looked healthy, we roughed it up mechanically and added talc to help it stick to the chest wall. We gave him some albumin to keep his blood pressure stable and placed a chest tube.",
+    "note_text": "Mr. Ortiz, who suffers from liver cirrhosis, had a large amount of fluid around his right lung. We performed a thoracoscopy to drain it and try to prevent it from coming back. We removed 2.1 liters of fluid. Since the lung lining looked healthy, we roughed it up mechanically and added talc to help it stick to the chest wall. We gave him some albumin to keep his blood pressure stable and placed a chest tube.",
     "cpt_codes": [
       32650
     ],
@@ -3996,12 +3935,6 @@
       "style_type": 8,
       "generated_name": "Edward Wright",
       "generation_date": "2025-12-09T12:09:23.251120"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4453,7 +4386,7 @@
     }
   },
   {
-    "note_text": "Procedure: Left Thoracoscopy for Pneumo\nPatient: Liam Johnson, 27M\n\n1. GA, DLT.\n2. Surgery stapled blebs first.\n3. We did the pleurodesis.\n4. Scratched the pleura (abrasion).\n5. Puffed in 4g Talc powder.\n6. Chest tube placed.\n\nEvents: <PERSON> to 88% during single lung vent, fixed with recruitment.",
+    "note_text": "Procedure: Left Thoracoscopy for Pneumo\nPatient: Liam Johnson, 27M\n\n1. GA, DLT.\n2. Surgery stapled blebs first.\n3. We did the pleurodesis.\n4. Scratched the pleura (abrasion).\n5. Puffed in 4g Talc powder.\n6. Chest tube placed.\n\nEvents: Desat to 88% during single lung vent, fixed with recruitment.",
     "cpt_codes": [
       32650
     ],
@@ -4562,16 +4495,10 @@
       "style_type": 4,
       "generated_name": "Jason Flores",
       "generation_date": "2025-12-09T12:09:23.251270"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> is the young guy with the collapsed lung again. We went in with the surgeons. They stapled the blebs. We did the pleurodesis part. Rubbed the apex with gauze and blew in the talc powder 4 grams. He desatted a bit when we dropped the lung but came back up. Tube is in. Tell him to stop smoking seriously.",
+    "note_text": "Liam is the young guy with the collapsed lung again. We went in with the surgeons. They stapled the blebs. We did the pleurodesis part. Rubbed the apex with gauze and blew in the talc powder 4 grams. He desatted a bit when we dropped the lung but came back up. Tube is in. Tell him to stop smoking seriously.",
     "cpt_codes": [
       32650
     ],
@@ -4680,12 +4607,6 @@
       "style_type": 5,
       "generated_name": "Matthew Green",
       "generation_date": "2025-12-09T12:09:23.251298"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4913,7 +4834,7 @@
     }
   },
   {
-    "note_text": "<PERSON> came in for his third collapsed lung. We worked with the surgery team; they stapled off the weak spots (blebs) on his lung. Then, we performed the pleurodesis to stick the lung to the chest wall. We used a scratch pad on the lining and blew in dry talc powder. He had a brief drop in oxygen levels during the procedure but recovered quickly. He has a chest tube in now.",
+    "note_text": "Liam came in for his third collapsed lung. We worked with the surgery team; they stapled off the weak spots (blebs) on his lung. Then, we performed the pleurodesis to stick the lung to the chest wall. We used a scratch pad on the lining and blew in dry talc powder. He had a brief drop in oxygen levels during the procedure but recovered quickly. He has a chest tube in now.",
     "cpt_codes": [
       32650
     ],
@@ -5022,12 +4943,6 @@
       "style_type": 8,
       "generated_name": "Jose Baker",
       "generation_date": "2025-12-09T12:09:23.251389"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5479,7 +5394,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: <PERSON>\nDx: <PERSON>, Loculated effusion\n\n1. Moderate sedation.\n2. US showed loculations.\n3. Scope in -> broke up adhesions (lysis).\n4. Drained 900cc.\n5. Biopsied nodules.\n6. Put in Talc.\n7. 20Fr tube.\n\nPatient comfortable, minimal pain.",
+    "note_text": "Resident Note\nPt: <PERSON>\nDx: Ovarian Ca, Loculated effusion\n\n1. Moderate sedation.\n2. US showed loculations.\n3. Scope in -> broke up adhesions (lysis).\n4. Drained 900cc.\n5. Biopsied nodules.\n6. Put in Talc.\n7. 20Fr tube.\n\nPatient comfortable, minimal pain.",
     "cpt_codes": [
       32650
     ],
@@ -5590,9 +5505,8 @@
       "generation_date": "2025-12-09T12:09:23.251532"
     },
     "scrub_metadata": {
-      "entities_redacted": 2,
+      "entities_redacted": 1,
       "entity_types": [
-        "PERSON",
         "PERSON"
       ]
     }
@@ -5934,7 +5848,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON>'s fluid was trapped in pockets (loculated), so a regular needle drain wouldn't work. We used the thoracoscope to break up these pockets and drained 900ml of fluid. We found some cancer spots and took samples. To keep the fluid from coming back, we put in talc. She had some pain during the procedure but we managed it with medication.",
+    "note_text": "Ms. Brown's fluid was trapped in pockets (loculated), so a regular needle drain wouldn't work. We used the thoracoscope to break up these pockets and drained 900ml of fluid. We found some cancer spots and took samples. To keep the fluid from coming back, we put in talc. She had some pain during the procedure but we managed it with medication.",
     "cpt_codes": [
       32650
     ],
@@ -6043,12 +5957,6 @@
       "style_type": 8,
       "generated_name": "Amanda Turner",
       "generation_date": "2025-12-09T12:09:23.251663"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6618,7 +6526,7 @@
     }
   },
   {
-    "note_text": "Mr <PERSON> has lung cancer and fluid on the left. We did the thoracoscopy under GA. Drained 1.6 liters. The pleura looked bumpy so we biopsied it. Put in the talc to seal it up. No issues bleeding was minor. Chest tube is hooked up to suction.",
+    "note_text": "Mr Miller has lung cancer and fluid on the left. We did the thoracoscopy under GA. Drained 1.6 liters. The pleura looked bumpy so we biopsied it. Put in the talc to seal it up. No issues bleeding was minor. Chest tube is hooked up to suction.",
     "cpt_codes": [
       32650
     ],
@@ -6727,12 +6635,6 @@
       "style_type": 5,
       "generated_name": "Stephen Rogers",
       "generation_date": "2025-12-09T12:09:23.251841"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6960,7 +6862,7 @@
     }
   },
   {
-    "note_text": "We performed a procedure to drain the fluid around Mr. <PERSON>'s left lung and prevent it from returning. We removed 1.6 liters of fluid. We saw many nodules on the lung lining consistent with his cancer and took biopsies to confirm. We then spread talc in the chest cavity. He is recovering on the floor with a chest tube.",
+    "note_text": "We performed a procedure to drain the fluid around Mr. Miller's left lung and prevent it from returning. We removed 1.6 liters of fluid. We saw many nodules on the lung lining consistent with his cancer and took biopsies to confirm. We then spread talc in the chest cavity. He is recovering on the floor with a chest tube.",
     "cpt_codes": [
       32650
     ],
@@ -7069,12 +6971,6 @@
       "style_type": 8,
       "generated_name": "Gregory Morgan",
       "generation_date": "2025-12-09T12:09:23.251930"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7526,7 +7422,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPt: <PERSON>\nDx: Renal Cell Ca\n\n1. Moderate sedation.\n2. Left 6th ICS.\n3. Drained 1.3L bloody fluid.\n4. Saw hemorrhagic implants -> Biopsy.\n5. Talc slurry 4g.\n6. 20Fr tube.\n\nPlan: Remove tube when output low.",
+    "note_text": "Resident Note\nPt: Noah Allen\nDx: Renal Cell Ca\n\n1. Moderate sedation.\n2. Left 6th ICS.\n3. Drained 1.3L bloody fluid.\n4. Saw hemorrhagic implants -> Biopsy.\n5. Talc slurry 4g.\n6. 20Fr tube.\n\nPlan: Remove tube when output low.",
     "cpt_codes": [
       32650
     ],
@@ -7635,16 +7531,10 @@
       "style_type": 4,
       "generated_name": "Peter Cooper",
       "generation_date": "2025-12-09T12:09:23.252178"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Did the scope on Mr <PERSON> he has kidney cancer. The fluid was very bloody drained 1.3 liters. The spots on the pleura were bleeding a bit too looked like renal cell. Biopsied them. Put in talc. No major bleeding problems surprisingly. Chest tube in.",
+    "note_text": "Did the scope on Mr Allen he has kidney cancer. The fluid was very bloody drained 1.3 liters. The spots on the pleura were bleeding a bit too looked like renal cell. Biopsied them. Put in talc. No major bleeding problems surprisingly. Chest tube in.",
     "cpt_codes": [
       32650
     ],
@@ -7753,12 +7643,6 @@
       "style_type": 5,
       "generated_name": "Harold Richardson",
       "generation_date": "2025-12-09T12:09:23.252212"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7986,7 +7870,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> has fluid around his lung from his kidney cancer. We drained 1.3 liters of bloody fluid using the thoracoscope. We saw several bleeding spots on the lung lining, which fits with his diagnosis. We took samples and then put in talc to seal the space. He is doing well with the chest tube in place.",
+    "note_text": "Mr. Allen has fluid around his lung from his kidney cancer. We drained 1.3 liters of bloody fluid using the thoracoscope. We saw several bleeding spots on the lung lining, which fits with his diagnosis. We took samples and then put in talc to seal the space. He is doing well with the chest tube in place.",
     "cpt_codes": [
       32650
     ],
@@ -8095,12 +7979,6 @@
       "style_type": 8,
       "generated_name": "Carl Ward",
       "generation_date": "2025-12-09T12:09:23.252306"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8552,7 +8430,7 @@
     }
   },
   {
-    "note_text": "Procedure: Left Thoracoscopy\nPt: <PERSON>\nDx: Mesothelioma (had Right side done before)\n\n1. GA.\n2. Left side entry.\n3. 1.5L serous fluid.\n4. Nodules seen -> Biopsy.\n5. Talc slurry.\n6. Tube placed.\n\nPlan: Pull tube when dry.",
+    "note_text": "Procedure: Left Thoracoscopy\nPt: James Cooper\nDx: Mesothelioma (had Right side done before)\n\n1. GA.\n2. Left side entry.\n3. 1.5L serous fluid.\n4. Nodules seen -> Biopsy.\n5. Talc slurry.\n6. Tube placed.\n\nPlan: Pull tube when dry.",
     "cpt_codes": [
       32650
     ],
@@ -8661,16 +8539,10 @@
       "style_type": 4,
       "generated_name": "Juan James",
       "generation_date": "2025-12-09T12:09:23.252510"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Mr <PERSON> is back with fluid on the other side now the left side. He has mesothelioma. We did the scope drained 1.5 liters. Looks just like the other side did nodules everywhere. Put in talc to freeze it. Chest tube is in. Palliative care is following.",
+    "note_text": "Mr Cooper is back with fluid on the other side now the left side. He has mesothelioma. We did the scope drained 1.5 liters. Looks just like the other side did nodules everywhere. Put in talc to freeze it. Chest tube is in. Palliative care is following.",
     "cpt_codes": [
       32650
     ],
@@ -8779,12 +8651,6 @@
       "style_type": 5,
       "generated_name": "Jack Watson",
       "generation_date": "2025-12-09T12:09:23.252540"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9012,7 +8878,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> developed fluid on his left side now, having previously had his right side treated. We performed a thoracoscopy to drain 1.5 liters of fluid. The appearance was consistent with his mesothelioma. We used talc to seal this side as well. He is comfortable and being followed by palliative care.",
+    "note_text": "Mr. Cooper developed fluid on his left side now, having previously had his right side treated. We performed a thoracoscopy to drain 1.5 liters of fluid. The appearance was consistent with his mesothelioma. We used talc to seal this side as well. He is comfortable and being followed by palliative care.",
     "cpt_codes": [
       32650
     ],
@@ -9121,12 +8987,6 @@
       "style_type": 8,
       "generated_name": "Justin Sanders",
       "generation_date": "2025-12-09T12:09:23.252631"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9578,7 +9438,7 @@
     }
   },
   {
-    "note_text": "Procedure: Left Thoracoscopy\nPt: <PERSON>\n\n1. Mod sedation.\n2. Left 7th ICS.\n3. Drained 1.7L fluid.\n4. Implants seen -> Biopsy.\n5. Talc slurry 4g.\n6. 20Fr tube.\n\nPlan: Watch the right side, might need a catheter there later.",
+    "note_text": "Procedure: Left Thoracoscopy\nPt: Ava Thompson\n\n1. Mod sedation.\n2. Left 7th ICS.\n3. Drained 1.7L fluid.\n4. Implants seen -> Biopsy.\n5. Talc slurry 4g.\n6. 20Fr tube.\n\nPlan: Watch the right side, might need a catheter there later.",
     "cpt_codes": [
       32650
     ],
@@ -9687,16 +9547,10 @@
       "style_type": 4,
       "generated_name": "Kelly Ross",
       "generation_date": "2025-12-09T12:09:23.252780"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> has fluid on both sides but the left is worse so we scoped that one. Moderate sedation. Drained 1.7 liters bloody fluid. Lots of cancer spots inside. Put in talc. She did fine. We'll watch the right side maybe put a PleurX in later if she needs it.",
+    "note_text": "Ms Thompson has fluid on both sides but the left is worse so we scoped that one. Moderate sedation. Drained 1.7 liters bloody fluid. Lots of cancer spots inside. Put in talc. She did fine. We'll watch the right side maybe put a PleurX in later if she needs it.",
     "cpt_codes": [
       32650
     ],
@@ -9805,12 +9659,6 @@
       "style_type": 5,
       "generated_name": "Nicole Henderson",
       "generation_date": "2025-12-09T12:09:23.252823"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10038,7 +9886,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> has fluid on both lungs, but the left side was causing more trouble. We drained 1.7 liters from the left side using the thoracoscope and biopsied the implants we found. We put in talc to prevent the fluid from coming back on that side. We will keep an eye on her right side and might need to place a drain there later if it bothers her.",
+    "note_text": "Ms. Thompson has fluid on both lungs, but the left side was causing more trouble. We drained 1.7 liters from the left side using the thoracoscope and biopsied the implants we found. We put in talc to prevent the fluid from coming back on that side. We will keep an eye on her right side and might need to place a drain there later if it bothers her.",
     "cpt_codes": [
       32650
     ],
@@ -10147,12 +9995,6 @@
       "style_type": 8,
       "generated_name": "Angela Perry",
       "generation_date": "2025-12-09T12:09:23.252929"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

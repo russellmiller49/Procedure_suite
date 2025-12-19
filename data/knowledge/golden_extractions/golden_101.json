@@ -909,7 +909,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nAttending: Dr. [Name]\nResident: [Name]\n\nProcedure: Therapeutic Bronchoscopy\n\nSteps:\n1. Time out performed.\n2. General anesthesia induced. LMA placed.\n3. Scope inserted. Y-stent visualized.\n4. Findings: Thick mucus obstructing stents. RUL stent tip noted.\n5. Action: Aggressive suctioning and forceps removal of mucus plugs. <PERSON> used.\n6. Stents cleared.\n7. Mini-BAL performed in LUL anterior segment.\n8. Scope removed. Patient stable.",
+    "note_text": "Procedure Note\nAttending: Dr. [Name]\nResident: [Name]\n\nProcedure: Therapeutic Bronchoscopy\n\nSteps:\n1. Time out performed.\n2. General anesthesia induced. LMA placed.\n3. Scope inserted. Y-stent visualized.\n4. Findings: Thick mucus obstructing stents. RUL stent tip noted.\n5. Action: Aggressive suctioning and forceps removal of mucus plugs. Bicarb used.\n6. Stents cleared.\n7. Mini-BAL performed in LUL anterior segment.\n8. Scope removed. Patient stable.",
     "cpt_codes": [
       31645,
       31624
@@ -1209,12 +1209,6 @@
       "style_type": 4,
       "generated_name": "William Davis",
       "generation_date": "2025-12-18T17:33:25.366662"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4818,7 +4812,7 @@
     }
   },
   {
-    "note_text": "Procedure Name: Navigational Bronchoscopy and Staging EBUS. Indications: Diagnosis and staging of presumed lung cancer. Pre-operative diagnosis: <PERSON>. Post-operative Diagnosis: <PERSON>. Medications: General Anesthesia. Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the T190 video bronchoscope was introduced through the mouth, via an 8.5 ETT  and advanced to the tracheobronchial tree. The distal trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions. The Covidien superDimension locatable guide was then inserted through the working channel and registration was performed. The Edge 180 degree extended working channel was then attached to the bronchoscope.  Using navigational map we advanced the catheter into the proximity of the lesion within the superior segment of the right lower lobe. Confirmation of placement once at the point of interest with radial ultrasound showed a diffuse heterogeneric concentric view within the lesion consistent with the known part solid nodule. Biopsies were then performed with peripheral needle under fluoroscopic visualization with ROSE findings consistent with malignancy, additional forceps biopsies were then performed in the same location. The flexible bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced via the ETT. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L, 7 and 4R lymph nodes. Sampling by transbronchial needle aspiration was performed with the Olympus EBUS TBNA 22- and 25-gauge needles beginning with the 4L Lymph node (7 biopsies), followed by the 7 lymph node (5 biopsies) and finally the 4R lymph node (4 biopsies). ROSE evaluation was consistent with adequate lymph node sampling in all stations. All samples were sent for routine cytology. Following completion of EBUS bronchoscopy, the T190 video bronchoscope was then re-inserted. Active oozing was noted at the site of the 4R lymph node and topical iced saline was applied with subsequent resolution of the bleeding and after suctioning remaining  blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+    "note_text": "Procedure Name: Navigational Bronchoscopy and Staging EBUS. Indications: Diagnosis and staging of presumed lung cancer. Pre-operative diagnosis: Pulmonary Nodule. Post-operative Diagnosis: Pulmonary Nodule. Medications: General Anesthesia. Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the T190 video bronchoscope was introduced through the mouth, via an 8.5 ETT  and advanced to the tracheobronchial tree. The distal trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions. The Covidien superDimension locatable guide was then inserted through the working channel and registration was performed. The Edge 180 degree extended working channel was then attached to the bronchoscope.  Using navigational map we advanced the catheter into the proximity of the lesion within the superior segment of the right lower lobe. Confirmation of placement once at the point of interest with radial ultrasound showed a diffuse heterogeneric concentric view within the lesion consistent with the known part solid nodule. Biopsies were then performed with peripheral needle under fluoroscopic visualization with ROSE findings consistent with malignancy, additional forceps biopsies were then performed in the same location. The flexible bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced via the ETT. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L, 7 and 4R lymph nodes. Sampling by transbronchial needle aspiration was performed with the Olympus EBUS TBNA 22- and 25-gauge needles beginning with the 4L Lymph node (7 biopsies), followed by the 7 lymph node (5 biopsies) and finally the 4R lymph node (4 biopsies). ROSE evaluation was consistent with adequate lymph node sampling in all stations. All samples were sent for routine cytology. Following completion of EBUS bronchoscopy, the T190 video bronchoscope was then re-inserted. Active oozing was noted at the site of the 4R lymph node and topical iced saline was applied with subsequent resolution of the bleeding and after suctioning remaining  blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
     "cpt_codes": [
       31653,
       31628,
@@ -5232,13 +5226,6 @@
       "style_type": 6,
       "generated_name": "Jennifer Garcia",
       "generation_date": "2025-12-18T17:33:25.367701"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -15395,7 +15382,7 @@
     }
   },
   {
-    "note_text": "CPT Justification:\n- 31628 (Transbronchial Biopsy): Forceps biopsies taken from the mass within the RLL cavity. (<PERSON> service).\n- 31624 (BAL): Separate bronchoalveolar lavage performed in the RLL superior segment to collect fluid for extensive culture (AFB, fungal, cytology). \nNote: Bleeding management is bundled.",
+    "note_text": "CPT Justification:\n- 31628 (Transbronchial Biopsy): Forceps biopsies taken from the mass within the RLL cavity. (Primary service).\n- 31624 (BAL): Separate bronchoalveolar lavage performed in the RLL superior segment to collect fluid for extensive culture (AFB, fungal, cytology). \nNote: Bleeding management is bundled.",
     "cpt_codes": [
       31628,
       31624
@@ -16099,12 +16086,6 @@
       "style_type": 3,
       "generated_name": "Kenneth Green",
       "generation_date": "2025-12-18T17:33:25.370486"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18936,7 +18917,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON>, a cystic fibrosis patient, underwent bronchoscopy for an RLL cavity. We used general anesthesia and a hybrid scope. We found pus coming from the RLL superior segment and performed a wash (BAL). Looking deeper, we found a cavity with a fungal ball inside. We took biopsies of this mass. It started bleeding moderately, so we used epinephrine, iced saline, and wedged the scope to stop it. He recovered well.",
+    "note_text": "Mr. Grace, a cystic fibrosis patient, underwent bronchoscopy for an RLL cavity. We used general anesthesia and a hybrid scope. We found pus coming from the RLL superior segment and performed a wash (BAL). Looking deeper, we found a cavity with a fungal ball inside. We took biopsies of this mass. It started bleeding moderately, so we used epinephrine, iced saline, and wedged the scope to stop it. He recovered well.",
     "cpt_codes": [
       31628,
       31624
@@ -19640,12 +19621,6 @@
       "style_type": 8,
       "generated_name": "Anthony Campbell",
       "generation_date": "2025-12-18T17:33:25.371358"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

@@ -1533,7 +1533,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> required removal of a migrated airway stent complicated by infection. Under general anesthesia, we used a rigid bronchoscope to access the airway. After clearing significant purulent debris, we successfully grasped and removed the migrated stent. The underlying TE fistula appeared stable, covered by his esophageal stent.",
+    "note_text": "Mr. Conley required removal of a migrated airway stent complicated by infection. Under general anesthesia, we used a rigid bronchoscope to access the airway. After clearing significant purulent debris, we successfully grasped and removed the migrated stent. The underlying TE fistula appeared stable, covered by his esophageal stent.",
     "cpt_codes": [
       31635
     ],
@@ -1749,12 +1749,6 @@
       "style_type": 8,
       "generated_name": "Joseph Miller",
       "generation_date": "2025-12-09T09:18:46.310181"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3122,7 +3116,7 @@
     }
   },
   {
-    "note_text": "Pt: <PERSON>. Proc: Medical Thoracoscopy, IPC placement. Findings: 1600cc fluid, diffuse nodules. Action: Biopsy x12, IPC (15.5Fr) placed. Outcome: Lung re-expanded, catheter functional. Plan: Path f/u, catheter teaching.",
+    "note_text": "Pt: Maizie Booth. Proc: Medical Thoracoscopy, IPC placement. Findings: 1600cc fluid, diffuse nodules. Action: Biopsy x12, IPC (15.5Fr) placed. Outcome: Lung re-expanded, catheter functional. Plan: Path f/u, catheter teaching.",
     "cpt_codes": [
       32601,
       32550
@@ -3348,12 +3342,6 @@
       "style_type": 6,
       "generated_name": "Sarah Jackson",
       "generation_date": "2025-12-09T09:18:46.310575"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3586,7 +3574,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a medical thoracoscopy to investigate her pleural effusion. We drained 1.6 liters of fluid and found extensive nodules, which were biopsied. To manage the recurrent fluid, we placed a tunneled pleural catheter. She tolerated the procedure well.",
+    "note_text": "Ms. Booth underwent a medical thoracoscopy to investigate her pleural effusion. We drained 1.6 liters of fluid and found extensive nodules, which were biopsied. To manage the recurrent fluid, we placed a tunneled pleural catheter. She tolerated the procedure well.",
     "cpt_codes": [
       32601,
       32550
@@ -3812,16 +3800,10 @@
       "style_type": 8,
       "generated_name": "Nancy Harris",
       "generation_date": "2025-12-09T09:18:46.310686"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Intervention: Medical Thoracoscopy with implantation of tunneled drainage catheter. Subject: <PERSON>. Findings: Extensive carcinomatosis. Action: Twelve tissue samples procured. Tunneled catheter deployed for chronic drainage.",
+    "note_text": "Intervention: Medical Thoracoscopy with implantation of tunneled drainage catheter. Subject: Maizie Booth. Findings: Extensive carcinomatosis. Action: Twelve tissue samples procured. Tunneled catheter deployed for chronic drainage.",
     "cpt_codes": [
       32601,
       32550
@@ -4047,12 +4029,6 @@
       "style_type": 9,
       "generated_name": "Lisa Martin",
       "generation_date": "2025-12-09T09:18:46.310741"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4695,7 +4671,7 @@
     }
   },
   {
-    "note_text": "Procedure: Vapor Ablation (BLVR).\nSteps:\n1. Airway sizing.\n2. Catheter to RUL.\n3. Vapor delivery RB3 (8 cal).\n4. Vapor delivery RB1 (6 cal).\n5. Checked for bleeding/pneumo.\nPlan: Antibiotics, <LOCATION>.",
+    "note_text": "Procedure: Vapor Ablation (BLVR).\nSteps:\n1. Airway sizing.\n2. Catheter to RUL.\n3. Vapor delivery RB3 (8 cal).\n4. Vapor delivery RB1 (6 cal).\n5. Checked for bleeding/pneumo.\nPlan: Antibiotics, Prednisone.",
     "cpt_codes": [],
     "registry_entry": {
       "patient_mrn": "34567890_syn_4",
@@ -4905,12 +4881,6 @@
       "style_type": 4,
       "generated_name": "Mark Clark",
       "generation_date": "2025-12-09T09:18:46.310984"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -5127,7 +5097,7 @@
     }
   },
   {
-    "note_text": "Pt: <PERSON>. Proc: Bronchoscopic Thermal Vapor Ablation. Target: RUL. Dose: 14 cal (RB1, RB3). Complications: None. Plan: ICU observation, antibiotics, steroids for post-ablation inflammation.",
+    "note_text": "Pt: George Martinez. Proc: Bronchoscopic Thermal Vapor Ablation. Target: RUL. Dose: 14 cal (RB1, RB3). Complications: None. Plan: ICU observation, antibiotics, steroids for post-ablation inflammation.",
     "cpt_codes": [],
     "registry_entry": {
       "patient_mrn": "34567890_syn_6",
@@ -5337,12 +5307,6 @@
       "style_type": 6,
       "generated_name": "George Lewis",
       "generation_date": "2025-12-09T09:18:46.311091"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5559,7 +5523,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent thermal vapor ablation for his emphysema. Because he has collateral ventilation, valves were not an option. We treated the right upper lobe segments with heated water vapor, delivering a total of 14 calories. He will be monitored for the expected inflammatory response.",
+    "note_text": "Mr. Martinez underwent thermal vapor ablation for his emphysema. Because he has collateral ventilation, valves were not an option. We treated the right upper lobe segments with heated water vapor, delivering a total of 14 calories. He will be monitored for the expected inflammatory response.",
     "cpt_codes": [],
     "registry_entry": {
       "patient_mrn": "34567890_syn_8",
@@ -5769,12 +5733,6 @@
       "style_type": 8,
       "generated_name": "Steven Walker",
       "generation_date": "2025-12-09T09:18:46.311199"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7096,7 +7054,7 @@
     }
   },
   {
-    "note_text": "Pt: <PERSON>. Proc: BLVR LLL. Valves: 3 Zephyr (LB6, LB8, LB9-10). Findings: Complete occlusion. Complications: None. Plan: CXR, observation.",
+    "note_text": "Pt: Maria Rodriguez. Proc: BLVR LLL. Valves: 3 Zephyr (LB6, LB8, LB9-10). Findings: Complete occlusion. Complications: None. Plan: CXR, observation.",
     "cpt_codes": [
       31647
     ],
@@ -7314,12 +7272,6 @@
       "style_type": 6,
       "generated_name": "Donna Lopez",
       "generation_date": "2025-12-09T09:18:46.311579"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7544,7 +7496,7 @@
     }
   },
   {
-    "note_text": "Mrs. <PERSON> underwent elective valve placement for her emphysema. We targeted the left lower lobe. Three valves were successfully placed in the segmental bronchi, achieving complete occlusion of the lobe. She is stable and will be monitored for pneumothorax.",
+    "note_text": "Mrs. Rodriguez underwent elective valve placement for her emphysema. We targeted the left lower lobe. Three valves were successfully placed in the segmental bronchi, achieving complete occlusion of the lobe. She is stable and will be monitored for pneumothorax.",
     "cpt_codes": [
       31647
     ],
@@ -7762,12 +7714,6 @@
       "style_type": 8,
       "generated_name": "Michelle Scott",
       "generation_date": "2025-12-09T09:18:46.311685"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9272,7 +9218,7 @@
     }
   },
   {
-    "note_text": "Pt: <PERSON>. Indication: Tracheal compression. Proc: Rigid Bronch, Y-Stent (Silicone). Stent customized and placed. Trachea and both mainstems stented. Result: Airway patent. Plan: ICU.",
+    "note_text": "Pt: Emma Carlisle. Indication: Tracheal compression. Proc: Rigid Bronch, Y-Stent (Silicone). Stent customized and placed. Trachea and both mainstems stented. Result: Airway patent. Plan: ICU.",
     "cpt_codes": [
       31631,
       31636,
@@ -9525,12 +9471,6 @@
       "style_type": 6,
       "generated_name": "Laura Mitchell",
       "generation_date": "2025-12-09T09:18:46.312220"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9790,7 +9730,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> presented with respiratory failure due to tracheal compression. We performed a rigid bronchoscopy and placed a silicone Y-stent. This successfully scaffolded the trachea and both mainstem bronchi, relieving the obstruction. She was transferred to the ICU in stable condition.",
+    "note_text": "Ms. Carlisle presented with respiratory failure due to tracheal compression. We performed a rigid bronchoscopy and placed a silicone Y-stent. This successfully scaffolded the trachea and both mainstem bronchi, relieving the obstruction. She was transferred to the ICU in stable condition.",
     "cpt_codes": [
       31631,
       31636,
@@ -10043,12 +9983,6 @@
       "style_type": 8,
       "generated_name": "Cynthia Roberts",
       "generation_date": "2025-12-09T09:18:46.312398"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11925,7 +11859,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent rigid bronchoscopy to debulk a tracheal tumor causing obstruction. We used a snare to remove the bulk of the disease and APC to treat the base. We achieved 90% patency. Per his request, no stent was placed. He will follow up with oncology.",
+    "note_text": "Mr. Shepherd underwent rigid bronchoscopy to debulk a tracheal tumor causing obstruction. We used a snare to remove the bulk of the disease and APC to treat the base. We achieved 90% patency. Per his request, no stent was placed. He will follow up with oncology.",
     "cpt_codes": [
       31641
     ],
@@ -12153,12 +12087,6 @@
       "style_type": 8,
       "generated_name": "Nathan Sanchez",
       "generation_date": "2025-12-09T09:18:46.312964"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13273,7 +13201,7 @@
     }
   },
   {
-    "note_text": "valve procedure for <PERSON>... lul emphysema... chartis said no cv... put in 4 valves total... looks blocked off nicely... admit.",
+    "note_text": "valve procedure for thomas... lul emphysema... chartis said no cv... put in 4 valves total... looks blocked off nicely... admit.",
     "cpt_codes": [
       31647
     ],
@@ -13490,16 +13418,10 @@
       "style_type": 5,
       "generated_name": "Ryan Bell",
       "generation_date": "2025-12-09T09:18:46.313310"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Pt: <PERSON>. Proc: BLVR LUL. Chartis: Neg CV. Valves: 4 Zephyr. Result: Occlusion. Plan: Admit.",
+    "note_text": "Pt: Thomas O'Brien. Proc: BLVR LUL. Chartis: Neg CV. Valves: 4 Zephyr. Result: Occlusion. Plan: Admit.",
     "cpt_codes": [
       31647
     ],
@@ -13716,12 +13638,6 @@
       "style_type": 6,
       "generated_name": "Roger Murphy",
       "generation_date": "2025-12-09T09:18:46.313420"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13945,7 +13861,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent BLVR for his LUL emphysema. We confirmed he was a good candidate with Chartis. Four valves were placed, effectively occluding the lobe.",
+    "note_text": "Mr. O'Brien underwent BLVR for his LUL emphysema. We confirmed he was a good candidate with Chartis. Four valves were placed, effectively occluding the lobe.",
     "cpt_codes": [
       31647
     ],
@@ -14162,12 +14078,6 @@
       "style_type": 8,
       "generated_name": "Juan Rivera",
       "generation_date": "2025-12-09T09:18:46.313535"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -16456,7 +16366,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a combined procedure. We used the Ion robot to biopsy a nodule in his right upper lobe. We also performed a Chartis assessment on his left upper lobe to see if he qualifies for valves in the future; the results were promising.",
+    "note_text": "Mr. Pierce underwent a combined procedure. We used the Ion robot to biopsy a nodule in his right upper lobe. We also performed a Chartis assessment on his left upper lobe to see if he qualifies for valves in the future; the results were promising.",
     "cpt_codes": [
       31627,
       31629,
@@ -16748,12 +16658,6 @@
       "style_type": 8,
       "generated_name": "Willie Ramirez",
       "generation_date": "2025-12-09T09:18:46.314155"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18232,7 +18136,7 @@
     }
   },
   {
-    "note_text": "Pt: <PERSON>. Indication: Air leak. Proc: Valves RUL. Event: Iatrogenic Tension PTX. <PERSON>: Chest tube. Outcome: Air leak reduced. Disposition: ICU.",
+    "note_text": "Pt: Harold Johnson. Indication: Air leak. Proc: Valves RUL. Event: Iatrogenic Tension PTX. Mgmt: Chest tube. Outcome: Air leak reduced. Disposition: ICU.",
     "cpt_codes": [
       31647
     ],
@@ -18465,13 +18369,6 @@
       "style_type": 6,
       "generated_name": "Brandon Bennett",
       "generation_date": "2025-12-09T09:18:46.314595"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -18711,7 +18608,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent valve placement to treat a persistent air leak. Unfortunately, he developed a tension pneumothorax during the procedure, which required immediate chest tube placement. We proceeded to place a second valve to help seal the leak. He is currently stable in the ICU.",
+    "note_text": "Mr. Johnson underwent valve placement to treat a persistent air leak. Unfortunately, he developed a tension pneumothorax during the procedure, which required immediate chest tube placement. We proceeded to place a second valve to help seal the leak. He is currently stable in the ICU.",
     "cpt_codes": [
       31647
     ],
@@ -18944,12 +18841,6 @@
       "style_type": 8,
       "generated_name": "Scott Barnes",
       "generation_date": "2025-12-09T09:18:46.314713"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -20209,7 +20100,7 @@
     }
   },
   {
-    "note_text": "rigid bronch for <PERSON>... left main was blocked... took ebus samples first... then opened up the left main with apc and the rigid scope... dilated it too... looks better... gonna send for radiation.",
+    "note_text": "rigid bronch for jacob... left main was blocked... took ebus samples first... then opened up the left main with apc and the rigid scope... dilated it too... looks better... gonna send for radiation.",
     "cpt_codes": [
       31641,
       31652
@@ -20461,16 +20352,10 @@
       "style_type": 5,
       "generated_name": "Joshua Powell",
       "generation_date": "2025-12-09T09:18:46.315094"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Pt: <PERSON>. Proc: Rigid Bronch, EBUS, Debulking. Findings: LMS obstruction, subcarinal LAD. Action: EBUS-TBNA, APC/Cryo debulking LMS. Result: Recanalized. Plan: Rad Onc.",
+    "note_text": "Pt: Jacob Renfield. Proc: Rigid Bronch, EBUS, Debulking. Findings: LMS obstruction, subcarinal LAD. Action: EBUS-TBNA, APC/Cryo debulking LMS. Result: Recanalized. Plan: Rad Onc.",
     "cpt_codes": [
       31641,
       31652
@@ -20722,12 +20607,6 @@
       "style_type": 6,
       "generated_name": "Dennis Long",
       "generation_date": "2025-12-09T09:18:46.315156"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -20986,7 +20865,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent rigid bronchoscopy for a blocked left mainstem bronchus. We first sampled the subcarinal lymph nodes with EBUS. Then, using a combination of techniques including APC and balloon dilation, we opened the obstructed airway. We decided against stenting for now and will refer for radiation.",
+    "note_text": "Mr. Renfield underwent rigid bronchoscopy for a blocked left mainstem bronchus. We first sampled the subcarinal lymph nodes with EBUS. Then, using a combination of techniques including APC and balloon dilation, we opened the obstructed airway. We decided against stenting for now and will refer for radiation.",
     "cpt_codes": [
       31641,
       31652
@@ -21238,12 +21117,6 @@
       "style_type": 8,
       "generated_name": "Tyler Hughes",
       "generation_date": "2025-12-09T09:18:46.315277"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

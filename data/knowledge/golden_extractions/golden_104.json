@@ -2396,7 +2396,7 @@
     }
   },
   {
-    "note_text": "PROCEDURAL REPORT: Diagnostic bronchoscopy was undertaken for a known pulmonary nodule in the right lower lobe superior segment. Initial airway inspection revealed sharp carina and <PERSON>. A guide sheath was employed to navigate to the target lesion, where radial endobronchial ultrasound (R-EBUS) demonstrated a concentric orientation. Under fluoroscopic guidance, transbronchial needle aspiration and forceps biopsies were acquired. Immediate cytopathologic assessment (ROSE) confirmed malignancy. Hemostasis was achieved via bronchial wedging following minor hemorrhage.",
+    "note_text": "PROCEDURAL REPORT: Diagnostic bronchoscopy was undertaken for a known pulmonary nodule in the right lower lobe superior segment. Initial airway inspection revealed sharp carina and healthy mucosa. A guide sheath was employed to navigate to the target lesion, where radial endobronchial ultrasound (R-EBUS) demonstrated a concentric orientation. Under fluoroscopic guidance, transbronchial needle aspiration and forceps biopsies were acquired. Immediate cytopathologic assessment (ROSE) confirmed malignancy. Hemostasis was achieved via bronchial wedging following minor hemorrhage.",
     "cpt_codes": [
       31629,
       31654
@@ -2656,12 +2656,6 @@
       "style_type": 2,
       "generated_name": "Patricia Martinez",
       "generation_date": "2025-12-18T19:14:11.669756"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

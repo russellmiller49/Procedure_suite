@@ -182,7 +182,7 @@
     }
   },
   {
-    "note_text": "Service: Removal of tunneled pleural catheter (CPT 32552).\nIndication: Cessation of flow consistent with pleurodesis.\nTechnique:\n1. Anesthesia: Local infiltration (1% lidocaine).\n2. Exposure: Incision performed to expose the subcutaneous cuff (approx. 2cm from exit).\n3. Removal: Cuff dissected free from fibrous capsule. Catheter withdrawn from pleural space.\n4. Closure: <PERSON> applied.\nFindings: Catheter removed intact (28cm). No signs of tract infection.",
+    "note_text": "Service: Removal of tunneled pleural catheter (CPT 32552).\nIndication: Cessation of flow consistent with pleurodesis.\nTechnique:\n1. Anesthesia: Local infiltration (1% lidocaine).\n2. Exposure: Incision performed to expose the subcutaneous cuff (approx. 2cm from exit).\n3. Removal: Cuff dissected free from fibrous capsule. Catheter withdrawn from pleural space.\n4. Closure: Sutures applied.\nFindings: Catheter removed intact (28cm). No signs of tract infection.",
     "cpt_codes": [
       32552
     ],
@@ -267,12 +267,6 @@
       "style_type": 3,
       "generated_name": "Linda S. Jones",
       "generation_date": "2025-12-09T14:18:39.473039"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -364,7 +358,7 @@
     }
   },
   {
-    "note_text": "pt <PERSON> here for pleurx removal right side drainage stopped so we assume pleurodesis used local numbing cut down to the cuff freed it up with the kelly clamp and pulled it out came out fine no issues stitched it up with nylon patient tolerated well discharge home thanks.",
+    "note_text": "pt margaret chen here for pleurx removal right side drainage stopped so we assume pleurodesis used local numbing cut down to the cuff freed it up with the kelly clamp and pulled it out came out fine no issues stitched it up with nylon patient tolerated well discharge home thanks.",
     "cpt_codes": [
       32552
     ],
@@ -449,12 +443,6 @@
       "style_type": 5,
       "generated_name": "Elizabeth R. Davis",
       "generation_date": "2025-12-09T14:18:39.473095"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1457,7 +1445,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> was struggling to breathe due to fluid around his left lung from his heart failure. We performed a procedure to drain this fluid at the bedside. We sat him up and tapped on his back to find the best spot. We didn't need to use ultrasound. We numbed the skin and put a small tube in, draining about 1.8 liters of clear yellow fluid. He felt much better right away and his oxygen levels went up.",
+    "note_text": "Mr. Kim was struggling to breathe due to fluid around his left lung from his heart failure. We performed a procedure to drain this fluid at the bedside. We sat him up and tapped on his back to find the best spot. We didn't need to use ultrasound. We numbed the skin and put a small tube in, draining about 1.8 liters of clear yellow fluid. He felt much better right away and his oxygen levels went up.",
     "cpt_codes": [
       32554
     ],
@@ -1543,12 +1531,6 @@
       "style_type": 8,
       "generated_name": "Thomas Taylor",
       "generation_date": "2025-12-09T14:18:39.473474"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1729,7 +1711,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Instillation of Sclerosing Agent.\nINDICATION: Ms. <PERSON>, a 76-year-old female with metastatic breast carcinoma, required palliation for a recurrent right malignant pleural effusion.\nPROCEDURE: The existing right-sided 14Fr chest tube was utilized. A slurry comprising 4 grams of sterile talc suspended in 50mL of normal saline was prepared. This suspension was instilled into the pleural cavity. The tubing was clamped for sixty minutes, during which the patient was rotated to facilitate widespread pleural contact. Subsequently, the tube was unclamped and placed on -20cmH2O suction to appose the pleural surfaces.",
+    "note_text": "OPERATIVE REPORT: Instillation of Sclerosing Agent.\nINDICATION: Ms. Adams, a 76-year-old female with metastatic breast carcinoma, required palliation for a recurrent right malignant pleural effusion.\nPROCEDURE: The existing right-sided 14Fr chest tube was utilized. A slurry comprising 4 grams of sterile talc suspended in 50mL of normal saline was prepared. This suspension was instilled into the pleural cavity. The tubing was clamped for sixty minutes, during which the patient was rotated to facilitate widespread pleural contact. Subsequently, the tube was unclamped and placed on -20cmH2O suction to appose the pleural surfaces.",
     "cpt_codes": [
       32560
     ],
@@ -1814,12 +1796,6 @@
       "style_type": 2,
       "generated_name": "Sandra Harris",
       "generation_date": "2025-12-09T14:18:39.473560"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1911,7 +1887,7 @@
     }
   },
   {
-    "note_text": "Procedure: Talc Pleurodesis\nPatient: <PERSON>\nSteps:\n1. Checked chest tube output (<100ml).\n2. Mixed 4g talc in saline.\n3. Pushed slurry into tube.\n4. Clamped tube.\n5. Rotated patient q15 mins.\n6. Unclamped after 1 hour.\nPain managed with morphine.",
+    "note_text": "Procedure: Talc Pleurodesis\nPatient: Dorothy Adams\nSteps:\n1. Checked chest tube output (<100ml).\n2. Mixed 4g talc in saline.\n3. Pushed slurry into tube.\n4. Clamped tube.\n5. Rotated patient q15 mins.\n6. Unclamped after 1 hour.\nPain managed with morphine.",
     "cpt_codes": [
       32560
     ],
@@ -1996,12 +1972,6 @@
       "style_type": 4,
       "generated_name": "Kimberly Lewis",
       "generation_date": "2025-12-09T14:18:39.473619"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2093,7 +2063,7 @@
     }
   },
   {
-    "note_text": "Instillation of talc slurry via chest tube for pleurodesis performed on <PERSON>. Indication was recurrent right malignant pleural effusion. 4 grams of talc were mixed in 50mL saline and instilled through the existing chest tube. The tube was clamped for 1 hour with patient rotation. The patient received morphine for chest pain. The tube was returned to suction to facilitate pleurodesis.",
+    "note_text": "Instillation of talc slurry via chest tube for pleurodesis performed on Dorothy Adams. Indication was recurrent right malignant pleural effusion. 4 grams of talc were mixed in 50mL saline and instilled through the existing chest tube. The tube was clamped for 1 hour with patient rotation. The patient received morphine for chest pain. The tube was returned to suction to facilitate pleurodesis.",
     "cpt_codes": [
       32560
     ],
@@ -2178,12 +2148,6 @@
       "style_type": 6,
       "generated_name": "Carol Walker",
       "generation_date": "2025-12-09T14:18:39.473688"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2275,7 +2239,7 @@
     }
   },
   {
-    "note_text": "Mrs. <PERSON> has fluid coming back around her right lung because of her cancer. We decided to 'glue' the lung to the chest wall to stop the fluid. We used her existing chest tube to put a mixture of talc and water inside. We clamped the tube and had her roll around in bed for an hour to coat the inside of her chest. Afterward, we put the tube back on suction. She had some pain but we treated it with medication.",
+    "note_text": "Mrs. Adams has fluid coming back around her right lung because of her cancer. We decided to 'glue' the lung to the chest wall to stop the fluid. We used her existing chest tube to put a mixture of talc and water inside. We clamped the tube and had her roll around in bed for an hour to coat the inside of her chest. Afterward, we put the tube back on suction. She had some pain but we treated it with medication.",
     "cpt_codes": [
       32560
     ],
@@ -2360,12 +2324,6 @@
       "style_type": 8,
       "generated_name": "Sarah Allen",
       "generation_date": "2025-12-09T14:18:39.473738"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3429,7 +3387,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> has spots on both his right and left lungs that we needed to sample. We put him to sleep and used a special navigation scope. First, we went to the top right part of the lung and took several small pieces of tissue. Then, we moved the scope to the top left part of the lung and took more samples from there. We also washed the right lung to check for infection. Everything went smoothly.",
+    "note_text": "Mr. Wilson has spots on both his right and left lungs that we needed to sample. We put him to sleep and used a special navigation scope. First, we went to the top right part of the lung and took several small pieces of tissue. Then, we moved the scope to the top left part of the lung and took more samples from there. We also washed the right lung to check for infection. Everything went smoothly.",
     "cpt_codes": [
       31624,
       31628,
@@ -3564,12 +3522,6 @@
       "style_type": 8,
       "generated_name": "Matthew Green",
       "generation_date": "2025-12-09T14:18:39.474132"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4227,7 +4179,7 @@
     }
   },
   {
-    "note_text": "doing staging for <PERSON> she has rul cancer but also a lul nodule. did the ebus first got the lymph nodes. then used the needle on the rul mass. then went to the left side and needled the lul nodule too. positive for cancer.",
+    "note_text": "doing staging for linda chang she has rul cancer but also a lul nodule. did the ebus first got the lymph nodes. then used the needle on the rul mass. then went to the left side and needled the lul nodule too. positive for cancer.",
     "cpt_codes": [
       31653,
       31629,
@@ -4353,12 +4305,6 @@
       "style_type": 5,
       "generated_name": "Sharon Mitchell",
       "generation_date": "2025-12-09T14:18:39.474432"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4620,7 +4566,7 @@
     }
   },
   {
-    "note_text": "We performed a procedure to stage Ms. <PERSON>'s lung cancer. First, we used an ultrasound scope to check the lymph nodes in the center of her chest. Then, we used a needle to take samples directly from the main tumor in her right lung. We also saw a spot on her left lung and used the needle to sample that one as well to see if the cancer had spread there.",
+    "note_text": "We performed a procedure to stage Ms. Chang's lung cancer. First, we used an ultrasound scope to check the lymph nodes in the center of her chest. Then, we used a needle to take samples directly from the main tumor in her right lung. We also saw a spot on her left lung and used the needle to sample that one as well to see if the cancer had spread there.",
     "cpt_codes": [
       31653,
       31629,
@@ -4746,12 +4692,6 @@
       "style_type": 8,
       "generated_name": "Amy Turner",
       "generation_date": "2025-12-09T14:18:39.474531"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5336,7 +5276,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for valve placement lul. chartis was good. put the first valve in the top segment. then put three more in the other segments to block the whole lobe. four valves total. patient woke up fine.",
+    "note_text": "harold johnson here for valve placement lul. chartis was good. put the first valve in the top segment. then put three more in the other segments to block the whole lobe. four valves total. patient woke up fine.",
     "cpt_codes": [
       31647,
       31651,
@@ -5446,12 +5386,6 @@
       "style_type": 5,
       "generated_name": "Joshua Collins",
       "generation_date": "2025-12-09T14:18:39.474719"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5681,7 +5615,7 @@
     }
   },
   {
-    "note_text": "We treated Mr. <PERSON>'s emphysema by blocking off the diseased upper left part of his lung. We placed a total of four one-way valves. The first one went into the top segment, and then we placed three more in the remaining segments of that lobe to make sure no air could get in. This should help the healthier parts of his lung work better.",
+    "note_text": "We treated Mr. Johnson's emphysema by blocking off the diseased upper left part of his lung. We placed a total of four one-way valves. The first one went into the top segment, and then we placed three more in the remaining segments of that lobe to make sure no air could get in. This should help the healthier parts of his lung work better.",
     "cpt_codes": [
       31647,
       31651,
@@ -5791,12 +5725,6 @@
       "style_type": 8,
       "generated_name": "Walter Morris",
       "generation_date": "2025-12-09T14:18:39.474810"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6293,7 +6221,7 @@
     }
   },
   {
-    "note_text": "<PERSON> needs a drain for right side empyema. brought ultrasound in saw the pocket. put a pigtail in using the wire technique. got a lot of junk out like 850ml. stitched it in place. us shows it looks good.",
+    "note_text": "patricia moore needs a drain for right side empyema. brought ultrasound in saw the pocket. put a pigtail in using the wire technique. got a lot of junk out like 850ml. stitched it in place. us shows it looks good.",
     "cpt_codes": [
       32557
     ],
@@ -6385,12 +6313,6 @@
       "style_type": 5,
       "generated_name": "Virginia Murphy",
       "generation_date": "2025-12-09T14:18:39.475003"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6584,7 +6506,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> had a pocket of infected fluid around her right lung that needed draining. Using an ultrasound machine to guide us, we placed a small tube through her back and into the fluid. We drained about 850mL of cloudy fluid and left the tube in place to keep draining it.",
+    "note_text": "Ms. Moore had a pocket of infected fluid around her right lung that needed draining. Using an ultrasound machine to guide us, we placed a small tube through her back and into the fluid. We drained about 850mL of cloudy fluid and left the tube in place to keep draining it.",
     "cpt_codes": [
       32557
     ],
@@ -6676,12 +6598,6 @@
       "style_type": 8,
       "generated_name": "Janet Cooper",
       "generation_date": "2025-12-09T14:18:39.475083"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6873,7 +6789,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Bronchoscopic Revision of Airway Prosthesis.\nINDICATION: <LOCATION> secondary to proximal migration of Left Mainstem Stent.\nPROCEDURE: Rigid bronchoscopy revealed the Ultraflex stent extending into the distal trachea. Using rigid forceps, the prosthesis was mobilized. It was successfully repositioned distally into the left mainstem bronchus. Airway patency was fully restored, and the stent is now seated appropriately.",
+    "note_text": "OPERATIVE REPORT: Bronchoscopic Revision of Airway Prosthesis.\nINDICATION: Dyspnea secondary to proximal migration of Left Mainstem Stent.\nPROCEDURE: Rigid bronchoscopy revealed the Ultraflex stent extending into the distal trachea. Using rigid forceps, the prosthesis was mobilized. It was successfully repositioned distally into the left mainstem bronchus. Airway patency was fully restored, and the stent is now seated appropriately.",
     "cpt_codes": [
       31638
     ],
@@ -6963,12 +6879,6 @@
       "style_type": 2,
       "generated_name": "Scott Howard",
       "generation_date": "2025-12-09T14:18:39.475185"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -7158,7 +7068,7 @@
     }
   },
   {
-    "note_text": "<PERSON> has a stent in the left lung that moved up. went in with the rigid scope. saw it blocking the trachea a bit. grabbed it with the big forceps and shoved it back down where it belongs. looks good now breathing better.",
+    "note_text": "frank anderson has a stent in the left lung that moved up. went in with the rigid scope. saw it blocking the trachea a bit. grabbed it with the big forceps and shoved it back down where it belongs. looks good now breathing better.",
     "cpt_codes": [
       31638
     ],
@@ -7248,12 +7158,6 @@
       "style_type": 5,
       "generated_name": "Larry Peterson",
       "generation_date": "2025-12-09T14:18:39.475266"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7443,7 +7347,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON>'s airway stent had slipped out of place and was blocking his windpipe. We put him to sleep and used a metal tube to reach the stent. We carefully grabbed it and moved it back down into the left lung's airway where it is supposed to be. His breathing passage is now wide open again.",
+    "note_text": "Mr. Anderson's airway stent had slipped out of place and was blocking his windpipe. We put him to sleep and used a metal tube to reach the stent. We carefully grabbed it and moved it back down into the left lung's airway where it is supposed to be. His breathing passage is now wide open again.",
     "cpt_codes": [
       31638
     ],
@@ -7533,12 +7437,6 @@
       "style_type": 8,
       "generated_name": "Gregory James",
       "generation_date": "2025-12-09T14:18:39.475346"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

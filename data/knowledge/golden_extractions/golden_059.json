@@ -99,7 +99,7 @@
     }
   },
   {
-    "note_text": "HISTORY: Ms. <PERSON>, an 81-year-old female with esophageal carcinoma and secondary tracheal invasion, presented for therapeutic intervention.\nOPERATIVE REPORT: Under general anesthesia utilizing jet ventilation, the airway was accessed via rigid bronchoscopy. Significant obstruction was noted in the Left Mainstem (LMS). Argon Plasma Coagulation (APC) was utilized for thermal ablation of the endoluminal tumor component. Subsequently, the airway dimensions were sized, and a 14x60mm Novatech Silicone (Dumon) stent was deployed. Immediate relief of obstruction was visualized, with residual stenosis estimated at 14%.",
+    "note_text": "HISTORY: Ms. Williams, an 81-year-old female with esophageal carcinoma and secondary tracheal invasion, presented for therapeutic intervention.\nOPERATIVE REPORT: Under general anesthesia utilizing jet ventilation, the airway was accessed via rigid bronchoscopy. Significant obstruction was noted in the Left Mainstem (LMS). Argon Plasma Coagulation (APC) was utilized for thermal ablation of the endoluminal tumor component. Subsequently, the airway dimensions were sized, and a 14x60mm Novatech Silicone (Dumon) stent was deployed. Immediate relief of obstruction was visualized, with residual stenosis estimated at 14%.",
     "cpt_codes": [
       31636,
       31641
@@ -195,12 +195,6 @@
       "style_type": 2,
       "generated_name": "Patricia Brown",
       "generation_date": "2025-12-09T12:06:35.527844"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -402,7 +396,7 @@
     }
   },
   {
-    "note_text": "Note for <PERSON> we did the bronchoscopy today used the rigid scope because of the cancer invading the trachea. Dr Martinez was attending. We used the APC to burn the tumor a bit then put in a novatech silicone stent size 14 by 60 in the left main. looks much better now maybe 14 percent blocked. patient tolerated it fine minimal bleeding sending to recovery then floor thanks.",
+    "note_text": "Note for Barbara Williams we did the bronchoscopy today used the rigid scope because of the cancer invading the trachea. Dr Martinez was attending. We used the APC to burn the tumor a bit then put in a novatech silicone stent size 14 by 60 in the left main. looks much better now maybe 14 percent blocked. patient tolerated it fine minimal bleeding sending to recovery then floor thanks.",
     "cpt_codes": [
       31636,
       31641
@@ -498,12 +492,6 @@
       "style_type": 5,
       "generated_name": "Barbara Wilson",
       "generation_date": "2025-12-09T12:06:35.527932"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -903,7 +891,7 @@
     }
   },
   {
-    "note_text": "Dx: Esophageal CA, tracheal inv.\nProc: Rigid bronch, Laser ablation.\nSite: Bronchus Intermedius (BI).\nOp:\n- Tumor at <LOCATION>.\n- Laser used for sequential removal.\n- Max debulking achieved.\nResult: 15% residual. EBL 50mL.\nPlan: ICU obs.",
+    "note_text": "Dx: Esophageal CA, tracheal inv.\nProc: Rigid bronch, Laser ablation.\nSite: Bronchus Intermedius (BI).\nOp:\n- Tumor at BI.\n- Laser used for sequential removal.\n- Max debulking achieved.\nResult: 15% residual. EBL 50mL.\nPlan: ICU obs.",
     "cpt_codes": [
       31640
     ],
@@ -987,16 +975,10 @@
       "style_type": 1,
       "generated_name": "James Jackson",
       "generation_date": "2025-12-09T12:06:35.528066"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: The patient, Mr. <PERSON>, presented with 79% obstruction at the Bronchus Intermedius due to invasive esophageal carcinoma. Rigid bronchoscopy was initiated under general anesthesia. An endobronchial mass was identified. We proceeded with Laser ablation (CPT 31640), performing multiple passes to excise the tumor tissue sequentially. Excellent hemostasis was maintained. The airway caliber was significantly improved, leaving only 15% residual obstruction.",
+    "note_text": "OPERATIVE NARRATIVE: The patient, Mr. Thomas, presented with 79% obstruction at the Bronchus Intermedius due to invasive esophageal carcinoma. Rigid bronchoscopy was initiated under general anesthesia. An endobronchial mass was identified. We proceeded with Laser ablation (CPT 31640), performing multiple passes to excise the tumor tissue sequentially. Excellent hemostasis was maintained. The airway caliber was significantly improved, leaving only 15% residual obstruction.",
     "cpt_codes": [
       31640
     ],
@@ -1080,12 +1062,6 @@
       "style_type": 2,
       "generated_name": "John White",
       "generation_date": "2025-12-09T12:06:35.528091"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1176,7 +1152,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronchoscopy with Laser Ablation\nPatient: <PERSON>\nStaff: Dr. Lee\nSteps:\n1. General anesthesia induced.\n2. Rigid scope advanced to BI.\n3. Tumor identified.\n4. Laser used to ablate and remove tumor in pieces.\n5. Hemostasis good.\n6. Residual stenosis ~15%.\nDisposition: ICU.",
+    "note_text": "Procedure: Rigid Bronchoscopy with Laser Ablation\nPatient: Donald Thomas\nStaff: Dr. Lee\nSteps:\n1. General anesthesia induced.\n2. Rigid scope advanced to BI.\n3. Tumor identified.\n4. Laser used to ablate and remove tumor in pieces.\n5. Hemostasis good.\n6. Residual stenosis ~15%.\nDisposition: ICU.",
     "cpt_codes": [
       31640
     ],
@@ -1260,12 +1236,6 @@
       "style_type": 4,
       "generated_name": "Michael Martin",
       "generation_date": "2025-12-09T12:06:35.528140"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1530,7 +1500,7 @@
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on Mr. <PERSON> to address the obstruction in his Bronchus Intermedius. Upon visualization, we used laser ablation to carefully excise the tumor. We made multiple passes to ensure maximal debulking was achieved. The procedure was successful, reducing the obstruction from 79% down to 15%, with minimal blood loss.",
+    "note_text": "We performed a rigid bronchoscopy on Mr. Thomas to address the obstruction in his Bronchus Intermedius. Upon visualization, we used laser ablation to carefully excise the tumor. We made multiple passes to ensure maximal debulking was achieved. The procedure was successful, reducing the obstruction from 79% down to 15%, with minimal blood loss.",
     "cpt_codes": [
       31640
     ],
@@ -1614,12 +1584,6 @@
       "style_type": 8,
       "generated_name": "Charles Robinson",
       "generation_date": "2025-12-09T12:06:35.528247"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2310,7 +2274,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nThyroid CA, 83% BI obstruction.\n[Anesthesia]\nGeneral, Jet Vent.\n[Description]\nRigid bronchoscopy. APC ablation. Ultraflex SEMS Covered (20x40mm) deployed in <LOCATION>. Residual obstruction 24%.\n[Plan]\nFloor admission. Repeat bronch 4-6 wks.",
+    "note_text": "[Indication]\nThyroid CA, 83% BI obstruction.\n[Anesthesia]\nGeneral, Jet Vent.\n[Description]\nRigid bronchoscopy. APC ablation. Ultraflex SEMS Covered (20x40mm) deployed in BI. Residual obstruction 24%.\n[Plan]\nFloor admission. Repeat bronch 4-6 wks.",
     "cpt_codes": [
       31636,
       31641
@@ -2406,16 +2370,10 @@
       "style_type": 7,
       "generated_name": "Carol Young",
       "generation_date": "2025-12-09T12:06:35.528453"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent rigid bronchoscopy under general anesthesia due to tracheal compression from thyroid cancer. We first utilized APC to ablate the tumor and prepare the airway. Following this, we measured the stenosis and deployed a 20x40mm Ultraflex Covered SEMS into the Bronchus Intermedius. The stent expanded well, significantly improving airway patency.",
+    "note_text": "Ms. Young underwent rigid bronchoscopy under general anesthesia due to tracheal compression from thyroid cancer. We first utilized APC to ablate the tumor and prepare the airway. Following this, we measured the stenosis and deployed a 20x40mm Ultraflex Covered SEMS into the Bronchus Intermedius. The stent expanded well, significantly improving airway patency.",
     "cpt_codes": [
       31636,
       31641
@@ -2511,12 +2469,6 @@
       "style_type": 8,
       "generated_name": "Ruth Hernandez",
       "generation_date": "2025-12-09T12:06:35.528479"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2707,7 +2659,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE REPORT: Mr. <PERSON>, a 61-year-old male with metastatic lung cancer, underwent therapeutic rigid bronchoscopy. A 60% obstruction was visualized at the Bronchus Intermedius. Mechanical debulking was performed utilizing rigid biopsy forceps for piecemeal excision. Following bulk removal, APC and Laser were employed for hemostasis and ablation of the tumor base (CPT 31641). Anatomical patency was improved to 32% residual stenosis.",
+    "note_text": "PROCEDURE REPORT: Mr. Taylor, a 61-year-old male with metastatic lung cancer, underwent therapeutic rigid bronchoscopy. A 60% obstruction was visualized at the Bronchus Intermedius. Mechanical debulking was performed utilizing rigid biopsy forceps for piecemeal excision. Following bulk removal, APC and Laser were employed for hemostasis and ablation of the tumor base (CPT 31641). Anatomical patency was improved to 32% residual stenosis.",
     "cpt_codes": [
       31641
     ],
@@ -2792,12 +2744,6 @@
       "style_type": 2,
       "generated_name": "Christopher Lopez",
       "generation_date": "2025-12-09T12:06:35.528551"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2889,7 +2835,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronchoscopy Debulking\nPt: <PERSON>\nSteps:\n1. GA induced.\n2. Tumor seen at BI (60%).\n3. Forceps used to remove tumor chunks.\n4. Laser/APC used to burn the base and stop bleeding.\n5. Suctioned clear.\n6. Est residual: 32%.\nPlan: ICU.",
+    "note_text": "Procedure: Rigid Bronchoscopy Debulking\nPt: Anthony Taylor\nSteps:\n1. GA induced.\n2. Tumor seen at BI (60%).\n3. Forceps used to remove tumor chunks.\n4. Laser/APC used to burn the base and stop bleeding.\n5. Suctioned clear.\n6. Est residual: 32%.\nPlan: ICU.",
     "cpt_codes": [
       31641
     ],
@@ -2974,16 +2920,10 @@
       "style_type": 4,
       "generated_name": "Paul Scott",
       "generation_date": "2025-12-09T12:06:35.528599"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> dictation. he has lung cancer mets causing blockage in the BI. we did a rigid bronch today. used the biopsy forceps to grab the tumor out piece by piece. then used the laser and apc to clean up the base and stop the bleeding. blood loss maybe 75ml. airway looks better about 32% blocked now. sending to ICU.",
+    "note_text": "anthony taylor dictation. he has lung cancer mets causing blockage in the BI. we did a rigid bronch today. used the biopsy forceps to grab the tumor out piece by piece. then used the laser and apc to clean up the base and stop the bleeding. blood loss maybe 75ml. airway looks better about 32% blocked now. sending to ICU.",
     "cpt_codes": [
       31641
     ],
@@ -3068,12 +3008,6 @@
       "style_type": 5,
       "generated_name": "Mark Green",
       "generation_date": "2025-12-09T12:06:35.528623"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3253,7 +3187,7 @@
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on Mr. <PERSON> to manage his metastatic lung cancer obstruction. Using biopsy forceps, we mechanically debulked the tumor in the Bronchus Intermedius. We followed this with APC and laser treatment to ablate the remaining tumor base and ensure hemostasis. The procedure successfully reduced the blockage from 60% to 32%.",
+    "note_text": "We performed a rigid bronchoscopy on Mr. Taylor to manage his metastatic lung cancer obstruction. Using biopsy forceps, we mechanically debulked the tumor in the Bronchus Intermedius. We followed this with APC and laser treatment to ablate the remaining tumor base and ensure hemostasis. The procedure successfully reduced the blockage from 60% to 32%.",
     "cpt_codes": [
       31641
     ],
@@ -3338,12 +3272,6 @@
       "style_type": 8,
       "generated_name": "Kenneth Gonzalez",
       "generation_date": "2025-12-09T12:06:35.528694"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3525,7 +3453,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NOTE: Mr. <PERSON> presented with critical central airway obstruction (76% Trachea) secondary to primary lung adenocarcinoma. Rigid bronchoscopy was performed under general anesthesia. The tracheal lumen was sized, and a 20x60mm Novatech Silicone (Dumon) stent was deployed. Post-deployment inspection confirmed excellent expansion and restoration of airway caliber (15% residual).",
+    "note_text": "OPERATIVE NOTE: Mr. Allen presented with critical central airway obstruction (76% Trachea) secondary to primary lung adenocarcinoma. Rigid bronchoscopy was performed under general anesthesia. The tracheal lumen was sized, and a 20x60mm Novatech Silicone (Dumon) stent was deployed. Post-deployment inspection confirmed excellent expansion and restoration of airway caliber (15% residual).",
     "cpt_codes": [
       31631
     ],
@@ -3612,12 +3540,6 @@
       "style_type": 2,
       "generated_name": "Brian Mitchell",
       "generation_date": "2025-12-09T12:06:35.528769"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3711,7 +3633,7 @@
     }
   },
   {
-    "note_text": "Resident: Dr. Liu\nAttending: Dr. Chen\nPt: <PERSON>\nProc: Tracheal Stent\n1. Rigid scope inserted.\n2. Measured tracheal stenosis (76%).\n3. Deployed Novatech stent 20x60mm.\n4. Verified patency.\n5. No complications.\nPlan: Admit.",
+    "note_text": "Resident: Dr. Liu\nAttending: Dr. Chen\nPt: Thomas Allen\nProc: Tracheal Stent\n1. Rigid scope inserted.\n2. Measured tracheal stenosis (76%).\n3. Deployed Novatech stent 20x60mm.\n4. Verified patency.\n5. No complications.\nPlan: Admit.",
     "cpt_codes": [
       31631
     ],
@@ -3798,16 +3720,10 @@
       "style_type": 4,
       "generated_name": "Anthony Roberts",
       "generation_date": "2025-12-09T12:06:35.528816"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "procedure note for <PERSON>. he has lung cancer blocking the trachea pretty bad about 76 percent. <PERSON> and i did a rigid bronch. put in a dumon silicone stent 20 by 60 right in the trachea. opened up great residual is only 15 percent now. no bleeding issues. admit to floor for observation.",
+    "note_text": "procedure note for thomas allen. he has lung cancer blocking the trachea pretty bad about 76 percent. dr chen and i did a rigid bronch. put in a dumon silicone stent 20 by 60 right in the trachea. opened up great residual is only 15 percent now. no bleeding issues. admit to floor for observation.",
     "cpt_codes": [
       31631
     ],
@@ -3894,13 +3810,6 @@
       "style_type": 5,
       "generated_name": "Kevin Turner",
       "generation_date": "2025-12-09T12:06:35.528841"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -4084,7 +3993,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> was treated for a significant tracheal obstruction caused by lung adenocarcinoma. Under general anesthesia, we advanced the rigid bronchoscope and measured the affected area. We then successfully deployed a 20x60mm Novatech Silicone stent. The stent expanded fully, reducing the obstruction from 76% to 15%, providing immediate relief.",
+    "note_text": "Mr. Allen was treated for a significant tracheal obstruction caused by lung adenocarcinoma. Under general anesthesia, we advanced the rigid bronchoscope and measured the affected area. We then successfully deployed a 20x60mm Novatech Silicone stent. The stent expanded fully, reducing the obstruction from 76% to 15%, providing immediate relief.",
     "cpt_codes": [
       31631
     ],
@@ -4171,12 +4080,6 @@
       "style_type": 8,
       "generated_name": "Gary Parker",
       "generation_date": "2025-12-09T12:06:35.528914"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4534,7 +4437,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch w/ Cryo\nPatient: <PERSON>\nSteps:\n1. GA. Rigid scope to RMS.\n2. Tumor found.\n3. Cryo probe used to freeze and pull tumor chunks.\n4. Laser used to clean up base.\n5. Good hemostasis.\n6. Residual 22%.\nPlan: ICU.",
+    "note_text": "Procedure: Rigid Bronch w/ Cryo\nPatient: Ronald Young\nSteps:\n1. GA. Rigid scope to RMS.\n2. Tumor found.\n3. Cryo probe used to freeze and pull tumor chunks.\n4. Laser used to clean up base.\n5. Good hemostasis.\n6. Residual 22%.\nPlan: ICU.",
     "cpt_codes": [
       31641
     ],
@@ -4619,16 +4522,10 @@
       "style_type": 4,
       "generated_name": "Stephen Sanchez",
       "generation_date": "2025-12-09T12:06:35.529035"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> squamous cell cancer blocking the right mainstem. we used the cryo probe to pull the tumor out frozen. did a bunch of passes. then used the laser to stop the bleeding at the base. went from 77 percent blocked to 22 percent. pretty good result. 50ml blood loss. sending him to icu.",
+    "note_text": "<PERSON>. squamous cell cancer blocking the right mainstem. we used the cryo probe to pull the tumor out frozen. did a bunch of passes. then used the laser to stop the bleeding at the base. went from 77 percent blocked to 22 percent. pretty good result. 50ml blood loss. sending him to icu.",
     "cpt_codes": [
       31641
     ],
@@ -4898,7 +4795,7 @@
     }
   },
   {
-    "note_text": "We brought Mr. <PERSON> to the OR to address the blockage in his right mainstem bronchus. Using a rigid bronchoscope, we employed cryoextraction to freeze and remove the tumor in sections. We then used APC and laser to treat the base of the tumor and control bleeding. The obstruction was reduced from 77% to 22%.",
+    "note_text": "We brought Mr. Young to the OR to address the blockage in his right mainstem bronchus. Using a rigid bronchoscope, we employed cryoextraction to freeze and remove the tumor in sections. We then used APC and laser to treat the base of the tumor and control bleeding. The obstruction was reduced from 77% to 22%.",
     "cpt_codes": [
       31641
     ],
@@ -4983,12 +4880,6 @@
       "style_type": 8,
       "generated_name": "Joshua Cook",
       "generation_date": "2025-12-09T12:06:35.529130"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5080,7 +4971,7 @@
     }
   },
   {
-    "note_text": "Dx: Thyroid CA, LMS compression.\nProc: Rigid bronch, Microdebrider.\nAction: <PERSON> shaving of tumor. 76% -> 31%.\nEBL: 50mL.\nPlan: ICU obs.",
+    "note_text": "Dx: Thyroid CA, LMS compression.\nProc: Rigid bronch, Microdebrider.\nAction: Sequential shaving of tumor. 76% -> 31%.\nEBL: 50mL.\nPlan: ICU obs.",
     "cpt_codes": [
       31640
     ],
@@ -5164,16 +5055,10 @@
       "style_type": 1,
       "generated_name": "Dennis Bell",
       "generation_date": "2025-12-09T12:06:35.529178"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Mr. <PERSON> presented with 76% obstruction of the Left Mainstem Bronchus due to thyroid malignancy. Under general anesthesia, a rigid bronchoscope was introduced. The microdebrider blade was utilized to shave and aspirate the endoluminal tumor component (CPT 31640). Multiple passes achieved significant luminal gain, resulting in 31% residual obstruction. Hemostasis was maintained.",
+    "note_text": "OPERATIVE SUMMARY: Mr. Green presented with 76% obstruction of the Left Mainstem Bronchus due to thyroid malignancy. Under general anesthesia, a rigid bronchoscope was introduced. The microdebrider blade was utilized to shave and aspirate the endoluminal tumor component (CPT 31640). Multiple passes achieved significant luminal gain, resulting in 31% residual obstruction. Hemostasis was maintained.",
     "cpt_codes": [
       31640
     ],
@@ -5257,12 +5142,6 @@
       "style_type": 2,
       "generated_name": "Walter Murphy",
       "generation_date": "2025-12-09T12:06:35.529200"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5701,7 +5580,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent rigid bronchoscopy for a thyroid cancer tumor invading the left mainstem bronchus. We utilized a microdebrider to carefully excise the tumor tissue. After multiple passes, we successfully debulked the lesion, improving the airway patency from 76% obstruction to 31%.",
+    "note_text": "Mr. Green underwent rigid bronchoscopy for a thyroid cancer tumor invading the left mainstem bronchus. We utilized a microdebrider to carefully excise the tumor tissue. After multiple passes, we successfully debulked the lesion, improving the airway patency from 76% obstruction to 31%.",
     "cpt_codes": [
       31640
     ],
@@ -5785,12 +5664,6 @@
       "style_type": 8,
       "generated_name": "Carl Howard",
       "generation_date": "2025-12-09T12:06:35.529360"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6784,7 +6657,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented with severe (85%) obstruction of the Bronchus Intermedius due to metastatic lung cancer. Under general anesthesia, therapeutic rigid bronchoscopy was performed. The microdebrider was employed to excise the endobronchial tumor mass (CPT 31640). Systemic debulking resulted in a patent airway with 25% residual narrowing. Hemostasis was excellent.",
+    "note_text": "OPERATIVE REPORT: Mr. Johnson presented with severe (85%) obstruction of the Bronchus Intermedius due to metastatic lung cancer. Under general anesthesia, therapeutic rigid bronchoscopy was performed. The microdebrider was employed to excise the endobronchial tumor mass (CPT 31640). Systemic debulking resulted in a patent airway with 25% residual narrowing. Hemostasis was excellent.",
     "cpt_codes": [
       31640
     ],
@@ -6868,12 +6741,6 @@
       "style_type": 2,
       "generated_name": "Adam Bennett",
       "generation_date": "2025-12-09T12:06:35.529755"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6964,7 +6831,7 @@
     }
   },
   {
-    "note_text": "Procedure: Microdebrider Debulking\nPt: <PERSON>\nSteps:\n1. GA/Rigid scope.\n2. 85% block at BI.\n3. Microdebrider used to clear tumor.\n4. Multiple passes.\n5. Residual 25%.\nPlan: ICU.",
+    "note_text": "Procedure: Microdebrider Debulking\nPt: Robert Johnson\nSteps:\n1. GA/Rigid scope.\n2. 85% block at BI.\n3. Microdebrider used to clear tumor.\n4. Multiple passes.\n5. Residual 25%.\nPlan: ICU.",
     "cpt_codes": [
       31640
     ],
@@ -7048,12 +6915,6 @@
       "style_type": 4,
       "generated_name": "Ben Barnes",
       "generation_date": "2025-12-09T12:06:35.529803"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7324,7 +7185,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> required urgent intervention for an 85% obstruction in his Bronchus Intermedius caused by metastatic lung cancer. We performed a rigid bronchoscopy and utilized a microdebrider to shave away the tumor. We made multiple passes until the airway was significantly more open, leaving only a 25% residual obstruction.",
+    "note_text": "Mr. Johnson required urgent intervention for an 85% obstruction in his Bronchus Intermedius caused by metastatic lung cancer. We performed a rigid bronchoscopy and utilized a microdebrider to shave away the tumor. We made multiple passes until the airway was significantly more open, leaving only a 25% residual obstruction.",
     "cpt_codes": [
       31640
     ],
@@ -7408,12 +7269,6 @@
       "style_type": 8,
       "generated_name": "Gerald Jenkins",
       "generation_date": "2025-12-09T12:06:35.529901"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7592,7 +7447,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Ms. <PERSON> underwent rigid bronchoscopy for metastatic obstruction of the Left Mainstem (62%). The microdebrider was used for bulk excision of the tumor. Following mechanical removal, APC/Laser was utilized to ablate the tumor base and ensure hemostasis (CPT 31641). The airway was successfully recanalized to 39% residual obstruction.",
+    "note_text": "PROCEDURE NOTE: Ms. Allen underwent rigid bronchoscopy for metastatic obstruction of the Left Mainstem (62%). The microdebrider was used for bulk excision of the tumor. Following mechanical removal, APC/Laser was utilized to ablate the tumor base and ensure hemostasis (CPT 31641). The airway was successfully recanalized to 39% residual obstruction.",
     "cpt_codes": [
       31641
     ],
@@ -7677,12 +7532,6 @@
       "style_type": 2,
       "generated_name": "Amy Long",
       "generation_date": "2025-12-09T12:06:35.529978"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7774,7 +7623,7 @@
     }
   },
   {
-    "note_text": "Procedure: Debulking (Microdebrider + APC)\nPt: <PERSON>\nSteps:\n1. GA induced.\n2. LMS obstruction 62%.\n3. Microdebrider used to remove bulk.\n4. APC used on base.\n5. Residual 39%.\nPlan: ICU.",
+    "note_text": "Procedure: Debulking (Microdebrider + APC)\nPt: Stephanie Allen\nSteps:\n1. GA induced.\n2. LMS obstruction 62%.\n3. Microdebrider used to remove bulk.\n4. APC used on base.\n5. Residual 39%.\nPlan: ICU.",
     "cpt_codes": [
       31641
     ],
@@ -7859,16 +7708,10 @@
       "style_type": 4,
       "generated_name": "Virginia Hughes",
       "generation_date": "2025-12-09T12:06:35.530027"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> note. she has mets to the LMS blocking it about 62 percent. we used the microdebrider to take out the bulk of it. then used the laser and apc to burn the rest and stop bleeding. residual is 39 percent. blood loss 50ml. icu for observation.",
+    "note_text": "<PERSON>. she has mets to the LMS blocking it about 62 percent. we used the microdebrider to take out the bulk of it. then used the laser and apc to burn the rest and stop bleeding. residual is 39 percent. blood loss 50ml. icu for observation.",
     "cpt_codes": [
       31641
     ],
@@ -8138,7 +7981,7 @@
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on Ms. <PERSON> to address a 62% obstruction in the Left Mainstem. We used a microdebrider to mechanically remove the tumor bulk. Following this, we used APC and laser to ablate the tumor base and control bleeding. The obstruction was reduced to 39%.",
+    "note_text": "We performed a rigid bronchoscopy on Ms. Allen to address a 62% obstruction in the Left Mainstem. We used a microdebrider to mechanically remove the tumor bulk. Following this, we used APC and laser to ablate the tumor base and control bleeding. The obstruction was reduced to 39%.",
     "cpt_codes": [
       31641
     ],
@@ -8223,12 +8066,6 @@
       "style_type": 8,
       "generated_name": "Debra Simmons",
       "generation_date": "2025-12-09T12:06:35.530122"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

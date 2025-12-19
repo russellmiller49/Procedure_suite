@@ -1,211 +1,80 @@
-"""Integration tests for the CodingService.
+"""Integration tests for the extraction-first CodingService."""
 
-Tests the end-to-end coding pipeline including rule-based coding,
-LLM advisor, hybrid merge, and compliance rules.
-"""
+from dataclasses import dataclass
+from typing import Optional
 
 import pytest
-from dataclasses import dataclass, field
-from typing import Optional, Any
 
-from modules.coder.application.coding_service import CodingService
-from modules.coder.application.smart_hybrid_policy import HybridDecision
 from config.settings import CoderSettings
-
-
-# ============================================================================
-# Mock implementations
-# ============================================================================
+from modules.coder.application.coding_service import CodingService
+from modules.registry.application.registry_service import RegistryExtractionResult
+from modules.registry.schema import RegistryRecord
 
 
 @dataclass
 class MockProcedureInfo:
-    """Mock procedure info."""
-
     code: str
     description: str = ""
 
 
 class MockKnowledgeBaseRepository:
-    """Mock KB repo."""
-
-    def __init__(self):
+    def __init__(self) -> None:
         self.version = "mock_kb_v1"
         self._codes = {
             "31622": "Bronchoscopy with BAL",
-            "31623": "Bronchoscopy with brushing",
-            "31624": "Bronchoscopy with biopsy",
             "31652": "EBUS-TBNA",
-            "31653": "EBUS-TBNA additional sites",
         }
-
-    def get_all_codes(self) -> list[str]:
-        return list(self._codes.keys())
 
     def get_procedure_info(self, code: str) -> Optional[MockProcedureInfo]:
         if code in self._codes:
             return MockProcedureInfo(code=code, description=self._codes[code])
         return None
 
-    def get_ncci_pairs(self, code: str) -> list[tuple[str, int]]:
-        """Return NCCI pairs for a code. Empty for mock."""
-        return []
-
-    def get_mer_bundles(self, code: str) -> list[str]:
-        """Return MER bundles for a code. Empty for mock."""
-        return []
-
-
-@dataclass
-class MockKeywordMapping:
-    """Mock keyword mapping."""
-
-    code: str
-    positive_phrases: list[str] = field(default_factory=list)
-    negative_phrases: list[str] = field(default_factory=list)
-    context_window_chars: int = 200
-
 
 class MockKeywordMappingRepository:
-    """Mock keyword mapping repo."""
+    version = "mock_keyword_v1"
 
-    def __init__(self):
-        self.version = "mock_keyword_v1"
-        self._mappings = {
-            "31622": MockKeywordMapping(
-                code="31622",
-                positive_phrases=["bronchoalveolar lavage", "bal"],
-                negative_phrases=["no bal"],
-            ),
-            "31624": MockKeywordMapping(
-                code="31624",
-                positive_phrases=["biopsy", "tblb"],
-                negative_phrases=["no biopsy"],
-            ),
-            "31652": MockKeywordMapping(
-                code="31652",
-                positive_phrases=["ebus", "tbna"],
-                negative_phrases=["no ebus"],
-            ),
-        }
-
-    def get_mapping(self, code: str) -> Optional[MockKeywordMapping]:
-        return self._mappings.get(code)
+    def get_mapping(self, code: str):
+        return None
 
 
 class MockNegationDetector:
-    """Mock negation detector."""
-
-    def __init__(self):
-        self.version = "mock_negation_v1"
+    version = "mock_negation_v1"
 
     def is_negated_simple(self, context: str, negative_phrases: list[str]) -> bool:
-        context_lower = context.lower()
-        for neg in negative_phrases:
-            if neg.lower() in context_lower:
-                return True
         return False
 
 
-@dataclass
-class MockRuleEngineResult:
-    """Mock result from rule engine."""
+class MockRegistryService:
+    def __init__(self, result: RegistryExtractionResult) -> None:
+        self._result = result
 
-    codes: list[str]
-    confidence: dict[str, float]
-
-
-class MockRuleEngine:
-    """Mock rule-based coding engine."""
-
-    def __init__(self, codes_to_return: dict[str, float] | None = None):
-        self._codes_to_return = codes_to_return or {}
-
-    def generate_candidates(self, report_text: str) -> MockRuleEngineResult:
-        """Generate codes based on configured return values."""
-        return MockRuleEngineResult(
-            codes=list(self._codes_to_return.keys()),
-            confidence=self._codes_to_return,
-        )
+    def extract_fields_extraction_first(self, note_text: str) -> RegistryExtractionResult:
+        return self._result
 
 
-@dataclass
-class MockLLMSuggestion:
-    """Mock LLM suggestion."""
-
-    code: str
-    confidence: float
-
-
-class MockLLMAdvisor:
-    """Mock LLM advisor."""
-
-    def __init__(self, codes_to_return: dict[str, float] | None = None):
-        self._codes_to_return = codes_to_return or {}
-        self.version = "mock_llm_v1"
-
-    def suggest_codes(self, report_text: str) -> list[MockLLMSuggestion]:
-        """Return configured suggestions."""
-        return [
-            MockLLMSuggestion(code=code, confidence=conf)
-            for code, conf in self._codes_to_return.items()
-        ]
-
-
-# ============================================================================
-# Mock NCCI/MER functions
-# ============================================================================
-
-
-@dataclass
-class MockComplianceResult:
-    """Mock compliance check result."""
-
-    kept_codes: list[str]
-    removed_codes: list[str]
-    warnings: list[str]
-
-
-def mock_apply_ncci_edits(
-    codes: list[str], kb_repo: Any
-) -> MockComplianceResult:
-    """Mock NCCI edits - removes nothing by default."""
-    return MockComplianceResult(
-        kept_codes=list(codes),
-        removed_codes=[],
+def make_extraction_result(
+    *,
+    cpt_codes: list[str],
+    code_rationales: dict[str, str] | None = None,
+    coder_difficulty: str = "HIGH_CONF",
+    audit_warnings: list[str] | None = None,
+    derivation_warnings: list[str] | None = None,
+    needs_manual_review: bool = False,
+) -> RegistryExtractionResult:
+    return RegistryExtractionResult(
+        record=RegistryRecord(),
+        cpt_codes=cpt_codes,
+        coder_difficulty=coder_difficulty,
+        coder_source="extraction_first",
+        mapped_fields={},
+        code_rationales=code_rationales or {},
+        derivation_warnings=derivation_warnings or [],
         warnings=[],
+        needs_manual_review=needs_manual_review,
+        validation_errors=[],
+        audit_warnings=audit_warnings or [],
     )
-
-
-def mock_apply_mer_rules(
-    codes: list[str], kb_repo: Any
-) -> MockComplianceResult:
-    """Mock MER rules - removes nothing by default."""
-    return MockComplianceResult(
-        kept_codes=list(codes),
-        removed_codes=[],
-        warnings=[],
-    )
-
-
-# ============================================================================
-# Fixtures
-# ============================================================================
-
-
-@pytest.fixture
-def kb_repo() -> MockKnowledgeBaseRepository:
-    return MockKnowledgeBaseRepository()
-
-
-@pytest.fixture
-def keyword_repo() -> MockKeywordMappingRepository:
-    return MockKeywordMappingRepository()
-
-
-@pytest.fixture
-def negation_detector() -> MockNegationDetector:
-    return MockNegationDetector()
 
 
 @pytest.fixture
@@ -217,300 +86,130 @@ def config() -> CoderSettings:
     )
 
 
-@pytest.fixture
-def rule_engine() -> MockRuleEngine:
-    return MockRuleEngine(codes_to_return={"31622": 0.9, "31624": 0.85})
-
-
-@pytest.fixture
-def llm_advisor() -> MockLLMAdvisor:
-    return MockLLMAdvisor(codes_to_return={"31622": 0.92, "31652": 0.88})
-
-
-# ============================================================================
-# Integration tests
-# ============================================================================
-
-
-class TestCodingServicePipeline:
-    """Test the full coding pipeline."""
-
-    def test_generate_suggestions_with_agreement(
-        self,
-        kb_repo: MockKnowledgeBaseRepository,
-        keyword_repo: MockKeywordMappingRepository,
-        negation_detector: MockNegationDetector,
-        config: CoderSettings,
-        monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
-        """Test pipeline when rule engine and LLM agree."""
-        # Mock the compliance functions - must patch where they're imported/used
-        import modules.coder.application.coding_service as coding_service_mod
-        monkeypatch.setattr(coding_service_mod, "apply_ncci_edits", mock_apply_ncci_edits)
-        monkeypatch.setattr(coding_service_mod, "apply_mer_rules", mock_apply_mer_rules)
-
-        rule_engine = MockRuleEngine(codes_to_return={"31622": 0.9})
-        llm_advisor = MockLLMAdvisor(codes_to_return={"31622": 0.95})
+class TestCodingServiceExtractionFirst:
+    def test_generate_suggestions_uses_registry_output(self, config: CoderSettings) -> None:
+        kb_repo = MockKnowledgeBaseRepository()
+        keyword_repo = MockKeywordMappingRepository()
+        negation_detector = MockNegationDetector()
+        extraction_result = make_extraction_result(
+            cpt_codes=["31622"],
+            code_rationales={"31622": "diagnostic_bronchoscopy.performed=true"},
+        )
+        registry_service = MockRegistryService(extraction_result)
 
         service = CodingService(
             kb_repo=kb_repo,
             keyword_repo=keyword_repo,
             negation_detector=negation_detector,
-            rule_engine=rule_engine,
-            llm_advisor=llm_advisor,
+            rule_engine=None,  # type: ignore[arg-type]
+            llm_advisor=None,
             config=config,
+            registry_service=registry_service,
         )
 
         suggestions, latency_ms = service.generate_suggestions(
             procedure_id="test-123",
-            report_text="BAL was performed successfully.",
+            report_text="Bronchoscopy performed.",
             use_llm=True,
         )
 
-        assert len(suggestions) == 1
         assert latency_ms >= 0
+        assert len(suggestions) == 1
         assert suggestions[0].code == "31622"
-        assert suggestions[0].hybrid_decision == HybridDecision.ACCEPTED_AGREEMENT.value
-        assert suggestions[0].source == "hybrid"
-        assert suggestions[0].procedure_id == "test-123"
-        assert suggestions[0].suggestion_id is not None
+        assert suggestions[0].hybrid_decision == "EXTRACTION_FIRST"
+        assert suggestions[0].reasoning.policy_version == service.POLICY_VERSION
+        assert "DETERMINISTIC" in suggestions[0].reasoning.rule_paths[0]
 
-    def test_generate_suggestions_llm_addition_verified(
-        self,
-        kb_repo: MockKnowledgeBaseRepository,
-        keyword_repo: MockKeywordMappingRepository,
-        negation_detector: MockNegationDetector,
-        config: CoderSettings,
-        monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
-        """Test pipeline with LLM-only code that gets verified."""
-        import modules.coder.application.coding_service as coding_service_mod
-        monkeypatch.setattr(coding_service_mod, "apply_ncci_edits", mock_apply_ncci_edits)
-        monkeypatch.setattr(coding_service_mod, "apply_mer_rules", mock_apply_mer_rules)
-
-        rule_engine = MockRuleEngine(codes_to_return={})
-        llm_advisor = MockLLMAdvisor(codes_to_return={"31652": 0.92})
+    def test_review_flag_required_when_manual_review(self, config: CoderSettings) -> None:
+        kb_repo = MockKnowledgeBaseRepository()
+        keyword_repo = MockKeywordMappingRepository()
+        negation_detector = MockNegationDetector()
+        extraction_result = make_extraction_result(
+            cpt_codes=["31652"],
+            code_rationales={"31652": "linear_ebus.performed=true"},
+            needs_manual_review=True,
+        )
+        registry_service = MockRegistryService(extraction_result)
 
         service = CodingService(
             kb_repo=kb_repo,
             keyword_repo=keyword_repo,
             negation_detector=negation_detector,
-            rule_engine=rule_engine,
-            llm_advisor=llm_advisor,
+            rule_engine=None,  # type: ignore[arg-type]
+            llm_advisor=None,
             config=config,
+            registry_service=registry_service,
         )
 
-        suggestions, latency_ms = service.generate_suggestions(
+        suggestions, _ = service.generate_suggestions(
             procedure_id="test-124",
-            report_text="EBUS-TBNA performed at lymph node station 4R.",
-            use_llm=True,
+            report_text="EBUS performed.",
+            use_llm=False,
         )
 
-        assert len(suggestions) == 1
-        assert latency_ms >= 0
-        assert suggestions[0].code == "31652"
-        assert suggestions[0].hybrid_decision == HybridDecision.ACCEPTED_HYBRID.value
-        assert suggestions[0].source == "llm"
-        assert suggestions[0].evidence_verified is True
-        assert len(suggestions[0].trigger_phrases) > 0
+        assert suggestions[0].review_flag == "required"
 
-    def test_generate_suggestions_without_llm(
-        self,
-        kb_repo: MockKnowledgeBaseRepository,
-        keyword_repo: MockKeywordMappingRepository,
-        negation_detector: MockNegationDetector,
-        config: CoderSettings,
-        monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
-        """Test pipeline with LLM disabled."""
-        import modules.coder.application.coding_service as coding_service_mod
-        monkeypatch.setattr(coding_service_mod, "apply_ncci_edits", mock_apply_ncci_edits)
-        monkeypatch.setattr(coding_service_mod, "apply_mer_rules", mock_apply_mer_rules)
-
-        rule_engine = MockRuleEngine(codes_to_return={"31622": 0.9, "31624": 0.85})
-        llm_advisor = MockLLMAdvisor(codes_to_return={"99999": 0.99})  # Should be ignored
+    def test_review_flag_recommended_on_audit_warning(self, config: CoderSettings) -> None:
+        kb_repo = MockKnowledgeBaseRepository()
+        keyword_repo = MockKeywordMappingRepository()
+        negation_detector = MockNegationDetector()
+        extraction_result = make_extraction_result(
+            cpt_codes=["31622"],
+            code_rationales={"31622": "diagnostic_bronchoscopy.performed=true"},
+            audit_warnings=["RAW_ML_AUDIT: missing 31624"],
+        )
+        registry_service = MockRegistryService(extraction_result)
 
         service = CodingService(
             kb_repo=kb_repo,
             keyword_repo=keyword_repo,
             negation_detector=negation_detector,
-            rule_engine=rule_engine,
-            llm_advisor=llm_advisor,
+            rule_engine=None,  # type: ignore[arg-type]
+            llm_advisor=None,
             config=config,
+            registry_service=registry_service,
         )
 
-        suggestions, latency_ms = service.generate_suggestions(
+        suggestions, _ = service.generate_suggestions(
             procedure_id="test-125",
-            report_text="BAL and biopsy performed.",
-            use_llm=False,  # LLM disabled
+            report_text="Bronchoscopy performed.",
+            use_llm=False,
         )
 
-        # Should only have rule-based codes
-        assert latency_ms >= 0
-        codes = {s.code for s in suggestions}
-        assert "31622" in codes
-        assert "31624" in codes
-        assert "99999" not in codes
+        assert suggestions[0].review_flag == "recommended"
 
 
 class TestCodingServiceResult:
-    """Test the complete result generation."""
-
-    def test_generate_result_includes_metadata(
-        self,
-        kb_repo: MockKnowledgeBaseRepository,
-        keyword_repo: MockKeywordMappingRepository,
-        negation_detector: MockNegationDetector,
-        config: CoderSettings,
-        monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
-        """Test that generate_result includes all metadata."""
-        import modules.coder.application.coding_service as coding_service_mod
-        monkeypatch.setattr(coding_service_mod, "apply_ncci_edits", mock_apply_ncci_edits)
-        monkeypatch.setattr(coding_service_mod, "apply_mer_rules", mock_apply_mer_rules)
-
-        rule_engine = MockRuleEngine(codes_to_return={"31622": 0.9})
-        llm_advisor = MockLLMAdvisor(codes_to_return={"31622": 0.95})
+    def test_generate_result_includes_metadata(self, config: CoderSettings) -> None:
+        kb_repo = MockKnowledgeBaseRepository()
+        keyword_repo = MockKeywordMappingRepository()
+        negation_detector = MockNegationDetector()
+        extraction_result = make_extraction_result(
+            cpt_codes=["31622"],
+            code_rationales={"31622": "diagnostic_bronchoscopy.performed=true"},
+            coder_difficulty="GRAY_ZONE",
+        )
+        registry_service = MockRegistryService(extraction_result)
 
         service = CodingService(
             kb_repo=kb_repo,
             keyword_repo=keyword_repo,
             negation_detector=negation_detector,
-            rule_engine=rule_engine,
-            llm_advisor=llm_advisor,
+            rule_engine=None,  # type: ignore[arg-type]
+            llm_advisor=None,
             config=config,
+            registry_service=registry_service,
         )
 
         result = service.generate_result(
             procedure_id="test-126",
-            report_text="BAL was performed.",
-            use_llm=True,
+            report_text="Bronchoscopy performed.",
+            use_llm=False,
         )
 
         assert result.procedure_id == "test-126"
-        assert len(result.suggestions) > 0
+        assert len(result.suggestions) == 1
         assert result.kb_version == "mock_kb_v1"
-        assert result.policy_version == "smart_hybrid_v2"
-        assert result.model_version == "mock_llm_v1"
+        assert result.policy_version == service.POLICY_VERSION
+        assert result.model_version == ""
         assert result.processing_time_ms > 0
-
-
-class TestCodingServiceReviewFlags:
-    """Test review flag assignment."""
-
-    def test_review_flag_required_for_human_review(
-        self,
-        kb_repo: MockKnowledgeBaseRepository,
-        keyword_repo: MockKeywordMappingRepository,
-        negation_detector: MockNegationDetector,
-        config: CoderSettings,
-        monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
-        """Test that HUMAN_REVIEW_REQUIRED gets review_flag='required'."""
-        import modules.coder.application.coding_service as coding_service_mod
-        monkeypatch.setattr(coding_service_mod, "apply_ncci_edits", mock_apply_ncci_edits)
-        monkeypatch.setattr(coding_service_mod, "apply_mer_rules", mock_apply_mer_rules)
-
-        rule_engine = MockRuleEngine(codes_to_return={})
-        llm_advisor = MockLLMAdvisor(codes_to_return={"31652": 0.90})
-
-        service = CodingService(
-            kb_repo=kb_repo,
-            keyword_repo=keyword_repo,
-            negation_detector=negation_detector,
-            rule_engine=rule_engine,
-            llm_advisor=llm_advisor,
-            config=config,
-        )
-
-        # Text WITHOUT EBUS keywords → needs review
-        suggestions, latency_ms = service.generate_suggestions(
-            procedure_id="test-127",
-            report_text="Normal bronchoscopy performed.",
-            use_llm=True,
-        )
-
-        assert latency_ms >= 0
-        ebus_suggestion = next((s for s in suggestions if s.code == "31652"), None)
-        assert ebus_suggestion is not None
-        assert ebus_suggestion.review_flag == "required"
-
-    def test_review_flag_optional_for_high_confidence(
-        self,
-        kb_repo: MockKnowledgeBaseRepository,
-        keyword_repo: MockKeywordMappingRepository,
-        negation_detector: MockNegationDetector,
-        config: CoderSettings,
-        monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
-        """Test that high confidence codes get review_flag='optional'."""
-        import modules.coder.application.coding_service as coding_service_mod
-        monkeypatch.setattr(coding_service_mod, "apply_ncci_edits", mock_apply_ncci_edits)
-        monkeypatch.setattr(coding_service_mod, "apply_mer_rules", mock_apply_mer_rules)
-
-        rule_engine = MockRuleEngine(codes_to_return={"31622": 0.95})
-        llm_advisor = MockLLMAdvisor(codes_to_return={"31622": 0.98})
-
-        service = CodingService(
-            kb_repo=kb_repo,
-            keyword_repo=keyword_repo,
-            negation_detector=negation_detector,
-            rule_engine=rule_engine,
-            llm_advisor=llm_advisor,
-            config=config,
-        )
-
-        suggestions, latency_ms = service.generate_suggestions(
-            procedure_id="test-128",
-            report_text="BAL was performed.",
-            use_llm=True,
-        )
-
-        assert latency_ms >= 0
-        assert len(suggestions) == 1
-        assert suggestions[0].review_flag == "optional"
-
-
-class TestCodingServiceReasoning:
-    """Test reasoning/provenance in suggestions."""
-
-    def test_reasoning_includes_versions(
-        self,
-        kb_repo: MockKnowledgeBaseRepository,
-        keyword_repo: MockKeywordMappingRepository,
-        negation_detector: MockNegationDetector,
-        config: CoderSettings,
-        monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
-        """Test that reasoning includes all version info."""
-        import modules.coder.application.coding_service as coding_service_mod
-        monkeypatch.setattr(coding_service_mod, "apply_ncci_edits", mock_apply_ncci_edits)
-        monkeypatch.setattr(coding_service_mod, "apply_mer_rules", mock_apply_mer_rules)
-
-        rule_engine = MockRuleEngine(codes_to_return={"31622": 0.9})
-        llm_advisor = MockLLMAdvisor(codes_to_return={"31622": 0.95})
-
-        service = CodingService(
-            kb_repo=kb_repo,
-            keyword_repo=keyword_repo,
-            negation_detector=negation_detector,
-            rule_engine=rule_engine,
-            llm_advisor=llm_advisor,
-            config=config,
-        )
-
-        suggestions, latency_ms = service.generate_suggestions(
-            procedure_id="test-129",
-            report_text="BAL performed.",
-            use_llm=True,
-        )
-
-        assert latency_ms >= 0
-        assert len(suggestions) == 1
-        reasoning = suggestions[0].reasoning
-
-        assert reasoning.kb_version == "mock_kb_v1"
-        assert reasoning.policy_version == "smart_hybrid_v2"
-        assert reasoning.model_version == "mock_llm_v1"
-        assert reasoning.keyword_map_version == "mock_keyword_v1"
-        assert reasoning.negation_detector_version == "mock_negation_v1"

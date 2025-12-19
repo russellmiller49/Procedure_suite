@@ -2562,7 +2562,7 @@
     }
   },
   {
-    "note_text": "Indication: Tumor obstruction LMS.\nProc: Rigid Bronch, Flex Bronch.\n- Mucus suctioned (RMS, <PERSON>).\n- LMS 100% obstructed by tumor.\n- Electrocautery knife and Microwave ablation (90C, 2 min) applied.\n- Patency restored to 100%.\n- Stent (Bonastent 10x20) placed in LLL basal segment.\n- BAL Lingula.\nComp: None.",
+    "note_text": "Indication: Tumor obstruction LMS.\nProc: Rigid Bronch, Flex Bronch.\n- Mucus suctioned (RMS, Left Main).\n- LMS 100% obstructed by tumor.\n- Electrocautery knife and Microwave ablation (90C, 2 min) applied.\n- Patency restored to 100%.\n- Stent (Bonastent 10x20) placed in LLL basal segment.\n- BAL Lingula.\nComp: None.",
     "cpt_codes": [
       31641,
       31636,
@@ -2864,12 +2864,6 @@
       "style_type": 1,
       "generated_name": "Sarah Jenkins",
       "generation_date": "2025-12-18T19:20:31.592747"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

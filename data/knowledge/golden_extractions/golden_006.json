@@ -186,7 +186,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: Ms. <PERSON> presented for therapeutic whole lung lavage for pulmonary alveolar proteinosis. Following induction of general anesthesia and isolation of the left lung using a 37Fr double-lumen endotracheal tube, positional verification was achieved via flexible bronchoscopy. We proceeded with large-volume lavage, instilling a total of 6 liters of warmed normal saline in 1-liter aliquots. The initial effluent was characteristically proteinaceous and opaque, progressively clearing to translucency by the final aliquot. Hemodynamics and oxygenation were maintained throughout single-lung ventilation.",
+    "note_text": "OPERATIVE SUMMARY: Ms. Rodriguez presented for therapeutic whole lung lavage for pulmonary alveolar proteinosis. Following induction of general anesthesia and isolation of the left lung using a 37Fr double-lumen endotracheal tube, positional verification was achieved via flexible bronchoscopy. We proceeded with large-volume lavage, instilling a total of 6 liters of warmed normal saline in 1-liter aliquots. The initial effluent was characteristically proteinaceous and opaque, progressively clearing to translucency by the final aliquot. Hemodynamics and oxygenation were maintained throughout single-lung ventilation.",
     "cpt_codes": [
       32997
     ],
@@ -369,12 +369,6 @@
       "style_type": 2,
       "generated_name": "Isabella Martinez",
       "generation_date": "2025-12-09T09:18:37.155162"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -750,7 +744,7 @@
     }
   },
   {
-    "note_text": "Procedure note for <PERSON> she has PAP doing the lavage today left side. <PERSON> attending. We put in the double lumen tube 37 french checked it with the scope looked good. Poured in saline 1 liter at a time total 6 liters drained it out by gravity. Came out real milky at first then clear. She tolerated it fine sats were okay the whole time. Extubate in recovery thanks.",
+    "note_text": "Procedure note for Maria Rodriguez she has PAP doing the lavage today left side. Dr Brown attending. We put in the double lumen tube 37 french checked it with the scope looked good. Poured in saline 1 liter at a time total 6 liters drained it out by gravity. Came out real milky at first then clear. She tolerated it fine sats were okay the whole time. Extubate in recovery thanks.",
     "cpt_codes": [
       32997
     ],
@@ -933,17 +927,10 @@
       "style_type": 5,
       "generated_name": "Valentina Diaz",
       "generation_date": "2025-12-09T09:18:37.155609"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON>, 38-year-old female with pulmonary alveolar proteinosis. Under general anesthesia, a 37Fr left-sided double lumen tube was placed. Position confirmed bronchoscopically. The patient was placed in right lateral decubitus. Single lung ventilation initiated. The left lung was lavaged with 6000mL of warmed normal saline in aliquots. Return volume was 5820mL. The effluent cleared from turbid to clear. Catheter removed, airway suctioned. Patient tolerated single lung ventilation well without desaturation.",
+    "note_text": "Maria Rodriguez, 38-year-old female with pulmonary alveolar proteinosis. Under general anesthesia, a 37Fr left-sided double lumen tube was placed. Position confirmed bronchoscopically. The patient was placed in right lateral decubitus. Single lung ventilation initiated. The left lung was lavaged with 6000mL of warmed normal saline in aliquots. Return volume was 5820mL. The effluent cleared from turbid to clear. Catheter removed, airway suctioned. Patient tolerated single lung ventilation well without desaturation.",
     "cpt_codes": [
       32997
     ],
@@ -1126,12 +1113,6 @@
       "style_type": 6,
       "generated_name": "Gabriela Perez",
       "generation_date": "2025-12-09T09:18:37.155707"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1321,7 +1302,7 @@
     }
   },
   {
-    "note_text": "Ms. <PERSON> was brought to the operating room for a left whole lung lavage to treat her pulmonary alveolar proteinosis. Once general anesthesia was induced, we placed a 37Fr double-lumen tube to isolate the lungs. We confirmed the position with a bronchoscope. With the patient in the lateral decubitus position, we washed the left lung with a total of 6 liters of saline. The fluid, which started out thick and white, ran clear by the end. She handled the single-lung ventilation perfectly well.",
+    "note_text": "Ms. Rodriguez was brought to the operating room for a left whole lung lavage to treat her pulmonary alveolar proteinosis. Once general anesthesia was induced, we placed a 37Fr double-lumen tube to isolate the lungs. We confirmed the position with a bronchoscope. With the patient in the lateral decubitus position, we washed the left lung with a total of 6 liters of saline. The fluid, which started out thick and white, ran clear by the end. She handled the single-lung ventilation perfectly well.",
     "cpt_codes": [
       32997
     ],
@@ -1504,16 +1485,10 @@
       "style_type": 8,
       "generated_name": "Martina Sanchez",
       "generation_date": "2025-12-09T09:18:37.155811"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Operation: Total lung washing (CPT 32997).\nSubject: <PERSON>.\nDetails: Following anesthesia induction, a double-lumen tube was inserted. We authenticated the position bronchoscopically. The left lung was irrigated with 6L of saline. The return fluid transitioned from turbid to transparent. 5820mL was retrieved. We suctioned the airway and resumed bilateral ventilation.\nOutcome: Procedure accomplished without adverse events.",
+    "note_text": "Operation: Total lung washing (CPT 32997).\nSubject: Maria Rodriguez.\nDetails: Following anesthesia induction, a double-lumen tube was inserted. We authenticated the position bronchoscopically. The left lung was irrigated with 6L of saline. The return fluid transitioned from turbid to transparent. 5820mL was retrieved. We suctioned the airway and resumed bilateral ventilation.\nOutcome: Procedure accomplished without adverse events.",
     "cpt_codes": [
       32997
     ],
@@ -1696,12 +1671,6 @@
       "style_type": 9,
       "generated_name": "Lucia Ramirez",
       "generation_date": "2025-12-09T09:18:37.155859"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1922,7 +1891,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented with malignant central airway obstruction. Under general anesthesia, a 12mm ventilating rigid bronchoscope was introduced. Significant submucosal tumor infiltration was noted in the distal trachea and left mainstem (LMS). We utilized a multimodal approach for recanalization, employing argon plasma coagulation (APC), cryotherapy, and rigid forceps to mechanically debulk the endoluminal tumor. Subsequent balloon dilation (CRE 8-10mm) yielded marked improvement in caliber. EBUS-TBNA of the subcarinal station was performed for staging.",
+    "note_text": "OPERATIVE REPORT: Mr. Foster presented with malignant central airway obstruction. Under general anesthesia, a 12mm ventilating rigid bronchoscope was introduced. Significant submucosal tumor infiltration was noted in the distal trachea and left mainstem (LMS). We utilized a multimodal approach for recanalization, employing argon plasma coagulation (APC), cryotherapy, and rigid forceps to mechanically debulk the endoluminal tumor. Subsequent balloon dilation (CRE 8-10mm) yielded marked improvement in caliber. EBUS-TBNA of the subcarinal station was performed for staging.",
     "cpt_codes": [
       31631,
       31633,
@@ -2136,12 +2105,6 @@
       "style_type": 2,
       "generated_name": "Robert Hayes",
       "generation_date": "2025-12-09T09:18:37.155970"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2362,7 +2325,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch / Debulking\nPatient: <PERSON>\nAttending: Dr. Carter\nSteps:\n1. GA. Rigid scope inserted.\n2. Saw tumor blocking Left Main.\n3. Used APC and forceps to core out tumor.\n4. Used balloon to dilate airway.\n5. Did EBUS on station 7.\n6. Bleeding controlled with APC.\nPlan: Rad Onc consult.",
+    "note_text": "Procedure: Rigid Bronch / Debulking\nPatient: Brian Foster\nAttending: Dr. Carter\nSteps:\n1. GA. Rigid scope inserted.\n2. Saw tumor blocking Left Main.\n3. Used APC and forceps to core out tumor.\n4. Used balloon to dilate airway.\n5. Did EBUS on station 7.\n6. Bleeding controlled with APC.\nPlan: Rad Onc consult.",
     "cpt_codes": [
       31631,
       31633,
@@ -2576,16 +2539,10 @@
       "style_type": 4,
       "generated_name": "David Cole",
       "generation_date": "2025-12-09T09:18:37.156075"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for the rigid bronch he has a mass blocking the left side. We put the rigid scope down 12 size. Saw the tumor it was blocking the whole left mainstem. We burned it with APC and pulled pieces out with forceps also used the balloon to open it up. Got it open about 50 percent. Did some biopsies with the ultrasound needle too. Little bit of bleeding but stopped it. Woke him up fine.",
+    "note_text": "Brian Foster here for the rigid bronch he has a mass blocking the left side. We put the rigid scope down 12 size. Saw the tumor it was blocking the whole left mainstem. We burned it with APC and pulled pieces out with forceps also used the balloon to open it up. Got it open about 50 percent. Did some biopsies with the ultrasound needle too. Little bit of bleeding but stopped it. Woke him up fine.",
     "cpt_codes": [
       31631,
       31633,
@@ -2799,16 +2756,10 @@
       "style_type": 5,
       "generated_name": "Richard Morgan",
       "generation_date": "2025-12-09T09:18:37.156127"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Rigid bronchoscopy performed on <PERSON>. Indication: Malignant airway obstruction. A 12 mm rigid bronchoscope was inserted. The left mainstem bronchus was completely obstructed by tumor. Mechanical debulking was performed using forceps and cryotherapy, combined with APC for coagulation. The airway was dilated with a CRE balloon. EBUS-TBNA was performed on the subcarinal lymph node. Hemostasis achieved. Patency of the left mainstem improved to allow therapeutic scope passage.",
+    "note_text": "Rigid bronchoscopy performed on Brian Foster. Indication: Malignant airway obstruction. A 12 mm rigid bronchoscope was inserted. The left mainstem bronchus was completely obstructed by tumor. Mechanical debulking was performed using forceps and cryotherapy, combined with APC for coagulation. The airway was dilated with a CRE balloon. EBUS-TBNA was performed on the subcarinal lymph node. Hemostasis achieved. Patency of the left mainstem improved to allow therapeutic scope passage.",
     "cpt_codes": [
       31631,
       31633,
@@ -3022,12 +2973,6 @@
       "style_type": 6,
       "generated_name": "Joseph Price",
       "generation_date": "2025-12-09T09:18:37.156176"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3248,7 +3193,7 @@
     }
   },
   {
-    "note_text": "We took Mr. <PERSON> to the OR to address his blocked airway. Using a rigid bronchoscope, we could see the tumor completely blocking the left main airway. We spent some time chipping away at the tumor using cautery and forceps, and then used a balloon to stretch the airway open. We managed to get it about halfway open, which is a big improvement. We also took some samples from the lymph nodes under the airway while we were there.",
+    "note_text": "We took Mr. Foster to the OR to address his blocked airway. Using a rigid bronchoscope, we could see the tumor completely blocking the left main airway. We spent some time chipping away at the tumor using cautery and forceps, and then used a balloon to stretch the airway open. We managed to get it about halfway open, which is a big improvement. We also took some samples from the lymph nodes under the airway while we were there.",
     "cpt_codes": [
       31631,
       31633,
@@ -3462,12 +3407,6 @@
       "style_type": 8,
       "generated_name": "Thomas Reed",
       "generation_date": "2025-12-09T09:18:37.156277"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3888,7 +3827,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. <PERSON> underwent EBUS-guided sampling for mediastinal lymphadenopathy. Previous fine-needle aspirations were nondiagnostic. Utilizing a linear EBUS scope, Stations 4R and 7 were identified. Initial TBNA of 4R was inconclusive. We proceeded with EBUS-guided intranodal forceps biopsy (IFB), creating a capsular entry with the needle followed by insertion of mini-forceps. Histological acquisition from both stations revealed necrotizing granulomatous inflammation consistent with sarcoidosis or infectious etiology.",
+    "note_text": "PROCEDURE NOTE: Mr. Anderson underwent EBUS-guided sampling for mediastinal lymphadenopathy. Previous fine-needle aspirations were nondiagnostic. Utilizing a linear EBUS scope, Stations 4R and 7 were identified. Initial TBNA of 4R was inconclusive. We proceeded with EBUS-guided intranodal forceps biopsy (IFB), creating a capsular entry with the needle followed by insertion of mini-forceps. Histological acquisition from both stations revealed necrotizing granulomatous inflammation consistent with sarcoidosis or infectious etiology.",
     "cpt_codes": [
       31653
     ],
@@ -4085,12 +4024,6 @@
       "style_type": 2,
       "generated_name": "Paul Jenkins",
       "generation_date": "2025-12-09T09:18:37.156522"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4494,7 +4427,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for EBUS he had two negative ones before. We did the forceps biopsy this time. Went for node 4R and 7. Poked a hole with the needle then put the little forceps in and grabbed tissue. Pathologist said it looks like granulomas maybe sarcoid or TB. No bleeding really. Patient woke up fine.",
+    "note_text": "Thomas Anderson here for EBUS he had two negative ones before. We did the forceps biopsy this time. Went for node 4R and 7. Poked a hole with the needle then put the little forceps in and grabbed tissue. Pathologist said it looks like granulomas maybe sarcoid or TB. No bleeding really. Patient woke up fine.",
     "cpt_codes": [
       31653
     ],
@@ -4691,16 +4624,10 @@
       "style_type": 5,
       "generated_name": "Kenneth Butler",
       "generation_date": "2025-12-09T09:18:37.156670"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "EBUS-guided intranodal forceps biopsy performed on <PERSON>. Indication: Undiagnosed lymphadenopathy. Stations 4R and 7 were visualized and sampled. 4R showed calcifications; TBNA was non-diagnostic. Intranodal forceps biopsies obtained from 4R and 7 yielded adequate core tissue showing necrotizing granulomatous inflammation. No complications. Specimens sent for histology and culture.",
+    "note_text": "EBUS-guided intranodal forceps biopsy performed on Thomas Anderson. Indication: Undiagnosed lymphadenopathy. Stations 4R and 7 were visualized and sampled. 4R showed calcifications; TBNA was non-diagnostic. Intranodal forceps biopsies obtained from 4R and 7 yielded adequate core tissue showing necrotizing granulomatous inflammation. No complications. Specimens sent for histology and culture.",
     "cpt_codes": [
       31653
     ],
@@ -4897,12 +4824,6 @@
       "style_type": 6,
       "generated_name": "Kevin Simmons",
       "generation_date": "2025-12-09T09:18:37.156716"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5106,7 +5027,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> came in for another attempt at diagnosing his swollen lymph nodes. Since the needles didn't work last time, we used a special technique where we insert tiny forceps into the lymph nodes under ultrasound guidance. We took samples from the nodes near his trachea and below the airway split. The preliminary results show granulomas, which might mean sarcoidosis or an infection like TB.",
+    "note_text": "Mr. Anderson came in for another attempt at diagnosing his swollen lymph nodes. Since the needles didn't work last time, we used a special technique where we insert tiny forceps into the lymph nodes under ultrasound guidance. We took samples from the nodes near his trachea and below the airway split. The preliminary results show granulomas, which might mean sarcoidosis or an infection like TB.",
     "cpt_codes": [
       31653
     ],
@@ -5303,16 +5224,10 @@
       "style_type": 8,
       "generated_name": "Jason Russell",
       "generation_date": "2025-12-09T09:18:37.156808"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Endobronchial ultrasound with intranodal forceps sampling.\nSubject: <PERSON>.\nAction: The EBUS scope was navigated to the mediastinum. Stations 4R and 7 were targeted. Standard aspiration was insufficient, so we employed mini-forceps to harvest histological cores from the nodes.\nResult: Samples revealed granulomatous inflammation.",
+    "note_text": "Procedure: Endobronchial ultrasound with intranodal forceps sampling.\nSubject: Thomas Anderson.\nAction: The EBUS scope was navigated to the mediastinum. Stations 4R and 7 were targeted. Standard aspiration was insufficient, so we employed mini-forceps to harvest histological cores from the nodes.\nResult: Samples revealed granulomatous inflammation.",
     "cpt_codes": [
       31653
     ],
@@ -5509,12 +5424,6 @@
       "style_type": 9,
       "generated_name": "Jeffrey Griffin",
       "generation_date": "2025-12-09T09:18:37.156857"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7432,7 +7341,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented with critical malignant central airway obstruction involving the distal trachea and both mainstems. We performed rigid bronchoscopy. Due to glottic anatomy, a 12mm scope was utilized. The tumor was thermally ablated (APC) and mechanically debulked to restore caliber. A custom-modified silicone Y-stent (15x12x12) was deployed blindly via forceps and positioned using the rigid scope. Post-deployment inspection confirmed patency of the tracheal and bronchial limbs.",
+    "note_text": "OPERATIVE REPORT: Mr. Thompson presented with critical malignant central airway obstruction involving the distal trachea and both mainstems. We performed rigid bronchoscopy. Due to glottic anatomy, a 12mm scope was utilized. The tumor was thermally ablated (APC) and mechanically debulked to restore caliber. A custom-modified silicone Y-stent (15x12x12) was deployed blindly via forceps and positioned using the rigid scope. Post-deployment inspection confirmed patency of the tracheal and bronchial limbs.",
     "cpt_codes": [
       31631,
       31636,
@@ -7642,12 +7551,6 @@
       "style_type": 2,
       "generated_name": "Robert Clarke",
       "generation_date": "2025-12-09T09:18:37.157434"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7864,7 +7767,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch / Y-Stent\nPatient: <PERSON>\nStaff: Dr. Williams\nSteps:\n1. Difficult intubation (lost teeth).\n2. Debulked tumor in trachea/carina with APC/Cryo.\n3. Measured for stent.\n4. Placed silicone Y-stent.\n5. Adjusted position with forceps.\n6. Airway open now.\nPlan: ICU, watch for swelling.",
+    "note_text": "Procedure: Rigid Bronch / Y-Stent\nPatient: Michael Thompson\nStaff: Dr. Williams\nSteps:\n1. Difficult intubation (lost teeth).\n2. Debulked tumor in trachea/carina with APC/Cryo.\n3. Measured for stent.\n4. Placed silicone Y-stent.\n5. Adjusted position with forceps.\n6. Airway open now.\nPlan: ICU, watch for swelling.",
     "cpt_codes": [
       31631,
       31636,
@@ -8074,16 +7977,10 @@
       "style_type": 4,
       "generated_name": "David Phillips",
       "generation_date": "2025-12-09T09:18:37.157554"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for the stent. He had a bad tumor blocking the windpipe and both main tubes. We put the rigid scope in. Burned the tumor back with APC. Then we put in a silicone Y stent. Had to push it through the cords blindly because it wouldnt fit in the scope. Got it seated right. He can breathe now. Lost a couple teeth getting the tube in though sorry.",
+    "note_text": "Michael Thompson here for the stent. He had a bad tumor blocking the windpipe and both main tubes. We put the rigid scope in. Burned the tumor back with APC. Then we put in a silicone Y stent. Had to push it through the cords blindly because it wouldnt fit in the scope. Got it seated right. He can breathe now. Lost a couple teeth getting the tube in though sorry.",
     "cpt_codes": [
       31631,
       31636,
@@ -8293,12 +8190,6 @@
       "style_type": 5,
       "generated_name": "Richard Turner",
       "generation_date": "2025-12-09T09:18:37.157607"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8728,7 +8619,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a severe blockage in his main airway. We performed a rigid bronchoscopy to clear it. After burning and freezing away some of the tumor, we placed a Y-shaped silicone stent to hold the airway open. It was a difficult placement, but we managed to get it seated perfectly, opening up breathing passages to both lungs. We'll monitor him in the ICU to make sure the stent stays in place.",
+    "note_text": "Mr. Thompson had a severe blockage in his main airway. We performed a rigid bronchoscopy to clear it. After burning and freezing away some of the tumor, we placed a Y-shaped silicone stent to hold the airway open. It was a difficult placement, but we managed to get it seated perfectly, opening up breathing passages to both lungs. We'll monitor him in the ICU to make sure the stent stays in place.",
     "cpt_codes": [
       31631,
       31636,
@@ -8938,12 +8829,6 @@
       "style_type": 8,
       "generated_name": "Thomas Evans",
       "generation_date": "2025-12-09T09:18:37.157771"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9379,7 +9264,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. <PERSON> underwent electromagnetic navigation bronchoscopy for a suspicious RUL nodule. The superDimension system was registered successfully. We navigated to the target in the posterior segment. Radial EBUS confirmed lesion location (concentric view). Transbronchial biopsy and brushing were performed under fluoroscopic and virtual guidance. Rapid on-site evaluation was consistent with squamous cell carcinoma.",
+    "note_text": "PROCEDURE NOTE: Mr. Anderson underwent electromagnetic navigation bronchoscopy for a suspicious RUL nodule. The superDimension system was registered successfully. We navigated to the target in the posterior segment. Radial EBUS confirmed lesion location (concentric view). Transbronchial biopsy and brushing were performed under fluoroscopic and virtual guidance. Rapid on-site evaluation was consistent with squamous cell carcinoma.",
     "cpt_codes": [
       31627,
       31651,
@@ -9595,12 +9480,6 @@
       "style_type": 2,
       "generated_name": "Robert M. Lewis",
       "generation_date": "2025-12-09T09:18:37.157932"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10042,7 +9921,7 @@
     }
   },
   {
-    "note_text": "<PERSON> for the nav bronch he has a spot in the right upper lobe. Used the superdimension thing. Got right to it. Verified with the mini ultrasound probe looked solid. Took a bunch of bites with the forceps and brushed it. Pathologist in the room said it looks like cancer squamous type. Patient did great going home.",
+    "note_text": "David Anderson for the nav bronch he has a spot in the right upper lobe. Used the superdimension thing. Got right to it. Verified with the mini ultrasound probe looked solid. Took a bunch of bites with the forceps and brushed it. Pathologist in the room said it looks like cancer squamous type. Patient did great going home.",
     "cpt_codes": [
       31627,
       31651,
@@ -10258,12 +10137,6 @@
       "style_type": 5,
       "generated_name": "Richard T. Allen",
       "generation_date": "2025-12-09T09:18:37.158086"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10705,7 +10578,7 @@
     }
   },
   {
-    "note_text": "We used the navigation system to guide a scope out to the nodule in Mr. <PERSON>'s right lung. Once we got there, we used a tiny ultrasound probe to confirm we were exactly inside the nodule. We took several small tissue samples. The preliminary check by the pathologist in the room suggests it is a type of lung cancer called squamous cell carcinoma.",
+    "note_text": "We used the navigation system to guide a scope out to the nodule in Mr. Anderson's right lung. Once we got there, we used a tiny ultrasound probe to confirm we were exactly inside the nodule. We took several small tissue samples. The preliminary check by the pathologist in the room suggests it is a type of lung cancer called squamous cell carcinoma.",
     "cpt_codes": [
       31627,
       31651,
@@ -10921,12 +10794,6 @@
       "style_type": 8,
       "generated_name": "Thomas F. Wright",
       "generation_date": "2025-12-09T09:18:37.158339"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11336,7 +11203,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NOTE: Mr. <PERSON>, with known metastatic mesothelioma, underwent placement of a left indwelling pleural catheter (IPC) for palliation of recurrent effusion. Under ultrasound guidance, a subcutaneous tunnel was created, and the 15.5Fr PleurX catheter was inserted into the pleural space using the Seldinger technique. The cuff was positioned within the tunnel. 1,200 mL of fluid was evacuated. The patient tolerated the procedure with only transient discomfort.",
+    "note_text": "OPERATIVE NOTE: Mr. Bradford, with known metastatic mesothelioma, underwent placement of a left indwelling pleural catheter (IPC) for palliation of recurrent effusion. Under ultrasound guidance, a subcutaneous tunnel was created, and the 15.5Fr PleurX catheter was inserted into the pleural space using the Seldinger technique. The cuff was positioned within the tunnel. 1,200 mL of fluid was evacuated. The patient tolerated the procedure with only transient discomfort.",
     "cpt_codes": [
       32550
     ],
@@ -11520,12 +11387,6 @@
       "style_type": 2,
       "generated_name": "Edward J. Davis",
       "generation_date": "2025-12-09T09:18:37.158483"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11903,7 +11764,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for the PleurX. He has mesothelioma and the fluid just keeps building up. We put the tunneled catheter in the left side today. Used ultrasound. Tunnel looked good. Drained about a liter and a half. He had some pain so we gave fentanyl. Catheter works good. Visiting nurses will help him drain it at home.",
+    "note_text": "Thomas Bradford here for the PleurX. He has mesothelioma and the fluid just keeps building up. We put the tunneled catheter in the left side today. Used ultrasound. Tunnel looked good. Drained about a liter and a half. He had some pain so we gave fentanyl. Catheter works good. Visiting nurses will help him drain it at home.",
     "cpt_codes": [
       32550
     ],
@@ -12087,12 +11948,6 @@
       "style_type": 5,
       "generated_name": "Walter P. Taylor",
       "generation_date": "2025-12-09T09:18:37.158622"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12470,7 +12325,7 @@
     }
   },
   {
-    "note_text": "Mr. <PERSON> needs frequent fluid drainage for his mesothelioma, so we placed a permanent drain today. We numbed the area and passed a tube under his skin and into the fluid pocket on his left side. This will allow him or his family to drain the fluid at home whenever he feels short of breath, without coming to the hospital. We drained a good amount today to get him started.",
+    "note_text": "Mr. Bradford needs frequent fluid drainage for his mesothelioma, so we placed a permanent drain today. We numbed the area and passed a tube under his skin and into the fluid pocket on his left side. This will allow him or his family to drain the fluid at home whenever he feels short of breath, without coming to the hospital. We drained a good amount today to get him started.",
     "cpt_codes": [
       32550
     ],
@@ -12654,12 +12509,6 @@
       "style_type": 8,
       "generated_name": "Raymond S. Jackson",
       "generation_date": "2025-12-09T09:18:37.158758"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13043,7 +12892,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mr. <PERSON> underwent diagnostic pleuroscopy. Upon entry into the left pleural space, 650 mL of fluid was evacuated. Inspection revealed focal parietal pleural thickening and inflammation, though no gross nodularity was distinct. Multiple parietal pleural biopsies were obtained. Given the high suspicion and adequate lung re-expansion, talc poudrage (5g) was performed for pleurodesis. A chest tube was placed for drainage.",
+    "note_text": "PROCEDURE NOTE: Mr. Torres underwent diagnostic pleuroscopy. Upon entry into the left pleural space, 650 mL of fluid was evacuated. Inspection revealed focal parietal pleural thickening and inflammation, though no gross nodularity was distinct. Multiple parietal pleural biopsies were obtained. Given the high suspicion and adequate lung re-expansion, talc poudrage (5g) was performed for pleurodesis. A chest tube was placed for drainage.",
     "cpt_codes": [
       32650
     ],
@@ -13233,12 +13082,6 @@
       "style_type": 2,
       "generated_name": "Juan Morales",
       "generation_date": "2025-12-09T09:18:37.158903"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13628,7 +13471,7 @@
     }
   },
   {
-    "note_text": "<PERSON> for the scope in the chest. We drained the fluid. Looked inside with the camera. Pleura looked red and angry but not clearly cancer yet. We grabbed a bunch of biopsies to be sure. Since the lung came up we went ahead and puffed the talc in to glue the lung to the wall. Put a chest tube in. He needs pain meds for the talc inflammation.",
+    "note_text": "Michael Torres for the scope in the chest. We drained the fluid. Looked inside with the camera. Pleura looked red and angry but not clearly cancer yet. We grabbed a bunch of biopsies to be sure. Since the lung came up we went ahead and puffed the talc in to glue the lung to the wall. Put a chest tube in. He needs pain meds for the talc inflammation.",
     "cpt_codes": [
       32650
     ],
@@ -13818,12 +13661,6 @@
       "style_type": 5,
       "generated_name": "Antonio Castillo",
       "generation_date": "2025-12-09T09:18:37.159063"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14213,7 +14050,7 @@
     }
   },
   {
-    "note_text": "We performed a procedure to look inside Mr. <PERSON>'s chest cavity. We drained the fluid and saw some inflammation on the lining of the chest wall. We took several samples to test for cancer or infection. Since his lung expanded well, we sprayed medical talc into the space to seal it up and prevent the fluid from coming back. He has a chest tube in place now to help the lung stick.",
+    "note_text": "We performed a procedure to look inside Mr. Torres's chest cavity. We drained the fluid and saw some inflammation on the lining of the chest wall. We took several samples to test for cancer or infection. Since his lung expanded well, we sprayed medical talc into the space to seal it up and prevent the fluid from coming back. He has a chest tube in place now to help the lung stick.",
     "cpt_codes": [
       32650
     ],
@@ -14403,12 +14240,6 @@
       "style_type": 8,
       "generated_name": "Pedro Reyes",
       "generation_date": "2025-12-09T09:18:37.159274"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14817,7 +14648,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE REPORT: Ms. <PERSON> presented for mediastinal staging of known LLL adenocarcinoma. EBUS-TBNA was performed. Systematic evaluation revealed enlarged, heterogeneous nodes at stations 7, 4L, 10L, and 11L. Transbronchial needle aspiration was performed at each station. Rapid On-Site Evaluation (ROSE) confirmed malignant cells in all sampled stations, confirming contralateral/bulky mediastinal involvement (N3). Samples were sent for molecular profiling.",
+    "note_text": "PROCEDURE REPORT: Ms. Garcia presented for mediastinal staging of known LLL adenocarcinoma. EBUS-TBNA was performed. Systematic evaluation revealed enlarged, heterogeneous nodes at stations 7, 4L, 10L, and 11L. Transbronchial needle aspiration was performed at each station. Rapid On-Site Evaluation (ROSE) confirmed malignant cells in all sampled stations, confirming contralateral/bulky mediastinal involvement (N3). Samples were sent for molecular profiling.",
     "cpt_codes": [
       31653
     ],
@@ -15026,12 +14857,6 @@
       "style_type": 2,
       "generated_name": "Ana Sofia Rivera",
       "generation_date": "2025-12-09T09:18:37.159432"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -16101,7 +15926,7 @@
     }
   },
   {
-    "note_text": "We performed an ultrasound of the airways to see if Ms. <PERSON>'s lung cancer had spread. Unfortunately, we found cancer cells in the lymph nodes in the center of the chest and on the left side (stations 7, 4L, 10L, and 11L). This helps us stage the cancer accurately so the oncologists can choose the best treatment, which will likely involve medication and radiation rather than just surgery.",
+    "note_text": "We performed an ultrasound of the airways to see if Ms. Garcia's lung cancer had spread. Unfortunately, we found cancer cells in the lymph nodes in the center of the chest and on the left side (stations 7, 4L, 10L, and 11L). This helps us stage the cancer accurately so the oncologists can choose the best treatment, which will likely involve medication and radiation rather than just surgery.",
     "cpt_codes": [
       31653
     ],
@@ -16310,12 +16135,6 @@
       "style_type": 8,
       "generated_name": "Martha Castillo",
       "generation_date": "2025-12-09T09:18:37.159776"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

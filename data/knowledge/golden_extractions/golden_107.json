@@ -2898,7 +2898,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nAttending: [Name]\nResident: [Name]\nIndication: Lung mass.\nSteps:\n1. Time out. GA induced.\n2. EUS-B scope inserted. Paraesophageal mass biopsied (FNA). <PERSON>.\n3. Airway exchanged for LMA.\n4. Bronchoscope inserted. Inspection normal.\n5. Radial EBUS to LLL posterior basal segment (concentric view).\n6. Samples: TBBx, Brush, Needle, BAL.\n7. Tolerated well.",
+    "note_text": "Procedure Note\nAttending: [Name]\nResident: [Name]\nIndication: Lung mass.\nSteps:\n1. Time out. GA induced.\n2. EUS-B scope inserted. Paraesophageal mass biopsied (FNA). ROSE neg.\n3. Airway exchanged for LMA.\n4. Bronchoscope inserted. Inspection normal.\n5. Radial EBUS to LLL posterior basal segment (concentric view).\n6. Samples: TBBx, Brush, Needle, BAL.\n7. Tolerated well.",
     "cpt_codes": [
       43238,
       31628,
@@ -3861,12 +3861,6 @@
       "style_description": "Trainee/Resident",
       "generated_name": "Elijah Brown",
       "generation_date": "2025-12-18T19:14:23.847325"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7734,7 +7728,7 @@
     }
   },
   {
-    "note_text": "Indications: <PERSON> lesion. Medications: GA. Action: The EBUS scope was deployed into the esophagus. The mass was visualized and aspirated with a 22G needle. ROSE was negative. The scope was withdrawn. An LMA was sited. The bronchoscope was navigated to the LLL. The lesion was localized with radial ultrasound. Tissue was harvested via forceps, brush, and needle. The segment was lavaged. The instrument was extracted. No adverse events.",
+    "note_text": "Indications: Pulmonary lesion. Medications: GA. Action: The EBUS scope was deployed into the esophagus. The mass was visualized and aspirated with a 22G needle. ROSE was negative. The scope was withdrawn. An LMA was sited. The bronchoscope was navigated to the LLL. The lesion was localized with radial ultrasound. Tissue was harvested via forceps, brush, and needle. The segment was lavaged. The instrument was extracted. No adverse events.",
     "cpt_codes": [
       43238,
       31628,
@@ -8697,12 +8691,6 @@
       "style_description": "Synonym Swapper",
       "generated_name": "Henry Rodriguez",
       "generation_date": "2025-12-18T19:14:23.848490"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9009,7 +8997,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Flexible bronchoscopy with EBUS and radial probe guidance.\nINDICATION: <PERSON> mass suspicious for malignancy.\nFINDINGS: Initial airway inspection via LMA was unremarkable. Linear EBUS was utilized to systematically sample hilar and mediastinal nodes (11L, 7, 10R, 11R); ROSE indicated benign lymphocytes. A therapeutic scope was then used with a guide sheath and radial EBUS to localize the right lower lobe mass (superior segment). Transbronchial needle aspiration and forceps biopsies were performed under fluoroscopic guidance. \nCOMPLICATIONS: Post-procedure emesis with aspiration and development of a small pneumothorax.\nDISPOSITION: Admission for observation and antibiotics (Augmentin).",
+    "note_text": "PROCEDURE: Flexible bronchoscopy with EBUS and radial probe guidance.\nINDICATION: Pulmonary mass suspicious for malignancy.\nFINDINGS: Initial airway inspection via LMA was unremarkable. Linear EBUS was utilized to systematically sample hilar and mediastinal nodes (11L, 7, 10R, 11R); ROSE indicated benign lymphocytes. A therapeutic scope was then used with a guide sheath and radial EBUS to localize the right lower lobe mass (superior segment). Transbronchial needle aspiration and forceps biopsies were performed under fluoroscopic guidance. \nCOMPLICATIONS: Post-procedure emesis with aspiration and development of a small pneumothorax.\nDISPOSITION: Admission for observation and antibiotics (Augmentin).",
     "cpt_codes": [
       31653,
       31628,
@@ -9302,12 +9290,6 @@
       "style_description": "Academic Attending",
       "generated_name": "Emma Martinez",
       "generation_date": "2025-12-18T19:14:23.848642"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

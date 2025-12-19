@@ -1,23 +1,23 @@
-"""Integration tests ensuring CodingService uses sectionizer before LLM calls."""
+"""Integration tests ensuring CodingService ignores LLM in extraction-first mode."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-import pytest
-
 from config.settings import CoderSettings
 from modules.coder.application.coding_service import CodingService
 from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDetector
+from modules.registry.application.registry_service import RegistryExtractionResult
+from modules.registry.schema import RegistryRecord
 
 
 class DummyLLMAdvisor:
-    def __init__(self):
+    def __init__(self) -> None:
         self.version = "dummy_llm"
-        self.last_text: str | None = None
+        self.called = False
 
     def suggest_codes(self, report_text: str):
-        self.last_text = report_text
+        self.called = True
         return []
 
 
@@ -64,10 +64,27 @@ class StubKeywordMappingRepository:
         return None
 
 
-def test_sectionizer_applied_to_llm_prompts(monkeypatch):
-    monkeypatch.setenv("CODING_SECTIONIZER_ENABLED", "true")
-    monkeypatch.setenv("CODING_MAX_LLM_INPUT_TOKENS", "20")
+class StubRegistryService:
+    def __init__(self) -> None:
+        self._result = RegistryExtractionResult(
+            record=RegistryRecord(),
+            cpt_codes=[],
+            coder_difficulty="LOW_CONF",
+            coder_source="extraction_first",
+            mapped_fields={},
+            code_rationales={},
+            derivation_warnings=[],
+            warnings=[],
+            needs_manual_review=False,
+            validation_errors=[],
+            audit_warnings=[],
+        )
 
+    def extract_fields_extraction_first(self, note_text: str) -> RegistryExtractionResult:
+        return self._result
+
+
+def test_llm_is_not_called_in_extraction_first():
     kb_repo = StubKnowledgeBaseRepository()
     keyword_repo = StubKeywordMappingRepository()
     neg_detector = SimpleNegationDetector()
@@ -82,17 +99,13 @@ def test_sectionizer_applied_to_llm_prompts(monkeypatch):
         rule_engine=rule_engine,  # type: ignore[arg-type]
         llm_advisor=llm_advisor,  # type: ignore[arg-type]
         config=config,
+        registry_service=StubRegistryService(),
     )
 
-    long_text = (
-        "HISTORY: " + ("hx " * 200) + "\n"
-        "PROCEDURE: Bronchoscopy with EBUS performed.\n"
-        "FINDINGS: Stations 7, 4R sampled.\n"
+    service.generate_suggestions(
+        procedure_id="test-proc",
+        report_text="Bronchoscopy performed.",
+        use_llm=True,
     )
 
-    service._run_llm_advisor(report_text=long_text, use_llm=True)
-    assert llm_advisor.last_text is not None
-    lowered = llm_advisor.last_text.lower()
-    assert "procedure:" in lowered
-    assert "findings:" in lowered
-    assert "history:" not in lowered
+    assert llm_advisor.called is False

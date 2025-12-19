@@ -5,19 +5,12 @@ from __future__ import annotations
 import logging
 import re
 from dataclasses import dataclass
-from typing import Iterable, List, Sequence
+from typing import Any, Iterable, Sequence, TYPE_CHECKING
 
-try:  # pragma: no cover - optional dependency
-    import spacy
+if TYPE_CHECKING:  # pragma: no cover
     from spacy.language import Language
-except ImportError:  # pragma: no cover - optional dependency
-    spacy = None  # type: ignore
-    Language = None  # type: ignore
-
-try:  # pragma: no cover - optional dependency
-    from medspacy.sectionizer import Sectionizer as MedspacySectionizer
-except ImportError:  # pragma: no cover - optional dependency
-    MedspacySectionizer = None  # type: ignore
+else:  # pragma: no cover - runtime type alias
+    Language = Any  # type: ignore[misc,assignment]
 
 LOGGER = logging.getLogger(__name__)
 
@@ -62,10 +55,18 @@ class SectionizerService:
         self._nlp: Language | None = None
         self._sectionizer = None
 
-        if spacy is not None and MedspacySectionizer is not None:  # pragma: no cover - import guard
+        # Lazy import heavy optional deps so merely importing this module doesn't pull in spaCy/medspaCy.
+        try:  # pragma: no cover - optional dependency
+            import spacy  # type: ignore
+            from medspacy.sectionizer import Sectionizer as MedspacySectionizer  # type: ignore
+
             self._nlp = spacy.blank("en")
             rules = self._build_rules(self.headings)
             self._sectionizer = MedspacySectionizer(self._nlp, rules=rules)
+        except Exception:
+            # Fallback: regex-only sectionizer (works without spaCy/medspaCy).
+            self._nlp = None
+            self._sectionizer = None
 
     def sectionize(self, text: str) -> list[Section]:
         """Split *text* into logical sections."""

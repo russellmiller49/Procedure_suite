@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime as dt
 import hashlib
 import json
+import os
 import re
 from dataclasses import dataclass, field
 from copy import deepcopy
@@ -34,7 +35,6 @@ from modules.registry.legacy.adapters import AdapterRegistry
 import modules.registry.legacy.adapters.airway  # noqa: F401
 import modules.registry.legacy.adapters.pleural  # noqa: F401
 from proc_nlp.normalize_proc import normalize_dictation
-from proc_nlp.umls_linker import umls_link
 from modules.reporting.metadata import (
     MissingFieldIssue,
     ProcedureAutocodeResult,
@@ -81,12 +81,34 @@ _ENV.globals["get_addon_metadata"] = get_addon_metadata
 _ENV.globals["list_addon_slugs"] = list_addon_slugs
 
 
+def _enable_umls_linker() -> bool:
+    """Return True if UMLS linking should be attempted for report metadata."""
+    return os.getenv("ENABLE_UMLS_LINKER", "true").strip().lower() in ("1", "true", "yes")
+
+
+def _safe_umls_link(text: str) -> list[Any]:
+    """Best-effort UMLS linking.
+
+    We avoid importing scispaCy/spaCy at module import time (startup performance).
+    When disabled via ENABLE_UMLS_LINKER=false, this returns an empty list.
+    """
+    if not _enable_umls_linker():
+        return []
+    try:
+        from proc_nlp.umls_linker import umls_link as _umls_link  # heavy optional import
+
+        return list(_umls_link(text))
+    except Exception:
+        # UMLS is optional and should not break report composition.
+        return []
+
+
 def compose_report_from_text(text: str, hints: Dict[str, Any] | None = None) -> Tuple[ProcedureReport, str]:
     """Normalize dictation + hints into a ProcedureReport and Markdown note."""
     hints = deepcopy(hints or {})
     normalized_core = normalize_dictation(text, hints)
     procedure_core = ProcedureCore(**normalized_core)
-    umls = [_serialize_concept(concept) for concept in umls_link(text)]
+    umls = [_serialize_concept(concept) for concept in _safe_umls_link(text)]
     paragraph_hashes = _hash_paragraphs(text)
     nlp = NLPTrace(paragraph_hashes=paragraph_hashes, umls=umls)
 
@@ -121,7 +143,7 @@ def compose_report_from_form(form: Dict[str, Any] | ProcedureReport) -> Tuple[Pr
             text = _extract_text(payload)
             payload["nlp"] = NLPTrace(
                 paragraph_hashes=_hash_paragraphs(text),
-                umls=[_serialize_concept(concept) for concept in umls_link(text)],
+                umls=[_serialize_concept(concept) for concept in _safe_umls_link(text)],
             )
         report = ProcedureReport(**payload)
     note_md = _render_note(report)

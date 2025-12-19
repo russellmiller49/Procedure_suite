@@ -500,7 +500,7 @@
     }
   },
   {
-    "note_text": "Code Selection Justification:\n- 31628 (Transbronchial biopsy): <PERSON> sampling method utilized for peripheral LLL nodule.\n- 31623 (Brushing): Distinct sampling modality employed on the same target.\n- 31654 (Radial EBUS): Add-on code supported by documentation of concentric view localization of the peripheral lesion prior to sampling.\nProcedure Note: Visualization confirmed via radial probe. Tools extended into lesion.",
+    "note_text": "Code Selection Justification:\n- 31628 (Transbronchial biopsy): Primary sampling method utilized for peripheral LLL nodule.\n- 31623 (Brushing): Distinct sampling modality employed on the same target.\n- 31654 (Radial EBUS): Add-on code supported by documentation of concentric view localization of the peripheral lesion prior to sampling.\nProcedure Note: Visualization confirmed via radial probe. Tools extended into lesion.",
     "cpt_codes": [
       31628,
       31623,
@@ -747,12 +747,6 @@
       "generated_name": "Michael Brown",
       "generated_age": 67,
       "generation_date": "2025-12-18T19:15:11.143268"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7962,7 +7956,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS-TBNA.\nStation 11L: 7mm, 6 passes, <PERSON>.\nLung Mass (LLL): 31.5mm, 8 passes, Malignant.\nDiagnosis: Lung Cancer (ROSE positive).",
+    "note_text": "Procedure: EBUS-TBNA.\nStation 11L: 7mm, 6 passes, Lymphocytes.\nLung Mass (LLL): 31.5mm, 8 passes, Malignant.\nDiagnosis: Lung Cancer (ROSE positive).",
     "cpt_codes": [
       31652
     ],
@@ -8498,12 +8492,6 @@
       "generated_name": "Lisa Robinson",
       "generated_age": 55,
       "generation_date": "2025-12-18T19:15:11.145209"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13867,7 +13855,7 @@
     }
   },
   {
-    "note_text": "patient ran in choking so i grabbed the scope no sedation just lidocaine went down and saw a huge mucus plug in the trachea sucked it out then looked at his stent on the left it was half blocked with mucus sucked that out too he felt better right away sent to <LOCATION>",
+    "note_text": "patient ran in choking so i grabbed the scope no sedation just lidocaine went down and saw a huge mucus plug in the trachea sucked it out then looked at his stent on the left it was half blocked with mucus sucked that out too he felt better right away sent to ER",
     "cpt_codes": [
       31645
     ],
@@ -14126,12 +14114,6 @@
       "generated_name": "Jason Nelson",
       "generated_age": 73,
       "generation_date": "2025-12-18T19:15:11.146602"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
