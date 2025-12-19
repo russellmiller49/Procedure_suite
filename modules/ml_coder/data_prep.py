@@ -5,8 +5,11 @@ Builds clean training CSVs from golden JSONs with iterative multi-label
 stratification and encounter-level leakage checks.
 """
 
+from __future__ import annotations
+
 import glob
 import json
+import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
@@ -19,6 +22,12 @@ try:
     from skmultilearn.model_selection import iterative_train_test_split
 except ModuleNotFoundError:  # pragma: no cover
     iterative_train_test_split = None
+
+# Allow running this file directly (e.g. `python modules/ml_coder/data_prep.py`)
+# by ensuring the repo root is on sys.path so imports like `modules.*` work.
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
 
 GOLDEN_DIR = Path("data/knowledge/golden_extractions")
 

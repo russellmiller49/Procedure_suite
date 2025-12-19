@@ -551,7 +551,9 @@ def normalize_registry_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
     # ==========================================================================
     # Therapeutic aspiration involves airways (Trachea, RMS, LMS, Carina, etc.)
     # Transbronchial biopsy involves lung parenchyma (lobes/segments)
-    procedures = payload.get("procedures_performed") or {}
+    procedures = payload.get("procedures_performed")
+    if not isinstance(procedures, dict):
+        procedures = {}
     tbbx = procedures.get("transbronchial_biopsy")
     if tbbx and tbbx.get("performed"):
         tbbx_locations = tbbx.get("locations", []) or []
