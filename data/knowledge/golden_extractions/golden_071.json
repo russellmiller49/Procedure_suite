@@ -230,7 +230,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: The patient, presenting with symptomatic pulmonary alveolar proteinosis, underwent therapeutic whole lung lavage of the right lung. Following the induction of general <LOCATION> and the precise placement of a left-sided double-lumen endotracheal tube, single-lung ventilation was established. The right lung was subjected to sequential large-volume lavage utilizing 18.0 liters of warmed isotonic saline. The initially opaque, proteinaceous effluent demonstrated progressive clearing with each cycle. Despite transient intraoperative desaturations necessitating recruitment maneuvers, the procedure was completed successfully with a recovery volume of 15.2 liters. The patient was extubated in the operating theater.",
+    "note_text": "OPERATIVE REPORT: The patient, presenting with symptomatic pulmonary alveolar proteinosis, underwent therapeutic whole lung lavage of the right lung. Following the induction of general anesthesia and the precise placement of a left-sided double-lumen endotracheal tube, single-lung ventilation was established. The right lung was subjected to sequential large-volume lavage utilizing 18.0 liters of warmed isotonic saline. The initially opaque, proteinaceous effluent demonstrated progressive clearing with each cycle. Despite transient intraoperative desaturations necessitating recruitment maneuvers, the procedure was completed successfully with a recovery volume of 15.2 liters. The patient was extubated in the operating theater.",
     "cpt_codes": [
       32997
     ],
@@ -457,12 +457,6 @@
       "style_type": 2,
       "generated_name": "Dan Rivers",
       "generation_date": "2025-12-08T14:08:09.806733"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -696,7 +690,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: Right WLL\nStaff: Dr. Thompson\nSteps:\n1. L DLT placed, position checked with scope.\n2. Right lung isolated.\n3. Instilled 1L saline aliquots x 18 cycles (Total 18L).\n4. Percussion performed during dwell time.\n5. Fluid cleared nicely.\n6. Extubated.\nIssues: Sats dropped to <DATE_TIME> a few times, fixed with recruitment.",
+    "note_text": "Resident Note\nPatient: Daniel Rivera\nProcedure: Right WLL\nStaff: Dr. Thompson\nSteps:\n1. L DLT placed, position checked with scope.\n2. Right lung isolated.\n3. Instilled 1L saline aliquots x 18 cycles (Total 18L).\n4. Percussion performed during dwell time.\n5. Fluid cleared nicely.\n6. Extubated.\nIssues: Sats dropped to 80s a few times, fixed with recruitment.",
     "cpt_codes": [
       32997
     ],
@@ -923,17 +917,10 @@
       "style_type": 4,
       "generated_name": "Darren Ross",
       "generation_date": "2025-12-08T14:08:09.806856"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "daniel rivera for right lung lavage pap symptoms <LOCATION> general left sided dlt used 37 french lavage right side with 18 liters saline drained about 15 liters looked milky then clear desats to 85 percent handled fine extubated to icu thanks",
+    "note_text": "daniel rivera for right lung lavage pap symptoms anesthesia general left sided dlt used 37 french lavage right side with 18 liters saline drained about 15 liters looked milky then clear desats to 85 percent handled fine extubated to icu thanks",
     "cpt_codes": [
       32997
     ],
@@ -1160,16 +1147,10 @@
       "style_type": 5,
       "generated_name": "Dominic Reed",
       "generation_date": "2025-12-08T14:08:09.806912"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Right whole lung lavage was performed on a <DATE_TIME> male with pulmonary alveolar proteinosis. General <LOCATION> with a 37 Fr left-sided double-lumen tube was utilized. Single-lung ventilation of the left lung allowed for lavage of the right lung using 18.0 L of warmed normal saline in 1.0 L aliquots. Effluent gradually cleared from opaque to translucent. 15.2 L of fluid were recovered. Transient desaturation occurred but responded to recruitment. The patient was extubated and transferred to the ICU.",
+    "note_text": "Right whole lung lavage was performed on a 42-year-old male with pulmonary alveolar proteinosis. General anesthesia with a 37 Fr left-sided double-lumen tube was utilized. Single-lung ventilation of the left lung allowed for lavage of the right lung using 18.0 L of warmed normal saline in 1.0 L aliquots. Effluent gradually cleared from opaque to translucent. 15.2 L of fluid were recovered. Transient desaturation occurred but responded to recruitment. The patient was extubated and transferred to the ICU.",
     "cpt_codes": [
       32997
     ],
@@ -1396,17 +1377,10 @@
       "style_type": 6,
       "generated_name": "Daniel Reyes",
       "generation_date": "2025-12-08T14:08:09.806968"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSymptomatic PAP with right-predominant disease.\n[<LOCATION>]\nGeneral, 37Fr Left DLT.\n[Description]\nRight lung lavage. 18L instilled, 15.2L recovered. Chest percussion applied. Effluent cleared. Transient hypoxemia managed with recruitment.\n[Plan]\nICU admission, monitor oxygenation.",
+    "note_text": "[Indication]\nSymptomatic PAP with right-predominant disease.\n[Anesthesia]\nGeneral, 37Fr Left DLT.\n[Description]\nRight lung lavage. 18L instilled, 15.2L recovered. Chest percussion applied. Effluent cleared. Transient hypoxemia managed with recruitment.\n[Plan]\nICU admission, monitor oxygenation.",
     "cpt_codes": [
       32997
     ],
@@ -1633,16 +1607,10 @@
       "style_type": 7,
       "generated_name": "Dustin Rhodes",
       "generation_date": "2025-12-08T14:08:09.807024"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> was brought to the operating room for a therapeutic lavage of his right lung due to PAP. We placed a double-lumen tube to isolate the lungs and verified it with the scope. We then washed the right lung with 18 liters of saline, draining it by gravity between fills. The fluid started out very milky but was clear by the end. He had some dips in his oxygen levels, but we managed those with recruitment maneuvers. We pulled the tube and sent him to the ICU.",
+    "note_text": "Mr. Rivera was brought to the operating room for a therapeutic lavage of his right lung due to PAP. We placed a double-lumen tube to isolate the lungs and verified it with the scope. We then washed the right lung with 18 liters of saline, draining it by gravity between fills. The fluid started out very milky but was clear by the end. He had some dips in his oxygen levels, but we managed those with recruitment maneuvers. We pulled the tube and sent him to the ICU.",
     "cpt_codes": [
       32997
     ],
@@ -1869,12 +1837,6 @@
       "style_type": 8,
       "generated_name": "Derek Richardson",
       "generation_date": "2025-12-08T14:08:09.807077"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2338,7 +2300,7 @@
     }
   },
   {
-    "note_text": "NARRATIVE: This <DATE_TIME> female underwent a staged contralateral whole lung lavage for pulmonary alveolar proteinosis. Following the successful right lung lavage previously, the left lung was targeted today. General <LOCATION> was induced, and a 35 Fr left-sided double-lumen tube was positioned to permit right lung ventilation. The left lung was lavaged with 16.0 liters of saline in aliquots. The effluent cleared appropriately. The patient remained hemodynamically stable with excellent oxygenation throughout. Extubation occurred in the operating room.",
+    "note_text": "NARRATIVE: This 51-year-old female underwent a staged contralateral whole lung lavage for pulmonary alveolar proteinosis. Following the successful right lung lavage previously, the left lung was targeted today. General anesthesia was induced, and a 35 Fr left-sided double-lumen tube was positioned to permit right lung ventilation. The left lung was lavaged with 16.0 liters of saline in aliquots. The effluent cleared appropriately. The patient remained hemodynamically stable with excellent oxygenation throughout. Extubation occurred in the operating room.",
     "cpt_codes": [
       32997
     ],
@@ -2565,13 +2527,6 @@
       "style_type": 2,
       "generated_name": "Sally Miller",
       "generation_date": "2025-12-08T14:08:09.807245"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -2805,7 +2760,7 @@
     }
   },
   {
-    "note_text": "Procedure: Left WLL\nPt: <PERSON>\nAttending: Dr. Owens\nSteps:\n1. Intubated with 35Fr Left DLT.\n2. Confirmed isolation of left lung.\n3. Lavaged left lung with 16L saline.\n4. Chest PT performed.\n5. Fluid became clear.\n6. Extubated stable.\nPlan: Step-down unit.",
+    "note_text": "Procedure: Left WLL\nPt: Sarah McIntyre\nAttending: Dr. Owens\nSteps:\n1. Intubated with 35Fr Left DLT.\n2. Confirmed isolation of left lung.\n3. Lavaged left lung with 16L saline.\n4. Chest PT performed.\n5. Fluid became clear.\n6. Extubated stable.\nPlan: Step-down unit.",
     "cpt_codes": [
       32997
     ],
@@ -3032,16 +2987,10 @@
       "style_type": 4,
       "generated_name": "Sandra Mitchell",
       "generation_date": "2025-12-08T14:08:09.807358"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "patient <PERSON> here for the left side lavage had the right one done <DATE_TIME> general <LOCATION> left dlt 35 french used washed left lung with 16 liters saline return 13.5 liters fluid clear at end no desats extubated fine to step down",
+    "note_text": "patient sarah mcintyre here for the left side lavage had the right one done last month general anesthesia left dlt 35 french used washed left lung with 16 liters saline return 13.5 liters fluid clear at end no desats extubated fine to step down",
     "cpt_codes": [
       32997
     ],
@@ -3268,14 +3217,6 @@
       "style_type": 5,
       "generated_name": "Stacy Morgan",
       "generation_date": "2025-12-08T14:08:09.807415"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -3509,7 +3450,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nStaged left WLL for PAP.\n[<LOCATION>]\nGeneral, 35Fr Left DLT.\n[Description]\nLeft lung lavage. 16L instilled. 13.5L recovered. Effluent cleared. No hypoxia.\n[Plan]\nStep-down unit, observe.",
+    "note_text": "[Indication]\nStaged left WLL for PAP.\n[Anesthesia]\nGeneral, 35Fr Left DLT.\n[Description]\nLeft lung lavage. 16L instilled. 13.5L recovered. Effluent cleared. No hypoxia.\n[Plan]\nStep-down unit, observe.",
     "cpt_codes": [
       32997
     ],
@@ -3736,16 +3677,10 @@
       "style_type": 7,
       "generated_name": "Sylvia Matthews",
       "generation_date": "2025-12-08T14:08:09.807525"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for the second part of her treatment, the lavage of the left lung. We used a double-lumen tube to breathe for her right lung while we washed the left. We used 16 liters of saline in total. The fluid cleared up nicely as we went. She didn't have any oxygen issues this time and we were able to wake her up and take the tube out right in the OR.",
+    "note_text": "Ms. McIntyre came in for the second part of her treatment, the lavage of the left lung. We used a double-lumen tube to breathe for her right lung while we washed the left. We used 16 liters of saline in total. The fluid cleared up nicely as we went. She didn't have any oxygen issues this time and we were able to wake her up and take the tube out right in the OR.",
     "cpt_codes": [
       32997
     ],
@@ -3972,12 +3907,6 @@
       "style_type": 8,
       "generated_name": "Stephanie Meyer",
       "generation_date": "2025-12-08T14:08:09.807577"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4681,7 +4610,7 @@
     }
   },
   {
-    "note_text": "CPT: <DATE_TIME> (Discontinued Procedure).\nRationale: Right whole lung lavage initiated. 10L saline instilled. Procedure terminated due to threat to patient well-being (severe refractory hypoxemia).\nDocumentation: Supports significant physician work prior to termination.",
+    "note_text": "CPT: 32997-53 (Discontinued Procedure).\nRationale: Right whole lung lavage initiated. 10L saline instilled. Procedure terminated due to threat to patient well-being (severe refractory hypoxemia).\nDocumentation: Supports significant physician work prior to termination.",
     "cpt_codes": [
       32997
     ],
@@ -4913,16 +4842,10 @@
       "style_type": 3,
       "generated_name": "Matthew Hill",
       "generation_date": "2025-12-08T14:08:09.807807"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Aborted Right WLL\nPt: <PERSON>\nSteps:\n1. DLT placed.\n2. Started lavage right lung.\n3. Got 10L in.\n4. Sats dropped to 78% and stayed down.\n5. Stopped lavage.\n6. Suctioned out fluid.\nPlan: ICU, keep intubated.",
+    "note_text": "Procedure: Aborted Right WLL\nPt: Marcus Hall\nSteps:\n1. DLT placed.\n2. Started lavage right lung.\n3. Got 10L in.\n4. Sats dropped to 78% and stayed down.\n5. Stopped lavage.\n6. Suctioned out fluid.\nPlan: ICU, keep intubated.",
     "cpt_codes": [
       32997
     ],
@@ -5154,12 +5077,6 @@
       "style_type": 4,
       "generated_name": "Mark Henderson",
       "generation_date": "2025-12-08T14:08:09.807866"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5633,7 +5550,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPAP, severe hypoxemia.\n[<LOCATION>]\nGeneral, DLT.\n[Description]\nRight WLL attempted. 10L instilled. Aborted due to refractory desaturation (78%). Fluid suctioned.\n[Plan]\nICU, mechanical ventilation.",
+    "note_text": "[Indication]\nPAP, severe hypoxemia.\n[Anesthesia]\nGeneral, DLT.\n[Description]\nRight WLL attempted. 10L instilled. Aborted due to refractory desaturation (78%). Fluid suctioned.\n[Plan]\nICU, mechanical ventilation.",
     "cpt_codes": [
       32997
     ],
@@ -5865,16 +5782,10 @@
       "style_type": 7,
       "generated_name": "Mason Hunt",
       "generation_date": "2025-12-08T14:08:09.808060"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We started the lavage on Mr. <PERSON>'s right lung, but he didn't tolerate it well. After about 10 liters, his oxygen saturation dropped to 78% and wouldn't improve even with 100% oxygen and recruitment. We had to stop the procedure for his safety. We suctioned out the remaining fluid and sent him to the ICU still on the ventilator.",
+    "note_text": "We started the lavage on Mr. Hall's right lung, but he didn't tolerate it well. After about 10 liters, his oxygen saturation dropped to 78% and wouldn't improve even with 100% oxygen and recruitment. We had to stop the procedure for his safety. We suctioned out the remaining fluid and sent him to the ICU still on the ventilator.",
     "cpt_codes": [
       32997
     ],
@@ -6106,12 +6017,6 @@
       "style_type": 8,
       "generated_name": "Malcolm Hamilton",
       "generation_date": "2025-12-08T14:08:09.808119"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6580,7 +6485,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Left medical thoracoscopy. Under general <LOCATION> and single-lung ventilation, the left pleural space was accessed. 1400 mL of straw-colored exudate were evacuated. Visualization revealed diffuse nodularity of the parietal pleura. Multiple biopsies were obtained using forceps. A 24 Fr chest tube was inserted via the access site. The patient tolerated the procedure well.",
+    "note_text": "PROCEDURE: Left medical thoracoscopy. Under general anesthesia and single-lung ventilation, the left pleural space was accessed. 1400 mL of straw-colored exudate were evacuated. Visualization revealed diffuse nodularity of the parietal pleura. Multiple biopsies were obtained using forceps. A 24 Fr chest tube was inserted via the access site. The patient tolerated the procedure well.",
     "cpt_codes": [
       32609
     ],
@@ -6807,12 +6712,6 @@
       "style_type": 2,
       "generated_name": "Lisa Jones",
       "generation_date": "2025-12-08T14:08:09.808295"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -7046,7 +6945,7 @@
     }
   },
   {
-    "note_text": "Procedure: Left Thoracoscopy\nPt: <PERSON>\nSteps:\n1. 7.5 ETT, single lung vent.\n2. Trocar in 6th ICS.\n3. Drained 1.4L fluid.\n4. Saw nodules on pleura -> Biopsied.\n5. Chest tube placed.\nPlan: Floor, watch chest tube.",
+    "note_text": "Procedure: Left Thoracoscopy\nPt: Linda Jacobs\nSteps:\n1. 7.5 ETT, single lung vent.\n2. Trocar in 6th ICS.\n3. Drained 1.4L fluid.\n4. Saw nodules on pleura -> Biopsied.\n5. Chest tube placed.\nPlan: Floor, watch chest tube.",
     "cpt_codes": [
       32609
     ],
@@ -7273,16 +7172,10 @@
       "style_type": 4,
       "generated_name": "Loretta James",
       "generation_date": "2025-12-08T14:08:09.808405"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> left pleural effusion thoracoscopy drained 1400 cc fluid looked straw colored lots of little nodules on the wall took biopsies put in a 24 french chest tube sent to floor no issues",
+    "note_text": "linda jacobs left pleural effusion thoracoscopy drained 1400 cc fluid looked straw colored lots of little nodules on the wall took biopsies put in a 24 french chest tube sent to floor no issues",
     "cpt_codes": [
       32609
     ],
@@ -7509,12 +7402,6 @@
       "style_type": 5,
       "generated_name": "Lucia Jenkins",
       "generation_date": "2025-12-08T14:08:09.808465"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7748,7 +7635,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent left exudative effusion.\n[<LOCATION>]\nGA, Single-lung ventilation.\n[Description]\nThoracoscopy. 1400mL drained. Parietal nodules biopsied. 24Fr Chest tube placed.\n[Plan]\nAdmit, await pathology.",
+    "note_text": "[Indication]\nRecurrent left exudative effusion.\n[Anesthesia]\nGA, Single-lung ventilation.\n[Description]\nThoracoscopy. 1400mL drained. Parietal nodules biopsied. 24Fr Chest tube placed.\n[Plan]\nAdmit, await pathology.",
     "cpt_codes": [
       32609
     ],
@@ -7975,16 +7862,10 @@
       "style_type": 7,
       "generated_name": "Lillian Jeffrey",
       "generation_date": "2025-12-08T14:08:09.808644"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mrs. <PERSON> underwent a medical thoracoscopy on the left side to investigate her fluid buildup. We drained 1400 mL of fluid and saw a lot of small nodules on the chest wall. We took biopsies of these nodules for the lab. We left a chest tube in place to keep the fluid off while the lung heals.",
+    "note_text": "Mrs. Jacobs underwent a medical thoracoscopy on the left side to investigate her fluid buildup. We drained 1400 mL of fluid and saw a lot of small nodules on the chest wall. We took biopsies of these nodules for the lab. We left a chest tube in place to keep the fluid off while the lung heals.",
     "cpt_codes": [
       32609
     ],
@@ -8211,12 +8092,6 @@
       "style_type": 8,
       "generated_name": "Leslie Jenson",
       "generation_date": "2025-12-08T14:08:09.808723"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9140,7 +9015,7 @@
     }
   },
   {
-    "note_text": "Procedure: Right Thoracoscopy w/ Talc\nPt: <PERSON>\nSteps:\n1. Port placed 7th ICS.\n2. Drained 1.8L.\n3. Biopsies taken.\n4. Lung looked trapped.\n5. Talc poudrage (4g) performed.\n6. Chest tube in.\nPlan: Admit.",
+    "note_text": "Procedure: Right Thoracoscopy w/ Talc\nPt: Robert Evans\nSteps:\n1. Port placed 7th ICS.\n2. Drained 1.8L.\n3. Biopsies taken.\n4. Lung looked trapped.\n5. Talc poudrage (4g) performed.\n6. Chest tube in.\nPlan: Admit.",
     "cpt_codes": [
       32650
     ],
@@ -9367,16 +9242,10 @@
       "style_type": 4,
       "generated_name": "Ralph Erickson",
       "generation_date": "2025-12-08T14:08:09.809006"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> right malignant effusion thoracoscopy drained 1800 cc lung trapped tumor on pleura biopsies taken did talc poudrage 4 grams chest tube placed admit to floor",
+    "note_text": "robert evans right malignant effusion thoracoscopy drained 1800 cc lung trapped tumor on pleura biopsies taken did talc poudrage 4 grams chest tube placed admit to floor",
     "cpt_codes": [
       32650
     ],
@@ -9603,12 +9472,6 @@
       "style_type": 5,
       "generated_name": "Randy Evans",
       "generation_date": "2025-12-08T14:08:09.809062"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9842,7 +9705,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent malignant effusion, trapped lung.\n[<LOCATION>]\nGA.\n[Description]\nRight thoracoscopy. 1800mL drained. Biopsies taken. Talc poudrage (4g) performed. Chest tube placed.\n[Plan]\nAdmit, suction.",
+    "note_text": "[Indication]\nRecurrent malignant effusion, trapped lung.\n[Anesthesia]\nGA.\n[Description]\nRight thoracoscopy. 1800mL drained. Biopsies taken. Talc poudrage (4g) performed. Chest tube placed.\n[Plan]\nAdmit, suction.",
     "cpt_codes": [
       32650
     ],
@@ -10069,16 +9932,10 @@
       "style_type": 7,
       "generated_name": "Ryan English",
       "generation_date": "2025-12-08T14:08:09.809190"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We performed a thoracoscopy on Mr. <PERSON>' right side. We drained about 1.8 liters of fluid. The lung looked trapped by the tumor. We took some biopsies and then sprayed talc powder into the chest cavity to try and glue the lung to the wall. A chest tube was left in place.",
+    "note_text": "We performed a thoracoscopy on Mr. Evans' right side. We drained about 1.8 liters of fluid. The lung looked trapped by the tumor. We took some biopsies and then sprayed talc powder into the chest cavity to try and glue the lung to the wall. A chest tube was left in place.",
     "cpt_codes": [
       32650
     ],
@@ -10305,12 +10162,6 @@
       "style_type": 8,
       "generated_name": "Russell Emery",
       "generation_date": "2025-12-08T14:08:09.809250"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11417,7 +11268,7 @@
     }
   },
   {
-    "note_text": "Procedure: Thoracoscopy + Talc + IPC\nPt: <PERSON>\nSteps:\n1. 2L fluid drained via scope.\n2. Biopsies taken.\n3. Talc poudrage performed.\n4. Lung trapped, so IPC placed.\n5. IPC tunneled and secured.\nPlan: Home with drainage supplies.",
+    "note_text": "Procedure: Thoracoscopy + Talc + IPC\nPt: Maria Alvarez\nSteps:\n1. 2L fluid drained via scope.\n2. Biopsies taken.\n3. Talc poudrage performed.\n4. Lung trapped, so IPC placed.\n5. IPC tunneled and secured.\nPlan: Home with drainage supplies.",
     "cpt_codes": [
       32650,
       32550
@@ -11705,16 +11556,10 @@
       "style_type": 4,
       "generated_name": "Michelle Armstrong",
       "generation_date": "2025-12-08T14:08:09.809578"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> right effusion thoracoscopy drained 2 liters lung trapped so we did talc and also put in a pleurx catheter for home drainage biopsies sent went home same day",
+    "note_text": "maria alvarez right effusion thoracoscopy drained 2 liters lung trapped so we did talc and also put in a pleurx catheter for home drainage biopsies sent went home same day",
     "cpt_codes": [
       32650,
       32550
@@ -12002,16 +11847,10 @@
       "style_type": 5,
       "generated_name": "Monica Austin",
       "generation_date": "2025-12-08T14:08:09.809647"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Right medical thoracoscopy with talc pleurodesis and tunneled pleural catheter placement was performed. <DATE_TIME> mL were drained. Trapped lung and tumor implants were noted. Biopsies were taken. Talc poudrage was executed. A tunneled pleural catheter was inserted to manage the trapped lung. The patient was discharged to home.",
+    "note_text": "Right medical thoracoscopy with talc pleurodesis and tunneled pleural catheter placement was performed. 2000 mL were drained. Trapped lung and tumor implants were noted. Biopsies were taken. Talc poudrage was executed. A tunneled pleural catheter was inserted to manage the trapped lung. The patient was discharged to home.",
     "cpt_codes": [
       32650,
       32550
@@ -12299,16 +12138,10 @@
       "style_type": 6,
       "generated_name": "Melissa Andrews",
       "generation_date": "2025-12-08T14:08:09.809716"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nMalignant effusion, trapped lung.\n[<LOCATION>]\nGA.\n[Description]\nThoracoscopy. 2L drained. Talc poudrage. Tunneled pleural catheter (IPC) placed.\n[Plan]\nDischarge, home drainage.",
+    "note_text": "[Indication]\nMalignant effusion, trapped lung.\n[Anesthesia]\nGA.\n[Description]\nThoracoscopy. 2L drained. Talc poudrage. Tunneled pleural catheter (IPC) placed.\n[Plan]\nDischarge, home drainage.",
     "cpt_codes": [
       32650,
       32550
@@ -12596,16 +12429,10 @@
       "style_type": 7,
       "generated_name": "Maureen Arnold",
       "generation_date": "2025-12-08T14:08:09.809784"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We did a thoracoscopy on Mrs. <PERSON>. We drained 2 liters of fluid and found her lung was trapped by the cancer. We sprayed talc to help, but because the lung was trapped, we also put in a permanent tunneled catheter so she can drain fluid at home. She went home the same day.",
+    "note_text": "We did a thoracoscopy on Mrs. Alvarez. We drained 2 liters of fluid and found her lung was trapped by the cancer. We sprayed talc to help, but because the lung was trapped, we also put in a permanent tunneled catheter so she can drain fluid at home. She went home the same day.",
     "cpt_codes": [
       32650,
       32550
@@ -12893,12 +12720,6 @@
       "style_type": 8,
       "generated_name": "Marilyn Atkins",
       "generation_date": "2025-12-08T14:08:09.809857"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

@@ -1,7 +1,7 @@
-"""Presidio-based scrubber adapter (synthetic PHI demo ready).
+"""Presidio-based scrubber adapter (Dynamic Clinical Context).
 
-Implements PHIScrubberPort using Presidio AnalyzerEngine. Avoids logging raw
-PHI and preserves IP anatomical terms via allowlist filtering.
+Implements PHIScrubberPort using Presidio AnalyzerEngine with enhanced
+dynamic safeguards for clinical terms, providers, and HIPAA age rules.
 """
 
 from __future__ import annotations
@@ -10,9 +10,8 @@ import logging
 import os
 import re
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Iterable
 from functools import lru_cache
-from typing import Iterable
 
 from modules.phi.ports import PHIScrubberPort, ScrubResult
 
@@ -31,219 +30,114 @@ ZERO_WIDTH_CHARACTERS: frozenset[str] = frozenset(
 )
 ZERO_WIDTH_TRANSLATION_TABLE: dict[int, int] = {ord(ch): ord(" ") for ch in ZERO_WIDTH_CHARACTERS}
 
+# --- Dynamic Regex Configurations ---
+
+# HIPAA Age Rule: Match ages >= 90 for aggregation.
+# Captures: "92 yo", "92 year old", "Age: 92", "Aged 102"
+# Avoids: "BP 120/92" (requires either "Age:" prefix OR "yo" suffix to be confident)
+AGE_OVER_90_RE = re.compile(
+    r"(?i)(?:\b(?:age|aged)\s*[:]?\s*(?:9\d|[1-9]\d{2,})\b)|(?:\b(?:9\d|[1-9]\d{2,})\s*-?\s*(?:yo|yrs?|years?|year-old|year\s+old)\b)"
+)
+
+# Eponym Suffixes: If a PERSON entity is followed by these, it's likely a medical term
+MEDICAL_EPONYM_SUFFIXES = {
+    "syndrome", "maneuver", "sign", "catheter", "tube", "stent", "clamp",
+    "retractor", "forceps", "needle", "classification", "criteria", "score",
+    "scale", "stage", "grade", "grading", "system", "procedure", "operation",
+    "technique", "approach", "incision", "fascia", "ligament", "artery",
+    "vein", "nerve", "muscle", "reflex", "law", "principle", "solution",
+    "medium", "agar", "stain", "position", "view", "line", "drain", "bag",
+    "mask", "airway", "blade", "scope", "loop", "snare", "basket", "anesthesia"
+}
+
+# Dynamic Headers: Matches "History of Present Illness:" or "Findings:"
+_DYNAMIC_HEADER_RE = re.compile(
+    r"^\s*([A-Z][A-Z0-9\s\/\-\(\)]+|[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s*:\s*$",
+    re.MULTILINE
+)
+
+# Terms that the Biomedical Shield should NOT protect (prevent un-redacting actual people)
+BIOMEDICAL_SHIELD_BLOCKLIST = {
+    "patient", "pt", "dr", "doctor", "mr", "ms", "mrs", "male", "female", 
+    "man", "woman", "boy", "girl", "mother", "father", "son", "daughter",
+    "husband", "wife", "spouse", "partner", "subject", "participant"
+}
 
 ANATOMICAL_ALLOW_LIST = {
-    # Head & Neck / Upper Airway
-    "larynx",
-    "pharynx",
-    "oropharynx",
-    "nasopharynx",
-    "glottis",
-    "subglottis",
-    "epiglottis",
-    "vocal cords",
-    "true vocal cords",
-    "false vocal cords",
-    "cords",
-    "naris",
-    "nares",
-    "oral cavity",
-    "tongue",
-    "palate",
-    # Lung lobes and shorthand
-    "upper lobe",
-    "lower lobe",
-    "middle lobe",
-    "right upper lobe",
-    "rul",
-    "right middle lobe",
-    "rml",
-    "right lower lobe",
-    "rll",
-    "left upper lobe",
-    "lul",
-    "left lower lobe",
-    "lll",
-    "lingula",
-    "lingular",
-    # Airway structures
-    "carina",
-    "main carina",
-    "trachea",
-    "distal trachea",
-    "proximal trachea",
-    "bronchus",
-    "bronchi",
-    "mainstem",
-    "right mainstem",
-    "left mainstem",
-    "bronchus intermedius",
-    "segmental",
-    "subsegmental",
-    "proximal airways",
-    "distal airways",
-    # Stations
-    "station 4r",
-    "station 4l",
-    "station 7",
-    "station 2r",
-    "station 2l",
-    "station 10",
-    "station 11",
-    "station 12",
-    # Station shorthand (common in bronchoscopy/EBUS notes)
-    "4r",
-    "4l",
-    "7",
-    "10r",
-    "10l",
-    "11r",
-    "11l",
-    "11rs",
-    "11ri",
-    # Mediastinal/lymphatic terms
-    "mediastinum",
-    "mediastinal",
-    "hilum",
-    "hilar",
-    "paratracheal",
-    "subcarinal",
-    "lymph node",
-    "lymph nodes",
-    "node",
-    "nodes",
-    # Procedures/techniques
-    "ebus",
-    "eus",
-    "tbna",
-    "bal",
-    "bronchoscopy",
-    # Laterality descriptors
-    "left",
-    "right",
-    "bilateral",
-    "unilateral",
+    "larynx", "pharynx", "oropharynx", "nasopharynx", "glottis", "subglottis",
+    "epiglottis", "vocal cords", "true vocal cords", "false vocal cords", "cords",
+    "naris", "nares", "oral cavity", "tongue", "palate", "upper lobe", "lower lobe",
+    "middle lobe", "right upper lobe", "rul", "right middle lobe", "rml",
+    "right lower lobe", "rll", "left upper lobe", "lul", "left lower lobe", "lll",
+    "lingula", "lingular", "carina", "main carina", "trachea", "distal trachea",
+    "proximal trachea", "bronchus", "bronchi", "mainstem", "right mainstem",
+    "left mainstem", "bronchus intermedius", "segmental", "subsegmental",
+    "proximal airways", "distal airways", "station 4r", "station 4l", "station 7",
+    "station 2r", "station 2l", "station 10", "station 11", "station 12",
+    "4r", "4l", "7", "10r", "10l", "11r", "11l", "11rs", "11ri", "mediastinum",
+    "mediastinal", "hilum", "hilar", "paratracheal", "subcarinal", "lymph node",
+    "lymph nodes", "node", "nodes", "ebus", "eus", "tbna", "bal", "bronchoscopy",
+    "left", "right", "bilateral", "unilateral",
 }
 
 CLINICAL_ALLOW_LIST = {
-    # --- From IP_Registry.json & Dictionaries ---
-    
-    # Navigation & Robotics (often flagged as Locations/Persons)
+    # Retaining extensive list for fallback safety
+    *ANATOMICAL_ALLOW_LIST,
     "ion", "monarch", "galaxy", "superdimension", "illumisite", "spin", 
     "lungvision", "archimedes", "inreach", "veran", "intuitive", "auris",
-    "shape-sensing", "robotic-assisted", "nav-guided", "enb",
-    
-    # Valves & Devices
-    "zephyr", "spiration", "pulmonx", "olympus", "coviden", "medtronic",
-    "boston scientific", "cook", "merit", "conmed", "erbe",
-    "chartis", "collateral ventilation",
-    
-    # Catheters & Tubes
+    "shape-sensing", "robotic-assisted", "nav-guided", "enb", "zephyr",
+    "spiration", "pulmonx", "olympus", "coviden", "medtronic", "boston scientific",
+    "cook", "merit", "conmed", "erbe", "chartis", "collateral ventilation",
     "pleurx", "aspira", "rocket", "yueh", "cooke", "pigtail", "tru-cut", 
     "abrams", "heimlich", "pleurovac", "chest tube", "ipc", "tunneled catheter",
     "picc", "picc line", "midline", "central line", "art line", "a-line",
-    
-    # Stents
     "dumon", "hood", "novatech", "aero", "ultraflex", "sems", "silicone",
-    "hybrid stent", "y-stent", "airway stent", "bonastent",
-    
-    # Imaging & Guidance
-    "cios", "cios spin", "cone beam", "cbct", "fluoroscopy", "rebus", 
-    "radial ebus", "radial probe", "miniprobe", "ultrasound", "sonographic",
-    "elastography", "ultrasound elastography",
-    
-    # Ablation & Tools
-    "apc", "argon plasma", "electrocautery", "cryo", "cryoprobe", "cryospray",
-    "cryoablation", "cryotherapy", "cryobiopsy", "mwa", "microwave", "radiofrequency", "rfa",
-    "laser", "nd:yag", "co2 laser", "diode", "microdebrider", "snare", "basket",
-    "fogarty", "arndt", "cohen", "blocker", "balloon", "bougie", "brush", "knife",
-    "forceps", "alligator forceps", "needle", "catheter", "dilator", "guidewire",
-    "trochar", "introduction needle", "introducer", "lyofoam",
-    "rigid", "rigid scope", "rigid bronchoscope", "ventilating scope",
-    "lma", "laryngeal mask", "laryngeal mask airway", "ett", "endotracheal tube",
-    
-    # Medications (Sedation/Reversal/Local) - commonly flagged
-    "lidocaine", "fentanyl", "midazolam", "versed", "propofol", "etomidate",
-    "succinylcholine", "rocuronium", "cisatracurium", "sugammadex", "neostigmine",
-    "glycopyrrolate", "atropine", "epinephrine", "phenylephrine", "norepinephrine",
-    "flumazenil", "naloxone", "narcan", "romazicon", "kenalog", "tranexamic acid", 
-    "txa", "doxycycline", "bleomycin", "talc", "saline", "ns",
-    "instillation", "fibrinolysis", "tpa", "dnase",
-    
-    # Common Clinical Descriptors & Status
-    "absen", "absent", "present", "normal", "abnormal", "stable", "unstable",
-    "adequate", "inadequate", "diagnostic", "nondiagnostic", "malignant", "benign",
-    "suspicious", "atypical", "granuloma", "necrosis", "inflammation", 
-    "anthracotic", "cobblestoning", "erythematous", "friable", "nodular", "polypoid",
-    "patent", "occluded", "obstructed", "stenosis", "stricture", "malacia",
-    "fistula", "dehiscence", "granulation", "secretions", "mucus", "blood", "clot",
-    "purulent", "serous", "serosanguinous", "chylous", "bloody", "fluid",
-    "size", "volume", "echogenicity", "anechoic", "hypoechoic", "isoechoic",
-    "hyperechoic", "loculations", "thin", "thick", "diminished", "eccentric",
-    "continuous", "margin",
-    
-    # Anatomy & Pathology
-    "lung", "lungs", "lobe", "lobes", "pleura", "pleural", "airway", "trachea",
-    "esophagus", "thyroid", "spine", "rib", "chest wall", "diaphragm",
-    "nodule", "mass", "lesion", "tumor", "infiltrate", "consolidation", 
-    "ground glass", "cavity", "calcification", "effusion", "pneumothorax", 
-    "hemothorax", "empyema", "chylothorax", "trapped lung", "lymphadenopathy",
-    "neoplasm", "malignancy", "mycetoma", "pleural effusion",
-    
-    # Administrative/Coding Terms (often flagged as DATE/TIME or IDs)
+    "hybrid stent", "y-stent", "airway stent", "bonastent", "cios", "cios spin",
+    "cone beam", "cbct", "fluoroscopy", "rebus", "radial ebus", "radial probe",
+    "miniprobe", "ultrasound", "sonographic", "elastography", "apc", "argon plasma",
+    "electrocautery", "cryo", "cryoprobe", "cryospray", "cryoablation", "cryotherapy",
+    "cryobiopsy", "mwa", "microwave", "radiofrequency", "rfa", "laser", "nd:yag",
+    "co2 laser", "diode", "microdebrider", "snare", "basket", "fogarty", "arndt",
+    "cohen", "blocker", "balloon", "bougie", "brush", "knife", "forceps",
+    "alligator forceps", "needle", "catheter", "dilator", "guidewire", "trochar",
+    "introduction needle", "introducer", "lyofoam", "rigid", "rigid scope",
+    "rigid bronchoscope", "ventilating scope", "lma", "laryngeal mask",
+    "laryngeal mask airway", "ett", "endotracheal tube", "lidocaine", "fentanyl",
+    "midazolam", "versed", "propofol", "etomidate", "succinylcholine", "rocuronium",
+    "cisatracurium", "sugammadex", "neostigmine", "glycopyrrolate", "atropine",
+    "epinephrine", "phenylephrine", "norepinephrine", "flumazenil", "naloxone",
+    "narcan", "romazicon", "kenalog", "tranexamic acid", "txa", "doxycycline",
+    "bleomycin", "talc", "saline", "ns", "instillation", "fibrinolysis", "tpa",
+    "dnase", "absen", "absent", "present", "normal", "abnormal", "stable",
+    "unstable", "adequate", "inadequate", "diagnostic", "nondiagnostic",
+    "malignant", "benign", "suspicious", "atypical", "granuloma", "necrosis",
+    "inflammation", "anthracotic", "cobblestoning", "erythematous", "friable",
+    "nodular", "polypoid", "patent", "occluded", "obstructed", "stenosis",
+    "stricture", "malacia", "fistula", "dehiscence", "granulation", "secretions",
+    "mucus", "blood", "clot", "purulent", "serous", "serosanguinous", "chylous",
+    "bloody", "fluid", "size", "volume", "echogenicity", "anechoic", "hypoechoic",
+    "isoechoic", "hyperechoic", "loculations", "thin", "thick", "diminished",
+    "eccentric", "continuous", "margin", "lung", "lungs", "lobe", "lobes", "pleura",
+    "pleural", "airway", "trachea", "esophagus", "thyroid", "spine", "rib",
+    "chest wall", "diaphragm", "nodule", "mass", "lesion", "tumor", "infiltrate",
+    "consolidation", "ground glass", "cavity", "calcification", "effusion",
+    "pneumothorax", "hemothorax", "empyema", "chylothorax", "trapped lung",
+    "lymphadenopathy", "neoplasm", "malignancy", "mycetoma", "pleural effusion",
     "initial day", "subsequent day", "initial episode", "repeat", "modifier",
-    "separate structure", "distinct service", "unlisted procedure",
-    "cpt", "icd-10", "diagnosis", "indication", "history", "plan", "assessment",
-    "tbbx", "tbna", "tbcbx",
-    
-    # Units & Measurements
-    "mm", "cm", "fr", "french", "gauge", "liter", "liters", "cc", "ml", 
-    "joules", "watts", "lpm", "l/min", "mins", "seconds", "secs", "minutes",
-    
-    # Personnel roles (lower case to catch common misclassifications)
-    "attending", "fellow", "resident", "anesthesiologist", "crna", "nurse", "rn", 
-    "tech", "technician", "observer", "proceduralist", "assistant",
-    "self, referred", "referred", "provider",
-    
-    # Disease specific
-    "hodgkin", "hodgkin's", "non-hodgkin", "lymphoma", "carcinoma", 
-    "adenocarcinoma", "squamous", "sarcoidosis", "tuberculosis", "afb",
-    "fungal", "bacterial", "viral",
-    
-    # Meds + common descriptors that frequently false-positive as PHI.
-    "nonobstructive",
-    # Common clinical/admin tokens that spaCy can misclassify as entities (often LOCATION).
-    "anesthesia",
-    "general anesthesia",
-    # Common abbreviations which can false-positive as entities.
-    "us",  # Ultrasound (often misread as United States)
-    "mc",  # Mail code / internal routing shorthand
-    "pacs",
-    "on",  # "on" (preposition) sometimes flagged
-    # Common clinician credentials.
-    "md",
-    "do",
-    "phd",
-    # Clinical terms often capitalized in headers/lists.
-    "target",
-    "freeze",
-    "brush",
-    "media",
-    "samples",
-    "sample",
-    "specimen",
-    "specimens",
-    "disposition",
-    "mediastinal",
-    "lymph",
-    "lymph node",
-    "lymph nodes",
-    "lung nodule",
-    "solitary lung nodule",
-    "mass",
-    "lesion",
-    # Existing anatomical allow-list (critical for procedure coding).
-    *ANATOMICAL_ALLOW_LIST,
+    "separate structure", "distinct service", "unlisted procedure", "cpt",
+    "icd-10", "diagnosis", "indication", "history", "plan", "assessment", "tbbx",
+    "tbna", "tbcbx", "mm", "cm", "fr", "french", "gauge", "liter", "liters", "cc",
+    "ml", "joules", "watts", "lpm", "l/min", "mins", "seconds", "secs", "minutes",
+    "attending", "fellow", "resident", "anesthesiologist", "crna", "nurse", "rn",
+    "tech", "technician", "observer", "proceduralist", "assistant", "self, referred",
+    "referred", "provider", "hodgkin", "hodgkin's", "non-hodgkin", "lymphoma",
+    "carcinoma", "adenocarcinoma", "squamous", "sarcoidosis", "tuberculosis", "afb",
+    "fungal", "bacterial", "viral", "nonobstructive", "anesthesia",
+    "general anesthesia", "us", "mc", "pacs", "on", "md", "do", "phd", "target",
+    "freeze", "brush", "media", "samples", "sample", "specimen", "specimens",
+    "disposition", "mediastinal", "lymph", "lymph node", "lymph nodes",
+    "lung nodule", "solitary lung nodule", "mass", "lesion", "mark", "place",
+    "note", "report", "review"
 }
 
 DEFAULT_ENTITY_SCORE_THRESHOLDS: dict[str, float] = {
@@ -255,24 +149,18 @@ DEFAULT_ENTITY_SCORE_THRESHOLDS: dict[str, float] = {
 }
 
 DEFAULT_RELATIVE_DATE_TIME_PHRASES: tuple[str, ...] = (
-    "about a week",
-    "in a week",
-    "next week",
-    "today",
-    "tomorrow",
-    "yesterday",
-    "same day",
+    "about a week", "in a week", "next week", "today", "tomorrow", "yesterday", "same day",
 )
 
 PATIENT_NAME_LINE_RE = re.compile(
     r"""(?im)^\s*
-        (?:INDICATION\s+FOR\s+OPERATION|IMPRESSION\s*/\s*PLAN)\s*:\s*
+        (?:INDICATION\s+FOR\s+OPERATION|IMPRESSION\s*/\s*PLAN|PATIENT|NAME)\s*[:]\s*
         (?P<name>
             [A-Z][a-z'’-]+
             (?:\s+[A-Z]\.?)?
             (?:\s+[A-Z][a-z'’-]+){1,3}
         )
-        \s+is\s+(?:a|an)\b
+        \s+(?:is\s+(?:a|an)\b|MRN|ID)
     """,
     re.VERBOSE,
 )
@@ -280,10 +168,8 @@ PATIENT_NAME_LINE_RE = re.compile(
 _DATE_NUMERIC_RE = re.compile(
     r"""(?ix)
     \b(
-        # MM/DD/YYYY or M/D/YY (supports / or -)
         (?:0?[1-9]|1[0-2]) [/-] (?:0?[1-9]|[12]\d|3[01]) [/-] (?:\d{4}|\d{2})
         |
-        # MM/DDYYYY (missing slash before year): 12/162025
         (?:0?[1-9]|1[0-2]) [/-] (?:0?[1-9]|[12]\d|3[01]) (?:\d{4})
     )\b
     """
@@ -318,22 +204,8 @@ _MEASUREMENT_UNIT_TAIL_RE = re.compile(r"(?i)^\s*(?:ml|cc|mg|mcg|g|kg|fr|cmh2o|m
 
 _CREDENTIAL_NORMALIZED: frozenset[str] = frozenset(
     {
-        "MD",
-        "DO",
-        "PHD",
-        "RN",
-        "RT",
-        "PA",
-        "PAC",
-        "NPC",
-        "NP",
-        "DNP",
-        "FNP",
-        "CRNA",
-        "RRT",
-        "LPN",
-        "CNA",
-        "MA",
+        "MD", "DO", "PHD", "RN", "RT", "PA", "PAC", "NPC", "NP", "DNP", "FNP", 
+        "CRNA", "RRT", "LPN", "CNA", "MA",
     }
 )
 
@@ -341,35 +213,17 @@ _PROVIDER_LINE_LABEL_RE = re.compile(
     r"""(?im)^\s*(?:CC\s+REFERRED\s+PHYSICIAN|REFERRED\s+PHYSICIAN|REFERRING\s+PHYSICIAN|
         PRIMARY\s+CARE\s+PHYSICIAN|ATTENDING(?:\s+PHYSICIAN)?|SURGEON|ASSISTANT|
         ANESTHESIOLOGIST|FELLOW|RESIDENT|COSIGNED\s+BY|SIGNED\s+BY|DICTATED\s+BY|
-        PERFORMED\s+BY|AUTHORED\s+BY|PROVIDER)\s*:\s*""",
+        PERFORMED\s+BY|AUTHORED\s+BY|PROVIDER|PROCEDURALIST|OPERATOR)\s*:\s*""",
     re.VERBOSE,
 )
 _STAFF_ROLE_LINE_RE = re.compile(r"(?im)^\s*(?:RN|RT|PA|NP|MA|CNA)\s*:\s*")
 
 _SECTION_HEADER_WORDS: frozenset[str] = frozenset(
     {
-        "DISPOSITION",
-        "SPECIMEN",
-        "SPECIMEN(S)",
-        "SAMPLE",
-        "SAMPLES",
-        "IMPRESSION",
-        "PLAN",
-        "PROCEDURE",
-        "PROCEDURES",
-        "ATTENDING",
-        "ASSISTANT",
-        "ANESTHESIA",
-        "MONITORING",
-        "TRACHEA",
-        "BRUSH",
-        "CRYOBIOPSY",
-        "MEDIASTINAL",
-        "MEDIA",
-        "SIZE",
-        "FLUID",
-        "LARYNX",
-        "PHARYNX",
+        "DISPOSITION", "SPECIMEN", "SPECIMEN(S)", "SAMPLE", "SAMPLES", "IMPRESSION",
+        "PLAN", "PROCEDURE", "PROCEDURES", "ATTENDING", "ASSISTANT", "ANESTHESIA",
+        "MONITORING", "TRACHEA", "BRUSH", "CRYOBIOPSY", "MEDIASTINAL", "MEDIA",
+        "SIZE", "FLUID", "LARYNX", "PHARYNX", "FINDINGS", "COMPLICATIONS", "INDICATION",
     }
 )
 
@@ -380,12 +234,19 @@ _ALLOWLIST_BOUNDARY_RE = re.compile(
 )
 
 _DEVICE_MODEL_CONTEXT_RE = re.compile(
-    r"\b(?:[A-Z]{1,3}\d{2,4}|[A-Z]{1,3}-[A-Z0-9]{2,10})\b"
-    r"(?=[^\n]{0,20}\b(?:video bronchoscope|bronchoscope|scope|cryoprobe|needle)\b)",
+    r"\b(?:(?:Ref|Lot|Model|SN|ID)\s*[:#]?\s*)?"
+    r"(?:[A-Z]{1,3}\d{2,4}|[A-Z]{1,3}-[A-Z0-9]{2,10})\b"
+    r"(?=[^\n]{0,20}\b(?:video bronchoscope|bronchoscope|scope|cryoprobe|needle|catheter)\b)",
     re.IGNORECASE,
 )
 
 _MRN_ID_LINE_RE = re.compile(r"\b(mrn|id)\s*[:#]", re.IGNORECASE)
+
+_ADDRESS_STATE_ZIP_RE = re.compile(r"\b[A-Z]{2}\s+\d{5}(?:-\d{4})?\b")
+_ADDRESS_STREET_LINE_RE = re.compile(
+    r"(?im)^\s*\d{1,6}\s+.+\b(?:St\.?|Street|Ave\.?|Avenue|Blvd\.?|Boulevard|Rd\.?|Road|Dr\.?|Drive|Ln\.?|Lane|Way|Ct\.?|Court|Pl\.?|Place|Ter\.?|Terrace|Pkwy\.?|Parkway|Hwy\.?|Highway|Cir\.?|Circle)\b.*$"
+)
+_ADDRESS_MAILCODE_RE = re.compile(r"\bMC\s*\d{3,6}\b", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -428,7 +289,6 @@ def _env_flag(name: str, default: bool) -> bool:
 def _parse_score_thresholds(value: str | None) -> dict[str, float]:
     if not value:
         return dict(DEFAULT_ENTITY_SCORE_THRESHOLDS)
-
     thresholds: dict[str, float] = dict(DEFAULT_ENTITY_SCORE_THRESHOLDS)
     for part in value.split(","):
         if not part.strip():
@@ -451,113 +311,8 @@ def _is_allowlisted(detected_text: str) -> bool:
     return _ALLOWLIST_BOUNDARY_RE.search(detected_text) is not None
 
 
-def filter_allowlisted_terms(text: str, results: list) -> list:
-    """Drop detections whose detected text is allow-listed."""
-
-    filtered: list = []
-    for res in results:
-        entity_type = str(getattr(res, "entity_type", "")).upper()
-        if entity_type == "ADDRESS":
-            filtered.append(res)
-            continue
-        if getattr(res, "source", None) == "forced_patient_name":
-            filtered.append(res)
-            continue
-        detected_text = text[int(getattr(res, "start")) : int(getattr(res, "end"))]
-        if _is_allowlisted(detected_text):
-            continue
-        filtered.append(res)
-    return filtered
-
-
-def filter_device_model_context(text: str, results: list) -> list:
-    """Drop detections which match known device/model identifiers in device context."""
-
-    safe_spans: list[tuple[int, int]] = []
-    for m in _DEVICE_MODEL_CONTEXT_RE.finditer(text):
-        line_start, line_end = _line_bounds(text, m.start())
-        line = text[line_start:line_end]
-        if _MRN_ID_LINE_RE.search(line):
-            continue
-        safe_spans.append((m.start(), m.end()))
-
-    if not safe_spans:
-        return results
-
-    filtered: list = []
-    for res in results:
-        start = int(getattr(res, "start"))
-        end = int(getattr(res, "end"))
-        if any(start >= s and end <= e for s, e in safe_spans):
-            continue
-        filtered.append(res)
-    return filtered
-
-
-def filter_cpt_codes(text: str, results: list) -> list:
-    """Drop detections which point at CPT/medical procedure codes.
-
-    Detects CPT codes (5 digits, optionally alphanumeric) when they appear:
-    1. On a line containing "CPT" or "PROCEDURE".
-    2. In a block of text following a "PROCEDURE:"-style header.
-    """
-    safe_spans: list[tuple[int, int]] = []
-
-    cpt_hint_re = re.compile(r"\b(?:CPT|HCPCS|ICD-?10|ICD)\b", re.IGNORECASE)
-    # Negative lookbehind avoids matching the year portion of dates like 12/17/2025.
-    code_re = re.compile(r"\b(?<!/)\d{5}[A-Z0-9]{0,4}\b", re.IGNORECASE)
-
-    # Pass 1: line-based scanning (protect codes on CPT/ICD/HCPCS lines or standalone code lines).
-    cursor = 0
-    while cursor <= len(text):
-        line_end = text.find("\n", cursor)
-        if line_end == -1:
-            line_end = len(text)
-        line = text[cursor:line_end]
-        if line.strip():
-            if cpt_hint_re.search(line):
-                for m in code_re.finditer(line):
-                    safe_spans.append((cursor + m.start(), cursor + m.end()))
-            elif re.match(r"^\s*\d{5}[A-Z0-9]{0,4}\b", line) and not _ADDRESS_STREET_LINE_RE.match(line):
-                for m in code_re.finditer(line):
-                    safe_spans.append((cursor + m.start(), cursor + m.end()))
-        if line_end == len(text):
-            break
-        cursor = line_end + 1
-
-    # Pass 2: block-based scanning after "PROCEDURE:" / "CPT CODES:" headers.
-    header_re = re.compile(r"(?im)^\s*(?:PROCEDURE|CPT\s*CODES?|CODES?)\s*[:]")
-    next_header_re = re.compile(r"(?im)^\s*[A-Z][A-Za-z\s/]+[:]")
-    lines = text.splitlines(keepends=True)
-    current_pos = 0
-    in_cpt_block = False
-    for line in lines:
-        line_len = len(line)
-        if header_re.match(line):
-            in_cpt_block = True
-        elif in_cpt_block and next_header_re.match(line):
-            in_cpt_block = False
-        if in_cpt_block or "CPT" in line:
-            for m in code_re.finditer(line):
-                safe_spans.append((current_pos + m.start(), current_pos + m.end()))
-        current_pos += line_len
-
-    if not safe_spans:
-        return results
-
-    filtered: list = []
-    for res in results:
-        start = int(getattr(res, "start"))
-        end = int(getattr(res, "end"))
-        if any(start >= s and end <= e for s, e in safe_spans):
-            continue
-        filtered.append(res)
-    return filtered
-
-
 def sanitize_length_preserving(text: str) -> str:
     """Replace invisible/formatting marks without shifting offsets."""
-
     if not text:
         return text
     return text.translate(ZERO_WIDTH_TRANSLATION_TABLE)
@@ -601,6 +356,23 @@ def _valid_hhmm(token: str) -> bool:
     return 0 <= hour <= 23 and 0 <= minute <= 59
 
 
+# --- New: HIPAA Age Detection ---
+def detect_hipaa_ages(text: str) -> list[Detection]:
+    """Detect ages over 89 for HIPAA compliance (must be redacted)."""
+    detections: list[Detection] = []
+    for m in AGE_OVER_90_RE.finditer(text):
+        detections.append(
+            Detection(
+                entity_type="AGE_OVER_90",
+                start=m.start(),
+                end=m.end(),
+                score=1.0,
+                source="regex_hipaa_age"
+            )
+        )
+    return detections
+
+
 def detect_datetime_detections(text: str) -> list[Detection]:
     detections: list[Detection] = []
     seen: set[tuple[int, int, str]] = set()
@@ -612,33 +384,17 @@ def detect_datetime_detections(text: str) -> list[Detection]:
         seen.add(key)
         detections.append(Detection(entity_type="DATE_TIME", start=start, end=end, score=1.0, source=source))
 
-    for m in _DATETIME_ISO_RE.finditer(text):
-        _add(m.start(), m.end(), "regex_datetime_iso")
-    for m in _DATETIME_SLASH_TIME_COLON_RE.finditer(text):
-        _add(m.start(), m.end(), "regex_datetime_time_colon")
+    for m in _DATETIME_ISO_RE.finditer(text): _add(m.start(), m.end(), "regex_datetime_iso")
+    for m in _DATETIME_SLASH_TIME_COLON_RE.finditer(text): _add(m.start(), m.end(), "regex_datetime_time_colon")
     for m in _DATETIME_SLASH_TIME_COMPACT_RE.finditer(text):
-        token = m.group(0)
-        time_token = token.split()[-1]
-        if _valid_hhmm(time_token):
-            _add(m.start(), m.end(), "regex_datetime_time_compact")
+        if _valid_hhmm(m.group(0).split()[-1]): _add(m.start(), m.end(), "regex_datetime_time_compact")
 
-    for m in _DATE_NUMERIC_RE.finditer(text):
-        _add(m.start(), m.end(), "regex_date_numeric")
-    for m in _DATE_ISO_RE.finditer(text):
-        _add(m.start(), m.end(), "regex_date_iso")
-    for m in _DATE_TEXT_MONTH_FIRST_RE.finditer(text):
-        _add(m.start(), m.end(), "regex_date_text")
-    for m in _DATE_TEXT_DAY_FIRST_RE.finditer(text):
-        _add(m.start(), m.end(), "regex_date_text")
+    for m in _DATE_NUMERIC_RE.finditer(text): _add(m.start(), m.end(), "regex_date_numeric")
+    for m in _DATE_ISO_RE.finditer(text): _add(m.start(), m.end(), "regex_date_iso")
+    for m in _DATE_TEXT_MONTH_FIRST_RE.finditer(text): _add(m.start(), m.end(), "regex_date_text")
+    for m in _DATE_TEXT_DAY_FIRST_RE.finditer(text): _add(m.start(), m.end(), "regex_date_text")
 
     return detections
-
-
-_ADDRESS_STATE_ZIP_RE = re.compile(r"\b[A-Z]{2}\s+\d{5}(?:-\d{4})?\b")
-_ADDRESS_STREET_LINE_RE = re.compile(
-    r"(?im)^\s*\d{1,6}\s+.+\b(?:St\.?|Street|Ave\.?|Avenue|Blvd\.?|Boulevard|Rd\.?|Road|Dr\.?|Drive|Ln\.?|Lane|Way|Ct\.?|Court|Pl\.?|Place|Ter\.?|Terrace|Pkwy\.?|Parkway|Hwy\.?|Highway|Cir\.?|Circle)\b.*$"
-)
-_ADDRESS_MAILCODE_RE = re.compile(r"\bMC\s*\d{3,6}\b", re.IGNORECASE)
 
 
 def detect_address_detections(text: str) -> list[Detection]:
@@ -652,8 +408,7 @@ def detect_address_detections(text: str) -> list[Detection]:
         if line_end < len(text):
             next_start = line_end + 1
             next_end = text.find("\n", next_start)
-            if next_end == -1:
-                next_end = len(text)
+            if next_end == -1: next_end = len(text)
             next_line = text[next_start:next_end]
             if _ADDRESS_STATE_ZIP_RE.search(next_line):
                 detections.append(
@@ -679,333 +434,392 @@ def detect_address_detections(text: str) -> list[Detection]:
     return detections
 
 
-def _normalize_credential(text: str) -> str:
-    return re.sub(r"[^A-Za-z0-9]", "", text).upper()
+# --- FILTERS ---
 
-
-def is_credential(detected_text: str) -> bool:
-    normalized = _normalize_credential(detected_text.strip())
-    return normalized in _CREDENTIAL_NORMALIZED
-
-
-def filter_credentials(text: str, results: list) -> list:
-    """Drop detections which are provider credentials/titles (MD, RN, etc)."""
-
+def filter_allowlisted_terms(text: str, results: list) -> list:
+    """Drop detections whose detected text is allow-listed."""
     filtered: list = []
     for res in results:
+        entity_type = str(getattr(res, "entity_type", "")).upper()
+        if entity_type == "ADDRESS" or getattr(res, "source", None) == "forced_patient_name":
+            filtered.append(res)
+            continue
         detected_text = text[int(getattr(res, "start")) : int(getattr(res, "end"))]
-        if is_credential(detected_text):
+        if _is_allowlisted(detected_text):
             continue
         filtered.append(res)
     return filtered
 
 
-def filter_datetime_measurements(text: str, results: list) -> list:
-    """Drop DATE_TIME false positives which are numeric measurements with units (e.g., '1250 ml')."""
+def filter_eponyms(text: str, results: list) -> list:
+    """Drop PERSON detections that are likely part of a medical eponym.
+    
+    Checks if the word immediately following the detection is a common medical noun.
+    """
+    filtered: list = []
+    
+    # Use a simple lookahead window
+    suffix_pattern = re.compile(
+        r"^\s+(" + "|".join(re.escape(s) for s in MEDICAL_EPONYM_SUFFIXES) + r")\b",
+        re.IGNORECASE
+    )
+
+    for res in results:
+        if str(getattr(res, "entity_type", "")).upper() != "PERSON":
+            filtered.append(res)
+            continue
+
+        end = int(getattr(res, "end"))
+        # Check text immediately following the entity
+        suffix_window = text[end : min(len(text), end + 20)]
+        if suffix_pattern.match(suffix_window):
+            # E.g. "Foley" in "Foley catheter" -> Drop "Foley"
+            continue
+            
+        filtered.append(res)
+    return filtered
+
+
+def filter_structural_headers(text: str, results: list) -> list:
+    """Drop PERSON/LOCATION detections that are actually dynamic section headers."""
+    header_spans = []
+    for m in _DYNAMIC_HEADER_RE.finditer(text):
+        # Protect the label part
+        header_spans.append((m.start(1), m.end(1)))
+        
+    if not header_spans:
+        return results
+        
+    filtered: list = []
+    for res in results:
+        # Keep forced names
+        if getattr(res, "source", None) == "forced_patient_name":
+            filtered.append(res)
+            continue
+            
+        start = int(getattr(res, "start"))
+        end = int(getattr(res, "end"))
+        
+        is_header = False
+        for h_start, h_end in header_spans:
+            if start >= h_start and end <= h_end:
+                is_header = True
+                break
+        
+        if is_header:
+            continue
+            
+        filtered.append(res)
+    return filtered
+
+
+def filter_dynamic_biomedical_shield(text: str, results: list, nlp_engine: Any) -> list:
+    """Dynamic Veto: Use the underlying spaCy model (scispacy) to detect medical entities.
+    
+    If the NLP model identifies a span as a biomedical ENTITY/CHEMICAL/DISEASE, and Presidio 
+    flagged it as PII (PERSON/LOCATION), we prioritize the biomedical classification and
+    veto the redaction.
+    """
+    if not nlp_engine:
+        return results
+    
+    try:
+        # Access the 'en' model from Presidio's NLP engine wrapper
+        nlp = nlp_engine.nlp.get("en")
+        if not nlp:
+            return results
+            
+        doc = nlp(text)
+        # scispacy uses 'ENTITY' for broad coverage; ensure we don't un-redact 'Patient'
+        valid_labels = {"ENTITY", "DISEASE", "CHEMICAL", "PROCEDURE", "BODY_PART"}
+        
+        bio_spans = []
+        for ent in doc.ents:
+            if ent.label_ in valid_labels and ent.text.lower() not in BIOMEDICAL_SHIELD_BLOCKLIST:
+                bio_spans.append((ent.start_char, ent.end_char))
+    except Exception as e:
+        # Fail safe if model access fails
+        logger.debug(f"Biomedical shield scan failed: {e}")
+        return results
+        
+    if not bio_spans:
+        return results
 
     filtered: list = []
+    for res in results:
+        # Do not un-redact forced names, MRNs, or strong PII types
+        if (getattr(res, "source", None) == "forced_patient_name" or 
+            res.entity_type in {"MRN", "US_SSN", "PHONE_NUMBER", "EMAIL_ADDRESS", "AGE_OVER_90"}):
+            filtered.append(res)
+            continue
+            
+        r_start, r_end = int(res.start), int(res.end)
+        
+        is_biomedical = False
+        for b_start, b_end in bio_spans:
+            # If the detection is significantly overlapping a biomedical term
+            overlap_start = max(r_start, b_start)
+            overlap_end = min(r_end, b_end)
+            
+            if overlap_end > overlap_start:
+                # Calculate overlap ratio
+                overlap_len = overlap_end - overlap_start
+                det_len = r_end - r_start
+                # If overlap covers > 50% of the detection, trust the bio model
+                if det_len > 0 and (overlap_len / det_len) > 0.5:
+                    is_biomedical = True
+                    break
+        
+        if is_biomedical:
+            continue
+            
+        filtered.append(res)
+    return filtered
+
+
+def filter_device_model_context(text: str, results: list) -> list:
+    safe_spans: list[tuple[int, int]] = []
+    for m in _DEVICE_MODEL_CONTEXT_RE.finditer(text):
+        line_start, line_end = _line_bounds(text, m.start())
+        line = text[line_start:line_end]
+        if _MRN_ID_LINE_RE.search(line):
+            continue
+        safe_spans.append((m.start(), m.end()))
+
+    if not safe_spans: return results
+
+    filtered: list = []
+    for res in results:
+        start, end = int(getattr(res, "start")), int(getattr(res, "end"))
+        if any(start >= s and end <= e for s, e in safe_spans): continue
+        filtered.append(res)
+    return filtered
+
+
+def filter_cpt_codes(text: str, results: list) -> list:
+    safe_spans: list[tuple[int, int]] = []
+    cpt_hint_re = re.compile(r"\b(?:CPT|HCPCS|ICD-?10|ICD)\b", re.IGNORECASE)
+    code_re = re.compile(r"\b(?<!/)\d{5}[A-Z0-9]{0,4}\b", re.IGNORECASE)
+    cursor = 0
+    while cursor <= len(text):
+        line_end = text.find("\n", cursor)
+        if line_end == -1: line_end = len(text)
+        line = text[cursor:line_end]
+        if line.strip():
+            if cpt_hint_re.search(line):
+                for m in code_re.finditer(line): safe_spans.append((cursor + m.start(), cursor + m.end()))
+            elif re.match(r"^\s*\d{5}[A-Z0-9]{0,4}\b", line) and not _ADDRESS_STREET_LINE_RE.match(line):
+                for m in code_re.finditer(line): safe_spans.append((cursor + m.start(), cursor + m.end()))
+        if line_end == len(text): break
+        cursor = line_end + 1
+
+    # Block-based scanning
+    header_re = re.compile(r"(?im)^\s*(?:PROCEDURE|CPT\s*CODES?|CODES?)\s*[:]")
+    next_header_re = re.compile(r"(?im)^\s*[A-Z][A-Za-z\s/]+[:]")
+    lines = text.splitlines(keepends=True)
+    current_pos = 0
+    in_cpt_block = False
+    for line in lines:
+        if header_re.match(line): in_cpt_block = True
+        elif in_cpt_block and next_header_re.match(line): in_cpt_block = False
+        if in_cpt_block or "CPT" in line:
+            for m in code_re.finditer(line): safe_spans.append((current_pos + m.start(), current_pos + m.end()))
+        current_pos += len(line)
+
+    if not safe_spans: return results
+    filtered = []
+    for res in results:
+        start, end = int(getattr(res, "start")), int(getattr(res, "end"))
+        if any(start >= s and end <= e for s, e in safe_spans): continue
+        filtered.append(res)
+    return filtered
+
+
+def filter_credentials(text: str, results: list) -> list:
+    filtered = []
+    for res in results:
+        norm = re.sub(r"[^A-Za-z0-9]", "", text[int(getattr(res, "start")) : int(getattr(res, "end"))]).upper()
+        if norm not in _CREDENTIAL_NORMALIZED: filtered.append(res)
+    return filtered
+
+
+def filter_datetime_measurements(text: str, results: list) -> list:
+    filtered = []
     for res in results:
         if str(getattr(res, "entity_type", "")).upper() != "DATE_TIME":
             filtered.append(res)
             continue
-        start = int(getattr(res, "start"))
-        end = int(getattr(res, "end"))
-        token = text[start:end]
-        if token.isdigit():
+        start, end = int(getattr(res, "start")), int(getattr(res, "end"))
+        if text[start:end].isdigit():
             tail = text[end : min(len(text), end + 12)]
-            if _MEASUREMENT_UNIT_TAIL_RE.match(tail):
-                continue
+            if _MEASUREMENT_UNIT_TAIL_RE.match(tail): continue
         filtered.append(res)
     return filtered
 
 
 def filter_strict_datetime_patterns(text: str, results: list) -> list:
-    """Drop DATE_TIME detections which don't match strict date/time patterns."""
-
-    filtered: list = []
+    filtered = []
     for res in results:
         if str(getattr(res, "entity_type", "")).upper() != "DATE_TIME":
             filtered.append(res)
             continue
-
-        start = int(getattr(res, "start"))
-        end = int(getattr(res, "end"))
-        detected_text = text[start:end]
-        candidate = detected_text.strip()
-        if (
-            _DATE_NUMERIC_RE.fullmatch(candidate)
-            or _DATE_ISO_RE.fullmatch(candidate)
-            or _DATE_TEXT_MONTH_FIRST_RE.fullmatch(candidate)
-            or _DATE_TEXT_DAY_FIRST_RE.fullmatch(candidate)
-            or _DATETIME_ISO_RE.fullmatch(candidate)
-            or _DATETIME_SLASH_TIME_COLON_RE.fullmatch(candidate)
-            or (_DATETIME_SLASH_TIME_COMPACT_RE.fullmatch(candidate) and _valid_hhmm(candidate.split()[-1]))
-        ):
+        candidate = text[int(getattr(res, "start")) : int(getattr(res, "end"))].strip()
+        if (_DATE_NUMERIC_RE.fullmatch(candidate) or _DATE_ISO_RE.fullmatch(candidate) or
+            _DATE_TEXT_MONTH_FIRST_RE.fullmatch(candidate) or _DATE_TEXT_DAY_FIRST_RE.fullmatch(candidate) or
+            _DATETIME_ISO_RE.fullmatch(candidate) or _DATETIME_SLASH_TIME_COLON_RE.fullmatch(candidate) or
+            (_DATETIME_SLASH_TIME_COMPACT_RE.fullmatch(candidate) and _valid_hhmm(candidate.split()[-1]))):
             filtered.append(res)
-            continue
-
     return filtered
 
 
 def _is_header_label_context(text: str, start: int, end: int) -> bool:
     token = text[start:end].strip()
-    if not token:
-        return False
-    if any(ch.islower() for ch in token):
-        return False
-    if not any(ch.isalpha() for ch in token):
-        return False
-
+    if not token or any(ch.islower() for ch in token) or not any(ch.isalpha() for ch in token): return False
     line_start, line_end = _line_bounds(text, start)
     line = text[line_start:line_end]
-    prefix = line[: start - line_start]
-    if prefix.strip():
-        return False
+    if line[: start - line_start].strip(): return False
     suffix = line[end - line_start :]
     colon_idx = suffix.find(":")
-    if colon_idx == -1 or colon_idx > 40:
-        return False
-    return True
+    return colon_idx != -1 and colon_idx <= 40
 
 
 def filter_person_location_false_positives(text: str, results: list) -> list:
-    """Drop common clinical/header false positives for PERSON/LOCATION."""
-
-    filtered: list = []
+    filtered = []
     for res in results:
-        entity_type = str(getattr(res, "entity_type", "")).upper()
-        if entity_type not in {"PERSON", "LOCATION"}:
+        if str(getattr(res, "entity_type", "")).upper() not in {"PERSON", "LOCATION"}:
             filtered.append(res)
             continue
-
-        start = int(getattr(res, "start"))
-        end = int(getattr(res, "end"))
-        detected_text = text[start:end].strip()
-        if not detected_text:
-            continue
-        if any(ch.isdigit() for ch in detected_text):
-            continue
-        if "/" in detected_text or ":" in detected_text:
-            continue
-        if detected_text.upper() in _SECTION_HEADER_WORDS:
-            continue
-        if _is_header_label_context(text, start, end):
-            continue
-
+        token = text[int(getattr(res, "start")) : int(getattr(res, "end"))].strip()
+        if not token or any(ch.isdigit() for ch in token) or "/" in token or ":" in token: continue
+        if token.upper() in _SECTION_HEADER_WORDS or _is_header_label_context(text, int(getattr(res, "start")), int(getattr(res, "end"))): continue
         filtered.append(res)
-
     return filtered
 
 
 def filter_person_provider_lines(text: str, results: list) -> list:
-    """Suppress PERSON detections on structured provider/staff lines (keep clinician names)."""
-
-    provider_line_spans: list[tuple[int, int]] = []
-    for m in _PROVIDER_LINE_LABEL_RE.finditer(text):
-        line_start, line_end = _line_bounds(text, m.start())
-        provider_line_spans.append((line_start, line_end))
-    for m in _STAFF_ROLE_LINE_RE.finditer(text):
-        line_start, line_end = _line_bounds(text, m.start())
-        provider_line_spans.append((line_start, line_end))
-
-    if not provider_line_spans:
-        return results
-
+    provider_spans = []
+    for m in _PROVIDER_LINE_LABEL_RE.finditer(text): provider_spans.append(_line_bounds(text, m.start()))
+    for m in _STAFF_ROLE_LINE_RE.finditer(text): provider_spans.append(_line_bounds(text, m.start()))
+    if not provider_spans: return results
     patient_label_re = re.compile(r"^patient\s*:", re.IGNORECASE)
-
-    filtered: list = []
+    filtered = []
     for res in results:
-        if str(getattr(res, "entity_type", "")).upper() != "PERSON":
+        if str(getattr(res, "entity_type", "")).upper() != "PERSON" or getattr(res, "source", None) == "forced_patient_name":
             filtered.append(res)
             continue
-        if getattr(res, "source", None) == "forced_patient_name":
-            filtered.append(res)
-            continue
-
-        start = int(getattr(res, "start"))
-        end = int(getattr(res, "end"))
+        start, end = int(getattr(res, "start")), int(getattr(res, "end"))
         line_start, line_end = _line_bounds(text, start)
-        line = text[line_start:line_end]
-        if patient_label_re.search(line.lstrip()):
+        if patient_label_re.search(text[line_start:line_end].lstrip()):
             filtered.append(res)
             continue
-
-        if any(start >= s and end <= e for s, e in provider_line_spans):
-            continue
-
+        if any(start >= s and end <= e for s, e in provider_spans): continue
         filtered.append(res)
-
     return filtered
 
 
 def filter_datetime_exclusions(text: str, results: list, relative_phrases: Iterable[str]) -> list:
-    """Drop DATE_TIME detections that are durations or vague/relative time."""
-
+    # Extended to include treatment days "Day 1"
     duration_re = re.compile(
-        r"^\s*\d+(?:\.\d+)?\s*(?:second|seconds|minute|minutes|hour|hours|day|days|week|weeks)\b",
+        r"^\s*(?:\d+(?:\.\d+)?\s*(?:second|seconds|minute|minutes|hour|hours|day|days|week|weeks)|"
+        r"(?:post-?op\s+)?day\s+\d+)\b",
         re.IGNORECASE,
     )
     relative_res = [re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE) for p in relative_phrases]
-
-    filtered: list = []
+    filtered = []
     for res in results:
         if getattr(res, "entity_type", None) != "DATE_TIME":
             filtered.append(res)
             continue
-        detected_text = text[int(getattr(res, "start")) : int(getattr(res, "end"))]
-        if duration_re.search(detected_text):
-            continue
-        if any(r.search(detected_text) for r in relative_res):
-            continue
+        token = text[int(getattr(res, "start")) : int(getattr(res, "end"))]
+        if duration_re.search(token): continue
+        if any(r.search(token) for r in relative_res): continue
         filtered.append(res)
     return filtered
 
 
 def filter_low_score_results(results: list, thresholds: dict[str, float]) -> list:
-    """Drop detections below per-entity minimum score thresholds."""
-
-    filtered: list = []
+    filtered = []
     for res in results:
-        entity_type = str(getattr(res, "entity_type", "")).upper()
         score = float(getattr(res, "score", 0.0) or 0.0)
-        minimum = float(thresholds.get(entity_type, thresholds.get("__DEFAULT__", 0.0)))
-        if score < minimum:
-            continue
-        filtered.append(res)
+        min_score = thresholds.get(str(getattr(res, "entity_type", "")).upper(), thresholds.get("__DEFAULT__", 0.0))
+        if score >= min_score: filtered.append(res)
     return filtered
 
 
 def select_non_overlapping_results(results: list) -> list:
-    """Resolve overlaps by keeping the highest-confidence, longest detections."""
-
-    entity_priority: dict[str, int] = {
-        "MRN": 100,
-        "US_SSN": 95,
-        "EMAIL_ADDRESS": 90,
-        "PHONE_NUMBER": 90,
-        "ADDRESS": 85,
-        "DATE_TIME": 80,
-        "PERSON": 70,
-        "LOCATION": 60,
-        "MEDICAL_LICENSE": 50,
-        "US_DRIVER_LICENSE": 50,
+    entity_priority = {
+        "AGE_OVER_90": 95,  # High priority to resolve conflicts with Generic Dates/Numbers
+        "MRN": 100, "US_SSN": 95, "EMAIL_ADDRESS": 90, "PHONE_NUMBER": 90, 
+        "ADDRESS": 85, "DATE_TIME": 80, "PERSON": 70, "LOCATION": 60, 
+        "MEDICAL_LICENSE": 50, "US_DRIVER_LICENSE": 50
     }
-
-    def _key(r) -> tuple[int, float, int, int, str]:
-        start = int(getattr(r, "start"))
-        end = int(getattr(r, "end"))
-        score = float(getattr(r, "score", 0.0) or 0.0)
-        length = end - start
-        entity_type = str(getattr(r, "entity_type", ""))
-        priority = entity_priority.get(entity_type.upper(), 0)
-        return (priority, score, length, -start, entity_type)
-
-    selected: list = []
+    def _key(r):
+        return (entity_priority.get(str(getattr(r, "entity_type", "")).upper(), 0), 
+                float(getattr(r, "score", 0.0) or 0.0), 
+                int(getattr(r, "end")) - int(getattr(r, "start")), 
+                -int(getattr(r, "start")))
+    selected = []
     for res in sorted(results, key=_key, reverse=True):
-        start = int(getattr(res, "start"))
-        end = int(getattr(res, "end"))
-        if any(start < int(getattr(s, "end")) and end > int(getattr(s, "start")) for s in selected):
-            continue
+        start, end = int(getattr(res, "start")), int(getattr(res, "end"))
+        if any(start < int(getattr(s, "end")) and end > int(getattr(s, "start")) for s in selected): continue
         selected.append(res)
-
     return sorted(selected, key=lambda r: int(getattr(r, "start")))
 
 
 def filter_provider_signature_block(text: str, results: list) -> list:
-    """Drop PERSON detections in likely provider signature blocks near the end."""
-
     header = re.search(r"(?im)^recommendations:\s*$", text)
     zone_start = header.start() if header else int(len(text) * 0.75)
-
     cred_re = re.compile(r"(?:,\s*)?(md|do)\b", re.IGNORECASE)
     service_re = re.compile(r"\binterventional\s+pulmonology\b", re.IGNORECASE)
-
-    filtered: list = []
+    filtered = []
     for res in results:
-        if getattr(res, "entity_type", None) != "PERSON":
+        if getattr(res, "entity_type", None) != "PERSON" or int(getattr(res, "start")) < zone_start:
             filtered.append(res)
             continue
-        if int(getattr(res, "start")) < zone_start:
-            filtered.append(res)
-            continue
-
         line_start, line_end = _line_bounds(text, int(getattr(res, "start")))
         line = text[line_start:line_end]
-        next_line = ""
-        if line_end < len(text):
-            nl_start = line_end + 1
-            nl_end = text.find("\n", nl_start)
-            if nl_end == -1:
-                nl_end = len(text)
-            next_line = text[nl_start:nl_end]
-
-        has_cred = cred_re.search(line) is not None
-        has_service = service_re.search(line) is not None or service_re.search(next_line) is not None
-        if has_cred and has_service:
-            continue
-
+        if cred_re.search(line) and service_re.search(line): continue
         filtered.append(res)
-
     return filtered
 
 
 def _line_bounds(text: str, index: int) -> tuple[int, int]:
     start = text.rfind("\n", 0, index) + 1
     end = text.find("\n", index)
-    if end == -1:
-        end = len(text)
-    return start, end
+    return start, end if end != -1 else len(text)
 
 
 def _context_window(text: str, start: int, end: int, window: int = 40) -> str:
-    left = max(0, start - window)
-    right = min(len(text), end + window)
-    return text[left:right]
+    return text[max(0, start - window) : min(len(text), end + window)]
 
 
 def filter_person_provider_context(text: str, results: list) -> list:
-    """Prevent redaction of clinician/provider names based on local context."""
-
+    """Context-aware provider protection (e.g. 'Dr. Smith', 'Jane Doe, MD')."""
     patient_label_re = re.compile(r"^patient\s*:", re.IGNORECASE)
     dr_prefix_re = re.compile(r"\b(dr\.?|doctor)\s*$", re.IGNORECASE)
-    provider_inline_label_re = re.compile(
-        r"\b(surgeon|assistant|anesthesiologist|attending|fellow|resident)\b\s*:\s*$",
-        re.IGNORECASE,
-    )
-    credential_suffix_re = re.compile(r"^\s*,?\s*(md|do)\b", re.IGNORECASE)
-
-    filtered: list = []
+    provider_inline_label_re = re.compile(r"\b(surgeon|assistant|anesthesiologist|attending|fellow|resident|proceduralist)\b\s*:\s*$", re.IGNORECASE)
+    credential_suffix_re = re.compile(r"^\s*,?\s*(md|do|rn|pa|np)\b", re.IGNORECASE)
+    
+    filtered = []
     for res in results:
-        if getattr(res, "entity_type", None) != "PERSON":
+        if getattr(res, "entity_type", None) != "PERSON" or getattr(res, "source", None) == "forced_patient_name":
             filtered.append(res)
             continue
-        if getattr(res, "source", None) == "forced_patient_name":
+        res_start, res_end = int(getattr(res, "start")), int(getattr(res, "end"))
+        line_start, line_end = _line_bounds(text, res_start)
+        # Always redact if on a 'Patient:' line
+        if patient_label_re.search(text[line_start:line_end].lstrip()):
             filtered.append(res)
             continue
-
-        res_start = int(getattr(res, "start"))
-        res_end = int(getattr(res, "end"))
-        start, _ = _line_bounds(text, res_start)
-        _, end = _line_bounds(text, res_end)
-        line = text[start:end]
-
-        # Patient header line always redacts (even if patient is a clinician with credentials).
-        if patient_label_re.search(line.lstrip()):
-            filtered.append(res)
+        
+        # Check local context
+        prefix = text[max(0, res_start - 20) : res_start]
+        suffix = text[res_end : min(len(text), res_end + 12)]
+        
+        if provider_inline_label_re.search(prefix) or dr_prefix_re.search(prefix) or credential_suffix_re.search(suffix):
             continue
-
-        prefix_window = text[max(0, res_start - 60) : res_start]
-        if provider_inline_label_re.search(prefix_window):
-            continue
-        if dr_prefix_re.search(prefix_window):
-            continue
-
-        suffix_window = text[res_end : min(len(text), res_end + 12)]
-        if credential_suffix_re.search(suffix_window):
-            continue
-
+            
         filtered.append(res)
-
     return filtered
 
 
@@ -1019,181 +833,127 @@ def redact_with_audit(
     nlp_backend: str | None = None,
     nlp_model: str | None = None,
     requested_nlp_model: str | None = None,
+    nlp_engine: Any | None = None,  # New: Access to analyzer.nlp_engine
 ) -> tuple[ScrubResult, dict[str, Any]]:
+    
     if not text:
-        empty = ScrubResult(scrubbed_text="", entities=[])
-        return empty, {"detections": [], "removed_detections": [], "redacted_text": ""}
-
+        return ScrubResult("", []), {"detections": [], "removed_detections": [], "redacted_text": ""}
+    
     raw = detections
     removed: list[dict[str, Any]] = []
 
     def _record_removed(before: list[Detection], after: list[Detection], reason: str) -> None:
         for d in _diff_removed(before, after):
-            removed.append(
-                {
-                    "reason": reason,
-                    "entity_type": d.entity_type,
-                    "start": d.start,
-                    "end": d.end,
-                    "score": d.score,
-                    "source": d.source,
-                    "detected_text": text[d.start : d.end],
-                    "surrounding_context": _context_window(text, d.start, d.end, window=40),
-                }
-            )
+            removed.append({
+                "reason": reason, "entity_type": d.entity_type, "start": d.start, "end": d.end,
+                "score": d.score, "source": d.source, "detected_text": text[d.start : d.end],
+                "surrounding_context": _context_window(text, d.start, d.end)
+            })
 
+    # 1. Contextual Provider Protection
     step0 = filter_person_provider_lines(text, raw)
+    step0 = filter_person_provider_context(text, step0)
+    step0 = filter_provider_signature_block(text, step0)
     _record_removed(raw, step0, "provider_context")
 
-    step = filter_person_provider_context(text, step0)
-    _record_removed(step0, step, "provider_context")
+    # 2. Dynamic Guards (Headers, Eponyms, Biomedical)
+    step1 = filter_structural_headers(text, step0)
+    _record_removed(step0, step1, "dynamic_header")
+    
+    step2 = filter_eponyms(text, step1)
+    _record_removed(step1, step2, "medical_eponym")
+    
+    # This is the primary robustness upgrade: leveraging scispacy
+    step3 = filter_dynamic_biomedical_shield(text, step2, nlp_engine)
+    _record_removed(step2, step3, "biomedical_shield")
 
-    step2 = filter_provider_signature_block(text, step)
-    _record_removed(step, step2, "provider_context")
+    # 3. Technical Filters
+    step4 = filter_device_model_context(text, step3)
+    step4 = filter_credentials(text, step4)
+    step4 = filter_cpt_codes(text, step4)
+    _record_removed(step3, step4, "technical_filters")
 
-    step3 = filter_device_model_context(text, step2)
-    _record_removed(step2, step3, "device_model")
+    # 4. Date/Time Logic
+    step5 = filter_datetime_exclusions(text, step4, relative_datetime_phrases)
+    step5 = filter_datetime_measurements(text, step5)
+    step5 = filter_strict_datetime_patterns(text, step5)
+    _record_removed(step4, step5, "datetime_logic")
 
-    step_cred = filter_credentials(text, step3)
-    _record_removed(step3, step_cred, "credentials")
+    # 5. Static Allowlist (Fallback)
+    step6 = filter_allowlisted_terms(text, step5)
+    _record_removed(step5, step6, "static_allowlist")
 
-    step_cpt = filter_cpt_codes(text, step_cred)
-    _record_removed(step_cred, step_cpt, "cpt_code")
+    # 6. Header False Positives & Scoring
+    step7 = filter_person_location_false_positives(text, step6)
+    step7 = filter_low_score_results(step7, score_thresholds)
+    _record_removed(step6, step7, "header_low_score")
 
-    step4 = filter_datetime_exclusions(text, step_cpt, relative_phrases=relative_datetime_phrases)
-    _record_removed(step_cpt, step4, "duration_datetime")
+    # 7. Final Selection
+    final = select_non_overlapping_results(step7)
+    _record_removed(step7, final, "overlap_resolution")
 
-    step_dt_meas = filter_datetime_measurements(text, step4)
-    _record_removed(step4, step_dt_meas, "measurement_datetime")
-
-    step_dt_strict = filter_strict_datetime_patterns(text, step_dt_meas)
-    _record_removed(step_dt_meas, step_dt_strict, "datetime_pattern")
-
-    step5 = filter_allowlisted_terms(text, step_dt_strict)
-    _record_removed(step_dt_strict, step5, "allowlist")
-
-    step_fp = filter_person_location_false_positives(text, step5)
-    _record_removed(step5, step_fp, "header_false_positive")
-
-    step6 = filter_low_score_results(step_fp, thresholds=score_thresholds)
-    _record_removed(step_fp, step6, "low_score")
-
-    final = select_non_overlapping_results(step6)
-    _record_removed(step6, final, "overlap")
+    # Custom placeholders for specific entity types to support registry value extraction
+    CUSTOM_PLACEHOLDERS = {
+        "AGE_OVER_90": ">90"  # HIPAA Safe Harbor aggregation
+    }
 
     scrubbed_text = text
     entities = []
-    for _, d in enumerate(sorted(final, key=lambda r: r.start, reverse=True)):
-        placeholder = f"<{d.entity_type.upper()}>"
+    # Apply redactions in reverse order to preserve indices
+    for d in sorted(final, key=lambda r: r.start, reverse=True):
+        # Use custom placeholder if defined, otherwise default to <ENTITY_TYPE>
+        placeholder = CUSTOM_PLACEHOLDERS.get(d.entity_type, f"<{d.entity_type.upper()}>")
+        
         scrubbed_text = scrubbed_text[: d.start] + placeholder + scrubbed_text[d.end :]
-        entities.append(
-            {
-                "placeholder": placeholder,
-                "entity_type": d.entity_type,
-                "original_start": d.start,
-                "original_end": d.end,
-            }
-        )
-
+        entities.append({
+            "placeholder": placeholder, "entity_type": d.entity_type, 
+            "original_start": d.start, "original_end": d.end
+        })
+    
     entities = list(reversed(entities))
-    scrub_result = ScrubResult(scrubbed_text=scrubbed_text, entities=entities)
+    
+    detections_report = [
+        {"entity_type": d.entity_type, "text": text[d.start:d.end], "score": d.score} 
+        for d in raw
+    ]
 
-    detections_report = []
-    for d in raw:
-        detections_report.append(
-            {
-                "entity_type": d.entity_type,
-                "start": d.start,
-                "end": d.end,
-                "score": d.score,
-                "source": d.source,
-                "detected_text": text[d.start : d.end],
-                "surrounding_context": _context_window(text, d.start, d.end, window=40),
-            }
-        )
-
-    report: dict[str, Any] = {
-        "config": {
-            "nlp_backend": nlp_backend,
-            "nlp_model": nlp_model,
-            "requested_nlp_model": requested_nlp_model,
-            "enable_driver_license_recognizer": enable_driver_license_recognizer,
-            "entity_score_thresholds": dict(score_thresholds),
-            "relative_datetime_phrases": list(relative_datetime_phrases),
-        },
+    return ScrubResult(scrubbed_text, entities), {
+        "config": {"nlp_model": nlp_model},
         "detections": detections_report,
         "removed_detections": removed,
-        "redacted_text": scrub_result.scrubbed_text,
+        "redacted_text": scrubbed_text
     }
-
-    return scrub_result, report
 
 
 def _build_analyzer(model_name: str):
     from presidio_analyzer import AnalyzerEngine
     from presidio_analyzer.nlp_engine import NlpEngineProvider
+    from presidio_analyzer import Pattern, PatternRecognizer, RecognizerResult
 
     provider = NlpEngineProvider(
-        nlp_configuration={
-            "nlp_engine_name": "spacy",
-            "models": [{"lang_code": "en", "model_name": model_name}],
-        }
+        nlp_configuration={"nlp_engine_name": "spacy", "models": [{"lang_code": "en", "model_name": model_name}]}
     )
     nlp_engine = provider.create_engine()
     analyzer = AnalyzerEngine(nlp_engine=nlp_engine)
 
-    # High-confidence override: treat patient header patterns as PERSON.
-    # This helps when Presidio misses the patient identity in demographic headers.
-    from presidio_analyzer import Pattern, PatternRecognizer, RecognizerResult
-
     class _PatientLabelRecognizer(PatternRecognizer):
         def __init__(self):
-            super().__init__(
-                supported_entity="PERSON",
-                patterns=[
-                    # Pattern 1: Standard "Patient: First Last"
-                    Pattern(name="patient_label_line", regex=r"(?im)^Patient:\s*.+$", score=0.95),
-                    # Pattern 2: "Last, First" followed by MRN/ID
-                    Pattern(
-                        name="name_then_mrn",
-                        regex=r"(?im)^[A-Z][A-Za-z'-]+\s*,\s*[A-Z][A-Za-z'-]+.*\b(?:MRN|ID)\s*[:#]",
-                        score=0.95,
-                    ),
-                    # Pattern 3: Explicit "Patient: Last, First" where MRN might be on next line
-                    Pattern(
-                         name="patient_label_comma",
-                         regex=r"(?im)^Patient:\s*[A-Z][A-Za-z'-]+\s*,\s*[A-Z][A-Za-z'-]+",
-                         score=0.95
-                    )
-                ],
-                name="PATIENT_LABEL_NAME",
-            )
-            # Regex to extract the name part only from the full matched line
-            self._patient_line = re.compile(
-                r"(?im)^Patient:\s*(.+?)(?:\s+(?:MRN|ID)\s*[:#].*)?$"
-            )
-            self._name_then_mrn = re.compile(
-                r"(?im)^([A-Z][A-Za-z'-]+\s*,\s*[A-Z][A-Za-z'-]+(?:\s+[A-Z][A-Za-z'-]+)?)\s+(?=(?:MRN|ID)\s*[:#])"
-            )
-
-        def analyze(self, text: str, entities: list[str], nlp_artifacts=None):  # type: ignore[override]
-            results: list[RecognizerResult] = []
-            if "PERSON" not in entities:
-                return results
-            
-            # Handle "Patient: Name" lines
+            super().__init__(supported_entity="PERSON", patterns=[
+                Pattern("patient_label_line", r"(?im)^Patient:\s*.+$", 0.95),
+                Pattern("name_then_mrn", r"(?im)^[A-Z][A-Za-z'-]+\s*,\s*[A-Z][A-Za-z'-]+.*\b(?:MRN|ID)\s*[:#]", 0.95)
+            ], name="PATIENT_LABEL_NAME")
+            self._patient_line = re.compile(r"(?im)^Patient:\s*(.+?)(?:\s+(?:MRN|ID)\s*[:#].*)?$")
+            self._name_then_mrn = re.compile(r"(?im)^([A-Z][A-Za-z'-]+\s*,\s*[A-Z][A-Za-z'-]+(?:\s+[A-Z][A-Za-z'-]+)?)\s+(?=(?:MRN|ID)\s*[:#])")
+        def analyze(self, text, entities, nlp_artifacts=None):
+            results = []
+            if "PERSON" not in entities: return results
             for m in self._patient_line.finditer(text):
                 start, end = m.span(1)
-                if end - start >= 2:
-                    results.append(RecognizerResult(entity_type="PERSON", start=start, end=end, score=0.95))
-            
-            # Handle "Name, Name MRN: ..." lines
+                if end - start >= 2: results.append(RecognizerResult("PERSON", start, end, 0.95))
             for m in self._name_then_mrn.finditer(text):
                 start, end = m.span(1)
-                if end - start >= 2:
-                    results.append(RecognizerResult(entity_type="PERSON", start=start, end=end, score=0.95))
+                if end - start >= 2: results.append(RecognizerResult("PERSON", start, end, 0.95))
             return results
-
     analyzer.registry.add_recognizer(_PatientLabelRecognizer())
 
     class _InstitutionRecognizer(PatternRecognizer):
@@ -1201,38 +961,40 @@ def _build_analyzer(model_name: str):
             super().__init__(
                 supported_entity="LOCATION",
                 patterns=[
-                    Pattern(name="ucsd", regex=r"(?i)\bUCSD\b", score=0.95),
-                    Pattern(name="nmcsd", regex=r"(?i)\bNMCSD\b", score=0.95),
-                    Pattern(name="balboa", regex=r"(?i)\bBalboa\b", score=0.95),
-                    Pattern(name="navy", regex=r"(?i)\bNavy\b", score=0.95),
+                    Pattern("ucsd", r"(?i)\bUCSD\b", 0.95),
+                    Pattern("nmcsd", r"(?i)\bNMCSD\b", 0.95),
+                    Pattern("balboa", r"(?i)\bBalboa\b", 0.95),
+                    Pattern("navy", r"(?i)\bNavy\b", 0.95),
                 ],
                 name="INSTITUTION_PATTERN",
             )
-    
     analyzer.registry.add_recognizer(_InstitutionRecognizer())
 
     class _MrnRecognizer(PatternRecognizer):
         def __init__(self):
             super().__init__(
                 supported_entity="MRN",
-                # Added \b before and after to strictly match word ID, avoiding matches inside "identified".
                 patterns=[
-                    Pattern(name="mrn", regex=r"(?i)\b(?:MRN|ID)\b\s*[:#]?\s*[A-Z0-9][A-Z0-9-]{3,}\b", score=0.95)
+                    Pattern(
+                        "mrn",
+                        r"(?i)\b(?:MRN|ID)\b\s*[:#]?\s*[A-Z0-9][A-Z0-9-]{3,}\b",
+                        0.95,
+                    )
                 ],
                 name="MRN",
             )
             self._mrn = re.compile(r"(?i)\b(?:MRN|ID)\b\s*[:#]?\s*([A-Z0-9][A-Z0-9-]{3,})\b")
 
-        def analyze(self, text: str, entities: list[str], nlp_artifacts=None):  # type: ignore[override]
-            results: list[RecognizerResult] = []
+        def analyze(self, text, entities, nlp_artifacts=None):
+            results = []
             if "MRN" not in entities:
                 return results
             for m in self._mrn.finditer(text):
                 start, end = m.span(1)
                 results.append(RecognizerResult(entity_type="MRN", start=start, end=end, score=0.95))
             return results
-
     analyzer.registry.add_recognizer(_MrnRecognizer())
+    
     return analyzer
 
 
@@ -1242,111 +1004,59 @@ def _get_analyzer(model_name: str):
         analyzer = _build_analyzer(model_name)
         logger.info("PresidioScrubber initialized", extra={"model": model_name})
         return analyzer
-    except Exception as exc:  # noqa: BLE001
-        raise RuntimeError(
-            "PresidioScrubber initialization failed; ensure presidio-analyzer and spaCy model are installed."
-        ) from exc
+    except Exception as exc:
+        raise RuntimeError("PresidioScrubber initialization failed") from exc
 
 
 class PresidioScrubber(PHIScrubberPort):
-    """Presidio-powered scrubber with IP allowlist filtering."""
+    """Presidio-powered scrubber with dynamic IP allowlist filtering."""
 
     def __init__(self, model_name: str | None = None):
         self.nlp_backend = os.getenv("NLP_BACKEND", "spacy").lower()
         default_model = "en_core_sci_sm" if self.nlp_backend == "scispacy" else "en_core_web_sm"
         self.requested_model_name = model_name or os.getenv("PRESIDIO_NLP_MODEL", default_model)
+        
+        fallbacks = ["en_core_web_sm", "en_core_web_md"]
+        candidates = [self.requested_model_name] + [m for m in fallbacks if m != self.requested_model_name]
 
-        fallbacks_env = os.getenv("PRESIDIO_NLP_MODEL_FALLBACKS")
-        if fallbacks_env is not None:
-            fallback_models = [m.strip() for m in fallbacks_env.split(",") if m.strip()]
-        else:
-            fallback_models = ["en_core_web_sm", "en_core_web_md", "en_core_web_lg"]
-
-        model_candidates = [self.requested_model_name] + [
-            m for m in fallback_models if m != self.requested_model_name
-        ]
-
-        last_exc: RuntimeError | None = None
-        for candidate in model_candidates:
+        for candidate in candidates:
             try:
                 self._analyzer = _get_analyzer(candidate)
                 self.model_name = candidate
                 break
-            except RuntimeError as exc:
-                last_exc = exc
+            except RuntimeError:
+                continue
+        
+        if not hasattr(self, "_analyzer"):
+            raise RuntimeError(f"Could not load any spaCy model from {candidates}")
 
-        if last_exc is not None and not hasattr(self, "_analyzer"):
-            raise last_exc
-
-        if self.model_name != self.requested_model_name:
-            logger.warning(
-                "Requested spaCy model unavailable; falling back",
-                extra={"requested_model": self.requested_model_name, "fallback_model": self.model_name},
-            )
-        # Clinical procedure notes rarely contain driver license IDs, but the recognizer
-        # often false-positives on device model tokens like "T190" bronchoscope models.
         self.enable_driver_license_recognizer = _env_flag("ENABLE_DRIVER_LICENSE_RECOGNIZER", False)
-
         self.score_thresholds = _parse_score_thresholds(os.getenv("PHI_ENTITY_SCORE_THRESHOLDS"))
-        self.relative_datetime_phrases = tuple(
-            p.strip()
-            for p in os.getenv("PHI_DATE_TIME_RELATIVE_PHRASES", ",".join(DEFAULT_RELATIVE_DATE_TIME_PHRASES)).split(
-                ","
-            )
-            if p.strip()
-        )
-
-        # Entity types to request from Presidio (used by the scrubber and audit CLI).
-        entities: list[str] = [
-            "PERSON",
-            "EMAIL_ADDRESS",
-            "PHONE_NUMBER",
-            "US_SSN",
-            "LOCATION",
-            "MEDICAL_LICENSE",
-            "MRN",
-        ]
-        if self.enable_driver_license_recognizer:
-            entities.append("US_DRIVER_LICENSE")
-        self.entities = entities
+        self.relative_datetime_phrases = tuple(p.strip() for p in os.getenv("PHI_DATE_TIME_RELATIVE_PHRASES", ",".join(DEFAULT_RELATIVE_DATE_TIME_PHRASES)).split(",") if p.strip())
+        self.entities = ["PERSON", "EMAIL_ADDRESS", "PHONE_NUMBER", "US_SSN", "LOCATION", "MEDICAL_LICENSE", "MRN"]
+        if self.enable_driver_license_recognizer: self.entities.append("US_DRIVER_LICENSE")
 
     def _analyze_detections(self, text: str) -> list[Detection]:
-        results = self._analyzer.analyze(
-            text=text,
-            language="en",
-            entities=self.entities,
-        )
-        detections: list[Detection] = []
+        results = self._analyzer.analyze(text=text, language="en", entities=self.entities)
+        detections = []
         for r in results:
-            start = int(getattr(r, "start"))
-            end = int(getattr(r, "end"))
-            # Truncate detections that mistakenly span across newlines (e.g. "Name\nLabel")
-            text_span = text[start:end]
-            if "\n" in text_span:
-                newline_idx = text_span.find("\n")
-                # Keep only the first line of the detection
-                end = start + newline_idx
-            
-            detections.append(
-                Detection(
-                    entity_type=str(getattr(r, "entity_type")),
-                    start=start,
-                    end=end,
-                    score=float(getattr(r, "score", 0.0) or 0.0),
-                )
-            )
+            start, end = int(r.start), int(r.end)
+            span = text[start:end]
+            if "\n" in span: end = start + span.find("\n")
+            detections.append(Detection(str(r.entity_type), start, end, float(r.score)))
         return detections
 
-    def scrub_with_audit(
-        self, text: str, document_type: str | None = None, specialty: str | None = None
-    ) -> tuple[ScrubResult, dict[str, Any]]:
+    def scrub_with_audit(self, text: str, document_type: str | None = None, specialty: str | None = None) -> tuple[ScrubResult, dict[str, Any]]:
         sanitized = sanitize_length_preserving(text)
         raw = self._analyze_detections(sanitized)
         forced_names = extract_patient_names(sanitized)
         forced_detections = forced_patient_name_detections(sanitized, forced_names)
         datetime_detections = detect_datetime_detections(sanitized)
         address_detections = detect_address_detections(sanitized)
-        raw = raw + forced_detections + datetime_detections + address_detections
+        age_detections = detect_hipaa_ages(sanitized)
+        
+        raw = raw + forced_detections + datetime_detections + address_detections + age_detections
+        
         return redact_with_audit(
             text=sanitized,
             detections=raw,
@@ -1356,11 +1066,11 @@ class PresidioScrubber(PHIScrubberPort):
             nlp_backend=self.nlp_backend,
             nlp_model=self.model_name,
             requested_nlp_model=self.requested_model_name,
+            nlp_engine=self._analyzer.nlp_engine # Pass NLP engine for dynamic biomedical check
         )
 
     def scrub(self, text: str, document_type: str | None = None, specialty: str | None = None) -> ScrubResult:
         scrub_result, _ = self.scrub_with_audit(text, document_type=document_type, specialty=specialty)
         return scrub_result
-
 
 __all__ = ["PresidioScrubber"]

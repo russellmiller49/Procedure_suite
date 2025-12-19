@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Procedure: EBUS-TBNA.\n<PERSON>: 7, 4R, 10R, 11R.\nFindings: Stations 7, 4R, 10R positive for Adenocarcinoma. 11R benign.\nTechnique: 22G needle, multiple passes. ROSE confirmed malignancy.\nDx: Stage IIIC (N3 disease).\nPlan: Oncology referral.",
+    "note_text": "Procedure: EBUS-TBNA.\nNodes Sampled: 7, 4R, 10R, 11R.\nFindings: Stations 7, 4R, 10R positive for Adenocarcinoma. 11R benign.\nTechnique: 22G needle, multiple passes. ROSE confirmed malignancy.\nDx: Stage IIIC (N3 disease).\nPlan: Oncology referral.",
     "cpt_codes": [
       31653
     ],
@@ -75,12 +75,6 @@
       "style_type": 1,
       "generated_name": "James Wilson",
       "generation_date": "2025-12-09T09:20:09.498314"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -474,7 +468,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMediastinal lymphadenopathy, staging.\n[<LOCATION>]\nGeneral, LMA.\n[Description]\nEBUS-TBNA performed on stations 7, 4R, 10R, 11R. ROSE confirmed adenocarcinoma in 7, 4R, 10R.\n[Plan]\nRefer to Oncology for Stage IIIC management.",
+    "note_text": "[Indication]\nMediastinal lymphadenopathy, staging.\n[Anesthesia]\nGeneral, LMA.\n[Description]\nEBUS-TBNA performed on stations 7, 4R, 10R, 11R. ROSE confirmed adenocarcinoma in 7, 4R, 10R.\n[Plan]\nRefer to Oncology for Stage IIIC management.",
     "cpt_codes": [
       31653
     ],
@@ -549,12 +543,6 @@
       "style_type": 7,
       "generated_name": "Charles Lopez",
       "generation_date": "2025-12-09T09:20:09.498463"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -714,7 +702,7 @@
     }
   },
   {
-    "note_text": "Procedure: BLVR RUL.\nIndication: Severe emphysema, <PERSON> negative.\nAction: 3 Zephyr valves placed in RB1 (4.0), RB2 (4.0), RB3 (5.5).\nResult: Total lobar occlusion. No air leak.\nPlan: Admit for obs.",
+    "note_text": "Procedure: BLVR RUL.\nIndication: Severe emphysema, CV negative.\nAction: 3 Zephyr valves placed in RB1 (4.0), RB2 (4.0), RB3 (5.5).\nResult: Total lobar occlusion. No air leak.\nPlan: Admit for obs.",
     "cpt_codes": [
       31622,
       31647
@@ -779,16 +767,10 @@
       "style_type": 1,
       "generated_name": "John King",
       "generation_date": "2025-12-09T09:20:09.498527"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Mr. <PERSON> presented for elective bronchoscopic lung volume reduction. Pre-procedural Chartis assessment confirmed the absence of collateral ventilation in the Right Upper Lobe (RUL). Using a flexible bronchoscope, the RUL segmental anatomy was identified. Three Zephyr endobronchial valves were deployed: a 4.0mm valve in RB1, a 4.0mm valve in <LOCATION>, and a 5.5mm valve in RB3. Bronchoscopic inspection confirmed optimal seating and complete lobar occlusion.",
+    "note_text": "OPERATIVE REPORT: Mr. Chen presented for elective bronchoscopic lung volume reduction. Pre-procedural Chartis assessment confirmed the absence of collateral ventilation in the Right Upper Lobe (RUL). Using a flexible bronchoscope, the RUL segmental anatomy was identified. Three Zephyr endobronchial valves were deployed: a 4.0mm valve in RB1, a 4.0mm valve in RB2, and a 5.5mm valve in RB3. Bronchoscopic inspection confirmed optimal seating and complete lobar occlusion.",
     "cpt_codes": [
       31622,
       31647
@@ -853,13 +835,6 @@
       "style_type": 2,
       "generated_name": "Michael Scott",
       "generation_date": "2025-12-09T09:20:09.498548"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -931,7 +906,7 @@
     }
   },
   {
-    "note_text": "Procedure: Valve Placement (BLVR)\nAttending: Dr. Thompson\nSteps:\n1. Airway inspection. RUL selected.\n2. Chartis negative (good for valves).\n3. Sized airways.\n4. Placed valves in <LOCATION>, RB2, RB3.\n5. Checked for leaks - none.\nPlan: CXR to check for pneumothorax.",
+    "note_text": "Procedure: Valve Placement (BLVR)\nAttending: Dr. Thompson\nSteps:\n1. Airway inspection. RUL selected.\n2. Chartis negative (good for valves).\n3. Sized airways.\n4. Placed valves in RB1, RB2, RB3.\n5. Checked for leaks - none.\nPlan: CXR to check for pneumothorax.",
     "cpt_codes": [
       31622,
       31647
@@ -996,16 +971,10 @@
       "style_type": 4,
       "generated_name": "James Baker",
       "generation_date": "2025-12-09T09:20:09.498584"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We did the lung volume reduction on Mr <PERSON> today for his emphysema right upper lobe. Chartis balloon showed no collateral ventilation so we proceeded. Put in three valves total two 4s and one 5.5. They fit good no leaks. RUL looks closed off. Patient woke up fine sending to recovery.",
+    "note_text": "We did the lung volume reduction on Mr Chen today for his emphysema right upper lobe. Chartis balloon showed no collateral ventilation so we proceeded. Put in three valves total two 4s and one 5.5. They fit good no leaks. RUL looks closed off. Patient woke up fine sending to recovery.",
     "cpt_codes": [
       31622,
       31647
@@ -1070,12 +1039,6 @@
       "style_type": 5,
       "generated_name": "Robert Adams",
       "generation_date": "2025-12-09T09:20:09.498604"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1147,7 +1110,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSevere emphysema, RUL target.\n[<LOCATION>]\nModerate Sedation.\n[Description]\nChartis: <PERSON>. Valves placed: RB1, RB2, RB3. Total occlusion confirmed.\n[Plan]\n<DATE_TIME> observation. CXR protocol.",
+    "note_text": "[Indication]\nSevere emphysema, RUL target.\n[Anesthesia]\nModerate Sedation.\n[Description]\nChartis: CV Negative. Valves placed: RB1, RB2, RB3. Total occlusion confirmed.\n[Plan]\nOvernight observation. CXR protocol.",
     "cpt_codes": [
       31622,
       31647
@@ -1212,18 +1175,10 @@
       "style_type": 7,
       "generated_name": "Richard Hill",
       "generation_date": "2025-12-09T09:20:09.498641"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "LOCATION",
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a procedure to help with his severe emphysema. We targeted the right upper lobe of his lung. After confirming that the lobe was isolated using a balloon catheter, we placed three one-way valves into the airways leading to that lobe. These valves will allow air to escape but not enter, hopefully reducing the size of the lobe and helping him breathe better. Everything went smoothly and the valves are sitting perfectly.",
+    "note_text": "Mr. Chen underwent a procedure to help with his severe emphysema. We targeted the right upper lobe of his lung. After confirming that the lobe was isolated using a balloon catheter, we placed three one-way valves into the airways leading to that lobe. These valves will allow air to escape but not enter, hopefully reducing the size of the lobe and helping him breathe better. Everything went smoothly and the valves are sitting perfectly.",
     "cpt_codes": [
       31622,
       31647
@@ -1288,12 +1243,6 @@
       "style_type": 8,
       "generated_name": "Joseph Ramirez",
       "generation_date": "2025-12-09T09:20:09.498661"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1365,7 +1314,7 @@
     }
   },
   {
-    "note_text": "Dx: Subglottic stenosis (GPA).\nProcedure: Dilation + Radial cuts.\nFindings: 5cm stenotic segment, 60% obstruction.\nAction: \n- CRE balloon dilation (<DATE_TIME>).\n- Electrocautery radial incisions.\n- Repeat dilation.\nResult: Airway patent, bronchoscope passes easily.",
+    "note_text": "Dx: Subglottic stenosis (GPA).\nProcedure: Dilation + Radial cuts.\nFindings: 5cm stenotic segment, 60% obstruction.\nAction: \n- CRE balloon dilation (12-15mm).\n- Electrocautery radial incisions.\n- Repeat dilation.\nResult: Airway patent, bronchoscope passes easily.",
     "cpt_codes": [
       31630
     ],
@@ -1428,12 +1377,6 @@
       "style_type": 1,
       "generated_name": "Sarah Mitchell",
       "generation_date": "2025-12-09T09:20:09.498699"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -1569,7 +1512,7 @@
     }
   },
   {
-    "note_text": "Procedure: Airway Dilation\nResident: Dr. Miller\nPatient: <PERSON>\nSteps:\n1. Identified long tracheal stenosis.\n2. Dilated with CRE balloon.\n3. Used cautery knife to cut scar bands.\n4. Dilated RLL and LLL segments.\n5. Airway looks much better now.\nPlan: PACU.",
+    "note_text": "Procedure: Airway Dilation\nResident: Dr. Miller\nPatient: Ava Harrington\nSteps:\n1. Identified long tracheal stenosis.\n2. Dilated with CRE balloon.\n3. Used cautery knife to cut scar bands.\n4. Dilated RLL and LLL segments.\n5. Airway looks much better now.\nPlan: PACU.",
     "cpt_codes": [
       31630
     ],
@@ -1632,16 +1575,10 @@
       "style_type": 4,
       "generated_name": "Ashley Phillips",
       "generation_date": "2025-12-09T09:20:09.498752"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for her tracheal stenosis she has wegeners. We looked down and saw the narrowing about 3cm below cords. Used the balloon to stretch it out then the knife to cut the tight bands. Also did some work on the lower lobes right and left. Everything is open now scope goes through easy. No bleeding.",
+    "note_text": "Ava Harrington here for her tracheal stenosis she has wegeners. We looked down and saw the narrowing about 3cm below cords. Used the balloon to stretch it out then the knife to cut the tight bands. Also did some work on the lower lobes right and left. Everything is open now scope goes through easy. No bleeding.",
     "cpt_codes": [
       31630
     ],
@@ -1704,12 +1641,6 @@
       "style_type": 5,
       "generated_name": "Michelle Evans",
       "generation_date": "2025-12-09T09:20:09.498772"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1779,7 +1710,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nTracheal/Bronchial Stenosis (GPA).\n[<LOCATION>]\nGeneral, LMA.\n[Description]\nLong segment tracheal stenosis dilated and incised. Bilateral lower lobe strictures dilated. Patency restored.\n[Plan]\nPRN follow-up.",
+    "note_text": "[Indication]\nTracheal/Bronchial Stenosis (GPA).\n[Anesthesia]\nGeneral, LMA.\n[Description]\nLong segment tracheal stenosis dilated and incised. Bilateral lower lobe strictures dilated. Patency restored.\n[Plan]\nPRN follow-up.",
     "cpt_codes": [
       31630
     ],
@@ -1842,16 +1773,10 @@
       "style_type": 7,
       "generated_name": "Melissa Torres",
       "generation_date": "2025-12-09T09:20:09.498810"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> came in for treatment of her airway narrowing caused by her autoimmune condition. Under general <LOCATION>, we found a significant narrowing in her windpipe and lower airways. We used a combination of a small knife to make relief cuts in the scar tissue and balloons to stretch the airways open. By the end of the procedure, the airways were significantly more open, which should improve her breathing.",
+    "note_text": "Ms. Harrington came in for treatment of her airway narrowing caused by her autoimmune condition. Under general anesthesia, we found a significant narrowing in her windpipe and lower airways. We used a combination of a small knife to make relief cuts in the scar tissue and balloons to stretch the airways open. By the end of the procedure, the airways were significantly more open, which should improve her breathing.",
     "cpt_codes": [
       31630
     ],
@@ -1914,13 +1839,6 @@
       "style_type": 8,
       "generated_name": "Stephanie Parker",
       "generation_date": "2025-12-09T09:20:09.498827"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -2227,7 +2145,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch + Y-Stent\nPt: <PERSON>\nSteps:\n1. 12mm Rigid scope inserted.\n2. Tumor debulked with APC and suction.\n3. Measured for Y-stent.\n4. Inserted silicone Y-stent (blind pass technique).\n5. Adjusted with forceps.\n6. Airway open now.\nPlan: ICU, humidified air.",
+    "note_text": "Procedure: Rigid Bronch + Y-Stent\nPt: Ethan Calder\nSteps:\n1. 12mm Rigid scope inserted.\n2. Tumor debulked with APC and suction.\n3. Measured for Y-stent.\n4. Inserted silicone Y-stent (blind pass technique).\n5. Adjusted with forceps.\n6. Airway open now.\nPlan: ICU, humidified air.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -2303,16 +2221,10 @@
       "style_type": 4,
       "generated_name": "Mark Morris",
       "generation_date": "2025-12-09T09:20:09.498951"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> with the esophageal cancer compressing the airway. We took him to the OR for a stent. Rigid scope went in. Debulked a lot of tumor at the carina left side was totally shut. Put in a Y stent silicone type. Had to push it past cords blindly then grab it with forceps. It sat perfectly. Airways look great now. ICU for monitoring.",
+    "note_text": "Ethan Calder with the esophageal cancer compressing the airway. We took him to the OR for a stent. Rigid scope went in. Debulked a lot of tumor at the carina left side was totally shut. Put in a Y stent silicone type. Had to push it past cords blindly then grab it with forceps. It sat perfectly. Airways look great now. ICU for monitoring.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -2388,12 +2300,6 @@
       "style_type": 5,
       "generated_name": "Donald Nguyen",
       "generation_date": "2025-12-09T09:20:09.498971"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2476,7 +2382,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMalignant Central Airway Obstruction.\n[<LOCATION>]\nGeneral, <PERSON>.\n[Description]\nRigid bronchoscopy. Tumor debulked (APC/Cryo). Silicone Y-Stent placed. Patency restored to >90%.\n[Plan]\nICU, Saline nebs.",
+    "note_text": "[Indication]\nMalignant Central Airway Obstruction.\n[Anesthesia]\nGeneral, Jet Ventilation.\n[Description]\nRigid bronchoscopy. Tumor debulked (APC/Cryo). Silicone Y-Stent placed. Patency restored to >90%.\n[Plan]\nICU, Saline nebs.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -2552,17 +2458,10 @@
       "style_type": 7,
       "generated_name": "Paul Rivera",
       "generation_date": "2025-12-09T09:20:09.499015"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> was suffering from severe difficulty breathing due to a tumor blocking his main airways. We performed a rigid bronchoscopy to clear the blockage. After removing a significant amount of tumor tissue using heat and freezing probes, we placed a Y-shaped silicone stent. This stent props open his windpipe and branches to both lungs. We were very pleased to see his airways were 90% open after the stent was in place.",
+    "note_text": "Mr. Calder was suffering from severe difficulty breathing due to a tumor blocking his main airways. We performed a rigid bronchoscopy to clear the blockage. After removing a significant amount of tumor tissue using heat and freezing probes, we placed a Y-shaped silicone stent. This stent props open his windpipe and branches to both lungs. We were very pleased to see his airways were 90% open after the stent was in place.",
     "cpt_codes": [
       "31628",
       "31654"
@@ -2638,12 +2537,6 @@
       "style_type": 8,
       "generated_name": "Andrew Cook",
       "generation_date": "2025-12-09T09:20:09.499034"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2924,7 +2817,7 @@
     }
   },
   {
-    "note_text": "Procedure: Stent Removal\nResident: Dr. Gallegos\nSteps:\n1. Rigid scope inserted.\n2. Stent found migrated into RMS.\n3. <PERSON> of pus behind it.\n4. Grabbed stent with rigid forceps.\n5. Pulled everything out.\n6. Cleaned up the airway.\nPlan: Antibiotics for pneumonia.",
+    "note_text": "Procedure: Stent Removal\nResident: Dr. Gallegos\nSteps:\n1. Rigid scope inserted.\n2. Stent found migrated into RMS.\n3. Tons of pus behind it.\n4. Grabbed stent with rigid forceps.\n5. Pulled everything out.\n6. Cleaned up the airway.\nPlan: Antibiotics for pneumonia.",
     "cpt_codes": [
       31638
     ],
@@ -2987,16 +2880,10 @@
       "style_type": 4,
       "generated_name": "Eric Ross",
       "generation_date": "2025-12-09T09:20:09.499141"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for stent removal. The old stent slid down and blocked the left lung. It was nasty full of pus. We went in with the rigid scope grabbed the edge of the stent and pulled the whole thing out. Suctioned out a lot of infection. The fistula looks covered by the esophageal stent so thats good. Sending him to PACU.",
+    "note_text": "Daniel Conley here for stent removal. The old stent slid down and blocked the left lung. It was nasty full of pus. We went in with the rigid scope grabbed the edge of the stent and pulled the whole thing out. Suctioned out a lot of infection. The fistula looks covered by the esophageal stent so thats good. Sending him to PACU.",
     "cpt_codes": [
       31638
     ],
@@ -3059,12 +2946,6 @@
       "style_type": 5,
       "generated_name": "Stephen Henderson",
       "generation_date": "2025-12-09T09:20:09.499160"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3134,7 +3015,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nStent migration, infection.\n[<LOCATION>]\nGeneral.\n[Description]\nRigid bronchoscopy. Migrated stent removed via forceps. Purulent secretions cleared. TE fistula assessed.\n[Plan]\nAntibiotics, observation.",
+    "note_text": "[Indication]\nStent migration, infection.\n[Anesthesia]\nGeneral.\n[Description]\nRigid bronchoscopy. Migrated stent removed via forceps. Purulent secretions cleared. TE fistula assessed.\n[Plan]\nAntibiotics, observation.",
     "cpt_codes": [
       31638
     ],
@@ -3197,16 +3078,10 @@
       "style_type": 7,
       "generated_name": "Justin Jenkins",
       "generation_date": "2025-12-09T09:20:09.499196"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> needed his airway stent removed because it had moved out of place and caused an infection. Using a rigid metal tube, we reached the stent which had slipped into his right lung. We carefully pulled it out. Once it was gone, we were able to clear out a lot of infected fluid from his left lung, which had been blocked. His airways look irritated but open now.",
+    "note_text": "Mr. Conley needed his airway stent removed because it had moved out of place and caused an infection. Using a rigid metal tube, we reached the stent which had slipped into his right lung. We carefully pulled it out. Once it was gone, we were able to clear out a lot of infected fluid from his left lung, which had been blocked. His airways look irritated but open now.",
     "cpt_codes": [
       31638
     ],
@@ -3269,12 +3144,6 @@
       "style_type": 8,
       "generated_name": "Scott Perry",
       "generation_date": "2025-12-09T09:20:09.499213"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3429,7 +3298,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: The patient with severe emphysema underwent bronchoscopic thermal vapor ablation. The Right Upper Lobe was selected based on collateral ventilation status. The InterVapor catheter was navigated to the anterior (RB3) and apical (RB1) segments. A total of 14 calories of thermal energy were delivered (<DATE_TIME>, <DATE_TIME> to RB1). Fluoroscopy confirmed accurate catheter placement and vapor containment. The patient tolerated the procedure without adverse events.",
+    "note_text": "OPERATIVE NARRATIVE: The patient with severe emphysema underwent bronchoscopic thermal vapor ablation. The Right Upper Lobe was selected based on collateral ventilation status. The InterVapor catheter was navigated to the anterior (RB3) and apical (RB1) segments. A total of 14 calories of thermal energy were delivered (8 cal to RB3, 6 cal to RB1). Fluoroscopy confirmed accurate catheter placement and vapor containment. The patient tolerated the procedure without adverse events.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -3511,13 +3380,6 @@
       "style_type": 2,
       "generated_name": "Gregory Alexander",
       "generation_date": "2025-12-09T09:20:09.499278"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3691,7 +3553,7 @@
     }
   },
   {
-    "note_text": "<PERSON> here for the vapor treatment for his COPD. We did the RUL today. Used the steam catheter put 8 calories in the front segment and 6 in the top one. Vapor went in good seen on xray. Patient is stable. He needs antibiotics and prednisone for the inflammation coming up.",
+    "note_text": "George Martinez here for the vapor treatment for his COPD. We did the RUL today. Used the steam catheter put 8 calories in the front segment and 6 in the top one. Vapor went in good seen on xray. Patient is stable. He needs antibiotics and prednisone for the inflammation coming up.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -3773,12 +3635,6 @@
       "style_type": 5,
       "generated_name": "Jack Diaz",
       "generation_date": "2025-12-09T09:20:09.499362"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3867,7 +3723,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSevere <PERSON>, RUL target (CV+).\n[<LOCATION>]\nMAC/LMA.\n[Description]\nBTVA to RUL. RB3: 8 cal. RB1: 6 cal. Vapor delivery confirmed.\n[Plan]\nICU, <LOCATION>, Antibiotics.",
+    "note_text": "[Indication]\nSevere Emphysema, RUL target (CV+).\n[Anesthesia]\nMAC/LMA.\n[Description]\nBTVA to RUL. RB3: 8 cal. RB1: 6 cal. Vapor delivery confirmed.\n[Plan]\nICU, Prednisone, Antibiotics.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -3949,18 +3805,10 @@
       "style_type": 7,
       "generated_name": "Jerry Myers",
       "generation_date": "2025-12-09T09:20:09.499409"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a steam treatment for his emphysema today. Since his lung anatomy wasn't right for valves, we used thermal vapor to treat the diseased parts of his right upper lung. We delivered the vapor to two specific segments. This will cause that tissue to scar down and shrink over <DATE_TIME>, which should help him breathe better. He needs to stay in the hospital for monitoring as this causes a deliberate inflammation.",
+    "note_text": "Mr. Martinez underwent a steam treatment for his emphysema today. Since his lung anatomy wasn't right for valves, we used thermal vapor to treat the diseased parts of his right upper lung. We delivered the vapor to two specific segments. This will cause that tissue to scar down and shrink over the next few months, which should help him breathe better. He needs to stay in the hospital for monitoring as this causes a deliberate inflammation.",
     "cpt_codes": [
       "31641",
       "31631"
@@ -4042,13 +3890,6 @@
       "style_type": 8,
       "generated_name": "Tyler Ford",
       "generation_date": "2025-12-09T09:20:09.499431"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {

@@ -12,16 +12,19 @@ Usage:
     python scripts/scrub_golden_jsons.py --dry-run          # Preview without modifying
     python scripts/scrub_golden_jsons.py --no-backup        # Scrub in-place without backups
     python scripts/scrub_golden_jsons.py --output-dir out/  # Write to separate directory
+    python scripts/scrub_golden_jsons.py --report-path artifacts/redactions.jsonl  # Write redaction report (JSONL)
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import csv
 import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
+from typing import Any, Optional
 
 # Add project root to path for module imports
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -36,12 +39,59 @@ def get_scrubber():
     return PresidioScrubber()
 
 
+def _open_report_writer(report_path: Path | None, report_format: str):
+    """Open a report writer for redactions.
+
+    Returns:
+        (handle, write_row_fn) or (None, None) if report_path is None.
+    """
+    if report_path is None:
+        return None, None
+
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_format = report_format.lower().strip()
+    if report_format not in {"jsonl", "csv"}:
+        raise ValueError("report_format must be one of: jsonl, csv")
+
+    if report_format == "jsonl":
+        f = report_path.open("w", encoding="utf-8")
+
+        def _write(row: dict[str, Any]) -> None:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+        return f, _write
+
+    # CSV
+    f = report_path.open("w", encoding="utf-8", newline="")
+    writer = csv.DictWriter(
+        f,
+        fieldnames=[
+            "timestamp_utc",
+            "input_file",
+            "record_index",
+            "entity_type",
+            "placeholder",
+            "original_start",
+            "original_end",
+            "original_text",
+        ],
+    )
+    writer.writeheader()
+
+    def _write(row: dict[str, Any]) -> None:
+        writer.writerow(row)
+
+    return f, _write
+
+
 def scrub_golden_json(
     input_path: Path,
     scrubber,
     dry_run: bool = False,
     output_path: Path | None = None,
     create_backup: bool = True,
+    report_write=None,
+    report_timestamp_utc: str | None = None,
 ) -> dict:
     """Scrub PHI from a single golden JSON file.
 
@@ -51,6 +101,8 @@ def scrub_golden_json(
         dry_run: If True, don't write changes
         output_path: Optional separate output path
         create_backup: If True and output_path is None, create .bak backup
+        report_write: Optional function which accepts a dict and writes a report row
+        report_timestamp_utc: Optional timestamp string to include in report rows
 
     Returns:
         Dict with stats: {total_records, scrubbed_count, entity_count}
@@ -65,7 +117,7 @@ def scrub_golden_json(
         "entities_by_type": {},
     }
 
-    for record in records:
+    for idx, record in enumerate(records):
         if "note_text" not in record or not record["note_text"]:
             continue
 
@@ -80,6 +132,29 @@ def scrub_golden_json(
             for ent in result.entities:
                 etype = ent.get("entity_type", "UNKNOWN")
                 stats["entities_by_type"][etype] = stats["entities_by_type"].get(etype, 0) + 1
+
+                # Optional per-entity report rows
+                if report_write is not None:
+                    try:
+                        start = int(ent.get("original_start", -1))
+                        end = int(ent.get("original_end", -1))
+                    except Exception:
+                        start, end = -1, -1
+                    redacted = ""
+                    if 0 <= start < end <= len(original_text):
+                        redacted = original_text[start:end]
+                    report_write(
+                        {
+                            "timestamp_utc": report_timestamp_utc,
+                            "input_file": str(input_path),
+                            "record_index": idx,
+                            "entity_type": etype,
+                            "placeholder": ent.get("placeholder", ""),
+                            "original_start": start,
+                            "original_end": end,
+                            "original_text": redacted,
+                        }
+                    )
 
             # Update the record
             record["note_text"] = result.scrubbed_text
@@ -143,6 +218,19 @@ def main():
         default="golden_*.json",
         help="Glob pattern for input files (default: golden_*.json)",
     )
+    parser.add_argument(
+        "--report-path",
+        type=Path,
+        default=None,
+        help="Optional path to write a redaction report (JSONL/CSV).",
+    )
+    parser.add_argument(
+        "--report-format",
+        type=str,
+        default="jsonl",
+        choices=["jsonl", "csv"],
+        help="Redaction report format (default: jsonl).",
+    )
 
     args = parser.parse_args()
 
@@ -159,12 +247,18 @@ def main():
     print(f"Files found: {len(input_files)}")
     print(f"Output: {'DRY RUN (no changes)' if args.dry_run else (args.output_dir or 'in-place')}")
     print(f"Backups: {'No' if args.no_backup else 'Yes'}")
+    if args.report_path:
+        print(f"Redaction report: {args.report_path} ({args.report_format})")
     print(f"{'=' * 60}\n")
 
     # Initialize scrubber
     print("Initializing Presidio scrubber...")
     scrubber = get_scrubber()
     print(f"Using spaCy model: {scrubber.model_name}\n")
+
+    # Optional report writer
+    report_ts = datetime.utcnow().strftime("%Y%m%d_%H%M%SZ")
+    report_handle, report_write = _open_report_writer(args.report_path, args.report_format)
 
     # Process files
     total_stats = {
@@ -189,6 +283,8 @@ def main():
                 dry_run=args.dry_run,
                 output_path=output_path,
                 create_backup=not args.no_backup,
+                report_write=report_write,
+                report_timestamp_utc=report_ts,
             )
 
             total_stats["files_processed"] += 1
@@ -227,6 +323,10 @@ def main():
         print(f"\nScrubbed files written to: {args.output_dir}")
     else:
         print(f"\nFiles modified in-place. Backups: {'disabled' if args.no_backup else 'created (.bak)'}")
+
+    if report_handle is not None:
+        report_handle.close()
+        print(f"\nRedaction report written: {args.report_path}")
 
 
 if __name__ == "__main__":

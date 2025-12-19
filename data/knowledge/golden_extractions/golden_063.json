@@ -118,7 +118,7 @@
   },
   {
     "note_id": "RAB001",
-    "note_text": "OPERATIVE REPORT: The patient presented with a suspicious 1.8 cm left lower lobe nodule. Under general <LOCATION>, the Intuitive Ion robotic platform was utilized for navigation. Radial endobronchial ultrasound (REBUS) identified a concentric, heterogeneous lesion in the lateral basal segment. Cone-beam computed tomography (CBCT) verification ensured precise instrument placement. Transbronchial forceps biopsies and brushings were procured without significant hemorrhage. The airway remained patent upon conclusion.",
+    "note_text": "OPERATIVE REPORT: The patient presented with a suspicious 1.8 cm left lower lobe nodule. Under general anesthesia, the Intuitive Ion robotic platform was utilized for navigation. Radial endobronchial ultrasound (REBUS) identified a concentric, heterogeneous lesion in the lateral basal segment. Cone-beam computed tomography (CBCT) verification ensured precise instrument placement. Transbronchial forceps biopsies and brushings were procured without significant hemorrhage. The airway remained patent upon conclusion.",
     "cpt_codes": [
       31627,
       31654,
@@ -231,12 +231,6 @@
       "style_type": 2,
       "generated_name": "Robert Jones",
       "generation_date": "2025-12-09T12:07:14.107869"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -358,7 +352,7 @@
   },
   {
     "note_id": "RAB001",
-    "note_text": "Resident Note\nPatient: <PERSON>\nAttending: Dr. Nguyen\nProcedure: Ion Robotic Bronchoscopy\nSteps:\n1. Time out/GA.\n2. Ion registration (low error).\n3. Navigated to LLL lateral basal.\n4. REBUS: Concentric view.\n5. CBCT spin: Confirmed tool in lesion.\n6. Biopsies: <PERSON>, Brush x1.\n7. Tolerated well.",
+    "note_text": "Resident Note\nPatient: Case 01\nAttending: Dr. Nguyen\nProcedure: Ion Robotic Bronchoscopy\nSteps:\n1. Time out/GA.\n2. Ion registration (low error).\n3. Navigated to LLL lateral basal.\n4. REBUS: Concentric view.\n5. CBCT spin: Confirmed tool in lesion.\n6. Biopsies: Forceps x5, Brush x1.\n7. Tolerated well.",
     "cpt_codes": [
       31627,
       31654,
@@ -471,13 +465,6 @@
       "style_type": 4,
       "generated_name": "David Davis",
       "generation_date": "2025-12-09T12:07:14.107933"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -599,7 +586,7 @@
   },
   {
     "note_id": "RAB001",
-    "note_text": "Robotic navigational bronchoscopy with radial EBUS and transbronchial biopsy. The patient is a <DATE_TIME> male with a left lower lobe nodule. General <LOCATION> was induced. The Ion catheter was navigated to the lateral basal segment. Radial EBUS showed a concentric 18 mm lesion. CBCT confirmed position. Biopsies and brushings were obtained. Minimal bleeding occurred. No complications.",
+    "note_text": "Robotic navigational bronchoscopy with radial EBUS and transbronchial biopsy. The patient is a 62-year-old male with a left lower lobe nodule. General anesthesia was induced. The Ion catheter was navigated to the lateral basal segment. Radial EBUS showed a concentric 18 mm lesion. CBCT confirmed position. Biopsies and brushings were obtained. Minimal bleeding occurred. No complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -712,18 +699,11 @@
       "style_type": 6,
       "generated_name": "Richard Wilson",
       "generation_date": "2025-12-09T12:07:14.108004"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB001",
-    "note_text": "[Indication]\n1.8 cm LLL lateral basal nodule, suspicious for malignancy.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nIon robotic navigation used. REBUS showed concentric lesion. CBCT confirmed tool-in-lesion. Forceps biopsy and brushing performed.\n[Plan]\nDischarge. Follow up pathology.",
+    "note_text": "[Indication]\n1.8 cm LLL lateral basal nodule, suspicious for malignancy.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nIon robotic navigation used. REBUS showed concentric lesion. CBCT confirmed tool-in-lesion. Forceps biopsy and brushing performed.\n[Plan]\nDischarge. Follow up pathology.",
     "cpt_codes": [
       31627,
       31654,
@@ -836,17 +816,11 @@
       "style_type": 7,
       "generated_name": "Joseph Moore",
       "generation_date": "2025-12-09T12:07:14.108034"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB001",
-    "note_text": "The patient, a <DATE_TIME> male, underwent a diagnostic robotic navigational bronchoscopy for a left lower lobe nodule. After induction of <LOCATION>, the Ion system was registered. We navigated to the target in the lateral basal segment, where radial EBUS confirmed a concentric lesion. Cone-beam CT was utilized to verify the tool was within the lesion. We then proceeded to take multiple forceps biopsies and brushings. There was only minimal bleeding, and the patient recovered without issues.",
+    "note_text": "The patient, a 62-year-old male, underwent a diagnostic robotic navigational bronchoscopy for a left lower lobe nodule. After induction of anesthesia, the Ion system was registered. We navigated to the target in the lateral basal segment, where radial EBUS confirmed a concentric lesion. Cone-beam CT was utilized to verify the tool was within the lesion. We then proceeded to take multiple forceps biopsies and brushings. There was only minimal bleeding, and the patient recovered without issues.",
     "cpt_codes": [
       31627,
       31654,
@@ -959,18 +933,11 @@
       "style_type": 8,
       "generated_name": "Thomas Taylor",
       "generation_date": "2025-12-09T12:07:14.108063"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB001",
-    "note_text": "Indication: LLL mass.\nTechnique: Robotic guidance (Ion), ultrasonic localization (REBUS), tissue sampling (forceps, brush).\nFindings: 18mm concentric abnormality.\nVerification: <PERSON> imaging (CBCT).\nOutcome: Specimens harvested. Hemostasis achieved. No pneumothorax.",
+    "note_text": "Indication: LLL mass.\nTechnique: Robotic guidance (Ion), ultrasonic localization (REBUS), tissue sampling (forceps, brush).\nFindings: 18mm concentric abnormality.\nVerification: Volumetric imaging (CBCT).\nOutcome: Specimens harvested. Hemostasis achieved. No pneumothorax.",
     "cpt_codes": [
       31627,
       31654,
@@ -1083,12 +1050,6 @@
       "style_type": 9,
       "generated_name": "Charles Anderson",
       "generation_date": "2025-12-09T12:07:14.108092"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1209,7 +1170,7 @@
   },
   {
     "note_id": "RAB002",
-    "note_text": "PROCEDURE NOTE: This <DATE_TIME> female with a highly metabolic RUL nodule underwent robotic-assisted bronchoscopy. The Ion catheter was driven to the posterior segment of the right upper lobe. Radial EBUS imaging revealed an eccentric, heterogeneous 22 mm mass. Intraprocedural cone-beam CT confirmed the biopsy tool's position within the target. Extensive sampling via forceps and brush was conducted. Minor hemorrhage was managed successfully with cold saline lavage.",
+    "note_text": "PROCEDURE NOTE: This 74-year-old female with a highly metabolic RUL nodule underwent robotic-assisted bronchoscopy. The Ion catheter was driven to the posterior segment of the right upper lobe. Radial EBUS imaging revealed an eccentric, heterogeneous 22 mm mass. Intraprocedural cone-beam CT confirmed the biopsy tool's position within the target. Extensive sampling via forceps and brush was conducted. Minor hemorrhage was managed successfully with cold saline lavage.",
     "cpt_codes": [
       31627,
       31654,
@@ -1321,17 +1282,11 @@
       "style_type": 2,
       "generated_name": "Patricia Williams",
       "generation_date": "2025-12-09T12:07:14.108154"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB002",
-    "note_text": "Billing Codes: <DATE_TIME> (Robotic Nav), <DATE_TIME> (Peripheral EBUS), <DATE_TIME> (Bx), <DATE_TIME> (<PERSON>).\nJustification: 2.2 cm RUL lesion required advanced navigation and imaging (CBCT) for accurate targeting. Multiple samples taken to ensure diagnostic yield for suspected primary lung cancer.",
+    "note_text": "Billing Codes: 31627 (Robotic Nav), 31654 (Peripheral EBUS), 31628 (Bx), 31623 (Brush).\nJustification: 2.2 cm RUL lesion required advanced navigation and imaging (CBCT) for accurate targeting. Multiple samples taken to ensure diagnostic yield for suspected primary lung cancer.",
     "cpt_codes": [
       31627,
       31654,
@@ -1443,21 +1398,11 @@
       "style_type": 3,
       "generated_name": "Linda Jones",
       "generation_date": "2025-12-09T12:07:14.108186"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 5,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "RAB002",
-    "note_text": "<PERSON>\nPt: 74F\nAttending: Dr. Ortiz\nOp: Ion RUL Bx\n- GA/ETT.\n- Registered Ion.\n- Nav to RUL posterior.\n- REBUS: Eccentric 22mm.\n- CBCT: Good position.\n- Bx: 6 forceps, 2 brush.\n- Bleeding: Mild, stopped w/ saline.",
+    "note_text": "Trainee Note\nPt: 74F\nAttending: Dr. Ortiz\nOp: Ion RUL Bx\n- GA/ETT.\n- Registered Ion.\n- Nav to RUL posterior.\n- REBUS: Eccentric 22mm.\n- CBCT: Good position.\n- Bx: 6 forceps, 2 brush.\n- Bleeding: Mild, stopped w/ saline.",
     "cpt_codes": [
       31627,
       31654,
@@ -1569,17 +1514,11 @@
       "style_type": 4,
       "generated_name": "Barbara Brown",
       "generation_date": "2025-12-09T12:07:14.108216"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "RAB002",
-    "note_text": "case <DATE_TIME> female rul nodule likely cancer ion system used for biopsy reg was auto complete nav to posterior segment rebus showed eccentric lesion cbct confirmed we took 6 bites with forceps and 2 brushes little bit of oozing used iced saline stopped fine extubated in room",
+    "note_text": "case 2 74 female rul nodule likely cancer ion system used for biopsy reg was auto complete nav to posterior segment rebus showed eccentric lesion cbct confirmed we took 6 bites with forceps and 2 brushes little bit of oozing used iced saline stopped fine extubated in room",
     "cpt_codes": [
       31627,
       31654,
@@ -1691,17 +1630,11 @@
       "style_type": 5,
       "generated_name": "Elizabeth Davis",
       "generation_date": "2025-12-09T12:07:14.108245"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB002",
-    "note_text": "Robotic navigational bronchoscopy, radial EBUS, and biopsy. <DATE_TIME> female with RUL nodule. Ion system used. Radial EBUS showed 22 mm eccentric lesion. CBCT used for verification. Forceps biopsies and brushings obtained. Mild bleeding controlled. Patient extubated and stable.",
+    "note_text": "Robotic navigational bronchoscopy, radial EBUS, and biopsy. 74-year-old female with RUL nodule. Ion system used. Radial EBUS showed 22 mm eccentric lesion. CBCT used for verification. Forceps biopsies and brushings obtained. Mild bleeding controlled. Patient extubated and stable.",
     "cpt_codes": [
       31627,
       31654,
@@ -1813,17 +1746,11 @@
       "style_type": 6,
       "generated_name": "Jennifer Miller",
       "generation_date": "2025-12-09T12:07:14.108273"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB002",
-    "note_text": "[Indication]\nEnlarging 2.2 cm RUL nodule, SUV 8.1.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nIon navigation to RUL posterior. REBUS eccentric. CBCT confirmation. 6 biopsies, 2 brushings. Hemostasis achieved.\n[Plan]\nExpedited path review. Staging if malignant.",
+    "note_text": "[Indication]\nEnlarging 2.2 cm RUL nodule, SUV 8.1.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nIon navigation to RUL posterior. REBUS eccentric. CBCT confirmation. 6 biopsies, 2 brushings. Hemostasis achieved.\n[Plan]\nExpedited path review. Staging if malignant.",
     "cpt_codes": [
       31627,
       31654,
@@ -1935,17 +1862,11 @@
       "style_type": 7,
       "generated_name": "Maria Wilson",
       "generation_date": "2025-12-09T12:07:14.108301"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB002",
-    "note_text": "A <DATE_TIME> woman presented with a suspicious right upper lobe nodule. We performed a robotic bronchoscopy using the Ion system. Upon reaching the posterior segment, radial EBUS revealed an eccentric lesion. We used cone-beam CT to confirm our tool was inside the lesion before taking six biopsies and two brushings. Mild bleeding was noted and treated with iced saline. The patient was extubated without complication.",
+    "note_text": "A 74-year-old woman presented with a suspicious right upper lobe nodule. We performed a robotic bronchoscopy using the Ion system. Upon reaching the posterior segment, radial EBUS revealed an eccentric lesion. We used cone-beam CT to confirm our tool was inside the lesion before taking six biopsies and two brushings. Mild bleeding was noted and treated with iced saline. The patient was extubated without complication.",
     "cpt_codes": [
       31627,
       31654,
@@ -2057,12 +1978,6 @@
       "style_type": 8,
       "generated_name": "Susan Moore",
       "generation_date": "2025-12-09T12:07:14.108330"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -2399,7 +2314,7 @@
   },
   {
     "note_id": "RAB003",
-    "note_text": "Service: Robotic Bronchoscopy (<DATE_TIME>), EBUS (<DATE_TIME>), <LOCATION> (<DATE_TIME>).\nTarget: RML lateral segment.\nImaging: Augmented fluoroscopy used to refine position (no CBCT).\nSamples: 5 forceps biopsies obtained.",
+    "note_text": "Service: Robotic Bronchoscopy (31627), EBUS (31654), Biopsy (31628).\nTarget: RML lateral segment.\nImaging: Augmented fluoroscopy used to refine position (no CBCT).\nSamples: 5 forceps biopsies obtained.",
     "cpt_codes": [
       31627,
       31654,
@@ -2503,20 +2418,11 @@
       "style_type": 3,
       "generated_name": "Lisa Jackson",
       "generation_date": "2025-12-09T12:07:14.108439"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB003",
-    "note_text": "Resident Procedure Note\nPatient: <PERSON>\nSite: RML\nProcedure: Ion Bx\n- Plan loaded, reg complete.\n- Nav to RML lateral.\n- REBUS: Adjacent 12mm.\n- <LOCATION> check: Good.\n- Bx x5.\n- No bleeding.\n- Stable.",
+    "note_text": "Resident Procedure Note\nPatient: Case 03\nSite: RML\nProcedure: Ion Bx\n- Plan loaded, reg complete.\n- Nav to RML lateral.\n- REBUS: Adjacent 12mm.\n- Fluoro check: Good.\n- Bx x5.\n- No bleeding.\n- Stable.",
     "cpt_codes": [
       31627,
       31654,
@@ -2620,13 +2526,6 @@
       "style_type": 4,
       "generated_name": "Betty White",
       "generation_date": "2025-12-09T12:07:14.108465"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -2847,7 +2746,7 @@
   },
   {
     "note_id": "RAB003",
-    "note_text": "[Indication]\n1.2 cm RML nodule, mildly avid.\n[<LOCATION>]\nGeneral.\n[Description]\nIon nav to RML. REBUS adjacent. Augmented fluoro confirmation. 5 biopsies taken. No brushing.\n[Plan]\nDischarge. Watch/wait vs tx based on path.",
+    "note_text": "[Indication]\n1.2 cm RML nodule, mildly avid.\n[Anesthesia]\nGeneral.\n[Description]\nIon nav to RML. REBUS adjacent. Augmented fluoro confirmation. 5 biopsies taken. No brushing.\n[Plan]\nDischarge. Watch/wait vs tx based on path.",
     "cpt_codes": [
       31627,
       31654,
@@ -2951,17 +2850,11 @@
       "style_type": 7,
       "generated_name": "Ashley Thompson",
       "generation_date": "2025-12-09T12:07:14.108544"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB003",
-    "note_text": "We performed a robotic biopsy on a <DATE_TIME> female with a right middle lobe nodule. Using the Ion system, we navigated to the lateral segment where radial EBUS showed an adjacent 12 mm lesion. We used augmented fluoroscopy to confirm the tool's position. Five biopsies were taken with minimal bleeding. The patient was discharged after the procedure.",
+    "note_text": "We performed a robotic biopsy on a 59-year-old female with a right middle lobe nodule. Using the Ion system, we navigated to the lateral segment where radial EBUS showed an adjacent 12 mm lesion. We used augmented fluoroscopy to confirm the tool's position. Five biopsies were taken with minimal bleeding. The patient was discharged after the procedure.",
     "cpt_codes": [
       31627,
       31654,
@@ -3065,12 +2958,6 @@
       "style_type": 8,
       "generated_name": "Kimberly Garcia",
       "generation_date": "2025-12-09T12:07:14.108570"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3293,7 +3180,7 @@
   },
   {
     "note_id": "RAB004",
-    "note_text": "PROCEDURE REPORT: This <DATE_TIME> male with a left upper lobe nodule and lymphadenopathy underwent robotic diagnostic bronchoscopy. The Ion catheter was navigated to the apicoposterior segment. Radial EBUS demonstrated a small 9 mm concentric lesion. Forceps biopsies were obtained, followed by transbronchial needle aspiration (TBNA) of the peribronchial tissue. Hemostasis was secured.",
+    "note_text": "PROCEDURE REPORT: This 67-year-old male with a left upper lobe nodule and lymphadenopathy underwent robotic diagnostic bronchoscopy. The Ion catheter was navigated to the apicoposterior segment. Radial EBUS demonstrated a small 9 mm concentric lesion. Forceps biopsies were obtained, followed by transbronchial needle aspiration (TBNA) of the peribronchial tissue. Hemostasis was secured.",
     "cpt_codes": [
       31629,
       31627,
@@ -3399,17 +3286,11 @@
       "style_type": 2,
       "generated_name": "Daniel Clark",
       "generation_date": "2025-12-09T12:07:14.108653"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB004",
-    "note_text": "CPT 31629 (TBNA): Primary code for needle aspiration of peribronchial tissue.\nCPT 31627 (Nav): Robotic guidance.\nCPT 31654 (REBUS): Localization.\nNote: Forceps biopsy (<DATE_TIME>) bundled/not separately billed if same site as TBNA depending on payer, but documented here as performed.",
+    "note_text": "CPT 31629 (TBNA): Primary code for needle aspiration of peribronchial tissue.\nCPT 31627 (Nav): Robotic guidance.\nCPT 31654 (REBUS): Localization.\nNote: Forceps biopsy (31628) bundled/not separately billed if same site as TBNA depending on payer, but documented here as performed.",
     "cpt_codes": [
       31629,
       31627,
@@ -3515,17 +3396,11 @@
       "style_type": 3,
       "generated_name": "Paul Rodriguez",
       "generation_date": "2025-12-09T12:07:14.108681"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB004",
-    "note_text": "<PERSON>\nPt: 67M\nOp: Ion LUL Bx + TBNA\n- Nav to LUL apicoposterior.\n- REBUS: 9mm concentric.\n- Forceps Bx taken.\n- TBNA needle used for peribronchial sample.\n- No CBCT.\n- Mild bleeding, stopped.",
+    "note_text": "Trainee Note\nPt: 67M\nOp: Ion LUL Bx + TBNA\n- Nav to LUL apicoposterior.\n- REBUS: 9mm concentric.\n- Forceps Bx taken.\n- TBNA needle used for peribronchial sample.\n- No CBCT.\n- Mild bleeding, stopped.",
     "cpt_codes": [
       31629,
       31627,
@@ -3631,17 +3506,11 @@
       "style_type": 4,
       "generated_name": "Mark Lewis",
       "generation_date": "2025-12-09T12:07:14.108708"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "RAB004",
-    "note_text": "case <DATE_TIME>m lul nodule and nodes robotic bronch with ion system nav to apicoposterior segment rebus showed small 9mm lesion did forceps biopsy and then tbna needle passes too mild oozing iced saline used no complications",
+    "note_text": "case 04 67m lul nodule and nodes robotic bronch with ion system nav to apicoposterior segment rebus showed small 9mm lesion did forceps biopsy and then tbna needle passes too mild oozing iced saline used no complications",
     "cpt_codes": [
       31629,
       31627,
@@ -3747,12 +3616,6 @@
       "style_type": 5,
       "generated_name": "Donald Lee",
       "generation_date": "2025-12-09T12:07:14.108736"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3867,7 +3730,7 @@
   },
   {
     "note_id": "RAB004",
-    "note_text": "[Indication]\n9mm LUL nodule, peribronchial tissue.\n[<LOCATION>]\nGeneral.\n[Description]\nIon nav to LUL. REBUS concentric. Forceps bx and TBNA performed. No CBCT.\n[Plan]\nPath review. Staging if malignant.",
+    "note_text": "[Indication]\n9mm LUL nodule, peribronchial tissue.\n[Anesthesia]\nGeneral.\n[Description]\nIon nav to LUL. REBUS concentric. Forceps bx and TBNA performed. No CBCT.\n[Plan]\nPath review. Staging if malignant.",
     "cpt_codes": [
       31629,
       31627,
@@ -3973,17 +3836,11 @@
       "style_type": 7,
       "generated_name": "Kenneth Hall",
       "generation_date": "2025-12-09T12:07:14.108789"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB004",
-    "note_text": "A <DATE_TIME> male underwent robotic bronchoscopy for a left upper lobe nodule. We navigated to the apicoposterior segment using the Ion system. Radial EBUS showed a small concentric lesion. We performed both forceps biopsies and transbronchial needle aspiration (TBNA). Mild bleeding was controlled with iced saline. The procedure was completed without complications.",
+    "note_text": "A 67-year-old male underwent robotic bronchoscopy for a left upper lobe nodule. We navigated to the apicoposterior segment using the Ion system. Radial EBUS showed a small concentric lesion. We performed both forceps biopsies and transbronchial needle aspiration (TBNA). Mild bleeding was controlled with iced saline. The procedure was completed without complications.",
     "cpt_codes": [
       31629,
       31627,
@@ -4089,12 +3946,6 @@
       "style_type": 8,
       "generated_name": "Steven Allen",
       "generation_date": "2025-12-09T12:07:14.108817"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -4209,7 +4060,7 @@
   },
   {
     "note_id": "RAB005",
-    "note_text": "Indication: RLL nodule, ILD.\nProc: Ion bronch, REBUS, <PERSON>.\nFindings: 25mm heterogeneous lesion.\nAction: 2 cryo samples, 1 brush. Balloon tamponade used.\nPlan: Admit for obs.",
+    "note_text": "Indication: RLL nodule, ILD.\nProc: Ion bronch, REBUS, Cryobiopsy.\nFindings: 25mm heterogeneous lesion.\nAction: 2 cryo samples, 1 brush. Balloon tamponade used.\nPlan: Admit for obs.",
     "cpt_codes": [
       31628,
       31623,
@@ -4322,17 +4173,11 @@
       "style_type": 1,
       "generated_name": "Brian Hernandez",
       "generation_date": "2025-12-09T12:07:14.108906"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "RAB005",
-    "note_text": "OPERATIVE NOTE: The patient, a <DATE_TIME> male with interstitial lung disease, presented with a right lower lobe nodule. Robotic bronchoscopy was utilized for navigation. Radial EBUS identified a 25 mm lesion in the superior segment. A cryoprobe was introduced, and two transbronchial cryobiopsies were obtained to maximize diagnostic yield. Moderate bleeding occurred, necessitating balloon tamponade. No pneumothorax was detected post-procedure.",
+    "note_text": "OPERATIVE NOTE: The patient, a 71-year-old male with interstitial lung disease, presented with a right lower lobe nodule. Robotic bronchoscopy was utilized for navigation. Radial EBUS identified a 25 mm lesion in the superior segment. A cryoprobe was introduced, and two transbronchial cryobiopsies were obtained to maximize diagnostic yield. Moderate bleeding occurred, necessitating balloon tamponade. No pneumothorax was detected post-procedure.",
     "cpt_codes": [
       31628,
       31623,
@@ -4445,17 +4290,11 @@
       "style_type": 2,
       "generated_name": "Ronald King",
       "generation_date": "2025-12-09T12:07:14.108963"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB005",
-    "note_text": "Billing: <DATE_TIME> (Lung Biopsy - Primary for Cryo if single lobe).\n<DATE_TIME> (Nav), <DATE_TIME> (REBUS), <DATE_TIME> (<PERSON>).\nNote: <PERSON> used for nodule diagnosis in setting of ILD.",
+    "note_text": "Billing: 31628 (Lung Biopsy - Primary for Cryo if single lobe).\n31627 (Nav), 31654 (REBUS), 31623 (Brush).\nNote: Cryobiopsy used for nodule diagnosis in setting of ILD.",
     "cpt_codes": [
       31628,
       31623,
@@ -4568,17 +4407,6 @@
       "style_type": 3,
       "generated_name": "Anthony Wright",
       "generation_date": "2025-12-09T12:07:14.109005"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 6,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -4817,7 +4645,7 @@
   },
   {
     "note_id": "RAB005",
-    "note_text": "Robotic navigational bronchoscopy with cryobiopsy. Indication: RLL nodule in <LOCATION>. Ion system used. REBUS showed 25 mm lesion. Two cryobiopsy samples taken. Moderate bleeding controlled with balloon. No pneumothorax. Admitted.",
+    "note_text": "Robotic navigational bronchoscopy with cryobiopsy. Indication: RLL nodule in ILD. Ion system used. REBUS showed 25 mm lesion. Two cryobiopsy samples taken. Moderate bleeding controlled with balloon. No pneumothorax. Admitted.",
     "cpt_codes": [
       31628,
       31623,
@@ -4930,17 +4758,11 @@
       "style_type": 6,
       "generated_name": "Matthew Scott",
       "generation_date": "2025-12-09T12:07:14.109093"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB005",
-    "note_text": "[Indication]\n2.5 cm RLL nodule in <LOCATION>.\n[<LOCATION>]\nGeneral.\n[Description]\nIon nav to RLL. REBUS confirmed lesion. 2 cryobiopsies taken. Balloon tamponade for bleeding.\n[Plan]\nAdmit overnight. CXR.",
+    "note_text": "[Indication]\n2.5 cm RLL nodule in ILD.\n[Anesthesia]\nGeneral.\n[Description]\nIon nav to RLL. REBUS confirmed lesion. 2 cryobiopsies taken. Balloon tamponade for bleeding.\n[Plan]\nAdmit overnight. CXR.",
     "cpt_codes": [
       31628,
       31623,
@@ -5053,18 +4875,11 @@
       "style_type": 7,
       "generated_name": "Gary Green",
       "generation_date": "2025-12-09T12:07:14.109122"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB005",
-    "note_text": "This <DATE_TIME> male with ILD and a right lower lobe nodule underwent robotic bronchoscopy. We navigated to the lesion using the Ion system and confirmed it with radial EBUS. We obtained two cryobiopsy samples and one brushing. Moderate bleeding was managed with a bronchial blocker. The patient was admitted for observation.",
+    "note_text": "This 71-year-old male with ILD and a right lower lobe nodule underwent robotic bronchoscopy. We navigated to the lesion using the Ion system and confirmed it with radial EBUS. We obtained two cryobiopsy samples and one brushing. Moderate bleeding was managed with a bronchial blocker. The patient was admitted for observation.",
     "cpt_codes": [
       31628,
       31623,
@@ -5177,12 +4992,6 @@
       "style_type": 8,
       "generated_name": "Timothy Adams",
       "generation_date": "2025-12-09T12:07:14.109149"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -5652,7 +5461,7 @@
   },
   {
     "note_id": "RAB006",
-    "note_text": "<PERSON>\nPt: 64F\nOp: Ion LLL Bx (Partial Reg)\n- Partial reg (left side only).\n- Nav to LLL basilar.\n- REBUS: 15mm eccentric.\n- Aug Fluoro: Confirmed.\n- Bx x4, Brush x1.\n- No complications.",
+    "note_text": "Trainee Note\nPt: 64F\nOp: Ion LLL Bx (Partial Reg)\n- Partial reg (left side only).\n- Nav to LLL basilar.\n- REBUS: 15mm eccentric.\n- Aug Fluoro: Confirmed.\n- Bx x4, Brush x1.\n- No complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -5764,12 +5573,6 @@
       "style_type": 4,
       "generated_name": "Laura Mitchell",
       "generation_date": "2025-12-09T12:07:14.109292"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6006,7 +5809,7 @@
   },
   {
     "note_id": "RAB006",
-    "note_text": "[Indication]\n1.5 cm LLL nodule.\n[<LOCATION>]\nGeneral.\n[Description]\nIon partial registration. Nav to LLL. REBUS eccentric. Aug fluoro confirmation. 4 biopsies, 1 brush.\n[Plan]\nDischarge. Path f/u.",
+    "note_text": "[Indication]\n1.5 cm LLL nodule.\n[Anesthesia]\nGeneral.\n[Description]\nIon partial registration. Nav to LLL. REBUS eccentric. Aug fluoro confirmation. 4 biopsies, 1 brush.\n[Plan]\nDischarge. Path f/u.",
     "cpt_codes": [
       31627,
       31654,
@@ -6118,17 +5921,11 @@
       "style_type": 7,
       "generated_name": "Cynthia Turner",
       "generation_date": "2025-12-09T12:07:14.109373"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB006",
-    "note_text": "A <DATE_TIME> female underwent robotic bronchoscopy for a left lower lobe nodule. We used a partial registration strategy with the Ion system, which was successful. Radial EBUS showed an eccentric lesion, and augmented fluoroscopy confirmed the tool's position. We took four biopsies and one brushing with minimal bleeding. The patient was discharged.",
+    "note_text": "A 64-year-old female underwent robotic bronchoscopy for a left lower lobe nodule. We used a partial registration strategy with the Ion system, which was successful. Radial EBUS showed an eccentric lesion, and augmented fluoroscopy confirmed the tool's position. We took four biopsies and one brushing with minimal bleeding. The patient was discharged.",
     "cpt_codes": [
       31627,
       31654,
@@ -6240,12 +6037,6 @@
       "style_type": 8,
       "generated_name": "Angela Phillips",
       "generation_date": "2025-12-09T12:07:14.109399"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -6598,7 +6389,7 @@
   },
   {
     "note_id": "RAB007",
-    "note_text": "CPT 31627: Navigational bronchoscopy (includes registration and correction of drift).\nCPT 31654: EBUS.\nCPT 31628: <LOCATION>.\nCPT 31623: Brushing.\nNote: Extra time for re-registration included in facility time, not extra CPT.",
+    "note_text": "CPT 31627: Navigational bronchoscopy (includes registration and correction of drift).\nCPT 31654: EBUS.\nCPT 31628: Biopsy.\nCPT 31623: Brushing.\nNote: Extra time for re-registration included in facility time, not extra CPT.",
     "cpt_codes": [
       31627,
       31654,
@@ -6710,12 +6501,6 @@
       "style_type": 3,
       "generated_name": "Frank Edwards",
       "generation_date": "2025-12-09T12:07:14.109517"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -6836,7 +6621,7 @@
   },
   {
     "note_id": "RAB007",
-    "note_text": "case <DATE_TIME>m rul nodule ion system used we had some drift mid case had to re register then it was fine went to apical segment rebus showed 19mm lesion cbct confirmed biopsy and brush taken mild bleeding stopped discharge home",
+    "note_text": "case 07 58m rul nodule ion system used we had some drift mid case had to re register then it was fine went to apical segment rebus showed 19mm lesion cbct confirmed biopsy and brush taken mild bleeding stopped discharge home",
     "cpt_codes": [
       31627,
       31654,
@@ -6948,12 +6733,6 @@
       "style_type": 5,
       "generated_name": "Eric Stewart",
       "generation_date": "2025-12-09T12:07:14.109573"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -7074,7 +6853,7 @@
   },
   {
     "note_id": "RAB007",
-    "note_text": "[Indication]\n1.9 cm RUL apical nodule.\n[<LOCATION>]\nGeneral.\n[Description]\nIon nav with re-registration due to drift. REBUS concentric. CBCT confirmation. Forceps bx and brush.\n[Plan]\nDischarge. Path review.",
+    "note_text": "[Indication]\n1.9 cm RUL apical nodule.\n[Anesthesia]\nGeneral.\n[Description]\nIon nav with re-registration due to drift. REBUS concentric. CBCT confirmation. Forceps bx and brush.\n[Plan]\nDischarge. Path review.",
     "cpt_codes": [
       31627,
       31654,
@@ -7186,17 +6965,11 @@
       "style_type": 7,
       "generated_name": "Andrew Morris",
       "generation_date": "2025-12-09T12:07:14.109634"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB007",
-    "note_text": "We performed a robotic bronchoscopy on a <DATE_TIME> male with a right upper lobe nodule. We encountered registration drift during the procedure and had to re-register the system. Once corrected, we navigated to the apical segment where radial EBUS and CBCT confirmed the lesion. We obtained multiple biopsies and brushings. The patient was discharged home.",
+    "note_text": "We performed a robotic bronchoscopy on a 58-year-old male with a right upper lobe nodule. We encountered registration drift during the procedure and had to re-register the system. Once corrected, we navigated to the apical segment where radial EBUS and CBCT confirmed the lesion. We obtained multiple biopsies and brushings. The patient was discharged home.",
     "cpt_codes": [
       31627,
       31654,
@@ -7308,12 +7081,6 @@
       "style_type": 8,
       "generated_name": "Raymond Rogers",
       "generation_date": "2025-12-09T12:07:14.109659"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -7550,7 +7317,7 @@
   },
   {
     "note_id": "RAB008",
-    "note_text": "PROCEDURE REPORT: This <DATE_TIME> male with a right lower lobe nodule underwent robotic-assisted bronchoscopy using the Monarch platform. The robotic sheath was advanced to the basilar segment. Radial EBUS visualized a concentric 14 mm lesion. Cone-beam CT provided confirmation of catheter placement. Forceps biopsies and brushings were collected. The patient tolerated the procedure well.",
+    "note_text": "PROCEDURE REPORT: This 63-year-old male with a right lower lobe nodule underwent robotic-assisted bronchoscopy using the Monarch platform. The robotic sheath was advanced to the basilar segment. Radial EBUS visualized a concentric 14 mm lesion. Cone-beam CT provided confirmation of catheter placement. Forceps biopsies and brushings were collected. The patient tolerated the procedure well.",
     "cpt_codes": [
       31627,
       31654,
@@ -7662,17 +7429,11 @@
       "style_type": 2,
       "generated_name": "Jerry Morgan",
       "generation_date": "2025-12-09T12:07:14.109744"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB008",
-    "note_text": "Codes: 31627 (Monarch Nav), 31654 (EBUS), 31628 (Bx), 31623 (<PERSON>).\nPlatform: Auris Monarch.\nImaging: CBCT used for verification.\nTarget: RLL basilar.",
+    "note_text": "Codes: 31627 (Monarch Nav), 31654 (EBUS), 31628 (Bx), 31623 (Brush).\nPlatform: Auris Monarch.\nImaging: CBCT used for verification.\nTarget: RLL basilar.",
     "cpt_codes": [
       31627,
       31654,
@@ -7784,17 +7545,11 @@
       "style_type": 3,
       "generated_name": "Dennis Bell",
       "generation_date": "2025-12-09T12:07:14.109772"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "RAB008",
-    "note_text": "<PERSON>\nPt: 63M\nAttending: Dr. Flores\nSystem: Monarch\n- Reg completed.\n- Nav to RLL basilar.\n- REBUS: 14mm concentric.\n- CBCT: Tool in lesion.\n- Bx x5, Brush x1.\n- Hemostasis good.",
+    "note_text": "Trainee Note\nPt: 63M\nAttending: Dr. Flores\nSystem: Monarch\n- Reg completed.\n- Nav to RLL basilar.\n- REBUS: 14mm concentric.\n- CBCT: Tool in lesion.\n- Bx x5, Brush x1.\n- Hemostasis good.",
     "cpt_codes": [
       31627,
       31654,
@@ -7906,12 +7661,6 @@
       "style_type": 4,
       "generated_name": "Walter Murphy",
       "generation_date": "2025-12-09T12:07:14.109798"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8148,7 +7897,7 @@
   },
   {
     "note_id": "RAB008",
-    "note_text": "[Indication]\n1.4 cm RLL basilar nodule.\n[<LOCATION>]\nGeneral.\n[Description]\nMonarch nav to RLL. REBUS concentric. CBCT confirmation. 5 biopsies, 1 brush.\n[Plan]\nDischarge. Tumor board if malignant.",
+    "note_text": "[Indication]\n1.4 cm RLL basilar nodule.\n[Anesthesia]\nGeneral.\n[Description]\nMonarch nav to RLL. REBUS concentric. CBCT confirmation. 5 biopsies, 1 brush.\n[Plan]\nDischarge. Tumor board if malignant.",
     "cpt_codes": [
       31627,
       31654,
@@ -8260,17 +8009,11 @@
       "style_type": 7,
       "generated_name": "Harold Cooper",
       "generation_date": "2025-12-09T12:07:14.109881"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB008",
-    "note_text": "A <DATE_TIME> male underwent robotic bronchoscopy using the Monarch platform for a right lower lobe nodule. We navigated to the basilar segment and confirmed the lesion with radial EBUS and cone-beam CT. We obtained five biopsies and one brushing. The patient was discharged without complications.",
+    "note_text": "A 63-year-old male underwent robotic bronchoscopy using the Monarch platform for a right lower lobe nodule. We navigated to the basilar segment and confirmed the lesion with radial EBUS and cone-beam CT. We obtained five biopsies and one brushing. The patient was discharged without complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -8382,17 +8125,11 @@
       "style_type": 8,
       "generated_name": "Douglas Richardson",
       "generation_date": "2025-12-09T12:07:14.109908"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB008",
-    "note_text": "Indication: RLL nodule.\nTechnique: Monarch robotic piloting, ultrasonic scanning, tissue acquisition.\nFindings: 14mm concentric target.\nVerification: <PERSON>.\nAction: Harvested tissue. No hemorrhage.",
+    "note_text": "Indication: RLL nodule.\nTechnique: Monarch robotic piloting, ultrasonic scanning, tissue acquisition.\nFindings: 14mm concentric target.\nVerification: Volumetric CT.\nAction: Harvested tissue. No hemorrhage.",
     "cpt_codes": [
       31627,
       31654,
@@ -8504,12 +8241,6 @@
       "style_type": 9,
       "generated_name": "Henry Cox",
       "generation_date": "2025-12-09T12:07:14.109936"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8622,7 +8353,7 @@
   },
   {
     "note_id": "RAB009",
-    "note_text": "OPERATIVE NOTE: The patient underwent Monarch robotic bronchoscopy for a small lingular nodule. <PERSON> was successful to the subpleural space. Radial EBUS identified an adjacent 10 mm lesion. Augmented fluoroscopy was utilized to confirm tool-in-lesion status. Transbronchial biopsies were obtained without complication.",
+    "note_text": "OPERATIVE NOTE: The patient underwent Monarch robotic bronchoscopy for a small lingular nodule. Navigation was successful to the subpleural space. Radial EBUS identified an adjacent 10 mm lesion. Augmented fluoroscopy was utilized to confirm tool-in-lesion status. Transbronchial biopsies were obtained without complication.",
     "cpt_codes": [
       31627,
       31654,
@@ -8726,17 +8457,11 @@
       "style_type": 2,
       "generated_name": "Virginia Ward",
       "generation_date": "2025-12-09T12:07:14.109988"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "RAB009",
-    "note_text": "CPT 31627 (Monarch Nav), 31654 (EBUS), 31628 (Bx).\nNote: No brushing (<DATE_TIME>) performed. No CBCT used, only augmented fluoroscopy.",
+    "note_text": "CPT 31627 (Monarch Nav), 31654 (EBUS), 31628 (Bx).\nNote: No brushing (31623) performed. No CBCT used, only augmented fluoroscopy.",
     "cpt_codes": [
       31627,
       31654,
@@ -8840,12 +8565,6 @@
       "style_type": 3,
       "generated_name": "Debra Torres",
       "generation_date": "2025-12-09T12:07:14.110084"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -9174,7 +8893,7 @@
   },
   {
     "note_id": "RAB009",
-    "note_text": "[Indication]\n1.0 cm Lingular nodule.\n[<LOCATION>]\nGeneral.\n[Description]\nMonarch nav to Lingula. REBUS adjacent. Aug fluoro confirmation. 4 biopsies.\n[Plan]\nDischarge. Path f/u.",
+    "note_text": "[Indication]\n1.0 cm Lingular nodule.\n[Anesthesia]\nGeneral.\n[Description]\nMonarch nav to Lingula. REBUS adjacent. Aug fluoro confirmation. 4 biopsies.\n[Plan]\nDischarge. Path f/u.",
     "cpt_codes": [
       31627,
       31654,
@@ -9278,17 +8997,11 @@
       "style_type": 7,
       "generated_name": "Christine James",
       "generation_date": "2025-12-09T12:07:14.110188"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB009",
-    "note_text": "We performed a robotic bronchoscopy on a <DATE_TIME> female with a lingular nodule using the Monarch platform. <PERSON> led us to a subpleural location where radial EBUS showed an adjacent 10 mm lesion. Augmented fluoroscopy confirmed the position. We took four biopsies with no complications.",
+    "note_text": "We performed a robotic bronchoscopy on a 52-year-old female with a lingular nodule using the Monarch platform. Navigation led us to a subpleural location where radial EBUS showed an adjacent 10 mm lesion. Augmented fluoroscopy confirmed the position. We took four biopsies with no complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -9392,13 +9105,6 @@
       "style_type": 8,
       "generated_name": "Marie Watson",
       "generation_date": "2025-12-09T12:07:14.110213"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON"
-      ]
     }
   },
   {
@@ -9627,7 +9333,7 @@
   },
   {
     "note_id": "RAB010",
-    "note_text": "PROCEDURE REPORT: This <DATE_TIME> male with a central RUL mass underwent robotic bronchoscopy via the Monarch system. Navigation to the target was achieved. Radial EBUS revealed an eccentric mass signal. Forceps biopsies were obtained, followed by bronchoalveolar lavage (BAL) of the segment. Cone-beam CT verified tool placement. Hemostasis was maintained.",
+    "note_text": "PROCEDURE REPORT: This 69-year-old male with a central RUL mass underwent robotic bronchoscopy via the Monarch system. Navigation to the target was achieved. Radial EBUS revealed an eccentric mass signal. Forceps biopsies were obtained, followed by bronchoalveolar lavage (BAL) of the segment. Cone-beam CT verified tool placement. Hemostasis was maintained.",
     "cpt_codes": [
       31627,
       31654,
@@ -9739,12 +9445,6 @@
       "style_type": 2,
       "generated_name": "Arthur Sanders",
       "generation_date": "2025-12-09T12:07:14.110297"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -9865,7 +9565,7 @@
   },
   {
     "note_id": "RAB010",
-    "note_text": "<PERSON>\nPt: 69M\nOp: Monarch RUL Bx + BAL\n- Nav to RUL central.\n- REBUS: Eccentric mass.\n- Bx x4.\n- BAL x1.\n- CBCT: Tool in lesion.\n- Minimal bleeding.",
+    "note_text": "Trainee Note\nPt: 69M\nOp: Monarch RUL Bx + BAL\n- Nav to RUL central.\n- REBUS: Eccentric mass.\n- Bx x4.\n- BAL x1.\n- CBCT: Tool in lesion.\n- Minimal bleeding.",
     "cpt_codes": [
       31627,
       31654,
@@ -9977,17 +9677,11 @@
       "style_type": 4,
       "generated_name": "Roger Bennett",
       "generation_date": "2025-12-09T12:07:14.110351"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "RAB010",
-    "note_text": "case <DATE_TIME>m rul mass monarch system used nav to central rul rebus showed mass eccentric took biopsies and did a lavage bal cbct confirmed position bleeding controlled suction discharge",
+    "note_text": "case 10 69m rul mass monarch system used nav to central rul rebus showed mass eccentric took biopsies and did a lavage bal cbct confirmed position bleeding controlled suction discharge",
     "cpt_codes": [
       31627,
       31654,
@@ -10099,12 +9793,6 @@
       "style_type": 5,
       "generated_name": "Joe Wood",
       "generation_date": "2025-12-09T12:07:14.110379"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -10225,7 +9913,7 @@
   },
   {
     "note_id": "RAB010",
-    "note_text": "[Indication]\n3.0 cm RUL mass.\n[<LOCATION>]\nGeneral.\n[Description]\nMonarch nav to RUL. REBUS eccentric. CBCT confirmation. <LOCATION> and BAL performed.\n[Plan]\nDischarge. Tumor board.",
+    "note_text": "[Indication]\n3.0 cm RUL mass.\n[Anesthesia]\nGeneral.\n[Description]\nMonarch nav to RUL. REBUS eccentric. CBCT confirmation. Biopsy and BAL performed.\n[Plan]\nDischarge. Tumor board.",
     "cpt_codes": [
       31627,
       31654,
@@ -10337,18 +10025,11 @@
       "style_type": 7,
       "generated_name": "Jack Ross",
       "generation_date": "2025-12-09T12:07:14.110435"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB010",
-    "note_text": "A <DATE_TIME> male with a right upper lobe mass underwent robotic bronchoscopy using the Monarch system. We navigated to the central RUL and confirmed the lesion with radial EBUS. We performed forceps biopsies and a BAL. Cone-beam CT confirmed the tool's position. The procedure was uncomplicated.",
+    "note_text": "A 69-year-old male with a right upper lobe mass underwent robotic bronchoscopy using the Monarch system. We navigated to the central RUL and confirmed the lesion with radial EBUS. We performed forceps biopsies and a BAL. Cone-beam CT confirmed the tool's position. The procedure was uncomplicated.",
     "cpt_codes": [
       31627,
       31654,
@@ -10460,17 +10141,11 @@
       "style_type": 8,
       "generated_name": "Albert Henderson",
       "generation_date": "2025-12-09T12:07:14.110461"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB010",
-    "note_text": "Indication: RUL tumor.\nTechnique: Monarch robotic piloting, ultrasonic scanning, lavage, tissue harvesting.\nFindings: 3cm mass.\nVerification: <PERSON>.\nAction: Collected tissue and washings. Hemostasis confirmed.",
+    "note_text": "Indication: RUL tumor.\nTechnique: Monarch robotic piloting, ultrasonic scanning, lavage, tissue harvesting.\nFindings: 3cm mass.\nVerification: Volumetric CT.\nAction: Collected tissue and washings. Hemostasis confirmed.",
     "cpt_codes": [
       31627,
       31654,
@@ -10582,17 +10257,11 @@
       "style_type": 9,
       "generated_name": "Jonathan Coleman",
       "generation_date": "2025-12-09T12:07:14.110489"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "RAB011",
-    "note_text": "Indication: LLL nodules.\nProc: Ion bronch, <PERSON>, bx.\nFindings: 1.4cm dominant nodule.\nAction: Bx of both nodules. Aug fluoro.\nResult: No complications.",
+    "note_text": "Indication: LLL nodules.\nProc: Ion bronch, Partial Reg, bx.\nFindings: 1.4cm dominant nodule.\nAction: Bx of both nodules. Aug fluoro.\nResult: No complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -10704,12 +10373,6 @@
       "style_type": 1,
       "generated_name": "Catherine Jenkins",
       "generation_date": "2025-12-09T12:07:14.110519"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10830,7 +10493,7 @@
   },
   {
     "note_id": "RAB011",
-    "note_text": "CPT 31627 (Nav), 31654 (EBUS), 31628 (Bx), 31623 (<PERSON>).\nNote: Multiple lesions sampled in same lobe = single unit of <DATE_TIME>. Partial registration used for efficiency.",
+    "note_text": "CPT 31627 (Nav), 31654 (EBUS), 31628 (Bx), 31623 (Brush).\nNote: Multiple lesions sampled in same lobe = single unit of 31628. Partial registration used for efficiency.",
     "cpt_codes": [
       31627,
       31654,
@@ -10942,18 +10605,11 @@
       "style_type": 3,
       "generated_name": "Joyce Powell",
       "generation_date": "2025-12-09T12:07:14.110575"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB011",
-    "note_text": "Resident Note\nPt: 61F\nOp: Ion LLL Bx (Cluster)\n- Partial reg.\n- Nav to LLL.\n- REBUS: Concentric 1.4cm.\n- Aug <LOCATION> used.\n- Bx dominant & satellite nodules.\n- Brush x1.\n- No bleeding.",
+    "note_text": "Resident Note\nPt: 61F\nOp: Ion LLL Bx (Cluster)\n- Partial reg.\n- Nav to LLL.\n- REBUS: Concentric 1.4cm.\n- Aug Fluoro used.\n- Bx dominant & satellite nodules.\n- Brush x1.\n- No bleeding.",
     "cpt_codes": [
       31627,
       31654,
@@ -11065,12 +10721,6 @@
       "style_type": 4,
       "generated_name": "Diane Long",
       "generation_date": "2025-12-09T12:07:14.110605"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -11307,7 +10957,7 @@
   },
   {
     "note_id": "RAB011",
-    "note_text": "[Indication]\nClustered LLL nodules.\n[<LOCATION>]\nGeneral.\n[Description]\nIon partial reg. Nav to LLL. REBUS concentric. Aug fluoro. Biopsies of dominant and satellite nodules.\n[Plan]\nDischarge. Path review.",
+    "note_text": "[Indication]\nClustered LLL nodules.\n[Anesthesia]\nGeneral.\n[Description]\nIon partial reg. Nav to LLL. REBUS concentric. Aug fluoro. Biopsies of dominant and satellite nodules.\n[Plan]\nDischarge. Path review.",
     "cpt_codes": [
       31627,
       31654,
@@ -11419,17 +11069,11 @@
       "style_type": 7,
       "generated_name": "Heather Flores",
       "generation_date": "2025-12-09T12:07:14.110733"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB011",
-    "note_text": "We performed a robotic bronchoscopy on a <DATE_TIME> female with clustered nodules in the left lower lobe. Using the Ion system with partial registration, we navigated to the dominant nodule. Radial EBUS showed a concentric view. We biopsied both the dominant and satellite nodules. The patient tolerated the procedure well.",
+    "note_text": "We performed a robotic bronchoscopy on a 61-year-old female with clustered nodules in the left lower lobe. Using the Ion system with partial registration, we navigated to the dominant nodule. Radial EBUS showed a concentric view. We biopsied both the dominant and satellite nodules. The patient tolerated the procedure well.",
     "cpt_codes": [
       31627,
       31654,
@@ -11541,12 +11185,6 @@
       "style_type": 8,
       "generated_name": "Teresa Washington",
       "generation_date": "2025-12-09T12:07:14.110765"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -11775,7 +11413,7 @@
   },
   {
     "note_id": "RAB012",
-    "note_text": "PROCEDURE REPORT: This <DATE_TIME> male with a right lower lobe ground-glass opacity underwent robotic bronchoscopy. The Ion system was used to navigate to the posterior segment. Radial EBUS revealed a faint acoustic halo compatible with GGO. Respiratory-gated breath-holds and augmented fluoroscopy optimized target alignment. Forceps biopsies were obtained without complication.",
+    "note_text": "PROCEDURE REPORT: This 56-year-old male with a right lower lobe ground-glass opacity underwent robotic bronchoscopy. The Ion system was used to navigate to the posterior segment. Radial EBUS revealed a faint acoustic halo compatible with GGO. Respiratory-gated breath-holds and augmented fluoroscopy optimized target alignment. Forceps biopsies were obtained without complication.",
     "cpt_codes": [
       31627,
       31654,
@@ -11879,12 +11517,6 @@
       "style_type": 2,
       "generated_name": "Terry Foster",
       "generation_date": "2025-12-09T12:07:14.110848"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -11997,7 +11629,7 @@
   },
   {
     "note_id": "RAB012",
-    "note_text": "<PERSON>\nPt: 56M\nOp: Ion RLL GGO Bx\n- Nav to RLL posterior.\n- REBUS: Faint halo (GGO).\n- Used resp gating/breath hold.\n- Aug <LOCATION> confirm.\n- Bx x4.\n- No bleeding.",
+    "note_text": "Trainee Note\nPt: 56M\nOp: Ion RLL GGO Bx\n- Nav to RLL posterior.\n- REBUS: Faint halo (GGO).\n- Used resp gating/breath hold.\n- Aug Fluoro confirm.\n- Bx x4.\n- No bleeding.",
     "cpt_codes": [
       31627,
       31654,
@@ -12101,13 +11733,6 @@
       "style_type": 4,
       "generated_name": "Keith Bryant",
       "generation_date": "2025-12-09T12:07:14.110899"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -12328,7 +11953,7 @@
   },
   {
     "note_id": "RAB012",
-    "note_text": "[Indication]\n1.3 cm RLL GGO.\n[<LOCATION>]\nGeneral.\n[Description]\nIon nav to RLL. REBUS halo. Resp gating used. 4 biopsies.\n[Plan]\nDischarge. Path review.",
+    "note_text": "[Indication]\n1.3 cm RLL GGO.\n[Anesthesia]\nGeneral.\n[Description]\nIon nav to RLL. REBUS halo. Resp gating used. 4 biopsies.\n[Plan]\nDischarge. Path review.",
     "cpt_codes": [
       31627,
       31654,
@@ -12432,17 +12057,11 @@
       "style_type": 7,
       "generated_name": "Ralph Griffin",
       "generation_date": "2025-12-09T12:07:14.110978"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB012",
-    "note_text": "A <DATE_TIME> male underwent robotic bronchoscopy for a ground-glass nodule in the right lower lobe. We utilized the Ion system and confirmed the lesion with radial EBUS, which showed a faint halo. We employed respiratory gating to stabilize the target and obtained four biopsies. The procedure was uncomplicated.",
+    "note_text": "A 56-year-old male underwent robotic bronchoscopy for a ground-glass nodule in the right lower lobe. We utilized the Ion system and confirmed the lesion with radial EBUS, which showed a faint halo. We employed respiratory gating to stabilize the target and obtained four biopsies. The procedure was uncomplicated.",
     "cpt_codes": [
       31627,
       31654,
@@ -12546,12 +12165,6 @@
       "style_type": 8,
       "generated_name": "Lawrence Diaz",
       "generation_date": "2025-12-09T12:07:14.111003"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -12780,7 +12393,7 @@
   },
   {
     "note_id": "RAB013",
-    "note_text": "OPERATIVE NOTE: The patient, a <DATE_TIME> female with COPD, underwent Monarch robotic bronchoscopy for a right middle lobe nodule. Navigation to the medial segment was achieved. Radial EBUS demonstrated an eccentric 20 mm lesion. Cone-beam CT confirmed the catheter position. Multiple biopsies and a brushing were obtained. The patient was extubated without difficulty.",
+    "note_text": "OPERATIVE NOTE: The patient, a 73-year-old female with COPD, underwent Monarch robotic bronchoscopy for a right middle lobe nodule. Navigation to the medial segment was achieved. Radial EBUS demonstrated an eccentric 20 mm lesion. Cone-beam CT confirmed the catheter position. Multiple biopsies and a brushing were obtained. The patient was extubated without difficulty.",
     "cpt_codes": [
       31627,
       31654,
@@ -12892,17 +12505,11 @@
       "style_type": 2,
       "generated_name": "Evelyn Ford",
       "generation_date": "2025-12-09T12:07:14.111088"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB013",
-    "note_text": "CPT 31627 (Monarch Nav), 31654 (EBUS), 31628 (Bx), 31623 (<PERSON>).\nComorbidity: COPD.\nImaging: CBCT used.\nOutcome: Successful sampling.",
+    "note_text": "CPT 31627 (Monarch Nav), 31654 (EBUS), 31628 (Bx), 31623 (Brush).\nComorbidity: COPD.\nImaging: CBCT used.\nOutcome: Successful sampling.",
     "cpt_codes": [
       31627,
       31654,
@@ -13014,12 +12621,6 @@
       "style_type": 3,
       "generated_name": "Jean Hamilton",
       "generation_date": "2025-12-09T12:07:14.111175"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13372,7 +12973,7 @@
   },
   {
     "note_id": "RAB013",
-    "note_text": "[Indication]\n2.0 cm RML nodule, COPD.\n[<LOCATION>]\nGeneral.\n[Description]\nMonarch nav to RML. REBUS eccentric. CBCT confirmation. 5 biopsies, 1 brush.\n[Plan]\nDischarge. Path review.",
+    "note_text": "[Indication]\n2.0 cm RML nodule, COPD.\n[Anesthesia]\nGeneral.\n[Description]\nMonarch nav to RML. REBUS eccentric. CBCT confirmation. 5 biopsies, 1 brush.\n[Plan]\nDischarge. Path review.",
     "cpt_codes": [
       31627,
       31654,
@@ -13484,17 +13085,11 @@
       "style_type": 7,
       "generated_name": "Joan Woods",
       "generation_date": "2025-12-09T12:07:14.111303"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB013",
-    "note_text": "We performed a robotic bronchoscopy on a <DATE_TIME> female with COPD and a right middle lobe nodule. Using the Monarch platform, we navigated to the medial segment. Radial EBUS and CBCT confirmed the lesion. We obtained multiple biopsies and a brushing. The patient was extubated and recovered well.",
+    "note_text": "We performed a robotic bronchoscopy on a 73-year-old female with COPD and a right middle lobe nodule. Using the Monarch platform, we navigated to the medial segment. Radial EBUS and CBCT confirmed the lesion. We obtained multiple biopsies and a brushing. The patient was extubated and recovered well.",
     "cpt_codes": [
       31627,
       31654,
@@ -13606,17 +13201,11 @@
       "style_type": 8,
       "generated_name": "Ashley Cole",
       "generation_date": "2025-12-09T12:07:14.111332"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB013",
-    "note_text": "Indication: RML neoplasm.\nTechnique: Monarch robotic piloting, ultrasonic scanning, tissue acquisition.\nFindings: 20mm eccentric target.\nVerification: <PERSON>.\nAction: Collected specimens. No hemorrhage.",
+    "note_text": "Indication: RML neoplasm.\nTechnique: Monarch robotic piloting, ultrasonic scanning, tissue acquisition.\nFindings: 20mm eccentric target.\nVerification: Volumetric CT.\nAction: Collected specimens. No hemorrhage.",
     "cpt_codes": [
       31627,
       31654,
@@ -13728,12 +13317,6 @@
       "style_type": 9,
       "generated_name": "Judith West",
       "generation_date": "2025-12-09T12:07:14.111520"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13854,7 +13437,7 @@
   },
   {
     "note_id": "RAB014",
-    "note_text": "PROCEDURE REPORT: This <DATE_TIME> male with a left upper lobe nodule underwent robotic-assisted bronchoscopy (Ion). The catheter was navigated to the anterior segment. Radial EBUS revealed a concentric 16 mm lesion. Cone-beam CT confirmed tool-in-lesion. Biopsies and a brushing were obtained. There were no immediate complications.",
+    "note_text": "PROCEDURE REPORT: This 65-year-old male with a left upper lobe nodule underwent robotic-assisted bronchoscopy (Ion). The catheter was navigated to the anterior segment. Radial EBUS revealed a concentric 16 mm lesion. Cone-beam CT confirmed tool-in-lesion. Biopsies and a brushing were obtained. There were no immediate complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -13966,17 +13549,11 @@
       "style_type": 2,
       "generated_name": "Benjamin Owens",
       "generation_date": "2025-12-09T12:07:14.111587"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB014",
-    "note_text": "CPT 31627 (Nav), 31654 (EBUS), 31628 (Bx), 31623 (<PERSON>).\nTarget: LUL anterior segment.\nImaging: CBCT confirmed location.\nOutcome: Samples obtained.",
+    "note_text": "CPT 31627 (Nav), 31654 (EBUS), 31628 (Bx), 31623 (Brush).\nTarget: LUL anterior segment.\nImaging: CBCT confirmed location.\nOutcome: Samples obtained.",
     "cpt_codes": [
       31627,
       31654,
@@ -14088,17 +13665,11 @@
       "style_type": 3,
       "generated_name": "Bruce Reynolds",
       "generation_date": "2025-12-09T12:07:14.111615"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "RAB014",
-    "note_text": "<PERSON>\nPt: 65M\nOp: Ion LUL Bx\n- Nav to LUL anterior.\n- REBUS: 16mm concentric.\n- CBCT: Tool in lesion.\n- Bx x4, Brush x1.\n- Minimal oozing.\n- Stable.",
+    "note_text": "Trainee Note\nPt: 65M\nOp: Ion LUL Bx\n- Nav to LUL anterior.\n- REBUS: 16mm concentric.\n- CBCT: Tool in lesion.\n- Bx x4, Brush x1.\n- Minimal oozing.\n- Stable.",
     "cpt_codes": [
       31627,
       31654,
@@ -14210,17 +13781,11 @@
       "style_type": 4,
       "generated_name": "Brandon Fisher",
       "generation_date": "2025-12-09T12:07:14.111645"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "RAB014",
-    "note_text": "case <DATE_TIME>m lul nodule ion robotic bronch nav to anterior segment rebus showed concentric 16mm lesion cbct confirmed tool in lesion took biopsies and brush minimal oozing stopped on its own",
+    "note_text": "case 14 65m lul nodule ion robotic bronch nav to anterior segment rebus showed concentric 16mm lesion cbct confirmed tool in lesion took biopsies and brush minimal oozing stopped on its own",
     "cpt_codes": [
       31627,
       31654,
@@ -14332,12 +13897,6 @@
       "style_type": 5,
       "generated_name": "Adam Ellis",
       "generation_date": "2025-12-09T12:07:14.111671"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -14458,7 +14017,7 @@
   },
   {
     "note_id": "RAB014",
-    "note_text": "[Indication]\n1.6 cm LUL nodule.\n[<LOCATION>]\nGeneral.\n[Description]\nIon nav to LUL. REBUS concentric. CBCT confirmation. Biopsies and brush.\n[Plan]\nDischarge. Path review.",
+    "note_text": "[Indication]\n1.6 cm LUL nodule.\n[Anesthesia]\nGeneral.\n[Description]\nIon nav to LUL. REBUS concentric. CBCT confirmation. Biopsies and brush.\n[Plan]\nDischarge. Path review.",
     "cpt_codes": [
       31627,
       31654,
@@ -14570,17 +14129,11 @@
       "style_type": 7,
       "generated_name": "Fred Gibson",
       "generation_date": "2025-12-09T12:07:14.111728"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB014",
-    "note_text": "A <DATE_TIME> male underwent robotic bronchoscopy for a left upper lobe nodule. We used the Ion system to navigate to the anterior segment. Radial EBUS showed a concentric lesion, and CBCT confirmed the tool was inside. We obtained biopsies and a brushing with minimal oozing. The procedure was successful.",
+    "note_text": "A 65-year-old male underwent robotic bronchoscopy for a left upper lobe nodule. We used the Ion system to navigate to the anterior segment. Radial EBUS showed a concentric lesion, and CBCT confirmed the tool was inside. We obtained biopsies and a brushing with minimal oozing. The procedure was successful.",
     "cpt_codes": [
       31627,
       31654,
@@ -14692,12 +14245,6 @@
       "style_type": 8,
       "generated_name": "Wayne McDonald",
       "generation_date": "2025-12-09T12:07:14.111756"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -14934,7 +14481,7 @@
   },
   {
     "note_id": "RAB015",
-    "note_text": "OPERATIVE SUMMARY: The patient, a <DATE_TIME> female, underwent Monarch robotic bronchoscopy for a left lower lobe nodule. Navigation to the superior segment was successful. Radial EBUS identified an eccentric 17 mm lesion. Augmented fluoroscopy confirmed alignment; CBCT was not required. Biopsies and a brushing were collected. The patient remained stable throughout.",
+    "note_text": "OPERATIVE SUMMARY: The patient, a 60-year-old female, underwent Monarch robotic bronchoscopy for a left lower lobe nodule. Navigation to the superior segment was successful. Radial EBUS identified an eccentric 17 mm lesion. Augmented fluoroscopy confirmed alignment; CBCT was not required. Biopsies and a brushing were collected. The patient remained stable throughout.",
     "cpt_codes": [
       31627,
       31654,
@@ -15046,17 +14593,11 @@
       "style_type": 2,
       "generated_name": "Janice Ortiz",
       "generation_date": "2025-12-09T12:07:14.111841"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "RAB015",
-    "note_text": "CPT 31627 (Monarch Nav), 31654 (EBUS), 31628 (Bx), 31623 (<PERSON>).\nTarget: LLL superior segment.\nImaging: Augmented fluoroscopy sufficient.\nOutcome: Samples obtained.",
+    "note_text": "CPT 31627 (Monarch Nav), 31654 (EBUS), 31628 (Bx), 31623 (Brush).\nTarget: LLL superior segment.\nImaging: Augmented fluoroscopy sufficient.\nOutcome: Samples obtained.",
     "cpt_codes": [
       31627,
       31654,
@@ -15168,12 +14709,6 @@
       "style_type": 3,
       "generated_name": "Kelly Gomez",
       "generation_date": "2025-12-09T12:07:14.111868"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -15526,7 +15061,7 @@
   },
   {
     "note_id": "RAB015",
-    "note_text": "[Indication]\n1.7 cm LLL nodule.\n[<LOCATION>]\nGeneral.\n[Description]\nMonarch nav to LLL. REBUS eccentric. Aug fluoro confirmation. Biopsies and brush.\n[Plan]\nDischarge. Path review.",
+    "note_text": "[Indication]\n1.7 cm LLL nodule.\n[Anesthesia]\nGeneral.\n[Description]\nMonarch nav to LLL. REBUS eccentric. Aug fluoro confirmation. Biopsies and brush.\n[Plan]\nDischarge. Path review.",
     "cpt_codes": [
       31627,
       31654,
@@ -15638,17 +15173,11 @@
       "style_type": 7,
       "generated_name": "Kathy Webb",
       "generation_date": "2025-12-09T12:07:14.111984"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "RAB015",
-    "note_text": "We performed a robotic bronchoscopy on a <DATE_TIME> female using the Monarch platform for a left lower lobe nodule. We navigated to the superior segment and visualized the lesion with radial EBUS. Augmented fluoroscopy confirmed the alignment. We collected multiple samples without complications.",
+    "note_text": "We performed a robotic bronchoscopy on a 60-year-old female using the Monarch platform for a left lower lobe nodule. We navigated to the superior segment and visualized the lesion with radial EBUS. Augmented fluoroscopy confirmed the alignment. We collected multiple samples without complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -15760,12 +15289,6 @@
       "style_type": 8,
       "generated_name": "Theresa Simpson",
       "generation_date": "2025-12-09T12:07:14.112012"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {

@@ -109,7 +109,7 @@
     }
   },
   {
-    "note_text": "CLINICAL SUMMARY: This <DATE_TIME> female with a right-sided loculated parapneumonic effusion required intervention. The indwelling pleural catheter exhibited poor drainage secondary to loculations.\nINTERVENTION: Therapeutic instillation of fibrinolytic agents. Under sterile conditions, tissue plasminogen activator (10 mg) and dornase alfa (5 mg) were administered into the pleural space via the existing catheter. The device was clamped for a dwell time of 120 minutes to facilitate fibrinolysis, then opened to gravity drainage. The patient tolerated the procedure without adverse hemodynamic sequelae.",
+    "note_text": "CLINICAL SUMMARY: This 67-year-old female with a right-sided loculated parapneumonic effusion required intervention. The indwelling pleural catheter exhibited poor drainage secondary to loculations.\nINTERVENTION: Therapeutic instillation of fibrinolytic agents. Under sterile conditions, tissue plasminogen activator (10 mg) and dornase alfa (5 mg) were administered into the pleural space via the existing catheter. The device was clamped for a dwell time of 120 minutes to facilitate fibrinolysis, then opened to gravity drainage. The patient tolerated the procedure without adverse hemodynamic sequelae.",
     "cpt_codes": [
       32561
     ],
@@ -215,16 +215,10 @@
       "style_type": 2,
       "generated_name": "Betty Liu",
       "generation_date": "2025-12-09T14:15:33.942036"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Instillation of fibrinolytic agent (CPT 32561).\nDevice: Indwelling pleural catheter (Right).\nAgents: tPA 10mg + DNase 5mg.\nTechnique: Sterile prep, injection of agents, <DATE_TIME> clamp time.\nMedical Necessity: To break down loculations in complex parapneumonic effusion.",
+    "note_text": "Procedure: Instillation of fibrinolytic agent (CPT 32561).\nDevice: Indwelling pleural catheter (Right).\nAgents: tPA 10mg + DNase 5mg.\nTechnique: Sterile prep, injection of agents, 2-hour clamp time.\nMedical Necessity: To break down loculations in complex parapneumonic effusion.",
     "cpt_codes": [
       32561
     ],
@@ -330,16 +324,10 @@
       "style_type": 3,
       "generated_name": "Catherine Zhang",
       "generation_date": "2025-12-09T14:15:33.942074"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure Note: Fibrinolytic Instillation\nIndication: Loculated effusion\nSteps:\n1. Sterile prep of catheter hub.\n2. Flush with NS.\n3. Instilled tPA <DATE_TIME>/DNase 5mg.\n4. Clamped x 2 hours.\n5. Unclamped.\nPatient tolerated well.",
+    "note_text": "Procedure Note: Fibrinolytic Instillation\nIndication: Loculated effusion\nSteps:\n1. Sterile prep of catheter hub.\n2. Flush with NS.\n3. Instilled tPA 10mg/DNase 5mg.\n4. Clamped x 2 hours.\n5. Unclamped.\nPatient tolerated well.",
     "cpt_codes": [
       32561
     ],
@@ -445,16 +433,10 @@
       "style_type": 4,
       "generated_name": "Diana Wu",
       "generation_date": "2025-12-09T14:15:33.942107"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "pt with loculated effusion right side we did the tpa dnase instillation today tube was flushed 10 tpa 5 dnase went in fine clamped it for <DATE_TIME> then opened it up no issues draining better now plan for bid dosing.",
+    "note_text": "pt with loculated effusion right side we did the tpa dnase instillation today tube was flushed 10 tpa 5 dnase went in fine clamped it for two hours then opened it up no issues draining better now plan for bid dosing.",
     "cpt_codes": [
       32561
     ],
@@ -560,12 +542,6 @@
       "style_type": 5,
       "generated_name": "Elena Chang",
       "generation_date": "2025-12-09T14:15:33.942138"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -678,7 +654,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRight complex parapneumonic effusion with loculations.\n[<LOCATION>]\nNone (Local catheter access).\n[Description]\nInstilled 10mg tPA and 5mg DNase via 14Fr chest tube. Dwell time 2 hours.\n[Plan]\nBID dosing x 6 doses.",
+    "note_text": "[Indication]\nRight complex parapneumonic effusion with loculations.\n[Anesthesia]\nNone (Local catheter access).\n[Description]\nInstilled 10mg tPA and 5mg DNase via 14Fr chest tube. Dwell time 2 hours.\n[Plan]\nBID dosing x 6 doses.",
     "cpt_codes": [
       32561
     ],
@@ -784,16 +760,10 @@
       "style_type": 7,
       "generated_name": "Grace Lin",
       "generation_date": "2025-12-09T14:15:33.942197"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> is a <DATE_TIME> female suffering from a right-sided pneumonia that has developed into a complex, loculated effusion. Today, we proceeded with <DATE_TIME> of intrapleural fibrinolytic therapy. Using her existing 14Fr chest tube, we instilled a mixture of 10mg tPA and 5mg DNase. We clamped the tube for <DATE_TIME> to allow the medication to work, then opened it back up for drainage. She handled it very well.",
+    "note_text": "Ms. Chen is a 67-year-old female suffering from a right-sided pneumonia that has developed into a complex, loculated effusion. Today, we proceeded with the first day of intrapleural fibrinolytic therapy. Using her existing 14Fr chest tube, we instilled a mixture of 10mg tPA and 5mg DNase. We clamped the tube for two hours to allow the medication to work, then opened it back up for drainage. She handled it very well.",
     "cpt_codes": [
       32561
     ],
@@ -899,15 +869,6 @@
       "style_type": 8,
       "generated_name": "Helen Yang",
       "generation_date": "2025-12-09T14:15:33.942226"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -1020,7 +981,7 @@
     }
   },
   {
-    "note_text": "Indication: Empyema, multiloculated.\nProcedure: tPA/DNase instillation <DATE_TIME>.\n- Cath flushed.\n- 10mg tPA / 5mg DNase instilled.\n- 2hr dwell.\n- Unclamped to water seal.",
+    "note_text": "Indication: Empyema, multiloculated.\nProcedure: tPA/DNase instillation Day 1.\n- Cath flushed.\n- 10mg tPA / 5mg DNase instilled.\n- 2hr dwell.\n- Unclamped to water seal.",
     "cpt_codes": [
       32561
     ],
@@ -1119,16 +1080,10 @@
       "style_type": 1,
       "generated_name": "Ian Roberts",
       "generation_date": "2025-12-09T14:15:33.942284"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Intrapleural administration of fibrinolytic agents.\nINDICATION: A <DATE_TIME> male with a multiloculated empyema post-pneumonia.\n<PERSON>: The indwelling pigtail catheter was prepped. A solution containing 10 mg of tissue plasminogen activator and 5 mg of dornase alfa was instilled into the pleural cavity. The catheter was clamped for a dwell period of <DATE_TIME> to maximize therapeutic effect before being unclamped to water seal drainage.",
+    "note_text": "PROCEDURE NOTE: Intrapleural administration of fibrinolytic agents.\nINDICATION: A 76-year-old male with a multiloculated empyema post-pneumonia.\nDESCRIPTION: The indwelling pigtail catheter was prepped. A solution containing 10 mg of tissue plasminogen activator and 5 mg of dornase alfa was instilled into the pleural cavity. The catheter was clamped for a dwell period of two hours to maximize therapeutic effect before being unclamped to water seal drainage.",
     "cpt_codes": [
       32561
     ],
@@ -1227,18 +1182,10 @@
       "style_type": 2,
       "generated_name": "Jack Thomas",
       "generation_date": "2025-12-09T14:15:33.942310"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Billing Code: <DATE_TIME> (Instillation of fibrinolytic agent).\nDosage: tPA 10mg, DNase 5mg.\nRoute: Via existing indwelling pleural catheter.\nIndication: Empyema with septations (ICD-10 J86.9).\nNote: First dose of planned regimen.",
+    "note_text": "Billing Code: 32561 (Instillation of fibrinolytic agent).\nDosage: tPA 10mg, DNase 5mg.\nRoute: Via existing indwelling pleural catheter.\nIndication: Empyema with septations (ICD-10 J86.9).\nNote: First dose of planned regimen.",
     "cpt_codes": [
       32561
     ],
@@ -1337,16 +1284,10 @@
       "style_type": 3,
       "generated_name": "Kevin Davis",
       "generation_date": "2025-12-09T14:15:33.942337"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Resident Procedure Note\nPatient: <PERSON>\nProcedure: Fibrinolytic Instillation\nSteps:\n1. Time out performed.\n2. Catheter hub cleaned.\n3. Meds instilled (tPA/DNase).\n4. Clamped x 2h.\n5. Opened to drainage.\nNo complications.",
+    "note_text": "Resident Procedure Note\nPatient: Harold Williams\nProcedure: Fibrinolytic Instillation\nSteps:\n1. Time out performed.\n2. Catheter hub cleaned.\n3. Meds instilled (tPA/DNase).\n4. Clamped x 2h.\n5. Opened to drainage.\nNo complications.",
     "cpt_codes": [
       32561
     ],
@@ -1445,16 +1386,10 @@
       "style_type": 4,
       "generated_name": "Liam Wilson",
       "generation_date": "2025-12-09T14:15:33.942371"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> 76M with empyema we put in the lytics today tpa 10 and dnase 5 pushed through the pigtail clamped it for <DATE_TIME> draining ok now no pain fever or anything will do again <DATE_TIME>.",
+    "note_text": "Harold Williams 76M with empyema we put in the lytics today tpa 10 and dnase 5 pushed through the pigtail clamped it for a couple hours draining ok now no pain fever or anything will do again tonight.",
     "cpt_codes": [
       32561
     ],
@@ -1553,18 +1488,10 @@
       "style_type": 5,
       "generated_name": "Mason Clark",
       "generation_date": "2025-12-09T14:15:33.942397"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "76M with multiloculated empyema. Instillation of fibrinolytic agents via indwelling pleural catheter <DATE_TIME>. Sterile technique used. Pleural catheter flushed with 10mL saline. tPA 10mg in 30mL NS and DNase 5mg in 30mL NS instilled. Total dwell time 2 hours. Catheter unclamped to water seal. Patient stable.",
+    "note_text": "76M with multiloculated empyema. Instillation of fibrinolytic agents via indwelling pleural catheter Day 1. Sterile technique used. Pleural catheter flushed with 10mL saline. tPA 10mg in 30mL NS and DNase 5mg in 30mL NS instilled. Total dwell time 2 hours. Catheter unclamped to water seal. Patient stable.",
     "cpt_codes": [
       32561
     ],
@@ -1663,16 +1590,10 @@
       "style_type": 6,
       "generated_name": "Noah Lewis",
       "generation_date": "2025-12-09T14:15:33.942423"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nEmpyema with multiple septations.\n[<LOCATION>]\nNone.\n[Description]\nInstilled tPA 10mg and DNase 5mg via left pigtail catheter. Dwell time 2 hours.\n[Plan]\nContinue q12h dosing.",
+    "note_text": "[Indication]\nEmpyema with multiple septations.\n[Anesthesia]\nNone.\n[Description]\nInstilled tPA 10mg and DNase 5mg via left pigtail catheter. Dwell time 2 hours.\n[Plan]\nContinue q12h dosing.",
     "cpt_codes": [
       32561
     ],
@@ -1771,16 +1692,10 @@
       "style_type": 7,
       "generated_name": "Oliver Walker",
       "generation_date": "2025-12-09T14:15:33.942450"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> has a complicated empyema that isn't draining well with just the catheter. Today we started fibrinolytic therapy to break up the loculations. We injected tPA and DNase through his chest tube and let it sit for <DATE_TIME>. Afterward, we opened the tube back up to the water seal. He didn't have any pain or fever during the process.",
+    "note_text": "Mr. Williams has a complicated empyema that isn't draining well with just the catheter. Today we started fibrinolytic therapy to break up the loculations. We injected tPA and DNase through his chest tube and let it sit for two hours. Afterward, we opened the tube back up to the water seal. He didn't have any pain or fever during the process.",
     "cpt_codes": [
       32561
     ],
@@ -1879,17 +1794,10 @@
       "style_type": 8,
       "generated_name": "Peter Hall",
       "generation_date": "2025-12-09T14:15:33.942477"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Indication: Septated empyema.\nAction: Introduced fibrinolytic agents via pleural tube (<DATE_TIME>).\nDetails: The catheter was prepped. 10mg alteplase and 5mg dornase alfa were injected. The tube was closed for 2 hours, then released to the water seal. Patient remained stable.",
+    "note_text": "Indication: Septated empyema.\nAction: Introduced fibrinolytic agents via pleural tube (Day 1).\nDetails: The catheter was prepped. 10mg alteplase and 5mg dornase alfa were injected. The tube was closed for 2 hours, then released to the water seal. Patient remained stable.",
     "cpt_codes": [
       32561
     ],
@@ -1988,16 +1896,10 @@
       "style_type": 9,
       "generated_name": "Quinn Allen",
       "generation_date": "2025-12-09T14:15:33.942504"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Dx: Loculated MPE (Breast CA).\nProc: PleurX fibrinolysis Day 1.\n- 10mg tPA instilled.\n- Clamped <DATE_TIME>.\n- Drained 450mL serosanguinous.\n- No complications.",
+    "note_text": "Dx: Loculated MPE (Breast CA).\nProc: PleurX fibrinolysis Day 1.\n- 10mg tPA instilled.\n- Clamped 1.5h.\n- Drained 450mL serosanguinous.\n- No complications.",
     "cpt_codes": [
       32561
     ],
@@ -2103,16 +2005,10 @@
       "style_type": 1,
       "generated_name": "Rachel Gomez",
       "generation_date": "2025-12-09T14:15:33.942534"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Instillation of fibrinolytic agent via tunneled pleural catheter.\nDIAGNOSIS: Metastatic breast cancer with loculated malignant pleural effusion.\nDETAILS: The patency of the PleurX catheter was confirmed. Ten milligrams of alteplase were instilled into the pleural space. Following a <DATE_TIME> clamp period, gravity drainage yielded 450 mL of serosanguinous fluid, suggesting effective lysis of loculations.",
+    "note_text": "PROCEDURE: Instillation of fibrinolytic agent via tunneled pleural catheter.\nDIAGNOSIS: Metastatic breast cancer with loculated malignant pleural effusion.\nDETAILS: The patency of the PleurX catheter was confirmed. Ten milligrams of alteplase were instilled into the pleural space. Following a 90-minute clamp period, gravity drainage yielded 450 mL of serosanguinous fluid, suggesting effective lysis of loculations.",
     "cpt_codes": [
       32561
     ],
@@ -2218,12 +2114,6 @@
       "style_type": 2,
       "generated_name": "Sofia Perez",
       "generation_date": "2025-12-09T14:15:33.942562"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -2445,7 +2335,7 @@
     }
   },
   {
-    "note_text": "<PERSON> w metastatic breast ca has a loculated effusion pleurx wasn't draining so we put in 10 of tpa clamped it for <DATE_TIME> got out 450ml fluid looks bloody but thats expected no issues.",
+    "note_text": "Rosa Martinez w metastatic breast ca has a loculated effusion pleurx wasn't draining so we put in 10 of tpa clamped it for an hour and half got out 450ml fluid looks bloody but thats expected no issues.",
     "cpt_codes": [
       32561
     ],
@@ -2551,17 +2441,10 @@
       "style_type": 5,
       "generated_name": "Vanessa Cruz",
       "generation_date": "2025-12-09T14:15:33.942654"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Malignant pleural effusion with loculations breast CA metastatic. Fibrinolytic agent instillation via PleurX catheter <DATE_TIME>. PleurX catheter confirmed patent with flush. Instilled 10mg alteplase in 50mL saline. Catheter clamped 1.5 hours. Released to gravity drainage. 450mL serosanguinous fluid drained over <DATE_TIME>. No complications.",
+    "note_text": "Malignant pleural effusion with loculations breast CA metastatic. Fibrinolytic agent instillation via PleurX catheter Day 1. PleurX catheter confirmed patent with flush. Instilled 10mg alteplase in 50mL saline. Catheter clamped 1.5 hours. Released to gravity drainage. 450mL serosanguinous fluid drained over next 4 hours. No complications.",
     "cpt_codes": [
       32561
     ],
@@ -2667,17 +2550,10 @@
       "style_type": 6,
       "generated_name": "Wendy Ortiz",
       "generation_date": "2025-12-09T14:15:33.942691"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nLoculated malignant pleural effusion.\n[<LOCATION>]\nNone.\n[Description]\nInstilled 10mg Alteplase via left PleurX. Clamped 90 mins. Drained 450mL.\n[Plan]\nDaily instillations.",
+    "note_text": "[Indication]\nLoculated malignant pleural effusion.\n[Anesthesia]\nNone.\n[Description]\nInstilled 10mg Alteplase via left PleurX. Clamped 90 mins. Drained 450mL.\n[Plan]\nDaily instillations.",
     "cpt_codes": [
       32561
     ],
@@ -2783,16 +2659,10 @@
       "style_type": 7,
       "generated_name": "Ximena Ramos",
       "generation_date": "2025-12-09T14:15:33.942720"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> has a malignant effusion that has become loculated, reducing the effectiveness of her PleurX catheter. Today we treated this by injecting 10mg of alteplase through the catheter. We clamped it for <DATE_TIME> to let the medicine work. When we opened it back up, we were able to drain 450mL of fluid, which is a good result.",
+    "note_text": "Ms. Martinez has a malignant effusion that has become loculated, reducing the effectiveness of her PleurX catheter. Today we treated this by injecting 10mg of alteplase through the catheter. We clamped it for about an hour and a half to let the medicine work. When we opened it back up, we were able to drain 450mL of fluid, which is a good result.",
     "cpt_codes": [
       32561
     ],
@@ -2898,13 +2768,6 @@
       "style_type": 8,
       "generated_name": "Yolanda Flores",
       "generation_date": "2025-12-09T14:15:33.942754"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3122,7 +2985,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE REPORT: Intrapleural fibrinolytic therapy for organized hemothorax.\nCLINICAL CONTEXT: <DATE_TIME> male post-trauma with retained hemothorax.\nINTERVENTION: To facilitate drainage of the organized collection, sequential instillation of alteplase (10 mg) and dornase alfa (5 mg) was performed via the chest tube. Following a <DATE_TIME> clamp period, suction was reapplied, yielding 200 mL of dark sanguineous fluid.",
+    "note_text": "PROCEDURE REPORT: Intrapleural fibrinolytic therapy for organized hemothorax.\nCLINICAL CONTEXT: 54-year-old male post-trauma with retained hemothorax.\nINTERVENTION: To facilitate drainage of the organized collection, sequential instillation of alteplase (10 mg) and dornase alfa (5 mg) was performed via the chest tube. Following a two-hour clamp period, suction was reapplied, yielding 200 mL of dark sanguineous fluid.",
     "cpt_codes": [
       32561
     ],
@@ -3224,13 +3087,6 @@
       "style_type": 2,
       "generated_name": "Brian Murphy",
       "generation_date": "2025-12-09T14:15:33.942843"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3444,7 +3300,7 @@
     }
   },
   {
-    "note_text": "Trauma patient with the stuck hemothorax we did the lytics tpa dnase put it in clamped for <DATE_TIME> got out about 200 cc dark blood patient is fine sats good on 2L plan for bid dosing.",
+    "note_text": "Trauma patient with the stuck hemothorax we did the lytics tpa dnase put it in clamped for two hours got out about 200 cc dark blood patient is fine sats good on 2L plan for bid dosing.",
     "cpt_codes": [
       32561
     ],
@@ -3546,16 +3402,10 @@
       "style_type": 5,
       "generated_name": "Ethan Ryan",
       "generation_date": "2025-12-09T14:15:33.942927"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Intrapleural fibrinolytic administration <DATE_TIME>. Organized hemothorax post-trauma. Confirmed tube patency. Instilled <PERSON> 10mg and <PERSON> alfa 5mg. <PERSON> instillation. Catheter clamped for 2 hours total dwell. Opened to -20cmH2O suction. Immediate output 200mL dark bloody fluid. Patient hemodynamically stable.",
+    "note_text": "Intrapleural fibrinolytic administration Day 1. Organized hemothorax post-trauma. Confirmed tube patency. Instilled Alteplase 10mg and Dornase alfa 5mg. Sequential instillation. Catheter clamped for 2 hours total dwell. Opened to -20cmH2O suction. Immediate output 200mL dark bloody fluid. Patient hemodynamically stable.",
     "cpt_codes": [
       32561
     ],
@@ -3657,19 +3507,10 @@
       "style_type": 6,
       "generated_name": "Frank O'Connor",
       "generation_date": "2025-12-09T14:15:33.942953"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nOrganized traumatic hemothorax.\n[<LOCATION>]\nNone.\n[Description]\nInstilled tPA <DATE_TIME>/DNase 5mg via chest tube. 2 hour dwell. 200mL output.\n[Plan]\nBID dosing x 3 days.",
+    "note_text": "[Indication]\nOrganized traumatic hemothorax.\n[Anesthesia]\nNone.\n[Description]\nInstilled tPA 10mg/DNase 5mg via chest tube. 2 hour dwell. 200mL output.\n[Plan]\nBID dosing x 3 days.",
     "cpt_codes": [
       32561
     ],
@@ -3771,17 +3612,10 @@
       "style_type": 7,
       "generated_name": "George Byrne",
       "generation_date": "2025-12-09T14:15:33.942983"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> is dealing with a retained hemothorax from his car accident. To help clear the blood clots, we administered tPA and DNase through his chest tube today. We let the medication sit for <DATE_TIME> before turning the suction back on. This resulted in the drainage of 200mL of dark, bloody fluid, indicating it's breaking up the clot.",
+    "note_text": "Mr. O'Brien is dealing with a retained hemothorax from his car accident. To help clear the blood clots, we administered tPA and DNase through his chest tube today. We let the medication sit for two hours before turning the suction back on. This resulted in the drainage of 200mL of dark, bloody fluid, indicating it's breaking up the clot.",
     "cpt_codes": [
       32561
     ],
@@ -3883,13 +3717,6 @@
       "style_type": 8,
       "generated_name": "Henry Doyle",
       "generation_date": "2025-12-09T14:15:33.943009"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3998,7 +3825,7 @@
     }
   },
   {
-    "note_text": "Dx: Loculated MPE (NSCLC).\nProc: IPC fibrinolysis <DATE_TIME>.\n- 10mg tPA / 5mg DNase.\n- 2hr dwell w/ repositioning.\n- Drained 850mL straw fluid.\n- SpO2 improved 89->94%.",
+    "note_text": "Dx: Loculated MPE (NSCLC).\nProc: IPC fibrinolysis Day 1.\n- 10mg tPA / 5mg DNase.\n- 2hr dwell w/ repositioning.\n- Drained 850mL straw fluid.\n- SpO2 improved 89->94%.",
     "cpt_codes": [
       32561
     ],
@@ -4106,16 +3933,10 @@
       "style_type": 1,
       "generated_name": "Jane Smith",
       "generation_date": "2025-12-09T14:15:33.943067"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Intrapleural fibrinolytic therapy via indwelling pleural catheter.\nINDICATION: Recurrent loculated malignant pleural effusion secondary to Stage IV NSCLC.\n<PERSON>: A solution of 10 mg tPA and 5 mg DNase was instilled into the pleural space via the PleurX catheter. The patient was repositioned during the <DATE_TIME> dwell time to ensure distribution. Subsequent drainage yielded 850 mL of fluid, resulting in symptomatic improvement and increased oxygen saturation.",
+    "note_text": "PROCEDURE: Intrapleural fibrinolytic therapy via indwelling pleural catheter.\nINDICATION: Recurrent loculated malignant pleural effusion secondary to Stage IV NSCLC.\nDESCRIPTION: A solution of 10 mg tPA and 5 mg DNase was instilled into the pleural space via the PleurX catheter. The patient was repositioned during the two-hour dwell time to ensure distribution. Subsequent drainage yielded 850 mL of fluid, resulting in symptomatic improvement and increased oxygen saturation.",
     "cpt_codes": [
       32561
     ],
@@ -4223,13 +4044,6 @@
       "style_type": 2,
       "generated_name": "Kelly Johnson",
       "generation_date": "2025-12-09T14:15:33.943097"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -4455,7 +4269,7 @@
     }
   },
   {
-    "note_text": "<PERSON> lung cancer patient with the pleurx that stopped draining we put in tpa and dnase today clamped it moved her around a bit after <DATE_TIME> got out huge amount 850ml she feels way better sats up.",
+    "note_text": "Jennifer Walsh lung cancer patient with the pleurx that stopped draining we put in tpa and dnase today clamped it moved her around a bit after two hours got out huge amount 850ml she feels way better sats up.",
     "cpt_codes": [
       32561
     ],
@@ -4563,13 +4377,6 @@
       "style_type": 5,
       "generated_name": "Nicole Miller",
       "generation_date": "2025-12-09T14:15:33.943183"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -4684,7 +4491,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLoculated malignant pleural effusion (NSCLC).\n[<LOCATION>]\nNone.\n[Description]\nInstilled 10mg tPA/5mg DNase via IPC. 2 hour dwell. Drained 850mL.\n[Plan]\nDaily x 3 days.",
+    "note_text": "[Indication]\nLoculated malignant pleural effusion (NSCLC).\n[Anesthesia]\nNone.\n[Description]\nInstilled 10mg tPA/5mg DNase via IPC. 2 hour dwell. Drained 850mL.\n[Plan]\nDaily x 3 days.",
     "cpt_codes": [
       32561
     ],
@@ -4792,16 +4599,10 @@
       "style_type": 7,
       "generated_name": "Patricia Garcia",
       "generation_date": "2025-12-09T14:15:33.943266"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> has a malignant effusion that wasn't draining due to loculations. We treated this by injecting tPA and DNase into her PleurX catheter. We asked her to move side-to-side while the tube was clamped for <DATE_TIME> to spread the medicine. This was very effective, draining 850mL of fluid and significantly improving her oxygen levels and breathing.",
+    "note_text": "Ms. Walsh has a malignant effusion that wasn't draining due to loculations. We treated this by injecting tPA and DNase into her PleurX catheter. We asked her to move side-to-side while the tube was clamped for two hours to spread the medicine. This was very effective, draining 850mL of fluid and significantly improving her oxygen levels and breathing.",
     "cpt_codes": [
       32561
     ],
@@ -4909,13 +4710,6 @@
       "style_type": 8,
       "generated_name": "Quinn Rodriguez",
       "generation_date": "2025-12-09T14:15:33.943295"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -5030,7 +4824,7 @@
     }
   },
   {
-    "note_text": "Indication: <LOCATION>.\nProcedure: VATS thymectomy/mass excision.\n- 3 ports.\n- Mass dissected from pericardium/innominate.\n- Margins clear.\n- Removed via endobag.\n- 24Fr chest tube.",
+    "note_text": "Indication: Thymoma.\nProcedure: VATS thymectomy/mass excision.\n- 3 ports.\n- Mass dissected from pericardium/innominate.\n- Margins clear.\n- Removed via endobag.\n- 24Fr chest tube.",
     "cpt_codes": [
       "32662"
     ],
@@ -5151,12 +4945,6 @@
       "style_type": 1,
       "generated_name": "Steve Baker",
       "generation_date": "2025-12-09T14:15:33.943371"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -5284,7 +5072,7 @@
     }
   },
   {
-    "note_text": "CPT 32662: VATS excision of mediastinal cyst, tumor, or mass.\nApproach: 3-port VATS.\nPathology: <PERSON> (4.5cm).\nWork: Complete dissection from pericardium and innominate vein; extraction via bag; chest tube placement.",
+    "note_text": "CPT 32662: VATS excision of mediastinal cyst, tumor, or mass.\nApproach: 3-port VATS.\nPathology: Thymoma (4.5cm).\nWork: Complete dissection from pericardium and innominate vein; extraction via bag; chest tube placement.",
     "cpt_codes": [
       "32662"
     ],
@@ -5405,12 +5193,6 @@
       "style_type": 3,
       "generated_name": "Ulysses Nelson",
       "generation_date": "2025-12-09T14:15:33.943448"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5662,7 +5444,7 @@
     }
   },
   {
-    "note_text": "Video-assisted thoracoscopic surgery (VATS) with excision of mediastinal lesion. <DATE_TIME> male with 4.2cm anterior mediastinal mass. Three port placements. Thoracoscope introduced. Anterior mediastinum visualized with well-encapsulated mass arising from thymic tissue. Careful dissection performed using harmonic scalpel separating mass from pericardium and left innominate vein. <PERSON> removed via endo-bag. Single 24Fr chest tube placed.",
+    "note_text": "Video-assisted thoracoscopic surgery (VATS) with excision of mediastinal lesion. 65-year-old male with 4.2cm anterior mediastinal mass. Three port placements. Thoracoscope introduced. Anterior mediastinum visualized with well-encapsulated mass arising from thymic tissue. Careful dissection performed using harmonic scalpel separating mass from pericardium and left innominate vein. Specimen removed via endo-bag. Single 24Fr chest tube placed.",
     "cpt_codes": [
       "32662"
     ],
@@ -5783,17 +5565,10 @@
       "style_type": 6,
       "generated_name": "Xavier Green",
       "generation_date": "2025-12-09T14:15:33.943638"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nAnterior mediastinal mass (<LOCATION>).\n[<LOCATION>]\nGeneral, DLT.\n[Description]\n3-port VATS. 4.5cm mass dissected from anterior mediastinum. Complete excision. Endo-bag extraction.\n[Plan]\nAdmit, chest tube management.",
+    "note_text": "[Indication]\nAnterior mediastinal mass (Thymoma).\n[Anesthesia]\nGeneral, DLT.\n[Description]\n3-port VATS. 4.5cm mass dissected from anterior mediastinum. Complete excision. Endo-bag extraction.\n[Plan]\nAdmit, chest tube management.",
     "cpt_codes": [
       "32662"
     ],
@@ -5914,17 +5689,10 @@
       "style_type": 7,
       "generated_name": "Yusuf Campbell",
       "generation_date": "2025-12-09T14:15:33.943671"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a VATS procedure to remove a suspicious mass in his chest. We used three small incisions to access the space. The mass, located in the anterior mediastinum, was carefully separated from the heart and major veins. We were able to remove it completely in a retrieval bag. A chest tube was left in place to drain any fluid or air.",
+    "note_text": "Mr. Anderson underwent a VATS procedure to remove a suspicious mass in his chest. We used three small incisions to access the space. The mass, located in the anterior mediastinum, was carefully separated from the heart and major veins. We were able to remove it completely in a retrieval bag. A chest tube was left in place to drain any fluid or air.",
     "cpt_codes": [
       "32662"
     ],
@@ -6045,12 +5813,6 @@
       "style_type": 8,
       "generated_name": "Zachary Mitchell",
       "generation_date": "2025-12-09T14:15:33.943704"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6178,7 +5940,7 @@
     }
   },
   {
-    "note_text": "Indication: Post. mediastinal mass (<PERSON>).\nProc: VATS excision.\n- 3 ports.\n- Mass at T6-T7.\n- Dissected from nerve root.\n- Nerve transected.\n- Specimen extracted.\n- 28Fr tube.",
+    "note_text": "Indication: Post. mediastinal mass (Schwannoma).\nProc: VATS excision.\n- 3 ports.\n- Mass at T6-T7.\n- Dissected from nerve root.\n- Nerve transected.\n- Specimen extracted.\n- 28Fr tube.",
     "cpt_codes": [
       "32662"
     ],
@@ -6281,12 +6043,6 @@
       "style_type": 1,
       "generated_name": "Bella Ivanov",
       "generation_date": "2025-12-09T14:15:33.943771"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6608,7 +6364,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the nerve tumor in the back chest vats 3 ports found the mass at t6 t7 dissected it out cut the nerve pulled it out in a bag checked for leaks none chest tube in.",
+    "note_text": "Linda Petrova with the nerve tumor in the back chest vats 3 ports found the mass at t6 t7 dissected it out cut the nerve pulled it out in a bag checked for leaks none chest tube in.",
     "cpt_codes": [
       "32662"
     ],
@@ -6711,12 +6467,6 @@
       "style_type": 5,
       "generated_name": "Fay Popov",
       "generation_date": "2025-12-09T14:15:33.943891"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6826,7 +6576,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPosterior mediastinal mass (<PERSON>).\n[<LOCATION>]\nGeneral, DLT.\n[Description]\n3-port VATS. Mass dissected from T6-T7 intercostal nerve. Nerve transected. Mass removed.\n[Plan]\nAdmit, monitor for CSF leak (none seen).",
+    "note_text": "[Indication]\nPosterior mediastinal mass (Schwannoma).\n[Anesthesia]\nGeneral, DLT.\n[Description]\n3-port VATS. Mass dissected from T6-T7 intercostal nerve. Nerve transected. Mass removed.\n[Plan]\nAdmit, monitor for CSF leak (none seen).",
     "cpt_codes": [
       "32662"
     ],
@@ -6929,17 +6679,10 @@
       "style_type": 7,
       "generated_name": "Hope Lebedev",
       "generation_date": "2025-12-09T14:15:33.943947"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> had a tumor on a nerve near her spine. We used video-assisted surgery to remove it. Through three small ports, we located the mass and carefully separated it from the nerve, which had to be cut to remove the tumor completely. We checked to make sure there was no fluid leaking from the spine area and then closed up, leaving a chest tube.",
+    "note_text": "Ms. Petrova had a tumor on a nerve near her spine. We used video-assisted surgery to remove it. Through three small ports, we located the mass and carefully separated it from the nerve, which had to be cut to remove the tumor completely. We checked to make sure there was no fluid leaking from the spine area and then closed up, leaving a chest tube.",
     "cpt_codes": [
       "32662"
     ],
@@ -7042,12 +6785,6 @@
       "style_type": 8,
       "generated_name": "Iris Novikov",
       "generation_date": "2025-12-09T14:15:33.943975"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7533,7 +7270,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the big cyst in the middle of the chest vats 3 ports stuck to the esophagus and airway carefully peeled it off after draining it got the whole wall out chest tube placed no leaks.",
+    "note_text": "George Nakamura 73M with the big cyst in the middle of the chest vats 3 ports stuck to the esophagus and airway carefully peeled it off after draining it got the whole wall out chest tube placed no leaks.",
     "cpt_codes": [
       "32662"
     ],
@@ -7624,12 +7361,6 @@
       "style_type": 5,
       "generated_name": "Oscar Watanabe",
       "generation_date": "2025-12-09T14:15:33.944133"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7727,7 +7458,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSymptomatic mediastinal cyst (Bronchogenic).\n[<LOCATION>]\nGeneral, DLT.\n[Description]\n3-port VATS. Cyst aspirated. Wall dissected from esophagus/bronchus. Complete excision.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nSymptomatic mediastinal cyst (Bronchogenic).\n[Anesthesia]\nGeneral, DLT.\n[Description]\n3-port VATS. Cyst aspirated. Wall dissected from esophagus/bronchus. Complete excision.\n[Plan]\nAdmit.",
     "cpt_codes": [
       "32662"
     ],
@@ -7818,16 +7549,10 @@
       "style_type": 7,
       "generated_name": "Quincy Yamamoto",
       "generation_date": "2025-12-09T14:15:33.944184"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a large cyst pressing on his esophagus. We performed a VATS procedure to remove it. Once we were inside, we drained the fluid from the cyst to make it smaller, then carefully peeled the cyst wall off of the esophagus and the main airway. We got the whole thing out without damaging any organs.",
+    "note_text": "Mr. Nakamura had a large cyst pressing on his esophagus. We performed a VATS procedure to remove it. Once we were inside, we drained the fluid from the cyst to make it smaller, then carefully peeled the cyst wall off of the esophagus and the main airway. We got the whole thing out without damaging any organs.",
     "cpt_codes": [
       "32662"
     ],
@@ -7918,12 +7643,6 @@
       "style_type": 8,
       "generated_name": "Ray Kobayashi",
       "generation_date": "2025-12-09T14:15:33.944207"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8239,7 +7958,7 @@
     }
   },
   {
-    "note_text": "CPT 32662: VATS excision of mediastinal mass.\nPathology: Hodgkin Lymphoma.\n<PERSON>: 5.5cm.\nWork: Dissection from vascular structures (SVC), complete excision, frozen section, drain placement.",
+    "note_text": "CPT 32662: VATS excision of mediastinal mass.\nPathology: Hodgkin Lymphoma.\nSize: 5.5cm.\nWork: Dissection from vascular structures (SVC), complete excision, frozen section, drain placement.",
     "cpt_codes": [
       "32662"
     ],
@@ -8345,12 +8064,6 @@
       "style_type": 3,
       "generated_name": "Vera Zielinski",
       "generation_date": "2025-12-09T14:15:33.944323"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8463,7 +8176,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the mediastinal mass suspected lymphoma vats 3 ports found the mass anteriorly 5.5cm stuck to thymus and svc peeled it off sent for frozen came back hodgkins drain in closed up.",
+    "note_text": "Sandra Kowalski with the mediastinal mass suspected lymphoma vats 3 ports found the mass anteriorly 5.5cm stuck to thymus and svc peeled it off sent for frozen came back hodgkins drain in closed up.",
     "cpt_codes": [
       "32662"
     ],
@@ -8569,12 +8282,6 @@
       "style_type": 5,
       "generated_name": "Xena Wozniak",
       "generation_date": "2025-12-09T14:15:33.944382"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8687,7 +8394,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nAnterior mediastinal mass (Lymphoma).\n[<LOCATION>]\nGeneral, SLV.\n[Description]\n3-port VATS. 5.5cm mass excised from anterior mediastinum. Dissected from SVC. Frozen section confirmed Hodgkin's.\n[Plan]\nAdmit, Oncology consult.",
+    "note_text": "[Indication]\nAnterior mediastinal mass (Lymphoma).\n[Anesthesia]\nGeneral, SLV.\n[Description]\n3-port VATS. 5.5cm mass excised from anterior mediastinum. Dissected from SVC. Frozen section confirmed Hodgkin's.\n[Plan]\nAdmit, Oncology consult.",
     "cpt_codes": [
       "32662"
     ],
@@ -8793,16 +8500,10 @@
       "style_type": 7,
       "generated_name": "Zoe Lewandowski",
       "generation_date": "2025-12-09T14:15:33.944439"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a VATS procedure to diagnose and remove a mass in her chest. We found a large mass in the front part of the mediastinum attached to the thymus. We carefully separated it from the heart sac and the large vein draining the head. The pathologist confirmed it was Hodgkin's lymphoma while we were still in the OR. We placed a drain and finished the surgery.",
+    "note_text": "Ms. Kowalski underwent a VATS procedure to diagnose and remove a mass in her chest. We found a large mass in the front part of the mediastinum attached to the thymus. We carefully separated it from the heart sac and the large vein draining the head. The pathologist confirmed it was Hodgkin's lymphoma while we were still in the OR. We placed a drain and finished the surgery.",
     "cpt_codes": [
       "32662"
     ],
@@ -8908,12 +8609,6 @@
       "style_type": 8,
       "generated_name": "Abby Jankowski",
       "generation_date": "2025-12-09T14:15:33.944484"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9210,7 +8905,7 @@
     }
   },
   {
-    "note_text": "CPT 32662: VATS excision of mediastinal tumor.\nPathology: Lipoma.\n<PERSON>: 7cm.\nComplication treated: SVC compression.\nWork: Dissection from great vessels, removal via bag, chest tube.",
+    "note_text": "CPT 32662: VATS excision of mediastinal tumor.\nPathology: Lipoma.\nSize: 7cm.\nComplication treated: SVC compression.\nWork: Dissection from great vessels, removal via bag, chest tube.",
     "cpt_codes": [
       "32662"
     ],
@@ -9299,12 +8994,6 @@
       "style_type": 3,
       "generated_name": "Emeka Nwosu",
       "generation_date": "2025-12-09T14:15:33.944616"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9400,7 +9089,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the lipoma pushing on his svc vats right side found the big fatty tumor 7cm peeled it off the vein vein opened up nicely mass out in a bag chest tube placed.",
+    "note_text": "Henry Okonkwo with the lipoma pushing on his svc vats right side found the big fatty tumor 7cm peeled it off the vein vein opened up nicely mass out in a bag chest tube placed.",
     "cpt_codes": [
       "32662"
     ],
@@ -9489,12 +9178,6 @@
       "style_type": 5,
       "generated_name": "Gabriel Obi",
       "generation_date": "2025-12-09T14:15:33.944678"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9590,7 +9273,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMediastinal lipoma with SVC compression.\n[<LOCATION>]\nGeneral.\n[Description]\n3-port VATS. 7cm mass dissected from SVC. Complete excision. SVC decompressed.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nMediastinal lipoma with SVC compression.\n[Anesthesia]\nGeneral.\n[Description]\n3-port VATS. 7cm mass dissected from SVC. Complete excision. SVC decompressed.\n[Plan]\nAdmit.",
     "cpt_codes": [
       "32662"
     ],
@@ -9679,16 +9362,10 @@
       "style_type": 7,
       "generated_name": "Idris Musa",
       "generation_date": "2025-12-09T14:15:33.944727"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a benign fatty tumor pressing on his superior vena cava, causing swelling. We used VATS to remove it. The tumor was large, about 7cm, and sitting right on the vein. We carefully dissected it away. Once it was removed, we could see the vein expand back to its normal size. We placed a chest tube and closed.",
+    "note_text": "Mr. Okonkwo had a benign fatty tumor pressing on his superior vena cava, causing swelling. We used VATS to remove it. The tumor was large, about 7cm, and sitting right on the vein. We carefully dissected it away. Once it was removed, we could see the vein expand back to its normal size. We placed a chest tube and closed.",
     "cpt_codes": [
       "32662"
     ],
@@ -9777,12 +9454,6 @@
       "style_type": 8,
       "generated_name": "Jamal Abdullahi",
       "generation_date": "2025-12-09T14:15:33.944752"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10014,7 +9685,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Medical thoracoscopy with mediastinal lymph <PERSON>.\nINDICATION: Undiagnosed mediastinal lymphadenopathy.\nTECHNIQUE: Under local anesthesia and moderate sedation, a single port was established. The mediastinal pleura was opened to access the subcarinal (Station 7) and aortopulmonary window stations. Adequate tissue sampling was achieved using rigid forceps. Hemostasis was secured, and a chest tube was placed.",
+    "note_text": "PROCEDURE NOTE: Medical thoracoscopy with mediastinal lymph node biopsy.\nINDICATION: Undiagnosed mediastinal lymphadenopathy.\nTECHNIQUE: Under local anesthesia and moderate sedation, a single port was established. The mediastinal pleura was opened to access the subcarinal (Station 7) and aortopulmonary window stations. Adequate tissue sampling was achieved using rigid forceps. Hemostasis was secured, and a chest tube was placed.",
     "cpt_codes": [
       "32606"
     ],
@@ -10147,16 +9818,10 @@
       "style_type": 2,
       "generated_name": "Debra Scott",
       "generation_date": "2025-12-09T14:15:33.944851"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "CPT 32606: Thoracoscopy with biopsy of mediastinal space/lymph nodes.\nTarget: Station 7 and AP window nodes.\nMethod: Medical thoracoscopy (semi-rigid scope).\n<LOCATION>: 10 biopsies total.\nPlacement of chest tube included.",
+    "note_text": "CPT 32606: Thoracoscopy with biopsy of mediastinal space/lymph nodes.\nTarget: Station 7 and AP window nodes.\nMethod: Medical thoracoscopy (semi-rigid scope).\nSpecimens: 10 biopsies total.\nPlacement of chest tube included.",
     "cpt_codes": [
       "32606"
     ],
@@ -10289,12 +9954,6 @@
       "style_type": 3,
       "generated_name": "Ellen Phillips",
       "generation_date": "2025-12-09T14:15:33.944888"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -10434,7 +10093,7 @@
     }
   },
   {
-    "note_text": "<PERSON> for mediastinal nodes biopsy medical thoracoscopy single port found the nodes station 7 and ap window took a bunch of biopsies sent for everything chest tube in tolerated well.",
+    "note_text": "Barbara Mitchell for mediastinal nodes biopsy medical thoracoscopy single port found the nodes station 7 and ap window took a bunch of biopsies sent for everything chest tube in tolerated well.",
     "cpt_codes": [
       "32606"
     ],
@@ -10567,12 +10226,6 @@
       "style_type": 5,
       "generated_name": "Gina Turner",
       "generation_date": "2025-12-09T14:15:33.944962"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10712,7 +10365,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMediastinal lymphadenopathy (<PERSON> vs Lymphoma).\n[<LOCATION>]\nLocal + Sedation.\n[Description]\nSingle port. Biopsied Station 7 and AP window nodes. 10 samples. 20Fr chest tube.\n[Plan]\nAdmit for observation.",
+    "note_text": "[Indication]\nMediastinal lymphadenopathy (Sarcoid vs Lymphoma).\n[Anesthesia]\nLocal + Sedation.\n[Description]\nSingle port. Biopsied Station 7 and AP window nodes. 10 samples. 20Fr chest tube.\n[Plan]\nAdmit for observation.",
     "cpt_codes": [
       "32606"
     ],
@@ -10845,17 +10498,10 @@
       "style_type": 7,
       "generated_name": "Ida Collins",
       "generation_date": "2025-12-09T14:15:33.945029"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> needed a biopsy of her lymph nodes. We performed a medical thoracoscopy with sedation. Through a small cut in her side, we used a camera to see the nodes in the center of her chest. We opened the lining covering them and took several samples from two different areas. We left a small tube in her chest to drain air and fluid.",
+    "note_text": "Ms. Mitchell needed a biopsy of her lymph nodes. We performed a medical thoracoscopy with sedation. Through a small cut in her side, we used a camera to see the nodes in the center of her chest. We opened the lining covering them and took several samples from two different areas. We left a small tube in her chest to drain air and fluid.",
     "cpt_codes": [
       "32606"
     ],
@@ -10988,12 +10634,6 @@
       "style_type": 8,
       "generated_name": "Joan Edwards",
       "generation_date": "2025-12-09T14:15:33.945063"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11401,7 +11041,7 @@
     }
   },
   {
-    "note_text": "CPT 32606: Thoracoscopy with biopsy of mediastinal space.\nNodes: 4R and 7.\nTechnique: Single port, flex-rigid scope.\n<LOCATION>: 10 cores.\nChest tube: 14Fr pigtail.",
+    "note_text": "CPT 32606: Thoracoscopy with biopsy of mediastinal space.\nNodes: 4R and 7.\nTechnique: Single port, flex-rigid scope.\nSpecimens: 10 cores.\nChest tube: 14Fr pigtail.",
     "cpt_codes": [
       "32606"
     ],
@@ -11532,12 +11172,6 @@
       "style_type": 3,
       "generated_name": "Ned Reed",
       "generation_date": "2025-12-09T14:15:33.945206"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -11675,7 +11309,7 @@
     }
   },
   {
-    "note_text": "<PERSON> needing biopsy for lymph nodes single port thoracoscopy right side found 4r and 7 nodes huge took good biopsies with the hot forceps pigtail in no pneumo.",
+    "note_text": "Charles Freeman needing biopsy for lymph nodes single port thoracoscopy right side found 4r and 7 nodes huge took good biopsies with the hot forceps pigtail in no pneumo.",
     "cpt_codes": [
       "32606"
     ],
@@ -11806,16 +11440,10 @@
       "style_type": 5,
       "generated_name": "Phil Morgan",
       "generation_date": "2025-12-09T14:15:33.945313"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Thoracoscopy with mediastinal lymph <PERSON>. Single-incision thoracoscopy at 6th ICS MAL. Flex-rigid scope inserted. Mediastinal pleura over station 4R and 7 opened. Multiple deep biopsies obtained using insulated-tip forceps. Station 4R 5 specimens. Station 7 5 specimens. Hemostasis with electrocautery. 14Fr pigtail catheter placed.",
+    "note_text": "Thoracoscopy with mediastinal lymph node biopsy. Single-incision thoracoscopy at 6th ICS MAL. Flex-rigid scope inserted. Mediastinal pleura over station 4R and 7 opened. Multiple deep biopsies obtained using insulated-tip forceps. Station 4R 5 specimens. Station 7 5 specimens. Hemostasis with electrocautery. 14Fr pigtail catheter placed.",
     "cpt_codes": [
       "32606"
     ],
@@ -11946,16 +11574,10 @@
       "style_type": 6,
       "generated_name": "Quentin Bell",
       "generation_date": "2025-12-09T14:15:33.945347"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nBulky mediastinal adenopathy.\n[<LOCATION>]\nModerate Sedation.\n[Description]\nSingle port thoracoscopy. Biopsies of 4R and 7. Pigtail catheter placed.\n[Plan]\nObs overnight.",
+    "note_text": "[Indication]\nBulky mediastinal adenopathy.\n[Anesthesia]\nModerate Sedation.\n[Description]\nSingle port thoracoscopy. Biopsies of 4R and 7. Pigtail catheter placed.\n[Plan]\nObs overnight.",
     "cpt_codes": [
       "32606"
     ],
@@ -12086,16 +11708,10 @@
       "style_type": 7,
       "generated_name": "Ralph Murphy",
       "generation_date": "2025-12-09T14:15:33.945385"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a thoracoscopy to biopsy enlarged lymph nodes in his chest. We used a flexible scope through a single incision. We identified large nodes near his windpipe and under the airway split. We took multiple samples from both areas to ensure a good diagnosis. A small pigtail tube was left in place.",
+    "note_text": "Mr. Freeman underwent a thoracoscopy to biopsy enlarged lymph nodes in his chest. We used a flexible scope through a single incision. We identified large nodes near his windpipe and under the airway split. We took multiple samples from both areas to ensure a good diagnosis. A small pigtail tube was left in place.",
     "cpt_codes": [
       "32606"
     ],
@@ -12226,12 +11842,6 @@
       "style_type": 8,
       "generated_name": "Scott Bailey",
       "generation_date": "2025-12-09T14:15:33.945418"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -12489,7 +12099,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Diagnostic thoracoscopy with biopsy of anterior mediastinal mass.\nINDICATION: 3.5 cm anterior mediastinal lesion suggestive of <LOCATION>.\nPROCEDURE: General <PERSON> was utilized. A single port was placed in the 4th intercostal space. The mediastinal pleura was incised, and multiple biopsies were taken from the encapsulated mass. Frozen section analysis suggested thymic tissue. A 14Fr chest tube was placed.",
+    "note_text": "OPERATIVE REPORT: Diagnostic thoracoscopy with biopsy of anterior mediastinal mass.\nINDICATION: 3.5 cm anterior mediastinal lesion suggestive of thymoma.\nPROCEDURE: General anesthesia was utilized. A single port was placed in the 4th intercostal space. The mediastinal pleura was incised, and multiple biopsies were taken from the encapsulated mass. Frozen section analysis suggested thymic tissue. A 14Fr chest tube was placed.",
     "cpt_codes": [
       "32606"
     ],
@@ -12606,13 +12216,6 @@
       "style_type": 2,
       "generated_name": "Bianca Ramirez",
       "generation_date": "2025-12-09T14:15:33.945525"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -12856,7 +12459,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the anterior mediastinal mass for biopsy vats single port 4th ics found the mass took 8 bites frozen said thymoma maybe chest tube in patient extubated fine.",
+    "note_text": "Maria Santos with the anterior mediastinal mass for biopsy vats single port 4th ics found the mass took 8 bites frozen said thymoma maybe chest tube in patient extubated fine.",
     "cpt_codes": [
       "32606"
     ],
@@ -12973,16 +12576,10 @@
       "style_type": 5,
       "generated_name": "Eva Sanders",
       "generation_date": "2025-12-09T14:15:33.945658"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Thoracoscopy with diagnostic biopsy of mediastinal lesion. Patient underwent general <LOCATION>. Left chest entered via single 2cm incision at 4th ICS anterior axillary line. Anterior mediastinal mass visible through mediastinal pleura approximately 3.5cm encapsulated appearance. Mediastinal pleura incised. Multiple deep forceps biopsies x8 obtained. Frozen section Thymic tissue with features suggestive of thymoma. Small 14Fr chest tube placed.",
+    "note_text": "Thoracoscopy with diagnostic biopsy of mediastinal lesion. Patient underwent general anesthesia. Left chest entered via single 2cm incision at 4th ICS anterior axillary line. Anterior mediastinal mass visible through mediastinal pleura approximately 3.5cm encapsulated appearance. Mediastinal pleura incised. Multiple deep forceps biopsies x8 obtained. Frozen section Thymic tissue with features suggestive of thymoma. Small 14Fr chest tube placed.",
     "cpt_codes": [
       "32606"
     ],
@@ -13099,16 +12696,10 @@
       "style_type": 6,
       "generated_name": "Fernanda Price",
       "generation_date": "2025-12-09T14:15:33.945714"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nAnterior mediastinal mass.\n[<LOCATION>]\nGeneral, LMA.\n[Description]\nSingle port. Biopsied mass x8. Frozen section: Thymic tissue. 14Fr chest tube.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nAnterior mediastinal mass.\n[Anesthesia]\nGeneral, LMA.\n[Description]\nSingle port. Biopsied mass x8. Frozen section: Thymic tissue. 14Fr chest tube.\n[Plan]\nAdmit.",
     "cpt_codes": [
       "32606"
     ],
@@ -13225,16 +12816,10 @@
       "style_type": 7,
       "generated_name": "Gina Bennett",
       "generation_date": "2025-12-09T14:15:33.945753"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> has a mass in the front of her chest that might be a thymoma. We performed a thoracoscopy under general <LOCATION> to biopsy it. Through a small incision, we took eight samples of the mass. The preliminary results point to a thymus tumor. We left a small chest tube in to help the lung stay expanded.",
+    "note_text": "Ms. Santos has a mass in the front of her chest that might be a thymoma. We performed a thoracoscopy under general anesthesia to biopsy it. Through a small incision, we took eight samples of the mass. The preliminary results point to a thymus tumor. We left a small chest tube in to help the lung stay expanded.",
     "cpt_codes": [
       "32606"
     ],
@@ -13351,13 +12936,6 @@
       "style_type": 8,
       "generated_name": "Hilda Wood",
       "generation_date": "2025-12-09T14:15:33.945786"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -13611,7 +13189,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Medical thoracoscopy for mediastinal lymph node sampling.\nINDICATION: Evaluation of mediastinal adenopathy for sarcoidosis.\n<PERSON>: Under moderate sedation, the pleural space was accessed. The mediastinal pleura was opened to expose stations 4R and 7. Adequate biopsy specimens were obtained from both sites for histological and microbiological analysis. A 16Fr chest tube was placed.",
+    "note_text": "PROCEDURE NOTE: Medical thoracoscopy for mediastinal lymph node sampling.\nINDICATION: Evaluation of mediastinal adenopathy for sarcoidosis.\nDESCRIPTION: Under moderate sedation, the pleural space was accessed. The mediastinal pleura was opened to expose stations 4R and 7. Adequate biopsy specimens were obtained from both sites for histological and microbiological analysis. A 16Fr chest tube was placed.",
     "cpt_codes": [
       "32606"
     ],
@@ -13738,12 +13316,6 @@
       "style_type": 2,
       "generated_name": "Bill Henderson",
       "generation_date": "2025-12-09T14:15:33.945890"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14007,7 +13579,7 @@
     }
   },
   {
-    "note_text": "<PERSON> sarcoid workup medical thoracoscopy right side 5th ics normal pleura biopsied 4r and 7 good cores sent for cultures too 16fr tube in done.",
+    "note_text": "Robert Jackson sarcoid workup medical thoracoscopy right side 5th ics normal pleura biopsied 4r and 7 good cores sent for cultures too 16fr tube in done.",
     "cpt_codes": [
       "32606"
     ],
@@ -14134,12 +13706,6 @@
       "style_type": 5,
       "generated_name": "Earl Perry",
       "generation_date": "2025-12-09T14:15:33.945992"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14273,7 +13839,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSuspected Sarcoidosis.\n[<LOCATION>]\nModerate Sedation.\n[Description]\nThoracoscopy. Biopsied 4R and 7. 16Fr tube placed.\n[Plan]\nObs.",
+    "note_text": "[Indication]\nSuspected Sarcoidosis.\n[Anesthesia]\nModerate Sedation.\n[Description]\nThoracoscopy. Biopsied 4R and 7. 16Fr tube placed.\n[Plan]\nObs.",
     "cpt_codes": [
       "32606"
     ],
@@ -14400,16 +13966,10 @@
       "style_type": 7,
       "generated_name": "Greg Long",
       "generation_date": "2025-12-09T14:15:33.946090"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> needed tissue confirmation for suspected sarcoidosis. We performed a thoracoscopy with sedation. We found enlarged lymph nodes in the chest and took several samples from two different locations. These will be tested for sarcoidosis and infections. A chest tube was placed at the end.",
+    "note_text": "Mr. Jackson needed tissue confirmation for suspected sarcoidosis. We performed a thoracoscopy with sedation. We found enlarged lymph nodes in the chest and took several samples from two different locations. These will be tested for sarcoidosis and infections. A chest tube was placed at the end.",
     "cpt_codes": [
       "32606"
     ],
@@ -14536,12 +14096,6 @@
       "style_type": 8,
       "generated_name": "Hank Patterson",
       "generation_date": "2025-12-09T14:15:33.946136"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14808,7 +14362,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NOTE: Video-assisted thoracoscopic biopsy of mediastinal lymph nodes.\nINDICATION: Extensive mediastinal adenopathy, previous non-diagnostic biopsy.\nPROCEDURE: A three-port VATS approach was used. Large confluent nodes were identified in the paratracheal and subcarinal regions. Generous biopsies were taken from stations 4R and 7 for extensive pathological workup including flow cytometry. A <LOCATION> chest tube was placed.",
+    "note_text": "OPERATIVE NOTE: Video-assisted thoracoscopic biopsy of mediastinal lymph nodes.\nINDICATION: Extensive mediastinal adenopathy, previous non-diagnostic biopsy.\nPROCEDURE: A three-port VATS approach was used. Large confluent nodes were identified in the paratracheal and subcarinal regions. Generous biopsies were taken from stations 4R and 7 for extensive pathological workup including flow cytometry. A 24Fr chest tube was placed.",
     "cpt_codes": [
       "32606"
     ],
@@ -14938,16 +14492,10 @@
       "style_type": 2,
       "generated_name": "Karen Washington",
       "generation_date": "2025-12-09T14:15:33.946246"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "CPT 32606: VATS biopsy of mediastinal lymph nodes.\nNodes: 4R and 7.\n<LOCATION>: 14 total biopsies.\nWork: 3-port access, dissection, biopsy, chest tube.\nIndication: Lymphadenopathy.",
+    "note_text": "CPT 32606: VATS biopsy of mediastinal lymph nodes.\nNodes: 4R and 7.\nSpecimens: 14 total biopsies.\nWork: 3-port access, dissection, biopsy, chest tube.\nIndication: Lymphadenopathy.",
     "cpt_codes": [
       "32606"
     ],
@@ -15077,12 +14625,6 @@
       "style_type": 3,
       "generated_name": "Lisa Butler",
       "generation_date": "2025-12-09T14:15:33.946281"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -15219,7 +14761,7 @@
     }
   },
   {
-    "note_text": "<PERSON> for mediastinal biopsy vats 3 ports huge nodes 4r and 7 took tons of biopsies sent for flow and molecular tube in <DATE_TIME> no issues.",
+    "note_text": "Angela Torres for mediastinal biopsy vats 3 ports huge nodes 4r and 7 took tons of biopsies sent for flow and molecular tube in 24fr no issues.",
     "cpt_codes": [
       "32606"
     ],
@@ -15349,17 +14891,10 @@
       "style_type": 5,
       "generated_name": "Nina Foster",
       "generation_date": "2025-12-09T14:15:33.946360"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Thoracoscopy with mediastinal biopsy. General <LOCATION> induced. Right thoracoscopy via three-port technique. Large confluent nodal mass in the right paratracheal region. Subcarinal adenopathy. Station 4R 8 large biopsies. Station 7 6 biopsies. Specimens sent fresh to pathology. 24Fr chest tube placed.",
+    "note_text": "Thoracoscopy with mediastinal biopsy. General anesthesia induced. Right thoracoscopy via three-port technique. Large confluent nodal mass in the right paratracheal region. Subcarinal adenopathy. Station 4R 8 large biopsies. Station 7 6 biopsies. Specimens sent fresh to pathology. 24Fr chest tube placed.",
     "cpt_codes": [
       "32606"
     ],
@@ -15489,16 +15024,10 @@
       "style_type": 6,
       "generated_name": "Olga Gonzales",
       "generation_date": "2025-12-09T14:15:33.946396"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nMediastinal adenopathy.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\n3-port VATS. Biopsies of 4R and 7. 24Fr tube.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nMediastinal adenopathy.\n[Anesthesia]\nGeneral, ETT.\n[Description]\n3-port VATS. Biopsies of 4R and 7. 24Fr tube.\n[Plan]\nAdmit.",
     "cpt_codes": [
       "32606"
     ],
@@ -15628,16 +15157,10 @@
       "style_type": 7,
       "generated_name": "Pamela Bryant",
       "generation_date": "2025-12-09T14:15:33.946434"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> had swollen lymph nodes in her chest that needed a diagnosis. We did a 3-port VATS procedure under general <LOCATION>. We found large lymph node masses and took many samples to make sure the lab has enough for all the tests, including for lymphoma. We left a chest tube in to drain the chest.",
+    "note_text": "Ms. Torres had swollen lymph nodes in her chest that needed a diagnosis. We did a 3-port VATS procedure under general anesthesia. We found large lymph node masses and took many samples to make sure the lab has enough for all the tests, including for lymphoma. We left a chest tube in to drain the chest.",
     "cpt_codes": [
       "32606"
     ],
@@ -15767,13 +15290,6 @@
       "style_type": 8,
       "generated_name": "Qiana Alexander",
       "generation_date": "2025-12-09T14:15:33.946468"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -15910,7 +15426,7 @@
     }
   },
   {
-    "note_text": "Indication: Large R effusion.\nProc: Thoracentesis w/ catheter.\n- <LOCATION> marked.\n- 14Fr catheter.\n- Drained 1800mL serosanguinous.\n- Catheter left in place.",
+    "note_text": "Indication: Large R effusion.\nProc: Thoracentesis w/ catheter.\n- US marked.\n- 14Fr catheter.\n- Drained 1800mL serosanguinous.\n- Catheter left in place.",
     "cpt_codes": [
       32556
     ],
@@ -16017,16 +15533,10 @@
       "style_type": 1,
       "generated_name": "Sam Griffin",
       "generation_date": "2025-12-09T14:15:33.946583"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Thoracentesis with insertion of indwelling pleural drainage catheter.\nINDICATION: <LOCATION> pleural effusion, suspected malignancy.\n<PERSON>: Following ultrasound marking, a 14Fr pleural catheter was inserted using the Seldinger technique. A total of 1800 mL of serosanguinous fluid was drained, providing immediate symptomatic relief. The catheter was secured for ongoing drainage.",
+    "note_text": "PROCEDURE NOTE: Thoracentesis with insertion of indwelling pleural drainage catheter.\nINDICATION: Symptomatic pleural effusion, suspected malignancy.\nDESCRIPTION: Following ultrasound marking, a 14Fr pleural catheter was inserted using the Seldinger technique. A total of 1800 mL of serosanguinous fluid was drained, providing immediate symptomatic relief. The catheter was secured for ongoing drainage.",
     "cpt_codes": [
       32556
     ],
@@ -16133,13 +15643,6 @@
       "style_type": 2,
       "generated_name": "Ted Hayes",
       "generation_date": "2025-12-09T14:15:33.946614"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -16253,7 +15756,7 @@
     }
   },
   {
-    "note_text": "Procedure: Catheter Drainage\n1. <LOCATION> mark.\n2. Local.\n3. 14Fr catheter placed.\n4. Drained 1800mL.\n5. Secured.",
+    "note_text": "Procedure: Catheter Drainage\n1. US mark.\n2. Local.\n3. 14Fr catheter placed.\n4. Drained 1800mL.\n5. Secured.",
     "cpt_codes": [
       32556
     ],
@@ -16360,16 +15863,10 @@
       "style_type": 4,
       "generated_name": "Vince Ford",
       "generation_date": "2025-12-09T14:15:33.946681"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> with the big right effusion put in <DATE_TIME> catheter today marked with us drained 1.8 liters fluid looks serosanguinous patient breathing better now catheter stayed in.",
+    "note_text": "William Turner with the big right effusion put in a 14fr catheter today marked with us drained 1.8 liters fluid looks serosanguinous patient breathing better now catheter stayed in.",
     "cpt_codes": [
       32556
     ],
@@ -16476,13 +15973,6 @@
       "style_type": 5,
       "generated_name": "Will Hamilton",
       "generation_date": "2025-12-09T14:15:33.946712"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -16596,7 +16086,7 @@
     }
   },
   {
-    "note_text": "[Indication]\n<LOCATION> R pleural effusion.\n[<LOCATION>]\nLocal.\n[Description]\n14Fr catheter placed (<LOCATION> marked). Drained 1800mL.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nSymptomatic R pleural effusion.\n[Anesthesia]\nLocal.\n[Description]\n14Fr catheter placed (US marked). Drained 1800mL.\n[Plan]\nAdmit.",
     "cpt_codes": [
       32556
     ],
@@ -16703,18 +16193,10 @@
       "style_type": 7,
       "generated_name": "Yuri Sullivan",
       "generation_date": "2025-12-09T14:15:33.946767"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a large amount of fluid around his right lung causing shortness of breath. We used ultrasound to find the best spot, then inserted a small tube (catheter) to drain it. We removed 1800mL of fluid, which helped his breathing right away. We left the tube in to continue draining.",
+    "note_text": "Mr. Turner had a large amount of fluid around his right lung causing shortness of breath. We used ultrasound to find the best spot, then inserted a small tube (catheter) to drain it. We removed 1800mL of fluid, which helped his breathing right away. We left the tube in to continue draining.",
     "cpt_codes": [
       32556
     ],
@@ -16821,12 +16303,6 @@
       "style_type": 8,
       "generated_name": "Zack Wallace",
       "generation_date": "2025-12-09T14:15:33.946796"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -17380,7 +16856,7 @@
     }
   },
   {
-    "note_text": "<PERSON> recurrent hydrothorax drained it again today put in a 12fr pigtail got out 2.1 liters she started coughing so we stopped pulled the tube fluid clear.",
+    "note_text": "Dorothy Williams recurrent hydrothorax drained it again today put in a 12fr pigtail got out 2.1 liters she started coughing so we stopped pulled the tube fluid clear.",
     "cpt_codes": [
       32556
     ],
@@ -17487,16 +16963,10 @@
       "style_type": 5,
       "generated_name": "Florence Reynolds",
       "generation_date": "2025-12-09T14:15:33.946986"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Thoracentesis with catheter aspiration. 78F with CHF and cirrhosis presenting with recurrent left pleural effusion. Using <PERSON> technique without imaging guidance 12Fr pigtail catheter inserted into pleural space. Total of 2100mL drained over 45 minutes. Catheter removed. Post-procedure SpO2 96% on <LOCATION>.",
+    "note_text": "Thoracentesis with catheter aspiration. 78F with CHF and cirrhosis presenting with recurrent left pleural effusion. Using Seldinger technique without imaging guidance 12Fr pigtail catheter inserted into pleural space. Total of 2100mL drained over 45 minutes. Catheter removed. Post-procedure SpO2 96% on RA.",
     "cpt_codes": [
       32556
     ],
@@ -17603,17 +17073,10 @@
       "style_type": 6,
       "generated_name": "Gertrude Fisher",
       "generation_date": "2025-12-09T14:15:33.947016"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent L hepatic hydrothorax.\n[<LOCATION>]\nLocal.\n[Description]\n12Fr pigtail placed. Drained 2100mL. Removed.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nRecurrent L hepatic hydrothorax.\n[Anesthesia]\nLocal.\n[Description]\n12Fr pigtail placed. Drained 2100mL. Removed.\n[Plan]\nDischarge.",
     "cpt_codes": [
       32556
     ],
@@ -17720,16 +17183,10 @@
       "style_type": 7,
       "generated_name": "Harriet Ellis",
       "generation_date": "2025-12-09T14:15:33.947045"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> has recurrent fluid buildup due to her liver condition. She needed another drainage today. We inserted a small pigtail catheter into her left chest and drained over 2 liters of fluid. We removed the catheter right after the procedure. She felt much better afterward.",
+    "note_text": "Ms. Williams has recurrent fluid buildup due to her liver condition. She needed another drainage today. We inserted a small pigtail catheter into her left chest and drained over 2 liters of fluid. We removed the catheter right after the procedure. She felt much better afterward.",
     "cpt_codes": [
       32556
     ],
@@ -17836,12 +17293,6 @@
       "style_type": 8,
       "generated_name": "Irene Harrison",
       "generation_date": "2025-12-09T14:15:33.947072"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18065,7 +17516,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Placement of pleural drainage catheter.\nINDICATION: Complicated parapneumonic effusion/empyema.\n<PERSON>: A 14Fr pigtail catheter was inserted into the right pleural space using the Seldinger technique without imaging guidance. Purulent fluid was encountered, and 900 mL was drained. The catheter was secured and attached to a water seal system for continuous drainage.",
+    "note_text": "PROCEDURE: Placement of pleural drainage catheter.\nINDICATION: Complicated parapneumonic effusion/empyema.\nDESCRIPTION: A 14Fr pigtail catheter was inserted into the right pleural space using the Seldinger technique without imaging guidance. Purulent fluid was encountered, and 900 mL was drained. The catheter was secured and attached to a water seal system for continuous drainage.",
     "cpt_codes": [
       32556
     ],
@@ -18172,12 +17623,6 @@
       "style_type": 2,
       "generated_name": "Lyle Marshall",
       "generation_date": "2025-12-09T14:15:33.947162"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18401,7 +17846,7 @@
     }
   },
   {
-    "note_text": "<PERSON> with the empyema put in a pigtail 14fr right side landmark guided drained 900cc pus hooked it up to atrium for drainage.",
+    "note_text": "James Morrison with the empyema put in a pigtail 14fr right side landmark guided drained 900cc pus hooked it up to atrium for drainage.",
     "cpt_codes": [
       32556
     ],
@@ -18508,12 +17953,6 @@
       "style_type": 5,
       "generated_name": "Owen Murray",
       "generation_date": "2025-12-09T14:15:33.947306"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -18627,7 +18066,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nComplicated parapneumonic effusion.\n[<LOCATION>]\nLocal.\n[Description]\n14Fr pigtail inserted. 900mL drained. Secured to water seal.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nComplicated parapneumonic effusion.\n[Anesthesia]\nLocal.\n[Description]\n14Fr pigtail inserted. 900mL drained. Secured to water seal.\n[Plan]\nAdmit.",
     "cpt_codes": [
       32556
     ],
@@ -18734,16 +18173,10 @@
       "style_type": 7,
       "generated_name": "Quinn Wells",
       "generation_date": "2025-12-09T14:15:33.947389"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> has an infected fluid collection around his lung. We placed a pigtail catheter to drain it continuously. We drained 900mL of cloudy fluid initially and hooked the tube up to a drainage system to keep the lung clear.",
+    "note_text": "Mr. Morrison has an infected fluid collection around his lung. We placed a pigtail catheter to drain it continuously. We drained 900mL of cloudy fluid initially and hooked the tube up to a drainage system to keep the lung clear.",
     "cpt_codes": [
       32556
     ],
@@ -18850,12 +18283,6 @@
       "style_type": 8,
       "generated_name": "Rick Webb",
       "generation_date": "2025-12-09T14:15:33.947421"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -19079,7 +18506,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Therapeutic thoracentesis via catheter.\nINDICATION: <LOCATION> malignant pleural effusion.\nDETAILS: A 12Fr drainage catheter was introduced into the left pleural space using anatomical landmarks. Approximately 1.5 liters of serosanguinous fluid were drained, resulting in symptomatic relief. The catheter was removed at the conclusion of the procedure.",
+    "note_text": "PROCEDURE NOTE: Therapeutic thoracentesis via catheter.\nINDICATION: Symptomatic malignant pleural effusion.\nDETAILS: A 12Fr drainage catheter was introduced into the left pleural space using anatomical landmarks. Approximately 1.5 liters of serosanguinous fluid were drained, resulting in symptomatic relief. The catheter was removed at the conclusion of the procedure.",
     "cpt_codes": [
       32556
     ],
@@ -19186,12 +18613,6 @@
       "style_type": 2,
       "generated_name": "Barb Tucker",
       "generation_date": "2025-12-09T14:15:33.947514"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -19415,7 +18836,7 @@
     }
   },
   {
-    "note_text": "<PERSON> mesothelioma patient large effusion drained 1.5L today using a 12fr kit catheter fluid bloody patient coughed so we stopped pulled line.",
+    "note_text": "Catherine Brown mesothelioma patient large effusion drained 1.5L today using a 12fr kit catheter fluid bloody patient coughed so we stopped pulled line.",
     "cpt_codes": [
       32556
     ],
@@ -19522,12 +18943,6 @@
       "style_type": 5,
       "generated_name": "Eve Hicks",
       "generation_date": "2025-12-09T14:15:33.947605"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -19641,7 +19056,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMalignant pleural effusion.\n[<LOCATION>]\nLocal.\n[Description]\n12Fr catheter. Drained 1500mL. Removed.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nMalignant pleural effusion.\n[Anesthesia]\nLocal.\n[Description]\n12Fr catheter. Drained 1500mL. Removed.\n[Plan]\nDischarge.",
     "cpt_codes": [
       32556
     ],
@@ -19748,16 +19163,10 @@
       "style_type": 7,
       "generated_name": "Gail Henry",
       "generation_date": "2025-12-09T14:15:33.947664"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> has mesothelioma and a large fluid buildup. We drained it today using a temporary catheter. We removed 1.5 liters of bloody fluid, which helped her breathing a lot. We took the catheter out once we were done.",
+    "note_text": "Ms. Brown has mesothelioma and a large fluid buildup. We drained it today using a temporary catheter. We removed 1.5 liters of bloody fluid, which helped her breathing a lot. We took the catheter out once we were done.",
     "cpt_codes": [
       32556
     ],
@@ -19864,12 +19273,6 @@
       "style_type": 8,
       "generated_name": "Helen Boyd",
       "generation_date": "2025-12-09T14:15:33.947696"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -20095,7 +19498,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Insertion of pleural drainage catheter with manometry.\nINDICATION: Large symptomatic effusion post-CABG.\n<PERSON>: A 14Fr pigtail catheter was inserted into the right pleural space without imaging. Manometry was performed, showing normal pleural elastance. A total of <DATE_TIME> mL of serous fluid was drained. The catheter was left in place and connected to a bulb drain.",
+    "note_text": "PROCEDURE: Insertion of pleural drainage catheter with manometry.\nINDICATION: Large symptomatic effusion post-CABG.\nDESCRIPTION: A 14Fr pigtail catheter was inserted into the right pleural space without imaging. Manometry was performed, showing normal pleural elastance. A total of 2350 mL of serous fluid was drained. The catheter was left in place and connected to a bulb drain.",
     "cpt_codes": [
       32556
     ],
@@ -20204,13 +19607,6 @@
       "style_type": 2,
       "generated_name": "Ken Kennedy",
       "generation_date": "2025-12-09T14:15:33.947784"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -20438,7 +19834,7 @@
     }
   },
   {
-    "note_text": "<PERSON> post cabg effusion drained it with a pigtail 14fr checked pressures lung expanded fine got out over 2 liters <DATE_TIME> total left it to bulb suction.",
+    "note_text": "Richard Hernandez post cabg effusion drained it with a pigtail 14fr checked pressures lung expanded fine got out over 2 liters 2350 total left it to bulb suction.",
     "cpt_codes": [
       32556
     ],
@@ -20547,13 +19943,6 @@
       "style_type": 5,
       "generated_name": "Nat Ramos",
       "generation_date": "2025-12-09T14:15:33.947876"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -20669,7 +20058,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPost-CABG effusion.\n[<LOCATION>]\nLocal.\n[Description]\n14Fr pigtail. Manometry normal. Drained <PERSON> suction.\n[Plan]\nReassess tomorrow.",
+    "note_text": "[Indication]\nPost-CABG effusion.\n[Anesthesia]\nLocal.\n[Description]\n14Fr pigtail. Manometry normal. Drained 2350mL. Bulb suction.\n[Plan]\nReassess tomorrow.",
     "cpt_codes": [
       32556
     ],
@@ -20778,17 +20167,10 @@
       "style_type": 7,
       "generated_name": "Paul Burns",
       "generation_date": "2025-12-09T14:15:33.947951"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a large fluid collection after his heart surgery. We placed a pigtail catheter to drain it. We checked the pressures in his chest while draining, which showed his lung was expanding well. We drained over 2 liters of fluid and left the tube in with a suction bulb to get the rest out.",
+    "note_text": "Mr. Hernandez had a large fluid collection after his heart surgery. We placed a pigtail catheter to drain it. We checked the pressures in his chest while draining, which showed his lung was expanding well. We drained over 2 liters of fluid and left the tube in with a suction bulb to get the rest out.",
     "cpt_codes": [
       32556
     ],
@@ -20897,12 +20279,6 @@
       "style_type": 8,
       "generated_name": "Quincy Gordon",
       "generation_date": "2025-12-09T14:15:33.947982"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

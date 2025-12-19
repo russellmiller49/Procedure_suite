@@ -39,7 +39,7 @@
   },
   {
     "note_id": "TBA-001",
-    "note_text": "OPERATIVE REPORT: The patient presented with a biopsy-proven, PET-avid nodule in the right lower lobe posterior basal segment. Under general <LOCATION>, electromagnetic navigation bronchoscopy utilizing the Illumisite platform was performed. Following registration and tomosynthesis correction, the lesion was targeted. An Emprint microwave ablation catheter was precisely positioned under cone-beam CT guidance. A single cycle of microwave energy was delivered for 10 minutes. Post-ablation imaging confirmed a concentric ablation zone with adequate oncologic margins. The patient remained hemodynamically stable throughout.",
+    "note_text": "OPERATIVE REPORT: The patient presented with a biopsy-proven, PET-avid nodule in the right lower lobe posterior basal segment. Under general anesthesia, electromagnetic navigation bronchoscopy utilizing the Illumisite platform was performed. Following registration and tomosynthesis correction, the lesion was targeted. An Emprint microwave ablation catheter was precisely positioned under cone-beam CT guidance. A single cycle of microwave energy was delivered for 10 minutes. Post-ablation imaging confirmed a concentric ablation zone with adequate oncologic margins. The patient remained hemodynamically stable throughout.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -73,12 +73,6 @@
       "style_type": 2,
       "generated_name": "Ford Prefect",
       "generation_date": "2025-12-09T09:22:27.328794"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -121,7 +115,7 @@
   },
   {
     "note_id": "TBA-001",
-    "note_text": "Procedure: RLL Microwave Ablation\nAttending: Dr. Rivera\nSteps:\n1. GA, 8.5 ETT.\n2. Navigated to RLL posterior basal segment using Illumisite.\n3. Used CBCT to confirm needle/catheter placement.\n4. Advanced Emprint catheter.\n5. Ablated for 10 mins.\n6. Post-op CBCT showed good margin.\nNo complications. Extubated to <LOCATION>.",
+    "note_text": "Procedure: RLL Microwave Ablation\nAttending: Dr. Rivera\nSteps:\n1. GA, 8.5 ETT.\n2. Navigated to RLL posterior basal segment using Illumisite.\n3. Used CBCT to confirm needle/catheter placement.\n4. Advanced Emprint catheter.\n5. Ablated for 10 mins.\n6. Post-op CBCT showed good margin.\nNo complications. Extubated to PACU.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -155,12 +149,6 @@
       "style_type": 4,
       "generated_name": "Tricia McMillan",
       "generation_date": "2025-12-09T09:22:27.328825"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -203,7 +191,7 @@
   },
   {
     "note_id": "TBA-001",
-    "note_text": "The patient was brought to the hybrid OR for ablation of an 18 mm RLL nodule. General <LOCATION> was induced. Using the Illumisite navigation system, we accessed the posterior basal segment. Cone-beam CT confirmed the catheter was centered in the lesion. We performed a <DATE_TIME> microwave ablation using the Emprint system. Final imaging showed a 6 mm circumferential margin. The patient tolerated the procedure well without complications.",
+    "note_text": "The patient was brought to the hybrid OR for ablation of an 18 mm RLL nodule. General anesthesia was induced. Using the Illumisite navigation system, we accessed the posterior basal segment. Cone-beam CT confirmed the catheter was centered in the lesion. We performed a 10-minute microwave ablation using the Emprint system. Final imaging showed a 6 mm circumferential margin. The patient tolerated the procedure well without complications.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -237,18 +225,11 @@
       "style_type": 6,
       "generated_name": "Marvin Android",
       "generation_date": "2025-12-09T09:22:27.328848"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-001",
-    "note_text": "[Indication]\nHigh-risk stage IA NSCLC, RLL posterior basal segment.\n[<LOCATION>]\nGeneral, 8.5 ETT.\n[Description]\nNavigated to RLL. CBCT confirmed position. 10-min microwave ablation delivered via Emprint. 6mm margin achieved. No bleeding.\n[Plan]\nDischarge today. CT in <DATE_TIME>.",
+    "note_text": "[Indication]\nHigh-risk stage IA NSCLC, RLL posterior basal segment.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nNavigated to RLL. CBCT confirmed position. 10-min microwave ablation delivered via Emprint. 6mm margin achieved. No bleeding.\n[Plan]\nDischarge today. CT in 3 months.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -282,13 +263,6 @@
       "style_type": 7,
       "generated_name": "Eddie Computer",
       "generation_date": "2025-12-09T09:22:27.328861"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -445,7 +419,7 @@
   },
   {
     "note_id": "TBA-002",
-    "note_text": "Primary Code: <DATE_TIME> (Destruction of tumor, RUL). Add-on: <DATE_TIME> (Navigation). The service involved robotic assistance (Ion platform) to navigate to a peripheral apical lesion. 3D rotational fluoroscopy was used for target verification. Microwave energy was applied in two cycles to destroy the tumor. The complexity of the robotic navigation supports the add-on code.",
+    "note_text": "Primary Code: 31641 (Destruction of tumor, RUL). Add-on: 31627 (Navigation). The service involved robotic assistance (Ion platform) to navigate to a peripheral apical lesion. 3D rotational fluoroscopy was used for target verification. Microwave energy was applied in two cycles to destroy the tumor. The complexity of the robotic navigation supports the add-on code.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -479,13 +453,6 @@
       "style_type": 3,
       "generated_name": "Leia Organa",
       "generation_date": "2025-12-09T09:22:27.328918"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -528,7 +495,7 @@
   },
   {
     "note_id": "TBA-002",
-    "note_text": "rul nodule ablation with the ion robot. drove the robot out to the apical segment. used the cios spin for the 3d pic. confirmed we were in the nodule. did two burns 8 mins and 6 mins to make sure we got it all. margin looked big enough like 7mm. minimal bleeding. admitting <DATE_TIME> just to be safe.",
+    "note_text": "rul nodule ablation with the ion robot. drove the robot out to the apical segment. used the cios spin for the 3d pic. confirmed we were in the nodule. did two burns 8 mins and 6 mins to make sure we got it all. margin looked big enough like 7mm. minimal bleeding. admitting overnight just to be safe.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -562,17 +529,11 @@
       "style_type": 5,
       "generated_name": "Anakin Skywalker",
       "generation_date": "2025-12-09T09:22:27.328939"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-002",
-    "note_text": "Under general <LOCATION>, the Ion robotic system was used to navigate to a 12 mm nodule in the RUL apical segment. Cios Spin 3D imaging confirmed the catheter position. We performed two overlapping microwave ablations using the Emprint catheter to ensure adequate margins. Post-ablation imaging showed a 7 mm margin. The patient was extubated and transferred to the floor for <DATE_TIME> observation.",
+    "note_text": "Under general anesthesia, the Ion robotic system was used to navigate to a 12 mm nodule in the RUL apical segment. Cios Spin 3D imaging confirmed the catheter position. We performed two overlapping microwave ablations using the Emprint catheter to ensure adequate margins. Post-ablation imaging showed a 7 mm margin. The patient was extubated and transferred to the floor for overnight observation.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -606,18 +567,11 @@
       "style_type": 6,
       "generated_name": "Padme Amidala",
       "generation_date": "2025-12-09T09:22:27.328953"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-002",
-    "note_text": "[Indication]\nMetachronous stage <LOCATION> adenocarcinoma, RUL.\n[<LOCATION>]\nGeneral, 8.0 ETT.\n[Description]\nRobotic navigation to apical segment. 3D C-arm confirmation. Double microwave ablation (<DATE_TIME> min). 7mm margin obtained. No pneumothorax.\n[Plan]\nAdmit overnight.",
+    "note_text": "[Indication]\nMetachronous stage IA adenocarcinoma, RUL.\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nRobotic navigation to apical segment. 3D C-arm confirmation. Double microwave ablation (8+6 min). 7mm margin obtained. No pneumothorax.\n[Plan]\nAdmit overnight.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -651,14 +605,6 @@
       "style_type": 7,
       "generated_name": "Mace Windu",
       "generation_date": "2025-12-09T09:22:27.328964"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -891,7 +837,7 @@
   },
   {
     "note_id": "TBA-003",
-    "note_text": "ablation of rll superior nodule big <DATE_TIME>. illumisite nav used. had to adjust for divergence. did two burns 10 mins and 7 mins pulling back a bit. looks like we got it all 5mm margin. tiny pneumo at the apex pt feels fine no tube needed. discharge tomorrow.",
+    "note_text": "ablation of rll superior nodule big one 24mm. illumisite nav used. had to adjust for divergence. did two burns 10 mins and 7 mins pulling back a bit. looks like we got it all 5mm margin. tiny pneumo at the apex pt feels fine no tube needed. discharge tomorrow.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -925,17 +871,11 @@
       "style_type": 5,
       "generated_name": "Hikaru Sulu",
       "generation_date": "2025-12-09T09:22:27.329042"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-003",
-    "note_text": "Electromagnetic navigation bronchoscopy was performed to target a 24 mm nodule in the RLL superior segment. Using cone-beam CT guidance, we positioned the microwave catheter. Two overlapping ablations were performed to cover the lesion length. Post-ablation imaging confirmed good margins but revealed a small apical pneumothorax. The patient remained stable and was observed <DATE_TIME>.",
+    "note_text": "Electromagnetic navigation bronchoscopy was performed to target a 24 mm nodule in the RLL superior segment. Using cone-beam CT guidance, we positioned the microwave catheter. Two overlapping ablations were performed to cover the lesion length. Post-ablation imaging confirmed good margins but revealed a small apical pneumothorax. The patient remained stable and was observed overnight.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -969,17 +909,11 @@
       "style_type": 6,
       "generated_name": "Pavel Chekov",
       "generation_date": "2025-12-09T09:22:27.329052"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-003",
-    "note_text": "[Indication]\nInoperable RLL superior segment CA.\n[<LOCATION>]\nGeneral, 8.0 ETT.\n[Description]\nNavigated to lesion. Two sequential ablations (10+7 min) performed. 5-6mm margin achieved. Small asymptomatic pneumothorax noted.\n[Plan]\nMonitor <DATE_TIME>, serial CXRs.",
+    "note_text": "[Indication]\nInoperable RLL superior segment CA.\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nNavigated to lesion. Two sequential ablations (10+7 min) performed. 5-6mm margin achieved. Small asymptomatic pneumothorax noted.\n[Plan]\nMonitor overnight, serial CXRs.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -1013,13 +947,6 @@
       "style_type": 7,
       "generated_name": "Nyota Uhura",
       "generation_date": "2025-12-09T09:22:27.329062"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -1062,7 +989,7 @@
   },
   {
     "note_id": "TBA-003",
-    "note_text": "Indication: RLL malignancy treatment.\nProcedure: Electromagnetic steering with thermal ablation.\nAction: The device was guided to the superior segment. Two cycles of energy were administered with catheter repositioning. A resultant pneumothorax was observed but deemed non-critical.\nOutcome: Lesion destroyed, conservative management for <PERSON>.",
+    "note_text": "Indication: RLL malignancy treatment.\nProcedure: Electromagnetic steering with thermal ablation.\nAction: The device was guided to the superior segment. Two cycles of energy were administered with catheter repositioning. A resultant pneumothorax was observed but deemed non-critical.\nOutcome: Lesion destroyed, conservative management for PTX.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -1096,17 +1023,11 @@
       "style_type": 9,
       "generated_name": "Janice Rand",
       "generation_date": "2025-12-09T09:22:27.329085"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "TBA-004",
-    "note_text": "Procedure: Nav Bronch, <PERSON>, MWA.\n- Target: 16mm LLL lateral basal nodule.\n- Action: Radial EBUS confirmation. Cryobiopsy x2 (<PERSON>). MWA 10 min.\n- Result: 5mm margin, mild hemorrhage.\n- Plan: Admit overnight.",
+    "note_text": "Procedure: Nav Bronch, Cryobiopsy, MWA.\n- Target: 16mm LLL lateral basal nodule.\n- Action: Radial EBUS confirmation. Cryobiopsy x2 (Adeno CA). MWA 10 min.\n- Result: 5mm margin, mild hemorrhage.\n- Plan: Admit overnight.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -1147,18 +1068,11 @@
       "style_type": 1,
       "generated_name": "Frodo Baggins",
       "generation_date": "2025-12-09T09:22:27.329098"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "TBA-004",
-    "note_text": "OPERATIVE REPORT: The patient underwent a combined diagnostic and therapeutic procedure for a peripheral LLL nodule. Electromagnetic navigation and radial EBUS localized the lesion. Transbronchial cryobiopsy provided a diagnosis of adenocarcinoma via frozen section. Subsequently, an Emprint microwave catheter was deployed. A single <DATE_TIME> ablation resulted in a ground-glass opacity enveloping the biopsy cavity. Mild perilesional hemorrhage was noted and controlled.",
+    "note_text": "OPERATIVE REPORT: The patient underwent a combined diagnostic and therapeutic procedure for a peripheral LLL nodule. Electromagnetic navigation and radial EBUS localized the lesion. Transbronchial cryobiopsy provided a diagnosis of adenocarcinoma via frozen section. Subsequently, an Emprint microwave catheter was deployed. A single 10-minute ablation resulted in a ground-glass opacity enveloping the biopsy cavity. Mild perilesional hemorrhage was noted and controlled.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -1199,17 +1113,11 @@
       "style_type": 2,
       "generated_name": "Samwise Gamgee",
       "generation_date": "2025-12-09T09:22:27.329111"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-004",
-    "note_text": "Codes: 31641 (Destruction LLL), 31627 (Nav), 31654 (REBUS). Note: 31628 (<LOCATION>) is bundled into 31641 per <LOCATION> edits when performed at the same site. The procedure involved navigation, radial EBUS confirmation, diagnostic cryobiopsy, and immediate therapeutic microwave ablation of the confirmed malignancy.",
+    "note_text": "Codes: 31641 (Destruction LLL), 31627 (Nav), 31654 (REBUS). Note: 31628 (Biopsy) is bundled into 31641 per NCCI edits when performed at the same site. The procedure involved navigation, radial EBUS confirmation, diagnostic cryobiopsy, and immediate therapeutic microwave ablation of the confirmed malignancy.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -1250,13 +1158,6 @@
       "style_type": 3,
       "generated_name": "Meriadoc Brandybuck",
       "generation_date": "2025-12-09T09:22:27.329123"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1396,7 +1297,7 @@
   },
   {
     "note_id": "TBA-004",
-    "note_text": "[Indication]\nLLL nodule, dx and <PERSON>.\n[<LOCATION>]\nGeneral.\n[Description]\nNav/REBUS loc. Cryobiopsy: Adenocarcinoma. MWA: 10 min burn. 5mm margin. Mild hemorrhage controlled.\n[Plan]\nAdmit for observation.",
+    "note_text": "[Indication]\nLLL nodule, dx and tx.\n[Anesthesia]\nGeneral.\n[Description]\nNav/REBUS loc. Cryobiopsy: Adenocarcinoma. MWA: 10 min burn. 5mm margin. Mild hemorrhage controlled.\n[Plan]\nAdmit for observation.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -1437,13 +1338,6 @@
       "style_type": 7,
       "generated_name": "Gimli Gloin",
       "generation_date": "2025-12-09T09:22:27.329174"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1538,7 +1432,7 @@
   },
   {
     "note_id": "TBA-005",
-    "note_text": "Procedure: Nav Bronch w/ Double MWA.\n- Target: 25mm RML lateral nodule.\n- Action: Navigated w/ Illumisite. 10 min burn (medial margin thin). Repositioned. 8 min burn.\n- Result: Fused ablation zone, 6mm margin.\n- Plan: Cardiac monitoring <DATE_TIME>.",
+    "note_text": "Procedure: Nav Bronch w/ Double MWA.\n- Target: 25mm RML lateral nodule.\n- Action: Navigated w/ Illumisite. 10 min burn (medial margin thin). Repositioned. 8 min burn.\n- Result: Fused ablation zone, 6mm margin.\n- Plan: Cardiac monitoring overnight.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -1572,17 +1466,11 @@
       "style_type": 1,
       "generated_name": "Harry Potter",
       "generation_date": "2025-12-09T09:22:27.329209"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-005",
-    "note_text": "OPERATIVE NARRATIVE: A 2.5 cm neoplasm in the RML lateral segment was targeted for ablation. Utilizing the Illumisite navigation system and cone-beam CT, the lesion was accessed. An initial <DATE_TIME> microwave ablation was deemed insufficient regarding the medial margin. Consequently, the catheter was repositioned medially, and a secondary <DATE_TIME> ablation was delivered. The final fused ablation zone provided adequate circumferential coverage.",
+    "note_text": "OPERATIVE NARRATIVE: A 2.5 cm neoplasm in the RML lateral segment was targeted for ablation. Utilizing the Illumisite navigation system and cone-beam CT, the lesion was accessed. An initial 10-minute microwave ablation was deemed insufficient regarding the medial margin. Consequently, the catheter was repositioned medially, and a secondary 8-minute ablation was delivered. The final fused ablation zone provided adequate circumferential coverage.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -1616,18 +1504,11 @@
       "style_type": 2,
       "generated_name": "Ron Weasley",
       "generation_date": "2025-12-09T09:22:27.329220"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-005",
-    "note_text": "Code 31641 (Destruction of tumor, RML) and <DATE_TIME> (Navigation). Despite two separate burns, <DATE_TIME> is reported once per lobe/lesion. Navigation utilizing Illumisite and CBCT was integral. The procedure involved repositioning to ensure adequate margins for a large (2.5cm) lesion.",
+    "note_text": "Code 31641 (Destruction of tumor, RML) and 31627 (Navigation). Despite two separate burns, 31641 is reported once per lobe/lesion. Navigation utilizing Illumisite and CBCT was integral. The procedure involved repositioning to ensure adequate margins for a large (2.5cm) lesion.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -1661,18 +1542,11 @@
       "style_type": 3,
       "generated_name": "Hermione Granger",
       "generation_date": "2025-12-09T09:22:27.329230"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-005",
-    "note_text": "Procedure: RML MWA\nStaff: Dr. Alvarez\n1. Nav to RML lateral.\n2. Burn 1: 10 mins. CT showed thin medial margin.\n3. Repositioned catheter.\n4. Burn 2: 8 mins.\n5. CT showed fused zone 6mm margin.\nPt has CAD -> cardiac monitor <DATE_TIME>.",
+    "note_text": "Procedure: RML MWA\nStaff: Dr. Alvarez\n1. Nav to RML lateral.\n2. Burn 1: 10 mins. CT showed thin medial margin.\n3. Repositioned catheter.\n4. Burn 2: 8 mins.\n5. CT showed fused zone 6mm margin.\nPt has CAD -> cardiac monitor overnight.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -1706,17 +1580,11 @@
       "style_type": 4,
       "generated_name": "Albus Dumbledore",
       "generation_date": "2025-12-09T09:22:27.329240"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-005",
-    "note_text": "rml nodule 25mm. navigated out there. did a 10 minute burn first but the margin wasn't great medially. moved the catheter over a bit and did another 8 minutes. now it looks solid 6mm margin all around. no bleeding. keeping him <DATE_TIME> for heart monitoring.",
+    "note_text": "rml nodule 25mm. navigated out there. did a 10 minute burn first but the margin wasn't great medially. moved the catheter over a bit and did another 8 minutes. now it looks solid 6mm margin all around. no bleeding. keeping him overnight for heart monitoring.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -1750,17 +1618,11 @@
       "style_type": 5,
       "generated_name": "Severus Snape",
       "generation_date": "2025-12-09T09:22:27.329252"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-005",
-    "note_text": "Microwave ablation of a 25 mm RML nodule. <PERSON> was successful. The first <DATE_TIME> ablation left a narrow medial margin. We repositioned the catheter and performed a second <DATE_TIME> ablation. The two zones fused to create a 6 mm margin. Airway patent. Patient extubated and stable.",
+    "note_text": "Microwave ablation of a 25 mm RML nodule. Navigation was successful. The first 10-minute ablation left a narrow medial margin. We repositioned the catheter and performed a second 8-minute ablation. The two zones fused to create a 6 mm margin. Airway patent. Patient extubated and stable.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -1794,19 +1656,11 @@
       "style_type": 6,
       "generated_name": "Minerva McGonagall",
       "generation_date": "2025-12-09T09:22:27.329264"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-005",
-    "note_text": "[Indication]\n25mm RML nodule, poor surgical candidate.\n[<LOCATION>]\nGeneral, 8.5 ETT.\n[Description]\nNavigated to lesion. Two ablations (10 min + 8 min) required for coverage. Fused zone achieved 6mm margin. No complications.\n[Plan]\nAdmit for cardiac monitoring.",
+    "note_text": "[Indication]\n25mm RML nodule, poor surgical candidate.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nNavigated to lesion. Two ablations (10 min + 8 min) required for coverage. Fused zone achieved 6mm margin. No complications.\n[Plan]\nAdmit for cardiac monitoring.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -1840,12 +1694,6 @@
       "style_type": 7,
       "generated_name": "Rubeus Hagrid",
       "generation_date": "2025-12-09T09:22:27.329275"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1926,7 +1774,7 @@
   },
   {
     "note_id": "TBA-006",
-    "note_text": "Procedure: Nav Bronch w/ MWA.\n- Target: 9mm LLL superior GGO.\n- Action: Navigated to segment. CBCT confirmed position. Two burns (<DATE_TIME> min) w/o repositioning.\n- Result: Spherical ablation zone, 5-6mm margin.\n- Plan: Discharge today.",
+    "note_text": "Procedure: Nav Bronch w/ MWA.\n- Target: 9mm LLL superior GGO.\n- Action: Navigated to segment. CBCT confirmed position. Two burns (6 min + 5 min) w/o repositioning.\n- Result: Spherical ablation zone, 5-6mm margin.\n- Plan: Discharge today.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -1960,12 +1808,6 @@
       "style_type": 1,
       "generated_name": "Tony Stark",
       "generation_date": "2025-12-09T09:22:27.329309"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -2008,7 +1850,7 @@
   },
   {
     "note_id": "TBA-006",
-    "note_text": "Code 31641 (Destruction, LLL) and <DATE_TIME> (Navigation). Indication: GGO (likely adenocarcinoma). Technique: Navigation to a peripheral subsolid lesion requiring CBCT for visualization. Two ablation cycles were used for a single small lesion to ensure margin without repositioning (protocol driven).",
+    "note_text": "Code 31641 (Destruction, LLL) and 31627 (Navigation). Indication: GGO (likely adenocarcinoma). Technique: Navigation to a peripheral subsolid lesion requiring CBCT for visualization. Two ablation cycles were used for a single small lesion to ensure margin without repositioning (protocol driven).",
     "cpt_codes": [
       "31641",
       "31627"
@@ -2042,12 +1884,6 @@
       "style_type": 3,
       "generated_name": "Bruce Banner",
       "generation_date": "2025-12-09T09:22:27.329332"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -2166,7 +2002,7 @@
   },
   {
     "note_id": "TBA-006",
-    "note_text": "[Indication]\n9mm LLL superior GGO.\n[<LOCATION>]\nGeneral.\n[Description]\nNavigated to GGO. Confirmed w/ CBCT. MWA x2 (<DATE_TIME> min). Spherical zone created. 5-6mm margin. No complications.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\n9mm LLL superior GGO.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to GGO. Confirmed w/ CBCT. MWA x2 (6+5 min). Spherical zone created. 5-6mm margin. No complications.\n[Plan]\nDischarge.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -2200,13 +2036,6 @@
       "style_type": 7,
       "generated_name": "Nick Fury",
       "generation_date": "2025-12-09T09:22:27.329378"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -2363,7 +2192,7 @@
   },
   {
     "note_id": "TBA-007",
-    "note_text": "Codes: 31641 (Destruction RUL) and 31627 (Navigation). Technology: Monarch robotic platform and <PERSON> catheter. The procedure required robotic navigation to a difficult apical location. Multiple overlapping burns were used to treat the 2cm lesion. Medical necessity: High-risk patient (CKD, frailty).",
+    "note_text": "Codes: 31641 (Destruction RUL) and 31627 (Navigation). Technology: Monarch robotic platform and Neuwave Flex catheter. The procedure required robotic navigation to a difficult apical location. Multiple overlapping burns were used to treat the 2cm lesion. Medical necessity: High-risk patient (CKD, frailty).",
     "cpt_codes": [
       "31641",
       "31627"
@@ -2397,12 +2226,6 @@
       "style_type": 3,
       "generated_name": "Diana Prince",
       "generation_date": "2025-12-09T09:22:27.329431"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2483,7 +2306,7 @@
   },
   {
     "note_id": "TBA-007",
-    "note_text": "Robotic bronchoscopy with microwave ablation for RUL apical nodule. Monarch system used for navigation. <PERSON> catheter placed. Two overlapping ablations (8 and 7 min) delivered. Good margins achieved avoiding apical structures. Patient stable, admitted for observation.",
+    "note_text": "Robotic bronchoscopy with microwave ablation for RUL apical nodule. Monarch system used for navigation. Neuwave Flex catheter placed. Two overlapping ablations (8 and 7 min) delivered. Good margins achieved avoiding apical structures. Patient stable, admitted for observation.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -2517,17 +2340,11 @@
       "style_type": 6,
       "generated_name": "Victor Stone",
       "generation_date": "2025-12-09T09:22:27.329463"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "TBA-007",
-    "note_text": "[Indication]\n20mm RUL apical posterior nodule.\n[<LOCATION>]\nGeneral.\n[Description]\nRobotic nav (Monarch). Flex MWA catheter. Two burns (8+7 min). 6mm margin. No nerve injury.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\n20mm RUL apical posterior nodule.\n[Anesthesia]\nGeneral.\n[Description]\nRobotic nav (Monarch). Flex MWA catheter. Two burns (8+7 min). 6mm margin. No nerve injury.\n[Plan]\nAdmit.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -2561,12 +2378,6 @@
       "style_type": 7,
       "generated_name": "Hal Jordan",
       "generation_date": "2025-12-09T09:22:27.329473"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -2647,7 +2458,7 @@
   },
   {
     "note_id": "TBA-008",
-    "note_text": "Procedure: Nav Bronch w/ MWA (Cios Spin).\n- Target: 18mm LLL basal nodule (near diaphragm).\n- Action: Navigated w/ Illumisite. 3D spin verification. Two burns (<DATE_TIME> min).\n- Result: 5-6mm margin, diaphragm spared.\n- Plan: Admit (monitor liver/volume).",
+    "note_text": "Procedure: Nav Bronch w/ MWA (Cios Spin).\n- Target: 18mm LLL basal nodule (near diaphragm).\n- Action: Navigated w/ Illumisite. 3D spin verification. Two burns (10+5 min).\n- Result: 5-6mm margin, diaphragm spared.\n- Plan: Admit (monitor liver/volume).",
     "cpt_codes": [
       "31641",
       "31627"
@@ -2681,12 +2492,6 @@
       "style_type": 1,
       "generated_name": "Peter Parker",
       "generation_date": "2025-12-09T09:22:27.329506"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -2729,7 +2534,7 @@
   },
   {
     "note_id": "TBA-008",
-    "note_text": "Code 31641 (Destruction LLL) and <DATE_TIME> (Navigation). Technique involved complex imaging (Cios Spin cone-beam) to safely treat a lesion near the diaphragm. Transbronchial needle was used to tunnel into parenchyma. Two ablation cycles delivered. <DATE_TIME> justified by EM navigation usage.",
+    "note_text": "Code 31641 (Destruction LLL) and 31627 (Navigation). Technique involved complex imaging (Cios Spin cone-beam) to safely treat a lesion near the diaphragm. Transbronchial needle was used to tunnel into parenchyma. Two ablation cycles delivered. 31627 justified by EM navigation usage.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -2763,13 +2568,6 @@
       "style_type": 3,
       "generated_name": "Harry Osborn",
       "generation_date": "2025-12-09T09:22:27.329527"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -2888,7 +2686,7 @@
   },
   {
     "note_id": "TBA-008",
-    "note_text": "[Indication]\n18mm LLL basal nodule, cirrhosis.\n[<LOCATION>]\nGeneral.\n[Description]\nNavigated to LLL. Cios Spin guidance. Tunneled to lesion. MWA x2 (<DATE_TIME> min). Diaphragm spared.\n[Plan]\nAdmit overnight.",
+    "note_text": "[Indication]\n18mm LLL basal nodule, cirrhosis.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to LLL. Cios Spin guidance. Tunneled to lesion. MWA x2 (10+5 min). Diaphragm spared.\n[Plan]\nAdmit overnight.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -2922,13 +2720,6 @@
       "style_type": 7,
       "generated_name": "Flash Thompson",
       "generation_date": "2025-12-09T09:22:27.329568"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -2971,7 +2762,7 @@
   },
   {
     "note_id": "TBA-008",
-    "note_text": "Indication: <PERSON>-diaphragmatic lesion.\nProcedure: Guided endoscopy with thermal ablation.\nAction: 3D fluoroscopy verified probe placement. Energy was delivered in two phases. The ablation zone excluded the diaphragm.\nOutcome: Safe lesion necrosis.",
+    "note_text": "Indication: Juxta-diaphragmatic lesion.\nProcedure: Guided endoscopy with thermal ablation.\nAction: 3D fluoroscopy verified probe placement. Energy was delivered in two phases. The ablation zone excluded the diaphragm.\nOutcome: Safe lesion necrosis.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3005,12 +2796,6 @@
       "style_type": 9,
       "generated_name": "Robbie Robertson",
       "generation_date": "2025-12-09T09:22:27.329587"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3053,7 +2838,7 @@
   },
   {
     "note_id": "TBA-009",
-    "note_text": "OPERATIVE NARRATIVE: This patient, status post right pneumonectomy, presented with a new nodule in the lingula. Lung-preserving microwave ablation was elected. Under general <LOCATION> with protective ventilation, the lesion was targeted via electromagnetic navigation. A single <DATE_TIME> ablation was performed to minimize parenchymal impact while ensuring oncologic efficacy. Cone-beam CT confirmed complete tumor coverage with adequate margins. The patient maintained adequate oxygenation throughout.",
+    "note_text": "OPERATIVE NARRATIVE: This patient, status post right pneumonectomy, presented with a new nodule in the lingula. Lung-preserving microwave ablation was elected. Under general anesthesia with protective ventilation, the lesion was targeted via electromagnetic navigation. A single 8-minute ablation was performed to minimize parenchymal impact while ensuring oncologic efficacy. Cone-beam CT confirmed complete tumor coverage with adequate margins. The patient maintained adequate oxygenation throughout.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3087,18 +2872,11 @@
       "style_type": 2,
       "generated_name": "Jesse Pinkman",
       "generation_date": "2025-12-09T09:22:27.329610"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-009",
-    "note_text": "Code 31641 (Destruction LUL) and <DATE_TIME> (Navigation). Special consideration: Procedure performed on a single lung (post-pneumonectomy). Navigation and CBCT were critical for precision. A single <DATE_TIME> ablation was sufficient for the 1.5 cm lesion.",
+    "note_text": "Code 31641 (Destruction LUL) and 31627 (Navigation). Special consideration: Procedure performed on a single lung (post-pneumonectomy). Navigation and CBCT were critical for precision. A single 8-minute ablation was sufficient for the 1.5 cm lesion.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3132,13 +2910,6 @@
       "style_type": 3,
       "generated_name": "Skyler White",
       "generation_date": "2025-12-09T09:22:27.329620"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3181,7 +2952,7 @@
   },
   {
     "note_id": "TBA-009",
-    "note_text": "patient has only one lung. nodule in the lingula. carefully navigated there. used the cone beam. did <DATE_TIME> burn didn't want to overdo it. <PERSON> showed we got it with a 5mm rim. oxygen stayed good. step down unit for watch.",
+    "note_text": "patient has only one lung. nodule in the lingula. carefully navigated there. used the cone beam. did one 8 minute burn didn't want to overdo it. scan showed we got it with a 5mm rim. oxygen stayed good. step down unit for watch.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3215,18 +2986,11 @@
       "style_type": 5,
       "generated_name": "Marie Schrader",
       "generation_date": "2025-12-09T09:22:27.329641"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "TBA-009",
-    "note_text": "Microwave ablation of 15 mm lingular nodule in a post-pneumonectomy patient. Navigation and cone-beam CT used. Single <DATE_TIME> ablation performed. 5 mm margin achieved. No respiratory compromise. Patient extubated to high-flow O2.",
+    "note_text": "Microwave ablation of 15 mm lingular nodule in a post-pneumonectomy patient. Navigation and cone-beam CT used. Single 8-minute ablation performed. 5 mm margin achieved. No respiratory compromise. Patient extubated to high-flow O2.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3260,17 +3024,11 @@
       "style_type": 6,
       "generated_name": "Saul Goodman",
       "generation_date": "2025-12-09T09:22:27.329651"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-009",
-    "note_text": "[Indication]\n15mm Lingular nodule, single lung.\n[<LOCATION>]\nGeneral, protective vent.\n[Description]\nNavigated to lingula. Single 8-min MWA. 5mm margin. No desaturation.\n[Plan]\nStep-down unit.",
+    "note_text": "[Indication]\n15mm Lingular nodule, single lung.\n[Anesthesia]\nGeneral, protective vent.\n[Description]\nNavigated to lingula. Single 8-min MWA. 5mm margin. No desaturation.\n[Plan]\nStep-down unit.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3304,17 +3062,11 @@
       "style_type": 7,
       "generated_name": "Mike Ehrmantraut",
       "generation_date": "2025-12-09T09:22:27.329663"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "TBA-009",
-    "note_text": "Since this patient only has one lung, we had to be extremely careful. We navigated to the small tumor in the lingula and performed a quick, single <DATE_TIME> burn. This successfully destroyed the tumor with a safe margin without taking out too much healthy lung tissue. The patient breathed well throughout the procedure.",
+    "note_text": "Since this patient only has one lung, we had to be extremely careful. We navigated to the small tumor in the lingula and performed a quick, single 8-minute burn. This successfully destroyed the tumor with a safe margin without taking out too much healthy lung tissue. The patient breathed well throughout the procedure.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3348,12 +3100,6 @@
       "style_type": 8,
       "generated_name": "Gustavo Fring",
       "generation_date": "2025-12-09T09:22:27.329674"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3396,7 +3142,7 @@
   },
   {
     "note_id": "TBA-010",
-    "note_text": "Procedure: Nav Bronch w/ MWA + Vapor.\n- Target: 19mm RLL superior nodule + STAS.\n- Action: 10 min MWA. Vapor delivered to adjacent segment.\n- Result: Extended ablation zone covering <PERSON>.\n- Plan: Admit (expect fever).",
+    "note_text": "Procedure: Nav Bronch w/ MWA + Vapor.\n- Target: 19mm RLL superior nodule + STAS.\n- Action: 10 min MWA. Vapor delivered to adjacent segment.\n- Result: Extended ablation zone covering STAS.\n- Plan: Admit (expect fever).",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3431,17 +3177,11 @@
       "style_type": 1,
       "generated_name": "Jon Snow",
       "generation_date": "2025-12-09T09:22:27.329696"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "TBA-010",
-    "note_text": "OPERATIVE REPORT: The patient presented with a RLL nodule exhibiting imaging features of spread-through-airspaces (STAS). A multimodal ablation strategy was employed. First, electromagnetic navigation guided a <DATE_TIME> microwave ablation of the primary nodule. Subsequently, to address the locoregional risk, bronchoscopic thermal vapor ablation was applied to the surrounding segmental airways. Post-procedure imaging confirmed a composite ablation zone incorporating both the primary tumor and the adjacent parenchyma.",
+    "note_text": "OPERATIVE REPORT: The patient presented with a RLL nodule exhibiting imaging features of spread-through-airspaces (STAS). A multimodal ablation strategy was employed. First, electromagnetic navigation guided a 10-minute microwave ablation of the primary nodule. Subsequently, to address the locoregional risk, bronchoscopic thermal vapor ablation was applied to the surrounding segmental airways. Post-procedure imaging confirmed a composite ablation zone incorporating both the primary tumor and the adjacent parenchyma.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3476,17 +3216,11 @@
       "style_type": 2,
       "generated_name": "Daenerys Targaryen",
       "generation_date": "2025-12-09T09:22:27.329707"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-010",
-    "note_text": "Code 31641 (Destruction RLL) and <DATE_TIME> (Navigation). Although two modalities (microwave and vapor) were used, they treated the same primary lesion/lobe, so <DATE_TIME> is reported once. <PERSON> facilitated access. Vapor was an adjunct for extended margins.",
+    "note_text": "Code 31641 (Destruction RLL) and 31627 (Navigation). Although two modalities (microwave and vapor) were used, they treated the same primary lesion/lobe, so 31641 is reported once. Navigation facilitated access. Vapor was an adjunct for extended margins.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3521,14 +3255,6 @@
       "style_type": 3,
       "generated_name": "Tyrion Lannister",
       "generation_date": "2025-12-09T09:22:27.329719"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "PERSON"
-      ]
     }
   },
   {
@@ -3611,7 +3337,7 @@
   },
   {
     "note_id": "TBA-010",
-    "note_text": "Multimodal ablation for 19 mm RLL nodule with STAS. <PERSON> used. <DATE_TIME> microwave ablation performed for the core lesion. Thermal vapor ablation was then delivered to the adjacent segment to extend margins. Post-op scan showed extensive coverage. Patient stable.",
+    "note_text": "Multimodal ablation for 19 mm RLL nodule with STAS. Navigation used. 10-minute microwave ablation performed for the core lesion. Thermal vapor ablation was then delivered to the adjacent segment to extend margins. Post-op scan showed extensive coverage. Patient stable.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3646,18 +3372,11 @@
       "style_type": 6,
       "generated_name": "Sansa Stark",
       "generation_date": "2025-12-09T09:22:27.329750"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-010",
-    "note_text": "[Indication]\n19mm RLL nodule w/ <PERSON>.\n[<LOCATION>]\nGeneral.\n[Description]\nNavigated to RLL. 10-min MWA performed. Adjunct vapor ablation delivered. Extended ablation zone achieved.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\n19mm RLL nodule w/ STAS.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to RLL. 10-min MWA performed. Adjunct vapor ablation delivered. Extended ablation zone achieved.\n[Plan]\nAdmit.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3692,13 +3411,6 @@
       "style_type": 7,
       "generated_name": "Arya Stark",
       "generation_date": "2025-12-09T09:22:27.329760"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -3819,7 +3531,7 @@
   },
   {
     "note_id": "TBA-011",
-    "note_text": "OPERATIVE NARRATIVE: A solitary colorectal metastasis in the RLL medial basal segment was targeted for local control. Utilizing electromagnetic navigation and pre-procedural planning, a cooled radiofrequency ablation (RFA) catheter was guided to the lesion center. Verification was achieved via cone-beam CT. A single <DATE_TIME> cycle of radiofrequency energy was delivered. Post-ablation imaging demonstrated a well-demarcated zone of necrosis with clear margins.",
+    "note_text": "OPERATIVE NARRATIVE: A solitary colorectal metastasis in the RLL medial basal segment was targeted for local control. Utilizing electromagnetic navigation and pre-procedural planning, a cooled radiofrequency ablation (RFA) catheter was guided to the lesion center. Verification was achieved via cone-beam CT. A single 12-minute cycle of radiofrequency energy was delivered. Post-ablation imaging demonstrated a well-demarcated zone of necrosis with clear margins.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3853,17 +3565,11 @@
       "style_type": 2,
       "generated_name": "Daryl Dixon",
       "generation_date": "2025-12-09T09:22:27.329810"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-011",
-    "note_text": "Code 31641 (Destruction RLL) and <DATE_TIME> (Navigation). Method: Radiofrequency Ablation (RFA). Navigation and CBCT were used for placement. A cooled RFA probe was used to deliver a <DATE_TIME> treatment cycle. Appropriate for metastatic disease control.",
+    "note_text": "Code 31641 (Destruction RLL) and 31627 (Navigation). Method: Radiofrequency Ablation (RFA). Navigation and CBCT were used for placement. A cooled RFA probe was used to deliver a 12-minute treatment cycle. Appropriate for metastatic disease control.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3897,13 +3603,6 @@
       "style_type": 3,
       "generated_name": "Carol Peletier",
       "generation_date": "2025-12-09T09:22:27.329821"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3946,7 +3645,7 @@
   },
   {
     "note_id": "TBA-011",
-    "note_text": "colorectal met in rll. used the nav system to get there. put the rfa catheter in. did a 12 minute burn with the cooling on. <PERSON> after showed a nice sharp circle around the tumor. no bleeding. sending home later.",
+    "note_text": "colorectal met in rll. used the nav system to get there. put the rfa catheter in. did a 12 minute burn with the cooling on. scan after showed a nice sharp circle around the tumor. no bleeding. sending home later.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -3980,17 +3679,11 @@
       "style_type": 5,
       "generated_name": "Glenn Rhee",
       "generation_date": "2025-12-09T09:22:27.329843"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "TBA-011",
-    "note_text": "Navigation bronchoscopy for RLL colorectal metastasis. Cooled RFA catheter positioned in the medial basal segment. <DATE_TIME> ablation performed. Cone-beam CT confirmed good margins. Airway intact. Discharged same day.",
+    "note_text": "Navigation bronchoscopy for RLL colorectal metastasis. Cooled RFA catheter positioned in the medial basal segment. 12-minute ablation performed. Cone-beam CT confirmed good margins. Airway intact. Discharged same day.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -4024,17 +3717,11 @@
       "style_type": 6,
       "generated_name": "Michonne Hawthorne",
       "generation_date": "2025-12-09T09:22:27.329853"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-011",
-    "note_text": "[Indication]\nRLL colorectal metastasis.\n[<LOCATION>]\nGeneral.\n[Description]\nNavigated to medial basal. Cooled RFA delivered (12 min). 5mm margin. No pneumothorax.\n[Plan]\nDischarge in 6 hours.",
+    "note_text": "[Indication]\nRLL colorectal metastasis.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to medial basal. Cooled RFA delivered (12 min). 5mm margin. No pneumothorax.\n[Plan]\nDischarge in 6 hours.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -4068,12 +3755,6 @@
       "style_type": 7,
       "generated_name": "Carl Grimes",
       "generation_date": "2025-12-09T09:22:27.329864"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -4196,7 +3877,7 @@
   },
   {
     "note_id": "TBA-012",
-    "note_text": "OPERATIVE REPORT: The patient presented with a high-risk LUL posterior segment nodule adjacent to vascular structures. Electromagnetic navigation and radial EBUS facilitated safe access and confirmed the relationship to the vessel. A cooled radiofrequency ablation (RFA) catheter was deployed. To avoid vascular injury while ensuring coverage, two overlapping <DATE_TIME> cycles were delivered with catheter rotation. Post-ablation imaging confirmed lesion destruction with vascular preservation.",
+    "note_text": "OPERATIVE REPORT: The patient presented with a high-risk LUL posterior segment nodule adjacent to vascular structures. Electromagnetic navigation and radial EBUS facilitated safe access and confirmed the relationship to the vessel. A cooled radiofrequency ablation (RFA) catheter was deployed. To avoid vascular injury while ensuring coverage, two overlapping 8-minute cycles were delivered with catheter rotation. Post-ablation imaging confirmed lesion destruction with vascular preservation.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -4234,12 +3915,6 @@
       "style_type": 2,
       "generated_name": "Jim Halpert",
       "generation_date": "2025-12-09T09:22:27.329907"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -4328,7 +4003,7 @@
   },
   {
     "note_id": "TBA-012",
-    "note_text": "lul nodule close to a vessel. used nav and radial ebus to see it. decided on rfa. did <DATE_TIME> burns rotating the catheter so we didn't hit the vessel. scan looks good tumor covered vessel fine. admit.",
+    "note_text": "lul nodule close to a vessel. used nav and radial ebus to see it. decided on rfa. did two 8 minute burns rotating the catheter so we didn't hit the vessel. scan looks good tumor covered vessel fine. admit.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -4366,17 +4041,11 @@
       "style_type": 5,
       "generated_name": "Angela Martin",
       "generation_date": "2025-12-09T09:22:27.329938"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-012",
-    "note_text": "Ablation of 22 mm LUL nodule near vessel. Navigation and REBUS used. Cooled RFA performed in two <DATE_TIME> cycles with rotation. Ablation zone encased lesion without vascular injury. Patient stable.",
+    "note_text": "Ablation of 22 mm LUL nodule near vessel. Navigation and REBUS used. Cooled RFA performed in two 8-minute cycles with rotation. Ablation zone encased lesion without vascular injury. Patient stable.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -4414,17 +4083,11 @@
       "style_type": 6,
       "generated_name": "Kevin Malone",
       "generation_date": "2025-12-09T09:22:27.329949"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-012",
-    "note_text": "[Indication]\n22mm LUL nodule, vascular proximity.\n[<LOCATION>]\nGeneral.\n[Description]\nNav/REBUS guidance. Cooled RFA x2 (8 min). Vessel spared. 6mm margin.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\n22mm LUL nodule, vascular proximity.\n[Anesthesia]\nGeneral.\n[Description]\nNav/REBUS guidance. Cooled RFA x2 (8 min). Vessel spared. 6mm margin.\n[Plan]\nAdmit.",
     "cpt_codes": [
       "31641",
       "31627",
@@ -4462,12 +4125,6 @@
       "style_type": 7,
       "generated_name": "Oscar Martinez",
       "generation_date": "2025-12-09T09:22:27.329962"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -4556,7 +4213,7 @@
   },
   {
     "note_id": "TBA-013",
-    "note_text": "Procedure: Nav Bronch w/ PEF (Trial).\n- Target: 14mm RLL lateral basal nodule.\n- Action: Investigational PEF catheter. Biphasic pulses delivered.\n- Result: Nonthermal ablation zone. No arrhythmia.\n- Plan: Telemetry <DATE_TIME>.",
+    "note_text": "Procedure: Nav Bronch w/ PEF (Trial).\n- Target: 14mm RLL lateral basal nodule.\n- Action: Investigational PEF catheter. Biphasic pulses delivered.\n- Result: Nonthermal ablation zone. No arrhythmia.\n- Plan: Telemetry overnight.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -4590,12 +4247,6 @@
       "style_type": 1,
       "generated_name": "Leslie Knope",
       "generation_date": "2025-12-09T09:22:27.329995"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -4638,7 +4289,7 @@
   },
   {
     "note_id": "TBA-013",
-    "note_text": "Codes: 31641 (Destruction RLL) and 31627 (Navigation). Modality: Pulsed Electric Field (PEF) - Investigational/Trial context. 31641 captures the destruction service regardless of energy source (thermal vs non-thermal) provided destruction occurs. <PERSON> verified placement.",
+    "note_text": "Codes: 31641 (Destruction RLL) and 31627 (Navigation). Modality: Pulsed Electric Field (PEF) - Investigational/Trial context. 31641 captures the destruction service regardless of energy source (thermal vs non-thermal) provided destruction occurs. Navigation verified placement.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -4672,17 +4323,11 @@
       "style_type": 3,
       "generated_name": "Tom Haverford",
       "generation_date": "2025-12-09T09:22:27.330016"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "TBA-013",
-    "note_text": "Procedure: PEF Ablation Trial\nAttending: Dr. Romero\n1. Nav to RLL lateral basal.\n2. Placed study catheter.\n3. Delivered PEF pulses per protocol.\n4. No temp spike.\n5. CT showed good zone.\nTelemetry <DATE_TIME>.",
+    "note_text": "Procedure: PEF Ablation Trial\nAttending: Dr. Romero\n1. Nav to RLL lateral basal.\n2. Placed study catheter.\n3. Delivered PEF pulses per protocol.\n4. No temp spike.\n5. CT showed good zone.\nTelemetry overnight.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -4716,17 +4361,11 @@
       "style_type": 4,
       "generated_name": "April Ludgate",
       "generation_date": "2025-12-09T09:22:27.330026"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-013",
-    "note_text": "patient in the <PERSON> trial. rll nodule. got there with nav. put the special cath in. fired the pulses. no heat generated. scan showed a clean ablation zone. heart rhythm stayed fine. admit for telemetry per protocol.",
+    "note_text": "patient in the pef trial. rll nodule. got there with nav. put the special cath in. fired the pulses. no heat generated. scan showed a clean ablation zone. heart rhythm stayed fine. admit for telemetry per protocol.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -4760,17 +4399,11 @@
       "style_type": 5,
       "generated_name": "Andy Dwyer",
       "generation_date": "2025-12-09T09:22:27.330036"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
     "note_id": "TBA-013",
-    "note_text": "Investigational PEF ablation of 14 mm RLL nodule. Navigation used. Catheter placed. Biphasic electric pulses delivered. No thermal effect. Sharply demarcated zone achieved. No arrhythmia. Patient monitored <DATE_TIME>.",
+    "note_text": "Investigational PEF ablation of 14 mm RLL nodule. Navigation used. Catheter placed. Biphasic electric pulses delivered. No thermal effect. Sharply demarcated zone achieved. No arrhythmia. Patient monitored overnight.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -4804,17 +4437,11 @@
       "style_type": 6,
       "generated_name": "Ben Wyatt",
       "generation_date": "2025-12-09T09:22:27.330046"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-013",
-    "note_text": "[Indication]\nTrial: PEF ablation of RLL nodule.\n[<LOCATION>]\nGeneral.\n[Description]\nNavigated to lesion. PEF pulses delivered. Nonthermal ablation achieved. No arrhythmia.\n[Plan]\nTelemetry admission.",
+    "note_text": "[Indication]\nTrial: PEF ablation of RLL nodule.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to lesion. PEF pulses delivered. Nonthermal ablation achieved. No arrhythmia.\n[Plan]\nTelemetry admission.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -4848,12 +4475,6 @@
       "style_type": 7,
       "generated_name": "Chris Traeger",
       "generation_date": "2025-12-09T09:22:27.330056"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -4975,7 +4596,7 @@
   },
   {
     "note_id": "TBA-014",
-    "note_text": "OPERATIVE REPORT: The patient presented with synchronous primary lung cancers in the RUL and RLL. A staged single-session ablation strategy was executed. Navigation bronchoscopy first targeted the RUL posterior segment nodule, which was ablated for 8 minutes. The system was then redirected to the RLL superior segment, where a <DATE_TIME> ablation was performed. Cone-beam CT confirmed independent, adequate ablation zones for both lesions.",
+    "note_text": "OPERATIVE REPORT: The patient presented with synchronous primary lung cancers in the RUL and RLL. A staged single-session ablation strategy was executed. Navigation bronchoscopy first targeted the RUL posterior segment nodule, which was ablated for 8 minutes. The system was then redirected to the RLL superior segment, where a 6-minute ablation was performed. Cone-beam CT confirmed independent, adequate ablation zones for both lesions.",
     "cpt_codes": [
       "31641",
       "31641",
@@ -5012,17 +4633,11 @@
       "style_type": 2,
       "generated_name": "John Watson",
       "generation_date": "2025-12-09T09:22:27.330111"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-014",
-    "note_text": "Codes: 31641 (Destruction RUL), <DATE_TIME> (Destruction RLL), 31627 (Navigation). Procedure involved treating two separate lesions in separate lobes (Right Upper and Right Lower). Code 31641 is reported twice; the second instance requires modifier -59 (or -XS) to denote a separate anatomic location.",
+    "note_text": "Codes: 31641 (Destruction RUL), 31641-59 (Destruction RLL), 31627 (Navigation). Procedure involved treating two separate lesions in separate lobes (Right Upper and Right Lower). Code 31641 is reported twice; the second instance requires modifier -59 (or -XS) to denote a separate anatomic location.",
     "cpt_codes": [
       "31641",
       "31641",
@@ -5059,12 +4674,6 @@
       "style_type": 3,
       "generated_name": "Mycroft Holmes",
       "generation_date": "2025-12-09T09:22:27.330123"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -5110,7 +4719,7 @@
   },
   {
     "note_id": "TBA-014",
-    "note_text": "two spots to treat rul and rll. did the upper one first 8 minutes. moved down to the lower one did 6 minutes. <PERSON> showed good burns on both. no bleeding. admitting <DATE_TIME> since we did two spots.",
+    "note_text": "two spots to treat rul and rll. did the upper one first 8 minutes. moved down to the lower one did 6 minutes. scan showed good burns on both. no bleeding. admitting overnight since we did two spots.",
     "cpt_codes": [
       "31641",
       "31641",
@@ -5147,13 +4756,6 @@
       "style_type": 5,
       "generated_name": "Molly Hooper",
       "generation_date": "2025-12-09T09:22:27.330149"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -5199,7 +4801,7 @@
   },
   {
     "note_id": "TBA-014",
-    "note_text": "[Indication]\nSynchronous RUL and RLL nodules.\n[<LOCATION>]\nGeneral.\n[Description]\nNavigated to RUL -> 8 min MWA. Navigated to RLL -> 6 min MWA. Both lesions ablated. No pneumothorax.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nSynchronous RUL and RLL nodules.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to RUL -> 8 min MWA. Navigated to RLL -> 6 min MWA. Both lesions ablated. No pneumothorax.\n[Plan]\nAdmit.",
     "cpt_codes": [
       "31641",
       "31641",
@@ -5236,17 +4838,11 @@
       "style_type": 7,
       "generated_name": "Irene Adler",
       "generation_date": "2025-12-09T09:22:27.330171"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
     "note_id": "TBA-014",
-    "note_text": "This patient had two separate lung cancers on the right side: one in the upper lobe and one in the lower lobe. We treated both in the same session. We started with the upper one, burning it for 8 minutes, then moved to the lower one for a <DATE_TIME> burn. Both tumors are now destroyed, and he's staying overnight for observation.",
+    "note_text": "This patient had two separate lung cancers on the right side: one in the upper lobe and one in the lower lobe. We treated both in the same session. We started with the upper one, burning it for 8 minutes, then moved to the lower one for a 6-minute burn. Both tumors are now destroyed, and he's staying overnight for observation.",
     "cpt_codes": [
       "31641",
       "31641",
@@ -5283,12 +4879,6 @@
       "style_type": 8,
       "generated_name": "Jim Moriarty",
       "generation_date": "2025-12-09T09:22:27.330182"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -5334,7 +4924,7 @@
   },
   {
     "note_id": "TBA-015",
-    "note_text": "Procedure: Nav Bronch w/ MWA.\n- Target: 21mm LLL superior nodule (Prior LVRS/Emphysema).\n- Action: 10 min burn. Repositioned. 5 min burn.\n- Result: 6mm margin.\n- Plan: <DATE_TIME>.",
+    "note_text": "Procedure: Nav Bronch w/ MWA.\n- Target: 21mm LLL superior nodule (Prior LVRS/Emphysema).\n- Action: 10 min burn. Repositioned. 5 min burn.\n- Result: 6mm margin.\n- Plan: Obs 23hr.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -5368,17 +4958,11 @@
       "style_type": 1,
       "generated_name": "Homer Simpson",
       "generation_date": "2025-12-09T09:22:27.330204"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-015",
-    "note_text": "OPERATIVE NARRATIVE: A patient with severe emphysema and prior lung volume reduction surgery presented for ablation of an LLL superior segment nodule. Navigational bronchoscopy was utilized. An initial <DATE_TIME> ablation resulted in a narrow posterolateral margin. To ensure safety and efficacy in this compromised lung, the catheter was repositioned, and a supplementary <DATE_TIME> ablation was delivered. Final imaging confirmed a robust margin.",
+    "note_text": "OPERATIVE NARRATIVE: A patient with severe emphysema and prior lung volume reduction surgery presented for ablation of an LLL superior segment nodule. Navigational bronchoscopy was utilized. An initial 10-minute ablation resulted in a narrow posterolateral margin. To ensure safety and efficacy in this compromised lung, the catheter was repositioned, and a supplementary 5-minute ablation was delivered. Final imaging confirmed a robust margin.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -5412,13 +4996,6 @@
       "style_type": 2,
       "generated_name": "Marge Simpson",
       "generation_date": "2025-12-09T09:22:27.330215"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -5537,7 +5114,7 @@
   },
   {
     "note_id": "TBA-015",
-    "note_text": "Microwave ablation of 21 mm LLL nodule in patient with prior LVRS. Navigation used. Two ablations (<DATE_TIME> min) performed to ensure posterolateral margin. Final margin 6 mm. No pneumothorax. <DATE_TIME> observation.",
+    "note_text": "Microwave ablation of 21 mm LLL nodule in patient with prior LVRS. Navigation used. Two ablations (10 and 5 min) performed to ensure posterolateral margin. Final margin 6 mm. No pneumothorax. 23-hour observation.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -5571,18 +5148,11 @@
       "style_type": 6,
       "generated_name": "Ned Flanders",
       "generation_date": "2025-12-09T09:22:27.330256"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-015",
-    "note_text": "[Indication]\n21mm LLL nodule, severe COPD/prior LVRS.\n[<LOCATION>]\nGeneral.\n[Description]\nNavigated to LLL. MWA x2 (<DATE_TIME> min). Good margin achieved. No air leak.\n[Plan]\n23hr observation.",
+    "note_text": "[Indication]\n21mm LLL nodule, severe COPD/prior LVRS.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to LLL. MWA x2 (10+5 min). Good margin achieved. No air leak.\n[Plan]\n23hr observation.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -5616,18 +5186,11 @@
       "style_type": 7,
       "generated_name": "Moe Szyslak",
       "generation_date": "2025-12-09T09:22:27.330267"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
     "note_id": "TBA-015",
-    "note_text": "This patient has very poor lungs and previous lung surgery, so we had to be precise. We targeted a 2.1 cm tumor in the left lower lobe. The first burn was good but missed a tiny edge, so we adjusted and burned it again for 5 minutes. We achieved a safe margin all around and will watch him closely for <DATE_TIME>.",
+    "note_text": "This patient has very poor lungs and previous lung surgery, so we had to be precise. We targeted a 2.1 cm tumor in the left lower lobe. The first burn was good but missed a tiny edge, so we adjusted and burned it again for 5 minutes. We achieved a safe margin all around and will watch him closely for a day.",
     "cpt_codes": [
       "31641",
       "31627"
@@ -5661,12 +5224,6 @@
       "style_type": 8,
       "generated_name": "Barney Gumble",
       "generation_date": "2025-12-09T09:22:27.330278"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {

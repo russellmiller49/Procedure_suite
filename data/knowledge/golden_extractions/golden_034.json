@@ -92,7 +92,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: The patient was brought to the bronchoscopy suite for staging of mediastinal lymphadenopathy. Under moderate sedation, a linear EBUS bronchoscope was introduced. A systematic evaluation of the mediastinum was conducted. Station 2R was identified (24mm) and sampled with a 22G needle; <LOCATION> indicated <LOCATION>. Station 4R (31mm) demonstrated distinct malignant features and was sampled; cytology confirmed adenocarcinoma. Station 7 (18mm) yielded benign lymphoid tissue. Station 10R was visualized but deemed sub-centimeter and not sampled. The procedure concluded without adverse events.",
+    "note_text": "OPERATIVE NARRATIVE: The patient was brought to the bronchoscopy suite for staging of mediastinal lymphadenopathy. Under moderate sedation, a linear EBUS bronchoscope was introduced. A systematic evaluation of the mediastinum was conducted. Station 2R was identified (24mm) and sampled with a 22G needle; ROSE indicated atypia. Station 4R (31mm) demonstrated distinct malignant features and was sampled; cytology confirmed adenocarcinoma. Station 7 (18mm) yielded benign lymphoid tissue. Station 10R was visualized but deemed sub-centimeter and not sampled. The procedure concluded without adverse events.",
     "cpt_codes": [
       31653
     ],
@@ -181,13 +181,6 @@
       "style_type": 2,
       "generated_name": "Carlos Rodriguez",
       "generation_date": "2025-12-09T09:20:07.480213"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -375,7 +368,7 @@
     }
   },
   {
-    "note_text": "dictation for patient roberto martinez dob <DATE_TIME> date of service today... we did the ebus tbna for that big node indicated for malignancy eval <LOCATION> was moderate sedation lidocaine used... findings scope went down fine 2R was 24mm heterogenous 5 passes rose said atypical 4R was 31mm hypoechoic 4 passes rose said adenocarcinoma 7 was 18mm 3 passes benign... 10R was small didnt touch it... no complications minimal bleeding suctioned out... impression ebus tbna successful malignancy in 4R plan oncology... end dictation.",
+    "note_text": "dictation for patient roberto martinez dob 03/15/67 date of service today... we did the ebus tbna for that big node indicated for malignancy eval anesthesia was moderate sedation lidocaine used... findings scope went down fine 2R was 24mm heterogenous 5 passes rose said atypical 4R was 31mm hypoechoic 4 passes rose said adenocarcinoma 7 was 18mm 3 passes benign... 10R was small didnt touch it... no complications minimal bleeding suctioned out... impression ebus tbna successful malignancy in 4R plan oncology... end dictation.",
     "cpt_codes": [
       31653
     ],
@@ -464,13 +457,6 @@
       "style_type": 5,
       "generated_name": "Jose Gonzalez",
       "generation_date": "2025-12-09T09:20:07.480291"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -566,7 +552,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nEvaluation of 62mm right paratracheal lymphadenopathy.\n[<LOCATION>]\nModerate sedation (Fentanyl/Midazolam) + local Lidocaine.\n[Description]\nLinear EBUS employed. Systematic survey completed. \n- Station 2R sampled (5 passes, atypical).\n- Station 4R sampled (4 passes, adenocarcinoma).\n- Station 7 sampled (3 passes, benign).\n- Station 10R inspected only.\n[Plan]\nRefer to Oncology for staging.",
+    "note_text": "[Indication]\nEvaluation of 62mm right paratracheal lymphadenopathy.\n[Anesthesia]\nModerate sedation (Fentanyl/Midazolam) + local Lidocaine.\n[Description]\nLinear EBUS employed. Systematic survey completed. \n- Station 2R sampled (5 passes, atypical).\n- Station 4R sampled (4 passes, adenocarcinoma).\n- Station 7 sampled (3 passes, benign).\n- Station 10R inspected only.\n[Plan]\nRefer to Oncology for staging.",
     "cpt_codes": [
       31653
     ],
@@ -655,12 +641,6 @@
       "style_type": 7,
       "generated_name": "Jorge Sanchez",
       "generation_date": "2025-12-09T09:20:07.480339"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -933,7 +913,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: The patient was brought to the bronchoscopy suite for staging of mediastinal lymphadenopathy. Under moderate sedation, a linear EBUS bronchoscope was introduced. A systematic evaluation of the mediastinum was conducted. Station 2R was identified (24mm) and sampled with a 22G needle; <LOCATION> indicated <LOCATION>. Station 4R (31mm) demonstrated distinct malignant features and was sampled; cytology confirmed adenocarcinoma. Station 7 (18mm) yielded benign lymphoid tissue. Station 10R was visualized but deemed sub-centimeter and not sampled. The procedure concluded without adverse events.",
+    "note_text": "OPERATIVE NARRATIVE: The patient was brought to the bronchoscopy suite for staging of mediastinal lymphadenopathy. Under moderate sedation, a linear EBUS bronchoscope was introduced. A systematic evaluation of the mediastinum was conducted. Station 2R was identified (24mm) and sampled with a 22G needle; ROSE indicated atypia. Station 4R (31mm) demonstrated distinct malignant features and was sampled; cytology confirmed adenocarcinoma. Station 7 (18mm) yielded benign lymphoid tissue. Station 10R was visualized but deemed sub-centimeter and not sampled. The procedure concluded without adverse events.",
     "cpt_codes": [
       31653
     ],
@@ -1015,13 +995,6 @@
       "style_type": 2,
       "generated_name": "Carlos Rodriguez",
       "generation_date": "2025-12-09T09:20:07.480433"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1195,7 +1168,7 @@
     }
   },
   {
-    "note_text": "dictation for patient roberto martinez dob <DATE_TIME> date of service today... we did the ebus tbna for that big node indicated for malignancy eval <LOCATION> was moderate sedation lidocaine used... findings scope went down fine 2R was 24mm heterogenous 5 passes rose said atypical 4R was 31mm hypoechoic 4 passes rose said adenocarcinoma 7 was 18mm 3 passes benign... 10R was small didnt touch it... no complications minimal bleeding suctioned out... impression ebus tbna successful malignancy in 4R plan oncology... end dictation.",
+    "note_text": "dictation for patient roberto martinez dob 03/15/67 date of service today... we did the ebus tbna for that big node indicated for malignancy eval anesthesia was moderate sedation lidocaine used... findings scope went down fine 2R was 24mm heterogenous 5 passes rose said atypical 4R was 31mm hypoechoic 4 passes rose said adenocarcinoma 7 was 18mm 3 passes benign... 10R was small didnt touch it... no complications minimal bleeding suctioned out... impression ebus tbna successful malignancy in 4R plan oncology... end dictation.",
     "cpt_codes": [
       31653
     ],
@@ -1277,13 +1250,6 @@
       "style_type": 5,
       "generated_name": "Jose Gonzalez",
       "generation_date": "2025-12-09T09:20:07.480552"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1372,7 +1338,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nEvaluation of 62mm right paratracheal lymphadenopathy.\n[<LOCATION>]\nModerate sedation (Fentanyl/Midazolam) + local Lidocaine.\n[Description]\nLinear EBUS employed. Systematic survey completed. \n- Station 2R sampled (5 passes, atypical).\n- Station 4R sampled (4 passes, adenocarcinoma).\n- Station 7 sampled (3 passes, benign).\n- Station 10R inspected only.\n[Plan]\nRefer to Oncology for staging.",
+    "note_text": "[Indication]\nEvaluation of 62mm right paratracheal lymphadenopathy.\n[Anesthesia]\nModerate sedation (Fentanyl/Midazolam) + local Lidocaine.\n[Description]\nLinear EBUS employed. Systematic survey completed. \n- Station 2R sampled (5 passes, atypical).\n- Station 4R sampled (4 passes, adenocarcinoma).\n- Station 7 sampled (3 passes, benign).\n- Station 10R inspected only.\n[Plan]\nRefer to Oncology for staging.",
     "cpt_codes": [
       31653
     ],
@@ -1454,12 +1420,6 @@
       "style_type": 7,
       "generated_name": "Jorge Sanchez",
       "generation_date": "2025-12-09T09:20:07.480615"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1633,7 +1593,7 @@
     }
   },
   {
-    "note_text": "Indication: FBA (peanut), R mainstem.\n<LOCATION>: GA, spont vent.\nProcedure: Rigid bronch (3.5mm).\nFindings: Peanut fragment R mainstem.\nAction: Optical forceps used. FB removed intact.\nResult: Airway clear. <LOCATION> mild edema.\nPlan: Observe, CXR.",
+    "note_text": "Indication: FBA (peanut), R mainstem.\nAnesthesia: GA, spont vent.\nProcedure: Rigid bronch (3.5mm).\nFindings: Peanut fragment R mainstem.\nAction: Optical forceps used. FB removed intact.\nResult: Airway clear. Mucosa mild edema.\nPlan: Observe, CXR.",
     "cpt_codes": [
       31635
     ],
@@ -1706,17 +1666,10 @@
       "style_type": 1,
       "generated_name": "Sophia Miller",
       "generation_date": "2025-12-09T09:20:07.480689"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Pediatric Rigid Bronchoscopy for Foreign Body Retrieval.\nFollowing the induction of general <LOCATION>, a 3.5mm Storz rigid bronchoscope was introduced. The larynx and trachea were patent. Upon inspection of the right mainstem bronchus, an organic foreign body consistent with a peanut was visualized approximately 2cm distal to the carina. Optical forceps were utilized to grasp the object. The bronchoscope and forceps were withdrawn in unison to ensure intact removal. Re-inspection confirmed the airway was free of residual particulate matter.",
+    "note_text": "PROCEDURE NOTE: Pediatric Rigid Bronchoscopy for Foreign Body Retrieval.\nFollowing the induction of general anesthesia, a 3.5mm Storz rigid bronchoscope was introduced. The larynx and trachea were patent. Upon inspection of the right mainstem bronchus, an organic foreign body consistent with a peanut was visualized approximately 2cm distal to the carina. Optical forceps were utilized to grasp the object. The bronchoscope and forceps were withdrawn in unison to ensure intact removal. Re-inspection confirmed the airway was free of residual particulate matter.",
     "cpt_codes": [
       31635
     ],
@@ -1789,12 +1742,6 @@
       "style_type": 2,
       "generated_name": "Olivia Davis",
       "generation_date": "2025-12-09T09:20:07.480711"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1874,7 +1821,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch FB Removal\nPatient: <PERSON>\nStaff: Dr. Martinez\nSteps:\n1. GA, spontaneous breathing maintained.\n2. 3.5mm rigid scope inserted.\n3. Found peanut in RMS.\n4. Grabbed with optical forceps.\n5. Pulled everything out together.\n6. Re-looked: airway clear.\nPlan: <DATE_TIME> obs.",
+    "note_text": "Procedure: Rigid Bronch FB Removal\nPatient: Emma T (3yo)\nStaff: Dr. Martinez\nSteps:\n1. GA, spontaneous breathing maintained.\n2. 3.5mm rigid scope inserted.\n3. Found peanut in RMS.\n4. Grabbed with optical forceps.\n5. Pulled everything out together.\n6. Re-looked: airway clear.\nPlan: Overnight obs.",
     "cpt_codes": [
       31635
     ],
@@ -1947,17 +1894,10 @@
       "style_type": 4,
       "generated_name": "Isabella Moore",
       "generation_date": "2025-12-09T09:20:07.480754"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "note for emma thompson <DATE_TIME> female came in with wheezing after eating peanuts... did the rigid bronchoscopy today under GA... used the 3.5 storz scope saw the peanut in the right mainstem about 2cm down... used the optical forceps to grab it it was a bit friable but got it all out intact... checked the other lobes right upper middle lower and left side all clear... suctioned some secretions... mild edema no bleeding... extubated fine... <PERSON> attending present.",
+    "note_text": "note for emma thompson 3 year old female came in with wheezing after eating peanuts... did the rigid bronchoscopy today under GA... used the 3.5 storz scope saw the peanut in the right mainstem about 2cm down... used the optical forceps to grab it it was a bit friable but got it all out intact... checked the other lobes right upper middle lower and left side all clear... suctioned some secretions... mild edema no bleeding... extubated fine... dr martinez attending present.",
     "cpt_codes": [
       31635
     ],
@@ -2030,17 +1970,10 @@
       "style_type": 5,
       "generated_name": "Mia Taylor",
       "generation_date": "2025-12-09T09:20:07.480798"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Rigid Bronchoscopy with Foreign Body Removal. General <LOCATION> with spontaneous ventilation. A 3.5mm Storz pediatric rigid bronchoscope was introduced via the mouth under direct laryngoscopy. The vocal cords were visualized and appeared normal. The bronchoscope was advanced into the right mainstem bronchus. A foreign body was visualized 2cm distal to the carina - a tan-brown, irregular object consistent with a peanut fragment. Optical forceps were advanced through the rigid bronchoscope. The peanut fragment was grasped carefully. The foreign body was removed intact. Final inspection showed complete foreign body removal.",
+    "note_text": "Rigid Bronchoscopy with Foreign Body Removal. General anesthesia with spontaneous ventilation. A 3.5mm Storz pediatric rigid bronchoscope was introduced via the mouth under direct laryngoscopy. The vocal cords were visualized and appeared normal. The bronchoscope was advanced into the right mainstem bronchus. A foreign body was visualized 2cm distal to the carina - a tan-brown, irregular object consistent with a peanut fragment. Optical forceps were advanced through the rigid bronchoscope. The peanut fragment was grasped carefully. The foreign body was removed intact. Final inspection showed complete foreign body removal.",
     "cpt_codes": [
       31635
     ],
@@ -2113,16 +2046,10 @@
       "style_type": 6,
       "generated_name": "Charlotte Anderson",
       "generation_date": "2025-12-09T09:20:07.480821"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected foreign body aspiration (peanut) in 3yo female.\n[<LOCATION>]\nGeneral <LOCATION>, spontaneous ventilation maintained.\n[Description]\n3.5mm Rigid scope advanced. Peanut fragment identified in Right Mainstem. Extracted using optical forceps. Re-inspection of all lobes negative for residue.\n[Plan]\nPost-op CXR. Discharge tomorrow if stable.",
+    "note_text": "[Indication]\nSuspected foreign body aspiration (peanut) in 3yo female.\n[Anesthesia]\nGeneral anesthesia, spontaneous ventilation maintained.\n[Description]\n3.5mm Rigid scope advanced. Peanut fragment identified in Right Mainstem. Extracted using optical forceps. Re-inspection of all lobes negative for residue.\n[Plan]\nPost-op CXR. Discharge tomorrow if stable.",
     "cpt_codes": [
       31635
     ],
@@ -2195,17 +2122,10 @@
       "style_type": 7,
       "generated_name": "Amelia Thomas",
       "generation_date": "2025-12-09T09:20:07.480844"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Emma, a <DATE_TIME> female, was brought to the OR for suspected aspiration. Under general <LOCATION>, we inserted a pediatric rigid bronchoscope. We navigated to the right mainstem bronchus where we found a peanut fragment causing partial occlusion. Using optical forceps, we carefully grasped the peanut and removed it intact along with the scope to prevent it from breaking apart. We then re-inserted the scope to verify that the right lung and left lung were completely clear of debris.",
+    "note_text": "Emma, a 3-year-old female, was brought to the OR for suspected aspiration. Under general anesthesia, we inserted a pediatric rigid bronchoscope. We navigated to the right mainstem bronchus where we found a peanut fragment causing partial occlusion. Using optical forceps, we carefully grasped the peanut and removed it intact along with the scope to prevent it from breaking apart. We then re-inserted the scope to verify that the right lung and left lung were completely clear of debris.",
     "cpt_codes": [
       31635
     ],
@@ -2278,13 +2198,6 @@
       "style_type": 8,
       "generated_name": "Harper Jackson",
       "generation_date": "2025-12-09T09:20:07.480863"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -2364,7 +2277,7 @@
     }
   },
   {
-    "note_text": "Procedure: US-Guided Thoracentesis.\nSite: R chest, 8th ICS.\nFluids: 420mL turbid yellow removed.\nLabs: pH 7.18, <PERSON> 32.\nFindings: Complicated effusion.\nPlan: <PERSON> for chest tube.",
+    "note_text": "Procedure: US-Guided Thoracentesis.\nSite: R chest, 8th ICS.\nFluids: 420mL turbid yellow removed.\nLabs: pH 7.18, Glucose 32.\nFindings: Complicated effusion.\nPlan: Consult Thoracic for chest tube.",
     "cpt_codes": [
       32555
     ],
@@ -2437,17 +2350,10 @@
       "style_type": 1,
       "generated_name": "Priya Sharma",
       "generation_date": "2025-12-09T09:20:07.480906"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Therapeutic and Diagnostic Thoracentesis.\nUnder ultrasound guidance, a pocket of complex pleural <PERSON> was identified in the right hemithorax. Following sterile preparation and local <LOCATION>, an 18-gauge catheter was introduced into the 8th intercostal space. Approximately 420 mL of turbid, viscid fluid was aspirated. Analysis revealed a pH of 7.18 and glucose of 32 mg/dL, indicative of a complicated parapneumonic effusion. The procedure was terminated, and the patient referred for tube thoracostomy.",
+    "note_text": "PROCEDURE: Therapeutic and Diagnostic Thoracentesis.\nUnder ultrasound guidance, a pocket of complex pleural fluid was identified in the right hemithorax. Following sterile preparation and local anesthesia, an 18-gauge catheter was introduced into the 8th intercostal space. Approximately 420 mL of turbid, viscid fluid was aspirated. Analysis revealed a pH of 7.18 and glucose of 32 mg/dL, indicative of a complicated parapneumonic effusion. The procedure was terminated, and the patient referred for tube thoracostomy.",
     "cpt_codes": [
       32555
     ],
@@ -2520,17 +2426,10 @@
       "style_type": 2,
       "generated_name": "Anjali Gupta",
       "generation_date": "2025-12-09T09:20:07.480929"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Billing Code: <DATE_TIME> (Thoracentesis with imaging guidance).\nDocumentation of Guidance: Ultrasound used to verify fluid depth (4.8cm) and complex nature prior to needle entry.\nVolume: 420 mL removed.\nProcessing: Samples sent for pH, Cell Count, Culture, Cytology.\nMedical Necessity: Complicated parapneumonic effusion (pH 7.18) requiring drainage.",
+    "note_text": "Billing Code: 32555 (Thoracentesis with imaging guidance).\nDocumentation of Guidance: Ultrasound used to verify fluid depth (4.8cm) and complex nature prior to needle entry.\nVolume: 420 mL removed.\nProcessing: Samples sent for pH, Cell Count, Culture, Cytology.\nMedical Necessity: Complicated parapneumonic effusion (pH 7.18) requiring drainage.",
     "cpt_codes": [
       32555
     ],
@@ -2603,16 +2502,10 @@
       "style_type": 3,
       "generated_name": "Fatima Ali",
       "generation_date": "2025-12-09T09:20:07.480950"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Thoracentesis\nAttending: Dr. Mendez\nSteps:\n1. <LOCATION> check: R effusion.\n2. Local lidocaine.\n3. Needle in 8th ICS.\n4. Drained 420cc cloudy fluid.\n5. Pulled needle, bandaged.\nNote: Fluid looks infected (low pH). Needs chest tube.",
+    "note_text": "Procedure: Thoracentesis\nAttending: Dr. Mendez\nSteps:\n1. US check: R effusion.\n2. Local lidocaine.\n3. Needle in 8th ICS.\n4. Drained 420cc cloudy fluid.\n5. Pulled needle, bandaged.\nNote: Fluid looks infected (low pH). Needs chest tube.",
     "cpt_codes": [
       32555
     ],
@@ -2685,12 +2578,6 @@
       "style_type": 4,
       "generated_name": "Zara Khan",
       "generation_date": "2025-12-09T09:20:07.480969"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -2846,7 +2733,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPersistent right pleural effusion post-pneumonia.\n[<LOCATION>]\nLocal Lidocaine 1%.\n[Description]\nUltrasound localized complex fluid. 18G catheter inserted. 420mL turbid fluid aspirated. Catheter removed.\n[Plan]\nFluid analysis shows pH 7.18. <PERSON> for tube thoracostomy.",
+    "note_text": "[Indication]\nPersistent right pleural effusion post-pneumonia.\n[Anesthesia]\nLocal Lidocaine 1%.\n[Description]\nUltrasound localized complex fluid. 18G catheter inserted. 420mL turbid fluid aspirated. Catheter removed.\n[Plan]\nFluid analysis shows pH 7.18. Consult Thoracic Surgery for tube thoracostomy.",
     "cpt_codes": [
       32555
     ],
@@ -2919,17 +2806,10 @@
       "style_type": 7,
       "generated_name": "Meera Kumar",
       "generation_date": "2025-12-09T09:20:07.481031"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<LOCATION> presented with a persistent right-sided effusion. We performed an ultrasound which showed complex fluid. After numbing the area, we inserted a catheter into the 8th intercostal space. We were able to drain 420 mL of cloudy, <PERSON>. Bedside analysis showed a very low pH, suggesting a complicated infection. We finished the drainage and ordered a chest x-ray, planning to consult surgery for a more permanent drain.",
+    "note_text": "Aisha presented with a persistent right-sided effusion. We performed an ultrasound which showed complex fluid. After numbing the area, we inserted a catheter into the 8th intercostal space. We were able to drain 420 mL of cloudy, thick fluid. Bedside analysis showed a very low pH, suggesting a complicated infection. We finished the drainage and ordered a chest x-ray, planning to consult surgery for a more permanent drain.",
     "cpt_codes": [
       32555
     ],
@@ -3002,17 +2882,10 @@
       "style_type": 8,
       "generated_name": "Sana Desai",
       "generation_date": "2025-12-09T09:20:07.481051"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Ultrasound-guided pleural aspiration.\nTarget: Right pleural space.\nAction: Validated fluid pocket via imaging. Inserted catheter. <PERSON> 420 mL of turbid fluid.\nAssessment: Complicated effusion (pH 7.18).\nDisposition: Thoracic surgery referral.",
+    "note_text": "Procedure: Ultrasound-guided pleural aspiration.\nTarget: Right pleural space.\nAction: Validated fluid pocket via imaging. Inserted catheter. Withdrew 420 mL of turbid fluid.\nAssessment: Complicated effusion (pH 7.18).\nDisposition: Thoracic surgery referral.",
     "cpt_codes": [
       32555
     ],
@@ -3085,16 +2958,10 @@
       "style_type": 9,
       "generated_name": "Riya Shah",
       "generation_date": "2025-12-09T09:20:07.481070"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Dx: L mainstem stenosis (GPA).\nProc: Rigid bronch, APC, dilation, chest tube.\nFindings: L mainstem 90-100% occluded.\nAction: Radial cuts, APC, tissue shaving. Dilation attempted. Micro-perf to PA suspected. Sealed w/ fibrin glue. 14F chest tube placed for <PERSON>.\nPlan: ICU, keep intubated.",
+    "note_text": "Dx: L mainstem stenosis (GPA).\nProc: Rigid bronch, APC, dilation, chest tube.\nFindings: L mainstem 90-100% occluded.\nAction: Radial cuts, APC, tissue shaving. Dilation attempted. Micro-perf to PA suspected. Sealed w/ fibrin glue. 14F chest tube placed for PTX.\nPlan: ICU, keep intubated.",
     "cpt_codes": [
       32551,
       31641
@@ -3177,12 +3044,6 @@
       "style_type": 1,
       "generated_name": "James Owen",
       "generation_date": "2025-12-09T09:20:07.481094"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3272,7 +3133,7 @@
     }
   },
   {
-    "note_text": "Coding Summary:\n- 31641: Bronchoscopy with destruction of tumor/relief of stenosis (APC and shaving of tissue in Left Mainstem).\n- 32551: Tube thoracostomy (Chest tube placed for pneumothorax complication).\n- Note: Dilation (<DATE_TIME>) is bundled into <DATE_TIME>.\nComplication: Suspected airway-vascular fistula managed with fibrin glue.",
+    "note_text": "Coding Summary:\n- 31641: Bronchoscopy with destruction of tumor/relief of stenosis (APC and shaving of tissue in Left Mainstem).\n- 32551: Tube thoracostomy (Chest tube placed for pneumothorax complication).\n- Note: Dilation (31630) is bundled into 31641.\nComplication: Suspected airway-vascular fistula managed with fibrin glue.",
     "cpt_codes": [
       32551,
       31641
@@ -3355,17 +3216,10 @@
       "style_type": 3,
       "generated_name": "Michael Wood",
       "generation_date": "2025-12-09T09:20:07.481142"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch & Chest Tube\nPt: <PERSON>\nSteps:\n1. Flex bronch showed L mainstem blocked.\n2. Rigid bronch inserted.\n3. Used APC and cuts to open airway (<DATE_TIME>).\n4. Saw small bleeder/hole, used glue.\n5. CXR showed pneumothorax.\n6. Placed chest tube (<DATE_TIME>).\nPlan: ICU.",
+    "note_text": "Procedure: Rigid Bronch & Chest Tube\nPt: Christopher Hayes\nSteps:\n1. Flex bronch showed L mainstem blocked.\n2. Rigid bronch inserted.\n3. Used APC and cuts to open airway (31641).\n4. Saw small bleeder/hole, used glue.\n5. CXR showed pneumothorax.\n6. Placed chest tube (32551).\nPlan: ICU.",
     "cpt_codes": [
       32551,
       31641
@@ -3448,18 +3302,10 @@
       "style_type": 4,
       "generated_name": "William Bennett",
       "generation_date": "2025-12-09T09:20:07.481165"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "op note for <PERSON> history of gpa with airway stenosis... rigid bronchoscopy performed... left mainstem was totally socked in... used the knife and balloon then the rigid scope... did apc and shaving of the tissue to open it up... got down about 3cm then saw a pulsatile vessel likely pa... put fibrin glue in right away... patient had a pneumothorax on xray so we put in a 14 french chest tube... patient to picu intubated.",
+    "note_text": "op note for christopher hayes history of gpa with airway stenosis... rigid bronchoscopy performed... left mainstem was totally socked in... used the knife and balloon then the rigid scope... did apc and shaving of the tissue to open it up... got down about 3cm then saw a pulsatile vessel likely pa... put fibrin glue in right away... patient had a pneumothorax on xray so we put in a 14 french chest tube... patient to picu intubated.",
     "cpt_codes": [
       32551,
       31641
@@ -3542,12 +3388,6 @@
       "style_type": 5,
       "generated_name": "David Ross",
       "generation_date": "2025-12-09T09:20:07.481187"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3637,7 +3477,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLeft mainstem obstruction due to GPA.\n[<LOCATION>]\nGeneral <LOCATION>.\n[Description]\nRigid bronchoscopy utilized. APC and mechanical debridement used to recanalize LMS. Procedure complicated by suspected micro-perforation to PA. Hemostasis secured with fibrin glue. Post-op PTX noted.\n[Intervention]\n14F chest tube placed.\n[Plan]\nAdmit to ICU.",
+    "note_text": "[Indication]\nLeft mainstem obstruction due to GPA.\n[Anesthesia]\nGeneral Anesthesia.\n[Description]\nRigid bronchoscopy utilized. APC and mechanical debridement used to recanalize LMS. Procedure complicated by suspected micro-perforation to PA. Hemostasis secured with fibrin glue. Post-op PTX noted.\n[Intervention]\n14F chest tube placed.\n[Plan]\nAdmit to ICU.",
     "cpt_codes": [
       32551,
       31641
@@ -3720,17 +3560,10 @@
       "style_type": 7,
       "generated_name": "Joseph Perry",
       "generation_date": "2025-12-09T09:20:07.481240"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> underwent a rigid bronchoscopy to treat a severe blockage in his left mainstem bronchus caused by GPA. We used a combination of laser-like burning (APC) and physical shaving of the tissue to try and open the airway. During the process, we suspected a tiny tear connecting to a blood vessel, so we sealed it with glue to prevent bleeding. Because a chest x-ray showed a collapsed lung afterwards, we inserted a chest tube to re-expand it. He is currently stable in the ICU.",
+    "note_text": "Christopher underwent a rigid bronchoscopy to treat a severe blockage in his left mainstem bronchus caused by GPA. We used a combination of laser-like burning (APC) and physical shaving of the tissue to try and open the airway. During the process, we suspected a tiny tear connecting to a blood vessel, so we sealed it with glue to prevent bleeding. Because a chest x-ray showed a collapsed lung afterwards, we inserted a chest tube to re-expand it. He is currently stable in the ICU.",
     "cpt_codes": [
       32551,
       31641
@@ -3813,12 +3646,6 @@
       "style_type": 8,
       "generated_name": "Thomas Powell",
       "generation_date": "2025-12-09T09:20:07.481262"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4076,7 +3903,7 @@
     }
   },
   {
-    "note_text": "Code: 32650 (Thoracoscopy, surgical; with pleurodesis).\n<PERSON>: Rigid pleuroscope inserted. Pleural fluid evacuated. Biopsies taken (bundled). 5 grams of sterile talc insufflated for chemical pleurodesis. Chest tube placed.\nNote: <DATE_TIME> is bundled into <DATE_TIME>.",
+    "note_text": "Code: 32650 (Thoracoscopy, surgical; with pleurodesis).\nDetail: Rigid pleuroscope inserted. Pleural fluid evacuated. Biopsies taken (bundled). 5 grams of sterile talc insufflated for chemical pleurodesis. Chest tube placed.\nNote: 32551 is bundled into 32650.",
     "cpt_codes": [
       32650
     ],
@@ -4157,18 +3984,10 @@
       "style_type": 3,
       "generated_name": "Linda Brown",
       "generation_date": "2025-12-09T09:20:07.481376"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Pleuroscopy & Talc\nPt: <PERSON> T\nSteps:\n1. Lateral decubitus.\n2. Trocar in 6th ICS.\n3. Drained 1.2L fluid.\n4. Saw nodules, took biopsies.\n5. Sprayed 5g Talc for pleurodesis.\n6. Chest tube in.\nPlan: Admit, pain control.",
+    "note_text": "Procedure: Pleuroscopy & Talc\nPt: Elizabeth T\nSteps:\n1. Lateral decubitus.\n2. Trocar in 6th ICS.\n3. Drained 1.2L fluid.\n4. Saw nodules, took biopsies.\n5. Sprayed 5g Talc for pleurodesis.\n6. Chest tube in.\nPlan: Admit, pain control.",
     "cpt_codes": [
       32650
     ],
@@ -4249,16 +4068,10 @@
       "style_type": 4,
       "generated_name": "Barbara Jones",
       "generation_date": "2025-12-09T09:20:07.481397"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "procedure note for <PERSON>... medical pleuroscopy right side... recurrent effusion... <PERSON>... put the trocar in drained <DATE_TIME> ml yellow fluid... saw bunch of nodules on the pleura took like 10 biopsies... lung came up good so we did the talc pleurodesis with 5 grams... put a 28 french chest tube in... patient to floor pain meds ordered.",
+    "note_text": "procedure note for elizabeth thompson... medical pleuroscopy right side... recurrent effusion... mac anesthesia... put the trocar in drained 1250 ml yellow fluid... saw bunch of nodules on the pleura took like 10 biopsies... lung came up good so we did the talc pleurodesis with 5 grams... put a 28 french chest tube in... patient to floor pain meds ordered.",
     "cpt_codes": [
       32650
     ],
@@ -4339,14 +4152,6 @@
       "style_type": 5,
       "generated_name": "Susan Garcia",
       "generation_date": "2025-12-09T09:20:07.481419"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -4434,7 +4239,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent exudative right pleural effusion.\n[<LOCATION>]\nMAC.\n[Description]\nPleuroscopy performed. Multifocal nodules visualized and biopsied. 1250mL fluid drained. 5g Talc poudrage administered. 28F chest tube placed.\n[Plan]\nAdmit. Pain control. Water seal tomorrow.",
+    "note_text": "[Indication]\nRecurrent exudative right pleural effusion.\n[Anesthesia]\nMAC.\n[Description]\nPleuroscopy performed. Multifocal nodules visualized and biopsied. 1250mL fluid drained. 5g Talc poudrage administered. 28F chest tube placed.\n[Plan]\nAdmit. Pain control. Water seal tomorrow.",
     "cpt_codes": [
       32650
     ],
@@ -4515,16 +4320,10 @@
       "style_type": 7,
       "generated_name": "Dorothy Davis",
       "generation_date": "2025-12-09T09:20:07.481463"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> came in for a pleuroscopy to check her recurrent right-sided fluid. We drained over a liter of fluid and saw several nodules on the lining of her lung, which we biopsied. Since her lung expanded well after the fluid was gone, we sprayed medical talc into the space to seal it and prevent the fluid from coming back. We left a chest tube in place to help the lung heal and admitted her to the hospital.",
+    "note_text": "Elizabeth came in for a pleuroscopy to check her recurrent right-sided fluid. We drained over a liter of fluid and saw several nodules on the lining of her lung, which we biopsied. Since her lung expanded well after the fluid was gone, we sprayed medical talc into the space to seal it and prevent the fluid from coming back. We left a chest tube in place to help the lung heal and admitted her to the hospital.",
     "cpt_codes": [
       32650
     ],
@@ -4605,12 +4404,6 @@
       "style_type": 8,
       "generated_name": "Lisa Rodriguez",
       "generation_date": "2025-12-09T09:20:07.481483"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4866,7 +4659,7 @@
     }
   },
   {
-    "note_text": "Billing: <DATE_TIME> (EBUS sampling 3+ stations).\nSupport: \n- Station 4R: Sampled.\n- Station 7: Sampled.\n- Station 10R: Sampled.\n- Station 11R: Sampled.\nTotal stations: 4.\nPathology: Malignancy confirmed in 4R/7.",
+    "note_text": "Billing: 31653 (EBUS sampling 3+ stations).\nSupport: \n- Station 4R: Sampled.\n- Station 7: Sampled.\n- Station 10R: Sampled.\n- Station 11R: Sampled.\nTotal stations: 4.\nPathology: Malignancy confirmed in 4R/7.",
     "cpt_codes": [
       31653
     ],
@@ -4947,16 +4740,10 @@
       "style_type": 3,
       "generated_name": "Robert Taylor",
       "generation_date": "2025-12-09T09:20:07.481577"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPt: <PERSON>\nSteps:\n1. EBUS scope in.\n2. Sampled 4R, 7, 10R, 11R.\n3. ROSE said cancer in 4R and 7.\n4. No issues.\nPlan: Oncology.",
+    "note_text": "Procedure: EBUS\nPt: Michael Brown\nSteps:\n1. EBUS scope in.\n2. Sampled 4R, 7, 10R, 11R.\n3. ROSE said cancer in 4R and 7.\n4. No issues.\nPlan: Oncology.",
     "cpt_codes": [
       31653
     ],
@@ -5037,16 +4824,10 @@
       "style_type": 4,
       "generated_name": "Michael Anderson",
       "generation_date": "2025-12-09T09:20:07.481599"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "ebus tbna for <PERSON> staging lung mass... sampled four stations 4R 7 10R and 11R... rose positive for adeno in the mediastinal nodes 4r and 7... patient tolerated well <PERSON> used... refer to onc for n2 disease.",
+    "note_text": "ebus tbna for michael brown staging lung mass... sampled four stations 4R 7 10R and 11R... rose positive for adeno in the mediastinal nodes 4r and 7... patient tolerated well mac anesthesia used... refer to onc for n2 disease.",
     "cpt_codes": [
       31653
     ],
@@ -5127,13 +4908,6 @@
       "style_type": 5,
       "generated_name": "William Thomas",
       "generation_date": "2025-12-09T09:20:07.481621"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -5221,7 +4995,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nStaging RUL Mass.\n[<LOCATION>]\nMAC.\n[Description]\nEBUS-TBNA performed. \n- 4R: Malignant.\n- 7: Malignant.\n- 10R: Benign.\n- 11R: Benign.\n[Plan]\nMultidisciplinary Tumor Board.",
+    "note_text": "[Indication]\nStaging RUL Mass.\n[Anesthesia]\nMAC.\n[Description]\nEBUS-TBNA performed. \n- 4R: Malignant.\n- 7: Malignant.\n- 10R: Benign.\n- 11R: Benign.\n[Plan]\nMultidisciplinary Tumor Board.",
     "cpt_codes": [
       31653
     ],
@@ -5302,16 +5076,10 @@
       "style_type": 7,
       "generated_name": "Richard White",
       "generation_date": "2025-12-09T09:20:07.481666"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> underwent an EBUS procedure to stage a mass in his right upper lung. We sampled lymph nodes in four different areas: 4R, 7, 10R, and 11R. The pathologist in the room confirmed that the nodes in the center of the chest (4R and 7) contained cancer cells, which confirms N2 disease. We will refer him to oncology to discuss treatment options.",
+    "note_text": "Michael underwent an EBUS procedure to stage a mass in his right upper lung. We sampled lymph nodes in four different areas: 4R, 7, 10R, and 11R. The pathologist in the room confirmed that the nodes in the center of the chest (4R and 7) contained cancer cells, which confirms N2 disease. We will refer him to oncology to discuss treatment options.",
     "cpt_codes": [
       31653
     ],
@@ -5392,12 +5160,6 @@
       "style_type": 8,
       "generated_name": "Joseph Harris",
       "generation_date": "2025-12-09T09:20:07.481756"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5653,7 +5415,7 @@
     }
   },
   {
-    "note_text": "Billing: <DATE_TIME> (EBUS sampling 3+ stations).\nSupport: \n- Station 4R: Sampled.\n- Station 7: Sampled.\n- Station 10R: Sampled.\n- Station 11R: Sampled.\nTotal stations: 4.\nPathology: Malignancy confirmed in 4R/7.",
+    "note_text": "Billing: 31653 (EBUS sampling 3+ stations).\nSupport: \n- Station 4R: Sampled.\n- Station 7: Sampled.\n- Station 10R: Sampled.\n- Station 11R: Sampled.\nTotal stations: 4.\nPathology: Malignancy confirmed in 4R/7.",
     "cpt_codes": [
       31653
     ],
@@ -5734,16 +5496,10 @@
       "style_type": 3,
       "generated_name": "Robert Taylor",
       "generation_date": "2025-12-09T09:20:07.481853"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: EBUS\nPt: <PERSON>\nSteps:\n1. EBUS scope in.\n2. Sampled 4R, 7, 10R, 11R.\n3. ROSE said cancer in 4R and 7.\n4. No issues.\nPlan: Oncology.",
+    "note_text": "Procedure: EBUS\nPt: Michael Brown\nSteps:\n1. EBUS scope in.\n2. Sampled 4R, 7, 10R, 11R.\n3. ROSE said cancer in 4R and 7.\n4. No issues.\nPlan: Oncology.",
     "cpt_codes": [
       31653
     ],
@@ -5824,16 +5580,10 @@
       "style_type": 4,
       "generated_name": "Michael Anderson",
       "generation_date": "2025-12-09T09:20:07.481872"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "ebus tbna for <PERSON> staging lung mass... sampled four stations 4R 7 10R and 11R... rose positive for adeno in the mediastinal nodes 4r and 7... patient tolerated well <PERSON> used... refer to onc for n2 disease.",
+    "note_text": "ebus tbna for michael brown staging lung mass... sampled four stations 4R 7 10R and 11R... rose positive for adeno in the mediastinal nodes 4r and 7... patient tolerated well mac anesthesia used... refer to onc for n2 disease.",
     "cpt_codes": [
       31653
     ],
@@ -5914,13 +5664,6 @@
       "style_type": 5,
       "generated_name": "William Thomas",
       "generation_date": "2025-12-09T09:20:07.481892"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -6008,7 +5751,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nStaging RUL Mass.\n[<LOCATION>]\nMAC.\n[Description]\nEBUS-TBNA performed. \n- 4R: Malignant.\n- 7: Malignant.\n- 10R: Benign.\n- 11R: Benign.\n[Plan]\nMultidisciplinary Tumor Board.",
+    "note_text": "[Indication]\nStaging RUL Mass.\n[Anesthesia]\nMAC.\n[Description]\nEBUS-TBNA performed. \n- 4R: Malignant.\n- 7: Malignant.\n- 10R: Benign.\n- 11R: Benign.\n[Plan]\nMultidisciplinary Tumor Board.",
     "cpt_codes": [
       31653
     ],
@@ -6089,16 +5832,10 @@
       "style_type": 7,
       "generated_name": "Richard White",
       "generation_date": "2025-12-09T09:20:07.481936"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> underwent an EBUS procedure to stage a mass in his right upper lung. We sampled lymph nodes in four different areas: 4R, 7, 10R, and 11R. The pathologist in the room confirmed that the nodes in the center of the chest (4R and 7) contained cancer cells, which confirms N2 disease. We will refer him to oncology to discuss treatment options.",
+    "note_text": "Michael underwent an EBUS procedure to stage a mass in his right upper lung. We sampled lymph nodes in four different areas: 4R, 7, 10R, and 11R. The pathologist in the room confirmed that the nodes in the center of the chest (4R and 7) contained cancer cells, which confirms N2 disease. We will refer him to oncology to discuss treatment options.",
     "cpt_codes": [
       31653
     ],
@@ -6179,12 +5916,6 @@
       "style_type": 8,
       "generated_name": "Joseph Harris",
       "generation_date": "2025-12-09T09:20:07.481958"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6272,7 +6003,7 @@
     }
   },
   {
-    "note_text": "Proc: EBUS + EMN + TBBx.\nEBUS: Stations 5, 7, 10L sampled (<DATE_TIME>). N2/N3 positive.\nNav: EMN to LUL mass. Radial EBUS confirmed (<DATE_TIME>, <DATE_TIME>).\nSampling: TBBx (<DATE_TIME>), <PERSON>, Needle. Endobronchial bx of anterior segment (<DATE_TIME>). BAL (<DATE_TIME>).\nDx: Stage IIIB Squamous Cell.",
+    "note_text": "Proc: EBUS + EMN + TBBx.\nEBUS: Stations 5, 7, 10L sampled (31653). N2/N3 positive.\nNav: EMN to LUL mass. Radial EBUS confirmed (31627, 31654).\nSampling: TBBx (31628), Brush, Needle. Endobronchial bx of anterior segment (31625). BAL (31624).\nDx: Stage IIIB Squamous Cell.",
     "cpt_codes": [
       31653,
       31628,
@@ -6421,18 +6152,6 @@
       "style_type": 1,
       "generated_name": "Hiroshi Tanaka",
       "generation_date": "2025-12-09T09:20:07.482017"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 7,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -6588,7 +6307,7 @@
     }
   },
   {
-    "note_text": "Coding Summary:\n- <DATE_TIME>: EBUS sampling 3 stations (5, 7, 10L).\n- 31627: <PERSON>\n- 31654: Radial EBUS Add-on.\n- 31628: Transbronchial Biopsy (LUL Mass).\n- 31625: Endobronchial Biopsy (Distinct lesion anterior segment).\n- 31624: BAL.\nDx: Squamous Cell CA.",
+    "note_text": "Coding Summary:\n- 31653: EBUS sampling 3 stations (5, 7, 10L).\n- 31627: Navigation Add-on.\n- 31654: Radial EBUS Add-on.\n- 31628: Transbronchial Biopsy (LUL Mass).\n- 31625: Endobronchial Biopsy (Distinct lesion anterior segment).\n- 31624: BAL.\nDx: Squamous Cell CA.",
     "cpt_codes": [
       31653,
       31628,
@@ -6737,17 +6456,10 @@
       "style_type": 3,
       "generated_name": "Yuki Sato",
       "generation_date": "2025-12-09T09:20:07.482091"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: EBUS/Nav Bronch\nPt: <PERSON>\nSteps:\n1. EBUS: Sampled 5, 7, 10L. Positive.\n2. Switched scopes.\n3. Navigated to LUL mass. Confirmed w/ Radial EBUS.\n4. Biopsied mass (TBBx).\n5. Saw tumor in airway, biopsied that too (Endobronchial).\n6. BAL.\nPlan: Chemo/Rad.",
+    "note_text": "Procedure: EBUS/Nav Bronch\nPt: Kenji N.\nSteps:\n1. EBUS: Sampled 5, 7, 10L. Positive.\n2. Switched scopes.\n3. Navigated to LUL mass. Confirmed w/ Radial EBUS.\n4. Biopsied mass (TBBx).\n5. Saw tumor in airway, biopsied that too (Endobronchial).\n6. BAL.\nPlan: Chemo/Rad.",
     "cpt_codes": [
       31653,
       31628,
@@ -6896,16 +6608,10 @@
       "style_type": 4,
       "generated_name": "Ken Suzuki",
       "generation_date": "2025-12-09T09:20:07.482143"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "bronchoscopy note for <PERSON>... big case... started with ebus sampled stations 5 7 and 10L rose called it squamous... then did the superdimension navigation to the lul mass found it with radial probe... took biopsy brush needle... also saw tumor sticking out in the anterior segment biopsied that directly... did a wash too... patient has stage 3b cancer.",
+    "note_text": "bronchoscopy note for kenji nakamura... big case... started with ebus sampled stations 5 7 and 10L rose called it squamous... then did the superdimension navigation to the lul mass found it with radial probe... took biopsy brush needle... also saw tumor sticking out in the anterior segment biopsied that directly... did a wash too... patient has stage 3b cancer.",
     "cpt_codes": [
       31653,
       31628,
@@ -7054,16 +6760,10 @@
       "style_type": 5,
       "generated_name": "Daiki Takahashi",
       "generation_date": "2025-12-09T09:20:07.482183"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "EBUS-TBNA of mediastinal/hilar lymph nodes. Electromagnetic navigation bronchoscopy. Radial EBUS. Transbronchial biopsy of LUL mass. Station 5: Sampled. Station 7: Sampled. Station 10L: Sampled. EMN Navigation: Target LUL mass. Radial EBUS: Lesion >35mm. Sampling via guide sheath: Forceps biopsies, <PERSON> cytology, Needle aspiration. Direct endobronchial biopsies: 4 specimens. ROSE: Squamous cell carcinoma confirmed. Stage IIIB.",
+    "note_text": "EBUS-TBNA of mediastinal/hilar lymph nodes. Electromagnetic navigation bronchoscopy. Radial EBUS. Transbronchial biopsy of LUL mass. Station 5: Sampled. Station 7: Sampled. Station 10L: Sampled. EMN Navigation: Target LUL mass. Radial EBUS: Lesion >35mm. Sampling via guide sheath: Forceps biopsies, Brush cytology, Needle aspiration. Direct endobronchial biopsies: 4 specimens. ROSE: Squamous cell carcinoma confirmed. Stage IIIB.",
     "cpt_codes": [
       31653,
       31628,
@@ -7212,16 +6912,10 @@
       "style_type": 6,
       "generated_name": "Haruto Watanabe",
       "generation_date": "2025-12-09T09:20:07.482219"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nLUL Mass, Staging.\n[<LOCATION>]\nMAC.\n[Description]\n1. EBUS-TBNA: Stations 5, 7, 10L (Positive).\n2. EMN/REBUS: Localized LUL mass.\n3. Sampling: TBBx, needle, brush of mass. BAL.\n4. Endobronchial Bx: Anterior segment lesion.\n[Plan]\nOncology consult.",
+    "note_text": "[Indication]\nLUL Mass, Staging.\n[Anesthesia]\nMAC.\n[Description]\n1. EBUS-TBNA: Stations 5, 7, 10L (Positive).\n2. EMN/REBUS: Localized LUL mass.\n3. Sampling: TBBx, needle, brush of mass. BAL.\n4. Endobronchial Bx: Anterior segment lesion.\n[Plan]\nOncology consult.",
     "cpt_codes": [
       31653,
       31628,
@@ -7370,16 +7064,10 @@
       "style_type": 7,
       "generated_name": "Riku Ito",
       "generation_date": "2025-12-09T09:20:07.482255"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<LOCATION> underwent a complex bronchoscopy for a large lung mass. First, we used EBUS to sample lymph nodes in the AP window, subcarinal, and hilar areas; all showed cancer. We then used electromagnetic navigation and radial ultrasound to find the main tumor deep in the lung and biopsied it. We also noticed tumor tissue growing into the airway and biopsied that separately. The wash and biopsies confirmed squamous cell carcinoma.",
+    "note_text": "Kenji underwent a complex bronchoscopy for a large lung mass. First, we used EBUS to sample lymph nodes in the AP window, subcarinal, and hilar areas; all showed cancer. We then used electromagnetic navigation and radial ultrasound to find the main tumor deep in the lung and biopsied it. We also noticed tumor tissue growing into the airway and biopsied that separately. The wash and biopsies confirmed squamous cell carcinoma.",
     "cpt_codes": [
       31653,
       31628,
@@ -7528,12 +7216,6 @@
       "style_type": 8,
       "generated_name": "Sora Kobayashi",
       "generation_date": "2025-12-09T09:20:07.482291"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -7689,7 +7371,7 @@
     }
   },
   {
-    "note_text": "Indication: Esophageal stent migrated into airway. TE Fistula.\nProc: Rigid Bronch, FB Removal, Y-Stent.\nAction: Remnant esophageal stent removed piecemeal (31635). Large TEF exposed. Hybrid Y-stent placed (<DATE_TIME>) to cover defect.\nPlan: ICU, nebulizers.",
+    "note_text": "Indication: Esophageal stent migrated into airway. TE Fistula.\nProc: Rigid Bronch, FB Removal, Y-Stent.\nAction: Remnant esophageal stent removed piecemeal (31635). Large TEF exposed. Hybrid Y-stent placed (31631) to cover defect.\nPlan: ICU, nebulizers.",
     "cpt_codes": [
       31631,
       31635
@@ -7773,12 +7455,6 @@
       "style_type": 1,
       "generated_name": "Sarah Lewis",
       "generation_date": "2025-12-09T09:20:07.482352"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -7956,7 +7632,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch Stent Removal/Placement\nPt: <PERSON>\nSteps:\n1. Rigid scope inserted.\n2. Saw esophageal stent in airway.\n3. Cut it out piece by piece (FB removal).\n4. Saw huge fistula.\n5. Placed Y-stent to cover the hole.\n6. Intubated through stent.\nPlan: ICU.",
+    "note_text": "Procedure: Rigid Bronch Stent Removal/Placement\nPt: Jessica McBee\nSteps:\n1. Rigid scope inserted.\n2. Saw esophageal stent in airway.\n3. Cut it out piece by piece (FB removal).\n4. Saw huge fistula.\n5. Placed Y-stent to cover the hole.\n6. Intubated through stent.\nPlan: ICU.",
     "cpt_codes": [
       31631,
       31635
@@ -8040,16 +7716,10 @@
       "style_type": 4,
       "generated_name": "Ashley Walker",
       "generation_date": "2025-12-09T09:20:07.482420"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "op note for <PERSON> mcbee... airway emergency esophageal stent came through the trachea... used the rigid scope to pull the stent out had to cut it into pieces very difficult... huge hole te fistula found... placed a hybrid y stent to cover it up took a few tries but got it seated... intubated through the stent patient stable for now.",
+    "note_text": "op note for jessica mcbee... airway emergency esophageal stent came through the trachea... used the rigid scope to pull the stent out had to cut it into pieces very difficult... huge hole te fistula found... placed a hybrid y stent to cover it up took a few tries but got it seated... intubated through the stent patient stable for now.",
     "cpt_codes": [
       31631,
       31635
@@ -8133,12 +7803,6 @@
       "style_type": 5,
       "generated_name": "Jennifer Hall",
       "generation_date": "2025-12-09T09:20:07.482442"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8229,7 +7893,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nAirway obstruction from migrated esophageal stent.\n[<LOCATION>]\nGeneral.\n[Description]\nRigid bronchoscopy performed. Esophageal stent fragments removed piecemeal from airway. TE fistula identified. Dynamic Y-stent deployed to cover fistula and maintain patency.\n[Plan]\nICU, humidity, check CXR.",
+    "note_text": "[Indication]\nAirway obstruction from migrated esophageal stent.\n[Anesthesia]\nGeneral.\n[Description]\nRigid bronchoscopy performed. Esophageal stent fragments removed piecemeal from airway. TE fistula identified. Dynamic Y-stent deployed to cover fistula and maintain patency.\n[Plan]\nICU, humidity, check CXR.",
     "cpt_codes": [
       31631,
       31635
@@ -8313,12 +7977,6 @@
       "style_type": 7,
       "generated_name": "Melissa Allen",
       "generation_date": "2025-12-09T09:20:07.482488"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {

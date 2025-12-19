@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Indication: Empyema suspected.\nProcedure: <LOCATION> guided access. 6F catheter placed -> frank pus. Converted to 14F chest tube via Seldinger. 450cc purulent drainage. tPA/DNase instilled. Tube clamped.\nComplications: None.",
+    "note_text": "Indication: Empyema suspected.\nProcedure: US guided access. 6F catheter placed -> frank pus. Converted to 14F chest tube via Seldinger. 450cc purulent drainage. tPA/DNase instilled. Tube clamped.\nComplications: None.",
     "cpt_codes": [
       32551,
       32561
@@ -105,16 +105,10 @@
       "style_type": 1,
       "generated_name": "Logan Wolverine",
       "generation_date": "2025-12-09T09:21:03.532127"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: PLEURAL INTERVENTION\nThe patient presented with signs of pleural sepsis. Ultrasound interrogation of the right hemithorax revealed a complex, loculated effusion. Initial diagnostic thoracentesis yielded frank purulence, necessitating immediate escalation to tube thoracostomy. A 14 French <PERSON> catheter was sited using the Seldinger technique, draining 450 mL of purulent fluid. To address the loculations, intrapleural fibrinolytic therapy (tPA/DNase) was administered.",
+    "note_text": "OPERATIVE REPORT: PLEURAL INTERVENTION\nThe patient presented with signs of pleural sepsis. Ultrasound interrogation of the right hemithorax revealed a complex, loculated effusion. Initial diagnostic thoracentesis yielded frank purulence, necessitating immediate escalation to tube thoracostomy. A 14 French Wayne catheter was sited using the Seldinger technique, draining 450 mL of purulent fluid. To address the loculations, intrapleural fibrinolytic therapy (tPA/DNase) was administered.",
     "cpt_codes": [
       32551,
       32561
@@ -219,16 +213,10 @@
       "style_type": 2,
       "generated_name": "Jack Howlett",
       "generation_date": "2025-12-09T09:21:03.532171"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Primary Service: Tube Thoracostomy (<DATE_TIME>).\nSecondary Service: Fibrinolytic Instillation (<DATE_TIME>).\nSequence: Diagnostic aspiration (bundled) -> Conversion to therapeutic drainage (billable). \nSite: Right posterior chest.\nDevice: 14Fr Pigtail.\nOutput: 450cc purulent fluid.\nNote: <DATE_TIME> not billed as it converted to <DATE_TIME> at same site.",
+    "note_text": "Primary Service: Tube Thoracostomy (32551).\nSecondary Service: Fibrinolytic Instillation (32561).\nSequence: Diagnostic aspiration (bundled) -> Conversion to therapeutic drainage (billable). \nSite: Right posterior chest.\nDevice: 14Fr Pigtail.\nOutput: 450cc purulent fluid.\nNote: 32555 not billed as it converted to 32551 at same site.",
     "cpt_codes": [
       32551,
       32561
@@ -333,19 +321,10 @@
       "style_type": 3,
       "generated_name": "James Logan",
       "generation_date": "2025-12-09T09:21:03.532202"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Chest Tube Placement\nResident: Dr. X\nSteps:\n1. <LOCATION> check: Loculated fluid.\n2. Local lidocaine.\n3. Needle access -> Pus.\n4. Wire placed.\n5. Dilated.\n6. 14Fr chest tube placed.\n7. 10mg tPA / 5mg DNase instilled.\n8. Clamped.",
+    "note_text": "Procedure: Chest Tube Placement\nResident: Dr. X\nSteps:\n1. US check: Loculated fluid.\n2. Local lidocaine.\n3. Needle access -> Pus.\n4. Wire placed.\n5. Dilated.\n6. 14Fr chest tube placed.\n7. 10mg tPA / 5mg DNase instilled.\n8. Clamped.",
     "cpt_codes": [
       32551,
       32561
@@ -450,16 +429,10 @@
       "style_type": 4,
       "generated_name": "Wolverine X",
       "generation_date": "2025-12-09T09:21:03.532233"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Dr Xavier here seeing Mr <PERSON> for the empyema right side. Started as a tap put in the small catheter got straight pus out so we switched to a chest tube right there. 14 french wayne. Drained about 450 pus. Because of the loculations on the ultrasound we put in tPA and DNase right away. Clamped it. Admitting him.",
+    "note_text": "Dr Xavier here seeing Mr Howlett for the empyema right side. Started as a tap put in the small catheter got straight pus out so we switched to a chest tube right there. 14 french wayne. Drained about 450 pus. Because of the loculations on the ultrasound we put in tPA and DNase right away. Clamped it. Admitting him.",
     "cpt_codes": [
       32551,
       32561
@@ -564,12 +537,6 @@
       "style_type": 5,
       "generated_name": "Weapon X",
       "generation_date": "2025-12-09T09:21:03.532263"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -681,7 +648,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nFevers, loculated right pleural effusion, empyema concern.\n[<LOCATION>]\nLocal (Lidocaine).\n[Description]\nDiagnostic thoracentesis revealed pus. Converted to 14Fr chest tube placement. 450cc purulent drainage. Instillation of tPA/DNase.\n[Plan]\nAdmit for empyema protocol.",
+    "note_text": "[Indication]\nFevers, loculated right pleural effusion, empyema concern.\n[Anesthesia]\nLocal (Lidocaine).\n[Description]\nDiagnostic thoracentesis revealed pus. Converted to 14Fr chest tube placement. 450cc purulent drainage. Instillation of tPA/DNase.\n[Plan]\nAdmit for empyema protocol.",
     "cpt_codes": [
       32551,
       32561
@@ -786,16 +753,10 @@
       "style_type": 7,
       "generated_name": "James L.",
       "generation_date": "2025-12-09T09:21:03.532315"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We performed a pleural intervention on Mr. <PERSON>. Initially, we inserted a small catheter for diagnostic purposes, which revealed <PERSON>. Consequently, we immediately proceeded to place a 14 French chest tube in the same location to establish drainage. We drained <PERSON> of fluid. Given the loculations seen on ultrasound, we instilled fibrinolytics (tPA and DNase) directly into the tube before clamping it.",
+    "note_text": "We performed a pleural intervention on Mr. Howlett. Initially, we inserted a small catheter for diagnostic purposes, which revealed frank pus. Consequently, we immediately proceeded to place a 14 French chest tube in the same location to establish drainage. We drained 450cc of fluid. Given the loculations seen on ultrasound, we instilled fibrinolytics (tPA and DNase) directly into the tube before clamping it.",
     "cpt_codes": [
       32551,
       32561
@@ -900,14 +861,6 @@
       "style_type": 8,
       "generated_name": "Old Man Logan",
       "generation_date": "2025-12-09T09:21:03.532349"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -1233,7 +1186,7 @@
     }
   },
   {
-    "note_text": "Code 31641: Destruction of tumor (APC to RUL orifice).\nCode 31645: Therapeutic aspiration (400cc blood/clot from trachea/LMS).\nNote: Tamponade is incidental to control. Rigid scope used. General <LOCATION>.",
+    "note_text": "Code 31641: Destruction of tumor (APC to RUL orifice).\nCode 31645: Therapeutic aspiration (400cc blood/clot from trachea/LMS).\nNote: Tamponade is incidental to control. Rigid scope used. General anesthesia.",
     "cpt_codes": [
       31641,
       31645
@@ -1337,12 +1290,6 @@
       "style_type": 3,
       "generated_name": "Connor Roy",
       "generation_date": "2025-12-09T09:21:03.532471"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1453,7 +1400,7 @@
     }
   },
   {
-    "note_text": "Emergency bronch for <PERSON> massive bleeding. Rigid scope. Tube was full of blood sucked out like 400cc just to see. Bleeding coming from RUL tumor. Put a balloon in there to block it for a bit then hit it with APC. Used iced saline too. Stopped bleeding. Extubated in room.",
+    "note_text": "Emergency bronch for Logan Roy massive bleeding. Rigid scope. Tube was full of blood sucked out like 400cc just to see. Bleeding coming from RUL tumor. Put a balloon in there to block it for a bit then hit it with APC. Used iced saline too. Stopped bleeding. Extubated in room.",
     "cpt_codes": [
       31641,
       31645
@@ -1557,12 +1504,6 @@
       "style_type": 5,
       "generated_name": "L. Roy",
       "generation_date": "2025-12-09T09:21:03.532524"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1673,7 +1614,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMassive hemoptysis, RUL SCC.\n[<LOCATION>]\nGeneral, Rigid Bronchoscopy.\n[Description]\nEvacuation of 400cc clot. Balloon tamponade RUL. APC destruction of bleeding tumor. Iced saline.\n[Plan]\nICU admission.",
+    "note_text": "[Indication]\nMassive hemoptysis, RUL SCC.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy.\n[Description]\nEvacuation of 400cc clot. Balloon tamponade RUL. APC destruction of bleeding tumor. Iced saline.\n[Plan]\nICU admission.",
     "cpt_codes": [
       31641,
       31645
@@ -1777,16 +1718,10 @@
       "style_type": 7,
       "generated_name": "Waystar Roy",
       "generation_date": "2025-12-09T09:21:03.532577"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> required emergency rigid bronchoscopy for massive hemoptysis. We first cleared the airway of approximately 400cc of clot to ventilate him. Identifying the bleeding source at the RUL tumor, we deployed a Fogarty balloon for tamponade. Subsequently, we applied APC to the tumor bed to cauterize the vessels and instilled iced saline. These measures successfully halted the bleeding.",
+    "note_text": "Mr. Roy required emergency rigid bronchoscopy for massive hemoptysis. We first cleared the airway of approximately 400cc of clot to ventilate him. Identifying the bleeding source at the RUL tumor, we deployed a Fogarty balloon for tamponade. Subsequently, we applied APC to the tumor bed to cauterize the vessels and instilled iced saline. These measures successfully halted the bleeding.",
     "cpt_codes": [
       31641,
       31645
@@ -1890,12 +1825,6 @@
       "style_type": 8,
       "generated_name": "Logan R.",
       "generation_date": "2025-12-09T09:21:03.532604"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2006,7 +1935,7 @@
     }
   },
   {
-    "note_text": "Proc: EBUS, <PERSON>, <LOCATION>.\nEBUS: 4R, 7 sampled (<PERSON>).\nLUL: Navigated cryobiopsy <PERSON> (nodule).\nRMB: Incidental tumor resected (snare/APC).\nComp: None.",
+    "note_text": "Proc: EBUS, Nav Cryobiopsy, Central Resection.\nEBUS: 4R, 7 sampled (neg).\nLUL: Navigated cryobiopsy x3 (nodule).\nRMB: Incidental tumor resected (snare/APC).\nComp: None.",
     "cpt_codes": [
       31652,
       31627,
@@ -2172,15 +2101,6 @@
       "style_type": 1,
       "generated_name": "Ryan Reynolds",
       "generation_date": "2025-12-09T09:21:03.532677"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "LOCATION",
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -2522,7 +2442,7 @@
     }
   },
   {
-    "note_text": "Procedure: EBUS / Ion / Resection\nPatient: <PERSON>\nSteps:\n1. EBUS TBNA 7, 4R.\n2. Ion nav to LUL. Radial EBUS verify. <PERSON>.\n3. Found RMB polyp. Snared and APC'd it.\nNo issues.",
+    "note_text": "Procedure: EBUS / Ion / Resection\nPatient: Wade Wilson\nSteps:\n1. EBUS TBNA 7, 4R.\n2. Ion nav to LUL. Radial EBUS verify. Cryobiopsy x3.\n3. Found RMB polyp. Snared and APC'd it.\nNo issues.",
     "cpt_codes": [
       31652,
       31627,
@@ -2688,17 +2608,10 @@
       "style_type": 4,
       "generated_name": "Merc Mouth",
       "generation_date": "2025-12-09T09:21:03.532805"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Busy case for Mr <PERSON>. Started with EBUS 7 and 4R negative. Then used the robot to get the LUL nodule froze it 3 times. On the way out saw a huge polyp in the right main. Snared it off and APCd the base. 3 separate procedures basically. Patient fine.",
+    "note_text": "Busy case for Mr Wilson. Started with EBUS 7 and 4R negative. Then used the robot to get the LUL nodule froze it 3 times. On the way out saw a huge polyp in the right main. Snared it off and APCd the base. 3 separate procedures basically. Patient fine.",
     "cpt_codes": [
       31652,
       31627,
@@ -2864,12 +2777,6 @@
       "style_type": 5,
       "generated_name": "Wade W.",
       "generation_date": "2025-12-09T09:21:03.532844"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3042,7 +2949,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nStaging, LUL nodule.\n[<LOCATION>]\nGeneral.\n[Description]\n1. EBUS-TBNA 4R, 7.\n2. Navigated cryobiopsy LUL nodule (w/ REBUS).\n3. Snare resection/APC of incidental RMB tumor.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nStaging, LUL nodule.\n[Anesthesia]\nGeneral.\n[Description]\n1. EBUS-TBNA 4R, 7.\n2. Navigated cryobiopsy LUL nodule (w/ REBUS).\n3. Snare resection/APC of incidental RMB tumor.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31652,
       31627,
@@ -3208,16 +3115,10 @@
       "style_type": 7,
       "generated_name": "Regenerating Degenerate",
       "generation_date": "2025-12-09T09:21:03.532924"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We performed a complex procedure on Mr. <PERSON>. First, we staged the mediastinum using EBUS. Next, we used the Ion robot to navigate to and cryobiopsy a nodule in the LUL. Unexpectedly, we found a separate tumor obstructing the Right Mainstem Bronchus. We resected this central tumor using a snare and APC. All three targets were distinct.",
+    "note_text": "We performed a complex procedure on Mr. Wilson. First, we staged the mediastinum using EBUS. Next, we used the Ion robot to navigate to and cryobiopsy a nodule in the LUL. Unexpectedly, we found a separate tumor obstructing the Right Mainstem Bronchus. We resected this central tumor using a snare and APC. All three targets were distinct.",
     "cpt_codes": [
       31652,
       31627,
@@ -3383,12 +3284,6 @@
       "style_type": 8,
       "generated_name": "Weapon XI",
       "generation_date": "2025-12-09T09:21:03.532966"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3949,7 +3844,7 @@
     }
   },
   {
-    "note_text": "Dr Stein here. Patient with the tracheal stent has bad breath. <PERSON> was full of granulation. Went in with the rigid took the old one out. Used APC and cryo to clean up the mess at the bottom. Put a fresh 14 by <DATE_TIME> in there. Looks much better.",
+    "note_text": "Dr Stein here. Patient with the tracheal stent has bad breath. Stent was full of granulation. Went in with the rigid took the old one out. Used APC and cryo to clean up the mess at the bottom. Put a fresh 14 by 40 in there. Looks much better.",
     "cpt_codes": [
       31638
     ],
@@ -4043,13 +3938,6 @@
       "style_type": 5,
       "generated_name": "Mary Shelley",
       "generation_date": "2025-12-09T09:21:03.533170"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -4150,7 +4038,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nBenign tracheal stenosis, stent obstruction.\n[<LOCATION>]\nGeneral, <PERSON>.\n[Description]\nRemoval of obstructed silicone stent. Ablation of granulation tissue (APC/Cryo). Placement of new 14x40mm silicone stent.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nBenign tracheal stenosis, stent obstruction.\n[Anesthesia]\nGeneral, Rigid.\n[Description]\nRemoval of obstructed silicone stent. Ablation of granulation tissue (APC/Cryo). Placement of new 14x40mm silicone stent.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31638
     ],
@@ -4244,13 +4132,6 @@
       "style_type": 7,
       "generated_name": "Prometheus Modern",
       "generation_date": "2025-12-09T09:21:03.533222"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -4841,7 +4722,7 @@
     }
   },
   {
-    "note_text": "Procedure: Cryo Ablation and <LOCATION>\nSteps:\n1. RLL mass: <PERSON>/removed x5. Cleared airway.\n2. LUL nodule: Found with REBUS. Biopsied x2.\nPath sent for LUL only.",
+    "note_text": "Procedure: Cryo Ablation and Biopsy\nSteps:\n1. RLL mass: Frozen/removed x5. Cleared airway.\n2. LUL nodule: Found with REBUS. Biopsied x2.\nPath sent for LUL only.",
     "cpt_codes": [
       31641,
       31628,
@@ -4969,17 +4850,10 @@
       "style_type": 4,
       "generated_name": "Unknown Subject",
       "generation_date": "2025-12-09T09:21:03.533409"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Two part procedure today. First the RLL mass we know its cancer so I just cryo'd it to open the airway threw the tissue away. Then went to the LUL for that new spot. Used the radar to find it and took two biopsies sent those to the lab. Codes are <DATE_TIME> and <DATE_TIME>.",
+    "note_text": "Two part procedure today. First the RLL mass we know its cancer so I just cryo'd it to open the airway threw the tissue away. Then went to the LUL for that new spot. Used the radar to find it and took two biopsies sent those to the lab. Codes are 31641 and 31628.",
     "cpt_codes": [
       31641,
       31628,
@@ -5107,13 +4981,6 @@
       "style_type": 5,
       "generated_name": "Mystery Patient",
       "generation_date": "2025-12-09T09:21:03.533440"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -5248,7 +5115,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRLL obstruction, LUL nodule.\n[<LOCATION>]\nModerate.\n[Description]\n1. Cryo-ablation of RLL mass (therapeutic).\n2. Radial EBUS localization LUL.\n3. Cryobiopsy LUL nodule (diagnostic).\n[Plan]\nPathology pending for LUL.",
+    "note_text": "[Indication]\nRLL obstruction, LUL nodule.\n[Anesthesia]\nModerate.\n[Description]\n1. Cryo-ablation of RLL mass (therapeutic).\n2. Radial EBUS localization LUL.\n3. Cryobiopsy LUL nodule (diagnostic).\n[Plan]\nPathology pending for LUL.",
     "cpt_codes": [
       31641,
       31628,
@@ -5376,12 +5243,6 @@
       "style_type": 7,
       "generated_name": "No Name",
       "generation_date": "2025-12-09T09:21:03.533505"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {

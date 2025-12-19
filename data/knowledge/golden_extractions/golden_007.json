@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Procedure: Robotic bronchoscopy, radial EBUS, TBBx, BAL.\nIndication: Bilateral nodules, largest RLL 2.6cm.\nAction:\n- ETT/GA.\n- Ion nav to RLL posterior nodule.\n- REBUS: Concentric lesion confirmed.\n- Biopsy: Forceps x7, <PERSON>.\n- BAL RLL performed.\nFindings: Lesion sampled. No bleeding.\nPlan: CXR 2 hours. Clinic 2 wks.",
+    "note_text": "Procedure: Robotic bronchoscopy, radial EBUS, TBBx, BAL.\nIndication: Bilateral nodules, largest RLL 2.6cm.\nAction:\n- ETT/GA.\n- Ion nav to RLL posterior nodule.\n- REBUS: Concentric lesion confirmed.\n- Biopsy: Forceps x7, Brush x3.\n- BAL RLL performed.\nFindings: Lesion sampled. No bleeding.\nPlan: CXR 2 hours. Clinic 2 wks.",
     "cpt_codes": [
       31627,
       31654,
@@ -237,16 +237,10 @@
       "style_type": 1,
       "generated_name": "Carlos Gomez",
       "generation_date": "2025-12-09T09:18:39.656996"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE NARRATIVE: The patient was brought to the operating suite for elective robotic-assisted bronchoscopy. Following induction of general <LOCATION>, the Ion endoluminal system was deployed. <PERSON> was established to the target lesion in the right lower lobe posterior segment, identified as a 2.6 cm FDG-avid nodule. Radial endobronchial ultrasound (REBUS) interrogation revealed a concentric echogenic signature, confirming tool-in-lesion status. Extensive sampling was performed via transbronchial forceps biopsy and cytology brushing. Additionally, a bronchoalveolar lavage was conducted for microbiological assessment. The patient tolerated the procedure without physiological derangement.",
+    "note_text": "OPERATIVE NARRATIVE: The patient was brought to the operating suite for elective robotic-assisted bronchoscopy. Following induction of general anesthesia, the Ion endoluminal system was deployed. Navigation was established to the target lesion in the right lower lobe posterior segment, identified as a 2.6 cm FDG-avid nodule. Radial endobronchial ultrasound (REBUS) interrogation revealed a concentric echogenic signature, confirming tool-in-lesion status. Extensive sampling was performed via transbronchial forceps biopsy and cytology brushing. Additionally, a bronchoalveolar lavage was conducted for microbiological assessment. The patient tolerated the procedure without physiological derangement.",
     "cpt_codes": [
       31627,
       31654,
@@ -483,17 +477,10 @@
       "style_type": 2,
       "generated_name": "Manuel Ortiz",
       "generation_date": "2025-12-09T09:18:39.657070"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedures Performed/Justification:\n1. <DATE_TIME> (Navigational Bronchoscopy): Required for localization of peripheral RLL nodule not visible via standard bronchoscopy. Planning and real-time guidance utilized.\n2. <DATE_TIME> (Peripheral EBUS): Radial probe used to confirm lesion concentricity and verify tool placement prior to biopsy.\n3. <DATE_TIME> (Transbronchial <LOCATION>): Primary diagnostic maneuver; 7 specimens obtained from single site (RLL).\n4. 31624 (BAL): Separate diagnostic wash performed for culture/cytology.\nEquipment: Intuitive Ion, 20MHz radial probe.",
+    "note_text": "Procedures Performed/Justification:\n1. 31627 (Navigational Bronchoscopy): Required for localization of peripheral RLL nodule not visible via standard bronchoscopy. Planning and real-time guidance utilized.\n2. 31654 (Peripheral EBUS): Radial probe used to confirm lesion concentricity and verify tool placement prior to biopsy.\n3. 31628 (Transbronchial Biopsy): Primary diagnostic maneuver; 7 specimens obtained from single site (RLL).\n4. 31624 (BAL): Separate diagnostic wash performed for culture/cytology.\nEquipment: Intuitive Ion, 20MHz radial probe.",
     "cpt_codes": [
       31627,
       31654,
@@ -730,19 +717,10 @@
       "style_type": 3,
       "generated_name": "Javier Hernandez",
       "generation_date": "2025-12-09T09:18:39.657131"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Resident Procedure Note\nPatient: <PERSON>\nAttending: Dr. Anderson\nPre-op Dx: Lung nodules.\nSteps:\n1. Time out. GA induced. 8.0 ETT.\n2. Ion robot docked. Registration error 1.5mm.\n3. Navigated to RLL target.\n4. Radial EBUS showed concentric view.\n5. Taken: 7 biopsies, 3 brushes, 1 BAL.\n6. ROSE: Atypical cells.\n7. Extubated stable.\nPlan: CXR, discharge if negative.",
+    "note_text": "Resident Procedure Note\nPatient: Carlos Gomez\nAttending: Dr. Anderson\nPre-op Dx: Lung nodules.\nSteps:\n1. Time out. GA induced. 8.0 ETT.\n2. Ion robot docked. Registration error 1.5mm.\n3. Navigated to RLL target.\n4. Radial EBUS showed concentric view.\n5. Taken: 7 biopsies, 3 brushes, 1 BAL.\n6. ROSE: Atypical cells.\n7. Extubated stable.\nPlan: CXR, discharge if negative.",
     "cpt_codes": [
       31627,
       31654,
@@ -979,16 +957,10 @@
       "style_type": 4,
       "generated_name": "Luis R. Martinez",
       "generation_date": "2025-12-09T09:18:39.657192"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "pt here for robotic bronchoscopy right lower lobe nodule uh we used general <LOCATION> intubated. navigated to the rll posterior segment with the ion system looked good on the screen radial ebus showed the lesion concentric so we biopsied it. took about seven bites and some brushes also did a wash. rose said maybe cancer. no bleeding really patient woke up fine sent to recovery check a chest xray thanks.",
+    "note_text": "pt here for robotic bronchoscopy right lower lobe nodule uh we used general anesthesia intubated. navigated to the rll posterior segment with the ion system looked good on the screen radial ebus showed the lesion concentric so we biopsied it. took about seven bites and some brushes also did a wash. rose said maybe cancer. no bleeding really patient woke up fine sent to recovery check a chest xray thanks.",
     "cpt_codes": [
       31627,
       31654,
@@ -1225,16 +1197,10 @@
       "style_type": 5,
       "generated_name": "Miguel Torres",
       "generation_date": "2025-12-09T09:18:39.657249"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "The patient was brought to the OR and placed under general <LOCATION> with an 8.0 ETT. A time-out was performed. We utilized the Intuitive Ion robotic platform to navigate to a 2.6 cm nodule in the RLL posterior segment. <PERSON> was successful with a fiducial error of 1.5mm. We inserted a radial EBUS probe which demonstrated a concentric echogenic pattern consistent with a solid lesion. We then performed 7 transbronchial biopsies and 3 brushes. A BAL was also collected. Rapid on-site evaluation suggested atypical cells. There were no complications. The patient was extubated and transferred to PACU.",
+    "note_text": "The patient was brought to the OR and placed under general anesthesia with an 8.0 ETT. A time-out was performed. We utilized the Intuitive Ion robotic platform to navigate to a 2.6 cm nodule in the RLL posterior segment. Navigation was successful with a fiducial error of 1.5mm. We inserted a radial EBUS probe which demonstrated a concentric echogenic pattern consistent with a solid lesion. We then performed 7 transbronchial biopsies and 3 brushes. A BAL was also collected. Rapid on-site evaluation suggested atypical cells. There were no complications. The patient was extubated and transferred to PACU.",
     "cpt_codes": [
       31627,
       31654,
@@ -1471,17 +1437,10 @@
       "style_type": 6,
       "generated_name": "Roberto Sanchez",
       "generation_date": "2025-12-09T09:18:39.657306"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\n64M with multiple lung nodules, largest RLL 2.6cm, need tissue diagnosis.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nIon robotic navigation used to reach RLL posterior segment target. Radial EBUS confirmed concentric lesion. Transbronchial biopsies (x7) and brushings (<PERSON>) obtained. BAL performed. Hemostasis achieved.\n[Plan]\nCXR to rule out pneumothorax. Follow-up in 2 weeks.",
+    "note_text": "[Indication]\n64M with multiple lung nodules, largest RLL 2.6cm, need tissue diagnosis.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nIon robotic navigation used to reach RLL posterior segment target. Radial EBUS confirmed concentric lesion. Transbronchial biopsies (x7) and brushings (x3) obtained. BAL performed. Hemostasis achieved.\n[Plan]\nCXR to rule out pneumothorax. Follow-up in 2 weeks.",
     "cpt_codes": [
       31627,
       31654,
@@ -1718,17 +1677,10 @@
       "style_type": 7,
       "generated_name": "Alejandro Diaz",
       "generation_date": "2025-12-09T09:18:39.657362"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> presented for evaluation of bilateral pulmonary nodules. We proceeded with a robotic-assisted bronchoscopy targeting the largest lesion in the right lower lobe. Under general <LOCATION>, the scope was successfully navigated to the target in the posterior segment. Confirmation was achieved using radial EBUS, which showed a clear concentric view of the 24mm lesion. We then obtained seven biopsy samples and three cytology brushings, followed by a bronchoalveolar lavage. The preliminary on-site pathology review showed atypical cells. The patient tolerated the procedure well with minimal blood loss.",
+    "note_text": "Mr. Morales presented for evaluation of bilateral pulmonary nodules. We proceeded with a robotic-assisted bronchoscopy targeting the largest lesion in the right lower lobe. Under general anesthesia, the scope was successfully navigated to the target in the posterior segment. Confirmation was achieved using radial EBUS, which showed a clear concentric view of the 24mm lesion. We then obtained seven biopsy samples and three cytology brushings, followed by a bronchoalveolar lavage. The preliminary on-site pathology review showed atypical cells. The patient tolerated the procedure well with minimal blood loss.",
     "cpt_codes": [
       31627,
       31654,
@@ -1965,13 +1917,6 @@
       "style_type": 8,
       "generated_name": "Ricardo Morales",
       "generation_date": "2025-12-09T09:18:39.657416"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -2215,7 +2160,7 @@
     }
   },
   {
-    "note_text": "Indication: Severe emphysema, LUL target.\nProc: LUL Valve Placement.\nSteps:\n- GA, 8.5 ETT.\n- Chartis LUL: CV Negative (flow to zero).\n- 3 Zephyr valves placed: <PERSON>, LB1+2c, LB3.\n- Total occlusion confirmed.\nResult: LUL atelectasis initiated. No leaks.\nPlan: Admit. Pneumothorax precautions.",
+    "note_text": "Indication: Severe emphysema, LUL target.\nProc: LUL Valve Placement.\nSteps:\n- GA, 8.5 ETT.\n- Chartis LUL: CV Negative (flow to zero).\n- 3 Zephyr valves placed: LB1+2, LB1+2c, LB3.\n- Total occlusion confirmed.\nResult: LUL atelectasis initiated. No leaks.\nPlan: Admit. Pneumothorax precautions.",
     "cpt_codes": [
       31634,
       31647
@@ -2428,12 +2373,6 @@
       "style_type": 1,
       "generated_name": "James T. Wilson",
       "generation_date": "2025-12-09T09:18:39.657527"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2653,7 +2592,7 @@
     }
   },
   {
-    "note_text": "Service: Bronchoscopic Lung Volume Reduction (BLVR).\nCodes:\n- 31647: Placement of valves in initial lobe (LUL).\n- 31634: Balloon occlusion/Chartis assessment (Bundled but performed).\nJustification: CT showed intact fissure. Chartis confirmed absence of collateral ventilation (required for valve success). Three (3) valves utilized to occlude <PERSON>, <LOCATION>+2c, and LB3. Procedure medically necessary for severe refractory emphysema.",
+    "note_text": "Service: Bronchoscopic Lung Volume Reduction (BLVR).\nCodes:\n- 31647: Placement of valves in initial lobe (LUL).\n- 31634: Balloon occlusion/Chartis assessment (Bundled but performed).\nJustification: CT showed intact fissure. Chartis confirmed absence of collateral ventilation (required for valve success). Three (3) valves utilized to occlude LB1+2, LB1+2c, and LB3. Procedure medically necessary for severe refractory emphysema.",
     "cpt_codes": [
       31634,
       31647
@@ -2866,17 +2805,10 @@
       "style_type": 3,
       "generated_name": "Thomas Lewis",
       "generation_date": "2025-12-09T09:18:39.657631"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Procedure Note - Fellow\nPatient: <PERSON>\nProcedure: LUL Valves\nStaff: Dr. Lee\n1. Intubated 8.5 ETT.\n2. Bronch to LUL.\n3. Chartis: Flow went to zero (CV Negative).\n4. Sized and placed 3 Zephyr valves in LUL.\n5. Checked for leaks - none.\n6. Extubated.\nPlan: Observe for pneumo <DATE_TIME>.",
+    "note_text": "Procedure Note - Fellow\nPatient: Robert Clark\nProcedure: LUL Valves\nStaff: Dr. Lee\n1. Intubated 8.5 ETT.\n2. Bronch to LUL.\n3. Chartis: Flow went to zero (CV Negative).\n4. Sized and placed 3 Zephyr valves in LUL.\n5. Checked for leaks - none.\n6. Extubated.\nPlan: Observe for pneumo x3 days.",
     "cpt_codes": [
       31634,
       31647
@@ -3089,17 +3021,10 @@
       "style_type": 4,
       "generated_name": "George Walker",
       "generation_date": "2025-12-09T09:18:39.657682"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Mr <PERSON> here for the valve procedure severe emphysema left upper lobe. We put him to sleep tube in. Checked the LUL with the chartis balloon it stopped flowing so no collateral ventilation good to go. Put in three zephyr valves total one in the apicoposterior one anterior one superior. They look seated well no air getting through. Patient woke up fine no issues sending to floor for monitoring.",
+    "note_text": "Mr Harris here for the valve procedure severe emphysema left upper lobe. We put him to sleep tube in. Checked the LUL with the chartis balloon it stopped flowing so no collateral ventilation good to go. Put in three zephyr valves total one in the apicoposterior one anterior one superior. They look seated well no air getting through. Patient woke up fine no issues sending to floor for monitoring.",
     "cpt_codes": [
       31634,
       31647
@@ -3312,16 +3237,10 @@
       "style_type": 5,
       "generated_name": "Edward Hall",
       "generation_date": "2025-12-09T09:18:39.657733"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Endobronchial valve placement was performed on a <DATE_TIME> male with severe emphysema. General <LOCATION> was induced. The left upper lobe was assessed for collateral ventilation using the Chartis system, which showed no collateral ventilation (CV Negative). Subsequently, three Zephyr valves were deployed into the LB1+2, <LOCATION>+2c, and LB3 segmental bronchi. Visual inspection confirmed appropriate expansion and seating of the valves with complete occlusion of the lobar orifice. There were no immediate complications.",
+    "note_text": "Endobronchial valve placement was performed on a 68-year-old male with severe emphysema. General anesthesia was induced. The left upper lobe was assessed for collateral ventilation using the Chartis system, which showed no collateral ventilation (CV Negative). Subsequently, three Zephyr valves were deployed into the LB1+2, LB1+2c, and LB3 segmental bronchi. Visual inspection confirmed appropriate expansion and seating of the valves with complete occlusion of the lobar orifice. There were no immediate complications.",
     "cpt_codes": [
       31634,
       31647
@@ -3534,18 +3453,10 @@
       "style_type": 6,
       "generated_name": "Charles Allen",
       "generation_date": "2025-12-09T09:18:39.657783"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSevere heterogeneous emphysema, target LUL, intact fissures.\n[<LOCATION>]\nGeneral, 8.5 ETT.\n[Description]\nChartis assessment LUL: Negative for collateral ventilation. Three Zephyr valves deployed (<DATE_TIME>, LB1+2c, LB3). Complete occlusion achieved. Valves functioning normally.\n[Plan]\nAdmit to monitored bed. Serial CXRs to monitor for pneumothorax.",
+    "note_text": "[Indication]\nSevere heterogeneous emphysema, target LUL, intact fissures.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nChartis assessment LUL: Negative for collateral ventilation. Three Zephyr valves deployed (LB1+2, LB1+2c, LB3). Complete occlusion achieved. Valves functioning normally.\n[Plan]\nAdmit to monitored bed. Serial CXRs to monitor for pneumothorax.",
     "cpt_codes": [
       31634,
       31647
@@ -3758,17 +3669,10 @@
       "style_type": 7,
       "generated_name": "Frank Young",
       "generation_date": "2025-12-09T09:18:39.657834"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "We performed an elective lung volume reduction for Mr. <PERSON> today. After placing the breathing tube, we navigated to the left upper lobe. The Chartis balloon test confirmed that there was no airflow between the lobes, making him a good candidate. We then proceeded to place three valves in the upper lobe segments. We verified that each valve was sitting correctly and that the airway was fully blocked. He tolerated the procedure well and is now recovering.",
+    "note_text": "We performed an elective lung volume reduction for Mr. Allen today. After placing the breathing tube, we navigated to the left upper lobe. The Chartis balloon test confirmed that there was no airflow between the lobes, making him a good candidate. We then proceeded to place three valves in the upper lobe segments. We verified that each valve was sitting correctly and that the airway was fully blocked. He tolerated the procedure well and is now recovering.",
     "cpt_codes": [
       31634,
       31647
@@ -3981,12 +3885,6 @@
       "style_type": 8,
       "generated_name": "Henry King",
       "generation_date": "2025-12-09T09:18:39.657883"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4206,7 +4104,7 @@
     }
   },
   {
-    "note_text": "Dx: GPA with tracheal/bronchial stenosis.\nProc: Bronchoscopy, radial cuts, balloon dilation.\nAction:\n- 5cm tracheal stenosis: Dilated <DATE_TIME>.\n- RLL/LUL strictures: Radial cuts (electrocautery), then balloon dilation (6-8mm).\n- Airways recanalized.\nResult: Patency improved. No bleeding.\nPlan: PACU.",
+    "note_text": "Dx: GPA with tracheal/bronchial stenosis.\nProc: Bronchoscopy, radial cuts, balloon dilation.\nAction:\n- 5cm tracheal stenosis: Dilated 12-15mm.\n- RLL/LUL strictures: Radial cuts (electrocautery), then balloon dilation (6-8mm).\n- Airways recanalized.\nResult: Patency improved. No bleeding.\nPlan: PACU.",
     "cpt_codes": [
       31641
     ],
@@ -4395,16 +4293,10 @@
       "style_type": 1,
       "generated_name": "Karen Brooks",
       "generation_date": "2025-12-09T09:18:39.657983"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: The patient, with a history of Granulomatosis with Polyangiitis, presented with complex multilevel airway stenosis. Under general <PERSON> via LMA, a flexible bronchoscope was introduced. A 5cm circumferential tracheal stenosis was identified and treated via serial balloon dilation (CRE <DATE_TIME>). Further inspection revealed web-like stenoses in the RLL and Lingula. These were managed with a hybrid approach utilizing radial electrocautery incisions followed by balloon dilation to 8mm. Excellent anatomic restoration of the airway caliber was achieved without hemorrhagic complication.",
+    "note_text": "OPERATIVE REPORT: The patient, with a history of Granulomatosis with Polyangiitis, presented with complex multilevel airway stenosis. Under general anesthesia via LMA, a flexible bronchoscope was introduced. A 5cm circumferential tracheal stenosis was identified and treated via serial balloon dilation (CRE 12-15mm). Further inspection revealed web-like stenoses in the RLL and Lingula. These were managed with a hybrid approach utilizing radial electrocautery incisions followed by balloon dilation to 8mm. Excellent anatomic restoration of the airway caliber was achieved without hemorrhagic complication.",
     "cpt_codes": [
       31641
     ],
@@ -4593,17 +4485,10 @@
       "style_type": 2,
       "generated_name": "Susan Bennett",
       "generation_date": "2025-12-09T09:18:39.658030"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "CPT Coding Rationale:\n- <DATE_TIME>: Therapeutic bronchoscopy with destruction of tumor or relief of stenosis. Justified by use of electrocautery knife ('radial knife incisions') to cut band-like strictures in RLL and Lingula.\nNote: Balloon dilation (<DATE_TIME>) was performed but is bundled into <DATE_TIME> when performed at the same session/site. The primary service is the relief of stenosis via multiple modalities.",
+    "note_text": "CPT Coding Rationale:\n- 31641: Therapeutic bronchoscopy with destruction of tumor or relief of stenosis. Justified by use of electrocautery knife ('radial knife incisions') to cut band-like strictures in RLL and Lingula.\nNote: Balloon dilation (31630) was performed but is bundled into 31641 when performed at the same session/site. The primary service is the relief of stenosis via multiple modalities.",
     "cpt_codes": [
       31641
     ],
@@ -4792,18 +4677,10 @@
       "style_type": 3,
       "generated_name": "Linda Gray",
       "generation_date": "2025-12-09T09:18:39.658077"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: Airway Dilation/Cuts\nIndication: GPA Stenosis\nSteps:\n1. LMA placed.\n2. Saw long tracheal stenosis -> Dilated w/ balloon up to 15mm.\n3. Saw pinhole stenosis in RLL/Lingula.\n4. Used elec-knife to cut the webs.\n5. Dilated those segments w/ balloon.\n6. Airways open now.\nComplications: None.",
+    "note_text": "Resident Note\nPatient: Linda Gray\nProcedure: Airway Dilation/Cuts\nIndication: GPA Stenosis\nSteps:\n1. LMA placed.\n2. Saw long tracheal stenosis -> Dilated w/ balloon up to 15mm.\n3. Saw pinhole stenosis in RLL/Lingula.\n4. Used elec-knife to cut the webs.\n5. Dilated those segments w/ balloon.\n6. Airways open now.\nComplications: None.",
     "cpt_codes": [
       31641
     ],
@@ -4992,16 +4869,10 @@
       "style_type": 4,
       "generated_name": "Donna James",
       "generation_date": "2025-12-09T09:18:39.658121"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for airway stenosis she has wegeners granulomatosis. We put in an lma and went down with the scope. Trachea was tight so we ballooned it open. Then the right lower lobe and lingula were basically shut so we used the electrocautery knife to make cuts and then ballooned them too. Opened up nicely no bleeding. Patient woke up fine going to pacu.",
+    "note_text": "Lisa morgan here for airway stenosis she has wegeners granulomatosis. We put in an lma and went down with the scope. Trachea was tight so we ballooned it open. Then the right lower lobe and lingula were basically shut so we used the electrocautery knife to make cuts and then ballooned them too. Opened up nicely no bleeding. Patient woke up fine going to pacu.",
     "cpt_codes": [
       31641
     ],
@@ -5190,16 +5061,10 @@
       "style_type": 5,
       "generated_name": "Sandra Watson",
       "generation_date": "2025-12-09T09:18:39.658170"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Flexible bronchoscopy with radial knife incisions and balloon dilatation was performed. The patient has tracheal and bronchial stenosis secondary to Granulomatosis with polyangiitis. Under general <LOCATION> with an LMA, a long segment tracheal stenosis was visualized and dilated using 12, 13.5, and 15mm balloons. Web-like strictures in the RLL and Lingula were then addressed. An electrocautery knife was used to make radial incisions in the strictures, followed by balloon dilation using 6-8mm balloons. Near complete recanalization was achieved.",
+    "note_text": "Flexible bronchoscopy with radial knife incisions and balloon dilatation was performed. The patient has tracheal and bronchial stenosis secondary to Granulomatosis with polyangiitis. Under general anesthesia with an LMA, a long segment tracheal stenosis was visualized and dilated using 12, 13.5, and 15mm balloons. Web-like strictures in the RLL and Lingula were then addressed. An electrocautery knife was used to make radial incisions in the strictures, followed by balloon dilation using 6-8mm balloons. Near complete recanalization was achieved.",
     "cpt_codes": [
       31641
     ],
@@ -5388,16 +5253,10 @@
       "style_type": 6,
       "generated_name": "Betty Hughes",
       "generation_date": "2025-12-09T09:18:39.658218"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nTracheal and bronchial stenosis (GPA).\n[<LOCATION>]\nGeneral, LMA.\n[Description]\nTracheal stenosis (5cm long) dilated with CRE balloons (<DATE_TIME>). Bronchial strictures (RLL, Lingula) treated with radial electrocautery incisions and subsequent balloon dilation. Airway patency restored.\n[Plan]\n<PERSON> recovery. PRN follow-up.",
+    "note_text": "[Indication]\nTracheal and bronchial stenosis (GPA).\n[Anesthesia]\nGeneral, LMA.\n[Description]\nTracheal stenosis (5cm long) dilated with CRE balloons (12-15mm). Bronchial strictures (RLL, Lingula) treated with radial electrocautery incisions and subsequent balloon dilation. Airway patency restored.\n[Plan]\nPACU recovery. PRN follow-up.",
     "cpt_codes": [
       31641
     ],
@@ -5586,18 +5445,10 @@
       "style_type": 7,
       "generated_name": "Dorothy Price",
       "generation_date": "2025-12-09T09:18:39.658284"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a therapeutic bronchoscopy to treat her airway narrowing caused by her autoimmune condition. We found significant narrowing in her windpipe and several branches of her lungs. We first used a balloon to stretch open the main windpipe. For the smaller branches in the right and left lungs, we used a special heated knife to carefully cut the scar tissue before stretching them open with a smaller balloon. The airways looked much more open by the end of the procedure.",
+    "note_text": "Ms. Hughes underwent a therapeutic bronchoscopy to treat her airway narrowing caused by her autoimmune condition. We found significant narrowing in her windpipe and several branches of her lungs. We first used a balloon to stretch open the main windpipe. For the smaller branches in the right and left lungs, we used a special heated knife to carefully cut the scar tissue before stretching them open with a smaller balloon. The airways looked much more open by the end of the procedure.",
     "cpt_codes": [
       31641
     ],
@@ -5786,12 +5637,6 @@
       "style_type": 8,
       "generated_name": "Helen Sanders",
       "generation_date": "2025-12-09T09:18:39.658333"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5987,7 +5832,7 @@
     }
   },
   {
-    "note_text": "Indication: 3.2cm RUL mass + adenopathy.\nProc: EBUS + Ion Nav Bronch.\nEBUS: Stations 4R, 7, 10R sampled. All positive for SqCC.\nNav Bronch: RUL mass. REBUS concentric. <LOCATION> x7.\nDx: Squamous Cell Ca, Stage IIIA.\nPlan: Oncology referral.",
+    "note_text": "Indication: 3.2cm RUL mass + adenopathy.\nProc: EBUS + Ion Nav Bronch.\nEBUS: Stations 4R, 7, 10R sampled. All positive for SqCC.\nNav Bronch: RUL mass. REBUS concentric. Biopsy x7.\nDx: Squamous Cell Ca, Stage IIIA.\nPlan: Oncology referral.",
     "cpt_codes": [
       31653,
       31627,
@@ -6226,16 +6071,10 @@
       "style_type": 1,
       "generated_name": "Marcus Washington",
       "generation_date": "2025-12-09T09:18:39.658441"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE SUMMARY: This <DATE_TIME> male presented for diagnosis and staging of a right upper lobe mass. EBUS-TBNA was performed initially, sampling stations 4R, 7, and 10R. Rapid on-site evaluation (ROSE) confirmed squamous cell carcinoma in all nodal stations. Subsequently, robotic-assisted navigation (Ion) was utilized to localize the peripheral RLL mass. Radial EBUS confirmed lesion position. Transbronchial biopsies yielded tissue consistent with the nodal findings. The patient has confirmed N2 disease, determining a clinical stage of at least IIIA.",
+    "note_text": "OPERATIVE SUMMARY: This 68-year-old male presented for diagnosis and staging of a right upper lobe mass. EBUS-TBNA was performed initially, sampling stations 4R, 7, and 10R. Rapid on-site evaluation (ROSE) confirmed squamous cell carcinoma in all nodal stations. Subsequently, robotic-assisted navigation (Ion) was utilized to localize the peripheral RLL mass. Radial EBUS confirmed lesion position. Transbronchial biopsies yielded tissue consistent with the nodal findings. The patient has confirmed N2 disease, determining a clinical stage of at least IIIA.",
     "cpt_codes": [
       31653,
       31627,
@@ -6474,16 +6313,10 @@
       "style_type": 2,
       "generated_name": "Darnell Jefferson",
       "generation_date": "2025-12-09T09:18:39.658496"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Coding <PERSON>:\n- <DATE_TIME>: EBUS sampling of 3+ stations (4R, 7, 10R).\n- 31627: Computer-assisted navigation (Add-on) for RUL mass.\n- 31654: Peripheral EBUS (Add-on) for RUL mass confirmation.\n- 31628: Transbronchial lung biopsy, single lobe (RUL).\nMedical Necessity: Staging of lung cancer and diagnosis of primary lesion.",
+    "note_text": "Coding Breakdown:\n- 31653: EBUS sampling of 3+ stations (4R, 7, 10R).\n- 31627: Computer-assisted navigation (Add-on) for RUL mass.\n- 31654: Peripheral EBUS (Add-on) for RUL mass confirmation.\n- 31628: Transbronchial lung biopsy, single lobe (RUL).\nMedical Necessity: Staging of lung cancer and diagnosis of primary lesion.",
     "cpt_codes": [
       31653,
       31627,
@@ -6722,17 +6555,10 @@
       "style_type": 3,
       "generated_name": "Terrence Robinson",
       "generation_date": "2025-12-09T09:18:39.658552"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: EBUS + Robotic Bronch\n1. EBUS first. Stuck 4R, 7, 10R. All positive for Squamous on ROSE.\n2. Switched to Ion robot.\n3. Navigated to RUL mass.\n4. Confirmed with radial probe.\n5. Took 7 biopsies.\n6. ROSE confirmed Squamous.\nImpression: Stage IIIA lung cancer.",
+    "note_text": "Procedure Note\nPatient: Andre Banks\nProcedure: EBUS + Robotic Bronch\n1. EBUS first. Stuck 4R, 7, 10R. All positive for Squamous on ROSE.\n2. Switched to Ion robot.\n3. Navigated to RUL mass.\n4. Confirmed with radial probe.\n5. Took 7 biopsies.\n6. ROSE confirmed Squamous.\nImpression: Stage IIIA lung cancer.",
     "cpt_codes": [
       31653,
       31627,
@@ -6971,16 +6797,10 @@
       "style_type": 4,
       "generated_name": "Andre Banks",
       "generation_date": "2025-12-09T09:18:39.658611"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Mr <PERSON> for staging and biopsy he has a rul mass. we did the ebus first hit the lymph nodes 4r 7 and 10r dr park said they were all cancer squamous cell. then we used the robot to go out to the mass in the rul. radial ebus showed it nicely. grabbed some biopsies and brushes. looks like stage 3a so hes gonna need chemo and radiation not surgery. no complications.",
+    "note_text": "Mr Jackson for staging and biopsy he has a rul mass. we did the ebus first hit the lymph nodes 4r 7 and 10r dr park said they were all cancer squamous cell. then we used the robot to go out to the mass in the rul. radial ebus showed it nicely. grabbed some biopsies and brushes. looks like stage 3a so hes gonna need chemo and radiation not surgery. no complications.",
     "cpt_codes": [
       31653,
       31627,
@@ -7219,12 +7039,6 @@
       "style_type": 5,
       "generated_name": "Darius Coleman",
       "generation_date": "2025-12-09T09:18:39.658666"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7470,7 +7284,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRUL mass and PET-positive lymphadenopathy.\n[<LOCATION>]\nModerate sedation.\n[Description]\nEBUS-TBNA of stations 4R, 7, 10R performed; all positive for malignancy. Ion robotic navigation to RUL mass performed. REBUS confirmation. Transbronchial biopsies obtained.\n[Plan]\nRefer to Medical Oncology/Radiation Oncology for Stage IIIA Squamous Cell Carcinoma.",
+    "note_text": "[Indication]\nRUL mass and PET-positive lymphadenopathy.\n[Anesthesia]\nModerate sedation.\n[Description]\nEBUS-TBNA of stations 4R, 7, 10R performed; all positive for malignancy. Ion robotic navigation to RUL mass performed. REBUS confirmation. Transbronchial biopsies obtained.\n[Plan]\nRefer to Medical Oncology/Radiation Oncology for Stage IIIA Squamous Cell Carcinoma.",
     "cpt_codes": [
       31653,
       31627,
@@ -7709,16 +7523,10 @@
       "style_type": 7,
       "generated_name": "Malik Jenkins",
       "generation_date": "2025-12-09T09:18:39.658780"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We brought Mr. <PERSON> in to biopsy a mass in his right lung and check his lymph nodes. We started with the ultrasound scope to check the nodes in the center of his chest. Unfortunately, the samples from three different areas all showed cancer. We then used the robotic system to navigate out to the main mass in the lung and took samples from there as well, which matched the lymph nodes. This confirms the cancer has spread to the lymph nodes, so we will proceed with chemotherapy and radiation rather than surgery.",
+    "note_text": "We brought Mr. Jenkins in to biopsy a mass in his right lung and check his lymph nodes. We started with the ultrasound scope to check the nodes in the center of his chest. Unfortunately, the samples from three different areas all showed cancer. We then used the robotic system to navigate out to the main mass in the lung and took samples from there as well, which matched the lymph nodes. This confirms the cancer has spread to the lymph nodes, so we will proceed with chemotherapy and radiation rather than surgery.",
     "cpt_codes": [
       31653,
       31627,
@@ -7957,12 +7765,6 @@
       "style_type": 8,
       "generated_name": "Xavier Perry",
       "generation_date": "2025-12-09T09:18:39.658843"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8208,7 +8010,7 @@
     }
   },
   {
-    "note_text": "Indication: RUL nodule, mediastinal adenopathy.\nProc: EBUS-TBNA.\n<PERSON>: 7, 4R, 10R, 11R.\nResults:\n- 7, 4R, 10R: Positive for Adenocarcinoma.\n- 11R: Benign.\nDx: Stage IIIC (N3 disease).\nPlan: Oncology for systemic therapy.",
+    "note_text": "Indication: RUL nodule, mediastinal adenopathy.\nProc: EBUS-TBNA.\nNodes Sampled: 7, 4R, 10R, 11R.\nResults:\n- 7, 4R, 10R: Positive for Adenocarcinoma.\n- 11R: Benign.\nDx: Stage IIIC (N3 disease).\nPlan: Oncology for systemic therapy.",
     "cpt_codes": [
       31653
     ],
@@ -8628,12 +8430,6 @@
       "style_type": 1,
       "generated_name": "Deborah A. Collins",
       "generation_date": "2025-12-09T09:18:39.658982"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9483,7 +9279,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: EBUS\nAttending: Dr. Turner\n1. Scope down. Examined airways - clear.\n2. EBUS'd station 7, 4R, 10R, 11R.\n3. ROSE said cancer in 7, 4R, 10R.\n4. 11R was negative.\n5. No complications.\nPlan: <PERSON>. Not a surgical candidate.",
+    "note_text": "Resident Note\nPatient: Sharon Morris\nProcedure: EBUS\nAttending: Dr. Turner\n1. Scope down. Examined airways - clear.\n2. EBUS'd station 7, 4R, 10R, 11R.\n3. ROSE said cancer in 7, 4R, 10R.\n4. 11R was negative.\n5. No complications.\nPlan: Consult Med Onc. Not a surgical candidate.",
     "cpt_codes": [
       31653
     ],
@@ -9903,17 +9699,10 @@
       "style_type": 4,
       "generated_name": "Sharon L. Morris",
       "generation_date": "2025-12-09T09:18:39.659215"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for EBUS staging. She has a lung nodule and swollen nodes. We sampled station 7 4R 10R and 11R. The pathologist in the room said 7 4R and 10R were all cancer adenocarcinoma. 11R was just reactive. So she has stage 3 disease extensive. We will send for molecular testing and get her to oncology asap.",
+    "note_text": "Patricia Henderson here for EBUS staging. She has a lung nodule and swollen nodes. We sampled station 7 4R 10R and 11R. The pathologist in the room said 7 4R and 10R were all cancer adenocarcinoma. 11R was just reactive. So she has stage 3 disease extensive. We will send for molecular testing and get her to oncology asap.",
     "cpt_codes": [
       31653
     ],
@@ -10333,12 +10122,6 @@
       "style_type": 5,
       "generated_name": "Michelle K. Rogers",
       "generation_date": "2025-12-09T09:18:39.659296"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10765,7 +10548,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRUL Adenocarcinoma, staging required.\n[<LOCATION>]\nGeneral (Tracheostomy/Deep Sedation context).\n[Description]\nEBUS-TBNA performed on stations 7, 4R, 10R, 11R. <PERSON> confirmed in 7, 4R, 10R via ROSE. 11R benign.\n[Plan]\nMedical Oncology consult. Molecular testing pending.",
+    "note_text": "[Indication]\nRUL Adenocarcinoma, staging required.\n[Anesthesia]\nGeneral (Tracheostomy/Deep Sedation context).\n[Description]\nEBUS-TBNA performed on stations 7, 4R, 10R, 11R. Malignancy confirmed in 7, 4R, 10R via ROSE. 11R benign.\n[Plan]\nMedical Oncology consult. Molecular testing pending.",
     "cpt_codes": [
       31653
     ],
@@ -11185,13 +10968,6 @@
       "style_type": 7,
       "generated_name": "Sarah T. Cook",
       "generation_date": "2025-12-09T09:18:39.659451"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {

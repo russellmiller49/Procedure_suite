@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Indication: Lung-RADS 4X nodule (22mm RUL).\nProcedure: Bronchoscopy with Galaxy robotic navigation.\n- Navigated to RUL (RB3). <PERSON> error 3.6mm.\n- TiLT+ used to correct 1.4cm divergence.\n- rEBUS: Eccentric view.\n- TBNA (22G) x 6 passes.\n- BAL RUL: 60cc in/22cc out.\n- Fiducial placed.\nROSE: Benign respiratory epithelium.\nPlan: Recovery, D/C.",
+    "note_text": "Indication: Lung-RADS 4X nodule (22mm RUL).\nProcedure: Bronchoscopy with Galaxy robotic navigation.\n- Navigated to RUL (RB3). Reg error 3.6mm.\n- TiLT+ used to correct 1.4cm divergence.\n- rEBUS: Eccentric view.\n- TBNA (22G) x 6 passes.\n- BAL RUL: 60cc in/22cc out.\n- Fiducial placed.\nROSE: Benign respiratory epithelium.\nPlan: Recovery, D/C.",
     "cpt_codes": [
       31629,
       31627,
@@ -178,16 +178,10 @@
       "style_type": 1,
       "generated_name": "Robert Chen",
       "generation_date": "2025-12-09T12:09:42.111718"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "The patient presented for diagnostic bronchoscopy regarding a 22mm RUL lesion. Following induction of general <LOCATION>, the Noah Galaxy robotic system was deployed. Electromagnetic registration was achieved with 3.6mm accuracy. Upon navigation to the RB3 segment, Augmented Fluoroscopy (TiLT+) identified a significant divergence of 1.4cm necessitating alignment correction. Once confirmed via eccentric rEBUS signal, sampling was performed using a 22G needle and bronchoalveolar lavage. A gold fiducial was implanted for future stereotactic planning. Cytopathology revealed benign cells.",
+    "note_text": "The patient presented for diagnostic bronchoscopy regarding a 22mm RUL lesion. Following induction of general anesthesia, the Noah Galaxy robotic system was deployed. Electromagnetic registration was achieved with 3.6mm accuracy. Upon navigation to the RB3 segment, Augmented Fluoroscopy (TiLT+) identified a significant divergence of 1.4cm necessitating alignment correction. Once confirmed via eccentric rEBUS signal, sampling was performed using a 22G needle and bronchoalveolar lavage. A gold fiducial was implanted for future stereotactic planning. Cytopathology revealed benign cells.",
     "cpt_codes": [
       31629,
       31627,
@@ -365,16 +359,10 @@
       "style_type": 2,
       "generated_name": "William Tran",
       "generation_date": "2025-12-09T12:09:42.111779"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "CPT Coding Justification:\n31627: Navigation (Galaxy system utilized to reach RUL target).\n31654: Radial EBUS (Peripheral probe used to localize 22mm lesion).\n31629: TBNA (22G needle aspiration of RUL nodule).\n<DATE_TIME>: Fiducial Markers (Placement of gold marker for SBRT).\n31624: BAL (Separate lavage of target segment).\nTechnique: TiLT+ tomosynthesis used to verify tool-in-lesion.",
+    "note_text": "CPT Coding Justification:\n31627: Navigation (Galaxy system utilized to reach RUL target).\n31654: Radial EBUS (Peripheral probe used to localize 22mm lesion).\n31629: TBNA (22G needle aspiration of RUL nodule).\n31626: Fiducial Markers (Placement of gold marker for SBRT).\n31624: BAL (Separate lavage of target segment).\nTechnique: TiLT+ tomosynthesis used to verify tool-in-lesion.",
     "cpt_codes": [
       31629,
       31627,
@@ -552,12 +540,6 @@
       "style_type": 3,
       "generated_name": "James Wu",
       "generation_date": "2025-12-09T12:09:42.111829"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -923,7 +905,7 @@
     }
   },
   {
-    "note_text": "The patient was brought to the endoscopy suite and placed under general <LOCATION>. A Noah Galaxy bronchoscope was inserted. Registration was performed with a 3.6mm error. Navigation to the 22mm RUL nodule was assisted by TiLT+ tomosynthesis which corrected a 1.4cm divergence. Radial EBUS showed an eccentric view. Transbronchial needle aspiration and BAL were performed. A gold fiducial was placed. There were no complications.",
+    "note_text": "The patient was brought to the endoscopy suite and placed under general anesthesia. A Noah Galaxy bronchoscope was inserted. Registration was performed with a 3.6mm error. Navigation to the 22mm RUL nodule was assisted by TiLT+ tomosynthesis which corrected a 1.4cm divergence. Radial EBUS showed an eccentric view. Transbronchial needle aspiration and BAL were performed. A gold fiducial was placed. There were no complications.",
     "cpt_codes": [
       31629,
       31627,
@@ -1101,16 +1083,10 @@
       "style_type": 6,
       "generated_name": "Richard Hoang",
       "generation_date": "2025-12-09T12:09:42.111969"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nLung-RADS 4X nodule, 22mm RUL.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nGalaxy navigation to RB3. TiLT+ correction of 1.4cm divergence. rEBUS eccentric. TBNA (22G) and BAL performed. Fiducial placed.\n[Plan]\nDischarge to home. Follow up 1 week.",
+    "note_text": "[Indication]\nLung-RADS 4X nodule, 22mm RUL.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nGalaxy navigation to RB3. TiLT+ correction of 1.4cm divergence. rEBUS eccentric. TBNA (22G) and BAL performed. Fiducial placed.\n[Plan]\nDischarge to home. Follow up 1 week.",
     "cpt_codes": [
       31629,
       31627,
@@ -1288,16 +1264,10 @@
       "style_type": 7,
       "generated_name": "Thomas Vo",
       "generation_date": "2025-12-09T12:09:42.112015"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We began the procedure by inducing general <LOCATION> and securing the airway. The Galaxy robotic scope was introduced, and we navigated to the Right Upper Lobe. Utilizing the TiLT+ feature, we identified and corrected a divergence of 1.4cm. After confirming the lesion with radial EBUS, we obtained samples via needle aspiration and lavage. Finally, a fiducial marker was placed to assist with future radiation therapy.",
+    "note_text": "We began the procedure by inducing general anesthesia and securing the airway. The Galaxy robotic scope was introduced, and we navigated to the Right Upper Lobe. Utilizing the TiLT+ feature, we identified and corrected a divergence of 1.4cm. After confirming the lesion with radial EBUS, we obtained samples via needle aspiration and lavage. Finally, a fiducial marker was placed to assist with future radiation therapy.",
     "cpt_codes": [
       31629,
       31627,
@@ -1475,12 +1445,6 @@
       "style_type": 8,
       "generated_name": "Charles Dang",
       "generation_date": "2025-12-09T12:09:42.112056"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1818,7 +1782,7 @@
     }
   },
   {
-    "note_text": "The patient underwent elective robotic bronchoscopy for a suspicious 14mm nodule in the Right Middle Lobe. The Noah Galaxy platform was utilized. Intra-procedural tomosynthesis (TiLT+) revealed a 2.1cm target divergence attributed to respiratory motion, which was digitally corrected. Following concentric rEBUS confirmation, transbronchial needle aspiration was executed. Rapid on-site evaluation suggested necrosis with <LOCATION>.",
+    "note_text": "The patient underwent elective robotic bronchoscopy for a suspicious 14mm nodule in the Right Middle Lobe. The Noah Galaxy platform was utilized. Intra-procedural tomosynthesis (TiLT+) revealed a 2.1cm target divergence attributed to respiratory motion, which was digitally corrected. Following concentric rEBUS confirmation, transbronchial needle aspiration was executed. Rapid on-site evaluation suggested necrosis with atypia.",
     "cpt_codes": [
       31629,
       31627,
@@ -1968,12 +1932,6 @@
       "style_type": 2,
       "generated_name": "Patricia Williams",
       "generation_date": "2025-12-09T12:09:42.112182"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -2130,7 +2088,7 @@
     }
   },
   {
-    "note_text": "Resident Note:\nAttending: Dr. Thompson\nPt: 65F, RML nodule.\n1. ETT placed.\n2. Galaxy nav to <LOCATION>.\n3. TiLT spin -> updated target (2.1cm shift).\n4. rEBUS concentric.\n5. TBNA x7.\n6. ROSE: Atypical.\nStable.",
+    "note_text": "Resident Note:\nAttending: Dr. Thompson\nPt: 65F, RML nodule.\n1. ETT placed.\n2. Galaxy nav to RB4.\n3. TiLT spin -> updated target (2.1cm shift).\n4. rEBUS concentric.\n5. TBNA x7.\n6. ROSE: Atypical.\nStable.",
     "cpt_codes": [
       31629,
       31627,
@@ -2280,16 +2238,10 @@
       "style_type": 4,
       "generated_name": "Barbara Brown",
       "generation_date": "2025-12-09T12:09:42.112263"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> came in for the rml nodule. galaxy scope used. <PERSON> was 3.9mm. got to the rml and did the tilt spin thing, huge shift 2.1cm from breathing i guess. fixed it and saw concentric view on ebus. stuck it with the 21g needle 7 times. rose showed necrotic junk and maybe cancer. shes fine going home.",
+    "note_text": "sandra came in for the rml nodule. galaxy scope used. reg was 3.9mm. got to the rml and did the tilt spin thing, huge shift 2.1cm from breathing i guess. fixed it and saw concentric view on ebus. stuck it with the 21g needle 7 times. rose showed necrotic junk and maybe cancer. shes fine going home.",
     "cpt_codes": [
       31629,
       31627,
@@ -2439,13 +2391,6 @@
       "style_type": 5,
       "generated_name": "Elizabeth Davis",
       "generation_date": "2025-12-09T12:09:42.112302"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -2602,7 +2547,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLung-RADS 4B, 14mm RML.\n[<LOCATION>]\nGeneral.\n[Description]\nGalaxy navigation. TiLT+ used to sync target (2.1cm divergence). rEBUS concentric. TBNA performed.\n[Plan]\nMonitor for pneumothorax (negative on immediate check). Discharge.",
+    "note_text": "[Indication]\nLung-RADS 4B, 14mm RML.\n[Anesthesia]\nGeneral.\n[Description]\nGalaxy navigation. TiLT+ used to sync target (2.1cm divergence). rEBUS concentric. TBNA performed.\n[Plan]\nMonitor for pneumothorax (negative on immediate check). Discharge.",
     "cpt_codes": [
       31629,
       31627,
@@ -2752,12 +2697,6 @@
       "style_type": 7,
       "generated_name": "Maria Wilson",
       "generation_date": "2025-12-09T12:09:42.112379"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -3067,7 +3006,7 @@
     }
   },
   {
-    "note_text": "Target: 28mm LUL nodule (PET-avid).\nNav: Galaxy electromagnetic. TiLT correction 1.0cm.\nTools: rEBUS (eccentric), 22G TBNA, Cytology <PERSON>, BAL, Fiducial.\nROSE: Suspicious (necrotic/atypical).\nPlan: Outpatient discharge.",
+    "note_text": "Target: 28mm LUL nodule (PET-avid).\nNav: Galaxy electromagnetic. TiLT correction 1.0cm.\nTools: rEBUS (eccentric), 22G TBNA, Cytology Brush, BAL, Fiducial.\nROSE: Suspicious (necrotic/atypical).\nPlan: Outpatient discharge.",
     "cpt_codes": [
       31629,
       31627,
@@ -3260,16 +3199,10 @@
       "style_type": 1,
       "generated_name": "John Smith",
       "generation_date": "2025-12-09T12:09:42.112507"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "A <DATE_TIME> male presented with a hypermetabolic LUL mass. Diagnostic bronchoscopy was performed utilizing the Galaxy robotic system. Registration accuracy was 3.7mm. Intraoperative C-arm tomosynthesis (TiLT) identified a 1.0cm target divergence. Following alignment, the lesion was sampled via multidimensional approach: TBNA, brushing, and lavage. A fiducial was deployed for potential SBRT.",
+    "note_text": "A 51-year-old male presented with a hypermetabolic LUL mass. Diagnostic bronchoscopy was performed utilizing the Galaxy robotic system. Registration accuracy was 3.7mm. Intraoperative C-arm tomosynthesis (TiLT) identified a 1.0cm target divergence. Following alignment, the lesion was sampled via multidimensional approach: TBNA, brushing, and lavage. A fiducial was deployed for potential SBRT.",
     "cpt_codes": [
       31629,
       31627,
@@ -3462,16 +3395,10 @@
       "style_type": 2,
       "generated_name": "Robert Anderson",
       "generation_date": "2025-12-09T12:09:42.112556"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Coding Summary:\n<DATE_TIME> (Nav) + 31654 (EBUS) + 31629 (TBNA) + 31623 (Brush) + 31624 (BAL) <DATE_TIME> (<PERSON>).\nDocumentation supports use of Galaxy navigation and TiLT+ verification for LUL target. Multiple distinct sampling tools utilized.",
+    "note_text": "Coding Summary:\n31627 (Nav) + 31654 (EBUS) + 31629 (TBNA) + 31623 (Brush) + 31624 (BAL) + 31626 (Marker).\nDocumentation supports use of Galaxy navigation and TiLT+ verification for LUL target. Multiple distinct sampling tools utilized.",
     "cpt_codes": [
       31629,
       31627,
@@ -3664,18 +3591,10 @@
       "style_type": 3,
       "generated_name": "Michael Thomas",
       "generation_date": "2025-12-09T12:09:42.112604"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: LUL biopsy (Galaxy)\nSteps:\n- ETT.\n- Nav to LB3.\n- TiLT sweep: 1.0cm shift.\n- rEBUS: Eccentric.\n- TBNA x8.\n- Brush x1.\n- BAL.\n- <PERSON> placed.\nROSE: Atypical cells.",
+    "note_text": "Procedure: LUL biopsy (Galaxy)\nSteps:\n- ETT.\n- Nav to LB3.\n- TiLT sweep: 1.0cm shift.\n- rEBUS: Eccentric.\n- TBNA x8.\n- Brush x1.\n- BAL.\n- Marker placed.\nROSE: Atypical cells.",
     "cpt_codes": [
       31629,
       31627,
@@ -3868,16 +3787,10 @@
       "style_type": 4,
       "generated_name": "William Jackson",
       "generation_date": "2025-12-09T12:09:42.112650"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> has a pet avid nodule lul. we did the galaxy bronch today. registration ok. tilt showed the nodule was 1cm off from the ct so we fixed that. did needles brushes and a wash. also dropped a seed for radiation. rose guy said it looks weird necrotic. no issues.",
+    "note_text": "james has a pet avid nodule lul. we did the galaxy bronch today. registration ok. tilt showed the nodule was 1cm off from the ct so we fixed that. did needles brushes and a wash. also dropped a seed for radiation. rose guy said it looks weird necrotic. no issues.",
     "cpt_codes": [
       31629,
       31627,
@@ -4070,12 +3983,6 @@
       "style_type": 5,
       "generated_name": "David White",
       "generation_date": "2025-12-09T12:09:42.112748"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4275,7 +4182,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPET-avid nodule, 28mm LUL.\n[<LOCATION>]\nGeneral.\n[Description]\nGalaxy Nav to LB3. TiLT correction (1.0cm). rEBUS eccentric. TBNA, <PERSON>, BAL performed. Fiducial placed.\n[Plan]\nResults in 5-7 days.",
+    "note_text": "[Indication]\nPET-avid nodule, 28mm LUL.\n[Anesthesia]\nGeneral.\n[Description]\nGalaxy Nav to LB3. TiLT correction (1.0cm). rEBUS eccentric. TBNA, Brush, BAL performed. Fiducial placed.\n[Plan]\nResults in 5-7 days.",
     "cpt_codes": [
       31629,
       31627,
@@ -4468,17 +4375,10 @@
       "style_type": 7,
       "generated_name": "Joseph Martin",
       "generation_date": "2025-12-09T12:09:42.112849"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We went after a 28mm spot in the left upper lobe today. Using the Galaxy robot, we got close and used the TiLT spin to fine-tune our position, correcting a 1cm error. We threw the kitchen sink at it—needle biopsies, brushing, and a wash. We also left a gold marker behind just in case he needs radiation later. The preliminary slides look suspicious.",
+    "note_text": "We went after a 28mm spot in the left upper lobe today. Using the Galaxy robot, we got close and used the TiLT spin to fine-tune our position, correcting a 1cm error. We threw the kitchen sink at it\u2014needle biopsies, brushing, and a wash. We also left a gold marker behind just in case he needs radiation later. The preliminary slides look suspicious.",
     "cpt_codes": [
       31629,
       31627,
@@ -4674,7 +4574,7 @@
     }
   },
   {
-    "note_text": "Indication: PET-avid mass.\nOperation: Galaxy navigation to LUL. TiLT+ adjusted for 1.0cm divergence. Lesion localized with rEBUS. Sampled via TBNA and brush. Lavaged. <PERSON> implanted. ROSE: Atypical.",
+    "note_text": "Indication: PET-avid mass.\nOperation: Galaxy navigation to LUL. TiLT+ adjusted for 1.0cm divergence. Lesion localized with rEBUS. Sampled via TBNA and brush. Lavaged. Marker implanted. ROSE: Atypical.",
     "cpt_codes": [
       31629,
       31627,
@@ -4867,16 +4767,10 @@
       "style_type": 9,
       "generated_name": "Charles Garcia",
       "generation_date": "2025-12-09T12:09:42.112946"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Indication: RLL nodule (21mm, 4X).\nNav: Galaxy. <PERSON> error 2.7mm.\nVerify: TiLT+ & Fluoroscopy.\n<LOCATION>: TBNA, <PERSON> (4 specs), <PERSON>, BAL.\n<PERSON>: Fiducial placed.\nROSE: Adenocarcinoma.",
+    "note_text": "Indication: RLL nodule (21mm, 4X).\nNav: Galaxy. Reg error 2.7mm.\nVerify: TiLT+ & Fluoroscopy.\nBiopsy: TBNA, Forceps (4 specs), Brush, BAL.\nMarker: Fiducial placed.\nROSE: Adenocarcinoma.",
     "cpt_codes": [
       31629,
       31626,
@@ -5070,16 +4964,6 @@
       "style_type": 1,
       "generated_name": "Karen Robinson",
       "generation_date": "2025-12-09T12:09:42.112994"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 5,
-      "entity_types": [
-        "PERSON",
-        "LOCATION",
-        "PERSON",
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
@@ -5280,7 +5164,7 @@
     }
   },
   {
-    "note_text": "Codes: 31629 (TBNA), 31624 (BAL), 31623 (<PERSON>), 31627 (Nav), 31654 (EBUS), 31626 (<PERSON>).\nNote: Forceps biopsy (<DATE_TIME>) performed but bundled with 31629 at same site per NCCI. High complexity procedure using TiLT augmented fluoroscopy.",
+    "note_text": "Codes: 31629 (TBNA), 31624 (BAL), 31623 (Brush), 31627 (Nav), 31654 (EBUS), 31626 (Marker).\nNote: Forceps biopsy (31628) performed but bundled with 31629 at same site per NCCI. High complexity procedure using TiLT augmented fluoroscopy.",
     "cpt_codes": [
       31629,
       31626,
@@ -5474,18 +5358,10 @@
       "style_type": 3,
       "generated_name": "Lisa Rodriguez",
       "generation_date": "2025-12-09T12:09:42.113144"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "RLL Nodule Biopsy.\n- Navigated to RB7 using Galaxy.\n- Validated with TiLT/Fluoro.\n- rEBUS eccentric.\n- Needles, Forceps, <PERSON>, BAL done.\n- Fiducial dropped.\n- ROSE: <PERSON>.",
+    "note_text": "RLL Nodule Biopsy.\n- Navigated to RB7 using Galaxy.\n- Validated with TiLT/Fluoro.\n- rEBUS eccentric.\n- Needles, Forceps, Brush, BAL done.\n- Fiducial dropped.\n- ROSE: Adeno.",
     "cpt_codes": [
       31629,
       31626,
@@ -5679,17 +5555,10 @@
       "style_type": 4,
       "generated_name": "Betty Lewis",
       "generation_date": "2025-12-09T12:09:42.113212"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for the rll nodule 21mm. galaxy scope. <PERSON> was super good 2.7mm. fluoroscopy and tilt confirmed we were right on it. did needles forceps brush and wash. put a gold seed in. <PERSON> says its cancer adenocarcinoma. told the family we are waiting for finals.",
+    "note_text": "kathleen here for the rll nodule 21mm. galaxy scope. reg was super good 2.7mm. fluoroscopy and tilt confirmed we were right on it. did needles forceps brush and wash. put a gold seed in. rose says its cancer adenocarcinoma. told the family we are waiting for finals.",
     "cpt_codes": [
       31629,
       31626,
@@ -5883,18 +5752,10 @@
       "style_type": 5,
       "generated_name": "Dorothy Lee",
       "generation_date": "2025-12-09T12:09:42.113263"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Lung-RADS 4X nodule 21mm in RLL. General <LOCATION>. Noah Galaxy bronchoscope. Navigated to RB7. Fluoroscopic guidance with TiLT overlay. rEBUS eccentric. TBNA 22G, Forceps biopsy, Cytology brush, BAL, and Fiducial marker placement performed. ROSE Malignant cells identified consistent with adenocarcinoma.",
+    "note_text": "Lung-RADS 4X nodule 21mm in RLL. General anesthesia. Noah Galaxy bronchoscope. Navigated to RB7. Fluoroscopic guidance with TiLT overlay. rEBUS eccentric. TBNA 22G, Forceps biopsy, Cytology brush, BAL, and Fiducial marker placement performed. ROSE Malignant cells identified consistent with adenocarcinoma.",
     "cpt_codes": [
       31629,
       31626,
@@ -6088,16 +5949,10 @@
       "style_type": 6,
       "generated_name": "Sandra Walker",
       "generation_date": "2025-12-09T12:09:42.113316"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nLung-RADS 4X, 21mm RLL.\n[<LOCATION>]\nGeneral.\n[Description]\nGalaxy Nav to RB7. Verified via TiLT/Fluoro. TBNA, Forceps, <PERSON>, BAL. Fiducial placed.\n[Plan]\nOncology referral pending final path.",
+    "note_text": "[Indication]\nLung-RADS 4X, 21mm RLL.\n[Anesthesia]\nGeneral.\n[Description]\nGalaxy Nav to RB7. Verified via TiLT/Fluoro. TBNA, Forceps, Brush, BAL. Fiducial placed.\n[Plan]\nOncology referral pending final path.",
     "cpt_codes": [
       31629,
       31626,
@@ -6291,17 +6146,10 @@
       "style_type": 7,
       "generated_name": "Ashley Hall",
       "generation_date": "2025-12-09T12:09:42.113365"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> had a suspicious spot in her right lower lung. We used the Galaxy system to guide us right to it. We double-checked our position with x-ray and the TiLT system. We took several different types of samples including needle, forceps, and brush. Unfortunately, the preliminary check in the room showed it is adenocarcinoma. We placed a marker for future treatment.",
+    "note_text": "Ms. Robinson had a suspicious spot in her right lower lung. We used the Galaxy system to guide us right to it. We double-checked our position with x-ray and the TiLT system. We took several different types of samples including needle, forceps, and brush. Unfortunately, the preliminary check in the room showed it is adenocarcinoma. We placed a marker for future treatment.",
     "cpt_codes": [
       31629,
       31626,
@@ -6495,16 +6343,10 @@
       "style_type": 8,
       "generated_name": "Kimberly Allen",
       "generation_date": "2025-12-09T12:09:42.113412"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Indication: Lung-RADS 4X lesion.\nProcedure: Galaxy navigation to RLL. Position validated with TiLT overlay. Lesion sampled via TBNA, forceps, and brush. Lavaged. <PERSON> deployed. ROSE: Adenocarcinoma.",
+    "note_text": "Indication: Lung-RADS 4X lesion.\nProcedure: Galaxy navigation to RLL. Position validated with TiLT overlay. Lesion sampled via TBNA, forceps, and brush. Lavaged. Marker deployed. ROSE: Adenocarcinoma.",
     "cpt_codes": [
       31629,
       31626,
@@ -6698,16 +6540,10 @@
       "style_type": 9,
       "generated_name": "Donna Young",
       "generation_date": "2025-12-09T12:09:42.113460"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Target: 29mm LLL nodule.\nSystem: Galaxy + TiLT.\nCorrection: 1.4cm divergence (CT-body drift).\n<LOCATION>: TBNA, Forceps, <PERSON>.\nROSE: Adenocarcinoma.\nDisposition: Discharge.",
+    "note_text": "Target: 29mm LLL nodule.\nSystem: Galaxy + TiLT.\nCorrection: 1.4cm divergence (CT-body drift).\nBiopsy: TBNA, Forceps, Brush.\nROSE: Adenocarcinoma.\nDisposition: Discharge.",
     "cpt_codes": [
       31629,
       31623,
@@ -6875,13 +6711,6 @@
       "style_type": 1,
       "generated_name": "Carol Hernandez",
       "generation_date": "2025-12-09T12:09:42.113578"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -7056,7 +6885,7 @@
     }
   },
   {
-    "note_text": "CPT 31629 (TBNA), 31623 (<PERSON>), 31627 (Nav), 31654 (EBUS). Forceps biopsy performed but bundled. TiLT used to correct 1.4cm divergence to ensure diagnostic yield. ROSE confirmed malignancy.",
+    "note_text": "CPT 31629 (TBNA), 31623 (Brush), 31627 (Nav), 31654 (EBUS). Forceps biopsy performed but bundled. TiLT used to correct 1.4cm divergence to ensure diagnostic yield. ROSE confirmed malignancy.",
     "cpt_codes": [
       31629,
       31623,
@@ -7224,16 +7053,10 @@
       "style_type": 3,
       "generated_name": "Emily Wright",
       "generation_date": "2025-12-09T12:09:42.113680"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: LLL Biopsy\nPt: 62F.\n- Galaxy Nav to LB6.\n- TiLT: 1.4cm divergence fixed.\n- rEBUS: Adjacent.\n- TBNA x7, <PERSON>, <PERSON>.\n- ROSE positive for <LOCATION>.\nStable.",
+    "note_text": "Procedure: LLL Biopsy\nPt: 62F.\n- Galaxy Nav to LB6.\n- TiLT: 1.4cm divergence fixed.\n- rEBUS: Adjacent.\n- TBNA x7, Forceps x4, Brush.\n- ROSE positive for Adeno.\nStable.",
     "cpt_codes": [
       31629,
       31623,
@@ -7401,18 +7224,10 @@
       "style_type": 4,
       "generated_name": "Helen Lopez",
       "generation_date": "2025-12-09T12:09:42.113729"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> has a big nodule 29mm in the lll. used galaxy. tilt showed we were 1.4cm off so glad we checked. fixed it. did needles forceps and brushing. rose says <PERSON> patient did fine.",
+    "note_text": "sandra has a big nodule 29mm in the lll. used galaxy. tilt showed we were 1.4cm off so glad we checked. fixed it. did needles forceps and brushing. rose says adeno. patient did fine.",
     "cpt_codes": [
       31629,
       31623,
@@ -7580,17 +7395,10 @@
       "style_type": 5,
       "generated_name": "Melissa Hill",
       "generation_date": "2025-12-09T12:09:42.113773"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Lung-RADS 4B nodule 29mm in LLL. General <LOCATION>. Noah Galaxy bronchoscope. Navigated to LB6. TiLT+ sweep showed 1.4cm divergence due to registration drift. Corrected. rEBUS adjacent. TBNA 21G, Transbronchial forceps biopsy, Cytology brushings performed. ROSE Malignant cells identified.",
+    "note_text": "Lung-RADS 4B nodule 29mm in LLL. General anesthesia. Noah Galaxy bronchoscope. Navigated to LB6. TiLT+ sweep showed 1.4cm divergence due to registration drift. Corrected. rEBUS adjacent. TBNA 21G, Transbronchial forceps biopsy, Cytology brushings performed. ROSE Malignant cells identified.",
     "cpt_codes": [
       31629,
       31623,
@@ -7758,16 +7566,10 @@
       "style_type": 6,
       "generated_name": "Deborah Scott",
       "generation_date": "2025-12-09T12:09:42.113815"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nLung-RADS 4B, 29mm LLL.\n[<LOCATION>]\nGeneral.\n[Description]\nGalaxy Nav to LB6. TiLT correction 1.4cm. rEBUS adjacent. TBNA, Forceps, <PERSON> performed.\n[Plan]\nPathology follow-up.",
+    "note_text": "[Indication]\nLung-RADS 4B, 29mm LLL.\n[Anesthesia]\nGeneral.\n[Description]\nGalaxy Nav to LB6. TiLT correction 1.4cm. rEBUS adjacent. TBNA, Forceps, Brush performed.\n[Plan]\nPathology follow-up.",
     "cpt_codes": [
       31629,
       31623,
@@ -7935,13 +7737,6 @@
       "style_type": 7,
       "generated_name": "Stephanie Green",
       "generation_date": "2025-12-09T12:09:42.113899"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -8287,7 +8082,7 @@
     }
   },
   {
-    "note_text": "Indication: 12mm LLL nodule.\nNav: Galaxy + TiLT.\nDiv: 2.1cm (atelectasis).\nTools: rEBUS (concentric), TBNA, <PERSON>.\nROSE: Atypical.\nResult: No complications.",
+    "note_text": "Indication: 12mm LLL nodule.\nNav: Galaxy + TiLT.\nDiv: 2.1cm (atelectasis).\nTools: rEBUS (concentric), TBNA, Brush.\nROSE: Atypical.\nResult: No complications.",
     "cpt_codes": [
       31629,
       31627,
@@ -8452,16 +8247,10 @@
       "style_type": 1,
       "generated_name": "Sharon Gonzalez",
       "generation_date": "2025-12-09T12:09:42.114029"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "A high-risk 12mm LLL nodule was interrogated. Galaxy navigation was employed. A significant 2.1cm divergence caused by atelectasis was identified via TiLT+ and corrected. Upon establishing a concentric rEBUS view, 21G TBNA and cytology brushing were performed. Preliminary pathology indicates <LOCATION>.",
+    "note_text": "A high-risk 12mm LLL nodule was interrogated. Galaxy navigation was employed. A significant 2.1cm divergence caused by atelectasis was identified via TiLT+ and corrected. Upon establishing a concentric rEBUS view, 21G TBNA and cytology brushing were performed. Preliminary pathology indicates atypia.",
     "cpt_codes": [
       31629,
       31627,
@@ -8626,16 +8415,10 @@
       "style_type": 2,
       "generated_name": "Cynthia Nelson",
       "generation_date": "2025-12-09T12:09:42.114073"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Codes: 31629 (TBNA), 31623 (<PERSON>), 31627 (Nav), 31654 (EBUS). Note: Significant 2.1cm divergence required TiLT+ correction to ensure tool-in-lesion.",
+    "note_text": "Codes: 31629 (TBNA), 31623 (Brush), 31627 (Nav), 31654 (EBUS). Note: Significant 2.1cm divergence required TiLT+ correction to ensure tool-in-lesion.",
     "cpt_codes": [
       31629,
       31627,
@@ -8800,16 +8583,10 @@
       "style_type": 3,
       "generated_name": "Kathleen Carter",
       "generation_date": "2025-12-09T12:09:42.114113"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "LLL Nodule (12mm).\n- Galaxy nav to LB9.\n- TiLT: 2.1cm shift (atelectasis).\n- rEBUS: Concentric.\n- TBNA x7, <PERSON>.\n- ROSE: Atypical/Suspicious.",
+    "note_text": "LLL Nodule (12mm).\n- Galaxy nav to LB9.\n- TiLT: 2.1cm shift (atelectasis).\n- rEBUS: Concentric.\n- TBNA x7, Brush.\n- ROSE: Atypical/Suspicious.",
     "cpt_codes": [
       31629,
       31627,
@@ -8974,12 +8751,6 @@
       "style_type": 4,
       "generated_name": "Amy Mitchell",
       "generation_date": "2025-12-09T12:09:42.114156"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9151,7 +8922,7 @@
     }
   },
   {
-    "note_text": "Suspicious nodule 12mm in LLL. General <LOCATION>. Noah Galaxy bronchoscope. Navigated to LB9. TiLT+ sweep revealed 2.1cm divergence due to atelectasis. Corrected. rEBUS concentric. TBNA 21G and Cytology brushings performed. ROSE Atypical cells. Discharged.",
+    "note_text": "Suspicious nodule 12mm in LLL. General anesthesia. Noah Galaxy bronchoscope. Navigated to LB9. TiLT+ sweep revealed 2.1cm divergence due to atelectasis. Corrected. rEBUS concentric. TBNA 21G and Cytology brushings performed. ROSE Atypical cells. Discharged.",
     "cpt_codes": [
       31629,
       31627,
@@ -9316,16 +9087,10 @@
       "style_type": 6,
       "generated_name": "Angela Roberts",
       "generation_date": "2025-12-09T12:09:42.114237"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspicious nodule, 12mm LLL.\n[<LOCATION>]\nGeneral.\n[Description]\nGalaxy Nav. TiLT correction 2.1cm. rEBUS concentric. TBNA and <PERSON> performed.\n[Plan]\n<LOCATION> final path.",
+    "note_text": "[Indication]\nSuspicious nodule, 12mm LLL.\n[Anesthesia]\nGeneral.\n[Description]\nGalaxy Nav. TiLT correction 2.1cm. rEBUS concentric. TBNA and Brush performed.\n[Plan]\nAwait final path.",
     "cpt_codes": [
       31629,
       31627,
@@ -9490,14 +9255,6 @@
       "style_type": 7,
       "generated_name": "Anna Turner",
       "generation_date": "2025-12-09T12:09:42.114279"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "LOCATION",
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -9837,7 +9594,7 @@
     }
   },
   {
-    "note_text": "Target: 8mm nodule Lingula.\nNav: Galaxy + TiLT (1.1cm div).\nTools: rEBUS (eccentric), TBNA, <PERSON>.\nROSE: SCC.\nPlan: Oncology.",
+    "note_text": "Target: 8mm nodule Lingula.\nNav: Galaxy + TiLT (1.1cm div).\nTools: rEBUS (eccentric), TBNA, Brush.\nROSE: SCC.\nPlan: Oncology.",
     "cpt_codes": [
       31629,
       31627,
@@ -10002,12 +9759,6 @@
       "style_type": 1,
       "generated_name": "Christopher Parker",
       "generation_date": "2025-12-09T12:09:42.114411"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10179,7 +9930,7 @@
     }
   },
   {
-    "note_text": "<DATE_TIME> (TBNA), <DATE_TIME> (<PERSON>), <DATE_TIME> (Nav), <DATE_TIME> (EBUS). Small 8mm target required TiLT+ precision (1.1cm correction). ROSE positive for malignancy.",
+    "note_text": "31629 (TBNA), 31623 (Brush), 31627 (Nav), 31654 (EBUS). Small 8mm target required TiLT+ precision (1.1cm correction). ROSE positive for malignancy.",
     "cpt_codes": [
       31629,
       31627,
@@ -10344,20 +10095,10 @@
       "style_type": 3,
       "generated_name": "Paul Edwards",
       "generation_date": "2025-12-09T12:09:42.114498"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 5,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Lingula Nodule (8mm).\n- Galaxy Nav to LB4.\n- TiLT: 1.1cm divergence.\n- rEBUS: Eccentric.\n- TBNA x8, <PERSON>.\n- ROSE: Squamous Cell.\nStable.",
+    "note_text": "Lingula Nodule (8mm).\n- Galaxy Nav to LB4.\n- TiLT: 1.1cm divergence.\n- rEBUS: Eccentric.\n- TBNA x8, Brush.\n- ROSE: Squamous Cell.\nStable.",
     "cpt_codes": [
       31629,
       31627,
@@ -10522,12 +10263,6 @@
       "style_type": 4,
       "generated_name": "Mark Collins",
       "generation_date": "2025-12-09T12:09:42.114545"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10699,7 +10434,7 @@
     }
   },
   {
-    "note_text": "Peripheral pulmonary nodule 8mm in Lingula. General <LOCATION>. Noah Galaxy bronchoscope. Navigated to LB4. TiLT+ sweep revealed 1.1cm divergence. Corrected. rEBUS eccentric. TBNA 22G and Cytology brushings performed. ROSE Malignant cells identified consistent with squamous cell carcinoma.",
+    "note_text": "Peripheral pulmonary nodule 8mm in Lingula. General anesthesia. Noah Galaxy bronchoscope. Navigated to LB4. TiLT+ sweep revealed 1.1cm divergence. Corrected. rEBUS eccentric. TBNA 22G and Cytology brushings performed. ROSE Malignant cells identified consistent with squamous cell carcinoma.",
     "cpt_codes": [
       31629,
       31627,
@@ -10864,16 +10599,10 @@
       "style_type": 6,
       "generated_name": "George Sanchez",
       "generation_date": "2025-12-09T12:09:42.114631"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\n8mm nodule, Lingula.\n[<LOCATION>]\nGeneral.\n[Description]\nGalaxy Nav. TiLT correction 1.1cm. rEBUS eccentric. TBNA and <PERSON> performed.\n[Plan]\nOncology consult.",
+    "note_text": "[Indication]\n8mm nodule, Lingula.\n[Anesthesia]\nGeneral.\n[Description]\nGalaxy Nav. TiLT correction 1.1cm. rEBUS eccentric. TBNA and Brush performed.\n[Plan]\nOncology consult.",
     "cpt_codes": [
       31629,
       31627,
@@ -11038,13 +10767,6 @@
       "style_type": 7,
       "generated_name": "Kenneth Morris",
       "generation_date": "2025-12-09T12:09:42.114694"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -11690,7 +11412,7 @@
     }
   },
   {
-    "note_text": "<DATE_TIME> (TBNA), <DATE_TIME> (Nav), <DATE_TIME> (EBUS). 1.9cm divergence corrected by TiLT+.",
+    "note_text": "31629 (TBNA), 31627 (Nav), 31654 (EBUS). 1.9cm divergence corrected by TiLT+.",
     "cpt_codes": [
       31629,
       31627,
@@ -11840,14 +11562,6 @@
       "style_type": 3,
       "generated_name": "Evelyn Bell",
       "generation_date": "2025-12-09T12:09:42.114911"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -12004,7 +11718,7 @@
     }
   },
   {
-    "note_text": "carol here for lll nodule 13mm. galaxy scope. breathing moved the target 1.9cm tilt fixed it. adjacent ebus view. just did needles. rose thinks <PERSON>.",
+    "note_text": "carol here for lll nodule 13mm. galaxy scope. breathing moved the target 1.9cm tilt fixed it. adjacent ebus view. just did needles. rose thinks nsclc.",
     "cpt_codes": [
       31629,
       31627,
@@ -12154,16 +11868,10 @@
       "style_type": 5,
       "generated_name": "Jean Bailey",
       "generation_date": "2025-12-09T12:09:42.114986"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Peripheral pulmonary nodule 13mm in LLL. General <LOCATION>. Noah Galaxy bronchoscope. Navigated to LB10. TiLT+ sweep revealed 1.9cm divergence. Corrected. rEBUS adjacent. TBNA 21G performed. ROSE Suspicious for non-small cell carcinoma.",
+    "note_text": "Peripheral pulmonary nodule 13mm in LLL. General anesthesia. Noah Galaxy bronchoscope. Navigated to LB10. TiLT+ sweep revealed 1.9cm divergence. Corrected. rEBUS adjacent. TBNA 21G performed. ROSE Suspicious for non-small cell carcinoma.",
     "cpt_codes": [
       31629,
       31627,
@@ -12313,16 +12021,10 @@
       "style_type": 6,
       "generated_name": "Frances Rivera",
       "generation_date": "2025-12-09T12:09:42.115025"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\n13mm nodule, LLL.\n[<LOCATION>]\nGeneral.\n[Description]\nGalaxy Nav. TiLT correction 1.9cm. rEBUS adjacent. TBNA performed.\n[Plan]\nFollow up.",
+    "note_text": "[Indication]\n13mm nodule, LLL.\n[Anesthesia]\nGeneral.\n[Description]\nGalaxy Nav. TiLT correction 1.9cm. rEBUS adjacent. TBNA performed.\n[Plan]\nFollow up.",
     "cpt_codes": [
       31629,
       31627,
@@ -12472,12 +12174,6 @@
       "style_type": 7,
       "generated_name": "Catherine Cooper",
       "generation_date": "2025-12-09T12:09:42.115061"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -12971,7 +12667,7 @@
     }
   },
   {
-    "note_text": "A 25mm RUL mass was biopsied using the Galaxy robotic system. Navigation to <LOCATION> was accurate, with TiLT confirming a minor 0.8cm divergence. Multimodal sampling (TBNA, forceps, BAL) was performed. A fiducial was placed. Pathology confirmed adenocarcinoma.",
+    "note_text": "A 25mm RUL mass was biopsied using the Galaxy robotic system. Navigation to RB2 was accurate, with TiLT confirming a minor 0.8cm divergence. Multimodal sampling (TBNA, forceps, BAL) was performed. A fiducial was placed. Pathology confirmed adenocarcinoma.",
     "cpt_codes": [
       31629,
       31626,
@@ -13152,16 +12848,10 @@
       "style_type": 2,
       "generated_name": "Ronald Ward",
       "generation_date": "2025-12-09T12:09:42.115252"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<DATE_TIME> (TBNA), <DATE_TIME> (BAL), <DATE_TIME> (<PERSON>), <DATE_TIME> (Nav), <DATE_TIME> (EBUS). Forceps bundled. 0.8cm TiLT correction.",
+    "note_text": "31629 (TBNA), 31624 (BAL), 31626 (Marker), 31627 (Nav), 31654 (EBUS). Forceps bundled. 0.8cm TiLT correction.",
     "cpt_codes": [
       31629,
       31626,
@@ -13342,21 +13032,10 @@
       "style_type": 3,
       "generated_name": "Anthony Torres",
       "generation_date": "2025-12-09T12:09:42.115299"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 6,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "RUL Mass (25mm).\n- Galaxy Nav to RB2.\n- TiLT: 0.8cm shift.\n- rEBUS: Eccentric.\n- TBNA x7, Forceps x7, BAL.\n- Fiducial placed.\n- ROSE: <PERSON>.",
+    "note_text": "RUL Mass (25mm).\n- Galaxy Nav to RB2.\n- TiLT: 0.8cm shift.\n- rEBUS: Eccentric.\n- TBNA x7, Forceps x7, BAL.\n- Fiducial placed.\n- ROSE: Adeno.",
     "cpt_codes": [
       31629,
       31626,
@@ -13537,12 +13216,6 @@
       "style_type": 4,
       "generated_name": "Kevin Peterson",
       "generation_date": "2025-12-09T12:09:42.115346"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13914,7 +13587,7 @@
     }
   },
   {
-    "note_text": "[Indication]\n25mm mass, RUL.\n[<LOCATION>]\nGeneral.\n[Description]\nGalaxy Nav. TiLT correction 0.8cm. rEBUS eccentric. TBNA, Forceps, BAL. Fiducial placed.\n[Plan]\nOncology.",
+    "note_text": "[Indication]\n25mm mass, RUL.\n[Anesthesia]\nGeneral.\n[Description]\nGalaxy Nav. TiLT correction 0.8cm. rEBUS eccentric. TBNA, Forceps, BAL. Fiducial placed.\n[Plan]\nOncology.",
     "cpt_codes": [
       31629,
       31626,
@@ -14095,12 +13768,6 @@
       "style_type": 7,
       "generated_name": "Gary James",
       "generation_date": "2025-12-09T12:09:42.115489"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -14288,7 +13955,7 @@
     }
   },
   {
-    "note_text": "Indication: Suspected malignancy.\nProcedure: Galaxy navigation to RUL. TiLT+ rectified 0.8cm error. Sampled via TBNA, forceps, and lavage. <PERSON> deployed. ROSE: Adenocarcinoma.",
+    "note_text": "Indication: Suspected malignancy.\nProcedure: Galaxy navigation to RUL. TiLT+ rectified 0.8cm error. Sampled via TBNA, forceps, and lavage. Marker deployed. ROSE: Adenocarcinoma.",
     "cpt_codes": [
       31629,
       31626,
@@ -14469,16 +14136,10 @@
       "style_type": 9,
       "generated_name": "Jose Brooks",
       "generation_date": "2025-12-09T12:09:42.115576"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Target: 11mm RUL nodule.\nNav: Galaxy. <PERSON> error 3.0mm.\nVerify: Fluoroscopy.\nTools: rEBUS (eccentric), TBNA, Forceps.\nROSE: Granuloma.\nResult: Benign.",
+    "note_text": "Target: 11mm RUL nodule.\nNav: Galaxy. Reg error 3.0mm.\nVerify: Fluoroscopy.\nTools: rEBUS (eccentric), TBNA, Forceps.\nROSE: Granuloma.\nResult: Benign.",
     "cpt_codes": [
       31629,
       31627,
@@ -14629,12 +14290,6 @@
       "style_type": 1,
       "generated_name": "Janet Kelly",
       "generation_date": "2025-12-09T12:09:42.115616"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -14792,7 +14447,7 @@
     }
   },
   {
-    "note_text": "<DATE_TIME> (TBNA), <DATE_TIME> (Nav), <DATE_TIME> (EBUS). Forceps bundled. 11mm target reached with Galaxy/Fluoroscopy.",
+    "note_text": "31629 (TBNA), 31627 (Nav), 31654 (EBUS). Forceps bundled. 11mm target reached with Galaxy/Fluoroscopy.",
     "cpt_codes": [
       31629,
       31627,
@@ -14943,18 +14598,10 @@
       "style_type": 3,
       "generated_name": "Pamela Price",
       "generation_date": "2025-12-09T12:09:42.115696"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "RUL Nodule (11mm).\n- Galaxy Nav to RB2.\n- <LOCATION> confirm.\n- rEBUS: Eccentric.\n- TBNA x5, Forceps x6.\n- ROSE: Granuloma.",
+    "note_text": "RUL Nodule (11mm).\n- Galaxy Nav to RB2.\n- Fluoro confirm.\n- rEBUS: Eccentric.\n- TBNA x5, Forceps x6.\n- ROSE: Granuloma.",
     "cpt_codes": [
       31629,
       31627,
@@ -15105,12 +14752,6 @@
       "style_type": 4,
       "generated_name": "Victoria Bennett",
       "generation_date": "2025-12-09T12:09:42.115736"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -15268,7 +14909,7 @@
     }
   },
   {
-    "note_text": "<PERSON> nodule 11mm in RUL. General anesthesia. Noah Galaxy bronchoscope. Navigated to RB2. Fluoroscopic guidance. rEBUS eccentric. TBNA 22G and Transbronchial forceps biopsy performed. ROSE Granulomatous inflammation.",
+    "note_text": "Pulmonary nodule 11mm in RUL. General anesthesia. Noah Galaxy bronchoscope. Navigated to RB2. Fluoroscopic guidance. rEBUS eccentric. TBNA 22G and Transbronchial forceps biopsy performed. ROSE Granulomatous inflammation.",
     "cpt_codes": [
       31629,
       31627,
@@ -15419,16 +15060,10 @@
       "style_type": 6,
       "generated_name": "Emma Barnes",
       "generation_date": "2025-12-09T12:09:42.115817"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\n11mm nodule, RUL.\n[<LOCATION>]\nGeneral.\n[Description]\nGalaxy Nav. Fluoroscopy. rEBUS eccentric. TBNA and <PERSON> performed.\n[Plan]\nFollow up.",
+    "note_text": "[Indication]\n11mm nodule, RUL.\n[Anesthesia]\nGeneral.\n[Description]\nGalaxy Nav. Fluoroscopy. rEBUS eccentric. TBNA and Forceps performed.\n[Plan]\nFollow up.",
     "cpt_codes": [
       31629,
       31627,
@@ -15579,17 +15214,10 @@
       "style_type": 7,
       "generated_name": "Brenda Ross",
       "generation_date": "2025-12-09T12:09:42.115857"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> has a history of cancer and a new 11mm spot in the right upper lobe. We used the Galaxy system to reach it and confirmed with fluoroscopy. We took samples with needles and forceps. The preliminary read shows granulomas, which is a relief as it suggests inflammation rather than cancer.",
+    "note_text": "Ms. Kelly has a history of cancer and a new 11mm spot in the right upper lobe. We used the Galaxy system to reach it and confirmed with fluoroscopy. We took samples with needles and forceps. The preliminary read shows granulomas, which is a relief as it suggests inflammation rather than cancer.",
     "cpt_codes": [
       31629,
       31627,
@@ -15740,16 +15368,10 @@
       "style_type": 8,
       "generated_name": "Olivia Henderson",
       "generation_date": "2025-12-09T12:09:42.115897"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Reason: <PERSON> nodule.\nAction: Galaxy navigation to RUL. Position verified via fluoroscopy. Sampled via TBNA and forceps. ROSE: Granulomatous inflammation.",
+    "note_text": "Reason: Pulmonary nodule.\nAction: Galaxy navigation to RUL. Position verified via fluoroscopy. Sampled via TBNA and forceps. ROSE: Granulomatous inflammation.",
     "cpt_codes": [
       31629,
       31627,
@@ -15900,12 +15522,6 @@
       "style_type": 9,
       "generated_name": "Nicole Coleman",
       "generation_date": "2025-12-09T12:09:42.115937"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   }
 ]

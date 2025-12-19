@@ -186,7 +186,7 @@
     }
   },
   {
-    "note_text": "HISTORY: A <DATE_TIME> female presented with unilateral wheeze following organic aspiration. Radiography suggested right middle lobe atelectasis.\nPROCEDURE: Moderate sedation was induced. The tracheobronchial tree was systematically inspected. An organic foreign body, consistent with a nut fragment, was identified obstructing the RML medial segment. Using a flexible retrieval basket, the object was successfully ensnared and extracted. A subsequent pass cleared a minor residual fragment. The mucosa demonstrated localized edema but no active hemorrhage.\nIMPRESSION: Successful bronchoscopic retrieval of organic foreign body.",
+    "note_text": "HISTORY: A 32-year-old female presented with unilateral wheeze following organic aspiration. Radiography suggested right middle lobe atelectasis.\nPROCEDURE: Moderate sedation was induced. The tracheobronchial tree was systematically inspected. An organic foreign body, consistent with a nut fragment, was identified obstructing the RML medial segment. Using a flexible retrieval basket, the object was successfully ensnared and extracted. A subsequent pass cleared a minor residual fragment. The mucosa demonstrated localized edema but no active hemorrhage.\nIMPRESSION: Successful bronchoscopic retrieval of organic foreign body.",
     "cpt_codes": [
       31635
     ],
@@ -369,12 +369,6 @@
       "style_type": 2,
       "generated_name": "Ashley Davis",
       "generation_date": "2025-12-08T14:08:53.092271"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -564,7 +558,7 @@
     }
   },
   {
-    "note_text": "Procedure: Bronchoscopy FB Removal\nPatient: <PERSON>\nAttending: Dr. IP_Attending_01\nSteps:\n1. Time out. Moderate sedation.\n2. Scope inserted orally.\n3. Identified nut fragment in RML medial segment.\n4. Used basket to grab and remove it.\n5. Suctioned small piece.\n6. Re-looked: clear.\nPlan: DC home.",
+    "note_text": "Procedure: Bronchoscopy FB Removal\nPatient: 32F\nAttending: Dr. IP_Attending_01\nSteps:\n1. Time out. Moderate sedation.\n2. Scope inserted orally.\n3. Identified nut fragment in RML medial segment.\n4. Used basket to grab and remove it.\n5. Suctioned small piece.\n6. Re-looked: clear.\nPlan: DC home.",
     "cpt_codes": [
       31635
     ],
@@ -747,16 +741,10 @@
       "style_type": 4,
       "generated_name": "Emily Moore",
       "generation_date": "2025-12-08T14:08:53.092370"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "patient came in for aspiration 32 yo female we did the scope with <PERSON> and fent went down to the right lung found a pistachio nut in the RML medial part looks like it was stuck used the basket to get it out took two tries to get it all but we got it no bleeding patient did fine going home today.",
+    "note_text": "patient came in for aspiration 32 yo female we did the scope with midaz and fent went down to the right lung found a pistachio nut in the RML medial part looks like it was stuck used the basket to get it out took two tries to get it all but we got it no bleeding patient did fine going home today.",
     "cpt_codes": [
       31635
     ],
@@ -939,16 +927,10 @@
       "style_type": 5,
       "generated_name": "Amanda Taylor",
       "generation_date": "2025-12-08T14:08:53.092418"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Flexible bronchoscopy with foreign body removal was performed on a <DATE_TIME> female for suspected organic food aspiration with right middle lobe collapse. Moderate sedation with IV midazolam and fentanyl was used. After standard time-out, a flexible video bronchoscope was advanced. In the right middle lobe medial segment bronchus, a tan friable foreign body consistent with pistachio nut fragment was visualized. A 1.8 mm flexible retrieval basket was deployed to capture the fragment. The basket and bronchoscope were withdrawn en bloc. A small residual fragment was removed on a second pass. No additional foreign material was seen. There was mild mucosal erythema without active bleeding.",
+    "note_text": "Flexible bronchoscopy with foreign body removal was performed on a 32-year-old female for suspected organic food aspiration with right middle lobe collapse. Moderate sedation with IV midazolam and fentanyl was used. After standard time-out, a flexible video bronchoscope was advanced. In the right middle lobe medial segment bronchus, a tan friable foreign body consistent with pistachio nut fragment was visualized. A 1.8 mm flexible retrieval basket was deployed to capture the fragment. The basket and bronchoscope were withdrawn en bloc. A small residual fragment was removed on a second pass. No additional foreign material was seen. There was mild mucosal erythema without active bleeding.",
     "cpt_codes": [
       31635
     ],
@@ -1131,16 +1113,10 @@
       "style_type": 6,
       "generated_name": "Jennifer Anderson",
       "generation_date": "2025-12-08T14:08:53.092463"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected organic food aspiration, RML collapse.\n[<LOCATION>]\nModerate sedation (Midazolam/Fentanyl).\n[Description]\nScope advanced. Pistachio nut fragment visualized in RML medial segment. Retrieval basket used to capture and remove fragment. Small residual piece suctioned. Airway cleared.\n[Plan]\nDischarge home with return precautions.",
+    "note_text": "[Indication]\nSuspected organic food aspiration, RML collapse.\n[Anesthesia]\nModerate sedation (Midazolam/Fentanyl).\n[Description]\nScope advanced. Pistachio nut fragment visualized in RML medial segment. Retrieval basket used to capture and remove fragment. Small residual piece suctioned. Airway cleared.\n[Plan]\nDischarge home with return precautions.",
     "cpt_codes": [
       31635
     ],
@@ -1323,16 +1299,10 @@
       "style_type": 7,
       "generated_name": "Melissa Thomas",
       "generation_date": "2025-12-08T14:08:53.092511"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "The patient, a <DATE_TIME> female, presented with a cough after choking on mixed nuts. We proceeded with a flexible bronchoscopy under moderate sedation. Upon inspection, we found a piece of a pistachio nut blocking the medial segment of the right middle lobe. We used a retrieval basket to grab the nut and pulled it out along with the scope. We had to go back down once more to suction up a tiny leftover piece, but after that, the airway was completely clear. There wasn't any significant bleeding, just some redness where the nut had been.",
+    "note_text": "The patient, a 32-year-old female, presented with a cough after choking on mixed nuts. We proceeded with a flexible bronchoscopy under moderate sedation. Upon inspection, we found a piece of a pistachio nut blocking the medial segment of the right middle lobe. We used a retrieval basket to grab the nut and pulled it out along with the scope. We had to go back down once more to suction up a tiny leftover piece, but after that, the airway was completely clear. There wasn't any significant bleeding, just some redness where the nut had been.",
     "cpt_codes": [
       31635
     ],
@@ -1515,12 +1485,6 @@
       "style_type": 8,
       "generated_name": "Nicole Jackson",
       "generation_date": "2025-12-08T14:08:53.092555"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -1710,7 +1674,7 @@
     }
   },
   {
-    "note_text": "Dx: Denture aspiration.\nAx: Moderate sedation. Flexible bronch.\nFindings: Metal denture clasp RLL basal segment.\nIntervention: Alligator forceps used under fluoro. Clasp grasped and removed.\nResult: Clear airway. <PERSON> erythematous.\nPlan: Admit for obs (COPD).",
+    "note_text": "Dx: Denture aspiration.\nAx: Moderate sedation. Flexible bronch.\nFindings: Metal denture clasp RLL basal segment.\nIntervention: Alligator forceps used under fluoro. Clasp grasped and removed.\nResult: Clear airway. Mucosa erythematous.\nPlan: Admit for obs (COPD).",
     "cpt_codes": [
       31635
     ],
@@ -1892,16 +1856,10 @@
       "style_type": 1,
       "generated_name": "Robert Smith",
       "generation_date": "2025-12-08T14:08:53.092650"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "INDICATION: The patient, a <DATE_TIME> male with COPD, presented with a history of denture aspiration and focal right lower lobe findings.\nOPERATIVE REPORT: Flexible bronchoscopy was initiated under moderate sedation. Inspection revealed an inorganic, metallic object lodged in the RLL basal segment bronchus. Fluoroscopic guidance was employed to verify the object's orientation. Flexible alligator forceps were utilized to secure the denture clasp, which was then extracted intact. Post-extraction inspection confirmed the absence of residual debris or significant trauma.\nCONCLUSION: Uncomplicated removal of inorganic foreign body.",
+    "note_text": "INDICATION: The patient, a 68-year-old male with COPD, presented with a history of denture aspiration and focal right lower lobe findings.\nOPERATIVE REPORT: Flexible bronchoscopy was initiated under moderate sedation. Inspection revealed an inorganic, metallic object lodged in the RLL basal segment bronchus. Fluoroscopic guidance was employed to verify the object's orientation. Flexible alligator forceps were utilized to secure the denture clasp, which was then extracted intact. Post-extraction inspection confirmed the absence of residual debris or significant trauma.\nCONCLUSION: Uncomplicated removal of inorganic foreign body.",
     "cpt_codes": [
       31635
     ],
@@ -2083,12 +2041,6 @@
       "style_type": 2,
       "generated_name": "James Johnson",
       "generation_date": "2025-12-08T14:08:53.092695"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -2277,7 +2229,7 @@
     }
   },
   {
-    "note_text": "Procedure: FB Removal (Denture)\nPatient: <PERSON>\nSteps:\n1. Sedation (Midaz/Fent).\n2. Scope down. Saw metal clasp in RLL basal segment.\n3. Used alligator forceps to grab it.\n4. Pulled it out under fluoro guidance.\n5. Checked for bleeding - none.\nPlan: Admit for observation.",
+    "note_text": "Procedure: FB Removal (Denture)\nPatient: 68M w/ COPD\nSteps:\n1. Sedation (Midaz/Fent).\n2. Scope down. Saw metal clasp in RLL basal segment.\n3. Used alligator forceps to grab it.\n4. Pulled it out under fluoro guidance.\n5. Checked for bleeding - none.\nPlan: Admit for observation.",
     "cpt_codes": [
       31635
     ],
@@ -2459,12 +2411,6 @@
       "style_type": 4,
       "generated_name": "David Brown",
       "generation_date": "2025-12-08T14:08:53.092787"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2653,7 +2599,7 @@
     }
   },
   {
-    "note_text": "Flexible bronchoscopy with foreign body removal. Indication was inorganic foreign body aspiration (denture fragment) with right lower lobe wheeze. <DATE_TIME> male with COPD. Moderate sedation was used. In the right lower lobe basal segment bronchus, a shiny metallic-appearing foreign body consistent with a denture clasp was lodged. Under brief fluoroscopic guidance, a flexible alligator forceps was used to grasp the clasp. The bronchoscope and forceps were withdrawn together with the denture fragment intact. Repeat bronchoscopy confirmed no residual foreign material or bleeding. Inorganic metallic denture fragment completely removed.",
+    "note_text": "Flexible bronchoscopy with foreign body removal. Indication was inorganic foreign body aspiration (denture fragment) with right lower lobe wheeze. 68-year-old male with COPD. Moderate sedation was used. In the right lower lobe basal segment bronchus, a shiny metallic-appearing foreign body consistent with a denture clasp was lodged. Under brief fluoroscopic guidance, a flexible alligator forceps was used to grasp the clasp. The bronchoscope and forceps were withdrawn together with the denture fragment intact. Repeat bronchoscopy confirmed no residual foreign material or bleeding. Inorganic metallic denture fragment completely removed.",
     "cpt_codes": [
       31635
     ],
@@ -2835,16 +2781,10 @@
       "style_type": 6,
       "generated_name": "Charles Garcia",
       "generation_date": "2025-12-08T14:08:53.092917"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nDenture aspiration, RLL wheeze.\n[<LOCATION>]\nModerate sedation, native airway.\n[Description]\nBronchoscope inserted. Metal denture clasp identified in RLL basal segment. Alligator forceps used to grasp object under fluoroscopy. Object removed intact.\n[Plan]\nAdmit to floor for observation.",
+    "note_text": "[Indication]\nDenture aspiration, RLL wheeze.\n[Anesthesia]\nModerate sedation, native airway.\n[Description]\nBronchoscope inserted. Metal denture clasp identified in RLL basal segment. Alligator forceps used to grasp object under fluoroscopy. Object removed intact.\n[Plan]\nAdmit to floor for observation.",
     "cpt_codes": [
       31635
     ],
@@ -3026,16 +2966,10 @@
       "style_type": 7,
       "generated_name": "Joseph Miller",
       "generation_date": "2025-12-08T14:08:53.092963"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> swallowed a piece of his denture while lying down, so we brought him in for a bronchoscopy. We found the metal clasp stuck in the bottom part of his right lung. Using alligator forceps and a quick look with the x-ray machine (fluoroscopy) to guide us, we grabbed the edge of the clasp and pulled it out. We checked again to make sure we got it all and didn't cause any bleeding. He's doing fine but we'll keep him overnight because of his COPD.",
+    "note_text": "Mr. Jones swallowed a piece of his denture while lying down, so we brought him in for a bronchoscopy. We found the metal clasp stuck in the bottom part of his right lung. Using alligator forceps and a quick look with the x-ray machine (fluoroscopy) to guide us, we grabbed the edge of the clasp and pulled it out. We checked again to make sure we got it all and didn't cause any bleeding. He's doing fine but we'll keep him overnight because of his COPD.",
     "cpt_codes": [
       31635
     ],
@@ -3217,12 +3151,6 @@
       "style_type": 8,
       "generated_name": "Thomas Davis",
       "generation_date": "2025-12-08T14:08:53.093010"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3596,7 +3524,7 @@
     }
   },
   {
-    "note_text": "INDICATION: A <DATE_TIME> male presented with acute wheeze following coin ingestion/aspiration.\nPROCEDURE: General <LOCATION> was induced. A pediatric rigid bronchoscope was introduced, serving as the airway. Examination revealed a metallic foreign body occluding the left mainstem bronchus. Rigid optical grasping forceps were utilized to manipulate and securely grasp the object. The coin was reoriented and extracted through the rigid barrel. The bronchial mucosa exhibited minimal trauma.\nIMPRESSION: Successful rigid bronchoscopic removal of left mainstem foreign body.",
+    "note_text": "INDICATION: A 5-year-old male presented with acute wheeze following coin ingestion/aspiration.\nPROCEDURE: General anesthesia was induced. A pediatric rigid bronchoscope was introduced, serving as the airway. Examination revealed a metallic foreign body occluding the left mainstem bronchus. Rigid optical grasping forceps were utilized to manipulate and securely grasp the object. The coin was reoriented and extracted through the rigid barrel. The bronchial mucosa exhibited minimal trauma.\nIMPRESSION: Successful rigid bronchoscopic removal of left mainstem foreign body.",
     "cpt_codes": [
       31635
     ],
@@ -3778,13 +3706,6 @@
       "style_type": 2,
       "generated_name": "Liam Hernandez",
       "generation_date": "2025-12-08T14:08:53.093154"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -3973,7 +3894,7 @@
     }
   },
   {
-    "note_text": "Procedure: Rigid Bronch / FB Removal\nPatient: <PERSON>\nSteps:\n1. GA / Jet ventilation.\n2. Rigid scope inserted.\n3. Found coin in Left Mainstem.\n4. Used rigid forceps to grab and turn the coin.\n5. Pulled it out.\n6. Check for bleeding: minimal abrasion.\nPlan: Admit peds floor.",
+    "note_text": "Procedure: Rigid Bronch / FB Removal\nPatient: 5yo Male\nSteps:\n1. GA / Jet ventilation.\n2. Rigid scope inserted.\n3. Found coin in Left Mainstem.\n4. Used rigid forceps to grab and turn the coin.\n5. Pulled it out.\n6. Check for bleeding: minimal abrasion.\nPlan: Admit peds floor.",
     "cpt_codes": [
       31635
     ],
@@ -4155,16 +4076,10 @@
       "style_type": 4,
       "generated_name": "Jacob Gonzalez",
       "generation_date": "2025-12-08T14:08:53.093243"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "kid swallowed a coin well breathed it in actually <DATE_TIME>. took him to the OR for rigid bronchoscopy under general. saw the coin in the left main bronchus tight fit. used the optical forceps took a few tries to get a grip then turned it sideways and pulled it out. airway looks okay little scratch but no bleeding. admit for observation.",
+    "note_text": "kid swallowed a coin well breathed it in actually 5 years old. took him to the OR for rigid bronchoscopy under general. saw the coin in the left main bronchus tight fit. used the optical forceps took a few tries to get a grip then turned it sideways and pulled it out. airway looks okay little scratch but no bleeding. admit for observation.",
     "cpt_codes": [
       31635
     ],
@@ -4346,16 +4261,10 @@
       "style_type": 5,
       "generated_name": "William Wilson",
       "generation_date": "2025-12-08T14:08:53.093288"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Rigid bronchoscopy with foreign body removal. Pediatric patient with suspected coin aspiration and unilateral wheeze. General <LOCATION> with rigid bronchoscope used as the airway. At the left mainstem bronchus, a circular metallic foreign body consistent with a coin was lodged against the bronchial wall. Multiple attempts were required to obtain a secure purchase using rigid optical grasping forceps. The coin was rotated into a favorable orientation and removed en bloc through the rigid bronchoscope. The left bronchial tree was reinspected and was free of additional foreign material.",
+    "note_text": "Rigid bronchoscopy with foreign body removal. Pediatric patient with suspected coin aspiration and unilateral wheeze. General anesthesia with rigid bronchoscope used as the airway. At the left mainstem bronchus, a circular metallic foreign body consistent with a coin was lodged against the bronchial wall. Multiple attempts were required to obtain a secure purchase using rigid optical grasping forceps. The coin was rotated into a favorable orientation and removed en bloc through the rigid bronchoscope. The left bronchial tree was reinspected and was free of additional foreign material.",
     "cpt_codes": [
       31635
     ],
@@ -4537,16 +4446,10 @@
       "style_type": 6,
       "generated_name": "Ethan Anderson",
       "generation_date": "2025-12-08T14:08:53.093334"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nPediatric coin aspiration, left wheeze.\n[<LOCATION>]\nGeneral, Rigid Bronchoscope/Jet Vent.\n[Description]\nRigid scope passed. Coin identified in Left Mainstem Bronchus. Optical forceps used to grasp and rotate coin. Removed en bloc. Minimal mucosal abrasion.\n[Plan]\nPediatric floor observation.",
+    "note_text": "[Indication]\nPediatric coin aspiration, left wheeze.\n[Anesthesia]\nGeneral, Rigid Bronchoscope/Jet Vent.\n[Description]\nRigid scope passed. Coin identified in Left Mainstem Bronchus. Optical forceps used to grasp and rotate coin. Removed en bloc. Minimal mucosal abrasion.\n[Plan]\nPediatric floor observation.",
     "cpt_codes": [
       31635
     ],
@@ -4728,16 +4631,10 @@
       "style_type": 7,
       "generated_name": "Michael Thomas",
       "generation_date": "2025-12-08T14:08:53.093383"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "This <DATE_TIME> boy inhaled a coin, which got stuck in his left main airway. We put him under general <LOCATION> and used a rigid metal tube (bronchoscope) to reach the coin. It was tight, but we used special forceps to grab the coin, turn it so it would fit, and pulled it out. We double-checked the airway afterwards and everything looked clear with just a tiny scrape. He's going to the pediatric floor for <DATE_TIME>.",
+    "note_text": "This 5-year-old boy inhaled a coin, which got stuck in his left main airway. We put him under general anesthesia and used a rigid metal tube (bronchoscope) to reach the coin. It was tight, but we used special forceps to grab the coin, turn it so it would fit, and pulled it out. We double-checked the airway afterwards and everything looked clear with just a tiny scrape. He's going to the pediatric floor for the night.",
     "cpt_codes": [
       31635
     ],
@@ -4919,18 +4816,10 @@
       "style_type": 8,
       "generated_name": "Alexander Taylor",
       "generation_date": "2025-12-08T14:08:53.093430"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Operation: Rigid bronchoscopy with extraction of foreign body.\nSubject: <DATE_TIME> male.\nDetails: Under general <LOCATION>, a rigid scope was inserted. A metallic coin was observed obstructing the left mainstem. Rigid optical forceps were employed to clutch the object. The coin was pivoted and withdrawn en bloc. The bronchial tree was re-examined and found clear.\nResult: Metallic foreign body eliminated.",
+    "note_text": "Operation: Rigid bronchoscopy with extraction of foreign body.\nSubject: 5-year-old male.\nDetails: Under general anesthesia, a rigid scope was inserted. A metallic coin was observed obstructing the left mainstem. Rigid optical forceps were employed to clutch the object. The coin was pivoted and withdrawn en bloc. The bronchial tree was re-examined and found clear.\nResult: Metallic foreign body eliminated.",
     "cpt_codes": [
       31635
     ],
@@ -5112,13 +5001,6 @@
       "style_type": 9,
       "generated_name": "Daniel Moore",
       "generation_date": "2025-12-08T14:08:53.093495"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -5872,7 +5754,7 @@
     }
   },
   {
-    "note_text": "Procedure: Nav Bronch / Microwave Ablation\nPatient: <PERSON>\nSteps:\n1. EMN mapping to RUL posterior nodule.\n2. Radial EBUS: concentric view.\n3. CBCT: confirmed tool in lesion.\n4. Microwave catheter in.\n5. Burned at 65W for 7 min.\n6. Post-burn CBCT: good margins.\nPlan: Admit.",
+    "note_text": "Procedure: Nav Bronch / Microwave Ablation\nPatient: 74F\nSteps:\n1. EMN mapping to RUL posterior nodule.\n2. Radial EBUS: concentric view.\n3. CBCT: confirmed tool in lesion.\n4. Microwave catheter in.\n5. Burned at 65W for 7 min.\n6. Post-burn CBCT: good margins.\nPlan: Admit.",
     "cpt_codes": [
       31641,
       31627,
@@ -6119,16 +6001,10 @@
       "style_type": 4,
       "generated_name": "Barbara White",
       "generation_date": "2025-12-08T14:08:53.093747"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure note for microwave ablation on <DATE_TIME> lady with the RUL spot. Used the navigation system to get out there radial ebus showed we were right in the middle. Spun the patient for cone beam to double check. Put the microwave probe in and cooked it for 7 minutes at 65 watts. Margins looked good on the scan after. No pneumothorax. sending to floor.",
+    "note_text": "Procedure note for microwave ablation on the 74 year old lady with the RUL spot. Used the navigation system to get out there radial ebus showed we were right in the middle. Spun the patient for cone beam to double check. Put the microwave probe in and cooked it for 7 minutes at 65 watts. Margins looked good on the scan after. No pneumothorax. sending to floor.",
     "cpt_codes": [
       31641,
       31627,
@@ -6375,16 +6251,10 @@
       "style_type": 5,
       "generated_name": "Elizabeth Harris",
       "generation_date": "2025-12-08T14:08:53.093809"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Navigational bronchoscopy with microwave ablation of a peripheral right upper lobe nodule. 2.1 cm PET-avid peripheral right upper lobe nodule. General <LOCATION> with endotracheal tube. Using electromagnetic navigation bronchoscopy, a steerable catheter was guided to a posterior segment right upper lobe peripheral target. Radial EBUS demonstrated a concentric ultrasound signal. After confirming catheter position with cone-beam CT, a microwave ablation catheter was advanced. A single ablation cycle was performed at <DATE_TIME> for 7 minutes. Post-ablation cone-beam CT demonstrated an ablation zone encompassing the nodule with at least a 5 mm circumferential margin.",
+    "note_text": "Navigational bronchoscopy with microwave ablation of a peripheral right upper lobe nodule. 2.1 cm PET-avid peripheral right upper lobe nodule. General anesthesia with endotracheal tube. Using electromagnetic navigation bronchoscopy, a steerable catheter was guided to a posterior segment right upper lobe peripheral target. Radial EBUS demonstrated a concentric ultrasound signal. After confirming catheter position with cone-beam CT, a microwave ablation catheter was advanced. A single ablation cycle was performed at 65 W for 7 minutes. Post-ablation cone-beam CT demonstrated an ablation zone encompassing the nodule with at least a 5 mm circumferential margin.",
     "cpt_codes": [
       31641,
       31627,
@@ -6631,17 +6501,10 @@
       "style_type": 6,
       "generated_name": "Jennifer Sanchez",
       "generation_date": "2025-12-08T14:08:53.093870"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\n2.1 cm RUL nodule, poor surgical candidate.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nEMN guidance to RUL posterior segment. Radial EBUS concentric. Cone-beam CT confirmation. Microwave ablation 65W x 7 min. Margins confirmed via CBCT.\n[Plan]\n<DATE_TIME> telemetry.",
+    "note_text": "[Indication]\n2.1 cm RUL nodule, poor surgical candidate.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nEMN guidance to RUL posterior segment. Radial EBUS concentric. Cone-beam CT confirmation. Microwave ablation 65W x 7 min. Margins confirmed via CBCT.\n[Plan]\nOvernight telemetry.",
     "cpt_codes": [
       31641,
       31627,
@@ -6888,13 +6751,6 @@
       "style_type": 7,
       "generated_name": "Maria Clark",
       "generation_date": "2025-12-08T14:08:53.093928"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -7148,7 +7004,7 @@
     }
   },
   {
-    "note_text": "Procedure: Navigational bronchoscopy with microwave destruction of a peripheral RUL nodule.\nMethod: Electromagnetic navigation guided a catheter to the posterior segment target. Radial EBUS displayed a concentric signal. Position was validated with cone-beam CT. A microwave ablation catheter was deployed. A single cycle was executed at <DATE_TIME> for 7 minutes. Post-procedure imaging showed an ablation zone surrounding the nodule.",
+    "note_text": "Procedure: Navigational bronchoscopy with microwave destruction of a peripheral RUL nodule.\nMethod: Electromagnetic navigation guided a catheter to the posterior segment target. Radial EBUS displayed a concentric signal. Position was validated with cone-beam CT. A microwave ablation catheter was deployed. A single cycle was executed at 65 W for 7 minutes. Post-procedure imaging showed an ablation zone surrounding the nodule.",
     "cpt_codes": [
       31641,
       31627,
@@ -7395,12 +7251,6 @@
       "style_type": 9,
       "generated_name": "Margaret Lewis",
       "generation_date": "2025-12-08T14:08:53.094045"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -7653,7 +7503,7 @@
     }
   },
   {
-    "note_text": "INDICATION: Treatment of biopsy-proven adenocarcinoma in the RLL superior segment in a patient with GOLD III COPD.\nPROCEDURE: Following general <LOCATION>, virtual bronchoscopic navigation facilitated access to the target lesion. Radial EBUS revealed an eccentric orientation. Radiofrequency ablation was selected as the modality. Three overlapping cycles were delivered at 50 Watts/5 minutes, achieving tip temperatures of 105 degrees Celsius. Cone-beam CT verified the extent of the ablation zone.\nIMPRESSION: Successful radiofrequency ablation of RLL malignancy.",
+    "note_text": "INDICATION: Treatment of biopsy-proven adenocarcinoma in the RLL superior segment in a patient with GOLD III COPD.\nPROCEDURE: Following general anesthesia, virtual bronchoscopic navigation facilitated access to the target lesion. Radial EBUS revealed an eccentric orientation. Radiofrequency ablation was selected as the modality. Three overlapping cycles were delivered at 50 Watts/5 minutes, achieving tip temperatures of 105 degrees Celsius. Cone-beam CT verified the extent of the ablation zone.\nIMPRESSION: Successful radiofrequency ablation of RLL malignancy.",
     "cpt_codes": [
       31641,
       31627,
@@ -7899,16 +7749,10 @@
       "style_type": 2,
       "generated_name": "Robert Walker",
       "generation_date": "2025-12-08T14:08:53.094168"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Coding: <DATE_TIME> (Tumor destruction), <DATE_TIME> (Navigation), <DATE_TIME> (REBUS).\nModality: Radiofrequency Ablation (RFA).\nTarget: Right Lower Lobe Superior Segment (2.0 cm).\nTechnique: Navigation to lesion, EBUS confirmation, RFA catheter deployment.\nDosimetry: 3 cycles x 50W x 5 min.\nOutcome: Ablation zone encompassed nodule on CBCT.",
+    "note_text": "Coding: 31641 (Tumor destruction), 31627 (Navigation), 31654 (REBUS).\nModality: Radiofrequency Ablation (RFA).\nTarget: Right Lower Lobe Superior Segment (2.0 cm).\nTechnique: Navigation to lesion, EBUS confirmation, RFA catheter deployment.\nDosimetry: 3 cycles x 50W x 5 min.\nOutcome: Ablation zone encompassed nodule on CBCT.",
     "cpt_codes": [
       31641,
       31627,
@@ -8154,18 +7998,10 @@
       "style_type": 3,
       "generated_name": "Michael Young",
       "generation_date": "2025-12-08T14:08:53.094228"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Nav Bronch / RFA\nPatient: <PERSON>\nSteps:\n1. Navigated to RLL superior segment.\n2. EBUS showed eccentric view.\n3. Adjusted and verified with CBCT.\n4. RFA probe inserted.\n5. 3 cycles of burning (50W, 5 min each).\n6. Temps hit 105C.\nPlan: Admit overnight.",
+    "note_text": "Procedure: Nav Bronch / RFA\nPatient: 66M (COPD)\nSteps:\n1. Navigated to RLL superior segment.\n2. EBUS showed eccentric view.\n3. Adjusted and verified with CBCT.\n4. RFA probe inserted.\n5. 3 cycles of burning (50W, 5 min each).\n6. Temps hit 105C.\nPlan: Admit overnight.",
     "cpt_codes": [
       31641,
       31627,
@@ -8411,16 +8247,10 @@
       "style_type": 4,
       "generated_name": "William Allen",
       "generation_date": "2025-12-08T14:08:53.094298"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "did an RFA on the guy with the RLL cancer <DATE_TIME>. Navigated down there ebus was a bit eccentric but we adjusted. Used the cone beam to confirm. Did three burns with the radiofrequency catheter 50 watts each for 5 mins. Got it nice and hot 105 degrees. Scan after showed we got the whole thing. No bleeding no pneumo.",
+    "note_text": "did an RFA on the guy with the RLL cancer 66 year old. Navigated down there ebus was a bit eccentric but we adjusted. Used the cone beam to confirm. Did three burns with the radiofrequency catheter 50 watts each for 5 mins. Got it nice and hot 105 degrees. Scan after showed we got the whole thing. No bleeding no pneumo.",
     "cpt_codes": [
       31641,
       31627,
@@ -8666,16 +8496,10 @@
       "style_type": 5,
       "generated_name": "David King",
       "generation_date": "2025-12-08T14:08:53.094361"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Navigational bronchoscopy with radiofrequency ablation of a peripheral right lower lobe nodule. 2.0 cm peripheral right lower lobe nodule, biopsy-proven adenocarcinoma. General <LOCATION> with endotracheal tube. A navigation catheter was advanced using CT-based virtual bronchoscopy planning to a superior segment right lower lobe target. Radial EBUS confirmed an eccentric image. A radiofrequency ablation catheter was then advanced. Three overlapping ablation cycles (each 50 W for 5 minutes) were delivered with careful monitoring of impedance and tip temperature. Post-ablation cone-beam CT demonstrated an ablation zone encompassing the nodule.",
+    "note_text": "Navigational bronchoscopy with radiofrequency ablation of a peripheral right lower lobe nodule. 2.0 cm peripheral right lower lobe nodule, biopsy-proven adenocarcinoma. General anesthesia with endotracheal tube. A navigation catheter was advanced using CT-based virtual bronchoscopy planning to a superior segment right lower lobe target. Radial EBUS confirmed an eccentric image. A radiofrequency ablation catheter was then advanced. Three overlapping ablation cycles (each 50 W for 5 minutes) were delivered with careful monitoring of impedance and tip temperature. Post-ablation cone-beam CT demonstrated an ablation zone encompassing the nodule.",
     "cpt_codes": [
       31641,
       31627,
@@ -8921,16 +8745,10 @@
       "style_type": 6,
       "generated_name": "Richard Wright",
       "generation_date": "2025-12-08T14:08:53.094425"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\n2.0 cm RLL adenocarcinoma, limited reserve.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nNavigation to RLL superior segment. EBUS eccentric. CBCT confirmation. RFA: 3 cycles, 50W, 5 mins. <PERSON> temp <DATE_TIME> zone verified.\n[Plan]\nAdmit for observation.",
+    "note_text": "[Indication]\n2.0 cm RLL adenocarcinoma, limited reserve.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nNavigation to RLL superior segment. EBUS eccentric. CBCT confirmation. RFA: 3 cycles, 50W, 5 mins. Max temp 105C. Ablation zone verified.\n[Plan]\nAdmit for observation.",
     "cpt_codes": [
       31641,
       31627,
@@ -9176,14 +8994,6 @@
       "style_type": 7,
       "generated_name": "Joseph Scott",
       "generation_date": "2025-12-08T14:08:53.094488"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "LOCATION",
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -9685,7 +9495,7 @@
     }
   },
   {
-    "note_text": "Indication: LLL nodule (1.4cm), <PERSON>.\nProcedure: Nav bronch + Cryoablation.\nTarget: Lateral basal segment LLL.\nGuidance: EMN + Radial EBUS (concentric) + CBCT.\nAblation: 3 freeze-thaw cycles (10 min freeze each). Temp -60C.\nResult: Ice ball covered nodule. No pneumothorax.\nPlan: Admit.",
+    "note_text": "Indication: LLL nodule (1.4cm), PET+.\nProcedure: Nav bronch + Cryoablation.\nTarget: Lateral basal segment LLL.\nGuidance: EMN + Radial EBUS (concentric) + CBCT.\nAblation: 3 freeze-thaw cycles (10 min freeze each). Temp -60C.\nResult: Ice ball covered nodule. No pneumothorax.\nPlan: Admit.",
     "cpt_codes": [
       31641,
       31627,
@@ -9931,16 +9741,10 @@
       "style_type": 1,
       "generated_name": "Lisa Hill",
       "generation_date": "2025-12-08T14:08:53.094667"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "INDICATION: Ablative therapy for a solitary pulmonary nodule in the LLL lateral basal segment in a post-lobectomy patient.\nPROCEDURE: Navigational bronchoscopy was employed to localize the target. Radial EBUS demonstrated a concentric lesion. Following cone-beam CT verification, a cryoablation probe was deployed. The protocol consisted of three freeze-thaw cycles (<DATE_TIME> freeze), achieving a nadir temperature of -60 C. Intraprocedural imaging visualized the ice ball extending beyond the tumor margins.\nIMPRESSION: Successful cryoablation of LLL nodule.",
+    "note_text": "INDICATION: Ablative therapy for a solitary pulmonary nodule in the LLL lateral basal segment in a post-lobectomy patient.\nPROCEDURE: Navigational bronchoscopy was employed to localize the target. Radial EBUS demonstrated a concentric lesion. Following cone-beam CT verification, a cryoablation probe was deployed. The protocol consisted of three freeze-thaw cycles (10-minute freeze), achieving a nadir temperature of -60 C. Intraprocedural imaging visualized the ice ball extending beyond the tumor margins.\nIMPRESSION: Successful cryoablation of LLL nodule.",
     "cpt_codes": [
       31641,
       31627,
@@ -10186,16 +9990,10 @@
       "style_type": 2,
       "generated_name": "Nancy Flores",
       "generation_date": "2025-12-08T14:08:53.094727"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "CPT Justification: 31641 (Tumor destruction via cryo), 31627 (Nav), 31654 (REBUS).\nTechnique: Cryoablation.\nTarget: Left Lower Lobe Lateral Basal Segment (1.4 cm).\nTools: EMN, Radial EBUS, Cryoprobe.\nProtocol: 3 cycles of <DATE_TIME> freeze.\nVerification: CBCT visualization of ice ball margins.",
+    "note_text": "CPT Justification: 31641 (Tumor destruction via cryo), 31627 (Nav), 31654 (REBUS).\nTechnique: Cryoablation.\nTarget: Left Lower Lobe Lateral Basal Segment (1.4 cm).\nTools: EMN, Radial EBUS, Cryoprobe.\nProtocol: 3 cycles of 10-minute freeze.\nVerification: CBCT visualization of ice ball margins.",
     "cpt_codes": [
       31641,
       31627,
@@ -10441,16 +10239,10 @@
       "style_type": 3,
       "generated_name": "Karen Green",
       "generation_date": "2025-12-08T14:08:53.094787"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Nav Bronch / Cryoablation\nPatient: <PERSON>\nSteps:\n1. Navigated to LLL lateral basal.\n2. EBUS: Concentric.\n3. CBCT confirmed position.\n4. Cryoprobe in.\n5. 3 cycles: 10 min freeze, passive thaw.\n6. Saw ice ball on scan covering the nodule.\nPlan: Admit.",
+    "note_text": "Procedure: Nav Bronch / Cryoablation\nPatient: 59F\nSteps:\n1. Navigated to LLL lateral basal.\n2. EBUS: Concentric.\n3. CBCT confirmed position.\n4. Cryoprobe in.\n5. 3 cycles: 10 min freeze, passive thaw.\n6. Saw ice ball on scan covering the nodule.\nPlan: Admit.",
     "cpt_codes": [
       31641,
       31627,
@@ -10696,16 +10488,10 @@
       "style_type": 4,
       "generated_name": "Betty Adams",
       "generation_date": "2025-12-08T14:08:53.094847"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "cryoablation for <DATE_TIME> female with the LLL nodule. She had a lobectomy before so saving lung. Navigated to the lateral basal segment ebus was concentric. Confirmed with the cone beam. Used the cryo probe 3 cycles of freezing 10 mins each got down to minus 60. Ice ball looked good on the scan covered the whole thing. No issues.",
+    "note_text": "cryoablation for the 59 year old female with the LLL nodule. She had a lobectomy before so saving lung. Navigated to the lateral basal segment ebus was concentric. Confirmed with the cone beam. Used the cryo probe 3 cycles of freezing 10 mins each got down to minus 60. Ice ball looked good on the scan covered the whole thing. No issues.",
     "cpt_codes": [
       31641,
       31627,
@@ -10951,16 +10737,10 @@
       "style_type": 5,
       "generated_name": "Helen Nelson",
       "generation_date": "2025-12-08T14:08:53.094910"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Navigational bronchoscopy with cryoablation of a peripheral left lower lobe nodule. 1.4 cm peripheral left lower lobe pulmonary nodule. General <LOCATION> with endotracheal tube. Using CT-based navigational bronchoscopy, a steerable catheter was guided to a lateral basal segment left lower lobe target. Radial EBUS confirmed a concentric image. A dedicated endobronchial cryoprobe was advanced. Three freeze–thaw cycles were performed (<DATE_TIME> freeze followed by passive thaw). Cone-beam CT after the final cycle demonstrated an ice ball encompassing the nodule with appropriate margins.",
+    "note_text": "Navigational bronchoscopy with cryoablation of a peripheral left lower lobe nodule. 1.4 cm peripheral left lower lobe pulmonary nodule. General anesthesia with endotracheal tube. Using CT-based navigational bronchoscopy, a steerable catheter was guided to a lateral basal segment left lower lobe target. Radial EBUS confirmed a concentric image. A dedicated endobronchial cryoprobe was advanced. Three freeze–thaw cycles were performed (10-minute freeze followed by passive thaw). Cone-beam CT after the final cycle demonstrated an ice ball encompassing the nodule with appropriate margins.",
     "cpt_codes": [
       31641,
       31627,
@@ -11206,17 +10986,10 @@
       "style_type": 6,
       "generated_name": "Sandra Baker",
       "generation_date": "2025-12-08T14:08:53.094968"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\n1.4 cm LLL nodule, prior contralateral lobectomy.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nNavigation to LLL lateral basal. EBUS concentric. CBCT confirmation. Cryoablation: 3 cycles x 10 min freeze. Ice ball confirmed on imaging.\n[Plan]\nAdmit for observation.",
+    "note_text": "[Indication]\n1.4 cm LLL nodule, prior contralateral lobectomy.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nNavigation to LLL lateral basal. EBUS concentric. CBCT confirmation. Cryoablation: 3 cycles x 10 min freeze. Ice ball confirmed on imaging.\n[Plan]\nAdmit for observation.",
     "cpt_codes": [
       31641,
       31627,
@@ -11462,12 +11235,6 @@
       "style_type": 7,
       "generated_name": "Donna Hall",
       "generation_date": "2025-12-08T14:08:53.095113"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {

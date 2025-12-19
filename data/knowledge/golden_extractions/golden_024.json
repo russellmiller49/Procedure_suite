@@ -216,7 +216,7 @@
     }
   },
   {
-    "note_text": "Resident Note:\nProcedure: EBUS-TBNA\n1. Moderate sedation initiated.\n2. Scope inserted orally.\n3. Identified target nodes (4R, 7, 10R).\n4. 22G needle passes <PERSON> each station.\n5. Diagnosis: Adenocarcinoma.\nPlan: Oncology referral.",
+    "note_text": "Resident Note:\nProcedure: EBUS-TBNA\n1. Moderate sedation initiated.\n2. Scope inserted orally.\n3. Identified target nodes (4R, 7, 10R).\n4. 22G needle passes x3 each station.\n5. Diagnosis: Adenocarcinoma.\nPlan: Oncology referral.",
     "cpt_codes": [
       31653
     ],
@@ -285,12 +285,6 @@
       "style_type": 4,
       "generated_name": "Emily Davis",
       "generation_date": "2025-12-09T09:19:23.866233"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -438,7 +432,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMediastinal adenopathy, FDG-avid.\n[<LOCATION>]\nModerate sedation.\n[Description]\nEBUS-TBNA of stations 4R, 7, and 10R. Metastatic adenocarcinoma confirmed.\n[Plan]\nRefer to Oncology.",
+    "note_text": "[Indication]\nMediastinal adenopathy, FDG-avid.\n[Anesthesia]\nModerate sedation.\n[Description]\nEBUS-TBNA of stations 4R, 7, and 10R. Metastatic adenocarcinoma confirmed.\n[Plan]\nRefer to Oncology.",
     "cpt_codes": [
       31653
     ],
@@ -507,16 +501,10 @@
       "style_type": 7,
       "generated_name": "David Taylor",
       "generation_date": "2025-12-09T09:19:23.866292"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "The patient underwent an EBUS-TBNA procedure under moderate sedation to investigate <PERSON> nodes. We specifically targeted stations 4R, 7, and 10R. Using the ultrasound-guided needle, we obtained samples from each station. The preliminary pathology results confirmed the presence of metastatic adenocarcinoma.",
+    "note_text": "The patient underwent an EBUS-TBNA procedure under moderate sedation to investigate avid lymph nodes. We specifically targeted stations 4R, 7, and 10R. Using the ultrasound-guided needle, we obtained samples from each station. The preliminary pathology results confirmed the presence of metastatic adenocarcinoma.",
     "cpt_codes": [
       31653
     ],
@@ -585,12 +573,6 @@
       "style_type": 8,
       "generated_name": "Jessica Anderson",
       "generation_date": "2025-12-09T09:19:23.866310"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1086,7 +1068,7 @@
     }
   },
   {
-    "note_text": "Navigational bronchoscopy with ENB and radial EBUS confirmation followed by bronchoscopic cryoablation of a peripheral LUL adenocarcinoma. <PERSON> successful. Lesion localized. Cryoablation performed without incident.",
+    "note_text": "Navigational bronchoscopy with ENB and radial EBUS confirmation followed by bronchoscopic cryoablation of a peripheral LUL adenocarcinoma. Navigation successful. Lesion localized. Cryoablation performed without incident.",
     "cpt_codes": [
       31641,
       31654,
@@ -1167,16 +1149,10 @@
       "style_type": 6,
       "generated_name": "Elizabeth Thompson",
       "generation_date": "2025-12-09T09:19:23.866462"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nLUL Adenocarcinoma, ablation candidate.\n[<LOCATION>]\nGA.\n[Description]\nENB and REBUS used to target lesion. Bronchoscopic cryoablation performed.\n[Plan]\nPost-op imaging monitoring.",
+    "note_text": "[Indication]\nLUL Adenocarcinoma, ablation candidate.\n[Anesthesia]\nGA.\n[Description]\nENB and REBUS used to target lesion. Bronchoscopic cryoablation performed.\n[Plan]\nPost-op imaging monitoring.",
     "cpt_codes": [
       31641,
       31654,
@@ -1257,12 +1233,6 @@
       "style_type": 7,
       "generated_name": "Richard White",
       "generation_date": "2025-12-09T09:19:23.866484"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1434,7 +1404,7 @@
     }
   },
   {
-    "note_text": "Proc: EBUS (4R, 7) + Ion Nav RLL Mass.\n- Staging: Negative.\n- RLL Mass: Radial EBUS confirmed.\n- TBBx: <PERSON> obtained.\n- Complications: None.",
+    "note_text": "Proc: EBUS (4R, 7) + Ion Nav RLL Mass.\n- Staging: Negative.\n- RLL Mass: Radial EBUS confirmed.\n- TBBx: Samples obtained.\n- Complications: None.",
     "cpt_codes": [
       31652,
       31654,
@@ -1528,12 +1498,6 @@
       "style_type": 1,
       "generated_name": "Charles Harris",
       "generation_date": "2025-12-09T09:19:23.866553"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2022,7 +1986,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRLL Mass, Staging.\n[<LOCATION>]\nGA.\n[Description]\nEBUS 4R/7. Ion Nav to RLL. REBUS confirm. TBBx performed.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nRLL Mass, Staging.\n[Anesthesia]\nGA.\n[Description]\nEBUS 4R/7. Ion Nav to RLL. REBUS confirm. TBBx performed.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31652,
       31654,
@@ -2116,12 +2080,6 @@
       "style_type": 7,
       "generated_name": "Daniel Hall",
       "generation_date": "2025-12-09T09:19:23.866727"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -2501,7 +2459,7 @@
     }
   },
   {
-    "note_text": "Codes: 31626 (Fiducials), 31628 (<LOCATION>), 31627 (Nav), 31654 (REBUS).\nPrimary intent: Fiducial placement and diagnosis. Note: <DATE_TIME> is the primary code by RVU usually, or <DATE_TIME> depending on carrier, but both distinct.",
+    "note_text": "Codes: 31626 (Fiducials), 31628 (Biopsy), 31627 (Nav), 31654 (REBUS).\nPrimary intent: Fiducial placement and diagnosis. Note: 31626 is the primary code by RVU usually, or 31628 depending on carrier, but both distinct.",
     "cpt_codes": [
       31626,
       31654,
@@ -2589,18 +2547,10 @@
       "style_type": 3,
       "generated_name": "Mark Scott",
       "generation_date": "2025-12-09T09:19:23.866879"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Resident Note\nProcedure: Ion Biopsy + Fiducials\n1. Nav to LLL.\n2. REBUS check.\n3. Biopsies taken.\n4. 3 Fiducials dropped.\n5. <LOCATION> confirmed position.\nPlan: SBRT referral.",
+    "note_text": "Resident Note\nProcedure: Ion Biopsy + Fiducials\n1. Nav to LLL.\n2. REBUS check.\n3. Biopsies taken.\n4. 3 Fiducials dropped.\n5. Fluoro confirmed position.\nPlan: SBRT referral.",
     "cpt_codes": [
       31626,
       31654,
@@ -2688,12 +2638,6 @@
       "style_type": 4,
       "generated_name": "Karen Torres",
       "generation_date": "2025-12-09T09:19:23.866902"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -2879,7 +2823,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLLL Mass, requires fiducials.\n[<LOCATION>]\nGA.\n[Description]\nIon Nav. REBUS. TBBx <LOCATION>. Fiducials <PERSON> placed LLL.\n[Plan]\nRadiation Oncology.",
+    "note_text": "[Indication]\nLLL Mass, requires fiducials.\n[Anesthesia]\nGA.\n[Description]\nIon Nav. REBUS. TBBx x4. Fiducials x3 placed LLL.\n[Plan]\nRadiation Oncology.",
     "cpt_codes": [
       31626,
       31654,
@@ -2967,14 +2911,6 @@
       "style_type": 7,
       "generated_name": "Paul Flores",
       "generation_date": "2025-12-09T09:19:23.866970"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -3445,7 +3381,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nProcedure: EBUS + EMN\n1. Station 7 TBNA.\n2. EMN Nav to RLL.\n3. REBUS confirm.\n4. Biopsy RLL.\nHistory: <PERSON>.\nPlan: Path check.",
+    "note_text": "Resident Note\nProcedure: EBUS + EMN\n1. Station 7 TBNA.\n2. EMN Nav to RLL.\n3. REBUS confirm.\n4. Biopsy RLL.\nHistory: Breast CA.\nPlan: Path check.",
     "cpt_codes": [
       31652,
       31654,
@@ -3537,12 +3473,6 @@
       "style_type": 4,
       "generated_name": "Kimberly Mitchell",
       "generation_date": "2025-12-09T09:19:23.867116"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3736,7 +3666,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMetastatic Breast Cancer, RLL nodule.\n[<LOCATION>]\nGA.\n[Description]\nEBUS Station 7. EMN Nav RLL. REBUS. TBBx.\n[Plan]\nOncology f/u.",
+    "note_text": "[Indication]\nMetastatic Breast Cancer, RLL nodule.\n[Anesthesia]\nGA.\n[Description]\nEBUS Station 7. EMN Nav RLL. REBUS. TBBx.\n[Plan]\nOncology f/u.",
     "cpt_codes": [
       31652,
       31654,
@@ -3828,12 +3758,6 @@
       "style_type": 7,
       "generated_name": "George Campbell",
       "generation_date": "2025-12-09T09:19:23.867193"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -4027,7 +3951,7 @@
     }
   },
   {
-    "note_text": "Proc: EBUS (4R, 7) + Ion RML <LOCATION>.\n- EBUS: Staging.\n- Ion/REBUS: RML nodule.\n- Sampling: <PERSON>.\n- No complications.",
+    "note_text": "Proc: EBUS (4R, 7) + Ion RML Biopsy.\n- EBUS: Staging.\n- Ion/REBUS: RML nodule.\n- Sampling: Forceps + Cryobiopsy.\n- No complications.",
     "cpt_codes": [
       31652,
       31654,
@@ -4121,13 +4045,6 @@
       "style_type": 1,
       "generated_name": "Brian Edwards",
       "generation_date": "2025-12-09T09:19:23.867263"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -4228,7 +4145,7 @@
     }
   },
   {
-    "note_text": "Codes: 31652 (EBUS), 31628 (<LOCATION>), 31627 (Nav), 31654 (REBUS).\nNote: <PERSON> for diagnosis is coded as <DATE_TIME> (biopsy), not ablation.",
+    "note_text": "Codes: 31652 (EBUS), 31628 (Biopsy), 31627 (Nav), 31654 (REBUS).\nNote: Cryobiopsy for diagnosis is coded as 31628 (biopsy), not ablation.",
     "cpt_codes": [
       31652,
       31654,
@@ -4322,14 +4239,6 @@
       "style_type": 3,
       "generated_name": "Edward Stewart",
       "generation_date": "2025-12-09T09:19:23.867311"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "LOCATION",
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -4624,7 +4533,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRML Nodule.\n[<LOCATION>]\nGA.\n[Description]\nEBUS 4R/7. Ion Nav RML. REBUS. Forceps and <PERSON> performed.\n[Plan]\nRecovery.",
+    "note_text": "[Indication]\nRML Nodule.\n[Anesthesia]\nGA.\n[Description]\nEBUS 4R/7. Ion Nav RML. REBUS. Forceps and Cryobiopsy performed.\n[Plan]\nRecovery.",
     "cpt_codes": [
       31652,
       31654,
@@ -4718,13 +4627,6 @@
       "style_type": 7,
       "generated_name": "Timothy Reed",
       "generation_date": "2025-12-09T09:19:23.867404"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -5064,7 +4966,7 @@
     }
   },
   {
-    "note_text": "Codes: 31653 (EBUS 3+), 31625 (Endobronchial Bx).\nNote: EMN (<DATE_TIME>) is generally not reimbursed with <DATE_TIME> (endobronchial biopsy) unless the target is peripheral/parenchymal. Given 'cavitary LUL SCC', if lesion is visible endobronchially, <DATE_TIME> applies.",
+    "note_text": "Codes: 31653 (EBUS 3+), 31625 (Endobronchial Bx).\nNote: EMN (31627) is generally not reimbursed with 31625 (endobronchial biopsy) unless the target is peripheral/parenchymal. Given 'cavitary LUL SCC', if lesion is visible endobronchially, 31625 applies.",
     "cpt_codes": [
       31625,
       31653
@@ -5132,14 +5034,6 @@
       "style_type": 3,
       "generated_name": "Ryan Bailey",
       "generation_date": "2025-12-09T09:19:23.867525"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -5356,7 +5250,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLUL SCC, Nodal disease.\n[<LOCATION>]\nGA.\n[Description]\nEBUS x4 stations. EMN to LUL. Endobronchial Bx.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nLUL SCC, Nodal disease.\n[Anesthesia]\nGA.\n[Description]\nEBUS x4 stations. EMN to LUL. Endobronchial Bx.\n[Plan]\nAdmit.",
     "cpt_codes": [
       31625,
       31653
@@ -5424,12 +5318,6 @@
       "style_type": 7,
       "generated_name": "Gary Cox",
       "generation_date": "2025-12-09T09:19:23.867663"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -5727,7 +5615,7 @@
     }
   },
   {
-    "note_text": "Code: 31653 (EBUS-TBNA 3+ stations).\n<PERSON>: 5 distinct stations sampled (7, 4R, 4L, 10R, 11R).",
+    "note_text": "Code: 31653 (EBUS-TBNA 3+ stations).\nDetail: 5 distinct stations sampled (7, 4R, 4L, 10R, 11R).",
     "cpt_codes": [
       31653
     ],
@@ -5800,16 +5688,10 @@
       "style_type": 3,
       "generated_name": "Stephen Gray",
       "generation_date": "2025-12-09T09:19:23.867812"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Resident Note\nProcedure: EBUS\n1. Sampled 7, 4R, 4L, 10R, 11R.\n2. ROSE: Positive for <LOCATION>.\n3. N2 disease confirmed.\nPlan: Oncology.",
+    "note_text": "Resident Note\nProcedure: EBUS\n1. Sampled 7, 4R, 4L, 10R, 11R.\n2. ROSE: Positive for Adeno.\n3. N2 disease confirmed.\nPlan: Oncology.",
     "cpt_codes": [
       31653
     ],
@@ -5882,12 +5764,6 @@
       "style_type": 4,
       "generated_name": "Amy Ramirez",
       "generation_date": "2025-12-09T09:19:23.867833"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -6043,7 +5919,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nStaging, Adenocarcinoma.\n[<LOCATION>]\nModerate.\n[Description]\nEBUS x5 stations (7, 4R, 4L, 10R, 11R). Confirmed <PERSON> disease.\n[Plan]\nReferral.",
+    "note_text": "[Indication]\nStaging, Adenocarcinoma.\n[Anesthesia]\nModerate.\n[Description]\nEBUS x5 stations (7, 4R, 4L, 10R, 11R). Confirmed N2 disease.\n[Plan]\nReferral.",
     "cpt_codes": [
       31653
     ],
@@ -6116,13 +5992,6 @@
       "style_type": 7,
       "generated_name": "Justin Brooks",
       "generation_date": "2025-12-09T09:19:23.867897"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -6426,7 +6295,7 @@
     }
   },
   {
-    "note_text": "Code: 31653 (EBUS 3+ stations).\nIndication: Adenopathy.\nPathology: <PERSON> (<PERSON>).",
+    "note_text": "Code: 31653 (EBUS 3+ stations).\nIndication: Adenopathy.\nPathology: Granulomas (Sarcoid).",
     "cpt_codes": [
       31653
     ],
@@ -6497,17 +6366,10 @@
       "style_type": 3,
       "generated_name": "Frank Wood",
       "generation_date": "2025-12-09T09:19:23.867997"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Resident Note\nProcedure: EBUS\n1. Indication: Rule out <LOCATION>.\n2. Sampled 7, 4R, 10R, 11R.\n3. ROSE: <PERSON> seen.\nPlan: Pulm clinic.",
+    "note_text": "Resident Note\nProcedure: EBUS\n1. Indication: Rule out Sarcoid.\n2. Sampled 7, 4R, 10R, 11R.\n3. ROSE: Granulomas seen.\nPlan: Pulm clinic.",
     "cpt_codes": [
       31653
     ],
@@ -6578,13 +6440,6 @@
       "style_type": 4,
       "generated_name": "Nicole Barnes",
       "generation_date": "2025-12-09T09:19:23.868015"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -6736,7 +6591,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nAdenopathy, suspect <PERSON>.\n[<LOCATION>]\nModerate.\n[Description]\nEBUS x4 stations. Path: Non-necrotizing granulomas.\n[Plan]\nFollow up.",
+    "note_text": "[Indication]\nAdenopathy, suspect Sarcoid.\n[Anesthesia]\nModerate.\n[Description]\nEBUS x4 stations. Path: Non-necrotizing granulomas.\n[Plan]\nFollow up.",
     "cpt_codes": [
       31653
     ],
@@ -6807,13 +6662,6 @@
       "style_type": 7,
       "generated_name": "Raymond Coleman",
       "generation_date": "2025-12-09T09:19:23.868070"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -7028,7 +6876,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Ultrasound-guided diagnostic thoracentesis. The left hemithorax was scanned, and a pocket of fluid was identified. Under sterile conditions and local <LOCATION>, a needle was introduced. 650 mL of hemorrhagic fluid was drained from the patient with a known LUL mass (CPT 32555).",
+    "note_text": "PROCEDURE: Ultrasound-guided diagnostic thoracentesis. The left hemithorax was scanned, and a pocket of fluid was identified. Under sterile conditions and local anesthesia, a needle was introduced. 650 mL of hemorrhagic fluid was drained from the patient with a known LUL mass (CPT 32555).",
     "cpt_codes": [
       32555
     ],
@@ -7088,12 +6936,6 @@
       "style_type": 2,
       "generated_name": "Debra Long",
       "generation_date": "2025-12-09T09:19:23.868145"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -7160,7 +7002,7 @@
     }
   },
   {
-    "note_text": "Resident Note\nProcedure: Left Thoracentesis\n1. <LOCATION> marked site.\n2. Prep/Drape.\n3. Needle in.\n4. Drained 650cc bloody fluid.\n5. Bandage applied.\nPlan: Fluid analysis.",
+    "note_text": "Resident Note\nProcedure: Left Thoracentesis\n1. US marked site.\n2. Prep/Drape.\n3. Needle in.\n4. Drained 650cc bloody fluid.\n5. Bandage applied.\nPlan: Fluid analysis.",
     "cpt_codes": [
       32555
     ],
@@ -7220,12 +7062,6 @@
       "style_type": 4,
       "generated_name": "Rachel Hughes",
       "generation_date": "2025-12-09T09:19:23.868181"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -7355,7 +7191,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLeft effusion, LUL mass.\n[<LOCATION>]\nLocal.\n[Description]\n<LOCATION> guidance. Left thoracentesis. 650mL bloody fluid removed.\n[Plan]\nFluid analysis.",
+    "note_text": "[Indication]\nLeft effusion, LUL mass.\n[Anesthesia]\nLocal.\n[Description]\nUS guidance. Left thoracentesis. 650mL bloody fluid removed.\n[Plan]\nFluid analysis.",
     "cpt_codes": [
       32555
     ],
@@ -7415,13 +7251,6 @@
       "style_type": 7,
       "generated_name": "Jerry Butler",
       "generation_date": "2025-12-09T09:19:23.868232"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {

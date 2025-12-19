@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Patient: <PERSON> MRN: <MRN> || DOB: <DATE_TIME>\nDate of Procedure: <DATE_TIME> || Location: Mercy General Hospital, <LOCATION>, OR\nAttending: Dr. Amanda Rodriguez, <LOCATION>, FCCP\n\nPREOPERATIVE DIAGNOSIS: Recurrent right-sided malignant pleural effusion secondary to metastatic breast carcinoma\n\nPOSTOPERATIVE DIAGNOSIS: Same\n\nPROCEDURE PERFORMED: Ultrasound-guided right-sided tunneled indwelling pleural catheter (PleurX) insertion\n\nINDICATION: <DATE_TIME> female with metastatic breast cancer presenting with recurrent symptomatic right malignant pleural effusion requiring <DATE_TIME> thoracenteses. Decision made for tunneled pleural catheter for home drainage.\n\nINFORMED CONSENT: Procedure risks, benefits, and alternatives discussed. Patient understands and consents.\n\nPROCEDURE DETAILS:\nWith the patient in left lateral decubitus position, timeout performed confirming right side. The right lateral chest wall was prepped and draped in sterile fashion. Ultrasound used to identify optimal insertion site in the 5th intercostal space, mid-axillary line. Pocket of fluid confirmed, pleural sliding absent confirming adhesions.\n\nLocal anesthesia with 1% lidocaine infiltrated along proposed tract and subcutaneous tunnel path. A 3cm incision was made at the insertion site. Using the tunneling trocar, a 10cm subcutaneous tunnel was created anteriorly ending approximately 5cm from the axilla. The PleurX catheter was drawn through the tunnel with the polyester cuff positioned 2cm from the exit site.\n\nThe pleural space was entered using Seldinger technique under real-time ultrasound guidance. The 15.5Fr PleurX catheter was advanced over the guidewire and positioned in the posterior pleural space. Good flow confirmed with drainage of 1,200mL of bloody, viscous fluid which was sent for cytology, cell count, and chemistry.\n\nThe catheter was secured with 2-0 silk suture at the exit site. Sterile dressing applied. Chest X-ray obtained showing catheter in good position with improved aeration of right lung base, no pneumothorax.\n\nSPECIMENS: Pleural fluid to cytology, cell count, LDH, protein, glucose\n\nCOMPLICATIONS: None\n\nESTIMATED BLOOD LOSS: Minimal (<10mL)\n\nDISPOSITION: Discharge home with PleurX drainage supplies and home health nursing arranged for drainage teaching and supervision.\n\nFOLLOW-UP: Return to clinic in 1 week for wound check and drainage log review.\n\nAmanda Rodriguez, <LOCATION>, FCCP\nInterventional Pulmonology",
+    "note_text": "Patient: Margaret Chen || MRN: 5264363 || DOB: 05/22/1952\nDate of Procedure: 2025-10-17 || Location: Mercy General Hospital, Portland, OR\nAttending: Dr. Amanda Rodriguez, MD, FCCP\n\nPREOPERATIVE DIAGNOSIS: Recurrent right-sided malignant pleural effusion secondary to metastatic breast carcinoma\n\nPOSTOPERATIVE DIAGNOSIS: Same\n\nPROCEDURE PERFORMED: Ultrasound-guided right-sided tunneled indwelling pleural catheter (PleurX) insertion\n\nINDICATION: 72-year-old female with metastatic breast cancer presenting with recurrent symptomatic right malignant pleural effusion requiring weekly thoracenteses. Decision made for tunneled pleural catheter for home drainage.\n\nINFORMED CONSENT: Procedure risks, benefits, and alternatives discussed. Patient understands and consents.\n\nPROCEDURE DETAILS:\nWith the patient in left lateral decubitus position, timeout performed confirming right side. The right lateral chest wall was prepped and draped in sterile fashion. Ultrasound used to identify optimal insertion site in the 5th intercostal space, mid-axillary line. Pocket of fluid confirmed, pleural sliding absent confirming adhesions.\n\nLocal anesthesia with 1% lidocaine infiltrated along proposed tract and subcutaneous tunnel path. A 3cm incision was made at the insertion site. Using the tunneling trocar, a 10cm subcutaneous tunnel was created anteriorly ending approximately 5cm from the axilla. The PleurX catheter was drawn through the tunnel with the polyester cuff positioned 2cm from the exit site.\n\nThe pleural space was entered using Seldinger technique under real-time ultrasound guidance. The 15.5Fr PleurX catheter was advanced over the guidewire and positioned in the posterior pleural space. Good flow confirmed with drainage of 1,200mL of bloody, viscous fluid which was sent for cytology, cell count, and chemistry.\n\nThe catheter was secured with 2-0 silk suture at the exit site. Sterile dressing applied. Chest X-ray obtained showing catheter in good position with improved aeration of right lung base, no pneumothorax.\n\nSPECIMENS: Pleural fluid to cytology, cell count, LDH, protein, glucose\n\nCOMPLICATIONS: None\n\nESTIMATED BLOOD LOSS: Minimal (<10mL)\n\nDISPOSITION: Discharge home with PleurX drainage supplies and home health nursing arranged for drainage teaching and supervision.\n\nFOLLOW-UP: Return to clinic in 1 week for wound check and drainage log review.\n\nAmanda Rodriguez, MD, FCCP\nInterventional Pulmonology",
     "cpt_codes": [
       32550
     ],
@@ -95,24 +95,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 9,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE NOTE\n\nPatient: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (<DATE_TIME>)\nDate of Service: <DATE_TIME>\nLocation: University Medical Center, <LOCATION>, AZ\n\nAttending Physician: Dr. James Park, <LOCATION>\nFellow: Dr. Lisa Tran, <LOCATION> (PGY-6)\nRN: <PERSON>, RN\nRT: <PERSON>, RRT\n\nINDICATION: Refractory hepatic hydrothorax in patient with decompensated cirrhosis (Child-Pugh C, MELD 24). Prior TIPS revision unsuccessful. Requiring twice-<DATE_TIME> thoracenteses with significant symptom burden. Not a liver transplant candidate.\n\nPREOPERATIVE DIAGNOSIS: Right hepatic hydrothorax\n\nPOSTOPERATIVE DIAGNOSIS: Same\n\nPROCEDURE: Tunneled indwelling pleural catheter placement, right hemithorax\n\nANESTHESIA: Moderate sedation (Midazolam 2mg IV, Fentanyl 75mcg IV) with local <LOCATION> (1% lidocaine with epinephrine)\n\nPROCEDURE NARRATIVE:\nPatient positioned in left lateral decubitus. Standard surgical timeout completed confirming right side, procedure, and patient identity. Pre-procedure ultrasound demonstrated large right pleural effusion with no loculations. Optimal entry point identified at 6th intercostal space, posterior axillary line.\n\nThe skin was prepped with chlorhexidine and draped in sterile fashion. Local <LOCATION> was administered along the proposed insertion tract and subcutaneous tunnel. A 15mm skin incision was made at the insertion point.\n\nUsing the Rocket Medical tunneling system, a 12cm subcutaneous tunnel was created from the insertion site anteriorly toward the anterior axillary line. The Rocket IPC was threaded through the tunnel with the Dacron cuff positioned approximately 2cm from the exit site to promote tissue ingrowth.\n\nThe pleural space was accessed using modified Seldinger technique. Real-time ultrasound confirmed the guidewire position in the pleural space. The dilator and peel-away sheath were introduced, and the 15.5Fr Rocket catheter was advanced into the pleural space. The position was confirmed with aspiration of clear, straw-colored fluid.\n\n1,800mL of transudative-appearing fluid was drained. Pleural <PERSON> sent for cell count, chemistry, culture, and cytology. The catheter was secured with 2-0 Prolene sutures. Exit site dressed with sterile gauze and <LOCATION>.\n\nPost-procedure CXR showed catheter tip in dependent right hemithorax, significant improvement in effusion, no pneumothorax.\n\nFINDINGS:\n- Large free-flowing right pleural effusion\n- Transudative appearing fluid\n- No loculations or septations\n- Catheter positioned in posterior dependent space\n\nCOMPLICATIONS: None\n\nEBL: <5mL\n\nDISPOSITION: Admitted for <DATE_TIME> observation given hepatic encephalopathy risk with large volume drainage. Home health arranged for <DATE_TIME> drainage (<PERSON> <DATE_TIME>).\n\nFOLLOW-UP: Interventional pulmonology clinic in 2 weeks.\n\n<PERSON> signed by:\nJames Park, <LOCATION>\nLisa Tran, <LOCATION> (Fellow)",
+    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE NOTE\n\nPatient: Robert Kowalski\nMRN: 6957003\nDOB: 11/08/1961 (63 years old)\nDate of Service: 2025-04-17\nLocation: University Medical Center, Phoenix, AZ\n\nAttending Physician: Dr. James Park, MD\nFellow: Dr. Lisa Tran, MD (PGY-6)\nRN: Sarah Mitchell, RN\nRT: David Chen, RRT\n\nINDICATION: Refractory hepatic hydrothorax in patient with decompensated cirrhosis (Child-Pugh C, MELD 24). Prior TIPS revision unsuccessful. Requiring twice-weekly thoracenteses with significant symptom burden. Not a liver transplant candidate.\n\nPREOPERATIVE DIAGNOSIS: Right hepatic hydrothorax\n\nPOSTOPERATIVE DIAGNOSIS: Same\n\nPROCEDURE: Tunneled indwelling pleural catheter placement, right hemithorax\n\nANESTHESIA: Moderate sedation (Midazolam 2mg IV, Fentanyl 75mcg IV) with local anesthesia (1% lidocaine with epinephrine)\n\nPROCEDURE NARRATIVE:\nPatient positioned in left lateral decubitus. Standard surgical timeout completed confirming right side, procedure, and patient identity. Pre-procedure ultrasound demonstrated large right pleural effusion with no loculations. Optimal entry point identified at 6th intercostal space, posterior axillary line.\n\nThe skin was prepped with chlorhexidine and draped in sterile fashion. Local anesthesia was administered along the proposed insertion tract and subcutaneous tunnel. A 15mm skin incision was made at the insertion point.\n\nUsing the Rocket Medical tunneling system, a 12cm subcutaneous tunnel was created from the insertion site anteriorly toward the anterior axillary line. The Rocket IPC was threaded through the tunnel with the Dacron cuff positioned approximately 2cm from the exit site to promote tissue ingrowth.\n\nThe pleural space was accessed using modified Seldinger technique. Real-time ultrasound confirmed the guidewire position in the pleural space. The dilator and peel-away sheath were introduced, and the 15.5Fr Rocket catheter was advanced into the pleural space. The position was confirmed with aspiration of clear, straw-colored fluid.\n\n1,800mL of transudative-appearing fluid was drained. Pleural fluid samples sent for cell count, chemistry, culture, and cytology. The catheter was secured with 2-0 Prolene sutures. Exit site dressed with sterile gauze and Tegaderm.\n\nPost-procedure CXR showed catheter tip in dependent right hemithorax, significant improvement in effusion, no pneumothorax.\n\nFINDINGS:\n- Large free-flowing right pleural effusion\n- Transudative appearing fluid\n- No loculations or septations\n- Catheter positioned in posterior dependent space\n\nCOMPLICATIONS: None\n\nEBL: <5mL\n\nDISPOSITION: Admitted for overnight observation given hepatic encephalopathy risk with large volume drainage. Home health arranged for daily drainage (max 1000mL/day).\n\nFOLLOW-UP: Interventional pulmonology clinic in 2 weeks.\n\nElectronically signed by:\nJames Park, MD\nLisa Tran, MD (Fellow)",
     "cpt_codes": [
       32550
     ],
@@ -208,37 +194,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 22,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "PERSON",
-        "PERSON",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "PERSON",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "PERSON",
-        "DATE_TIME",
-        "PERSON",
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON>\n\nDATE: <DATE_TIME>\nPATIENT: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME>\nAGE: <DATE_TIME>\nSEX: Female\n\nATTENDING: Dr. Michael Santos, <LOCATION>\nLOCATION: Cardiac Pavilion, Johns Hopkins Hospital, <LOCATION>, <LOCATION>\n\nPREOPERATIVE DIAGNOSIS:\n1. Recurrent bilateral pleural effusions\n2. New York Heart Association Class IV heart failure with reduced ejection fraction (EF 15%)\n3. Not candidate for mechanical circulatory support or transplant\n\nPOSTOPERATIVE DIAGNOSIS: Same\n\nPROCEDURE: Left-sided tunneled indwelling pleural catheter (PleurX) placement\n\nINDICATION: This <DATE_TIME> female with end-stage heart failure has required hospitalization 6 times in <DATE_TIME> for symptomatic bilateral pleural effusions despite maximum medical therapy. After multidisciplinary discussion including heart failure, palliative care, and IP, decision was made for left-sided IPC given larger effusion on left. Patient and family understand palliative intent.\n\nANESTHESIA: Local anesthesia only (2% lidocaine) - patient unable to tolerate any sedation given severity of cardiac dysfunction.\n\nPROCEDURE:\nPatient positioned semi-recumbent at 45 degrees (unable to lay flat due to orthopnea). Timeout completed. Ultrasound identified large left pleural effusion. Skin marked at 6th intercostal space, anterior axillary line.\n\nSkin prepped with ChloraPrep. Local <LOCATION> infiltrated liberally along proposed tract. 3cm skin incision made. Tunneling device used to create 8cm subcutaneous tunnel anteriorly. PleurX 15.5Fr catheter threaded through tunnel.\n\nPleural space entered using Seldinger technique under ultrasound guidance. Catheter advanced without difficulty. Initial drainage of 800mL clear yellow fluid - drainage stopped per institutional protocol for heart failure patients (max 500-1000mL to avoid re-expansion issues and volume shifts).\n\nCatheter secured with suture. Dry sterile dressing applied. Post-procedure portable CXR confirms good catheter position, no pneumothorax.\n\nFluid sent for: Cell count, chemistry, NT-proBNP\n\nESTIMATED BLOOD LOSS: Minimal\n\nCOMPLICATIONS: None. Patient tolerated procedure well with no hemodynamic changes.\n\nPLAN:\n1. <DATE_TIME> telemetry monitoring\n2. Home health for IPC drainage teaching\n3. Drainage frequency to be determined based on symptoms - anticipate every <DATE_TIME>\n4. Continue diuretics and guideline-directed medical therapy\n5. Follow-up with heart failure team and IP clinic\n\nDr. Michael Santos, <LOCATION>\nInterventional Pulmonology",
+    "note_text": "PROCEDURE NOTE - INTERVENTIONAL PULMONOLOGY\n\nDATE: 2025-01-19\nPATIENT: Dorothy Williams\nMRN: 1553685\nDOB: 02/14/1940\nAGE: 84 years old\nSEX: Female\n\nATTENDING: Dr. Michael Santos, MD\nLOCATION: Cardiac Pavilion, Johns Hopkins Hospital, Baltimore, MD\n\nPREOPERATIVE DIAGNOSIS:\n1. Recurrent bilateral pleural effusions\n2. New York Heart Association Class IV heart failure with reduced ejection fraction (EF 15%)\n3. Not candidate for mechanical circulatory support or transplant\n\nPOSTOPERATIVE DIAGNOSIS: Same\n\nPROCEDURE: Left-sided tunneled indwelling pleural catheter (PleurX) placement\n\nINDICATION: This 84-year-old female with end-stage heart failure has required hospitalization 6 times in the past 3 months for symptomatic bilateral pleural effusions despite maximum medical therapy. After multidisciplinary discussion including heart failure, palliative care, and IP, decision was made for left-sided IPC given larger effusion on left. Patient and family understand palliative intent.\n\nANESTHESIA: Local anesthesia only (2% lidocaine) - patient unable to tolerate any sedation given severity of cardiac dysfunction.\n\nPROCEDURE:\nPatient positioned semi-recumbent at 45 degrees (unable to lay flat due to orthopnea). Timeout completed. Ultrasound identified large left pleural effusion. Skin marked at 6th intercostal space, anterior axillary line.\n\nSkin prepped with ChloraPrep. Local anesthesia infiltrated liberally along proposed tract. 3cm skin incision made. Tunneling device used to create 8cm subcutaneous tunnel anteriorly. PleurX 15.5Fr catheter threaded through tunnel.\n\nPleural space entered using Seldinger technique under ultrasound guidance. Catheter advanced without difficulty. Initial drainage of 800mL clear yellow fluid - drainage stopped per institutional protocol for heart failure patients (max 500-1000mL to avoid re-expansion issues and volume shifts).\n\nCatheter secured with suture. Dry sterile dressing applied. Post-procedure portable CXR confirms good catheter position, no pneumothorax.\n\nFluid sent for: Cell count, chemistry, NT-proBNP\n\nESTIMATED BLOOD LOSS: Minimal\n\nCOMPLICATIONS: None. Patient tolerated procedure well with no hemodynamic changes.\n\nPLAN:\n1. Overnight telemetry monitoring\n2. Home health for IPC drainage teaching\n3. Drainage frequency to be determined based on symptoms - anticipate every 2-3 days\n4. Continue diuretics and guideline-directed medical therapy\n5. Follow-up with heart failure team and IP clinic\n\nDr. Michael Santos, MD\nInterventional Pulmonology",
     "cpt_codes": [
       32550
     ],
@@ -338,30 +297,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 15,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nPatient: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (<DATE_TIME>)\nDate: <DATE_TIME>\nLocation: University of Colorado Hospital, <PERSON>, CO\n\nAttending: Dr. Rachel Kim, <LOCATION>\nFellow: Dr. Ahmed Hassan, <LOCATION> (PGY-5)\n\nPREOPERATIVE DIAGNOSIS: Recurrent post-intubation tracheal stenosis\n\nPOSTOPERATIVE DIAGNOSIS: Same - Grade III tracheal stenosis, 8mm web-like\n\nPROCEDURE:\n1. Rigid bronchoscopy\n2. Balloon dilation of tracheal stenosis\n3. Biodegradable tracheal stent placement (BD-Stent, Merit Endotek)\n\nINDICATION: <DATE_TIME> male with history of prolonged intubation (28 days) for ARDS secondary to COVID-19 in <DATE_TIME>. Developed tracheal stenosis requiring multiple dilations. Has failed 3 prior balloon dilations with recurrence within <DATE_TIME>. After discussion of options including T-tube, surgical resection, and biodegradable stent, patient elected for biodegradable stent trial given relatively young age and desire to avoid permanent stent or surgery.\n\nANESTHESIA: Total intravenous anesthesia (propofol/remifentanil)\n\nPROCEDURE DETAILS:\nUnder TIVA, rigid bronchoscopy performed using 12mm Storz ventilating rigid bronchoscope. Airway anatomy:\n- Subglottic region: Normal\n- Tracheal stenosis: Located 2.5cm below vocal cords, approximately 8mm thick web-like stenosis narrowing the lumen to 5mm (<LOCATION>, Myer-Cotton)\n- Distal trachea and bilateral mainstem: Normal\n\nBalloon dilation performed using 15mm x 40mm CRE balloon (Boston Scientific). Balloon inflated to 8 ATM x 60 seconds x 3 inflations with radial fracturing of the stenosis observed. Post-dilation diameter approximately 12mm.\n\nMerit <PERSON> (18mm diameter x 30mm length, polydioxanone-based) selected based on tracheal measurements. Stent delivery system advanced through the rigid bronchoscope and deployed under direct visualization with the proximal and distal markers positioned 1cm beyond the stenosis margins. Stent expanded fully to approximately 16mm. Confirmation of good apposition to tracheal wall.\n\nPost-procedure bronchoscopy confirmed patent airway through the stent with no evidence of stent migration. Mucosa intact with minimal bleeding from dilation site.\n\nSPECIMENS: None\n\nCOMPLICATIONS: None\n\nEBL: <5mL\n\nDISPOSITION: <PERSON> recovery, discharge home same day with post-procedure instructions. No activity restrictions. Soft diet x 24 hours.\n\nFOLLOW-UP:\n- Bronchoscopy in 8 weeks for stent assessment\n- BD-Stent expected to degrade over <DATE_TIME>\n- CT airway in <DATE_TIME>\n\nDr. Rachel Kim, <LOCATION>\nDr. Ahmed Hassan, <LOCATION>",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nPatient: Thomas Henderson\nMRN: 1005321\nDOB: 08/30/1978 (46 years old)\nDate: 2025-10-28\nLocation: University of Colorado Hospital, Aurora, CO\n\nAttending: Dr. Rachel Kim, MD\nFellow: Dr. Ahmed Hassan, MD (PGY-5)\n\nPREOPERATIVE DIAGNOSIS: Recurrent post-intubation tracheal stenosis\n\nPOSTOPERATIVE DIAGNOSIS: Same - Grade III tracheal stenosis, 8mm web-like\n\nPROCEDURE:\n1. Rigid bronchoscopy\n2. Balloon dilation of tracheal stenosis\n3. Biodegradable tracheal stent placement (BD-Stent, Merit Endotek)\n\nINDICATION: 46-year-old male with history of prolonged intubation (28 days) for ARDS secondary to COVID-19 in 2021. Developed tracheal stenosis requiring multiple dilations. Has failed 3 prior balloon dilations with recurrence within 4-6 weeks. After discussion of options including T-tube, surgical resection, and biodegradable stent, patient elected for biodegradable stent trial given relatively young age and desire to avoid permanent stent or surgery.\n\nANESTHESIA: Total intravenous anesthesia (propofol/remifentanil)\n\nPROCEDURE DETAILS:\nUnder TIVA, rigid bronchoscopy performed using 12mm Storz ventilating rigid bronchoscope. Airway anatomy:\n- Subglottic region: Normal\n- Tracheal stenosis: Located 2.5cm below vocal cords, approximately 8mm thick web-like stenosis narrowing the lumen to 5mm (Grade III, Myer-Cotton)\n- Distal trachea and bilateral mainstem: Normal\n\nBalloon dilation performed using 15mm x 40mm CRE balloon (Boston Scientific). Balloon inflated to 8 ATM x 60 seconds x 3 inflations with radial fracturing of the stenosis observed. Post-dilation diameter approximately 12mm.\n\nMerit Endotek BD-Stent (18mm diameter x 30mm length, polydioxanone-based) selected based on tracheal measurements. Stent delivery system advanced through the rigid bronchoscope and deployed under direct visualization with the proximal and distal markers positioned 1cm beyond the stenosis margins. Stent expanded fully to approximately 16mm. Confirmation of good apposition to tracheal wall.\n\nPost-procedure bronchoscopy confirmed patent airway through the stent with no evidence of stent migration. Mucosa intact with minimal bleeding from dilation site.\n\nSPECIMENS: None\n\nCOMPLICATIONS: None\n\nEBL: <5mL\n\nDISPOSITION: PACU recovery, discharge home same day with post-procedure instructions. No activity restrictions. Soft diet x 24 hours.\n\nFOLLOW-UP:\n- Bronchoscopy in 8 weeks for stent assessment\n- BD-Stent expected to degrade over 4-6 months\n- CT airway in 3 months\n\nDr. Rachel Kim, MD\nDr. Ahmed Hassan, MD",
     "cpt_codes": [
       31631,
       31630
@@ -471,33 +410,10 @@
         "31630"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 18,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "PERSON",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "PERSON",
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE REPORT - INTERVENTIONAL PULMONOLOGY\n\nPATIENT: <PERSON>\nMRN: <MRN>  \nDOB: <DATE_TIME>\nAGE: 69\nDATE OF PROCEDURE: <DATE_TIME>\n\nSURGEON: Dr. David Chen, <LOCATION>\nASSISTANT: Dr. Katherine Wong, <LOCATION> (IP Fellow)\nANESTHESIOLOGIST: Dr. Paul Martinez, <LOCATION>\nFACILITY: Mayo Clinic, <LOCATION>, MN\n\nPREOPERATIVE DIAGNOSIS: Fractured right mainstem bronchus self-expanding metallic stent (SEMS)\n\nPOSTOPERATIVE DIAGNOSIS: Same; stent granulation tissue ingrowth\n\nPROCEDURES PERFORMED:\n1. Rigid bronchoscopy with stent removal\n2. Bronchoscopy with destruction of endobronchial granulation tissue using APC\n\nINDICATION: <DATE_TIME> male with history of esophageal cancer status post esophagectomy complicated by recurrent stricture of airway fistula <DATE_TIME> for which a covered SEMS was placed in the right mainstem bronchus. Recent CT showed stent fracture with proximal wire protruding into the trachea. Patient symptomatic with worsening cough and hemoptysis.\n\nANESTHESIA: General <LOCATION>, jet ventilation\n\nDESCRIPTION OF PROCEDURE:\nUnder general <LOCATION>, the patient was intubated with a 12mm Bryan-Dumon ventilating rigid bronchoscope. Examination of the trachea revealed the fractured proximal portion of the right mainstem SEMS protruding approximately 1.5cm into the distal trachea. The fractured wire ends were sharp and had caused mucosal injury with surrounding granulation tissue formation.\n\nA flexible bronchoscope was passed through the rigid scope to examine beyond the stent. The stent lumen was narrowed by approximately 40% due to granulation tissue ingrowth at the proximal end. The distal right bronchus intermedius appeared patent.\n\nThe granulation tissue was treated with APC (ERBE VIO, 30W, Effect 2) at the proximal stent margin, achieving adequate hemostasis and improving visualization.\n\nUsing a combination of rigid optical forceps and alligator forceps, the proximal edge of the stent was grasped. The stent was collapsed using the forceps in a rolling fashion and withdrawn en bloc through the rigid bronchoscope.\n\nInspection of the airway post-removal revealed:\n- Mild residual granulation tissue at the former stent site (treated with APC)\n- No perforation or significant bleeding\n- Bronchus intermedius patent\n- Right upper, middle, and lower lobe orifices patent\n\nFinal inspection showed no debris, no significant bleeding, patent airways bilaterally. The patient was extubated and transferred to PACU in stable condition.\n\nSPECIMENS: None (stent sent to pathology for documentation)\n\nCOMPLICATIONS: None\n\nEBL: 15mL\n\nDISPOSITION: Same day discharge anticipated. Follow-up bronchoscopy in 6 weeks to assess granulation tissue recurrence.\n\nDr. David Chen, <LOCATION>\nDr. Katherine Wong, <LOCATION>",
+    "note_text": "OPERATIVE REPORT - INTERVENTIONAL PULMONOLOGY\n\nPATIENT: William O'Brien\nMRN: 1808730  \nDOB: 03/17/1955\nAGE: 69\nDATE OF PROCEDURE: 2025-04-30\n\nSURGEON: Dr. David Chen, MD\nASSISTANT: Dr. Katherine Wong, MD (IP Fellow)\nANESTHESIOLOGIST: Dr. Paul Martinez, MD\nFACILITY: Mayo Clinic, Rochester, MN\n\nPREOPERATIVE DIAGNOSIS: Fractured right mainstem bronchus self-expanding metallic stent (SEMS)\n\nPOSTOPERATIVE DIAGNOSIS: Same; stent granulation tissue ingrowth\n\nPROCEDURES PERFORMED:\n1. Rigid bronchoscopy with stent removal\n2. Bronchoscopy with destruction of endobronchial granulation tissue using APC\n\nINDICATION: 69-year-old male with history of esophageal cancer status post esophagectomy complicated by recurrent stricture of airway fistula 18 months ago for which a covered SEMS was placed in the right mainstem bronchus. Recent CT showed stent fracture with proximal wire protruding into the trachea. Patient symptomatic with worsening cough and hemoptysis.\n\nANESTHESIA: General anesthesia, jet ventilation\n\nDESCRIPTION OF PROCEDURE:\nUnder general anesthesia, the patient was intubated with a 12mm Bryan-Dumon ventilating rigid bronchoscope. Examination of the trachea revealed the fractured proximal portion of the right mainstem SEMS protruding approximately 1.5cm into the distal trachea. The fractured wire ends were sharp and had caused mucosal injury with surrounding granulation tissue formation.\n\nA flexible bronchoscope was passed through the rigid scope to examine beyond the stent. The stent lumen was narrowed by approximately 40% due to granulation tissue ingrowth at the proximal end. The distal right bronchus intermedius appeared patent.\n\nThe granulation tissue was treated with APC (ERBE VIO, 30W, Effect 2) at the proximal stent margin, achieving adequate hemostasis and improving visualization.\n\nUsing a combination of rigid optical forceps and alligator forceps, the proximal edge of the stent was grasped. The stent was collapsed using the forceps in a rolling fashion and withdrawn en bloc through the rigid bronchoscope.\n\nInspection of the airway post-removal revealed:\n- Mild residual granulation tissue at the former stent site (treated with APC)\n- No perforation or significant bleeding\n- Bronchus intermedius patent\n- Right upper, middle, and lower lobe orifices patent\n\nFinal inspection showed no debris, no significant bleeding, patent airways bilaterally. The patient was extubated and transferred to PACU in stable condition.\n\nSPECIMENS: None (stent sent to pathology for documentation)\n\nCOMPLICATIONS: None\n\nEBL: 15mL\n\nDISPOSITION: Same day discharge anticipated. Follow-up bronchoscopy in 6 weeks to assess granulation tissue recurrence.\n\nDr. David Chen, MD\nDr. Katherine Wong, MD",
     "cpt_codes": [
       31635,
       31641
@@ -606,29 +522,10 @@
         "31641"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 14,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nDate: <DATE_TIME>\nPatient: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (<DATE_TIME>)\n\nAttending Physician: Dr. Samuel Johnson, <LOCATION>\nLocation: Community Medical Center, <LOCATION>, CO\n\nINDICATION: Diffuse bilateral reticular opacities on CT chest, clinical concern for hypersensitivity pneumonitis vs. idiopathic pulmonary fibrosis. Pulmonary function shows restrictive pattern with DLCO 52% predicted.\n\nPREOPERATIVE DIAGNOSIS: Interstitial lung disease, undefined\n\nPOSTOPERATIVE DIAGNOSIS: Same (pending pathology)\n\nPROCEDURE: \n1. Flexible bronchoscopy with bronchoalveolar lavage\n2. Fluoroscopic-guided transbronchial lung biopsy, right lower lobe\n3. Fluoroscopic-guided transbronchial lung biopsy, left lower lobe\n\nANESTHESIA: Moderate sedation (Midazolam 4mg, Fentanyl 100mcg)\n\nPROCEDURE DETAILS:\nFollowing IV sedation with continuous monitoring, flexible bronchoscope (Olympus BF-1TH190) advanced through the oropharynx. Vocal cords normal, trachea patent. All segmental bronchi visualized and appeared normal with no endobronchial lesions.\n\nAIRWAY INSPECTION: Complete inspection of airways to subsegmental level bilaterally. No mucosal abnormalities, masses, or obstruction.\n\nBAL: Performed in the right middle lobe (RB4) using 3 x 60mL aliquots of sterile saline. Return approximately 90mL of slightly cloudy fluid. Sent for cell count with differential, cultures (bacterial, fungal, AFB), and cytology.\n\nTRANSBRONCHIAL BIOPSIES:\nUsing fluoroscopic guidance (C-arm positioned for AP view), the bronchoscope was advanced into the right lower lobe basal segments. The forceps (2.0mm alligator-type) were advanced under fluoroscopic visualization, positioning the forceps approximately 1-2cm from the pleural surface. 6 transbronchial biopsies were obtained from RB9 and RB10.\n\nThe bronchoscope was then repositioned to the left lower lobe. Under fluoroscopy, 5 transbronchial biopsies were obtained from the left lower lobe (LB9-10), again positioning 1-2cm from the pleura.\n\nAfter biopsies, the biopsy sites were irrigated with cold saline. Bleeding was minimal and self-limited. Final bronchoscopic inspection showed no significant bleeding or airway abnormality.\n\nFLUOROSCOPY TIME: 2.3 minutes\nRADIATION DOSE: 38 mGy·cm²\n\nSPECIMENS:\n- BAL: Cytology, cell count with diff, bacterial/fungal/AFB culture\n- TBLB RLL (6 specimens): Surgical pathology\n- TBLB LLL (5 specimens): Surgical pathology\n\nCOMPLICATIONS: None. No pneumothorax on post-procedure CXR.\n\nEBL: <10mL\n\nDISPOSITION: Recovery in PACU x 2 hours. Post-procedure CXR negative for pneumothorax. Discharge home with standard bronchoscopy precautions.\n\nFOLLOW-UP: Return to clinic in 1 week for pathology results. If non-diagnostic, will discuss transbronchial cryobiopsy vs. surgical lung biopsy.\n\nSamuel Johnson, <LOCATION>\nPulmonary & Critical Care Medicine",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nDate: 2025-03-07\nPatient: Maria Garcia\nMRN: 5517703\nDOB: 07/22/1968 (56 years old)\n\nAttending Physician: Dr. Samuel Johnson, MD\nLocation: Community Medical Center, Denver, CO\n\nINDICATION: Diffuse bilateral reticular opacities on CT chest, clinical concern for hypersensitivity pneumonitis vs. idiopathic pulmonary fibrosis. Pulmonary function shows restrictive pattern with DLCO 52% predicted.\n\nPREOPERATIVE DIAGNOSIS: Interstitial lung disease, undefined\n\nPOSTOPERATIVE DIAGNOSIS: Same (pending pathology)\n\nPROCEDURE: \n1. Flexible bronchoscopy with bronchoalveolar lavage\n2. Fluoroscopic-guided transbronchial lung biopsy, right lower lobe\n3. Fluoroscopic-guided transbronchial lung biopsy, left lower lobe\n\nANESTHESIA: Moderate sedation (Midazolam 4mg, Fentanyl 100mcg)\n\nPROCEDURE DETAILS:\nFollowing IV sedation with continuous monitoring, flexible bronchoscope (Olympus BF-1TH190) advanced through the oropharynx. Vocal cords normal, trachea patent. All segmental bronchi visualized and appeared normal with no endobronchial lesions.\n\nAIRWAY INSPECTION: Complete inspection of airways to subsegmental level bilaterally. No mucosal abnormalities, masses, or obstruction.\n\nBAL: Performed in the right middle lobe (RB4) using 3 x 60mL aliquots of sterile saline. Return approximately 90mL of slightly cloudy fluid. Sent for cell count with differential, cultures (bacterial, fungal, AFB), and cytology.\n\nTRANSBRONCHIAL BIOPSIES:\nUsing fluoroscopic guidance (C-arm positioned for AP view), the bronchoscope was advanced into the right lower lobe basal segments. The forceps (2.0mm alligator-type) were advanced under fluoroscopic visualization, positioning the forceps approximately 1-2cm from the pleural surface. 6 transbronchial biopsies were obtained from RB9 and RB10.\n\nThe bronchoscope was then repositioned to the left lower lobe. Under fluoroscopy, 5 transbronchial biopsies were obtained from the left lower lobe (LB9-10), again positioning 1-2cm from the pleura.\n\nAfter biopsies, the biopsy sites were irrigated with cold saline. Bleeding was minimal and self-limited. Final bronchoscopic inspection showed no significant bleeding or airway abnormality.\n\nFLUOROSCOPY TIME: 2.3 minutes\nRADIATION DOSE: 38 mGy\u00b7cm\u00b2\n\nSPECIMENS:\n- BAL: Cytology, cell count with diff, bacterial/fungal/AFB culture\n- TBLB RLL (6 specimens): Surgical pathology\n- TBLB LLL (5 specimens): Surgical pathology\n\nCOMPLICATIONS: None. No pneumothorax on post-procedure CXR.\n\nEBL: <10mL\n\nDISPOSITION: Recovery in PACU x 2 hours. Post-procedure CXR negative for pneumothorax. Discharge home with standard bronchoscopy precautions.\n\nFOLLOW-UP: Return to clinic in 1 week for pathology results. If non-diagnostic, will discuss transbronchial cryobiopsy vs. surgical lung biopsy.\n\nSamuel Johnson, MD\nPulmonary & Critical Care Medicine",
     "cpt_codes": [
       31628,
       31632,
@@ -758,23 +655,10 @@
         "31624"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 8,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY REPORT\n\nPatient: <PERSON>\nMRN: <MRN>\nDate of Birth: <DATE_TIME>\nDate of Procedure: <DATE_TIME>\nLocation: Cleveland Clinic, <LOCATION>, OH\n\nAttending: Dr. Erin McCarthy, <LOCATION>\nFellow: Dr. Alex Rivera, <LOCATION> (PGY-7)\nRN: <PERSON>\nRT: <PERSON>\n\nINDICATION: <DATE_TIME> African American male with bilateral hilar lymphadenopathy and scattered bilateral upper lobe perilymphatic nodules on CT chest. Clinical presentation consistent with pulmonary sarcoidosis. Bronchoscopy for tissue diagnosis.\n\nPREOPERATIVE DIAGNOSIS: Suspected pulmonary sarcoidosis, Stage II\n\nPOSTOPERATIVE DIAGNOSIS: Same (pending pathology)\n\nPROCEDURE:\n1. Flexible bronchoscopy\n2. Bronchoalveolar lavage\n3. Fluoroscopic-guided transbronchial lung biopsy, right upper lobe\n\nSEDATION: Moderate sedation (Versed 3mg, Fentanyl 75mcg) with topical lidocaine\n\nPROCEDURE NOTE:\nPatient was sedated and bronchoscope introduced via oral route. Airway examination revealed normal vocal cords, patent trachea, and normal-appearing carina. All visible airways were free of endobronchial abnormalities. Mucosa appeared normal throughout.\n\nBAL was performed in the right middle lobe using 150mL sterile saline (3 x 50mL). Approximately 75mL of slightly turbid fluid was recovered and sent for cell count, differential, CD4/CD8 ratio, cultures, and cytology.\n\nFor transbronchial biopsies, the bronchoscope was advanced into the right upper lobe. Using biplanar fluoroscopy (AP and lateral views), the biopsy forceps (standard cup forceps) were advanced into the RUL anterior segment (RB3) and positioned approximately 2cm from the pleural surface. 8 biopsies were obtained from the right upper lobe, targeting areas of perilymphatic nodularity.\n\nEach specimen was placed in formalin and examined visually - multiple fragments appeared adequate in size. Minimal bleeding occurred, controlled with wedge technique. Repeat fluoroscopy at end of procedure showed no pneumothorax.\n\nFLUOROSCOPY DATA:\n- Total fluoro time: 1.8 min\n- DAP: 24 mGy·cm²\n\nSPECIMENS:\n1. BAL - Cell count/diff, CD4/CD8 ratio, bacterial/fungal/AFB cultures, PCP DFA, cytology\n2. TBLB RUL x 8 - Surgical pathology with request for special stains (GMS, AFB)\n\nCOMPLICATIONS: None\n\nESTIMATED BLOOD LOSS: <5mL\n\nPOST-PROCEDURE: Patient recovered well. CXR 2 hours post-procedure showed no pneumothorax. Patient discharged home in stable condition.\n\nIMPRESSION: Airways grossly normal. TBLB and BAL obtained for suspected sarcoidosis workup. Await pathology for non-caseating granulomas and BAL lymphocytosis/elevated CD4:CD8 ratio to confirm diagnosis.\n\nFOLLOW-UP: Return to sarcoidosis clinic in 2 weeks for results.\n\nErin McCarthy, <LOCATION>\nAlex Rivera, <LOCATION>",
+    "note_text": "BRONCHOSCOPY REPORT\n\nPatient: James Wilson\nMRN: 2866345\nDate of Birth: 11/03/1985\nDate of Procedure: 2025-07-15\nLocation: Cleveland Clinic, Cleveland, OH\n\nAttending: Dr. Erin McCarthy, MD\nFellow: Dr. Alex Rivera, MD (PGY-7)\nRN: Jennifer Adams\nRT: Marcus Thompson\n\nINDICATION: 39-year-old African American male with bilateral hilar lymphadenopathy and scattered bilateral upper lobe perilymphatic nodules on CT chest. Clinical presentation consistent with pulmonary sarcoidosis. Bronchoscopy for tissue diagnosis.\n\nPREOPERATIVE DIAGNOSIS: Suspected pulmonary sarcoidosis, Stage II\n\nPOSTOPERATIVE DIAGNOSIS: Same (pending pathology)\n\nPROCEDURE:\n1. Flexible bronchoscopy\n2. Bronchoalveolar lavage\n3. Fluoroscopic-guided transbronchial lung biopsy, right upper lobe\n\nSEDATION: Moderate sedation (Versed 3mg, Fentanyl 75mcg) with topical lidocaine\n\nPROCEDURE NOTE:\nPatient was sedated and bronchoscope introduced via oral route. Airway examination revealed normal vocal cords, patent trachea, and normal-appearing carina. All visible airways were free of endobronchial abnormalities. Mucosa appeared normal throughout.\n\nBAL was performed in the right middle lobe using 150mL sterile saline (3 x 50mL). Approximately 75mL of slightly turbid fluid was recovered and sent for cell count, differential, CD4/CD8 ratio, cultures, and cytology.\n\nFor transbronchial biopsies, the bronchoscope was advanced into the right upper lobe. Using biplanar fluoroscopy (AP and lateral views), the biopsy forceps (standard cup forceps) were advanced into the RUL anterior segment (RB3) and positioned approximately 2cm from the pleural surface. 8 biopsies were obtained from the right upper lobe, targeting areas of perilymphatic nodularity.\n\nEach specimen was placed in formalin and examined visually - multiple fragments appeared adequate in size. Minimal bleeding occurred, controlled with wedge technique. Repeat fluoroscopy at end of procedure showed no pneumothorax.\n\nFLUOROSCOPY DATA:\n- Total fluoro time: 1.8 min\n- DAP: 24 mGy\u00b7cm\u00b2\n\nSPECIMENS:\n1. BAL - Cell count/diff, CD4/CD8 ratio, bacterial/fungal/AFB cultures, PCP DFA, cytology\n2. TBLB RUL x 8 - Surgical pathology with request for special stains (GMS, AFB)\n\nCOMPLICATIONS: None\n\nESTIMATED BLOOD LOSS: <5mL\n\nPOST-PROCEDURE: Patient recovered well. CXR 2 hours post-procedure showed no pneumothorax. Patient discharged home in stable condition.\n\nIMPRESSION: Airways grossly normal. TBLB and BAL obtained for suspected sarcoidosis workup. Await pathology for non-caseating granulomas and BAL lymphocytosis/elevated CD4:CD8 ratio to confirm diagnosis.\n\nFOLLOW-UP: Return to sarcoidosis clinic in 2 weeks for results.\n\nErin McCarthy, MD\nAlex Rivera, MD",
     "cpt_codes": [
       31628,
       31624
@@ -900,27 +784,10 @@
         "31624"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 12,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "PERSON",
-        "PERSON",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nDate: <DATE_TIME>\nPatient: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (<DATE_TIME>)\n\nAttending: Dr. Jennifer Liu, <LOCATION>\nLocation: VA Medical Center, <LOCATION>, CA\n\nINDICATION: <DATE_TIME> male with 30 pack-year smoking history presenting with <DATE_TIME> history of moderate hemoptysis (<DATE_TIME>). CT chest showed bilateral upper lobe bronchiectasis and tree-in-bud opacities. <PERSON> cultures pending. Bronchoscopy for airway inspection and clearance of blood/secretions.\n\nPREOPERATIVE DIAGNOSIS: Hemoptysis, likely infectious etiology vs bronchiectasis\n\nPOSTOPERATIVE DIAGNOSIS: Diffuse bronchiectasis with mucopurulent secretions; no endobronchial lesion or active bleeding source identified\n\nPROCEDURE: Diagnostic flexible bronchoscopy with therapeutic suctioning\n\nSEDATION: Moderate sedation (Midazolam 3mg IV, Fentanyl 50mcg IV)\n\nPROCEDURE DESCRIPTION:\nThe patient was sedated and the flexible bronchoscope (Olympus BF-P190) was introduced via the oropharynx. The vocal cords appeared normal without lesions or edema. The trachea was patent with normal mucosa. Carina was sharp.\n\nAIRWAY FINDINGS:\n- Right mainstem: Patent. Old blood coating the mucosa.\n- Right upper lobe: Multiple segments with thick mucopurulent secretions and old blood. Significant bronchiectatic changes. No endobronchial lesions. No active bleeding visualized.\n- Bronchus intermedius: Patent with mild inflammation\n- Right middle lobe: Mucopurulent secretions, no masses\n- Right lower lobe: Bronchiectatic changes, thick secretions\n- Left mainstem: Patent, old blood noted\n- Left upper lobe: Similar bronchiectatic changes with mucopurulent secretions. No tumor or active bleeding.\n- Lingula: Mild secretions\n- Left lower lobe: Bronchiectasis, mucopurulent secretions, no source of bleeding identified\n\nTHERAPEUTIC INTERVENTION:\nExtensive suctioning performed throughout all visualized airways. Large quantities of thick mucopurulent secretions and old blood were cleared from bilateral bronchi. No single bleeding source could be identified - the hemoptysis appears to be diffuse from inflamed bronchiectatic airways.\n\nNo biopsy was performed as no discrete lesion identified. No BAL performed as secretions already sent from suctioning.\n\nSPECIMENS: \n- Bronchial aspirate/secretions: Bacterial culture, fungal culture, AFB culture, cytology\n\nCOMPLICATIONS: None. No active bleeding during or after procedure.\n\nEBL: Trace\n\nPOST-PROCEDURE: Patient tolerated well. No respiratory distress. CXR unchanged from pre-procedure.\n\nIMPRESSION & PLAN:\n1. Diffuse bilateral bronchiectasis with mucopurulent secretions - no discrete bleeding source identified\n2. Hemoptysis likely from diffuse bronchiectatic mucosal inflammation with superimposed infection\n3. No endobronchial malignancy identified\n4. Continue empiric antibiotics pending cultures\n5. <PERSON> hygiene with chest physiotherapy\n6. Follow-up in 2 weeks; consider repeat CT if hemoptysis persists\n\nDr. Jennifer Liu, <LOCATION>\nPulmonary/Critical Care",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nDate: 2025-09-28\nPatient: Robert Martinez\nMRN: 2844661\nDOB: 04/15/1971 (53 years old)\n\nAttending: Dr. Jennifer Liu, MD\nLocation: VA Medical Center, San Diego, CA\n\nINDICATION: 53-year-old male with 30 pack-year smoking history presenting with 3-day history of moderate hemoptysis (approximately 100mL/day). CT chest showed bilateral upper lobe bronchiectasis and tree-in-bud opacities. Sputum cultures pending. Bronchoscopy for airway inspection and clearance of blood/secretions.\n\nPREOPERATIVE DIAGNOSIS: Hemoptysis, likely infectious etiology vs bronchiectasis\n\nPOSTOPERATIVE DIAGNOSIS: Diffuse bronchiectasis with mucopurulent secretions; no endobronchial lesion or active bleeding source identified\n\nPROCEDURE: Diagnostic flexible bronchoscopy with therapeutic suctioning\n\nSEDATION: Moderate sedation (Midazolam 3mg IV, Fentanyl 50mcg IV)\n\nPROCEDURE DESCRIPTION:\nThe patient was sedated and the flexible bronchoscope (Olympus BF-P190) was introduced via the oropharynx. The vocal cords appeared normal without lesions or edema. The trachea was patent with normal mucosa. Carina was sharp.\n\nAIRWAY FINDINGS:\n- Right mainstem: Patent. Old blood coating the mucosa.\n- Right upper lobe: Multiple segments with thick mucopurulent secretions and old blood. Significant bronchiectatic changes. No endobronchial lesions. No active bleeding visualized.\n- Bronchus intermedius: Patent with mild inflammation\n- Right middle lobe: Mucopurulent secretions, no masses\n- Right lower lobe: Bronchiectatic changes, thick secretions\n- Left mainstem: Patent, old blood noted\n- Left upper lobe: Similar bronchiectatic changes with mucopurulent secretions. No tumor or active bleeding.\n- Lingula: Mild secretions\n- Left lower lobe: Bronchiectasis, mucopurulent secretions, no source of bleeding identified\n\nTHERAPEUTIC INTERVENTION:\nExtensive suctioning performed throughout all visualized airways. Large quantities of thick mucopurulent secretions and old blood were cleared from bilateral bronchi. No single bleeding source could be identified - the hemoptysis appears to be diffuse from inflamed bronchiectatic airways.\n\nNo biopsy was performed as no discrete lesion identified. No BAL performed as secretions already sent from suctioning.\n\nSPECIMENS: \n- Bronchial aspirate/secretions: Bacterial culture, fungal culture, AFB culture, cytology\n\nCOMPLICATIONS: None. No active bleeding during or after procedure.\n\nEBL: Trace\n\nPOST-PROCEDURE: Patient tolerated well. No respiratory distress. CXR unchanged from pre-procedure.\n\nIMPRESSION & PLAN:\n1. Diffuse bilateral bronchiectasis with mucopurulent secretions - no discrete bleeding source identified\n2. Hemoptysis likely from diffuse bronchiectatic mucosal inflammation with superimposed infection\n3. No endobronchial malignancy identified\n4. Continue empiric antibiotics pending cultures\n5. Pulmonary hygiene with chest physiotherapy\n6. Follow-up in 2 weeks; consider repeat CT if hemoptysis persists\n\nDr. Jennifer Liu, MD\nPulmonary/Critical Care",
     "cpt_codes": [
       31622
     ],
@@ -1015,28 +882,10 @@
         "31622"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 13,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "PERSON",
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE REPORT - INTERVENTIONAL PULMONOLOGY / THORACIC SURGERY\n\nDATE: <DATE_TIME>\nPATIENT: <PERSON>\nMRN: <MRN>\nDOB: <PERSON> (<DATE_TIME>)\n\nSURGEONS:\nIP: Dr. Mark Anderson, <LOCATION> (started case)\n<PERSON>: Dr. Sarah Kim, <LOCATION> (completed case after conversion)\n\nLOCATION: Main OR, Emory University Hospital, <LOCATION>, GA\n\nPREOPERATIVE DIAGNOSIS: Right-sided exudative pleural effusion, unknown etiology\n\nPOSTOPERATIVE DIAGNOSIS: Dense pleural adhesions with loculated effusion; trapped lung\n\nPLANNED PROCEDURE: Medical thoracoscopy (pleuroscopy) with pleural biopsy and potential talc poudrage\n\nACTUAL PROCEDURES PERFORMED:\n1. Attempted medical thoracoscopy (aborted)\n2. Conversion to VATS (Video-Assisted Thoracoscopic Surgery)\n3. VATS lysis of adhesions\n4. VATS pleural <PERSON>\n5. Decortication (partial)\n6. Chest tube placement\n\nINDICATION: <DATE_TIME> female with <DATE_TIME> history of progressive dyspnea. CT chest revealed large right pleural effusion with mild enhancement of pleura concerning for malignancy. Thoracentesis x 2 showed exudative effusion with negative cytology. Medical thoracoscopy planned for definitive diagnosis and potential pleurodesis.\n\nANESTHESIA: General anesthesia with double-lumen endotracheal tube (left-sided)\n\nPROCEDURE NARRATIVE:\n\nMEDICAL THORACOSCOPY ATTEMPT (Dr. Anderson):\nPatient positioned in left lateral decubitus. After induction of general <LOCATION> and lung isolation, the right chest was prepped and draped. Ultrasound examination revealed a small pocket of fluid in the mid-axillary line but significant lung adherence to chest wall throughout.\n\nA 2cm incision was made in the 6th intercostal space. Upon blunt dissection into the pleural space, immediate dense adhesions were encountered. The 7mm trocar could not be safely advanced due to extensive lung-to-chest-wall adhesions. A small pocket of loculated fluid (~200mL) was drained but no window could be created for safe pleuroscopy. Multiple attempts at different intercostal spaces (5th, 7th) encountered similar dense adhesions.\n\nDECISION TO CONVERT: After thorough discussion with thoracic surgery colleagues and the patient's family (who had been counseled preoperatively about this possibility), the decision was made to convert to VATS for safe completion of the procedure.\n\nVATS PROCEDURE (Dr. Kim):\nThe incision was extended and a 10mm port placed under direct vision where a small pleural space was identified. Two additional 5mm ports were placed. Dense adhesions were found throughout the hemithorax. Using a combination of blunt dissection, electrocautery, and harmonic scalpel, extensive adhesiolysis was performed over approximately 90 minutes.\n\nFindings:\n- Dense fibrinous adhesions throughout\n- Thickened visceral pleura with trapped lung\n- Nodular thickening of parietal pleura (multiple biopsies taken)\n- Approximately 500mL of loculated, amber-colored fluid drained\n\nMultiple parietal pleural biopsies were obtained from chest wall and diaphragmatic pleura. Partial decortication of the visceral pleura was performed to allow lung expansion, though complete expansion could not be achieved due to chronic entrapment.\n\nA 28Fr chest tube was placed. Negative-pressure water seal established. Lung expansion approximately 70% at end of case.\n\nSPECIMENS:\n- Pleural fluid: Cytology, cell count, chemistry, cultures, adenosine deaminase\n- Pleural biopsies (multiple): Surgical pathology\n\nESTIMATED BLOOD LOSS: 150mL\n\nCOMPLICATIONS: None intraoperatively. Conversion was planned contingency.\n\nDISPOSITION: Transferred to SICU for <DATE_TIME> monitoring. Chest tube to suction.\n\nPOST-OPERATIVE PLAN:\n1. Monitor chest tube output\n2. CXR in AM\n3. Await pathology - concern for malignant mesothelioma or chronic fibrinous pleuritis\n4. If lung remains trapped, may require chronic indwelling pleural catheter\n\nDr. Mark Anderson, MD - Interventional Pulmonology\nDr. Sarah Kim, <LOCATION> - Thoracic Surgery",
+    "note_text": "OPERATIVE REPORT - INTERVENTIONAL PULMONOLOGY / THORACIC SURGERY\n\nDATE: 2025-08-15\nPATIENT: Linda Thompson\nMRN: 1472710\nDOB: 09/28/1960 (64 years old)\n\nSURGEONS:\nIP: Dr. Mark Anderson, MD (started case)\nThoracic Surgery: Dr. Sarah Kim, MD (completed case after conversion)\n\nLOCATION: Main OR, Emory University Hospital, Atlanta, GA\n\nPREOPERATIVE DIAGNOSIS: Right-sided exudative pleural effusion, unknown etiology\n\nPOSTOPERATIVE DIAGNOSIS: Dense pleural adhesions with loculated effusion; trapped lung\n\nPLANNED PROCEDURE: Medical thoracoscopy (pleuroscopy) with pleural biopsy and potential talc poudrage\n\nACTUAL PROCEDURES PERFORMED:\n1. Attempted medical thoracoscopy (aborted)\n2. Conversion to VATS (Video-Assisted Thoracoscopic Surgery)\n3. VATS lysis of adhesions\n4. VATS pleural biopsy\n5. Decortication (partial)\n6. Chest tube placement\n\nINDICATION: 64-year-old female with 2-month history of progressive dyspnea. CT chest revealed large right pleural effusion with mild enhancement of pleura concerning for malignancy. Thoracentesis x 2 showed exudative effusion with negative cytology. Medical thoracoscopy planned for definitive diagnosis and potential pleurodesis.\n\nANESTHESIA: General anesthesia with double-lumen endotracheal tube (left-sided)\n\nPROCEDURE NARRATIVE:\n\nMEDICAL THORACOSCOPY ATTEMPT (Dr. Anderson):\nPatient positioned in left lateral decubitus. After induction of general anesthesia and lung isolation, the right chest was prepped and draped. Ultrasound examination revealed a small pocket of fluid in the mid-axillary line but significant lung adherence to chest wall throughout.\n\nA 2cm incision was made in the 6th intercostal space. Upon blunt dissection into the pleural space, immediate dense adhesions were encountered. The 7mm trocar could not be safely advanced due to extensive lung-to-chest-wall adhesions. A small pocket of loculated fluid (~200mL) was drained but no window could be created for safe pleuroscopy. Multiple attempts at different intercostal spaces (5th, 7th) encountered similar dense adhesions.\n\nDECISION TO CONVERT: After thorough discussion with thoracic surgery colleagues and the patient's family (who had been counseled preoperatively about this possibility), the decision was made to convert to VATS for safe completion of the procedure.\n\nVATS PROCEDURE (Dr. Kim):\nThe incision was extended and a 10mm port placed under direct vision where a small pleural space was identified. Two additional 5mm ports were placed. Dense adhesions were found throughout the hemithorax. Using a combination of blunt dissection, electrocautery, and harmonic scalpel, extensive adhesiolysis was performed over approximately 90 minutes.\n\nFindings:\n- Dense fibrinous adhesions throughout\n- Thickened visceral pleura with trapped lung\n- Nodular thickening of parietal pleura (multiple biopsies taken)\n- Approximately 500mL of loculated, amber-colored fluid drained\n\nMultiple parietal pleural biopsies were obtained from chest wall and diaphragmatic pleura. Partial decortication of the visceral pleura was performed to allow lung expansion, though complete expansion could not be achieved due to chronic entrapment.\n\nA 28Fr chest tube was placed. Negative-pressure water seal established. Lung expansion approximately 70% at end of case.\n\nSPECIMENS:\n- Pleural fluid: Cytology, cell count, chemistry, cultures, adenosine deaminase\n- Pleural biopsies (multiple): Surgical pathology\n\nESTIMATED BLOOD LOSS: 150mL\n\nCOMPLICATIONS: None intraoperatively. Conversion was planned contingency.\n\nDISPOSITION: Transferred to SICU for overnight monitoring. Chest tube to suction.\n\nPOST-OPERATIVE PLAN:\n1. Monitor chest tube output\n2. CXR in AM\n3. Await pathology - concern for malignant mesothelioma or chronic fibrinous pleuritis\n4. If lung remains trapped, may require chronic indwelling pleural catheter\n\nDr. Mark Anderson, MD - Interventional Pulmonology\nDr. Sarah Kim, MD - Thoracic Surgery",
     "cpt_codes": [
       32555
     ],
@@ -1159,30 +1008,10 @@
         "32555"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 15,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "PERSON",
-        "DATE_TIME",
-        "LOCATION",
-        "PERSON",
-        "LOCATION",
-        "LOCATION",
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE NOTE\n\nPatient: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (<DATE_TIME>)\nDate of Procedure: <DATE_TIME>\nLocation: Stanford Medical Center, <LOCATION>, CA\n\nAttending: Dr. Priya Patel, <LOCATION>\nFellow: Dr. Kevin Nguyen, <LOCATION> (PGY-6)\nRN: <PERSON>\nRT: <PERSON>\n\nPREOPERATIVE DIAGNOSIS: Persistent bronchopleural fistula (BPF) with prolonged air leak, post right upper lobectomy for lung cancer (POD #14)\n\nPOSTOPERATIVE DIAGNOSIS: Same\n\nPROCEDURE: Flexible bronchoscopy with endobronchial valve placement for bronchopleural fistula/air leak closure\n\nINDICATION: <DATE_TIME> male status post right upper lobectomy for stage IIA squamous cell carcinoma 14 days ago, complicated by persistent air leak via chest tube (continuous, >500mL/breath). CT chest shows persistent right apical pneumothorax with bronchial stump intact but suspected peripheral alveolar-pleural fistula in the remaining RML/RLL. Given poor surgical candidacy for re-thoracotomy (COPD, recent surgery, poor nutritional status), endobronchial valve placement was planned for non-surgical management of the air leak.\n\nNOTE: This is NOT a BLVR procedure for emphysema/lung volume reduction. The indication is therapeutic air leak closure in the setting of BPF.\n\nANESTHESIA: General <PERSON> (TIVA) with single-lumen ETT\n\nPROCEDURE NARRATIVE:\nPatient intubated and positioned supine. Flexible bronchoscopy performed. Airway inspection revealed:\n- Trachea: Normal\n- Right bronchial stump: Healing well, no gross leak\n- Right bronchus intermedius: Patent\n- Right middle lobe: Patent, normal appearance\n- Right lower lobe: Segmental bronchi appeared inflamed but patent\n- Left lung: Normal\n\nBalloon occlusion testing was performed to identify the leaking segment. Sequential balloon occlusion of right lower lobe segments revealed:\n- RB6 (superior segment): Partial reduction in air leak\n- RB7-10 (basal segments): Further reduction with RB9 occlusion\n- Combined RB6 + RB9 occlusion: Complete cessation of air leak\n\nBased on balloon occlusion testing, decision was made to place endobronchial valves in RB6 and RB9.\n\nValve placement:\n1. RB6 (superior segment): Zephyr 4.0mm EBV deployed. Good fit, no air flow around valve.\n2. RB9 (lateral basal segment): Zephyr 4.0-LP EBV deployed. Good fit.\n\nPost-valve bronchoscopy confirmed valves in good position. Patient's chest tube placed to water seal at end of procedure.\n\nImmediate post-procedure assessment showed COMPLETE CESSATION of air leak on the chest tube drainage system.\n\nDEVICES:\n- Zephyr EBV 4.0mm x 1 (RB6)\n- Zephyr EBV 4.0-LP x 1 (RB9)\n\nSPECIMENS: None\n\nCOMPLICATIONS: None\n\nEBL: Minimal\n\nDISPOSITION: Return to thoracic surgery floor. Chest tube to water seal. If no air leak for 48 hours, will remove chest tube.\n\nFOLLOW-UP: Will monitor for valve expectoration. Repeat bronchoscopy in <DATE_TIME> for potential valve removal if air leak remains resolved. Valves may be permanent if necessary.\n\nDr. Priya Patel, <LOCATION>\nDr. Kevin Nguyen, <LOCATION>",
+    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE NOTE\n\nPatient: Charles Davis\nMRN: 8684379\nDOB: 06/20/1958 (66 years old)\nDate of Procedure: 2025-03-07\nLocation: Stanford Medical Center, Palo Alto, CA\n\nAttending: Dr. Priya Patel, MD\nFellow: Dr. Kevin Nguyen, MD (PGY-6)\nRN: Anna Martinez\nRT: Brian Lee\n\nPREOPERATIVE DIAGNOSIS: Persistent bronchopleural fistula (BPF) with prolonged air leak, post right upper lobectomy for lung cancer (POD #14)\n\nPOSTOPERATIVE DIAGNOSIS: Same\n\nPROCEDURE: Flexible bronchoscopy with endobronchial valve placement for bronchopleural fistula/air leak closure\n\nINDICATION: 66-year-old male status post right upper lobectomy for stage IIA squamous cell carcinoma 14 days ago, complicated by persistent air leak via chest tube (continuous, >500mL/breath). CT chest shows persistent right apical pneumothorax with bronchial stump intact but suspected peripheral alveolar-pleural fistula in the remaining RML/RLL. Given poor surgical candidacy for re-thoracotomy (COPD, recent surgery, poor nutritional status), endobronchial valve placement was planned for non-surgical management of the air leak.\n\nNOTE: This is NOT a BLVR procedure for emphysema/lung volume reduction. The indication is therapeutic air leak closure in the setting of BPF.\n\nANESTHESIA: General anesthesia (TIVA) with single-lumen ETT\n\nPROCEDURE NARRATIVE:\nPatient intubated and positioned supine. Flexible bronchoscopy performed. Airway inspection revealed:\n- Trachea: Normal\n- Right bronchial stump: Healing well, no gross leak\n- Right bronchus intermedius: Patent\n- Right middle lobe: Patent, normal appearance\n- Right lower lobe: Segmental bronchi appeared inflamed but patent\n- Left lung: Normal\n\nBalloon occlusion testing was performed to identify the leaking segment. Sequential balloon occlusion of right lower lobe segments revealed:\n- RB6 (superior segment): Partial reduction in air leak\n- RB7-10 (basal segments): Further reduction with RB9 occlusion\n- Combined RB6 + RB9 occlusion: Complete cessation of air leak\n\nBased on balloon occlusion testing, decision was made to place endobronchial valves in RB6 and RB9.\n\nValve placement:\n1. RB6 (superior segment): Zephyr 4.0mm EBV deployed. Good fit, no air flow around valve.\n2. RB9 (lateral basal segment): Zephyr 4.0-LP EBV deployed. Good fit.\n\nPost-valve bronchoscopy confirmed valves in good position. Patient's chest tube placed to water seal at end of procedure.\n\nImmediate post-procedure assessment showed COMPLETE CESSATION of air leak on the chest tube drainage system.\n\nDEVICES:\n- Zephyr EBV 4.0mm x 1 (RB6)\n- Zephyr EBV 4.0-LP x 1 (RB9)\n\nSPECIMENS: None\n\nCOMPLICATIONS: None\n\nEBL: Minimal\n\nDISPOSITION: Return to thoracic surgery floor. Chest tube to water seal. If no air leak for 48 hours, will remove chest tube.\n\nFOLLOW-UP: Will monitor for valve expectoration. Repeat bronchoscopy in 6-8 weeks for potential valve removal if air leak remains resolved. Valves may be permanent if necessary.\n\nDr. Priya Patel, MD\nDr. Kevin Nguyen, MD",
     "cpt_codes": [
       31647,
       31651
@@ -1324,30 +1153,10 @@
         "31651"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 15,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "PERSON",
-        "PERSON",
-        "DATE_TIME",
-        "PERSON",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nDate: <DATE_TIME>\nPatient: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (<DATE_TIME>)\n\nAttending: Dr. Robert Chen, <LOCATION>\nCytopathologist: Dr. Elizabeth Taylor, <LOCATION> (ROSE)\nLocation: UCLA Medical Center, <LOCATION>, CA\n\nINDICATION: <DATE_TIME> female non-smoker with 2.8cm RUL spiculated nodule (PET avid, SUVmax 8.2) and enlarged mediastinal lymph nodes on CT (Station 4R 1.8cm, Station 7 2.1cm, Station 4L 1.2cm). Referred for EBUS-TBNA staging prior to planned surgical resection if N2/N3 negative.\n\nPREOPERATIVE DIAGNOSIS: Right upper lobe lung mass concerning for primary lung malignancy; mediastinal lymphadenopathy for staging\n\nPOSTOPERATIVE DIAGNOSIS: Same; mediastinal lymph nodes sampled - ROSE benign at all stations\n\nPROCEDURE: Linear EBUS bronchoscopy with transbronchial needle aspiration of mediastinal and hilar lymph nodes (5 stations)\n\nANESTHESIA: General anesthesia with LMA\n\nPROCEDURE NARRATIVE:\nThe EBUS bronchoscope (Olympus BF-UC180F) was introduced through the LMA. Systematic mediastinal staging was performed.\n\nSTATION-BY-STATION SAMPLING:\n\nStation 7 (Subcarinal):\n- Size: 22mm short axis, oval, heterogeneous, no CHS\n- Elastography: Score 4 (suspicious)\n- Sampling: 22G FNA needle, 4 passes\n- ROSE: Abundant lymphocytes, no malignant cells, ADEQUATE - BENIGN\n\nStation 4R (Right lower paratracheal):\n- Size: 18mm short axis, round, heterogeneous\n- Elastography: Score 3 (indeterminate)\n- Sampling: 22G FNA needle, 4 passes  \n- ROSE: Lymphocytes with scattered histiocytes, no malignant cells, ADEQUATE - BENIGN\n\nStation 4L (Left lower paratracheal):\n- Size: 12mm short axis, oval, homogeneous, CHS present\n- Elastography: Score 2 (benign-appearing)\n- Sampling: 22G FNA needle, 3 passes\n- ROSE: Reactive lymphocytes, ADEQUATE - BENIGN\n\nStation 10R (Right hilar):\n- Size: 14mm short axis\n- Sampling: 22G FNA needle, 3 passes\n- ROSE: Lymphocytes and bronchial cells, ADEQUATE - BENIGN\n\nStation 11R (Right interlobar):\n- Size: 11mm short axis\n- Sampling: 22G FNA needle, 3 passes\n- ROSE: Lymphocytes, ADEQUATE - BENIGN\n\nAll samples sent for cell block and final cytopathology.\n\nNo complications. Airways examined and appeared normal. No endobronchial lesion at RUL orifice.\n\nROSE SUMMARY (Dr. Taylor):\n\"5 stations sampled with adequate lymphocyte material at all stations. No malignant cells identified at any station. Recommend final pathology confirmation. If staging remains N0 on final path, patient may proceed with planned surgical resection. If clinical suspicion remains high despite negative EBUS, recommend surgical staging (mediastinoscopy) given substantial adenopathy and risk of sampling error.\"\n\nSPECIMENS:\n- Station 7: Cytology, cell block\n- Station 4R: Cytology, cell block\n- Station 4L: Cytology, cell block\n- Station 10R: Cytology, cell block\n- Station 11R: Cytology, cell block\n\nCOMPLICATIONS: None\n\nEBL: <5mL\n\nIMPRESSION:\n1. EBUS-TBNA of 5 mediastinal/hilar stations performed for lung cancer staging\n2. ROSE negative for malignancy at all stations\n3. Pending final cytopathology confirmation\n\nPLAN:\n1. Await final pathology (<DATE_TIME>)\n2. Discussed with patient: If final pathology benign at all stations, will recommend surgical mediastinoscopy given size of station 7 and 4R nodes and high suspicion for malignancy based on primary lesion PET characteristics\n3. Thoracic surgery consultation placed for mediastinoscopy\n4. If mediastinoscopy also negative, patient will proceed with lobectomy + lymph node dissection\n\nDr. Robert Chen, <LOCATION>\nInterventional Pulmonology",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nDate: 2025-04-17\nPatient: Patricia Wong\nMRN: 3983760\nDOB: 12/05/1962 (62 years old)\n\nAttending: Dr. Robert Chen, MD\nCytopathologist: Dr. Elizabeth Taylor, MD (ROSE)\nLocation: UCLA Medical Center, Los Angeles, CA\n\nINDICATION: 62-year-old female non-smoker with 2.8cm RUL spiculated nodule (PET avid, SUVmax 8.2) and enlarged mediastinal lymph nodes on CT (Station 4R 1.8cm, Station 7 2.1cm, Station 4L 1.2cm). Referred for EBUS-TBNA staging prior to planned surgical resection if N2/N3 negative.\n\nPREOPERATIVE DIAGNOSIS: Right upper lobe lung mass concerning for primary lung malignancy; mediastinal lymphadenopathy for staging\n\nPOSTOPERATIVE DIAGNOSIS: Same; mediastinal lymph nodes sampled - ROSE benign at all stations\n\nPROCEDURE: Linear EBUS bronchoscopy with transbronchial needle aspiration of mediastinal and hilar lymph nodes (5 stations)\n\nANESTHESIA: General anesthesia with LMA\n\nPROCEDURE NARRATIVE:\nThe EBUS bronchoscope (Olympus BF-UC180F) was introduced through the LMA. Systematic mediastinal staging was performed.\n\nSTATION-BY-STATION SAMPLING:\n\nStation 7 (Subcarinal):\n- Size: 22mm short axis, oval, heterogeneous, no CHS\n- Elastography: Score 4 (suspicious)\n- Sampling: 22G FNA needle, 4 passes\n- ROSE: Abundant lymphocytes, no malignant cells, ADEQUATE - BENIGN\n\nStation 4R (Right lower paratracheal):\n- Size: 18mm short axis, round, heterogeneous\n- Elastography: Score 3 (indeterminate)\n- Sampling: 22G FNA needle, 4 passes  \n- ROSE: Lymphocytes with scattered histiocytes, no malignant cells, ADEQUATE - BENIGN\n\nStation 4L (Left lower paratracheal):\n- Size: 12mm short axis, oval, homogeneous, CHS present\n- Elastography: Score 2 (benign-appearing)\n- Sampling: 22G FNA needle, 3 passes\n- ROSE: Reactive lymphocytes, ADEQUATE - BENIGN\n\nStation 10R (Right hilar):\n- Size: 14mm short axis\n- Sampling: 22G FNA needle, 3 passes\n- ROSE: Lymphocytes and bronchial cells, ADEQUATE - BENIGN\n\nStation 11R (Right interlobar):\n- Size: 11mm short axis\n- Sampling: 22G FNA needle, 3 passes\n- ROSE: Lymphocytes, ADEQUATE - BENIGN\n\nAll samples sent for cell block and final cytopathology.\n\nNo complications. Airways examined and appeared normal. No endobronchial lesion at RUL orifice.\n\nROSE SUMMARY (Dr. Taylor):\n\"5 stations sampled with adequate lymphocyte material at all stations. No malignant cells identified at any station. Recommend final pathology confirmation. If staging remains N0 on final path, patient may proceed with planned surgical resection. If clinical suspicion remains high despite negative EBUS, recommend surgical staging (mediastinoscopy) given substantial adenopathy and risk of sampling error.\"\n\nSPECIMENS:\n- Station 7: Cytology, cell block\n- Station 4R: Cytology, cell block\n- Station 4L: Cytology, cell block\n- Station 10R: Cytology, cell block\n- Station 11R: Cytology, cell block\n\nCOMPLICATIONS: None\n\nEBL: <5mL\n\nIMPRESSION:\n1. EBUS-TBNA of 5 mediastinal/hilar stations performed for lung cancer staging\n2. ROSE negative for malignancy at all stations\n3. Pending final cytopathology confirmation\n\nPLAN:\n1. Await final pathology (3-5 days)\n2. Discussed with patient: If final pathology benign at all stations, will recommend surgical mediastinoscopy given size of station 7 and 4R nodes and high suspicion for malignancy based on primary lesion PET characteristics\n3. Thoracic surgery consultation placed for mediastinoscopy\n4. If mediastinoscopy also negative, patient will proceed with lobectomy + lymph node dissection\n\nDr. Robert Chen, MD\nInterventional Pulmonology",
     "cpt_codes": [
       31653
     ],
@@ -1549,26 +1358,10 @@
         "31653"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 11,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE NOTE\nDate: <DATE_TIME> | Patient: <PERSON> | MRN: <MRN>\nAttending: Dr. Angela Morrison, <LOCATION> | Location: Memorial Hospital, <LOCATION>, TX\n\nPROCEDURE: Indwelling pleural catheter access and drainage\n\nINDICATION: Established left PleurX catheter (placed 3 weeks ago) for malignant mesothelioma with recurrent effusion. Patient reports increased dyspnea and has not been able to drain at home due to suspected catheter occlusion.\n\nPROCEDURE: Under sterile technique, the PleurX catheter was accessed. Initial aspiration revealed thick loculated fluid. The catheter was flushed with 10mL saline with return of cloudy fluid. A total of 850mL of serosanguinous fluid was drained. tPA 4mg/40mL NS was instilled per protocol for suspected fibrinous occlusion. Patient to clamp for 2 hours then attempt drainage.\n\nSPECIMENS: Pleural fluid to cytology, culture\n\nCOMPLICATIONS: None\n\nPLAN: Home health to continue <DATE_TIME> drainage. Return if unable to drain. Consider fibrinolytic protocol if recurrent.\n\nAngela Morrison, <LOCATION>",
+    "note_text": "PROCEDURE NOTE\nDate: 2025-05-15 | Patient: Henry Smith | MRN: 2189773\nAttending: Dr. Angela Morrison, MD | Location: Memorial Hospital, Houston, TX\n\nPROCEDURE: Indwelling pleural catheter access and drainage\n\nINDICATION: Established left PleurX catheter (placed 3 weeks ago) for malignant mesothelioma with recurrent effusion. Patient reports increased dyspnea and has not been able to drain at home due to suspected catheter occlusion.\n\nPROCEDURE: Under sterile technique, the PleurX catheter was accessed. Initial aspiration revealed thick loculated fluid. The catheter was flushed with 10mL saline with return of cloudy fluid. A total of 850mL of serosanguinous fluid was drained. tPA 4mg/40mL NS was instilled per protocol for suspected fibrinous occlusion. Patient to clamp for 2 hours then attempt drainage.\n\nSPECIMENS: Pleural fluid to cytology, culture\n\nCOMPLICATIONS: None\n\nPLAN: Home health to continue daily drainage. Return if unable to drain. Consider fibrinolytic protocol if recurrent.\n\nAngela Morrison, MD",
     "cpt_codes": [
       32557
     ],
@@ -1629,22 +1422,10 @@
         "overall_assessment": "Appropriate for established IPC management."
       }
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 7,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "OPERATIVE REPORT - INTERVENTIONAL PULMONOLOGY\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | DOB: <DATE_TIME>\n\nAttending: Dr. James Walker, <LOCATION>\nLocation: Massachusetts General Hospital, <LOCATION>, MA\n\nPREOP DX: Recurrent tracheomalacia with carinal involvement, s/p prior metallic stent placement with stent-in-stent failure\n\nPOSTOP DX: Same\n\nPROCEDURE: \n1. Rigid bronchoscopy\n2. Removal of prior SEMS\n3. Silicone Y-stent (Dumon) placement\n\nANESTHESIA: General, jet ventilation\n\nPROCEDURE: Under GA with rigid bronchoscopy (14mm Dumon), the previously placed covered SEMS was removed using rigid forceps with en bloc extraction. <PERSON> confirmed with >75% collapse on expiration involving distal trachea and proximal mainstems bilaterally.\n\nA Novatech silicone Y-stent (18mm trachea, 14mm bilateral limbs, 50mm body length) was loaded on the deployment rod. Under direct visualization, the Y-stent was advanced and deployed with the carinal spur appropriately positioned. Both mainstem limbs expanded well. Post-deployment bronchoscopy confirmed patent airways bilaterally, good stent positioning, no mucus impaction.\n\nCOMPLICATIONS: None\nEBL: 10mL\n<PERSON>: <PERSON>, discharge same day\n\nDr. James Walker, <LOCATION>",
+    "note_text": "OPERATIVE REPORT - INTERVENTIONAL PULMONOLOGY\nDate: 2025-11-04\nPatient: Richard Thompson | MRN: 3060386 | DOB: 01/15/1957\n\nAttending: Dr. James Walker, MD\nLocation: Massachusetts General Hospital, Boston, MA\n\nPREOP DX: Recurrent tracheomalacia with carinal involvement, s/p prior metallic stent placement with stent-in-stent failure\n\nPOSTOP DX: Same\n\nPROCEDURE: \n1. Rigid bronchoscopy\n2. Removal of prior SEMS\n3. Silicone Y-stent (Dumon) placement\n\nANESTHESIA: General, jet ventilation\n\nPROCEDURE: Under GA with rigid bronchoscopy (14mm Dumon), the previously placed covered SEMS was removed using rigid forceps with en bloc extraction. Tracheomalacia confirmed with >75% collapse on expiration involving distal trachea and proximal mainstems bilaterally.\n\nA Novatech silicone Y-stent (18mm trachea, 14mm bilateral limbs, 50mm body length) was loaded on the deployment rod. Under direct visualization, the Y-stent was advanced and deployed with the carinal spur appropriately positioned. Both mainstem limbs expanded well. Post-deployment bronchoscopy confirmed patent airways bilaterally, good stent positioning, no mucus impaction.\n\nCOMPLICATIONS: None\nEBL: 10mL\nDISPOSITION: PACU, discharge same day\n\nDr. James Walker, MD",
     "cpt_codes": [
       31631,
       31637,
@@ -1728,25 +1509,10 @@
         "overall_assessment": "Y-stent with bilateral limbs requires 31631 + 31637. Prior stent removal separately reportable."
       }
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 10,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "LOCATION",
-        "LOCATION",
-        "PERSON",
-        "PERSON",
-        "PERSON",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "NAVIGATION BRONCHOSCOPY NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 58F\nAttending: Dr. Michael Park, <LOCATION> | Fellow: Dr. Karen Chen (PGY-6)\nLocation: UCSF Medical Center, <LOCATION>, CA\n\nINDICATION: 15mm LUL ground-glass nodule (SUV 3.2), bronchus sign positive. Biopsy for diagnosis.\n\nPROCEDURE: Ion robotic bronchoscopy with transbronchial cryobiopsy\n\nUnder GA, Ion platform registration performed (fiducial-less, registration error 1.2mm). Navigation to LUL anterior segment (LB3). Radial EBUS showed concentric lesion view. Target lock confirmed. \n\nCryoprobe (1.9mm) advanced under augmented fluoroscopy. Tool-in-lesion confirmed on CBCT. 3 cryobiopsies obtained (<DATE_TIME> freeze time each). Specimens 3-4mm, sent to surgical pathology. Mild bleeding controlled with wedge technique. No pneumothorax on completion fluoro.\n\nFINDINGS: r-EBUS concentric view, CBCT TIL confirmed, adequate specimens\n\nSPECIMENS: Cryobiopsy LUL x 3 - surgical pathology\n\nCOMPLICATIONS: Mild bleeding - self-limited\nDISPOSITION: Outpatient discharge after 2hr CXR\n\nDr. Michael Park, <LOCATION>",
+    "note_text": "NAVIGATION BRONCHOSCOPY NOTE\nDate: 2025-09-13\nPatient: Susan Lee | MRN: 2885591 | Age: 58F\nAttending: Dr. Michael Park, MD | Fellow: Dr. Karen Chen (PGY-6)\nLocation: UCSF Medical Center, San Francisco, CA\n\nINDICATION: 15mm LUL ground-glass nodule (SUV 3.2), bronchus sign positive. Biopsy for diagnosis.\n\nPROCEDURE: Ion robotic bronchoscopy with transbronchial cryobiopsy\n\nUnder GA, Ion platform registration performed (fiducial-less, registration error 1.2mm). Navigation to LUL anterior segment (LB3). Radial EBUS showed concentric lesion view. Target lock confirmed. \n\nCryoprobe (1.9mm) advanced under augmented fluoroscopy. Tool-in-lesion confirmed on CBCT. 3 cryobiopsies obtained (4-second freeze time each). Specimens 3-4mm, sent to surgical pathology. Mild bleeding controlled with wedge technique. No pneumothorax on completion fluoro.\n\nFINDINGS: r-EBUS concentric view, CBCT TIL confirmed, adequate specimens\n\nSPECIMENS: Cryobiopsy LUL x 3 - surgical pathology\n\nCOMPLICATIONS: Mild bleeding - self-limited\nDISPOSITION: Outpatient discharge after 2hr CXR\n\nDr. Michael Park, MD",
     "cpt_codes": [
       31627,
       31654,
@@ -1845,22 +1611,10 @@
         "overall_assessment": "Robotic navigation with radial EBUS and cryobiopsy for nodule diagnosis."
       }
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 7,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "THORACOSCOPY PROCEDURE NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 72M\nAttending: Dr. Lisa Chang, <LOCATION>\nLocation: Cedars-Sinai Medical Center, <LOCATION>, CA\n\nINDICATION: Recurrent right malignant pleural effusion (lung adenocarcinoma, EGFR+). Prior thoracenteses x 4. Patient prefers pleurodesis over IPC.\n\nPROCEDURE: \n1. Medical thoracoscopy (pleuroscopy)\n2. Pleural biopsy\n3. Talc poudrage pleurodesis\n4. Chest tube placement\n\nANESTHESIA: Moderate sedation with local <LOCATION>\n\nPROCEDURE: Patient in left lateral decubitus. Entry via 7th ICS mid-axillary line. 1000mL serous fluid drained. Thoracoscope (LTF-160) introduced. Findings:\n- Parietal pleura: Diffuse nodular studding, largest 5mm\n- Visceral pleura: Scattered nodules\n- Diaphragm: Nodular implants\n- Lung: Partially trapped, ~70% expansion achievable\n\nMultiple biopsies taken from parietal and diaphragmatic pleura using flexible forceps (8 specimens total).\n\nAfter fluid evacuation and lung re-expansion to ~80%, talc poudrage performed (4g sterile talc via atomizer, even distribution). 24Fr chest tube placed, connected to suction (-20cmH2O).\n\nSPECIMENS: Pleural biopsies x 8, pleural <PERSON> (cytology, cell block)\nCOMPLICATIONS: None\nEBL: Minimal\nDISPOSITION: Admit for chest tube management. Target removal in <DATE_TIME> if output <<DATE_TIME> and lung expanded.\n\nDr. Lisa Chang, <LOCATION>",
+    "note_text": "THORACOSCOPY PROCEDURE NOTE\nDate: 2025-03-08\nPatient: George Martinez | MRN: 7601167 | Age: 72M\nAttending: Dr. Lisa Chang, MD\nLocation: Cedars-Sinai Medical Center, Los Angeles, CA\n\nINDICATION: Recurrent right malignant pleural effusion (lung adenocarcinoma, EGFR+). Prior thoracenteses x 4. Patient prefers pleurodesis over IPC.\n\nPROCEDURE: \n1. Medical thoracoscopy (pleuroscopy)\n2. Pleural biopsy\n3. Talc poudrage pleurodesis\n4. Chest tube placement\n\nANESTHESIA: Moderate sedation with local anesthesia\n\nPROCEDURE: Patient in left lateral decubitus. Entry via 7th ICS mid-axillary line. 1000mL serous fluid drained. Thoracoscope (LTF-160) introduced. Findings:\n- Parietal pleura: Diffuse nodular studding, largest 5mm\n- Visceral pleura: Scattered nodules\n- Diaphragm: Nodular implants\n- Lung: Partially trapped, ~70% expansion achievable\n\nMultiple biopsies taken from parietal and diaphragmatic pleura using flexible forceps (8 specimens total).\n\nAfter fluid evacuation and lung re-expansion to ~80%, talc poudrage performed (4g sterile talc via atomizer, even distribution). 24Fr chest tube placed, connected to suction (-20cmH2O).\n\nSPECIMENS: Pleural biopsies x 8, pleural fluid (cytology, cell block)\nCOMPLICATIONS: None\nEBL: Minimal\nDISPOSITION: Admit for chest tube management. Target removal in 48-72hr if output <150mL/day and lung expanded.\n\nDr. Lisa Chang, MD",
     "cpt_codes": [
       32609,
       32650
@@ -1940,25 +1694,10 @@
         "overall_assessment": "Medical thoracoscopy with both biopsy and pleurodesis - both codes reportable."
       }
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 10,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "EBUS PROCEDURE NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 34F\nAttending: Dr. Steven Williams, <LOCATION>\nLocation: Duke University Hospital, <LOCATION>, NC\n\nINDICATION: 34F with bilateral hilar and mediastinal lymphadenopathy, erythema nodosum, uveitis. Clinical suspicion for sarcoidosis.\n\nPROCEDURE: EBUS-TBNA of mediastinal lymph nodes\n\nANESTHESIA: Moderate sedation\n\nTECHNIQUE: EBUS (Olympus BF-UC190F) introduced. Systematic staging performed.\n\nStation 7: 25mm, sampled x 4 passes - ROSE: Non-caseating granulomas! Diagnostic.\nStation 4R: 15mm, sampled x 3 passes - ROSE: <PERSON>\nStation 11L: 12mm, sampled x 2 passes - ROSE: Reactive lymphocytes\nStation 11R: 10mm, sampled x 2 passes - ROSE: Lymphocytes with granulomas\n\nAll specimens sent for cell block, AFB stain, fungal stain to rule out infection.\n\nFINDINGS: ROSE positive for non-caseating granulomas at multiple stations - consistent with sarcoidosis. No necrosis identified.\n\nCOMPLICATIONS: None\nDISPOSITION: Outpatient discharge. Follow-up in sarcoidosis clinic.\n\nIMPRESSION: EBUS findings consistent with pulmonary sarcoidosis. Await final pathology and infectious stains.\n\nDr. Steven Williams, <LOCATION>",
+    "note_text": "EBUS PROCEDURE NOTE\nDate: 2025-07-05\nPatient: Michelle Brown | MRN: 3427249 | Age: 34F\nAttending: Dr. Steven Williams, MD\nLocation: Duke University Hospital, Durham, NC\n\nINDICATION: 34F with bilateral hilar and mediastinal lymphadenopathy, erythema nodosum, uveitis. Clinical suspicion for sarcoidosis.\n\nPROCEDURE: EBUS-TBNA of mediastinal lymph nodes\n\nANESTHESIA: Moderate sedation\n\nTECHNIQUE: EBUS (Olympus BF-UC190F) introduced. Systematic staging performed.\n\nStation 7: 25mm, sampled x 4 passes - ROSE: Non-caseating granulomas! Diagnostic.\nStation 4R: 15mm, sampled x 3 passes - ROSE: Granulomas\nStation 11L: 12mm, sampled x 2 passes - ROSE: Reactive lymphocytes\nStation 11R: 10mm, sampled x 2 passes - ROSE: Lymphocytes with granulomas\n\nAll specimens sent for cell block, AFB stain, fungal stain to rule out infection.\n\nFINDINGS: ROSE positive for non-caseating granulomas at multiple stations - consistent with sarcoidosis. No necrosis identified.\n\nCOMPLICATIONS: None\nDISPOSITION: Outpatient discharge. Follow-up in sarcoidosis clinic.\n\nIMPRESSION: EBUS findings consistent with pulmonary sarcoidosis. Await final pathology and infectious stains.\n\nDr. Steven Williams, MD",
     "cpt_codes": [
       31653
     ],
@@ -2033,22 +1772,10 @@
         "overall_assessment": "4 stations sampled, diagnostic for sarcoidosis."
       }
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 7,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "PERSON",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "BRONCHOSCOPY NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 45M\nAttending: Dr. Nancy Adams, <LOCATION>\nLocation: Northwestern Memorial Hospital, <LOCATION>, <LOCATION>\n\nINDICATION: Immunocompromised patient (AML s/p allo-HSCT day +45) with new bilateral infiltrates on CT, febrile, hypoxic. BAL for infectious workup.\n\nPROCEDURE: Flexible bronchoscopy with BAL\n\nANESTHESIA: Moderate sedation (intubated in MICU, FiO2 60%)\n\nPROCEDURE: Bronchoscope advanced via ETT. Airways examined:\n- Diffuse mucosal edema and erythema throughout\n- Scant mucopurulent secretions\n- No endobronchial lesions\n\nBAL performed in RML (area of maximal infiltrate on CT):\n- Instilled 150mL sterile saline in 3 aliquots\n- Returned 60mL slightly cloudy <PERSON>\n- Sent for: Cell count, bacterial/fungal/viral cultures, PCP DFA, CMV PCR, galactomannan, respiratory viral panel, cytology\n\nSPECIMENS: BAL fluid - comprehensive infectious workup\n\nCOMPLICATIONS: Transient desaturation to 88% during procedure, resolved with increased FiO2\n\nIMPRESSION: BAL obtained for infectious workup in immunocompromised host. Await results.\n\nDr. Nancy Adams, <LOCATION>",
+    "note_text": "BRONCHOSCOPY NOTE\nDate: 2025-07-04\nPatient: David Kim | MRN: 4517051 | Age: 45M\nAttending: Dr. Nancy Adams, MD\nLocation: Northwestern Memorial Hospital, Chicago, IL\n\nINDICATION: Immunocompromised patient (AML s/p allo-HSCT day +45) with new bilateral infiltrates on CT, febrile, hypoxic. BAL for infectious workup.\n\nPROCEDURE: Flexible bronchoscopy with BAL\n\nANESTHESIA: Moderate sedation (intubated in MICU, FiO2 60%)\n\nPROCEDURE: Bronchoscope advanced via ETT. Airways examined:\n- Diffuse mucosal edema and erythema throughout\n- Scant mucopurulent secretions\n- No endobronchial lesions\n\nBAL performed in RML (area of maximal infiltrate on CT):\n- Instilled 150mL sterile saline in 3 aliquots\n- Returned 60mL slightly cloudy fluid\n- Sent for: Cell count, bacterial/fungal/viral cultures, PCP DFA, CMV PCR, galactomannan, respiratory viral panel, cytology\n\nSPECIMENS: BAL fluid - comprehensive infectious workup\n\nCOMPLICATIONS: Transient desaturation to 88% during procedure, resolved with increased FiO2\n\nIMPRESSION: BAL obtained for infectious workup in immunocompromised host. Await results.\n\nDr. Nancy Adams, MD",
     "cpt_codes": [
       31624
     ],
@@ -2111,23 +1838,10 @@
         "overall_assessment": "BAL-only procedure appropriate for pneumonia workup."
       }
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 8,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "PERSON",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "BRONCHOSCOPY NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 68F\nAttending: Dr. Thomas Green, <LOCATION>\nLocation: Johns Hopkins Hospital, <LOCATION>, <LOCATION>\n\nINDICATION: Central airway mass visualized on CT extending from left mainstem into LUL orifice. Biopsy for diagnosis.\n\nPROCEDURE: Flexible bronchoscopy with endobronchial biopsy\n\nANESTHESIA: Moderate sedation\n\nFINDINGS: \n- Right lung: Normal\n- Trachea: Normal\n- Carina: Normal\n- Left mainstem: Large polypoid, friable mass arising from posterior wall, extending to LUL orifice, causing approximately 60% obstruction\n\nPROCEDURE: Multiple endobronchial biopsies (6) obtained using cup forceps. Moderate bleeding occurred, controlled with epinephrine (1:20,000) instillation and wedge technique. Specimens sent for surgical pathology.\n\nSPECIMENS: Endobronchial biopsy LMS/LUL x 6\n\nCOMPLICATIONS: Moderate bleeding - controlled\n\nIMPRESSION: Endobronchial mass LMS concerning for primary lung malignancy. Await pathology.\n\nDr. Thomas Green, <LOCATION>",
+    "note_text": "BRONCHOSCOPY NOTE\nDate: 2025-07-27\nPatient: Barbara White | MRN: 7502210 | Age: 68F\nAttending: Dr. Thomas Green, MD\nLocation: Johns Hopkins Hospital, Baltimore, MD\n\nINDICATION: Central airway mass visualized on CT extending from left mainstem into LUL orifice. Biopsy for diagnosis.\n\nPROCEDURE: Flexible bronchoscopy with endobronchial biopsy\n\nANESTHESIA: Moderate sedation\n\nFINDINGS: \n- Right lung: Normal\n- Trachea: Normal\n- Carina: Normal\n- Left mainstem: Large polypoid, friable mass arising from posterior wall, extending to LUL orifice, causing approximately 60% obstruction\n\nPROCEDURE: Multiple endobronchial biopsies (6) obtained using cup forceps. Moderate bleeding occurred, controlled with epinephrine (1:20,000) instillation and wedge technique. Specimens sent for surgical pathology.\n\nSPECIMENS: Endobronchial biopsy LMS/LUL x 6\n\nCOMPLICATIONS: Moderate bleeding - controlled\n\nIMPRESSION: Endobronchial mass LMS concerning for primary lung malignancy. Await pathology.\n\nDr. Thomas Green, MD",
     "cpt_codes": [
       31625
     ],
@@ -2184,22 +1898,10 @@
         "overall_assessment": "Endobronchial biopsy appropriate for visible lesion."
       }
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 7,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "<PERSON> LUNG LAVAGE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 52M\nAttending: Dr. Maria Rodriguez, <LOCATION>\n<LOCATION>: Dr. John Smith, <LOCATION>\nLocation: Cleveland Clinic, <LOCATION>, <LOCATION>\n\nINDICATION: Pulmonary alveolar proteinosis (PAP), anti-GM-CSF autoantibody positive, progressive hypoxia (SpO2 85% on 6L NC). Therapeutic whole lung lavage.\n\nPROCEDURE: Left whole lung lavage under general anesthesia\n\nANESTHESIA: General, double-lumen ETT (39Fr left-sided)\n\nPROCEDURE DETAILS:\nLeft lung isolation confirmed with fiberoptic bronchoscopy through DLT. Right lung ventilated with 100% O2.\n\nLeft lung lavage:\n- Warmed sterile saline (37°C) instilled in 1L aliquots\n- Total instilled: 15L\n- Total returned: 14.2L (95% return)\n- Initial return: Milky white (classic PAP appearance)\n- Final return: Nearly clear\n\nProcedure duration: 3.5 hours\nLowest SpO2: 92% on FiO2 100%\n\nSPECIMENS: Lavage fluid sent for cytology (lipid-laden macrophages)\n\nCOMPLICATIONS: None\n\nPOST-PROCEDURE: Patient extubated in OR. SpO2 94% on 4L NC (improved from baseline). Admitted to SICU <DATE_TIME>.\n\nPLAN: CXR in AM. Consider right lung lavage in <DATE_TIME> if needed.\n\nDr. Maria Rodriguez, <LOCATION>",
+    "note_text": "PROCEDURE NOTE - WHOLE LUNG LAVAGE\nDate: 2025-04-12\nPatient: Frank Johnson | MRN: 3207783 | Age: 52M\nAttending: Dr. Maria Rodriguez, MD\nAnesthesia: Dr. John Smith, MD\nLocation: Cleveland Clinic, Cleveland, OH\n\nINDICATION: Pulmonary alveolar proteinosis (PAP), anti-GM-CSF autoantibody positive, progressive hypoxia (SpO2 85% on 6L NC). Therapeutic whole lung lavage.\n\nPROCEDURE: Left whole lung lavage under general anesthesia\n\nANESTHESIA: General, double-lumen ETT (39Fr left-sided)\n\nPROCEDURE DETAILS:\nLeft lung isolation confirmed with fiberoptic bronchoscopy through DLT. Right lung ventilated with 100% O2.\n\nLeft lung lavage:\n- Warmed sterile saline (37\u00b0C) instilled in 1L aliquots\n- Total instilled: 15L\n- Total returned: 14.2L (95% return)\n- Initial return: Milky white (classic PAP appearance)\n- Final return: Nearly clear\n\nProcedure duration: 3.5 hours\nLowest SpO2: 92% on FiO2 100%\n\nSPECIMENS: Lavage fluid sent for cytology (lipid-laden macrophages)\n\nCOMPLICATIONS: None\n\nPOST-PROCEDURE: Patient extubated in OR. SpO2 94% on 4L NC (improved from baseline). Admitted to SICU overnight.\n\nPLAN: CXR in AM. Consider right lung lavage in 1-2 weeks if needed.\n\nDr. Maria Rodriguez, MD",
     "cpt_codes": [
       31624
     ],
@@ -2264,27 +1966,10 @@
         "overall_assessment": "WLL coded as 31624 - single code covers the procedure."
       }
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 12,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "BRONCHOSCOPY NOTE - URGENT\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: <DATE_TIME>, Male\nAttending: Dr. Patricia Lee, <LOCATION> (Pediatric IP)\nLocation: Children's Hospital of Philadelphia\n\nINDICATION: <DATE_TIME> male with witnessed aspiration of peanut 2 hours ago. <PERSON>, decreased breath sounds on right.\n\nPROCEDURE: Rigid bronchoscopy with foreign body removal\n\nANESTHESIA: General <PERSON> (sevoflurane induction, propofol maintenance)\n\nFINDINGS:\n- Vocal cords: Edematous\n- Trachea: Mucosal inflammation\n- Right mainstem: Peanut fragment lodged at RMS/BI junction causing complete obstruction\n- Left lung: Normal\n\nPROCEDURE: Using 3.5mm pediatric rigid bronchoscope, the peanut was visualized. Optical forceps used to grasp and remove the foreign body en bloc. Post-removal inspection showed mucosal edema and erythema but patent airway. Second fragment found in RLL, also removed.\n\nSPECIMENS: Peanut fragments x 2 (gross specimen)\n\nCOMPLICATIONS: None\n\nPOST-PROCEDURE: Dexamethasone 0.5mg/kg IV given. Patient extubated, stridor resolved. Admission for <DATE_TIME> observation and racemic epinephrine PRN.\n\nDr. Patricia Lee, <LOCATION>",
+    "note_text": "BRONCHOSCOPY NOTE - URGENT\nDate: 2025-04-21\nPatient: Timothy Clark | MRN: 7063244 | Age: 3 years, Male\nAttending: Dr. Patricia Lee, MD (Pediatric IP)\nLocation: Children's Hospital of Philadelphia\n\nINDICATION: 3-year-old male with witnessed aspiration of peanut 2 hours ago. Stridor, decreased breath sounds on right.\n\nPROCEDURE: Rigid bronchoscopy with foreign body removal\n\nANESTHESIA: General anesthesia (sevoflurane induction, propofol maintenance)\n\nFINDINGS:\n- Vocal cords: Edematous\n- Trachea: Mucosal inflammation\n- Right mainstem: Peanut fragment lodged at RMS/BI junction causing complete obstruction\n- Left lung: Normal\n\nPROCEDURE: Using 3.5mm pediatric rigid bronchoscope, the peanut was visualized. Optical forceps used to grasp and remove the foreign body en bloc. Post-removal inspection showed mucosal edema and erythema but patent airway. Second fragment found in RLL, also removed.\n\nSPECIMENS: Peanut fragments x 2 (gross specimen)\n\nCOMPLICATIONS: None\n\nPOST-PROCEDURE: Dexamethasone 0.5mg/kg IV given. Patient extubated, stridor resolved. Admission for overnight observation and racemic epinephrine PRN.\n\nDr. Patricia Lee, MD",
     "cpt_codes": [
       31635
     ],
@@ -2351,25 +2036,10 @@
         "overall_assessment": "FB removal successful via rigid bronchoscopy."
       }
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 10,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "LOCATION",
-        "DATE_TIME",
-        "PERSON",
-        "PERSON",
-        "DATE_TIME",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "BRONCHOSCOPY NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 74F\nAttending: Dr. James Wilson, <LOCATION>\nLocation: MICU, <PERSON> and Women's Hospital\n\nINDICATION: 74F on mechanical ventilation for respiratory failure. New RLL collapse on CXR. Suspected mucus plugging.\n\nPROCEDURE: Flexible bronchoscopy with therapeutic aspiration\n\nANESTHESIA: Already sedated/paralyzed on ventilator\n\nFINDINGS:\n- ETT: 7.5mm at 22cm, no granulation\n- Trachea: Copious thick yellow secretions\n- RMS: Thick mucus plug at RMS/BI junction\n- RLL: Complete mucus impaction with cast\n- Left lung: Moderate secretions\n\nPROCEDURE: Extensive suctioning performed. Large mucus cast removed from RLL basal segments using suction and saline lavage. Post-procedure, all segments patent.\n\nSPECIMENS: Secretions sent for culture\n\nPOST-PROCEDURE: CXR showed re-expansion of RLL. Ventilator weaning resumed.\n\nDr. James Wilson, <LOCATION>",
+    "note_text": "BRONCHOSCOPY NOTE\nDate: 2025-08-12\nPatient: Carol Davis | MRN: 9707634 | Age: 74F\nAttending: Dr. James Wilson, MD\nLocation: MICU, Brigham and Women's Hospital\n\nINDICATION: 74F on mechanical ventilation for respiratory failure. New RLL collapse on CXR. Suspected mucus plugging.\n\nPROCEDURE: Flexible bronchoscopy with therapeutic aspiration\n\nANESTHESIA: Already sedated/paralyzed on ventilator\n\nFINDINGS:\n- ETT: 7.5mm at 22cm, no granulation\n- Trachea: Copious thick yellow secretions\n- RMS: Thick mucus plug at RMS/BI junction\n- RLL: Complete mucus impaction with cast\n- Left lung: Moderate secretions\n\nPROCEDURE: Extensive suctioning performed. Large mucus cast removed from RLL basal segments using suction and saline lavage. Post-procedure, all segments patent.\n\nSPECIMENS: Secretions sent for culture\n\nPOST-PROCEDURE: CXR showed re-expansion of RLL. Ventilator weaning resumed.\n\nDr. James Wilson, MD",
     "cpt_codes": [
       31645
     ],
@@ -2431,21 +2101,10 @@
         "overall_assessment": "31645 appropriate for significant mucus plugging causing collapse, distinct from simple suctioning."
       }
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 6,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "PERSON",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "BLVR PROCEDURE NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 67M\nAttending: Dr. Sarah Kim, <LOCATION>\nLocation: Temple University Hospital, <LOCATION>, PA\n\nINDICATION: Severe heterogeneous emphysema, upper lobe predominant, hyperinflation with <LOCATION> 240%. FEV1 28% predicted. CT shows intact fissures. Candidate for endobronchial valve therapy (BLVR).\n\nPROCEDURE: \n1. Flexible bronchoscopy\n2. Chartis collateral ventilation assessment (LUL)\n3. Endobronchial valve placement (LUL)\n\nANESTHESIA: General anesthesia\n\nCHARTIS ASSESSMENT:\nLUL evaluated using Chartis system via balloon catheter at LB1+2 combined orifice:\n- Adequate seal obtained\n- Measurement duration: 5 minutes\n- Flow pattern: Decreasing to zero\n- Result: CV NEGATIVE (favorable for valve therapy)\n\nVALVE PLACEMENT:\nBased on <LOCATION> negative result and CT planning, Zephyr valves (Pulmonx) placed:\n1. LB1+2: Zephyr 5.5mm - deployed, seal confirmed\n2. LB3: Zephyr 5.0mm - deployed, seal confirmed  \n3. LB4+5 (Lingula): Zephyr 4.0-LP - deployed, seal confirmed\n4. LB6: Zephyr 5.5mm - deployed, seal confirmed\n\nTotal: 4 Zephyr valves placed in complete LUL lobar occlusion\n\nPost-procedure bronchoscopy confirmed all valves seated with no visible air leak.\n\nCOMPLICATIONS: None\nDISPOSITION: Admit overnight for pneumothorax monitoring. CXR q6h x <DATE_TIME>.\n\nFOLLOW-UP: CT chest in <DATE_TIME>, PFTs at <DATE_TIME>, <DATE_TIME>.\n\nDr. Sarah Kim, <LOCATION>",
+    "note_text": "BLVR PROCEDURE NOTE\nDate: 2025-04-03\nPatient: Walter Peterson | MRN: 6504899 | Age: 67M\nAttending: Dr. Sarah Kim, MD\nLocation: Temple University Hospital, Philadelphia, PA\n\nINDICATION: Severe heterogeneous emphysema, upper lobe predominant, hyperinflation with RV 240%. FEV1 28% predicted. CT shows intact fissures. Candidate for endobronchial valve therapy (BLVR).\n\nPROCEDURE: \n1. Flexible bronchoscopy\n2. Chartis collateral ventilation assessment (LUL)\n3. Endobronchial valve placement (LUL)\n\nANESTHESIA: General anesthesia\n\nCHARTIS ASSESSMENT:\nLUL evaluated using Chartis system via balloon catheter at LB1+2 combined orifice:\n- Adequate seal obtained\n- Measurement duration: 5 minutes\n- Flow pattern: Decreasing to zero\n- Result: CV NEGATIVE (favorable for valve therapy)\n\nVALVE PLACEMENT:\nBased on CV negative result and CT planning, Zephyr valves (Pulmonx) placed:\n1. LB1+2: Zephyr 5.5mm - deployed, seal confirmed\n2. LB3: Zephyr 5.0mm - deployed, seal confirmed  \n3. LB4+5 (Lingula): Zephyr 4.0-LP - deployed, seal confirmed\n4. LB6: Zephyr 5.5mm - deployed, seal confirmed\n\nTotal: 4 Zephyr valves placed in complete LUL lobar occlusion\n\nPost-procedure bronchoscopy confirmed all valves seated with no visible air leak.\n\nCOMPLICATIONS: None\nDISPOSITION: Admit overnight for pneumothorax monitoring. CXR q6h x 24hr.\n\nFOLLOW-UP: CT chest in 6-8 weeks, PFTs at 3 months, 6 months.\n\nDr. Sarah Kim, MD",
     "cpt_codes": [
       31647,
       31651,
@@ -2589,27 +2248,10 @@
         "blvr"
       ]
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 12,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "THERAPEUTIC BRONCHOSCOPY NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 59F\nAttending: Dr. Kevin Park, <LOCATION>\nFellow: Dr. Jennifer Walsh, <LOCATION> (PGY-6)\nLocation: MD Anderson Cancer Center, <LOCATION>, TX\n\nINDICATION: Stage IIIB non-small cell lung cancer with near-complete obstruction of left mainstem bronchus causing post-obstructive pneumonia and respiratory failure. Palliative airway recanalization.\n\nPROCEDURE:\n1. Rigid bronchoscopy\n2. Tumor debulking with rigid coring/mechanical debridement\n3. Argon plasma coagulation (APC) for hemostasis and tumor ablation\n4. Balloon dilation\n5. Silicone stent placement, left mainstem\n\nANESTHESIA: General <LOCATION>, jet ventilation\n\nFINDINGS & PROCEDURE:\nUnder GA, rigid bronchoscope (12mm Dumon) introduced. \n- Trachea: Patent\n- Carina: Normal\n- Right lung: Patent\n- Left mainstem: >95% occluded by exophytic, necrotic tumor arising from posterolateral wall\n\nTUMOR DEBULKING:\nRigid coring performed to remove bulk of intraluminal tumor. Significant necrotic debris evacuated. APC (ERBE, <DATE_TIME>) applied for hemostasis and ablation of residual tumor at margins. Estimated 80% tumor removed with resulting lumen ~10mm.\n\nBALLOON DILATION:\nCRE balloon (15mm x 40mm) used to dilate narrowed segment to accept stent. 3 inflations at 6 ATM.\n\n<PERSON>:\nNovatech Dumon silicone stent (14mm x 40mm) deployed over the debulked segment. Good expansion. Proximal and distal ends 1cm beyond visible tumor.\n\nPOST-PROCEDURE:\n- Pre-obstruction: >95%\n- Post-procedure: <20% (patent stent lumen)\n- LLL and lingula now ventilated\n\nSPECIMENS: Tumor fragments to surgical pathology\nCOMPLICATIONS: Moderate bleeding - controlled with APC\nEBL: 75mL\nDISPOSITION: SICU <DATE_TIME> then step-down\n\nDr. Kevin Park, <LOCATION>",
+    "note_text": "THERAPEUTIC BRONCHOSCOPY NOTE\nDate: 2025-04-14\nPatient: Elizabeth Morgan | MRN: 6330785 | Age: 59F\nAttending: Dr. Kevin Park, MD\nFellow: Dr. Jennifer Walsh, MD (PGY-6)\nLocation: MD Anderson Cancer Center, Houston, TX\n\nINDICATION: Stage IIIB non-small cell lung cancer with near-complete obstruction of left mainstem bronchus causing post-obstructive pneumonia and respiratory failure. Palliative airway recanalization.\n\nPROCEDURE:\n1. Rigid bronchoscopy\n2. Tumor debulking with rigid coring/mechanical debridement\n3. Argon plasma coagulation (APC) for hemostasis and tumor ablation\n4. Balloon dilation\n5. Silicone stent placement, left mainstem\n\nANESTHESIA: General anesthesia, jet ventilation\n\nFINDINGS & PROCEDURE:\nUnder GA, rigid bronchoscope (12mm Dumon) introduced. \n- Trachea: Patent\n- Carina: Normal\n- Right lung: Patent\n- Left mainstem: >95% occluded by exophytic, necrotic tumor arising from posterolateral wall\n\nTUMOR DEBULKING:\nRigid coring performed to remove bulk of intraluminal tumor. Significant necrotic debris evacuated. APC (ERBE, 40W) applied for hemostasis and ablation of residual tumor at margins. Estimated 80% tumor removed with resulting lumen ~10mm.\n\nBALLOON DILATION:\nCRE balloon (15mm x 40mm) used to dilate narrowed segment to accept stent. 3 inflations at 6 ATM.\n\nSTENT PLACEMENT:\nNovatech Dumon silicone stent (14mm x 40mm) deployed over the debulked segment. Good expansion. Proximal and distal ends 1cm beyond visible tumor.\n\nPOST-PROCEDURE:\n- Pre-obstruction: >95%\n- Post-procedure: <20% (patent stent lumen)\n- LLL and lingula now ventilated\n\nSPECIMENS: Tumor fragments to surgical pathology\nCOMPLICATIONS: Moderate bleeding - controlled with APC\nEBL: 75mL\nDISPOSITION: SICU overnight then step-down\n\nDr. Kevin Park, MD",
     "cpt_codes": [
       31641,
       31636,
@@ -2719,26 +2361,10 @@
         "airway_stent"
       ]
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 11,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "PERSON",
-        "DATE_TIME",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "TRANSBRONCHIAL CRYOBIOPSY NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 62F\nAttending: Dr. Michael Roberts, <LOCATION>\nLocation: University of Pennsylvania, <LOCATION>, PA\n\nINDICATION: Progressive ILD with UIP pattern on HRCT. Multidisciplinary discussion recommends tissue diagnosis to guide therapy. TBLC (transbronchial lung cryobiopsy) preferred over surgical lung biopsy given comorbidities.\n\nPROCEDURE:\n1. Flexible bronchoscopy\n2. Transbronchial cryobiopsy (RLL, 2 sites)\n3. BAL (RML)\n\nANESTHESIA: General anesthesia with ETT, blocker on standby\n\nPROCEDURE DETAILS:\nUnder GA, bronchoscope advanced. Airways inspected - no endobronchial lesions.\n\nBAL performed in RML (120mL instilled, 65mL return).\n\nTBLC performed in RLL using 1.9mm cryoprobe (Erbe):\n\nSite 1 - RB9:\n- Fluoroscopy confirmed position 2cm from pleural surface\n- Freeze time: 5 seconds x 3 biopsies\n- Specimens <DATE_TIME>, excellent quality\n- Mild bleeding, controlled with Fogarty balloon\n\nSite 2 - RB10:\n- Freeze time: 5 seconds x 2 biopsies\n- Specimens 3-4mm, good quality\n- Minimal bleeding\n\nTotal: 5 cryobiopsies from 2 sites\n\nNo pneumothorax on completion fluoroscopy.\n\nSPECIMENS: Cryobiopsy RLL x 5 (surgical pathology for ILD workup)\nCOMPLICATIONS: Mild bleeding - controlled with blocker\nDISPOSITION: <DATE_TIME> observation, CXR, discharge if stable\n\nDr. Michael Roberts, <LOCATION>",
+    "note_text": "TRANSBRONCHIAL CRYOBIOPSY NOTE\nDate: 2025-04-13\nPatient: Nancy Taylor | MRN: 4019379 | Age: 62F\nAttending: Dr. Michael Roberts, MD\nLocation: University of Pennsylvania, Philadelphia, PA\n\nINDICATION: Progressive ILD with UIP pattern on HRCT. Multidisciplinary discussion recommends tissue diagnosis to guide therapy. TBLC (transbronchial lung cryobiopsy) preferred over surgical lung biopsy given comorbidities.\n\nPROCEDURE:\n1. Flexible bronchoscopy\n2. Transbronchial cryobiopsy (RLL, 2 sites)\n3. BAL (RML)\n\nANESTHESIA: General anesthesia with ETT, blocker on standby\n\nPROCEDURE DETAILS:\nUnder GA, bronchoscope advanced. Airways inspected - no endobronchial lesions.\n\nBAL performed in RML (120mL instilled, 65mL return).\n\nTBLC performed in RLL using 1.9mm cryoprobe (Erbe):\n\nSite 1 - RB9:\n- Fluoroscopy confirmed position 2cm from pleural surface\n- Freeze time: 5 seconds x 3 biopsies\n- Specimens 4-5mm, excellent quality\n- Mild bleeding, controlled with Fogarty balloon\n\nSite 2 - RB10:\n- Freeze time: 5 seconds x 2 biopsies\n- Specimens 3-4mm, good quality\n- Minimal bleeding\n\nTotal: 5 cryobiopsies from 2 sites\n\nNo pneumothorax on completion fluoroscopy.\n\nSPECIMENS: Cryobiopsy RLL x 5 (surgical pathology for ILD workup)\nCOMPLICATIONS: Mild bleeding - controlled with blocker\nDISPOSITION: 4-hour observation, CXR, discharge if stable\n\nDr. Michael Roberts, MD",
     "cpt_codes": [
       31628,
       31624
@@ -2830,23 +2456,10 @@
         "transbronchial_cryobiopsy"
       ]
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 8,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "THORACENTESIS NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 78M\nAttending: Dr. Linda Harris, <LOCATION>\nLocation: Outpatient Procedure Center, University Hospital\n\nINDICATION: New moderate left pleural effusion on CXR. Patient with history of CHF and recent pneumonia. Diagnostic thoracentesis to evaluate etiology.\n\nPROCEDURE: Ultrasound-guided diagnostic thoracentesis, left\n\nPROCEDURE DETAILS:\nPatient seated upright, leaning forward. Ultrasound identified moderate free-flowing left effusion. Entry site marked at 8th ICS posterior axillary line. Skin prepped with chlorhexidine, local <LOCATION> with 1% lidocaine.\n\n22G needle introduced under real-time ultrasound guidance. Clear yellow fluid aspirated. 50mL removed for diagnostic studies.\n\nPOST-PROCEDURE: No pneumothorax on ultrasound. Lung sliding confirmed.\n\nSPECIMENS:\n- Cell count with differential\n- LDH, protein, glucose\n- pH\n- Cytology\n- Gram stain and culture\n\nFLUID APPEARANCE: Clear, straw-colored\n\nCOMPLICATIONS: None\n\nIMPRESSION: Diagnostic thoracentesis completed. Await results to determine transudative vs exudative.\n\nDr. Linda Harris, <LOCATION>",
+    "note_text": "THORACENTESIS NOTE\nDate: 2025-01-31\nPatient: Joseph Anderson | MRN: 9611682 | Age: 78M\nAttending: Dr. Linda Harris, MD\nLocation: Outpatient Procedure Center, University Hospital\n\nINDICATION: New moderate left pleural effusion on CXR. Patient with history of CHF and recent pneumonia. Diagnostic thoracentesis to evaluate etiology.\n\nPROCEDURE: Ultrasound-guided diagnostic thoracentesis, left\n\nPROCEDURE DETAILS:\nPatient seated upright, leaning forward. Ultrasound identified moderate free-flowing left effusion. Entry site marked at 8th ICS posterior axillary line. Skin prepped with chlorhexidine, local anesthesia with 1% lidocaine.\n\n22G needle introduced under real-time ultrasound guidance. Clear yellow fluid aspirated. 50mL removed for diagnostic studies.\n\nPOST-PROCEDURE: No pneumothorax on ultrasound. Lung sliding confirmed.\n\nSPECIMENS:\n- Cell count with differential\n- LDH, protein, glucose\n- pH\n- Cytology\n- Gram stain and culture\n\nFLUID APPEARANCE: Clear, straw-colored\n\nCOMPLICATIONS: None\n\nIMPRESSION: Diagnostic thoracentesis completed. Await results to determine transudative vs exudative.\n\nDr. Linda Harris, MD",
     "cpt_codes": [
       32555
     ],
@@ -2902,21 +2515,10 @@
         "pleural_procedure"
       ]
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 6,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "BRONCHIAL THERMOPLASTY NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 48F\nAttending: Dr. Andrew Miller, <LOCATION>\nLocation: National Jewish Health, <LOCATION>, CO\n\nINDICATION: Severe persistent asthma (FEV1 65%, on high-dose ICS/LABA, omalizumab, history of <DATE_TIME>). Selected for bronchial thermoplasty after multidisciplinary review.\n\nPROCEDURE: Bronchial thermoplasty - Session 2 of 3 (Left Lower Lobe)\n\nANESTHESIA: Moderate sedation\n\nPROCEDURE DETAILS:\nUsing the Alair System (Boston Scientific), bronchial thermoplasty performed in the left lower lobe.\n\nTreatment Sites:\n- LB6: 15 activations\n- LB7: 8 activations\n- LB8: 12 activations\n- LB9: 14 activations\n- LB10: 11 activations\n\nTotal activations: 60\n\nEach activation delivered radiofrequency energy at 18.5 watts for 10 seconds at sequential 5mm intervals per standard protocol.\n\nPOST-PROCEDURE: Patient observed for 4 hours. Mild transient chest tightness resolved with bronchodilator. No significant adverse events.\n\nPLAN: <DATE_TIME> (RLL) in 3 weeks.\n\nDr. Andrew Miller, <LOCATION>",
+    "note_text": "BRONCHIAL THERMOPLASTY NOTE\nDate: 2025-07-20\nPatient: Sandra Lewis | MRN: 3404046 | Age: 48F\nAttending: Dr. Andrew Miller, MD\nLocation: National Jewish Health, Denver, CO\n\nINDICATION: Severe persistent asthma (FEV1 65%, on high-dose ICS/LABA, omalizumab, history of 3 exacerbations past year). Selected for bronchial thermoplasty after multidisciplinary review.\n\nPROCEDURE: Bronchial thermoplasty - Session 2 of 3 (Left Lower Lobe)\n\nANESTHESIA: Moderate sedation\n\nPROCEDURE DETAILS:\nUsing the Alair System (Boston Scientific), bronchial thermoplasty performed in the left lower lobe.\n\nTreatment Sites:\n- LB6: 15 activations\n- LB7: 8 activations\n- LB8: 12 activations\n- LB9: 14 activations\n- LB10: 11 activations\n\nTotal activations: 60\n\nEach activation delivered radiofrequency energy at 18.5 watts for 10 seconds at sequential 5mm intervals per standard protocol.\n\nPOST-PROCEDURE: Patient observed for 4 hours. Mild transient chest tightness resolved with bronchodilator. No significant adverse events.\n\nPLAN: Session 3 (RLL) in 3 weeks.\n\nDr. Andrew Miller, MD",
     "cpt_codes": [
       31660
     ],
@@ -2970,23 +2572,10 @@
         "bronchial_thermoplasty"
       ]
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 8,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   },
   {
-    "note_text": "EBUS PROCEDURE NOTE\nDate: <DATE_TIME>\nPatient: <PERSON> MRN: <MRN> | Age: 71M\nAttending: Dr. Christine Lee, <LOCATION>\nCytopathologist: Dr. Mark Thompson, <LOCATION>\nLocation: Memorial Sloan Kettering, <LOCATION>, <LOCATION>\n\nINDICATION: 71M with 3.5cm RUL mass (SUV 12), PET-positive mediastinal nodes (4R, 7). EBUS for staging prior to treatment planning.\n\nPROCEDURE: EBUS-TBNA\n\nANESTHESIA: Moderate sedation\n\nRESULTS:\n\nStation 4R (Right lower paratracheal):\n- 20mm, heterogeneous, no CHS\n- 4 passes with 22G needle\n- ROSE: POSITIVE - Adenocarcinoma\n\nStation 7 (Subcarinal):\n- 24mm, round, heterogeneous\n- 4 passes\n- ROSE: POSITIVE - Adenocarcinoma\n\nStation 11R (Right interlobar):\n- 12mm\n- 3 passes\n- ROSE: POSITIVE - Adenocarcinoma\n\nSpecimens sent for cell block, molecular testing (EGFR, ALK, <LOCATION>, <LOCATION>-L1).\n\nIMPRESSION: EBUS-TBNA confirms metastatic adenocarcinoma at stations 4R, 7, 11R. Pathologic N2 disease. Stage IIIA (cT2aN2M0).\n\nPLAN: Medical oncology referral for concurrent chemoradiation.\n\nDr. Christine Lee, <LOCATION>",
+    "note_text": "EBUS PROCEDURE NOTE\nDate: 2025-10-11\nPatient: Robert Garcia | MRN: 4906580 | Age: 71M\nAttending: Dr. Christine Lee, MD\nCytopathologist: Dr. Mark Thompson, MD\nLocation: Memorial Sloan Kettering, New York, NY\n\nINDICATION: 71M with 3.5cm RUL mass (SUV 12), PET-positive mediastinal nodes (4R, 7). EBUS for staging prior to treatment planning.\n\nPROCEDURE: EBUS-TBNA\n\nANESTHESIA: Moderate sedation\n\nRESULTS:\n\nStation 4R (Right lower paratracheal):\n- 20mm, heterogeneous, no CHS\n- 4 passes with 22G needle\n- ROSE: POSITIVE - Adenocarcinoma\n\nStation 7 (Subcarinal):\n- 24mm, round, heterogeneous\n- 4 passes\n- ROSE: POSITIVE - Adenocarcinoma\n\nStation 11R (Right interlobar):\n- 12mm\n- 3 passes\n- ROSE: POSITIVE - Adenocarcinoma\n\nSpecimens sent for cell block, molecular testing (EGFR, ALK, ROS1, PD-L1).\n\nIMPRESSION: EBUS-TBNA confirms metastatic adenocarcinoma at stations 4R, 7, 11R. Pathologic N2 disease. Stage IIIA (cT2aN2M0).\n\nPLAN: Medical oncology referral for concurrent chemoradiation.\n\nDr. Christine Lee, MD",
     "cpt_codes": [
       31653
     ],
@@ -3056,21 +2645,6 @@
         "linear_ebus"
       ]
     },
-    "source_file": "synthetic_additional_v2_8.json",
-    "scrub_metadata": {
-      "entities_redacted": 10,
-      "entity_types": [
-        "DATE_TIME",
-        "PERSON",
-        "MRN",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION",
-        "LOCATION"
-      ]
-    }
+    "source_file": "synthetic_additional_v2_8.json"
   }
 ]

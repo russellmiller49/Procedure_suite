@@ -819,7 +819,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: Whole Lung Lavage (Left)\nSteps:\n1. General <LOCATION>, DLT.\n2. Isolated left lung.\n3. Instilled 6L saline.\n4. Patient desatted to 78%.\n5. Aborted procedure, suctioned fluid.\n6. Sent to ICU intubated.",
+    "note_text": "Procedure Note\nPatient: Kevin Foster\nProcedure: Whole Lung Lavage (Left)\nSteps:\n1. General anesthesia, DLT.\n2. Isolated left lung.\n3. Instilled 6L saline.\n4. Patient desatted to 78%.\n5. Aborted procedure, suctioned fluid.\n6. Sent to ICU intubated.",
     "cpt_codes": [
       32997
     ],
@@ -1089,17 +1089,10 @@
       "style_type": 4,
       "generated_name": "David Evans",
       "generation_date": "2025-12-09T09:19:15.072504"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> WLL note. We started washing the left lung got about 6 liters in but his sats dropped to the 70s. Couldn't get them up so we stopped. Sucked out what we could. He's going to the ICU still on the vent.",
+    "note_text": "Kevin Foster WLL note. We started washing the left lung got about 6 liters in but his sats dropped to the 70s. Couldn't get them up so we stopped. Sucked out what we could. He's going to the ICU still on the vent.",
     "cpt_codes": [
       32997
     ],
@@ -1369,16 +1362,10 @@
       "style_type": 5,
       "generated_name": "Edward Foster",
       "generation_date": "2025-12-09T09:19:15.072569"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Left lung lavage was initiated with 1 L aliquots under general <LOCATION> with a double-lumen ET tube. After 6 L instilled and 4.8 L returned, patient developed refractory hypoxemia. The lavage was aborted, fluid drained as completely as possible, and both lungs ventilated. The patient was left intubated and transported to the ICU.",
+    "note_text": "Left lung lavage was initiated with 1 L aliquots under general anesthesia with a double-lumen ET tube. After 6 L instilled and 4.8 L returned, patient developed refractory hypoxemia. The lavage was aborted, fluid drained as completely as possible, and both lungs ventilated. The patient was left intubated and transported to the ICU.",
     "cpt_codes": [
       32997
     ],
@@ -1648,16 +1635,10 @@
       "style_type": 6,
       "generated_name": "Frank Green",
       "generation_date": "2025-12-09T09:19:15.072634"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nPulmonary alveolar proteinosis.\n[<LOCATION>]\nGeneral, Double-lumen tube.\n[Description]\nLeft whole lung lavage initiated. 6L instilled. Aborted due to refractory hypoxemia (78%). <PERSON> drained.\n[Plan]\nICU admission.",
+    "note_text": "[Indication]\nPulmonary alveolar proteinosis.\n[Anesthesia]\nGeneral, Double-lumen tube.\n[Description]\nLeft whole lung lavage initiated. 6L instilled. Aborted due to refractory hypoxemia (78%). Fluid drained.\n[Plan]\nICU admission.",
     "cpt_codes": [
       32997
     ],
@@ -1927,17 +1908,10 @@
       "style_type": 7,
       "generated_name": "George Hill",
       "generation_date": "2025-12-09T09:19:15.072699"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent an attempted left whole lung lavage for his PAP. We placed a double-lumen tube and began the washing process. Unfortunately, after using about 6 liters of fluid, his oxygen levels dropped dangerously low. We made the decision to stop the procedure immediately, drain the remaining fluid, and transfer him to the ICU while keeping him on the ventilator.",
+    "note_text": "Mr. Foster underwent an attempted left whole lung lavage for his PAP. We placed a double-lumen tube and began the washing process. Unfortunately, after using about 6 liters of fluid, his oxygen levels dropped dangerously low. We made the decision to stop the procedure immediately, drain the remaining fluid, and transfer him to the ICU while keeping him on the ventilator.",
     "cpt_codes": [
       32997
     ],
@@ -2207,12 +2181,6 @@
       "style_type": 8,
       "generated_name": "Henry Irwin",
       "generation_date": "2025-12-09T09:19:15.072764"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2762,7 +2730,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE PERFORMED: Pediatric rigid bronchoscopy with foreign body retrieval.\nCLINICAL SUMMARY: This <DATE_TIME> male presented with findings consistent with foreign body aspiration. Rigid bronchoscopy revealed an organic foreign body, identified as a peanut fragment, obstructing the right middle lobe bronchus. The object was successfully extracted using optical alligator forceps. The airway was subsequently cleared of secretions. There was a transient desaturation event which resolved promptly.",
+    "note_text": "PROCEDURE PERFORMED: Pediatric rigid bronchoscopy with foreign body retrieval.\nCLINICAL SUMMARY: This 2-year-old male presented with findings consistent with foreign body aspiration. Rigid bronchoscopy revealed an organic foreign body, identified as a peanut fragment, obstructing the right middle lobe bronchus. The object was successfully extracted using optical alligator forceps. The airway was subsequently cleared of secretions. There was a transient desaturation event which resolved promptly.",
     "cpt_codes": [
       31635
     ],
@@ -3032,12 +3000,6 @@
       "style_type": 2,
       "generated_name": "Oliver Johnson",
       "generation_date": "2025-12-09T09:19:15.072980"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3314,7 +3276,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: Rigid Bronch/FB Removal\nSteps:\n1. GA/Rigid scope.\n2. Found peanut in RML.\n3. Grabbed with alligator forceps.\n4. Pulled it out.\n5. Checked airway - clear.\n6. Extubated.",
+    "note_text": "Procedure Note\nPatient: Noah Brooks\nProcedure: Rigid Bronch/FB Removal\nSteps:\n1. GA/Rigid scope.\n2. Found peanut in RML.\n3. Grabbed with alligator forceps.\n4. Pulled it out.\n5. Checked airway - clear.\n6. Extubated.",
     "cpt_codes": [
       31635
     ],
@@ -3584,12 +3546,6 @@
       "style_type": 4,
       "generated_name": "James Brown",
       "generation_date": "2025-12-09T09:19:15.073118"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3866,7 +3822,7 @@
     }
   },
   {
-    "note_text": "Rigid bronchoscopy was performed under general <LOCATION>. An organic foreign body (peanut fragment) was found lodged in the right middle lobe bronchus. The foreign body was removed using alligator forceps and suction. The airway was irrigated. Brief desaturation to 88 percent occurred during retrieval but resolved.",
+    "note_text": "Rigid bronchoscopy was performed under general anesthesia. An organic foreign body (peanut fragment) was found lodged in the right middle lobe bronchus. The foreign body was removed using alligator forceps and suction. The airway was irrigated. Brief desaturation to 88 percent occurred during retrieval but resolved.",
     "cpt_codes": [
       31635
     ],
@@ -4136,16 +4092,10 @@
       "style_type": 6,
       "generated_name": "Benjamin Garcia",
       "generation_date": "2025-12-09T09:19:15.073255"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected peanut aspiration; RML collapse.\n[<LOCATION>]\nGeneral (Rigid Bronchoscope).\n[Description]\nPeanut fragment visualized in RML. Removed via alligator forceps. Airway cleared.\n[Plan]\nObservation on pediatric ward.",
+    "note_text": "[Indication]\nSuspected peanut aspiration; RML collapse.\n[Anesthesia]\nGeneral (Rigid Bronchoscope).\n[Description]\nPeanut fragment visualized in RML. Removed via alligator forceps. Airway cleared.\n[Plan]\nObservation on pediatric ward.",
     "cpt_codes": [
       31635
     ],
@@ -4415,16 +4365,10 @@
       "style_type": 7,
       "generated_name": "Lucas Miller",
       "generation_date": "2025-12-09T09:19:15.073321"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We performed a rigid bronchoscopy on <PERSON> to remove a peanut he had inhaled. We found the piece lodged in his right middle lobe. Using special forceps, we were able to grab it and pull it out. He had a brief drop in oxygen levels during the removal, but he recovered quickly and was woken up in the operating room.",
+    "note_text": "We performed a rigid bronchoscopy on Noah to remove a peanut he had inhaled. We found the piece lodged in his right middle lobe. Using special forceps, we were able to grab it and pull it out. He had a brief drop in oxygen levels during the removal, but he recovered quickly and was woken up in the operating room.",
     "cpt_codes": [
       31635
     ],
@@ -4694,12 +4638,6 @@
       "style_type": 8,
       "generated_name": "Henry Davis",
       "generation_date": "2025-12-09T09:19:15.073386"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5795,7 +5733,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: FB Removal\nSteps:\n1. GA/Rigid bronch.\n2. Saw plastic toy in Left Main.\n3. Removed with optical forceps.\n4. Suctioned airway.\n5. Extubated.\nPlan: Home.",
+    "note_text": "Procedure Note\nPatient: Sophia King\nProcedure: FB Removal\nSteps:\n1. GA/Rigid bronch.\n2. Saw plastic toy in Left Main.\n3. Removed with optical forceps.\n4. Suctioned airway.\n5. Extubated.\nPlan: Home.",
     "cpt_codes": [
       31635
     ],
@@ -6065,16 +6003,10 @@
       "style_type": 4,
       "generated_name": "Amelia Gonzalez",
       "generation_date": "2025-12-09T09:19:15.073731"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> 5yo swallowed a toy well inhaled it. We went in with the rigid scope and saw the plastic piece in the left mainstem. Used the optical forceps to grab it and pull it out. Came out in one piece. No issues she went home later.",
+    "note_text": "Sophia King 5yo swallowed a toy well inhaled it. We went in with the rigid scope and saw the plastic piece in the left mainstem. Used the optical forceps to grab it and pull it out. Came out in one piece. No issues she went home later.",
     "cpt_codes": [
       31635
     ],
@@ -6344,16 +6276,10 @@
       "style_type": 5,
       "generated_name": "Mia Wilson",
       "generation_date": "2025-12-09T09:19:15.073799"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "General <LOCATION> was induced via rigid pediatric bronchoscope. A brightly colored plastic toy fragment was found lodged in the left mainstem bronchus. The foreign body was removed using optical grasping forceps in a single piece. Airways were suctioned and re-inspected; no residual fragments were found.",
+    "note_text": "General anesthesia was induced via rigid pediatric bronchoscope. A brightly colored plastic toy fragment was found lodged in the left mainstem bronchus. The foreign body was removed using optical grasping forceps in a single piece. Airways were suctioned and re-inspected; no residual fragments were found.",
     "cpt_codes": [
       31635
     ],
@@ -6623,16 +6549,10 @@
       "style_type": 6,
       "generated_name": "Harper Anderson",
       "generation_date": "2025-12-09T09:19:15.073864"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nForeign body aspiration (plastic toy).\n[<LOCATION>]\nGeneral (Rigid).\n[Description]\nPlastic fragment in Left Mainstem Bronchus. Removed via optical forceps. Airway patent.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nForeign body aspiration (plastic toy).\n[Anesthesia]\nGeneral (Rigid).\n[Description]\nPlastic fragment in Left Mainstem Bronchus. Removed via optical forceps. Airway patent.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31635
     ],
@@ -6902,12 +6822,6 @@
       "style_type": 7,
       "generated_name": "Evelyn Thomas",
       "generation_date": "2025-12-09T09:19:15.073931"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -8279,7 +8193,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: Flex Bronch FB Removal\nSteps:\n1. Moderate sedation.\n2. Scope down. Found crown in RLL.\n3. Used fluoro to help.\n4. Grabbed with alligator forceps.\n5. Pulled it out.\n6. Stable.",
+    "note_text": "Procedure Note\nPatient: Liam Murphy\nProcedure: Flex Bronch FB Removal\nSteps:\n1. Moderate sedation.\n2. Scope down. Found crown in RLL.\n3. Used fluoro to help.\n4. Grabbed with alligator forceps.\n5. Pulled it out.\n6. Stable.",
     "cpt_codes": [
       31635
     ],
@@ -8550,16 +8464,10 @@
       "style_type": 4,
       "generated_name": "Ethan Martin",
       "generation_date": "2025-12-09T09:19:15.074323"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> aspirated a crown at the dentist. We did a flexible bronch with some sedation. Found the crown deep in the RLL. Used the x-ray to help grab it with the forceps. Got it out fine. Just a little redness inside.",
+    "note_text": "Liam Murphy aspirated a crown at the dentist. We did a flexible bronch with some sedation. Found the crown deep in the RLL. Used the x-ray to help grab it with the forceps. Got it out fine. Just a little redness inside.",
     "cpt_codes": [
       31635
     ],
@@ -8830,12 +8738,6 @@
       "style_type": 5,
       "generated_name": "Jacob Thompson",
       "generation_date": "2025-12-09T09:19:15.074384"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9113,7 +9015,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nAspirated dental crown.\n[<LOCATION>]\nModerate Sedation.\n[Description]\nCrown visualized in RLL basal segment. Removed via flexible alligator forceps and fluoroscopy.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nAspirated dental crown.\n[Anesthesia]\nModerate Sedation.\n[Description]\nCrown visualized in RLL basal segment. Removed via flexible alligator forceps and fluoroscopy.\n[Plan]\nDischarge.",
     "cpt_codes": [
       31635
     ],
@@ -9384,16 +9286,10 @@
       "style_type": 7,
       "generated_name": "Daniel Martinez",
       "generation_date": "2025-12-09T09:19:15.074522"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> aspirated a dental crown, so we performed a flexible bronchoscopy to get it out. We found the metal crown in the lower part of his right lung. Using real-time x-ray guidance and flexible forceps, we grabbed the crown and pulled it out. He had a bit of a cough but otherwise did great.",
+    "note_text": "Mr. Murphy aspirated a dental crown, so we performed a flexible bronchoscopy to get it out. We found the metal crown in the lower part of his right lung. Using real-time x-ray guidance and flexible forceps, we grabbed the crown and pulled it out. He had a bit of a cough but otherwise did great.",
     "cpt_codes": [
       31635
     ],
@@ -9664,12 +9560,6 @@
       "style_type": 8,
       "generated_name": "Matthew Robinson",
       "generation_date": "2025-12-09T09:19:15.074678"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -9947,7 +9837,7 @@
     }
   },
   {
-    "note_text": "Indication: Severe asthma.\nProcedure: Bronchial <PERSON> (RLL).\nAction: 52 activations delivered to RLL segments.\nComplication: Mild wheeze.\nPlan: D/C on prednisone.",
+    "note_text": "Indication: Severe asthma.\nProcedure: Bronchial Thermoplasty (RLL).\nAction: 52 activations delivered to RLL segments.\nComplication: Mild wheeze.\nPlan: D/C on prednisone.",
     "cpt_codes": [
       31660
     ],
@@ -10217,16 +10107,10 @@
       "style_type": 1,
       "generated_name": "Sofia Lewis",
       "generation_date": "2025-12-09T09:19:15.074891"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Bronchial <PERSON>, initial session.\nTARGET: Right Lower Lobe.\nDETAILS: Under moderate sedation, the Alair catheter was advanced into the distal segmental airways of the right lower lobe. Radiofrequency energy was delivered systematically. A total of 52 activations were completed. The patient experienced mild procedure-induced bronchospasm which responded to bronchodilators.",
+    "note_text": "PROCEDURE: Bronchial Thermoplasty, initial session.\nTARGET: Right Lower Lobe.\nDETAILS: Under moderate sedation, the Alair catheter was advanced into the distal segmental airways of the right lower lobe. Radiofrequency energy was delivered systematically. A total of 52 activations were completed. The patient experienced mild procedure-induced bronchospasm which responded to bronchodilators.",
     "cpt_codes": [
       31660
     ],
@@ -10496,12 +10380,6 @@
       "style_type": 2,
       "generated_name": "Avery Lee",
       "generation_date": "2025-12-09T09:19:15.074978"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10778,7 +10656,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: BT Session 1 (RLL)\nSteps:\n1. Sedation.\n2. Treated RLL airways with thermoplasty catheter.\n3. 52 hits total.\n4. Tolerated well, mild wheeze.\nPlan: Prednisone burst, home.",
+    "note_text": "Procedure Note\nPatient: Chloe Adams\nProcedure: BT Session 1 (RLL)\nSteps:\n1. Sedation.\n2. Treated RLL airways with thermoplasty catheter.\n3. 52 hits total.\n4. Tolerated well, mild wheeze.\nPlan: Prednisone burst, home.",
     "cpt_codes": [
       31660
     ],
@@ -11048,16 +10926,10 @@
       "style_type": 4,
       "generated_name": "Madison Hall",
       "generation_date": "2025-12-09T09:19:15.075179"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> here for her first thermoplasty session on the RLL. We did the usual sedation. Treated all the segments in the right lower lobe got 52 activations. She got a little wheezy so we gave her some treatment. Sent her home on prednisone.",
+    "note_text": "Chloe Adams here for her first thermoplasty session on the RLL. We did the usual sedation. Treated all the segments in the right lower lobe got 52 activations. She got a little wheezy so we gave her some treatment. Sent her home on prednisone.",
     "cpt_codes": [
       31660
     ],
@@ -11327,12 +11199,6 @@
       "style_type": 5,
       "generated_name": "Scarlett Allen",
       "generation_date": "2025-12-09T09:19:15.075259"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11609,7 +11475,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSevere persistent asthma.\n[<LOCATION>]\nModerate Sedation.\n[Description]\nBronchial Thermoplasty performed on Right Lower Lobe. 52 activations delivered.\n[Plan]\nDischarge with prednisone.",
+    "note_text": "[Indication]\nSevere persistent asthma.\n[Anesthesia]\nModerate Sedation.\n[Description]\nBronchial Thermoplasty performed on Right Lower Lobe. 52 activations delivered.\n[Plan]\nDischarge with prednisone.",
     "cpt_codes": [
       31660
     ],
@@ -11879,16 +11745,10 @@
       "style_type": 7,
       "generated_name": "Luna King",
       "generation_date": "2025-12-09T09:19:15.075411"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent her first session of bronchial thermoplasty for her asthma. We focused on the right lower lobe today. Using the special catheter, we treated the airways with heat energy, completing 52 activations. She had some coughing and wheezing during the procedure, but it settled down. She went home <DATE_TIME>.",
+    "note_text": "Ms. Adams underwent her first session of bronchial thermoplasty for her asthma. We focused on the right lower lobe today. Using the special catheter, we treated the airways with heat energy, completing 52 activations. She had some coughing and wheezing during the procedure, but it settled down. She went home later that day.",
     "cpt_codes": [
       31660
     ],
@@ -12158,17 +12018,10 @@
       "style_type": 8,
       "generated_name": "Grace Wright",
       "generation_date": "2025-12-09T09:19:15.075476"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Airway thermal ablation (<DATE_TIME>).\nTarget: RLL.\nAction: RF energy applied to segmental bronchi. 52 applications performed.\nOutcome: Procedure completed with minor bronchospasm.",
+    "note_text": "Procedure: Airway thermal ablation (Session 1).\nTarget: RLL.\nAction: RF energy applied to segmental bronchi. 52 applications performed.\nOutcome: Procedure completed with minor bronchospasm.",
     "cpt_codes": [
       31660
     ],
@@ -12438,16 +12291,10 @@
       "style_type": 9,
       "generated_name": "Chloe Scott",
       "generation_date": "2025-12-09T09:19:15.075543"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Indication: Severe asthma, session 2.\nProcedure: Bronchial <PERSON> (LLL).\nAction: 48 activations delivered to LLL.\nComplication: Transient bronchospasm.\nPlan: D/C on prednisone taper.",
+    "note_text": "Indication: Severe asthma, session 2.\nProcedure: Bronchial Thermoplasty (LLL).\nAction: 48 activations delivered to LLL.\nComplication: Transient bronchospasm.\nPlan: D/C on prednisone taper.",
     "cpt_codes": [
       31660
     ],
@@ -12717,16 +12564,10 @@
       "style_type": 1,
       "generated_name": "Samuel Green",
       "generation_date": "2025-12-09T09:19:15.075612"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Bronchial <PERSON>, second session.\nTARGET: Left Lower Lobe.\nDETAILS: Following the protocol for severe refractory asthma, the left lower lobe was selected for treatment. The thermoplasty catheter was deployed to the distal subsegmental bronchi. A total of 48 radiofrequency activations were delivered. The patient tolerated the procedure with only transient bronchospasm.",
+    "note_text": "PROCEDURE: Bronchial Thermoplasty, second session.\nTARGET: Left Lower Lobe.\nDETAILS: Following the protocol for severe refractory asthma, the left lower lobe was selected for treatment. The thermoplasty catheter was deployed to the distal subsegmental bronchi. A total of 48 radiofrequency activations were delivered. The patient tolerated the procedure with only transient bronchospasm.",
     "cpt_codes": [
       31660
     ],
@@ -12996,12 +12837,6 @@
       "style_type": 2,
       "generated_name": "Sebastian Baker",
       "generation_date": "2025-12-09T09:19:15.075677"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -13278,7 +13113,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: BT Session 2 (LLL)\nSteps:\n1. MAC sedation.\n2. Treated LLL with <LOCATION> catheter.\n3. 48 activations.\n4. Some spasm, treated.\nPlan: Home.",
+    "note_text": "Procedure Note\nPatient: Jason Miller\nProcedure: BT Session 2 (LLL)\nSteps:\n1. MAC sedation.\n2. Treated LLL with BT catheter.\n3. 48 activations.\n4. Some spasm, treated.\nPlan: Home.",
     "cpt_codes": [
       31660
     ],
@@ -13548,17 +13383,10 @@
       "style_type": 4,
       "generated_name": "Owen Nelson",
       "generation_date": "2025-12-09T09:19:15.075807"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> back for session 2 of thermoplasty LLL this time. MAC <LOCATION>. We did 48 activations in the left lower lobe. He got tight during the case but we gave bronchodilators and he opened up. Discharged him after <DATE_TIME>.",
+    "note_text": "Jason Miller back for session 2 of thermoplasty LLL this time. MAC anesthesia. We did 48 activations in the left lower lobe. He got tight during the case but we gave bronchodilators and he opened up. Discharged him after a few hours.",
     "cpt_codes": [
       31660
     ],
@@ -13828,18 +13656,10 @@
       "style_type": 5,
       "generated_name": "Theodore Carter",
       "generation_date": "2025-12-09T09:19:15.075873"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Flexible bronchoscopy performed with <LOCATION> catheter treatment of LLL segmental and subsegmental bronchi. Total of 48 activations delivered. Transient bronchospasm requiring additional bronchodilator therapy occurred; no respiratory failure. Patient discharged on prednisone taper.",
+    "note_text": "Flexible bronchoscopy performed with BT catheter treatment of LLL segmental and subsegmental bronchi. Total of 48 activations delivered. Transient bronchospasm requiring additional bronchodilator therapy occurred; no respiratory failure. Patient discharged on prednisone taper.",
     "cpt_codes": [
       31660
     ],
@@ -14109,16 +13929,10 @@
       "style_type": 6,
       "generated_name": "Wyatt Mitchell",
       "generation_date": "2025-12-09T09:19:15.075962"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSevere asthma (<DATE_TIME>).\n[<LOCATION>]\nMAC.\n[Description]\nBronchial Thermoplasty performed on Left Lower Lobe. 48 activations delivered.\n[Plan]\nDischarge on prednisone.",
+    "note_text": "[Indication]\nSevere asthma (Session 2).\n[Anesthesia]\nMAC.\n[Description]\nBronchial Thermoplasty performed on Left Lower Lobe. 48 activations delivered.\n[Plan]\nDischarge on prednisone.",
     "cpt_codes": [
       31660
     ],
@@ -14388,17 +14202,10 @@
       "style_type": 7,
       "generated_name": "Julian Perez",
       "generation_date": "2025-12-09T09:19:15.076028"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> returned for his second bronchial thermoplasty treatment, targeting the left lower lobe. We delivered 48 pulses of energy to the airways. He experienced some tightening of the airways during the procedure, which we treated with medication. He was monitored for <DATE_TIME> and then sent home.",
+    "note_text": "Mr. Miller returned for his second bronchial thermoplasty treatment, targeting the left lower lobe. We delivered 48 pulses of energy to the airways. He experienced some tightening of the airways during the procedure, which we treated with medication. He was monitored for a few hours and then sent home.",
     "cpt_codes": [
       31660
     ],
@@ -14668,17 +14475,10 @@
       "style_type": 8,
       "generated_name": "Luke Roberts",
       "generation_date": "2025-12-09T09:19:15.076095"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Airway thermal ablation (<DATE_TIME>).\nTarget: LLL.\nAction: RF energy applied to segmental bronchi. 48 applications performed.\nOutcome: Procedure completed, transient spasm managed.",
+    "note_text": "Procedure: Airway thermal ablation (Session 2).\nTarget: LLL.\nAction: RF energy applied to segmental bronchi. 48 applications performed.\nOutcome: Procedure completed, transient spasm managed.",
     "cpt_codes": [
       31660
     ],
@@ -14948,16 +14748,10 @@
       "style_type": 9,
       "generated_name": "Gabriel Turner",
       "generation_date": "2025-12-09T09:19:15.076158"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Indication: Severe asthma, final session.\nProcedure: Bronchial <PERSON> (RUL + LUL).\nAction: 60 activations total (30/side).\nComplication: Mild cough.\nPlan: Admit for observation.",
+    "note_text": "Indication: Severe asthma, final session.\nProcedure: Bronchial Thermoplasty (RUL + LUL).\nAction: 60 activations total (30/side).\nComplication: Mild cough.\nPlan: Admit for observation.",
     "cpt_codes": [
       31660
     ],
@@ -15227,16 +15021,10 @@
       "style_type": 1,
       "generated_name": "Penelope Phillips",
       "generation_date": "2025-12-09T09:19:15.076229"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Bronchial <PERSON>, final session.\nTARGET: Bilateral Upper Lobes.\nDETAILS: Under general <LOCATION>, the final stage of thermoplasty was undertaken. The catheter was sequentially deployed in the right upper lobe and left upper lobe segmental airways. A total of 60 activations were delivered (30 per lobe). The patient remained stable with only mild post-procedure cough.",
+    "note_text": "PROCEDURE: Bronchial Thermoplasty, final session.\nTARGET: Bilateral Upper Lobes.\nDETAILS: Under general anesthesia, the final stage of thermoplasty was undertaken. The catheter was sequentially deployed in the right upper lobe and left upper lobe segmental airways. A total of 60 activations were delivered (30 per lobe). The patient remained stable with only mild post-procedure cough.",
     "cpt_codes": [
       31660
     ],
@@ -15506,13 +15294,6 @@
       "style_type": 2,
       "generated_name": "Layla Campbell",
       "generation_date": "2025-12-09T09:19:15.076299"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -15789,7 +15570,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: BT Session 3 (Upper Lobes)\nSteps:\n1. GA/LMA.\n2. Treated RUL and LUL.\n3. 60 hits total.\n4. Mild cough.\nPlan: Admit overnight.",
+    "note_text": "Procedure Note\nPatient: Hannah Lewis\nProcedure: BT Session 3 (Upper Lobes)\nSteps:\n1. GA/LMA.\n2. Treated RUL and LUL.\n3. 60 hits total.\n4. Mild cough.\nPlan: Admit overnight.",
     "cpt_codes": [
       31660
     ],
@@ -16059,16 +15840,10 @@
       "style_type": 4,
       "generated_name": "Zoey Evans",
       "generation_date": "2025-12-09T09:19:15.076436"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> for her last thermoplasty session doing both upper lobes today. General <LOCATION> with an LMA. We did 30 hits on the right and 30 on the left. She did fine just some coughing after. Keeping her overnight since she lives far away.",
+    "note_text": "Hannah Lewis for her last thermoplasty session doing both upper lobes today. General anesthesia with an LMA. We did 30 hits on the right and 30 on the left. She did fine just some coughing after. Keeping her overnight since she lives far away.",
     "cpt_codes": [
       31660
     ],
@@ -16338,17 +16113,10 @@
       "style_type": 5,
       "generated_name": "Nora Edwards",
       "generation_date": "2025-12-09T09:19:15.076503"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "BT catheter deployed sequentially in RUL and LUL segmental airways. Total of 60 activations delivered (30 per side). Mild postprocedure cough and chest tightness noted. Patient admitted <DATE_TIME> for observation.",
+    "note_text": "BT catheter deployed sequentially in RUL and LUL segmental airways. Total of 60 activations delivered (30 per side). Mild postprocedure cough and chest tightness noted. Patient admitted overnight for observation.",
     "cpt_codes": [
       31660
     ],
@@ -16618,16 +16386,10 @@
       "style_type": 6,
       "generated_name": "Lily Collins",
       "generation_date": "2025-12-09T09:19:15.076585"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSevere asthma (<DATE_TIME>).\n[<LOCATION>]\nGeneral, LMA.\n[Description]\nBronchial Thermoplasty performed on Bilateral Upper Lobes. 60 total activations.\n[Plan]\nAdmit for observation.",
+    "note_text": "[Indication]\nSevere asthma (Session 3).\n[Anesthesia]\nGeneral, LMA.\n[Description]\nBronchial Thermoplasty performed on Bilateral Upper Lobes. 60 total activations.\n[Plan]\nAdmit for observation.",
     "cpt_codes": [
       31660
     ],
@@ -16897,17 +16659,10 @@
       "style_type": 7,
       "generated_name": "Eleanor Stewart",
       "generation_date": "2025-12-09T09:19:15.076659"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent her final bronchial thermoplasty session, treating both upper lobes. We used general <LOCATION> for this session. We delivered 30 activations to the right upper lobe and 30 to the left. She had some chest tightness afterwards, so we decided to keep her overnight for monitoring.",
+    "note_text": "Ms. Lewis underwent her final bronchial thermoplasty session, treating both upper lobes. We used general anesthesia for this session. We delivered 30 activations to the right upper lobe and 30 to the left. She had some chest tightness afterwards, so we decided to keep her overnight for monitoring.",
     "cpt_codes": [
       31660
     ],
@@ -17177,17 +16932,10 @@
       "style_type": 8,
       "generated_name": "Hannah Sanchez",
       "generation_date": "2025-12-09T09:19:15.076737"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Airway thermal ablation (<DATE_TIME>).\nTarget: Bilateral Upper Lobes.\nAction: RF energy applied to segmental bronchi. 60 applications total.\nOutcome: Procedure completed, patient admitted.",
+    "note_text": "Procedure: Airway thermal ablation (Session 3).\nTarget: Bilateral Upper Lobes.\nAction: RF energy applied to segmental bronchi. 60 applications total.\nOutcome: Procedure completed, patient admitted.",
     "cpt_codes": [
       31660
     ],
@@ -17457,12 +17205,6 @@
       "style_type": 9,
       "generated_name": "Lillian Morris",
       "generation_date": "2025-12-09T09:19:15.076817"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -18285,7 +18027,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: Med Thoracoscopy + Talc\nSteps:\n1. MAC/Local.\n2. Trocar in 6th ICS.\n3. Drained 1.5L fluid.\n4. Saw nodules, took biopsies.\n5. Put in talc slurry.\n6. Chest tube placed.\nPlan: Admit.",
+    "note_text": "Procedure Note\nPatient: George Turner\nProcedure: Med Thoracoscopy + Talc\nSteps:\n1. MAC/Local.\n2. Trocar in 6th ICS.\n3. Drained 1.5L fluid.\n4. Saw nodules, took biopsies.\n5. Put in talc slurry.\n6. Chest tube placed.\nPlan: Admit.",
     "cpt_codes": [
       32609
     ],
@@ -18555,16 +18297,10 @@
       "style_type": 4,
       "generated_name": "Joshua Morgan",
       "generation_date": "2025-12-09T09:19:15.077095"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> medical thoracoscopy. We went in on the left side drained about a liter and a half of fluid. The pleura looked studded with cancer. Took a bunch of biopsies. Put some talc in there to stick it down. He's admitted with a chest tube.",
+    "note_text": "George Turner medical thoracoscopy. We went in on the left side drained about a liter and a half of fluid. The pleura looked studded with cancer. Took a bunch of biopsies. Put some talc in there to stick it down. He's admitted with a chest tube.",
     "cpt_codes": [
       32609
     ],
@@ -18834,12 +18570,6 @@
       "style_type": 5,
       "generated_name": "Christian Bell",
       "generation_date": "2025-12-09T09:19:15.077159"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -19116,7 +18846,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent left pleural effusion; suspected malignancy.\n[<LOCATION>]\nMAC/Local.\n[Description]\nMedical Thoracoscopy performed. 1.5L fluid drained. Parietal nodules biopsied. Talc pleurodesis performed.\n[Plan]\nAdmit for chest tube management.",
+    "note_text": "[Indication]\nRecurrent left pleural effusion; suspected malignancy.\n[Anesthesia]\nMAC/Local.\n[Description]\nMedical Thoracoscopy performed. 1.5L fluid drained. Parietal nodules biopsied. Talc pleurodesis performed.\n[Plan]\nAdmit for chest tube management.",
     "cpt_codes": [
       32609
     ],
@@ -19386,16 +19116,10 @@
       "style_type": 7,
       "generated_name": "Ryan Bailey",
       "generation_date": "2025-12-09T09:19:15.077294"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We performed a medical thoracoscopy on Mr. <PERSON> to diagnose and treat his recurrent <PERSON>. We drained 1.5 liters of fluid and found several nodules on the lining of the lung, which we biopsied. To prevent the fluid from coming back, we performed a talc pleurodesis. He will stay in the hospital with a chest tube for <DATE_TIME>.",
+    "note_text": "We performed a medical thoracoscopy on Mr. Turner to diagnose and treat his recurrent fluid buildup. We drained 1.5 liters of fluid and found several nodules on the lining of the lung, which we biopsied. To prevent the fluid from coming back, we performed a talc pleurodesis. He will stay in the hospital with a chest tube for a few days.",
     "cpt_codes": [
       32609
     ],
@@ -19665,14 +19389,6 @@
       "style_type": 8,
       "generated_name": "Aaron Rivera",
       "generation_date": "2025-12-09T09:19:15.077375"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -19949,7 +19665,7 @@
     }
   },
   {
-    "note_text": "Indication: Recurrent right effusion.\nProcedure: <LOCATION>-guided Thoracentesis.\nAction: 900mL clear fluid removed.\nComplication: None.\nPlan: Discharge.",
+    "note_text": "Indication: Recurrent right effusion.\nProcedure: US-guided Thoracentesis.\nAction: 900mL clear fluid removed.\nComplication: None.\nPlan: Discharge.",
     "cpt_codes": [
       32555
     ],
@@ -20220,16 +19936,10 @@
       "style_type": 1,
       "generated_name": "Addison Richardson",
       "generation_date": "2025-12-09T09:19:15.077530"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Ultrasound-guided therapeutic thoracentesis.\nNARRATIVE: The right hemithorax was scanned, identifying a locatable pocket of fluid in the 8th intercostal space. Under local <LOCATION>, a catheter was introduced and 900 mL of clear serous fluid was aspirated. The patient tolerated the procedure without complication.",
+    "note_text": "PROCEDURE: Ultrasound-guided therapeutic thoracentesis.\nNARRATIVE: The right hemithorax was scanned, identifying a locatable pocket of fluid in the 8th intercostal space. Under local anesthesia, a catheter was introduced and 900 mL of clear serous fluid was aspirated. The patient tolerated the procedure without complication.",
     "cpt_codes": [
       32555
     ],
@@ -20500,12 +20210,6 @@
       "style_type": 2,
       "generated_name": "Aubrey Cox",
       "generation_date": "2025-12-09T09:19:15.077599"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -20783,7 +20487,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: Thoracentesis\nSteps:\n1. Ultrasound check.\n2. Local numbing.\n3. Needle/catheter in.\n4. Drained 900cc.\n5. Pulled catheter, bandaged.\nPlan: Home.",
+    "note_text": "Procedure Note\nPatient: Isabel Morales\nProcedure: Thoracentesis\nSteps:\n1. Ultrasound check.\n2. Local numbing.\n3. Needle/catheter in.\n4. Drained 900cc.\n5. Pulled catheter, bandaged.\nPlan: Home.",
     "cpt_codes": [
       32555
     ],
@@ -21054,12 +20758,6 @@
       "style_type": 4,
       "generated_name": "Natalie Ward",
       "generation_date": "2025-12-09T09:19:15.077735"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -21611,7 +21309,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent right pleural effusion (HF).\n[<LOCATION>]\nLocal.\n[Description]\n<LOCATION>-guided thoracentesis. 900mL serous fluid drained.\n[Plan]\nDischarge.",
+    "note_text": "[Indication]\nRecurrent right pleural effusion (HF).\n[Anesthesia]\nLocal.\n[Description]\nUS-guided thoracentesis. 900mL serous fluid drained.\n[Plan]\nDischarge.",
     "cpt_codes": [
       32555
     ],
@@ -21882,17 +21580,10 @@
       "style_type": 7,
       "generated_name": "Hazel Gray",
       "generation_date": "2025-12-09T09:19:15.077936"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> needed fluid drained from her right lung due to heart failure. We used ultrasound to guide a small tube into the fluid pocket and drained 900 mL. She tolerated it well and was breathing better afterwards. She was discharged home.",
+    "note_text": "Ms. Morales needed fluid drained from her right lung due to heart failure. We used ultrasound to guide a small tube into the fluid pocket and drained 900 mL. She tolerated it well and was breathing better afterwards. She was discharged home.",
     "cpt_codes": [
       32555
     ],
@@ -22163,12 +21854,6 @@
       "style_type": 8,
       "generated_name": "Violet Ramirez",
       "generation_date": "2025-12-09T09:19:15.078002"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -22446,7 +22131,7 @@
     }
   },
   {
-    "note_text": "Indication: Malignant effusion.\nProcedure: Medical Thoracoscopy + IPC.\nFindings: 1.8L fluid, nodules.\nAction: Talc poudrage performed. Tunneled catheter placed.\nPlan: Admit, d/c <DATE_TIME>.",
+    "note_text": "Indication: Malignant effusion.\nProcedure: Medical Thoracoscopy + IPC.\nFindings: 1.8L fluid, nodules.\nAction: Talc poudrage performed. Tunneled catheter placed.\nPlan: Admit, d/c next day.",
     "cpt_codes": [
       32609,
       32550
@@ -22773,16 +22458,10 @@
       "style_type": 1,
       "generated_name": "Caleb Watson",
       "generation_date": "2025-12-09T09:19:15.078153"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Medical thoracoscopy with talc poudrage and placement of indwelling pleural catheter.\nFINDINGS: Thoracoscopy revealed extensive parietal pleural implants. 1.8 L of serosanguinous fluid was evacuated. \nINTERVENTION: Talc poudrage was insufflated for pleurodesis. Additionally, a tunneled indwelling pleural catheter was placed to ensure long-term drainage capability. \nDISPOSITION: The patient will be admitted for <DATE_TIME> observation.",
+    "note_text": "PROCEDURE: Medical thoracoscopy with talc poudrage and placement of indwelling pleural catheter.\nFINDINGS: Thoracoscopy revealed extensive parietal pleural implants. 1.8 L of serosanguinous fluid was evacuated. \nINTERVENTION: Talc poudrage was insufflated for pleurodesis. Additionally, a tunneled indwelling pleural catheter was placed to ensure long-term drainage capability. \nDISPOSITION: The patient will be admitted for overnight observation.",
     "cpt_codes": [
       32609,
       32550
@@ -23109,12 +22788,6 @@
       "style_type": 2,
       "generated_name": "Ryan Brooks",
       "generation_date": "2025-12-09T09:19:15.078236"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -23448,7 +23121,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: Thoracoscopy + Talc + IPC\nSteps:\n1. MAC sedation.\n2. Thoracoscopy: drained 1.8L.\n3. Sprayed talc (poudrage).\n4. Placed PleurX catheter.\n5. Secure.\nPlan: Admit.",
+    "note_text": "Procedure Note\nPatient: Ethan Hall\nProcedure: Thoracoscopy + Talc + IPC\nSteps:\n1. MAC sedation.\n2. Thoracoscopy: drained 1.8L.\n3. Sprayed talc (poudrage).\n4. Placed PleurX catheter.\n5. Secure.\nPlan: Admit.",
     "cpt_codes": [
       32609,
       32550
@@ -23775,16 +23448,10 @@
       "style_type": 4,
       "generated_name": "Adrian Sanders",
       "generation_date": "2025-12-09T09:19:15.078392"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> thoracoscopy note. Drained 1.8L bloody fluid. Lung looked cancerous. We did the talc spray to glue it and also put in a tunneled catheter just in case. He's staying <DATE_TIME>.",
+    "note_text": "Ethan Hall thoracoscopy note. Drained 1.8L bloody fluid. Lung looked cancerous. We did the talc spray to glue it and also put in a tunneled catheter just in case. He's staying overnight.",
     "cpt_codes": [
       32609,
       32550
@@ -24111,17 +23778,10 @@
       "style_type": 5,
       "generated_name": "Leo Price",
       "generation_date": "2025-12-09T09:19:15.078471"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Under ultrasound guidance, right 7th intercostal space selected. 1.8 L of serosanguinous pleural fluid drained. Thoracoscopy revealed nodular parietal pleural implants. Talc poudrage pleurodesis performed and indwelling tunneled pleural catheter placed for outpatient drainage. Admitted <DATE_TIME>.",
+    "note_text": "Under ultrasound guidance, right 7th intercostal space selected. 1.8 L of serosanguinous pleural fluid drained. Thoracoscopy revealed nodular parietal pleural implants. Talc poudrage pleurodesis performed and indwelling tunneled pleural catheter placed for outpatient drainage. Admitted overnight.",
     "cpt_codes": [
       32609,
       32550
@@ -24448,16 +24108,10 @@
       "style_type": 6,
       "generated_name": "Isaiah Bennett",
       "generation_date": "2025-12-09T09:19:15.078547"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent malignant pleural effusion.\n[<LOCATION>]\nMAC/Local.\n[Description]\nMedical Thoracoscopy. 1.8L drained. Talc poudrage performed. Tunneled pleural catheter placed.\n[Plan]\nAdmit.",
+    "note_text": "[Indication]\nRecurrent malignant pleural effusion.\n[Anesthesia]\nMAC/Local.\n[Description]\nMedical Thoracoscopy. 1.8L drained. Talc poudrage performed. Tunneled pleural catheter placed.\n[Plan]\nAdmit.",
     "cpt_codes": [
       32609,
       32550
@@ -24784,16 +24438,10 @@
       "style_type": 7,
       "generated_name": "Jonathan Wood",
       "generation_date": "2025-12-09T09:19:15.078633"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> underwent a procedure to manage his malignant <PERSON>. We performed a thoracoscopy, drained 1.8 liters of fluid, and sprayed talc to seal the lung. We also placed a permanent tunneled catheter to allow for drainage at home if the fluid comes back. He will stay <DATE_TIME> for monitoring.",
+    "note_text": "Mr. Hall underwent a procedure to manage his malignant fluid buildup. We performed a thoracoscopy, drained 1.8 liters of fluid, and sprayed talc to seal the lung. We also placed a permanent tunneled catheter to allow for drainage at home if the fluid comes back. He will stay overnight for monitoring.",
     "cpt_codes": [
       32609,
       32550
@@ -25120,14 +24768,6 @@
       "style_type": 8,
       "generated_name": "Charles Barnes",
       "generation_date": "2025-12-09T09:19:15.078712"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {

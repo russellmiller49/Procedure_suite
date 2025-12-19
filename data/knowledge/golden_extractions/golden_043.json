@@ -642,7 +642,7 @@
     }
   },
   {
-    "note_text": "Procedure Note:\n1. Time out/Consent verified.\n2. General <PERSON>/ETT.\n3. Scope inserted to carina.\n4. R mainstem mass identified.\n5. Biopsies taken with standard forceps.\n6. Brushing performed with protected catheter.\n7. Scope removed. Patient stable.",
+    "note_text": "Procedure Note:\n1. Time out/Consent verified.\n2. General Anesthesia/ETT.\n3. Scope inserted to carina.\n4. R mainstem mass identified.\n5. Biopsies taken with standard forceps.\n6. Brushing performed with protected catheter.\n7. Scope removed. Patient stable.",
     "cpt_codes": [
       31625,
       31623
@@ -853,12 +853,6 @@
       "style_type": 4,
       "generated_name": "Doris O'Connor",
       "generation_date": "2025-12-09T09:20:28.598761"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1076,7 +1070,7 @@
     }
   },
   {
-    "note_text": "Flexible bronchoscopy was performed under general <LOCATION> via oral endotracheal tube. Vocal cords and trachea were normal. A friable, obstructing, exophytic tumor was visualized in the right mainstem bronchus with contact bleeding. Multiple endobronchial forceps biopsies were obtained from the right mainstem tumor for histology with good hemostasis after iced saline and brief suctioning. Additional protected brushings were performed from the same lesion for cytology. The patient was extubated in the procedure room.",
+    "note_text": "Flexible bronchoscopy was performed under general anesthesia via oral endotracheal tube. Vocal cords and trachea were normal. A friable, obstructing, exophytic tumor was visualized in the right mainstem bronchus with contact bleeding. Multiple endobronchial forceps biopsies were obtained from the right mainstem tumor for histology with good hemostasis after iced saline and brief suctioning. Additional protected brushings were performed from the same lesion for cytology. The patient was extubated in the procedure room.",
     "cpt_codes": [
       31625,
       31623
@@ -1287,16 +1281,10 @@
       "style_type": 6,
       "generated_name": "Florence Stone",
       "generation_date": "2025-12-09T09:20:28.598867"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nHemoptysis, R mainstem mass.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nFriable tumor R mainstem. Forceps biopsies x4. Protected brushings x1. Hemostasis secured.\n[Plan]\nPathology pending. Oncology referral.",
+    "note_text": "[Indication]\nHemoptysis, R mainstem mass.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nFriable tumor R mainstem. Forceps biopsies x4. Protected brushings x1. Hemostasis secured.\n[Plan]\nPathology pending. Oncology referral.",
     "cpt_codes": [
       31625,
       31623
@@ -1507,12 +1495,6 @@
       "style_type": 7,
       "generated_name": "Grace Davis",
       "generation_date": "2025-12-09T09:20:28.598919"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1730,7 +1712,7 @@
     }
   },
   {
-    "note_text": "Flexible bronchoscopy conducted under general <LOCATION>. An exophytic lesion was observed in the right mainstem. Multiple tissue samples were harvested using forceps. Additionally, cellular material was collected via protected brushing. Hemostasis was maintained. The patient was extubated without incident.",
+    "note_text": "Flexible bronchoscopy conducted under general anesthesia. An exophytic lesion was observed in the right mainstem. Multiple tissue samples were harvested using forceps. Additionally, cellular material was collected via protected brushing. Hemostasis was maintained. The patient was extubated without incident.",
     "cpt_codes": [
       31625,
       31623
@@ -1941,16 +1923,10 @@
       "style_type": 9,
       "generated_name": "Irene Wright",
       "generation_date": "2025-12-09T09:20:28.599019"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Indication: FB aspiration.\n<LOCATION>: Moderate.\nFindings: Nut in RMS.\nAction: Removal via forceps en bloc.\nOutcome: Airway clear. No fragmentation.",
+    "note_text": "Indication: FB aspiration.\nAnesthesia: Moderate.\nFindings: Nut in RMS.\nAction: Removal via forceps en bloc.\nOutcome: Airway clear. No fragmentation.",
     "cpt_codes": [
       31635
     ],
@@ -2133,12 +2109,6 @@
       "style_type": 1,
       "generated_name": "John Jenkins",
       "generation_date": "2025-12-09T09:20:28.599069"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -3072,7 +3042,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nChoking, unilateral wheeze.\n[<LOCATION>]\nModerate, native airway.\n[Description]\nForeign body (nut) identified in RMS. Removed en bloc with forceps. Mucosa edematous but intact.\n[Plan]\nDischarge home.",
+    "note_text": "[Indication]\nChoking, unilateral wheeze.\n[Anesthesia]\nModerate, native airway.\n[Description]\nForeign body (nut) identified in RMS. Removed en bloc with forceps. Mucosa edematous but intact.\n[Plan]\nDischarge home.",
     "cpt_codes": [
       31635
     ],
@@ -3255,12 +3225,6 @@
       "style_type": 7,
       "generated_name": "Peter White",
       "generation_date": "2025-12-09T09:20:28.599337"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -4012,7 +3976,7 @@
     }
   },
   {
-    "note_text": "CPT 31652: Bronchoscopy with EBUS-TBNA, 1-2 nodal stations.\nDetails: Station 4R sampled under direct ultrasound guidance. 3 passes made. No other stations sampled (supports single code <DATE_TIME>, no <DATE_TIME>).",
+    "note_text": "CPT 31652: Bronchoscopy with EBUS-TBNA, 1-2 nodal stations.\nDetails: Station 4R sampled under direct ultrasound guidance. 3 passes made. No other stations sampled (supports single code 31652, no 31653).",
     "cpt_codes": [
       31652
     ],
@@ -4197,17 +4161,10 @@
       "style_type": 3,
       "generated_name": "Ursula Myers",
       "generation_date": "2025-12-09T09:20:28.599639"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure Steps:\n1. ETT placement.\n2. EBUS scope insertion.\n3. ID <MRN> 4R (12mm).\n4. FNA x 3 with 22G needle.\n5. ROSE pos for carcinoma.\n6. Extubate.",
+    "note_text": "Procedure Steps:\n1. ETT placement.\n2. EBUS scope insertion.\n3. ID station 4R (12mm).\n4. FNA x 3 with 22G needle.\n5. ROSE pos for carcinoma.\n6. Extubate.",
     "cpt_codes": [
       31652
     ],
@@ -4392,16 +4349,10 @@
       "style_type": 4,
       "generated_name": "Victor Anderson",
       "generation_date": "2025-12-09T09:20:28.599687"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
-    "note_text": "62 male lung cancer workup ebus done general <LOCATION> tube in. looked at 4r node it was big poked it three times with the needle rose said cancer so we stopped there didnt do any other nodes patient did fine.",
+    "note_text": "62 male lung cancer workup ebus done general anesthesia tube in. looked at 4r node it was big poked it three times with the needle rose said cancer so we stopped there didnt do any other nodes patient did fine.",
     "cpt_codes": [
       31652
     ],
@@ -4586,16 +4537,10 @@
       "style_type": 5,
       "generated_name": "Walter Mitchell",
       "generation_date": "2025-12-09T09:20:28.599736"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Linear EBUS bronchoscopy performed under general <LOCATION> via oral ETT. The 4R lymph node measured approximately 12 mm short axis with heterogeneous echotexture and no <PERSON> vessels. Using a 22-gauge EBUS needle, three passes were obtained from station 4R with good cytologic material seen on ROSE, consistent with malignant cells. No additional nodal stations were sampled.",
+    "note_text": "Linear EBUS bronchoscopy performed under general anesthesia via oral ETT. The 4R lymph node measured approximately 12 mm short axis with heterogeneous echotexture and no Doppler vessels. Using a 22-gauge EBUS needle, three passes were obtained from station 4R with good cytologic material seen on ROSE, consistent with malignant cells. No additional nodal stations were sampled.",
     "cpt_codes": [
       31652
     ],
@@ -4780,17 +4725,10 @@
       "style_type": 6,
       "generated_name": "Xander Reynolds",
       "generation_date": "2025-12-09T09:20:28.599781"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nPET-avid 4R node.\n[<LOCATION>]\nGeneral.\n[Description]\nEBUS localization of 4R. TBNA x3 (22G). ROSE positive for malignancy. No other stations.\n[Plan]\nOncology consult.",
+    "note_text": "[Indication]\nPET-avid 4R node.\n[Anesthesia]\nGeneral.\n[Description]\nEBUS localization of 4R. TBNA x3 (22G). ROSE positive for malignancy. No other stations.\n[Plan]\nOncology consult.",
     "cpt_codes": [
       31652
     ],
@@ -4975,16 +4913,10 @@
       "style_type": 7,
       "generated_name": "Yusuf Baker",
       "generation_date": "2025-12-09T09:20:28.599828"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Under general <LOCATION>, we performed an EBUS bronchoscopy. We located an enlarged lymph node at station 4R. We took three needle samples from this node. The pathologist in the room confirmed cancer cells were present. We did not sample any other nodes and ended the procedure.",
+    "note_text": "Under general anesthesia, we performed an EBUS bronchoscopy. We located an enlarged lymph node at station 4R. We took three needle samples from this node. The pathologist in the room confirmed cancer cells were present. We did not sample any other nodes and ended the procedure.",
     "cpt_codes": [
       31652
     ],
@@ -5169,12 +5101,6 @@
       "style_type": 8,
       "generated_name": "Zachary Roberts",
       "generation_date": "2025-12-09T09:20:28.599873"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -5589,7 +5515,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE: Comprehensive mediastinal staging via EBUS-TBNA followed by bronchoalveolar lavage. Systematic ultrasonic evaluation revealed adenopathy at stations 4R, 7, and 11R. Fine needle aspiration was performed at all three stations (3 passes each, 22G). Cytopathology indicated malignancy in the <LOCATION> (4R, 7) stations. Subsequently, a bronchoalveolar lavage of the right lower lobe was performed for microbiological analysis.",
+    "note_text": "PROCEDURE: Comprehensive mediastinal staging via EBUS-TBNA followed by bronchoalveolar lavage. Systematic ultrasonic evaluation revealed adenopathy at stations 4R, 7, and 11R. Fine needle aspiration was performed at all three stations (3 passes each, 22G). Cytopathology indicated malignancy in the N2 (4R, 7) stations. Subsequently, a bronchoalveolar lavage of the right lower lobe was performed for microbiological analysis.",
     "cpt_codes": [
       31653,
       31624
@@ -5809,16 +5735,10 @@
       "style_type": 2,
       "generated_name": "Carol Campbell",
       "generation_date": "2025-12-09T09:20:28.600102"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Billing Summary:\n- <DATE_TIME>: EBUS sampling of 3 or more stations (4R, 7, 11R).\n- 31624: Distinct BAL performed in RLL for microbiology.\n- Justification: Comprehensive staging and separate diagnostic lavage performed.",
+    "note_text": "Billing Summary:\n- 31653: EBUS sampling of 3 or more stations (4R, 7, 11R).\n- 31624: Distinct BAL performed in RLL for microbiology.\n- Justification: Comprehensive staging and separate diagnostic lavage performed.",
     "cpt_codes": [
       31653,
       31624
@@ -6038,12 +5958,6 @@
       "style_type": 3,
       "generated_name": "Diana Allen",
       "generation_date": "2025-12-09T09:20:28.600161"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -6270,7 +6184,7 @@
     }
   },
   {
-    "note_text": "stging procedure for 71F general <LOCATION> ebus scope used. sampled 4r then 7 then 11r three passes each. cancer in the mediastinum. then we washed the rll for culture bal fluid looked clear patient woke up ok.",
+    "note_text": "stging procedure for 71F general anesthesia ebus scope used. sampled 4r then 7 then 11r three passes each. cancer in the mediastinum. then we washed the rll for culture bal fluid looked clear patient woke up ok.",
     "cpt_codes": [
       31653,
       31624
@@ -6490,12 +6404,6 @@
       "style_type": 5,
       "generated_name": "Fiona Hernandez",
       "generation_date": "2025-12-09T09:20:28.600324"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -6722,7 +6630,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMediastinal adenopathy, staging.\n[<LOCATION>]\nGeneral, ETT.\n[Description]\nEBUS-TBNA of 4R, 7, 11R (3 stations). BAL RLL performed. ROSE positive 4R/7.\n[Plan]\nOncology/ID <MRN> up.",
+    "note_text": "[Indication]\nMediastinal adenopathy, staging.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nEBUS-TBNA of 4R, 7, 11R (3 stations). BAL RLL performed. ROSE positive 4R/7.\n[Plan]\nOncology/ID follow up.",
     "cpt_codes": [
       31653,
       31624
@@ -6942,17 +6850,10 @@
       "style_type": 7,
       "generated_name": "Holly Wright",
       "generation_date": "2025-12-09T09:20:28.600480"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "MRN"
-      ]
     }
   },
   {
-    "note_text": "We performed a complete EBUS staging procedure under general <LOCATION>. We sampled three distinct lymph node stations: 4R, 7, and 11R. The onsite evaluation showed cancer in <DATE_TIME>. After the staging, we performed a lung wash (BAL) in the right lower lobe to check for infection.",
+    "note_text": "We performed a complete EBUS staging procedure under general anesthesia. We sampled three distinct lymph node stations: 4R, 7, and 11R. The onsite evaluation showed cancer in the first two. After the staging, we performed a lung wash (BAL) in the right lower lobe to check for infection.",
     "cpt_codes": [
       31653,
       31624
@@ -7172,17 +7073,10 @@
       "style_type": 8,
       "generated_name": "Iris Scott",
       "generation_date": "2025-12-09T09:20:28.600536"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Linear EBUS bronchoscopy executed under general <LOCATION>. Three nodal stations (4R, 7, 11R) were aspirated. ROSE indicated malignancy in 4R and 7. A bronchoalveolar lavage was subsequently conducted in the right lower lobe.",
+    "note_text": "Linear EBUS bronchoscopy executed under general anesthesia. Three nodal stations (4R, 7, 11R) were aspirated. ROSE indicated malignancy in 4R and 7. A bronchoalveolar lavage was subsequently conducted in the right lower lobe.",
     "cpt_codes": [
       31653,
       31624
@@ -7402,16 +7296,10 @@
       "style_type": 9,
       "generated_name": "Judy Allen",
       "generation_date": "2025-12-09T09:20:28.600590"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Indication: CAO, post-obstructive pneumonia.\nAction:\n- Suctioned copious pus (Therapeutic asp).\n- Balloon dilation.\n- Placed covered metal stent RMS.\nResult: Airway patent. <PERSON> cleared.",
+    "note_text": "Indication: CAO, post-obstructive pneumonia.\nAction:\n- Suctioned copious pus (Therapeutic asp).\n- Balloon dilation.\n- Placed covered metal stent RMS.\nResult: Airway patent. Pus cleared.",
     "cpt_codes": [
       31636,
       31645
@@ -7630,12 +7518,6 @@
       "style_type": 1,
       "generated_name": "Brian Hill",
       "generation_date": "2025-12-09T09:20:28.600651"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -8527,7 +8409,7 @@
     }
   },
   {
-    "note_text": "Rigid and flexible bronchoscopy under general <LOCATION>. A friable intraluminal tumor was seen nearly occluding the right mainstem bronchus. Therapeutic aspiration and suctioning were used to clear copious purulent secretions. Balloon dilation was performed to facilitate stent placement. A covered metallic bronchial stent was deployed across the right mainstem bronchus with good expansion and restoration of lumen.",
+    "note_text": "Rigid and flexible bronchoscopy under general anesthesia. A friable intraluminal tumor was seen nearly occluding the right mainstem bronchus. Therapeutic aspiration and suctioning were used to clear copious purulent secretions. Balloon dilation was performed to facilitate stent placement. A covered metallic bronchial stent was deployed across the right mainstem bronchus with good expansion and restoration of lumen.",
     "cpt_codes": [
       31636,
       31645
@@ -8746,16 +8628,10 @@
       "style_type": 6,
       "generated_name": "Greg Thompson",
       "generation_date": "2025-12-09T09:20:28.600920"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nRight mainstem malignant obstruction, pneumonia.\n[<LOCATION>]\nGeneral, Rigid/Flex.\n[Description]\nTherapeutic aspiration of pus. Dilation. Covered stent placement RMS.\n[Plan]\nICU admission.",
+    "note_text": "[Indication]\nRight mainstem malignant obstruction, pneumonia.\n[Anesthesia]\nGeneral, Rigid/Flex.\n[Description]\nTherapeutic aspiration of pus. Dilation. Covered stent placement RMS.\n[Plan]\nICU admission.",
     "cpt_codes": [
       31636,
       31645
@@ -8974,16 +8850,10 @@
       "style_type": 7,
       "generated_name": "Henry Garcia",
       "generation_date": "2025-12-09T09:20:28.600973"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Under general <LOCATION>, we treated a blockage in the right mainstem bronchus. First, we had to suction out a large amount of infected mucus that was trapped behind the tumor. Once clear, we placed a metal stent to hold the airway open. The stent expanded well and air flow was restored.",
+    "note_text": "Under general anesthesia, we treated a blockage in the right mainstem bronchus. First, we had to suction out a large amount of infected mucus that was trapped behind the tumor. Once clear, we placed a metal stent to hold the airway open. The stent expanded well and air flow was restored.",
     "cpt_codes": [
       31636,
       31645
@@ -9202,12 +9072,6 @@
       "style_type": 8,
       "generated_name": "Ian Martinez",
       "generation_date": "2025-12-09T09:20:28.601027"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -9991,7 +9855,7 @@
     }
   },
   {
-    "note_text": "Resident Note:\n- Patient: 69F, <PERSON>.\n- Procedure: BLVR.\n- Lobe: RUL.\n- Valves: 4 Zephyr.\n- Outcome: Good seating, lobar collapse seen.\n- Disposition: Telemetry.",
+    "note_text": "Resident Note:\n- Patient: 69F, Emphysema.\n- Procedure: BLVR.\n- Lobe: RUL.\n- Valves: 4 Zephyr.\n- Outcome: Good seating, lobar collapse seen.\n- Disposition: Telemetry.",
     "cpt_codes": [
       31647
     ],
@@ -10174,12 +10038,6 @@
       "style_type": 4,
       "generated_name": "Nina Mitchell",
       "generation_date": "2025-12-09T09:20:28.601340"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -10369,7 +10227,7 @@
     }
   },
   {
-    "note_text": "Flexible bronchoscopy under general <PERSON> via ETT. The right upper lobe airways were carefully inspected. Four Zephyr endobronchial valves were placed sequentially into segmental bronchi of the right upper lobe using the manufacturer deployment catheter, with good seating and immediate lobar collapse on fluoroscopy. No valves were placed in other lobes.",
+    "note_text": "Flexible bronchoscopy under general anesthesia via ETT. The right upper lobe airways were carefully inspected. Four Zephyr endobronchial valves were placed sequentially into segmental bronchi of the right upper lobe using the manufacturer deployment catheter, with good seating and immediate lobar collapse on fluoroscopy. No valves were placed in other lobes.",
     "cpt_codes": [
       31647
     ],
@@ -10552,16 +10410,10 @@
       "style_type": 6,
       "generated_name": "Paula Phillips",
       "generation_date": "2025-12-09T09:20:28.601453"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSevere <PERSON>, <PERSON> candidate.\n[<LOCATION>]\nGeneral.\n[Description]\n4 Zephyr valves deployed RUL. Immediate atelectasis noted on fluoro.\n[Plan]\nPneumothorax watch.",
+    "note_text": "[Indication]\nSevere Emphysema, BLVR candidate.\n[Anesthesia]\nGeneral.\n[Description]\n4 Zephyr valves deployed RUL. Immediate atelectasis noted on fluoro.\n[Plan]\nPneumothorax watch.",
     "cpt_codes": [
       31647
     ],
@@ -10744,14 +10596,6 @@
       "style_type": 7,
       "generated_name": "Quinn Campbell",
       "generation_date": "2025-12-09T09:20:28.601500"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -11127,7 +10971,7 @@
     }
   },
   {
-    "note_text": "Indication: Migrated valves, pneumonia.\nAction: Removed 4 Zephyr valves RUL. Suctioned <PERSON>/secretions.\nResult: Airways cleared. Valves retrieved.\nPlan: Antibiotics.",
+    "note_text": "Indication: Migrated valves, pneumonia.\nAction: Removed 4 Zephyr valves RUL. Suctioned thick pus/secretions.\nResult: Airways cleared. Valves retrieved.\nPlan: Antibiotics.",
     "cpt_codes": [
       31648,
       31645
@@ -11336,12 +11180,6 @@
       "style_type": 1,
       "generated_name": "Tom Mitchell",
       "generation_date": "2025-12-09T09:20:28.601641"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -11557,7 +11395,7 @@
     }
   },
   {
-    "note_text": "Coding: <DATE_TIME> (Removal of valves, initial lobe) + <DATE_TIME> (Therapeutic aspiration).\nJustification: Removal of failing devices due to migration. Separate significant effort required to clear 'thick, purulent secretions' justifying the additional aspiration code.",
+    "note_text": "Coding: 31648 (Removal of valves, initial lobe) + 31645 (Therapeutic aspiration).\nJustification: Removal of failing devices due to migration. Separate significant effort required to clear 'thick, purulent secretions' justifying the additional aspiration code.",
     "cpt_codes": [
       31648,
       31645
@@ -11766,17 +11604,10 @@
       "style_type": 3,
       "generated_name": "Vince Roberts",
       "generation_date": "2025-12-09T09:20:28.601745"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure Steps:\n1. Inspect RUL.\n2. ID <MRN> valves.\n3. Remove 4 valves via forceps.\n4. Suction copious pus (toilet).\n5. Extubate.",
+    "note_text": "Procedure Steps:\n1. Inspect RUL.\n2. ID migrated valves.\n3. Remove 4 valves via forceps.\n4. Suction copious pus (toilet).\n5. Extubate.",
     "cpt_codes": [
       31648,
       31645
@@ -11985,12 +11816,6 @@
       "style_type": 4,
       "generated_name": "Will Smith",
       "generation_date": "2025-12-09T09:20:28.601797"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
@@ -12206,7 +12031,7 @@
     }
   },
   {
-    "note_text": "Flexible bronchoscopy under general <PERSON> via ETT. Four previously placed Zephyr valves were visualized in the right upper lobe segmental bronchi, with one partially migrated. All four valves were removed using the manufacturer retrieval forceps without complication. Extensive therapeutic aspiration and suctioning were performed to clear thick, purulent secretions from the right upper lobe and bronchus intermedius.",
+    "note_text": "Flexible bronchoscopy under general anesthesia via ETT. Four previously placed Zephyr valves were visualized in the right upper lobe segmental bronchi, with one partially migrated. All four valves were removed using the manufacturer retrieval forceps without complication. Extensive therapeutic aspiration and suctioning were performed to clear thick, purulent secretions from the right upper lobe and bronchus intermedius.",
     "cpt_codes": [
       31648,
       31645
@@ -12415,16 +12240,10 @@
       "style_type": 6,
       "generated_name": "Yanni Brown",
       "generation_date": "2025-12-09T09:20:28.601902"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nInfected/Migrated RUL valves.\n[<LOCATION>]\nGeneral.\n[Description]\nRemoved 4 Zephyr valves. Therapeutic aspiration of purulent secretions performed.\n[Plan]\nIV Antibiotics.",
+    "note_text": "[Indication]\nInfected/Migrated RUL valves.\n[Anesthesia]\nGeneral.\n[Description]\nRemoved 4 Zephyr valves. Therapeutic aspiration of purulent secretions performed.\n[Plan]\nIV Antibiotics.",
     "cpt_codes": [
       31648,
       31645
@@ -12633,12 +12452,6 @@
       "style_type": 7,
       "generated_name": "Zane Miller",
       "generation_date": "2025-12-09T09:20:28.601953"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -13066,7 +12879,7 @@
     }
   },
   {
-    "note_text": "Proc: Bedside Thoracentesis.\nSite: Right posterior.\nVolume: 1.5L serous.\nNo imaging code billed (<LOCATION> for marking only).\nComplications: None.",
+    "note_text": "Proc: Bedside Thoracentesis.\nSite: Right posterior.\nVolume: 1.5L serous.\nNo imaging code billed (US for marking only).\nComplications: None.",
     "cpt_codes": [
       32554
     ],
@@ -13248,12 +13061,6 @@
       "style_type": 1,
       "generated_name": "Cathy Taylor",
       "generation_date": "2025-12-09T09:20:28.602098"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -13442,7 +13249,7 @@
     }
   },
   {
-    "note_text": "CPT 32554: Thoracentesis without imaging guidance code.\nNote: Ultrasound used for marking but report specifies 'No ultrasound guidance code... performed', implying <DATE_TIME> is the correct billing assignment over <DATE_TIME>.",
+    "note_text": "CPT 32554: Thoracentesis without imaging guidance code.\nNote: Ultrasound used for marking but report specifies 'No ultrasound guidance code... performed', implying 32554 is the correct billing assignment over 32555.",
     "cpt_codes": [
       32554
     ],
@@ -13624,17 +13431,10 @@
       "style_type": 3,
       "generated_name": "Elena Thomas",
       "generation_date": "2025-12-09T09:20:28.602188"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Resident Note:\n- Indication: R pleural effusion.\n- Prep: Chloraprep/Drape.\n- Device: Thoracentesis kit.\n- Fluid: 1500ml serous.\n- Guidance: <LOCATION> for marking.\n- Complications: None.",
+    "note_text": "Resident Note:\n- Indication: R pleural effusion.\n- Prep: Chloraprep/Drape.\n- Device: Thoracentesis kit.\n- Fluid: 1500ml serous.\n- Guidance: US for marking.\n- Complications: None.",
     "cpt_codes": [
       32554
     ],
@@ -13816,16 +13616,10 @@
       "style_type": 4,
       "generated_name": "Fran Jackson",
       "generation_date": "2025-12-09T09:20:28.602230"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "bedside tap right side <DATE_TIME> female. used ultrasound to find the spot but didnt save pics. put the needle in drained 1.5 liters yellow fluid patient feels better sending fluid to lab.",
+    "note_text": "bedside tap right side 60 year old female. used ultrasound to find the spot but didnt save pics. put the needle in drained 1.5 liters yellow fluid patient feels better sending fluid to lab.",
     "cpt_codes": [
       32554
     ],
@@ -14007,12 +13801,6 @@
       "style_type": 5,
       "generated_name": "Gail White",
       "generation_date": "2025-12-09T09:20:28.602276"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -14201,7 +13989,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSymptomatic R effusion.\n[<LOCATION>]\nLocal.\n[Description]\nNeedle thoracentesis. 1500mL removed. <LOCATION> used for marking only.\n[Plan]\nFluid analysis.",
+    "note_text": "[Indication]\nSymptomatic R effusion.\n[Anesthesia]\nLocal.\n[Description]\nNeedle thoracentesis. 1500mL removed. US used for marking only.\n[Plan]\nFluid analysis.",
     "cpt_codes": [
       32554
     ],
@@ -14383,13 +14171,6 @@
       "style_type": 7,
       "generated_name": "Ivy Martin",
       "generation_date": "2025-12-09T09:20:28.602366"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -14763,7 +14544,7 @@
     }
   },
   {
-    "note_text": "Proc: IPC placement + lytics.\nGuidance: <LOCATION>.\nOutput: 800mL serosanguinous.\nMedication: tPA/DNase instilled via catheter.\nDisp: Admitted.",
+    "note_text": "Proc: IPC placement + lytics.\nGuidance: US.\nOutput: 800mL serosanguinous.\nMedication: tPA/DNase instilled via catheter.\nDisp: Admitted.",
     "cpt_codes": [
       32550,
       32561
@@ -14972,12 +14753,6 @@
       "style_type": 1,
       "generated_name": "Larry Martinez",
       "generation_date": "2025-12-09T09:20:28.602528"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -15193,7 +14968,7 @@
     }
   },
   {
-    "note_text": "Billing: <DATE_TIME> (Tunneled catheter insert) <DATE_TIME> (Lytic agent, initial day).\nRationale: Indwelling catheter placed for chronic/loculated effusion. Lytics administered through this new catheter during the same session.",
+    "note_text": "Billing: 32550 (Tunneled catheter insert) + 32561 (Lytic agent, initial day).\nRationale: Indwelling catheter placed for chronic/loculated effusion. Lytics administered through this new catheter during the same session.",
     "cpt_codes": [
       32550,
       32561
@@ -15402,17 +15177,10 @@
       "style_type": 3,
       "generated_name": "Nathan Clark",
       "generation_date": "2025-12-09T09:20:28.602630"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure Note:\n1. <LOCATION> guidance.\n2. Tunnel created.\n3. IPC inserted R chest.\n4. Drained 800cc.\n5. Instilled tPA/DNase.\n6. <PERSON> placed.",
+    "note_text": "Procedure Note:\n1. US guidance.\n2. Tunnel created.\n3. IPC inserted R chest.\n4. Drained 800cc.\n5. Instilled tPA/DNase.\n6. Cap placed.",
     "cpt_codes": [
       32550,
       32561
@@ -15621,13 +15389,6 @@
       "style_type": 4,
       "generated_name": "Oliver Rodriguez",
       "generation_date": "2025-12-09T09:20:28.602682"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
@@ -16055,7 +15816,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nLoculated effusion.\n[<LOCATION>]\nLocal/Mod.\n[Description]\nTunneled IPC placed right. 800mL output. tPA/DNase instilled.\n[Plan]\nSerial lytics.",
+    "note_text": "[Indication]\nLoculated effusion.\n[Anesthesia]\nLocal/Mod.\n[Description]\nTunneled IPC placed right. 800mL output. tPA/DNase instilled.\n[Plan]\nSerial lytics.",
     "cpt_codes": [
       32550,
       32561
@@ -16264,12 +16025,6 @@
       "style_type": 7,
       "generated_name": "Ray Walker",
       "generation_date": "2025-12-09T09:20:28.602876"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -16697,7 +16452,7 @@
     }
   },
   {
-    "note_text": "Proc: CT Biopsy RLL -> Pneumothorax -> Chest tube.\n<LOCATION>: 18G core x3.\nComplication: Moderate pneumothorax.\nIntervention: Chest tube placed, air evacuated.\nStatus: Admitted.",
+    "note_text": "Proc: CT Biopsy RLL -> Pneumothorax -> Chest tube.\nBiopsy: 18G core x3.\nComplication: Moderate pneumothorax.\nIntervention: Chest tube placed, air evacuated.\nStatus: Admitted.",
     "cpt_codes": [
       32408,
       32551
@@ -16904,12 +16659,6 @@
       "style_type": 1,
       "generated_name": "Mary Young",
       "generation_date": "2025-12-09T09:20:28.603032"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -17123,7 +16872,7 @@
     }
   },
   {
-    "note_text": "Coding: <DATE_TIME> (Core biopsy, inc imaging) <DATE_TIME> (Tube thoracostomy).\nJustification: <LOCATION> performed. Iatrogenic pneumothorax occurred requiring separate, distinct chest tube placement for management.",
+    "note_text": "Coding: 32408 (Core biopsy, inc imaging) + 32551 (Tube thoracostomy).\nJustification: Biopsy performed. Iatrogenic pneumothorax occurred requiring separate, distinct chest tube placement for management.",
     "cpt_codes": [
       32408,
       32551
@@ -17330,14 +17079,6 @@
       "style_type": 3,
       "generated_name": "Ophelia King",
       "generation_date": "2025-12-09T09:20:28.603134"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -17971,7 +17712,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRLL Nodule.\n[Description]\nCT-guided core biopsy (<DATE_TIME>). Complicated by Pneumothorax. Chest tube placed (<DATE_TIME>).\n[Plan]\nChest tube management.",
+    "note_text": "[Indication]\nRLL Nodule.\n[Description]\nCT-guided core biopsy (32408). Complicated by Pneumothorax. Chest tube placed (32551).\n[Plan]\nChest tube management.",
     "cpt_codes": [
       32408,
       32551
@@ -18178,13 +17919,6 @@
       "style_type": 7,
       "generated_name": "Sally Baker",
       "generation_date": "2025-12-09T09:20:28.603332"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {

@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Indication: Malignant effusion (Breast CA).\nProcedure: <LOCATION>-guided pigtail (10Fr).\nSite: Right 8th ICS.\nAction: Seldinger technique. 1464mL serosanguinous fluid drained.\nResult: No PTX on CXR.\nPlan: Floor admission.",
+    "note_text": "Indication: Malignant effusion (Breast CA).\nProcedure: US-guided pigtail (10Fr).\nSite: Right 8th ICS.\nAction: Seldinger technique. 1464mL serosanguinous fluid drained.\nResult: No PTX on CXR.\nPlan: Floor admission.",
     "cpt_codes": [
       32557
     ],
@@ -86,16 +86,10 @@
       "style_type": 1,
       "generated_name": "Susan Baker",
       "generation_date": "2025-12-09T09:21:15.169794"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Ultrasound-Guided Thoracentesis with Catheter Placement.\nThe patient presented with a symptomatic malignant pleural effusion secondary to breast carcinoma. Real-time ultrasonography was utilized to identify a safe pocket in the right 8th intercostal space. Under sterile conditions, a <DATE_TIME> pigtail catheter was introduced using the Seldinger technique. Approximately 1.4L of serosanguinous fluid was evacuated. Post-procedure imaging confirmed appropriate positioning.",
+    "note_text": "PROCEDURE NOTE: Ultrasound-Guided Thoracentesis with Catheter Placement.\nThe patient presented with a symptomatic malignant pleural effusion secondary to breast carcinoma. Real-time ultrasonography was utilized to identify a safe pocket in the right 8th intercostal space. Under sterile conditions, a 10Fr pigtail catheter was introduced using the Seldinger technique. Approximately 1.4L of serosanguinous fluid was evacuated. Post-procedure imaging confirmed appropriate positioning.",
     "cpt_codes": [
       32557
     ],
@@ -181,16 +175,10 @@
       "style_type": 2,
       "generated_name": "Linda Carter",
       "generation_date": "2025-12-09T09:21:15.169835"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Service: Pleural drainage with insertion of indwelling catheter (CPT 32557).\nImaging: Real-time ultrasound guidance employed for needle entry and catheter placement.\nDevice: 10 French pigtail catheter.\nDrainage: <DATE_TIME> mL.\nStatus: Catheter secured; system connected.",
+    "note_text": "Service: Pleural drainage with insertion of indwelling catheter (CPT 32557).\nImaging: Real-time ultrasound guidance employed for needle entry and catheter placement.\nDevice: 10 French pigtail catheter.\nDrainage: 1464 mL.\nStatus: Catheter secured; system connected.",
     "cpt_codes": [
       32557
     ],
@@ -276,16 +264,10 @@
       "style_type": 3,
       "generated_name": "Karen Mitchell",
       "generation_date": "2025-12-09T09:21:15.169866"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Resident Note\nPatient: <PERSON>\nProcedure: Pigtail Placement\nSteps:\n1. Ultrasound check.\n2. Lidocaine 1%.\n3. Needle in, wire down, dilated.\n4. 10Fr catheter placed.\n5. Drained 1464cc.\nPlan: Monitor output.",
+    "note_text": "Resident Note\nPatient: Mary Nelson\nProcedure: Pigtail Placement\nSteps:\n1. Ultrasound check.\n2. Lidocaine 1%.\n3. Needle in, wire down, dilated.\n4. 10Fr catheter placed.\n5. Drained 1464cc.\nPlan: Monitor output.",
     "cpt_codes": [
       32557
     ],
@@ -371,16 +353,10 @@
       "style_type": 4,
       "generated_name": "Patricia Roberts",
       "generation_date": "2025-12-09T09:21:15.169895"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "placed a pigtail for ms <PERSON> right side breast cancer effusion used the ultrasound to look first found a good spot 8th space put the 10 french line in drained about 1400 ml fluid looks bloody catheter is taped down cxr looks fine.",
+    "note_text": "placed a pigtail for ms nelson right side breast cancer effusion used the ultrasound to look first found a good spot 8th space put the 10 french line in drained about 1400 ml fluid looks bloody catheter is taped down cxr looks fine.",
     "cpt_codes": [
       32557
     ],
@@ -466,12 +442,6 @@
       "style_type": 5,
       "generated_name": "Nancy Phillips",
       "generation_date": "2025-12-09T09:21:15.169921"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -564,7 +534,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMalignant pleural effusion (Breast).\n[<LOCATION>]\nLocal (Lidocaine).\n[Description]\n<LOCATION>-guided placement of 10Fr pigtail catheter (Right). 1464mL serosanguinous fluid drained.\n[Plan]\nAdmit to floor.",
+    "note_text": "[Indication]\nMalignant pleural effusion (Breast).\n[Anesthesia]\nLocal (Lidocaine).\n[Description]\nUS-guided placement of 10Fr pigtail catheter (Right). 1464mL serosanguinous fluid drained.\n[Plan]\nAdmit to floor.",
     "cpt_codes": [
       32557
     ],
@@ -650,17 +620,10 @@
       "style_type": 7,
       "generated_name": "Dorothy Turner",
       "generation_date": "2025-12-09T09:21:15.169971"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We performed an ultrasound-guided drainage procedure on Ms. <PERSON> today. After verifying the fluid pocket on the right side, we numbed the skin and inserted a small pigtail catheter. We were able to drain nearly 1.5 liters of fluid, which should help her breathing significantly. The chest X-ray showed the tube is in the right spot.",
+    "note_text": "We performed an ultrasound-guided drainage procedure on Ms. Nelson today. After verifying the fluid pocket on the right side, we numbed the skin and inserted a small pigtail catheter. We were able to drain nearly 1.5 liters of fluid, which should help her breathing significantly. The chest X-ray showed the tube is in the right spot.",
     "cpt_codes": [
       32557
     ],
@@ -746,16 +709,10 @@
       "style_type": 8,
       "generated_name": "Margaret Torres",
       "generation_date": "2025-12-09T09:21:15.169994"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Sonographically assisted insertion of pleural drainage cannula.\nTarget: Right hemithorax.\nOutput: 1464mL serosanguinous exudate.\nTechnique: Guidewire exchange (<PERSON>).\nOutcome: Evaluation radiograph negative for pneumothorax.",
+    "note_text": "Procedure: Sonographically assisted insertion of pleural drainage cannula.\nTarget: Right hemithorax.\nOutput: 1464mL serosanguinous exudate.\nTechnique: Guidewire exchange (Seldinger).\nOutcome: Evaluation radiograph negative for pneumothorax.",
     "cpt_codes": [
       32557
     ],
@@ -841,12 +798,6 @@
       "style_type": 9,
       "generated_name": "Sandra Parker",
       "generation_date": "2025-12-09T09:21:15.170018"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -939,7 +890,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Insertion of Tunneled Indwelling Pleural Catheter.\nMr. <PERSON> underwent palliative catheter placement for a recurrent malignant effusion. Following ultrasound localization, a subcutaneous tunnel was created on the right chest wall. The Aspira catheter was introduced into the pleural cavity via a separate counter-incision. 2.3L of turbid fluid was evacuated. The cuff was positioned appropriately within the tunnel.",
+    "note_text": "OPERATIVE REPORT: Insertion of Tunneled Indwelling Pleural Catheter.\nMr. Ramirez underwent palliative catheter placement for a recurrent malignant effusion. Following ultrasound localization, a subcutaneous tunnel was created on the right chest wall. The Aspira catheter was introduced into the pleural cavity via a separate counter-incision. 2.3L of turbid fluid was evacuated. The cuff was positioned appropriately within the tunnel.",
     "cpt_codes": [
       32550
     ],
@@ -1025,12 +976,6 @@
       "style_type": 2,
       "generated_name": "Robert Hernandez",
       "generation_date": "2025-12-09T09:21:15.170072"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1123,7 +1068,7 @@
     }
   },
   {
-    "note_text": "Procedure: IPC Placement\nPatient: <PERSON>\nSteps:\n1. <LOCATION> marked site (5th ICS).\n2. Local/Sedation.\n3. Tunnel made.\n4. Catheter inserted over wire.\n5. Drained 2.3L.\nPlan: Discharge with supplies.",
+    "note_text": "Procedure: IPC Placement\nPatient: David Ramirez\nSteps:\n1. US marked site (5th ICS).\n2. Local/Sedation.\n3. Tunnel made.\n4. Catheter inserted over wire.\n5. Drained 2.3L.\nPlan: Discharge with supplies.",
     "cpt_codes": [
       32550
     ],
@@ -1209,13 +1154,6 @@
       "style_type": 4,
       "generated_name": "William Rodriguez",
       "generation_date": "2025-12-09T09:21:15.170140"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1397,7 +1335,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nMalignant effusion, unknown primary.\n[<LOCATION>]\nModerate sedation.\n[Description]\nRight-sided IPC placed via tunneling technique. 2300mL drained.\n[Plan]\nClinic f/u <DATE_TIME>.",
+    "note_text": "[Indication]\nMalignant effusion, unknown primary.\n[Anesthesia]\nModerate sedation.\n[Description]\nRight-sided IPC placed via tunneling technique. 2300mL drained.\n[Plan]\nClinic f/u 1-2 weeks.",
     "cpt_codes": [
       32550
     ],
@@ -1483,17 +1421,10 @@
       "style_type": 7,
       "generated_name": "Joseph Perez",
       "generation_date": "2025-12-09T09:21:15.170217"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "We placed a permanent drainage catheter for Mr. <PERSON> today to help manage his fluid buildup. We created a small tunnel under the skin to lower infection risk and inserted the tube into the pleural space. We drained over 2 liters of fluid immediately. He will learn how to drain this at home.",
+    "note_text": "We placed a permanent drainage catheter for Mr. Ramirez today to help manage his fluid buildup. We created a small tunnel under the skin to lower infection risk and inserted the tube into the pleural space. We drained over 2 liters of fluid immediately. He will learn how to drain this at home.",
     "cpt_codes": [
       32550
     ],
@@ -1579,12 +1510,6 @@
       "style_type": 8,
       "generated_name": "Thomas Sanchez",
       "generation_date": "2025-12-09T09:21:15.170244"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1677,7 +1602,7 @@
     }
   },
   {
-    "note_text": "Indication: Complicated parapneumonic effusion.\nProcedure: Tube Thoracostomy (Left).\n<PERSON>: 28Fr.\nTechnique: Blunt dissection.\nDrainage: 1686mL turbid.\nPlan: Suction -20cmH2O.",
+    "note_text": "Indication: Complicated parapneumonic effusion.\nProcedure: Tube Thoracostomy (Left).\nSize: 28Fr.\nTechnique: Blunt dissection.\nDrainage: 1686mL turbid.\nPlan: Suction -20cmH2O.",
     "cpt_codes": [
       32551
     ],
@@ -1763,16 +1688,10 @@
       "style_type": 1,
       "generated_name": "Sarah Wright",
       "generation_date": "2025-12-09T09:21:15.170293"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Tube Thoracostomy.\nMs. <PERSON> presented with a complicated left parapneumonic effusion. Bedside ultrasound confirmed specific location. Under local <LOCATION>, a 28Fr chest tube was inserted into the 5th intercostal space utilizing a blunt dissection technique. Immediate return of 1686 mL of turbid fluid was noted. The tube was secured and connected to a Pleur-evac system.",
+    "note_text": "PROCEDURE NOTE: Tube Thoracostomy.\nMs. Perez presented with a complicated left parapneumonic effusion. Bedside ultrasound confirmed specific location. Under local anesthesia, a 28Fr chest tube was inserted into the 5th intercostal space utilizing a blunt dissection technique. Immediate return of 1686 mL of turbid fluid was noted. The tube was secured and connected to a Pleur-evac system.",
     "cpt_codes": [
       32551
     ],
@@ -1858,17 +1777,10 @@
       "style_type": 2,
       "generated_name": "Jessica King",
       "generation_date": "2025-12-09T09:21:15.170328"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "CPT 32551: Tube thoracostomy, includes connection to drainage system.\nMethod: Open/Blunt dissection (not <PERSON>).\nDevice: 28 French chest tube.\nLocation: Left 5th ICS.\nOutput: 1686 mL.",
+    "note_text": "CPT 32551: Tube thoracostomy, includes connection to drainage system.\nMethod: Open/Blunt dissection (not Seldinger).\nDevice: 28 French chest tube.\nLocation: Left 5th ICS.\nOutput: 1686 mL.",
     "cpt_codes": [
       32551
     ],
@@ -1954,16 +1866,10 @@
       "style_type": 3,
       "generated_name": "Emily Scott",
       "generation_date": "2025-12-09T09:21:15.170352"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Chest Tube\nPatient: <PERSON>\nSteps:\n1. <LOCATION> check.\n2. Lidocaine.\n3. Incision/Kelly clamp dissection.\n4. Finger sweep.\n5. Tube (28Fr) inserted.\n6. Sutured.\nPlan: Admit floor.",
+    "note_text": "Procedure: Chest Tube\nPatient: Lisa Perez\nSteps:\n1. US check.\n2. Lidocaine.\n3. Incision/Kelly clamp dissection.\n4. Finger sweep.\n5. Tube (28Fr) inserted.\n6. Sutured.\nPlan: Admit floor.",
     "cpt_codes": [
       32551
     ],
@@ -2049,17 +1955,10 @@
       "style_type": 4,
       "generated_name": "Ashley Green",
       "generation_date": "2025-12-09T09:21:15.170378"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "chest tube placed left side for <PERSON> she has that complicated effusion used a 28 french tube blunt dissection got almost 1.7 liters out turbid stuff hooked up to suction xray looks good.",
+    "note_text": "chest tube placed left side for lisa perez she has that complicated effusion used a 28 french tube blunt dissection got almost 1.7 liters out turbid stuff hooked up to suction xray looks good.",
     "cpt_codes": [
       32551
     ],
@@ -2145,12 +2044,6 @@
       "style_type": 5,
       "generated_name": "Amanda Baker",
       "generation_date": "2025-12-09T09:21:15.170403"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2243,7 +2136,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nComplicated parapneumonic effusion.\n[<LOCATION>]\nLocal.\n[Description]\nLeft tube thoracostomy (28Fr). Blunt dissection. 1686mL turbid fluid.\n[Plan]\nSuction -20cmH2O.",
+    "note_text": "[Indication]\nComplicated parapneumonic effusion.\n[Anesthesia]\nLocal.\n[Description]\nLeft tube thoracostomy (28Fr). Blunt dissection. 1686mL turbid fluid.\n[Plan]\nSuction -20cmH2O.",
     "cpt_codes": [
       32551
     ],
@@ -2329,16 +2222,10 @@
       "style_type": 7,
       "generated_name": "Melissa Nelson",
       "generation_date": "2025-12-09T09:21:15.170449"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We placed a large chest tube in Ms. <PERSON>'s left side to drain the infection-related fluid. We used ultrasound to pick the spot, then carefully dissected through the muscle to place the tube. A large amount of cloudy fluid came out right away. The tube is stitched in place and connected to a suction box.",
+    "note_text": "We placed a large chest tube in Ms. Perez's left side to drain the infection-related fluid. We used ultrasound to pick the spot, then carefully dissected through the muscle to place the tube. A large amount of cloudy fluid came out right away. The tube is stitched in place and connected to a suction box.",
     "cpt_codes": [
       32551
     ],
@@ -2424,12 +2311,6 @@
       "style_type": 8,
       "generated_name": "Nicole Hill",
       "generation_date": "2025-12-09T09:21:15.170473"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2522,7 +2403,7 @@
     }
   },
   {
-    "note_text": "Indication: Hepatic hydrothorax.\nProcedure: Pleural Catheter (Left).\nMethod: Seldinger (Landmark).\n<PERSON>: 14Fr.\nDrainage: 996mL serosanguinous.\nPlan: Monitor output.",
+    "note_text": "Indication: Hepatic hydrothorax.\nProcedure: Pleural Catheter (Left).\nMethod: Seldinger (Landmark).\nSize: 14Fr.\nDrainage: 996mL serosanguinous.\nPlan: Monitor output.",
     "cpt_codes": [
       32556
     ],
@@ -2608,16 +2489,10 @@
       "style_type": 1,
       "generated_name": "Christopher Allen",
       "generation_date": "2025-12-09T09:21:15.170522"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Placement of Pleural Drainage Catheter.\nMr. <PERSON> required drainage of a left-sided hepatic hydrothorax. The 5th intercostal space was identified by anatomic landmarks. A 14Fr pigtail catheter was placed using the Seldinger technique without real-time imaging. 996 mL of fluid was evacuated. Complications: None.",
+    "note_text": "PROCEDURE: Placement of Pleural Drainage Catheter.\nMr. Moore required drainage of a left-sided hepatic hydrothorax. The 5th intercostal space was identified by anatomic landmarks. A 14Fr pigtail catheter was placed using the Seldinger technique without real-time imaging. 996 mL of fluid was evacuated. Complications: None.",
     "cpt_codes": [
       32556
     ],
@@ -2703,12 +2578,6 @@
       "style_type": 2,
       "generated_name": "Matthew Young",
       "generation_date": "2025-12-09T09:21:15.170546"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2801,7 +2670,7 @@
     }
   },
   {
-    "note_text": "Procedure: Pigtail Placement\nPatient: <PERSON>\nSteps:\n1. Landmarks identified.\n2. Prep/Drape/Local.\n3. Needle entry.\n4. 14Fr catheter over wire.\n5. Drained ~1L.\nPlan: Reassess <DATE_TIME>.",
+    "note_text": "Procedure: Pigtail Placement\nPatient: John Moore\nSteps:\n1. Landmarks identified.\n2. Prep/Drape/Local.\n3. Needle entry.\n4. 14Fr catheter over wire.\n5. Drained ~1L.\nPlan: Reassess 48h.",
     "cpt_codes": [
       32556
     ],
@@ -2887,13 +2756,6 @@
       "style_type": 4,
       "generated_name": "Andrew Hall",
       "generation_date": "2025-12-09T09:21:15.170595"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3075,7 +2937,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nHepatic hydrothorax.\n[<LOCATION>]\nLocal.\n[Description]\nLeft 14Fr pigtail placed (Landmark guidance). 996mL drained.\n[Plan]\nFloor care.",
+    "note_text": "[Indication]\nHepatic hydrothorax.\n[Anesthesia]\nLocal.\n[Description]\nLeft 14Fr pigtail placed (Landmark guidance). 996mL drained.\n[Plan]\nFloor care.",
     "cpt_codes": [
       32556
     ],
@@ -3161,16 +3023,10 @@
       "style_type": 7,
       "generated_name": "Justin Lewis",
       "generation_date": "2025-12-09T09:21:15.170670"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "We inserted a small drainage tube into Mr. <PERSON>'s left chest to treat his liver-related <PERSON>. We found the spot by feeling the ribs and placed the tube using a guide wire. It drained just under a liter of fluid. We'll watch the output over <DATE_TIME>.",
+    "note_text": "We inserted a small drainage tube into Mr. Moore's left chest to treat his liver-related fluid buildup. We found the spot by feeling the ribs and placed the tube using a guide wire. It drained just under a liter of fluid. We'll watch the output over the next few days.",
     "cpt_codes": [
       32556
     ],
@@ -3256,14 +3112,6 @@
       "style_type": 8,
       "generated_name": "Brandon Robinson",
       "generation_date": "2025-12-09T09:21:15.170692"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -3356,7 +3204,7 @@
     }
   },
   {
-    "note_text": "Indication: Iatrogenic Pneumothorax.\nProcedure: Chest Tube (Right).\n<PERSON>: <DATE_TIME>.\nFindings: Air rush. Tube fogging.\nPlan: ICU. Suction.",
+    "note_text": "Indication: Iatrogenic Pneumothorax.\nProcedure: Chest Tube (Right).\nSize: 24Fr.\nFindings: Air rush. Tube fogging.\nPlan: ICU. Suction.",
     "cpt_codes": [
       32551
     ],
@@ -3442,17 +3290,10 @@
       "style_type": 1,
       "generated_name": "Gary Davis",
       "generation_date": "2025-12-09T09:21:15.170742"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Emergent Tube Thoracostomy.\nMr. <PERSON> developed an iatrogenic pneumothorax post-procedure. A <LOCATION> chest tube was inserted into the right 5th intercostal space using blunt dissection. A significant rush of air was appreciated upon pleural entry, and the tube demonstrated fogging with respiration. The tube was secured and placed to suction.",
+    "note_text": "PROCEDURE NOTE: Emergent Tube Thoracostomy.\nMr. Harris developed an iatrogenic pneumothorax post-procedure. A 24Fr chest tube was inserted into the right 5th intercostal space using blunt dissection. A significant rush of air was appreciated upon pleural entry, and the tube demonstrated fogging with respiration. The tube was secured and placed to suction.",
     "cpt_codes": [
       32551
     ],
@@ -3538,13 +3379,6 @@
       "style_type": 2,
       "generated_name": "Larry Wilson",
       "generation_date": "2025-12-09T09:21:15.170767"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -3637,7 +3471,7 @@
     }
   },
   {
-    "note_text": "Procedure: Chest Tube for PTX\nPatient: <PERSON>\nSteps:\n1. Stat prep.\n2. 5th ICS anterior axillary.\n3. Dissection.\n4. <LOCATION> tube in.\n5. Air rush confirmed.\nPlan: ICU.",
+    "note_text": "Procedure: Chest Tube for PTX\nPatient: Timothy Harris\nSteps:\n1. Stat prep.\n2. 5th ICS anterior axillary.\n3. Dissection.\n4. 24Fr tube in.\n5. Air rush confirmed.\nPlan: ICU.",
     "cpt_codes": [
       32551
     ],
@@ -3723,13 +3557,6 @@
       "style_type": 4,
       "generated_name": "Frank Anderson",
       "generation_date": "2025-12-09T09:21:15.170814"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -3822,7 +3649,7 @@
     }
   },
   {
-    "note_text": "Tube thoracostomy was performed for right pneumothorax. The chest wall was prepped. A <LOCATION> tube was inserted via blunt dissection. Air release was noted. The tube was connected to a drainage system at -20cmH2O.",
+    "note_text": "Tube thoracostomy was performed for right pneumothorax. The chest wall was prepped. A 24Fr tube was inserted via blunt dissection. Air release was noted. The tube was connected to a drainage system at -20cmH2O.",
     "cpt_codes": [
       32551
     ],
@@ -3908,16 +3735,10 @@
       "style_type": 6,
       "generated_name": "Raymond Jackson",
       "generation_date": "2025-12-09T09:21:15.170862"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nIatrogenic PTX.\n[<LOCATION>]\nLocal.\n[Description]\nRight tube thoracostomy (24Fr). Air rush noted.\n[Plan]\nICU admission.",
+    "note_text": "[Indication]\nIatrogenic PTX.\n[Anesthesia]\nLocal.\n[Description]\nRight tube thoracostomy (24Fr). Air rush noted.\n[Plan]\nICU admission.",
     "cpt_codes": [
       32551
     ],
@@ -4003,16 +3824,10 @@
       "style_type": 7,
       "generated_name": "Gregory White",
       "generation_date": "2025-12-09T09:21:15.170885"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> suffered a collapsed lung after his earlier procedure. We immediately placed a chest tube on his right side to re-expand the lung. We heard the air escape as we put the tube in. He is now being monitored in the ICU with the tube on suction.",
+    "note_text": "Mr. Harris suffered a collapsed lung after his earlier procedure. We immediately placed a chest tube on his right side to re-expand the lung. We heard the air escape as we put the tube in. He is now being monitored in the ICU with the tube on suction.",
     "cpt_codes": [
       32551
     ],
@@ -4098,12 +3913,6 @@
       "style_type": 8,
       "generated_name": "Jerry Harris",
       "generation_date": "2025-12-09T09:21:15.170907"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

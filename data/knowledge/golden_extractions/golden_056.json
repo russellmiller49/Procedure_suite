@@ -291,7 +291,7 @@
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: <PERSON>\nProcedure: Right Medical Thoracoscopy w/ Biopsy & Talc\nAttending: Dr. Williams\nSteps:\n1. Timeout.\n2. Local + Moderate Sedation.\n3. Trocar entry 6th ICS.\n4. Survey: Nodules on parietal pleura.\n5. Biopsied parietal (x6) and diaphragm.\n6. Talc poudrage.\n7. Chest tube secured.",
+    "note_text": "Procedure Note\nPatient: 79F\nProcedure: Right Medical Thoracoscopy w/ Biopsy & Talc\nAttending: Dr. Williams\nSteps:\n1. Timeout.\n2. Local + Moderate Sedation.\n3. Trocar entry 6th ICS.\n4. Survey: Nodules on parietal pleura.\n5. Biopsied parietal (x6) and diaphragm.\n6. Talc poudrage.\n7. Chest tube secured.",
     "cpt_codes": [
       32609,
       32650
@@ -385,12 +385,6 @@
       "style_type": 4,
       "generated_name": "Diana Miller",
       "generation_date": "2025-12-09T12:06:17.867060"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -491,7 +485,7 @@
     }
   },
   {
-    "note_text": "Medical Thoracoscopy with Pleural <PERSON> and Talc Poudrage. Under moderate sedation with local <LOCATION>, a single-port entry was made at the 6th intercostal space, mid-axillary line. The semi-rigid pleuroscope was inserted. Inspection revealed thickened parietal pleura with nodules. Multiple biopsies were obtained from the parietal pleura (6 specimens) and diaphragmatic pleura. Specimens were sent for histopathology. Talc poudrage was performed for pleurodesis. All fluid was evacuated and a chest tube was placed.",
+    "note_text": "Medical Thoracoscopy with Pleural Biopsy and Talc Poudrage. Under moderate sedation with local anesthesia, a single-port entry was made at the 6th intercostal space, mid-axillary line. The semi-rigid pleuroscope was inserted. Inspection revealed thickened parietal pleura with nodules. Multiple biopsies were obtained from the parietal pleura (6 specimens) and diaphragmatic pleura. Specimens were sent for histopathology. Talc poudrage was performed for pleurodesis. All fluid was evacuated and a chest tube was placed.",
     "cpt_codes": [
       32609,
       32650
@@ -585,17 +579,10 @@
       "style_type": 6,
       "generated_name": "Frances Moore",
       "generation_date": "2025-12-09T12:06:17.867113"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "PERSON",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nStaging for lung cancer pleural involvement.\n[<LOCATION>]\nModerate sedation, local <LOCATION>.\n[Description]\nRight-sided entry (6th ICS). Findings: Thickened parietal pleura with nodules. Interventions: Parietal biopsies (6), diaphragmatic biopsies, Talc poudrage pleurodesis. Chest tube placed.\n[Plan]\nAdmit. Oncology consult if pos.",
+    "note_text": "[Indication]\nStaging for lung cancer pleural involvement.\n[Anesthesia]\nModerate sedation, local anesthesia.\n[Description]\nRight-sided entry (6th ICS). Findings: Thickened parietal pleura with nodules. Interventions: Parietal biopsies (6), diaphragmatic biopsies, Talc poudrage pleurodesis. Chest tube placed.\n[Plan]\nAdmit. Oncology consult if pos.",
     "cpt_codes": [
       32609,
       32650
@@ -689,13 +676,6 @@
       "style_type": 7,
       "generated_name": "Gloria Taylor",
       "generation_date": "2025-12-09T12:06:17.867143"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1067,7 +1047,7 @@
     }
   },
   {
-    "note_text": "Billing Code: <DATE_TIME> (Thoracoscopy, diagnostic).\nLocation: Right.\nDetails: Visualization of parietal, visceral, and diaphragmatic pleura. Findings included diffuse pleural nodularity. Complete fluid evacuation performed. No biopsies recorded in this specific encounter note (Pathology pending from fluid/prior).",
+    "note_text": "Billing Code: 32601 (Thoracoscopy, diagnostic).\nLocation: Right.\nDetails: Visualization of parietal, visceral, and diaphragmatic pleura. Findings included diffuse pleural nodularity. Complete fluid evacuation performed. No biopsies recorded in this specific encounter note (Pathology pending from fluid/prior).",
     "cpt_codes": [
       32601
     ],
@@ -1151,12 +1131,6 @@
       "style_type": 3,
       "generated_name": "Carl Green",
       "generation_date": "2025-12-09T12:06:17.867290"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -1334,7 +1308,7 @@
     }
   },
   {
-    "note_text": "Medical Thoracoscopy (Pleuroscopy) - Diagnostic. Under moderate sedation with local <LOCATION>, entry was achieved at the 6th intercostal space, mid-axillary line. The semi-rigid pleuroscope was inserted. Findings included diffuse pleural nodularity. Parietal, visceral, and diaphragmatic pleura were visualized. All remaining fluid was evacuated under direct visualization. A chest tube was placed. There was no air leak and the lung expanded.",
+    "note_text": "Medical Thoracoscopy (Pleuroscopy) - Diagnostic. Under moderate sedation with local anesthesia, entry was achieved at the 6th intercostal space, mid-axillary line. The semi-rigid pleuroscope was inserted. Findings included diffuse pleural nodularity. Parietal, visceral, and diaphragmatic pleura were visualized. All remaining fluid was evacuated under direct visualization. A chest tube was placed. There was no air leak and the lung expanded.",
     "cpt_codes": [
       32601
     ],
@@ -1418,16 +1392,10 @@
       "style_type": 6,
       "generated_name": "Frank Nelson",
       "generation_date": "2025-12-09T12:06:17.867385"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "[Indication]\nSuspected mesothelioma.\n[<LOCATION>]\nModerate sedation.\n[Description]\nRight side accessed (6th ICS). Visualized diffuse pleural nodularity across parietal/visceral surfaces. Fluid evacuated. Chest tube placed.\n[Plan]\nFloor admission. Path f/u.",
+    "note_text": "[Indication]\nSuspected mesothelioma.\n[Anesthesia]\nModerate sedation.\n[Description]\nRight side accessed (6th ICS). Visualized diffuse pleural nodularity across parietal/visceral surfaces. Fluid evacuated. Chest tube placed.\n[Plan]\nFloor admission. Path f/u.",
     "cpt_codes": [
       32601
     ],
@@ -1511,12 +1479,6 @@
       "style_type": 7,
       "generated_name": "George Carter",
       "generation_date": "2025-12-09T12:06:17.867409"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -1791,7 +1753,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE RECORD: Mr. <PERSON> underwent a right-sided medical thoracoscopy. The indication was radiographic pleural nodularity. Intraoperative inspection revealed inflammatory changes lacking distinct nodularity, contrary to imaging. Nevertheless, six biopsies were harvested from the parietal pleura and additional tissue from the diaphragm to rule out occult disease. Talc poudrage was instilled to achieve pleurodesis. A chest tube was inserted.",
+    "note_text": "PROCEDURE RECORD: Mr. Martinez underwent a right-sided medical thoracoscopy. The indication was radiographic pleural nodularity. Intraoperative inspection revealed inflammatory changes lacking distinct nodularity, contrary to imaging. Nevertheless, six biopsies were harvested from the parietal pleura and additional tissue from the diaphragm to rule out occult disease. Talc poudrage was instilled to achieve pleurodesis. A chest tube was inserted.",
     "cpt_codes": [
       32609,
       32650
@@ -1885,12 +1847,6 @@
       "style_type": 2,
       "generated_name": "Kevin Campbell",
       "generation_date": "2025-12-09T12:06:17.867513"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -1991,7 +1947,7 @@
     }
   },
   {
-    "note_text": "Steps:\n1. Right side prep.\n2. Scope in 6th ICS.\n3. Looked around: Inflammatory changes, no obvious nodules.\n4. Took 6 biopsies anyway (parietal) + diaphragm.\n5. Puffed Talc.\n6. Chest tube in.\n<PERSON>: Dr. Walsh.",
+    "note_text": "Steps:\n1. Right side prep.\n2. Scope in 6th ICS.\n3. Looked around: Inflammatory changes, no obvious nodules.\n4. Took 6 biopsies anyway (parietal) + diaphragm.\n5. Puffed Talc.\n6. Chest tube in.\nRes: Dr. Walsh.",
     "cpt_codes": [
       32609,
       32650
@@ -2085,16 +2041,10 @@
       "style_type": 4,
       "generated_name": "Mike Turner",
       "generation_date": "2025-12-09T12:06:17.867564"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> right thoracoscopy. indications were nodules on ct but inside it just looked inflammatory. we took biopsies anyway 6 from the wall and some from diaphragm. did the talc procedure just in case. chest tube placed to suction. no air leak hemostasis good.",
+    "note_text": "jacob martinez right thoracoscopy. indications were nodules on ct but inside it just looked inflammatory. we took biopsies anyway 6 from the wall and some from diaphragm. did the talc procedure just in case. chest tube placed to suction. no air leak hemostasis good.",
     "cpt_codes": [
       32609,
       32650
@@ -2188,12 +2138,6 @@
       "style_type": 5,
       "generated_name": "Nathan Parker",
       "generation_date": "2025-12-09T12:06:17.867588"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2294,7 +2238,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPleural nodularity on imaging.\n[<LOCATION>]\nModerate.\n[Description]\nRight side. Findings: Inflammatory changes. Action: 6 parietal biopsies, diaphragm biopsy, Talc poudrage. <PERSON> evacuated.\n[Plan]\nAdmit to floor. Suction.",
+    "note_text": "[Indication]\nPleural nodularity on imaging.\n[Anesthesia]\nModerate.\n[Description]\nRight side. Findings: Inflammatory changes. Action: 6 parietal biopsies, diaphragm biopsy, Talc poudrage. Fluid evacuated.\n[Plan]\nAdmit to floor. Suction.",
     "cpt_codes": [
       32609,
       32650
@@ -2388,17 +2332,10 @@
       "style_type": 7,
       "generated_name": "Paul Edwards",
       "generation_date": "2025-12-09T12:06:17.867639"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We carried out a right medical thoracoscopy on Mr. <PERSON>. Although imaging suggested nodules, direct visualization showed mostly inflammatory changes. We proceeded to biopsy the parietal pleura six times and sampled the diaphragm as well. To manage the effusion, we performed talc poudrage. The chest tube was placed without complication, and the lung expanded well.",
+    "note_text": "We carried out a right medical thoracoscopy on Mr. Martinez. Although imaging suggested nodules, direct visualization showed mostly inflammatory changes. We proceeded to biopsy the parietal pleura six times and sampled the diaphragm as well. To manage the effusion, we performed talc poudrage. The chest tube was placed without complication, and the lung expanded well.",
     "cpt_codes": [
       32609,
       32650
@@ -2492,12 +2429,6 @@
       "style_type": 8,
       "generated_name": "Quinn Stewart",
       "generation_date": "2025-12-09T12:06:17.867665"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -2772,7 +2703,7 @@
     }
   },
   {
-    "note_text": "Code: 32601 (Diagnostic Thoracoscopy).\nSide: Left.\nFindings: Multiple malignant-appearing nodules.\nWork: Visualization of parietal/visceral/diaphragmatic pleura. Evacuation of fluid. Placement of tube. (Note: <LOCATION> <DATE_TIME> not documented in this specific text, coding strictly to documentation).",
+    "note_text": "Code: 32601 (Diagnostic Thoracoscopy).\nSide: Left.\nFindings: Multiple malignant-appearing nodules.\nWork: Visualization of parietal/visceral/diaphragmatic pleura. Evacuation of fluid. Placement of tube. (Note: Biopsy 32609 not documented in this specific text, coding strictly to documentation).",
     "cpt_codes": [
       32601
     ],
@@ -2856,17 +2787,10 @@
       "style_type": 3,
       "generated_name": "Lisa Reed",
       "generation_date": "2025-12-09T12:06:17.867766"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Left Pleuroscopy (Diagnostic)\nPt: <PERSON>, 54F\n1. Port 6th ICS.\n2. Saw multiple nodules (look bad).\n3. Drained fluid.\n4. Chest tube placed.\nPlan: Admit, wait for path/cytology.",
+    "note_text": "Procedure: Left Pleuroscopy (Diagnostic)\nPt: Ramirez, 54F\n1. Port 6th ICS.\n2. Saw multiple nodules (look bad).\n3. Drained fluid.\n4. Chest tube placed.\nPlan: Admit, wait for path/cytology.",
     "cpt_codes": [
       32601
     ],
@@ -2950,16 +2874,10 @@
       "style_type": 4,
       "generated_name": "Mary Cook",
       "generation_date": "2025-12-09T12:06:17.867791"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "<PERSON> left side scope. looking for why the effusion keeps coming back. went in saw a bunch of nodules they look malignant. drained the fluid put a tube in. no air leak. sending to floor.",
+    "note_text": "amanda ramirez left side scope. looking for why the effusion keeps coming back. went in saw a bunch of nodules they look malignant. drained the fluid put a tube in. no air leak. sending to floor.",
     "cpt_codes": [
       32601
     ],
@@ -3043,12 +2961,6 @@
       "style_type": 5,
       "generated_name": "Nancy Morgan",
       "generation_date": "2025-12-09T12:06:17.867815"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3139,7 +3051,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nRecurrent pleural effusion, unknown etiology.\n[<LOCATION>]\nModerate.\n[Description]\nLeft side. Multiple malignant-appearing nodules visualized. <PERSON> evacuated. Chest tube placed.\n[Plan]\nAdmit. Tube to water seal.",
+    "note_text": "[Indication]\nRecurrent pleural effusion, unknown etiology.\n[Anesthesia]\nModerate.\n[Description]\nLeft side. Multiple malignant-appearing nodules visualized. Fluid evacuated. Chest tube placed.\n[Plan]\nAdmit. Tube to water seal.",
     "cpt_codes": [
       32601
     ],
@@ -3223,17 +3135,10 @@
       "style_type": 7,
       "generated_name": "Patricia Murphy",
       "generation_date": "2025-12-09T12:06:17.867866"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Ms. <PERSON> underwent a diagnostic thoracoscopy on the left side to investigate her recurrent effusion. Upon inspection, we identified multiple nodules that appeared malignant. We ensured all fluid was removed and placed a chest tube. The lung expanded fully, and there was no evidence of an air leak.",
+    "note_text": "Ms. Ramirez underwent a diagnostic thoracoscopy on the left side to investigate her recurrent effusion. Upon inspection, we identified multiple nodules that appeared malignant. We ensured all fluid was removed and placed a chest tube. The lung expanded fully, and there was no evidence of an air leak.",
     "cpt_codes": [
       32601
     ],
@@ -3317,12 +3222,6 @@
       "style_type": 8,
       "generated_name": "Rachel Bailey",
       "generation_date": "2025-12-09T12:06:17.867889"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3761,7 +3660,7 @@
     }
   },
   {
-    "note_text": "<PERSON> left side. went in to look at the nodules. saw a big mass on the diaphragm. looked at the rest of the pleura. drained the fluid put the chest tube in. patient did fine.",
+    "note_text": "timothy scott left side. went in to look at the nodules. saw a big mass on the diaphragm. looked at the rest of the pleura. drained the fluid put the chest tube in. patient did fine.",
     "cpt_codes": [
       32601
     ],
@@ -3845,12 +3744,6 @@
       "style_type": 5,
       "generated_name": "Xavier Ward",
       "generation_date": "2025-12-09T12:06:17.868031"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -3941,7 +3834,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPleural nodularity.\n[<LOCATION>]\nModerate.\n[Description]\nLeft entry. Findings: Mass lesion on diaphragm. <PERSON> evacuated. Chest tube to water seal.\n[Plan]\nAdmit. Pull tube when <150mL.",
+    "note_text": "[Indication]\nPleural nodularity.\n[Anesthesia]\nModerate.\n[Description]\nLeft entry. Findings: Mass lesion on diaphragm. Fluid evacuated. Chest tube to water seal.\n[Plan]\nAdmit. Pull tube when <150mL.",
     "cpt_codes": [
       32601
     ],
@@ -4025,17 +3918,10 @@
       "style_type": 7,
       "generated_name": "Zachary Peterson",
       "generation_date": "2025-12-09T12:06:17.868077"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We performed a diagnostic thoracoscopy on the left side for Mr. <PERSON>. The exam revealed a specific mass lesion located on the diaphragmatic pleura. We visualized the remaining pleural surfaces and evacuated the fluid. A chest tube was placed, and the lung was confirmed to be expanded.",
+    "note_text": "We performed a diagnostic thoracoscopy on the left side for Mr. Scott. The exam revealed a specific mass lesion located on the diaphragmatic pleura. We visualized the remaining pleural surfaces and evacuated the fluid. A chest tube was placed, and the lung was confirmed to be expanded.",
     "cpt_codes": [
       32601
     ],
@@ -4119,12 +4005,6 @@
       "style_type": 8,
       "generated_name": "Adam Gray",
       "generation_date": "2025-12-09T12:06:17.868100"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -4737,7 +4617,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nExudative effusion, neg cytology.\n[<LOCATION>]\nModerate.\n[Description]\nRight side. Findings: Pleural plaques. Fluid removed. Chest tube inserted.\n[Plan]\nAdmit. Monitor output.",
+    "note_text": "[Indication]\nExudative effusion, neg cytology.\n[Anesthesia]\nModerate.\n[Description]\nRight side. Findings: Pleural plaques. Fluid removed. Chest tube inserted.\n[Plan]\nAdmit. Monitor output.",
     "cpt_codes": [
       32601
     ],
@@ -4821,16 +4701,10 @@
       "style_type": 7,
       "generated_name": "Ivan Wood",
       "generation_date": "2025-12-09T12:06:17.868288"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Mr. <PERSON> had a right-sided diagnostic thoracoscopy today to investigate his effusion. We found pleural plaques upon inspection. We made sure to remove all the remaining fluid and placed a chest tube. The lung re-expanded well without any air leaks.",
+    "note_text": "Mr. Lopez had a right-sided diagnostic thoracoscopy today to investigate his effusion. We found pleural plaques upon inspection. We made sure to remove all the remaining fluid and placed a chest tube. The lung re-expanded well without any air leaks.",
     "cpt_codes": [
       32601
     ],
@@ -4914,12 +4788,6 @@
       "style_type": 8,
       "generated_name": "John Barnes",
       "generation_date": "2025-12-09T12:06:17.868319"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5098,7 +4966,7 @@
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Mrs. <PERSON> underwent right medical thoracoscopy. The pleural space was accessed at the 6th intercostal space. We encountered significant fibrinous adhesions and evidence of trapped lung. Extensive adhesiolysis was not performed, but eight biopsies were obtained from the parietal pleura for characterization. The fluid was evacuated and a chest tube placed to suction.",
+    "note_text": "PROCEDURE NOTE: Mrs. White underwent right medical thoracoscopy. The pleural space was accessed at the 6th intercostal space. We encountered significant fibrinous adhesions and evidence of trapped lung. Extensive adhesiolysis was not performed, but eight biopsies were obtained from the parietal pleura for characterization. The fluid was evacuated and a chest tube placed to suction.",
     "cpt_codes": [
       32609
     ],
@@ -5183,16 +5051,10 @@
       "style_type": 2,
       "generated_name": "Martha Coleman",
       "generation_date": "2025-12-09T12:06:17.868485"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "Coding: <DATE_TIME> (Thoracoscopy w/ biopsy).\nSite: Right.\nFindings: Adhesions, trapped lung.\nSpecimens: 8 parietal pleural biopsies.\nNote: No pleurodesis performed (likely due to trapped lung contraindication).",
+    "note_text": "Coding: 32609 (Thoracoscopy w/ biopsy).\nSite: Right.\nFindings: Adhesions, trapped lung.\nSpecimens: 8 parietal pleural biopsies.\nNote: No pleurodesis performed (likely due to trapped lung contraindication).",
     "cpt_codes": [
       32609
     ],
@@ -5277,12 +5139,6 @@
       "style_type": 3,
       "generated_name": "Nora Jenkins",
       "generation_date": "2025-12-09T12:06:17.868514"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
@@ -5374,7 +5230,7 @@
     }
   },
   {
-    "note_text": "<PERSON> right side. effusion not going away. went in with the scope. lung is trapped lots of adhesions. took 8 biopsies from the wall. drained the fluid put the tube in. hope it expands.",
+    "note_text": "karen white right side. effusion not going away. went in with the scope. lung is trapped lots of adhesions. took 8 biopsies from the wall. drained the fluid put the tube in. hope it expands.",
     "cpt_codes": [
       32609
     ],
@@ -5459,12 +5315,6 @@
       "style_type": 5,
       "generated_name": "Paula Powell",
       "generation_date": "2025-12-09T12:06:17.868569"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5556,7 +5406,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nPersistent effusion, trapped lung.\n[<LOCATION>]\nModerate.\n[Description]\nRight entry. Findings: Adhesions, trapped lung. Action: 8 parietal biopsies. <PERSON> drained. Chest tube placed.\n[Plan]\nAdmit. Suction.",
+    "note_text": "[Indication]\nPersistent effusion, trapped lung.\n[Anesthesia]\nModerate.\n[Description]\nRight entry. Findings: Adhesions, trapped lung. Action: 8 parietal biopsies. Fluid drained. Chest tube placed.\n[Plan]\nAdmit. Suction.",
     "cpt_codes": [
       32609
     ],
@@ -5641,17 +5491,10 @@
       "style_type": 7,
       "generated_name": "Rose Patterson",
       "generation_date": "2025-12-09T12:06:17.868621"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We performed a right thoracoscopy on Mrs. <PERSON>. We found fibrinous adhesions and a trapped lung, which explains the persistent effusion. We took eight biopsies from the parietal pleura to determine the cause. We drained the fluid and placed a chest tube, placing it to suction to encourage expansion.",
+    "note_text": "We performed a right thoracoscopy on Mrs. White. We found fibrinous adhesions and a trapped lung, which explains the persistent effusion. We took eight biopsies from the parietal pleura to determine the cause. We drained the fluid and placed a chest tube, placing it to suction to encourage expansion.",
     "cpt_codes": [
       32609
     ],
@@ -5736,12 +5579,6 @@
       "style_type": 8,
       "generated_name": "Susan Hughes",
       "generation_date": "2025-12-09T12:06:17.868647"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -5920,7 +5757,7 @@
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: Left diagnostic thoracoscopy. Entry at the 6th intercostal space. Inspection revealed fibrinous adhesions and the appearance of a trapped lung. The parietal, visceral, and diaphragmatic surfaces were visualized within the limits of the adhesions. <PERSON> was evacuated and a chest tube was placed.",
+    "note_text": "OPERATIVE REPORT: Left diagnostic thoracoscopy. Entry at the 6th intercostal space. Inspection revealed fibrinous adhesions and the appearance of a trapped lung. The parietal, visceral, and diaphragmatic surfaces were visualized within the limits of the adhesions. Fluid was evacuated and a chest tube was placed.",
     "cpt_codes": [
       32601
     ],
@@ -6004,12 +5841,6 @@
       "style_type": 2,
       "generated_name": "Max Butler",
       "generation_date": "2025-12-09T12:06:17.868721"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6187,7 +6018,7 @@
     }
   },
   {
-    "note_text": "<PERSON> green left side. diagnostic scope. saw adhesions and trapped lung. drained fluid put tube in. no biopsy just looked.",
+    "note_text": "nicholas green left side. diagnostic scope. saw adhesions and trapped lung. drained fluid put tube in. no biopsy just looked.",
     "cpt_codes": [
       32601
     ],
@@ -6271,12 +6102,6 @@
       "style_type": 5,
       "generated_name": "Peter Gonzales",
       "generation_date": "2025-12-09T12:06:17.868795"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6367,7 +6192,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nExudative effusion.\n[Description]\nLeft side. Visualized fibrinous adhesions and trapped lung. <PERSON> evacuated. Chest tube placed.\n[Plan]\nAdmit. Water seal.",
+    "note_text": "[Indication]\nExudative effusion.\n[Description]\nLeft side. Visualized fibrinous adhesions and trapped lung. Fluid evacuated. Chest tube placed.\n[Plan]\nAdmit. Water seal.",
     "cpt_codes": [
       32601
     ],
@@ -6451,16 +6276,10 @@
       "style_type": 7,
       "generated_name": "Ray Alexander",
       "generation_date": "2025-12-09T12:06:17.868927"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We looked inside Mr. <PERSON>'s left chest with the thoracoscope. We found adhesions and what looks like a trapped lung. We drained the fluid and put a chest tube in, but didn't take any biopsies this time.",
+    "note_text": "We looked inside Mr. Green's left chest with the thoracoscope. We found adhesions and what looks like a trapped lung. We drained the fluid and put a chest tube in, but didn't take any biopsies this time.",
     "cpt_codes": [
       32601
     ],
@@ -6544,12 +6363,6 @@
       "style_type": 8,
       "generated_name": "Sam Russell",
       "generation_date": "2025-12-09T12:06:17.868952"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -6640,7 +6453,7 @@
     }
   },
   {
-    "note_text": "Indication: TB pleuritis suspicion.\nProc: Left Thoracoscopy + <LOCATION>.\n- Findings: Inflammatory changes.\n- 9 biopsies parietal pleura + diaphragm.\n- Fluid evacuated. Chest tube in.",
+    "note_text": "Indication: TB pleuritis suspicion.\nProc: Left Thoracoscopy + Biopsy.\n- Findings: Inflammatory changes.\n- 9 biopsies parietal pleura + diaphragm.\n- Fluid evacuated. Chest tube in.",
     "cpt_codes": [
       32609
     ],
@@ -6725,16 +6538,10 @@
       "style_type": 1,
       "generated_name": "Ulysses Diaz",
       "generation_date": "2025-12-09T12:06:17.869005"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE NOTE: Left medical thoracoscopy for suspected tuberculous pleuritis. Access via 6th intercostal space. The pleura exhibited inflammatory changes without distinct nodularity. To ensure diagnostic yield, nine biopsies were obtained from the parietal pleura, along with diaphragmatic sampling. <PERSON> was evacuated and a chest tube inserted.",
+    "note_text": "PROCEDURE NOTE: Left medical thoracoscopy for suspected tuberculous pleuritis. Access via 6th intercostal space. The pleura exhibited inflammatory changes without distinct nodularity. To ensure diagnostic yield, nine biopsies were obtained from the parietal pleura, along with diaphragmatic sampling. Fluid was evacuated and a chest tube inserted.",
     "cpt_codes": [
       32609
     ],
@@ -6819,16 +6626,10 @@
       "style_type": 2,
       "generated_name": "Vince Hayes",
       "generation_date": "2025-12-09T12:06:17.869031"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "CPT: 32609 (<LOCATION>).\nSide: Left.\nFindings: Inflammatory.\nSamples: 9 parietal biopsies.\nNote: High biopsy count to r/o TB. No talc.",
+    "note_text": "CPT: 32609 (Biopsy).\nSide: Left.\nFindings: Inflammatory.\nSamples: 9 parietal biopsies.\nNote: High biopsy count to r/o TB. No talc.",
     "cpt_codes": [
       32609
     ],
@@ -6913,12 +6714,6 @@
       "style_type": 3,
       "generated_name": "Will Myers",
       "generation_date": "2025-12-09T12:06:17.869055"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "LOCATION"
-      ]
     }
   },
   {
@@ -7010,7 +6805,7 @@
     }
   },
   {
-    "note_text": "<PERSON> left side. think its TB. went in saw inflammation. took a lot of biopsies 9 of them plus diaphragm just to be sure. put the tube in. no air leak.",
+    "note_text": "donald flores left side. think its TB. went in saw inflammation. took a lot of biopsies 9 of them plus diaphragm just to be sure. put the tube in. no air leak.",
     "cpt_codes": [
       32609
     ],
@@ -7095,12 +6890,6 @@
       "style_type": 5,
       "generated_name": "Yusuf Hamilton",
       "generation_date": "2025-12-09T12:06:17.869103"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7192,7 +6981,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSuspected TB pleuritis.\n[<LOCATION>]\nModerate.\n[Description]\nLeft side. Inflammatory changes. 9 parietal biopsies taken. <PERSON> drained. Chest tube in.\n[Plan]\nAdmit. Await path.",
+    "note_text": "[Indication]\nSuspected TB pleuritis.\n[Anesthesia]\nModerate.\n[Description]\nLeft side. Inflammatory changes. 9 parietal biopsies taken. Fluid drained. Chest tube in.\n[Plan]\nAdmit. Await path.",
     "cpt_codes": [
       32609
     ],
@@ -7277,17 +7066,10 @@
       "style_type": 7,
       "generated_name": "Aaron Sullivan",
       "generation_date": "2025-12-09T12:06:17.869152"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "LOCATION",
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We performed a left-sided thoracoscopy on Mr. <PERSON> to check for TB. The pleura looked inflamed but didn't have nodules. We took nine biopsies from the chest wall and some from the diaphragm to send for analysis. We drained the fluid and left a chest tube in place.",
+    "note_text": "We performed a left-sided thoracoscopy on Mr. Flores to check for TB. The pleura looked inflamed but didn't have nodules. We took nine biopsies from the chest wall and some from the diaphragm to send for analysis. We drained the fluid and left a chest tube in place.",
     "cpt_codes": [
       32609
     ],
@@ -7372,12 +7154,6 @@
       "style_type": 8,
       "generated_name": "Bob Wallace",
       "generation_date": "2025-12-09T12:06:17.869175"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7817,7 +7593,7 @@
     }
   },
   {
-    "note_text": "<PERSON> right side. thought it was cancer but pleura looks normal. drained the fluid put the tube in. no biopsy needed.",
+    "note_text": "melissa wilson right side. thought it was cancer but pleura looks normal. drained the fluid put the tube in. no biopsy needed.",
     "cpt_codes": [
       32601
     ],
@@ -7901,12 +7677,6 @@
       "style_type": 5,
       "generated_name": "Yvonne Reynolds",
       "generation_date": "2025-12-09T12:06:17.869340"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
@@ -7997,7 +7767,7 @@
     }
   },
   {
-    "note_text": "[Indication]\nSuspected malignancy.\n[Description]\nRight side. Normal appearing pleura. <PERSON> drained. Chest tube placed.\n[Plan]\nAdmit. Water seal.",
+    "note_text": "[Indication]\nSuspected malignancy.\n[Description]\nRight side. Normal appearing pleura. Fluid drained. Chest tube placed.\n[Plan]\nAdmit. Water seal.",
     "cpt_codes": [
       32601
     ],
@@ -8081,16 +7851,10 @@
       "style_type": 7,
       "generated_name": "Amy Ellis",
       "generation_date": "2025-12-09T12:06:17.869386"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {
-    "note_text": "We did a diagnostic thoracoscopy on Ms. <PERSON>'s right side. Surprisingly, the pleura looked completely normal despite the suspicion of cancer. We drained the fluid and placed a chest tube, but didn't see anything to biopsy.",
+    "note_text": "We did a diagnostic thoracoscopy on Ms. Wilson's right side. Surprisingly, the pleura looked completely normal despite the suspicion of cancer. We drained the fluid and placed a chest tube, but didn't see anything to biopsy.",
     "cpt_codes": [
       32601
     ],
@@ -8174,12 +7938,6 @@
       "style_type": 8,
       "generated_name": "Bella Harrison",
       "generation_date": "2025-12-09T12:06:17.869409"
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "PERSON"
-      ]
     }
   },
   {

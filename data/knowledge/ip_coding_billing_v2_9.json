@@ -10,7 +10,7 @@
       "v2.6: Flattened code_lists structure; separated QA rules from bundling rules; added terminology_mappings for display normalization",
       "v2.5: Updated RVU values from CMS 2025 PFS Final Rule on 2025-12-01",
       "v2.4: Reconciled RVU conflicts between sections; consolidated duplicate synonym lists; added missing add-on codes; expanded NCCI pairs; fixed typos; standardized formatting",
-      "v2.9: Added missing codes from registry review (32997, 32662, 33015, 32602)"
+      "v2.9: Added missing codes from registry review (32997, 32662, 33015, 32602, 76604)"
     ],
     "notes": [
       "Local IP coding/billing knowledge base for decision support and NLP.",
@@ -652,6 +652,15 @@
           "global_days": 90,
           "status": "Inpatient only",
           "notes": "VATS pleurodesis - designated as inpatient-only procedure by CMS. Not payable under OPPS or ASC settings. Typically maps to MS-DRG 163-165 (Major Chest Procedures)."
+        },
+        "76604": {
+          "description": "Ultrasound, chest (includes mediastinum), real time with image documentation",
+          "work_rvu": 0.55,
+          "total_facility_rvu": 1.64,
+          "mpfs_facility_payment": 53,
+          "global_days": 0,
+          "total_nonfacility_rvu": 1.64,
+          "mpfs_nonfacility_payment": 53
         }
       }
     },
@@ -2142,6 +2151,21 @@
         "mult_proc_indicator": 0,
         "status_code": "A",
         "is_add_on": false
+      },
+      "76604": {
+        "description": "Us exam chest",
+        "work_rvu": 0.55,
+        "facility_pe_rvu": 1.05,
+        "nonfacility_pe_rvu": 1.05,
+        "mp_rvu": 0.04,
+        "total_facility_rvu": 1.64,
+        "total_nonfacility_rvu": 1.64,
+        "mpfs_facility_payment": 53,
+        "mpfs_nonfacility_payment": 53,
+        "global_days": "XXX",
+        "mult_proc_indicator": 0,
+        "status_code": "A",
+        "is_add_on": false
       }
     }
   },
@@ -2346,6 +2370,11 @@
       "work": 4.25,
       "pe": 1.61,
       "mp": 0.46
+    },
+    "76604": {
+      "work": 0.55,
+      "pe": 1.05,
+      "mp": 0.04
     }
   },
   "rvus_pleural": {
@@ -2692,6 +2721,12 @@
     ],
     "whole_lung_lavage": [
       "32997"
+    ],
+    "thoracic_ultrasound": [
+      "76604"
+    ],
+    "imaging_chest": [
+      "76604"
     ]
   },
   "add_on_codes": [
