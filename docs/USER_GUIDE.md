@@ -350,5 +350,12 @@ Lower thresholds = more cases use fast path (faster but may miss edge cases)
 - **Questions**: Open an issue on the repository
 
 ---
+Redaction Scripts:
+python scripts/phi_audit.py --note-path test_redact.txt
 
+
+python scripts/scrub_golden_jsons.py \
+  --input-dir data/knowledge/golden_extractions \
+  --pattern 'golden_*.json' \
+  --report-path artifacts/redactions.jsonl
 *Last updated: December 2025*

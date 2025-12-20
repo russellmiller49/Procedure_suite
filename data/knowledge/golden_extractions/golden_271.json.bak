@@ -1,0 +1,1406 @@
+[
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Whole lung lavage (right lung)\nPatient: Daniel Rivera, 42-year-old male with pulmonary alveolar proteinosis (PAP) and progressive dyspnea.\nAnesthesia: General anesthesia with left-sided double-lumen endotracheal tube.\nIndication: Symptomatic PAP with right-predominant crazy-paving on CT and declining oxygen requirement despite GM-CSF therapy.\n\nPROCEDURE IN DETAIL:\nAfter informed consent was confirmed, the patient was brought to the operating room and placed supine on the table. Standard ASA monitors were applied. General anesthesia was induced and the trachea was intubated with a 37 Fr left-sided double-lumen tube. Position was confirmed with flexible bronchoscopy and auscultation.\nThe patient was placed in the left lateral decubitus position with the right lung dependent. One-lung ventilation of the left lung was initiated. The right lung was sequentially lavaged using warmed 0.9% normal saline in 1.0 L aliquots. Each aliquot was instilled via the right lumen, allowed to dwell briefly, and then drained to gravity with gentle manual chest percussion. Effluent initially appeared opaque and milky, gradually clearing over subsequent cycles.\nA total of 18.0 L of saline were instilled with approximately 15.2 L recovered. The procedure was paused several times for recruitment maneuvers when oxygen saturation transiently decreased to the mid-80s, with prompt improvement after recruitment and brief return to two-lung ventilation. No hemodynamic instability occurred. No bronchoscopy-guided biopsies or additional airway interventions were performed.\nAt the conclusion of the lavage, residual fluid was suctioned, two-lung ventilation was resumed, and the double-lumen tube was exchanged for an 8.0 single-lumen ETT. The patient was gradually weaned and extubated uneventfully in the operating room.\n\nCOMPLICATIONS: Transient desaturation to 85% during lavage cycles, resolved with recruitment and brief two-lung ventilation. No bleeding, pneumothorax, or hemodynamic compromise.\nESTIMATED BLOOD LOSS: <20 mL\nDISPOSITION: Transferred to ICU for overnight monitoring with expectation of step-down transfer the following day.\nIMPRESSION/PLAN: Successful right lung whole lung lavage for PAP with good clearance of proteinaceous material. Continue bronchodilators and aggressive pulmonary hygiene. Plan consideration of staged left lung lavage in 2\u20134 weeks depending on clinical response.",
+    "cpt_codes": [
+      32997
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Whole lung lavage (right lung)\nPatient: Daniel Rivera, 42-year-old male with pulmonary alveolar proteinosis (PAP) and progressive dyspnea.\nAnesthesia: General anesthesia with left-sided double-lumen endotracheal tube.\nIndication: Symptomatic PAP with right-predominant crazy-paving on CT and declining oxygen requirement despite GM-CSF therapy.\n\nPROCEDURE IN DETAIL:\nAfter informed consent was confirmed, the patient was brought to the operating room and placed supine on the table. Standard ASA monitors were applied. General anesthesia was induced and the trachea was intubated with a 37 Fr left-sided double-lumen tube. Position was confirmed with flexible bronchoscopy and auscultation.\nThe patient was placed in the left lateral decubitus position with the right lung dependent. One-lung ventilation of the left lung was initiated. The right lung was sequentially lavaged using warmed 0.9% normal saline in 1.0 L aliquots. Each aliquot was instilled via the right lumen, allowed to dwell briefly, and then drained to gravity with gentle manual chest percussion. Effluent initially appeared opaque and milky, gradually clearing over subsequent cycles.\nA total of 18.0 L of saline were instilled with approximately 15.2 L recovered. The procedure was paused several times for recruitment maneuvers when oxygen saturation transiently decreased to the mid-80s, with prompt improvement after recruitment and brief return to two-lung ventilation. No hemodynamic instability occurred. No bronchoscopy-guided biopsies or additional airway interventions were performed.\nAt the conclusion of the lavage, residual fluid was suctioned, two-lung ventilation was resumed, and the double-lumen tube was exchanged for an 8.0 single-lumen ETT. The patient was gradually weaned and extubated uneventfully in the operating room.\n\nCOMPLICATIONS: Transient desaturation to 85% during lavage cycles, resolved with recruitment and brief two-lung ventilation. No bleeding, pneumothorax, or hemodynamic compromise.\nESTIMATED BLOOD LOSS: <20 mL\nDISPOSITION: Transferred to ICU for overnight monitoring with expectation of step-down transfer the following day.\nIMPRESSION/PLAN: Successful right lung whole lung lavage for PAP with good clearance of proteinaceous material. Continue bronchodilators and aggressive pulmonary hygiene. Plan consideration of staged left lung lavage in 2\u20134 weeks depending on clinical response.",
+      "patient_mrn": "IP2026001",
+      "procedure_date": "2025-02-10",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 42,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Therapeutic whole lung lavage for pulmonary alveolar proteinosis with right-predominant disease",
+      "radiographic_findings": "Diffuse bilateral crazy-paving on HRCT with right lung predominance",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "37 Fr left-sided double-lumen tube",
+      "ventilation_mode": "Single-lung ventilation of left lung during lavage, then two-lung ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "wll_volume_instilled_l": 18.0,
+      "wll_volume_returned_l": 15.2,
+      "wll_dlt_used": true,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "pleurodesis_performed": null,
+      "pleurodesis_agent": null,
+      "bronch_indication": "Airway control and lavage for PAP",
+      "bronch_location_lobe": "Right lung",
+      "bronch_location_segment": "Whole lung",
+      "bronch_guidance": "Flexible bronchoscopy to confirm DLT position and assist with suctioning",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "Transient desaturation responsive to recruitment maneuvers",
+      "ebl_ml": 20,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Pulmonary alveolar proteinosis; status post right lung lavage",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "follow_up_plan": "Overnight ICU monitoring with plan for step-down in 24 hours and consideration of contralateral lavage in 2\u20134 weeks",
+      "cpt_codes": [
+        32997
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "LCDR Maya Thompson, MD",
+        "fellow_name": "LT Alex Ramirez, MD",
+        "assistant_name": "Jordan Lee, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-08T09:48:35Z",
+        "generator": "ip_coding_review.patch_system",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "coding_summary": {
+          "primary_family": "whole_lung_lavage",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32997",
+              "description": "Total lung lavage (unilateral)",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Primary procedure performed: Whole lung lavage (Right).",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus (missing)",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32997",
+              "units": 1,
+              "work_rvu": null,
+              "total_facility_rvu": null,
+              "mpfs_facility_payment": null,
+              "notes": "RVU data not available in current knowledge base."
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 0,
+            "total_facility_rvu": 0,
+            "estimated_facility_payment_unadjusted": 0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32997",
+              "summary": "Supported by documentation of 18.0L saline instillation for PAP."
+            }
+          ],
+          "global_comments": [
+            "Code 32997 correctly identifies unilateral whole lung lavage.",
+            "Financial data is currently unavailable in the local fee schedule."
+          ]
+        }
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32997",
+            "description": "Total lung lavage (unilateral)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": null,
+        "work_rvu": null,
+        "practice_expense_rvu": null,
+        "malpractice_rvu": null
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_generated.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32997"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing and coding_support (RVUs unavailable for 32997)."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-08T00:00:00Z",
+      "generator": "ip_coding_review.synthetic_builder",
+      "knowledge_base_version": "ip_coding_billing.v2_8",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "32997",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Therapeutic whole lung lavage, unilateral",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Right-lung whole lung lavage with DLT-mediated lung isolation and large-volume saline instillation and drainage for PAP.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_8 + operative note documentation",
+            "note_spans": [
+              "Whole lung lavage of the right lung was performed using repeated 1 L aliquots of warmed saline via a double-lumen tube until effluent cleared."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_8 (no 32997 entry in fee_schedules)",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32997",
+            "description": "Therapeutic whole lung lavage, unilateral",
+            "work_rvu": null,
+            "facility_rvu": null,
+            "nonfacility_rvu": null,
+            "facility_payment": null,
+            "nonfacility_payment": null,
+            "notes": "RVU/payment values for 32997 are not present in the 2025 airway/pleural fee schedule sections; obtain current CMS values if needed.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": null,
+        "total_facility_rvu": null,
+        "total_nonfacility_rvu": null,
+        "estimated_professional_payment": null,
+        "notes": "Single 32997 reported for unilateral whole lung lavage; no bundled thoracentesis or thoracoscopy codes are modeled."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Therapeutic whole lung lavage with DLT placement, one-lung ventilation, and repeated saline instillations is well described without additional thoracic procedures.",
+          "No documentation of chest tube insertion, thoracoscopy, or pleural catheter placement; therefore only 32997 is supported."
+        ]
+      }
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Whole lung lavage (left lung)\nPatient: Sarah McIntyre, 51-year-old female with biopsy-proven pulmonary alveolar proteinosis and persistent exertional dyspnea.\nAnesthesia: General anesthesia with left-sided double-lumen endotracheal tube.\nIndication: Staged contralateral whole lung lavage for PAP after prior right lung lavage with partial symptomatic improvement.\n\nPROCEDURE IN DETAIL:\nFollowing verification of informed consent, the patient was brought to the operating room and placed supine. General anesthesia was induced and the airway secured with a 35 Fr left-sided double-lumen tube. Position was confirmed bronchoscopically.\nThe patient was placed in the right lateral decubitus position. One-lung ventilation of the right lung was maintained while the left lung was lavaged via the nonventilated lumen. Warmed normal saline was instilled in 800\u20131000 mL aliquots with chest percussion and drainage to gravity between cycles. Effluent initially appeared opaque and milky, then gradually became light and translucent.\nA total of 16.0 L of saline were instilled with approximately 13.5 L recovered. Oxygen saturations remained above 92% throughout; no arrhythmias or hemodynamic instability were observed. No endobronchial lesions were seen and no biopsies were obtained.\nAt the end of the procedure, the left lung was suctioned free of residual fluid, two-lung ventilation was resumed, and the double-lumen tube was exchanged for a single-lumen tube. The patient was extubated in the operating room and transferred to the step-down unit on nasal cannula oxygen.\n\nCOMPLICATIONS: None.\nESTIMATED BLOOD LOSS: <15 mL\nDISPOSITION: Step-down unit for overnight monitoring.\nIMPRESSION/PLAN: Successful staged left lung whole lung lavage for PAP. Continue pulmonary hygiene, bronchodilators as needed, and follow-up in interventional pulmonology clinic in 4\u20136 weeks.",
+    "cpt_codes": [
+      32997
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Whole lung lavage (left lung)\nPatient: Sarah McIntyre, 51-year-old female with biopsy-proven pulmonary alveolar proteinosis and persistent exertional dyspnea.\nAnesthesia: General anesthesia with left-sided double-lumen endotracheal tube.\nIndication: Staged contralateral whole lung lavage for PAP after prior right lung lavage with partial symptomatic improvement.\n\nPROCEDURE IN DETAIL:\nFollowing verification of informed consent, the patient was brought to the operating room and placed supine. General anesthesia was induced and the airway secured with a 35 Fr left-sided double-lumen tube. Position was confirmed bronchoscopically.\nThe patient was placed in the right lateral decubitus position. One-lung ventilation of the right lung was maintained while the left lung was lavaged via the nonventilated lumen. Warmed normal saline was instilled in 800\u20131000 mL aliquots with chest percussion and drainage to gravity between cycles. Effluent initially appeared opaque and milky, then gradually became light and translucent.\nA total of 16.0 L of saline were instilled with approximately 13.5 L recovered. Oxygen saturations remained above 92% throughout; no arrhythmias or hemodynamic instability were observed. No endobronchial lesions were seen and no biopsies were obtained.\nAt the end of the procedure, the left lung was suctioned free of residual fluid, two-lung ventilation was resumed, and the double-lumen tube was exchanged for a single-lumen tube. The patient was extubated in the operating room and transferred to the step-down unit on nasal cannula oxygen.\n\nCOMPLICATIONS: None.\nESTIMATED BLOOD LOSS: <15 mL\nDISPOSITION: Step-down unit for overnight monitoring.\nIMPRESSION/PLAN: Successful staged left lung whole lung lavage for PAP. Continue pulmonary hygiene, bronchodilators as needed, and follow-up in interventional pulmonology clinic in 4\u20136 weeks.",
+      "patient_mrn": "IP2026002",
+      "procedure_date": "2025-03-05",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 51,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Staged contralateral whole lung lavage for pulmonary alveolar proteinosis",
+      "radiographic_findings": "Diffuse bilateral ground-glass and crazy-paving with left lung predominance on HRCT",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "35 Fr left-sided double-lumen tube",
+      "ventilation_mode": "Single-lung ventilation of right lung during lavage, then two-lung ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "wll_volume_instilled_l": 16.0,
+      "wll_volume_returned_l": 13.5,
+      "wll_dlt_used": true,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "pleurodesis_performed": null,
+      "pleurodesis_agent": null,
+      "bronch_indication": "Staged whole lung lavage for PAP",
+      "bronch_location_lobe": "Left lung",
+      "bronch_location_segment": "Whole lung",
+      "bronch_guidance": "Flexible bronchoscopy to position DLT and assist with suctioning",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "None",
+      "ebl_ml": 15,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Pulmonary alveolar proteinosis; status post left lung lavage",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Overnight observation on step-down unit with early ambulation and clinic follow-up in 4\u20136 weeks",
+      "cpt_codes": [
+        32997
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Natalie Owens, MD",
+        "fellow_name": "LT Priya Shah, MD",
+        "assistant_name": "George Hill, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-08T09:48:35Z",
+        "generator": "ip_coding_review.patch_system",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "coding_summary": {
+          "primary_family": "whole_lung_lavage",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32997",
+              "description": "Total lung lavage (unilateral)",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Primary procedure performed: Whole lung lavage (Left).",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus (missing)",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32997",
+              "units": 1,
+              "work_rvu": null,
+              "total_facility_rvu": null,
+              "mpfs_facility_payment": null,
+              "notes": "RVU data not available in current knowledge base."
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 0,
+            "total_facility_rvu": 0,
+            "estimated_facility_payment_unadjusted": 0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32997",
+              "summary": "Supported by documentation of 16.0L saline instillation for PAP (staged)."
+            }
+          ],
+          "global_comments": [
+            "Code 32997 correctly identifies unilateral whole lung lavage.",
+            "Financial data is currently unavailable in the local fee schedule."
+          ]
+        }
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32997",
+            "description": "Total lung lavage (unilateral)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": null,
+        "work_rvu": null,
+        "practice_expense_rvu": null,
+        "malpractice_rvu": null
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_generated.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32997"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing and coding_support (RVUs unavailable for 32997)."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-08T00:00:00Z",
+      "generator": "ip_coding_review.synthetic_builder",
+      "knowledge_base_version": "ip_coding_billing.v2_8",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "32997",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Therapeutic whole lung lavage, unilateral",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Left-lung whole lung lavage as a staged contralateral procedure for PAP.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_8 + operative note documentation",
+            "note_spans": [
+              "Staged left lung whole lung lavage was performed using warmed saline aliquots with recovery of 13.5 L of effluent."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_8 (no 32997 entry in fee_schedules)",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32997",
+            "description": "Therapeutic whole lung lavage, unilateral",
+            "work_rvu": null,
+            "facility_rvu": null,
+            "nonfacility_rvu": null,
+            "facility_payment": null,
+            "nonfacility_payment": null,
+            "notes": "RVU/payment values for 32997 are not present in the 2025 airway/pleural fee schedule sections.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": null,
+        "total_facility_rvu": null,
+        "total_nonfacility_rvu": null,
+        "estimated_professional_payment": null,
+        "notes": "Single 32997 reported; no additional pleural or thoracoscopic services are modeled."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "The note describes unilateral whole lung lavage for PAP without chest tube placement or thoracoscopy.",
+          "32997 sufficiently captures the described work; additional codes would constitute unbundling."
+        ]
+      }
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Whole lung lavage (right lung) aborted early due to hypoxemia\nPatient: Marcus Hall, 58-year-old male with pulmonary alveolar proteinosis and resting hypoxemia.\nAnesthesia: General anesthesia with double-lumen endotracheal tube.\nIndication: Therapeutic whole lung lavage for symptomatic PAP after failure of inhaled GM-CSF.\n\nPROCEDURE IN DETAIL:\nAfter informed consent, the patient was brought to the operating room and placed supine. General anesthesia was induced and the airway was secured with a 39 Fr left-sided double-lumen tube. Position was confirmed with flexible bronchoscopy.\nThe patient was placed in the left lateral decubitus position. One-lung ventilation of the left lung was initiated and right lung lavage commenced. Warmed 0.9% saline was instilled via the right lumen in 1 L aliquots with gentle percussion and passive drainage. After a total of 10.0 L instilled and 7.5 L recovered, the patient developed progressive desaturation to 78% despite recruitment maneuvers, increased FiO2, and brief return to two-lung ventilation.\nGiven refractory hypoxemia, additional lavage cycles were aborted. Residual fluid was suctioned, and two-lung ventilation was re-established. The double-lumen tube was left in place for ongoing ventilatory support. No bronchoscopy-guided biopsies were performed.\n\nCOMPLICATIONS: Significant hypoxemia requiring early termination of lavage and ongoing mechanical ventilation.\nESTIMATED BLOOD LOSS: <10 mL\nDISPOSITION: Remained intubated and transported to the ICU for further management.\nIMPRESSION/PLAN: Incomplete right lung whole lung lavage for PAP due to hypoxemia. Continue mechanical ventilation and supportive care in ICU. Consider repeat lavage once gas exchange stabilizes.",
+    "cpt_codes": [
+      32997
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Whole lung lavage (right lung) aborted early due to hypoxemia\nPatient: Marcus Hall, 58-year-old male with pulmonary alveolar proteinosis and resting hypoxemia.\nAnesthesia: General anesthesia with double-lumen endotracheal tube.\nIndication: Therapeutic whole lung lavage for symptomatic PAP after failure of inhaled GM-CSF.\n\nPROCEDURE IN DETAIL:\nAfter informed consent, the patient was brought to the operating room and placed supine. General anesthesia was induced and the airway was secured with a 39 Fr left-sided double-lumen tube. Position was confirmed with flexible bronchoscopy.\nThe patient was placed in the left lateral decubitus position. One-lung ventilation of the left lung was initiated and right lung lavage commenced. Warmed 0.9% saline was instilled via the right lumen in 1 L aliquots with gentle percussion and passive drainage. After a total of 10.0 L instilled and 7.5 L recovered, the patient developed progressive desaturation to 78% despite recruitment maneuvers, increased FiO2, and brief return to two-lung ventilation.\nGiven refractory hypoxemia, additional lavage cycles were aborted. Residual fluid was suctioned, and two-lung ventilation was re-established. The double-lumen tube was left in place for ongoing ventilatory support. No bronchoscopy-guided biopsies were performed.\n\nCOMPLICATIONS: Significant hypoxemia requiring early termination of lavage and ongoing mechanical ventilation.\nESTIMATED BLOOD LOSS: <10 mL\nDISPOSITION: Remained intubated and transported to the ICU for further management.\nIMPRESSION/PLAN: Incomplete right lung whole lung lavage for PAP due to hypoxemia. Continue mechanical ventilation and supportive care in ICU. Consider repeat lavage once gas exchange stabilizes.",
+      "patient_mrn": "IP2026003",
+      "procedure_date": "2025-04-01",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 58,
+      "gender": "Male",
+      "asa_class": 4,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Therapeutic whole lung lavage for PAP in a hypoxemic patient",
+      "radiographic_findings": "Diffuse bilateral crazy-paving on CT chest",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "39 Fr left-sided double-lumen tube",
+      "ventilation_mode": "Single-lung ventilation of left lung during lavage, then two-lung ventilation",
+      "anesthesia_agents": "Etomidate, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "wll_volume_instilled_l": 10.0,
+      "wll_volume_returned_l": 7.5,
+      "wll_dlt_used": true,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "pleurodesis_performed": null,
+      "pleurodesis_agent": null,
+      "bronch_indication": "Airway management and lavage in PAP",
+      "bronch_location_lobe": "Right lung",
+      "bronch_location_segment": "Whole lung",
+      "bronch_guidance": "Flexible bronchoscopy to position DLT and suction residual fluid",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "Significant hypoxemia prompting early termination of lavage",
+      "ebl_ml": 10,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": true,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Pulmonary alveolar proteinosis; incomplete right lung lavage due to hypoxemia",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "follow_up_plan": "ICU management with lung-protective ventilation; consider repeat lavage when oxygenation permits",
+      "cpt_codes": [
+        32997
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CAPT Laura Simmons, MD",
+        "fellow_name": null,
+        "assistant_name": "Diana Ross, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-08T09:48:35Z",
+        "generator": "ip_coding_review.patch_system",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "coding_summary": {
+          "primary_family": "whole_lung_lavage",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32997",
+              "description": "Total lung lavage (unilateral)",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Procedure attempted (10L instilled) but aborted due to hypoxemia.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus (missing)",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32997",
+              "units": 1,
+              "work_rvu": null,
+              "total_facility_rvu": null,
+              "mpfs_facility_payment": null,
+              "notes": "RVU data not available in current knowledge base."
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 0,
+            "total_facility_rvu": 0,
+            "estimated_facility_payment_unadjusted": 0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32997",
+              "summary": "Procedure aborted early due to patient condition (hypoxemia).",
+              "qa_flags": [
+                {
+                  "severity": "warning",
+                  "message": "Procedure aborted. Consider Modifier 53 (physician) or 73/74 (facility) for billing."
+                }
+              ]
+            }
+          ],
+          "global_comments": [
+            "Substantial work (10L) performed prior to abort suggests 32997 is reportable, likely with a modifier for incomplete procedure."
+          ]
+        }
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32997",
+            "description": "Total lung lavage (unilateral)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": null,
+        "work_rvu": null,
+        "practice_expense_rvu": null,
+        "malpractice_rvu": null
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_generated.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32997"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing and coding_support (RVUs unavailable). Flagged for Modifier 53 consideration."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-08T00:00:00Z",
+      "generator": "ip_coding_review.synthetic_builder",
+      "knowledge_base_version": "ip_coding_billing.v2_8",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "32997",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Therapeutic whole lung lavage, unilateral",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Right-lung whole lung lavage initiated and aborted for hypoxemia; still best captured by 32997.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_8 + operative note documentation",
+            "note_spans": [
+              "Whole lung lavage of the right lung was performed with 10.0 L instilled before the procedure was aborted because of hypoxemia."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_8 (no 32997 entry in fee_schedules)",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32997",
+            "description": "Therapeutic whole lung lavage, unilateral",
+            "work_rvu": null,
+            "facility_rvu": null,
+            "nonfacility_rvu": null,
+            "facility_payment": null,
+            "nonfacility_payment": null,
+            "notes": "RVU/payment values for 32997 not present in the 2025 airway/pleural fee schedule sections.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": null,
+        "total_facility_rvu": null,
+        "total_nonfacility_rvu": null,
+        "estimated_professional_payment": null,
+        "notes": "Single 32997 used for attempted unilateral whole lung lavage; early termination does not change the CPT selection."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "CPT guidance allows use of 32997 for therapeutic whole lung lavage even when the procedure is incomplete due to clinical instability.",
+          "No separate codes for bronchoscopy, thoracentesis, or thoracoscopy are supported by the documentation."
+        ]
+      }
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies (left hemithorax)\nPatient: Linda Jacobs, 63-year-old female with recurrent left exudative pleural effusion.\nAnesthesia: General anesthesia with single-lumen endotracheal tube.\nIndication: Recurrent symptomatic left pleural effusion with two prior nondiagnostic thoracenteses; evaluation for malignancy.\n\nPROCEDURE IN DETAIL:\nAfter informed consent was reviewed, the patient was brought to the endoscopy suite and placed in the right lateral decubitus position. General anesthesia was induced and the airway secured with a 7.5 endotracheal tube. Lung isolation was achieved with selective mainstem intubation during the thoracoscopic portion.\nBedside ultrasound confirmed a moderate free-flowing left pleural effusion and identified a safe entry site in the 6th intercostal space at the midaxillary line. After sterile prep and local anesthetic infiltration, a 1.5 cm incision was made and a trocar was introduced into the pleural space with immediate return of straw-colored fluid. Approximately 1400 mL of fluid were drained.\nA 10 mm thoracoscope was inserted. Systematic inspection revealed diffuse fine nodularity over the parietal pleura, most prominent along the diaphragmatic and posterior costal pleura. Multiple pleural biopsies were obtained from abnormal-appearing areas using biopsy forceps. Hemostasis was achieved with gentle cautery and tamponade.\nAt the conclusion of the procedure, a 24 Fr chest tube was placed through the existing incision and secured to suction at -20 cm H2O. No talc pleurodesis or tunneled pleural catheter was performed.\n\nCOMPLICATIONS: None.\nESTIMATED BLOOD LOSS: ~30 mL\nDISPOSITION: Admitted to the medical ward with chest tube to wall suction.\nIMPRESSION/PLAN: Successful medical thoracoscopy with pleural biopsies and drainage of a recurrent left exudative effusion. Await pleural pathology and cytology. Daily chest tube output monitoring and CXR in the morning.",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies (left hemithorax)\nPatient: Linda Jacobs, 63-year-old female with recurrent left exudative pleural effusion.\nAnesthesia: General anesthesia with single-lumen endotracheal tube.\nIndication: Recurrent symptomatic left pleural effusion with two prior nondiagnostic thoracenteses; evaluation for malignancy.\n\nPROCEDURE IN DETAIL:\nAfter informed consent was reviewed, the patient was brought to the endoscopy suite and placed in the right lateral decubitus position. General anesthesia was induced and the airway secured with a 7.5 endotracheal tube. Lung isolation was achieved with selective mainstem intubation during the thoracoscopic portion.\nBedside ultrasound confirmed a moderate free-flowing left pleural effusion and identified a safe entry site in the 6th intercostal space at the midaxillary line. After sterile prep and local anesthetic infiltration, a 1.5 cm incision was made and a trocar was introduced into the pleural space with immediate return of straw-colored fluid. Approximately 1400 mL of fluid were drained.\nA 10 mm thoracoscope was inserted. Systematic inspection revealed diffuse fine nodularity over the parietal pleura, most prominent along the diaphragmatic and posterior costal pleura. Multiple pleural biopsies were obtained from abnormal-appearing areas using biopsy forceps. Hemostasis was achieved with gentle cautery and tamponade.\nAt the conclusion of the procedure, a 24 Fr chest tube was placed through the existing incision and secured to suction at -20 cm H2O. No talc pleurodesis or tunneled pleural catheter was performed.\n\nCOMPLICATIONS: None.\nESTIMATED BLOOD LOSS: ~30 mL\nDISPOSITION: Admitted to the medical ward with chest tube to wall suction.\nIMPRESSION/PLAN: Successful medical thoracoscopy with pleural biopsies and drainage of a recurrent left exudative effusion. Await pleural pathology and cytology. Daily chest tube output monitoring and CXR in the morning.",
+      "patient_mrn": "IP2026004",
+      "procedure_date": "2025-02-18",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Endoscopy suite",
+      "patient_age": 63,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "Apixaban held 72 hours preprocedure",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Recurrent undiagnosed left exudative pleural effusion",
+      "radiographic_findings": "Moderate left pleural effusion with associated atelectasis on CT chest",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "7.5 ETT",
+      "ventilation_mode": "Single-lung ventilation during thoracoscopy, then two-lung ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -14,
+      "pleural_fluid_appearance": "Straw-colored exudative fluid",
+      "pleural_volume_drained_ml": 1400,
+      "pleural_thoracoscopy_findings": "Diffuse small nodules over parietal pleura concerning for malignancy",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and immunohistochemistry; pleural fluid for cytology and chemistry",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 30,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Suspected malignant pleural effusion; pleural biopsy results pending",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Daily CXRs and chest tube output monitoring; remove tube when lung fully expanded and drainage low; oncology consultation if malignancy confirmed",
+      "cpt_codes": [
+        32609
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CAPT Laura Simmons, MD",
+        "fellow_name": "LT James Patel, MD",
+        "assistant_name": "Heather Cole, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-08T09:48:35Z",
+        "generator": "ip_coding_review.patch_system",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "coding_summary": {
+          "primary_family": "thoracoscopy_biopsy",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32609",
+              "description": "Thoracoscopy; with biopsy of a single segment, ipsilateral",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Medical thoracoscopy with parietal pleural biopsies.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "rvus_pleural",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32609",
+              "units": 1,
+              "work_rvu": 11.25,
+              "total_facility_rvu": 16.88,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 546,
+              "notes": "Medical thoracoscopy with biopsy."
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 11.25,
+            "total_facility_rvu": 16.88,
+            "estimated_facility_payment_unadjusted": 546
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32609",
+              "summary": "Matches documentation of medical thoracoscopy with pleural biopsies."
+            }
+          ],
+          "global_comments": [
+            "Chest tube placement is inherent to the procedure and not reported separately."
+          ]
+        }
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy; with biopsy of a single segment, ipsilateral",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.88,
+        "work_rvu": 11.25,
+        "practice_expense_rvu": 4.6,
+        "malpractice_rvu": 1.03
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_generated.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32609"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing and coding_support from ip_coding_billing.v2_7."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-08T00:00:00Z",
+      "generator": "ip_coding_review.synthetic_builder",
+      "knowledge_base_version": "ip_coding_billing.v2_8",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "32609",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Thoracoscopy; with biopsy(ies) of pleura",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Medical thoracoscopy with pleural biopsies for recurrent undiagnosed effusion; no pleurodesis.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_8 physician_2025_pleural + note documentation",
+            "note_spans": [
+              "Medical thoracoscopy with multiple pleural biopsies and drainage of a left exudative effusion was performed."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_8.fee_schedules.physician_2025_pleural",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32609",
+            "description": "Thoracoscopy; with biopsy(ies) of pleura",
+            "work_rvu": 4.58,
+            "facility_rvu": null,
+            "nonfacility_rvu": null,
+            "facility_payment": 244,
+            "nonfacility_payment": null,
+            "notes": "MPFS facility payment for medical thoracoscopy with pleural biopsies.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 4.58,
+        "total_facility_rvu": null,
+        "total_nonfacility_rvu": null,
+        "estimated_professional_payment": 244,
+        "notes": "Single 32609 assigned; chest tube placement is considered inherent to thoracoscopy."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Pleural biopsies and drainage of a recurrent effusion via medical thoracoscopy map directly to 32609.",
+          "No pleurodesis, tunneled pleural catheter, or additional pleural procedures are performed, so no other pleural CPT codes are selected."
+        ]
+      }
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis (right hemithorax)\nPatient: Robert Evans, 69-year-old male with metastatic non-small cell lung cancer and recurrent right malignant pleural effusion.\nAnesthesia: General anesthesia with single-lumen endotracheal tube.\nIndication: Symptomatic recurrent right malignant pleural effusion with rapid reaccumulation despite prior thoracenteses.\n\nPROCEDURE IN DETAIL:\nThe patient was brought to the operating room, placed in the left lateral decubitus position, and intubated with an 8.0 endotracheal tube. General anesthesia was maintained with inhaled agents and intravenous opioids. Single-lung ventilation of the left lung was used during the thoracoscopic portion.\nUltrasound confirmed a large right pleural effusion and a safe entry point in the 7th intercostal space at the midaxillary line. After sterile prep and local anesthetic infiltration, a small skin incision was made and a trocar was advanced into the pleural space with return of serosanguinous fluid. Approximately 1800 mL were drained.\nA thoracoscope was inserted. Inspection revealed diffuse parietal pleural nodularity and a partially trapped right lower lobe. Targeted parietal pleural biopsies were obtained from diaphragmatic and posterior chest wall regions and hemostasis was achieved with cautery. Four grams of sterile talc were insufflated evenly over the parietal pleural surfaces to perform talc poudrage pleurodesis.\nA 24 Fr chest tube was positioned through the same incision and secured to -20 cm H2O suction. The lung re-expanded partially with residual basilar loculations consistent with trapped lung.\n\nCOMPLICATIONS: None.\nESTIMATED BLOOD LOSS: ~25 mL\nDISPOSITION: Admitted to the medical ward with chest tube to suction.\nIMPRESSION/PLAN: Medical thoracoscopy with pleural biopsies and talc pleurodesis for malignant pleural effusion. Continue chest tube suction with daily CXRs and drainage monitoring; consider tunneled pleural catheter if trapped lung persists.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis (right hemithorax)\nPatient: Robert Evans, 69-year-old male with metastatic non-small cell lung cancer and recurrent right malignant pleural effusion.\nAnesthesia: General anesthesia with single-lumen endotracheal tube.\nIndication: Symptomatic recurrent right malignant pleural effusion with rapid reaccumulation despite prior thoracenteses.\n\nPROCEDURE IN DETAIL:\nThe patient was brought to the operating room, placed in the left lateral decubitus position, and intubated with an 8.0 endotracheal tube. General anesthesia was maintained with inhaled agents and intravenous opioids. Single-lung ventilation of the left lung was used during the thoracoscopic portion.\nUltrasound confirmed a large right pleural effusion and a safe entry point in the 7th intercostal space at the midaxillary line. After sterile prep and local anesthetic infiltration, a small skin incision was made and a trocar was advanced into the pleural space with return of serosanguinous fluid. Approximately 1800 mL were drained.\nA thoracoscope was inserted. Inspection revealed diffuse parietal pleural nodularity and a partially trapped right lower lobe. Targeted parietal pleural biopsies were obtained from diaphragmatic and posterior chest wall regions and hemostasis was achieved with cautery. Four grams of sterile talc were insufflated evenly over the parietal pleural surfaces to perform talc poudrage pleurodesis.\nA 24 Fr chest tube was positioned through the same incision and secured to -20 cm H2O suction. The lung re-expanded partially with residual basilar loculations consistent with trapped lung.\n\nCOMPLICATIONS: None.\nESTIMATED BLOOD LOSS: ~25 mL\nDISPOSITION: Admitted to the medical ward with chest tube to suction.\nIMPRESSION/PLAN: Medical thoracoscopy with pleural biopsies and talc pleurodesis for malignant pleural effusion. Continue chest tube suction with daily CXRs and drainage monitoring; consider tunneled pleural catheter if trapped lung persists.",
+      "patient_mrn": "IP2026005",
+      "procedure_date": "2025-01-29",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 69,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Recurrent right malignant pleural effusion requiring definitive pleurodesis",
+      "radiographic_findings": "Large right pleural effusion with compressive atelectasis and probable trapped lung",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "8.0 ETT",
+      "ventilation_mode": "Single-lung ventilation during thoracoscopy, then two-lung ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "pleural_procedure_type": "Medical thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "7th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -8,
+      "pleural_fluid_appearance": "Serosanguinous malignant-appearing fluid",
+      "pleural_volume_drained_ml": 1800,
+      "pleural_thoracoscopy_findings": "Diffuse parietal pleural nodularity with partially trapped lung",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc poudrage",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and immunohistochemistry; pleural fluid cytology",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 25,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Malignant pleural disease in setting of metastatic lung cancer",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Daily CXR and chest tube output monitoring; consider tunneled pleural catheter if lung remains trapped or drainage persists",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "LCDR Hannah Blake, MD",
+        "fellow_name": null,
+        "assistant_name": "Victor Lane, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-08T09:48:35Z",
+        "generator": "ip_coding_review.patch_system",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "coding_summary": {
+          "primary_family": "thoracoscopy_surgical",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32650",
+              "description": "Thoracoscopy, surgical; with pleurodesis (includes preparation)",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Medical thoracoscopy with talc poudrage pleurodesis.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "rvus_pleural",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32650",
+              "units": 1,
+              "work_rvu": 10.0,
+              "total_facility_rvu": 15.0,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 485,
+              "notes": "Thoracoscopy with pleurodesis."
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 10.0,
+            "total_facility_rvu": 15.0,
+            "estimated_facility_payment_unadjusted": 485
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32650",
+              "summary": "Matches documentation of talc poudrage via thoracoscopy."
+            }
+          ],
+          "global_comments": [
+            "Diagnostic biopsy (32609) is generally bundled into surgical thoracoscopy (32650) when performed on the same side."
+          ]
+        }
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis (includes preparation)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_generated.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32650"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing and coding_support from ip_coding_billing.v2_7."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-08T00:00:00Z",
+      "generator": "ip_coding_review.synthetic_builder",
+      "knowledge_base_version": "ip_coding_billing.v2_8",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "32650",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Thoracoscopy pleurodesis",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Medical thoracoscopy with talc pleurodesis for malignant pleural effusion.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_8 physician_2025_pleural + note documentation",
+            "note_spans": [
+              "Talc poudrage pleurodesis was performed throughout the right pleural cavity at the time of medical thoracoscopy."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_8.fee_schedules.physician_2025_pleural",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy pleurodesis",
+            "work_rvu": 10.0,
+            "facility_rvu": 15.0,
+            "nonfacility_rvu": 0.0,
+            "facility_payment": 485,
+            "nonfacility_payment": 0,
+            "notes": "Thoracoscopic pleurodesis RVUs and payment per 2025 pleural fee schedule.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 10.0,
+        "total_facility_rvu": 15.0,
+        "total_nonfacility_rvu": 0.0,
+        "estimated_professional_payment": 485,
+        "notes": "No separate thoracentesis or chest tube CPT modeled because they are bundled into 32650."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Thoracoscopic talc pleurodesis with pleural biopsies meets criteria for 32650.",
+          "Standalone thoracentesis or chest tube codes would duplicate work included in thoracoscopic pleurodesis."
+        ]
+      }
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis and tunneled pleural catheter placement (right hemithorax)\nPatient: Maria Alvarez, 71-year-old female with metastatic breast cancer and recurrent right malignant pleural effusion with trapped lung.\nAnesthesia: General anesthesia with single-lumen endotracheal tube.\nIndication: Rapidly recurrent symptomatic malignant pleural effusion with incomplete lung expansion after prior thoracenteses.\n\nPROCEDURE IN DETAIL:\nThe patient was brought to the operating room, placed in the left lateral decubitus position, and intubated with a 7.5 endotracheal tube. General anesthesia was induced and maintained with inhaled agents and IV opioids. Single-lung ventilation of the left lung was used during the thoracoscopic portion.\nUltrasound identified a moderate right pleural effusion and a safe entry site in the 6th intercostal space at the midaxillary line. After sterile prep and local anesthetic, a trocar was inserted with return of serosanguinous fluid. Approximately 2000 mL were drained.\nThoracoscopic inspection showed diffuse parietal pleural tumor implants and a trapped right lower lobe. Multiple biopsies of parietal pleura were obtained. Four grams of sterile talc were insufflated evenly for poudrage pleurodesis. Because of trapped lung and anticipated ongoing fluid production, a tunneled indwelling pleural catheter was placed through a separate anterior chest wall tunnel and exited at the right anterior axillary line. The catheter was secured, connected to suction, and then capped.\n\nCOMPLICATIONS: None.\nESTIMATED BLOOD LOSS: ~25 mL\nDISPOSITION: Discharged to home later the same day with tunneled pleural catheter in place and home health arranged for drainage.\nIMPRESSION/PLAN: Medical thoracoscopy with pleural biopsies, talc pleurodesis, and tunneled pleural catheter placement for recurrent malignant effusion with trapped lung. Initiate home drainage three times weekly, adjust based on output. Oncology follow-up as scheduled.",
+    "cpt_codes": [
+      32650,
+      32550
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis and tunneled pleural catheter placement (right hemithorax)\nPatient: Maria Alvarez, 71-year-old female with metastatic breast cancer and recurrent right malignant pleural effusion with trapped lung.\nAnesthesia: General anesthesia with single-lumen endotracheal tube.\nIndication: Rapidly recurrent symptomatic malignant pleural effusion with incomplete lung expansion after prior thoracenteses.\n\nPROCEDURE IN DETAIL:\nThe patient was brought to the operating room, placed in the left lateral decubitus position, and intubated with a 7.5 endotracheal tube. General anesthesia was induced and maintained with inhaled agents and IV opioids. Single-lung ventilation of the left lung was used during the thoracoscopic portion.\nUltrasound identified a moderate right pleural effusion and a safe entry site in the 6th intercostal space at the midaxillary line. After sterile prep and local anesthetic, a trocar was inserted with return of serosanguinous fluid. Approximately 2000 mL were drained.\nThoracoscopic inspection showed diffuse parietal pleural tumor implants and a trapped right lower lobe. Multiple biopsies of parietal pleura were obtained. Four grams of sterile talc were insufflated evenly for poudrage pleurodesis. Because of trapped lung and anticipated ongoing fluid production, a tunneled indwelling pleural catheter was placed through a separate anterior chest wall tunnel and exited at the right anterior axillary line. The catheter was secured, connected to suction, and then capped.\n\nCOMPLICATIONS: None.\nESTIMATED BLOOD LOSS: ~25 mL\nDISPOSITION: Discharged to home later the same day with tunneled pleural catheter in place and home health arranged for drainage.\nIMPRESSION/PLAN: Medical thoracoscopy with pleural biopsies, talc pleurodesis, and tunneled pleural catheter placement for recurrent malignant effusion with trapped lung. Initiate home drainage three times weekly, adjust based on output. Oncology follow-up as scheduled.",
+      "patient_mrn": "IP2026006",
+      "procedure_date": "2025-03-21",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 71,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Recurrent right malignant pleural effusion with trapped lung requiring thoracoscopy, pleurodesis, and tunneled pleural catheter",
+      "radiographic_findings": "Right pleural effusion with underlying trapped lung and pleural nodularity on CT",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "7.5 ETT",
+      "ventilation_mode": "Single-lung ventilation during thoracoscopy, then two-lung ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "pleural_procedure_type": "Medical thoracoscopy with tunneled pleural catheter",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "6th midaxillary",
+      "pleural_opening_pressure_measured": true,
+      "pleural_opening_pressure_cmh2o": -6,
+      "pleural_fluid_appearance": "Serosanguinous malignant-appearing fluid",
+      "pleural_volume_drained_ml": 2000,
+      "pleural_thoracoscopy_findings": "Multiple parietal pleural tumor implants with trapped lung",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc poudrage",
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Pleural biopsies for histology and receptor testing; pleural fluid for cytology",
+      "bronch_immediate_complications": null,
+      "ebl_ml": 25,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Tunneled pleural catheter",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Malignant pleural disease in metastatic breast cancer",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": "Home pleural catheter drainage three times weekly with visiting nurse support; oncology and IP clinic follow-up in 2 weeks",
+      "cpt_codes": [
+        32650,
+        32550
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Natalie Owens, MD",
+        "fellow_name": "LT Priya Shah, MD",
+        "assistant_name": "Pauline Fox, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-08T09:48:35Z",
+        "generator": "ip_coding_review.patch_system",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "coding_summary": {
+          "primary_family": "thoracoscopy_surgical",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32650",
+              "description": "Thoracoscopy, surgical; with pleurodesis (includes preparation)",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Medical thoracoscopy with talc pleurodesis.",
+              "is_add_on": false,
+              "source": "model"
+            },
+            {
+              "sequence": 2,
+              "code": "32550",
+              "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Separate insertion of tunneled pleural catheter.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "rvus_pleural",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32650",
+              "units": 1,
+              "work_rvu": 10.0,
+              "total_facility_rvu": 15.0,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 485,
+              "notes": "Thoracoscopy with pleurodesis."
+            },
+            {
+              "code": "32550",
+              "units": 1,
+              "work_rvu": 3.92,
+              "total_facility_rvu": 5.88,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 190,
+              "notes": "Tunneled pleural catheter insertion."
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 13.92,
+            "total_facility_rvu": 20.88,
+            "estimated_facility_payment_unadjusted": 675
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32650",
+              "summary": "Primary procedure: Thoracoscopic pleurodesis."
+            },
+            {
+              "code": "32550",
+              "summary": "Distinct procedure: Tunneled catheter placement (separate from thoracoscopy)."
+            }
+          ],
+          "global_comments": [
+            "Combined reporting of 32650 and 32550 is appropriate as they represent distinct work (catheter vs scope/pleurodesis)."
+          ]
+        }
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis (includes preparation)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 20.88,
+        "work_rvu": 13.92,
+        "practice_expense_rvu": 5.69,
+        "malpractice_rvu": 1.27
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_generated.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32650",
+        "32550"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing and coding_support from ip_coding_billing.v2_7."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-08T00:00:00Z",
+      "generator": "ip_coding_review.synthetic_builder",
+      "knowledge_base_version": "ip_coding_billing.v2_8",
+      "coding_summary": {
+        "primary_family": null,
+        "lines": [
+          {
+            "code": "32650",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Thoracoscopy pleurodesis",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "Medical thoracoscopy with talc poudrage pleurodesis for malignant effusion.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_8 physician_2025_pleural + note documentation",
+            "note_spans": [
+              "Talc poudrage pleurodesis was performed after thoracoscopic inspection and biopsies."
+            ]
+          },
+          {
+            "code": "32550",
+            "modifier": null,
+            "modifiers": null,
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "units": 1,
+            "role": "supporting",
+            "selection_status": "selected",
+            "selection_reason": "Indwelling tunneled pleural catheter was placed for outpatient drainage in the same session.",
+            "family_key": null,
+            "is_add_on": false,
+            "source": "ip_coding_billing.v2_8 physician_2025_pleural + note documentation",
+            "note_spans": [
+              "A tunneled pleural catheter was placed via a subcutaneous tunnel and left in place for long-term drainage."
+            ]
+          }
+        ]
+      },
+      "financial_analysis": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "Medicare Physician Fee Schedule",
+        "rvu_source": "ip_coding_billing.v2_8.fee_schedules.physician_2025_pleural",
+        "setting": "facility",
+        "per_code": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy pleurodesis",
+            "work_rvu": 10.0,
+            "facility_rvu": 15.0,
+            "nonfacility_rvu": 0.0,
+            "facility_payment": 485,
+            "nonfacility_payment": 0,
+            "notes": "Thoracoscopic pleurodesis values from the 2025 pleural fee schedule.",
+            "is_add_on": false
+          },
+          {
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "work_rvu": 3.92,
+            "facility_rvu": 5.88,
+            "nonfacility_rvu": 0.0,
+            "facility_payment": 190,
+            "nonfacility_payment": 0,
+            "notes": "Tunneled pleural catheter insertion values from the 2025 pleural fee schedule.",
+            "is_add_on": false
+          }
+        ],
+        "total_work_rvu": 13.92,
+        "total_facility_rvu": 20.88,
+        "total_nonfacility_rvu": 0.0,
+        "estimated_professional_payment": 675,
+        "notes": "Combined professional RVUs and payments for 32650 and 32550 in a single session."
+      },
+      "coding_rationale": {
+        "bullets": [
+          "Thoracoscopy with talc pleurodesis and tunneled pleural catheter insertion are both explicitly documented.",
+          "Bundling rules in the 2025 pleural coding guidance allow separate reporting of 32550 with thoracoscopic pleurodesis (32650)."
+        ]
+      }
+    }
+  }
+]

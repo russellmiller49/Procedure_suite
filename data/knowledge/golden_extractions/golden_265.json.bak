@@ -1,0 +1,1788 @@
+[
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-MWA-01\nDate of procedure: 2025-02-03\nAttending: Dr. A. Rivera\nAssistants: Pulmonary fellow; bronchoscopy RN; radiology technologist.\n\nPre-procedure diagnosis: 18 mm PET-avid right lower lobe posterior basal segment nodule, presumed clinical stage IA non\u2013small cell lung cancer in a nonsurgical candidate.\nPost-procedure diagnosis: Same.\nIndication: Parenchyma-sparing local control of early lung cancer via transbronchial microwave ablation.\nAnesthesia: General anesthesia, 8.5 mm ETT, ASA III.\n\nProcedures:\n1. Electromagnetic navigation bronchoscopy (Illumisite platform) with cone-beam CT guidance in a hybrid OR.\n2. Radial EBUS confirmation of peripheral lesion position.\n3. Transbronchial microwave ablation of right lower lobe nodule using Emprint catheter.\n\nDescription: After induction and intubation, a therapeutic bronchoscope was advanced to the right lower lobe. The planning CT was registered on the Illumisite platform; a pathway was generated to the posterior basal segment nodule. Following peripheral navigation, digital tomosynthesis corrected CT-to-body divergence and demonstrated a bullseye view of the lesion. A CrossCountry needle was advanced into the lesion, and an extended working channel (EWC) was positioned 1 cm beyond the nodule center. Radial EBUS showed a concentric hypoechoic lesion. An Emprint microwave catheter was advanced until the ablation center was aligned with the lesion. A single 10-minute ablation using the standard lung protocol was delivered. Post-ablation cone-beam CT demonstrated a concentric ground-glass ablation zone with a minimal circumferential margin of approximately 6 mm. There was no significant airway bleeding and the segmental bronchi remained patent.\n\nEstimated blood loss: <5 mL.\nComplications: None immediate. No pneumothorax on fluoroscopy.\nDisposition: Extubated in OR; observed for 6 hours in PACU; discharged home with plan for CT chest at 3 months.",
+    "cpt_codes": [
+      "31641",
+      "+31627",
+      "+31654"
+    ],
+    "registry_entry": {
+      "patient_mrn": "TBAMWA01",
+      "procedure_date": "2025-02-03",
+      "procedure_start_time": "10:15",
+      "procedure_end_time": "11:25",
+      "procedure_duration_minutes": 70,
+      "providers": {
+        "attending_name": "A. Rivera, MD",
+        "attending_npi": null,
+        "fellow_name": "J. Patel, MD",
+        "fellow_pgy_level": 6,
+        "assistant_name": "K. Lewis, RN",
+        "assistant_role": "RN",
+        "trainee_present": true,
+        "rose_present": false
+      },
+      "patient_demographics": {
+        "age_years": 72,
+        "gender": "Male",
+        "height_cm": 175,
+        "weight_kg": 78,
+        "bmi": 25.5,
+        "smoking_status": "Former",
+        "pack_years": 40
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "Right lower lobe 18 mm PET-avid nodule in high-risk surgical candidate, treated with transbronchial microwave ablation.",
+        "indication_category": "Ablation",
+        "radiographic_findings": "18 mm solid RLL posterior basal segment nodule, peripheral, with positive bronchus sign.",
+        "lesion_size_mm": 18,
+        "lesion_location": "RLL posterior basal segment (RB10)",
+        "pet_avidity": true,
+        "suv_max": 4.8,
+        "bronchus_sign": "Positive"
+      },
+      "procedure_setting": {
+        "location": "Hybrid OR",
+        "patient_position": "Supine",
+        "airway_type": "ETT",
+        "ett_size": 8.5
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": [
+          "Propofol",
+          "Fentanyl",
+          "Rocuronium",
+          "Sevoflurane"
+        ],
+        "paralytic_used": true,
+        "reversal_given": false,
+        "reversal_agent": null,
+        "reversal_agent_other": null,
+        "start_time": "10:00",
+        "end_time": "11:35",
+        "intraservice_minutes": 95
+      },
+      "equipment": {
+        "bronchoscope_type": "Therapeutic",
+        "bronchoscope_model": "Olympus BF-1TQ180",
+        "bronchoscope_outer_diameter_mm": 6.0,
+        "fluoroscopy_used": true,
+        "fluoroscopy_time_seconds": 230,
+        "fluoroscopy_dose_mgy": 35,
+        "navigation_platform": "ILLUMISITE",
+        "cbct_used": true,
+        "augmented_fluoroscopy": true
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Normal central airways; no endobronchial lesions; peripheral target not visible endobronchially.",
+          "airway_abnormalities": [
+            "Normal"
+          ]
+        },
+        "navigational_bronchoscopy": {
+          "performed": true,
+          "target_reached": true,
+          "divergence_mm": 4.0,
+          "tool_in_lesion_confirmed": true,
+          "confirmation_method": "CBCT",
+          "sampling_tools_used": [
+            "Needle"
+          ],
+          "number_of_biopsies": 0
+        },
+        "radial_ebus": {
+          "performed": true,
+          "probe_position": "Concentric",
+          "guide_sheath_used": true,
+          "guide_sheath_size": "Large (2.6mm)"
+        },
+        "peripheral_ablation": {
+          "performed": true,
+          "modality": "Microwave",
+          "device_name": "Emprint ablation catheter",
+          "device_manufacturer": "Medtronic",
+          "target_location": "RLL posterior basal segment (RB10)",
+          "lesion_size_mm": 18,
+          "ablation_duration_seconds": 600,
+          "power_setting": 100,
+          "number_of_ablations": 1,
+          "margin_assessed": true,
+          "margin_assessment_method": "CBCT",
+          "immediate_imaging_result": "Concentric ground-glass ablation zone with approximately 6 mm minimal circumferential margin and no pleural disruption."
+        }
+      },
+      "pleural_procedures": null,
+      "specimens": {
+        "specimens_collected": [],
+        "rose_result": "Not performed",
+        "specimen_adequacy": "Pending"
+      },
+      "complications": {
+        "any_complication": false,
+        "complication_list": [],
+        "bleeding": {
+          "occurred": false,
+          "severity": null,
+          "intervention_required": null
+        },
+        "pneumothorax": {
+          "occurred": false,
+          "size": null,
+          "intervention": null
+        },
+        "respiratory": {
+          "hypoxia_occurred": false,
+          "lowest_spo2": 94,
+          "supplemental_o2_increased": false,
+          "intubation_required": false,
+          "respiratory_failure": false
+        },
+        "other_complication_details": null
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "procedure_aborted_reason": null,
+        "preliminary_diagnosis": "Presumed stage IA NSCLC treated with transbronchial microwave ablation.",
+        "preliminary_staging": "cT1bN0M0",
+        "disposition": "Outpatient discharge",
+        "discharge_time": "17:00",
+        "follow_up_imaging_ordered": true,
+        "follow_up_imaging_type": "CT chest with contrast",
+        "follow_up_plan_text": "CT chest at 3 months to confirm complete ablation; multidisciplinary tumor board review.",
+        "follow_up_actions": [
+          {
+            "action_type": "CT chest with contrast",
+            "timeframe": "3 months",
+            "notes": "Assess ablation zone size and margin."
+          },
+          {
+            "action_type": "Tumor board",
+            "timeframe": "3-4 months",
+            "notes": "Discuss imaging response and systemic therapy options."
+          }
+        ]
+      },
+      "pathology_results": null,
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "C34.31",
+          "Z87.891"
+        ],
+        "total_rvu": 13.58,
+        "work_rvu": 8.92,
+        "practice_expense_rvu": 3.71,
+        "malpractice_rvu": 0.95
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T08:00:00Z",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            },
+            {
+              "sequence": 3,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": "+31627",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": "+31654",
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 8.92,
+            "total_facility_rvu": 13.58,
+            "estimated_facility_payment_unadjusted": 439
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Primary therapeutic service for microwave ablation of lung tumor."
+            },
+            {
+              "code": "+31627",
+              "summary": "Image-guided navigation (Illumisite) required to reach peripheral target."
+            },
+            {
+              "code": "+31654",
+              "summary": "Radial EBUS used for peripheral lesion confirmation."
+            }
+          ],
+          "global_comments": [
+            "Appropriate use of destruction code 31641 for microwave ablation.",
+            "Add-on codes +31627 and +31654 correctly supported by documentation."
+          ]
+        }
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "synthetic.v1",
+        "generated_at": "2025-12-07T00:00:00Z"
+      }
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-MWA-02\nDate of procedure: 2025-01-22\nAttending: Dr. L. Chen\n\nPre-procedure diagnosis: 12 mm part-solid right upper lobe apical nodule in a patient with prior contralateral lobectomy.\nIndication: Local treatment of presumed metachronous early adenocarcinoma using robotic transbronchial microwave ablation.\n\nProcedures:\n1. Robotic-assisted navigation bronchoscopy (Ion platform) with mobile C-arm cone-beam CT (Cios Spin).\n2. Radial EBUS confirmation of peripheral lesion.\n3. Transbronchial microwave ablation (Emprint catheter) of RUL apical nodule.\n\nDescription: The Ion catheter was navigated to the apical segment using shape-sensing guidance. Cone-beam CT confirmed the catheter tip centered within the lesion. After confirmation with radial EBUS (concentric view), an Emprint microwave catheter was advanced via the Ion EWC. Two overlapping ablations (8 and 6 minutes) were delivered without pleural disruption. Post-ablation CBCT demonstrated a fused ablation zone with an estimated minimal margin of 7 mm. The patient remained hemodynamically stable.\n\nComplications: None.\nDisposition: Extubated in OR; admitted overnight given single-lung status; plan CT at 3 months.",
+    "cpt_codes": [
+      "31641",
+      "+31627",
+      "+31654"
+    ],
+    "registry_entry": {
+      "patient_mrn": "TBAMWA02",
+      "procedure_date": "2025-01-22",
+      "procedure_start_time": "09:30",
+      "procedure_end_time": "10:40",
+      "procedure_duration_minutes": 70,
+      "providers": {
+        "attending_name": "L. Chen, MD",
+        "attending_npi": null,
+        "fellow_name": "M. Ortiz, MD",
+        "fellow_pgy_level": 5,
+        "assistant_name": "S. Walker, RN",
+        "assistant_role": "RN",
+        "trainee_present": true,
+        "rose_present": false
+      },
+      "patient_demographics": {
+        "age_years": 68,
+        "gender": "Female",
+        "height_cm": 160,
+        "weight_kg": 60,
+        "bmi": 23.4,
+        "smoking_status": "Former",
+        "pack_years": 30
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "12 mm RUL apical part-solid nodule in a patient with prior LUL lobectomy, treated with transbronchial microwave ablation.",
+        "indication_category": "Ablation",
+        "radiographic_findings": "12 mm part-solid apical nodule with positive bronchus sign; no nodal disease on PET.",
+        "lesion_size_mm": 12,
+        "lesion_location": "RUL apical segment",
+        "pet_avidity": true,
+        "suv_max": 3.1,
+        "bronchus_sign": "Positive"
+      },
+      "procedure_setting": {
+        "location": "Hybrid OR",
+        "patient_position": "Supine",
+        "airway_type": "ETT",
+        "ett_size": 8.0
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": [
+          "Propofol",
+          "Fentanyl",
+          "Rocuronium",
+          "Sevoflurane"
+        ],
+        "paralytic_used": true,
+        "reversal_given": false,
+        "reversal_agent": null,
+        "reversal_agent_other": null,
+        "start_time": "09:15",
+        "end_time": "10:55",
+        "intraservice_minutes": 100
+      },
+      "equipment": {
+        "bronchoscope_type": "Therapeutic",
+        "bronchoscope_model": "Ion robotic bronchoscope",
+        "bronchoscope_outer_diameter_mm": 3.5,
+        "fluoroscopy_used": true,
+        "fluoroscopy_time_seconds": 260,
+        "fluoroscopy_dose_mgy": 40,
+        "navigation_platform": "Ion",
+        "cbct_used": true,
+        "augmented_fluoroscopy": true
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Tracheobronchial tree without visible endobronchial tumor.",
+          "airway_abnormalities": [
+            "Normal"
+          ]
+        },
+        "navigational_bronchoscopy": {
+          "performed": true,
+          "target_reached": true,
+          "divergence_mm": 3.0,
+          "tool_in_lesion_confirmed": true,
+          "confirmation_method": "CBCT",
+          "sampling_tools_used": [],
+          "number_of_biopsies": 0
+        },
+        "radial_ebus": {
+          "performed": true,
+          "probe_position": "Concentric",
+          "guide_sheath_used": true,
+          "guide_sheath_size": "Small (1.95mm)"
+        },
+        "peripheral_ablation": {
+          "performed": true,
+          "modality": "Microwave",
+          "device_name": "Emprint ablation catheter",
+          "device_manufacturer": "Medtronic",
+          "target_location": "RUL apical segment",
+          "lesion_size_mm": 12,
+          "ablation_duration_seconds": 840,
+          "power_setting": 100,
+          "number_of_ablations": 2,
+          "margin_assessed": true,
+          "margin_assessment_method": "CBCT",
+          "immediate_imaging_result": "Elongated ground-glass ablation zone with approximately 7 mm minimal margin circumferentially."
+        }
+      },
+      "pleural_procedures": null,
+      "specimens": {
+        "specimens_collected": [],
+        "rose_result": "Not performed",
+        "specimen_adequacy": "Pending"
+      },
+      "complications": {
+        "any_complication": false,
+        "complication_list": [],
+        "bleeding": {
+          "occurred": false,
+          "severity": null,
+          "intervention_required": null
+        },
+        "pneumothorax": {
+          "occurred": false,
+          "size": null,
+          "intervention": null
+        },
+        "respiratory": {
+          "hypoxia_occurred": false,
+          "lowest_spo2": 95,
+          "supplemental_o2_increased": false,
+          "intubation_required": false,
+          "respiratory_failure": false
+        },
+        "other_complication_details": null
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "procedure_aborted_reason": null,
+        "preliminary_diagnosis": "Presumed early adenocarcinoma treated with transbronchial microwave ablation.",
+        "preliminary_staging": "cT1aN0M0",
+        "disposition": "Observation unit",
+        "discharge_time": "18:00",
+        "follow_up_imaging_ordered": true,
+        "follow_up_imaging_type": "CT chest with contrast",
+        "follow_up_plan_text": "CT chest at 3 months; earlier imaging if symptoms develop.",
+        "follow_up_actions": [
+          {
+            "action_type": "CT chest with contrast",
+            "timeframe": "3 months",
+            "notes": null
+          },
+          {
+            "action_type": "Clinic visit - Oncology",
+            "timeframe": "3 months",
+            "notes": "Review imaging and consider systemic therapy."
+          }
+        ]
+      },
+      "pathology_results": null,
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "C34.11",
+          "Z90.2"
+        ],
+        "total_rvu": 13.58,
+        "work_rvu": 8.92,
+        "practice_expense_rvu": 3.71,
+        "malpractice_rvu": 0.95
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T08:00:00Z",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            },
+            {
+              "sequence": 3,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": "+31627",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": "+31654",
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 8.92,
+            "total_facility_rvu": 13.58,
+            "estimated_facility_payment_unadjusted": 439
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Primary code for robotic microwave ablation."
+            },
+            {
+              "code": "+31627",
+              "summary": "Navigation (Ion platform) add-on."
+            },
+            {
+              "code": "+31654",
+              "summary": "Radial EBUS add-on for peripheral confirmation."
+            }
+          ],
+          "global_comments": [
+            "Standard coding for robotic-assisted peripheral ablation."
+          ]
+        }
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "synthetic.v1",
+        "generated_at": "2025-12-07T00:00:00Z"
+      }
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-MWA-03\nDate of procedure: 2025-03-05\nAttending: Dr. N. Patel\n\nPre-procedure diagnosis: 24 mm solid right lower lobe superior segment nodule, PET-avid, medically inoperable patient.\nIndication: Transbronchial microwave ablation of a peripheral lung cancer.\n\nProcedures:\n1. Electromagnetic navigation bronchoscopy (Illumisite) with CBCT confirmation.\n2. Radial EBUS localization.\n3. Two overlapping transbronchial microwave ablations of RLL superior segment nodule.\n\nDescription: Navigation was performed to the superior segment with tomosynthesis-based CT-to-body divergence correction. After needle puncture and EWC placement, radial EBUS showed an eccentric lesion. The Emprint catheter was advanced and two sequential 10- and 7-minute ablations were delivered with slight catheter retraction between cycles. CBCT showed an elongated ablation zone spanning the 2.4 cm lesion with an approximate minimal margin of 5\u20136 mm. A small apical pneumothorax was noted on CBCT and managed conservatively.\n\nComplications: Small asymptomatic right pneumothorax; observation only.\nDisposition: Overnight admission with serial CXRs; discharge on post-procedure day 1.",
+    "cpt_codes": [
+      "31641",
+      "+31627",
+      "+31654"
+    ],
+    "registry_entry": {
+      "patient_mrn": "TBAMWA03",
+      "procedure_date": "2025-03-05",
+      "procedure_start_time": "13:10",
+      "procedure_end_time": "14:35",
+      "procedure_duration_minutes": 85,
+      "providers": {
+        "attending_name": "N. Patel, MD",
+        "attending_npi": null,
+        "fellow_name": "K. Huang, MD",
+        "fellow_pgy_level": 7,
+        "assistant_name": "R. Lopez, RT",
+        "assistant_role": "RT",
+        "trainee_present": true,
+        "rose_present": false
+      },
+      "patient_demographics": {
+        "age_years": 75,
+        "gender": "Male",
+        "height_cm": 178,
+        "weight_kg": 82,
+        "bmi": 25.9,
+        "smoking_status": "Former",
+        "pack_years": 50
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "Right lower lobe superior segment 24 mm malignant nodule in a nonsurgical candidate undergoing transbronchial microwave ablation.",
+        "indication_category": "Ablation",
+        "radiographic_findings": "24 mm solid RLL superior segment lesion; no mediastinal adenopathy.",
+        "lesion_size_mm": 24,
+        "lesion_location": "RLL superior segment",
+        "pet_avidity": true,
+        "suv_max": 6.5,
+        "bronchus_sign": "Positive"
+      },
+      "procedure_setting": {
+        "location": "Hybrid OR",
+        "patient_position": "Supine",
+        "airway_type": "ETT",
+        "ett_size": 8.0
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": [
+          "Propofol",
+          "Fentanyl",
+          "Rocuronium",
+          "Sevoflurane"
+        ],
+        "paralytic_used": true,
+        "reversal_given": false,
+        "reversal_agent": null,
+        "reversal_agent_other": null,
+        "start_time": "12:55",
+        "end_time": "14:50",
+        "intraservice_minutes": 115
+      },
+      "equipment": {
+        "bronchoscope_type": "Therapeutic",
+        "bronchoscope_model": "Olympus BF-1TQ190",
+        "bronchoscope_outer_diameter_mm": 6.0,
+        "fluoroscopy_used": true,
+        "fluoroscopy_time_seconds": 320,
+        "fluoroscopy_dose_mgy": 48,
+        "navigation_platform": "ILLUMISITE",
+        "cbct_used": true,
+        "augmented_fluoroscopy": true
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Normal central airway mucosa; no endobronchial tumor.",
+          "airway_abnormalities": [
+            "Normal"
+          ]
+        },
+        "navigational_bronchoscopy": {
+          "performed": true,
+          "target_reached": true,
+          "divergence_mm": 5.0,
+          "tool_in_lesion_confirmed": true,
+          "confirmation_method": "CBCT",
+          "sampling_tools_used": [],
+          "number_of_biopsies": 0
+        },
+        "radial_ebus": {
+          "performed": true,
+          "probe_position": "Eccentric",
+          "guide_sheath_used": true,
+          "guide_sheath_size": "Large (2.6mm)"
+        },
+        "peripheral_ablation": {
+          "performed": true,
+          "modality": "Microwave",
+          "device_name": "Emprint ablation catheter",
+          "device_manufacturer": "Medtronic",
+          "target_location": "RLL superior segment",
+          "lesion_size_mm": 24,
+          "ablation_duration_seconds": 1020,
+          "power_setting": 100,
+          "number_of_ablations": 2,
+          "margin_assessed": true,
+          "margin_assessment_method": "CBCT",
+          "immediate_imaging_result": "Fusiform ablation zone fully covering the lesion with an estimated 5\u20136 mm minimal margin; small right apical pneumothorax present."
+        }
+      },
+      "pleural_procedures": null,
+      "specimens": {
+        "specimens_collected": [],
+        "rose_result": "Not performed",
+        "specimen_adequacy": "Pending"
+      },
+      "complications": {
+        "any_complication": true,
+        "complication_list": [
+          "Pneumothorax"
+        ],
+        "bleeding": {
+          "occurred": false,
+          "severity": null,
+          "intervention_required": null
+        },
+        "pneumothorax": {
+          "occurred": true,
+          "size": "Small (<2cm)",
+          "intervention": [
+            "Observation"
+          ]
+        },
+        "respiratory": {
+          "hypoxia_occurred": false,
+          "lowest_spo2": 93,
+          "supplemental_o2_increased": true,
+          "intubation_required": false,
+          "respiratory_failure": false
+        },
+        "other_complication_details": null
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "procedure_aborted_reason": null,
+        "preliminary_diagnosis": "RLL cancer treated with double transbronchial microwave ablation.",
+        "preliminary_staging": "cT1cN0M0",
+        "disposition": "Floor admission",
+        "discharge_time": null,
+        "follow_up_imaging_ordered": true,
+        "follow_up_imaging_type": "CXR and CT chest",
+        "follow_up_plan_text": "Serial CXRs overnight; CT chest 6\u20138 weeks to assess ablation zone and pneumothorax resolution.",
+        "follow_up_actions": [
+          {
+            "action_type": "CXR",
+            "timeframe": "Same day and next morning",
+            "notes": "Monitor small pneumothorax."
+          },
+          {
+            "action_type": "CT chest",
+            "timeframe": "6-8 weeks",
+            "notes": null
+          }
+        ]
+      },
+      "pathology_results": null,
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "C34.31",
+          "J95.811"
+        ],
+        "total_rvu": 13.58,
+        "work_rvu": 8.92,
+        "practice_expense_rvu": 3.71,
+        "malpractice_rvu": 0.95
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T08:00:00Z",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            },
+            {
+              "sequence": 3,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": "+31627",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": "+31654",
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 8.92,
+            "total_facility_rvu": 13.58,
+            "estimated_facility_payment_unadjusted": 439
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Primary code for microwave ablation. Multiple overlapping ablations of the same tumor are reported as a single unit."
+            },
+            {
+              "code": "+31627",
+              "summary": "Navigation add-on."
+            },
+            {
+              "code": "+31654",
+              "summary": "Radial EBUS add-on."
+            }
+          ],
+          "global_comments": [
+            "Multiple ablations of a single lesion do not justify multiple units or modifiers."
+          ]
+        }
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "synthetic.v1",
+        "generated_at": "2025-12-07T00:00:00Z"
+      }
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-MWA-04\nDate of procedure: 2025-02-11\nAttending: Dr. S. Moreno\n\nPre-procedure diagnosis: 16 mm peripheral left lower lobe lateral basal segment nodule with high probability of malignancy.\nIndication: Same-session diagnosis and local control via transbronchial biopsy and microwave ablation.\n\nProcedures:\n1. Electromagnetic navigation bronchoscopy with radial EBUS.\n2. Transbronchial forceps biopsies for frozen section.\n3. Transbronchial microwave ablation of LLL nodule.\n\nDescription: Navigation and radial EBUS confirmed a concentric lesion. Two forceps biopsies were obtained via the EWC and submitted for frozen section, which showed invasive adenocarcinoma. An Emprint catheter was then advanced and a 10-minute ablation was delivered. CBCT showed a well-centered ablation zone with an estimated minimal margin of 5 mm, although interpretation was partially limited by perilesional hemorrhage.\n\nComplications: Mild self-limited bleeding at biopsy site; no pneumothorax.\nDisposition: Overnight observation; planned CT in 3 months; oncology referral.",
+    "cpt_codes": [
+      "31641",
+      "+31627",
+      "+31654"
+    ],
+    "registry_entry": {
+      "patient_mrn": "TBAMWA04",
+      "procedure_date": "2025-02-11",
+      "procedure_start_time": "08:45",
+      "procedure_end_time": "10:05",
+      "procedure_duration_minutes": 80,
+      "providers": {
+        "attending_name": "S. Moreno, MD",
+        "attending_npi": null,
+        "fellow_name": "D. Shah, MD",
+        "fellow_pgy_level": 6,
+        "assistant_name": "A. Price, RN",
+        "assistant_role": "RN",
+        "trainee_present": true,
+        "rose_present": true
+      },
+      "patient_demographics": {
+        "age_years": 69,
+        "gender": "Female",
+        "height_cm": 158,
+        "weight_kg": 64,
+        "bmi": 25.6,
+        "smoking_status": "Former",
+        "pack_years": 20
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "LLL 16 mm peripheral nodule, high pre-test probability of malignancy, treated with same-session biopsy and microwave ablation.",
+        "indication_category": "Ablation",
+        "radiographic_findings": "16 mm peripheral LLL lateral basal nodule, ground-glass with solid core.",
+        "lesion_size_mm": 16,
+        "lesion_location": "LLL lateral basal segment",
+        "pet_avidity": true,
+        "suv_max": 3.9,
+        "bronchus_sign": "Positive"
+      },
+      "procedure_setting": {
+        "location": "Hybrid OR",
+        "patient_position": "Supine",
+        "airway_type": "ETT",
+        "ett_size": 8.0
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": [
+          "Propofol",
+          "Fentanyl",
+          "Rocuronium",
+          "Sevoflurane"
+        ],
+        "paralytic_used": true,
+        "reversal_given": false,
+        "reversal_agent": null,
+        "reversal_agent_other": null,
+        "start_time": "08:30",
+        "end_time": "10:20",
+        "intraservice_minutes": 110
+      },
+      "equipment": {
+        "bronchoscope_type": "Therapeutic",
+        "bronchoscope_model": "Olympus BF-1TQ180",
+        "bronchoscope_outer_diameter_mm": 6.0,
+        "fluoroscopy_used": true,
+        "fluoroscopy_time_seconds": 280,
+        "fluoroscopy_dose_mgy": 42,
+        "navigation_platform": "superDimension",
+        "cbct_used": true,
+        "augmented_fluoroscopy": false
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "No endobronchial tumor; airways otherwise normal.",
+          "airway_abnormalities": [
+            "Normal"
+          ]
+        },
+        "navigational_bronchoscopy": {
+          "performed": true,
+          "target_reached": true,
+          "divergence_mm": 4.0,
+          "tool_in_lesion_confirmed": true,
+          "confirmation_method": "Radial EBUS",
+          "sampling_tools_used": [
+            "Forceps"
+          ],
+          "number_of_biopsies": 2
+        },
+        "radial_ebus": {
+          "performed": true,
+          "probe_position": "Concentric",
+          "guide_sheath_used": true,
+          "guide_sheath_size": "Large (2.6mm)"
+        },
+        "transbronchial_biopsy": {
+          "performed": true,
+          "locations": [
+            "LLL lateral basal segment"
+          ],
+          "number_of_samples": 2,
+          "forceps_type": "Standard",
+          "cryoprobe_size_mm": null
+        },
+        "peripheral_ablation": {
+          "performed": true,
+          "modality": "Microwave",
+          "device_name": "Emprint ablation catheter",
+          "device_manufacturer": "Medtronic",
+          "target_location": "LLL lateral basal segment",
+          "lesion_size_mm": 16,
+          "ablation_duration_seconds": 600,
+          "power_setting": 100,
+          "number_of_ablations": 1,
+          "margin_assessed": true,
+          "margin_assessment_method": "CBCT",
+          "immediate_imaging_result": "Ground-glass ablation zone encompassing biopsy tract with approximate 5 mm minimal margin; some superimposed hemorrhage."
+        }
+      },
+      "pleural_procedures": null,
+      "specimens": {
+        "specimens_collected": [
+          {
+            "type": "Transbronchial biopsy",
+            "location": "LLL lateral basal segment",
+            "container_count": 1,
+            "sent_for": [
+              "Histology",
+              "Molecular/NGS",
+              "PD-L1"
+            ]
+          }
+        ],
+        "rose_result": "Adequate - malignant",
+        "specimen_adequacy": "Adequate"
+      },
+      "complications": {
+        "any_complication": true,
+        "complication_list": [
+          "Bleeding - Mild"
+        ],
+        "bleeding": {
+          "occurred": true,
+          "severity": "Mild (<50mL)",
+          "intervention_required": [
+            "Cold saline"
+          ]
+        },
+        "pneumothorax": {
+          "occurred": false,
+          "size": null,
+          "intervention": null
+        },
+        "respiratory": {
+          "hypoxia_occurred": false,
+          "lowest_spo2": 94,
+          "supplemental_o2_increased": false,
+          "intubation_required": false,
+          "respiratory_failure": false
+        },
+        "other_complication_details": null
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "procedure_aborted_reason": null,
+        "preliminary_diagnosis": "Invasive lung adenocarcinoma treated with microwave ablation.",
+        "preliminary_staging": "cT1bN0M0",
+        "disposition": "Observation unit",
+        "discharge_time": "16:30",
+        "follow_up_imaging_ordered": true,
+        "follow_up_imaging_type": "CT chest with contrast",
+        "follow_up_plan_text": "Oncology follow-up with CT chest at 3 months; consider adjuvant therapy based on final pathology.",
+        "follow_up_actions": [
+          {
+            "action_type": "Clinic visit - Oncology",
+            "timeframe": "2 weeks",
+            "notes": "Review frozen and final pathology."
+          },
+          {
+            "action_type": "CT chest with contrast",
+            "timeframe": "3 months",
+            "notes": null
+          }
+        ]
+      },
+      "pathology_results": null,
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "C34.32",
+          "R91.1"
+        ],
+        "total_rvu": 13.58,
+        "work_rvu": 8.92,
+        "practice_expense_rvu": 3.71,
+        "malpractice_rvu": 0.95
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T08:00:00Z",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            },
+            {
+              "sequence": 3,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": "+31627",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": "+31654",
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 8.92,
+            "total_facility_rvu": 13.58,
+            "estimated_facility_payment_unadjusted": 439
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Primary code for microwave ablation."
+            },
+            {
+              "code": "+31627",
+              "summary": "Navigation add-on."
+            },
+            {
+              "code": "+31654",
+              "summary": "Radial EBUS add-on."
+            }
+          ],
+          "global_comments": [
+            "Forceps biopsy of the same target lesion immediately prior to destruction (31641) is bundled into the ablation procedure."
+          ]
+        }
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "synthetic.v1",
+        "generated_at": "2025-12-07T00:00:00Z"
+      }
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-MWA-05\nDate of procedure: 2025-03-01\nAttending: Dr. D. Shah\n\nPre-procedure diagnosis: 21 mm left lower lobe superior segment nodule in severe COPD with prior lung volume reduction surgery.\nIndication: Local tumor control via transbronchial microwave ablation.\n\nProcedures:\n1. ENB-guided bronchoscopy with tomosynthesis correction (Illumisite).\n2. Radial EBUS confirmation.\n3. Two transbronchial microwave ablations of LLL superior segment lesion.\n\nDescription: CT-to-body divergence was corrected with Illumisite fluoroscopic navigation. After needle puncture and EWC advancement, an Emprint catheter was positioned across the lesion. A 10-minute ablation was delivered, followed by CBCT, which showed an ablation zone with only 3 mm posterolateral margin. The catheter was repositioned slightly posterolateral and a 5-minute repeat ablation was performed. Final CBCT demonstrated a symmetric ablation zone with approximately 6 mm minimal margin. Airways remained patent.\n\nComplications: None.\nDisposition: 23-hour observation due to underlying COPD; CT at 3 months and PFTs planned.",
+    "cpt_codes": [
+      "31641",
+      "+31627",
+      "+31654"
+    ],
+    "registry_entry": {
+      "patient_mrn": "TBAMWA05",
+      "procedure_date": "2025-03-01",
+      "procedure_start_time": "11:00",
+      "procedure_end_time": "12:20",
+      "procedure_duration_minutes": 80,
+      "providers": {
+        "attending_name": "D. Shah, MD",
+        "attending_npi": null,
+        "fellow_name": "R. Gomez, MD",
+        "fellow_pgy_level": 5,
+        "assistant_name": "M. Carter, RN",
+        "assistant_role": "RN",
+        "trainee_present": true,
+        "rose_present": false
+      },
+      "patient_demographics": {
+        "age_years": 70,
+        "gender": "Male",
+        "height_cm": 170,
+        "weight_kg": 65,
+        "bmi": 22.5,
+        "smoking_status": "Former",
+        "pack_years": 55
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "21 mm LLL superior segment nodule in severe COPD post-lung volume reduction, treated with transbronchial microwave ablation.",
+        "indication_category": "Ablation",
+        "radiographic_findings": "21 mm solid LLL superior segment nodule with adjacent emphysema.",
+        "lesion_size_mm": 21,
+        "lesion_location": "LLL superior segment",
+        "pet_avidity": true,
+        "suv_max": 5.3,
+        "bronchus_sign": "Positive"
+      },
+      "procedure_setting": {
+        "location": "Hybrid OR",
+        "patient_position": "Supine",
+        "airway_type": "ETT",
+        "ett_size": 8.0
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": [
+          "Propofol",
+          "Fentanyl",
+          "Rocuronium",
+          "Sevoflurane"
+        ],
+        "paralytic_used": true,
+        "reversal_given": false,
+        "reversal_agent": null,
+        "reversal_agent_other": null,
+        "start_time": "10:45",
+        "end_time": "12:35",
+        "intraservice_minutes": 110
+      },
+      "equipment": {
+        "bronchoscope_type": "Therapeutic",
+        "bronchoscope_model": "Olympus BF-1TQ190",
+        "bronchoscope_outer_diameter_mm": 6.0,
+        "fluoroscopy_used": true,
+        "fluoroscopy_time_seconds": 300,
+        "fluoroscopy_dose_mgy": 44,
+        "navigation_platform": "ILLUMISITE",
+        "cbct_used": true,
+        "augmented_fluoroscopy": true
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Dynamic airway collapse mild; no endobronchial tumor.",
+          "airway_abnormalities": [
+            "Tracheomalacia"
+          ]
+        },
+        "navigational_bronchoscopy": {
+          "performed": true,
+          "target_reached": true,
+          "divergence_mm": 4.5,
+          "tool_in_lesion_confirmed": true,
+          "confirmation_method": "CBCT",
+          "sampling_tools_used": [],
+          "number_of_biopsies": 0
+        },
+        "radial_ebus": {
+          "performed": true,
+          "probe_position": "Concentric",
+          "guide_sheath_used": true,
+          "guide_sheath_size": "Small (1.95mm)"
+        },
+        "peripheral_ablation": {
+          "performed": true,
+          "modality": "Microwave",
+          "device_name": "Emprint ablation catheter",
+          "device_manufacturer": "Medtronic",
+          "target_location": "LLL superior segment",
+          "lesion_size_mm": 21,
+          "ablation_duration_seconds": 900,
+          "power_setting": 100,
+          "number_of_ablations": 2,
+          "margin_assessed": true,
+          "margin_assessment_method": "CBCT",
+          "immediate_imaging_result": "Initial narrow posterolateral margin improved after second ablation; final CBCT showed symmetric ablation zone with ~6 mm minimal margin."
+        }
+      },
+      "pleural_procedures": null,
+      "specimens": {
+        "specimens_collected": [],
+        "rose_result": "Not performed",
+        "specimen_adequacy": "Pending"
+      },
+      "complications": {
+        "any_complication": false,
+        "complication_list": [],
+        "bleeding": {
+          "occurred": false,
+          "severity": null,
+          "intervention_required": null
+        },
+        "pneumothorax": {
+          "occurred": false,
+          "size": null,
+          "intervention": null
+        },
+        "respiratory": {
+          "hypoxia_occurred": false,
+          "lowest_spo2": 92,
+          "supplemental_o2_increased": true,
+          "intubation_required": false,
+          "respiratory_failure": false
+        },
+        "other_complication_details": null
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "procedure_aborted_reason": null,
+        "preliminary_diagnosis": "LLL malignancy treated with double microwave ablation in a COPD patient.",
+        "preliminary_staging": "cT1cN0M0",
+        "disposition": "Observation unit",
+        "discharge_time": null,
+        "follow_up_imaging_ordered": true,
+        "follow_up_imaging_type": "CT chest and PFTs",
+        "follow_up_plan_text": "CT chest and spirometry at 3 months; pulmonary rehab referral.",
+        "follow_up_actions": [
+          {
+            "action_type": "CT chest",
+            "timeframe": "3 months",
+            "notes": null
+          },
+          {
+            "action_type": "Pulmonary function tests",
+            "timeframe": "3 months",
+            "notes": "Assess impact of ablation on lung function."
+          }
+        ]
+      },
+      "pathology_results": null,
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "C34.32",
+          "J44.9",
+          "Z98.890"
+        ],
+        "total_rvu": 13.58,
+        "work_rvu": 8.92,
+        "practice_expense_rvu": 3.71,
+        "malpractice_rvu": 0.95
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T08:00:00Z",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            },
+            {
+              "sequence": 3,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": "+31627",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": "+31654",
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 8.92,
+            "total_facility_rvu": 13.58,
+            "estimated_facility_payment_unadjusted": 439
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Primary code for microwave ablation. Two ablations on single lesion = 1 unit."
+            },
+            {
+              "code": "+31627",
+              "summary": "Navigation add-on."
+            },
+            {
+              "code": "+31654",
+              "summary": "Radial EBUS add-on."
+            }
+          ],
+          "global_comments": [
+            "Appropriate use of destruction code."
+          ]
+        }
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "synthetic.v1",
+        "generated_at": "2025-12-07T00:00:00Z"
+      }
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-CRYO-01\nDate of procedure: 2025-02-05\nAttending: Dr. R. Silva\n\nPre-procedure diagnosis: 15 mm right lower lobe lateral basal segment nodule, high-risk for malignancy.\nIndication: Local treatment of peripheral lung cancer with investigational transbronchial cryoablation.\n\nProcedures:\n1. ENB-guided bronchoscopy (superDimension) with CBCT.\n2. Radial EBUS localization of peripheral lesion.\n3. Transbronchial cryoablation using a flexible cryoprobe with dual-freeze protocol.\n\nDescription: Following general anesthesia and ENB navigation, CBCT confirmed the extended working channel traversing the lesion. A novel flexible cryoprobe was advanced to the lesion center. Three freeze\u2013thaw cycles were performed (8\u20135\u20138 minutes, with passive thaw between freezes). CBCT after the final cycle showed a homogeneous low-attenuation zone with a rim of ground-glass change surrounding the lesion and an estimated minimal margin of approximately 6 mm. Airways remained patent.\n\nComplications: None immediate.\nDisposition: Overnight admission for monitoring; CT chest at 3 months.",
+    "cpt_codes": [
+      "31641",
+      "+31627",
+      "+31654"
+    ],
+    "registry_entry": {
+      "patient_mrn": "TBACRYO01",
+      "procedure_date": "2025-02-05",
+      "procedure_start_time": "08:20",
+      "procedure_end_time": "10:10",
+      "procedure_duration_minutes": 110,
+      "providers": {
+        "attending_name": "R. Silva, MD",
+        "attending_npi": null,
+        "fellow_name": "P. Nguyen, MD",
+        "fellow_pgy_level": 5,
+        "assistant_name": "J. Allen, RN",
+        "assistant_role": "RN",
+        "trainee_present": true,
+        "rose_present": false
+      },
+      "patient_demographics": {
+        "age_years": 63,
+        "gender": "Male",
+        "height_cm": 180,
+        "weight_kg": 90,
+        "bmi": 27.8,
+        "smoking_status": "Former",
+        "pack_years": 35
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "Right lower lobe 15 mm peripheral nodule treated with investigational transbronchial cryoablation.",
+        "indication_category": "Ablation",
+        "radiographic_findings": "15 mm RLL lateral basal segment nodule; no nodal disease.",
+        "lesion_size_mm": 15,
+        "lesion_location": "RLL lateral basal segment",
+        "pet_avidity": true,
+        "suv_max": 4.2,
+        "bronchus_sign": "Positive"
+      },
+      "procedure_setting": {
+        "location": "Hybrid OR",
+        "patient_position": "Supine",
+        "airway_type": "ETT",
+        "ett_size": 8.0
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": [
+          "Propofol",
+          "Fentanyl",
+          "Rocuronium",
+          "Sevoflurane"
+        ],
+        "paralytic_used": true,
+        "reversal_given": false,
+        "reversal_agent": null,
+        "reversal_agent_other": null,
+        "start_time": "08:05",
+        "end_time": "10:25",
+        "intraservice_minutes": 140
+      },
+      "equipment": {
+        "bronchoscope_type": "Therapeutic",
+        "bronchoscope_model": "Olympus BF-1TQ190",
+        "bronchoscope_outer_diameter_mm": 6.0,
+        "fluoroscopy_used": true,
+        "fluoroscopy_time_seconds": 260,
+        "fluoroscopy_dose_mgy": 38,
+        "navigation_platform": "superDimension",
+        "cbct_used": true,
+        "augmented_fluoroscopy": false
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Central airways normal.",
+          "airway_abnormalities": [
+            "Normal"
+          ]
+        },
+        "navigational_bronchoscopy": {
+          "performed": true,
+          "target_reached": true,
+          "divergence_mm": 3.5,
+          "tool_in_lesion_confirmed": true,
+          "confirmation_method": "CBCT",
+          "sampling_tools_used": [],
+          "number_of_biopsies": 0
+        },
+        "radial_ebus": {
+          "performed": true,
+          "probe_position": "Concentric",
+          "guide_sheath_used": true,
+          "guide_sheath_size": "Small (1.95mm)"
+        },
+        "peripheral_ablation": {
+          "performed": true,
+          "modality": "Cryoablation",
+          "device_name": "Flexible transbronchial cryoprobe",
+          "device_manufacturer": "Investigational",
+          "target_location": "RLL lateral basal segment",
+          "lesion_size_mm": 15,
+          "ablation_duration_seconds": 1260,
+          "power_setting": null,
+          "number_of_ablations": 3,
+          "margin_assessed": true,
+          "margin_assessment_method": "CBCT",
+          "immediate_imaging_result": "Uniform low-attenuation ablation zone surrounding the lesion with estimated 6 mm margin; no pleural disruption."
+        }
+      },
+      "pleural_procedures": null,
+      "specimens": {
+        "specimens_collected": [],
+        "rose_result": "Not performed",
+        "specimen_adequacy": "Pending"
+      },
+      "complications": {
+        "any_complication": false,
+        "complication_list": [],
+        "bleeding": {
+          "occurred": false,
+          "severity": null,
+          "intervention_required": null
+        },
+        "pneumothorax": {
+          "occurred": false,
+          "size": null,
+          "intervention": null
+        },
+        "respiratory": {
+          "hypoxia_occurred": false,
+          "lowest_spo2": 95,
+          "supplemental_o2_increased": false,
+          "intubation_required": false,
+          "respiratory_failure": false
+        },
+        "other_complication_details": null
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "procedure_aborted_reason": null,
+        "preliminary_diagnosis": "Presumed NSCLC treated with investigational cryoablation.",
+        "preliminary_staging": "cT1bN0M0",
+        "disposition": "Floor admission",
+        "discharge_time": null,
+        "follow_up_imaging_ordered": true,
+        "follow_up_imaging_type": "CT chest",
+        "follow_up_plan_text": "CT chest at 3 months to confirm ablation zone; enrollment in investigational registry.",
+        "follow_up_actions": [
+          {
+            "action_type": "CT chest",
+            "timeframe": "3 months",
+            "notes": null
+          }
+        ]
+      },
+      "pathology_results": null,
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "C34.31"
+        ],
+        "total_rvu": 13.58,
+        "work_rvu": 8.92,
+        "practice_expense_rvu": 3.71,
+        "malpractice_rvu": 0.95
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T08:00:00Z",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            },
+            {
+              "sequence": 3,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "units": 1,
+              "role": "add_on",
+              "selection_status": "selected",
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": "+31627",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": "+31654",
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 8.92,
+            "total_facility_rvu": 13.58,
+            "estimated_facility_payment_unadjusted": 439
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Cryoablation is reported using 31641 (destruction by any method)."
+            },
+            {
+              "code": "+31627",
+              "summary": "Navigation add-on."
+            },
+            {
+              "code": "+31654",
+              "summary": "Radial EBUS add-on."
+            }
+          ],
+          "global_comments": [
+            "Appropriate use of destruction code for cryoablation."
+          ]
+        }
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "synthetic.v1",
+        "generated_at": "2025-12-07T00:00:00Z"
+      }
+    }
+  }
+]

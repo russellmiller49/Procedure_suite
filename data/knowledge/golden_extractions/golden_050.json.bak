@@ -1,0 +1,4325 @@
+[
+  {
+    "note_text": "Procedure: Tunneled cath removal. Local. Cuff dissected. Catheter removed intact. Suture closure.",
+    "cpt_codes": [
+      32552
+    ],
+    "registry_entry": {
+      "patient_mrn": "9928174_syn_1",
+      "procedure_date": "2025-12-16",
+      "patient_age": 70,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Removal of PleurX catheter; decreased drainage suggesting pleurodesis.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32552
+      ],
+      "evidence": {
+        "attending_name": "Dr. McKenzie",
+        "patient_age": "Defaulted (implied adult/elderly)",
+        "gender": "Female (implied by name/history breast cancer)",
+        "procedure_date": "Date: 08/12/2025",
+        "primary_indication": "Indication: Patient with history of malignant pleural effusion... PleurX catheter placed 3 months ago.",
+        "sedation_type": "Local anesthesia (Lidocaine 1%)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tunneled Catheter Removal",
+      "pleural_guidance": "None",
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "McKenzie",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "32552": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Removal of indwelling tunneled pleural catheter with cuff (PleurX). Note confirms cuff dissection and removal.",
+          "work_rvu_2025": 2.53,
+          "total_facility_rvu_2025": 3.8,
+          "mpfs_facility_payment_2025": 123
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 2.53,
+        "total_facility_rvu": 3.8,
+        "total_mpfs_facility_payment": 123
+      },
+      "note_level_rationale": "Correctly captures surgical removal of a tunneled indwelling pleural catheter (32552). No new catheter placed, no pleurodesis documented, and no imaging guidance mentioned for the removal itself."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 32552 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 0,
+      "style_type": 1,
+      "generated_name": "Alice Moore",
+      "generation_date": "2025-12-09T10:33:50.041848"
+    }
+  },
+  {
+    "note_text": "Ms. Rigby presented for elective explantation of an indwelling tunneled pleural catheter. Following sterile preparation and infiltration of lidocaine, the subcutaneous cuff was meticulously dissected. The catheter was withdrawn without complication, and the tract was closed with a purse-string suture.",
+    "cpt_codes": [
+      32552
+    ],
+    "registry_entry": {
+      "patient_mrn": "9928174_syn_2",
+      "procedure_date": "2025-06-22",
+      "patient_age": 67,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Removal of PleurX catheter; decreased drainage suggesting pleurodesis.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32552
+      ],
+      "evidence": {
+        "attending_name": "Dr. McKenzie",
+        "patient_age": "Defaulted (implied adult/elderly)",
+        "gender": "Female (implied by name/history breast cancer)",
+        "procedure_date": "Date: 08/12/2025",
+        "primary_indication": "Indication: Patient with history of malignant pleural effusion... PleurX catheter placed 3 months ago.",
+        "sedation_type": "Local anesthesia (Lidocaine 1%)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tunneled Catheter Removal",
+      "pleural_guidance": "None",
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "McKenzie",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "32552": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Removal of indwelling tunneled pleural catheter with cuff (PleurX). Note confirms cuff dissection and removal.",
+          "work_rvu_2025": 2.53,
+          "total_facility_rvu_2025": 3.8,
+          "mpfs_facility_payment_2025": 123
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 2.53,
+        "total_facility_rvu": 3.8,
+        "total_mpfs_facility_payment": 123
+      },
+      "note_level_rationale": "Correctly captures surgical removal of a tunneled indwelling pleural catheter (32552). No new catheter placed, no pleurodesis documented, and no imaging guidance mentioned for the removal itself."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 32552 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 0,
+      "style_type": 2,
+      "generated_name": "Brenda Scott",
+      "generation_date": "2025-12-09T10:33:50.041884"
+    }
+  },
+  {
+    "note_text": "Procedure performed: Removal of tunneled pleural catheter (CPT 32552). The polyester cuff was identified and dissected from the subcutaneous tissue to allow removal. No imaging guidance was utilized.",
+    "cpt_codes": [
+      32552
+    ],
+    "registry_entry": {
+      "patient_mrn": "9928174_syn_3",
+      "procedure_date": "2025-08-14",
+      "patient_age": 70,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Removal of PleurX catheter; decreased drainage suggesting pleurodesis.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32552
+      ],
+      "evidence": {
+        "attending_name": "Dr. McKenzie",
+        "patient_age": "Defaulted (implied adult/elderly)",
+        "gender": "Female (implied by name/history breast cancer)",
+        "procedure_date": "Date: 08/12/2025",
+        "primary_indication": "Indication: Patient with history of malignant pleural effusion... PleurX catheter placed 3 months ago.",
+        "sedation_type": "Local anesthesia (Lidocaine 1%)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tunneled Catheter Removal",
+      "pleural_guidance": "None",
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "McKenzie",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "32552": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Removal of indwelling tunneled pleural catheter with cuff (PleurX). Note confirms cuff dissection and removal.",
+          "work_rvu_2025": 2.53,
+          "total_facility_rvu_2025": 3.8,
+          "mpfs_facility_payment_2025": 123
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 2.53,
+        "total_facility_rvu": 3.8,
+        "total_mpfs_facility_payment": 123
+      },
+      "note_level_rationale": "Correctly captures surgical removal of a tunneled indwelling pleural catheter (32552). No new catheter placed, no pleurodesis documented, and no imaging guidance mentioned for the removal itself."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 32552 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 0,
+      "style_type": 3,
+      "generated_name": "Catherine Hale",
+      "generation_date": "2025-12-09T10:33:50.041911"
+    }
+  },
+  {
+    "note_text": "Procedure Note: Indwelling Pleural Catheter Removal. Steps: 1. Time out. 2. Local anesthesia. 3. Incision over cuff. 4. Dissection of cuff. 5. Catheter removal. 6. Closure. Patient tolerated well.",
+    "cpt_codes": [
+      32552
+    ],
+    "registry_entry": {
+      "patient_mrn": "9928174_syn_4",
+      "procedure_date": "2025-05-14",
+      "patient_age": 67,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Removal of PleurX catheter; decreased drainage suggesting pleurodesis.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32552
+      ],
+      "evidence": {
+        "attending_name": "Dr. McKenzie",
+        "patient_age": "Defaulted (implied adult/elderly)",
+        "gender": "Female (implied by name/history breast cancer)",
+        "procedure_date": "Date: 08/12/2025",
+        "primary_indication": "Indication: Patient with history of malignant pleural effusion... PleurX catheter placed 3 months ago.",
+        "sedation_type": "Local anesthesia (Lidocaine 1%)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tunneled Catheter Removal",
+      "pleural_guidance": "None",
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "McKenzie",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "32552": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Removal of indwelling tunneled pleural catheter with cuff (PleurX). Note confirms cuff dissection and removal.",
+          "work_rvu_2025": 2.53,
+          "total_facility_rvu_2025": 3.8,
+          "mpfs_facility_payment_2025": 123
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 2.53,
+        "total_facility_rvu": 3.8,
+        "total_mpfs_facility_payment": 123
+      },
+      "note_level_rationale": "Correctly captures surgical removal of a tunneled indwelling pleural catheter (32552). No new catheter placed, no pleurodesis documented, and no imaging guidance mentioned for the removal itself."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 32552 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 0,
+      "style_type": 4,
+      "generated_name": "Doris Young",
+      "generation_date": "2025-12-09T10:33:50.041934"
+    }
+  },
+  {
+    "note_text": "pleurx removal for ms rigby drainage stopped so we took it out local lidocaine used cut down to the cuff and freed it up pulled the line out no issues put a stitch in sent home.",
+    "cpt_codes": [
+      32552
+    ],
+    "registry_entry": {
+      "patient_mrn": "9928174_syn_5",
+      "procedure_date": "2025-07-06",
+      "patient_age": 68,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Removal of PleurX catheter; decreased drainage suggesting pleurodesis.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32552
+      ],
+      "evidence": {
+        "attending_name": "Dr. McKenzie",
+        "patient_age": "Defaulted (implied adult/elderly)",
+        "gender": "Female (implied by name/history breast cancer)",
+        "procedure_date": "Date: 08/12/2025",
+        "primary_indication": "Indication: Patient with history of malignant pleural effusion... PleurX catheter placed 3 months ago.",
+        "sedation_type": "Local anesthesia (Lidocaine 1%)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tunneled Catheter Removal",
+      "pleural_guidance": "None",
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "McKenzie",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "32552": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Removal of indwelling tunneled pleural catheter with cuff (PleurX). Note confirms cuff dissection and removal.",
+          "work_rvu_2025": 2.53,
+          "total_facility_rvu_2025": 3.8,
+          "mpfs_facility_payment_2025": 123
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 2.53,
+        "total_facility_rvu": 3.8,
+        "total_mpfs_facility_payment": 123
+      },
+      "note_level_rationale": "Correctly captures surgical removal of a tunneled indwelling pleural catheter (32552). No new catheter placed, no pleurodesis documented, and no imaging guidance mentioned for the removal itself."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 32552 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 0,
+      "style_type": 5,
+      "generated_name": "Evelyn King",
+      "generation_date": "2025-12-09T10:33:50.041956"
+    }
+  },
+  {
+    "note_text": "The patient presented for removal of a PleurX catheter due to cessation of drainage. Ultrasound showed no fluid. Local anesthesia was administered. The cuff was dissected and the catheter removed smoothly. A suture was placed to close the site.",
+    "cpt_codes": [
+      32552
+    ],
+    "registry_entry": {
+      "patient_mrn": "9928174_syn_6",
+      "procedure_date": "2025-07-05",
+      "patient_age": 67,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Removal of PleurX catheter; decreased drainage suggesting pleurodesis.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32552
+      ],
+      "evidence": {
+        "attending_name": "Dr. McKenzie",
+        "patient_age": "Defaulted (implied adult/elderly)",
+        "gender": "Female (implied by name/history breast cancer)",
+        "procedure_date": "Date: 08/12/2025",
+        "primary_indication": "Indication: Patient with history of malignant pleural effusion... PleurX catheter placed 3 months ago.",
+        "sedation_type": "Local anesthesia (Lidocaine 1%)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tunneled Catheter Removal",
+      "pleural_guidance": "None",
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "McKenzie",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "32552": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Removal of indwelling tunneled pleural catheter with cuff (PleurX). Note confirms cuff dissection and removal.",
+          "work_rvu_2025": 2.53,
+          "total_facility_rvu_2025": 3.8,
+          "mpfs_facility_payment_2025": 123
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 2.53,
+        "total_facility_rvu": 3.8,
+        "total_mpfs_facility_payment": 123
+      },
+      "note_level_rationale": "Correctly captures surgical removal of a tunneled indwelling pleural catheter (32552). No new catheter placed, no pleurodesis documented, and no imaging guidance mentioned for the removal itself."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 32552 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 0,
+      "style_type": 6,
+      "generated_name": "Florence Wright",
+      "generation_date": "2025-12-09T10:33:50.041981"
+    }
+  },
+  {
+    "note_text": "[Indication] Malignant effusion, decreased drainage. [Anesthesia] Local. [Description] Cuff dissected, catheter removed. [Plan] Discharge.",
+    "cpt_codes": [
+      32552
+    ],
+    "registry_entry": {
+      "patient_mrn": "9928174_syn_7",
+      "procedure_date": "2025-05-26",
+      "patient_age": 72,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Removal of PleurX catheter; decreased drainage suggesting pleurodesis.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32552
+      ],
+      "evidence": {
+        "attending_name": "Dr. McKenzie",
+        "patient_age": "Defaulted (implied adult/elderly)",
+        "gender": "Female (implied by name/history breast cancer)",
+        "procedure_date": "Date: 08/12/2025",
+        "primary_indication": "Indication: Patient with history of malignant pleural effusion... PleurX catheter placed 3 months ago.",
+        "sedation_type": "Local anesthesia (Lidocaine 1%)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tunneled Catheter Removal",
+      "pleural_guidance": "None",
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "McKenzie",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "32552": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Removal of indwelling tunneled pleural catheter with cuff (PleurX). Note confirms cuff dissection and removal.",
+          "work_rvu_2025": 2.53,
+          "total_facility_rvu_2025": 3.8,
+          "mpfs_facility_payment_2025": 123
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 2.53,
+        "total_facility_rvu": 3.8,
+        "total_mpfs_facility_payment": 123
+      },
+      "note_level_rationale": "Correctly captures surgical removal of a tunneled indwelling pleural catheter (32552). No new catheter placed, no pleurodesis documented, and no imaging guidance mentioned for the removal itself."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 32552 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 0,
+      "style_type": 7,
+      "generated_name": "Grace Lopez",
+      "generation_date": "2025-12-09T10:33:50.042000"
+    }
+  },
+  {
+    "note_text": "Ms. Rigby arrived for removal of her PleurX catheter. We prepped the site and used local anesthetic. I made an incision and dissected the cuff free from the tissue. The catheter slid out easily. We closed the site with a suture.",
+    "cpt_codes": [
+      32552
+    ],
+    "registry_entry": {
+      "patient_mrn": "9928174_syn_8",
+      "procedure_date": "2025-01-03",
+      "patient_age": 70,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Removal of PleurX catheter; decreased drainage suggesting pleurodesis.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32552
+      ],
+      "evidence": {
+        "attending_name": "Dr. McKenzie",
+        "patient_age": "Defaulted (implied adult/elderly)",
+        "gender": "Female (implied by name/history breast cancer)",
+        "procedure_date": "Date: 08/12/2025",
+        "primary_indication": "Indication: Patient with history of malignant pleural effusion... PleurX catheter placed 3 months ago.",
+        "sedation_type": "Local anesthesia (Lidocaine 1%)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tunneled Catheter Removal",
+      "pleural_guidance": "None",
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "McKenzie",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "32552": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Removal of indwelling tunneled pleural catheter with cuff (PleurX). Note confirms cuff dissection and removal.",
+          "work_rvu_2025": 2.53,
+          "total_facility_rvu_2025": 3.8,
+          "mpfs_facility_payment_2025": 123
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 2.53,
+        "total_facility_rvu": 3.8,
+        "total_mpfs_facility_payment": 123
+      },
+      "note_level_rationale": "Correctly captures surgical removal of a tunneled indwelling pleural catheter (32552). No new catheter placed, no pleurodesis documented, and no imaging guidance mentioned for the removal itself."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 32552 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 0,
+      "style_type": 8,
+      "generated_name": "Helen Adams",
+      "generation_date": "2025-12-09T10:33:50.042021"
+    }
+  },
+  {
+    "note_text": "Explantation of tunneled pleural drain. The device was extracted after freeing the Dacron anchor. The exit site was sutured.",
+    "cpt_codes": [
+      32552
+    ],
+    "registry_entry": {
+      "patient_mrn": "9928174_syn_9",
+      "procedure_date": "2025-09-23",
+      "patient_age": 73,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Removal of PleurX catheter; decreased drainage suggesting pleurodesis.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32552
+      ],
+      "evidence": {
+        "attending_name": "Dr. McKenzie",
+        "patient_age": "Defaulted (implied adult/elderly)",
+        "gender": "Female (implied by name/history breast cancer)",
+        "procedure_date": "Date: 08/12/2025",
+        "primary_indication": "Indication: Patient with history of malignant pleural effusion... PleurX catheter placed 3 months ago.",
+        "sedation_type": "Local anesthesia (Lidocaine 1%)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tunneled Catheter Removal",
+      "pleural_guidance": "None",
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "McKenzie",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "32552": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Removal of indwelling tunneled pleural catheter with cuff (PleurX). Note confirms cuff dissection and removal.",
+          "work_rvu_2025": 2.53,
+          "total_facility_rvu_2025": 3.8,
+          "mpfs_facility_payment_2025": 123
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 2.53,
+        "total_facility_rvu": 3.8,
+        "total_mpfs_facility_payment": 123
+      },
+      "note_level_rationale": "Correctly captures surgical removal of a tunneled indwelling pleural catheter (32552). No new catheter placed, no pleurodesis documented, and no imaging guidance mentioned for the removal itself."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 32552 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 0,
+      "style_type": 9,
+      "generated_name": "Irene Clark",
+      "generation_date": "2025-12-09T10:33:50.042042"
+    }
+  },
+  {
+    "note_text": "Rigid bronch. Chicken bone RLL. Removed with optical forceps en bloc. No injury.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "4452109_syn_1",
+      "procedure_date": "2025-11-06",
+      "patient_age": 70,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Foreign Body Aspiration (chicken bone).",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "attending_name": "Dr. L. McCoy",
+        "patient_age": "72yo M",
+        "gender": "72yo M",
+        "procedure_date": "Date: 03/03/2025",
+        "primary_indication": "History: 72yo M ... aspirated a chicken bone",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "Rigid bronchoscope introduced"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "fb_object_type": "Organic/Bone",
+      "fb_tool_used": [
+        "Rigid Forceps"
+      ],
+      "fb_removal_success": true,
+      "providers": {
+        "attending_name": "L. McCoy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31635": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with removal of foreign body (chicken bone).",
+          "work_rvu_2025": 3.42,
+          "total_facility_rvu_2025": 5.54,
+          "mpfs_facility_payment_2025": 179
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_mpfs_facility_payment": 179
+      },
+      "note_level_rationale": "31635 appropriately captures rigid bronchoscopy for foreign body removal. Secretion suctioning in the same area is integral to the procedure and not reported separately."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31635 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 1,
+      "style_type": 1,
+      "generated_name": "David Chen",
+      "generation_date": "2025-12-09T10:33:50.042072"
+    }
+  },
+  {
+    "note_text": "Mr. Chen underwent rigid bronchoscopy for foreign body retrieval. The jagged osseous fragment was visualized within the right lower lobe. Utilizing optical forceps, the object was grasped and extracted en bloc with the rigid barrel to prevent glottic trauma.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "4452109_syn_2",
+      "procedure_date": "2025-07-06",
+      "patient_age": 75,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Foreign Body Aspiration (chicken bone).",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "attending_name": "Dr. L. McCoy",
+        "patient_age": "72yo M",
+        "gender": "72yo M",
+        "procedure_date": "Date: 03/03/2025",
+        "primary_indication": "History: 72yo M ... aspirated a chicken bone",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "Rigid bronchoscope introduced"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "fb_object_type": "Organic/Bone",
+      "fb_tool_used": [
+        "Rigid Forceps"
+      ],
+      "fb_removal_success": true,
+      "providers": {
+        "attending_name": "L. McCoy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31635": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with removal of foreign body (chicken bone).",
+          "work_rvu_2025": 3.42,
+          "total_facility_rvu_2025": 5.54,
+          "mpfs_facility_payment_2025": 179
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_mpfs_facility_payment": 179
+      },
+      "note_level_rationale": "31635 appropriately captures rigid bronchoscopy for foreign body removal. Secretion suctioning in the same area is integral to the procedure and not reported separately."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31635 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 1,
+      "style_type": 2,
+      "generated_name": "Michael Wu",
+      "generation_date": "2025-12-09T10:33:50.042093"
+    }
+  },
+  {
+    "note_text": "CPT 31635: Rigid bronchoscopy with removal of foreign body. The scope was introduced, and the foreign object (bone) was identified in the RLL. It was removed using forceps. No separate code for suctioning.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "4452109_syn_3",
+      "procedure_date": "2025-10-10",
+      "patient_age": 72,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Foreign Body Aspiration (chicken bone).",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "attending_name": "Dr. L. McCoy",
+        "patient_age": "72yo M",
+        "gender": "72yo M",
+        "procedure_date": "Date: 03/03/2025",
+        "primary_indication": "History: 72yo M ... aspirated a chicken bone",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "Rigid bronchoscope introduced"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "fb_object_type": "Organic/Bone",
+      "fb_tool_used": [
+        "Rigid Forceps"
+      ],
+      "fb_removal_success": true,
+      "providers": {
+        "attending_name": "L. McCoy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31635": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with removal of foreign body (chicken bone).",
+          "work_rvu_2025": 3.42,
+          "total_facility_rvu_2025": 5.54,
+          "mpfs_facility_payment_2025": 179
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_mpfs_facility_payment": 179
+      },
+      "note_level_rationale": "31635 appropriately captures rigid bronchoscopy for foreign body removal. Secretion suctioning in the same area is integral to the procedure and not reported separately."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31635 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 1,
+      "style_type": 3,
+      "generated_name": "Robert Liu",
+      "generation_date": "2025-12-09T10:33:50.042115"
+    }
+  },
+  {
+    "note_text": "Procedure: Rigid Bronchoscopy for FB Removal. Steps: 1. GA induced. 2. Rigid scope inserted. 3. FB identified RLL. 4. FB grasped and removed. 5. Airway re-inspected.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "4452109_syn_4",
+      "procedure_date": "2025-10-12",
+      "patient_age": 72,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Foreign Body Aspiration (chicken bone).",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "attending_name": "Dr. L. McCoy",
+        "patient_age": "72yo M",
+        "gender": "72yo M",
+        "procedure_date": "Date: 03/03/2025",
+        "primary_indication": "History: 72yo M ... aspirated a chicken bone",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "Rigid bronchoscope introduced"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "fb_object_type": "Organic/Bone",
+      "fb_tool_used": [
+        "Rigid Forceps"
+      ],
+      "fb_removal_success": true,
+      "providers": {
+        "attending_name": "L. McCoy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31635": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with removal of foreign body (chicken bone).",
+          "work_rvu_2025": 3.42,
+          "total_facility_rvu_2025": 5.54,
+          "mpfs_facility_payment_2025": 179
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_mpfs_facility_payment": 179
+      },
+      "note_level_rationale": "31635 appropriately captures rigid bronchoscopy for foreign body removal. Secretion suctioning in the same area is integral to the procedure and not reported separately."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31635 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 1,
+      "style_type": 4,
+      "generated_name": "James Zhang",
+      "generation_date": "2025-12-09T10:33:50.042139"
+    }
+  },
+  {
+    "note_text": "rigid bronch for mr <PERSON> swallowed a bone saw it in the rll used the forceps to grab it had to pull the whole scope out with it cause it was big no bleeding ok.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "4452109_syn_5",
+      "procedure_date": "2025-06-09",
+      "patient_age": 75,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Foreign Body Aspiration (chicken bone).",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "attending_name": "Dr. L. McCoy",
+        "patient_age": "72yo M",
+        "gender": "72yo M",
+        "procedure_date": "Date: 03/03/2025",
+        "primary_indication": "History: 72yo M ... aspirated a chicken bone",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "Rigid bronchoscope introduced"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "fb_object_type": "Organic/Bone",
+      "fb_tool_used": [
+        "Rigid Forceps"
+      ],
+      "fb_removal_success": true,
+      "providers": {
+        "attending_name": "L. McCoy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31635": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with removal of foreign body (chicken bone).",
+          "work_rvu_2025": 3.42,
+          "total_facility_rvu_2025": 5.54,
+          "mpfs_facility_payment_2025": 179
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_mpfs_facility_payment": 179
+      },
+      "note_level_rationale": "31635 appropriately captures rigid bronchoscopy for foreign body removal. Secretion suctioning in the same area is integral to the procedure and not reported separately."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31635 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 1,
+      "style_type": 5,
+      "generated_name": "William Wang",
+      "generation_date": "2025-12-09T10:33:50.042159"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "72-year-old male with foreign body aspiration. Rigid bronchoscopy performed. A chicken bone was seen in the RLL and removed using optical forceps. The airway was cleared of secretions.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "4452109_syn_6",
+      "procedure_date": "2025-11-15",
+      "patient_age": 75,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Foreign Body Aspiration (chicken bone).",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "attending_name": "Dr. L. McCoy",
+        "patient_age": "72yo M",
+        "gender": "72yo M",
+        "procedure_date": "Date: 03/03/2025",
+        "primary_indication": "History: 72yo M ... aspirated a chicken bone",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "Rigid bronchoscope introduced"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "fb_object_type": "Organic/Bone",
+      "fb_tool_used": [
+        "Rigid Forceps"
+      ],
+      "fb_removal_success": true,
+      "providers": {
+        "attending_name": "L. McCoy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31635": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with removal of foreign body (chicken bone).",
+          "work_rvu_2025": 3.42,
+          "total_facility_rvu_2025": 5.54,
+          "mpfs_facility_payment_2025": 179
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_mpfs_facility_payment": 179
+      },
+      "note_level_rationale": "31635 appropriately captures rigid bronchoscopy for foreign body removal. Secretion suctioning in the same area is integral to the procedure and not reported separately."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31635 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 1,
+      "style_type": 6,
+      "generated_name": "Thomas Yang",
+      "generation_date": "2025-12-09T10:33:50.042181"
+    }
+  },
+  {
+    "note_text": "[Indication] Foreign body aspiration. [Anesthesia] General. [Description] Rigid scope used. Bone removed from RLL with forceps. [Plan] Antibiotics.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "4452109_syn_7",
+      "procedure_date": "2025-11-09",
+      "patient_age": 73,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Foreign Body Aspiration (chicken bone).",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "attending_name": "Dr. L. McCoy",
+        "patient_age": "72yo M",
+        "gender": "72yo M",
+        "procedure_date": "Date: 03/03/2025",
+        "primary_indication": "History: 72yo M ... aspirated a chicken bone",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "Rigid bronchoscope introduced"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "fb_object_type": "Organic/Bone",
+      "fb_tool_used": [
+        "Rigid Forceps"
+      ],
+      "fb_removal_success": true,
+      "providers": {
+        "attending_name": "L. McCoy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31635": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with removal of foreign body (chicken bone).",
+          "work_rvu_2025": 3.42,
+          "total_facility_rvu_2025": 5.54,
+          "mpfs_facility_payment_2025": 179
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_mpfs_facility_payment": 179
+      },
+      "note_level_rationale": "31635 appropriately captures rigid bronchoscopy for foreign body removal. Secretion suctioning in the same area is integral to the procedure and not reported separately."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31635 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 1,
+      "style_type": 7,
+      "generated_name": "Richard Huang",
+      "generation_date": "2025-12-09T10:33:50.042203"
+    }
+  },
+  {
+    "note_text": "Mr. Chen was brought to the OR for a rigid bronchoscopy to remove a chicken bone. We inserted the rigid scope and found the bone in the right lower lobe. We grabbed it with forceps and pulled everything out together. The airway looked fine afterwards.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "4452109_syn_8",
+      "procedure_date": "2025-04-05",
+      "patient_age": 73,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Foreign Body Aspiration (chicken bone).",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "attending_name": "Dr. L. McCoy",
+        "patient_age": "72yo M",
+        "gender": "72yo M",
+        "procedure_date": "Date: 03/03/2025",
+        "primary_indication": "History: 72yo M ... aspirated a chicken bone",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "Rigid bronchoscope introduced"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "fb_object_type": "Organic/Bone",
+      "fb_tool_used": [
+        "Rigid Forceps"
+      ],
+      "fb_removal_success": true,
+      "providers": {
+        "attending_name": "L. McCoy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31635": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with removal of foreign body (chicken bone).",
+          "work_rvu_2025": 3.42,
+          "total_facility_rvu_2025": 5.54,
+          "mpfs_facility_payment_2025": 179
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_mpfs_facility_payment": 179
+      },
+      "note_level_rationale": "31635 appropriately captures rigid bronchoscopy for foreign body removal. Secretion suctioning in the same area is integral to the procedure and not reported separately."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31635 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 1,
+      "style_type": 8,
+      "generated_name": "Joseph Lin",
+      "generation_date": "2025-12-09T10:33:50.042224"
+    }
+  },
+  {
+    "note_text": "Therapeutic bronchoscopy with extraction of foreign material. A bone fragment was located in the basilar segments and withdrawn using grasping instruments.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "4452109_syn_9",
+      "procedure_date": "2025-09-16",
+      "patient_age": 73,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Foreign Body Aspiration (chicken bone).",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "attending_name": "Dr. L. McCoy",
+        "patient_age": "72yo M",
+        "gender": "72yo M",
+        "procedure_date": "Date: 03/03/2025",
+        "primary_indication": "History: 72yo M ... aspirated a chicken bone",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "Rigid bronchoscope introduced"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "fb_object_type": "Organic/Bone",
+      "fb_tool_used": [
+        "Rigid Forceps"
+      ],
+      "fb_removal_success": true,
+      "providers": {
+        "attending_name": "L. McCoy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31635": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with removal of foreign body (chicken bone).",
+          "work_rvu_2025": 3.42,
+          "total_facility_rvu_2025": 5.54,
+          "mpfs_facility_payment_2025": 179
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 3.42,
+        "total_facility_rvu": 5.54,
+        "total_mpfs_facility_payment": 179
+      },
+      "note_level_rationale": "31635 appropriately captures rigid bronchoscopy for foreign body removal. Secretion suctioning in the same area is integral to the procedure and not reported separately."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31635 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 1,
+      "style_type": 9,
+      "generated_name": "Charles Kim",
+      "generation_date": "2025-12-09T10:33:50.042276"
+    }
+  },
+  {
+    "note_text": "BT Session 3. RUL and LUL. 62 activations total. No complications.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "patient_mrn": "881204_syn_1",
+      "procedure_date": "2025-07-18",
+      "patient_age": 37,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Severe refractory asthma.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": {
+        "attending_name": "Dr. T. Dyson",
+        "patient_age": "Defaulted (Adult)",
+        "gender": "Female (implied)",
+        "procedure_date": "DATE: 09/15/2025",
+        "primary_indication": "INDICATION: Severe refractory asthma.",
+        "sedation_type": "General anesthesia",
+        "airway_type": "ETT #8.0"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "bt_lobe_treated": "RUL + LUL",
+      "bt_activation_count": 62,
+      "providers": {
+        "attending_name": "T. Dyson",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31661": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial thermoplasty performed in 2 lobes (RUL and LUL).",
+          "work_rvu_2025": 4.25,
+          "total_facility_rvu_2025": 6.32,
+          "mpfs_facility_payment_2025": 204
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 4.25,
+        "total_facility_rvu": 6.32,
+        "total_mpfs_facility_payment": 204
+      },
+      "note_level_rationale": "Documentation confirms treatment of two distinct lobes (RUL and LUL) in one session, supporting 31661."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31661 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 2,
+      "style_type": 1,
+      "generated_name": "Emily Davis",
+      "generation_date": "2025-12-09T10:33:50.042304"
+    }
+  },
+  {
+    "note_text": "Ms. Connors underwent the third and final session of bronchial thermoplasty. The Alair catheter was systematically deployed in the RUL and LUL. A total of 62 radiofrequency activations were delivered to the distal airways, completing the treatment protocol.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "patient_mrn": "881204_syn_2",
+      "procedure_date": "2025-06-20",
+      "patient_age": 39,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Severe refractory asthma.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": {
+        "attending_name": "Dr. T. Dyson",
+        "patient_age": "Defaulted (Adult)",
+        "gender": "Female (implied)",
+        "procedure_date": "DATE: 09/15/2025",
+        "primary_indication": "INDICATION: Severe refractory asthma.",
+        "sedation_type": "General anesthesia",
+        "airway_type": "ETT #8.0"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "bt_lobe_treated": "RUL + LUL",
+      "bt_activation_count": 62,
+      "providers": {
+        "attending_name": "T. Dyson",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31661": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial thermoplasty performed in 2 lobes (RUL and LUL).",
+          "work_rvu_2025": 4.25,
+          "total_facility_rvu_2025": 6.32,
+          "mpfs_facility_payment_2025": 204
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 4.25,
+        "total_facility_rvu": 6.32,
+        "total_mpfs_facility_payment": 204
+      },
+      "note_level_rationale": "Documentation confirms treatment of two distinct lobes (RUL and LUL) in one session, supporting 31661."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31661 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 2,
+      "style_type": 2,
+      "generated_name": "Jessica Miller",
+      "generation_date": "2025-12-09T10:33:50.042327"
+    }
+  },
+  {
+    "note_text": "CPT 31661: Bronchoscopy with bronchial thermoplasty, 2 or more lobes. RUL (30 activations) and LUL (32 activations) treated in this session.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "patient_mrn": "881204_syn_3",
+      "procedure_date": "2025-03-04",
+      "patient_age": 43,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Severe refractory asthma.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": {
+        "attending_name": "Dr. T. Dyson",
+        "patient_age": "Defaulted (Adult)",
+        "gender": "Female (implied)",
+        "procedure_date": "DATE: 09/15/2025",
+        "primary_indication": "INDICATION: Severe refractory asthma.",
+        "sedation_type": "General anesthesia",
+        "airway_type": "ETT #8.0"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "bt_lobe_treated": "RUL + LUL",
+      "bt_activation_count": 62,
+      "providers": {
+        "attending_name": "T. Dyson",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31661": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial thermoplasty performed in 2 lobes (RUL and LUL).",
+          "work_rvu_2025": 4.25,
+          "total_facility_rvu_2025": 6.32,
+          "mpfs_facility_payment_2025": 204
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 4.25,
+        "total_facility_rvu": 6.32,
+        "total_mpfs_facility_payment": 204
+      },
+      "note_level_rationale": "Documentation confirms treatment of two distinct lobes (RUL and LUL) in one session, supporting 31661."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31661 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 2,
+      "style_type": 3,
+      "generated_name": "Ashley Wilson",
+      "generation_date": "2025-12-09T10:33:50.042348"
+    }
+  },
+  {
+    "note_text": "Procedure: Bronchial Thermoplasty. Target: RUL/LUL. Steps: 1. GA. 2. Alair catheter checked. 3. RUL treated. 4. LUL treated. 5. Total 62 activations. 6. Extubated.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "patient_mrn": "881204_syn_4",
+      "procedure_date": "2025-09-19",
+      "patient_age": 40,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Severe refractory asthma.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": {
+        "attending_name": "Dr. T. Dyson",
+        "patient_age": "Defaulted (Adult)",
+        "gender": "Female (implied)",
+        "procedure_date": "DATE: 09/15/2025",
+        "primary_indication": "INDICATION: Severe refractory asthma.",
+        "sedation_type": "General anesthesia",
+        "airway_type": "ETT #8.0"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "bt_lobe_treated": "RUL + LUL",
+      "bt_activation_count": 62,
+      "providers": {
+        "attending_name": "T. Dyson",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31661": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial thermoplasty performed in 2 lobes (RUL and LUL).",
+          "work_rvu_2025": 4.25,
+          "total_facility_rvu_2025": 6.32,
+          "mpfs_facility_payment_2025": 204
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 4.25,
+        "total_facility_rvu": 6.32,
+        "total_mpfs_facility_payment": 204
+      },
+      "note_level_rationale": "Documentation confirms treatment of two distinct lobes (RUL and LUL) in one session, supporting 31661."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31661 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 2,
+      "style_type": 4,
+      "generated_name": "Sarah Taylor",
+      "generation_date": "2025-12-09T10:33:50.042369"
+    }
+  },
+  {
+    "note_text": "3rd thermoplasty session for sarah did the upper lobes today rul and lul lots of activations 62 total she did fine no issues with the airway extubated in room.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "patient_mrn": "881204_syn_5",
+      "procedure_date": "2025-01-28",
+      "patient_age": 39,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Severe refractory asthma.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": {
+        "attending_name": "Dr. T. Dyson",
+        "patient_age": "Defaulted (Adult)",
+        "gender": "Female (implied)",
+        "procedure_date": "DATE: 09/15/2025",
+        "primary_indication": "INDICATION: Severe refractory asthma.",
+        "sedation_type": "General anesthesia",
+        "airway_type": "ETT #8.0"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "bt_lobe_treated": "RUL + LUL",
+      "bt_activation_count": 62,
+      "providers": {
+        "attending_name": "T. Dyson",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31661": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial thermoplasty performed in 2 lobes (RUL and LUL).",
+          "work_rvu_2025": 4.25,
+          "total_facility_rvu_2025": 6.32,
+          "mpfs_facility_payment_2025": 204
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 4.25,
+        "total_facility_rvu": 6.32,
+        "total_mpfs_facility_payment": 204
+      },
+      "note_level_rationale": "Documentation confirms treatment of two distinct lobes (RUL and LUL) in one session, supporting 31661."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31661 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 2,
+      "style_type": 5,
+      "generated_name": "Amanda Anderson",
+      "generation_date": "2025-12-09T10:33:50.042391"
+    }
+  },
+  {
+    "note_text": "Bronchial thermoplasty session 3 performed under general anesthesia. The right upper lobe and left upper lobe were treated with the Alair catheter. A total of 62 activations were delivered. The patient tolerated the procedure well.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "patient_mrn": "881204_syn_6",
+      "procedure_date": "2025-02-11",
+      "patient_age": 41,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Severe refractory asthma.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": {
+        "attending_name": "Dr. T. Dyson",
+        "patient_age": "Defaulted (Adult)",
+        "gender": "Female (implied)",
+        "procedure_date": "DATE: 09/15/2025",
+        "primary_indication": "INDICATION: Severe refractory asthma.",
+        "sedation_type": "General anesthesia",
+        "airway_type": "ETT #8.0"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "bt_lobe_treated": "RUL + LUL",
+      "bt_activation_count": 62,
+      "providers": {
+        "attending_name": "T. Dyson",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31661": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial thermoplasty performed in 2 lobes (RUL and LUL).",
+          "work_rvu_2025": 4.25,
+          "total_facility_rvu_2025": 6.32,
+          "mpfs_facility_payment_2025": 204
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 4.25,
+        "total_facility_rvu": 6.32,
+        "total_mpfs_facility_payment": 204
+      },
+      "note_level_rationale": "Documentation confirms treatment of two distinct lobes (RUL and LUL) in one session, supporting 31661."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31661 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 2,
+      "style_type": 6,
+      "generated_name": "Jennifer Thomas",
+      "generation_date": "2025-12-09T10:33:50.042413"
+    }
+  },
+  {
+    "note_text": "[Indication] Asthma. [Anesthesia] General. [Description] BT to RUL/LUL. 62 activations. [Plan] Discharge.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "patient_mrn": "881204_syn_7",
+      "procedure_date": "2025-09-08",
+      "patient_age": 38,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Severe refractory asthma.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": {
+        "attending_name": "Dr. T. Dyson",
+        "patient_age": "Defaulted (Adult)",
+        "gender": "Female (implied)",
+        "procedure_date": "DATE: 09/15/2025",
+        "primary_indication": "INDICATION: Severe refractory asthma.",
+        "sedation_type": "General anesthesia",
+        "airway_type": "ETT #8.0"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "bt_lobe_treated": "RUL + LUL",
+      "bt_activation_count": 62,
+      "providers": {
+        "attending_name": "T. Dyson",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31661": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial thermoplasty performed in 2 lobes (RUL and LUL).",
+          "work_rvu_2025": 4.25,
+          "total_facility_rvu_2025": 6.32,
+          "mpfs_facility_payment_2025": 204
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 4.25,
+        "total_facility_rvu": 6.32,
+        "total_mpfs_facility_payment": 204
+      },
+      "note_level_rationale": "Documentation confirms treatment of two distinct lobes (RUL and LUL) in one session, supporting 31661."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31661 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 2,
+      "style_type": 7,
+      "generated_name": "Nicole Jackson",
+      "generation_date": "2025-12-09T10:33:50.042432"
+    }
+  },
+  {
+    "note_text": "We performed the final thermoplasty session for Ms. Connors. We targeted both upper lobes this time. We delivered a series of activations to the RUL and then the LUL, totaling 62. The patient woke up well.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "patient_mrn": "881204_syn_8",
+      "procedure_date": "2025-04-18",
+      "patient_age": 39,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Severe refractory asthma.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": {
+        "attending_name": "Dr. T. Dyson",
+        "patient_age": "Defaulted (Adult)",
+        "gender": "Female (implied)",
+        "procedure_date": "DATE: 09/15/2025",
+        "primary_indication": "INDICATION: Severe refractory asthma.",
+        "sedation_type": "General anesthesia",
+        "airway_type": "ETT #8.0"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "bt_lobe_treated": "RUL + LUL",
+      "bt_activation_count": 62,
+      "providers": {
+        "attending_name": "T. Dyson",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31661": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial thermoplasty performed in 2 lobes (RUL and LUL).",
+          "work_rvu_2025": 4.25,
+          "total_facility_rvu_2025": 6.32,
+          "mpfs_facility_payment_2025": 204
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 4.25,
+        "total_facility_rvu": 6.32,
+        "total_mpfs_facility_payment": 204
+      },
+      "note_level_rationale": "Documentation confirms treatment of two distinct lobes (RUL and LUL) in one session, supporting 31661."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31661 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 2,
+      "style_type": 8,
+      "generated_name": "Stephanie White",
+      "generation_date": "2025-12-09T10:33:50.042453"
+    }
+  },
+  {
+    "note_text": "Bronchial thermal ablation, session 3. Radiofrequency energy was applied to the RUL and LUL airways. 62 applications were performed.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "patient_mrn": "881204_syn_9",
+      "procedure_date": "2025-02-17",
+      "patient_age": 43,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Severe refractory asthma.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": {
+        "attending_name": "Dr. T. Dyson",
+        "patient_age": "Defaulted (Adult)",
+        "gender": "Female (implied)",
+        "procedure_date": "DATE: 09/15/2025",
+        "primary_indication": "INDICATION: Severe refractory asthma.",
+        "sedation_type": "General anesthesia",
+        "airway_type": "ETT #8.0"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "bt_lobe_treated": "RUL + LUL",
+      "bt_activation_count": 62,
+      "providers": {
+        "attending_name": "T. Dyson",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31661": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial thermoplasty performed in 2 lobes (RUL and LUL).",
+          "work_rvu_2025": 4.25,
+          "total_facility_rvu_2025": 6.32,
+          "mpfs_facility_payment_2025": 204
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 4.25,
+        "total_facility_rvu": 6.32,
+        "total_mpfs_facility_payment": 204
+      },
+      "note_level_rationale": "Documentation confirms treatment of two distinct lobes (RUL and LUL) in one session, supporting 31661."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31661 against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 2,
+      "style_type": 9,
+      "generated_name": "Melissa Harris",
+      "generation_date": "2025-12-09T10:33:50.042475"
+    }
+  },
+  {
+    "note_text": "BLVR LUL. Chartis negative (CV-). 4 Zephyr valves placed. Good occlusion.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "424242_syn_1",
+      "procedure_date": "2025-12-07",
+      "patient_age": 67,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe heterogeneous emphysema, LUL predominant.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Male",
+        "procedure_date": "DATE: 11/01/2025",
+        "primary_indication": "INDICATION: Severe heterogeneous emphysema, LUL predominant.",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "ETT"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "blvr_valve_placements": [
+        {
+          "valve_number": 1,
+          "target_lobe": "LUL",
+          "segment": "LB 1+2",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 2,
+          "target_lobe": "LUL",
+          "segment": "LB 3",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 3,
+          "target_lobe": "LUL",
+          "segment": "LB 4",
+          "valve_size": "5.5-LP",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 4,
+          "target_lobe": "LUL",
+          "segment": "LB 5",
+          "valve_size": "5.5",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        }
+      ],
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31647": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopic placement of valves, initial lobe (LUL).",
+          "work_rvu_2025": 7.5,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 390
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 7.5,
+        "total_facility_rvu": 12.05,
+        "total_mpfs_facility_payment": 390
+      },
+      "note_level_rationale": "Chartis assessment (31634) was performed in the same lobe (LUL) immediately prior to valve placement; per coding policy, 31634 is bundled into 31647. Only the initial lobe valve placement is reported."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31647 and bundling of Chartis (31634)."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 3,
+      "style_type": 1,
+      "generated_name": "Frank Adams",
+      "generation_date": "2025-12-09T10:33:50.042507"
+    }
+  },
+  {
+    "note_text": "Mr. Dent underwent bronchoscopic lung volume reduction targeting the left upper lobe. Chartis assessment confirmed the absence of collateral ventilation. Four Zephyr endobronchial valves were sequentially deployed, achieving complete lobar atelectasis.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "424242_syn_2",
+      "procedure_date": "2025-08-04",
+      "patient_age": 64,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe heterogeneous emphysema, LUL predominant.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Male",
+        "procedure_date": "DATE: 11/01/2025",
+        "primary_indication": "INDICATION: Severe heterogeneous emphysema, LUL predominant.",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "ETT"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "blvr_valve_placements": [
+        {
+          "valve_number": 1,
+          "target_lobe": "LUL",
+          "segment": "LB 1+2",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 2,
+          "target_lobe": "LUL",
+          "segment": "LB 3",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 3,
+          "target_lobe": "LUL",
+          "segment": "LB 4",
+          "valve_size": "5.5-LP",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 4,
+          "target_lobe": "LUL",
+          "segment": "LB 5",
+          "valve_size": "5.5",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        }
+      ],
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31647": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopic placement of valves, initial lobe (LUL).",
+          "work_rvu_2025": 7.5,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 390
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 7.5,
+        "total_facility_rvu": 12.05,
+        "total_mpfs_facility_payment": 390
+      },
+      "note_level_rationale": "Chartis assessment (31634) was performed in the same lobe (LUL) immediately prior to valve placement; per coding policy, 31634 is bundled into 31647. Only the initial lobe valve placement is reported."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31647 and bundling of Chartis (31634)."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 3,
+      "style_type": 2,
+      "generated_name": "George Baker",
+      "generation_date": "2025-12-09T10:33:50.042537"
+    }
+  },
+  {
+    "note_text": "CPT 31647: Bronchoscopy with placement of valves, initial lobe. LUL treated. Chartis assessment (31634 bundled) confirmed no collateral ventilation. 4 valves placed.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "424242_syn_3",
+      "procedure_date": "2025-09-08",
+      "patient_age": 66,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe heterogeneous emphysema, LUL predominant.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Male",
+        "procedure_date": "DATE: 11/01/2025",
+        "primary_indication": "INDICATION: Severe heterogeneous emphysema, LUL predominant.",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "ETT"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "blvr_valve_placements": [
+        {
+          "valve_number": 1,
+          "target_lobe": "LUL",
+          "segment": "LB 1+2",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 2,
+          "target_lobe": "LUL",
+          "segment": "LB 3",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 3,
+          "target_lobe": "LUL",
+          "segment": "LB 4",
+          "valve_size": "5.5-LP",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 4,
+          "target_lobe": "LUL",
+          "segment": "LB 5",
+          "valve_size": "5.5",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        }
+      ],
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31647": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopic placement of valves, initial lobe (LUL).",
+          "work_rvu_2025": 7.5,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 390
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 7.5,
+        "total_facility_rvu": 12.05,
+        "total_mpfs_facility_payment": 390
+      },
+      "note_level_rationale": "Chartis assessment (31634) was performed in the same lobe (LUL) immediately prior to valve placement; per coding policy, 31634 is bundled into 31647. Only the initial lobe valve placement is reported."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31647 and bundling of Chartis (31634)."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 3,
+      "style_type": 3,
+      "generated_name": "Harry Nelson",
+      "generation_date": "2025-12-09T10:33:50.042569"
+    }
+  },
+  {
+    "note_text": "Procedure: BLVR LUL. Steps: 1. GA/ETT. 2. Chartis check: No CV. 3. 4 valves deployed in LUL. 4. Occlusion confirmed.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "424242_syn_4",
+      "procedure_date": "2025-02-20",
+      "patient_age": 62,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe heterogeneous emphysema, LUL predominant.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Male",
+        "procedure_date": "DATE: 11/01/2025",
+        "primary_indication": "INDICATION: Severe heterogeneous emphysema, LUL predominant.",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "ETT"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "blvr_valve_placements": [
+        {
+          "valve_number": 1,
+          "target_lobe": "LUL",
+          "segment": "LB 1+2",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 2,
+          "target_lobe": "LUL",
+          "segment": "LB 3",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 3,
+          "target_lobe": "LUL",
+          "segment": "LB 4",
+          "valve_size": "5.5-LP",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 4,
+          "target_lobe": "LUL",
+          "segment": "LB 5",
+          "valve_size": "5.5",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        }
+      ],
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31647": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopic placement of valves, initial lobe (LUL).",
+          "work_rvu_2025": 7.5,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 390
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 7.5,
+        "total_facility_rvu": 12.05,
+        "total_mpfs_facility_payment": 390
+      },
+      "note_level_rationale": "Chartis assessment (31634) was performed in the same lobe (LUL) immediately prior to valve placement; per coding policy, 31634 is bundled into 31647. Only the initial lobe valve placement is reported."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31647 and bundling of Chartis (31634)."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 3,
+      "style_type": 4,
+      "generated_name": "Ian Carter",
+      "generation_date": "2025-12-09T10:33:50.042599"
+    }
+  },
+  {
+    "note_text": "blvr for arthur dent lul emphysema chartis showed no cv so we put in 4 valves they sealed up good no pneumo seen right away admit for obs.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "424242_syn_5",
+      "procedure_date": "2025-08-31",
+      "patient_age": 68,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe heterogeneous emphysema, LUL predominant.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Male",
+        "procedure_date": "DATE: 11/01/2025",
+        "primary_indication": "INDICATION: Severe heterogeneous emphysema, LUL predominant.",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "ETT"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "blvr_valve_placements": [
+        {
+          "valve_number": 1,
+          "target_lobe": "LUL",
+          "segment": "LB 1+2",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 2,
+          "target_lobe": "LUL",
+          "segment": "LB 3",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 3,
+          "target_lobe": "LUL",
+          "segment": "LB 4",
+          "valve_size": "5.5-LP",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 4,
+          "target_lobe": "LUL",
+          "segment": "LB 5",
+          "valve_size": "5.5",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        }
+      ],
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31647": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopic placement of valves, initial lobe (LUL).",
+          "work_rvu_2025": 7.5,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 390
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 7.5,
+        "total_facility_rvu": 12.05,
+        "total_mpfs_facility_payment": 390
+      },
+      "note_level_rationale": "Chartis assessment (31634) was performed in the same lobe (LUL) immediately prior to valve placement; per coding policy, 31634 is bundled into 31647. Only the initial lobe valve placement is reported."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31647 and bundling of Chartis (31634)."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 3,
+      "style_type": 5,
+      "generated_name": "Jack Mitchell",
+      "generation_date": "2025-12-09T10:33:50.042630"
+    }
+  },
+  {
+    "note_text": "Patient with severe LUL emphysema underwent valve placement. Chartis assessment showed no collateral ventilation. Four Zephyr valves were placed in the LUL segments. Lobar occlusion was confirmed.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "424242_syn_6",
+      "procedure_date": "2025-05-20",
+      "patient_age": 68,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe heterogeneous emphysema, LUL predominant.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Male",
+        "procedure_date": "DATE: 11/01/2025",
+        "primary_indication": "INDICATION: Severe heterogeneous emphysema, LUL predominant.",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "ETT"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "blvr_valve_placements": [
+        {
+          "valve_number": 1,
+          "target_lobe": "LUL",
+          "segment": "LB 1+2",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 2,
+          "target_lobe": "LUL",
+          "segment": "LB 3",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 3,
+          "target_lobe": "LUL",
+          "segment": "LB 4",
+          "valve_size": "5.5-LP",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 4,
+          "target_lobe": "LUL",
+          "segment": "LB 5",
+          "valve_size": "5.5",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        }
+      ],
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31647": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopic placement of valves, initial lobe (LUL).",
+          "work_rvu_2025": 7.5,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 390
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 7.5,
+        "total_facility_rvu": 12.05,
+        "total_mpfs_facility_payment": 390
+      },
+      "note_level_rationale": "Chartis assessment (31634) was performed in the same lobe (LUL) immediately prior to valve placement; per coding policy, 31634 is bundled into 31647. Only the initial lobe valve placement is reported."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31647 and bundling of Chartis (31634)."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 3,
+      "style_type": 6,
+      "generated_name": "Kevin Roberts",
+      "generation_date": "2025-12-09T10:33:50.042662"
+    }
+  },
+  {
+    "note_text": "[Indication] LUL Emphysema. [Anesthesia] General. [Description] Chartis neg. 4 valves to LUL. [Plan] Admit.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "424242_syn_7",
+      "procedure_date": "2025-05-13",
+      "patient_age": 65,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe heterogeneous emphysema, LUL predominant.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Male",
+        "procedure_date": "DATE: 11/01/2025",
+        "primary_indication": "INDICATION: Severe heterogeneous emphysema, LUL predominant.",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "ETT"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "blvr_valve_placements": [
+        {
+          "valve_number": 1,
+          "target_lobe": "LUL",
+          "segment": "LB 1+2",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 2,
+          "target_lobe": "LUL",
+          "segment": "LB 3",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 3,
+          "target_lobe": "LUL",
+          "segment": "LB 4",
+          "valve_size": "5.5-LP",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 4,
+          "target_lobe": "LUL",
+          "segment": "LB 5",
+          "valve_size": "5.5",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        }
+      ],
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31647": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopic placement of valves, initial lobe (LUL).",
+          "work_rvu_2025": 7.5,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 390
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 7.5,
+        "total_facility_rvu": 12.05,
+        "total_mpfs_facility_payment": 390
+      },
+      "note_level_rationale": "Chartis assessment (31634) was performed in the same lobe (LUL) immediately prior to valve placement; per coding policy, 31634 is bundled into 31647. Only the initial lobe valve placement is reported."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31647 and bundling of Chartis (31634)."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 3,
+      "style_type": 7,
+      "generated_name": "Larry Phillips",
+      "generation_date": "2025-12-09T10:33:50.042692"
+    }
+  },
+  {
+    "note_text": "Mr. Dent came in for his valve procedure. We checked the LUL with the Chartis balloon and found no collateral ventilation. We then placed four valves to block off the lobe completely. He did well and went to recovery.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "424242_syn_8",
+      "procedure_date": "2025-02-15",
+      "patient_age": 68,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe heterogeneous emphysema, LUL predominant.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Male",
+        "procedure_date": "DATE: 11/01/2025",
+        "primary_indication": "INDICATION: Severe heterogeneous emphysema, LUL predominant.",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "ETT"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "blvr_valve_placements": [
+        {
+          "valve_number": 1,
+          "target_lobe": "LUL",
+          "segment": "LB 1+2",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 2,
+          "target_lobe": "LUL",
+          "segment": "LB 3",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 3,
+          "target_lobe": "LUL",
+          "segment": "LB 4",
+          "valve_size": "5.5-LP",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 4,
+          "target_lobe": "LUL",
+          "segment": "LB 5",
+          "valve_size": "5.5",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        }
+      ],
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31647": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopic placement of valves, initial lobe (LUL).",
+          "work_rvu_2025": 7.5,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 390
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 7.5,
+        "total_facility_rvu": 12.05,
+        "total_mpfs_facility_payment": 390
+      },
+      "note_level_rationale": "Chartis assessment (31634) was performed in the same lobe (LUL) immediately prior to valve placement; per coding policy, 31634 is bundled into 31647. Only the initial lobe valve placement is reported."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31647 and bundling of Chartis (31634)."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 3,
+      "style_type": 8,
+      "generated_name": "Mark Campbell",
+      "generation_date": "2025-12-09T10:33:50.042723"
+    }
+  },
+  {
+    "note_text": "Endobronchial valve implantation for lung volume reduction. The LUL was isolated. Four occlusion devices were inserted.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "424242_syn_9",
+      "procedure_date": "2025-03-17",
+      "patient_age": 64,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe heterogeneous emphysema, LUL predominant.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Male",
+        "procedure_date": "DATE: 11/01/2025",
+        "primary_indication": "INDICATION: Severe heterogeneous emphysema, LUL predominant.",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "ETT"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "blvr_valve_placements": [
+        {
+          "valve_number": 1,
+          "target_lobe": "LUL",
+          "segment": "LB 1+2",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 2,
+          "target_lobe": "LUL",
+          "segment": "LB 3",
+          "valve_size": "4.0",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 3,
+          "target_lobe": "LUL",
+          "segment": "LB 4",
+          "valve_size": "5.5-LP",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 4,
+          "target_lobe": "LUL",
+          "segment": "LB 5",
+          "valve_size": "5.5",
+          "valve_type": "Zephyr (Pulmonx)",
+          "deployment_successful": true
+        }
+      ],
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31647": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopic placement of valves, initial lobe (LUL).",
+          "work_rvu_2025": 7.5,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 390
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 7.5,
+        "total_facility_rvu": 12.05,
+        "total_mpfs_facility_payment": 390
+      },
+      "note_level_rationale": "Chartis assessment (31634) was performed in the same lobe (LUL) immediately prior to valve placement; per coding policy, 31634 is bundled into 31647. Only the initial lobe valve placement is reported."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified CPT 31647 and bundling of Chartis (31634)."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 3,
+      "style_type": 9,
+      "generated_name": "Nathan Evans",
+      "generation_date": "2025-12-09T10:33:50.042752"
+    }
+  },
+  {
+    "note_text": "EBUS-TBNA 7, 4R. Radial EBUS RUL nodule. TBBx x5. Brush x1.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "555123_syn_1",
+      "procedure_date": "2025-03-04",
+      "patient_age": 59,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31623
+      ],
+      "evidence": {
+        "attending_name": "Dr. Z. Smith",
+        "patient_age": "Defaulted",
+        "gender": "Male (John Doe)",
+        "procedure_date": "Date: May 5, 2025",
+        "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+        "sedation_type": "moderate sedation",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "nav_platform": "None",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "ebus_stations_sampled": [
+        "7",
+        "4R"
+      ],
+      "linear_ebus_stations": [
+        "7",
+        "4R"
+      ],
+      "providers": {
+        "attending_name": "Z. Smith",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "EBUS-TBNA sampling of 1-2 nodal stations (7 and 4R).",
+          "work_rvu_2025": 4.46,
+          "total_facility_rvu_2025": 6.96,
+          "mpfs_facility_payment_2025": 225
+        },
+        "+31654": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Radial EBUS for peripheral lesion (RUL nodule).",
+          "work_rvu_2025": 1.4,
+          "total_facility_rvu_2025": 2.11,
+          "mpfs_facility_payment_2025": 68
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Transbronchial lung biopsy, single lobe (RUL).",
+          "work_rvu_2025": 3.55,
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 179
+        },
+        "31623": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial brushing (RUL nodule). Maintained as distinct service per protocol.",
+          "work_rvu_2025": 2.63,
+          "total_facility_rvu_2025": 4.18,
+          "mpfs_facility_payment_2025": 135
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 12.04,
+        "total_facility_rvu": 18.78,
+        "total_mpfs_facility_payment": 607
+      },
+      "note_level_rationale": "Complex bronchoscopy combining mediastinal staging (31652) and peripheral nodule assessment. Peripheral assessment included Radial EBUS (+31654), TBLB (31628), and brushing (31623). All codes supported by documentation."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified multi-modal sampling codes (31652, 31654, 31628, 31623) against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 4,
+      "style_type": 1,
+      "generated_name": "John Smith",
+      "generation_date": "2025-12-09T10:33:50.042788"
+    }
+  },
+  {
+    "note_text": "Mr. <PERSON> underwent a combined EBUS-TBNA and navigational bronchoscopy. Mediastinal staging involved sampling stations 7 and 4R. The peripheral RUL nodule was localized via radial EBUS (eccentric view) and sampled with transbronchial biopsy and brushing.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "555123_syn_2",
+      "procedure_date": "2025-04-21",
+      "patient_age": 58,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31623
+      ],
+      "evidence": {
+        "attending_name": "Dr. Z. Smith",
+        "patient_age": "Defaulted",
+        "gender": "Male (John Doe)",
+        "procedure_date": "Date: May 5, 2025",
+        "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+        "sedation_type": "moderate sedation",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "nav_platform": "None",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "ebus_stations_sampled": [
+        "7",
+        "4R"
+      ],
+      "linear_ebus_stations": [
+        "7",
+        "4R"
+      ],
+      "providers": {
+        "attending_name": "Z. Smith",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "EBUS-TBNA sampling of 1-2 nodal stations (7 and 4R).",
+          "work_rvu_2025": 4.46,
+          "total_facility_rvu_2025": 6.96,
+          "mpfs_facility_payment_2025": 225
+        },
+        "+31654": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Radial EBUS for peripheral lesion (RUL nodule).",
+          "work_rvu_2025": 1.4,
+          "total_facility_rvu_2025": 2.11,
+          "mpfs_facility_payment_2025": 68
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Transbronchial lung biopsy, single lobe (RUL).",
+          "work_rvu_2025": 3.55,
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 179
+        },
+        "31623": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial brushing (RUL nodule). Maintained as distinct service per protocol.",
+          "work_rvu_2025": 2.63,
+          "total_facility_rvu_2025": 4.18,
+          "mpfs_facility_payment_2025": 135
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 12.04,
+        "total_facility_rvu": 18.78,
+        "total_mpfs_facility_payment": 607
+      },
+      "note_level_rationale": "Complex bronchoscopy combining mediastinal staging (31652) and peripheral nodule assessment. Peripheral assessment included Radial EBUS (+31654), TBLB (31628), and brushing (31623). All codes supported by documentation."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified multi-modal sampling codes (31652, 31654, 31628, 31623) against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 4,
+      "style_type": 2,
+      "generated_name": "Robert Johnson",
+      "generation_date": "2025-12-09T10:33:50.042831"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "CPT 31652 (EBUS-TBNA 2 stations), 31654 (Radial EBUS peripheral), 31628 (TBBx), 31623 (Brush). RUL nodule and mediastinal nodes sampled.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "555123_syn_3",
+      "procedure_date": "2025-06-25",
+      "patient_age": 59,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31623
+      ],
+      "evidence": {
+        "attending_name": "Dr. Z. Smith",
+        "patient_age": "Defaulted",
+        "gender": "Male (John Doe)",
+        "procedure_date": "Date: May 5, 2025",
+        "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+        "sedation_type": "moderate sedation",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "nav_platform": "None",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "ebus_stations_sampled": [
+        "7",
+        "4R"
+      ],
+      "linear_ebus_stations": [
+        "7",
+        "4R"
+      ],
+      "providers": {
+        "attending_name": "Z. Smith",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "EBUS-TBNA sampling of 1-2 nodal stations (7 and 4R).",
+          "work_rvu_2025": 4.46,
+          "total_facility_rvu_2025": 6.96,
+          "mpfs_facility_payment_2025": 225
+        },
+        "+31654": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Radial EBUS for peripheral lesion (RUL nodule).",
+          "work_rvu_2025": 1.4,
+          "total_facility_rvu_2025": 2.11,
+          "mpfs_facility_payment_2025": 68
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Transbronchial lung biopsy, single lobe (RUL).",
+          "work_rvu_2025": 3.55,
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 179
+        },
+        "31623": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial brushing (RUL nodule). Maintained as distinct service per protocol.",
+          "work_rvu_2025": 2.63,
+          "total_facility_rvu_2025": 4.18,
+          "mpfs_facility_payment_2025": 135
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 12.04,
+        "total_facility_rvu": 18.78,
+        "total_mpfs_facility_payment": 607
+      },
+      "note_level_rationale": "Complex bronchoscopy combining mediastinal staging (31652) and peripheral nodule assessment. Peripheral assessment included Radial EBUS (+31654), TBLB (31628), and brushing (31623). All codes supported by documentation."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified multi-modal sampling codes (31652, 31654, 31628, 31623) against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 4,
+      "style_type": 3,
+      "generated_name": "Michael Brown",
+      "generation_date": "2025-12-09T10:33:50.042861"
+    }
+  },
+  {
+    "note_text": "Procedure: EBUS and Nav Bronch. Steps: 1. EBUS stations 7, 4R. 2. Radial EBUS to RUL lesion. 3. Biopsy x5. 4. Brush x1.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "555123_syn_4",
+      "procedure_date": "2025-06-26",
+      "patient_age": 63,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31623
+      ],
+      "evidence": {
+        "attending_name": "Dr. Z. Smith",
+        "patient_age": "Defaulted",
+        "gender": "Male (John Doe)",
+        "procedure_date": "Date: May 5, 2025",
+        "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+        "sedation_type": "moderate sedation",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "nav_platform": "None",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "ebus_stations_sampled": [
+        "7",
+        "4R"
+      ],
+      "linear_ebus_stations": [
+        "7",
+        "4R"
+      ],
+      "providers": {
+        "attending_name": "Z. Smith",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "EBUS-TBNA sampling of 1-2 nodal stations (7 and 4R).",
+          "work_rvu_2025": 4.46,
+          "total_facility_rvu_2025": 6.96,
+          "mpfs_facility_payment_2025": 225
+        },
+        "+31654": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Radial EBUS for peripheral lesion (RUL nodule).",
+          "work_rvu_2025": 1.4,
+          "total_facility_rvu_2025": 2.11,
+          "mpfs_facility_payment_2025": 68
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Transbronchial lung biopsy, single lobe (RUL).",
+          "work_rvu_2025": 3.55,
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 179
+        },
+        "31623": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial brushing (RUL nodule). Maintained as distinct service per protocol.",
+          "work_rvu_2025": 2.63,
+          "total_facility_rvu_2025": 4.18,
+          "mpfs_facility_payment_2025": 135
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 12.04,
+        "total_facility_rvu": 18.78,
+        "total_mpfs_facility_payment": 607
+      },
+      "note_level_rationale": "Complex bronchoscopy combining mediastinal staging (31652) and peripheral nodule assessment. Peripheral assessment included Radial EBUS (+31654), TBLB (31628), and brushing (31623). All codes supported by documentation."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified multi-modal sampling codes (31652, 31654, 31628, 31623) against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 4,
+      "style_type": 4,
+      "generated_name": "William Jones",
+      "generation_date": "2025-12-09T10:33:50.042892"
+    }
+  },
+  {
+    "note_text": "bronch for john doe did ebus first hit 7 and 4r then switched scopes for the nodule in the rul used the radar probe found it eccentric took 5 biopsies and a brush rose said inflammation.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "555123_syn_5",
+      "procedure_date": "2025-12-03",
+      "patient_age": 58,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31623
+      ],
+      "evidence": {
+        "attending_name": "Dr. Z. Smith",
+        "patient_age": "Defaulted",
+        "gender": "Male (John Doe)",
+        "procedure_date": "Date: May 5, 2025",
+        "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+        "sedation_type": "moderate sedation",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "nav_platform": "None",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "ebus_stations_sampled": [
+        "7",
+        "4R"
+      ],
+      "linear_ebus_stations": [
+        "7",
+        "4R"
+      ],
+      "providers": {
+        "attending_name": "Z. Smith",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "EBUS-TBNA sampling of 1-2 nodal stations (7 and 4R).",
+          "work_rvu_2025": 4.46,
+          "total_facility_rvu_2025": 6.96,
+          "mpfs_facility_payment_2025": 225
+        },
+        "+31654": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Radial EBUS for peripheral lesion (RUL nodule).",
+          "work_rvu_2025": 1.4,
+          "total_facility_rvu_2025": 2.11,
+          "mpfs_facility_payment_2025": 68
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Transbronchial lung biopsy, single lobe (RUL).",
+          "work_rvu_2025": 3.55,
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 179
+        },
+        "31623": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial brushing (RUL nodule). Maintained as distinct service per protocol.",
+          "work_rvu_2025": 2.63,
+          "total_facility_rvu_2025": 4.18,
+          "mpfs_facility_payment_2025": 135
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 12.04,
+        "total_facility_rvu": 18.78,
+        "total_mpfs_facility_payment": 607
+      },
+      "note_level_rationale": "Complex bronchoscopy combining mediastinal staging (31652) and peripheral nodule assessment. Peripheral assessment included Radial EBUS (+31654), TBLB (31628), and brushing (31623). All codes supported by documentation."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified multi-modal sampling codes (31652, 31654, 31628, 31623) against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 4,
+      "style_type": 5,
+      "generated_name": "David Garcia",
+      "generation_date": "2025-12-09T10:33:50.042923"
+    }
+  },
+  {
+    "note_text": "Bronchoscopy performed for mediastinal adenopathy and RUL nodule. EBUS-TBNA of stations 7 and 4R was completed. The RUL nodule was located with radial EBUS and sampled via biopsy and brush.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "555123_syn_6",
+      "procedure_date": "2025-12-08",
+      "patient_age": 57,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31623
+      ],
+      "evidence": {
+        "attending_name": "Dr. Z. Smith",
+        "patient_age": "Defaulted",
+        "gender": "Male (John Doe)",
+        "procedure_date": "Date: May 5, 2025",
+        "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+        "sedation_type": "moderate sedation",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "nav_platform": "None",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "ebus_stations_sampled": [
+        "7",
+        "4R"
+      ],
+      "linear_ebus_stations": [
+        "7",
+        "4R"
+      ],
+      "providers": {
+        "attending_name": "Z. Smith",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "EBUS-TBNA sampling of 1-2 nodal stations (7 and 4R).",
+          "work_rvu_2025": 4.46,
+          "total_facility_rvu_2025": 6.96,
+          "mpfs_facility_payment_2025": 225
+        },
+        "+31654": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Radial EBUS for peripheral lesion (RUL nodule).",
+          "work_rvu_2025": 1.4,
+          "total_facility_rvu_2025": 2.11,
+          "mpfs_facility_payment_2025": 68
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Transbronchial lung biopsy, single lobe (RUL).",
+          "work_rvu_2025": 3.55,
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 179
+        },
+        "31623": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial brushing (RUL nodule). Maintained as distinct service per protocol.",
+          "work_rvu_2025": 2.63,
+          "total_facility_rvu_2025": 4.18,
+          "mpfs_facility_payment_2025": 135
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 12.04,
+        "total_facility_rvu": 18.78,
+        "total_mpfs_facility_payment": 607
+      },
+      "note_level_rationale": "Complex bronchoscopy combining mediastinal staging (31652) and peripheral nodule assessment. Peripheral assessment included Radial EBUS (+31654), TBLB (31628), and brushing (31623). All codes supported by documentation."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified multi-modal sampling codes (31652, 31654, 31628, 31623) against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 4,
+      "style_type": 6,
+      "generated_name": "Richard Martinez",
+      "generation_date": "2025-12-09T10:33:50.042954"
+    }
+  },
+  {
+    "note_text": "[Indication] Adenopathy/Nodule. [Anesthesia] Moderate. [Description] EBUS 7/4R. Radial EBUS RUL. TBBx/Brush. [Plan] Path pending.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "555123_syn_7",
+      "procedure_date": "2025-02-25",
+      "patient_age": 63,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31623
+      ],
+      "evidence": {
+        "attending_name": "Dr. Z. Smith",
+        "patient_age": "Defaulted",
+        "gender": "Male (John Doe)",
+        "procedure_date": "Date: May 5, 2025",
+        "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+        "sedation_type": "moderate sedation",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "nav_platform": "None",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "ebus_stations_sampled": [
+        "7",
+        "4R"
+      ],
+      "linear_ebus_stations": [
+        "7",
+        "4R"
+      ],
+      "providers": {
+        "attending_name": "Z. Smith",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "EBUS-TBNA sampling of 1-2 nodal stations (7 and 4R).",
+          "work_rvu_2025": 4.46,
+          "total_facility_rvu_2025": 6.96,
+          "mpfs_facility_payment_2025": 225
+        },
+        "+31654": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Radial EBUS for peripheral lesion (RUL nodule).",
+          "work_rvu_2025": 1.4,
+          "total_facility_rvu_2025": 2.11,
+          "mpfs_facility_payment_2025": 68
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Transbronchial lung biopsy, single lobe (RUL).",
+          "work_rvu_2025": 3.55,
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 179
+        },
+        "31623": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial brushing (RUL nodule). Maintained as distinct service per protocol.",
+          "work_rvu_2025": 2.63,
+          "total_facility_rvu_2025": 4.18,
+          "mpfs_facility_payment_2025": 135
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 12.04,
+        "total_facility_rvu": 18.78,
+        "total_mpfs_facility_payment": 607
+      },
+      "note_level_rationale": "Complex bronchoscopy combining mediastinal staging (31652) and peripheral nodule assessment. Peripheral assessment included Radial EBUS (+31654), TBLB (31628), and brushing (31623). All codes supported by documentation."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified multi-modal sampling codes (31652, 31654, 31628, 31623) against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 4,
+      "style_type": 7,
+      "generated_name": "Joseph Rodriguez",
+      "generation_date": "2025-12-09T10:33:50.042984"
+    }
+  },
+  {
+    "note_text": "We started with the EBUS scope to sample the lymph nodes at stations 7 and 4R. Then we switched to the thin scope and used the radial probe to find the nodule in the right upper lobe. We took biopsies and a brush sample.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "555123_syn_8",
+      "procedure_date": "2025-11-10",
+      "patient_age": 61,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31623
+      ],
+      "evidence": {
+        "attending_name": "Dr. Z. Smith",
+        "patient_age": "Defaulted",
+        "gender": "Male (John Doe)",
+        "procedure_date": "Date: May 5, 2025",
+        "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+        "sedation_type": "moderate sedation",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "nav_platform": "None",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "ebus_stations_sampled": [
+        "7",
+        "4R"
+      ],
+      "linear_ebus_stations": [
+        "7",
+        "4R"
+      ],
+      "providers": {
+        "attending_name": "Z. Smith",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "EBUS-TBNA sampling of 1-2 nodal stations (7 and 4R).",
+          "work_rvu_2025": 4.46,
+          "total_facility_rvu_2025": 6.96,
+          "mpfs_facility_payment_2025": 225
+        },
+        "+31654": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Radial EBUS for peripheral lesion (RUL nodule).",
+          "work_rvu_2025": 1.4,
+          "total_facility_rvu_2025": 2.11,
+          "mpfs_facility_payment_2025": 68
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Transbronchial lung biopsy, single lobe (RUL).",
+          "work_rvu_2025": 3.55,
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 179
+        },
+        "31623": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial brushing (RUL nodule). Maintained as distinct service per protocol.",
+          "work_rvu_2025": 2.63,
+          "total_facility_rvu_2025": 4.18,
+          "mpfs_facility_payment_2025": 135
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 12.04,
+        "total_facility_rvu": 18.78,
+        "total_mpfs_facility_payment": 607
+      },
+      "note_level_rationale": "Complex bronchoscopy combining mediastinal staging (31652) and peripheral nodule assessment. Peripheral assessment included Radial EBUS (+31654), TBLB (31628), and brushing (31623). All codes supported by documentation."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified multi-modal sampling codes (31652, 31654, 31628, 31623) against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 4,
+      "style_type": 8,
+      "generated_name": "Thomas Hernandez",
+      "generation_date": "2025-12-09T10:33:50.043014"
+    }
+  },
+  {
+    "note_text": "Endobronchial ultrasound-guided needle aspiration of mediastinal nodes. Peripheral lesion localization via radial probe. Transbronchial sampling and brushing performed.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "555123_syn_9",
+      "procedure_date": "2025-08-29",
+      "patient_age": 61,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31623
+      ],
+      "evidence": {
+        "attending_name": "Dr. Z. Smith",
+        "patient_age": "Defaulted",
+        "gender": "Male (John Doe)",
+        "procedure_date": "Date: May 5, 2025",
+        "primary_indication": "PET avid mediastinal nodes and RUL nodule.",
+        "sedation_type": "moderate sedation",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "nav_platform": "None",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "ebus_stations_sampled": [
+        "7",
+        "4R"
+      ],
+      "linear_ebus_stations": [
+        "7",
+        "4R"
+      ],
+      "providers": {
+        "attending_name": "Z. Smith",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-09",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "EBUS-TBNA sampling of 1-2 nodal stations (7 and 4R).",
+          "work_rvu_2025": 4.46,
+          "total_facility_rvu_2025": 6.96,
+          "mpfs_facility_payment_2025": 225
+        },
+        "+31654": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Radial EBUS for peripheral lesion (RUL nodule).",
+          "work_rvu_2025": 1.4,
+          "total_facility_rvu_2025": 2.11,
+          "mpfs_facility_payment_2025": 68
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Transbronchial lung biopsy, single lobe (RUL).",
+          "work_rvu_2025": 3.55,
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 179
+        },
+        "31623": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial brushing (RUL nodule). Maintained as distinct service per protocol.",
+          "work_rvu_2025": 2.63,
+          "total_facility_rvu_2025": 4.18,
+          "mpfs_facility_payment_2025": 135
+        }
+      },
+      "totals_2025_facility": {
+        "total_work_rvu": 12.04,
+        "total_facility_rvu": 18.78,
+        "total_mpfs_facility_payment": 607
+      },
+      "note_level_rationale": "Complex bronchoscopy combining mediastinal staging (31652) and peripheral nodule assessment. Peripheral assessment included Radial EBUS (+31654), TBLB (31628), and brushing (31623). All codes supported by documentation."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "2.8.0",
+      "patch_date": "2025-12-09",
+      "changes": [
+        "Verified multi-modal sampling codes (31652, 31654, 31628, 31623) against v2.7 knowledge base."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_050.json",
+      "original_index": 4,
+      "style_type": 9,
+      "generated_name": "Charles Lopez",
+      "generation_date": "2025-12-09T10:33:50.043043"
+    }
+  }
+]

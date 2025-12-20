@@ -1,0 +1,1855 @@
+[
+  {
+    "note_text": "Pt: Wilson, David || MRN: 6497801 || DOB: 4/14/1957\nDate: 08/28/2025 || Location: Cleveland Clinic, Cleveland, OH\nAttending: Dr. Sarah Williams\nFellow: LCDR Sarah Kim, MD (PGY-6)\n\nIndication: Ground glass opacity requiring biopsy\nTarget: 23mm nodule in RML\n\nPROCEDURE:\n\nAfter the successful induction of general anesthesia, a timeout was performed confirming patient identity, procedure, and laterality. An 8.0 ETT was secured in good position.\n\nInitial Airway Inspection:\nThe visualized trachea is of normal caliber with sharp carina. Airways examined to the subsegmental level bilaterally. No endobronchial lesions identified. Mild secretions cleared with suction.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPRVC\t13\t356\t10\t80\t5\t21\n\nThe patient was positioned on the bed within the electromagnetic field. Reference sensors were placed on the anterior chest wall. The Monarch robotic endoscope was introduced through the ETT.\n\nElectromagnetic registration was completed by correlating the live bronchoscopic view with the virtual airway model at multiple anatomic landmarks including the main carina, right and left mainstem bronchi, and lobar carinas. Registration accuracy confirmed with error of 3.7mm.\n\nThe device was navigated to the RML. The outer sheath was parked and locked at the ostium of the segmental airway (RB5) to provide stability. The inner scope was then telescoped distally into the sub-segmental airways to reach the target lesion in the Medial Segment of RML.\n\nRadial EBUS performed via the working channel. rEBUS view: Adjacent. Lesion confirmed at target location.\n\nCrucially, continuous visualization was maintained throughout sampling. The needle was advanced through the working channel, and needle exit from the scope tip was visually confirmed before entering the bronchial wall.\n\nTransbronchial needle aspiration performed with 21G aspiration needle under direct endoscopic and fluoroscopic guidance. 7 passes performed. Samples sent for Cytology and Cell block.\n\nBronchoalveolar lavage performed at RB5. 60mL NS instilled with 24mL return. Sent for Cell count, Culture, and Cytology.\n\nROSE Result: Suspicious for non-small cell carcinoma\n\nThe inner scope was retracted into the outer sheath. Final airway inspection performed - no significant bleeding or airway trauma. The robotic system was removed.\n\nThe patient tolerated the procedure well. No immediate complications.\n\nDISPOSITION: Recovery area, post-procedure CXR, discharge if stable.\nFollow-up: Results in 5-7 days.\n\nWilliams, MD",
+    "cpt_codes": [
+      31629,
+      31627,
+      31654,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "6497801",
+      "procedure_date": "2025-08-28",
+      "patient_age": 68,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Ground glass opacity requiring biopsy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected",
+      "cpt_codes": [
+        31629,
+        31627,
+        31654,
+        31624
+      ],
+      "institution_name": "Cleveland Clinic, Cleveland, OH",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Monarch (Auris/J&J)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 3.7,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "Fluoroscopy + continuous visualization",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "21G needle"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 23,
+      "lesion_location": "RML - Medial Segment of RML",
+      "bronch_location_lobe": "RML",
+      "bronch_location_segment": "RB5",
+      "bronch_guidance": "Monarch robotic navigation + rEBUS + continuous visualization",
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Suspicious for non-small cell carcinoma",
+      "providers": {
+        "attending_name": "Williams",
+        "fellow_name": "LCDR Sarah Kim, MD",
+        "assistant_name": "Rebecca Flores, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.529547"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31627",
+            "31654",
+            "31624"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of RML nodule (7 passes with 21G needle under continuous visualization).",
+            "31627": "Monarch robotic navigation bronchoscopy with electromagnetic registration.",
+            "31654": "Radial EBUS with adjacent view confirming target.",
+            "31624": "BAL performed at RB5."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.31,
+          "facility_total_payment": 495.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            },
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json"
+        },
+        "overall_assessment": "Monarch robotic bronchoscopy with telescoping scope/sheath technique for 23mm RML nodule. Continuous visualization maintained. rEBUS adjacent. ROSE: suspicious for non-small cell carcinoma."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.31,
+        "work_rvu": 10.05,
+        "practice_expense_rvu": 4.16,
+        "malpractice_rvu": 1.1
+      }
+    },
+    "source_file": "synthetic_monarch_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31627",
+        "31654",
+        "31624"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T11:45:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629, +31627, +31654, 31624; total_work_rvu=10.05, total_rvu=15.31 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Pt: Lee, Melissa || MRN: 219775 || DOB: 2/20/1945\nDate: 11/14/2025 || Location: Cedars-Sinai Medical Center, Los Angeles, CA\nAttending: Dr. Lisa Anderson\nFellow: Dr. James Liu (PGY-5)\n\nIndication: Multiple pulmonary nodules - dominant lesion biopsy\nTarget: 20mm nodule in LLL\n\nPROCEDURE:\n\nAfter the successful induction of general anesthesia, a timeout was performed confirming patient identity, procedure, and laterality. An 8.0 ETT was secured in good position.\n\nInitial Airway Inspection:\nThe visualized trachea is of normal caliber with sharp carina. Airways examined to the subsegmental level bilaterally. No endobronchial lesions identified. Mild secretions cleared with suction.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nVCV\t11\t294\t13\t100\t6\t21\n\nThe patient was positioned on the bed within the electromagnetic field. Reference sensors were placed on the anterior chest wall. The Monarch robotic endoscope was introduced through the ETT.\n\nElectromagnetic registration was completed by correlating the live bronchoscopic view with the virtual airway model at multiple anatomic landmarks including the main carina, right and left mainstem bronchi, and lobar carinas. Registration accuracy confirmed with error of 4.8mm.\n\nThe device was navigated to the LLL. The outer sheath was parked and locked at the ostium of the segmental airway (LB7+8) to provide stability. The inner scope was then telescoped distally into the sub-segmental airways to reach the target lesion in the Anteromedial-Basal Segment of LLL.\n\nRadial EBUS performed via the working channel. rEBUS view: Adjacent. Lesion confirmed at target location.\n\nCrucially, continuous visualization was maintained throughout sampling. The needle was advanced through the working channel, and needle exit from the scope tip was visually confirmed before entering the bronchial wall.\n\nTransbronchial needle aspiration performed with 19G aspiration needle under direct endoscopic and fluoroscopic guidance. 7 passes performed. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed with standard forceps through the working channel. 6 specimens obtained. Continuous visualization maintained during each pass. Samples sent for Surgical Pathology.\n\nBronchoalveolar lavage performed at LB7+8. 60mL NS instilled with 32mL return. Sent for Cell count, Culture, and Cytology.\n\nROSE Result: No evidence of malignant neoplasm\n\nThe inner scope was retracted into the outer sheath. Final airway inspection performed - no significant bleeding or airway trauma. The robotic system was removed.\n\nThe patient tolerated the procedure well. No immediate complications.\n\nDISPOSITION: Recovery area, post-procedure CXR, discharge if stable.\nFollow-up: Results in 5-7 days.\n\nAnderson, MD",
+    "cpt_codes": [
+      31629,
+      31628,
+      31627,
+      31654,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "219775",
+      "procedure_date": "2025-11-14",
+      "patient_age": 80,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Multiple pulmonary nodules - dominant lesion biopsy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected",
+      "cpt_codes": [
+        31629,
+        31628,
+        31627,
+        31654,
+        31624
+      ],
+      "institution_name": "Cedars-Sinai Medical Center, Los Angeles, CA",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Monarch (Auris/J&J)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 4.8,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "Fluoroscopy + continuous visualization",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "19G needle",
+        "Transbronchial forceps"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 20,
+      "lesion_location": "LLL - Anteromedial-Basal Segment of LLL",
+      "bronch_location_lobe": "LLL",
+      "bronch_location_segment": "LB7+8",
+      "bronch_guidance": "Monarch robotic navigation + rEBUS + continuous visualization",
+      "bronch_num_tbbx": 6,
+      "bronch_tbbx_tool": "Standard transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "No evidence of malignant neoplasm",
+      "providers": {
+        "attending_name": "Anderson",
+        "fellow_name": "Dr. James Liu",
+        "assistant_name": "Shirley Young, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.529592"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31628",
+            "31627",
+            "31654",
+            "31624"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of LLL nodule (7 passes with 19G needle under continuous visualization).",
+            "31628": "Transbronchial forceps biopsy (6 specimens) with continuous endoscopic guidance.",
+            "31627": "Monarch robotic navigation bronchoscopy with electromagnetic registration.",
+            "31654": "Radial EBUS with adjacent view confirming target.",
+            "31624": "BAL performed at LB7+8."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 20.84,
+          "facility_total_payment": 674.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            },
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json"
+        },
+        "overall_assessment": "Monarch robotic bronchoscopy with telescoping scope/sheath technique for 20mm LLL nodule. Continuous visualization maintained. rEBUS adjacent. ROSE: no evidence of malignant neoplasm."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 20.84,
+        "work_rvu": 13.6,
+        "practice_expense_rvu": 5.76,
+        "malpractice_rvu": 1.48
+      }
+    },
+    "source_file": "synthetic_monarch_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31624"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T11:45:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629, 31628, +31627, +31654, 31624; total_work_rvu=13.6, total_rvu=20.84 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Pt: Williams, Ryan || MRN: 3612209 || DOB: 4/26/1958\nDate: 06/25/2025 || Location: Stanford Health Care, Stanford, CA\nAttending: Dr. Christopher Brown\nFellow: Dr. Lauren Walsh (PGY-6)\n\nIndication: Multiple pulmonary nodules - dominant lesion biopsy\nTarget: 14mm nodule in LLL\n\nPROCEDURE:\n\nAfter the successful induction of general anesthesia, a timeout was performed confirming patient identity, procedure, and laterality. An 8.0 ETT was secured in good position.\n\nInitial Airway Inspection:\nThe visualized trachea is of normal caliber with sharp carina. Airways examined to the subsegmental level bilaterally. No endobronchial lesions identified. Mild secretions cleared with suction.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPRVC\t10\t353\t14\t80\t8\t24\n\nThe patient was positioned on the bed within the electromagnetic field. Reference sensors were placed on the anterior chest wall. The Monarch robotic endoscope was introduced through the ETT.\n\nElectromagnetic registration was completed by correlating the live bronchoscopic view with the virtual airway model at multiple anatomic landmarks including the main carina, right and left mainstem bronchi, and lobar carinas. Registration accuracy confirmed with error of 2.2mm.\n\nThe device was navigated to the LLL. The outer sheath was parked and locked at the ostium of the segmental airway (LB10) to provide stability. The inner scope was then telescoped distally into the sub-segmental airways to reach the target lesion in the Posterior-Basal Segment of LLL.\n\nRadial EBUS performed via the working channel. rEBUS view: Adjacent. Lesion confirmed at target location.\n\nCrucially, continuous visualization was maintained throughout sampling. The needle was advanced through the working channel, and needle exit from the scope tip was visually confirmed before entering the bronchial wall.\n\nTransbronchial needle aspiration performed with 22G aspiration needle under direct endoscopic and fluoroscopic guidance. 6 passes performed. Samples sent for Cytology and Cell block.\n\nProtected cytology brushings obtained under direct visualization. Samples sent for Cytology.\n\nBronchoalveolar lavage performed at LB10. 40mL NS instilled with 14mL return. Sent for Cell count, Culture, and Cytology.\n\nROSE Result: Atypical cells present, suspicious for malignancy\n\nThe inner scope was retracted into the outer sheath. Final airway inspection performed - no significant bleeding or airway trauma. The robotic system was removed.\n\nThe patient tolerated the procedure well. No immediate complications.\n\nDISPOSITION: Recovery area, post-procedure CXR, discharge if stable.\nFollow-up: Results in 5-7 days.\n\nBrown, MD",
+    "cpt_codes": [
+      31629,
+      31627,
+      31654,
+      31623,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "3612209",
+      "procedure_date": "2025-06-25",
+      "patient_age": 67,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Multiple pulmonary nodules - dominant lesion biopsy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31627,
+        31654,
+        31623,
+        31624
+      ],
+      "institution_name": "Stanford Health Care, Stanford, CA",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Monarch (Auris/J&J)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 2.2,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "Fluoroscopy + continuous visualization",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "22G needle",
+        "Protected brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 14,
+      "lesion_location": "LLL - Posterior-Basal Segment of LLL",
+      "bronch_location_lobe": "LLL",
+      "bronch_location_segment": "LB10",
+      "bronch_guidance": "Monarch robotic navigation + rEBUS + continuous visualization",
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Atypical cells present, suspicious for malignancy",
+      "providers": {
+        "attending_name": "Brown",
+        "fellow_name": "Dr. Lauren Walsh",
+        "assistant_name": "Cynthia Robinson, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.529641"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31627",
+            "31654",
+            "31623",
+            "31624"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of LLL nodule (6 passes with 22G needle under continuous visualization).",
+            "31627": "Monarch robotic navigation bronchoscopy with electromagnetic registration.",
+            "31654": "Radial EBUS with adjacent view confirming target.",
+            "31623": "Protected cytology brushings under direct visualization.",
+            "31624": "BAL performed at LB10."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 19.49,
+          "facility_total_payment": 630.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json"
+        },
+        "overall_assessment": "Monarch robotic bronchoscopy with telescoping scope/sheath technique for 14mm LLL nodule. Continuous visualization maintained. rEBUS adjacent. ROSE: atypical cells present."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy; with brushing or protected brushings",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 19.49,
+        "work_rvu": 12.68,
+        "practice_expense_rvu": 5.41,
+        "malpractice_rvu": 1.4
+      }
+    },
+    "source_file": "synthetic_monarch_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31627",
+        "31654",
+        "31623",
+        "31624"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T11:45:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629, +31627, +31654, 31623, 31624; total_work_rvu=12.68, total_rvu=19.49 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Pt: Rivera, Kenneth || MRN: 5227732 || DOB: 1/14/1958\nDate: 07/18/2025 || Location: Cedars-Sinai Medical Center, Los Angeles, CA\nAttending: Dr. Emily Thompson\nFellow: Dr. Kevin Patel (PGY-5)\n\nIndication: Incidental pulmonary nodule requiring tissue diagnosis\nTarget: 13mm nodule in Lingula\n\nPROCEDURE:\n\nAfter the successful induction of general anesthesia, a timeout was performed confirming patient identity, procedure, and laterality. An 8.0 ETT was secured in good position.\n\nInitial Airway Inspection:\nThe visualized trachea is of normal caliber with sharp carina. Airways examined to the subsegmental level bilaterally. No endobronchial lesions identified. Mild secretions cleared with suction.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPRVC\t12\t321\t18\t80\t8\t24\n\nThe patient was positioned on the bed within the electromagnetic field. Reference sensors were placed on the anterior chest wall. The Monarch robotic endoscope was introduced through the ETT.\n\nElectromagnetic registration was completed by correlating the live bronchoscopic view with the virtual airway model at multiple anatomic landmarks including the main carina, right and left mainstem bronchi, and lobar carinas. Registration accuracy confirmed with error of 2.0mm.\n\nThe device was navigated to the Lingula. The outer sheath was parked and locked at the ostium of the segmental airway (LB4) to provide stability. The inner scope was then telescoped distally into the sub-segmental airways to reach the target lesion in the Superior Lingula.\n\nRadial EBUS performed via the working channel. rEBUS view: Concentric. Lesion confirmed at target location.\n\nCrucially, continuous visualization was maintained throughout sampling. The needle was advanced through the working channel, and needle exit from the scope tip was visually confirmed before entering the bronchial wall.\n\nTransbronchial needle aspiration performed with 22G aspiration needle under direct endoscopic and fluoroscopic guidance. 5 passes performed. Samples sent for Cytology and Cell block.\n\nProtected cytology brushings obtained under direct visualization. Samples sent for Cytology.\n\nROSE Result: Atypical cells present, suspicious for malignancy\n\nThe inner scope was retracted into the outer sheath. Final airway inspection performed - no significant bleeding or airway trauma. The robotic system was removed.\n\nThe patient tolerated the procedure well. No immediate complications.\n\nDISPOSITION: Recovery area, post-procedure CXR, discharge if stable.\nFollow-up: Results in 5-7 days.\n\nThompson, MD",
+    "cpt_codes": [
+      31629,
+      31627,
+      31654,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "5227732",
+      "procedure_date": "2025-07-18",
+      "patient_age": 67,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Incidental pulmonary nodule requiring tissue diagnosis",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31627,
+        31654,
+        31623
+      ],
+      "institution_name": "Cedars-Sinai Medical Center, Los Angeles, CA",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Monarch (Auris/J&J)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 2.0,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "Fluoroscopy + continuous visualization",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "22G needle",
+        "Protected brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 13,
+      "lesion_location": "Lingula - Superior Lingula",
+      "bronch_location_lobe": "Lingula",
+      "bronch_location_segment": "LB4",
+      "bronch_guidance": "Monarch robotic navigation + rEBUS + continuous visualization",
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Atypical cells present, suspicious for malignancy",
+      "providers": {
+        "attending_name": "Thompson",
+        "fellow_name": "Dr. Kevin Patel",
+        "assistant_name": "Karen Wilson, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.529698"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31627",
+            "31654",
+            "31623"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of Lingula nodule (5 passes with 22G needle under continuous visualization).",
+            "31627": "Monarch robotic navigation bronchoscopy with electromagnetic registration.",
+            "31654": "Radial EBUS with concentric view confirming target.",
+            "31623": "Protected cytology brushings under direct visualization."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.25,
+          "facility_total_payment": 493.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json"
+        },
+        "overall_assessment": "Monarch robotic bronchoscopy with telescoping scope/sheath technique for 13mm Lingula nodule. Continuous visualization maintained. rEBUS concentric. ROSE: atypical cells present."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy; with brushing or protected brushings",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.25,
+        "work_rvu": 10.05,
+        "practice_expense_rvu": 4.1,
+        "malpractice_rvu": 1.1
+      }
+    },
+    "source_file": "synthetic_monarch_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31627",
+        "31654",
+        "31623"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T11:45:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629, +31627, +31654, 31623; total_work_rvu=10.05, total_rvu=15.25 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Pt: Hernandez, Brian || MRN: 3410491 || DOB: 11/28/1968\nDate: 11/02/2025 || Location: UC San Diego Health, La Jolla, CA\nAttending: Dr. Jennifer Lee\n\nIndication: Lung cancer screening detected nodule\nTarget: 35mm nodule in Lingula\n\nPROCEDURE:\n\nAfter the successful induction of general anesthesia, a timeout was performed confirming patient identity, procedure, and laterality. An 8.0 ETT was secured in good position.\n\nInitial Airway Inspection:\nThe visualized trachea is of normal caliber with sharp carina. Airways examined to the subsegmental level bilaterally. No endobronchial lesions identified. Mild secretions cleared with suction.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPRVC\t10\t302\t9\t80\t6\t19\n\nThe patient was positioned on the bed within the electromagnetic field. Reference sensors were placed on the anterior chest wall. The Monarch robotic endoscope was introduced through the ETT.\n\nElectromagnetic registration was completed by correlating the live bronchoscopic view with the virtual airway model at multiple anatomic landmarks including the main carina, right and left mainstem bronchi, and lobar carinas. Registration accuracy confirmed with error of 3.0mm.\n\nThe device was navigated to the Lingula. The outer sheath was parked and locked at the ostium of the segmental airway (LB4) to provide stability. The inner scope was then telescoped distally into the sub-segmental airways to reach the target lesion in the Superior Lingula.\n\nRadial EBUS performed via the working channel. rEBUS view: Adjacent. Lesion confirmed at target location.\n\nCrucially, continuous visualization was maintained throughout sampling. The needle was advanced through the working channel, and needle exit from the scope tip was visually confirmed before entering the bronchial wall.\n\nTransbronchial needle aspiration performed with 19G aspiration needle under direct endoscopic and fluoroscopic guidance. 7 passes performed. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed with standard forceps through the working channel. 6 specimens obtained. Continuous visualization maintained during each pass. Samples sent for Surgical Pathology.\n\nProtected cytology brushings obtained under direct visualization. Samples sent for Cytology.\n\nBronchoalveolar lavage performed at LB4. 40mL NS instilled with 21mL return. Sent for Cell count, Culture, and Cytology.\n\nROSE Result: Suspicious for non-small cell carcinoma\n\nThe inner scope was retracted into the outer sheath. Final airway inspection performed - no significant bleeding or airway trauma. The robotic system was removed.\n\nThe patient tolerated the procedure well. No immediate complications.\n\nDISPOSITION: Recovery area, post-procedure CXR, discharge if stable.\nFollow-up: Results in 5-7 days.\n\nLee, MD",
+    "cpt_codes": [
+      31629,
+      31628,
+      31627,
+      31654,
+      31623,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "3410491",
+      "procedure_date": "2025-11-02",
+      "patient_age": 57,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Lung cancer screening detected nodule",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected",
+      "cpt_codes": [
+        31629,
+        31628,
+        31627,
+        31654,
+        31623,
+        31624
+      ],
+      "institution_name": "UC San Diego Health, La Jolla, CA",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Monarch (Auris/J&J)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 3.0,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "Fluoroscopy + continuous visualization",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "19G needle",
+        "Transbronchial forceps",
+        "Protected brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 35,
+      "lesion_location": "Lingula - Superior Lingula",
+      "bronch_location_lobe": "Lingula",
+      "bronch_location_segment": "LB4",
+      "bronch_guidance": "Monarch robotic navigation + rEBUS + continuous visualization",
+      "bronch_num_tbbx": 6,
+      "bronch_tbbx_tool": "Standard transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Suspicious for non-small cell carcinoma",
+      "providers": {
+        "attending_name": "Lee",
+        "fellow_name": null,
+        "assistant_name": "Linda King, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.529748"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31628",
+            "31627",
+            "31654",
+            "31623",
+            "31624"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of Lingula nodule (7 passes with 19G needle under continuous visualization).",
+            "31628": "Transbronchial forceps biopsy (6 specimens) with continuous endoscopic guidance.",
+            "31627": "Monarch robotic navigation bronchoscopy with electromagnetic registration.",
+            "31654": "Radial EBUS with adjacent view confirming target.",
+            "31623": "Protected cytology brushings under direct visualization.",
+            "31624": "BAL performed at LB4."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 25.02,
+          "facility_total_payment": 809.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json"
+        },
+        "overall_assessment": "Monarch robotic bronchoscopy with telescoping scope/sheath technique for 35mm Lingula nodule. Continuous visualization maintained. rEBUS adjacent. ROSE: suspicious for non-small cell carcinoma."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy; with brushing or protected brushings",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 25.02,
+        "work_rvu": 16.23,
+        "practice_expense_rvu": 7.0,
+        "malpractice_rvu": 1.78
+      }
+    },
+    "source_file": "synthetic_monarch_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623",
+        "31624"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T11:45:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629, 31628, +31627, +31654, 31623, 31624; total_work_rvu=16.23, total_rvu=25.02 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Pt: Clark, Carol || MRN: 3341502 || DOB: 5/1/1970\nDate: 09/24/2025 || Location: Northwestern Memorial Hospital, Chicago, IL\nAttending: Dr. Rachel Kim\nFellow: Dr. Kevin Patel (PGY-5)\n\nIndication: Growing lung nodule on surveillance\nTarget: 27mm nodule in LUL\n\nPROCEDURE:\n\nAfter the successful induction of general anesthesia, a timeout was performed confirming patient identity, procedure, and laterality. An 8.0 ETT was secured in good position.\n\nInitial Airway Inspection:\nThe visualized trachea is of normal caliber with sharp carina. Airways examined to the subsegmental level bilaterally. No endobronchial lesions identified. Mild secretions cleared with suction.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPRVC\t13\t286\t13\t100\t6\t23\n\nThe patient was positioned on the bed within the electromagnetic field. Reference sensors were placed on the anterior chest wall. The Monarch robotic endoscope was introduced through the ETT.\n\nElectromagnetic registration was completed by correlating the live bronchoscopic view with the virtual airway model at multiple anatomic landmarks including the main carina, right and left mainstem bronchi, and lobar carinas. Registration accuracy confirmed with error of 4.2mm.\n\nThe device was navigated to the LUL. The outer sheath was parked and locked at the ostium of the segmental airway (LB3) to provide stability. The inner scope was then telescoped distally into the sub-segmental airways to reach the target lesion in the Anterior Segment of LUL.\n\nRadial EBUS performed via the working channel. rEBUS view: Adjacent. Lesion confirmed at target location.\n\nCrucially, continuous visualization was maintained throughout sampling. The needle was advanced through the working channel, and needle exit from the scope tip was visually confirmed before entering the bronchial wall.\n\nTransbronchial needle aspiration performed with 19G aspiration needle under direct endoscopic and fluoroscopic guidance. 4 passes performed. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed with standard forceps through the working channel. 6 specimens obtained. Continuous visualization maintained during each pass. Samples sent for Surgical Pathology.\n\nROSE Result: Granulomatous inflammation\n\nThe inner scope was retracted into the outer sheath. Final airway inspection performed - no significant bleeding or airway trauma. The robotic system was removed.\n\nThe patient tolerated the procedure well. No immediate complications.\n\nDISPOSITION: Recovery area, post-procedure CXR, discharge if stable.\nFollow-up: Results in 5-7 days.\n\nKim, MD",
+    "cpt_codes": [
+      31629,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "3341502",
+      "procedure_date": "2025-09-24",
+      "patient_age": 55,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Growing lung nodule on surveillance",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31628,
+        31627,
+        31654
+      ],
+      "institution_name": "Northwestern Memorial Hospital, Chicago, IL",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Monarch (Auris/J&J)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 4.2,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "Fluoroscopy + continuous visualization",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "19G needle",
+        "Transbronchial forceps"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 27,
+      "lesion_location": "LUL - Anterior Segment of LUL",
+      "bronch_location_lobe": "LUL",
+      "bronch_location_segment": "LB3",
+      "bronch_guidance": "Monarch robotic navigation + rEBUS + continuous visualization",
+      "bronch_num_tbbx": 6,
+      "bronch_tbbx_tool": "Standard transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Granulomatous inflammation",
+      "providers": {
+        "attending_name": "Kim",
+        "fellow_name": "Dr. Kevin Patel",
+        "assistant_name": "Sharon Lopez, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.529810"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31628",
+            "31627",
+            "31654"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of LUL nodule (4 passes with 19G needle under continuous visualization).",
+            "31628": "Transbronchial forceps biopsy (6 specimens) with continuous endoscopic guidance.",
+            "31627": "Monarch robotic navigation bronchoscopy with electromagnetic registration.",
+            "31654": "Radial EBUS with adjacent view confirming target."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 16.6,
+          "facility_total_payment": 537.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json"
+        },
+        "overall_assessment": "Monarch robotic bronchoscopy with telescoping scope/sheath technique for 27mm LUL nodule. Continuous visualization maintained. rEBUS adjacent. ROSE: granulomatous inflammation."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.6,
+        "work_rvu": 10.97,
+        "practice_expense_rvu": 4.44,
+        "malpractice_rvu": 1.18
+      }
+    },
+    "source_file": "synthetic_monarch_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T11:45:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629, 31628, +31627, +31654; total_work_rvu=10.97, total_rvu=16.6 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Pt: Hall, Edward || MRN: 4888069 || DOB: 7/19/1950\nDate: 07/30/2025 || Location: Stanford Health Care, Stanford, CA\nAttending: Dr. Jennifer Lee\nFellow: Dr. Kevin Patel (PGY-5)\n\nIndication: Growing lung nodule on surveillance\nTarget: 14mm nodule in Lingula\n\nPROCEDURE:\n\nAfter the successful induction of general anesthesia, a timeout was performed confirming patient identity, procedure, and laterality. An 8.0 ETT was secured in good position.\n\nInitial Airway Inspection:\nThe visualized trachea is of normal caliber with sharp carina. Airways examined to the subsegmental level bilaterally. No endobronchial lesions identified. Mild secretions cleared with suction.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPCV\t13\t350\t13\t80\t5\t23\n\nThe patient was positioned on the bed within the electromagnetic field. Reference sensors were placed on the anterior chest wall. The Monarch robotic endoscope was introduced through the ETT.\n\nElectromagnetic registration was completed by correlating the live bronchoscopic view with the virtual airway model at multiple anatomic landmarks including the main carina, right and left mainstem bronchi, and lobar carinas. Registration accuracy confirmed with error of 4.7mm.\n\nThe device was navigated to the Lingula. The outer sheath was parked and locked at the ostium of the segmental airway (LB5) to provide stability. The inner scope was then telescoped distally into the sub-segmental airways to reach the target lesion in the Inferior Lingula.\n\nRadial EBUS performed via the working channel. rEBUS view: Eccentric. Lesion confirmed at target location.\n\nCrucially, continuous visualization was maintained throughout sampling. The needle was advanced through the working channel, and needle exit from the scope tip was visually confirmed before entering the bronchial wall.\n\nTransbronchial needle aspiration performed with 19G aspiration needle under direct endoscopic and fluoroscopic guidance. 5 passes performed. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed with standard forceps through the working channel. 5 specimens obtained. Continuous visualization maintained during each pass. Samples sent for Surgical Pathology.\n\nProtected cytology brushings obtained under direct visualization. Samples sent for Cytology.\n\nBronchoalveolar lavage performed at LB5. 60mL NS instilled with 22mL return. Sent for Cell count, Culture, and Cytology.\n\nROSE Result: Lymphocytes and benign cells, adequate for evaluation\n\nThe inner scope was retracted into the outer sheath. Final airway inspection performed - no significant bleeding or airway trauma. The robotic system was removed.\n\nThe patient tolerated the procedure well. No immediate complications.\n\nDISPOSITION: Recovery area, post-procedure CXR, discharge if stable.\nFollow-up: Results in 5-7 days.\n\nLee, MD",
+    "cpt_codes": [
+      31629,
+      31628,
+      31627,
+      31654,
+      31623,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "4888069",
+      "procedure_date": "2025-07-30",
+      "patient_age": 75,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Growing lung nodule on surveillance",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31628,
+        31627,
+        31654,
+        31623,
+        31624
+      ],
+      "institution_name": "Stanford Health Care, Stanford, CA",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Monarch (Auris/J&J)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 4.7,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_imaging_verification": "Fluoroscopy + continuous visualization",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "19G needle",
+        "Transbronchial forceps",
+        "Protected brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 14,
+      "lesion_location": "Lingula - Inferior Lingula",
+      "bronch_location_lobe": "Lingula",
+      "bronch_location_segment": "LB5",
+      "bronch_guidance": "Monarch robotic navigation + rEBUS + continuous visualization",
+      "bronch_num_tbbx": 5,
+      "bronch_tbbx_tool": "Standard transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Lymphocytes and benign cells, adequate for evaluation",
+      "providers": {
+        "attending_name": "Lee",
+        "fellow_name": "Dr. Kevin Patel",
+        "assistant_name": "Karen Williams, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.529867"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31628",
+            "31627",
+            "31654",
+            "31623",
+            "31624"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of Lingula nodule (5 passes with 19G needle under continuous visualization).",
+            "31628": "Transbronchial forceps biopsy (5 specimens) with continuous endoscopic guidance.",
+            "31627": "Monarch robotic navigation bronchoscopy with electromagnetic registration.",
+            "31654": "Radial EBUS with eccentric view confirming target.",
+            "31623": "Protected cytology brushings under direct visualization.",
+            "31624": "BAL performed at LB5."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 25.02,
+          "facility_total_payment": 809.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json"
+        },
+        "overall_assessment": "Monarch robotic bronchoscopy with telescoping scope/sheath technique for 14mm Lingula nodule. Continuous visualization maintained. rEBUS eccentric. ROSE: lymphocytes and benign cells."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy; with brushing or protected brushings",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 25.02,
+        "work_rvu": 16.23,
+        "practice_expense_rvu": 7.0,
+        "malpractice_rvu": 1.78
+      }
+    },
+    "source_file": "synthetic_monarch_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623",
+        "31624"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T11:45:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629, 31628, +31627, +31654, 31623, 31624; total_work_rvu=16.23, total_rvu=25.02 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Pt: Adams, Jonathan || MRN: 3764322 || DOB: 3/27/1960\nDate: 07/17/2025 || Location: Stanford Health Care, Stanford, CA\nAttending: CDR Patricia Davis, MD\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Lung cancer screening detected nodule\nTarget: 20mm nodule in LUL\n\nPROCEDURE:\n\nAfter the successful induction of general anesthesia, a timeout was performed confirming patient identity, procedure, and laterality. An 8.0 ETT was secured in good position.\n\nInitial Airway Inspection:\nThe visualized trachea is of normal caliber with sharp carina. Airways examined to the subsegmental level bilaterally. No endobronchial lesions identified. Mild secretions cleared with suction.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nVCV\t12\t321\t8\t80\t5\t20\n\nThe patient was positioned on the bed within the electromagnetic field. Reference sensors were placed on the anterior chest wall. The Monarch robotic endoscope was introduced through the ETT.\n\nElectromagnetic registration was completed by correlating the live bronchoscopic view with the virtual airway model at multiple anatomic landmarks including the main carina, right and left mainstem bronchi, and lobar carinas. Registration accuracy confirmed with error of 2.3mm.\n\nThe device was navigated to the LUL. The outer sheath was parked and locked at the ostium of the segmental airway (LB3) to provide stability. The inner scope was then telescoped distally into the sub-segmental airways to reach the target lesion in the Anterior Segment of LUL.\n\nRadial EBUS performed via the working channel. rEBUS view: Eccentric. Lesion confirmed at target location.\n\nCrucially, continuous visualization was maintained throughout sampling. The needle was advanced through the working channel, and needle exit from the scope tip was visually confirmed before entering the bronchial wall.\n\nTransbronchial needle aspiration performed with 19G aspiration needle under direct endoscopic and fluoroscopic guidance. 8 passes performed. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed with standard forceps through the working channel. 5 specimens obtained. Continuous visualization maintained during each pass. Samples sent for Surgical Pathology.\n\nBronchoalveolar lavage performed at LB3. 40mL NS instilled with 18mL return. Sent for Cell count, Culture, and Cytology.\n\nROSE Result: No evidence of malignant neoplasm\n\nThe inner scope was retracted into the outer sheath. Final airway inspection performed - no significant bleeding or airway trauma. The robotic system was removed.\n\nThe patient tolerated the procedure well. No immediate complications.\n\nDISPOSITION: Recovery area, post-procedure CXR, discharge if stable.\nFollow-up: Results in 5-7 days.\n\nDavis, MD",
+    "cpt_codes": [
+      31629,
+      31628,
+      31627,
+      31654,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "3764322",
+      "procedure_date": "2025-07-17",
+      "patient_age": 65,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Lung cancer screening detected nodule",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected",
+      "cpt_codes": [
+        31629,
+        31628,
+        31627,
+        31654,
+        31624
+      ],
+      "institution_name": "Stanford Health Care, Stanford, CA",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Monarch (Auris/J&J)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 2.3,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_imaging_verification": "Fluoroscopy + continuous visualization",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "19G needle",
+        "Transbronchial forceps"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 20,
+      "lesion_location": "LUL - Anterior Segment of LUL",
+      "bronch_location_lobe": "LUL",
+      "bronch_location_segment": "LB3",
+      "bronch_guidance": "Monarch robotic navigation + rEBUS + continuous visualization",
+      "bronch_num_tbbx": 5,
+      "bronch_tbbx_tool": "Standard transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "No evidence of malignant neoplasm",
+      "providers": {
+        "attending_name": "Davis",
+        "fellow_name": "LT Michelle Torres, MD",
+        "assistant_name": "Amanda Smith, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.529912"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31628",
+            "31627",
+            "31654",
+            "31624"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of LUL nodule (8 passes with 19G needle under continuous visualization).",
+            "31628": "Transbronchial forceps biopsy (5 specimens) with continuous endoscopic guidance.",
+            "31627": "Monarch robotic navigation bronchoscopy with electromagnetic registration.",
+            "31654": "Radial EBUS with eccentric view confirming target.",
+            "31624": "BAL performed at LB3."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 20.84,
+          "facility_total_payment": 674.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            },
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json"
+        },
+        "overall_assessment": "Monarch robotic bronchoscopy with telescoping scope/sheath technique for 20mm LUL nodule. Continuous visualization maintained. rEBUS eccentric. ROSE: no evidence of malignant neoplasm."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 20.84,
+        "work_rvu": 13.6,
+        "practice_expense_rvu": 5.76,
+        "malpractice_rvu": 1.48
+      }
+    },
+    "source_file": "synthetic_monarch_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31624"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T11:45:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629, 31628, +31627, +31654, 31624; total_work_rvu=13.6, total_rvu=20.84 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Pt: Taylor, Stephen || MRN: 4257756 || DOB: 9/5/1967\nDate: 07/26/2025 || Location: Scripps Memorial Hospital, La Jolla, CA\nAttending: Dr. Lisa Anderson\nFellow: Dr. Alex Chen (PGY-5)\n\nIndication: Lung-RADS 4X nodule\nTarget: 20mm nodule in RLL\n\nPROCEDURE:\n\nAfter the successful induction of general anesthesia, a timeout was performed confirming patient identity, procedure, and laterality. An 8.0 ETT was secured in good position.\n\nInitial Airway Inspection:\nThe visualized trachea is of normal caliber with sharp carina. Airways examined to the subsegmental level bilaterally. No endobronchial lesions identified. Mild secretions cleared with suction.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nVCV\t11\t349\t11\t100\t6\t17\n\nThe patient was positioned on the bed within the electromagnetic field. Reference sensors were placed on the anterior chest wall. The Monarch robotic endoscope was introduced through the ETT.\n\nElectromagnetic registration was completed by correlating the live bronchoscopic view with the virtual airway model at multiple anatomic landmarks including the main carina, right and left mainstem bronchi, and lobar carinas. Registration accuracy confirmed with error of 4.8mm.\n\nThe device was navigated to the RLL. The outer sheath was parked and locked at the ostium of the segmental airway (RB8) to provide stability. The inner scope was then telescoped distally into the sub-segmental airways to reach the target lesion in the Anterior-Basal Segment of RLL.\n\nRadial EBUS performed via the working channel. rEBUS view: Concentric. Lesion confirmed at target location.\n\nCrucially, continuous visualization was maintained throughout sampling. The needle was advanced through the working channel, and needle exit from the scope tip was visually confirmed before entering the bronchial wall.\n\nTransbronchial needle aspiration performed with 21G aspiration needle under direct endoscopic and fluoroscopic guidance. 6 passes performed. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed with standard forceps through the working channel. 7 specimens obtained. Continuous visualization maintained during each pass. Samples sent for Surgical Pathology.\n\nProtected cytology brushings obtained under direct visualization. Samples sent for Cytology.\n\nBronchoalveolar lavage performed at RB8. 60mL NS instilled with 28mL return. Sent for Cell count, Culture, and Cytology.\n\nROSE Result: Atypical cells present, suspicious for malignancy\n\nThe inner scope was retracted into the outer sheath. Final airway inspection performed - no significant bleeding or airway trauma. The robotic system was removed.\n\nThe patient tolerated the procedure well. No immediate complications.\n\nDISPOSITION: Recovery area, post-procedure CXR, discharge if stable.\nFollow-up: Results in 5-7 days.\n\nAnderson, MD",
+    "cpt_codes": [
+      31629,
+      31628,
+      31627,
+      31654,
+      31623,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "4257756",
+      "procedure_date": "2025-07-26",
+      "patient_age": 58,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Lung-RADS 4X nodule",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31628,
+        31627,
+        31654,
+        31623,
+        31624
+      ],
+      "institution_name": "Scripps Memorial Hospital, La Jolla, CA",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Monarch (Auris/J&J)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 4.8,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "Fluoroscopy + continuous visualization",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "21G needle",
+        "Transbronchial forceps",
+        "Protected brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 20,
+      "lesion_location": "RLL - Anterior-Basal Segment of RLL",
+      "bronch_location_lobe": "RLL",
+      "bronch_location_segment": "RB8",
+      "bronch_guidance": "Monarch robotic navigation + rEBUS + continuous visualization",
+      "bronch_num_tbbx": 7,
+      "bronch_tbbx_tool": "Standard transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Atypical cells present, suspicious for malignancy",
+      "providers": {
+        "attending_name": "Anderson",
+        "fellow_name": "Dr. Alex Chen",
+        "assistant_name": "Margaret Flores, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.529991"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31628",
+            "31627",
+            "31654",
+            "31623",
+            "31624"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of RLL nodule (6 passes with 21G needle under continuous visualization).",
+            "31628": "Transbronchial forceps biopsy (7 specimens) with continuous endoscopic guidance.",
+            "31627": "Monarch robotic navigation bronchoscopy with electromagnetic registration.",
+            "31654": "Radial EBUS with concentric view confirming target.",
+            "31623": "Protected cytology brushings under direct visualization.",
+            "31624": "BAL performed at RB8."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 25.02,
+          "facility_total_payment": 809.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json"
+        },
+        "overall_assessment": "Monarch robotic bronchoscopy with telescoping scope/sheath technique for 20mm RLL nodule. Continuous visualization maintained. rEBUS concentric. ROSE: atypical cells present."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy; with brushing or protected brushings",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 25.02,
+        "work_rvu": 16.23,
+        "practice_expense_rvu": 7.0,
+        "malpractice_rvu": 1.78
+      }
+    },
+    "source_file": "synthetic_monarch_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623",
+        "31624"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T11:45:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629, 31628, +31627, +31654, 31623, 31624; total_work_rvu=16.23, total_rvu=25.02 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Pt: Johnson, Rebecca || MRN: 231025 || DOB: 9/5/1961\nDate: 09/14/2025 || Location: Duke University Hospital, Durham, NC\nAttending: Dr. Sarah Williams\n\nIndication: Incidental pulmonary nodule requiring tissue diagnosis\nTarget: 33mm nodule in RML\n\nPROCEDURE:\n\nAfter the successful induction of general anesthesia, a timeout was performed confirming patient identity, procedure, and laterality. An 8.0 ETT was secured in good position.\n\nInitial Airway Inspection:\nThe visualized trachea is of normal caliber with sharp carina. Airways examined to the subsegmental level bilaterally. No endobronchial lesions identified. Mild secretions cleared with suction.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPCV\t10\t287\t8\t80\t8\t16\n\nThe patient was positioned on the bed within the electromagnetic field. Reference sensors were placed on the anterior chest wall. The Monarch robotic endoscope was introduced through the ETT.\n\nElectromagnetic registration was completed by correlating the live bronchoscopic view with the virtual airway model at multiple anatomic landmarks including the main carina, right and left mainstem bronchi, and lobar carinas. Registration accuracy confirmed with error of 2.2mm.\n\nThe device was navigated to the RML. The outer sheath was parked and locked at the ostium of the segmental airway (RB4) to provide stability. The inner scope was then telescoped distally into the sub-segmental airways to reach the target lesion in the Lateral Segment of RML.\n\nRadial EBUS performed via the working channel. rEBUS view: Concentric. Lesion confirmed at target location.\n\nCrucially, continuous visualization was maintained throughout sampling. The needle was advanced through the working channel, and needle exit from the scope tip was visually confirmed before entering the bronchial wall.\n\nTransbronchial needle aspiration performed with 19G aspiration needle under direct endoscopic and fluoroscopic guidance. 5 passes performed. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed with standard forceps through the working channel. 7 specimens obtained. Continuous visualization maintained during each pass. Samples sent for Surgical Pathology.\n\nProtected cytology brushings obtained under direct visualization. Samples sent for Cytology.\n\nROSE Result: Lymphocytes and benign cells, adequate for evaluation\n\nThe inner scope was retracted into the outer sheath. Final airway inspection performed - no significant bleeding or airway trauma. The robotic system was removed.\n\nThe patient tolerated the procedure well. No immediate complications.\n\nDISPOSITION: Recovery area, post-procedure CXR, discharge if stable.\nFollow-up: Results in 5-7 days.\n\nWilliams, MD",
+    "cpt_codes": [
+      31629,
+      31628,
+      31627,
+      31654,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "231025",
+      "procedure_date": "2025-09-14",
+      "patient_age": 64,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Incidental pulmonary nodule requiring tissue diagnosis",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31628,
+        31627,
+        31654,
+        31623
+      ],
+      "institution_name": "Duke University Hospital, Durham, NC",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Monarch (Auris/J&J)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 2.2,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "Fluoroscopy + continuous visualization",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "19G needle",
+        "Transbronchial forceps",
+        "Protected brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 33,
+      "lesion_location": "RML - Lateral Segment of RML",
+      "bronch_location_lobe": "RML",
+      "bronch_location_segment": "RB4",
+      "bronch_guidance": "Monarch robotic navigation + rEBUS + continuous visualization",
+      "bronch_num_tbbx": 7,
+      "bronch_tbbx_tool": "Standard transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Lymphocytes and benign cells, adequate for evaluation",
+      "providers": {
+        "attending_name": "Williams",
+        "fellow_name": null,
+        "assistant_name": "Elizabeth Adams, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530036"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31628",
+            "31627",
+            "31654",
+            "31623"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of RML nodule (5 passes with 19G needle under continuous visualization).",
+            "31628": "Transbronchial forceps biopsy (7 specimens) with continuous endoscopic guidance.",
+            "31627": "Monarch robotic navigation bronchoscopy with electromagnetic registration.",
+            "31654": "Radial EBUS with concentric view confirming target.",
+            "31623": "Protected cytology brushings under direct visualization."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 20.78,
+          "facility_total_payment": 672.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179
+            },
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json"
+        },
+        "overall_assessment": "Monarch robotic bronchoscopy with telescoping scope/sheath technique for 33mm RML nodule. Continuous visualization maintained. rEBUS concentric. ROSE: lymphocytes and benign cells."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy; with brushing or protected brushings",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 20.78,
+        "work_rvu": 13.6,
+        "practice_expense_rvu": 5.69,
+        "malpractice_rvu": 1.48
+      }
+    },
+    "source_file": "synthetic_monarch_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T11:45:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629, 31628, +31627, +31654, 31623; total_work_rvu=13.6, total_rvu=20.78 (facility)."
+      ],
+      "warnings": []
+    }
+  }
+]

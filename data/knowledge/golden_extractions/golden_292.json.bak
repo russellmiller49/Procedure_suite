@@ -1,0 +1,1046 @@
+{
+  "metadata": {
+    "generated_at": "2025-12-09",
+    "version": "1.0.0",
+    "schema_version": "v2.8",
+    "description": "Synthetic interventional pulmonology procedure notes for airway dilation and cryotherapy procedures",
+    "total_notes": 10
+  },
+  "airway_dilation_notes": [
+    {
+      "note_text": "Patient: Thompson, Margaret A.\nMRN: 3847291\nDOB: 04/18/1956\nDate: 12/05/2025\nFacility: Memorial Regional Medical Center, Houston, TX\nPhysician: Dr. Elena Rodriguez, MD\n\nPRE-OP DX: Post-intubation tracheal stenosis\nPOST-OP DX: Same, s/p dilation\nPROCEDURE: Bronchoscopy with balloon dilation of tracheal stenosis\n\nINDICATION: 68 y/o female with progressive dyspnea and stridor 6 weeks post extubation following prolonged ICU stay. CT showed subglottic stenosis with 70% narrowing.\n\nPROCEDURE DETAILS:\nPatient brought to OR, placed under general anesthesia with jet ventilation. Flexible bronchoscopy revealed circumferential web-like stenosis 2cm below vocal cords with 65-70% luminal obstruction. Sequential balloon dilation performed using CRE balloon dilator, starting at 10mm, progressed to 12mm, then 14mm over three cycles. Each inflation held for 60 seconds at 8 ATM. Post-dilation exam showed adequate lumen restored to approximately 90% patency. No mucosal tears. Minimal bleeding controlled with observation.\n\nCOMPLICATIONS: None\nEBL: <5mL\nDISPOSITION: PACU, planned same-day discharge\n\nPLAN: Repeat bronchoscopy in 6-8 weeks. Discuss stent if recurrence. Proton pump inhibitor started.\n\nElena Rodriguez, MD\nInterventional Pulmonology",
+      "cpt_codes": [
+        31630
+      ],
+      "registry_entry": {
+        "patient_mrn": "3847291",
+        "procedure_date": "2025-12-05",
+        "procedure_start_time": "08:30",
+        "procedure_end_time": "09:15",
+        "procedure_duration_minutes": 45,
+        "providers": {
+          "attending_name": "Rodriguez, Elena",
+          "attending_npi": "1234567890",
+          "fellow_name": null,
+          "fellow_pgy_level": null,
+          "assistant_name": null,
+          "assistant_role": null,
+          "trainee_present": false,
+          "rose_present": false
+        },
+        "patient_demographics": {
+          "age_years": 68,
+          "gender": "Female",
+          "height_cm": 162,
+          "weight_kg": 71,
+          "bmi": 27.1,
+          "smoking_status": "Former",
+          "pack_years": 15
+        },
+        "clinical_context": {
+          "asa_class": 3,
+          "primary_indication": "Post-intubation tracheal stenosis",
+          "indication_category": "Stricture/Stenosis",
+          "radiographic_findings": "CT: subglottic stenosis with 70% narrowing",
+          "lesion_size_mm": null,
+          "prior_therapy": "None"
+        },
+        "sedation_type": "General",
+        "airway_type": "Jet ventilation",
+        "bronchoscopy_approach": "Oral",
+        "scope_type": "Flexible",
+        "cao_performed": true,
+        "cao_location": "Subglottic trachea",
+        "cao_primary_modality": "Balloon dilation",
+        "cao_obstruction_pre_pct": 70,
+        "cao_obstruction_post_pct": 10,
+        "dilation_performed": true,
+        "dilation_balloon_size_mm": 14,
+        "dilation_inflation_pressure_atm": 8,
+        "stent_type": null,
+        "stent_placed": false,
+        "bleeding_severity": "None/Scant",
+        "pneumothorax": false,
+        "disposition": "Outpatient discharge",
+        "follow_up_plan": [
+          "Repeat bronchoscopy in 6-8 weeks",
+          "PPI started"
+        ],
+        "metadata": {
+          "data_entry_status": "Complete",
+          "version": "2.8",
+          "generated_at": "2025-12-09T10:00:00"
+        }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-09",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31630",
+          "final_codes": [
+            "31630"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "31630": "Bronchoscopy with tracheal/bronchial dilation (balloon method) for stenosis."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.27,
+          "facility_total_payment": 203,
+          "per_code": {
+            "31630": {
+              "work_rvu": 3.81,
+              "facility_rvu": 6.27,
+              "facility_payment": 203,
+              "apc": "5154",
+              "opps_payment": 3687
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json - physician_2025_airway"
+        }
+      }
+    },
+    {
+      "note_text": "Pt: Williams, Robert J.\nMRN: 5928374\nDOB: 11/22/1971\nDate: 12/06/2025\nLocation: University Hospital, Denver, CO\nMD: Dr. Michael Chen\n\nDx: RMS bronchus stenosis post lung transplant\nProcedure: Flexible bronchoscopy with rigid bronchoscopy and bronchial dilation\n\nHISTORY: 53 y/o male 8 months post bilateral lung transplant with worsening dyspnea. Surveillance bronch showed 80% stenosis at right mainstem anastomosis.\n\nPROCEDURE:\nGeneral anesthesia via ETT 8.0. Flexible bronch confirmed severe web-like stenosis at RMS anastomosis. Rigid bronchoscopy performed through laryngeal mask. Sequential dilation with rigid dilators (7mm, 9mm, 11mm). Final lumen approximately 12mm achieved. Mild mucosal edema post-dilation. No significant bleeding. Left system normal.\n\nAssessment: Successful dilation of RMS anastomotic stenosis\nPlan: Surveillance bronch in 4 weeks. May need stent if recurrent.\n\nM. Chen, MD",
+      "cpt_codes": [
+        31630
+      ],
+      "registry_entry": {
+        "patient_mrn": "5928374",
+        "procedure_date": "2025-12-06",
+        "procedure_start_time": "10:00",
+        "procedure_end_time": "11:30",
+        "procedure_duration_minutes": 90,
+        "providers": {
+          "attending_name": "Chen, Michael",
+          "attending_npi": "2345678901",
+          "fellow_name": "Patel, Anika",
+          "fellow_pgy_level": 5,
+          "assistant_name": "Torres, Maria",
+          "assistant_role": "RN",
+          "trainee_present": true,
+          "rose_present": false
+        },
+        "patient_demographics": {
+          "age_years": 53,
+          "gender": "Male",
+          "height_cm": 178,
+          "weight_kg": 82,
+          "bmi": 25.9,
+          "smoking_status": "Never",
+          "pack_years": 0
+        },
+        "clinical_context": {
+          "asa_class": 4,
+          "primary_indication": "Post-transplant anastomotic stenosis",
+          "indication_category": "Stricture/Stenosis",
+          "radiographic_findings": "CT: RMS anastomotic narrowing",
+          "lesion_size_mm": null,
+          "prior_therapy": "Prior dilation x2"
+        },
+        "sedation_type": "General",
+        "airway_type": "ETT",
+        "bronchoscopy_approach": "Oral",
+        "scope_type": "Rigid and Flexible",
+        "cao_performed": true,
+        "cao_location": "Right mainstem bronchus",
+        "cao_primary_modality": "Rigid dilation",
+        "cao_obstruction_pre_pct": 80,
+        "cao_obstruction_post_pct": 15,
+        "dilation_performed": true,
+        "dilation_balloon_size_mm": null,
+        "dilation_rigid_final_size_mm": 11,
+        "stent_type": null,
+        "stent_placed": false,
+        "bleeding_severity": "Mild",
+        "pneumothorax": false,
+        "disposition": "Inpatient observation",
+        "follow_up_plan": [
+          "Surveillance bronchoscopy in 4 weeks"
+        ],
+        "metadata": {
+          "data_entry_status": "Complete",
+          "version": "2.8",
+          "generated_at": "2025-12-09T10:00:00"
+        }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-09",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31630",
+          "final_codes": [
+            "31630"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "31630": "Bronchoscopy with bronchial dilation (rigid method) for anastomotic stenosis."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.27,
+          "facility_total_payment": 203,
+          "per_code": {
+            "31630": {
+              "work_rvu": 3.81,
+              "facility_rvu": 6.27,
+              "facility_payment": 203,
+              "apc": "5154",
+              "opps_payment": 3687
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json - physician_2025_airway"
+        }
+      }
+    },
+    {
+      "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nPatient: Garcia, Maria L.\nMRN: 6734829\nDOB: 07/14/1948\nDate of Procedure: 12/07/2025\nFacility: Cedars-Sinai Medical Center, Los Angeles, CA\nAttending: Dr. Sarah Kim, MD\nFellow: Dr. Jonathan Park, MD (PGY-6)\n\nPREOPERATIVE DIAGNOSIS: Left mainstem bronchus stenosis secondary to granulation tissue post stent removal\n\nPOSTOPERATIVE DIAGNOSIS: Same\n\nPROCEDURE: Bronchoscopy with balloon dilation of left mainstem bronchus\n\nINDICATIONS: 76 y/o female with history of LMS silicone stent removed 3 months ago, now with recurrent dyspnea. CT chest shows 60% narrowing at prior stent site with granulation tissue.\n\nANESTHESIA: General anesthesia, ETT 7.5\n\nFINDINGS AND PROCEDURE:\nFlexible bronchoscopy performed. RMS and right bronchial tree patent. LMS with circumferential granulation tissue causing 55-60% obstruction starting 1cm from carina extending 1.5cm. Balloon dilation performed with 12mm x 40mm CRE balloon, 3 cycles at 6 ATM x 60 seconds each. Post-dilation patency approximately 85%. Small mucosal tear at 3 o'clock position, no active bleeding. Lingula and LLL bronchi patent.\n\nCOMPLICATIONS: Minor mucosal tear, self-limited\nEBL: Minimal\n\nDISPOSITION: Recovery, planned overnight observation\n\nPLAN:\n1. Chest X-ray post-procedure\n2. Follow-up bronchoscopy in 6 weeks\n3. Consider repeat stent placement if stenosis recurs\n\nSarah Kim, MD\nInterventional Pulmonology",
+      "cpt_codes": [
+        31630
+      ],
+      "registry_entry": {
+        "patient_mrn": "6734829",
+        "procedure_date": "2025-12-07",
+        "procedure_start_time": "14:00",
+        "procedure_end_time": "14:45",
+        "procedure_duration_minutes": 45,
+        "providers": {
+          "attending_name": "Kim, Sarah",
+          "attending_npi": "3456789012",
+          "fellow_name": "Park, Jonathan",
+          "fellow_pgy_level": 6,
+          "assistant_name": "Lee, Jennifer",
+          "assistant_role": "RN",
+          "trainee_present": true,
+          "rose_present": false
+        },
+        "patient_demographics": {
+          "age_years": 76,
+          "gender": "Female",
+          "height_cm": 155,
+          "weight_kg": 58,
+          "bmi": 24.1,
+          "smoking_status": "Former",
+          "pack_years": 40
+        },
+        "clinical_context": {
+          "asa_class": 3,
+          "primary_indication": "Post-stent granulation tissue stenosis",
+          "indication_category": "Stricture/Stenosis",
+          "radiographic_findings": "CT: 60% LMS narrowing with granulation tissue",
+          "lesion_size_mm": 15,
+          "prior_therapy": "Prior LMS silicone stent (removed 3 months ago)"
+        },
+        "sedation_type": "General",
+        "airway_type": "ETT",
+        "airway_device_size": "7.5",
+        "bronchoscopy_approach": "Oral",
+        "scope_type": "Flexible",
+        "cao_performed": true,
+        "cao_location": "Left mainstem bronchus",
+        "cao_primary_modality": "Balloon dilation",
+        "cao_obstruction_pre_pct": 60,
+        "cao_obstruction_post_pct": 15,
+        "dilation_performed": true,
+        "dilation_balloon_size_mm": 12,
+        "dilation_balloon_length_mm": 40,
+        "dilation_inflation_pressure_atm": 6,
+        "stent_type": null,
+        "stent_placed": false,
+        "bleeding_severity": "Mild",
+        "pneumothorax": false,
+        "disposition": "Inpatient observation",
+        "follow_up_plan": [
+          "Chest X-ray post-procedure",
+          "Follow-up bronchoscopy in 6 weeks"
+        ],
+        "metadata": {
+          "data_entry_status": "Complete",
+          "version": "2.8",
+          "generated_at": "2025-12-09T10:00:00"
+        }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-09",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31630",
+          "final_codes": [
+            "31630"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "31630": "Bronchoscopy with balloon dilation for granulation tissue stenosis."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.27,
+          "facility_total_payment": 203,
+          "per_code": {
+            "31630": {
+              "work_rvu": 3.81,
+              "facility_rvu": 6.27,
+              "facility_payment": 203,
+              "apc": "5154",
+              "opps_payment": 3687
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json - physician_2025_airway"
+        }
+      }
+    },
+    {
+      "note_text": "Name: Anderson, James T.\nMRN: 8472910\nDOB: 02/28/1965\nDate: 12/08/2025\nLocation: Mayo Clinic, Rochester, MN\nAttending: Dr. David Miller, MD\n\nPREOP DIAGNOSIS: Tracheal stenosis post tracheostomy\nPOSTOP DIAGNOSIS: Complex tracheal stenosis, post dilation\n\nPROCEDURE: Rigid bronchoscopy with mechanical dilation and balloon dilation\n\nCLINICAL HISTORY:\n59 y/o male with history of traumatic brain injury requiring prolonged mechanical ventilation and tracheostomy 4 months ago. Tracheostomy decannulated 6 weeks ago. Progressive stridor and dyspnea on exertion. CT neck/chest shows 75% tracheal stenosis at stoma site.\n\nPROCEDURE DETAILS:\nGeneral anesthesia with spontaneous ventilation through rigid bronchoscope. Larynx normal. Subglottic region patent. At level of prior tracheostomy site (approximately 3rd tracheal ring), complex stenosis noted with combination of granulation tissue and fibrous web causing 70-75% obstruction over 2cm segment. Initial mechanical dilation with rigid bronchoscope (size 8, then 9). Balloon dilation with 15mm diameter balloon x 3 inflations at 10 ATM. Final patency approximately 80%. Distal trachea and bilateral mainstem bronchi normal.\n\nCOMPLICATIONS: None\nEBL: <10mL\n\nIMPRESSION: Successful dilation of post-tracheostomy tracheal stenosis\nPLAN: Repeat dilation in 4-6 weeks vs. T-tube vs. surgical reconstruction depending on recurrence. Pulmonary rehab referral.\n\nD. Miller, MD",
+      "cpt_codes": [
+        31630
+      ],
+      "registry_entry": {
+        "patient_mrn": "8472910",
+        "procedure_date": "2025-12-08",
+        "procedure_start_time": "07:30",
+        "procedure_end_time": "08:45",
+        "procedure_duration_minutes": 75,
+        "providers": {
+          "attending_name": "Miller, David",
+          "attending_npi": "4567890123",
+          "fellow_name": null,
+          "fellow_pgy_level": null,
+          "assistant_name": "Johnson, Robert",
+          "assistant_role": "RT",
+          "trainee_present": false,
+          "rose_present": false
+        },
+        "patient_demographics": {
+          "age_years": 59,
+          "gender": "Male",
+          "height_cm": 183,
+          "weight_kg": 95,
+          "bmi": 28.4,
+          "smoking_status": "Former",
+          "pack_years": 25
+        },
+        "clinical_context": {
+          "asa_class": 3,
+          "primary_indication": "Post-tracheostomy tracheal stenosis",
+          "indication_category": "Stricture/Stenosis",
+          "radiographic_findings": "CT: 75% tracheal stenosis at stoma site",
+          "lesion_size_mm": 20,
+          "prior_therapy": "Tracheostomy (decannulated 6 weeks ago)"
+        },
+        "sedation_type": "General",
+        "airway_type": "Rigid bronchoscope",
+        "ventilation_mode": "Spontaneous",
+        "bronchoscopy_approach": "Oral",
+        "scope_type": "Rigid",
+        "cao_performed": true,
+        "cao_location": "Mid-trachea (stoma site)",
+        "cao_primary_modality": "Rigid dilation with balloon",
+        "cao_obstruction_pre_pct": 75,
+        "cao_obstruction_post_pct": 20,
+        "dilation_performed": true,
+        "dilation_balloon_size_mm": 15,
+        "dilation_inflation_pressure_atm": 10,
+        "dilation_rigid_final_size_mm": 9,
+        "stent_type": null,
+        "stent_placed": false,
+        "bleeding_severity": "None/Scant",
+        "pneumothorax": false,
+        "disposition": "Inpatient observation",
+        "follow_up_plan": [
+          "Repeat dilation in 4-6 weeks",
+          "Consider T-tube or surgical reconstruction",
+          "Pulmonary rehab referral"
+        ],
+        "metadata": {
+          "data_entry_status": "Complete",
+          "version": "2.8",
+          "generated_at": "2025-12-09T10:00:00"
+        }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-09",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31630",
+          "final_codes": [
+            "31630"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "31630": "Bronchoscopy with tracheal dilation (combined rigid and balloon) for complex stenosis."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.27,
+          "facility_total_payment": 203,
+          "per_code": {
+            "31630": {
+              "work_rvu": 3.81,
+              "facility_rvu": 6.27,
+              "facility_payment": 203,
+              "apc": "5154",
+              "opps_payment": 3687
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json - physician_2025_airway"
+        }
+      }
+    },
+    {
+      "note_text": "INTERVENTIONAL BRONCHOSCOPY NOTE\n\nPatient: Nguyen, Thi H.\nMRN: 9283746\nDOB: 09/05/1952\nDate of Service: 12/09/2025\nFacility: Stanford Medical Center, Palo Alto, CA\nPrimary Operator: Dr. Lisa Wang, MD\nFellow: Dr. Kevin O'Brien, MD (PGY-5)\n\nPREOPERATIVE DIAGNOSIS:\n1. Bronchus intermedius stenosis\n2. History of RLL sleeve resection for carcinoid tumor\n\nPOSTOPERATIVE DIAGNOSIS: Same, s/p successful dilation\n\nPROCEDURES PERFORMED:\n1. Flexible bronchoscopy\n2. Balloon dilation of bronchus intermedius\n\nINDICATIONS: 72 y/o female with history of RLL sleeve resection 18 months ago, presenting with progressive dyspnea and recurrent right lower lobe pneumonias. CT demonstrates 70% stenosis at surgical anastomosis.\n\nANESTHESIA: Moderate sedation with midazolam 3mg and fentanyl 75mcg IV\n\nPROCEDURE NARRATIVE:\nPatient placed in supine position with standard monitoring. Flexible bronchoscope (Olympus BF-1TH190) introduced through right nare. Vocal cords normal mobility. Trachea and carina normal. LMS and left bronchial tree unremarkable. RMS patent. At bronchus intermedius, severe circumferential stenosis noted at anastomotic site with approximately 65-70% obstruction. Pinhole opening visualized. Sequential balloon dilation performed: 8mm x 20mm CRE balloon (2 inflations x 45 sec at 4 ATM), then 10mm x 20mm balloon (2 inflations x 60 sec at 6 ATM), finally 12mm balloon (1 inflation x 60 sec at 6 ATM). Post-dilation patency estimated at 80-85%. RLL basilar segments now visible and patent. Minimal bleeding, resolved spontaneously.\n\nCOMPLICATIONS: None\nSPECIMENS: None\nEBL: <5mL\n\nIMPRESSION:\nSuccessful balloon dilation of post-surgical anastomotic stenosis at bronchus intermedius\n\nRECOMMENDATIONS:\n1. Continue current antibiotics for recent pneumonia\n2. Follow-up bronchoscopy in 8 weeks\n3. Consider stent placement if recurrent stenosis\n\nLisa Wang, MD\nDivision of Interventional Pulmonology",
+      "cpt_codes": [
+        31630
+      ],
+      "registry_entry": {
+        "patient_mrn": "9283746",
+        "procedure_date": "2025-12-09",
+        "procedure_start_time": "11:00",
+        "procedure_end_time": "11:40",
+        "procedure_duration_minutes": 40,
+        "providers": {
+          "attending_name": "Wang, Lisa",
+          "attending_npi": "5678901234",
+          "fellow_name": "O'Brien, Kevin",
+          "fellow_pgy_level": 5,
+          "assistant_name": "Martinez, Carmen",
+          "assistant_role": "RN",
+          "trainee_present": true,
+          "rose_present": false
+        },
+        "patient_demographics": {
+          "age_years": 72,
+          "gender": "Female",
+          "height_cm": 157,
+          "weight_kg": 54,
+          "bmi": 21.9,
+          "smoking_status": "Never",
+          "pack_years": 0
+        },
+        "clinical_context": {
+          "asa_class": 3,
+          "primary_indication": "Post-surgical anastomotic stenosis",
+          "indication_category": "Stricture/Stenosis",
+          "radiographic_findings": "CT: 70% stenosis at RLL sleeve anastomosis",
+          "lesion_size_mm": null,
+          "prior_therapy": "RLL sleeve resection for carcinoid (18 months ago)"
+        },
+        "sedation_type": "Moderate",
+        "sedation_agents": [
+          "midazolam 3mg",
+          "fentanyl 75mcg"
+        ],
+        "airway_type": "Native",
+        "bronchoscopy_approach": "Transnasal",
+        "scope_type": "Flexible",
+        "scope_model": "Olympus BF-1TH190",
+        "cao_performed": true,
+        "cao_location": "Bronchus intermedius",
+        "cao_primary_modality": "Balloon dilation",
+        "cao_obstruction_pre_pct": 70,
+        "cao_obstruction_post_pct": 15,
+        "dilation_performed": true,
+        "dilation_balloon_size_mm": 12,
+        "dilation_balloon_length_mm": 20,
+        "dilation_inflation_pressure_atm": 6,
+        "stent_type": null,
+        "stent_placed": false,
+        "bleeding_severity": "None/Scant",
+        "pneumothorax": false,
+        "disposition": "Outpatient discharge",
+        "follow_up_plan": [
+          "Continue antibiotics",
+          "Follow-up bronchoscopy in 8 weeks"
+        ],
+        "metadata": {
+          "data_entry_status": "Complete",
+          "version": "2.8",
+          "generated_at": "2025-12-09T10:00:00"
+        }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-09",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31630",
+          "final_codes": [
+            "31630"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "31630": "Bronchoscopy with balloon dilation for bronchus intermedius stenosis."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.27,
+          "facility_total_payment": 203,
+          "per_code": {
+            "31630": {
+              "work_rvu": 3.81,
+              "facility_rvu": 6.27,
+              "facility_payment": 203,
+              "apc": "5154",
+              "opps_payment": 3687
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json - physician_2025_airway"
+        }
+      }
+    }
+  ],
+  "cryotherapy_notes": [
+    {
+      "note_text": "Patient: Martinez, Carlos R.\nMRN: 1029384\nDOB: 05/17/1958\nDate: 12/03/2025\nFacility: MD Anderson Cancer Center, Houston, TX\nPhysician: Dr. James Wilson, MD\n\nPRE-OP DX: Endobronchial squamous cell carcinoma, RUL with 80% obstruction\nPOST-OP DX: Same, s/p cryotherapy debulking\n\nPROCEDURE: Rigid bronchoscopy with cryotherapy ablation\n\nINDICATIONS: 66 y/o male with advanced squamous cell lung cancer, not a surgical candidate. Progressive dyspnea with near-complete RUL obstruction. Palliative debulking requested.\n\nPROCEDURE DETAILS:\nGeneral anesthesia with rigid bronchoscope ventilation. Large exophytic tumor at RUL orifice causing 80% obstruction with extension into bronchus intermedius. Cryotherapy performed using Erbe Erbokryo CA unit with flexible cryoprobe. Multiple freeze-thaw cycles applied to tumor surface:\n- RUL orifice: 4 cycles, 30 sec freeze each\n- Bronchus intermedius tumor extension: 3 cycles, 30 sec each\n\nSignificant tumor necrosis achieved. Necrotic tissue debrided with rigid suction. Post-procedure patency improved to approximately 50% at RUL, BI now 80% patent. Moderate bleeding controlled with cold saline and topical epinephrine.\n\nCOMPLICATIONS: Moderate bleeding, controlled\nEBL: ~75mL\n\nIMPRESSION: Successful palliative cryotherapy debulking\nPLAN: Repeat bronchoscopy in 1 week for additional debulking. Radiation oncology consult. Palliative care involved.\n\nJ. Wilson, MD",
+      "cpt_codes": [
+        31641
+      ],
+      "registry_entry": {
+        "patient_mrn": "1029384",
+        "procedure_date": "2025-12-03",
+        "procedure_start_time": "09:00",
+        "procedure_end_time": "10:30",
+        "procedure_duration_minutes": 90,
+        "providers": {
+          "attending_name": "Wilson, James",
+          "attending_npi": "6789012345",
+          "fellow_name": "Singh, Priya",
+          "fellow_pgy_level": 6,
+          "assistant_name": "Brown, Michael",
+          "assistant_role": "RT",
+          "trainee_present": true,
+          "rose_present": false
+        },
+        "patient_demographics": {
+          "age_years": 66,
+          "gender": "Male",
+          "height_cm": 175,
+          "weight_kg": 78,
+          "bmi": 25.5,
+          "smoking_status": "Current",
+          "pack_years": 50
+        },
+        "clinical_context": {
+          "asa_class": 4,
+          "primary_indication": "Endobronchial squamous cell carcinoma with CAO",
+          "indication_category": "Airway Obstruction",
+          "radiographic_findings": "CT: RUL mass with 80% endobronchial obstruction",
+          "lesion_size_mm": 35,
+          "prior_therapy": "Chemotherapy (2 cycles)"
+        },
+        "sedation_type": "General",
+        "airway_type": "Rigid bronchoscope",
+        "bronchoscopy_approach": "Oral",
+        "scope_type": "Rigid",
+        "cao_performed": true,
+        "cao_location": "RUL, Bronchus intermedius",
+        "cao_tumor_location": "RUL orifice extending to BI",
+        "cao_primary_modality": "Cryotherapy",
+        "cao_obstruction_pre_pct": 80,
+        "cao_obstruction_post_pct": 50,
+        "ablation_modality": "Cryotherapy",
+        "ablation_device_name": "Erbe Erbokryo CA",
+        "cryotherapy_cycles": 7,
+        "cryotherapy_freeze_duration_sec": 30,
+        "stent_type": null,
+        "stent_placed": false,
+        "bleeding_severity": "Moderate (50-200mL)",
+        "ebl_ml": 75,
+        "pneumothorax": false,
+        "final_diagnosis_prelim": "Malignancy",
+        "disposition": "Inpatient observation",
+        "follow_up_plan": [
+          "Repeat bronchoscopy in 1 week",
+          "Radiation oncology consult",
+          "Palliative care"
+        ],
+        "metadata": {
+          "data_entry_status": "Complete",
+          "version": "2.8",
+          "generated_at": "2025-12-09T10:00:00"
+        }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-09",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "31641": "Bronchoscopy with destruction of tumor by cryotherapy; rigid access for ventilation/debridement included/bundled."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272,
+          "per_code": {
+            "31641": {
+              "work_rvu": 5.25,
+              "facility_rvu": 8.4,
+              "facility_payment": 272,
+              "apc": "5155",
+              "opps_payment": 6922
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json - physician_2025_airway"
+        }
+      }
+    },
+    {
+      "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nPatient: Johnson, Patricia A.\nMRN: 2847563\nDOB: 03/22/1961\nDate of Procedure: 12/04/2025\nFacility: Cleveland Clinic, Cleveland, OH\nAttending: Dr. Robert Chen, MD\nFellow: Dr. Amanda Foster, MD (PGY-6)\n\nPREOPERATIVE DIAGNOSIS: Left mainstem endobronchial carcinoid tumor\n\nPOSTOPERATIVE DIAGNOSIS: Same, s/p cryotherapy\n\nPROCEDURE: Flexible bronchoscopy with cryotherapy ablation of endobronchial tumor\n\nINDICATIONS: 63 y/o female with incidentally discovered LMS carcinoid tumor on CT for unrelated workup. Biopsy confirmed typical carcinoid. Patient declines surgical resection. Endobronchial cryotherapy planned for tumor control.\n\nANESTHESIA: General anesthesia, ETT 7.5\n\nPROCEDURE NARRATIVE:\nFlexible bronchoscopy performed. Trachea and carina normal. RMS and right bronchial tree normal. LMS with polypoid tumor arising from posterior wall, 15mm in size, causing approximately 40% obstruction. Tumor has typical carcinoid appearance (pink, vascular). Cryotherapy performed using Erbe cryoprobe:\n- 5 freeze-thaw cycles applied circumferentially to tumor base\n- Each cycle: 20 seconds freeze, 10 seconds thaw\n- Visible blanching and early necrosis noted\n\nPost-procedure: Tumor appears devitalized. Lumen maintained. No significant bleeding.\n\nCOMPLICATIONS: None\nSPECIMENS: None (prior biopsy diagnostic)\nEBL: <5mL\n\nIMPRESSION:\nSuccessful cryotherapy ablation of LMS carcinoid tumor\n\nPLAN:\n1. Repeat bronchoscopy in 6 weeks to assess response\n2. Consider additional cryotherapy sessions if residual tumor\n3. Long-term surveillance with CT and bronchoscopy\n\nRobert Chen, MD\nDivision of Pulmonary Medicine",
+      "cpt_codes": [
+        31641
+      ],
+      "registry_entry": {
+        "patient_mrn": "2847563",
+        "procedure_date": "2025-12-04",
+        "procedure_start_time": "13:00",
+        "procedure_end_time": "13:45",
+        "procedure_duration_minutes": 45,
+        "providers": {
+          "attending_name": "Chen, Robert",
+          "attending_npi": "7890123456",
+          "fellow_name": "Foster, Amanda",
+          "fellow_pgy_level": 6,
+          "assistant_name": "Williams, Sarah",
+          "assistant_role": "RN",
+          "trainee_present": true,
+          "rose_present": false
+        },
+        "patient_demographics": {
+          "age_years": 63,
+          "gender": "Female",
+          "height_cm": 165,
+          "weight_kg": 68,
+          "bmi": 25.0,
+          "smoking_status": "Never",
+          "pack_years": 0
+        },
+        "clinical_context": {
+          "asa_class": 2,
+          "primary_indication": "Endobronchial carcinoid tumor",
+          "indication_category": "Ablation",
+          "radiographic_findings": "CT: LMS endobronchial lesion",
+          "lesion_size_mm": 15,
+          "prior_therapy": "None"
+        },
+        "sedation_type": "General",
+        "airway_type": "ETT",
+        "airway_device_size": "7.5",
+        "bronchoscopy_approach": "Oral",
+        "scope_type": "Flexible",
+        "cao_performed": true,
+        "cao_location": "Left mainstem bronchus",
+        "cao_tumor_location": "LMS posterior wall",
+        "cao_primary_modality": "Cryotherapy",
+        "cao_obstruction_pre_pct": 40,
+        "cao_obstruction_post_pct": 40,
+        "ablation_modality": "Cryotherapy",
+        "ablation_device_name": "Erbe cryoprobe",
+        "cryotherapy_cycles": 5,
+        "cryotherapy_freeze_duration_sec": 20,
+        "stent_type": null,
+        "stent_placed": false,
+        "bleeding_severity": "None/Scant",
+        "pneumothorax": false,
+        "final_diagnosis_prelim": "Carcinoid tumor",
+        "disposition": "Outpatient discharge",
+        "follow_up_plan": [
+          "Repeat bronchoscopy in 6 weeks",
+          "Long-term CT surveillance"
+        ],
+        "metadata": {
+          "data_entry_status": "Complete",
+          "version": "2.8",
+          "generated_at": "2025-12-09T10:00:00"
+        }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-09",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "31641": "Bronchoscopy with destruction of tumor (carcinoid) by cryotherapy."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272,
+          "per_code": {
+            "31641": {
+              "work_rvu": 5.25,
+              "facility_rvu": 8.4,
+              "facility_payment": 272,
+              "apc": "5155",
+              "opps_payment": 6922
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json - physician_2025_airway"
+        }
+      }
+    },
+    {
+      "note_text": "Pt: Davis, William M.\nMRN: 4738291\nDOB: 08/14/1955\nDate: 12/05/2025\nLocation: Northwestern Memorial Hospital, Chicago, IL\nMD: Dr. Emily Thompson\n\nDx: Recurrent granulation tissue post RMS stent removal\nProcedure: Bronchoscopy with cryotherapy for granulation tissue ablation\n\nHISTORY: 69 y/o male s/p RMS silicone stent for malignant CAO (adenocarcinoma, now in remission). Stent removed 2 months ago. Surveillance bronch shows recurrent granulation tissue at prior stent margins causing 50% stenosis.\n\nPROCEDURE:\nModerate sedation (propofol infusion). Flexible bronchoscopy via oral route. RMS with circumferential granulation tissue at 2cm from carina, 50% obstruction. LMS normal. Cryotherapy (spray cryotherapy, CSA Medical TrueFreeze) applied to granulation tissue:\n- Anterior wall: 3 applications x 5 seconds each\n- Posterior wall: 3 applications x 5 seconds each  \n- Lateral walls: 2 applications each side x 5 seconds\n\nImmediate tissue blanching and edema noted. Post-treatment lumen slightly improved. Expected further improvement with tissue sloughing over 1-2 weeks.\n\nCOMPLICATIONS: None\nEBL: Minimal\n\nPLAN: Repeat bronchoscopy in 2 weeks to assess response and debride necrotic tissue. Consider balloon dilation if stenosis persists.\n\nE. Thompson, MD",
+      "cpt_codes": [
+        31641
+      ],
+      "registry_entry": {
+        "patient_mrn": "4738291",
+        "procedure_date": "2025-12-05",
+        "procedure_start_time": "15:30",
+        "procedure_end_time": "16:15",
+        "procedure_duration_minutes": 45,
+        "providers": {
+          "attending_name": "Thompson, Emily",
+          "attending_npi": "8901234567",
+          "fellow_name": null,
+          "fellow_pgy_level": null,
+          "assistant_name": "Garcia, Luis",
+          "assistant_role": "RT",
+          "trainee_present": false,
+          "rose_present": false
+        },
+        "patient_demographics": {
+          "age_years": 69,
+          "gender": "Male",
+          "height_cm": 180,
+          "weight_kg": 88,
+          "bmi": 27.2,
+          "smoking_status": "Former",
+          "pack_years": 35
+        },
+        "clinical_context": {
+          "asa_class": 3,
+          "primary_indication": "Post-stent granulation tissue",
+          "indication_category": "Stricture/Stenosis",
+          "radiographic_findings": "Bronchoscopy: Granulation tissue at prior stent site",
+          "lesion_size_mm": null,
+          "prior_therapy": "RMS silicone stent (removed 2 months ago)"
+        },
+        "sedation_type": "Moderate",
+        "sedation_agents": [
+          "propofol infusion"
+        ],
+        "airway_type": "Native",
+        "bronchoscopy_approach": "Oral",
+        "scope_type": "Flexible",
+        "cao_performed": true,
+        "cao_location": "Right mainstem bronchus",
+        "cao_primary_modality": "Spray cryotherapy",
+        "cao_obstruction_pre_pct": 50,
+        "cao_obstruction_post_pct": 45,
+        "ablation_modality": "Spray cryotherapy",
+        "ablation_device_name": "CSA Medical TrueFreeze",
+        "cryotherapy_spray_applications": 10,
+        "cryotherapy_spray_duration_sec": 5,
+        "stent_type": null,
+        "stent_placed": false,
+        "bleeding_severity": "None/Scant",
+        "pneumothorax": false,
+        "disposition": "Outpatient discharge",
+        "follow_up_plan": [
+          "Repeat bronchoscopy in 2 weeks",
+          "Consider balloon dilation if stenosis persists"
+        ],
+        "metadata": {
+          "data_entry_status": "Complete",
+          "version": "2.8",
+          "generated_at": "2025-12-09T10:00:00"
+        }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-09",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "31641": "Bronchoscopy with destruction of granulation tissue using spray cryotherapy."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272,
+          "per_code": {
+            "31641": {
+              "work_rvu": 5.25,
+              "facility_rvu": 8.4,
+              "facility_payment": 272,
+              "apc": "5155",
+              "opps_payment": 6922
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json - physician_2025_airway"
+        }
+      }
+    },
+    {
+      "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE NOTE\n\nPatient: Brown, Sandra K.\nMRN: 5849271\nDOB: 12/03/1949\nDate of Service: 12/06/2025\nFacility: UCSF Medical Center, San Francisco, CA\nAttending: Dr. Michael Nakamura, MD\nFellow: Dr. Christina Lopez, MD (PGY-5)\n\nPREOPERATIVE DIAGNOSIS:\n1. Small cell lung cancer with endobronchial disease\n2. Right upper lobe bronchus obstruction\n\nPOSTOPERATIVE DIAGNOSIS: Same, s/p palliative cryotherapy\n\nPROCEDURES PERFORMED:\n1. Rigid bronchoscopy\n2. Cryotherapy ablation of endobronchial tumor\n3. Mechanical debridement\n\nCLINICAL HISTORY: 75 y/o female with extensive stage small cell lung cancer. Despite chemotherapy, progressive endobronchial disease causing RUL collapse and post-obstructive pneumonia. Palliative bronchoscopic intervention requested.\n\nANESTHESIA: General anesthesia with jet ventilation\n\nFINDINGS:\nRigid bronchoscopy introduced. Trachea patent. Carina sharp. LMS and left bronchial tree normal. RMS with tumor extending from RUL orifice, completely occluding RUL takeoff and causing 60% narrowing of bronchus intermedius. Tumor is friable, necrotic centrally.\n\nPROCEDURE:\n1. Cryotherapy (Erbe Erbokryo) applied to tumor bulk:\n   - RUL orifice: 6 freeze-thaw cycles (30 sec freeze/15 sec thaw)\n   - BI extension: 4 cycles\n2. Mechanical debridement using rigid suction and forceps\n3. Tumor core extracted en bloc\n\nRESULT: RUL orifice now 40% patent (was 0%). BI improved to 90% patency. Significant tumor burden removed. Active bleeding controlled with cold saline lavage.\n\nCOMPLICATIONS: Moderate bleeding (controlled)\nEBL: 100mL\n\nSPECIMENS: Tumor fragments sent to pathology\n\nDISPOSITION: ICU overnight monitoring\n\nPLAN:\n1. Chest X-ray post-procedure\n2. Continue IV antibiotics\n3. Repeat bronchoscopy in 5-7 days\n4. Oncology follow-up for additional chemotherapy\n\nMichael Nakamura, MD\nInterventional Pulmonology",
+      "cpt_codes": [
+        31641
+      ],
+      "registry_entry": {
+        "patient_mrn": "5849271",
+        "procedure_date": "2025-12-06",
+        "procedure_start_time": "08:00",
+        "procedure_end_time": "09:45",
+        "procedure_duration_minutes": 105,
+        "providers": {
+          "attending_name": "Nakamura, Michael",
+          "attending_npi": "9012345678",
+          "fellow_name": "Lopez, Christina",
+          "fellow_pgy_level": 5,
+          "assistant_name": "Kim, David",
+          "assistant_role": "RT",
+          "trainee_present": true,
+          "rose_present": false
+        },
+        "patient_demographics": {
+          "age_years": 75,
+          "gender": "Female",
+          "height_cm": 160,
+          "weight_kg": 52,
+          "bmi": 20.3,
+          "smoking_status": "Former",
+          "pack_years": 45
+        },
+        "clinical_context": {
+          "asa_class": 4,
+          "primary_indication": "Small cell lung cancer with endobronchial obstruction",
+          "indication_category": "Airway Obstruction",
+          "radiographic_findings": "CT: RUL collapse, endobronchial tumor",
+          "lesion_size_mm": 40,
+          "prior_therapy": "Chemotherapy"
+        },
+        "sedation_type": "General",
+        "airway_type": "Jet ventilation",
+        "bronchoscopy_approach": "Oral",
+        "scope_type": "Rigid",
+        "cao_performed": true,
+        "cao_location": "RUL, Bronchus intermedius",
+        "cao_tumor_location": "RUL orifice with BI extension",
+        "cao_primary_modality": "Cryotherapy with mechanical debridement",
+        "cao_obstruction_pre_pct": 100,
+        "cao_obstruction_post_pct": 60,
+        "ablation_modality": "Cryotherapy",
+        "ablation_device_name": "Erbe Erbokryo",
+        "cryotherapy_cycles": 10,
+        "cryotherapy_freeze_duration_sec": 30,
+        "mechanical_debridement": true,
+        "stent_type": null,
+        "stent_placed": false,
+        "bleeding_severity": "Moderate (50-200mL)",
+        "ebl_ml": 100,
+        "pneumothorax": false,
+        "specimens_collected": true,
+        "final_diagnosis_prelim": "Malignancy",
+        "disposition": "ICU admission",
+        "follow_up_plan": [
+          "Chest X-ray post-procedure",
+          "Continue IV antibiotics",
+          "Repeat bronchoscopy in 5-7 days"
+        ],
+        "metadata": {
+          "data_entry_status": "Complete",
+          "version": "2.8",
+          "generated_at": "2025-12-09T10:00:00"
+        }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-09",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "31641": "Bronchoscopy with destruction of tumor by cryotherapy; mechanical debridement bundled when same site."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272,
+          "per_code": {
+            "31641": {
+              "work_rvu": 5.25,
+              "facility_rvu": 8.4,
+              "facility_payment": 272,
+              "apc": "5155",
+              "opps_payment": 6922
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json - physician_2025_airway"
+        }
+      }
+    },
+    {
+      "note_text": "Patient: Lee, David H.\nMRN: 6738492\nDOB: 01/25/1963\nDate: 12/08/2025\nFacility: Duke University Medical Center, Durham, NC\nPhysician: Dr. Jennifer Adams, MD\n\nPREOP DIAGNOSIS: Tracheal papillomatosis\nPOSTOP DIAGNOSIS: Same, s/p cryotherapy ablation\n\nPROCEDURE: Flexible bronchoscopy with cryotherapy ablation of tracheal papillomas\n\nCLINICAL HISTORY:\n61 y/o male with recurrent respiratory papillomatosis (RRP), HPV-related. Multiple prior procedures for laryngeal involvement. Now with tracheal extension. Progressive cough and mild dyspnea. CT shows multiple papillomas in mid-trachea.\n\nANESTHESIA: General anesthesia, LMA\n\nFINDINGS AND PROCEDURE:\nFlexible bronchoscopy through LMA. Larynx with minimal scarring from prior procedures, cords mobile. Subglottic region clear. Mid-trachea (4-6cm below cords) with multiple papillomatous lesions, largest 8mm, total of 6 lesions causing approximately 30% obstruction collectively.\n\nCryotherapy performed using flexible cryoprobe (Erbe):\n- Each papilloma treated with 2-3 freeze-thaw cycles\n- Freeze time 15-20 seconds per cycle\n- Total of 15 applications\n\nAll visible lesions treated. Immediate blanching noted. No significant bleeding. Distal trachea and bronchial tree normal.\n\nCOMPLICATIONS: None\nEBL: <5mL\n\nIMPRESSION: Successful cryotherapy ablation of tracheal papillomas\n\nPLAN:\n1. Short course oral steroids for airway edema\n2. Follow-up bronchoscopy in 8-12 weeks\n3. Consider adjuvant cidofovir if rapid recurrence\n4. ENT follow-up for laryngeal surveillance\n\nJennifer Adams, MD\nInterventional Pulmonology",
+      "cpt_codes": [
+        31641
+      ],
+      "registry_entry": {
+        "patient_mrn": "6738492",
+        "procedure_date": "2025-12-08",
+        "procedure_start_time": "10:30",
+        "procedure_end_time": "11:15",
+        "procedure_duration_minutes": 45,
+        "providers": {
+          "attending_name": "Adams, Jennifer",
+          "attending_npi": "0123456789",
+          "fellow_name": "Patel, Raj",
+          "fellow_pgy_level": 6,
+          "assistant_name": "Wright, Nancy",
+          "assistant_role": "RN",
+          "trainee_present": true,
+          "rose_present": false
+        },
+        "patient_demographics": {
+          "age_years": 61,
+          "gender": "Male",
+          "height_cm": 172,
+          "weight_kg": 75,
+          "bmi": 25.4,
+          "smoking_status": "Never",
+          "pack_years": 0
+        },
+        "clinical_context": {
+          "asa_class": 2,
+          "primary_indication": "Recurrent respiratory papillomatosis with tracheal extension",
+          "indication_category": "Ablation",
+          "radiographic_findings": "CT: Multiple tracheal papillomas",
+          "lesion_size_mm": 8,
+          "lesion_count": 6,
+          "prior_therapy": "Multiple prior laryngeal procedures"
+        },
+        "sedation_type": "General",
+        "airway_type": "LMA",
+        "bronchoscopy_approach": "Oral",
+        "scope_type": "Flexible",
+        "cao_performed": true,
+        "cao_location": "Mid-trachea",
+        "cao_primary_modality": "Cryotherapy",
+        "cao_obstruction_pre_pct": 30,
+        "cao_obstruction_post_pct": 30,
+        "ablation_modality": "Cryotherapy",
+        "ablation_device_name": "Erbe cryoprobe",
+        "cryotherapy_applications": 15,
+        "cryotherapy_freeze_duration_sec": 20,
+        "stent_type": null,
+        "stent_placed": false,
+        "bleeding_severity": "None/Scant",
+        "pneumothorax": false,
+        "final_diagnosis_prelim": "Benign - Papillomatosis",
+        "disposition": "Outpatient discharge",
+        "follow_up_plan": [
+          "Short course oral steroids",
+          "Follow-up bronchoscopy in 8-12 weeks",
+          "ENT follow-up"
+        ],
+        "metadata": {
+          "data_entry_status": "Complete",
+          "version": "2.8",
+          "generated_at": "2025-12-09T10:00:00"
+        }
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-09",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "31641": "Bronchoscopy with destruction of tracheal papillomas by cryotherapy."
+          }
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272,
+          "per_code": {
+            "31641": {
+              "work_rvu": 5.25,
+              "facility_rvu": 8.4,
+              "facility_payment": 272,
+              "apc": "5155",
+              "opps_payment": 6922
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json - physician_2025_airway"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "airway_dilation": {
+      "procedure_count": 5,
+      "primary_cpt": "31630",
+      "cpt_description": "Bronchoscopy with tracheal/bronchial dilation or closed reduction of fracture",
+      "rvu_data": {
+        "work_rvu": 3.81,
+        "total_facility_rvu": 6.27,
+        "mpfs_facility_payment": 203,
+        "apc": "5154",
+        "opps_payment": 3687
+      },
+      "common_indications": [
+        "Post-intubation tracheal stenosis",
+        "Post-transplant anastomotic stenosis",
+        "Post-stent granulation tissue stenosis",
+        "Post-tracheostomy stenosis",
+        "Post-surgical anastomotic stenosis"
+      ],
+      "modalities": [
+        "Balloon dilation",
+        "Rigid dilation",
+        "Combined rigid and balloon"
+      ]
+    },
+    "cryotherapy": {
+      "procedure_count": 5,
+      "primary_cpt": "31641",
+      "cpt_description": "Bronchoscopy with destruction of tumor or relief of stenosis by any method",
+      "rvu_data": {
+        "work_rvu": 5.25,
+        "total_facility_rvu": 8.4,
+        "mpfs_facility_payment": 272,
+        "apc": "5155",
+        "opps_payment": 6922
+      },
+      "common_indications": [
+        "Endobronchial malignancy (palliative)",
+        "Carcinoid tumor ablation",
+        "Post-stent granulation tissue",
+        "Small cell lung cancer with CAO",
+        "Recurrent respiratory papillomatosis"
+      ],
+      "modalities": [
+        "Contact cryotherapy (probe)",
+        "Spray cryotherapy"
+      ]
+    }
+  }
+}

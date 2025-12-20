@@ -1,0 +1,4607 @@
+[
+  {
+    "note_text": "Procedures: Rigid bronchoscopy, mechanical tumor debridement, APC, balloon dilation, stent placement (RMS), PleurX catheter.\nIndication: Critical RMS obstruction, tamponade, effusion.\nFindings: 90% obstruction RMS (fungating tumor). Effusion.\nActions:\n- Rigid scope inserted. Jet ventilation.\n- Tumor cored/debrided. Hemostasis w/ epi/APC.\n- 14x60mm covered metal stent placed RMS. Patent.\n- Pericardial window (CT Surg).\n- PleurX catheter placed right chest. 850ml drained.\nComplications: None.",
+    "cpt_codes": [
+      31641,
+      31636,
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-03-01",
+      "providers": {
+        "attending_name": "Harrison"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159384"
+      },
+      "cpt_codes": [
+        31641,
+        31636,
+        32550
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Radiofrequency",
+      "ablation_max_temp_c": 8580,
+      "ablation_duration_seconds": 1800,
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31636,
+            32550
+          ],
+          "dropped_cpt_codes": [
+            32551,
+            31631,
+            31624,
+            32560
+          ],
+          "primary_cpt_family": "therapeutic_airway_pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 21.13,
+          "estimated_medicare_payment": 684,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31636,
+              "units": 1,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": 32550,
+              "units": 1,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Procedure involved rigid bronchoscopy with tumor debridement/destruction (31641) and placement of a bronchial stent in the right mainstem (31636).",
+            "Corrected 31631 (tracheal stent) to 31636 (bronchial stent) based on location (right mainstem).",
+            "Dropped 32551 (chest tube) as 32550 (tunneled pleural catheter) describes the pleural drainage procedure performed by IP.",
+            "Dropped 32560 as no pleurodesis agent was instilled.",
+            "Pericardial window is a thoracic surgery procedure (33025) and not coded here for IP."
+          ]
+        }
+      },
+      "patient_age": 62,
+      "patient_mrn": "UNKNOWN_syn_1"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPTs to [31641, 31636, 32550].",
+        "Replaced 31631 (tracheal) with 31636 (bronchial).",
+        "Removed 32551/32560 (incorrectly extracted).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 0,
+      "style_type": 1,
+      "generated_name": "Mary Smith",
+      "generation_date": "2025-12-09T09:19:34.780685"
+    }
+  },
+  {
+    "note_text": "OPERATIVE NARRATIVE: The patient presented with critical central airway obstruction and tamponade physiology. Following induction, a rigid bronchoscopic approach was utilized for the right mainstem (RMS) lesion. Significant fungating tumor burden obstructing 90% of the RMS was noted. Mechanical coring was performed with the rigid barrel, supplemented by Argon Plasma Coagulation (APC) for hemostasis and tissue destruction (CPT 31641). Following balloon dilation, a 14x60mm partially covered self-expanding metallic stent was deployed (CPT 31636), restoring patency to the RUL, RML, and RLL. Subsequently, a tunneled indwelling pleural catheter was inserted for palliation of malignant effusion (CPT 32550).",
+    "cpt_codes": [
+      31641,
+      31636,
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-07-20",
+      "providers": {
+        "attending_name": "Harrison"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159384"
+      },
+      "cpt_codes": [
+        31641,
+        31636,
+        32550
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Radiofrequency",
+      "ablation_max_temp_c": 8580,
+      "ablation_duration_seconds": 1800,
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31636,
+            32550
+          ],
+          "dropped_cpt_codes": [
+            32551,
+            31631,
+            31624,
+            32560
+          ],
+          "primary_cpt_family": "therapeutic_airway_pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 21.13,
+          "estimated_medicare_payment": 684,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31636,
+              "units": 1,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": 32550,
+              "units": 1,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Procedure involved rigid bronchoscopy with tumor debridement/destruction (31641) and placement of a bronchial stent in the right mainstem (31636).",
+            "Corrected 31631 (tracheal stent) to 31636 (bronchial stent) based on location (right mainstem).",
+            "Dropped 32551 (chest tube) as 32550 (tunneled pleural catheter) describes the pleural drainage procedure performed by IP.",
+            "Dropped 32560 as no pleurodesis agent was instilled.",
+            "Pericardial window is a thoracic surgery procedure (33025) and not coded here for IP."
+          ]
+        }
+      },
+      "patient_age": 66,
+      "patient_mrn": "UNKNOWN_syn_2"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPTs to [31641, 31636, 32550].",
+        "Replaced 31631 (tracheal) with 31636 (bronchial).",
+        "Removed 32551/32560 (incorrectly extracted).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 0,
+      "style_type": 2,
+      "generated_name": "Susan Johnson",
+      "generation_date": "2025-12-09T09:19:34.780724"
+    }
+  },
+  {
+    "note_text": "Code Selection Support:\n1. 31641 (Bronchoscopy, Rigid, with destruction of tumor): Rigid scope used to mechanically core 90% obstruction in Right Mainstem. APC used for destruction.\n2. 31636 (Bronchoscopy with Stent): Placement of Boston Scientific Ultraflex (14x60mm) in Right Mainstem Bronchus following dilation.\n3. 32550 (Tunneled Pleural Catheter): Ultrasound-guided insertion of PleurX catheter for recurrent malignant effusion.\nNote: Pericardial window performed by Thoracic Surgery (billed separately).",
+    "cpt_codes": [
+      31641,
+      31636,
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-07-13",
+      "providers": {
+        "attending_name": "Harrison"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159384"
+      },
+      "cpt_codes": [
+        31641,
+        31636,
+        32550
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Radiofrequency",
+      "ablation_max_temp_c": 8580,
+      "ablation_duration_seconds": 1800,
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31636,
+            32550
+          ],
+          "dropped_cpt_codes": [
+            32551,
+            31631,
+            31624,
+            32560
+          ],
+          "primary_cpt_family": "therapeutic_airway_pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 21.13,
+          "estimated_medicare_payment": 684,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31636,
+              "units": 1,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": 32550,
+              "units": 1,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Procedure involved rigid bronchoscopy with tumor debridement/destruction (31641) and placement of a bronchial stent in the right mainstem (31636).",
+            "Corrected 31631 (tracheal stent) to 31636 (bronchial stent) based on location (right mainstem).",
+            "Dropped 32551 (chest tube) as 32550 (tunneled pleural catheter) describes the pleural drainage procedure performed by IP.",
+            "Dropped 32560 as no pleurodesis agent was instilled.",
+            "Pericardial window is a thoracic surgery procedure (33025) and not coded here for IP."
+          ]
+        }
+      },
+      "patient_age": 65,
+      "patient_mrn": "UNKNOWN_syn_3"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPTs to [31641, 31636, 32550].",
+        "Replaced 31631 (tracheal) with 31636 (bronchial).",
+        "Removed 32551/32560 (incorrectly extracted).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 0,
+      "style_type": 3,
+      "generated_name": "Linda Williams",
+      "generation_date": "2025-12-09T09:19:34.780758"
+    }
+  },
+  {
+    "note_text": "Resident Procedure Note\nAttending: Dr. Kim\nProcedure: Rigid Bronch, Stent, PleurX.\nSteps:\n1. TFBC showed 90% RMS obstruction.\n2. Switched to Rigid Bronch (Storz 13mm).\n3. Debrided tumor manually and with APC.\n4. Placed stent (14x60mm) in RMS. Confirmed patency to all right segments.\n5. CT surgery did pericardial window.\n6. We placed PleurX tube in right chest using standard Seldinger technique.\nPlan: ICU for airway monitoring.",
+    "cpt_codes": [
+      31641,
+      31636,
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-07-24",
+      "providers": {
+        "attending_name": "Harrison"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159384"
+      },
+      "cpt_codes": [
+        31641,
+        31636,
+        32550
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Radiofrequency",
+      "ablation_max_temp_c": 8580,
+      "ablation_duration_seconds": 1800,
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31636,
+            32550
+          ],
+          "dropped_cpt_codes": [
+            32551,
+            31631,
+            31624,
+            32560
+          ],
+          "primary_cpt_family": "therapeutic_airway_pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 21.13,
+          "estimated_medicare_payment": 684,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31636,
+              "units": 1,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": 32550,
+              "units": 1,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Procedure involved rigid bronchoscopy with tumor debridement/destruction (31641) and placement of a bronchial stent in the right mainstem (31636).",
+            "Corrected 31631 (tracheal stent) to 31636 (bronchial stent) based on location (right mainstem).",
+            "Dropped 32551 (chest tube) as 32550 (tunneled pleural catheter) describes the pleural drainage procedure performed by IP.",
+            "Dropped 32560 as no pleurodesis agent was instilled.",
+            "Pericardial window is a thoracic surgery procedure (33025) and not coded here for IP."
+          ]
+        }
+      },
+      "patient_age": 66,
+      "patient_mrn": "UNKNOWN_syn_4"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPTs to [31641, 31636, 32550].",
+        "Replaced 31631 (tracheal) with 31636 (bronchial).",
+        "Removed 32551/32560 (incorrectly extracted).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 0,
+      "style_type": 4,
+      "generated_name": "Patricia Brown",
+      "generation_date": "2025-12-09T09:19:34.780785"
+    }
+  },
+  {
+    "note_text": "Procedure note for Mrs Okafor we did the rigid bronchoscopy today for that large mass in the right mainstem patient was intubated then we switched to the rigid scope used the tip to core out the tumor lots of bleeding but controlled with iced saline and APC. Put in a stent 14 by 60 covered metal one looks wide open now. Also put in a pleurx catheter for the fluid in the lung drained about 850 cc. Oh and surgery did the heart window thing. Patient stable sent to ICU.",
+    "cpt_codes": [
+      31641,
+      31636,
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-05-12",
+      "providers": {
+        "attending_name": "Harrison"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159384"
+      },
+      "cpt_codes": [
+        31641,
+        31636,
+        32550
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Radiofrequency",
+      "ablation_max_temp_c": 8580,
+      "ablation_duration_seconds": 1800,
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31636,
+            32550
+          ],
+          "dropped_cpt_codes": [
+            32551,
+            31631,
+            31624,
+            32560
+          ],
+          "primary_cpt_family": "therapeutic_airway_pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 21.13,
+          "estimated_medicare_payment": 684,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31636,
+              "units": 1,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": 32550,
+              "units": 1,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Procedure involved rigid bronchoscopy with tumor debridement/destruction (31641) and placement of a bronchial stent in the right mainstem (31636).",
+            "Corrected 31631 (tracheal stent) to 31636 (bronchial stent) based on location (right mainstem).",
+            "Dropped 32551 (chest tube) as 32550 (tunneled pleural catheter) describes the pleural drainage procedure performed by IP.",
+            "Dropped 32560 as no pleurodesis agent was instilled.",
+            "Pericardial window is a thoracic surgery procedure (33025) and not coded here for IP."
+          ]
+        }
+      },
+      "patient_age": 63,
+      "patient_mrn": "UNKNOWN_syn_5"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPTs to [31641, 31636, 32550].",
+        "Replaced 31631 (tracheal) with 31636 (bronchial).",
+        "Removed 32551/32560 (incorrectly extracted).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 0,
+      "style_type": 5,
+      "generated_name": "Barbara Jones",
+      "generation_date": "2025-12-09T09:19:34.780812"
+    }
+  },
+  {
+    "note_text": "The patient was brought to the hybrid OR for management of complex airway and pleural disease. General anesthesia was induced. Initial flexible inspection confirmed near-total obstruction of the right mainstem bronchus. A rigid bronchoscope was introduced. The tumor was mechanically debrided and cauterized using APC. A 14x60mm covered metallic stent was deployed, restoring ventilation to the right lung. Following this, the right hemithorax was accessed under ultrasound guidance, and a tunneled pleural catheter was placed without difficulty. 850mL of fluid was evacuated. The patient tolerated the procedures well.",
+    "cpt_codes": [
+      31641,
+      31636,
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-08-15",
+      "providers": {
+        "attending_name": "Harrison"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159384"
+      },
+      "cpt_codes": [
+        31641,
+        31636,
+        32550
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Radiofrequency",
+      "ablation_max_temp_c": 8580,
+      "ablation_duration_seconds": 1800,
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31636,
+            32550
+          ],
+          "dropped_cpt_codes": [
+            32551,
+            31631,
+            31624,
+            32560
+          ],
+          "primary_cpt_family": "therapeutic_airway_pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 21.13,
+          "estimated_medicare_payment": 684,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31636,
+              "units": 1,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": 32550,
+              "units": 1,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Procedure involved rigid bronchoscopy with tumor debridement/destruction (31641) and placement of a bronchial stent in the right mainstem (31636).",
+            "Corrected 31631 (tracheal stent) to 31636 (bronchial stent) based on location (right mainstem).",
+            "Dropped 32551 (chest tube) as 32550 (tunneled pleural catheter) describes the pleural drainage procedure performed by IP.",
+            "Dropped 32560 as no pleurodesis agent was instilled.",
+            "Pericardial window is a thoracic surgery procedure (33025) and not coded here for IP."
+          ]
+        }
+      },
+      "patient_age": 66,
+      "patient_mrn": "UNKNOWN_syn_6"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPTs to [31641, 31636, 32550].",
+        "Replaced 31631 (tracheal) with 31636 (bronchial).",
+        "Removed 32551/32560 (incorrectly extracted).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 0,
+      "style_type": 6,
+      "generated_name": "Elizabeth Garcia",
+      "generation_date": "2025-12-09T09:19:34.780841"
+    }
+  },
+  {
+    "note_text": "[Indication]\nMetastatic lung cancer with critical airway obstruction and malignant pleural effusion.\n[Anesthesia]\nGeneral, Rigid Bronchoscopy with Jet Ventilation.\n[Description]\n1. Rigid bronchoscopy performed. 90% RMS obstruction debrided via coring/APC. Stent (14x60mm) deployed. Airway patent.\n2. Pericardial window (by CT Surgery).\n3. Tunneled pleural catheter placed right chest. Fluid drained.\n[Plan]\nICU monitoring. CXR. PleurX education.",
+    "cpt_codes": [
+      31641,
+      31636,
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-11-07",
+      "providers": {
+        "attending_name": "Harrison"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159384"
+      },
+      "cpt_codes": [
+        31641,
+        31636,
+        32550
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Radiofrequency",
+      "ablation_max_temp_c": 8580,
+      "ablation_duration_seconds": 1800,
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31636,
+            32550
+          ],
+          "dropped_cpt_codes": [
+            32551,
+            31631,
+            31624,
+            32560
+          ],
+          "primary_cpt_family": "therapeutic_airway_pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 21.13,
+          "estimated_medicare_payment": 684,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31636,
+              "units": 1,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": 32550,
+              "units": 1,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Procedure involved rigid bronchoscopy with tumor debridement/destruction (31641) and placement of a bronchial stent in the right mainstem (31636).",
+            "Corrected 31631 (tracheal stent) to 31636 (bronchial stent) based on location (right mainstem).",
+            "Dropped 32551 (chest tube) as 32550 (tunneled pleural catheter) describes the pleural drainage procedure performed by IP.",
+            "Dropped 32560 as no pleurodesis agent was instilled.",
+            "Pericardial window is a thoracic surgery procedure (33025) and not coded here for IP."
+          ]
+        }
+      },
+      "patient_age": 63,
+      "patient_mrn": "UNKNOWN_syn_7"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPTs to [31641, 31636, 32550].",
+        "Replaced 31631 (tracheal) with 31636 (bronchial).",
+        "Removed 32551/32560 (incorrectly extracted).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 0,
+      "style_type": 7,
+      "generated_name": "Jennifer Miller",
+      "generation_date": "2025-12-09T09:19:34.780868"
+    }
+  },
+  {
+    "note_text": "Mrs. Okafor was taken to the operating room for multimodal palliation. We began with the airway intervention, utilizing a rigid bronchoscope to address the critical obstruction in the right mainstem bronchus. Through a combination of mechanical coring and argon plasma coagulation, we successfully debulked the tumor. To maintain patency, we deployed a covered metallic stent. Once the airway was secure, we turned our attention to the pleural space, inserting a tunneled indwelling catheter to manage her recurrent effusion. The procedure concluded successfully with improved aeration of the right lung.",
+    "cpt_codes": [
+      31641,
+      31636,
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-03-20",
+      "providers": {
+        "attending_name": "Harrison"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159384"
+      },
+      "cpt_codes": [
+        31641,
+        31636,
+        32550
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Radiofrequency",
+      "ablation_max_temp_c": 8580,
+      "ablation_duration_seconds": 1800,
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31636,
+            32550
+          ],
+          "dropped_cpt_codes": [
+            32551,
+            31631,
+            31624,
+            32560
+          ],
+          "primary_cpt_family": "therapeutic_airway_pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 21.13,
+          "estimated_medicare_payment": 684,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31636,
+              "units": 1,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": 32550,
+              "units": 1,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Procedure involved rigid bronchoscopy with tumor debridement/destruction (31641) and placement of a bronchial stent in the right mainstem (31636).",
+            "Corrected 31631 (tracheal stent) to 31636 (bronchial stent) based on location (right mainstem).",
+            "Dropped 32551 (chest tube) as 32550 (tunneled pleural catheter) describes the pleural drainage procedure performed by IP.",
+            "Dropped 32560 as no pleurodesis agent was instilled.",
+            "Pericardial window is a thoracic surgery procedure (33025) and not coded here for IP."
+          ]
+        }
+      },
+      "patient_age": 65,
+      "patient_mrn": "UNKNOWN_syn_8"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPTs to [31641, 31636, 32550].",
+        "Replaced 31631 (tracheal) with 31636 (bronchial).",
+        "Removed 32551/32560 (incorrectly extracted).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 0,
+      "style_type": 8,
+      "generated_name": "Maria Davis",
+      "generation_date": "2025-12-09T09:19:34.780894"
+    }
+  },
+  {
+    "note_text": "Operation: Rigid endoscopy with tumor eradication and stent implantation.\nDetails: The right mainstem bronchus displayed severe blockage. We navigated the rigid scope to the lesion. The tissue was excised using the scope tip and ablated with argon plasma. A prosthetic stent was anchored across the stricture, re-establishing luminal patency. Subsequently, a drainage catheter was installed in the pleural cavity to evacuate fluid collection.",
+    "cpt_codes": [
+      31641,
+      31636,
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-06-06",
+      "providers": {
+        "attending_name": "Harrison"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159384"
+      },
+      "cpt_codes": [
+        31641,
+        31636,
+        32550
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Radiofrequency",
+      "ablation_max_temp_c": 8580,
+      "ablation_duration_seconds": 1800,
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31636,
+            32550
+          ],
+          "dropped_cpt_codes": [
+            32551,
+            31631,
+            31624,
+            32560
+          ],
+          "primary_cpt_family": "therapeutic_airway_pleural"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 21.13,
+          "estimated_medicare_payment": 684,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31636,
+              "units": 1,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": 32550,
+              "units": 1,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Procedure involved rigid bronchoscopy with tumor debridement/destruction (31641) and placement of a bronchial stent in the right mainstem (31636).",
+            "Corrected 31631 (tracheal stent) to 31636 (bronchial stent) based on location (right mainstem).",
+            "Dropped 32551 (chest tube) as 32550 (tunneled pleural catheter) describes the pleural drainage procedure performed by IP.",
+            "Dropped 32560 as no pleurodesis agent was instilled.",
+            "Pericardial window is a thoracic surgery procedure (33025) and not coded here for IP."
+          ]
+        }
+      },
+      "patient_age": 66,
+      "patient_mrn": "UNKNOWN_syn_9"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPTs to [31641, 31636, 32550].",
+        "Replaced 31631 (tracheal) with 31636 (bronchial).",
+        "Removed 32551/32560 (incorrectly extracted).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 0,
+      "style_type": 9,
+      "generated_name": "Margaret Rodriguez",
+      "generation_date": "2025-12-09T09:19:34.780922"
+    }
+  },
+  {
+    "note_text": "Procedure: EBUS-TBNA.\nIndication: Mediastinal staging.\nNodes Sampled:\n- 4R (18mm): Positive for Adeno.\n- 7 (22mm): Positive for Adeno.\n- 10R (14mm): Positive for Adeno.\nTechnique: 22G needle, 3-4 passes per station.\nResult: N3 disease (Contralateral/Supraclavicular not sampled, but extensive N2 involved).",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "James Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159475"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2458901_syn_1",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31653
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "ebus_tbna"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 7.7,
+          "estimated_medicare_payment": 249,
+          "per_code": [
+            {
+              "code": 31653,
+              "units": 1,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 3 mediastinal/hilar stations (4R, 7, 10R).",
+            "Code 31653 correctly describes sampling of 3 or more stations.",
+            "Diagnostic bronchoscopy (31622) is bundled."
+          ]
+        }
+      },
+      "patient_age": 56
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT 31653 as correct."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 1,
+      "style_type": 1,
+      "generated_name": "Lisa Wilson",
+      "generation_date": "2025-12-09T09:19:34.780948"
+    }
+  },
+  {
+    "note_text": "DIAGNOSTIC OPERATIVE NOTE: The patient underwent endobronchial ultrasound-transbronchial needle aspiration (EBUS-TBNA) for mediastinal staging. The airway was inspected and found to be patent. Systematic ultrasonic evaluation of the mediastinum revealed lymphadenopathy in stations 4R, 7, and 10R. Real-time guided aspiration was performed utilizing a 22-gauge needle. Rapid On-Site Evaluation (ROSE) confirmed the presence of malignant cells consistent with adenocarcinoma in all sampled stations, confirming multi-station N2 disease.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "James Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159475"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2458901_syn_2",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31653
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "ebus_tbna"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 7.7,
+          "estimated_medicare_payment": 249,
+          "per_code": [
+            {
+              "code": 31653,
+              "units": 1,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 3 mediastinal/hilar stations (4R, 7, 10R).",
+            "Code 31653 correctly describes sampling of 3 or more stations.",
+            "Diagnostic bronchoscopy (31622) is bundled."
+          ]
+        }
+      },
+      "patient_age": 60
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT 31653 as correct."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 1,
+      "style_type": 2,
+      "generated_name": "Nancy Martinez",
+      "generation_date": "2025-12-09T09:19:34.780972"
+    }
+  },
+  {
+    "note_text": "CPT Coding Data:\n- 31653 (EBUS-TBNA, first 3 stations): Biopsies taken from stations 4R, 7, and 10R.\n- 31622 (Dx Bronch): Bundled.\nMedical Necessity: Staging for RUL mass.\nTechnique: Ultrasound guidance used for needle visualization during all passes. Images archived.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "James Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159475"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2458901_syn_3",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31653
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "ebus_tbna"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 7.7,
+          "estimated_medicare_payment": 249,
+          "per_code": [
+            {
+              "code": 31653,
+              "units": 1,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 3 mediastinal/hilar stations (4R, 7, 10R).",
+            "Code 31653 correctly describes sampling of 3 or more stations.",
+            "Diagnostic bronchoscopy (31622) is bundled."
+          ]
+        }
+      },
+      "patient_age": 57
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT 31653 as correct."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 1,
+      "style_type": 3,
+      "generated_name": "Karen Anderson",
+      "generation_date": "2025-12-09T09:19:34.780998"
+    }
+  },
+  {
+    "note_text": "Procedure: EBUS\nResident: Dr. Rogers\nPatient: Sarah Martinez\nSteps:\n1. Moderate sedation.\n2. Airway exam normal.\n3. EBUS scope down. Found nodes at 4R, 7, 10R.\n4. Biopsied all three with 22G needle.\n5. ROSE said cancer (adeno).\nPlan: Oncology referral.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "James Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159475"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2458901_syn_4",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31653
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "ebus_tbna"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 7.7,
+          "estimated_medicare_payment": 249,
+          "per_code": [
+            {
+              "code": 31653,
+              "units": 1,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 3 mediastinal/hilar stations (4R, 7, 10R).",
+            "Code 31653 correctly describes sampling of 3 or more stations.",
+            "Diagnostic bronchoscopy (31622) is bundled."
+          ]
+        }
+      },
+      "patient_age": 60
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT 31653 as correct."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 1,
+      "style_type": 4,
+      "generated_name": "Betty Taylor",
+      "generation_date": "2025-12-09T09:19:34.781020"
+    }
+  },
+  {
+    "note_text": "We did the EBUS on Sarah Martinez today indication was staging. Sedation was fine versed fentanyl. Looked at the nodes 4R was big so we stuck it 4 times came back cancer. Station 7 also big stuck that one too cancer. 10R also positive. So looks like stage III disease. No bleeding patient woke up fine.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "James Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159475"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2458901_syn_5",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31653
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "ebus_tbna"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 7.7,
+          "estimated_medicare_payment": 249,
+          "per_code": [
+            {
+              "code": 31653,
+              "units": 1,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 3 mediastinal/hilar stations (4R, 7, 10R).",
+            "Code 31653 correctly describes sampling of 3 or more stations.",
+            "Diagnostic bronchoscopy (31622) is bundled."
+          ]
+        }
+      },
+      "patient_age": 58
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT 31653 as correct."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 1,
+      "style_type": 5,
+      "generated_name": "Helen Thomas",
+      "generation_date": "2025-12-09T09:19:34.781043"
+    }
+  },
+  {
+    "note_text": "Endobronchial ultrasound-guided transbronchial needle aspiration was performed for staging of a right upper lobe mass. The EBUS bronchoscope was introduced. Lymph node stations 4R, 7, and 10R were identified, measured, and sampled using a 22-gauge needle under real-time ultrasound guidance. Cytopathology confirmed adenocarcinoma in all sampled stations. The procedure was well tolerated without complication.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "James Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159475"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2458901_syn_6",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31653
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "ebus_tbna"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 7.7,
+          "estimated_medicare_payment": 249,
+          "per_code": [
+            {
+              "code": 31653,
+              "units": 1,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 3 mediastinal/hilar stations (4R, 7, 10R).",
+            "Code 31653 correctly describes sampling of 3 or more stations.",
+            "Diagnostic bronchoscopy (31622) is bundled."
+          ]
+        }
+      },
+      "patient_age": 60
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT 31653 as correct."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 1,
+      "style_type": 6,
+      "generated_name": "Sandra Hernandez",
+      "generation_date": "2025-12-09T09:19:34.781066"
+    }
+  },
+  {
+    "note_text": "[Indication]\nMediastinal lymphadenopathy, staging for RUL mass.\n[Anesthesia]\nModerate Sedation.\n[Description]\nEBUS performed. Nodes sampled: 4R, 7, 10R. \nPathology: Adenocarcinoma confirmed in all stations.\n[Plan]\nRefer to Oncology for Stage IIIB treatment.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "James Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159475"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2458901_syn_7",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31653
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "ebus_tbna"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 7.7,
+          "estimated_medicare_payment": 249,
+          "per_code": [
+            {
+              "code": 31653,
+              "units": 1,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 3 mediastinal/hilar stations (4R, 7, 10R).",
+            "Code 31653 correctly describes sampling of 3 or more stations.",
+            "Diagnostic bronchoscopy (31622) is bundled."
+          ]
+        }
+      },
+      "patient_age": 57
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT 31653 as correct."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 1,
+      "style_type": 7,
+      "generated_name": "Donna Moore",
+      "generation_date": "2025-12-09T09:19:34.781088"
+    }
+  },
+  {
+    "note_text": "Ms. Martinez underwent an EBUS procedure today to stage her lung cancer. After checking her airways, which looked clear, we used the ultrasound scope to locate enlarged lymph nodes in the middle of her chest. We took samples from the right paratracheal, subcarinal, and right hilar nodes. Unfortunately, the preliminary results from the pathologist in the room showed cancer cells in all three areas, indicating the disease has spread to the lymph nodes.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "James Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159475"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2458901_syn_8",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31653
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "ebus_tbna"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 7.7,
+          "estimated_medicare_payment": 249,
+          "per_code": [
+            {
+              "code": 31653,
+              "units": 1,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 3 mediastinal/hilar stations (4R, 7, 10R).",
+            "Code 31653 correctly describes sampling of 3 or more stations.",
+            "Diagnostic bronchoscopy (31622) is bundled."
+          ]
+        }
+      },
+      "patient_age": 60
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT 31653 as correct."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 1,
+      "style_type": 8,
+      "generated_name": "Carol Martin",
+      "generation_date": "2025-12-09T09:19:34.781111"
+    }
+  },
+  {
+    "note_text": "Procedure: Endosonography with needle extraction.\nTarget: Mediastinal nodes.\nAction: Stations 4R, 7, and 10R were visualized. A needle was propelled into each node to harvest cells. The specimens were analyzed immediately.\nResult: Malignancy detected in all stations.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "James Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159475"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2458901_syn_9",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31653
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "ebus_tbna"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 7.7,
+          "estimated_medicare_payment": 249,
+          "per_code": [
+            {
+              "code": 31653,
+              "units": 1,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 3 mediastinal/hilar stations (4R, 7, 10R).",
+            "Code 31653 correctly describes sampling of 3 or more stations.",
+            "Diagnostic bronchoscopy (31622) is bundled."
+          ]
+        }
+      },
+      "patient_age": 58
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT 31653 as correct."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 1,
+      "style_type": 9,
+      "generated_name": "Ruth Jackson",
+      "generation_date": "2025-12-09T09:19:34.781134"
+    }
+  },
+  {
+    "note_text": "Procedure: Bronchoscopic Cryoablation LUL.\nTarget: 1.8cm nodule.\nTechnique: ENB + r-EBUS to localize. Cryoprobe inserted.\nAblation: 2 cycles (5 min freeze / 3 min thaw).\nResult: Ice ball visualized. No bleeding.\nPlan: D/C home.",
+    "cpt_codes": [
+      31641,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-08-16",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159495"
+      },
+      "cpt_codes": [
+        31641,
+        31627,
+        31654
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 300,
+      "patient_mrn": "2847561_syn_1",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "peripheral_ablation"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 13.58,
+          "estimated_medicare_payment": 439,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Bronchoscopic cryoablation of a peripheral nodule is coded with 31641 (destruction).",
+            "Navigation (31627) and Radial EBUS (31654) are separately reportable for localization.",
+            "Diagnostic bronchoscopy is bundled."
+          ]
+        }
+      },
+      "patient_age": 60
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT set [31641, 31627, 31654]."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 2,
+      "style_type": 1,
+      "generated_name": "Sharon Thompson",
+      "generation_date": "2025-12-09T09:19:34.781162"
+    }
+  },
+  {
+    "note_text": "OPERATIVE REPORT: The patient presented for bronchoscopic ablation of a biopsy-proven Stage IA1 adenocarcinoma in the LUL. Electromagnetic navigation (SPiN system) was utilized to navigate to the anterior segment. Radial EBUS confirmed concentric probe placement. A 2.4mm cryoprobe was deployed. Therapeutic cryoablation was administered via two freeze-thaw cycles (5 minutes each). Fluoroscopic imaging confirmed the formation of an ice ball encompassing the lesion margin. Post-procedure inspection revealed no hemorrhage.",
+    "cpt_codes": [
+      31641,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-05-12",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159495"
+      },
+      "cpt_codes": [
+        31641,
+        31627,
+        31654
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 300,
+      "patient_mrn": "2847561_syn_2",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "peripheral_ablation"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 13.58,
+          "estimated_medicare_payment": 439,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Bronchoscopic cryoablation of a peripheral nodule is coded with 31641 (destruction).",
+            "Navigation (31627) and Radial EBUS (31654) are separately reportable for localization.",
+            "Diagnostic bronchoscopy is bundled."
+          ]
+        }
+      },
+      "patient_age": 60
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT set [31641, 31627, 31654]."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 2,
+      "style_type": 2,
+      "generated_name": "Michelle White",
+      "generation_date": "2025-12-09T09:19:34.781186"
+    }
+  },
+  {
+    "note_text": "Billing Record:\n- 31641 (Destruction of tumor, bronchoscopic): Cryoablation of LUL nodule.\n- 31627 (Navigational Bronchoscopy): Used for localization.\n- 31654 (Radial EBUS): Used for verification of target.\nDevice: Erbe Cryo 2 system.\nTime: Ablation duration 300s x 2.",
+    "cpt_codes": [
+      31641,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-11-27",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159495"
+      },
+      "cpt_codes": [
+        31641,
+        31627,
+        31654
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 300,
+      "patient_mrn": "2847561_syn_3",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "peripheral_ablation"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 13.58,
+          "estimated_medicare_payment": 439,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Bronchoscopic cryoablation of a peripheral nodule is coded with 31641 (destruction).",
+            "Navigation (31627) and Radial EBUS (31654) are separately reportable for localization.",
+            "Diagnostic bronchoscopy is bundled."
+          ]
+        }
+      },
+      "patient_age": 64
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT set [31641, 31627, 31654]."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 2,
+      "style_type": 3,
+      "generated_name": "Laura Lopez",
+      "generation_date": "2025-12-09T09:19:34.781211"
+    }
+  },
+  {
+    "note_text": "Procedure: Cryoablation LUL\nStaff: Dr. Patterson\nSteps:\n1. Navigated to LUL nodule with ENB.\n2. Checked with rEBUS - concentric view.\n3. Put cryo probe in.\n4. Freezing x 2 cycles.\n5. Saw ice ball on fluoro.\nNo complications.",
+    "cpt_codes": [
+      31641,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-06-16",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159495"
+      },
+      "cpt_codes": [
+        31641,
+        31627,
+        31654
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 300,
+      "patient_mrn": "2847561_syn_4",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "peripheral_ablation"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 13.58,
+          "estimated_medicare_payment": 439,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Bronchoscopic cryoablation of a peripheral nodule is coded with 31641 (destruction).",
+            "Navigation (31627) and Radial EBUS (31654) are separately reportable for localization.",
+            "Diagnostic bronchoscopy is bundled."
+          ]
+        }
+      },
+      "patient_age": 66
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT set [31641, 31627, 31654]."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 2,
+      "style_type": 4,
+      "generated_name": "Sarah Lee",
+      "generation_date": "2025-12-09T09:19:34.781238"
+    }
+  },
+  {
+    "note_text": "<PERSON> here for the freezing procedure cryoablation. She has that small cancer in the LUL. We used the navigation system to get there and the ultrasound probe to make sure we were in the middle. Put the freezing probe in and froze it for 5 minutes then let it thaw then froze it again. Ice ball looked good on the xray screen. Patient did great no bleeding.",
+    "cpt_codes": [
+      31641,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-05-19",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159495"
+      },
+      "cpt_codes": [
+        31641,
+        31627,
+        31654
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 300,
+      "patient_mrn": "2847561_syn_5",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "peripheral_ablation"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 13.58,
+          "estimated_medicare_payment": 439,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Bronchoscopic cryoablation of a peripheral nodule is coded with 31641 (destruction).",
+            "Navigation (31627) and Radial EBUS (31654) are separately reportable for localization.",
+            "Diagnostic bronchoscopy is bundled."
+          ]
+        }
+      },
+      "patient_age": 66
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT set [31641, 31627, 31654]."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 2,
+      "style_type": 5,
+      "generated_name": "Kimberly Gonzalez",
+      "generation_date": "2025-12-09T09:19:34.781261"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "Bronchoscopic cryoablation of left upper lobe nodule. Patient is a 63-year-old female with stage IA1 adenocarcinoma. Under general anesthesia, electromagnetic navigation was used to reach the LUL target. Radial EBUS confirmed lesion position. A cryoprobe was advanced and two freeze-thaw cycles were performed to ablate the tumor. An ice ball was visualized fluoroscopically. There were no immediate complications.",
+    "cpt_codes": [
+      31641,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-07-08",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159495"
+      },
+      "cpt_codes": [
+        31641,
+        31627,
+        31654
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 300,
+      "patient_mrn": "2847561_syn_6",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "peripheral_ablation"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 13.58,
+          "estimated_medicare_payment": 439,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Bronchoscopic cryoablation of a peripheral nodule is coded with 31641 (destruction).",
+            "Navigation (31627) and Radial EBUS (31654) are separately reportable for localization.",
+            "Diagnostic bronchoscopy is bundled."
+          ]
+        }
+      },
+      "patient_age": 62
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT set [31641, 31627, 31654]."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 2,
+      "style_type": 6,
+      "generated_name": "Deborah Harris",
+      "generation_date": "2025-12-09T09:19:34.781286"
+    }
+  },
+  {
+    "note_text": "[Indication]\nLUL Nodule, Stage IA1 NSCLC, non-surgical candidate.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nNavigation to LUL. r-EBUS confirmation. Cryoablation performed (2 cycles). Ice ball confirmed. Airways intact.\n[Plan]\nDischarge. CT chest 4 weeks.",
+    "cpt_codes": [
+      31641,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-09-01",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159495"
+      },
+      "cpt_codes": [
+        31641,
+        31627,
+        31654
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 300,
+      "patient_mrn": "2847561_syn_7",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "peripheral_ablation"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 13.58,
+          "estimated_medicare_payment": 439,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Bronchoscopic cryoablation of a peripheral nodule is coded with 31641 (destruction).",
+            "Navigation (31627) and Radial EBUS (31654) are separately reportable for localization.",
+            "Diagnostic bronchoscopy is bundled."
+          ]
+        }
+      },
+      "patient_age": 66
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT set [31641, 31627, 31654]."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 2,
+      "style_type": 7,
+      "generated_name": "Jessica Clark",
+      "generation_date": "2025-12-09T09:19:34.781310"
+    }
+  },
+  {
+    "note_text": "Because Ms. Martinez wasn't a candidate for surgery, we proceeded with cryoablation of her lung nodule. We navigated a bronchoscope to the small tumor in her left upper lobe and confirmed its location with ultrasound. We then inserted a specialized freezing probe and performed two freezing cycles to destroy the tumor tissue. We could see the ice ball forming on the x-ray monitor, ensuring we treated the whole area.",
+    "cpt_codes": [
+      31641,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-10-08",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159495"
+      },
+      "cpt_codes": [
+        31641,
+        31627,
+        31654
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 300,
+      "patient_mrn": "2847561_syn_8",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "peripheral_ablation"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 13.58,
+          "estimated_medicare_payment": 439,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Bronchoscopic cryoablation of a peripheral nodule is coded with 31641 (destruction).",
+            "Navigation (31627) and Radial EBUS (31654) are separately reportable for localization.",
+            "Diagnostic bronchoscopy is bundled."
+          ]
+        }
+      },
+      "patient_age": 60
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT set [31641, 31627, 31654]."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 2,
+      "style_type": 8,
+      "generated_name": "Shirley Lewis",
+      "generation_date": "2025-12-09T09:19:34.781335"
+    }
+  },
+  {
+    "note_text": "Procedure: Endobronchial cryotherapy.\nTarget: Peripheral pulmonary lesion.\nAction: The instrument was steered to the LUL using electromagnetic guidance. The position was authenticated via radial ultrasound. A cryo-tip was inserted, and thermal ablation was executed via freezing cycles.\nOutcome: Lesion destruction visually confirmed via fluoroscopy.",
+    "cpt_codes": [
+      31641,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-11-11",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159495"
+      },
+      "cpt_codes": [
+        31641,
+        31627,
+        31654
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 300,
+      "patient_mrn": "2847561_syn_9",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31641,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "peripheral_ablation"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 13.58,
+          "estimated_medicare_payment": 439,
+          "per_code": [
+            {
+              "code": 31641,
+              "units": 1,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Bronchoscopic cryoablation of a peripheral nodule is coded with 31641 (destruction).",
+            "Navigation (31627) and Radial EBUS (31654) are separately reportable for localization.",
+            "Diagnostic bronchoscopy is bundled."
+          ]
+        }
+      },
+      "patient_age": 63
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Added coding_review.",
+        "Verified CPT set [31641, 31627, 31654]."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 2,
+      "style_type": 9,
+      "generated_name": "Cynthia Robinson",
+      "generation_date": "2025-12-09T09:19:34.781360"
+    }
+  },
+  {
+    "note_text": "Procedure: EBUS-TBNA & Ion Robotic Bronchoscopy.\nEBUS: Stations 4R, 7 sampled. Positive for Adeno.\nIon: Navigated to RLL mass. r-EBUS concentric. Biopsied x8.\nROSE: Adenocarcinoma in node and mass.\nDx: Stage IIIA (N2 positive).",
+    "cpt_codes": [
+      31652,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-09-16",
+      "providers": {
+        "attending_name": "Nicholas Foster"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159549"
+      },
+      "cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2847593_syn_1",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31652,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31653,
+            31623,
+            31626,
+            31622
+          ],
+          "primary_cpt_family": "ebus_plus_nav"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 17.67,
+          "estimated_medicare_payment": 571,
+          "per_code": [
+            {
+              "code": 31652,
+              "units": 1,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 2 stations (4R, 7). Code 31652 (1-2 stations). Corrected from 31653.",
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628) of peripheral mass.",
+            "Dropped 31623 (brush) and 31626 (fiducials - not documented).",
+            "Diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 58
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPT 31653 -> 31652 (2 stations).",
+        "Dropped 31626 (fiducials not documented).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 3,
+      "style_type": 1,
+      "generated_name": "Angela Walker",
+      "generation_date": "2025-12-09T09:19:34.781395"
+    }
+  },
+  {
+    "note_text": "OPERATIVE NARRATIVE: A combined staging and diagnostic procedure was performed. First, convex EBUS allowed for sampling of stations 4R and 7; rapid on-site evaluation demonstrated adenocarcinoma. Subsequently, the Ion robotic platform was docked. The catheter was navigated to the RLL posterior basal segment mass. Radial EBUS confirmed concentric alignment. Transbronchial biopsies were obtained. The pathologic findings confirm primary lung adenocarcinoma with mediastinal nodal involvement (N2 disease).",
+    "cpt_codes": [
+      31652,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-10-29",
+      "providers": {
+        "attending_name": "Nicholas Foster"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159549"
+      },
+      "cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2847593_syn_2",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31652,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31653,
+            31623,
+            31626,
+            31622
+          ],
+          "primary_cpt_family": "ebus_plus_nav"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 17.67,
+          "estimated_medicare_payment": 571,
+          "per_code": [
+            {
+              "code": 31652,
+              "units": 1,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 2 stations (4R, 7). Code 31652 (1-2 stations). Corrected from 31653.",
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628) of peripheral mass.",
+            "Dropped 31623 (brush) and 31626 (fiducials - not documented).",
+            "Diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 53
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPT 31653 -> 31652 (2 stations).",
+        "Dropped 31626 (fiducials not documented).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 3,
+      "style_type": 2,
+      "generated_name": "Melissa Perez",
+      "generation_date": "2025-12-09T09:19:34.781424"
+    }
+  },
+  {
+    "note_text": "Codes:\n- 31652 (EBUS-TBNA 1-2 stations): Sampled 4R, 7.\n- 31628 (Transbronchial lung biopsy): RLL mass via Ion.\n- 31627 (Navigational Bronchoscopy): Ion system used.\n- 31654 (Radial EBUS): Peripheral lesion check.\nNote: Nodal staging performed first.",
+    "cpt_codes": [
+      31652,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-01-01",
+      "providers": {
+        "attending_name": "Nicholas Foster"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159549"
+      },
+      "cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2847593_syn_3",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31652,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31653,
+            31623,
+            31626,
+            31622
+          ],
+          "primary_cpt_family": "ebus_plus_nav"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 17.67,
+          "estimated_medicare_payment": 571,
+          "per_code": [
+            {
+              "code": 31652,
+              "units": 1,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 2 stations (4R, 7). Code 31652 (1-2 stations). Corrected from 31653.",
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628) of peripheral mass.",
+            "Dropped 31623 (brush) and 31626 (fiducials - not documented).",
+            "Diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 53
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPT 31653 -> 31652 (2 stations).",
+        "Dropped 31626 (fiducials not documented).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 3,
+      "style_type": 3,
+      "generated_name": "Brenda Hall",
+      "generation_date": "2025-12-09T09:19:34.781467"
+    }
+  },
+  {
+    "note_text": "Resident Note\nPt: Morrison, Elizabeth\nProc: EBUS + Ion\nSteps:\n1. EBUS first. Biopsied 4R and 7. Both malignant.\n2. Switched to Ion robot.\n3. Navigated to RLL mass.\n4. rEBUS showed we were in the lesion.\n5. Took biopsies.\nImpression: Stage 3 Lung Cancer.",
+    "cpt_codes": [
+      31652,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-01-29",
+      "providers": {
+        "attending_name": "Nicholas Foster"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159549"
+      },
+      "cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2847593_syn_4",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31652,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31653,
+            31623,
+            31626,
+            31622
+          ],
+          "primary_cpt_family": "ebus_plus_nav"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 17.67,
+          "estimated_medicare_payment": 571,
+          "per_code": [
+            {
+              "code": 31652,
+              "units": 1,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 2 stations (4R, 7). Code 31652 (1-2 stations). Corrected from 31653.",
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628) of peripheral mass.",
+            "Dropped 31623 (brush) and 31626 (fiducials - not documented).",
+            "Diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 54
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPT 31653 -> 31652 (2 stations).",
+        "Dropped 31626 (fiducials not documented).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 3,
+      "style_type": 4,
+      "generated_name": "Amy Young",
+      "generation_date": "2025-12-09T09:19:34.781495"
+    }
+  },
+  {
+    "note_text": "We did a combined case today EBUS and the robot. Started with EBUS sampled the 4R and 7 nodes both looked cancerous on the slide. Then used the Ion robot to go out to that mass in the right lower lobe. Navigation was smooth. Biopsied the mass too confirmed it was the same cancer. So she has stage 3A.",
+    "cpt_codes": [
+      31652,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-01-29",
+      "providers": {
+        "attending_name": "Nicholas Foster"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159549"
+      },
+      "cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2847593_syn_5",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31652,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31653,
+            31623,
+            31626,
+            31622
+          ],
+          "primary_cpt_family": "ebus_plus_nav"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 17.67,
+          "estimated_medicare_payment": 571,
+          "per_code": [
+            {
+              "code": 31652,
+              "units": 1,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 2 stations (4R, 7). Code 31652 (1-2 stations). Corrected from 31653.",
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628) of peripheral mass.",
+            "Dropped 31623 (brush) and 31626 (fiducials - not documented).",
+            "Diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 54
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPT 31653 -> 31652 (2 stations).",
+        "Dropped 31626 (fiducials not documented).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 3,
+      "style_type": 5,
+      "generated_name": "Anna Allen",
+      "generation_date": "2025-12-09T09:19:34.781524"
+    }
+  },
+  {
+    "note_text": "Combined endobronchial ultrasound and robotic navigational bronchoscopy. Mediastinal staging was performed first via EBUS-TBNA of stations 4R and 7, revealing metastatic adenocarcinoma. The Ion robotic system was then utilized to navigate to a right lower lobe mass. Radial EBUS confirmed target acquisition. Transbronchial biopsies of the mass also showed adenocarcinoma. The patient was extubated and transferred to recovery.",
+    "cpt_codes": [
+      31652,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-02-01",
+      "providers": {
+        "attending_name": "Nicholas Foster"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159549"
+      },
+      "cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2847593_syn_6",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31652,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31653,
+            31623,
+            31626,
+            31622
+          ],
+          "primary_cpt_family": "ebus_plus_nav"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 17.67,
+          "estimated_medicare_payment": 571,
+          "per_code": [
+            {
+              "code": 31652,
+              "units": 1,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 2 stations (4R, 7). Code 31652 (1-2 stations). Corrected from 31653.",
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628) of peripheral mass.",
+            "Dropped 31623 (brush) and 31626 (fiducials - not documented).",
+            "Diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 52
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPT 31653 -> 31652 (2 stations).",
+        "Dropped 31626 (fiducials not documented).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 3,
+      "style_type": 6,
+      "generated_name": "Rebecca Sanchez",
+      "generation_date": "2025-12-09T09:19:34.781553"
+    }
+  },
+  {
+    "note_text": "[Indication]\nRLL mass, mediastinal adenopathy.\n[Anesthesia]\nGeneral, ETT.\n[Description]\n1. EBUS-TBNA: 4R, 7 positive for malignancy.\n2. Ion Robotics: Navigation to RLL mass. Biopsies positive for malignancy.\n[Plan]\nOncology consult for Stage IIIA NSCLC.",
+    "cpt_codes": [
+      31652,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-06-27",
+      "providers": {
+        "attending_name": "Nicholas Foster"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159549"
+      },
+      "cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2847593_syn_7",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31652,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31653,
+            31623,
+            31626,
+            31622
+          ],
+          "primary_cpt_family": "ebus_plus_nav"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 17.67,
+          "estimated_medicare_payment": 571,
+          "per_code": [
+            {
+              "code": 31652,
+              "units": 1,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 2 stations (4R, 7). Code 31652 (1-2 stations). Corrected from 31653.",
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628) of peripheral mass.",
+            "Dropped 31623 (brush) and 31626 (fiducials - not documented).",
+            "Diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 55
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPT 31653 -> 31652 (2 stations).",
+        "Dropped 31626 (fiducials not documented).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 3,
+      "style_type": 7,
+      "generated_name": "Virginia Wright",
+      "generation_date": "2025-12-09T09:19:34.781580"
+    }
+  },
+  {
+    "note_text": "Mrs. Morrison underwent a diagnostic bronchoscopy today. We started by checking the lymph nodes in the center of her chest using the EBUS scope. Unfortunately, the samples from nodes 4R and 7 showed cancer cells. We then used the robotic system to navigate to the main tumor in her lower right lung and took a biopsy of that as well, which matched the lymph nodes. This confirms the cancer has spread to the lymph nodes, placing her at Stage IIIA.",
+    "cpt_codes": [
+      31652,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-08-13",
+      "providers": {
+        "attending_name": "Nicholas Foster"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159549"
+      },
+      "cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2847593_syn_8",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31652,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31653,
+            31623,
+            31626,
+            31622
+          ],
+          "primary_cpt_family": "ebus_plus_nav"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 17.67,
+          "estimated_medicare_payment": 571,
+          "per_code": [
+            {
+              "code": 31652,
+              "units": 1,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 2 stations (4R, 7). Code 31652 (1-2 stations). Corrected from 31653.",
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628) of peripheral mass.",
+            "Dropped 31623 (brush) and 31626 (fiducials - not documented).",
+            "Diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 56
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPT 31653 -> 31652 (2 stations).",
+        "Dropped 31626 (fiducials not documented).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 3,
+      "style_type": 8,
+      "generated_name": "Kathleen King",
+      "generation_date": "2025-12-09T09:19:34.781607"
+    }
+  },
+  {
+    "note_text": "Procedure: Endosonography and Robotic-assisted bronchoscopy.\nFindings: Mediastinal nodes 4R and 7 were sampled and found malignant. The primary RLL lesion was accessed via the robotic platform and sampled.\nConclusion: Primary adenocarcinoma with nodal metastasis.",
+    "cpt_codes": [
+      31652,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-12-04",
+      "providers": {
+        "attending_name": "Nicholas Foster"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159549"
+      },
+      "cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "gender": "Female",
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "2847593_syn_9",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31652,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31653,
+            31623,
+            31626,
+            31622
+          ],
+          "primary_cpt_family": "ebus_plus_nav"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 17.67,
+          "estimated_medicare_payment": 571,
+          "per_code": [
+            {
+              "code": 31652,
+              "units": 1,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "EBUS-TBNA performed on 2 stations (4R, 7). Code 31652 (1-2 stations). Corrected from 31653.",
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628) of peripheral mass.",
+            "Dropped 31623 (brush) and 31626 (fiducials - not documented).",
+            "Diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 55
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Corrected CPT 31653 -> 31652 (2 stations).",
+        "Dropped 31626 (fiducials not documented).",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 3,
+      "style_type": 9,
+      "generated_name": "Pamela Scott",
+      "generation_date": "2025-12-09T09:19:34.781637"
+    }
+  },
+  {
+    "note_text": "Procedure: Ion Nav Bronch + Fiducials.\nTarget: LLL mass (3.8cm).\nAction: Navigated to lesion. r-EBUS eccentric. Biopsied x5. Placed 3 fiducial markers.\nResult: Markers visible on fluoro.\nPlan: Refer for SBRT.",
+    "cpt_codes": [
+      31626,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-06-01",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159560"
+      },
+      "cpt_codes": [
+        31626,
+        31628,
+        31627,
+        31654
+      ],
+      "patient_mrn": "2938475_syn_1",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31626,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "navigational_bronchoscopy"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 16.95,
+          "estimated_medicare_payment": 548,
+          "per_code": [
+            {
+              "code": 31626,
+              "units": 1,
+              "total_facility_rvu": 6.24,
+              "mpfs_facility_payment": 202
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628).",
+            "Fiducial placement (31626) explicitly documented.",
+            "All codes maintained; diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 67
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Verified CPTs as correct.",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 4,
+      "style_type": 1,
+      "generated_name": "James Green",
+      "generation_date": "2025-12-09T09:19:34.781663"
+    }
+  },
+  {
+    "note_text": "OPERATIVE NOTE: The patient presented for fiducial placement to facilitate stereotactic body radiation therapy (SBRT). The Ion robotic system was utilized to navigate to the left lower lobe mass. Following histologic confirmation via transbronchial biopsy (CPT 31628), four gold fiducial markers were deployed within and around the tumor volume (CPT 31626). Fluoroscopy confirmed appropriate spacing and stability of the markers.",
+    "cpt_codes": [
+      31626,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-12-07",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159560"
+      },
+      "cpt_codes": [
+        31626,
+        31628,
+        31627,
+        31654
+      ],
+      "patient_mrn": "2938475_syn_2",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31626,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "navigational_bronchoscopy"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 16.95,
+          "estimated_medicare_payment": 548,
+          "per_code": [
+            {
+              "code": 31626,
+              "units": 1,
+              "total_facility_rvu": 6.24,
+              "mpfs_facility_payment": 202
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628).",
+            "Fiducial placement (31626) explicitly documented.",
+            "All codes maintained; diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 70
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Verified CPTs as correct.",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 4,
+      "style_type": 2,
+      "generated_name": "John Baker",
+      "generation_date": "2025-12-09T09:19:34.781690"
+    }
+  },
+  {
+    "note_text": "Coding:\n- 31627 (Navigation)\n- 31626 (Fiducial markers): Primary intent for SBRT guidance.\n- 31628 (Biopsy): Tissue confirmation.\n- 31654 (REBUS): Localization.\nTarget: LLL Mass.",
+    "cpt_codes": [
+      31626,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-04-22",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159560"
+      },
+      "cpt_codes": [
+        31626,
+        31628,
+        31627,
+        31654
+      ],
+      "patient_mrn": "2938475_syn_3",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31626,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "navigational_bronchoscopy"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 16.95,
+          "estimated_medicare_payment": 548,
+          "per_code": [
+            {
+              "code": 31626,
+              "units": 1,
+              "total_facility_rvu": 6.24,
+              "mpfs_facility_payment": 202
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628).",
+            "Fiducial placement (31626) explicitly documented.",
+            "All codes maintained; diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 70
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Verified CPTs as correct.",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 4,
+      "style_type": 3,
+      "generated_name": "Robert Adams",
+      "generation_date": "2025-12-09T09:19:34.781715"
+    }
+  },
+  {
+    "note_text": "Procedure: Ion + Fiducials\nResident: Dr. Mitchell\nPatient: Marcus Thompson\nSteps:\n1. Navigated to LLL mass with Robot.\n2. Confirmed with rEBUS.\n3. Took biopsies.\n4. Dropped fiducials for Rad Onc.\n5. Fluoro showed good placement.",
+    "cpt_codes": [
+      31626,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-11-09",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159560"
+      },
+      "cpt_codes": [
+        31626,
+        31628,
+        31627,
+        31654
+      ],
+      "patient_mrn": "2938475_syn_4",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31626,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "navigational_bronchoscopy"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 16.95,
+          "estimated_medicare_payment": 548,
+          "per_code": [
+            {
+              "code": 31626,
+              "units": 1,
+              "total_facility_rvu": 6.24,
+              "mpfs_facility_payment": 202
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628).",
+            "Fiducial placement (31626) explicitly documented.",
+            "All codes maintained; diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 66
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Verified CPTs as correct.",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 4,
+      "style_type": 4,
+      "generated_name": "Michael Nelson",
+      "generation_date": "2025-12-09T09:19:34.781739"
+    }
+  },
+  {
+    "note_text": "Mr Thompson is here for markers. He has that LLL mass. We used the robot to get there. Biopsied it first to be sure then put in the gold markers for the radiation doctors. Put in four of them. Looks good on the screen. No pneumothorax.",
+    "cpt_codes": [
+      31626,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-04-13",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159560"
+      },
+      "cpt_codes": [
+        31626,
+        31628,
+        31627,
+        31654
+      ],
+      "patient_mrn": "2938475_syn_5",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31626,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "navigational_bronchoscopy"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 16.95,
+          "estimated_medicare_payment": 548,
+          "per_code": [
+            {
+              "code": 31626,
+              "units": 1,
+              "total_facility_rvu": 6.24,
+              "mpfs_facility_payment": 202
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628).",
+            "Fiducial placement (31626) explicitly documented.",
+            "All codes maintained; diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 72
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Verified CPTs as correct.",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 4,
+      "style_type": 5,
+      "generated_name": "William Hill",
+      "generation_date": "2025-12-09T09:19:34.781769"
+    }
+  },
+  {
+    "note_text": "Robotic navigational bronchoscopy with fiducial placement. The Ion system was used to access a left lower lobe mass. Radial EBUS confirmed lesion location. Transbronchial biopsies were obtained. Subsequently, fiducial markers were deployed into the lesion under fluoroscopic guidance to assist with future radiation therapy. Post-procedure imaging ruled out pneumothorax.",
+    "cpt_codes": [
+      31626,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-04-20",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159560"
+      },
+      "cpt_codes": [
+        31626,
+        31628,
+        31627,
+        31654
+      ],
+      "patient_mrn": "2938475_syn_6",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31626,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "navigational_bronchoscopy"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 16.95,
+          "estimated_medicare_payment": 548,
+          "per_code": [
+            {
+              "code": 31626,
+              "units": 1,
+              "total_facility_rvu": 6.24,
+              "mpfs_facility_payment": 202
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628).",
+            "Fiducial placement (31626) explicitly documented.",
+            "All codes maintained; diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 67
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Verified CPTs as correct.",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 4,
+      "style_type": 6,
+      "generated_name": "David Ramirez",
+      "generation_date": "2025-12-09T09:19:34.781793"
+    }
+  },
+  {
+    "note_text": "[Indication]\nLLL mass, need tissue and markers for SBRT.\n[Anesthesia]\nGeneral.\n[Description]\nIon navigation to LLL. Biopsy performed. Fiducial markers (x4) placed. Position confirmed.\n[Plan]\nRadiation Oncology follow-up.",
+    "cpt_codes": [
+      31626,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-02-24",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159560"
+      },
+      "cpt_codes": [
+        31626,
+        31628,
+        31627,
+        31654
+      ],
+      "patient_mrn": "2938475_syn_7",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31626,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "navigational_bronchoscopy"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 16.95,
+          "estimated_medicare_payment": 548,
+          "per_code": [
+            {
+              "code": 31626,
+              "units": 1,
+              "total_facility_rvu": 6.24,
+              "mpfs_facility_payment": 202
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628).",
+            "Fiducial placement (31626) explicitly documented.",
+            "All codes maintained; diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 72
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Verified CPTs as correct.",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 4,
+      "style_type": 7,
+      "generated_name": "Richard Campbell",
+      "generation_date": "2025-12-09T09:19:34.781819"
+    }
+  },
+  {
+    "note_text": "We performed a procedure on Mr. Thompson to prepare him for radiation therapy. Using the robotic bronchoscope, we navigated to the tumor in his left lower lung. We took a sample to confirm the diagnosis and then placed several small gold markers, or fiducials, directly into the tumor. These will act as targets for the radiation machine to treat the cancer precisely.",
+    "cpt_codes": [
+      31626,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-04-08",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159560"
+      },
+      "cpt_codes": [
+        31626,
+        31628,
+        31627,
+        31654
+      ],
+      "patient_mrn": "2938475_syn_8",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31626,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "navigational_bronchoscopy"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 16.95,
+          "estimated_medicare_payment": 548,
+          "per_code": [
+            {
+              "code": 31626,
+              "units": 1,
+              "total_facility_rvu": 6.24,
+              "mpfs_facility_payment": 202
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628).",
+            "Fiducial placement (31626) explicitly documented.",
+            "All codes maintained; diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 72
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Verified CPTs as correct.",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 4,
+      "style_type": 8,
+      "generated_name": "Joseph Mitchell",
+      "generation_date": "2025-12-09T09:19:34.781844"
+    }
+  },
+  {
+    "note_text": "Procedure: Robotic-assisted guidance with implantation of radiotherapy markers.\nAction: The LLL lesion was reached. Tissue was sampled. Metallic markers were deposited within the target volume.\nOutcome: Markers authenticated via fluoroscopy.",
+    "cpt_codes": [
+      31626,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "2025-03-13",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159560"
+      },
+      "cpt_codes": [
+        31626,
+        31628,
+        31627,
+        31654
+      ],
+      "patient_mrn": "2938475_syn_9",
+      "coding_review": {
+        "version": "v1.0",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "review_date": "2025-12-06",
+        "cpt_summary": {
+          "final_cpt_codes": [
+            31626,
+            31628,
+            31627,
+            31654
+          ],
+          "dropped_cpt_codes": [
+            31622
+          ],
+          "primary_cpt_family": "navigational_bronchoscopy"
+        },
+        "financial_summary_2025_facility": {
+          "total_facility_rvu": 16.95,
+          "estimated_medicare_payment": 548,
+          "per_code": [
+            {
+              "code": 31626,
+              "units": 1,
+              "total_facility_rvu": 6.24,
+              "mpfs_facility_payment": 202
+            },
+            {
+              "code": 31628,
+              "units": 1,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179
+            },
+            {
+              "code": 31627,
+              "units": 1,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99
+            },
+            {
+              "code": 31654,
+              "units": 1,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68
+            }
+          ]
+        },
+        "rationale": {
+          "high_level": [
+            "Navigational bronchoscopy (31627) with radial EBUS (31654) and transbronchial biopsy (31628).",
+            "Fiducial placement (31626) explicitly documented.",
+            "All codes maintained; diagnostic bronchoscopy bundled."
+          ]
+        }
+      },
+      "patient_age": 69
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-06T00:00:00",
+      "changes": [
+        "Verified CPTs as correct.",
+        "Added coding_review."
+      ]
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_028.json",
+      "original_index": 4,
+      "style_type": 9,
+      "generated_name": "Thomas Roberts",
+      "generation_date": "2025-12-09T09:19:34.781870"
+    }
+  }
+]

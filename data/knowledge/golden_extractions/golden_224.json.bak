@@ -1,0 +1,722 @@
+[
+  {
+    "note_text": "EBUS-TBNA under moderate sedation with sampling of FDG-avid stations 4R, 7, and 10R confirming metastatic adenocarcinoma.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158730"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.133904",
+      "changes": [
+        "Extracted CPT codes: [31629, 31653]",
+        "Extracted EBUS stations: ['10R', '4R', '7']"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.15,
+          "facility_payment_2025": 231.3
+        }
+      ],
+      "total_facility_rvu_2025": 7.15,
+      "total_facility_payment_2025": 231.3,
+      "rationale": [
+        "EBUS-TBNA performed on three stations (4R, 7, 10R) supports code 31653."
+      ]
+    }
+  },
+  {
+    "note_text": "Navigational bronchoscopy with ENB and radial EBUS confirmation followed by bronchoscopic cryoablation of a peripheral LUL adenocarcinoma.",
+    "cpt_codes": [
+      31641,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158736"
+      },
+      "cpt_codes": [
+        31641,
+        31654,
+        31627
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation"
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.134071",
+      "changes": [
+        "Extracted CPT codes: [31622, 31641, 31654, 31627]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Cryoablation"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31641,
+        31627,
+        31654
+      ],
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with tumor destruction/ablation",
+          "facility_rvu_2025": 7.43,
+          "facility_payment_2025": 240.36
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with navigation (add-on)",
+          "facility_rvu_2025": 2.82,
+          "facility_payment_2025": 91.23
+        },
+        {
+          "code": "31654",
+          "description": "Bronchoscopy with peripheral EBUS (add-on)",
+          "facility_rvu_2025": 1.95,
+          "facility_payment_2025": 63.08
+        }
+      ],
+      "total_facility_rvu_2025": 12.2,
+      "total_facility_payment_2025": 394.67,
+      "rationale": [
+        "Bronchoscopic cryoablation of a peripheral tumor is captured by 31641.",
+        "Navigation (ENB) and radial EBUS confirmation are reported with add-on codes 31627 and 31654."
+      ]
+    }
+  },
+  {
+    "note_text": "Combined EBUS nodal staging (4R and 7) and Ion robotic navigational bronchoscopy with radial EBUS and transbronchial biopsies of an RLL mass.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31627
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158741"
+      },
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31627
+      ],
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.134295",
+      "changes": [
+        "Extracted CPT codes: [31652, 31622, 31654, 31628, 31627]"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "cpt_summary": [
+        {
+          "code": "31652",
+          "description": "EBUS-TBNA, 1-2 nodal stations",
+          "facility_rvu_2025": 6.46,
+          "facility_payment_2025": 209.0
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy",
+          "facility_rvu_2025": 5.11,
+          "facility_payment_2025": 165.31
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with navigation (add-on)",
+          "facility_rvu_2025": 2.82,
+          "facility_payment_2025": 91.23
+        },
+        {
+          "code": "31654",
+          "description": "Bronchoscopy with peripheral EBUS (add-on)",
+          "facility_rvu_2025": 1.95,
+          "facility_payment_2025": 63.08
+        }
+      ],
+      "total_facility_rvu_2025": 16.34,
+      "total_facility_payment_2025": 528.62,
+      "rationale": [
+        "EBUS-TBNA of two stations (4R, 7) maps to 31652.",
+        "Robotic navigation with radial EBUS and transbronchial biopsy of a mass supports 31628 + 31627 + 31654."
+      ]
+    }
+  },
+  {
+    "note_text": "Ion robotic bronchoscopy with radial EBUS, transbronchial biopsies, and fiducial marker placement for an LLL mass.",
+    "cpt_codes": [
+      31626,
+      31654,
+      31628,
+      31627
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158746"
+      },
+      "cpt_codes": [
+        31626,
+        31654,
+        31628,
+        31627
+      ],
+      "nav_platform": "Ion",
+      "nav_rebus_used": true
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.134439",
+      "changes": [
+        "Extracted CPT codes: [31626, 31622, 31654, 31628, 31627]"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31626,
+        31628,
+        31627,
+        31654
+      ],
+      "cpt_summary": [
+        {
+          "code": "31626",
+          "description": "Bronchoscopy with fiducial marker placement",
+          "facility_rvu_2025": 5.8,
+          "facility_payment_2025": 187.67
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy",
+          "facility_rvu_2025": 5.11,
+          "facility_payment_2025": 165.31
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with navigation (add-on)",
+          "facility_rvu_2025": 2.82,
+          "facility_payment_2025": 91.23
+        },
+        {
+          "code": "31654",
+          "description": "Bronchoscopy with peripheral EBUS (add-on)",
+          "facility_rvu_2025": 1.95,
+          "facility_payment_2025": 63.08
+        }
+      ],
+      "total_facility_rvu_2025": 15.68,
+      "total_facility_payment_2025": 507.29,
+      "rationale": [
+        "Fiducial placement (31626) is the primary code.",
+        "Robotic navigation (31627), radial EBUS (31654), and transbronchial biopsy (31628) are reported as part of the peripheral lesion management."
+      ]
+    }
+  },
+  {
+    "note_text": "EBUS-TBNA of subcarinal node plus EMN-guided bronchoscopy with radial EBUS and transbronchial biopsies of an RLL nodule in a patient with metastatic breast cancer.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31628,
+      31627
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158751"
+      },
+      "cpt_codes": [
+        31652,
+        31654,
+        31628,
+        31627
+      ],
+      "ebus_stations_sampled": [
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "7"
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.134634",
+      "changes": [
+        "Extracted CPT codes: [31629, 31652, 31622, 31654, 31628]"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "cpt_summary": [
+        {
+          "code": "31652",
+          "description": "EBUS-TBNA, 1-2 nodal stations",
+          "facility_rvu_2025": 6.46,
+          "facility_payment_2025": 209.0
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy",
+          "facility_rvu_2025": 5.11,
+          "facility_payment_2025": 165.31
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with navigation (add-on)",
+          "facility_rvu_2025": 2.82,
+          "facility_payment_2025": 91.23
+        },
+        {
+          "code": "31654",
+          "description": "Bronchoscopy with peripheral EBUS (add-on)",
+          "facility_rvu_2025": 1.95,
+          "facility_payment_2025": 63.08
+        }
+      ],
+      "total_facility_rvu_2025": 16.34,
+      "total_facility_payment_2025": 528.62,
+      "rationale": [
+        "EBUS-TBNA of a single station (subcarinal) supports 31652.",
+        "EMN-guided bronchoscopy with radial EBUS and transbronchial biopsy of an RLL nodule supports 31628 + 31627 + 31654."
+      ]
+    }
+  },
+  {
+    "note_text": "EBUS nodal sampling of 4R and 7 plus Ion robotic bronchoscopy with radial EBUS and combined forceps and cryobiopsy of an RML nodule.",
+    "cpt_codes": [
+      31652,
+      31654,
+      31627,
+      31628
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158757"
+      },
+      "cpt_codes": [
+        31652,
+        31654,
+        31627,
+        31628
+      ],
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.134805",
+      "changes": [
+        "Extracted CPT codes: [31622, 31654, 31627]"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31652,
+        31628,
+        31627,
+        31654
+      ],
+      "cpt_summary": [
+        {
+          "code": "31652",
+          "description": "EBUS-TBNA, 1-2 nodal stations",
+          "facility_rvu_2025": 6.46,
+          "facility_payment_2025": 209.0
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy",
+          "facility_rvu_2025": 5.11,
+          "facility_payment_2025": 165.31
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with navigation (add-on)",
+          "facility_rvu_2025": 2.82,
+          "facility_payment_2025": 91.23
+        },
+        {
+          "code": "31654",
+          "description": "Bronchoscopy with peripheral EBUS (add-on)",
+          "facility_rvu_2025": 1.95,
+          "facility_payment_2025": 63.08
+        }
+      ],
+      "total_facility_rvu_2025": 16.34,
+      "total_facility_payment_2025": 528.62,
+      "rationale": [
+        "EBUS-TBNA of two stations (4R, 7) supports 31652.",
+        "Robotic navigation with radial EBUS and transbronchial biopsy (forceps/cryo) supports 31628 + 31627 + 31654. Note: 31628 covers parenchymal biopsy by any method (forceps or cryo)."
+      ]
+    }
+  },
+  {
+    "note_text": "EBUS-TBNA of four mediastinal/hilar stations plus EMN-guided and standard endobronchial biopsies of a cavitary LUL squamous cell carcinoma with extensive nodal disease.",
+    "cpt_codes": [
+      31625,
+      31653
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158762"
+      },
+      "cpt_codes": [
+        31625,
+        31653
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.134998",
+      "changes": [
+        "Extracted CPT codes: [31629, 31625, 31652]"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653,
+        31625
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.15,
+          "facility_payment_2025": 231.3
+        },
+        {
+          "code": "31625",
+          "description": "Bronchoscopy with endobronchial biopsy",
+          "facility_rvu_2025": 4.67,
+          "facility_payment_2025": 151.13
+        }
+      ],
+      "total_facility_rvu_2025": 11.82,
+      "total_facility_payment_2025": 382.43,
+      "rationale": [
+        "EBUS-TBNA of four stations supports 31653.",
+        "Endobronchial biopsies (EMN-guided or standard) are reported with 31625. Navigation code 31627 is typically not reported for endobronchial targets unless specific carrier policy allows."
+      ]
+    }
+  },
+  {
+    "note_text": "EBUS-TBNA with sampling of stations 7, 4R, 4L, 10R, and 11R showing adenocarcinoma in mediastinal lymph nodes consistent with N2 disease.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158768"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4L",
+        "4R",
+        "7"
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.135189",
+      "changes": [
+        "Extracted CPT codes: [31629, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4L', '4R', '7']"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.15,
+          "facility_payment_2025": 231.3
+        }
+      ],
+      "total_facility_rvu_2025": 7.15,
+      "total_facility_payment_2025": 231.3,
+      "rationale": [
+        "EBUS-TBNA of five nodal stations (7, 4R, 4L, 10R, 11R) supports 31653."
+      ]
+    }
+  },
+  {
+    "note_text": "Detailed EBUS-TBNA for mediastinal and hilar adenopathy in a never-smoker, with stations 7, 4R, 10R, and 11R sampled showing non-necrotizing granulomas consistent with sarcoidosis.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158774"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ]
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.135399",
+      "changes": [
+        "Extracted CPT codes: [31629, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.15,
+          "facility_payment_2025": 231.3
+        }
+      ],
+      "total_facility_rvu_2025": 7.15,
+      "total_facility_payment_2025": 231.3,
+      "rationale": [
+        "EBUS-TBNA of four nodal stations (7, 4R, 10R, 11R) supports 31653."
+      ]
+    }
+  },
+  {
+    "note_text": "Ultrasound-guided diagnostic thoracentesis of a left hemorrhagic effusion in a patient with LUL lung mass, draining 650 mL of blood-tinged fluid.",
+    "cpt_codes": [
+      32555
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158780"
+      },
+      "cpt_codes": [
+        32555
+      ],
+      "pleural_procedure_type": "Thoracentesis",
+      "pleural_guidance": "Ultrasound"
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.135577",
+      "changes": [
+        "Extracted CPT codes: [32554, 32555]"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        32555
+      ],
+      "cpt_summary": [
+        {
+          "code": "32555",
+          "description": "Thoracentesis with imaging guidance",
+          "facility_rvu_2025": 3.22,
+          "facility_payment_2025": 104.17
+        }
+      ],
+      "total_facility_rvu_2025": 3.22,
+      "total_facility_payment_2025": 104.17,
+      "rationale": [
+        "Ultrasound-guided diagnostic thoracentesis supports 32555."
+      ]
+    }
+  }
+]

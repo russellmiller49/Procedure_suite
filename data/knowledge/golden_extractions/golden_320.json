@@ -1,0 +1,939 @@
+[
+  {
+    "note_text": "Procedure Name: Bronchoscopy with endobronchial biopsy and tumor debulking\nIndications: endobronchial nodule in setting of widely metastatic disease requiring tissue diagnosis. \nMedications: Propofol infusion via anesthesia assistance  \nProcedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. \nFollowing intravenous medications the Q190 video bronchoscope was introduced through the endotracheal tube and advanced to the tracheobronchial tree. airway and tracheobronchial tree. The trachea is of normal caliber. The carina was sharp. All left sided airways were normal without endobronchial disease to the first segmental branch. The right upper and middle lobe were normal without endobronchial disease to the first segmental branch. Within the right lower lobe a polypoid  endobronchial tumor was visualized obstructing the anterior, lateral and posterior basilar segments just distal to the medial basal segment. The Q190 video bronchoscope was then removed and the T190 therapeutic bronchoscope was introduced through the ETT, and advanced to the tracheobronchial tree. Using the electrocautery snare we were able to remove the endobronchial lesion which was sent for pathological evaluation. The distal airways were noted to have purulent post-obstructive secretions which were suctioned and removed. Mild bleeding was seen at the base and using APC non-contact electrocautery we were able to cauterize this area. Post intervention the right lower lobe was approximately 90% patient.  After observing the area of interest to ensure there was no active bleeding the bronchoscope was removed and the procedure completed. \n\n\nComplications: \n-None \nEstimated Blood Loss:  10 cc.\nRecommendations:\n- Transfer to PACU\n- Await biopsy results \n- Discharge home once criteria met.",
+    "cpt_codes": [
+      31641,
+      31645
+    ],
+    "registry_entry": {
+      "patient_mrn": "UNKNOWN",
+      "procedure_date": "2025-12-17",
+      "providers": {
+        "attending_name": "UNKNOWN",
+        "anesthesia_provider": "Anesthesiologist"
+      },
+      "metadata": {
+        "schema_version": "2.0.0",
+        "data_entry_status": "Complete",
+        "created_at": "2025-12-17T15:35:00Z",
+        "created_by": "IP-Registry-Golden-Generator"
+      },
+      "patient_demographics": {},
+      "clinical_context": {
+        "primary_indication": "Endobronchial nodule in setting of widely metastatic disease requiring tissue diagnosis",
+        "indication_category": "Lung Cancer Staging"
+      },
+      "procedure_setting": {
+        "airway_type": "ETT",
+        "location": "Bronchoscopy Suite"
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": [
+          "Propofol"
+        ]
+      },
+      "equipment": {
+        "bronchoscope_model": "Olympus Q190 (Diagnostic), T190 (Therapeutic)"
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Normal trachea and carina. Left airways normal. Right upper/middle normal. RLL polypoid tumor obstructing basilar segments.",
+          "airway_abnormalities": [
+            "Endobronchial lesion",
+            "Secretions"
+          ]
+        },
+        "therapeutic_aspiration": {
+          "performed": true,
+          "material": "Purulent secretions",
+          "location": "Distal airways (RLL)"
+        },
+        "mechanical_debulking": {
+          "performed": true,
+          "method": "Forceps debulking",
+          "location": "RLL"
+        },
+        "thermal_ablation": {
+          "performed": true,
+          "modality": "APC",
+          "location": "RLL",
+          "indication": "Hemostasis"
+        },
+        "endobronchial_biopsy": {
+          "performed": true,
+          "locations": [
+            "RLL"
+          ],
+          "number_of_samples": 1,
+          "forceps_type": "Standard"
+        }
+      },
+      "granular_data": {
+        "cao_interventions_detail": [
+          {
+            "location": "RLL",
+            "obstruction_type": "Intraluminal",
+            "etiology": "Malignant - metastatic",
+            "modalities_applied": [
+              {
+                "modality": "Electrocautery - snare"
+              },
+              {
+                "modality": "APC"
+              }
+            ],
+            "post_obstruction_pct": 10,
+            "hemostasis_required": true,
+            "hemostasis_methods": [
+              "APC"
+            ],
+            "secretions_drained": true,
+            "notes": "Polypoid tumor obstructing anterior, lateral, and posterior basilar segments. Removed via snare. Base cauterized with APC. 90% patent post-intervention."
+          }
+        ],
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Endobronchial biopsy",
+            "source_location": "RLL Endobronchial Tumor",
+            "collection_tool": "Electrocautery Snare",
+            "destinations": [
+              "Histology/Surgical pathology"
+            ]
+          }
+        ]
+      },
+      "complications": {
+        "any_complication": false,
+        "bleeding": {
+          "occurred": true,
+          "severity": "Mild (<50mL)",
+          "intervention_required": [
+            "APC"
+          ]
+        }
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "disposition": "Outpatient discharge",
+        "follow_up_plan_text": "Transfer to PACU. Await biopsy results. Discharge home once criteria met."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy, rigid or flexible; with tumor destruction by ablative energy (eg, argon plasma coagulation, cryotherapy)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31645",
+            "description": "Bronchoscopy, rigid or flexible; with therapeutic aspiration of tracheobronchial tree, initial",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 12.87,
+        "work_rvu": 8.03,
+        "practice_expense_rvu": 3.97,
+        "malpractice_rvu": 0.87
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T22:30:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2_9",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy, rigid or flexible; with tumor destruction by ablative energy (eg, argon plasma coagulation, cryotherapy)",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Destruction of RLL tumor via APC/electrocautery. Bundles excision (31640) at same site.",
+              "source": "model"
+            },
+            {
+              "sequence": 2,
+              "code": "31645",
+              "description": "Bronchoscopy, rigid or flexible; with therapeutic aspiration of tracheobronchial tree, initial",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Therapeutic aspiration of purulent secretions from distal airways, distinct from tumor site.",
+              "source": "model"
+            },
+            {
+              "sequence": 3,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "role": "bundled_only",
+              "selection_status": "dropped",
+              "selection_reason": "Bundled into 31641 when performed at same anatomic site (RLL).",
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "units": 1,
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272,
+              "is_primary": true
+            },
+            {
+              "code": "31645",
+              "units": 1,
+              "work_rvu": 2.78,
+              "total_facility_rvu": 4.47,
+              "mpfs_facility_payment": 145,
+              "is_primary": false
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 8.03,
+            "total_facility_rvu": 12.87,
+            "estimated_facility_payment_unadjusted": 417
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Primary therapeutic service for RLL tumor. Although snare excision (31640) was used, APC destruction was also performed. 31641 is the higher-valued code for the same site."
+            },
+            {
+              "code": "31645",
+              "summary": "Separate therapeutic aspiration of purulent secretions from distal airways."
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "Procedure Name: Bronchoscopy with endobronchial glue instillation \nIndications: Post-pneumonectomy broncho-pleural fistula\nMedications: Per anesthesia\nPatient intubated by anesthesia with 8.5 ETT prior to case. The Q190 video bronchoscope was introduced through ETT and advanced to the tracheobronchial tree. ETT tip was approximately 4cm above carina. The distal trachea was of normal caliber. The carina was sharp. The right sided tracheobronchial tree was examined to at least the first subsegmental level and bronchial mucosa and anatomy were normal without endobronchial lesions or secretions. The left mainstem stump was then visualized with obvious pinpoint BP fistula, the remained of the stump appeared to be intact however we did not probe the stump due to concern for extending the fistula. At this point the Veno-seal sealant delivery system catheter was advanced through the working channel of the bronchoscope and glue was then carefully applied to seal the fistula which appeared to be successful. The bronchoscope was then removed and our portion of the procedure was completed. \nComplications: none\nEstimated Blood Loss: None\nPost-procedure diagnosis: BF fistula with successful occlusion via sealant.",
+    "cpt_codes": [
+      31622
+    ],
+    "registry_entry": {
+      "patient_mrn": "Unknown",
+      "procedure_date": "2025-12-17",
+      "providers": {
+        "attending_name": "Unknown",
+        "anesthesia_provider": "Anesthesiologist"
+      },
+      "metadata": {
+        "schema_version": "2.0.0",
+        "data_entry_status": "Complete",
+        "created_at": "2025-12-17T15:24:31.000Z",
+        "notes": "Procedure performed using Veno-seal sealant delivery system."
+      },
+      "clinical_context": {
+        "primary_indication": "Post-pneumonectomy broncho-pleural fistula",
+        "indication_category": "Fistula",
+        "radiographic_findings": "Not specified in note"
+      },
+      "procedure_setting": {
+        "airway_type": "ETT",
+        "ett_size": 8.5
+      },
+      "equipment": {
+        "bronchoscope_model": "Q190"
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist"
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "The distal trachea was of normal caliber. The carina was sharp. The right sided tracheobronchial tree was examined to at least the first subsegmental level and bronchial mucosa and anatomy were normal. The left mainstem stump was visualized with obvious pinpoint BP fistula.",
+          "airway_abnormalities": [
+            "Fistula"
+          ]
+        }
+      },
+      "complications": {
+        "any_complication": false,
+        "complication_list": []
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "preliminary_diagnosis": "BP fistula with successful occlusion via sealant",
+        "disposition": "Unknown",
+        "follow_up_plan_text": "Not specified in note"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31622",
+            "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; diagnostic, with cell washing, when performed",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "J98.09"
+        ],
+        "total_rvu": 4.2,
+        "work_rvu": 2.53,
+        "practice_expense_rvu": 1.37,
+        "malpractice_rvu": 0.3
+      },
+      "coding_support": {
+        "generated_at": "2025-12-17T15:24:31.000Z",
+        "generator": "IP-Registry-Gold-Gen",
+        "knowledge_base_version": "ip_coding_billing.v2.9",
+        "coding_summary": {
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31622",
+              "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; diagnostic, with cell washing, when performed",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Primary procedure performed was bronchoscopy with visualization of the BPF. The therapeutic intervention (glue instillation) does not have a specific CPT code in the standard bronchoscopy family (31622-31661) and typically requires an unlisted code (31899), which is not available in the current fee schedule. 31622 captures the diagnostic work.",
+              "source": "model",
+              "note_spans": [
+                {
+                  "snippet": "The Q190 video bronchoscope was introduced... left mainstem stump was then visualized with obvious pinpoint BP fistula",
+                  "start": 0,
+                  "end": 0
+                }
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31622",
+              "units": 1,
+              "work_rvu": 2.53,
+              "total_facility_rvu": 4.2,
+              "total_nonfacility_rvu": 7.82,
+              "mpfs_facility_payment": 136,
+              "mpfs_nonfacility_payment": 253,
+              "is_primary": true,
+              "rvu_source_path": "fee_schedules.physician_2025_airway.codes.31622"
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 2.53,
+            "total_facility_rvu": 4.2,
+            "total_nonfacility_rvu": 7.82,
+            "estimated_facility_payment_unadjusted": 136,
+            "estimated_nonfacility_payment_unadjusted": 253
+          },
+          "mppr_assumptions": "Single procedure performed; no MPPR reduction applied."
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31622",
+              "summary": "Selected as the primary code to capture the bronchoscopic evaluation of the bronchial tree and fistula. The specific therapeutic intervention (glue) is unlisted (31899) and thus 31622 is the highest-level specific code supported by the standard fee schedule.",
+              "documentation_evidence": [
+                {
+                  "snippet": "The left mainstem stump was then visualized with obvious pinpoint BP fistula"
+                }
+              ]
+            }
+          ],
+          "global_comments": [
+            "Endobronchial glue instillation for BPF is typically reported with unlisted code 31899.",
+            "As 31899 is not present in the reference fee schedule, 31622 is reported to capture the diagnostic component.",
+            "ICD-10 J98.09 (Bronchopleural fistula) supports medical necessity."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "Procedure Name: EBUS bronchoscopy and peripheral biopsy\nIndications: Pulmonary nodule requiring diagnosis/staging. \nMedications: Propofol infusion via anesthesia assistance  \nProcedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. \nFollowing intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level without endobronchial lesions visualized. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) was only met in station station 7. Sampling by transbronchial needle aspiration was performed using an Olympus EBUSTBNA 22 gauge needle. All samples were sent for routine cytology. Onsite path evaluation revealed benign lymphocytes. The bronchoscope was then removed and the PX190 ultrathin video bronchoscope was inserted into the airway and based on anatomical knowledge advanced into the left upper lobe to the area of known nodule within the Apical-posterior segment the lesion was identified visually. Biopsies were then performed with micro forceps.  After adequate samples were obtained the bronchoscope was removed. ROSE was consistent with malignancy within the lesion.  The bronchoscope was then removed and the P190 re-inserted into the airways. We then observed for evidence of active bleeding and none was identified. The bronchoscope was removed and the procedure completed. \nComplications: \t\n-None \nEstimated Blood Loss:  less than 5 cc.\nRecommendations:\n- Transfer to post-op ward\n- Await biopsy results \n- Discharge home once criteria met.",
+    "cpt_codes": [
+      31652,
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "UNKNOWN",
+      "procedure_date": "2025-12-17",
+      "providers": {
+        "attending_name": "UNKNOWN"
+      },
+      "metadata": {
+        "schema_version": "2.0.0",
+        "data_entry_status": "Complete"
+      },
+      "patient_demographics": null,
+      "clinical_context": {
+        "primary_indication": "Pulmonary nodule requiring diagnosis/staging",
+        "indication_category": "Lung Cancer Diagnosis"
+      },
+      "procedure_setting": {
+        "airway_type": "LMA"
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": [
+          "Propofol"
+        ]
+      },
+      "equipment": {
+        "bronchoscope_model": "Q190, UC180F, PX190, P190"
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Vocal cords normal, subglottic space normal, trachea normal caliber, carina sharp. No endobronchial lesions visualized."
+        },
+        "linear_ebus": {
+          "performed": true,
+          "stations_sampled": [
+            "7"
+          ],
+          "needle_gauge": "22G",
+          "needle_type": "Standard FNA"
+        },
+        "transbronchial_biopsy": {
+          "performed": false
+        },
+        "endobronchial_biopsy": {
+          "performed": true,
+          "locations": [
+            "LUL Apical-posterior"
+          ],
+          "forceps_type": "Standard"
+        }
+      },
+      "granular_data": {
+        "linear_ebus_stations_detail": [
+          {
+            "station": "7",
+            "sampled": true,
+            "needle_gauge": 22,
+            "needle_type": "Standard FNA",
+            "rose_performed": true,
+            "rose_result": "Adequate lymphocytes",
+            "specimen_sent_for": [
+              "Cytology"
+            ]
+          }
+        ],
+        "navigation_targets": [],
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "EBUS-TBNA",
+            "source_location": "7",
+            "collection_tool": "Olympus EBUSTBNA 22 gauge needle",
+            "rose_performed": true,
+            "rose_result": "Adequate lymphocytes",
+            "destinations": [
+              "Cytology"
+            ]
+          },
+          {
+            "specimen_number": 2,
+            "source_procedure": "Endobronchial biopsy",
+            "source_location": "LUL Apical-posterior segment",
+            "collection_tool": "micro forceps",
+            "rose_performed": true,
+            "rose_result": "Malignant"
+          }
+        ]
+      },
+      "complications": {
+        "any_complication": false
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "disposition": "Outpatient discharge"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31652",
+            "description": "Bronchoscopy, rigid or flexible; with endobronchial ultrasound (EBUS) guided transbronchial needle aspiration biopsy(s), trachea, main stem and/or lobar bronchus(i), single or first lobe",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31625",
+            "description": "Bronchoscopy, rigid or flexible; with bronchial or endobronchial biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 11.89,
+        "work_rvu": 7.57,
+        "practice_expense_rvu": 3.49,
+        "malpractice_rvu": 0.83
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T22:30:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2_9",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31652",
+              "description": "Bronchoscopy w/ EBUS-TBNA 1-2 stations",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "EBUS sampling of station 7 (1 station).",
+              "source": "model"
+            },
+            {
+              "sequence": 2,
+              "code": "31625",
+              "description": "Bronchoscopy w/ endobronchial biopsy(s)",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Biopsy of visually identified LUL nodule using micro forceps.",
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31652",
+              "units": 1,
+              "work_rvu": 4.46,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225,
+              "is_primary": true
+            },
+            {
+              "code": "31625",
+              "units": 1,
+              "work_rvu": 3.11,
+              "total_facility_rvu": 4.93,
+              "mpfs_facility_payment": 160,
+              "is_primary": false
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 7.57,
+            "total_facility_rvu": 11.89,
+            "estimated_facility_payment_unadjusted": 385
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31652",
+              "summary": "1 nodal station (7) sampled via EBUS."
+            },
+            {
+              "code": "31625",
+              "summary": "Endobronchial biopsy of LUL lesion. 'Micro forceps' and visual identification supports 31625 over 31628."
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "Procedure Name: EBUS bronchoscopy\nIndications: Mediastinal adenopathy \nMedications: Propofol infusion via anesthesia assistance  \nProcedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. \nFollowing intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway is in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. Ultrasound was utilized to identify and measure the radiographically enlarged station 7, 4R and 4L lymph nodes. Sampling by transbronchial needle aspiration using Olympus EBUSTBNA 22 gauge and 19G needles. At least 5 needle passes were performed at each lymph node station. All samples were sent for routine cytology. ROSE identified granulomas within the 4R lymph node. Following completion of EBUS bronchoscopy the video bronchoscope was re-inserted and blood was suctioned from the airway. There was no evidence of active bleeding and the bronchoscope was removed and procedure completed. \n\nComplications: No immediate complications\nEstimated Blood Loss: Less than 5 cc.\n\nPost Procedure Diagnosis:\n- Technically successful EBUS bronchoscopy\n- Will await final pathology results",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "patient_mrn": "UNKNOWN",
+      "procedure_date": "2025-12-17",
+      "providers": {
+        "attending_name": "UNKNOWN",
+        "anesthesia_provider": "Anesthesiologist"
+      },
+      "clinical_context": {
+        "indication_category": "Mediastinal Lymphadenopathy",
+        "primary_indication": "Mediastinal adenopathy"
+      },
+      "procedure_setting": {
+        "location": "Bronchoscopy Suite",
+        "airway_type": "LMA"
+      },
+      "sedation": {
+        "type": "MAC",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": [
+          "Propofol"
+        ]
+      },
+      "equipment": {
+        "bronchoscope_model": "Olympus Q190 (Video), Olympus UC180F (EBUS)",
+        "bronchoscope_type": "EBUS"
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Normal vocal cords, subglottic space, trachea, and carina. Normal bronchial mucosa and anatomy to sub-segmental level. No lesions or secretions."
+        },
+        "linear_ebus": {
+          "performed": true,
+          "stations_sampled": [
+            "7",
+            "4R",
+            "4L"
+          ],
+          "needle_gauge": "22G",
+          "passes_per_station": 5,
+          "stations_detail": [
+            {
+              "station": "7",
+              "sampled": true,
+              "passes": 5,
+              "needle_gauge": 22
+            },
+            {
+              "station": "4R",
+              "sampled": true,
+              "passes": 5,
+              "rose_result": "Granuloma"
+            },
+            {
+              "station": "4L",
+              "sampled": true,
+              "passes": 5
+            }
+          ]
+        }
+      },
+      "granular_data": {
+        "linear_ebus_stations_detail": [
+          {
+            "station": "7",
+            "sampled": true,
+            "number_of_passes": 5,
+            "specimen_sent_for": [
+              "Cytology"
+            ]
+          },
+          {
+            "station": "4R",
+            "sampled": true,
+            "number_of_passes": 5,
+            "rose_performed": true,
+            "rose_result": "Granuloma",
+            "specimen_sent_for": [
+              "Cytology"
+            ]
+          },
+          {
+            "station": "4L",
+            "sampled": true,
+            "number_of_passes": 5,
+            "specimen_sent_for": [
+              "Cytology"
+            ]
+          }
+        ]
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy, rigid or flexible; with endobronchial ultrasound (EBUS) guided transbronchial needle aspiration biopsy(s), 3 or more mediastinal and/or hilar lymph node stations or structures",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 7.7,
+        "work_rvu": 4.96,
+        "practice_expense_rvu": 2.22,
+        "malpractice_rvu": 0.52
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T22:30:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2_9",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31653",
+              "description": "Bronchoscopy w/ EBUS-TBNA 3+ stations",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "EBUS-TBNA performed on 3 stations: 7, 4R, 4L.",
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31653",
+              "units": 1,
+              "work_rvu": 4.96,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.96,
+            "total_facility_rvu": 7.7,
+            "estimated_facility_payment_unadjusted": 249
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31653",
+              "summary": "Supports EBUS-TBNA of 3 distinct nodal stations (4R, 4L, 7)."
+            }
+          ]
+        }
+      },
+      "complications": {
+        "any_complication": false
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "disposition": "Outpatient discharge"
+      },
+      "metadata": {
+        "data_entry_status": "Complete"
+      }
+    }
+  },
+  {
+    "note_text": "Procedure Name: EBUS bronchoscopy\nIndications: Molecular markers\nMedications: Propofol, fentanyl infusion via anesthesia assistance  \nProcedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. \nFollowing intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway is in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Left sided bronchial mucosa and anatomy were normal without endobronchial lesions. The right lower lobe stump was intact. The right upper lobe and middle lobe were unremarkable. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. Ultrasound was utilized to identify and measure the radiographically enlarged station 4R lymph node which, measured as 8.4 mm in the short axis dimension.  Sampling by transbronchial needle aspiration was performed within the 11Rs lymph node using an Olympus EBUS TBNA 22 gauge needle. A total of 7 needle passes were performed. All samples were sent for routine cytology. ROSE was consistent with adenocarcinoma. Following completion of EBUS bronchoscopy the video bronchoscope was re-inserted and blood was suctioned from the airway. There was no evidence of active bleeding and the bronchoscope was removed and procedure completed. \n\nComplications: No immediate complications\nEstimated Blood Loss: Less than 5 cc.\n\nPost Procedure Diagnosis:\n- Technically successful EBUS bronchoscopy\n- Will await final pathology results",
+    "cpt_codes": [
+      31652
+    ],
+    "registry_entry": {
+      "patient_mrn": "UNKNOWN",
+      "procedure_date": "2025-12-17",
+      "providers": {
+        "attending_name": "Unknown",
+        "assistant_role": "Anesthesia Provider"
+      },
+      "clinical_context": {
+        "primary_indication": "Molecular markers",
+        "indication_category": "Lung Cancer Staging",
+        "radiographic_findings": "Radiographically enlarged station 4R lymph node"
+      },
+      "procedure_setting": {
+        "airway_type": "LMA",
+        "location": "Bronchoscopy Suite"
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": [
+          "Propofol",
+          "Fentanyl"
+        ]
+      },
+      "equipment": {
+        "bronchoscope_type": "EBUS",
+        "bronchoscope_model": "Olympus UC180F",
+        "navigation_platform": "None"
+      },
+      "procedures_performed": {
+        "linear_ebus": {
+          "performed": true,
+          "stations_sampled": [
+            "11R"
+          ],
+          "stations_planned": [
+            "4R",
+            "11R"
+          ],
+          "needle_gauge": "22G",
+          "needle_type": "Standard FNA",
+          "passes_per_station": 7
+        },
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Vocal cords normal. Trachea normal. Carina sharp. Right lower lobe stump intact. Left side normal."
+        }
+      },
+      "granular_data": {
+        "linear_ebus_stations_detail": [
+          {
+            "station": "4R",
+            "short_axis_mm": 8.4,
+            "sampled": false,
+            "notes": "Identified and measured via EBUS"
+          },
+          {
+            "station": "11R",
+            "sampled": true,
+            "needle_gauge": 22,
+            "needle_type": "Standard FNA",
+            "number_of_passes": 7,
+            "rose_performed": true,
+            "rose_result": "Malignant",
+            "specimen_sent_for": [
+              "Cytology"
+            ],
+            "notes": "ROSE consistent with adenocarcinoma"
+          }
+        ],
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "EBUS-TBNA",
+            "source_location": "11R",
+            "specimen_count": 7,
+            "destinations": [
+              "Cytology"
+            ],
+            "rose_result": "Adenocarcinoma"
+          }
+        ]
+      },
+      "complications": {
+        "any_complication": false
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "preliminary_diagnosis": "Adenocarcinoma",
+        "disposition": "Outpatient discharge"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31652",
+            "description": "Bronchoscopy, rigid or flexible; with endobronchial ultrasound (EBUS) guided transbronchial needle aspiration biopsy(s), trachea, main stem and/or lobar bronchus(i), single or first lobe",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 6.96,
+        "work_rvu": 4.46,
+        "practice_expense_rvu": 2.02,
+        "malpractice_rvu": 0.48
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-17T15:25:06-08:00",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31652",
+              "description": "Bronchoscopy w/ EBUS-TBNA 1-2 stations",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Primary EBUS-TBNA service. Station 11R sampled. Station 4R inspected but not sampled (count = 1 station).",
+              "source": "model"
+            },
+            {
+              "sequence": 2,
+              "code": "31622",
+              "description": "Diagnostic Bronchoscopy",
+              "role": "bundled_only",
+              "selection_status": "dropped",
+              "selection_reason": "Bundled into surgical bronchoscopy (31652) per NCCI and CPT guidelines.",
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31652",
+              "units": 1,
+              "work_rvu": 4.46,
+              "total_facility_rvu": 6.96,
+              "mpfs_facility_payment": 225,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.46,
+            "total_facility_rvu": 6.96,
+            "estimated_facility_payment_unadjusted": 225
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31652",
+              "summary": "Selected based on EBUS-TBNA of 1 lymph node station (11R). Station 4R was visualized/measured but not sampled, so it does not count towards the station threshold for 31653.",
+              "documentation_evidence": [
+                {
+                  "snippet": "Sampling by transbronchial needle aspiration was performed within the 11Rs lymph node",
+                  "span": null
+                }
+              ]
+            },
+            {
+              "code": "31622",
+              "summary": "Diagnostic inspection (Q190 scope) was performed, but is inherent to the more extensive EBUS procedure (31652) performed in the same session.",
+              "rule_refs": [
+                "diagnostic_with_surgical"
+              ]
+            }
+          ],
+          "global_comments": [
+            "Moderate sedation codes (99152/99153) are omitted because anesthesia services were provided by an anesthesia professional."
+          ]
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "schema_version": "2.0.0"
+      }
+    }
+  }
+]

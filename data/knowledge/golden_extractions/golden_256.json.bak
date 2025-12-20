@@ -1,0 +1,824 @@
+[
+  {
+    "note_text": "Pt: Green, Sarah || MRN: 3429488 || DOB: 12/10/1946\nDate: 11/11/2025 || Location: Scripps Memorial Hospital, La Jolla, CA\nAttending: Dr. Sarah Williams\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Staging for lung cancer pleural involvement\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Thickened parietal pleura with nodules\nMultiple biopsies obtained from parietal pleura (6 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nWilliams, MD",
+    "cpt_codes": [
+      32609,
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "3429488",
+      "procedure_date": "2025-11-11",
+      "patient_age": 79,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Staging for lung cancer pleural involvement",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pending pathology",
+      "cpt_codes": [
+        32609,
+        32650
+      ],
+      "institution_name": "Scripps Memorial Hospital, La Jolla, CA",
+      "molecular_testing_requested": true,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Medical thoracoscopy with biopsy",
+      "pleural_side": "Right",
+      "pleural_thoracoscopy_findings": "Thickened parietal pleura with nodules",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc",
+      "bronch_num_tbbx": 6,
+      "providers": {
+        "attending_name": "Williams",
+        "fellow_name": "LT Michelle Torres, MD",
+        "assistant_name": "Sharon Johnson, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.303533"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32609",
+          "final_codes": [
+            "32609",
+            "32650"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "32609": "Thoracoscopy with pleural biopsy",
+            "32650": "Thoracoscopy with pleurodesis (talc poudrage)"
+          },
+          "coding_decision": "adjusted"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 31.88,
+          "facility_total_payment": 1031,
+          "per_code": {
+            "32609": {
+              "facility_rvu": 16.88,
+              "facility_payment": 546
+            },
+            "32650": {
+              "facility_rvu": 15.0,
+              "facility_payment": 485
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified thoracoscopy codes. Total Facility RVU: 31.88."
+      }
+    },
+    "source_file": "synthetic_thoracoscopy_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32609",
+        "32560"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: Martinez, George || MRN: 4193717 || DOB: 1/23/1968\nDate: 09/29/2025 || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. Robert Martinez\n\nIndication: Suspected mesothelioma\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Diffuse pleural nodularity\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nMartinez, MD",
+    "cpt_codes": [
+      32601
+    ],
+    "registry_entry": {
+      "patient_mrn": "4193717",
+      "procedure_date": "2025-09-29",
+      "patient_age": 57,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Suspected mesothelioma",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pending pathology",
+      "cpt_codes": [
+        32601
+      ],
+      "institution_name": "Naval Medical Center San Diego, San Diego, CA",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Medical thoracoscopy - diagnostic",
+      "pleural_side": "Right",
+      "pleural_thoracoscopy_findings": "Diffuse pleural nodularity",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "providers": {
+        "attending_name": "Martinez",
+        "fellow_name": null,
+        "assistant_name": "Donna Williams, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.303180"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32601",
+          "final_codes": [
+            "32601"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32601": "Diagnostic thoracoscopy"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.25,
+          "facility_total_payment": 267,
+          "per_code": {
+            "32601": {
+              "facility_rvu": 8.25,
+              "facility_payment": 267
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified thoracoscopy codes. Total Facility RVU: 8.25."
+      }
+    },
+    "source_file": "synthetic_thoracoscopy_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32601"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: Martinez, Jacob || MRN: 1232915 || DOB: 12/23/1951\nDate: 10/22/2025 || Location: Cleveland Clinic, Cleveland, OH\nAttending: Dr. Mark Taylor\nFellow: Dr. Lauren Walsh (PGY-6)\n\nIndication: Pleural nodularity on imaging\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Inflammatory changes without nodularity\nMultiple biopsies obtained from parietal pleura (6 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nTaylor, MD",
+    "cpt_codes": [
+      32609,
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "1232915",
+      "procedure_date": "2025-10-22",
+      "patient_age": 74,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Pleural nodularity on imaging",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Inflammatory",
+      "cpt_codes": [
+        32609,
+        32650
+      ],
+      "institution_name": "Cleveland Clinic, Cleveland, OH",
+      "molecular_testing_requested": true,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Medical thoracoscopy with biopsy",
+      "pleural_side": "Right",
+      "pleural_thoracoscopy_findings": "Inflammatory changes without nodularity",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc",
+      "bronch_num_tbbx": 6,
+      "providers": {
+        "attending_name": "Taylor",
+        "fellow_name": "Dr. Lauren Walsh",
+        "assistant_name": "Susan Johnson, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.303310"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32609",
+          "final_codes": [
+            "32609",
+            "32650"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "32609": "Thoracoscopy with pleural biopsy",
+            "32650": "Thoracoscopy with pleurodesis (talc poudrage)"
+          },
+          "coding_decision": "adjusted"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 31.88,
+          "facility_total_payment": 1031,
+          "per_code": {
+            "32609": {
+              "facility_rvu": 16.88,
+              "facility_payment": 546
+            },
+            "32650": {
+              "facility_rvu": 15.0,
+              "facility_payment": 485
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified thoracoscopy codes. Total Facility RVU: 31.88."
+      }
+    },
+    "source_file": "synthetic_thoracoscopy_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32609",
+        "32560"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: Ramirez, Amanda || MRN: 3591187 || DOB: 5/10/1971\nDate: 09/20/2025 || Location: University of Michigan Hospital, Ann Arbor, MI\nAttending: Dr. Mark Taylor\n\nIndication: Recurrent pleural effusion of unknown etiology\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Multiple pleural nodules - malignant appearing\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nTaylor, MD",
+    "cpt_codes": [
+      32601
+    ],
+    "registry_entry": {
+      "patient_mrn": "3591187",
+      "procedure_date": "2025-09-20",
+      "patient_age": 54,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Recurrent pleural effusion of unknown etiology",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant appearing",
+      "cpt_codes": [
+        32601
+      ],
+      "institution_name": "University of Michigan Hospital, Ann Arbor, MI",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Medical thoracoscopy - diagnostic",
+      "pleural_side": "Left",
+      "pleural_thoracoscopy_findings": "Multiple pleural nodules - malignant appearing",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "providers": {
+        "attending_name": "Taylor",
+        "fellow_name": null,
+        "assistant_name": "Kimberly Harris, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.303098"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32601",
+          "final_codes": [
+            "32601"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32601": "Diagnostic thoracoscopy"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.25,
+          "facility_total_payment": 267,
+          "per_code": {
+            "32601": {
+              "facility_rvu": 8.25,
+              "facility_payment": 267
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified thoracoscopy codes. Total Facility RVU: 8.25."
+      }
+    },
+    "source_file": "synthetic_thoracoscopy_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32601"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: Scott, Timothy || MRN: 2498770 || DOB: 5/6/1965\nDate: 10/02/2025 || Location: Cleveland Clinic, Cleveland, OH\nAttending: Dr. Michael Chen\nFellow: Dr. James Liu (PGY-5)\n\nIndication: Pleural nodularity on imaging\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Mass lesion on diaphragmatic pleura\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nChen, MD",
+    "cpt_codes": [
+      32601
+    ],
+    "registry_entry": {
+      "patient_mrn": "2498770",
+      "procedure_date": "2025-10-02",
+      "patient_age": 60,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Pleural nodularity on imaging",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pending pathology",
+      "cpt_codes": [
+        32601
+      ],
+      "institution_name": "Cleveland Clinic, Cleveland, OH",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Medical thoracoscopy - diagnostic",
+      "pleural_side": "Left",
+      "pleural_thoracoscopy_findings": "Mass lesion on diaphragmatic pleura",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "providers": {
+        "attending_name": "Chen",
+        "fellow_name": "Dr. James Liu",
+        "assistant_name": "Carol Jones, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.303149"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32601",
+          "final_codes": [
+            "32601"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32601": "Diagnostic thoracoscopy"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.25,
+          "facility_total_payment": 267,
+          "per_code": {
+            "32601": {
+              "facility_rvu": 8.25,
+              "facility_payment": 267
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified thoracoscopy codes. Total Facility RVU: 8.25."
+      }
+    },
+    "source_file": "synthetic_thoracoscopy_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32601"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: Lopez, Edward || MRN: 6157882 || DOB: 10/8/1973\nDate: 11/11/2025 || Location: Scripps Memorial Hospital, La Jolla, CA\nAttending: Dr. Sarah Williams\nFellow: Dr. Kevin Patel (PGY-5)\n\nIndication: Cytology-negative exudative effusion\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Pleural plaques\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nWilliams, MD",
+    "cpt_codes": [
+      32601
+    ],
+    "registry_entry": {
+      "patient_mrn": "6157882",
+      "procedure_date": "2025-11-11",
+      "patient_age": 52,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Cytology-negative exudative effusion",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pending pathology",
+      "cpt_codes": [
+        32601
+      ],
+      "institution_name": "Scripps Memorial Hospital, La Jolla, CA",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Medical thoracoscopy - diagnostic",
+      "pleural_side": "Right",
+      "pleural_thoracoscopy_findings": "Pleural plaques",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "providers": {
+        "attending_name": "Williams",
+        "fellow_name": "Dr. Kevin Patel",
+        "assistant_name": "Nancy Baker, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.303016"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32601",
+          "final_codes": [
+            "32601"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32601": "Diagnostic thoracoscopy"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.25,
+          "facility_total_payment": 267,
+          "per_code": {
+            "32601": {
+              "facility_rvu": 8.25,
+              "facility_payment": 267
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified thoracoscopy codes. Total Facility RVU: 8.25."
+      }
+    },
+    "source_file": "synthetic_thoracoscopy_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32601"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: White, Karen || MRN: 7516219 || DOB: 4/27/1944\nDate: 07/29/2025 || Location: Cedars-Sinai Medical Center, Los Angeles, CA\nAttending: CDR Patricia Davis, MD\n\nIndication: Persistent effusion despite thoracentesis\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Fibrinous adhesions with trapped lung\nMultiple biopsies obtained from parietal pleura (8 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nDavis, MD",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "7516219",
+      "procedure_date": "2025-07-29",
+      "patient_age": 81,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Persistent effusion despite thoracentesis",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pending pathology",
+      "cpt_codes": [
+        32609
+      ],
+      "institution_name": "Cedars-Sinai Medical Center, Los Angeles, CA",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Medical thoracoscopy with biopsy",
+      "pleural_side": "Right",
+      "pleural_thoracoscopy_findings": "Fibrinous adhesions with trapped lung",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_num_tbbx": 8,
+      "providers": {
+        "attending_name": "Davis",
+        "fellow_name": null,
+        "assistant_name": "Jessica Lee, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.303381"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32609",
+          "final_codes": [
+            "32609"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32609": "Thoracoscopy with pleural biopsy"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 16.88,
+          "facility_total_payment": 546,
+          "per_code": {
+            "32609": {
+              "facility_rvu": 16.88,
+              "facility_payment": 546
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified thoracoscopy codes. Total Facility RVU: 16.88."
+      }
+    },
+    "source_file": "synthetic_thoracoscopy_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32609"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: Green, Nicholas || MRN: 4577270 || DOB: 11/27/1954\nDate: 08/31/2025 || Location: Johns Hopkins Hospital, Baltimore, MD\nAttending: CDR Patricia Davis, MD\n\nIndication: Cytology-negative exudative effusion\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Fibrinous adhesions with trapped lung\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nDavis, MD",
+    "cpt_codes": [
+      32601
+    ],
+    "registry_entry": {
+      "patient_mrn": "4577270",
+      "procedure_date": "2025-08-31",
+      "patient_age": 71,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Cytology-negative exudative effusion",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pending pathology",
+      "cpt_codes": [
+        32601
+      ],
+      "institution_name": "Johns Hopkins Hospital, Baltimore, MD",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Medical thoracoscopy - diagnostic",
+      "pleural_side": "Left",
+      "pleural_thoracoscopy_findings": "Fibrinous adhesions with trapped lung",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "providers": {
+        "attending_name": "Davis",
+        "fellow_name": null,
+        "assistant_name": "Donna Clark, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302990"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32601",
+          "final_codes": [
+            "32601"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32601": "Diagnostic thoracoscopy"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.25,
+          "facility_total_payment": 267,
+          "per_code": {
+            "32601": {
+              "facility_rvu": 8.25,
+              "facility_payment": 267
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified thoracoscopy codes. Total Facility RVU: 8.25."
+      }
+    },
+    "source_file": "synthetic_thoracoscopy_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32601"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: Flores, Donald || MRN: 4086330 || DOB: 6/16/1966\nDate: 08/03/2025 || Location: Scripps Memorial Hospital, La Jolla, CA\nAttending: Dr. Sarah Williams\n\nIndication: Suspected tuberculous pleuritis\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Inflammatory changes without nodularity\nMultiple biopsies obtained from parietal pleura (9 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nWilliams, MD",
+    "cpt_codes": [
+      32609
+    ],
+    "registry_entry": {
+      "patient_mrn": "4086330",
+      "procedure_date": "2025-08-03",
+      "patient_age": 59,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Suspected tuberculous pleuritis",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Inflammatory",
+      "cpt_codes": [
+        32609
+      ],
+      "institution_name": "Scripps Memorial Hospital, La Jolla, CA",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Medical thoracoscopy with biopsy",
+      "pleural_side": "Left",
+      "pleural_thoracoscopy_findings": "Inflammatory changes without nodularity",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "bronch_num_tbbx": 9,
+      "providers": {
+        "attending_name": "Williams",
+        "fellow_name": null,
+        "assistant_name": "Elizabeth King, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.303505"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32609",
+          "final_codes": [
+            "32609"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32609": "Thoracoscopy with pleural biopsy"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 16.88,
+          "facility_total_payment": 546,
+          "per_code": {
+            "32609": {
+              "facility_rvu": 16.88,
+              "facility_payment": 546
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified thoracoscopy codes. Total Facility RVU: 16.88."
+      }
+    },
+    "source_file": "synthetic_thoracoscopy_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32609"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: Wilson, Melissa || MRN: 7642762 || DOB: 8/7/1971\nDate: 07/19/2025 || Location: UCSF Medical Center, San Francisco, CA\nAttending: Dr. Jennifer Lee\n\nIndication: Suspected malignant pleural disease\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Normal-appearing pleura\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nLee, MD",
+    "cpt_codes": [
+      32601
+    ],
+    "registry_entry": {
+      "patient_mrn": "7642762",
+      "procedure_date": "2025-07-19",
+      "patient_age": 54,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Suspected malignant pleural disease",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pending pathology",
+      "cpt_codes": [
+        32601
+      ],
+      "institution_name": "UCSF Medical Center, San Francisco, CA",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Medical thoracoscopy - diagnostic",
+      "pleural_side": "Right",
+      "pleural_thoracoscopy_findings": "Normal-appearing pleura",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "providers": {
+        "attending_name": "Lee",
+        "fellow_name": null,
+        "assistant_name": "Angela Walker, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.303269"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "2025-12-07",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32601",
+          "final_codes": [
+            "32601"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32601": "Diagnostic thoracoscopy"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.25,
+          "facility_total_payment": 267,
+          "per_code": {
+            "32601": {
+              "facility_rvu": 8.25,
+              "facility_payment": 267
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified thoracoscopy codes. Total Facility RVU: 8.25."
+      }
+    },
+    "source_file": "synthetic_thoracoscopy_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32601"
+      ],
+      "invalid_codes": []
+    }
+  }
+]

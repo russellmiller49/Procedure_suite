@@ -1,0 +1,1002 @@
+[
+  {
+    "note_text": "**PROCEDURE REPORT: COMBINED EBUS & NAVIGATIONAL BRONCHOSCOPY**\n\n**Patient:** Sarah Jenkins\n**MRN:** 8829104\n**DOB:** 05/12/1955\n**Date:** 05/15/2025\n**Attending:** Dr. Alan Wright\n**Fellow:** Dr. Emily Chen\n\n**Indication:** 70-year-old female with a 2.2 cm LUL nodule (spiculated, solid) and mediastinal adenopathy on CT. PET-CT shows SUV max 5.4 in the nodule and 4.1 in station 7.\n\n**Procedures:**\n1.  Linear EBUS-TBNA (Mediastinal Staging)\n2.  Electromagnetic Navigation Bronchoscopy (EMN)\n3.  Radial EBUS (Peripheral Lesion Confirmation)\n4.  Transbronchial Biopsy (TBBx)\n\n**Medications:** Fentanyl 150mcg, Midazolam 4mg, Propofol TCI. General Anesthesia with LMA #4.\n\n**Procedure Details:**\n\n* **Airway Inspection:** LMA placed. Therapeutic bronchoscope introduced. Normal vocal cords. Trachea patent. Carina sharp. Bilateral bronchial trees patent.\n* **EBUS-TBNA (Linear):**\n    * **Station 7 (Subcarinal):** 18mm node, heterogeneous. Sampled with 22G needle x 4 passes. ROSE: Lymphocytes only.\n    * **Station 4R (Lower Paratracheal):** 10mm node. Sampled x 3 passes. ROSE: Lymphocytes.\n    * **Station 4L (Lower Paratracheal):** 14mm node. Sampled x 3 passes. ROSE: Lymphocytes.\n* **Navigation (SuperDimension):**\n    * CT loaded. Target: LUL Apical-Posterior segment nodule.\n    * Registration: Auto-match successful. Error 4mm.\n    * Navigation to target achieved. Tool-in-lesion confirmed.\n* **Radial EBUS (r-EBUS):**\n    * Probe inserted. Concentric view of 20mm hypoechoic lesion obtained.\n* **Peripheral Sampling (LUL Nodule):**\n    * TBBx x 6 obtained with standard forceps. Fluoroscopy confirmed position.\n    * Brush x 2.\n    * ROSE: **Positive for Adenocarcinoma.**\n\n**Complications:** None. Minimal bleeding, controlled with suction.\n**Disposition:** Extubated (LMA removed), stable to PACU.\n**Plan:** Oncology referral. Molecular testing ordered.\n\n**Dr. Alan Wright**",
+    "cpt_codes": [
+      31653,
+      31627,
+      31654,
+      31628
+    ],
+    "registry_entry": {
+      "patient_mrn": "8829104",
+      "procedure_date": "2025-05-15",
+      "patient_age": 70,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "2.2 cm LUL nodule (spiculated, solid) and mediastinal adenopathy on CT.",
+      "sedation_type": "General",
+      "airway_type": "LMA",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31653,
+        31627,
+        31654,
+        31628
+      ],
+      "evidence": {
+        "attending_name": "Dr. Alan Wright",
+        "patient_age": "70-year-old female",
+        "gender": "70-year-old female",
+        "procedure_date": "Date: 05/15/2025",
+        "primary_indication": "Indication: 70-year-old female with a 2.2 cm LUL nodule (spiculated, solid) and mediastinal adenopathy on CT.",
+        "sedation_type": "General Anesthesia",
+        "airway_type": "LMA #4"
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "nav_platform": "superDimension",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "lesion_size_mm": 22.0,
+      "ebus_stations_sampled": [
+        "7",
+        "4R",
+        "4L"
+      ],
+      "linear_ebus_stations": [
+        "7",
+        "4R",
+        "4L"
+      ],
+      "providers": {
+        "attending_name": "Alan Wright",
+        "fellow_name": "Emily Chen",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 18.41,
+        "work_rvu": 12.18,
+        "practice_expense_rvu": 4.93,
+        "malpractice_rvu": 1.3
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T12:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_ebus_linear",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31653",
+              "description": "Bronchoscopy with EBUS-TBNA, 3 or more nodal stations",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Linear EBUS sampling of stations 7, 4R, 4L",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "31628",
+              "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Transbronchial biopsy of LUL nodule",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 3,
+              "code": "+31627",
+              "description": "Bronchoscopy with computer-assisted, image-guided navigation",
+              "role": "add_on",
+              "selection_status": "selected",
+              "selection_reason": "Electromagnetic navigation to peripheral lesion",
+              "units": 1,
+              "is_add_on": true
+            },
+            {
+              "sequence": 4,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s)",
+              "role": "add_on",
+              "selection_status": "selected",
+              "selection_reason": "Radial EBUS confirmation of peripheral lesion",
+              "units": 1,
+              "is_add_on": true
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.7442,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31653",
+              "units": 1,
+              "work_rvu": 4.96,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment_2025": 252,
+              "is_primary": true
+            },
+            {
+              "code": "31628",
+              "units": 1,
+              "work_rvu": 3.55,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment_2025": 181,
+              "is_primary": true
+            },
+            {
+              "code": "+31627",
+              "units": 1,
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment_2025": 101,
+              "is_add_on": true
+            },
+            {
+              "code": "+31654",
+              "units": 1,
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment_2025": 69,
+              "is_add_on": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 12.18,
+            "total_facility_rvu": 18.41,
+            "estimated_facility_payment_unadjusted": 603
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31653",
+              "summary": "Appropriate for EBUS-TBNA of 3 mediastinal stations (7, 4R, 4L).",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "31628",
+              "summary": "Primary code for transbronchial biopsy of the peripheral nodule.",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "+31627",
+              "summary": "Add-on for navigation required to reach the peripheral target.",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "+31654",
+              "summary": "Add-on for radial probe EBUS confirmation of the peripheral target.",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Diagnostic bronchoscopy (31622) is bundled.",
+            "Brushing (31623) is bundled/secondary to the biopsy in the same lobe."
+          ]
+        }
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-06",
+      "cpt_summary": {
+        "31653": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "EBUS-TBNA of 3+ stations (7, 4R, 4L)."
+        },
+        "31627": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Electromagnetic navigation bronchoscopy."
+        },
+        "31654": {
+          "units": 1,
+          "role": "add_on",
+          "rationale": "Radial EBUS for peripheral lesion."
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Transbronchial biopsy of single lobe (LUL)."
+        }
+      },
+      "is_edge_case": true,
+      "edge_case_category": "multi_modality_airway",
+      "edge_case_notes": "Edge case: combined linear EBUS mediastinal staging (31653) with EM navigation (+31627), radial EBUS for a peripheral LUL lesion (+31654), and transbronchial lung biopsy (31628) in the same session.",
+      "rvu_summary": {
+        "setting": "facility",
+        "conversion_factor_2025": 32.7442,
+        "per_code": {
+          "31653": {
+            "work_rvu": 4.96,
+            "practice_expense_rvu": 2.22,
+            "malpractice_rvu": 0.52,
+            "total_facility_rvu": 7.7,
+            "mpfs_facility_payment_2025": 252
+          },
+          "+31627": {
+            "work_rvu": 2.27,
+            "practice_expense_rvu": 0.55,
+            "malpractice_rvu": 0.25,
+            "total_facility_rvu": 3.07,
+            "mpfs_facility_payment_2025": 101
+          },
+          "+31654": {
+            "work_rvu": 1.4,
+            "practice_expense_rvu": 0.56,
+            "malpractice_rvu": 0.15,
+            "total_facility_rvu": 2.11,
+            "mpfs_facility_payment_2025": 69
+          },
+          "31628": {
+            "work_rvu": 3.55,
+            "practice_expense_rvu": 1.6,
+            "malpractice_rvu": 0.38,
+            "total_facility_rvu": 5.53,
+            "mpfs_facility_payment_2025": 181
+          }
+        },
+        "totals": {
+          "work_rvu": 12.18,
+          "practice_expense_rvu": 4.93,
+          "malpractice_rvu": 1.3,
+          "total_facility_rvu": 18.41,
+          "estimated_facility_payment_2025": 603
+        }
+      },
+      "note_level_rationale": "Linear EBUS mediastinal staging at 3 nodal stations (31653) plus EM navigation (+31627), radial EBUS for a peripheral LUL nodule (+31654), and transbronchial lung biopsies in one lobe (31628); no separate diagnostic bronchoscopy or moderate sedation is billed."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31653, +31627, +31654, 31628; total_work_rvu=12.18, total_rvu=18.41 (facility).",
+        "Added coding_review.rvu_summary with 2025 facility RVUs/payments and flagged this note as an edge_case for training."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Procedure Note\nPatient: Robert K. Miller (MRN: 994821)\nDate: April 10, 2025\nDr. Sarah O'Connor, Attending Pulmonologist.\n\nMr. Miller is a 62M with Stage IV lung cancer and a recurrent massive right pleural effusion causing severe dyspnea. He was admitted for management. We discussed options including repeat thoracentesis vs. PleurX vs. Chest Tube/Pleurodesis. He opted for a chest tube for drainage and possible talc slurry.\n\nTime Out performed. The patient was positioned sitting up. The right hemithorax was prepped and draped. Ultrasound identified a large free-flowing effusion. 1% Lidocaine was used for local anesthesia. A 14Fr pigtail catheter was inserted using Seldinger technique under real-time ultrasound guidance. 1200mL of straw-colored fluid was drained immediately. The tube was secured and connected to -20cmH2O suction. Fluid sent for cytology and culture. Post-procedure CXR confirmed placement. Patient tolerated well.\n\nAssessment: Successful US-guided small-bore chest tube placement right hemithorax.\nPlan: Drain to dry, then consider talc slurry.",
+    "cpt_codes": [
+      32557
+    ],
+    "registry_entry": {
+      "patient_mrn": "994821",
+      "procedure_date": "2025-04-10",
+      "patient_age": 62,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Recurrent massive right pleural effusion causing severe dyspnea.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32557
+      ],
+      "evidence": {
+        "attending_name": "Dr. Sarah O'Connor",
+        "patient_age": "Mr. Miller is a 62M",
+        "gender": "Mr. Miller is a 62M",
+        "procedure_date": "Date: April 10, 2025",
+        "primary_indication": "Mr. Miller is a 62M with Stage IV lung cancer and a recurrent massive right pleural effusion causing severe dyspnea.",
+        "sedation_type": "1% Lidocaine was used for local anesthesia",
+        "airway_type": "Native (implied)"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "pleural_procedure_type": "Chest Tube",
+      "pleural_guidance": "Ultrasound",
+      "pleurodesis_performed": false,
+      "pleural_volume_drained_ml": 1200,
+      "providers": {
+        "attending_name": "Sarah O'Connor",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32557",
+            "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 4.5,
+        "work_rvu": 3.12,
+        "practice_expense_rvu": 1.04,
+        "malpractice_rvu": 0.34
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T12:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "pleural_drainage",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32557",
+              "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Ultrasound-guided insertion of 14Fr pigtail catheter for drainage",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus.pleural",
+          "conversion_factor": 32.7442,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32557",
+              "units": 1,
+              "work_rvu": 3.12,
+              "total_facility_rvu": 4.5,
+              "mpfs_facility_payment_2025": 147,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 3.12,
+            "total_facility_rvu": 4.5,
+            "estimated_facility_payment_unadjusted": 147
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32557",
+              "summary": "Placement of a small-bore (14Fr) pigtail catheter using Seldinger technique and US guidance supports 32557 over 32551 (tube thoracostomy).",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Imaging guidance is inherent to 32557."
+          ]
+        }
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-06",
+      "cpt_summary": {
+        "32557": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Pleural drainage with insertion of indwelling catheter (pigtail) with imaging guidance."
+        }
+      },
+      "is_edge_case": true,
+      "edge_case_category": "pleural_drainage_vs_chest_tube",
+      "edge_case_notes": "Edge case: ultrasound-guided small-bore pleural drainage catheter (pigtail) that could be miscoded as a chest tube; language supports 32557 for percutaneous pleural drainage with imaging guidance.",
+      "rvu_summary": {
+        "setting": "facility",
+        "conversion_factor_2025": 32.7442,
+        "per_code": {
+          "32557": {
+            "work_rvu": 3.12,
+            "practice_expense_rvu": 1.04,
+            "malpractice_rvu": 0.34,
+            "total_facility_rvu": 4.5,
+            "mpfs_facility_payment_2025": 147
+          }
+        },
+        "totals": {
+          "work_rvu": 3.12,
+          "practice_expense_rvu": 1.04,
+          "malpractice_rvu": 0.34,
+          "total_facility_rvu": 4.5,
+          "estimated_facility_payment_2025": 147
+        }
+      },
+      "note_level_rationale": "Image-guided placement of a small-bore pleural drainage catheter using ultrasound without talc or fibrinolytic instillation; this supports 32557 rather than tube thoracostomy or tunneled IPC codes."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32557; total_work_rvu=3.12, total_rvu=4.5 (facility).",
+        "Added coding_review.rvu_summary with 2025 facility RVUs/payments and flagged this note as an edge_case for training."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "**OPERATIVE REPORT**\n\n**PATIENT:** James T. Kirk\n**MRN:** 1701-A\n**DATE:** 06/20/2025\n**SURGEON:** Dr. Leonard McCoy\n**ANESTHESIA:** General (TIVA)\n\n**PRE-OP DIAGNOSIS:** Tracheal Stenosis (Malignant)\n**POST-OP DIAGNOSIS:** Same, Status Post Laser Resection and Stenting\n**PROCEDURE:** Rigid Bronchoscopy, Laser Tumor Destruction, Silicone Stent Placement\n\n**FINDINGS:**\n1.  Exophytic tumor obstructing 80% of mid-trachea.\n2.  Rest of airways patent.\n\n**DESCRIPTION:**\nPatient inducted. Rigid bronchoscope (14mm) inserted. Tumor visualized in mid-trachea. Nd:YAG Laser used to coagulate and vaporize tumor tissue (30W, 2040J total). Mechanical debulking performed with rigid barrel. Hemostasis achieved. Airway opened to 90%.\n\nA 16x40mm Dumon silicone stent was deployed into the mid-trachea using the rigid deployer. Position confirmed with flexible scope. Stent patent and stable. Patient extubated in OR.\n\n**COMPLICATIONS:** None.\n**EBL:** 20cc.",
+    "cpt_codes": [
+      31641,
+      31631
+    ],
+    "registry_entry": {
+      "patient_mrn": "1701-A",
+      "procedure_date": "2025-06-20",
+      "patient_age": 60,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Tracheal Stenosis (Malignant)",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31641,
+        31631
+      ],
+      "evidence": {
+        "attending_name": "Dr. Leonard McCoy",
+        "patient_age": "Defaulted (Not in text, assuming adult)",
+        "gender": "Male (implied by name)",
+        "procedure_date": "DATE: 06/20/2025",
+        "primary_indication": "PRE-OP DIAGNOSIS: Tracheal Stenosis (Malignant)",
+        "sedation_type": "ANESTHESIA: General (TIVA)",
+        "airway_type": "Rigid bronchoscope (14mm) inserted"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "stent_type": "Silicone - Dumon",
+      "stent_location": "Trachea",
+      "stent_diameter_mm": 16.0,
+      "stent_length_mm": 40.0,
+      "ablation_modality": "Laser - Nd:YAG",
+      "cao_tumor_location": "Trachea",
+      "cao_obstruction_pre_pct": 80,
+      "cao_obstruction_post_pct": 10,
+      "providers": {
+        "attending_name": "Leonard McCoy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.55,
+        "work_rvu": 9.61,
+        "practice_expense_rvu": 4.91,
+        "malpractice_rvu": 1.03
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T12:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Laser destruction and mechanical debulking of tracheal tumor",
+              "units": 1,
+              "is_add_on": false
+            },
+            {
+              "sequence": 2,
+              "code": "31631",
+              "description": "Bronchoscopy; with placement of tracheal stent(s)",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Placement of silicone tracheal stent",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.7442,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "units": 1,
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment_2025": 275,
+              "is_primary": true
+            },
+            {
+              "code": "31631",
+              "units": 1,
+              "work_rvu": 4.36,
+              "total_facility_rvu": 7.15,
+              "mpfs_facility_payment_2025": 234,
+              "is_primary": false
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 9.61,
+            "total_facility_rvu": 15.55,
+            "estimated_facility_payment_unadjusted": 509
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Extensive tumor destruction with Nd:YAG laser performed prior to stenting.",
+              "rule_refs": [],
+              "qa_flags": []
+            },
+            {
+              "code": "31631",
+              "summary": "Placement of tracheal stent to maintain airway patency.",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Multiple endoscopy rule applies (highest valued code 31641 paid 100%, 31631 reduced)."
+          ]
+        }
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-06",
+      "cpt_summary": {
+        "31641": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with destruction of tumor (Laser) and relief of stenosis."
+        },
+        "31631": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchoscopy with placement of tracheal stent."
+        }
+      },
+      "is_edge_case": true,
+      "edge_case_category": "cao_tumor_plus_stent",
+      "edge_case_notes": "Edge case: malignant central airway obstruction treated with both tumor destruction (31641) and silicone tracheal stent placement (31631) in the same segment; tests understanding of CAO coding and bundling rules.",
+      "rvu_summary": {
+        "setting": "facility",
+        "conversion_factor_2025": 32.7442,
+        "per_code": {
+          "31641": {
+            "work_rvu": 5.25,
+            "practice_expense_rvu": 2.6,
+            "malpractice_rvu": 0.55,
+            "total_facility_rvu": 8.4,
+            "mpfs_facility_payment_2025": 275
+          },
+          "31631": {
+            "work_rvu": 4.36,
+            "practice_expense_rvu": 2.31,
+            "malpractice_rvu": 0.48,
+            "total_facility_rvu": 7.15,
+            "mpfs_facility_payment_2025": 234
+          }
+        },
+        "totals": {
+          "work_rvu": 9.61,
+          "practice_expense_rvu": 4.91,
+          "malpractice_rvu": 1.03,
+          "total_facility_rvu": 15.55,
+          "estimated_facility_payment_2025": 509
+        }
+      },
+      "note_level_rationale": "Rigid bronchoscopy for malignant tracheal obstruction with Nd:YAG laser tumor destruction (31641) followed by placement of a silicone Dumon tracheal stent (31631); no separate diagnostic bronchoscopy or balloon dilation is billed."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31641, 31631; total_work_rvu=9.61, total_rvu=15.55 (facility).",
+        "Added coding_review.rvu_summary with 2025 facility RVUs/payments and flagged this note as an edge_case for training."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "PROCEDURE: Medical Thoracoscopy (Right)\nDATE: 02/14/2025\nPHYSICIAN: Dr. House\nPATIENT: Greg (MRN 12345)\n\nIndication: Undiagnosed right pleural effusion.\n\nLocal anesthesia + MAC. Pt in LLD. Trocar inserted 5th ICS. 1.5L bloody fluid removed. Inspection showed diffuse nodules on parietal pleura. Visceral pleura appeared normal. \nBiopsies taken x 6 from parietal pleura. \nTalc poudrage (4g) performed for pleurodesis. \n24Fr Chest tube placed. \n\nDx: Suspicious for Mesothelioma.\nPlan: Admit.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "12345",
+      "procedure_date": "2025-02-14",
+      "patient_age": 50,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Undiagnosed right pleural effusion.",
+      "sedation_type": "MAC",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32650
+      ],
+      "evidence": {
+        "attending_name": "Dr. House",
+        "patient_age": "Defaulted (Not in text)",
+        "gender": "Male (implied)",
+        "procedure_date": "DATE: 02/14/2025",
+        "primary_indication": "Indication: Undiagnosed right pleural effusion.",
+        "sedation_type": "Local anesthesia + MAC",
+        "airway_type": "Native (implied)"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Thoracoscopy",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc Poudrage",
+      "pleural_thoracoscopy_findings": "Diffuse nodules on parietal pleura",
+      "providers": {
+        "attending_name": "House",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis",
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T12:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "thoracoscopy",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32650",
+              "description": "Thoracoscopy, surgical; with pleurodesis (e.g., mechanical or chemical)",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Medical thoracoscopy with talc poudrage pleurodesis",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus.pleural",
+          "conversion_factor": 32.7442,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32650",
+              "units": 1,
+              "work_rvu": 10.0,
+              "total_facility_rvu": 15.0,
+              "mpfs_facility_payment_2025": 491,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 10.0,
+            "total_facility_rvu": 15.0,
+            "estimated_facility_payment_unadjusted": 491
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32650",
+              "summary": "Surgical thoracoscopy with pleurodesis (talc poudrage). Includes biopsy and chest tube placement.",
+              "rule_refs": [
+                "thoracoscopy_biopsy_with_resection"
+              ],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Biopsies (3260x) are bundled into therapeutic thoracoscopy with pleurodesis (32650).",
+            "Tube thoracostomy (32551) is bundled."
+          ]
+        }
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-06",
+      "cpt_summary": {
+        "32650": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Thoracoscopy with pleurodesis (includes biopsy if done for this purpose, though biopsy specific code 32606/7/8 might be considered if diagnostic, usually pleurodesis code covers the session)."
+        }
+      },
+      "is_edge_case": true,
+      "edge_case_category": "thoracoscopy_pleurodesis",
+      "edge_case_notes": "Edge case: medical thoracoscopy with multiple parietal pleural biopsies and talc poudrage pleurodesis; only the pleurodesis code 32650 should be reported even though biopsies are performed.",
+      "rvu_summary": {
+        "setting": "facility",
+        "conversion_factor_2025": 32.7442,
+        "per_code": {
+          "32650": {
+            "work_rvu": 10.0,
+            "practice_expense_rvu": 4.09,
+            "malpractice_rvu": 0.91,
+            "total_facility_rvu": 15.0,
+            "mpfs_facility_payment_2025": 491
+          }
+        },
+        "totals": {
+          "work_rvu": 10.0,
+          "practice_expense_rvu": 4.09,
+          "malpractice_rvu": 0.91,
+          "total_facility_rvu": 15.0,
+          "estimated_facility_payment_2025": 491
+        }
+      },
+      "note_level_rationale": "Medical thoracoscopy with pleural biopsies and talc poudrage pleurodesis for a trapped-lung, recurrent malignant effusion; pleurodesis (32650) is the definitive surgical service and includes diagnostic thoracoscopy/biopsy."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 32650; total_work_rvu=10.0, total_rvu=15.0 (facility).",
+        "Added coding_review.rvu_summary with 2025 facility RVUs/payments and flagged this note as an edge_case for training."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Bronchoscopy Note - Thermoplasty Session 1\n\nPatient: Lisa Simpson | MRN: 876543 | Date: 07/07/2025\nProvider: Dr. Hibbert\n\n**History:** Severe persistent asthma refractory to biologics. Presenting for first session of Bronchial Thermoplasty (RLL).\n\n**Procedure:**\n- General Anesthesia/ETT.\n- Alair catheter introduced.\n- RLL basal segments treated systematically.\n- **Activations:**\n  - Right Posterior Basal: 14 activations\n  - Right Lateral Basal: 12 activations\n  - Right Anterior Basal: 10 activations\n  - Right Medial Basal: 8 activations\n  - Right Superior Segment: 15 activations\n- Total Activations: 59.\n- No significant bleeding or mucosal injury observed.\n\n**Post-Op:** Stable. Extubated. Observe for bronchospasm.",
+    "cpt_codes": [
+      31660
+    ],
+    "registry_entry": {
+      "patient_mrn": "876543",
+      "procedure_date": "2025-07-07",
+      "patient_age": 8,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Severe persistent asthma refractory to biologics.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31660
+      ],
+      "evidence": {
+        "attending_name": "Dr. Hibbert",
+        "patient_age": "Defaulted/Child implied by name but treated as adult for procedure",
+        "gender": "Female",
+        "procedure_date": "Date: 07/07/2025",
+        "primary_indication": "Severe persistent asthma refractory to biologics.",
+        "sedation_type": "General Anesthesia/ETT",
+        "airway_type": "ETT"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "bt_lobe_treated": "RLL",
+      "bt_activation_count": 59,
+      "providers": {
+        "attending_name": "Hibbert",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31660",
+            "description": "Bronchoscopy; with bronchial thermoplasty, 1 lobe",
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 5.97,
+        "work_rvu": 4.0,
+        "practice_expense_rvu": 1.53,
+        "malpractice_rvu": 0.44
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-06T12:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchial_thermoplasty",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31660",
+              "description": "Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with bronchial thermoplasty, 1 lobe",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Bronchial thermoplasty of RLL (1 lobe)",
+              "units": 1,
+              "is_add_on": false
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.7442,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31660",
+              "units": 1,
+              "work_rvu": 4.0,
+              "total_facility_rvu": 5.97,
+              "mpfs_facility_payment_2025": 195,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.0,
+            "total_facility_rvu": 5.97,
+            "estimated_facility_payment_unadjusted": 195
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31660",
+              "summary": "Appropriate code for initial thermoplasty session treating a single lobe.",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Includes diagnostic bronchoscopy."
+          ]
+        }
+      }
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-06",
+      "cpt_summary": {
+        "31660": {
+          "units": 1,
+          "role": "primary",
+          "rationale": "Bronchial thermoplasty, one lobe (RLL)."
+        }
+      },
+      "is_edge_case": true,
+      "edge_case_category": "bronchial_thermoplasty",
+      "edge_case_notes": "Edge case: bronchial thermoplasty (31660) performed in a younger severe-asthma patient, limited to a single lobe (RLL); tests BT-specific coding and avoidance of separate diagnostic bronchoscopy codes.",
+      "rvu_summary": {
+        "setting": "facility",
+        "conversion_factor_2025": 32.7442,
+        "per_code": {
+          "31660": {
+            "work_rvu": 4.0,
+            "practice_expense_rvu": 1.53,
+            "malpractice_rvu": 0.44,
+            "total_facility_rvu": 5.97,
+            "mpfs_facility_payment_2025": 195
+          }
+        },
+        "totals": {
+          "work_rvu": 4.0,
+          "practice_expense_rvu": 1.53,
+          "malpractice_rvu": 0.44,
+          "total_facility_rvu": 5.97,
+          "estimated_facility_payment_2025": 195
+        }
+      },
+      "note_level_rationale": "Bronchial thermoplasty session treating one lobe (RLL) only, with pre- and post-bronchodilator bronchoscopy and no additional lobes or separate diagnostic bronchoscopy billed; 31660 alone appropriately captures the work."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31660; total_work_rvu=4.0, total_rvu=5.97 (facility).",
+        "Added coding_review.rvu_summary with 2025 facility RVUs/payments and flagged this note as an edge_case for training."
+      ],
+      "warnings": []
+    }
+  }
+]

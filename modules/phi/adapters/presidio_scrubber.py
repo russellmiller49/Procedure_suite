@@ -1,7 +1,8 @@
-"""Presidio-based scrubber adapter (Dynamic Clinical Context).
+"""Presidio-based scrubber adapter (Unified Clinical Context).
 
 Implements PHIScrubberPort using Presidio AnalyzerEngine with enhanced
 dynamic safeguards for clinical terms, providers, and HIPAA age rules.
+Unified version combining scispacy integration and targeted false positive fixes.
 """
 
 from __future__ import annotations
@@ -105,6 +106,8 @@ ANATOMICAL_ALLOW_LIST = {
     "lymph nodes", "node", "nodes", "ebus", "eus", "tbna", "bal", "bronchoscopy",
     "left", "right", "bilateral", "unilateral",
     "apicoposterior", "left main", "single lobe", "upper lobes",
+    "nose", "nasal", "pulmonary", "lung", "lungs", "pleura", "pleural",
+    "tracheobronchial", "endobronchial", "chest", "thorax", "thoracic",
     # Lymph Node Stations (1-14 with variants)
     "station", "stations",
     "1r", "1l", "2r", "2l", "3a", "3p", "4r", "4l", "5", "6", "7", "8", "9",
@@ -191,19 +194,24 @@ CLINICAL_ALLOW_LIST = {
     "surgicel", "thermoplasty", "thoracostomy tube", "tube thoracostomy",
     "ultrathin", "veran", "volumetric", "volumetric ct", "em nav",
     "em navigation", "electromagnetic navigation",
-    # Clinical findings/pathology
+    # Clinical findings/pathology/Lab
     "atypia", "boggy", "debris", "desat", "dyspnea", "gastric ca", "glucose",
     "hemorrhagic hilar", "lymphocytes", "melanoma", "metastatic breast cancer",
     "mucosa", "neoplasia", "nsclc", "ovarian ca", "papillomas", "pus",
     "schwannoma", "squamous cell carcinoma", "stridor", "thymoma",
-    "tracheomalacia", "tracheobronchomalacia",
+    "tracheomalacia", "tracheobronchomalacia", "egfr", "hemoglobin", "hgb",
+    "infiltrating", "vc mode", "pmean", "thoracoscope", "dumon tracheal", 
+    "dumon",
     # Medications
     "alteplase", "azithromycin", "bicarb", "dornase", "levofloxacin",
     "levofloxacin prophylaxis", "lido", "midaz", "oxygen", "prednisone",
-    "temoporfin",
-    # Administrative and common phrases
+    "temoporfin", "augmentin", "decadron",
+    # Administrative, Roles, and Common False Positives
     "electronically signed", "findings rounded", "findings short", "findings tumor",
-    "augmentin", "decadron", "breast", "vessel", "myer-cotton", "endotek",
+    "breast", "vessel", "myer-cotton", "endotek",
+    "alert", "metrics", "dob", "mrn", "birth date", "birthdate",
+    "patient status", "registration", "minimal", "significant", "successful",
+    "prepared", "reduce", "remain", "max", "physician", "attending physician",
     # Institution / IT Terms to prevent False Positive Location redaction
     "ucsd", "nmcsd", "balboa", "navy", "va", "veterans affairs", "scripps", 
     "sharp", "kaiser", "sutter", "mercy", "providence", "palomar", "radys",
@@ -339,7 +347,8 @@ _SECTION_HEADER_WORDS: frozenset[str] = frozenset(
         "PLAN", "PROCEDURE", "PROCEDURES", "ATTENDING", "ASSISTANT", "ANESTHESIA",
         "MONITORING", "TRACHEA", "BRUSH", "CRYOBIOPSY", "MEDIASTINAL", "MEDIA",
         "SIZE", "FLUID", "LARYNX", "PHARYNX", "FINDINGS", "COMPLICATIONS", "INDICATION",
-        "DESCRIPTION", "DISCHARGE",
+        "DESCRIPTION", "DISCHARGE", "RECOMMENDATION", "DISCUSSION", "METRICS", 
+        "BIRTH DATE", "PATIENT STATUS", "PHYSICIAN", "ATTENDING PHYSICIAN"
     }
 )
 
@@ -384,6 +393,7 @@ _NON_NAME_TOKENS: frozenset[str] = frozenset(
         "juxta", "kinda", "loaded", "marker", "max", "messy", "mgmt", "mini",
         "obs", "primary", "refer", "resume", "scan", "screening", "sequential",
         "sputum", "transfer", "wean", "withdrew", "signed", "rounded", "short",
+        "minimal", "significant", "successful", "prepared", "reduce", "remain"
     }
 )
 _NON_NAME_LEADERS: frozenset[str] = frozenset(
@@ -393,7 +403,7 @@ _NON_NAME_LEADERS: frozenset[str] = frozenset(
         "unknown", "discharge", "recurrent", "observe", "observed", "looked",
         "sprayed", "wedged", "frozen", "moderate", "standard", "nodes", "large",
         "small", "superior", "findings", "electronically", "inserted", "loaded",
-        "withdrew", "resume", "refer",
+        "withdrew", "resume", "refer", "minimal", "significant", "successful"
     }
 )
 _LOBE_ABBREV_RE = re.compile(r"\b(?:rul|rml|rll|lul|lll|lml|lingula)\b", re.IGNORECASE)
@@ -995,6 +1005,10 @@ def filter_cpt_codes(text: str, results: list) -> list:
 def filter_address_false_positives(text: str, results: list) -> list:
     """Drop address detections that look like procedure/code lines."""
     filtered = []
+    
+    # Enhanced narrative check to avoid flagging "68 y.o. male with..." as ADDRESS
+    narrative_keywords = {"history", "presents", "male", "female", "y.o.", "year-old", "year old", "mass", "lesion", "nodule", "ct", "pet", "smoking", "pack-year"}
+    
     for res in results:
         if str(getattr(res, "entity_type", "")).upper() != "ADDRESS":
             filtered.append(res)
@@ -1004,11 +1018,17 @@ def filter_address_false_positives(text: str, results: list) -> list:
         line = text[line_start:line_end]
         line_lower = line.lower()
 
+        # Check for CPT/Procedure context
         if _CPT_HINT_RE.search(line):
             continue
         if _PROCEDURE_CONTEXT_RE.search(line_lower) and not _ADDRESS_STATE_ZIP_RE.search(line):
             if re.match(r"^[ \t]*\d{4,6}\b", line) or _CPT_CODE_RE.search(line):
                 continue
+                
+        # Check for Narrative/History context (e.g. "68 y.o. male...")
+        token_words = set(re.findall(r"\w+", line_lower))
+        if len(token_words & narrative_keywords) >= 2:
+             continue
 
         filtered.append(res)
     return filtered
@@ -1117,6 +1137,10 @@ def filter_person_location_sanity(text: str, results: list) -> list:
                 continue
             if _PROVIDER_TOKEN_RE.search(token):
                 continue
+            # NEW: Filter known clinical terms appearing capitalized at sentence start or in lists
+            if token_lower in {"hemoglobin", "hgb", "egfr", "pulmonary", "nose", "vc mode", "pmean", "dumon tracheal", "dumon"}:
+                continue
+                
             if token.isupper() and len(token) <= 4:
                 if _PROCEDURE_CONTEXT_RE.search(context) or _CLINICAL_CONTEXT_RE.search(context):
                     continue
@@ -1130,6 +1154,10 @@ def filter_person_location_sanity(text: str, results: list) -> list:
             ):
                 continue
             if _PROCEDURE_CONTEXT_RE.search(context) or _CLINICAL_CONTEXT_RE.search(context):
+                continue
+                
+            # NEW: Specific Location False Positives
+            if token_lower in {"thoracoscope", "infiltrating", "attending physician"}:
                 continue
 
         filtered.append(res)

@@ -1,0 +1,579 @@
+[
+  {
+    "note_text": "PROCEDURE NOTE: PLEURAL INTERVENTION CONVERSION\n\n**Patient:** James Howlett (MRN: 991823)\n**Date:** 10/31/2025\n**Provider:** Dr. C. Xavier\n\n**Indication:** 55M with fevers and large right pleural effusion. Concern for empyema.\n\n**Procedure Details:**\nTimeout performed. Right posterior chest prepped. \nUltrasound identified a loculated fluid collection. Local anesthesia (20cc Lidocaine). \n\n1. **Diagnostic Thoracentesis:** A 6Fr catheter was inserted. 60cc of frank purulent fluid (pus) was aspirated. \n   *Decision made to escalate to tube thoracostomy immediately given gross empyema.*\n\n2. **Chest Tube Placement:** Using the same site (tract dilated), a 14Fr Wayne pigtail catheter was inserted using Seldinger technique. \n   Return: 450cc purulent fluid. \n   Tube sutured in place and connected to atrium.\n\n3. **Fibrinolytics:** Given loculations seen on US, 10mg tPA and 5mg DNase were instilled through the new chest tube at the end of the case. Tube clamped.\n\n**Complications:** None.\n**Disposition:** Admitted for empyema management.",
+    "cpt_codes": [
+      32551,
+      32561
+    ],
+    "registry_entry": {
+      "patient_mrn": "991823",
+      "procedure_date": "2025-10-31",
+      "patient_age": 55,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Fevers and large right pleural effusion. Concern for empyema.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        32551,
+        32561
+      ],
+      "evidence": {
+        "attending_name": "Dr. C. Xavier",
+        "patient_age": "55M",
+        "gender": "55M",
+        "procedure_date": "Date: 10/31/2025",
+        "primary_indication": "Indication: 55M with fevers and large right pleural effusion.",
+        "sedation_type": "Local anesthesia (20cc Lidocaine)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Chest Tube",
+      "pleural_guidance": "Ultrasound",
+      "pleurodesis_performed": false,
+      "pleural_volume_drained_ml": 510,
+      "providers": {
+        "attending_name": "C. Xavier",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Pleural intervention conversion for James Howlett.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI Policy Manual Chapter 5"
+      ],
+      "per_code": [
+        {
+          "code": "32551",
+          "description": "Tube thoracostomy, includes connection to drainage system, when performed (separate procedure)",
+          "category": "tube_thoracostomy",
+          "units": 1,
+          "facility_total_rvus_2025": 4.56,
+          "facility_mpfs_payment_2025": 148.0,
+          "bundling_or_modifier_notes": "Primary service. Covers the definitive drainage. Diagnostic thoracentesis (32555) performed at the same site/session to confirm fluid before tube placement is bundled."
+        },
+        {
+          "code": "32561",
+          "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+          "category": "pleural_intrapleural_treatment",
+          "units": 1,
+          "facility_total_rvus_2025": 2.09,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Separately payable for instillation of tPA/DNase."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 6.65,
+        "total_facility_mpfs_payment": 216.0,
+        "computation_notes": "Sum of 32551 and 32561."
+      },
+      "rationale": [
+        "Procedure began as diagnostic thoracentesis but converted to tube thoracostomy at the same site due to frank pus. Only the more extensive procedure (32551) is reported.",
+        "Fibrinolytic instillation (32561) is separately reported."
+      ]
+    },
+    "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "ip_coder_patch_gpt_edge_v1",
+      "patch_date": "2025-12-07T00:00:00",
+      "is_edge_case": true,
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "changes": [
+        "Marked note as synthetic edge case and set source_file to synthetic_edge_case_notes_with_registry.jsonl.",
+        "Augmented coding_review CPT summary with 2025 physician facility RVUs and MPFS facility payments for all CPT codes.",
+        "Verified registry_entry content; no changes required for this edge-case note."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "**BRONCHOSCOPY SUITE - PROCEDURE NOTE**\n\n**Patient:** Logan Roy | **DOB:** 10/14/1948\n**Date:** 11/05/2025\n**MD:** Dr. Shiv Roy\n\n**History:** Massive hemoptysis (~300cc) this morning. History of squamous cell ca RUL.\n\n**Procedure:** Rigid Bronchoscopy (Emergency)\n**Anesthesia:** General.\n\n**Findings:**\nBlood clots filling trachea. Suctioned clear. \nActive pulsatile bleeding identified from RUL orifice. Tumor invasion noted at RUL carina.\n\n**Intervention:**\n1. **Therapeutic Aspiration:** ~400cc of blood and clot evacuated from trachea and left mainstem to restore ventilation.\n2. **Balloon Tamponade:** A fogarty balloon was deployed into the RUL bronchus and inflated to tamponade bleeding. Held for 5 minutes. Bleeding slowed.\n3. **Tumor Destruction (Hemostasis):** APC (Argon Plasma Coagulation) was applied to the visible tumor bed at the RUL orifice to cauterize vessels. \n4. **Iced Saline:** 500cc instilled and suctioned.\n\n**Outcome:** Hemostasis achieved. Extubated in OR once stable.\n\n**Impression:** Massive hemoptysis secondary to tumor erosion. Controlled with APC and Tamponade.",
+    "cpt_codes": [
+      31641,
+      31645
+    ],
+    "registry_entry": {
+      "patient_mrn": "Unknown",
+      "procedure_date": "2025-11-05",
+      "patient_age": 77,
+      "gender": "Male",
+      "asa_class": 4,
+      "primary_indication": "Massive hemoptysis (~300cc). History of squamous cell ca RUL.",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31641,
+        31645
+      ],
+      "evidence": {
+        "attending_name": "Dr. Shiv Roy",
+        "patient_age": "Calculated from DOB 1948",
+        "gender": "Male",
+        "procedure_date": "Date: 11/05/2025",
+        "primary_indication": "History: Massive hemoptysis (~300cc).",
+        "sedation_type": "General",
+        "airway_type": "Rigid Bronchoscope"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Severe (>200mL)",
+      "pneumothorax": false,
+      "ablation_modality": "APC",
+      "cao_tumor_location": "RUL Orifice",
+      "providers": {
+        "attending_name": "Shiv Roy",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Emergency rigid bronchoscopy for Logan Roy.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with destruction of tumor or relief of stenosis by any method",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
+          "units": 1,
+          "facility_total_rvus_2025": 8.4,
+          "facility_mpfs_payment_2025": 272.0,
+          "bundling_or_modifier_notes": "Primary therapeutic code. Supported by APC destruction of tumor at RUL orifice to control bleeding."
+        },
+        {
+          "code": "31645",
+          "description": "Bronchoscopy with therapeutic aspiration of tracheobronchial tree, initial",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
+          "units": 1,
+          "facility_total_rvus_2025": 4.47,
+          "facility_mpfs_payment_2025": 145.0,
+          "bundling_or_modifier_notes": "Supported by aspiration of 400cc blood/clot from trachea and left mainstem (distinct work from the RUL tumor destruction)."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 12.87,
+        "total_facility_mpfs_payment": 417.0,
+        "computation_notes": "Sum of 31641 and 31645."
+      },
+      "rationale": [
+        "APC applied to tumor bed maps to 31641.",
+        "Clearance of massive hemoptysis clots from non-target airways supports 31645.",
+        "Balloon tamponade is generally considered part of the hemorrhage control effort or critical care service and does not have a specific separate add-on code in this context."
+      ]
+    },
+    "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "ip_coder_patch_gpt_edge_v1",
+      "patch_date": "2025-12-07T00:00:00",
+      "is_edge_case": true,
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "changes": [
+        "Marked note as synthetic edge case and set source_file to synthetic_edge_case_notes_with_registry.jsonl.",
+        "Augmented coding_review CPT summary with 2025 physician facility RVUs and MPFS facility payments for all CPT codes.",
+        "Verified registry_entry content; no changes required for this edge-case note."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "PROCEDURE: Mixed Modality Staging and Treatment\nDATE: 06/06/2025\nPATIENT: Wade Wilson (MRN: Deadpool)\n\n**1. EBUS-TBNA:**\nConvex probe used. \n- Station 7 (Subcarinal): Sampled. ROSE negative.\n- Station 4R: Sampled. ROSE negative.\n\n**2. Navigation & Cryobiopsy (LUL):**\nIon robot used. Navigated to LUL nodule (1.5cm). Radial EBUS confirmed position. \n**Action:** Cryoprobe inserted. Freezing applied for 6 seconds. Biopsy taken x 3. (CPT 31627, 31654, 31628?)\n\n**3. Incidental Finding & Treatment (RMB):**\nUpon withdrawal, a large polypoid lesion was seen in the Right Mainstem Bronchus (completely separate from LUL target) causing 50% obstruction. \n**Action:** The lesion was resected using electrocautery snare and base treated with APC. (CPT 31641?)\n\n**Summary:** \n- LUL Cryobiopsy (Navigated)\n- Mediastinal Staging\n- RMB Tumor Resection (Unplanned)\n\nNo complications.",
+    "cpt_codes": [
+      31652,
+      31627,
+      31654,
+      31628,
+      31641
+    ],
+    "registry_entry": {
+      "patient_mrn": "Deadpool",
+      "procedure_date": "2025-06-06",
+      "patient_age": 45,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Staging and nodule biopsy.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31652,
+        31627,
+        31654,
+        31628,
+        31641
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Male",
+        "procedure_date": "DATE: 06/06/2025",
+        "primary_indication": "Mixed Modality Staging and Treatment",
+        "sedation_type": "General (implied by Ion)",
+        "airway_type": "ETT (implied by Ion)"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "nav_platform": "Ion",
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Not specified",
+      "nav_sampling_tools": [
+        "Cryoprobe"
+      ],
+      "nav_cryobiopsy_for_nodule": true,
+      "granular_data": {
+        "cryobiopsy_sites": [
+          {
+            "site_number": 1,
+            "lobe": "LUL",
+            "probe_size_mm": null,
+            "freeze_time_seconds": 6,
+            "number_of_biopsies": 3
+          }
+        ],
+        "cao_interventions_detail": [
+          {
+            "location": "RMS",
+            "obstruction_type": "Intraluminal",
+            "modalities_applied": [
+              {
+                "modality": "Electrocautery - snare"
+              },
+              {
+                "modality": "APC"
+              }
+            ]
+          }
+        ]
+      },
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Mixed modality staging and treatment for Wade Wilson.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI Policy Manual Chapter 5"
+      ],
+      "per_code": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with destruction of tumor or relief of stenosis by any method",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
+          "units": 1,
+          "facility_total_rvus_2025": 8.4,
+          "facility_mpfs_payment_2025": 272.0,
+          "bundling_or_modifier_notes": "High-value primary. Resection of RMB tumor."
+        },
+        {
+          "code": "31652",
+          "description": "Bronchoscopy with EBUS sampling, 1-2 nodal stations",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 6.96,
+          "facility_mpfs_payment_2025": 225.0,
+          "bundling_or_modifier_notes": "EBUS-TBNA of 7 and 4R."
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe",
+          "category": "bronchoscopy_biopsy_parenchymal",
+          "units": 1,
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Cryobiopsy of LUL nodule (distinct from RMB tumor)."
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on)",
+          "category": "bronchoscopy_navigation",
+          "units": 1,
+          "facility_total_rvus_2025": 3.07,
+          "facility_mpfs_payment_2025": 99.0,
+          "bundling_or_modifier_notes": "Navigation to LUL nodule."
+        },
+        {
+          "code": "31654",
+          "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention (add-on)",
+          "category": "bronchoscopy_ebus_radial",
+          "units": 1,
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Radial EBUS for LUL nodule."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 26.07,
+        "total_facility_mpfs_payment": 843.0,
+        "computation_notes": "Sum of all codes."
+      },
+      "rationale": [
+        "Complex case involving three distinct targets: Mediastinum (31652), LUL peripheral nodule (31628+31627+31654), and RMB central tumor (31641).",
+        "Modifier -59 or -XS would be required on 31628 and 31652 to distinguish from 31641."
+      ]
+    },
+    "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "ip_coder_patch_gpt_edge_v1",
+      "patch_date": "2025-12-07T00:00:00",
+      "is_edge_case": true,
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "changes": [
+        "Marked note as synthetic edge case and set source_file to synthetic_edge_case_notes_with_registry.jsonl.",
+        "Augmented coding_review CPT summary with 2025 physician facility RVUs and MPFS facility payments for all CPT codes.",
+        "Verified registry_entry content; no changes required for this edge-case note."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Operative Note: Complex Stent Exchange\nDate: 02/02/2025\nDr. F. N. Stein\n\nPatient with history of benign tracheal stenosis s/p silicone stent 1 year ago. Presents with halitosis and cough. \nBronchoscopy reveals the 14x40mm silicone stent is encrusted with granulation tissue at both ends. \n\nProcedure:\n1. **Removal:** The proximal granulation tissue was cored out using the rigid barrel. The stent was grasped and removed. \n2. **Assessment:** Underlying stenosis is stable but mucosa is inflamed. Significant granulation tissue remains at the distal seat.\n3. **Treatment:** APC and Cryotherapy applied to the granulomas to clean the airway base.\n4. **Replacement:** A NEW 14x40mm silicone stent was deployed in the same position.\n\nEBL: 10cc.",
+    "cpt_codes": [
+      31638
+    ],
+    "registry_entry": {
+      "patient_mrn": "Unknown",
+      "procedure_date": "2025-02-02",
+      "patient_age": 50,
+      "gender": "Unknown",
+      "asa_class": 2,
+      "primary_indication": "Benign tracheal stenosis s/p silicone stent.",
+      "sedation_type": "General",
+      "airway_type": "Rigid Bronchoscope",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        31638
+      ],
+      "evidence": {
+        "attending_name": "Dr. F. N. Stein",
+        "patient_age": "Defaulted",
+        "gender": "Defaulted",
+        "procedure_date": "Date: 02/02/2025",
+        "primary_indication": "History of benign tracheal stenosis s/p silicone stent.",
+        "sedation_type": "General (implied by Rigid)",
+        "airway_type": "Rigid Bronchoscope"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "stent_type": "Silicone - Dumon",
+      "stent_location": "Trachea",
+      "stent_diameter_mm": 14.0,
+      "stent_length_mm": 40.0,
+      "ablation_modality": "APC",
+      "providers": {
+        "attending_name": "F. N. Stein",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Stent exchange note for Dr. F. N. Stein.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
+        {
+          "code": "31638",
+          "description": "Bronchoscopy with revision of tracheal or bronchial stent",
+          "category": "bronchoscopy_therapeutic_stent",
+          "units": 1,
+          "facility_total_rvus_2025": 7.76,
+          "facility_mpfs_payment_2025": 251.0,
+          "bundling_or_modifier_notes": "Primary code. Covers the removal of the old stent, destruction of granulation tissue at the site, and placement of the new stent."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.76,
+        "total_facility_mpfs_payment": 251.0,
+        "computation_notes": "Single code 31638."
+      },
+      "rationale": [
+        "Code 31638 (Revision) is comprehensive for stent exchange.",
+        "Separate coding of 31641 (destruction) or 31631 (placement) is incorrect when performed at the same site during a revision."
+      ]
+    },
+    "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "ip_coder_patch_gpt_edge_v1",
+      "patch_date": "2025-12-07T00:00:00",
+      "is_edge_case": true,
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "changes": [
+        "Marked note as synthetic edge case and set source_file to synthetic_edge_case_notes_with_registry.jsonl.",
+        "Augmented coding_review CPT summary with 2025 physician facility RVUs and MPFS facility payments for all CPT codes.",
+        "Verified registry_entry content; no changes required for this edge-case note."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Procedure: Cryo-Ablation vs Biopsy\nDate: 09/09/2025\n\n**Scenario:** RLL endobronchial mass (Squamous cell).\n\n**Intervention:**\nCryoprobe applied to the mass. Frozen for 10 seconds. \nProbe and scope withdrawn. Large piece of tumor removed and **discarded** (not sent to pathology as diagnosis is known). \nRepeat freeze-thaw cycles x 5 to debulk the airway. Airway now 80% patent.\n\nThen, advanced to LUL for a *new* 8mm nodule. Radial EBUS confirmation. \nCryobiopsy performed x 2. **Sent to pathology.**\n\n**Codes:**\n31641 (RLL Ablation)\n31628 (LUL Biopsy)",
+    "cpt_codes": [
+      31641,
+      31628,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "Unknown",
+      "procedure_date": "2025-09-09",
+      "patient_age": 60,
+      "gender": "Unknown",
+      "asa_class": 3,
+      "primary_indication": "RLL endobronchial mass and new LUL nodule.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31641,
+        31628,
+        31654
+      ],
+      "evidence": {
+        "attending_name": "Unknown",
+        "patient_age": "Defaulted",
+        "gender": "Defaulted",
+        "procedure_date": "Date: 09/09/2025",
+        "primary_indication": "Scenario: RLL endobronchial mass.",
+        "sedation_type": "Moderate (implied)",
+        "airway_type": "Native"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "ablation_modality": "Cryotherapy - contact",
+      "cao_tumor_location": "RLL",
+      "nav_rebus_used": true,
+      "granular_data": {
+        "cao_interventions_detail": [
+          {
+            "location": "RLL",
+            "obstruction_type": "Intraluminal",
+            "modalities_applied": [
+              {
+                "modality": "Cryoextraction"
+              }
+            ]
+          }
+        ]
+      },
+      "providers": {
+        "attending_name": "Unknown",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-06T12:00:00.000000"
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Cryo-Ablation vs Biopsy note.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI Policy Manual Chapter 5"
+      ],
+      "per_code": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with destruction of tumor or relief of stenosis by any method",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
+          "units": 1,
+          "facility_total_rvus_2025": 8.4,
+          "facility_mpfs_payment_2025": 272.0,
+          "bundling_or_modifier_notes": "Primary. RLL mass ablation (tissue discarded/debulking)."
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe",
+          "category": "bronchoscopy_biopsy_parenchymal",
+          "units": 1,
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Distinct service. LUL peripheral nodule biopsy."
+        },
+        {
+          "code": "31654",
+          "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention (add-on)",
+          "category": "bronchoscopy_ebus_radial",
+          "units": 1,
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Add-on for LUL nodule localization."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 16.04,
+        "total_facility_mpfs_payment": 519.0,
+        "computation_notes": "Sum of all codes."
+      },
+      "rationale": [
+        "Documentation clearly distinguishes therapeutic destruction (31641) in RLL from diagnostic biopsy (31628) in LUL.",
+        "Use of cryoprobe for destruction supports 31641. Use of cryoprobe for biopsy supports 31628 (as per standard practice, though 31628 is technically 'forceps', payer policies generally accept cryoprobe biopsy under TBLB)."
+      ]
+    },
+    "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "ip_coder_patch_gpt_edge_v1",
+      "patch_date": "2025-12-07T00:00:00",
+      "is_edge_case": true,
+      "source_file": "synthetic_edge_case_notes_with_registry.jsonl",
+      "changes": [
+        "Marked note as synthetic edge case and set source_file to synthetic_edge_case_notes_with_registry.jsonl.",
+        "Augmented coding_review CPT summary with 2025 physician facility RVUs and MPFS facility payments for all CPT codes.",
+        "Verified registry_entry content; no changes required for this edge-case note."
+      ],
+      "warnings": []
+    }
+  }
+]

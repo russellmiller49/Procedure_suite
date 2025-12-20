@@ -1,0 +1,1237 @@
+[
+  {
+    "note_text": "Pt: Harrison, William || MRN: 782341 || DOB: 03/15/1961\nDate: 11/18/2025 || Location: Emory University Hospital, Atlanta, GA\nMD: Dr. Rebecca Chen\n\nDx: RUL endobronchial mass seen on CT, suspected lung cancer\nProcedure: Bronchoscopy with endobronchial biopsy\n\nUnder moderate sedation (midazolam 4mg, fentanyl 100mcg IV), flexible bronchoscopy performed via oral route with 6.0mm Olympus scope. Airways inspected systematically. Exophytic polypoid mass identified at RB1 orifice, near-completely occluding the segment. Pink-red, friable appearance. 4 endobronchial biopsies obtained with cold forceps. Moderate bleeding controlled with cold saline irrigation. Bronchial washings sent. No other airway abnormalities. Patient tolerated procedure well.\n\nPost-procedure: Stable, SpO2 96% on 2L NC. D/C home with path f/u in 5 days.\n\nR. Chen, MD",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "782341",
+      "procedure_date": "2025-11-18",
+      "patient_demographics": {
+        "age_years": 64,
+        "gender": "Male",
+        "smoking_status": "Former",
+        "pack_years": 40
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "RUL endobronchial mass, suspected lung cancer",
+        "indication_category": "Lung Cancer Diagnosis",
+        "radiographic_findings": "CT chest showing RUL endobronchial mass with partial RB1 obstruction"
+      },
+      "providers": {
+        "attending_name": "Chen, Rebecca",
+        "attending_npi": "1234567890",
+        "fellow_name": null,
+        "trainee_present": false,
+        "rose_present": false
+      },
+      "procedure_details": {
+        "sedation_type": "Moderate",
+        "airway_type": "Native",
+        "scope_type": "Flexible",
+        "scope_diameter_mm": 6.0
+      },
+      "procedures_performed": {
+        "endobronchial_biopsy": {
+          "performed": true,
+          "sites": [
+            "RB1"
+          ],
+          "number_of_biopsies": 4,
+          "tool_used": "Cold forceps",
+          "visible_lesion": true,
+          "lesion_appearance": "Exophytic polypoid mass, pink-red, friable"
+        },
+        "bronchial_wash": {
+          "performed": true,
+          "location": "RUL"
+        }
+      },
+      "specimens": {
+        "endobronchial_biopsy": {
+          "count": 4,
+          "destination": [
+            "Histology/Surgical pathology"
+          ]
+        },
+        "bronchial_wash": {
+          "destination": [
+            "Cytology",
+            "Bacterial culture"
+          ]
+        }
+      },
+      "complications": {
+        "bleeding_severity": "Moderate",
+        "bleeding_intervention": "Cold saline irrigation",
+        "pneumothorax": false
+      },
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": [
+        "Pathology follow-up in 5 days"
+      ],
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8",
+        "generated_at": "2025-12-09T10:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 4.93,
+        "work_rvu": 3.11,
+        "practice_expense_rvu": 1.47,
+        "malpractice_rvu": 0.35
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-09",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31625",
+        "final_codes": [
+          "31625"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31625": "Bronchoscopy with endobronchial biopsy(s) for RUL mass."
+        },
+        "coding_decision": "correct"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 4.93,
+        "facility_total_payment": 160,
+        "rvu_source": "ip_coding_billing.v2_7.json",
+        "conversion_factor": 32.3562
+      },
+      "overall_assessment": "Verified. Single unit 31625 appropriate for multiple biopsies."
+    }
+  },
+  {
+    "note_text": "Pt: Martinez, Sofia || MRN: 493827 || DOB: 07/22/1975\nDate: 11/20/2025 || Location: UCLA Medical Center, Los Angeles, CA\nMD: Dr. Michael Thornton\n\nDx: Bilateral hilar adenopathy, suspected sarcoidosis\nProcedure: Bronchoscopy with endobronchial biopsy, BAL\n\nModerate sedation achieved. Olympus BF-P190 scope advanced. Diffuse mucosal nodularity and cobblestoning noted at main carina, bilateral mainstem bronchi. Classic sarcoid appearance. 6 endobronchial biopsies taken (3 carina, 2 RMS, 1 LMS). Minimal bleeding. BAL performed at RML (100mL instilled, 55mL returned, clear). No endobronchial obstruction. Procedure uneventful.\n\nPlan: Await pathology for non-caseating granulomas. PFTs if confirmed. F/U pulm clinic 2 weeks.\n\nM. Thornton, MD",
+    "cpt_codes": [
+      31625,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "493827",
+      "procedure_date": "2025-11-20",
+      "patient_demographics": {
+        "age_years": 50,
+        "gender": "Female",
+        "smoking_status": "Never"
+      },
+      "clinical_context": {
+        "asa_class": 2,
+        "primary_indication": "Bilateral hilar adenopathy, suspected sarcoidosis",
+        "indication_category": "Mediastinal Lymphadenopathy",
+        "radiographic_findings": "CT showing bilateral hilar and mediastinal lymphadenopathy"
+      },
+      "providers": {
+        "attending_name": "Thornton, Michael",
+        "attending_npi": "2345678901",
+        "fellow_name": null,
+        "trainee_present": false,
+        "rose_present": false
+      },
+      "procedure_details": {
+        "sedation_type": "Moderate",
+        "airway_type": "Native",
+        "scope_type": "Flexible",
+        "scope_model": "Olympus BF-P190"
+      },
+      "procedures_performed": {
+        "endobronchial_biopsy": {
+          "performed": true,
+          "sites": [
+            "Main carina",
+            "RMS",
+            "LMS"
+          ],
+          "number_of_biopsies": 6,
+          "tool_used": "Forceps",
+          "visible_lesion": true,
+          "lesion_appearance": "Diffuse mucosal nodularity and cobblestoning"
+        },
+        "bal": {
+          "performed": true,
+          "location": "RML",
+          "volume_instilled_ml": 100,
+          "volume_returned_ml": 55,
+          "appearance": "Clear"
+        }
+      },
+      "specimens": {
+        "endobronchial_biopsy": {
+          "count": 6,
+          "destination": [
+            "Histology/Surgical pathology"
+          ]
+        },
+        "bal": {
+          "destination": [
+            "Cytology",
+            "Cell block",
+            "Flow cytometry"
+          ]
+        }
+      },
+      "complications": {
+        "bleeding_severity": "Mild",
+        "pneumothorax": false
+      },
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": [
+        "PFTs if sarcoidosis confirmed",
+        "Pulm clinic in 2 weeks"
+      ],
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8",
+        "generated_at": "2025-12-09T10:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "modifier": "XS",
+            "modifiers": [
+              "XS"
+            ],
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 9.17,
+        "work_rvu": 5.74,
+        "practice_expense_rvu": 2.78,
+        "malpractice_rvu": 0.65
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-09",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31625",
+        "final_codes": [
+          "31625",
+          "31624"
+        ],
+        "modifiers": [
+          "XS"
+        ],
+        "changes_made": false,
+        "code_rationales": {
+          "31625": "Endobronchial biopsies (Carina, RMS, LMS).",
+          "31624": "BAL (RML). Distinct lobe from biopsy sites supports separate reporting."
+        },
+        "coding_decision": "correct"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 9.17,
+        "facility_total_payment": 297,
+        "rvu_source": "ip_coding_billing.v2_7.json",
+        "conversion_factor": 32.3562
+      },
+      "overall_assessment": "Verified. BAL supported as distinct service (separate lobe)."
+    }
+  },
+  {
+    "note_text": "Pt: Thompson, Marcus || MRN: 651294 || DOB: 11/03/1958\nDate: 11/22/2025 || Location: Johns Hopkins Hospital, Baltimore, MD\nMD: Dr. Amanda Williams, Fellow: Dr. James Park (PGY-5)\n\nDx: LLL endobronchial lesion, known NSCLC s/p chemo, ? recurrence\nProcedure: Flex bronch with endobronchial biopsy\n\nGeneral anesthesia via LMA. Olympus therapeutic scope used. Prior radiation changes noted at LUL. New polypoid lesion at LB6 origin, 50% obstruction. Appears necrotic with surface ulceration. 5 endobronchial biopsies obtained. APC applied (40W, 0.8L/min) for hemostasis after moderate bleeding. Airways otherwise patent. Scope withdrawn, LMA removed, patient extubated.\n\nStable in PACU. CXR post-procedure unremarkable. D/C to home. Oncology f/u with results.\n\nA. Williams, MD / J. Park, MD",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "651294",
+      "procedure_date": "2025-11-22",
+      "patient_demographics": {
+        "age_years": 67,
+        "gender": "Male",
+        "smoking_status": "Former",
+        "pack_years": 55
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "LLL endobronchial lesion, known NSCLC post-chemo, suspected recurrence",
+        "indication_category": "Lung Cancer Diagnosis",
+        "prior_therapy": "Chemotherapy, radiation"
+      },
+      "providers": {
+        "attending_name": "Williams, Amanda",
+        "attending_npi": "3456789012",
+        "fellow_name": "Park, James",
+        "fellow_pgy_level": 5,
+        "trainee_present": true,
+        "rose_present": false
+      },
+      "procedure_details": {
+        "sedation_type": "General",
+        "airway_type": "LMA",
+        "scope_type": "Therapeutic flexible"
+      },
+      "procedures_performed": {
+        "endobronchial_biopsy": {
+          "performed": true,
+          "sites": [
+            "LB6"
+          ],
+          "number_of_biopsies": 5,
+          "tool_used": "Forceps",
+          "visible_lesion": true,
+          "lesion_appearance": "Polypoid, necrotic with surface ulceration, 50% obstruction"
+        },
+        "hemostasis": {
+          "performed": true,
+          "modality": "APC",
+          "settings": "40W, 0.8L/min argon flow"
+        }
+      },
+      "specimens": {
+        "endobronchial_biopsy": {
+          "count": 5,
+          "destination": [
+            "Histology/Surgical pathology",
+            "Molecular/NGS"
+          ]
+        }
+      },
+      "complications": {
+        "bleeding_severity": "Moderate",
+        "bleeding_intervention": "APC hemostasis",
+        "pneumothorax": false
+      },
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": [
+        "Oncology follow-up with pathology results"
+      ],
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8",
+        "generated_at": "2025-12-09T10:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 4.93,
+        "work_rvu": 3.11,
+        "practice_expense_rvu": 1.47,
+        "malpractice_rvu": 0.35
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-09",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31625",
+        "final_codes": [
+          "31625"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31625": "Endobronchial biopsy of necrotic lesion. APC used for hemostasis is bundled and not separately reportable as destruction (31641)."
+        },
+        "coding_decision": "correct"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 4.93,
+        "facility_total_payment": 160,
+        "rvu_source": "ip_coding_billing.v2_7.json",
+        "conversion_factor": 32.3562
+      },
+      "overall_assessment": "Verified. APC for bleeding control is incidental."
+    }
+  },
+  {
+    "note_text": "Pt: O'Brien, Kathleen || MRN: 829174 || DOB: 05/18/1969\nDate: 11/25/2025 || Location: Cleveland Clinic, Cleveland, OH\nMD: Dr. David Kim\n\nDx: Recurrent hemoptysis, RML bronchial lesion on CT\nProcedure: Bronchoscopy with endobronchial biopsy\n\nModerate sedation. Bronchoscopy via nasal approach with 4.9mm scope. Blood-tinged secretions in RML. Sessile raised lesion at RB4 with overlying clot. Clot gently removed with suction. Underlying 8mm reddish lesion visualized. 3 biopsies taken with small cup forceps. Brisk bleeding controlled with ice saline and topical epinephrine (1:10,000). No active bleeding at end. Remainder of airways normal.\n\nPost-procedure stable. No further hemoptysis. F/U path in 1 week. Return precautions given.\n\nD. Kim, MD",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "829174",
+      "procedure_date": "2025-11-25",
+      "patient_demographics": {
+        "age_years": 56,
+        "gender": "Female",
+        "smoking_status": "Current",
+        "pack_years": 30
+      },
+      "clinical_context": {
+        "asa_class": 2,
+        "primary_indication": "Recurrent hemoptysis, RML bronchial lesion",
+        "indication_category": "Hemoptysis",
+        "radiographic_findings": "CT showing RML bronchial wall thickening"
+      },
+      "providers": {
+        "attending_name": "Kim, David",
+        "attending_npi": "4567890123",
+        "fellow_name": null,
+        "trainee_present": false,
+        "rose_present": false
+      },
+      "procedure_details": {
+        "sedation_type": "Moderate",
+        "airway_type": "Native",
+        "scope_type": "Flexible",
+        "scope_diameter_mm": 4.9,
+        "approach": "Nasal"
+      },
+      "procedures_performed": {
+        "endobronchial_biopsy": {
+          "performed": true,
+          "sites": [
+            "RB4"
+          ],
+          "number_of_biopsies": 3,
+          "tool_used": "Small cup forceps",
+          "visible_lesion": true,
+          "lesion_appearance": "Sessile raised lesion, 8mm, reddish"
+        }
+      },
+      "specimens": {
+        "endobronchial_biopsy": {
+          "count": 3,
+          "destination": [
+            "Histology/Surgical pathology"
+          ]
+        }
+      },
+      "complications": {
+        "bleeding_severity": "Moderate",
+        "bleeding_intervention": "Ice saline, topical epinephrine 1:10,000",
+        "pneumothorax": false
+      },
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": [
+        "Pathology follow-up in 1 week",
+        "Return precautions given"
+      ],
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8",
+        "generated_at": "2025-12-09T10:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 4.93,
+        "work_rvu": 3.11,
+        "practice_expense_rvu": 1.47,
+        "malpractice_rvu": 0.35
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-09",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31625",
+        "final_codes": [
+          "31625"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31625": "Endobronchial biopsy RB4. Clot suctioning is incidental."
+        },
+        "coding_decision": "correct"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 4.93,
+        "facility_total_payment": 160,
+        "rvu_source": "ip_coding_billing.v2_7.json",
+        "conversion_factor": 32.3562
+      },
+      "overall_assessment": "Verified."
+    }
+  },
+  {
+    "note_text": "Pt: Nguyen, Tran || MRN: 374618 || DOB: 02/28/1982\nDate: 11/28/2025 || Location: UCSF Medical Center, San Francisco, CA\nMD: Dr. Elizabeth Foster\n\nDx: HIV+ (CD4 120), multiple pulmonary Kaposi sarcoma lesions\nProcedure: Bronchoscopy with endobronchial biopsy, bronchial wash\n\nModerate sedation with propofol infusion. Standard bronchoscopy. Multiple violaceous raised plaques noted: 2 in trachea, 3 in RMS, 2 in LMS, consistent with endobronchial KS. Representative biopsies taken from RMS (2) and LMS (2) lesions. Minimal bleeding. Bronchial wash from LLL for PCP rule-out.\n\nPatient stable. ID and oncology aware. D/C with close outpatient f/u. ART optimization planned.\n\nE. Foster, MD",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "374618",
+      "procedure_date": "2025-11-28",
+      "patient_demographics": {
+        "age_years": 43,
+        "gender": "Male",
+        "smoking_status": "Former"
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "HIV+ with multiple pulmonary Kaposi sarcoma lesions",
+        "indication_category": "Lung Cancer Diagnosis",
+        "radiographic_findings": "CT showing multiple pulmonary nodules and bronchial wall irregularities"
+      },
+      "providers": {
+        "attending_name": "Foster, Elizabeth",
+        "attending_npi": "5678901234",
+        "fellow_name": null,
+        "trainee_present": false,
+        "rose_present": false
+      },
+      "procedure_details": {
+        "sedation_type": "Moderate",
+        "sedation_agents": [
+          "Propofol"
+        ],
+        "airway_type": "Native",
+        "scope_type": "Flexible"
+      },
+      "procedures_performed": {
+        "endobronchial_biopsy": {
+          "performed": true,
+          "sites": [
+            "RMS",
+            "LMS"
+          ],
+          "number_of_biopsies": 4,
+          "tool_used": "Forceps",
+          "visible_lesion": true,
+          "lesion_appearance": "Multiple violaceous raised plaques, consistent with Kaposi sarcoma"
+        },
+        "bronchial_wash": {
+          "performed": true,
+          "location": "LLL"
+        }
+      },
+      "specimens": {
+        "endobronchial_biopsy": {
+          "count": 4,
+          "destination": [
+            "Histology/Surgical pathology"
+          ]
+        },
+        "bronchial_wash": {
+          "destination": [
+            "Cytology",
+            "PCP DFA",
+            "Fungal culture"
+          ]
+        }
+      },
+      "complications": {
+        "bleeding_severity": "Mild",
+        "pneumothorax": false
+      },
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": [
+        "ID follow-up",
+        "Oncology follow-up",
+        "ART optimization"
+      ],
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8",
+        "generated_at": "2025-12-09T10:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 4.93,
+        "work_rvu": 3.11,
+        "practice_expense_rvu": 1.47,
+        "malpractice_rvu": 0.35
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-09",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31625",
+        "final_codes": [
+          "31625"
+        ],
+        "modifiers": [],
+        "changes_made": true,
+        "code_rationales": {
+          "31625": "Primary service: Biopsies of KS lesions.",
+          "31622": "Dropped. Diagnostic bronchial wash is bundled into biopsy (31625)."
+        },
+        "coding_decision": "corrected_bundling"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 4.93,
+        "facility_total_payment": 160,
+        "rvu_source": "ip_coding_billing.v2_7.json",
+        "conversion_factor": 32.3562
+      },
+      "overall_assessment": "Corrected: Removed bundled 31622."
+    }
+  },
+  {
+    "note_text": "Pt: Davis, Robert || MRN: 582736 || DOB: 08/14/1955\nDate: 12/01/2025 || Location: Duke University Hospital, Durham, NC\nMD: Dr. Sarah Mitchell, Fellow: Dr. Kevin Lee (PGY-6)\n\nDx: Tracheal mass, stridor\nProcedure: Rigid bronchoscopy with endobronchial biopsy\n\nGeneral anesthesia, jet ventilation. Rigid bronchoscope (Karl Storz 12mm) inserted. Large pedunculated mass arising from posterior trachea, 2cm above carina, causing 70% obstruction. Mobile, well-vascularized. 4 biopsies with rigid cup forceps. Moderate bleeding - controlled with suction and pressure. Decision to await pathology before debulking. Scope exchanged for ETT, patient ventilated and transferred to PACU intubated for airway monitoring.\n\nAdmit to stepdown. Repeat bronch for potential debulking pending path.\n\nS. Mitchell, MD / K. Lee, MD",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "582736",
+      "procedure_date": "2025-12-01",
+      "patient_demographics": {
+        "age_years": 70,
+        "gender": "Male",
+        "smoking_status": "Former",
+        "pack_years": 45
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "Tracheal mass with stridor",
+        "indication_category": "Airway Obstruction",
+        "radiographic_findings": "CT showing tracheal mass 2cm above carina"
+      },
+      "providers": {
+        "attending_name": "Mitchell, Sarah",
+        "attending_npi": "6789012345",
+        "fellow_name": "Lee, Kevin",
+        "fellow_pgy_level": 6,
+        "trainee_present": true,
+        "rose_present": false
+      },
+      "procedure_details": {
+        "sedation_type": "General",
+        "airway_type": "Rigid bronchoscope",
+        "airway_device_size": "12mm",
+        "ventilation_mode": "Jet ventilation",
+        "scope_brand": "Karl Storz"
+      },
+      "procedures_performed": {
+        "endobronchial_biopsy": {
+          "performed": true,
+          "sites": [
+            "Posterior trachea"
+          ],
+          "number_of_biopsies": 4,
+          "tool_used": "Rigid cup forceps",
+          "visible_lesion": true,
+          "lesion_appearance": "Large pedunculated mass, well-vascularized, 70% obstruction"
+        }
+      },
+      "specimens": {
+        "endobronchial_biopsy": {
+          "count": 4,
+          "destination": [
+            "Histology/Surgical pathology"
+          ]
+        }
+      },
+      "complications": {
+        "bleeding_severity": "Moderate",
+        "bleeding_intervention": "Suction and pressure",
+        "pneumothorax": false
+      },
+      "disposition": "Inpatient admission",
+      "admission_location": "Stepdown unit",
+      "follow_up_plan": [
+        "Repeat bronchoscopy for potential debulking pending pathology"
+      ],
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8",
+        "generated_at": "2025-12-09T10:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 4.93,
+        "work_rvu": 3.11,
+        "practice_expense_rvu": 1.47,
+        "malpractice_rvu": 0.35
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-09",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31625",
+        "final_codes": [
+          "31625"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31625": "Biopsy of tracheal mass. 31625 applies to rigid or flexible bronchoscopy."
+        },
+        "coding_decision": "correct"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 4.93,
+        "facility_total_payment": 160,
+        "rvu_source": "ip_coding_billing.v2_7.json",
+        "conversion_factor": 32.3562
+      },
+      "overall_assessment": "Verified. Single code appropriate."
+    }
+  },
+  {
+    "note_text": "Pt: Anderson, Linda || MRN: 419283 || DOB: 12/07/1970\nDate: 12/03/2025 || Location: Northwestern Memorial Hospital, Chicago, IL\nMD: Dr. Richard Patel\n\nDx: RUL mass with endobronchial extension seen on PET (SUV 12.4)\nProcedure: Bronchoscopy with endobronchial biopsy, brushings\n\nModerate sedation. Oral bronchoscopy. RUL apical segment (RB1) shows extrinsic compression with mucosal invasion - erythematous, irregular mucosa extending into lumen. 5 endobronchial biopsies obtained. Protected brush specimen from same site. LUL, LLL, RML, RLL all normal. No secretions or blood.\n\nROSE: Atypical cells, suspicious for malignancy.\n\nD/C home. Path results to be discussed at tumor board. PET staging complete.\n\nR. Patel, MD",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "419283",
+      "procedure_date": "2025-12-03",
+      "patient_demographics": {
+        "age_years": 54,
+        "gender": "Female",
+        "smoking_status": "Current",
+        "pack_years": 35
+      },
+      "clinical_context": {
+        "asa_class": 2,
+        "primary_indication": "RUL mass with endobronchial extension",
+        "indication_category": "Lung Cancer Diagnosis",
+        "radiographic_findings": "PET-CT showing RUL mass SUV 12.4 with endobronchial component",
+        "pet_suv_max": 12.4,
+        "pet_avid": true
+      },
+      "providers": {
+        "attending_name": "Patel, Richard",
+        "attending_npi": "7890123456",
+        "fellow_name": null,
+        "trainee_present": false,
+        "rose_present": true
+      },
+      "procedure_details": {
+        "sedation_type": "Moderate",
+        "airway_type": "Native",
+        "scope_type": "Flexible"
+      },
+      "procedures_performed": {
+        "endobronchial_biopsy": {
+          "performed": true,
+          "sites": [
+            "RB1"
+          ],
+          "number_of_biopsies": 5,
+          "tool_used": "Forceps",
+          "visible_lesion": true,
+          "lesion_appearance": "Erythematous, irregular mucosa with luminal invasion"
+        },
+        "brushing": {
+          "performed": true,
+          "protected": true,
+          "location": "RB1"
+        }
+      },
+      "specimens": {
+        "endobronchial_biopsy": {
+          "count": 5,
+          "destination": [
+            "Histology/Surgical pathology",
+            "Molecular/NGS",
+            "PD-L1"
+          ],
+          "rose_performed": true,
+          "rose_result": "Atypical cells, suspicious for malignancy"
+        },
+        "brushing": {
+          "destination": [
+            "Cytology"
+          ]
+        }
+      },
+      "complications": {
+        "bleeding_severity": "None/Scant",
+        "pneumothorax": false
+      },
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": [
+        "Tumor board discussion",
+        "Oncology referral pending pathology"
+      ],
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8",
+        "generated_at": "2025-12-09T10:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 4.93,
+        "work_rvu": 3.11,
+        "practice_expense_rvu": 1.47,
+        "malpractice_rvu": 0.35
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-09",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31625",
+        "final_codes": [
+          "31625"
+        ],
+        "modifiers": [],
+        "changes_made": true,
+        "code_rationales": {
+          "31625": "Endobronchial biopsy RB1.",
+          "31623": "Dropped. Brushing of the same site (RB1) is bundled into the biopsy of that site."
+        },
+        "coding_decision": "corrected_bundling"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 4.93,
+        "facility_total_payment": 160,
+        "rvu_source": "ip_coding_billing.v2_7.json",
+        "conversion_factor": 32.3562
+      },
+      "overall_assessment": "Corrected: Removed 31623 (same site bundling)."
+    }
+  },
+  {
+    "note_text": "Pt: Wilson, James || MRN: 736492 || DOB: 04/25/1963\nDate: 12/05/2025 || Location: Mayo Clinic, Rochester, MN\nMD: Dr. Catherine Moore\n\nDx: Post-lung transplant, new endobronchial lesions at anastomosis\nProcedure: Surveillance bronchoscopy with endobronchial biopsy, TBBx\n\nGeneral anesthesia via ETT. Bilateral lung transplant 18 months ago. RMS anastomosis with granulation tissue and 2 small polyps. LMS anastomosis with single granuloma. Endobronchial biopsies: 2 from RMS, 1 from LMS. TBBx from RLL (4 specimens) and LLL (4 specimens) for rejection surveillance. BAL from RML. Minimal bleeding throughout.\n\nPath pending. Continue current immunosuppression. F/U transplant clinic.\n\nC. Moore, MD",
+    "cpt_codes": [
+      31625,
+      31628,
+      31632,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "736492",
+      "procedure_date": "2025-12-05",
+      "patient_demographics": {
+        "age_years": 62,
+        "gender": "Male",
+        "smoking_status": "Never"
+      },
+      "clinical_context": {
+        "asa_class": 3,
+        "primary_indication": "Post-lung transplant surveillance, new endobronchial lesions at anastomosis",
+        "indication_category": "Other",
+        "prior_therapy": "Bilateral lung transplant (18 months ago)"
+      },
+      "providers": {
+        "attending_name": "Moore, Catherine",
+        "attending_npi": "8901234567",
+        "fellow_name": null,
+        "trainee_present": false,
+        "rose_present": false
+      },
+      "procedure_details": {
+        "sedation_type": "General",
+        "airway_type": "ETT",
+        "scope_type": "Flexible"
+      },
+      "procedures_performed": {
+        "endobronchial_biopsy": {
+          "performed": true,
+          "sites": [
+            "RMS anastomosis",
+            "LMS anastomosis"
+          ],
+          "number_of_biopsies": 3,
+          "tool_used": "Forceps",
+          "visible_lesion": true,
+          "lesion_appearance": "Granulation tissue, small polyps (RMS); single granuloma (LMS)"
+        },
+        "transbronchial_biopsy": {
+          "performed": true,
+          "lobes": [
+            "RLL",
+            "LLL"
+          ],
+          "specimens_per_lobe": 4,
+          "total_specimens": 8
+        },
+        "bal": {
+          "performed": true,
+          "location": "RML"
+        }
+      },
+      "specimens": {
+        "endobronchial_biopsy": {
+          "count": 3,
+          "destination": [
+            "Histology/Surgical pathology"
+          ]
+        },
+        "transbronchial_biopsy": {
+          "count": 8,
+          "destination": [
+            "Histology/Surgical pathology"
+          ]
+        },
+        "bal": {
+          "destination": [
+            "Cytology",
+            "Bacterial culture",
+            "Fungal culture",
+            "Viral studies"
+          ]
+        }
+      },
+      "complications": {
+        "bleeding_severity": "Mild",
+        "pneumothorax": false
+      },
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": [
+        "Continue current immunosuppression",
+        "Transplant clinic follow-up"
+      ],
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8",
+        "generated_at": "2025-12-09T10:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "modifier": "XS",
+            "modifiers": [
+              "XS"
+            ],
+            "units": 1
+          },
+          {
+            "code": "31632",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), each additional lobe (add-on)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "modifier": "XS",
+            "modifiers": [
+              "XS"
+            ],
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 16.24,
+        "work_rvu": 10.29,
+        "practice_expense_rvu": 4.8,
+        "malpractice_rvu": 1.15
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-09",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31628",
+        "final_codes": [
+          "31628",
+          "31625",
+          "31624",
+          "31632"
+        ],
+        "modifiers": [
+          "XS"
+        ],
+        "changes_made": false,
+        "code_rationales": {
+          "31628": "TBBx RLL (Primary).",
+          "31625": "EBBx Anastomosis (Distinct site from TBBx, modifier XS).",
+          "31632": "TBBx LLL (Additional lobe add-on).",
+          "31624": "BAL RML (Distinct lobe, modifier XS)."
+        },
+        "coding_decision": "correct"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 16.24,
+        "facility_total_payment": 526,
+        "rvu_source": "ip_coding_billing.v2_7.json",
+        "conversion_factor": 32.3562
+      },
+      "overall_assessment": "Verified. Complex transplant surveillance coding accurate."
+    }
+  },
+  {
+    "note_text": "Pt: Garcia, Maria || MRN: 284719 || DOB: 09/30/1978\nDate: 12/06/2025 || Location: UT Southwestern, Dallas, TX\nMD: Dr. Thomas Green, Fellow: Dr. Amy Zhao (PGY-5)\n\nDx: Chronic cough, CT shows RML bronchial narrowing with thickening\nProcedure: Bronchoscopy with endobronchial biopsy\n\nModerate sedation. Flexible bronchoscopy. RML orifice shows circumferential mucosal thickening with narrowing to ~5mm. No exophytic mass. Mucosa appears edematous and erythematous. 4 biopsies obtained circumferentially. Appearance concerning for possible carcinoid or inflammatory stricture. Airways otherwise unremarkable. No complications.\n\nD/C with return precautions. Path f/u next week.\n\nT. Green, MD / A. Zhao, MD",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "284719",
+      "procedure_date": "2025-12-06",
+      "patient_demographics": {
+        "age_years": 47,
+        "gender": "Female",
+        "smoking_status": "Never"
+      },
+      "clinical_context": {
+        "asa_class": 2,
+        "primary_indication": "Chronic cough, RML bronchial narrowing",
+        "indication_category": "Stricture/Stenosis",
+        "radiographic_findings": "CT showing RML bronchial narrowing with wall thickening"
+      },
+      "providers": {
+        "attending_name": "Green, Thomas",
+        "attending_npi": "9012345678",
+        "fellow_name": "Zhao, Amy",
+        "fellow_pgy_level": 5,
+        "trainee_present": true,
+        "rose_present": false
+      },
+      "procedure_details": {
+        "sedation_type": "Moderate",
+        "airway_type": "Native",
+        "scope_type": "Flexible"
+      },
+      "procedures_performed": {
+        "endobronchial_biopsy": {
+          "performed": true,
+          "sites": [
+            "RML orifice"
+          ],
+          "number_of_biopsies": 4,
+          "tool_used": "Forceps",
+          "visible_lesion": true,
+          "lesion_appearance": "Circumferential mucosal thickening, edematous and erythematous, narrowing to 5mm"
+        }
+      },
+      "specimens": {
+        "endobronchial_biopsy": {
+          "count": 4,
+          "destination": [
+            "Histology/Surgical pathology"
+          ]
+        }
+      },
+      "complications": {
+        "bleeding_severity": "None/Scant",
+        "pneumothorax": false
+      },
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": [
+        "Pathology follow-up next week"
+      ],
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8",
+        "generated_at": "2025-12-09T10:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 4.93,
+        "work_rvu": 3.11,
+        "practice_expense_rvu": 1.47,
+        "malpractice_rvu": 0.35
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-09",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31625",
+        "final_codes": [
+          "31625"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31625": "Biopsy of stricture/mucosal abnormality at RML orifice."
+        },
+        "coding_decision": "correct"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 4.93,
+        "facility_total_payment": 160,
+        "rvu_source": "ip_coding_billing.v2_7.json",
+        "conversion_factor": 32.3562
+      },
+      "overall_assessment": "Verified."
+    }
+  },
+  {
+    "note_text": "Pt: Brown, Charles || MRN: 927364 || DOB: 01/11/1950\nDate: 12/08/2025 || Location: Stanford Health Care, Palo Alto, CA\nMD: Dr. Jennifer Wu\n\nDx: Metastatic melanoma, new cough, CT with multiple endobronchial nodules\nProcedure: Bronchoscopy with endobronchial biopsy\n\nGeneral anesthesia via LMA for airway protection given bulky disease. Multiple pigmented nodular lesions seen: 3 in trachea, 4 in RMS, 2 in LMS, 2 in BI, consistent with metastatic melanoma. Representative biopsies from trachea (2), RMS (2), LMS (1). Dark pigmented tissue obtained. Minimal bleeding. Airways remain patent despite diffuse disease.\n\nMedical oncology consulted. Immunotherapy to be considered. Palliative care referral. D/C home.\n\nJ. Wu, MD",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "927364",
+      "procedure_date": "2025-12-08",
+      "patient_demographics": {
+        "age_years": 75,
+        "gender": "Male",
+        "smoking_status": "Former",
+        "pack_years": 20
+      },
+      "clinical_context": {
+        "asa_class": 4,
+        "primary_indication": "Metastatic melanoma with new cough and multiple endobronchial nodules",
+        "indication_category": "Lung Cancer Diagnosis",
+        "radiographic_findings": "CT showing multiple endobronchial nodules throughout central airways",
+        "prior_therapy": "Prior melanoma treatment (details unspecified)"
+      },
+      "providers": {
+        "attending_name": "Wu, Jennifer",
+        "attending_npi": "0123456789",
+        "fellow_name": null,
+        "trainee_present": false,
+        "rose_present": false
+      },
+      "procedure_details": {
+        "sedation_type": "General",
+        "airway_type": "LMA",
+        "scope_type": "Flexible"
+      },
+      "procedures_performed": {
+        "endobronchial_biopsy": {
+          "performed": true,
+          "sites": [
+            "Trachea",
+            "RMS",
+            "LMS"
+          ],
+          "number_of_biopsies": 5,
+          "tool_used": "Forceps",
+          "visible_lesion": true,
+          "lesion_appearance": "Multiple pigmented nodular lesions, consistent with metastatic melanoma"
+        }
+      },
+      "specimens": {
+        "endobronchial_biopsy": {
+          "count": 5,
+          "destination": [
+            "Histology/Surgical pathology",
+            "Molecular/NGS"
+          ]
+        }
+      },
+      "complications": {
+        "bleeding_severity": "Mild",
+        "pneumothorax": false
+      },
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": [
+        "Medical oncology follow-up",
+        "Immunotherapy evaluation",
+        "Palliative care referral"
+      ],
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8",
+        "generated_at": "2025-12-09T10:00:00"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 4.93,
+        "work_rvu": 3.11,
+        "practice_expense_rvu": 1.47,
+        "malpractice_rvu": 0.35
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-09",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31625",
+        "final_codes": [
+          "31625"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31625": "Single unit covers biopsies at multiple endobronchial sites (Trachea, RMS, LMS)."
+        },
+        "coding_decision": "correct"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 4.93,
+        "facility_total_payment": 160,
+        "rvu_source": "ip_coding_billing.v2_7.json",
+        "conversion_factor": 32.3562
+      },
+      "overall_assessment": "Verified."
+    }
+  }
+]

@@ -1,0 +1,2307 @@
+[
+  {
+    "note_text": "02 Feb 2024\nName: Daniel Wilbert Conley MRN 30921342\nPREOPERATIVE DIAGNOSIS: Tracheal-esophageal fistula secondary to esophageal CA \nPOSTOPERATIVE DIAGNOSIS: Tracheal-esophageal fistula secondary to esophageal CA \nPROCEDURE PERFORMED: Rigid bronchoscopy, Tracheal self-expandable airway stent removal\nSURGEON: Mikie Gallegos, MD\nINDICATIONS: Stent migration and presumed stent infection\nSedation: General Anesthesia\nDESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. After administration of sedatives an LMA was inserted and the flexible bronchoscope was passed through the vocal cords and into the trachea. Approximately 2 cm distal to the vocal cords the patients previous stent could be visualized. Throughout the stent were thick purulent material consistent with infection. The telescoped distal tracheal stent was noted to have migrated into the right mainstem causing complete occlusion of the left mainstem. The flexible bronchoscope and LMA were removed and a 12mm non-ventilating rigid tracheoscope was subsequently inserted into the mid trachea and connected to ventilator. The flexible bronchoscope was inserted through the rigid and into the stent. Bronchial lavage was performed with specimen obtained by trap and sent for culture. The proximal edge of the distal telescoped stent was visualized and using flexible forceps we secured the proximal knot and attempted to withdraw the stent. The stent moved only slightly but enough to visualize copious amounts of post-obstructive pus being expressed from the previously obstructed left mainstem. The material was collected in a trap for culture. We then removed the flexible bronchoscope and inserted the rigid optic alongside the non-optical rigid forceps. The proximal edge of the distal stent was secured and the stent retracted with the rigid bronchoscope which was removed while grasping tightly to the stent. Both stents were removed with this maneuver and the patient was re-intubated with the rigid bronchoscope. The airways which were previously covered by the stent were erythematous and friable, however there was no evidence of airway obstruction from external compression related to esophageal mass. The patient\u2019s esophageal stent could be seen through the posterior trachea covering the TE fistula. The airways were irrigated and cleaned and once we were confident there was no evidence of active bleeding the rigid bronchoscope was removed and the procedure completed. \n\nPost procedure diagnosis:\n-\tStent infection\n-\tStent migration resulting in post-obstructive pneumonia.\n-\tPersistent TE fistula covered by esophageal stent \n-\ts/p airway stent removal\nRecommendations:\n- Transfer to PACU\n- Await cultures\n- consider gastrograffin swallow to ensure esophageal stent is adequately occluding TE fistula\n- Saline nebs 2-3 times per day for 3 days to thin residual blood and secretions allowing for expectoration.  \n\nMikie Gallegos MD\nInterventional Pulmonology \nTulsa Medical Center",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "30921342",
+      "procedure_date": "2024-02-02",
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Tracheal-esophageal fistula secondary to esophageal CA",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "PREOPERATIVE DIAGNOSIS: Tracheal-esophageal fistula secondary to esophageal CA",
+        "sedation_type": "general anesthesia/GA context",
+        "airway_type": "rigid bronchoscope mentioned"
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": "Tracheal self-expandable airway stent",
+      "fb_tool_used": [],
+      "fb_removal_success": true,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [
+        "forceps"
+      ],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": "Tulsa Medical Center",
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Mikie Gallegos",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.156249"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31635",
+          "final_codes": [
+            "31635"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31635": "Rigid bronchoscopy with removal of two migrated/infected airway stents. Diagnostic bronchoscopy and lavage are bundled."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.54,
+          "facility_total_payment": 179,
+          "per_code": {
+            "31635": {
+              "facility_rvu": 5.54,
+              "facility_payment": 179
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Appropriate code for stent removal."
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31635"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.063009",
+      "changes": [
+        "Added coding_review v1.0.0 (IP-Coder-Patch-GPT, 2025-12-06).",
+        "Corrected metadata and added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "review_date": "2025-12-06",
+      "reviewer": "IP-Coder-Patch-GPT",
+      "calendar_year": 2025,
+      "fee_schedule": "physician_2025_airway (ip_coding_billing.v2_7)",
+      "cpt_summary": [
+        {
+          "code": "31635",
+          "description": "Bronchoscopy, rigid or flexible, with removal of foreign body or stent",
+          "units": 1,
+          "total_facility_rvu_2025": 5.54,
+          "mpfs_facility_payment_2025": 183,
+          "is_add_on": false
+        }
+      ],
+      "totals": {
+        "total_facility_rvu_2025": 5.54,
+        "total_mpfs_facility_payment_2025": 183
+      },
+      "cpt_changes": [],
+      "bundling_notes": [
+        "Only the therapeutic foreign body/stent removal (31635) is reported. Diagnostic bronchoscopy, lavage, and inspection are inherent to the therapeutic service and not separately coded."
+      ],
+      "rationale": "The note documents rigid bronchoscopy with removal of a migrated airway stent covering a tracheoesophageal fistula. There is no new stent placement, valve therapy, navigation, or EBUS. CPT 31635 appropriately captures the rigid bronchoscopy with stent removal; additional diagnostic bronchoscopy codes would be bundled."
+    }
+  },
+  {
+    "note_text": "Proceduralist(s): Daniel Larson MD\nProcedure Name: Medical Thoracoscopy (pleuroscopy)\nPatient Name: Maizie Booth\nPatient MRN: 34329024\nIndications: Right sided Pleural effusion\nMedications: As per anesthesia record\nProcedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. The patient was placed on the standard procedural bed in the left lateral decubitus position and sites of compression were well padded. The pleural entry site was identified by means of the ultrasound. The patient was sterilely prepped with chlorhexidine gluconate (Chloraprep) and draped in the usual fashion. The entry sites was infiltrated with a 10mL solution of 1% lidocaine. Following instillation of subcutaneous lidocaine a 1.5 cm subcutaneous incision was made and gentle dissection was performed until the pleural space was entered.  An 8 mm disposable primary port was then placed on the left side at the 6th anterior axillary line. After allowing air entrainment and lung deflation, suction was applied through the port to remove pleural fluid with removal of approximately 1600cc of serosanguinous fluid. The rigid pleuroscopy telescope was then introduced through the trocar and advanced into the pleural space. The pleura was had diffuse carcinomatosis with multiple hard white pleural nodules covering the parietal and visceral pleura.  No adhesions were present Biopsies of the abnormal areas in the parietal pleura posteriorly were performed with forceps and sent for histopathological and microbiological examination with approximately 12 total biopsies taken. There was minimal bleeding associated with the biopsies. After residual bleeding had subsided, the pleuroscopy telescope was then removed and a 15.5 pleural catheter was placed into the pleural space through the primary port with tunneling anteriorly.\nComplications: None\nThe patient tolerated the procedural well.\nPost-procedure chest radiograph showed mild post-procedural subcutaneous air with full lung re-expansion and IPC in place\nEstimated Blood Loss: 15cc\nPost Procedure Diagnosis: Pleural effusion \nRecommendation:\nWill await pathology and microbiological studies\nPatient education on pleural catheter draining and will next week for initial drainage.\nJordan Parks, MD \nPulmonology Medicine\nUCLA Medical Center",
+    "cpt_codes": [
+      32601,
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "34329024",
+      "procedure_date": "2025-01-01",
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Not specified",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32601,
+        32550
+      ],
+      "evidence": {
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "sedation_type": "default Moderate (no explicit documentation)",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": "Medical Thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [
+        "forceps"
+      ],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": "UCLA Medical Center",
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Daniel Larson",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.156317"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32601",
+          "final_codes": [
+            "32601",
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "32601": "Medical thoracoscopy (pleuroscopy) for inspection and biopsy of pleural nodules.",
+            "32550": "Placement of indwelling tunneled pleural catheter (IPC) at the conclusion of the procedure."
+          },
+          "coding_decision": "modified"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 14.13,
+          "facility_total_payment": 457,
+          "per_code": {
+            "32601": {
+              "facility_rvu": 8.25,
+              "facility_payment": 267
+            },
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Added 32550 to capture the IPC placement documented in the note."
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "32601"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "POTENTIAL_CONCATENATION: Found 3 patient headers"
+    ],
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.063702",
+      "changes": [
+        "Added coding_review v1.0.0 (IP-Coder-Patch-GPT, 2025-12-06).",
+        "Added 32550 for IPC placement; Corrected provider/institution."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "review_date": "2025-12-06",
+      "reviewer": "IP-Coder-Patch-GPT",
+      "calendar_year": 2025,
+      "fee_schedule": "physician_2025_airway (ip_coding_billing.v2_7)",
+      "cpt_summary": [
+        {
+          "code": "32601",
+          "description": "Thoracoscopy, diagnostic, with or without pleural biopsy, with or without chest tube placement",
+          "units": 1,
+          "total_facility_rvu_2025": 14.85,
+          "mpfs_facility_payment_2025": 490,
+          "is_add_on": false
+        }
+      ],
+      "totals": {
+        "total_facility_rvu_2025": 14.85,
+        "total_mpfs_facility_payment_2025": 490
+      },
+      "cpt_changes": [],
+      "bundling_notes": [
+        "Pleural fluid drainage and indwelling catheter placement through the thoracoscopy access are included in 32601 and are not separately coded."
+      ],
+      "rationale": "The procedure is a medical thoracoscopy with extensive visual inspection, large-volume drainage of pleural effusion, and multiple pleural biopsies followed by tunneled pleural catheter placement. CPT 32601 (diagnostic thoracoscopy including pleural biopsy and chest tube) accurately reflects the work; no additional thoracentesis or chest tube codes are appropriate."
+    }
+  },
+  {
+    "note_text": "BRONCHOSCOPIC THERMAL VAPOR ABLATION PROCEDURE NOTE\n\nPatient: George Martinez | DOB: 03/19/1959 | Age: 65 | MRN: 34567890\nInstitution: University of Pittsburgh Medical Center, Pittsburgh, PA\nDate: 09/14/2024\nProcedure: Bronchoscopic Lung Volume Reduction via Thermal Vapor Ablation\nOperator: Lisa Chen, MD | Assistant: RN Jennifer Thompson\nAnesthesia: Dr. Michael Roberts, MD\n\nBACKGROUND:\nPatient with severe upper lobe predominant emphysema, failed prior medical management. CT shows 80% destruction of RUL with moderate collateral ventilation present (not ideal for valves).\n\nPREPARATION:\n- Pre-medication: Dexamethasone 8mg IV, acetaminophen 1000mg PO\n- Sedation: Propofol infusion (monitored anesthesia care)\n- Airway: Laryngeal mask airway placed\n\nPROCEDURE:\nRigid bronchoscopy initially performed for airway assessment and measurement. Subsequently transitioned to flexible bronchoscopy with therapeutic bronchoscope.\n\nInterVapor catheter advanced to RUL under direct visualization and fluoroscopic guidance. Vapor generator calibrated for target tissue volume of 10g.\n\nTREATMENT ADMINISTERED:\n- RUL anterior segment (RB3): 8 calories delivered\n- Temperature achieved: 72\u00b0C at tissue interface\n- Vapor penetration confirmed with fluoroscopy\n- Treatment duration: 10 seconds\n- Post-treatment bronchoscopy: Expected mucosal erythema, no bleeding\n\nSecond treatment site:\n- RUL apical segment (RB1): 6 calories delivered  \n- Similar technical success\n\nTOTAL VAPOR ENERGY: 14 calories\nTARGET TISSUE VOLUME: 10g\n\nIMMEDIATE ASSESSMENT:\nPatient hemodynamically stable throughout. Mild bronchospasm treated with inhaled albuterol. No significant hemorrhage or pneumothorax.\n\nPOST-PROCEDURE ORDERS:\n- ICU admission for monitoring (24-48 hours expected)\n- Prednisone 40mg daily x 5 days\n- Prophylactic antibiotics: Levofloxacin 750mg daily x 5 days\n- Aggressive pulmonary toilet\n- Serial chest radiographs\n- Expected inflammatory response with infiltrate development\n\nCOMPLICATIONS: None intra-procedurally\n\nThe patient and family were counseled on expected post-procedure course including inflammatory reaction, potential for COPD exacerbation, and gradual symptom improvement over 3-6 months.",
+    "cpt_codes": [],
+    "registry_entry": {
+      "patient_mrn": "34567890",
+      "procedure_date": "2024-09-14",
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Not specified",
+      "sedation_type": "Deep",
+      "airway_type": "LMA",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [],
+      "evidence": {
+        "procedure_date": "Date: 09/14/2024",
+        "institution_name": "Institution: University of Pittsburgh Medical Center, Pittsburgh, PA",
+        "patient_age": "Patient: George Martinez | DOB: 03/19/1959 | Age: 65 | MRN: 34567890",
+        "dob": "Patient: George Martinez | DOB: 03/19/1959 | Age: 65 | MRN: 34567890",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "sedation_type": "deep or MAC sedation",
+        "airway_type": "LMA mentioned"
+      },
+      "institution_name": "University of Pittsburgh Medical Center, Pittsburgh, PA",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Observation",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Steam/Vapor",
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": "RUL",
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": "Fluoroscopy",
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": "InterVapor",
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": 72,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Michael Roberts",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.156326"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": null,
+          "final_codes": [],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31647": "Removed: 31647 is for valve placement/thermoplasty. Thermal vapor ablation is typically reported with Category III codes (e.g., 0424T) which are not in the current knowledge base. Removing incorrect valve code."
+          },
+          "coding_decision": "modified"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 0,
+          "facility_total_payment": 0,
+          "per_code": {},
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Thermal vapor ablation (InterVapor) does not map to 31647. Removed incorrect code."
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31647"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "POTENTIAL_CONCATENATION: Found 3 patient headers"
+    ],
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.064430",
+      "changes": [
+        "Extracted ablation_max_temp_c: 72",
+        "Added coding_review v1.0.0 (IP-Coder-Patch-GPT, 2025-12-06).",
+        "Removed 31647 (incorrect for Vapor Ablation)."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "review_date": "2025-12-06",
+      "reviewer": "IP-Coder-Patch-GPT",
+      "calendar_year": 2025,
+      "fee_schedule": "physician_2025_airway (ip_coding_billing.v2_7)",
+      "cpt_summary": [
+        {
+          "code": "31647",
+          "description": "Bronchoscopy with bronchial thermoplasty / bronchoscopic lung volume reduction (per lobe series)",
+          "units": 1,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 398,
+          "is_add_on": false
+        }
+      ],
+      "totals": {
+        "total_facility_rvu_2025": 12.05,
+        "total_mpfs_facility_payment_2025": 398
+      },
+      "cpt_changes": [],
+      "bundling_notes": [
+        "Rigid bronchoscopy used for assessment and transition to flexible therapeutic bronchoscopy is bundled into 31647."
+      ],
+      "rationale": "The note describes bronchoscopic lung volume reduction via thermal vapor ablation of RUL segments with deep sedation and fluoroscopic guidance. Internal BLVR mapping uses 31647 for bronchoscopic lung volume reduction. No valves, navigation, or EBUS are documented. Therefore, 31647 alone is appropriate."
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE: EBV PLACEMENT\nDate: 05/10/2024  \nPatient: Maria Rodriguez | DOB: 09/30/1951 | Age: 72 | MRN: 45678912\nInstitution: UCSF Medical Center, San Francisco, CA\nPhysician: James Park, MD\n\nDx: Severe heterogeneous emphysema, LLL predominant\n\nProcedure: FB with EBV placement\nSedation: Moderate (Versed/Fentanyl)\nAccess: Oropharyngeal\n\nFindings:\n- Normal upper airways\n- LLL: Severe emphysematous changes\n- Target segments: LB6, LB8-10\n\nInterventions:\nLB6: 4.0mm EBV - good seal\nLB8: 4.0mm EBV - good seal  \nLB9-10: 5.5mm EBV - good seal\n\nOutcome: Successful complete LLL occlusion, no complications\nPost-op: CXR, admit for observation\n\nJames Park, MD\nUCSF Interventional Pulmonology",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "45678912",
+      "procedure_date": "2024-05-10",
+      "patient_age": 72,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Severe heterogeneous emphysema, LLL predominant",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "procedure_date": "Date: 05/10/2024",
+        "institution_name": "Institution: UCSF Medical Center, San Francisco, CA",
+        "patient_age": "Patient: Maria Rodriguez | DOB: 09/30/1951 | Age: 72 | MRN: 45678912",
+        "dob": "Patient: Maria Rodriguez | DOB: 09/30/1951 | Age: 72 | MRN: 45678912",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "Dx: Severe heterogeneous emphysema, LLL predominant",
+        "sedation_type": "opioid/benzo sedation (treated as Moderate)",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "institution_name": "UCSF Medical Center, San Francisco, CA",
+      "molecular_testing_requested": true,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": "LLL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 3,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "James Park",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.156334"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31647",
+          "final_codes": [
+            "31647"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31647": "Placement of 3 endobronchial valves in a single lobe (LLL)."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 12.05,
+          "facility_total_payment": 390,
+          "per_code": {
+            "31647": {
+              "facility_rvu": 12.05,
+              "facility_payment": 390
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correct code for unilobar valve placement."
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31647"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.064724",
+      "changes": [
+        "Added coding_review v1.0.0 (IP-Coder-Patch-GPT, 2025-12-06).",
+        "Populated BLVR registry fields; Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "review_date": "2025-12-06",
+      "reviewer": "IP-Coder-Patch-GPT",
+      "calendar_year": 2025,
+      "fee_schedule": "physician_2025_airway (ip_coding_billing.v2_7)",
+      "cpt_summary": [
+        {
+          "code": "31647",
+          "description": "Bronchoscopy with endobronchial valve placement / bronchial thermoplasty, per lobe series",
+          "units": 1,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 398,
+          "is_add_on": false
+        }
+      ],
+      "totals": {
+        "total_facility_rvu_2025": 12.05,
+        "total_mpfs_facility_payment_2025": 398
+      },
+      "cpt_changes": [],
+      "bundling_notes": [
+        "Multiple EBVs placed in the same target lobe (LLL) are encompassed within a single 31647 service."
+      ],
+      "rationale": "The UCSF note documents flexible bronchoscopy with placement of three Zephyr valves to occlude LLL segments for BLVR in a patient with heterogeneous emphysema. There is no Chartis measurement and no additional diagnostic or therapeutic services beyond the valve placement. CPT 31647 alone correctly represents this work."
+    }
+  },
+  {
+    "note_text": "Patient: Emma Carlisle\nMRN: 48291734\nDate: 28 Feb 20121\nPREOPERATIVE DIAGNOSIS: Respiratory failure secondary extrinsic tracheal compression\nPOSTOPERATIVE DIAGNOSIS: extrinsic tracheal compression s/p airway stent placement\nPROCEDURE PERFORMED: Rigid bronchoscopy, Silicone Y-stent placement, bronchoscopic intubation\nSURGEON: Russell Miller, MD\nINDICATIONS: Severe extrinsic tracheal compression\nConsent was obtained from the patient\u2019s family prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. \nSedation: General Anesthesia\nDESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. Once the patient was sedated a flexible Q190 Olympus bronchoscope was inserted through the ETT into the trachea and airway inspection was performed. Beginning in the mid trachea inflammation was seen within the airway walls extending into the bilateral mainstem with approximately 90% obstruction(at maximum)  of the tracheal lumen most prominent in the mid trachea with less extensive obstruction  extending to approximately 2cm above the carina. There was no endobronchial tumor. We subsequently removed the flexible bronchoscope and after administration of paralytics a 14 mm ventilating rigid bronchoscope was inserted through the mouth into the supraglottic space. The previously placed endotracheal tube was visualized passing through the vocal cords. Under direct visualization the endotracheal tube was removed and the rigid bronchoscope was inserted through the vocal cords into the mid trachea and connected to ventilator. The Q190 Olympus flexible bronchoscope was then introduced through the rigid bronchoscope and into the airways. After measuring the airways we customized a 16x13x13 silicone Y-stent to a length of 75mm in the tracheal limb, 15mm in the right mainstem limb and 30mm in the left mainstem limb. The rigid bronchoscope was then advanced into the left mainstem and the stent was deployed. Through the use of rigid forceps, and manipulation with the tip of the flexible bronchoscope we were able to adequately position the limbs within the proper airways resulting in successful stabilization of the airway. At this point inspection was performed to evaluate for any bleeding or other complications and none was seen. The rigid bronchoscope was then removed and an LMA was inserted. A repeat inspection was performed with the flexible bronchoscope and showed the stent well placed with near complete resolution of central airway obstruction. The bronchoscope was then removed and once the patient was awake and protecting airway the LMA was removed and the procedure was complete\nPost procedure diagnosis:\nSevere extrinsic tracheal compression s/p successful deployment of silicone tracheal Y-stent. \nRecommendations:\n\u00b7\tTransfer to ICU\n\u00b7\tObtain post procedure CXR\n\u00b7\tTID hypertonic nebulizers to avoid mucous impaction and obstruction of stent",
+    "cpt_codes": [
+      31631,
+      31636,
+      31637
+    ],
+    "registry_entry": {
+      "patient_mrn": "48291734",
+      "procedure_date": "2021-02-28",
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Respiratory failure secondary extrinsic tracheal compression",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31631,
+        31636,
+        31637
+      ],
+      "evidence": {
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "PREOPERATIVE DIAGNOSIS: Respiratory failure secondary extrinsic tracheal compression",
+        "sedation_type": "general anesthesia/GA context",
+        "airway_type": "rigid bronchoscope mentioned"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [
+        "forceps"
+      ],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": "Silicone - Y-Stent",
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": "Carina (Y)",
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Russell Miller",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.156409"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31631",
+          "final_codes": [
+            "31631",
+            "31636",
+            "31637"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31631": "Placement of tracheal limb of Y-stent.",
+            "31636": "Placement of initial bronchial limb (e.g., Left Main).",
+            "31637": "Placement of additional bronchial limb (e.g., Right Main)."
+          },
+          "coding_decision": "modified"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 16.41,
+          "facility_total_payment": 531,
+          "per_code": {
+            "31631": {
+              "facility_rvu": 7.15,
+              "facility_payment": 231
+            },
+            "31636": {
+              "facility_rvu": 6.85,
+              "facility_payment": 222
+            },
+            "31637": {
+              "facility_rvu": 2.41,
+              "facility_payment": 78
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Replaced incorrect TBNA code (31633) with appropriate bronchial stent codes (31636/31637) for Y-stent placement."
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31631",
+        "31631",
+        "31633",
+        "31631",
+        "31637"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.065699",
+      "changes": [
+        "Deduplicated CPT codes: [31631, 31631, 31633, 31631, 31637] -> [31631, 31633, 31637]",
+        "Added coding_review v1.0.0 (IP-Coder-Patch-GPT, 2025-12-06).",
+        "Corrected CPTs for Y-stent (Removed 31633, Added 31636); Corrected metadata."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "review_date": "2025-12-06",
+      "reviewer": "IP-Coder-Patch-GPT",
+      "calendar_year": 2025,
+      "fee_schedule": "physician_2025_airway (ip_coding_billing.v2_7)",
+      "cpt_summary": [
+        {
+          "code": "31631",
+          "description": "Bronchoscopy with tracheal stent placement",
+          "units": 1,
+          "total_facility_rvu_2025": 7.15,
+          "mpfs_facility_payment_2025": 236,
+          "is_add_on": false
+        },
+        {
+          "code": "31633",
+          "description": "Bronchoscopy, each additional tracheobronchial stent or additional airway segment (add-on)",
+          "units": 1,
+          "total_facility_rvu_2025": 2.0,
+          "mpfs_facility_payment_2025": 66,
+          "is_add_on": true
+        },
+        {
+          "code": "31637",
+          "description": "Bronchoscopy, additional therapeutic airway stent work (e.g., additional limb/segment; add-on)",
+          "units": 1,
+          "total_facility_rvu_2025": 2.41,
+          "mpfs_facility_payment_2025": 80,
+          "is_add_on": true
+        }
+      ],
+      "totals": {
+        "total_facility_rvu_2025": 11.56,
+        "total_mpfs_facility_payment_2025": 382
+      },
+      "cpt_changes": [],
+      "bundling_notes": [
+        "Airway inspection, dilation, and debridement are considered inherent to complex stent placement and are not separately coded when performed in the same anatomic region."
+      ],
+      "rationale": "The case describes rigid bronchoscopy with placement of a silicone Y-stent for subglottic/tracheal stenosis with bilateral mainstem involvement. Documentation supports tracheal stent placement with additional segmental limbs, consistent with base code 31631 and add-on stent codes 31633 and 31637. No separate EBUS, navigation, or valve therapy is performed."
+    }
+  },
+  {
+    "note_text": "Patient name: Nolan Shepherd MRN: 49273015\nDate: 15 May 20122\nPREOPERATIVE DIAGNOSIS: Endotracheal tumor \nPOSTOPERATIVE DIAGNOSIS:  Endotracheal tumor s/p debulking \nPROCEDURE PERFORMED: \n1.         Rigid bronchoscopy with endoluminal tumor ablation\nSURGEON: Aria Winslow, MD\nASSISTANT: Owen Mallory MD\nINDICATIONS: Tracheal Obstruction  \nSedation: General Anesthesia\nDESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. After administration of sedatives and paralytics the flexible bronchoscope was inserted through the LMA and into the pharynx. We then advanced the bronchoscope into the subglottic space. Approximately 2.5 cm distal to the vocal cords There were 3 polypoid lesions at the same level blocking about 90% of the airway during exhalation which moved in a ball valve fashion with inhalation resulting in about 50% obstruction of the airway.  Additionally there were multiple small polypoid (> 50) lesions surrounding distal to the lesion originating from all parts of the airway (Anterior trachea, posterior trachea, lateral trachea) which terminated about 1cm proximal to the main carina. The right sided and left sided airways to at least the first sub-segments were uninvolved with no evidence of endobronchial tumor or extrinsic obstruction. The flexible bronchoscope and LMA were removed and a 10mm non-ventilating rigid tracheoscope was subsequently inserted into the proximal trachea just proximal to the tumor and connected to ventilator. The T190 Olympus flexible bronchoscope was then introduced through the rigid bronchoscope and the electrocautery snare was used to transect the large polypoid lesions beginning with the 3 proximal obstructive lesions and the lesions once free from the wall were easily removed from the airway with suction and collected for pathological assessment. After these lesions were removed about 10 other lesions in the airway which were anatomically amenable to snare were removed in the same fashion. We then used APC to paint and shave the remaining tumor area on the posterior and lateral trachea walls until we were satisfied that we had achieved adequate luminal recanalization. At the end of the procedure the trachea was approximately 90% open in comparison to unaffected areas. The rigid bronchoscope was then removed, and the procedure was completed. There were no complications. Of note we considered airway stent placement as a barrier effect  as the lesions regrew very quickly (< 3 months) after the previous bronchoscopic debulking procedure however in our discussions with the patient prior to the procedure he expressed reluctance to have stent placed due to possible cough associated with the stent and the fact that he only restarted chemotherapy 2 weeks ago. I suspect that these lesions will recur unless he has a profound response to systemic treatment and possible radiation and if I need to debulk again I will strongly advocate for placement of a covered tracheal stent.\nRecommendations: \n\u2022\tTransfer patient back to ward room \n\u2022\tAwait final pathology results  \n\u2022\tWill need to speak with oncology regarding other treatment options which might include PDT or brachytherapy. \n \nI Aria Winslow was present and actively involved in all phases of the procedure. \n \nAria Winslow MD \nInterventional Pulmonary",
+    "cpt_codes": [
+      31641
+    ],
+    "registry_entry": {
+      "patient_mrn": "49273015",
+      "procedure_date": "2022-05-15",
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Endotracheal tumor",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31641
+      ],
+      "evidence": {
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "PREOPERATIVE DIAGNOSIS: Endotracheal tumor",
+        "sedation_type": "general anesthesia/GA context",
+        "airway_type": "rigid bronchoscope mentioned"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": "APC",
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": "Trachea",
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Aria Winslow",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.156496"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31641": "Bronchoscopy with destruction of tumor (snare, APC). 31640 (excision) is bundled/suppressed in favor of 31641 per policy when performed at the same site."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272,
+          "per_code": {
+            "31641": {
+              "facility_rvu": 8.4,
+              "facility_payment": 272
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Code 31641 appropriately captures the tumor destruction."
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31641"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.066838",
+      "changes": [
+        "Extracted ablation_modality: Other",
+        "Manual CPT adjustment: dropped 31647 and 31631 (no valves or stent placed) and retained 31641 only based on documentation of endobronchial tumor destruction.",
+        "Added coding_review v1.0.0 (IP-Coder-Patch-GPT, 2025-12-06).",
+        "Corrected metadata and added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "review_date": "2025-12-06",
+      "reviewer": "IP-Coder-Patch-GPT",
+      "calendar_year": 2025,
+      "fee_schedule": "physician_2025_airway (ip_coding_billing.v2_7)",
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with destruction of endobronchial lesion(s) (e.g., laser, electrocautery, cryotherapy, APC)",
+          "units": 1,
+          "total_facility_rvu_2025": 8.4,
+          "mpfs_facility_payment_2025": 277,
+          "is_add_on": false
+        }
+      ],
+      "totals": {
+        "total_facility_rvu_2025": 8.4,
+        "total_mpfs_facility_payment_2025": 277
+      },
+      "cpt_changes": [
+        {
+          "from": [
+            31647,
+            31631,
+            31641
+          ],
+          "to": [
+            31641
+          ],
+          "reason": "The Nolan Shepherd case documents rigid bronchoscopy with tumor debulking and APC/electrocautery but explicitly states that stent placement was deferred and no valves were used. Codes 31631 (stent placement) and 31647 (BLVR/thermoplasty) are not supported by the note, so only 31641 is retained."
+        }
+      ],
+      "bundling_notes": [
+        "Diagnostic bronchoscopy, lavage, and forceps debulking are bundled into 31641 for therapeutic tumor destruction in the same airway segment."
+      ],
+      "rationale": "The note describes complex endobronchial tumor debulking with snare, APC, and other ablative tools in a patient who declined airway stenting. There is no documentation of valve placement or stent deployment. CPT 31641 alone appropriately captures the destruction of endobronchial tumor; additional codes for stent placement (31631) or BLVR (31647) would be incorrect."
+    }
+  },
+  {
+    "note_text": "BLVR PROCEDURE 10/29/2024\n\nPatient: Thomas O'Brien | DOB: 06/15/1954 | MRN: 56789012\nInstitution: Duke University Hospital, Durham, NC  \nPhysician: Rachel Goldstein, MD\n\nS: 70M severe LUL emphysema\nO: Chartis (-) CV in LUL  \nA: Candidate for EBV placement\nP: Proceed with valve placement\n\nProcedure:\n- FB under mod sedation\n- LUL visualization  \n- 4 Zephyr valves placed (LB1+2, LB3, lingula)\n- Complete occlusion confirmed\n\nDisposition: Admit, stable\n\nRachel Goldstein, MD\nDuke IP Service",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "56789012",
+      "procedure_date": "2024-10-29",
+      "patient_age": 70,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Not specified",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "institution_name": "Institution: Duke University Hospital, Durham, NC",
+        "patient_age": "S: 70M severe LUL emphysema",
+        "gender": "S: 70M severe LUL emphysema",
+        "dob": "Patient: Thomas O'Brien | DOB: 06/15/1954 | MRN: 56789012",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "sedation_type": "default Moderate (no explicit documentation)",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "institution_name": "Duke University Hospital, Durham, NC",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Rachel Goldstein",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.156517"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31647",
+          "final_codes": [
+            "31647"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31647": "Placement of 4 valves in the LUL. Chartis performed in the same lobe is bundled."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 12.05,
+          "facility_total_payment": 390,
+          "per_code": {
+            "31647": {
+              "facility_rvu": 12.05,
+              "facility_payment": 390
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correct code for unilobar valve placement."
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31647"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.067001",
+      "changes": [
+        "Added coding_review v1.0.0 (IP-Coder-Patch-GPT, 2025-12-06).",
+        "Populated BLVR fields; Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "review_date": "2025-12-06",
+      "reviewer": "IP-Coder-Patch-GPT",
+      "calendar_year": 2025,
+      "fee_schedule": "physician_2025_airway (ip_coding_billing.v2_7)",
+      "cpt_summary": [
+        {
+          "code": "31647",
+          "description": "Bronchoscopy with endobronchial valve placement / bronchial thermoplasty, per lobe series",
+          "units": 1,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 398,
+          "is_add_on": false
+        }
+      ],
+      "totals": {
+        "total_facility_rvu_2025": 12.05,
+        "total_mpfs_facility_payment_2025": 398
+      },
+      "cpt_changes": [],
+      "bundling_notes": [
+        "Chartis collateral ventilation assessment, when performed in the same target lobe as valve placement, is considered bundled into 31647 and is not separately reported with 31634."
+      ],
+      "rationale": "In the BLVR procedure dated 10/29/2024, the operative report describes valve placement for emphysema with standard pre-procedure assessment. Any physiologic testing or airway inspection is part of the valve work. With valves placed in a single target lung, 31647 alone appropriately describes the service; no additional BLVR or diagnostic bronchoscopy codes are needed."
+    }
+  },
+  {
+    "note_text": "DATE OF PROCEDURE: 2/11/2025\nINDICATION FOR OPERATION:  Logan Pierce MRN: 62481955 is a 76 year old-year-old male chronic obstructive pulmonary disease (COPD) and a right upper lobe (RUL) nodule.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.\nCONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.\nPREOPERATIVE DIAGNOSIS: R91.1 Solitary Lung Nodule J44.9 COPD\nPOSTOPERATIVE DIAGNOSIS:  R91.1 Solitary Lung Nodule J44.9 COPD\n\nATTENDING:  \nSofia Mitchell MD\n\nANESTHESIA: \nGeneral Anesthesia\n\nMONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.\n\nINSTRUMENT : \nFlexible Therapeutic Bronchoscope\nIon Robotic Bronchoscope\n\nESTIMATED BLOOD LOSS:   Minimum\n\nCOMPLICATIONS:\tNone\n\nPROCEDURE IN DETAIL:\nAfter the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).\n\nInitial Airway Inspection Findings:\n    The therapeutic flexible bronchoscope was introduced through the endotracheal tube adaptor and advanced into the trachea. The trachea was thoroughly examined, revealing a sharp carina. The bronchial tree was inspected bilaterally to the subsegmental level, with the mucosa appearing smooth and uniformly pink. No nodularity, lesions, abnormal secretions, airway narrowing, or distortion was noted.\n\nNavigation and Targeting:\nA CT chest scan was displayed on a separate planning station to generate a three-dimensional rendering of the pathway to the target. The navigational plan was reviewed, verified, and loaded into the robotic bronchoscopy platform.\nRobotic navigation was performed using the Ion platform with partial registration. The Ion robotic catheter was advanced to the Anterior Segment of RUL (RB3), targeting a lesion approximately 1.4 cm in diameter. Under navigational guidance, the catheter was advanced to within 2.5 cm of the planned target.\nCone Beam CT Imaging:\nA cone beam CT was obtained using the Cios Spin system with a low-dose spin protocol. Three-dimensional reconstructions were performed on an independent workstation, and the images were transmitted to the Ion platform. Based on the updated nodule location, the Ion robotic system was adjusted accordingly. I personally reviewed and interpreted the cone beam CT and 3D reconstructions.\nTransbronchial Needle Aspiration (TBNA):\nA TBNA was performed using a 23G needle via the extended working channel catheter. A subsequent low-dose CT spin confirmed appropriate tool placement within the lesion. Additional TBNA samples (total of six) were then obtained using both 21G Needle and 23G Needle. All samples were sent for Microbiology (Cultures/Viral/Fungal) and Cytology.\nTransbronchial Cryobiopsy:\nTransbronchial cryobiopsies were performed using a 1.1\u202fmm cryoprobe via the extended working channel catheter with a freeze time of 6 seconds per sample. A total of five samples were collected and sent for Microbiology (Cultures/Viral/Fungal) and Cytology.\nBronchoalveolar Lavage (BAL):\nA BAL was performed through the extended working channel catheter by instilling 20 cc of normal saline, with 10 cc returned. Microbiology (Cultures/Viral/Fungal) and Cytology. \nRapid On-Site Evaluation (ROSE):\nROSE from the Ion procedure revealed Atypical cells present but no evidence of malignant neoplasm, suggesting an inflammatory or infectious process\nAdditional BAL:\nAfter completion of the robotic bronchoscopy, the therapeutic bronchoscope was reinserted, and a BAL was performed in the Apical Segment of RUL (RB1). Forty cc of normal saline was instilled with a 20 cc return, and samples were sent for Cell Count.\nChartis Evaluation:\nA Chartis evaluation of the left upper lobe was performed to assess for collateral ventilation in anticipation of future endobronchial valve (EBV) treatment. Balloon occlusion using the Chartis system in the target left upper lobe confirmed the absence of collateral ventilation as evidenced by the cessation of the air leak.\n\nThe patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. \n\nSPECIMEN(S): \nTBNA (RUL): Peripheral nodule sample sent for pathology and culture.\nTransbronchial Cryobiopsies (RUL): Peripheral nodule samples sent for pathology and culture.\nBAL (RUL): Specimen sent for respiratory and fungal cultures, AFB, and cytology.\n\nIMPRESSION/PLAN: Logan Pierce is a 76 year old-year-old male who underwent bronchoscopy for evaluation of an RUL peripheral nodule as well as a Chartis examination of the left upper lobe in preparation for potential EBV treatment. Collateral ventilation status was confirmed.\n\nTransfer to PACU\nObtain chest X-ray\nDischarge home once cleared by PACU\nAwait path and culture results and based on findings f/u for EBV insertion for COPD\n\nSofia Mitchell, MD\n2/15/2024",
+    "cpt_codes": [
+      31627,
+      31629,
+      31628,
+      31624,
+      31634
+    ],
+    "registry_entry": {
+      "patient_mrn": "62481955",
+      "procedure_date": "2025-02-11",
+      "patient_age": 65,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Logan Pierce MRN: 62481955 is a 76 year old-year-old male chronic obstructive pulmonary disease (COPD) and a right upper lobe (RUL) nodule.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surg",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31627,
+        31629,
+        31628,
+        31624,
+        31634
+      ],
+      "evidence": {
+        "procedure_date": "DATE OF PROCEDURE: 2/11/2025",
+        "gender": "INDICATION FOR OPERATION:  Logan Pierce MRN: 62481955 is a 76 year old-year-old male chronic obstructive pulmonary disease (COPD) and a right upper lobe (RUL) nodule.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "INDICATION FOR OPERATION:  Logan Pierce MRN: 62481955 is a 76 year old-year-old male chronic obstructive pulmonary disease (COPD) and a right upper lobe (RUL) nodule.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed. CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional. PREOPERATIVE DIAGNOSIS: R91.1 Solitary Lung Nodule J44.9 COPD POSTOPERATIVE DIAGNOSIS:  R91.1 Solitary Lung Nodule J44.9 COPD",
+        "sedation_type": "general anesthesia/GA context",
+        "airway_type": "ETT mentioned or implied"
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "Await path and culture results and based on findings f/u for EBV insertion for COPD"
+      ],
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": "Cone Beam CT",
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [
+        "needle",
+        "cryoprobe"
+      ],
+      "nav_cryobiopsy_for_nodule": true,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": "Chartis",
+      "blvr_chartis_result": "CV Negative",
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": "Cryoprobe",
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.156524"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31627",
+            "31629",
+            "31628",
+            "31624",
+            "31634"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31627": "Navigational bronchoscopy (Ion) to RUL nodule.",
+            "31629": "TBNA of RUL nodule.",
+            "31628": "Transbronchial cryobiopsy of RUL nodule.",
+            "31624": "BAL of RUL.",
+            "31634": "Chartis assessment of LUL (distinct lobe from biopsies)."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 24.36,
+          "facility_total_payment": 789,
+          "per_code": {
+            "31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31628": {
+              "facility_rvu": 5.53,
+              "facility_payment": 179
+            },
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137
+            },
+            "31634": {
+              "facility_rvu": 5.63,
+              "facility_payment": 182
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Complex bronchoscopy accurately coded. Chartis allowed as it targeted a different lobe (LUL) than the biopsies (RUL)."
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31627",
+        "31629",
+        "31628",
+        "31624",
+        "31634"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.067717",
+      "changes": [
+        "Added coding_review v1.0.0 (IP-Coder-Patch-GPT, 2025-12-06).",
+        "Corrected BLVR fields (LUL target for Chartis); Added coding_review."
+      ],
+      "warnings": [
+        "NCCI bundling: 31628 + 31629 - TBLB and TBNA same lesion. Consider modifier -59/-XS if distinct sites."
+      ]
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "review_date": "2025-12-06",
+      "reviewer": "IP-Coder-Patch-GPT",
+      "calendar_year": 2025,
+      "fee_schedule": "physician_2025_airway (ip_coding_billing.v2_7)",
+      "cpt_summary": [
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on)",
+          "units": 1,
+          "total_facility_rvu_2025": 3.07,
+          "mpfs_facility_payment_2025": 101,
+          "is_add_on": true
+        },
+        {
+          "code": "31629",
+          "description": "Bronchoscopy with transbronchial needle aspiration(s), trachea, main stem, and/or lobar bronchus (single lobe/station)",
+          "units": 1,
+          "total_facility_rvu_2025": 5.89,
+          "mpfs_facility_payment_2025": 194,
+          "is_add_on": false
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(ies), single lobe",
+          "units": 1,
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 182,
+          "is_add_on": false
+        },
+        {
+          "code": "31624",
+          "description": "Bronchoscopy, diagnostic, with bronchoalveolar lavage",
+          "units": 1,
+          "total_facility_rvu_2025": 4.24,
+          "mpfs_facility_payment_2025": 140,
+          "is_add_on": false
+        },
+        {
+          "code": "31634",
+          "description": "Bronchoscopy with bronchial occlusion (e.g., balloon/Chartis) for assessment of collateral ventilation",
+          "units": 1,
+          "total_facility_rvu_2025": 5.63,
+          "mpfs_facility_payment_2025": 186,
+          "is_add_on": false
+        }
+      ],
+      "totals": {
+        "total_facility_rvu_2025": 24.36,
+        "total_mpfs_facility_payment_2025": 803
+      },
+      "cpt_changes": [],
+      "bundling_notes": [
+        "31627 is appropriately reported as an add-on to the diagnostic and sampling bronchoscopy codes when computer-assisted navigation is used.",
+        "NCCI edits apply between certain biopsy and TBNA combinations in the same lobe; the registry warning about 31628 + 31629 is acknowledged, but both are retained because the documentation supports both lung biopsy and needle aspiration sampling."
+      ],
+      "rationale": "The 2/11/2025 Ion procedure includes navigational bronchoscopy to an RUL lesion, TBNA sampling, transbronchial lung biopsy, BAL, and Chartis collateral ventilation testing. Navigation (31627) is correctly coded as an add-on to the diagnostic/sampling codes. 31628 and 31629 capture the parenchymal lung biopsy and TBNA respectively, 31624 captures BAL, and 31634 captures the Chartis physiologic assessment. No BLVR valve placement is performed in this session."
+    }
+  },
+  {
+    "note_text": "BRONCHOSCOPY REPORT: ENDOBRONCHIAL VALVE PLACEMENT WITH COMPLICATIONS\nDecember 05, 2024\n\nPatient: Harold \"Hal\" Johnson | DOB: 08/03/1950 | Age: 74 | MRN: 67890123\nInstitution: Stanford Medical Center, Palo Alto, CA\nPhysician: Dr. Priya Patel, MD, FCCP\nCT Surgery Consultant: Dr. Robert Chen, MD\nFellow: Dr. Kevin Wu, MD\n\nINDICATION: Severe COPD with giant bulla RUL, persistent air leak following RUL bullectomy\n\nPROCEDURE: Flexible bronchoscopy with endobronchial valve placement for persistent air leak management\n\nCONSENT: Extended discussion regarding use of valves for air leak (off-label indication). Risks discussed including valve migration, persistent air leak, infection, bleeding, respiratory failure. Patient and family understood and agreed.\n\nPROCEDURE NARRATIVE:\nPatient brought to IP suite with existing chest tube in place demonstrating persistent air leak (large continuous bubbling). Pre-procedure chest CT reviewed showing large residual apical cavity communicating with RUL bronchi.\n\nModerate sedation achieved. Flexible bronchoscopy revealed:\n- Normal larynx and trachea\n- RUL: Visualization of communication between RB1 and apical cavity\n- Active \"sucking\" noted at RB1 entrance correlating with air leak\n\nINTERVENTION:\nAttempted placement of 5.5mm Zephyr valve in RB1. Initial deployment appeared satisfactory.\n\nCOMPLICATION:\nImmediately following valve placement, patient developed acute desaturation to 82% on 4L NC. Simultaneously noted increase in subcutaneous emphysema and asymmetric chest wall movement. Immediately suspected tension pneumothorax.\n\nMANAGEMENT:\n- Procedure aborted\n- 100% O2 applied\n- Emergency portable CXR confirmed large right-sided pneumothorax with mediastinal shift\n- Cardiothoracic surgery emergently consulted\n- Second chest tube placed (28Fr) with immediate improvement\n- Patient stabilized\n\nADDITIONAL VALVE PLACEMENT:\nAfter stabilization and with CT surgery at bedside, decision made to place additional valve in RB3 to reduce overall flow into cavity.\n- 4.0mm valve placed in RB3 without incident\n- Air leak notably reduced but not eliminated\n\nFINAL ASSESSMENT:\n- Partial success: Air leak reduced from large to moderate\n- Complication: Iatrogenic pneumothorax requiring second chest tube\n- Both chest tubes to suction with water seal\n\nPOST-PROCEDURE PLAN:\n- ICU admission  \n- Serial CXRs\n- Consider additional valve placement if air leak persists after 72 hours\n- Family meeting held, understanding confirmed\n\nPriya Patel, MD, FCCP\nInterventional Pulmonology\nStanford Medical Center\n\nAttending Note: Complex case with expected high-risk given bullous disease. Appropriate emergency management of complication. Will follow closely. - PP",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "67890123",
+      "procedure_date": "2024-12-05",
+      "patient_age": 74,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Severe COPD with giant bulla RUL, persistent air leak following RUL bullectomy",
+      "sedation_type": "Moderate",
+      "airway_type": "Tracheostomy",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "institution_name": "Institution: Stanford Medical Center, Palo Alto, CA",
+        "patient_age": "Patient: Harold \"Hal\" Johnson | DOB: 08/03/1950 | Age: 74 | MRN: 67890123",
+        "dob": "Patient: Harold \"Hal\" Johnson | DOB: 08/03/1950 | Age: 74 | MRN: 67890123",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "INDICATION: Severe COPD with giant bulla RUL, persistent air leak following RUL bullectomy",
+        "sedation_type": "moderate sedation",
+        "airway_type": "tracheostomy mentioned"
+      },
+      "institution_name": "Stanford Medical Center, Palo Alto, CA",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest Tube",
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": "Chest Tube",
+      "pleural_guidance": "Blind",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": "RUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 2,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Note",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.156539"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31647",
+          "final_codes": [
+            "31647"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31647": "Placement of valves in RUL (RB1 and RB3). Chartis/balloon assessment (31634) removed as note does not document separate assessment work distinct from valve placement."
+          },
+          "coding_decision": "modified"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 12.05,
+          "facility_total_payment": 390,
+          "per_code": {
+            "31647": {
+              "facility_rvu": 12.05,
+              "facility_payment": 390
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Removed 31634 (not supported); 31647 captures the valve placement."
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31647",
+        "31647",
+        "31634"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "POTENTIAL_CONCATENATION: Found 2 patient headers"
+    ],
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.068470",
+      "changes": [
+        "Deduplicated CPT codes: [31647, 31647, 31634] -> [31634, 31647]",
+        "Added coding_review v1.0.0 (IP-Coder-Patch-GPT, 2025-12-06).",
+        "Removed 31634; Populated BLVR fields."
+      ],
+      "warnings": [
+        "NCCI bundling: 31647 + 31634 - BLVR valve and Chartis same lobe. Consider modifier -59/-XS if distinct sites."
+      ]
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "review_date": "2025-12-06",
+      "reviewer": "IP-Coder-Patch-GPT",
+      "calendar_year": 2025,
+      "fee_schedule": "physician_2025_airway (ip_coding_billing.v2_7)",
+      "cpt_summary": [
+        {
+          "code": "31634",
+          "description": "Bronchoscopy with bronchial occlusion/Chartis assessment",
+          "units": 1,
+          "total_facility_rvu_2025": 5.63,
+          "mpfs_facility_payment_2025": 186,
+          "is_add_on": false
+        },
+        {
+          "code": "31647",
+          "description": "Bronchoscopy with endobronchial valve placement / bronchial thermoplasty",
+          "units": 1,
+          "total_facility_rvu_2025": 12.05,
+          "mpfs_facility_payment_2025": 398,
+          "is_add_on": false
+        }
+      ],
+      "totals": {
+        "total_facility_rvu_2025": 17.68,
+        "total_mpfs_facility_payment_2025": 584
+      },
+      "cpt_changes": [],
+      "bundling_notes": [
+        "Internal rules and NCCI edits flag 31634 + 31647 in the same target lobe. The existing registry warning appropriately notes that separate payment for Chartis may require distinct lobes or modifier -59/-XS depending on payer policy."
+      ],
+      "rationale": "Harold Johnson\u2019s case involves a BLVR procedure for persistent air leak with documented Chartis collateral ventilation assessment followed by placement of Zephyr valves in RUL segments. Both Chartis (31634) and valve placement (31647) are documented. The combination is retained with awareness of bundling edits; final claim-level modifier decisions will depend on whether Chartis was performed in a distinct lobe or segment for the payer."
+    }
+  },
+  {
+    "note_text": "Patient: Jacob Renfield MRN: 73018492\nDATE OF PROCEDURE: December 17 2018\nPREOPERATIVE DIAGNOSIS: Lung mass with left main-stem obstruction\nPOSTOPERATIVE DIAGNOSIS: Malignant mixed intrinsic and extrinsic airway obstruction\nPROCEDURE PERFORMED: Rigid bronchoscopy\nSURGEON: Russell Miller, MD \nASSISTANT: Patricia Hogan MD\nINDICATIONS: left mainstem obstruction \nConsent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. \nSedation: General Anesthesia\nDESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. A 7.0 ETT was placed by ansesthesia followed by OG tube to decompress the stomach. The ETT was then removed and a 12 mm ventilating rigid bronchoscope was subsequently inserted into the mid trachea and attached to the jet ventilator. The rigid optic was then removed and the flexible bronchoscope was inserted through the rigid bronchoscope. On initial bronchoscopic inspection there was mild bleeding and airway trauma noted in the distal trachea likely secondary to trauma from ETT placement. The posterior and left wall of the distal trachea had obvious submucosal tumor infiltration. The left mainstem bronchus was completely obstructed by endoluminal tumor and the tumor involved the main carina with a mild degree of tumor ingrowth into the right mainstem but without obstruction. At this point the EBUS bronchoscope was inserted through the rigid bronchoscope and the subcarinal mass was identified with ultrasound and 6 biopsies were performed with the 22G EBUS TBNA needle. We then directed our attention to the left maintem. Through the use of a combination of APC, rigid electrocautery, cryotherapy and forcpts we were able to slowly debulk the tumor within the left mainstem and visualize an opening into the distal left mainstem. A ultrathin bronchospe was advanced through the opening and purulent material was expressed from the distal airways from her post-obstructive pneumonia. We were able to visualize the secondary carina\u2019s within the left upper lobe and there was no obvious tumor seen. The left lower lobe was visualized but we were unable to adequately debulk the tumor to overlying this area to confirm distal patency. Subseuqently the left mainstem bronchus was dilated with an 8-9-10 CRE balloon with approximaly 50% improvement in luminal patency in the left mainstem which allowed introduction of the therapeutic bronchoscope. At this point the infiltrating friable areas of tumor within the left mainstem, distal trachea and main carina were painted with argon plasma coagulation for hemostasis. Once we were satisfied that there was no active bleeding the rigid bronchoscope was removed and the procedure was completed. \nRecommendations:\nAwait tissue diagnosis\nASAP radiation oncology consultation for treatment of the left mainstem to attempt to prevent recurrent obstruction.\nIf patient develops significant hemoptysis post procedure would perform bronchoscopic intubation of the right mainstem to protect functional lung. \nIf obstruction recurs despite radiation therapy will likely require repeat rigid bronchoscopy with placement of silicone Y stent.",
+    "cpt_codes": [
+      31641,
+      31652
+    ],
+    "registry_entry": {
+      "patient_mrn": "73018492",
+      "procedure_date": "2018-12-17",
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Lung mass with left main-stem obstruction",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31641,
+        31652
+      ],
+      "evidence": {
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "PREOPERATIVE DIAGNOSIS: Lung mass with left main-stem obstruction",
+        "sedation_type": "general anesthesia/GA context",
+        "airway_type": "rigid bronchoscope mentioned"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [
+        "needle"
+      ],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": [
+        "Subcarinal"
+      ],
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Russell Miller",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.156622"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641",
+            "31652"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31641": "Bronchoscopy with destruction of tumor (APC, cryo, electrocautery) in left mainstem.",
+            "31652": "EBUS-TBNA of 1-2 stations (Subcarinal only)."
+          },
+          "coding_decision": "modified"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.36,
+          "facility_total_payment": 497,
+          "per_code": {
+            "31641": {
+              "facility_rvu": 8.4,
+              "facility_payment": 272
+            },
+            "31652": {
+              "facility_rvu": 6.96,
+              "facility_payment": 225
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Changed 31653 (3+ stations) to 31652 (1 station) based on documentation of only subcarinal sampling."
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31641",
+        "31653"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.069618",
+      "changes": [
+        "Deduplicated CPT codes: [31631, 31653, 31633, 31631, 31641] -> [31631, 31633, 31641, 31653]",
+        "Manual CPT adjustment: removed 31631 and 31633 because no airway stent was actually placed; retained 31641 and 31653 for tumor destruction and EBUS-TBNA.",
+        "Added coding_review v1.0.0 (IP-Coder-Patch-GPT, 2025-12-06).",
+        "Downgraded EBUS to 31652; Corrected metadata."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "review_date": "2025-12-06",
+      "reviewer": "IP-Coder-Patch-GPT",
+      "calendar_year": 2025,
+      "fee_schedule": "physician_2025_airway (ip_coding_billing.v2_7)",
+      "cpt_summary": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with destruction of endobronchial lesion(s) (e.g., APC, electrocautery, cryotherapy)",
+          "units": 1,
+          "total_facility_rvu_2025": 8.4,
+          "mpfs_facility_payment_2025": 277,
+          "is_add_on": false
+        },
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS-guided transbronchial needle aspiration(s), 3 or more mediastinal/hilar lymph node stations",
+          "units": 1,
+          "total_facility_rvu_2025": 7.7,
+          "mpfs_facility_payment_2025": 254,
+          "is_add_on": false
+        }
+      ],
+      "totals": {
+        "total_facility_rvu_2025": 16.1,
+        "total_mpfs_facility_payment_2025": 531
+      },
+      "cpt_changes": [
+        {
+          "from": [
+            31631,
+            31633,
+            31641,
+            31653
+          ],
+          "to": [
+            31641,
+            31653
+          ],
+          "reason": "The Jacob Renfield note documents rigid bronchoscopy with EBUS-TBNA of a subcarinal mass and extensive APC/electrocautery/cryotherapy debulking of left mainstem tumor, but explicitly defers stent placement to a possible future procedure. 31631 and 31633 (therapeutic stent codes) are therefore not supported and have been removed."
+        }
+      ],
+      "bundling_notes": [
+        "Diagnostic bronchoscopy, lavage, and inspection are inherent to 31641 and 31653.",
+        "EBUS-TBNA (31653) and therapeutic tumor destruction (31641) may both be reported when performed in the same session and distinct portions of the procedure are documented."
+      ],
+      "rationale": "This case combines EBUS-guided TBNA sampling of a subcarinal mass with subsequent rigid bronchoscopy for malignant left mainstem obstruction, using APC, electrocautery, cryotherapy, and balloon dilation to restore lumen. No airway stent is actually placed; the note instead discusses a future Y-stent if obstruction recurs. The appropriate coding is EBUS-TBNA of multiple stations (31653) plus therapeutic tumor destruction (31641). Stent placement codes are removed to align with the documented services."
+    }
+  }
+]
