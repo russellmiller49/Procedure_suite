@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: <MRN>\nDate of procedure: <DATE_TIME>\nAttending: Dr. A. Rivera\nAssistants: Pulmonary fellow; bronchoscopy RN; radiology technologist.\n\nPre-procedure diagnosis: 18 mm PET-avid right lower lobe posterior basal segment nodule, presumed clinical stage IA non–small cell lung cancer in a nonsurgical candidate.\nPost-procedure diagnosis: Same.\nIndication: Parenchyma-sparing local control of early lung cancer via transbronchial microwave ablation.\nAnesthesia: General anesthesia, 8.5 mm ETT, ASA III.\n\nProcedures:\n1. Electromagnetic navigation bronchoscopy (Illumisite platform) with cone-beam CT guidance in a hybrid OR.\n2. Radial EBUS confirmation of peripheral lesion position.\n3. Transbronchial microwave ablation of right lower lobe nodule using Emprint catheter.\n\nDescription: After induction and intubation, a therapeutic bronchoscope was advanced to the right lower lobe. The planning CT was registered on the Illumisite platform; a pathway was generated to the posterior basal segment nodule. Following peripheral navigation, digital tomosynthesis corrected CT-to-body divergence and demonstrated a bullseye view of the lesion. A CrossCountry needle was advanced into the lesion, and an extended working channel (EWC) was positioned 1 cm beyond the nodule center. Radial EBUS showed a concentric hypoechoic lesion. An Emprint microwave catheter was advanced until the ablation center was aligned with the lesion. A single 10-minute ablation using the standard lung protocol was delivered. Post-ablation cone-beam CT demonstrated a concentric ground-glass ablation zone with a minimal circumferential margin of approximately 6 mm. There was no significant airway bleeding and the segmental bronchi remained patent.\n\nEstimated blood loss: <5 mL.\nComplications: None immediate. No pneumothorax on fluoroscopy.\nDisposition: Extubated in OR; observed for 6 hours in PACU; discharged home with plan for CT chest at 3 months.",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-MWA-01\nDate of procedure: 2025-02-03\nAttending: Dr. A. Rivera\nAssistants: Pulmonary fellow; bronchoscopy RN; radiology technologist.\n\nPre-procedure diagnosis: 18 mm PET-avid right lower lobe posterior basal segment nodule, presumed clinical stage IA non\u2013small cell lung cancer in a nonsurgical candidate.\nPost-procedure diagnosis: Same.\nIndication: Parenchyma-sparing local control of early lung cancer via transbronchial microwave ablation.\nAnesthesia: General anesthesia, 8.5 mm ETT, ASA III.\n\nProcedures:\n1. Electromagnetic navigation bronchoscopy (Illumisite platform) with cone-beam CT guidance in a hybrid OR.\n2. Radial EBUS confirmation of peripheral lesion position.\n3. Transbronchial microwave ablation of right lower lobe nodule using Emprint catheter.\n\nDescription: After induction and intubation, a therapeutic bronchoscope was advanced to the right lower lobe. The planning CT was registered on the Illumisite platform; a pathway was generated to the posterior basal segment nodule. Following peripheral navigation, digital tomosynthesis corrected CT-to-body divergence and demonstrated a bullseye view of the lesion. A CrossCountry needle was advanced into the lesion, and an extended working channel (EWC) was positioned 1 cm beyond the nodule center. Radial EBUS showed a concentric hypoechoic lesion. An Emprint microwave catheter was advanced until the ablation center was aligned with the lesion. A single 10-minute ablation using the standard lung protocol was delivered. Post-ablation cone-beam CT demonstrated a concentric ground-glass ablation zone with a minimal circumferential margin of approximately 6 mm. There was no significant airway bleeding and the segmental bronchi remained patent.\n\nEstimated blood loss: <5 mL.\nComplications: None immediate. No pneumothorax on fluoroscopy.\nDisposition: Extubated in OR; observed for 6 hours in PACU; discharged home with plan for CT chest at 3 months.",
     "cpt_codes": [
       "31641",
       "+31627",
@@ -293,17 +293,10 @@
         "version": "synthetic.v1",
         "generated_at": "2025-12-07T00:00:00Z"
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: <MRN>\nDate of procedure: <DATE_TIME>\nAttending: Dr. L. Chen\n\nPre-procedure diagnosis: 12 mm part-solid right upper lobe apical nodule in a patient with prior contralateral lobectomy.\nIndication: Local treatment of presumed metachronous early adenocarcinoma using robotic transbronchial microwave ablation.\n\nProcedures:\n1. Robotic-assisted navigation bronchoscopy (Ion platform) with mobile C-arm cone-beam CT (Cios Spin).\n2. Radial EBUS confirmation of peripheral lesion.\n3. Transbronchial microwave ablation (Emprint catheter) of RUL apical nodule.\n\nDescription: The Ion catheter was navigated to the apical segment using shape-sensing guidance. Cone-beam CT confirmed the catheter tip centered within the lesion. After confirmation with radial EBUS (concentric view), an Emprint microwave catheter was advanced via the Ion EWC. Two overlapping ablations (8 and 6 minutes) were delivered without pleural disruption. Post-ablation CBCT demonstrated a fused ablation zone with an estimated minimal margin of 7 mm. The patient remained hemodynamically stable.\n\nComplications: None.\nDisposition: Extubated in OR; admitted overnight given single-lung status; plan CT at 3 months.",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-MWA-02\nDate of procedure: 2025-01-22\nAttending: Dr. L. Chen\n\nPre-procedure diagnosis: 12 mm part-solid right upper lobe apical nodule in a patient with prior contralateral lobectomy.\nIndication: Local treatment of presumed metachronous early adenocarcinoma using robotic transbronchial microwave ablation.\n\nProcedures:\n1. Robotic-assisted navigation bronchoscopy (Ion platform) with mobile C-arm cone-beam CT (Cios Spin).\n2. Radial EBUS confirmation of peripheral lesion.\n3. Transbronchial microwave ablation (Emprint catheter) of RUL apical nodule.\n\nDescription: The Ion catheter was navigated to the apical segment using shape-sensing guidance. Cone-beam CT confirmed the catheter tip centered within the lesion. After confirmation with radial EBUS (concentric view), an Emprint microwave catheter was advanced via the Ion EWC. Two overlapping ablations (8 and 6 minutes) were delivered without pleural disruption. Post-ablation CBCT demonstrated a fused ablation zone with an estimated minimal margin of 7 mm. The patient remained hemodynamically stable.\n\nComplications: None.\nDisposition: Extubated in OR; admitted overnight given single-lung status; plan CT at 3 months.",
     "cpt_codes": [
       "31641",
       "+31627",
@@ -593,17 +586,10 @@
         "version": "synthetic.v1",
         "generated_at": "2025-12-07T00:00:00Z"
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: <MRN>\nDate of procedure: <DATE_TIME>\nAttending: Dr. N. Patel\n\nPre-procedure diagnosis: 24 mm solid right lower lobe superior segment nodule, PET-avid, medically inoperable patient.\nIndication: Transbronchial microwave ablation of a peripheral lung cancer.\n\nProcedures:\n1. Electromagnetic navigation bronchoscopy (Illumisite) with CBCT confirmation.\n2. Radial EBUS localization.\n3. Two overlapping transbronchial microwave ablations of RLL superior segment nodule.\n\nDescription: Navigation was performed to the superior segment with tomosynthesis-based CT-to-body divergence correction. After needle puncture and EWC placement, radial EBUS showed an eccentric lesion. The Emprint catheter was advanced and two sequential 10- and 7-minute ablations were delivered with slight catheter retraction between cycles. CBCT showed an elongated ablation zone spanning the 2.4 cm lesion with an approximate minimal margin of 5–6 mm. A small apical pneumothorax was noted on CBCT and managed conservatively.\n\nComplications: Small asymptomatic right pneumothorax; observation only.\nDisposition: Overnight admission with serial CXRs; discharge on post-procedure day 1.",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-MWA-03\nDate of procedure: 2025-03-05\nAttending: Dr. N. Patel\n\nPre-procedure diagnosis: 24 mm solid right lower lobe superior segment nodule, PET-avid, medically inoperable patient.\nIndication: Transbronchial microwave ablation of a peripheral lung cancer.\n\nProcedures:\n1. Electromagnetic navigation bronchoscopy (Illumisite) with CBCT confirmation.\n2. Radial EBUS localization.\n3. Two overlapping transbronchial microwave ablations of RLL superior segment nodule.\n\nDescription: Navigation was performed to the superior segment with tomosynthesis-based CT-to-body divergence correction. After needle puncture and EWC placement, radial EBUS showed an eccentric lesion. The Emprint catheter was advanced and two sequential 10- and 7-minute ablations were delivered with slight catheter retraction between cycles. CBCT showed an elongated ablation zone spanning the 2.4 cm lesion with an approximate minimal margin of 5\u20136 mm. A small apical pneumothorax was noted on CBCT and managed conservatively.\n\nComplications: Small asymptomatic right pneumothorax; observation only.\nDisposition: Overnight admission with serial CXRs; discharge on post-procedure day 1.",
     "cpt_codes": [
       "31641",
       "+31627",
@@ -714,7 +700,7 @@
           "number_of_ablations": 2,
           "margin_assessed": true,
           "margin_assessment_method": "CBCT",
-          "immediate_imaging_result": "Fusiform ablation zone fully covering the lesion with an estimated 5–6 mm minimal margin; small right apical pneumothorax present."
+          "immediate_imaging_result": "Fusiform ablation zone fully covering the lesion with an estimated 5\u20136 mm minimal margin; small right apical pneumothorax present."
         }
       },
       "pleural_procedures": null,
@@ -758,7 +744,7 @@
         "discharge_time": null,
         "follow_up_imaging_ordered": true,
         "follow_up_imaging_type": "CXR and CT chest",
-        "follow_up_plan_text": "Serial CXRs overnight; CT chest 6–8 weeks to assess ablation zone and pneumothorax resolution.",
+        "follow_up_plan_text": "Serial CXRs overnight; CT chest 6\u20138 weeks to assess ablation zone and pneumothorax resolution.",
         "follow_up_actions": [
           {
             "action_type": "CXR",
@@ -897,17 +883,10 @@
         "version": "synthetic.v1",
         "generated_at": "2025-12-07T00:00:00Z"
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: <MRN>\nDate of procedure: <DATE_TIME>\nAttending: Dr. S. Moreno\n\nPre-procedure diagnosis: 16 mm peripheral left lower lobe lateral basal segment nodule with high probability of malignancy.\nIndication: Same-session diagnosis and local control via transbronchial biopsy and microwave ablation.\n\nProcedures:\n1. Electromagnetic navigation bronchoscopy with radial EBUS.\n2. Transbronchial forceps biopsies for frozen section.\n3. Transbronchial microwave ablation of LLL nodule.\n\nDescription: Navigation and radial EBUS confirmed a concentric lesion. Two forceps biopsies were obtained via the EWC and submitted for frozen section, which showed invasive adenocarcinoma. An Emprint catheter was then advanced and a 10-minute ablation was delivered. CBCT showed a well-centered ablation zone with an estimated minimal margin of 5 mm, although interpretation was partially limited by perilesional hemorrhage.\n\nComplications: Mild self-limited bleeding at biopsy site; no pneumothorax.\nDisposition: Overnight observation; planned CT in 3 months; oncology referral.",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-MWA-04\nDate of procedure: 2025-02-11\nAttending: Dr. S. Moreno\n\nPre-procedure diagnosis: 16 mm peripheral left lower lobe lateral basal segment nodule with high probability of malignancy.\nIndication: Same-session diagnosis and local control via transbronchial biopsy and microwave ablation.\n\nProcedures:\n1. Electromagnetic navigation bronchoscopy with radial EBUS.\n2. Transbronchial forceps biopsies for frozen section.\n3. Transbronchial microwave ablation of LLL nodule.\n\nDescription: Navigation and radial EBUS confirmed a concentric lesion. Two forceps biopsies were obtained via the EWC and submitted for frozen section, which showed invasive adenocarcinoma. An Emprint catheter was then advanced and a 10-minute ablation was delivered. CBCT showed a well-centered ablation zone with an estimated minimal margin of 5 mm, although interpretation was partially limited by perilesional hemorrhage.\n\nComplications: Mild self-limited bleeding at biopsy site; no pneumothorax.\nDisposition: Overnight observation; planned CT in 3 months; oncology referral.",
     "cpt_codes": [
       "31641",
       "+31627",
@@ -1223,17 +1202,10 @@
         "version": "synthetic.v1",
         "generated_at": "2025-12-07T00:00:00Z"
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: <MRN>\nDate of procedure: <DATE_TIME>\nAttending: Dr. D. Shah\n\nPre-procedure diagnosis: 21 mm left lower lobe superior segment nodule in severe COPD with prior lung volume reduction surgery.\nIndication: Local tumor control via transbronchial microwave ablation.\n\nProcedures:\n1. ENB-guided bronchoscopy with tomosynthesis correction (Illumisite).\n2. Radial EBUS confirmation.\n3. Two transbronchial microwave ablations of LLL superior segment lesion.\n\nDescription: CT-to-body divergence was corrected with Illumisite fluoroscopic navigation. After needle puncture and EWC advancement, an Emprint catheter was positioned across the lesion. A 10-minute ablation was delivered, followed by CBCT, which showed an ablation zone with only 3 mm posterolateral margin. The catheter was repositioned slightly posterolateral and a 5-minute repeat ablation was performed. Final CBCT demonstrated a symmetric ablation zone with approximately 6 mm minimal margin. Airways remained patent.\n\nComplications: None.\nDisposition: 23-hour observation due to underlying COPD; CT at 3 months and PFTs planned.",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-MWA-05\nDate of procedure: 2025-03-01\nAttending: Dr. D. Shah\n\nPre-procedure diagnosis: 21 mm left lower lobe superior segment nodule in severe COPD with prior lung volume reduction surgery.\nIndication: Local tumor control via transbronchial microwave ablation.\n\nProcedures:\n1. ENB-guided bronchoscopy with tomosynthesis correction (Illumisite).\n2. Radial EBUS confirmation.\n3. Two transbronchial microwave ablations of LLL superior segment lesion.\n\nDescription: CT-to-body divergence was corrected with Illumisite fluoroscopic navigation. After needle puncture and EWC advancement, an Emprint catheter was positioned across the lesion. A 10-minute ablation was delivered, followed by CBCT, which showed an ablation zone with only 3 mm posterolateral margin. The catheter was repositioned slightly posterolateral and a 5-minute repeat ablation was performed. Final CBCT demonstrated a symmetric ablation zone with approximately 6 mm minimal margin. Airways remained patent.\n\nComplications: None.\nDisposition: 23-hour observation due to underlying COPD; CT at 3 months and PFTs planned.",
     "cpt_codes": [
       "31641",
       "+31627",
@@ -1524,17 +1496,10 @@
         "version": "synthetic.v1",
         "generated_at": "2025-12-07T00:00:00Z"
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: <MRN>\nDate of procedure: <DATE_TIME>\nAttending: Dr. R. Silva\n\nPre-procedure diagnosis: 15 mm right lower lobe lateral basal segment nodule, high-risk for malignancy.\nIndication: Local treatment of peripheral lung cancer with investigational transbronchial cryoablation.\n\nProcedures:\n1. ENB-guided bronchoscopy (superDimension) with CBCT.\n2. Radial EBUS localization of peripheral lesion.\n3. Transbronchial cryoablation using a flexible cryoprobe with dual-freeze protocol.\n\nDescription: Following general anesthesia and ENB navigation, CBCT confirmed the extended working channel traversing the lesion. A novel flexible cryoprobe was advanced to the lesion center. Three freeze–thaw cycles were performed (8–5–8 minutes, with passive thaw between freezes). CBCT after the final cycle showed a homogeneous low-attenuation zone with a rim of ground-glass change surrounding the lesion and an estimated minimal margin of approximately 6 mm. Airways remained patent.\n\nComplications: None immediate.\nDisposition: Overnight admission for monitoring; CT chest at 3 months.",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: TBA-CRYO-01\nDate of procedure: 2025-02-05\nAttending: Dr. R. Silva\n\nPre-procedure diagnosis: 15 mm right lower lobe lateral basal segment nodule, high-risk for malignancy.\nIndication: Local treatment of peripheral lung cancer with investigational transbronchial cryoablation.\n\nProcedures:\n1. ENB-guided bronchoscopy (superDimension) with CBCT.\n2. Radial EBUS localization of peripheral lesion.\n3. Transbronchial cryoablation using a flexible cryoprobe with dual-freeze protocol.\n\nDescription: Following general anesthesia and ENB navigation, CBCT confirmed the extended working channel traversing the lesion. A novel flexible cryoprobe was advanced to the lesion center. Three freeze\u2013thaw cycles were performed (8\u20135\u20138 minutes, with passive thaw between freezes). CBCT after the final cycle showed a homogeneous low-attenuation zone with a rim of ground-glass change surrounding the lesion and an estimated minimal margin of approximately 6 mm. Airways remained patent.\n\nComplications: None immediate.\nDisposition: Overnight admission for monitoring; CT chest at 3 months.",
     "cpt_codes": [
       "31641",
       "+31627",
@@ -1818,13 +1783,6 @@
         "version": "synthetic.v1",
         "generated_at": "2025-12-07T00:00:00Z"
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   }
 ]

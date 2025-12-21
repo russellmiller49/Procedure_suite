@@ -137,7 +137,7 @@
         "coding_review": {
           "version": "v1.0.0",
           "calendar_year": 2025,
-          "cpt_summary": "31628 as the primary code for flexible bronchoscopy with transbronchial lung biopsy of the LUL nodule, with +31627 (reported here as 31627) for the computer‑assisted EMN/navigation component.",
+          "cpt_summary": "31628 as the primary code for flexible bronchoscopy with transbronchial lung biopsy of the LUL nodule, with +31627 (reported here as 31627) for the computer\u2011assisted EMN/navigation component.",
           "total_facility_rvu_2025": 8.6,
           "estimated_mpfs_facility_payment_2025": 282,
           "per_code": [
@@ -373,7 +373,7 @@
               "units": 1,
               "total_facility_rvu_2025": 5.89,
               "mpfs_facility_payment_2025": 193,
-              "rationale": "The Monarch robotic bronchoscopy targets an RML nodule with multiple forceps biopsy passes described as transbronchial sampling through the working channel. Within this dataset’s coding model, 31629 is used alongside 31645 to capture the conventional transbronchial biopsy component in the same lobe."
+              "rationale": "The Monarch robotic bronchoscopy targets an RML nodule with multiple forceps biopsy passes described as transbronchial sampling through the working channel. Within this dataset\u2019s coding model, 31629 is used alongside 31645 to capture the conventional transbronchial biopsy component in the same lobe."
             },
             {
               "code": "31645",
@@ -1269,7 +1269,7 @@
             {
               "code": "31651",
               "billing_code": "+31651",
-              "description": "Bronchoscopic lung volume reduction with valves, each additional lobe/segment treated (add-on, per this dataset’s schema)",
+              "description": "Bronchoscopic lung volume reduction with valves, each additional lobe/segment treated (add-on, per this dataset\u2019s schema)",
               "units": 1,
               "total_facility_rvu_2025": 3.78,
               "mpfs_facility_payment_2025": 124,
@@ -1688,7 +1688,7 @@
               "units": 1,
               "total_facility_rvu_2025": 3.78,
               "mpfs_facility_payment_2025": 124,
-              "rationale": "Two valves are placed across LLL segments in the same session, reflecting additional work within the treated lobe. One add-on unit is consistent with the dataset’s BLVR model when more than one segment in the target lobe is treated."
+              "rationale": "Two valves are placed across LLL segments in the same session, reflecting additional work within the treated lobe. One add-on unit is consistent with the dataset\u2019s BLVR model when more than one segment in the target lobe is treated."
             }
           ],
           "overall_assessment": "31647 + +31651 appropriately capture this LLL Zephyr BLVR case. No additional bronchoscopic biopsy, BAL, or chest tube codes are supported by the documentation. Admission to a monitored bed for post-BLVR observation is clinical disposition, not a separate CPT-coded service.",

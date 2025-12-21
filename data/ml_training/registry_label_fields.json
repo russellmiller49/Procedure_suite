@@ -8,6 +8,7 @@
   "linear_ebus",
   "radial_ebus",
   "navigational_bronchoscopy",
+  "fiducial_placement",
   "transbronchial_biopsy",
   "transbronchial_cryobiopsy",
   "therapeutic_aspiration",
@@ -26,5 +27,6 @@
   "ipc",
   "medical_thoracoscopy",
   "pleurodesis",
+  "pleural_biopsy",
   "fibrinolytic_therapy"
 ]

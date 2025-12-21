@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Pt: Jackson, John || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: University of Michigan Hospital, Ann Arbor, MI\nAttending: Dr. James Rodriguez\n\nIndication: Primary lung adenocarcinoma with CAO\nPre-procedure: ~75% obstruction at BI\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at BI.\nRigid bronchoscopy debulking with biopsy forceps performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nPost-procedure: ~12% residual obstruction.\nEBL: ~75mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nRodriguez, MD",
+    "note_text": "Pt: Jackson, John || MRN: 6522198 || DOB: 8/18/1974\nDate: 08/20/2025 || Location: University of Michigan Hospital, Ann Arbor, MI\nAttending: Dr. James Rodriguez\n\nIndication: Primary lung adenocarcinoma with CAO\nPre-procedure: ~75% obstruction at BI\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at BI.\nRigid bronchoscopy debulking with biopsy forceps performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nPost-procedure: ~12% residual obstruction.\nEBL: ~75mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nRodriguez, MD",
     "cpt_codes": [
       31631
     ],
@@ -78,18 +78,10 @@
         "31641"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Wilson, William || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: MD Anderson Cancer Center, <LOCATION>, TX\nAttending: LCDR John Park, MD\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Malignant central airway obstruction\nPre-procedure obstruction: ~78% Trachea\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of trachea stenosis performed.\nAirway measured and Dumon Y-Stent Y-Stent stent (20x40mm) deployed in Trachea.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~21%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nPark, MD",
+    "note_text": "Pt: Wilson, William || MRN: 8821648 || DOB: 6/17/1973\nDate: 08/11/2025 || Location: MD Anderson Cancer Center, Houston, TX\nAttending: LCDR John Park, MD\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Malignant central airway obstruction\nPre-procedure obstruction: ~78% Trachea\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of trachea stenosis performed.\nAirway measured and Dumon Y-Stent Y-Stent stent (20x40mm) deployed in Trachea.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~21%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nPark, MD",
     "cpt_codes": [
       31636
     ],
@@ -170,19 +162,10 @@
         "31630"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Pt: Baker, Kenneth || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: UCSF Medical Center, <LOCATION>, CA\nAttending: Dr. Amanda Garcia\n\nIndication: Malignant central airway obstruction\nPre-procedure: ~72% obstruction at LMS\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at LMS.\nRigid bronchoscopy mechanical debulking performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nBalloon dilation performed for residual stenosis.\nPost-procedure: ~16% residual obstruction.\nEBL: ~200mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nGarcia, MD",
+    "note_text": "Pt: Baker, Kenneth || MRN: 8238113 || DOB: 2/24/1961\nDate: 07/10/2025 || Location: UCSF Medical Center, San Francisco, CA\nAttending: Dr. Amanda Garcia\n\nIndication: Malignant central airway obstruction\nPre-procedure: ~72% obstruction at LMS\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at LMS.\nRigid bronchoscopy mechanical debulking performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nBalloon dilation performed for residual stenosis.\nPost-procedure: ~16% residual obstruction.\nEBL: ~200mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nGarcia, MD",
     "cpt_codes": [
       31641
     ],
@@ -260,19 +243,10 @@
         "31630"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Pt: Green, Margaret || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Massachusetts General Hospital, Boston, MA\nAttending: Dr. Sarah Williams\nFellow: Dr. James Liu (PGY-5)\n\nIndication: Renal cell carcinoma metastasis to bronchus\nPre-procedure obstruction: ~89% Right mainstem\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of RMS stenosis performed.\nAirway measured and Ultraflex SEMS - Covered stent (18x30mm) deployed in Right mainstem.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~25%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nWilliams, MD",
+    "note_text": "Pt: Green, Margaret || MRN: 1925965 || DOB: 3/24/1947\nDate: 10/15/2025 || Location: Massachusetts General Hospital, Boston, MA\nAttending: Dr. Sarah Williams\nFellow: Dr. James Liu (PGY-5)\n\nIndication: Renal cell carcinoma metastasis to bronchus\nPre-procedure obstruction: ~89% Right mainstem\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of RMS stenosis performed.\nAirway measured and Ultraflex SEMS - Covered stent (18x30mm) deployed in Right mainstem.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~25%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nWilliams, MD",
     "cpt_codes": [
       31641
     ],
@@ -353,18 +327,10 @@
         "31630"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Green, Kenneth || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. David Wilson\n\nIndication: Thyroid cancer with tracheal compression\nPre-procedure: ~80% obstruction at RLL orifice\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at RLL orifice.\nApc (argon plasma coagulation) performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nPost-procedure: ~24% residual obstruction.\nEBL: ~200mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nWilson, MD",
+    "note_text": "Pt: Green, Kenneth || MRN: 3941765 || DOB: 6/7/1971\nDate: 09/23/2025 || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. David Wilson\n\nIndication: Thyroid cancer with tracheal compression\nPre-procedure: ~80% obstruction at RLL orifice\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at RLL orifice.\nApc (argon plasma coagulation) performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nPost-procedure: ~24% residual obstruction.\nEBL: ~200mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nWilson, MD",
     "cpt_codes": [
       31640,
       31641
@@ -450,18 +416,10 @@
         "31641"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Jones, Ronald || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Sharp Memorial Hospital, San Diego, CA\nAttending: Dr. David Wilson\nFellow: Dr. Maria Santos (PGY-6)\n\nIndication: Esophageal cancer with tracheal invasion\nPre-procedure obstruction: ~85% Trachea\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of trachea stenosis performed.\nAirway measured and Novatech Silicone - Dumon stent (20x50mm) deployed in Trachea.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~7%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nWilson, MD",
+    "note_text": "Pt: Jones, Ronald || MRN: 7163782 || DOB: 11/16/1952\nDate: 11/09/2025 || Location: Sharp Memorial Hospital, San Diego, CA\nAttending: Dr. David Wilson\nFellow: Dr. Maria Santos (PGY-6)\n\nIndication: Esophageal cancer with tracheal invasion\nPre-procedure obstruction: ~85% Trachea\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of trachea stenosis performed.\nAirway measured and Novatech Silicone - Dumon stent (20x50mm) deployed in Trachea.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~7%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nWilson, MD",
     "cpt_codes": [
       31631,
       31630
@@ -550,18 +508,10 @@
         "31630"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Baker, Nicholas || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: University of Michigan Hospital, Ann Arbor, MI\nAttending: LCDR John Park, MD\n\nIndication: Malignant central airway obstruction\nPre-procedure: ~76% obstruction at BI\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at BI.\nRigid bronchoscopy mechanical debulking performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nPost-procedure: ~19% residual obstruction.\nEBL: ~75mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nPark, MD",
+    "note_text": "Pt: Baker, Nicholas || MRN: 8734481 || DOB: 4/4/1971\nDate: 07/11/2025 || Location: University of Michigan Hospital, Ann Arbor, MI\nAttending: LCDR John Park, MD\n\nIndication: Malignant central airway obstruction\nPre-procedure: ~76% obstruction at BI\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at BI.\nRigid bronchoscopy mechanical debulking performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nPost-procedure: ~19% residual obstruction.\nEBL: ~75mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nPark, MD",
     "cpt_codes": [
       31640,
       31641
@@ -647,18 +597,10 @@
         "31641"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Adams, Ashley || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: MD Anderson Cancer Center, <LOCATION>, TX\nAttending: Dr. James Rodriguez\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Esophageal cancer with tracheal invasion\nPre-procedure obstruction: ~89% Right mainstem\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of RMS stenosis performed.\nAirway measured and Ultraflex SEMS - Covered stent (16x50mm) deployed in Right mainstem.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~11%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nRodriguez, MD",
+    "note_text": "Pt: Adams, Ashley || MRN: 4642724 || DOB: 8/4/1959\nDate: 08/27/2025 || Location: MD Anderson Cancer Center, Houston, TX\nAttending: Dr. James Rodriguez\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Esophageal cancer with tracheal invasion\nPre-procedure obstruction: ~89% Right mainstem\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of RMS stenosis performed.\nAirway measured and Ultraflex SEMS - Covered stent (16x50mm) deployed in Right mainstem.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~11%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nRodriguez, MD",
     "cpt_codes": [
       31636,
       31630
@@ -747,19 +689,10 @@
         "31630"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Pt: Lewis, Melissa || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: MD Anderson Cancer Center, <LOCATION>, TX\nAttending: CDR Patricia Davis, MD\n\nIndication: Metastatic lung cancer with bronchial obstruction\nPre-procedure: ~76% obstruction at RMS\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at RMS.\nRigid bronchoscopy debulking with biopsy forceps performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nPost-procedure: ~30% residual obstruction.\nEBL: ~75mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nDavis, MD",
+    "note_text": "Pt: Lewis, Melissa || MRN: 7617499 || DOB: 12/26/1950\nDate: 08/15/2025 || Location: MD Anderson Cancer Center, Houston, TX\nAttending: CDR Patricia Davis, MD\n\nIndication: Metastatic lung cancer with bronchial obstruction\nPre-procedure: ~76% obstruction at RMS\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at RMS.\nRigid bronchoscopy debulking with biopsy forceps performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nPost-procedure: ~30% residual obstruction.\nEBL: ~75mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nDavis, MD",
     "cpt_codes": [
       31640
     ],
@@ -836,19 +769,10 @@
         "31640"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Pt: Jackson, Nancy || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Memorial Sloan Kettering, New York, NY\nAttending: Dr. David Wilson\nFellow: Dr. James Liu (PGY-5)\n\nIndication: Squamous cell carcinoma with airway compromise\nPre-procedure: ~76% obstruction at distal trachea\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at distal trachea.\nRigid bronchoscopy mechanical debulking performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nPost-procedure: ~39% residual obstruction.\nEBL: ~150mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nWilson, MD",
+    "note_text": "Pt: Jackson, Nancy || MRN: 8011977 || DOB: 7/26/1955\nDate: 09/05/2025 || Location: Memorial Sloan Kettering, New York, NY\nAttending: Dr. David Wilson\nFellow: Dr. James Liu (PGY-5)\n\nIndication: Squamous cell carcinoma with airway compromise\nPre-procedure: ~76% obstruction at distal trachea\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor identified at distal trachea.\nRigid bronchoscopy mechanical debulking performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nPost-procedure: ~39% residual obstruction.\nEBL: ~150mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nWilson, MD",
     "cpt_codes": [
       31640,
       31641
@@ -934,14 +858,6 @@
         "31641"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   }
 ]

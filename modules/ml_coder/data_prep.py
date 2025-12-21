@@ -3,16 +3,22 @@ Data preparation module for ML coder training.
 
 Builds clean training CSVs from golden JSONs with patient-level splitting
 to support Silver Standard training (Train on Synthetic+Real, Test on Real).
+
+IMPORTANT: This module uses HYBRID LABELING to handle:
+1. CPT bundling rules (e.g., BAL bundled into biopsy codes)
+2. Schema drift between v0.4 (top-level cpt_codes) and v2.0 (nested billing)
+3. Anatomy-specific code mapping (31xxx=airway, 32xxx=pleural)
 """
 
 from __future__ import annotations
 
 import glob
 import json
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Set, Tuple
 
 import numpy as np
 import pandas as pd
@@ -43,6 +49,320 @@ def _is_valid_source(source_file: str) -> bool:
         if source_file.startswith(prefix):
             return False
     return True
+
+
+# =============================================================================
+# HYBRID LABELING: CPT + Text Regex
+# =============================================================================
+# These functions handle CPT bundling rules and schema drift to generate
+# accurate clinical labels from billing data + procedure note text.
+
+
+def _normalize_cpt_codes(entry: Dict[str, Any]) -> Set[str]:
+    """
+    Extract and normalize CPT codes from both v0.4 and v2.0 schema formats.
+
+    Handles:
+    - v0.4: Top-level `cpt_codes` list of integers
+    - v2.0: Nested `registry_entry.billing.cpt_codes` list of objects
+
+    Returns:
+        Set of CPT code strings (e.g., {"31653", "31627", "31624"})
+    """
+    cpts_set: Set[str] = set()
+
+    # Check top-level simple list (v0.4 format)
+    if "cpt_codes" in entry and isinstance(entry["cpt_codes"], list):
+        for c in entry["cpt_codes"]:
+            if isinstance(c, (int, str)):
+                cpts_set.add(str(c))
+
+    # Check nested registry billing objects (v2.0 format)
+    registry = entry.get("registry_entry", {})
+    if isinstance(registry, dict) and "billing" in registry:
+        billing = registry["billing"]
+        if isinstance(billing, dict):
+            billing_codes = billing.get("cpt_codes", [])
+            for item in billing_codes:
+                if isinstance(item, dict):
+                    code = item.get("code", "")
+                    if code:
+                        cpts_set.add(str(code))
+                elif isinstance(item, (int, str)):
+                    cpts_set.add(str(item))
+
+    # Also check registry_entry.cpt_codes if present (some legacy formats)
+    if isinstance(registry, dict) and "cpt_codes" in registry:
+        reg_codes = registry["cpt_codes"]
+        if isinstance(reg_codes, list):
+            for c in reg_codes:
+                if isinstance(c, (int, str)):
+                    cpts_set.add(str(c))
+
+    return cpts_set
+
+
+def get_clinical_labels(entry: Dict[str, Any], text: str) -> Dict[str, int]:
+    """
+    Generate clinical labels using Hybrid Logic (CPT + Text Regex).
+
+    This handles:
+    1. CPT Bundling: Minor procedures (BAL) may be missing from billing even
+       though they were clinically performed (bundled into major procedures).
+    2. Schema Drift: Different JSON versions have different CPT code locations.
+    3. Anatomy Mismatch: Distinguishes pleural (32xxx) vs airway (31xxx) codes.
+
+    Args:
+        entry: The full entry dict from golden JSON
+        text: The procedure note text
+
+    Returns:
+        Dict mapping procedure field names to 0/1 labels
+    """
+    text_lower = text.lower() if text else ""
+    cpts_set = _normalize_cpt_codes(entry)
+
+    labels: Dict[str, int] = {}
+
+    # =========================================================================
+    # PLEURAL DETECTION (Must check first - prevents cross-contamination)
+    # =========================================================================
+    # 32xxx codes are Pleural procedures
+    is_pleural_code = any(
+        c.startswith("326") or c.startswith("325") or c.startswith("324")
+        for c in cpts_set
+    )
+    is_pleural_text = bool(re.search(
+        r"medical thoracoscopy|pleuroscopy|pleural biopsy|thoracoscopy.*biopsy|"
+        r"rigid thoracoscopy|semi-rigid thoracoscopy",
+        text_lower
+    ))
+    is_pleural_case = is_pleural_code or is_pleural_text
+
+    # --- Medical Thoracoscopy ---
+    labels["medical_thoracoscopy"] = 1 if (
+        "32601" in cpts_set or "32606" in cpts_set or "32609" in cpts_set or
+        is_pleural_text
+    ) else 0
+
+    # --- Pleural Biopsy ---
+    labels["pleural_biopsy"] = 1 if (
+        "32609" in cpts_set or
+        bool(re.search(r"pleural biopsy|biopsy.*pleura|parietal pleura.*biopsy", text_lower))
+    ) else 0
+
+    # --- Thoracentesis ---
+    labels["thoracentesis"] = 1 if (
+        "32554" in cpts_set or "32555" in cpts_set or
+        bool(re.search(r"\bthoracentesis\b|thoracentesis performed", text_lower))
+    ) else 0
+
+    # --- Chest Tube ---
+    labels["chest_tube"] = 1 if (
+        "32551" in cpts_set or
+        bool(re.search(r"chest tube|tube thoracostomy", text_lower))
+    ) else 0
+
+    # --- IPC (Tunneled Pleural Catheter) ---
+    labels["ipc"] = 1 if (
+        "32550" in cpts_set or
+        bool(re.search(r"\bipc\b|pleurx|tunneled.*catheter|tunneled pleural", text_lower))
+    ) else 0
+
+    # --- Pleurodesis ---
+    labels["pleurodesis"] = 1 if (
+        "32560" in cpts_set or
+        bool(re.search(r"pleurodesis|talc.*poudrage|chemical pleurodesis", text_lower))
+    ) else 0
+
+    # --- Fibrinolytic Therapy ---
+    labels["fibrinolytic_therapy"] = 1 if (
+        bool(re.search(r"fibrinolytic|tpa.*pleural|alteplase.*pleural|streptokinase", text_lower))
+    ) else 0
+
+    # =========================================================================
+    # BRONCHOSCOPY / AIRWAY PROCEDURES
+    # =========================================================================
+    # Only set airway labels if NOT a purely pleural case
+
+    # --- BAL (Fixing the Bundling Error) ---
+    # BAL (31624) is often bundled into biopsy codes even though it was performed
+    labels["bal"] = 1 if (
+        "31624" in cpts_set or
+        bool(re.search(r"\bbal\b|bronchoalveolar lavage|mini-bal|mini bal", text_lower))
+    ) else 0
+
+    # --- Bronchial Wash ---
+    labels["bronchial_wash"] = 1 if (
+        "31622" in cpts_set or
+        bool(re.search(r"bronchial wash|bronchial washing", text_lower))
+    ) else 0
+
+    # --- Brushings ---
+    labels["brushings"] = 1 if (
+        "31623" in cpts_set or
+        bool(re.search(r"\bbrushings?\b|bronchial brush|cytology brush", text_lower))
+    ) else 0
+
+    # --- Endobronchial Biopsy ---
+    labels["endobronchial_biopsy"] = 1 if (
+        "31625" in cpts_set or
+        bool(re.search(r"endobronchial biopsy|ebb\b|mucosal biopsy", text_lower))
+    ) and not is_pleural_case else 0
+
+    # --- Transbronchial Biopsy (Preventing Pleural Cross-Contamination) ---
+    has_tbbx_code = any(c in cpts_set for c in ["31628", "31629", "31632", "31633"])
+    has_tbbx_text = bool(re.search(
+        r"transbronchial biopsy|tbbx\b|forceps biopsy|transbronchial lung biopsy",
+        text_lower
+    ))
+    labels["transbronchial_biopsy"] = 1 if (
+        (has_tbbx_code or has_tbbx_text) and not is_pleural_case
+    ) else 0
+
+    # --- Transbronchial Cryobiopsy ---
+    labels["transbronchial_cryobiopsy"] = 1 if (
+        "31629" in cpts_set or "31633" in cpts_set or
+        bool(re.search(r"cryobiopsy|cryo.*biopsy|transbronchial cryo", text_lower))
+    ) and not is_pleural_case else 0
+
+    # --- TBNA Conventional ---
+    labels["tbna_conventional"] = 1 if (
+        "31629" in cpts_set or  # Note: 31629 can be TBNA with fluoro
+        bool(re.search(r"\btbna\b|transbronchial needle aspir", text_lower))
+    ) and not is_pleural_case else 0
+
+    # --- Linear EBUS ---
+    labels["linear_ebus"] = 1 if (
+        any(c in cpts_set for c in ["31652", "31653", "31654"]) or
+        bool(re.search(r"linear ebus|ebus-tbna|ebus tbna|endobronchial ultrasound.*tbna", text_lower))
+    ) else 0
+
+    # --- Radial EBUS ---
+    labels["radial_ebus"] = 1 if (
+        bool(re.search(r"radial ebus|r-ebus|rebus\b|radial probe", text_lower))
+    ) else 0
+
+    # --- Navigational Bronchoscopy ---
+    labels["navigational_bronchoscopy"] = 1 if (
+        "31627" in cpts_set or
+        bool(re.search(
+            r"navigation|ion\s+bronchoscopy|superDimension|monarch|"
+            r"electromagnetic navigation|emn\b|robotic bronch",
+            text_lower
+        ))
+    ) else 0
+
+    # --- Fiducial Placement ---
+    labels["fiducial_placement"] = 1 if (
+        "31626" in cpts_set or
+        bool(re.search(r"fiducial|gold marker|gold seed|fiduciary marker", text_lower))
+    ) else 0
+
+    # --- Thermal Ablation (often bundled/unbilled) ---
+    labels["thermal_ablation"] = 1 if (
+        "31641" in cpts_set or
+        bool(re.search(r"\bapc\b|argon plasma|electrocautery|thermal ablation|laser ablation", text_lower))
+    ) else 0
+
+    # --- Cryotherapy ---
+    labels["cryotherapy"] = 1 if (
+        "31641" in cpts_set or  # Can be used for cryo debulking
+        bool(re.search(r"cryotherapy|cryo.*debulk|cryospray|spray cryo", text_lower))
+    ) else 0
+
+    # --- Airway Dilation ---
+    labels["airway_dilation"] = 1 if (
+        "31630" in cpts_set or "31631" in cpts_set or
+        bool(re.search(r"balloon dilation|airway dilation|bronchial dilation|dilated.*airway", text_lower))
+    ) else 0
+
+    # --- Airway Stent ---
+    labels["airway_stent"] = 1 if (
+        "31636" in cpts_set or "31637" in cpts_set or
+        bool(re.search(r"airway stent|bronchial stent|tracheal stent|stent.*placed|dumon", text_lower))
+    ) else 0
+
+    # --- Foreign Body Removal ---
+    labels["foreign_body_removal"] = 1 if (
+        "31635" in cpts_set or
+        bool(re.search(r"foreign body|stent removal|removed.*stent|fb removal", text_lower))
+    ) else 0
+
+    # --- Therapeutic Aspiration ---
+    labels["therapeutic_aspiration"] = 1 if (
+        bool(re.search(r"therapeutic aspiration|mucus plug.*removal|clot.*aspir", text_lower))
+    ) else 0
+
+    # --- BLVR ---
+    labels["blvr"] = 1 if (
+        "31647" in cpts_set or "31651" in cpts_set or
+        bool(re.search(r"\bblvr\b|bronchoscopic lung volume reduction|valve.*placement|zephyr valve", text_lower))
+    ) else 0
+
+    # --- Peripheral Ablation ---
+    labels["peripheral_ablation"] = 1 if (
+        bool(re.search(r"peripheral ablation|microwave ablation|mwa\b|rfa\b|radiofrequency ablation", text_lower))
+    ) else 0
+
+    # --- Bronchial Thermoplasty ---
+    labels["bronchial_thermoplasty"] = 1 if (
+        "31660" in cpts_set or "31661" in cpts_set or
+        bool(re.search(r"bronchial thermoplasty|\bbt\b.*asthma|thermoplasty", text_lower))
+    ) else 0
+
+    # --- Whole Lung Lavage ---
+    labels["whole_lung_lavage"] = 1 if (
+        "31624" in cpts_set or  # Can be billed for WLL
+        bool(re.search(r"whole lung lavage|wll\b|pap.*lavage|therapeutic lavage", text_lower))
+    ) else 0
+
+    # --- Rigid Bronchoscopy ---
+    labels["rigid_bronchoscopy"] = 1 if (
+        "31622" in cpts_set or  # Base bronch code often used with rigid
+        bool(re.search(r"rigid bronchoscopy|rigid scope|rigid.*bronch", text_lower))
+    ) else 0
+
+    # =========================================================================
+    # DIAGNOSTIC BRONCHOSCOPY (Derived flag)
+    # =========================================================================
+    # Set if any bronchoscopic procedure detected AND it's not purely pleural
+    bronch_indicators = [
+        labels.get("linear_ebus", 0),
+        labels.get("radial_ebus", 0),
+        labels.get("navigational_bronchoscopy", 0),
+        labels.get("transbronchial_biopsy", 0),
+        labels.get("transbronchial_cryobiopsy", 0),
+        labels.get("blvr", 0),
+        labels.get("peripheral_ablation", 0),
+        labels.get("thermal_ablation", 0),
+        labels.get("cryotherapy", 0),
+        labels.get("airway_dilation", 0),
+        labels.get("airway_stent", 0),
+        labels.get("foreign_body_removal", 0),
+        labels.get("bronchial_thermoplasty", 0),
+        labels.get("whole_lung_lavage", 0),
+        labels.get("rigid_bronchoscopy", 0),
+        labels.get("bal", 0),
+        labels.get("bronchial_wash", 0),
+        labels.get("brushings", 0),
+        labels.get("endobronchial_biopsy", 0),
+        labels.get("tbna_conventional", 0),
+        labels.get("fiducial_placement", 0),
+        labels.get("therapeutic_aspiration", 0),
+    ]
+
+    # Also check for generic bronchoscopy CPT codes or text
+    has_bronch_code = any(c.startswith("316") for c in cpts_set)
+    has_bronch_text = bool(re.search(r"bronchoscopy|bronchoscopic", text_lower))
+
+    labels["diagnostic_bronchoscopy"] = 1 if (
+        (any(bronch_indicators) or has_bronch_code or has_bronch_text)
+        and not (is_pleural_case and not any(bronch_indicators))
+    ) else 0
+
+    return labels
+
 
 # Registry procedure presence flags used as multi-label targets for ML.
 from modules.registry.v2_booleans import (
@@ -104,14 +424,19 @@ def _flatten_entries(data: Any) -> List[Dict[str, Any]]:
         return entries
     return []
 
-def _build_registry_dataframe() -> pd.DataFrame:
+def _build_registry_dataframe(use_hybrid_labels: bool = True) -> pd.DataFrame:
     """Build a DataFrame from all extraction files with Silver Standard metadata.
-    
+
     Extracts:
     - note_text
-    - boolean procedure flags
+    - boolean procedure flags (using hybrid CPT + text approach)
     - is_synthetic: True if note is AI-generated
     - root_mrn: The base patient ID (groups Real + Synthetic variations)
+
+    Args:
+        use_hybrid_labels: If True, use get_clinical_labels() which handles CPT
+            bundling rules and text regex fallback. If False, use only the
+            registry-based extraction (legacy behavior).
     """
     rows = []
     for file_path in _iter_golden_files():
@@ -130,7 +455,7 @@ def _build_registry_dataframe() -> pd.DataFrame:
         for entry in _flatten_entries(data):
             text = entry.get("note_text", "")
             source_file = entry.get("source_file", "")
-            
+
             if not _is_valid_source(source_file):
                 continue
 
@@ -152,12 +477,31 @@ def _build_registry_dataframe() -> pd.DataFrame:
             meta_is_syn = "synthetic_metadata" in entry
 
             is_synthetic = file_is_syn or source_is_syn or mrn_is_syn or meta_is_syn
-            
+
             # --- ROOT MRN EXTRACTION ---
             # Extracts 'S31640-021' from 'S31640-021_syn_1' so they stay grouped
             root_mrn = mrn.split("_syn")[0] if mrn else f"unknown_{len(rows)}"
 
-            flags = _extract_registry_booleans(registry)
+            # --- HYBRID LABELING ---
+            # Use CPT codes + text regex for robust label generation
+            if use_hybrid_labels:
+                # Hybrid approach: CPT codes + text regex (handles bundling)
+                flags = get_clinical_labels(entry, text)
+
+                # Also extract registry-based flags as fallback/supplement
+                registry_flags = _extract_registry_booleans(registry)
+
+                # Merge: prefer hybrid labels, but fill in any missing fields
+                # from registry extraction (for procedures not in hybrid logic)
+                for field in REGISTRY_TARGET_FIELDS:
+                    if field not in flags:
+                        flags[field] = registry_flags.get(field, 0)
+                    # Also set to 1 if registry extraction found it (OR logic)
+                    elif registry_flags.get(field, 0) == 1:
+                        flags[field] = 1
+            else:
+                # Legacy behavior: only registry-based extraction
+                flags = _extract_registry_booleans(registry)
 
             row = {
                 "note_text": text,

@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 72/M\nDate: <DATE_TIME>\nIndication: Malignant distal tracheal obstruction from squamous cell carcinoma with dyspnea and stridor.\nProcedure: Rigid bronchoscopy with mechanical dilation and placement of silicone tracheal stent.\nAnesthesia: General anesthesia with jet ventilation via rigid bronchoscope provided by Anesthesia.\nFindings: Approximately 80% circumferential narrowing of the distal trachea over 2 cm with friable endobronchial tumor; right mainstem partially compressed by tumor bulk.\nIntervention: Tumor was gently cored with the rigid barrel and suctioned to establish a lumen, followed by serial balloon dilation up to 14 mm. Over a guidewire a 14 x 40 mm straight silicone tracheal stent was deployed across the stenosis and positioned ~2 cm above the carina. Post-deployment the airway lumen was widely patent with about 20% residual narrowing.\nComplications: Mild oozing controlled with topical epinephrine and iced saline; no hypoxia or pneumothorax.\nDisposition: Patient remained intubated and was transported to the ICU in stable condition for overnight airway observation.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: John Keller  MRN: SYNIP0001  Age/Sex: 72/M\nDate: 2025-01-10\nIndication: Malignant distal tracheal obstruction from squamous cell carcinoma with dyspnea and stridor.\nProcedure: Rigid bronchoscopy with mechanical dilation and placement of silicone tracheal stent.\nAnesthesia: General anesthesia with jet ventilation via rigid bronchoscope provided by Anesthesia.\nFindings: Approximately 80% circumferential narrowing of the distal trachea over 2 cm with friable endobronchial tumor; right mainstem partially compressed by tumor bulk.\nIntervention: Tumor was gently cored with the rigid barrel and suctioned to establish a lumen, followed by serial balloon dilation up to 14 mm. Over a guidewire a 14 x 40 mm straight silicone tracheal stent was deployed across the stenosis and positioned ~2 cm above the carina. Post-deployment the airway lumen was widely patent with about 20% residual narrowing.\nComplications: Mild oozing controlled with topical epinephrine and iced saline; no hypoxia or pneumothorax.\nDisposition: Patient remained intubated and was transported to the ICU in stable condition for overnight airway observation.",
     "cpt_codes": [
       31631
     ],
@@ -113,18 +113,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 64/F\nDate: <DATE_TIME>\nIndication: Symptomatic right mainstem bronchial obstruction from locally advanced right upper lobe squamous cell carcinoma.\nProcedure: Rigid and flexible bronchoscopy with mechanical dilation and placement of a right mainstem bronchial stent.\nAnesthesia: General anesthesia with ETT; anesthesia provided by separate anesthesia service.\nFindings: About 90% eccentric narrowing of the proximal right mainstem bronchus from intraluminal tumor and extrinsic compression; mucosa friable with contact bleeding.\nIntervention: Tumor bulk was gently debulked mechanically using the rigid barrel and suction. A guidewire was passed into the right lower lobe and the ETT exchanged to a rigid bronchoscope. Serial balloon dilations to 12 mm were performed. A 12 x 40 mm self-expanding metallic stent was deployed in the right mainstem under fluoroscopic and bronchoscopic visualization with good expansion and coverage of the lesion. Residual narrowing estimated at 20%.\nComplications: Mild bleeding controlled with iced saline; no sustained desaturation or arrhythmia.\nDisposition: Extubated in OR and transferred to PACU, then surgical floor in stable condition.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Maria Lopez  MRN: SYNIP0002  Age/Sex: 64/F\nDate: 2025-02-03\nIndication: Symptomatic right mainstem bronchial obstruction from locally advanced right upper lobe squamous cell carcinoma.\nProcedure: Rigid and flexible bronchoscopy with mechanical dilation and placement of a right mainstem bronchial stent.\nAnesthesia: General anesthesia with ETT; anesthesia provided by separate anesthesia service.\nFindings: About 90% eccentric narrowing of the proximal right mainstem bronchus from intraluminal tumor and extrinsic compression; mucosa friable with contact bleeding.\nIntervention: Tumor bulk was gently debulked mechanically using the rigid barrel and suction. A guidewire was passed into the right lower lobe and the ETT exchanged to a rigid bronchoscope. Serial balloon dilations to 12 mm were performed. A 12 x 40 mm self-expanding metallic stent was deployed in the right mainstem under fluoroscopic and bronchoscopic visualization with good expansion and coverage of the lesion. Residual narrowing estimated at 20%.\nComplications: Mild bleeding controlled with iced saline; no sustained desaturation or arrhythmia.\nDisposition: Extubated in OR and transferred to PACU, then surgical floor in stable condition.",
     "cpt_codes": [
       31636
     ],
@@ -237,18 +229,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 69/M\nDate: <DATE_TIME>\nIndication: Combined distal tracheal and right mainstem obstruction from bulky non-small cell lung cancer with progressive dyspnea.\nProcedure: Rigid bronchoscopy with tracheal and right mainstem bronchial stent placement after limited mechanical debulking.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: 70% circumferential narrowing of the distal trachea and separate 80% narrowing of the proximal right mainstem bronchus from tumor and external compression.\nIntervention: Limited mechanical debulking with the rigid barrel and suction was performed to open both segments. A 14 x 40 mm straight silicone tracheal stent was deployed across the distal tracheal lesion. A separate 12 x 30 mm metallic stent was then placed in the right mainstem bronchus under fluoroscopic guidance. Both stents were well positioned with brisk air entry to the right lung; residual narrowing <20% in both locations.\nComplications: No major bleeding; transient desaturation to high 80s resolved with recruitment maneuvers.\nDisposition: Extubated in OR and transferred to PACU in stable condition, then ICU for overnight monitoring.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: George Patel  MRN: SYNIP0003  Age/Sex: 69/M\nDate: 2025-02-21\nIndication: Combined distal tracheal and right mainstem obstruction from bulky non-small cell lung cancer with progressive dyspnea.\nProcedure: Rigid bronchoscopy with tracheal and right mainstem bronchial stent placement after limited mechanical debulking.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: 70% circumferential narrowing of the distal trachea and separate 80% narrowing of the proximal right mainstem bronchus from tumor and external compression.\nIntervention: Limited mechanical debulking with the rigid barrel and suction was performed to open both segments. A 14 x 40 mm straight silicone tracheal stent was deployed across the distal tracheal lesion. A separate 12 x 30 mm metallic stent was then placed in the right mainstem bronchus under fluoroscopic guidance. Both stents were well positioned with brisk air entry to the right lung; residual narrowing <20% in both locations.\nComplications: No major bleeding; transient desaturation to high 80s resolved with recruitment maneuvers.\nDisposition: Extubated in OR and transferred to PACU in stable condition, then ICU for overnight monitoring.",
     "cpt_codes": [
       31631,
       31636
@@ -290,7 +274,7 @@
       "final_diagnosis_prelim": "Locally advanced non-small cell lung cancer with carinal involvement",
       "molecular_testing_requested": true,
       "disposition": "ICU admission",
-      "follow_up_plan": "ICU overnight; repeat bronchoscopy in 4–6 weeks for stent surveillance and tumor reassessment.",
+      "follow_up_plan": "ICU overnight; repeat bronchoscopy in 4\u20136 weeks for stent surveillance and tumor reassessment.",
       "billing": {
         "cpt_codes": [
           {
@@ -386,18 +370,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 61/F\nDate: <DATE_TIME>\nIndication: Malignant obstruction of left mainstem and left lower lobe bronchus with dyspnea at rest.\nProcedure: Rigid and flexible bronchoscopy with mechanical dilation and placement of stents in left mainstem and left lower lobe bronchus.\nAnesthesia: General anesthesia with ETT, anesthesia by separate service.\nFindings: About 85% narrowing of the left mainstem and 80% narrowing at the origin of the left lower lobe bronchus from tumor and extrinsic compression; copious secretions.\nIntervention: Mechanical debulking with the rigid barrel and suction restored a small lumen. Balloon dilation to 12 mm in the left mainstem followed by deployment of a 12 x 40 mm metallic stent. A second 10 x 30 mm metallic stent was placed in the left lower lobe bronchus as an extension. Final appearance showed <20% residual narrowing and markedly improved ventilation.\nComplications: Brief bleeding <30 mL, controlled with iced saline; no hypoxia.\nDisposition: Extubated in OR and discharged to surgical ICU in stable condition.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Elaine Young  MRN: SYNIP0004  Age/Sex: 61/F\nDate: 2025-03-05\nIndication: Malignant obstruction of left mainstem and left lower lobe bronchus with dyspnea at rest.\nProcedure: Rigid and flexible bronchoscopy with mechanical dilation and placement of stents in left mainstem and left lower lobe bronchus.\nAnesthesia: General anesthesia with ETT, anesthesia by separate service.\nFindings: About 85% narrowing of the left mainstem and 80% narrowing at the origin of the left lower lobe bronchus from tumor and extrinsic compression; copious secretions.\nIntervention: Mechanical debulking with the rigid barrel and suction restored a small lumen. Balloon dilation to 12 mm in the left mainstem followed by deployment of a 12 x 40 mm metallic stent. A second 10 x 30 mm metallic stent was placed in the left lower lobe bronchus as an extension. Final appearance showed <20% residual narrowing and markedly improved ventilation.\nComplications: Brief bleeding <30 mL, controlled with iced saline; no hypoxia.\nDisposition: Extubated in OR and discharged to surgical ICU in stable condition.",
     "cpt_codes": [
       31636,
       31637
@@ -439,7 +415,7 @@
       "final_diagnosis_prelim": "Stage III NSCLC with left central airway involvement",
       "molecular_testing_requested": true,
       "disposition": "ICU admission",
-      "follow_up_plan": "ICU overnight; repeat bronchoscopy in 4–6 weeks for stent check and secretion clearance.",
+      "follow_up_plan": "ICU overnight; repeat bronchoscopy in 4\u20136 weeks for stent check and secretion clearance.",
       "billing": {
         "cpt_codes": [
           {
@@ -533,18 +509,10 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 58/M\nDate: <DATE_TIME>\nIndication: Benign post-intubation distal tracheal stenosis with exertional dyspnea and biphasic stridor.\nProcedure: Rigid and flexible bronchoscopy with tracheal balloon dilation and silicone stent placement.\nAnesthesia: General anesthesia with ETT; anesthesia team present.\nFindings: Short-segment circumferential fibrotic ring in distal trachea causing ~75% narrowing; no mass lesion.\nIntervention: Serial balloon dilations up to 12 mm were performed across the stenosis. A 12 x 30 mm straight silicone stent was deployed across the narrowed segment and positioned just above the carina. Post-procedure lumen appeared widely patent with residual narrowing <20%.\nComplications: No significant bleeding; no hypoxia or hemodynamic instability.\nDisposition: Extubated in the OR and discharged to step-down unit in stable condition.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Kevin Moore  MRN: SYNIP0005  Age/Sex: 58/M\nDate: 2025-01-22\nIndication: Benign post-intubation distal tracheal stenosis with exertional dyspnea and biphasic stridor.\nProcedure: Rigid and flexible bronchoscopy with tracheal balloon dilation and silicone stent placement.\nAnesthesia: General anesthesia with ETT; anesthesia team present.\nFindings: Short-segment circumferential fibrotic ring in distal trachea causing ~75% narrowing; no mass lesion.\nIntervention: Serial balloon dilations up to 12 mm were performed across the stenosis. A 12 x 30 mm straight silicone stent was deployed across the narrowed segment and positioned just above the carina. Post-procedure lumen appeared widely patent with residual narrowing <20%.\nComplications: No significant bleeding; no hypoxia or hemodynamic instability.\nDisposition: Extubated in the OR and discharged to step-down unit in stable condition.",
     "cpt_codes": [
       31631
     ],
@@ -657,18 +625,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 63/M\nDate: <DATE_TIME>\nIndication: Left mainstem bronchial anastomotic stricture after left lung transplant with dyspnea and wheeze.\nProcedure: Flexible and rigid bronchoscopy with balloon dilation and placement of a left mainstem bronchial stent.\nAnesthesia: General anesthesia with ETT; anesthesia care by transplant anesthesia team.\nFindings: Concentric fibrotic narrowing at the bronchial anastomosis resulting in ~70% narrowing; mild mucosal edema; no mass.\nIntervention: Balloon dilation to 10 and then 12 mm was performed across the stricture. A 12 x 30 mm self-expanding metallic stent was deployed in the left mainstem across the anastomosis under fluoroscopic guidance. Airway lumen improved with <20% residual narrowing and symmetric ventilation.\nComplications: No significant bleeding; no hypoxia or hemodynamic instability.\nDisposition: Extubated in OR and returned to cardiothoracic ICU for routine post-transplant monitoring.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Oliver Grant  MRN: SYNIP0006  Age/Sex: 63/M\nDate: 2025-03-12\nIndication: Left mainstem bronchial anastomotic stricture after left lung transplant with dyspnea and wheeze.\nProcedure: Flexible and rigid bronchoscopy with balloon dilation and placement of a left mainstem bronchial stent.\nAnesthesia: General anesthesia with ETT; anesthesia care by transplant anesthesia team.\nFindings: Concentric fibrotic narrowing at the bronchial anastomosis resulting in ~70% narrowing; mild mucosal edema; no mass.\nIntervention: Balloon dilation to 10 and then 12 mm was performed across the stricture. A 12 x 30 mm self-expanding metallic stent was deployed in the left mainstem across the anastomosis under fluoroscopic guidance. Airway lumen improved with <20% residual narrowing and symmetric ventilation.\nComplications: No significant bleeding; no hypoxia or hemodynamic instability.\nDisposition: Extubated in OR and returned to cardiothoracic ICU for routine post-transplant monitoring.",
     "cpt_codes": [
       31636
     ],
@@ -709,7 +669,7 @@
       "final_diagnosis_prelim": "Benign left mainstem anastomotic stenosis after lung transplantation",
       "molecular_testing_requested": false,
       "disposition": "ICU admission",
-      "follow_up_plan": "Repeat bronchoscopy in 2–4 weeks; consider stent removal if lumen remains adequate.",
+      "follow_up_plan": "Repeat bronchoscopy in 2\u20134 weeks; consider stent removal if lumen remains adequate.",
       "billing": {
         "cpt_codes": [
           {
@@ -781,18 +741,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 55/F\nDate: <DATE_TIME>\nIndication: Bilateral bronchial anastomotic strictures after bilateral lung transplant with exertional dyspnea.\nProcedure: Flexible bronchoscopy with balloon dilation and bilateral bronchial stent placement (right and left mainstem).\nAnesthesia: General anesthesia with ETT; anesthesia team present.\nFindings: Approximately 60–70% concentric narrowing at both right and left mainstem bronchial anastomoses; no mass; mild mucus plugging.\nIntervention: Balloon dilation to 10 and 12 mm was performed at each anastomosis. A 12 x 30 mm metallic stent was deployed in the right mainstem (initial bronchus), followed by placement of a 12 x 30 mm metallic stent in the left mainstem as an additional major bronchus. Final lumen on both sides showed <20% residual narrowing with symmetric ventilation.\nComplications: Minimal bleeding; no hypoxia.\nDisposition: Extubated in OR and admitted to cardiothoracic ICU.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Sarah Jenkins  MRN: SYNIP0007  Age/Sex: 55/F\nDate: 2025-04-02\nIndication: Bilateral bronchial anastomotic strictures after bilateral lung transplant with exertional dyspnea.\nProcedure: Flexible bronchoscopy with balloon dilation and bilateral bronchial stent placement (right and left mainstem).\nAnesthesia: General anesthesia with ETT; anesthesia team present.\nFindings: Approximately 60\u201370% concentric narrowing at both right and left mainstem bronchial anastomoses; no mass; mild mucus plugging.\nIntervention: Balloon dilation to 10 and 12 mm was performed at each anastomosis. A 12 x 30 mm metallic stent was deployed in the right mainstem (initial bronchus), followed by placement of a 12 x 30 mm metallic stent in the left mainstem as an additional major bronchus. Final lumen on both sides showed <20% residual narrowing with symmetric ventilation.\nComplications: Minimal bleeding; no hypoxia.\nDisposition: Extubated in OR and admitted to cardiothoracic ICU.",
     "cpt_codes": [
       31636,
       31637
@@ -930,18 +882,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 49/F\nDate: <DATE_TIME>\nIndication: Extrinsic tracheal compression from mediastinal lymphoma with progressive stridor.\nProcedure: Rigid bronchoscopy with mechanical dilation and silicone tracheal stent placement.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: Long-segment mid to distal tracheal narrowing (~65% reduction in lumen) from external compression; mucosa intact.\nIntervention: Gentle mechanical dilatation with the rigid barrel and serial balloon inflations up to 13 mm restored tracheal caliber. A 13 x 50 mm silicone tracheal stent was deployed spanning the compressed segment. Post-placement, tracheal lumen was widely patent with minimal residual narrowing and improved airflow.\nComplications: None immediate.\nDisposition: Extubated in OR and admitted to oncology floor for ongoing lymphoma management.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Lila Shah  MRN: SYNIP0008  Age/Sex: 49/F\nDate: 2025-03-27\nIndication: Extrinsic tracheal compression from mediastinal lymphoma with progressive stridor.\nProcedure: Rigid bronchoscopy with mechanical dilation and silicone tracheal stent placement.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: Long-segment mid to distal tracheal narrowing (~65% reduction in lumen) from external compression; mucosa intact.\nIntervention: Gentle mechanical dilatation with the rigid barrel and serial balloon inflations up to 13 mm restored tracheal caliber. A 13 x 50 mm silicone tracheal stent was deployed spanning the compressed segment. Post-placement, tracheal lumen was widely patent with minimal residual narrowing and improved airflow.\nComplications: None immediate.\nDisposition: Extubated in OR and admitted to oncology floor for ongoing lymphoma management.",
     "cpt_codes": [
       31631
     ],
@@ -982,7 +926,7 @@
       "final_diagnosis_prelim": "Tracheal compression from mediastinal non-Hodgkin lymphoma",
       "molecular_testing_requested": false,
       "disposition": "Floor admission",
-      "follow_up_plan": "Repeat bronchoscopy in 4–6 weeks or sooner if respiratory symptoms recur.",
+      "follow_up_plan": "Repeat bronchoscopy in 4\u20136 weeks or sooner if respiratory symptoms recur.",
       "billing": {
         "cpt_codes": [
           {
@@ -1052,18 +996,10 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 59/M\nDate: <DATE_TIME>\nIndication: Critical right mainstem endobronchial tumor causing dyspnea at rest and right lung collapse.\nProcedure: Rigid bronchoscopy with mechanical debulking of right mainstem tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia service present.\nFindings: Friable exophytic squamous cell carcinoma arising from the medial wall of the proximal right mainstem bronchus causing ~90% occlusion; copious blood-tinged secretions.\nIntervention: The tumor was mechanically debulked using rigid coring, suction, and forceps. A microdebrider was then used to excise residual tumor until the airway lumen was restored. Multiple tumor fragments were removed with suction and forceps and sent for pathology. Final lumen showed approximately 30% residual narrowing with improved airflow to the right lung; no stent placed.\nComplications: Transient moderate bleeding controlled with iced saline and dilute epinephrine; no hemodynamic instability.\nDisposition: Patient remained intubated and was transferred to the ICU for overnight monitoring.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Robert Fields  MRN: SYNIP0009  Age/Sex: 59/M\nDate: 2025-02-14\nIndication: Critical right mainstem endobronchial tumor causing dyspnea at rest and right lung collapse.\nProcedure: Rigid bronchoscopy with mechanical debulking of right mainstem tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia service present.\nFindings: Friable exophytic squamous cell carcinoma arising from the medial wall of the proximal right mainstem bronchus causing ~90% occlusion; copious blood-tinged secretions.\nIntervention: The tumor was mechanically debulked using rigid coring, suction, and forceps. A microdebrider was then used to excise residual tumor until the airway lumen was restored. Multiple tumor fragments were removed with suction and forceps and sent for pathology. Final lumen showed approximately 30% residual narrowing with improved airflow to the right lung; no stent placed.\nComplications: Transient moderate bleeding controlled with iced saline and dilute epinephrine; no hemodynamic instability.\nDisposition: Patient remained intubated and was transferred to the ICU for overnight monitoring.",
     "cpt_codes": [
       31640
     ],
@@ -1097,14 +1033,14 @@
       "bronch_guidance": "Rigid bronchoscopy",
       "bronch_immediate_complications": "Moderate bleeding, controlled with topical measures",
       "ebl_ml": 80,
-      "bleeding_severity": "Moderate (50–200mL)",
+      "bleeding_severity": "Moderate (50\u2013200mL)",
       "pneumothorax": false,
       "pneumothorax_intervention": null,
       "hypoxia_respiratory_failure": false,
       "final_diagnosis_prelim": "Endobronchial squamous cell carcinoma of right mainstem bronchus",
       "molecular_testing_requested": true,
       "disposition": "ICU admission",
-      "follow_up_plan": "ICU observation; repeat bronchoscopy in 48–72 hours to reassess airway and consider stent placement.",
+      "follow_up_plan": "ICU observation; repeat bronchoscopy in 48\u201372 hours to reassess airway and consider stent placement.",
       "billing": {
         "cpt_codes": [
           {
@@ -1174,18 +1110,10 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 71/F\nDate: <DATE_TIME>\nIndication: Mid-tracheal endobronchial mass from adenoid cystic carcinoma with progressive dyspnea.\nProcedure: Rigid bronchoscopy with mechanical debulking of tracheal tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: Broad-based tracheal mass on posterior wall at T3 level causing ~70% lumen compromise; no distal involvement.\nIntervention: Tumor was resected using rigid coring, snare resection of the bulk, and microdebrider to shave residual tissue. Multiple tumor fragments were removed and sent for histology. Final airway lumen showed approximately 20% residual narrowing without immediate need for stent.\nComplications: Mild bleeding controlled with iced saline; no desaturation or pneumothorax.\nDisposition: Extubated in OR and discharged to step-down unit.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Margaret Stone  MRN: SYNIP0010  Age/Sex: 71/F\nDate: 2025-01-18\nIndication: Mid-tracheal endobronchial mass from adenoid cystic carcinoma with progressive dyspnea.\nProcedure: Rigid bronchoscopy with mechanical debulking of tracheal tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: Broad-based tracheal mass on posterior wall at T3 level causing ~70% lumen compromise; no distal involvement.\nIntervention: Tumor was resected using rigid coring, snare resection of the bulk, and microdebrider to shave residual tissue. Multiple tumor fragments were removed and sent for histology. Final airway lumen showed approximately 20% residual narrowing without immediate need for stent.\nComplications: Mild bleeding controlled with iced saline; no desaturation or pneumothorax.\nDisposition: Extubated in OR and discharged to step-down unit.",
     "cpt_codes": [
       31640
     ],
@@ -1226,7 +1154,7 @@
       "final_diagnosis_prelim": "Tracheal adenoid cystic carcinoma, debulked",
       "molecular_testing_requested": true,
       "disposition": "Floor admission",
-      "follow_up_plan": "Post-op CT and radiation oncology consultation; repeat bronchoscopy in 6–8 weeks.",
+      "follow_up_plan": "Post-op CT and radiation oncology consultation; repeat bronchoscopy in 6\u20138 weeks.",
       "billing": {
         "cpt_codes": [
           {
@@ -1296,14 +1224,6 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   }
 ]

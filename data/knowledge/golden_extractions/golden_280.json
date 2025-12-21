@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion.\nPatient: Daniel Carter, 68-year-old male with metastatic lung adenocarcinoma and recurrent left pleural effusion.\nAnesthesia: General anesthesia with double-lumen endotracheal tube.\nIndication: Symptomatic, rapidly recurrent left malignant pleural effusion after multiple prior therapeutic thoracenteses.\nProcedure details: Under ultrasound guidance, the left 6th intercostal space in the midaxillary line was selected. Approximately 1.8 L of serosanguinous pleural fluid was drained through a trocar. A semi-rigid thoracoscope was introduced. Diffuse parietal pleural studding and nodularity were seen, with trapped lung but near-complete re-expansion after drainage. Multiple parietal pleural biopsies were obtained. A talc slurry (4 g in 50 mL normal saline) was distributed evenly over the parietal pleura while rotating the patient. A 24 Fr chest tube was left in place and connected to −20 cmH2O suction.\nComplications: None; transient hypotension responsive to fluids.\nEstimated blood loss: 25 mL.\nDisposition: Admitted to floor with chest tube to suction.\nPlan: Daily chest radiographs, monitor drainage; remove chest tube when output <150 mL/day and lung fully expanded; oncology follow-up once pathology finalized.",
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion.\nPatient: Daniel Carter, 68-year-old male with metastatic lung adenocarcinoma and recurrent left pleural effusion.\nAnesthesia: General anesthesia with double-lumen endotracheal tube.\nIndication: Symptomatic, rapidly recurrent left malignant pleural effusion after multiple prior therapeutic thoracenteses.\nProcedure details: Under ultrasound guidance, the left 6th intercostal space in the midaxillary line was selected. Approximately 1.8 L of serosanguinous pleural fluid was drained through a trocar. A semi-rigid thoracoscope was introduced. Diffuse parietal pleural studding and nodularity were seen, with trapped lung but near-complete re-expansion after drainage. Multiple parietal pleural biopsies were obtained. A talc slurry (4 g in 50 mL normal saline) was distributed evenly over the parietal pleura while rotating the patient. A 24 Fr chest tube was left in place and connected to \u221220 cmH2O suction.\nComplications: None; transient hypotension responsive to fluids.\nEstimated blood loss: 25 mL.\nDisposition: Admitted to floor with chest tube to suction.\nPlan: Daily chest radiographs, monitor drainage; remove chest tube when output <150 mL/day and lung fully expanded; oncology follow-up once pathology finalized.",
     "cpt_codes": [
       32650
     ],
@@ -60,7 +60,7 @@
       "final_diagnosis_prelim": "Suspected malignant pleural effusion; pleural biopsies pending",
       "molecular_testing_requested": false,
       "disposition": "Floor admission",
-      "follow_up_plan": "Daily CXRs; remove chest tube once drainage low and lung expanded; oncology clinic within 1–2 weeks",
+      "follow_up_plan": "Daily CXRs; remove chest tube once drainage low and lung expanded; oncology clinic within 1\u20132 weeks",
       "cpt_codes": [
         32650
       ],
@@ -105,7 +105,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with mechanical pleurodesis for mesothelioma.\nPatient: Maria Lopez, 73-year-old female with biopsy-proven epithelioid malignant pleural mesothelioma and recurrent right effusion.\nAnesthesia: General anesthesia with single-lumen ETT and bronchial blocker.\nIndication: Progressive dyspnea from large recurrent right malignant pleural effusion despite prior thoracenteses.\nProcedure details: Right lateral decubitus positioning. The 5th intercostal space at the midaxillary line was opened with a 2 cm incision. Entry into the pleural space resulted in immediate drainage of 1.2 L of serous fluid. A rigid thoracoscope was used to inspect the pleural cavity, revealing circumferential parietal pleural thickening and tumor implants. Mechanical pleurodesis was performed using a gauze pad and thoracoscopic scratcher across the parietal pleura, followed by instillation of 500 mg doxycycline in 50 mL saline as adjunct sclerosing agent. A 28 Fr chest tube was secured in the posterior axillary line.\nComplications: Mild oozing from pleural surfaces controlled with cautery; no hemodynamic instability.\nEstimated blood loss: 40 mL.\nDisposition: Admitted to thoracic surgery floor with chest tube to suction.\nPlan: Maintain suction at −20 cmH2O; remove chest tube when drainage <150 mL/day and CXR stable; oncology follow-up for systemic therapy.",
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with mechanical pleurodesis for mesothelioma.\nPatient: Maria Lopez, 73-year-old female with biopsy-proven epithelioid malignant pleural mesothelioma and recurrent right effusion.\nAnesthesia: General anesthesia with single-lumen ETT and bronchial blocker.\nIndication: Progressive dyspnea from large recurrent right malignant pleural effusion despite prior thoracenteses.\nProcedure details: Right lateral decubitus positioning. The 5th intercostal space at the midaxillary line was opened with a 2 cm incision. Entry into the pleural space resulted in immediate drainage of 1.2 L of serous fluid. A rigid thoracoscope was used to inspect the pleural cavity, revealing circumferential parietal pleural thickening and tumor implants. Mechanical pleurodesis was performed using a gauze pad and thoracoscopic scratcher across the parietal pleura, followed by instillation of 500 mg doxycycline in 50 mL saline as adjunct sclerosing agent. A 28 Fr chest tube was secured in the posterior axillary line.\nComplications: Mild oozing from pleural surfaces controlled with cautery; no hemodynamic instability.\nEstimated blood loss: 40 mL.\nDisposition: Admitted to thoracic surgery floor with chest tube to suction.\nPlan: Maintain suction at \u221220 cmH2O; remove chest tube when drainage <150 mL/day and CXR stable; oncology follow-up for systemic therapy.",
     "cpt_codes": [
       32650
     ],
@@ -210,14 +210,14 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for recurrent breast cancer–related malignant pleural effusion.\nPatient: Hannah Nguyen, 61-year-old female with metastatic ER+/HER2− breast carcinoma and symptomatic right pleural effusion.\nAnesthesia: Monitored anesthesia care with propofol infusion and supplemental oxygen via face mask.\nIndication: Dyspnea on exertion and orthopnea from recurrent right pleural effusion despite three thoracenteses.\nProcedure details: After ultrasound localization, the right 7th intercostal space in the posterior axillary line was infiltrated with lidocaine and bupivacaine. A single-port semi-rigid medical thoracoscope was introduced after trocar insertion. Approximately 1.4 L of serous fluid was drained. The parietal pleura showed patchy nodularity over the diaphragmatic and posterior pleura. Biopsies were obtained from representative nodules. A talc slurry (4 g in 100 mL saline) was instilled and distributed with patient rotation. A 20 Fr chest tube was secured.\nComplications: None.\nEstimated blood loss: 15 mL.\nDisposition: Admitted overnight for monitoring and chest tube management.\nPlan: Transition chest tube to water seal once air leak resolves; remove when drainage <150 mL/day; resume systemic therapy per oncology.",
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for recurrent breast cancer\u2013related malignant pleural effusion.\nPatient: Hannah Nguyen, 61-year-old female with metastatic ER+/HER2\u2212 breast carcinoma and symptomatic right pleural effusion.\nAnesthesia: Monitored anesthesia care with propofol infusion and supplemental oxygen via face mask.\nIndication: Dyspnea on exertion and orthopnea from recurrent right pleural effusion despite three thoracenteses.\nProcedure details: After ultrasound localization, the right 7th intercostal space in the posterior axillary line was infiltrated with lidocaine and bupivacaine. A single-port semi-rigid medical thoracoscope was introduced after trocar insertion. Approximately 1.4 L of serous fluid was drained. The parietal pleura showed patchy nodularity over the diaphragmatic and posterior pleura. Biopsies were obtained from representative nodules. A talc slurry (4 g in 100 mL saline) was instilled and distributed with patient rotation. A 20 Fr chest tube was secured.\nComplications: None.\nEstimated blood loss: 15 mL.\nDisposition: Admitted overnight for monitoring and chest tube management.\nPlan: Transition chest tube to water seal once air leak resolves; remove when drainage <150 mL/day; resume systemic therapy per oncology.",
     "cpt_codes": [
       32650
     ],
     "registry_entry": {
       "patient_mrn": "IP32650-003",
       "procedure_date": "2025-03-01",
-      "institution_name": "Synthetic Women’s Cancer Center",
+      "institution_name": "Synthetic Women\u2019s Cancer Center",
       "procedure_setting": "Procedure suite",
       "patient_age": 61,
       "gender": "Female",
@@ -270,7 +270,7 @@
       "final_diagnosis_prelim": "Recurrent malignant pleural effusion with successful talc pleurodesis",
       "molecular_testing_requested": false,
       "disposition": "Floor admission",
-      "follow_up_plan": "Daily CXR until lung expansion stable; chest tube removal once drainage low; oncology follow-up within 1–2 weeks",
+      "follow_up_plan": "Daily CXR until lung expansion stable; chest tube removal once drainage low; oncology follow-up within 1\u20132 weeks",
       "cpt_codes": [
         32650
       ],
@@ -480,7 +480,7 @@
       "final_diagnosis_prelim": "Recurrent primary left spontaneous pneumothorax treated with thoracoscopic pleurodesis",
       "molecular_testing_requested": false,
       "disposition": "Floor admission",
-      "follow_up_plan": "Clinic visit in 2–4 weeks; reinforce smoking cessation; advise against high-altitude travel until cleared",
+      "follow_up_plan": "Clinic visit in 2\u20134 weeks; reinforce smoking cessation; advise against high-altitude travel until cleared",
       "cpt_codes": [
         32650
       ],
@@ -585,7 +585,7 @@
       "final_diagnosis_prelim": "Malignant pleural effusion with successful talc pleurodesis",
       "molecular_testing_requested": false,
       "disposition": "Floor admission",
-      "follow_up_plan": "Monitor chest tube output; remove when drainage low and lung expanded; follow up with oncology in 1–2 weeks",
+      "follow_up_plan": "Monitor chest tube output; remove when drainage low and lung expanded; follow up with oncology in 1\u20132 weeks",
       "cpt_codes": [
         32650
       ],
@@ -630,7 +630,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion in non–small cell lung cancer.\nPatient: Ethan Miller, 72-year-old male with stage IV squamous cell carcinoma and recurrent left pleural effusion.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: Worsening dyspnea and orthopnea due to recurrent malignant pleural effusion despite prior chest tube drainage.\nProcedure details: Left 6th intercostal space was selected under ultrasound guidance. Trocar entry produced a gush of serosanguinous fluid; 1.6 L was drained. Thoracoscopy showed nodular parietal and diaphragmatic pleura. Multiple biopsies were taken. After drainage, 4 g talc in 50 mL saline was instilled and spread evenly. A 24 Fr chest tube was secured.\nComplications: None.\nEstimated blood loss: 20 mL.\nDisposition: Admitted to oncology floor with chest tube to suction.\nPlan: Daily CXR and drainage monitoring; remove chest tube when output <150 mL/day; palliative care consult.",
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion in non\u2013small cell lung cancer.\nPatient: Ethan Miller, 72-year-old male with stage IV squamous cell carcinoma and recurrent left pleural effusion.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: Worsening dyspnea and orthopnea due to recurrent malignant pleural effusion despite prior chest tube drainage.\nProcedure details: Left 6th intercostal space was selected under ultrasound guidance. Trocar entry produced a gush of serosanguinous fluid; 1.6 L was drained. Thoracoscopy showed nodular parietal and diaphragmatic pleura. Multiple biopsies were taken. After drainage, 4 g talc in 50 mL saline was instilled and spread evenly. A 24 Fr chest tube was secured.\nComplications: None.\nEstimated blood loss: 20 mL.\nDisposition: Admitted to oncology floor with chest tube to suction.\nPlan: Daily CXR and drainage monitoring; remove chest tube when output <150 mL/day; palliative care consult.",
     "cpt_codes": [
       32650
     ],
@@ -840,7 +840,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion in mesothelioma (contralateral side).\nPatient: James Cooper, 70-year-old male with biphasic malignant pleural mesothelioma and new left pleural effusion after prior right-sided pleurodesis.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: Increasing dyspnea due to new contralateral effusion in a patient not eligible for further systemic therapy.\nProcedure details: Ultrasound confirmed a large left effusion. Trocar entry at the 6th intercostal space allowed drainage of 1.5 L of serous fluid. Thoracoscopy showed nodular parietal pleura; no diaphragmatic defects. Biopsies were obtained. Talc slurry (4 g in 50 mL saline) was instilled evenly. A 24 Fr chest tube was placed.\nComplications: None.\nEstimated blood loss: 30 mL.\nDisposition: Admitted overnight to thoracic ward.\nPlan: Monitor chest tube output; palliative care support; outpatient follow-up in 1–2 weeks.",
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with talc pleurodesis for malignant pleural effusion in mesothelioma (contralateral side).\nPatient: James Cooper, 70-year-old male with biphasic malignant pleural mesothelioma and new left pleural effusion after prior right-sided pleurodesis.\nAnesthesia: General anesthesia with single-lumen ETT.\nIndication: Increasing dyspnea due to new contralateral effusion in a patient not eligible for further systemic therapy.\nProcedure details: Ultrasound confirmed a large left effusion. Trocar entry at the 6th intercostal space allowed drainage of 1.5 L of serous fluid. Thoracoscopy showed nodular parietal pleura; no diaphragmatic defects. Biopsies were obtained. Talc slurry (4 g in 50 mL saline) was instilled evenly. A 24 Fr chest tube was placed.\nComplications: None.\nEstimated blood loss: 30 mL.\nDisposition: Admitted overnight to thoracic ward.\nPlan: Monitor chest tube output; palliative care support; outpatient follow-up in 1\u20132 weeks.",
     "cpt_codes": [
       32650
     ],

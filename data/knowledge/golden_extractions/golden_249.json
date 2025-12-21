@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "**PROCEDURE REPORT: COMBINED EBUS & NAVIGATIONAL BRONCHOSCOPY**\n\n**Patient:** <PERSON>\n**MRN:** 8829104\n**DOB:** <DATE_TIME>\n**Date:** <DATE_TIME>\n**Attending:** Dr. Alan Wright\n**Fellow:** Dr. Emily Chen\n\n**Indication:** 70-year-old female with a 2.2 cm LUL nodule (spiculated, solid) and mediastinal adenopathy on CT. PET-CT shows SUV max 5.4 in the nodule and 4.1 in station 7.\n\n**Procedures:**\n1.  Linear EBUS-TBNA (Mediastinal Staging)\n2.  Electromagnetic Navigation Bronchoscopy (EMN)\n3.  Radial EBUS (Peripheral Lesion Confirmation)\n4.  Transbronchial Biopsy (TBBx)\n\n**Medications:** Fentanyl 150mcg, Midazolam 4mg, Propofol TCI. General Anesthesia with LMA #4.\n\n**Procedure Details:**\n\n* **Airway Inspection:** LMA placed. Therapeutic bronchoscope introduced. Normal vocal cords. Trachea patent. Carina sharp. Bilateral bronchial trees patent.\n* **EBUS-TBNA (Linear):**\n    * **Station 7 (Subcarinal):** 18mm node, heterogeneous. Sampled with 22G needle x 4 passes. ROSE: Lymphocytes only.\n    * **Station 4R (Lower Paratracheal):** 10mm node. Sampled x 3 passes. ROSE: Lymphocytes.\n    * **Station 4L (Lower Paratracheal):** 14mm node. Sampled x 3 passes. ROSE: Lymphocytes.\n* **Navigation (SuperDimension):**\n    * CT loaded. Target: LUL Apical-Posterior segment nodule.\n    * Registration: Auto-match successful. Error 4mm.\n    * Navigation to target achieved. Tool-in-lesion confirmed.\n* **Radial EBUS (r-EBUS):**\n    * Probe inserted. Concentric view of 20mm hypoechoic lesion obtained.\n* **Peripheral Sampling (LUL Nodule):**\n    * TBBx x 6 obtained with standard forceps. Fluoroscopy confirmed position.\n    * Brush x 2.\n    * ROSE: **Positive for Adenocarcinoma.**\n\n**Complications:** None. Minimal bleeding, controlled with suction.\n**Disposition:** Extubated (LMA removed), stable to PACU.\n**Plan:** Oncology referral. Molecular testing ordered.\n\n**Dr. Alan Wright**",
+    "note_text": "**PROCEDURE REPORT: COMBINED EBUS & NAVIGATIONAL BRONCHOSCOPY**\n\n**Patient:** Sarah Jenkins\n**MRN:** 8829104\n**DOB:** 05/12/1955\n**Date:** 05/15/2025\n**Attending:** Dr. Alan Wright\n**Fellow:** Dr. Emily Chen\n\n**Indication:** 70-year-old female with a 2.2 cm LUL nodule (spiculated, solid) and mediastinal adenopathy on CT. PET-CT shows SUV max 5.4 in the nodule and 4.1 in station 7.\n\n**Procedures:**\n1.  Linear EBUS-TBNA (Mediastinal Staging)\n2.  Electromagnetic Navigation Bronchoscopy (EMN)\n3.  Radial EBUS (Peripheral Lesion Confirmation)\n4.  Transbronchial Biopsy (TBBx)\n\n**Medications:** Fentanyl 150mcg, Midazolam 4mg, Propofol TCI. General Anesthesia with LMA #4.\n\n**Procedure Details:**\n\n* **Airway Inspection:** LMA placed. Therapeutic bronchoscope introduced. Normal vocal cords. Trachea patent. Carina sharp. Bilateral bronchial trees patent.\n* **EBUS-TBNA (Linear):**\n    * **Station 7 (Subcarinal):** 18mm node, heterogeneous. Sampled with 22G needle x 4 passes. ROSE: Lymphocytes only.\n    * **Station 4R (Lower Paratracheal):** 10mm node. Sampled x 3 passes. ROSE: Lymphocytes.\n    * **Station 4L (Lower Paratracheal):** 14mm node. Sampled x 3 passes. ROSE: Lymphocytes.\n* **Navigation (SuperDimension):**\n    * CT loaded. Target: LUL Apical-Posterior segment nodule.\n    * Registration: Auto-match successful. Error 4mm.\n    * Navigation to target achieved. Tool-in-lesion confirmed.\n* **Radial EBUS (r-EBUS):**\n    * Probe inserted. Concentric view of 20mm hypoechoic lesion obtained.\n* **Peripheral Sampling (LUL Nodule):**\n    * TBBx x 6 obtained with standard forceps. Fluoroscopy confirmed position.\n    * Brush x 2.\n    * ROSE: **Positive for Adenocarcinoma.**\n\n**Complications:** None. Minimal bleeding, controlled with suction.\n**Disposition:** Extubated (LMA removed), stable to PACU.\n**Plan:** Oncology referral. Molecular testing ordered.\n\n**Dr. Alan Wright**",
     "cpt_codes": [
       31653,
       31627,
@@ -304,18 +304,10 @@
         "Added coding_review.rvu_summary with 2025 facility RVUs/payments and flagged this note as an edge_case for training."
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure Note\nPatient: Robert K. Miller (MRN: <MRN>)\nDate: <DATE_TIME>\nDr. Sarah O'Connor, Attending Pulmonologist.\n\nMr. Miller is a 62M with Stage IV lung cancer and a recurrent massive right pleural effusion causing severe dyspnea. He was admitted for management. We discussed options including repeat thoracentesis vs. PleurX vs. Chest Tube/Pleurodesis. He opted for a chest tube for drainage and possible talc slurry.\n\nTime Out performed. The patient was positioned sitting up. The right hemithorax was prepped and draped. Ultrasound identified a large free-flowing effusion. 1% Lidocaine was used for local anesthesia. A 14Fr pigtail catheter was inserted using Seldinger technique under real-time ultrasound guidance. 1200mL of straw-colored fluid was drained immediately. The tube was secured and connected to -20cmH2O suction. Fluid sent for cytology and culture. Post-procedure CXR confirmed placement. Patient tolerated well.\n\nAssessment: Successful US-guided small-bore chest tube placement right hemithorax.\nPlan: Drain to dry, then consider talc slurry.",
+    "note_text": "Procedure Note\nPatient: Robert K. Miller (MRN: 994821)\nDate: April 10, 2025\nDr. Sarah O'Connor, Attending Pulmonologist.\n\nMr. Miller is a 62M with Stage IV lung cancer and a recurrent massive right pleural effusion causing severe dyspnea. He was admitted for management. We discussed options including repeat thoracentesis vs. PleurX vs. Chest Tube/Pleurodesis. He opted for a chest tube for drainage and possible talc slurry.\n\nTime Out performed. The patient was positioned sitting up. The right hemithorax was prepped and draped. Ultrasound identified a large free-flowing effusion. 1% Lidocaine was used for local anesthesia. A 14Fr pigtail catheter was inserted using Seldinger technique under real-time ultrasound guidance. 1200mL of straw-colored fluid was drained immediately. The tube was secured and connected to -20cmH2O suction. Fluid sent for cytology and culture. Post-procedure CXR confirmed placement. Patient tolerated well.\n\nAssessment: Successful US-guided small-bore chest tube placement right hemithorax.\nPlan: Drain to dry, then consider talc slurry.",
     "cpt_codes": [
       32557
     ],
@@ -474,17 +466,10 @@
         "Added coding_review.rvu_summary with 2025 facility RVUs/payments and flagged this note as an edge_case for training."
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "**OPERATIVE REPORT**\n\n**PATIENT:** James T. Kirk\n**MRN:** 1701-A\n**DATE:** <DATE_TIME>\n**SURGEON:** Dr. Leonard McCoy\n**ANESTHESIA:** General (TIVA)\n\n**PRE-OP DIAGNOSIS:** Tracheal Stenosis (Malignant)\n**POST-OP DIAGNOSIS:** Same, Status Post Laser Resection and Stenting\n**PROCEDURE:** Rigid Bronchoscopy, Laser Tumor Destruction, Silicone Stent Placement\n\n**FINDINGS:**\n1.  Exophytic tumor obstructing 80% of mid-trachea.\n2.  Rest of airways patent.\n\n**DESCRIPTION:**\nPatient inducted. Rigid bronchoscope (14mm) inserted. Tumor visualized in mid-trachea. Nd:YAG Laser used to coagulate and vaporize tumor tissue (30W, 2040J total). Mechanical debulking performed with rigid barrel. Hemostasis achieved. Airway opened to 90%.\n\nA 16x40mm Dumon silicone stent was deployed into the mid-trachea using the rigid deployer. Position confirmed with flexible scope. Stent patent and stable. Patient extubated in OR.\n\n**COMPLICATIONS:** None.\n**EBL:** 20cc.",
+    "note_text": "**OPERATIVE REPORT**\n\n**PATIENT:** James T. Kirk\n**MRN:** 1701-A\n**DATE:** 06/20/2025\n**SURGEON:** Dr. Leonard McCoy\n**ANESTHESIA:** General (TIVA)\n\n**PRE-OP DIAGNOSIS:** Tracheal Stenosis (Malignant)\n**POST-OP DIAGNOSIS:** Same, Status Post Laser Resection and Stenting\n**PROCEDURE:** Rigid Bronchoscopy, Laser Tumor Destruction, Silicone Stent Placement\n\n**FINDINGS:**\n1.  Exophytic tumor obstructing 80% of mid-trachea.\n2.  Rest of airways patent.\n\n**DESCRIPTION:**\nPatient inducted. Rigid bronchoscope (14mm) inserted. Tumor visualized in mid-trachea. Nd:YAG Laser used to coagulate and vaporize tumor tissue (30W, 2040J total). Mechanical debulking performed with rigid barrel. Hemostasis achieved. Airway opened to 90%.\n\nA 16x40mm Dumon silicone stent was deployed into the mid-trachea using the rigid deployer. Position confirmed with flexible scope. Stent patent and stable. Patient extubated in OR.\n\n**COMPLICATIONS:** None.\n**EBL:** 20cc.",
     "cpt_codes": [
       31641,
       31631
@@ -689,16 +674,10 @@
         "Added coding_review.rvu_summary with 2025 facility RVUs/payments and flagged this note as an edge_case for training."
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Medical Thoracoscopy (Right)\nDATE: <DATE_TIME>\nPHYSICIAN: Dr. House\nPATIENT: Greg (MRN 12345)\n\nIndication: Undiagnosed right pleural effusion.\n\nLocal anesthesia + MAC. Pt in LLD. Trocar inserted 5th ICS. 1.5L bloody fluid removed. Inspection showed diffuse nodules on parietal pleura. Visceral pleura appeared normal. \nBiopsies taken x 6 from parietal pleura. \nTalc poudrage (4g) performed for pleurodesis. \n24Fr Chest tube placed. \n\nDx: Suspicious for Mesothelioma.\nPlan: Admit.",
+    "note_text": "PROCEDURE: Medical Thoracoscopy (Right)\nDATE: 02/14/2025\nPHYSICIAN: Dr. House\nPATIENT: Greg (MRN 12345)\n\nIndication: Undiagnosed right pleural effusion.\n\nLocal anesthesia + MAC. Pt in LLD. Trocar inserted 5th ICS. 1.5L bloody fluid removed. Inspection showed diffuse nodules on parietal pleura. Visceral pleura appeared normal. \nBiopsies taken x 6 from parietal pleura. \nTalc poudrage (4g) performed for pleurodesis. \n24Fr Chest tube placed. \n\nDx: Suspicious for Mesothelioma.\nPlan: Admit.",
     "cpt_codes": [
       32650
     ],
@@ -859,16 +838,10 @@
         "Added coding_review.rvu_summary with 2025 facility RVUs/payments and flagged this note as an edge_case for training."
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Bronchoscopy Note - Thermoplasty Session 1\n\nPatient: Lisa Simpson | MRN: <MRN> | Date: <DATE_TIME>\nProvider: Dr. Hibbert\n\n**History:** Severe persistent asthma refractory to biologics. Presenting for first session of Bronchial Thermoplasty (RLL).\n\n**Procedure:**\n- General Anesthesia/ETT.\n- Alair catheter introduced.\n- RLL basal segments treated systematically.\n- **Activations:**\n  - Right Posterior Basal: 14 activations\n  - Right Lateral Basal: 12 activations\n  - Right Anterior Basal: 10 activations\n  - Right Medial Basal: 8 activations\n  - Right Superior Segment: 15 activations\n- Total Activations: 59.\n- No significant bleeding or mucosal injury observed.\n\n**Post-Op:** Stable. Extubated. Observe for bronchospasm.",
+    "note_text": "Bronchoscopy Note - Thermoplasty Session 1\n\nPatient: Lisa Simpson | MRN: 876543 | Date: 07/07/2025\nProvider: Dr. Hibbert\n\n**History:** Severe persistent asthma refractory to biologics. Presenting for first session of Bronchial Thermoplasty (RLL).\n\n**Procedure:**\n- General Anesthesia/ETT.\n- Alair catheter introduced.\n- RLL basal segments treated systematically.\n- **Activations:**\n  - Right Posterior Basal: 14 activations\n  - Right Lateral Basal: 12 activations\n  - Right Anterior Basal: 10 activations\n  - Right Medial Basal: 8 activations\n  - Right Superior Segment: 15 activations\n- Total Activations: 59.\n- No significant bleeding or mucosal injury observed.\n\n**Post-Op:** Stable. Extubated. Observe for bronchospasm.",
     "cpt_codes": [
       31660
     ],
@@ -1024,13 +997,6 @@
         "Added coding_review.rvu_summary with 2025 facility RVUs/payments and flagged this note as an edge_case for training."
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   }
 ]

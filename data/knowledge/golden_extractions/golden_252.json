@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "PROCEDURE NOTE: PLEURAL INTERVENTION CONVERSION\n\n**Patient:** James Howlett (MRN: <MRN>)\n**Date:** <DATE_TIME>\n**Provider:** Dr. C. Xavier\n\n**Indication:** 55M with fevers and large right pleural effusion. Concern for empyema.\n\n**Procedure Details:**\nTimeout performed. Right posterior chest prepped. \nUltrasound identified a loculated fluid collection. Local anesthesia (20cc Lidocaine). \n\n1. **Diagnostic Thoracentesis:** A 6Fr catheter was inserted. 60cc of frank purulent fluid (pus) was aspirated. \n   *Decision made to escalate to tube thoracostomy immediately given gross empyema.*\n\n2. **Chest Tube Placement:** Using the same site (tract dilated), a 14Fr Wayne pigtail catheter was inserted using Seldinger technique. \n   Return: 450cc purulent fluid. \n   Tube sutured in place and connected to atrium.\n\n3. **Fibrinolytics:** Given loculations seen on US, 10mg tPA and 5mg DNase were instilled through the new chest tube at the end of the case. Tube clamped.\n\n**Complications:** None.\n**Disposition:** Admitted for empyema management.",
+    "note_text": "PROCEDURE NOTE: PLEURAL INTERVENTION CONVERSION\n\n**Patient:** James Howlett (MRN: 991823)\n**Date:** 10/31/2025\n**Provider:** Dr. C. Xavier\n\n**Indication:** 55M with fevers and large right pleural effusion. Concern for empyema.\n\n**Procedure Details:**\nTimeout performed. Right posterior chest prepped. \nUltrasound identified a loculated fluid collection. Local anesthesia (20cc Lidocaine). \n\n1. **Diagnostic Thoracentesis:** A 6Fr catheter was inserted. 60cc of frank purulent fluid (pus) was aspirated. \n   *Decision made to escalate to tube thoracostomy immediately given gross empyema.*\n\n2. **Chest Tube Placement:** Using the same site (tract dilated), a 14Fr Wayne pigtail catheter was inserted using Seldinger technique. \n   Return: 450cc purulent fluid. \n   Tube sutured in place and connected to atrium.\n\n3. **Fibrinolytics:** Given loculations seen on US, 10mg tPA and 5mg DNase were instilled through the new chest tube at the end of the case. Tube clamped.\n\n**Complications:** None.\n**Disposition:** Admitted for empyema management.",
     "cpt_codes": [
       32551,
       32561
@@ -98,17 +98,10 @@
         "Verified registry_entry content; no changes required for this edge-case note."
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "**BRONCHOSCOPY SUITE - PROCEDURE NOTE**\n\n**Patient:** Logan <PERSON> | **DOB:** <DATE_TIME>\n**Date:** <DATE_TIME>\n**MD:** Dr. Shiv Roy\n\n**History:** Massive hemoptysis (~300cc) this morning. History of squamous cell ca RUL.\n\n**Procedure:** Rigid Bronchoscopy (Emergency)\n**Anesthesia:** General.\n\n**Findings:**\nBlood clots filling trachea. Suctioned clear. \nActive pulsatile bleeding identified from RUL orifice. Tumor invasion noted at RUL carina.\n\n**Intervention:**\n1. **Therapeutic Aspiration:** ~400cc of blood and clot evacuated from trachea and left mainstem to restore ventilation.\n2. **Balloon Tamponade:** A fogarty balloon was deployed into the RUL bronchus and inflated to tamponade bleeding. Held for 5 minutes. Bleeding slowed.\n3. **Tumor Destruction (Hemostasis):** APC (Argon Plasma Coagulation) was applied to the visible tumor bed at the RUL orifice to cauterize vessels. \n4. **Iced Saline:** 500cc instilled and suctioned.\n\n**Outcome:** Hemostasis achieved. Extubated in OR once stable.\n\n**Impression:** Massive hemoptysis secondary to tumor erosion. Controlled with APC and Tamponade.",
+    "note_text": "**BRONCHOSCOPY SUITE - PROCEDURE NOTE**\n\n**Patient:** Logan Roy | **DOB:** 10/14/1948\n**Date:** 11/05/2025\n**MD:** Dr. Shiv Roy\n\n**History:** Massive hemoptysis (~300cc) this morning. History of squamous cell ca RUL.\n\n**Procedure:** Rigid Bronchoscopy (Emergency)\n**Anesthesia:** General.\n\n**Findings:**\nBlood clots filling trachea. Suctioned clear. \nActive pulsatile bleeding identified from RUL orifice. Tumor invasion noted at RUL carina.\n\n**Intervention:**\n1. **Therapeutic Aspiration:** ~400cc of blood and clot evacuated from trachea and left mainstem to restore ventilation.\n2. **Balloon Tamponade:** A fogarty balloon was deployed into the RUL bronchus and inflated to tamponade bleeding. Held for 5 minutes. Bleeding slowed.\n3. **Tumor Destruction (Hemostasis):** APC (Argon Plasma Coagulation) was applied to the visible tumor bed at the RUL orifice to cauterize vessels. \n4. **Iced Saline:** 500cc instilled and suctioned.\n\n**Outcome:** Hemostasis achieved. Extubated in OR once stable.\n\n**Impression:** Massive hemoptysis secondary to tumor erosion. Controlled with APC and Tamponade.",
     "cpt_codes": [
       31641,
       31645
@@ -205,18 +198,10 @@
         "Verified registry_entry content; no changes required for this edge-case note."
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Mixed Modality Staging and Treatment\nDATE: <DATE_TIME>\nPATIENT: Wade Wilson (MRN: Deadpool)\n\n**1. EBUS-TBNA:**\nConvex probe used. \n- Station 7 (Subcarinal): Sampled. ROSE negative.\n- Station 4R: Sampled. ROSE negative.\n\n**2. Navigation & Cryobiopsy (LUL):**\nIon robot used. Navigated to LUL nodule (1.5cm). Radial EBUS confirmed position. \n**Action:** Cryoprobe inserted. Freezing applied for 6 seconds. Biopsy taken x 3. (CPT 31627, 31654, 31628?)\n\n**3. Incidental Finding & Treatment (RMB):**\nUpon withdrawal, a large polypoid lesion was seen in the Right Mainstem Bronchus (completely separate from LUL target) causing 50% obstruction. \n**Action:** The lesion was resected using electrocautery snare and base treated with APC. (CPT 31641?)\n\n**Summary:** \n- LUL Cryobiopsy (Navigated)\n- Mediastinal Staging\n- RMB Tumor Resection (Unplanned)\n\nNo complications.",
+    "note_text": "PROCEDURE: Mixed Modality Staging and Treatment\nDATE: 06/06/2025\nPATIENT: Wade Wilson (MRN: Deadpool)\n\n**1. EBUS-TBNA:**\nConvex probe used. \n- Station 7 (Subcarinal): Sampled. ROSE negative.\n- Station 4R: Sampled. ROSE negative.\n\n**2. Navigation & Cryobiopsy (LUL):**\nIon robot used. Navigated to LUL nodule (1.5cm). Radial EBUS confirmed position. \n**Action:** Cryoprobe inserted. Freezing applied for 6 seconds. Biopsy taken x 3. (CPT 31627, 31654, 31628?)\n\n**3. Incidental Finding & Treatment (RMB):**\nUpon withdrawal, a large polypoid lesion was seen in the Right Mainstem Bronchus (completely separate from LUL target) causing 50% obstruction. \n**Action:** The lesion was resected using electrocautery snare and base treated with APC. (CPT 31641?)\n\n**Summary:** \n- LUL Cryobiopsy (Navigated)\n- Mediastinal Staging\n- RMB Tumor Resection (Unplanned)\n\nNo complications.",
     "cpt_codes": [
       31652,
       31627,
@@ -375,16 +360,10 @@
         "Verified registry_entry content; no changes required for this edge-case note."
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Operative Note: Complex Stent Exchange\nDate: <DATE_TIME>\nDr. F. N. Stein\n\nPatient with history of benign tracheal stenosis s/p silicone stent 1 year ago. Presents with halitosis and cough. \nBronchoscopy reveals the 14x40mm silicone stent is encrusted with granulation tissue at both ends. \n\nProcedure:\n1. **Removal:** The proximal granulation tissue was cored out using the rigid barrel. The stent was grasped and removed. \n2. **Assessment:** Underlying stenosis is stable but mucosa is inflamed. Significant granulation tissue remains at the distal seat.\n3. **Treatment:** APC and Cryotherapy applied to the granulomas to clean the airway base.\n4. **Replacement:** A NEW 14x40mm silicone stent was deployed in the same position.\n\nEBL: 10cc.",
+    "note_text": "Operative Note: Complex Stent Exchange\nDate: 02/02/2025\nDr. F. N. Stein\n\nPatient with history of benign tracheal stenosis s/p silicone stent 1 year ago. Presents with halitosis and cough. \nBronchoscopy reveals the 14x40mm silicone stent is encrusted with granulation tissue at both ends. \n\nProcedure:\n1. **Removal:** The proximal granulation tissue was cored out using the rigid barrel. The stent was grasped and removed. \n2. **Assessment:** Underlying stenosis is stable but mucosa is inflamed. Significant granulation tissue remains at the distal seat.\n3. **Treatment:** APC and Cryotherapy applied to the granulomas to clean the airway base.\n4. **Replacement:** A NEW 14x40mm silicone stent was deployed in the same position.\n\nEBL: 10cc.",
     "cpt_codes": [
       31638
     ],
@@ -471,16 +450,10 @@
         "Verified registry_entry content; no changes required for this edge-case note."
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Procedure: Cryo-Ablation vs Biopsy\nDate: <DATE_TIME>\n\n**Scenario:** RLL endobronchial mass (Squamous cell).\n\n**Intervention:**\nCryoprobe applied to the mass. Frozen for 10 seconds. \nProbe and scope withdrawn. Large piece of tumor removed and **discarded** (not sent to pathology as diagnosis is known). \nRepeat freeze-thaw cycles x 5 to debulk the airway. Airway now 80% patent.\n\nThen, advanced to LUL for a *new* 8mm nodule. Radial EBUS confirmation. \nCryobiopsy performed x 2. **Sent to pathology.**\n\n**Codes:**\n31641 (RLL Ablation)\n31628 (LUL Biopsy)",
+    "note_text": "Procedure: Cryo-Ablation vs Biopsy\nDate: 09/09/2025\n\n**Scenario:** RLL endobronchial mass (Squamous cell).\n\n**Intervention:**\nCryoprobe applied to the mass. Frozen for 10 seconds. \nProbe and scope withdrawn. Large piece of tumor removed and **discarded** (not sent to pathology as diagnosis is known). \nRepeat freeze-thaw cycles x 5 to debulk the airway. Airway now 80% patent.\n\nThen, advanced to LUL for a *new* 8mm nodule. Radial EBUS confirmation. \nCryobiopsy performed x 2. **Sent to pathology.**\n\n**Codes:**\n31641 (RLL Ablation)\n31628 (LUL Biopsy)",
     "cpt_codes": [
       31641,
       31628,
@@ -601,12 +574,6 @@
         "Verified registry_entry content; no changes required for this edge-case note."
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   }
 ]

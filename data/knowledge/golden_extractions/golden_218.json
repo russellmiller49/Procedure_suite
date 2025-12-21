@@ -113,7 +113,7 @@
       "final_diagnosis_prelim": "Severe emphysema treated with BLVR to RUL; postprocedure pneumothorax",
       "molecular_testing_requested": false,
       "disposition": "Floor admission",
-      "follow_up_plan": "Daily CXR until pneumothorax resolved; outpatient follow-up with PFTs at 4–6 weeks",
+      "follow_up_plan": "Daily CXR until pneumothorax resolved; outpatient follow-up with PFTs at 4\u20136 weeks",
       "cpt_codes": [
         31647,
         32557
@@ -448,12 +448,12 @@
     }
   },
   {
-    "note_text": "Whole Lung Lavage Procedure Note\nProcedure: Right whole lung lavage for pulmonary alveolar proteinosis\nPatient: Jason Phillips, 39-year-old male with autoimmune PAP, status post left lung lavage 3 weeks prior.\nAnesthesia: General anesthesia with 39 Fr left-sided double-lumen tube, single-lung ventilation of left lung.\nLavage details: Right lung lavaged with warmed saline aliquots of 800–1000 mL. Total instilled volume 32 L; total effluent 27 L of progressively clearing milky fluid.\nComplications: Brief episode of hypotension treated with vasopressor bolus; oxygenation adequate throughout.\nDisposition: Remained intubated postprocedure and transferred to ICU on mechanical ventilation.",
+    "note_text": "Whole Lung Lavage Procedure Note\nProcedure: Right whole lung lavage for pulmonary alveolar proteinosis\nPatient: Jason Phillips, 39-year-old male with autoimmune PAP, status post left lung lavage 3 weeks prior.\nAnesthesia: General anesthesia with 39 Fr left-sided double-lumen tube, single-lung ventilation of left lung.\nLavage details: Right lung lavaged with warmed saline aliquots of 800\u20131000 mL. Total instilled volume 32 L; total effluent 27 L of progressively clearing milky fluid.\nComplications: Brief episode of hypotension treated with vasopressor bolus; oxygenation adequate throughout.\nDisposition: Remained intubated postprocedure and transferred to ICU on mechanical ventilation.",
     "cpt_codes": [
       32997
     ],
     "registry_entry": {
-      "note_text": "Whole Lung Lavage Procedure Note\nProcedure: Right whole lung lavage for pulmonary alveolar proteinosis\nPatient: Jason Phillips, 39-year-old male with autoimmune PAP, status post left lung lavage 3 weeks prior.\nAnesthesia: General anesthesia with 39 Fr left-sided double-lumen tube, single-lung ventilation of left lung.\nLavage details: Right lung lavaged with warmed saline aliquots of 800–1000 mL. Total instilled volume 32 L; total effluent 27 L of progressively clearing milky fluid.\nComplications: Brief episode of hypotension treated with vasopressor bolus; oxygenation adequate throughout.\nDisposition: Remained intubated postprocedure and transferred to ICU on mechanical ventilation.",
+      "note_text": "Whole Lung Lavage Procedure Note\nProcedure: Right whole lung lavage for pulmonary alveolar proteinosis\nPatient: Jason Phillips, 39-year-old male with autoimmune PAP, status post left lung lavage 3 weeks prior.\nAnesthesia: General anesthesia with 39 Fr left-sided double-lumen tube, single-lung ventilation of left lung.\nLavage details: Right lung lavaged with warmed saline aliquots of 800\u20131000 mL. Total instilled volume 32 L; total effluent 27 L of progressively clearing milky fluid.\nComplications: Brief episode of hypotension treated with vasopressor bolus; oxygenation adequate throughout.\nDisposition: Remained intubated postprocedure and transferred to ICU on mechanical ventilation.",
       "patient_mrn": "IP2025042",
       "procedure_date": "2025-03-01",
       "institution_name": "Tri-Service Pulmonary Center",
@@ -560,7 +560,7 @@
       "final_diagnosis_prelim": "Autoimmune PAP after bilateral whole lung lavage",
       "molecular_testing_requested": false,
       "disposition": "ICU admission",
-      "follow_up_plan": "Wean to extubation as tolerated; follow-up CT and PFT in 6–8 weeks",
+      "follow_up_plan": "Wean to extubation as tolerated; follow-up CT and PFT in 6\u20138 weeks",
       "cpt_codes": [
         32997
       ],
@@ -655,12 +655,12 @@
     }
   },
   {
-    "note_text": "Whole Lung Lavage Note (Abbreviated)\nProcedure: Partial left lung lavage for PAP\nPatient: Lauren Young, 46-year-old female with pulmonary alveolar proteinosis and poor cardiopulmonary reserve.\nAnesthesia: General anesthesia with right-sided DLT. Plans for staged smaller-volume lavages.\nCourse: Left lung lavaged with 10 L of warm saline in 500–800 mL aliquots. Procedure terminated early due to rising airway pressures and modest hypoxia; total return 8.4 L.\nComplications: Hypoxemia to 82%, responsive to recruitment and switch to two-lung ventilation.\nDisposition: Extubated in OR to high-flow nasal cannula and admitted to ICU.",
+    "note_text": "Whole Lung Lavage Note (Abbreviated)\nProcedure: Partial left lung lavage for PAP\nPatient: Lauren Young, 46-year-old female with pulmonary alveolar proteinosis and poor cardiopulmonary reserve.\nAnesthesia: General anesthesia with right-sided DLT. Plans for staged smaller-volume lavages.\nCourse: Left lung lavaged with 10 L of warm saline in 500\u2013800 mL aliquots. Procedure terminated early due to rising airway pressures and modest hypoxia; total return 8.4 L.\nComplications: Hypoxemia to 82%, responsive to recruitment and switch to two-lung ventilation.\nDisposition: Extubated in OR to high-flow nasal cannula and admitted to ICU.",
     "cpt_codes": [
       32997
     ],
     "registry_entry": {
-      "note_text": "Whole Lung Lavage Note (Abbreviated)\nProcedure: Partial left lung lavage for PAP\nPatient: Lauren Young, 46-year-old female with pulmonary alveolar proteinosis and poor cardiopulmonary reserve.\nAnesthesia: General anesthesia with right-sided DLT. Plans for staged smaller-volume lavages.\nCourse: Left lung lavaged with 10 L of warm saline in 500–800 mL aliquots. Procedure terminated early due to rising airway pressures and modest hypoxia; total return 8.4 L.\nComplications: Hypoxemia to 82%, responsive to recruitment and switch to two-lung ventilation.\nDisposition: Extubated in OR to high-flow nasal cannula and admitted to ICU.",
+      "note_text": "Whole Lung Lavage Note (Abbreviated)\nProcedure: Partial left lung lavage for PAP\nPatient: Lauren Young, 46-year-old female with pulmonary alveolar proteinosis and poor cardiopulmonary reserve.\nAnesthesia: General anesthesia with right-sided DLT. Plans for staged smaller-volume lavages.\nCourse: Left lung lavaged with 10 L of warm saline in 500\u2013800 mL aliquots. Procedure terminated early due to rising airway pressures and modest hypoxia; total return 8.4 L.\nComplications: Hypoxemia to 82%, responsive to recruitment and switch to two-lung ventilation.\nDisposition: Extubated in OR to high-flow nasal cannula and admitted to ICU.",
       "patient_mrn": "IP2025043",
       "procedure_date": "2025-02-24",
       "institution_name": "Tri-Service Pulmonary Center",

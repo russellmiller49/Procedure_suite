@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "PATIENT: Reeves, Harold || MRN: <MRN> || DOB: <DATE_TIME>\nDATE: <DATE_TIME> || LOCATION: St. Mary's Medical Center - Bronchoscopy Suite\nATTENDING: Megan Porter, MD\n\nINDICATION: Enlarged mediastinal lymph nodes (4R, 7) on CT/PET in a man with a right upper lobe mass.\n\nPROCEDURE: FLEXIBLE BRONCHOSCOPY WITH LINEAR EBUS-TBNA (CONSCIOUS SEDATION)\n- Moderate IV sedation with fentanyl and midazolam, monitored by RN; total intra-procedure time ~35 minutes.\n- Native airway with bite block; scope advanced orally.\n- Standard airway survey to segmental bronchi: no endobronchial tumor, mild erythema in RUL.\n- Linear EBUS performed via CP-EBUS scope.\n  * Station 4R: 1.5 cm, oval, mildly heterogeneous; 3 passes with 22G needle, material to cytology.\n  * Station 7: 1.3 cm, oval, homogeneous; 3 passes with 22G needle, material to cytology.\n- No other nodal stations sampled.\n- Minimal bleeding, no complications.\n\nPOST-PROCEDURE: Patient awakened and transported to PACU in stable condition. Chest X-ray not deemed necessary.\nPLAN: Await cytology results for staging; follow up in clinic.\n",
+    "note_text": "PATIENT: Reeves, Harold || MRN: 700001 || DOB: 01/23/1957\nDATE: 08/12/2025 || LOCATION: St. Mary's Medical Center - Bronchoscopy Suite\nATTENDING: Megan Porter, MD\n\nINDICATION: Enlarged mediastinal lymph nodes (4R, 7) on CT/PET in a man with a right upper lobe mass.\n\nPROCEDURE: FLEXIBLE BRONCHOSCOPY WITH LINEAR EBUS-TBNA (CONSCIOUS SEDATION)\n- Moderate IV sedation with fentanyl and midazolam, monitored by RN; total intra-procedure time ~35 minutes.\n- Native airway with bite block; scope advanced orally.\n- Standard airway survey to segmental bronchi: no endobronchial tumor, mild erythema in RUL.\n- Linear EBUS performed via CP-EBUS scope.\n  * Station 4R: 1.5 cm, oval, mildly heterogeneous; 3 passes with 22G needle, material to cytology.\n  * Station 7: 1.3 cm, oval, homogeneous; 3 passes with 22G needle, material to cytology.\n- No other nodal stations sampled.\n- Minimal bleeding, no complications.\n\nPOST-PROCEDURE: Patient awakened and transported to PACU in stable condition. Chest X-ray not deemed necessary.\nPLAN: Await cytology results for staging; follow up in clinic.\n",
     "cpt_codes": [
       31652
     ],
@@ -152,7 +152,7 @@
         "dropped_codes": [],
         "rules_applied": [],
         "narrative": [
-          "Single flexible bronchoscopy with linear EBUS-TBNA of two nodal stations (4R and 7); 31652 correctly captures EBUS biopsy of 1–2 mediastinal/hilar node stations without additional bronchoscopic interventions."
+          "Single flexible bronchoscopy with linear EBUS-TBNA of two nodal stations (4R and 7); 31652 correctly captures EBUS biopsy of 1\u20132 mediastinal/hilar node stations without additional bronchoscopic interventions."
         ]
       }
     },
@@ -174,21 +174,13 @@
       "total_facility_rvu_2025": 6.96,
       "estimated_total_facility_payment_2025": 228,
       "comments": [
-        "31652 appropriately captures linear EBUS-TBNA of 1–2 mediastinal/hilar nodal stations (4R and 7).",
+        "31652 appropriately captures linear EBUS-TBNA of 1\u20132 mediastinal/hilar nodal stations (4R and 7).",
         "No navigation, radial EBUS, transbronchial biopsies, or BAL are documented, so no additional bronchoscopy CPT codes are added."
-      ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
       ]
     }
   },
   {
-    "note_text": "Pt: Alvarez, Maria || MRN: <MRN> || DOB: <DATE_TIME>\nDate of procedure: <DATE_TIME>\nSite: University Pulmonary Procedure Unit\nOperator: Patricia Lee, MD\n\nPre-procedure dx: RML nodule 2.4 cm with borderline PET uptake; borderline subcarinal node.\n\nPROCEDURE SUMMARY:\n- Deep sedation with anesthesiology; patient intubated with ETT.\n- Flexible bronchoscopy performed: no obvious endobronchial tumor.\n- Linear EBUS: Station 7 (1.1 cm, oval, homogeneous) sampled with 22G needle x3 passes; no other nodes met size criteria.\n- Scope exchanged for standard therapeutic bronchoscope; RML medial segment targeted.\n- Fluoroscopic guidance used. Transbronchial lung biopsies obtained from RML medial segment x4 forceps bites.\n- BAL not performed.\n- No significant bleeding; no pneumothorax on immediate fluoroscopic survey.\n\nIMPRESSION: Successful linear EBUS sampling of single subcarinal node and transbronchial lung biopsy of RML nodule.\nPLAN: Observe 2 hours post-procedure; outpatient follow-up with pathology results.\n",
+    "note_text": "Pt: Alvarez, Maria || MRN: 700002 || DOB: 02/14/1951\nDate of procedure: 09/03/2025\nSite: University Pulmonary Procedure Unit\nOperator: Patricia Lee, MD\n\nPre-procedure dx: RML nodule 2.4 cm with borderline PET uptake; borderline subcarinal node.\n\nPROCEDURE SUMMARY:\n- Deep sedation with anesthesiology; patient intubated with ETT.\n- Flexible bronchoscopy performed: no obvious endobronchial tumor.\n- Linear EBUS: Station 7 (1.1 cm, oval, homogeneous) sampled with 22G needle x3 passes; no other nodes met size criteria.\n- Scope exchanged for standard therapeutic bronchoscope; RML medial segment targeted.\n- Fluoroscopic guidance used. Transbronchial lung biopsies obtained from RML medial segment x4 forceps bites.\n- BAL not performed.\n- No significant bleeding; no pneumothorax on immediate fluoroscopic survey.\n\nIMPRESSION: Successful linear EBUS sampling of single subcarinal node and transbronchial lung biopsy of RML nodule.\nPLAN: Observe 2 hours post-procedure; outpatient follow-up with pathology results.\n",
     "cpt_codes": [
       31652,
       31628
@@ -394,18 +386,10 @@
         "EBUS sampling of a single subcarinal node supports 31652 rather than the 3+ station code 31653.",
         "Transbronchial lung biopsies confined to one lobe (RML) justify 31628; no navigation or radial EBUS is documented."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT NAME: Morgan, Elise || MRN: <MRN>\nDATE: <DATE_TIME>\nLOCATION: VA Interventional Pulmonology Lab\nPHYSICIAN: Lt Cdr Jonathan Hale, MD\n\nPRE-PROCEDURE DIAGNOSIS: Newly diagnosed left upper lobe adenocarcinoma with bulky mediastinal lymphadenopathy.\n\nPROCEDURE: FLEXIBLE BRONCHOSCOPY WITH LINEAR EBUS-GUIDED TRANSBRONCHIAL NEEDLE ASPIRATION\n- General anesthesia with ETT.\n- Standard airway inspection: tumor not visible endobronchially.\n- Linear EBUS performed.\n  * Station 2R: 1.5 cm, round, heterogeneous; sampled x3 passes.\n  * Station 4R: 1.8 cm, irregular, heterogeneous; sampled x3 passes.\n  * Station 4L: 1.4 cm, oval; sampled x3 passes.\n  * Station 7: 2.0 cm, heterogeneous with necrotic center; sampled x4 passes.\n- A total of 13 passes performed with a 22G needle.\n- No peripheral lesion was targeted and no transbronchial lung biopsies performed.\n- No immediate complications.\n\nPOST-PROCEDURE: Extubated in the procedure room and transported to PACU stable. CXR ordered in recovery.\nPLAN: Await cytology for nodal staging; multidisciplinary tumor board discussion.\n",
+    "note_text": "PATIENT NAME: Morgan, Elise || MRN: 700003\nDATE: 07/18/2025\nLOCATION: VA Interventional Pulmonology Lab\nPHYSICIAN: Lt Cdr Jonathan Hale, MD\n\nPRE-PROCEDURE DIAGNOSIS: Newly diagnosed left upper lobe adenocarcinoma with bulky mediastinal lymphadenopathy.\n\nPROCEDURE: FLEXIBLE BRONCHOSCOPY WITH LINEAR EBUS-GUIDED TRANSBRONCHIAL NEEDLE ASPIRATION\n- General anesthesia with ETT.\n- Standard airway inspection: tumor not visible endobronchially.\n- Linear EBUS performed.\n  * Station 2R: 1.5 cm, round, heterogeneous; sampled x3 passes.\n  * Station 4R: 1.8 cm, irregular, heterogeneous; sampled x3 passes.\n  * Station 4L: 1.4 cm, oval; sampled x3 passes.\n  * Station 7: 2.0 cm, heterogeneous with necrotic center; sampled x4 passes.\n- A total of 13 passes performed with a 22G needle.\n- No peripheral lesion was targeted and no transbronchial lung biopsies performed.\n- No immediate complications.\n\nPOST-PROCEDURE: Extubated in the procedure room and transported to PACU stable. CXR ordered in recovery.\nPLAN: Await cytology for nodal staging; multidisciplinary tumor board discussion.\n",
     "cpt_codes": [
       31653
     ],
@@ -582,17 +566,10 @@
         "Sampling four mediastinal nodal stations meets the 3-or-more station threshold for 31653.",
         "No peripheral navigation, radial EBUS, or transbronchial lung biopsies are described, so 31653 is the only bronchoscopy CPT reported."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Patient: Daniels, Corey || MRN: <MRN>\nService: Interventional Pulmonology\nDate: <DATE_TIME>\nFacility: Northside Academic Medical Center\nAttending: Sarah Chen, MD\n\nINDICATION: RLL peripheral nodule (2.0 cm, PET-avid) with mediastinal nodes (4R, 7) requiring diagnosis and staging.\n\nPROCEDURE: ROBOTIC NAVIGATIONAL BRONCHOSCOPY WITH LINEAR AND RADIAL EBUS\n- General anesthesia with oral ETT.\n- Ion robotic bronchoscopy used for navigation to RLL lateral basal segment; registration error <2 mm.\n- Radial EBUS miniprobe advanced through the extended working channel:\n  * Concentric radial view within the nodule confirmed tool-in-lesion.\n- Transbronchial lung biopsies x5 from RLL lateral basal segment under fluoroscopy.\n- No BAL performed.\n- Linear EBUS performed afterwards for mediastinal staging:\n  * Station 4R sampled x3 passes.\n  * Station 7 sampled x3 passes.\n  * Station 10R sampled x3 passes.\n- Total EBUS passes: 9.\n- No immediate complications; minimal bleeding controlled with suction.\n\nPOST-PROCEDURE: Extubated in PACU, stable. CXR ordered.\nPLAN: Await pathology for both RLL nodule and nodal staging; follow up in tumor clinic.\n",
+    "note_text": "Patient: Daniels, Corey || MRN: 700004\nService: Interventional Pulmonology\nDate: 10/02/2025\nFacility: Northside Academic Medical Center\nAttending: Sarah Chen, MD\n\nINDICATION: RLL peripheral nodule (2.0 cm, PET-avid) with mediastinal nodes (4R, 7) requiring diagnosis and staging.\n\nPROCEDURE: ROBOTIC NAVIGATIONAL BRONCHOSCOPY WITH LINEAR AND RADIAL EBUS\n- General anesthesia with oral ETT.\n- Ion robotic bronchoscopy used for navigation to RLL lateral basal segment; registration error <2 mm.\n- Radial EBUS miniprobe advanced through the extended working channel:\n  * Concentric radial view within the nodule confirmed tool-in-lesion.\n- Transbronchial lung biopsies x5 from RLL lateral basal segment under fluoroscopy.\n- No BAL performed.\n- Linear EBUS performed afterwards for mediastinal staging:\n  * Station 4R sampled x3 passes.\n  * Station 7 sampled x3 passes.\n  * Station 10R sampled x3 passes.\n- Total EBUS passes: 9.\n- No immediate complications; minimal bleeding controlled with suction.\n\nPOST-PROCEDURE: Extubated in PACU, stable. CXR ordered.\nPLAN: Await pathology for both RLL nodule and nodal staging; follow up in tumor clinic.\n",
     "cpt_codes": [
       31653,
       31627,
@@ -856,17 +833,10 @@
         "Robotic navigation to an RLL lesion supports 31627, with radial EBUS confirmation captured by add-on code 31654.",
         "Linear EBUS staging of three nodal stations (4R, 7, 10R) supports 31653, and transbronchial lung biopsies from a single lobe justify additional code 31628."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Patient: Cho, David || MRN: <MRN>\nDate: <DATE_TIME>\nLocation: City Hospital Endoscopy Center\nAttending bronchoscopist: Laura Kim, MD\n\nINDICATION: Peripheral LUL nodule (1.5 cm, PET-avid) referred for bronchoscopic biopsy and fiducial placement for planned stereotactic body radiation therapy.\n\nPROCEDURE: NAVIGATIONAL BRONCHOSCOPY WITH RADIAL EBUS, TRANSBRONCHIAL LUNG BIOPSY, AND FIDUCIAL PLACEMENT\n- General anesthesia; patient intubated with ETT.\n- Electromagnetic navigation (Illumisite system) used to register pre-procedure CT; registration error 3 mm.\n- Navigated to target in apicoposterior segment of LUL.\n- Radial EBUS miniprobe advanced:\n  * Eccentric view confirming adjacency to the lesion.\n- Transbronchial lung biopsies x4 from LUL apicoposterior segment.\n- No BAL performed.\n- Through the extended working channel, three gold fiducial markers were deployed around the lesion under fluoroscopic guidance.\n- No mediastinal staging performed.\n- No immediate complications.\n\nPLAN: Same-day discharge after observation; radiation oncology to proceed with planning using fiducial markers.\n",
+    "note_text": "Patient: Cho, David || MRN: 700005\nDate: 06/11/2025\nLocation: City Hospital Endoscopy Center\nAttending bronchoscopist: Laura Kim, MD\n\nINDICATION: Peripheral LUL nodule (1.5 cm, PET-avid) referred for bronchoscopic biopsy and fiducial placement for planned stereotactic body radiation therapy.\n\nPROCEDURE: NAVIGATIONAL BRONCHOSCOPY WITH RADIAL EBUS, TRANSBRONCHIAL LUNG BIOPSY, AND FIDUCIAL PLACEMENT\n- General anesthesia; patient intubated with ETT.\n- Electromagnetic navigation (Illumisite system) used to register pre-procedure CT; registration error 3 mm.\n- Navigated to target in apicoposterior segment of LUL.\n- Radial EBUS miniprobe advanced:\n  * Eccentric view confirming adjacency to the lesion.\n- Transbronchial lung biopsies x4 from LUL apicoposterior segment.\n- No BAL performed.\n- Through the extended working channel, three gold fiducial markers were deployed around the lesion under fluoroscopic guidance.\n- No mediastinal staging performed.\n- No immediate complications.\n\nPLAN: Same-day discharge after observation; radiation oncology to proceed with planning using fiducial markers.\n",
     "cpt_codes": [
       "31626",
       "31628",
@@ -1130,17 +1100,10 @@
         "Computer-assisted electromagnetic navigation to a peripheral LUL lesion supports 31627, with radial EBUS verification captured by add-on code 31654.",
         "Transbronchial lung biopsies in a single lobe support 31628, and deployment of multiple fiducial markers around the lesion is reported with 31626."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "NAME: Harris, Evelyn || MRN: <MRN>\nDATE OF SERVICE: <DATE_TIME>\nLOCATION: Advanced Endoscopy Suite\nPHYSICIAN: Michael Grant, MD\n\nPRE-PROCEDURE DX: Early squamous cell carcinoma involving the right mainstem bronchus status post Photofrin infusion 48 hours prior.\n\nPROCEDURE: FLEXIBLE BRONCHOSCOPY WITH PHOTODYNAMIC THERAPY LIGHT APPLICATION\n- Deep sedation, native airway.\n- Diagnostic bronchoscopy performed to the segmental level: flat, slightly raised plaque along medial wall of right mainstem; no other lesions.\n- PDT light fiber positioned over the lesion.\n- Light application at prescribed energy density over 20 minutes, covering entire involved segment.\n- No biopsies, no stent placement, no debulking with other modalities.\n- No immediate airway compromise or bleeding.\n\nIMPRESSION: Photodynamic therapy light application to known superficial squamous lesion in right mainstem.\nPLAN: Admit overnight for observation, maintain light precautions; follow-up bronchoscopy in 6 weeks.\n",
+    "note_text": "NAME: Harris, Evelyn || MRN: 700006\nDATE OF SERVICE: 04/29/2025\nLOCATION: Advanced Endoscopy Suite\nPHYSICIAN: Michael Grant, MD\n\nPRE-PROCEDURE DX: Early squamous cell carcinoma involving the right mainstem bronchus status post Photofrin infusion 48 hours prior.\n\nPROCEDURE: FLEXIBLE BRONCHOSCOPY WITH PHOTODYNAMIC THERAPY LIGHT APPLICATION\n- Deep sedation, native airway.\n- Diagnostic bronchoscopy performed to the segmental level: flat, slightly raised plaque along medial wall of right mainstem; no other lesions.\n- PDT light fiber positioned over the lesion.\n- Light application at prescribed energy density over 20 minutes, covering entire involved segment.\n- No biopsies, no stent placement, no debulking with other modalities.\n- No immediate airway compromise or bleeding.\n\nIMPRESSION: Photodynamic therapy light application to known superficial squamous lesion in right mainstem.\nPLAN: Admit overnight for observation, maintain light precautions; follow-up bronchoscopy in 6 weeks.\n",
     "cpt_codes": [
       31641
     ],
@@ -1317,17 +1280,10 @@
         "Photodynamic therapy applied to an endobronchial tumor without additional debulking or stent placement is best captured with 31641 alone.",
         "No distinct biopsy, stent placement, or pleural procedure is documented, so no additional CPT codes are added."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: O'Neil, Patrick || MRN: <MRN>\nDATE: <DATE_TIME>\nLOCATION: Thoracic Procedure OR\nSURGEON: Amanda Brooks, MD\n\nINDICATION: Malignant obstruction of left mainstem bronchus from locally advanced squamous cell carcinoma with dyspnea and post-obstructive pneumonia.\n\nPROCEDURE: RIGID BRONCHOSCOPY WITH TUMOR DEBULKING AND BRONCHIAL STENT PLACEMENT\n- General anesthesia with rigid bronchoscopy; flexible therapeutic bronchoscope used through rigid barrel.\n- Endobronchial tumor nearly occluding left mainstem (90% obstruction).\n- Debulking performed with mechanical coring and flexible cryotherapy until lumen opened to ~40%.\n- After debulking, a covered SEMS 12 x 40 mm stent deployed in the left mainstem with good position.\n- No additional lobar or segmental stents placed.\n- Moderate bleeding controlled with iced saline and suction.\n- No pleural procedures performed.\n\nPOST-PROCEDURE: Patient remained intubated briefly, then extubated in PACU, breathing improved.\nPLAN: Broad-spectrum antibiotics for post-obstructive pneumonia; follow up in IP clinic in 2 weeks.\n",
+    "note_text": "PATIENT: O'Neil, Patrick || MRN: 700007\nDATE: 03/05/2025\nLOCATION: Thoracic Procedure OR\nSURGEON: Amanda Brooks, MD\n\nINDICATION: Malignant obstruction of left mainstem bronchus from locally advanced squamous cell carcinoma with dyspnea and post-obstructive pneumonia.\n\nPROCEDURE: RIGID BRONCHOSCOPY WITH TUMOR DEBULKING AND BRONCHIAL STENT PLACEMENT\n- General anesthesia with rigid bronchoscopy; flexible therapeutic bronchoscope used through rigid barrel.\n- Endobronchial tumor nearly occluding left mainstem (90% obstruction).\n- Debulking performed with mechanical coring and flexible cryotherapy until lumen opened to ~40%.\n- After debulking, a covered SEMS 12 x 40 mm stent deployed in the left mainstem with good position.\n- No additional lobar or segmental stents placed.\n- Moderate bleeding controlled with iced saline and suction.\n- No pleural procedures performed.\n\nPOST-PROCEDURE: Patient remained intubated briefly, then extubated in PACU, breathing improved.\nPLAN: Broad-spectrum antibiotics for post-obstructive pneumonia; follow up in IP clinic in 2 weeks.\n",
     "cpt_codes": [
       31641,
       31636
@@ -1533,17 +1489,10 @@
         "Rigid bronchoscopy with mechanical and cryotherapy debulking of a malignant left mainstem obstruction supports 31641.",
         "Placement of a single covered bronchial SEMS in the left mainstem is separately reported with 31636; no pleural or BLVR procedures were performed."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "NAME: Lyons, Sheryl || MRN: <MRN>\nDATE: <DATE_TIME>\nLOCATION: Main OR, University Hospital\nSURGEON: Daniel Rivera, MD\n\nPRE-OP DX: Central airway obstruction from metastatic breast cancer with associated large recurrent right malignant pleural effusion.\n\nPROCEDURE: RIGID BRONCHOSCOPY WITH TUMOR DESTRUCTION AND STENT PLACEMENT, FOLLOWED BY TUNNELED PLEURAL CATHETER INSERTION\n- General anesthesia with rigid bronchoscopy.\n- Tumor debulking with mechanical coring and argon plasma coagulation of right mainstem bronchus.\n- Placement of a covered SEMS stent (10 x 40 mm) in right mainstem.\n- After completing bronchoscopy, patient repositioned in lateral decubitus.\n- Ultrasound-guided insertion of tunneled pleural catheter (PleurX) into right hemithorax; 1.7 L serosanguinous fluid drained.\n- Catheter tunneled and cuff secured; connected to drainage bottle.\n- No talc pleurodesis performed.\n\nPOST-PROCEDURE: Extubated in PACU, oxygen requirement decreased. Catheter draining well.\nPLAN: Outpatient drainage protocol; oncology follow up.\n",
+    "note_text": "NAME: Lyons, Sheryl || MRN: 700008\nDATE: 11/21/2025\nLOCATION: Main OR, University Hospital\nSURGEON: Daniel Rivera, MD\n\nPRE-OP DX: Central airway obstruction from metastatic breast cancer with associated large recurrent right malignant pleural effusion.\n\nPROCEDURE: RIGID BRONCHOSCOPY WITH TUMOR DESTRUCTION AND STENT PLACEMENT, FOLLOWED BY TUNNELED PLEURAL CATHETER INSERTION\n- General anesthesia with rigid bronchoscopy.\n- Tumor debulking with mechanical coring and argon plasma coagulation of right mainstem bronchus.\n- Placement of a covered SEMS stent (10 x 40 mm) in right mainstem.\n- After completing bronchoscopy, patient repositioned in lateral decubitus.\n- Ultrasound-guided insertion of tunneled pleural catheter (PleurX) into right hemithorax; 1.7 L serosanguinous fluid drained.\n- Catheter tunneled and cuff secured; connected to drainage bottle.\n- No talc pleurodesis performed.\n\nPOST-PROCEDURE: Extubated in PACU, oxygen requirement decreased. Catheter draining well.\nPLAN: Outpatient drainage protocol; oncology follow up.\n",
     "cpt_codes": [
       31641,
       31636,
@@ -1778,17 +1727,10 @@
         "Rigid bronchoscopy with tumor destruction and covered SEMS placement in the right mainstem is captured by 31641 and 31636.",
         "A tunneled indwelling pleural catheter placed under ultrasound guidance for malignant effusion is separately reported with 32550; no talc pleurodesis or additional pleural procedure is documented."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Jensen, Robert || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME>\nLocation: Community Pulmonary Lab\nPhysician: Linda Foster, MD\n\nIndication: Nonresolving right lower lobe pneumonia in immunosuppressed patient after renal transplant.\n\nProcedure: Flexible bronchoscopy with bronchoalveolar lavage\n- Moderate conscious sedation; native airway with nasal trumpet.\n- Bronchoscope advanced to RLL segments; no significant secretions or endobronchial lesions.\n- BAL performed in RLL superior segment: 120 mL instilled in four 30 mL aliquots, ~70 mL return.\n- Samples sent for culture, cytology, fungal and viral studies.\n- No biopsies, no EBUS, no navigation.\n- Tolerated well without hypoxia or bleeding.\n\nPlan: Resume home oxygen as needed; follow up with transplant team when cultures return.\n",
+    "note_text": "Pt: Jensen, Robert || MRN: 700009 || DOB: 10/09/1949\nDate: 05/04/2025\nLocation: Community Pulmonary Lab\nPhysician: Linda Foster, MD\n\nIndication: Nonresolving right lower lobe pneumonia in immunosuppressed patient after renal transplant.\n\nProcedure: Flexible bronchoscopy with bronchoalveolar lavage\n- Moderate conscious sedation; native airway with nasal trumpet.\n- Bronchoscope advanced to RLL segments; no significant secretions or endobronchial lesions.\n- BAL performed in RLL superior segment: 120 mL instilled in four 30 mL aliquots, ~70 mL return.\n- Samples sent for culture, cytology, fungal and viral studies.\n- No biopsies, no EBUS, no navigation.\n- Tolerated well without hypoxia or bleeding.\n\nPlan: Resume home oxygen as needed; follow up with transplant team when cultures return.\n",
     "cpt_codes": [
       31624
     ],
@@ -1965,18 +1907,10 @@
         "Bronchoalveolar lavage performed in a single lobe without additional biopsy or EBUS supports 31624 as the sole bronchoscopy code.",
         "Diagnostic bronchoscopy (31622) is inherent to 31624 and appropriately not billed separately."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: Khan, Aisha || MRN: <MRN>\nDATE: <DATE_TIME>\nLOCATION: Ultrasound Procedure Suite\nPHYSICIAN: Eric Morales, MD\n\nINDICATION: Recurrent symptomatic left pleural effusion due to hepatic hydrothorax despite optimized medical therapy.\n\nPROCEDURE: ULTRASOUND-GUIDED INSERTION OF TUNNELED INDWELLING PLEURAL CATHETER\n- Moderate IV sedation; patient in supine position with head elevated.\n- Bedside ultrasound confirmed large free-flowing left pleural effusion, no loculations.\n- Entry site marked in midaxillary line; local anesthesia with lidocaine.\n- Pleural space entered using Seldinger technique; wire advanced under ultrasound.\n- Subcutaneous tunnel created; tunneled catheter (PleurX) pulled through tunnel.\n- Catheter advanced into pleural space; cuff positioned in tunnel; sutured and dressing applied.\n- Approximately 1.5 L clear yellow fluid drained without hemodynamic compromise.\n- No pleurodesis agent instilled.\n\nPLAN: Home drainage three times weekly with visiting nurse; follow up in liver clinic.\n",
+    "note_text": "PATIENT: Khan, Aisha || MRN: 700010\nDATE: 01/30/2025\nLOCATION: Ultrasound Procedure Suite\nPHYSICIAN: Eric Morales, MD\n\nINDICATION: Recurrent symptomatic left pleural effusion due to hepatic hydrothorax despite optimized medical therapy.\n\nPROCEDURE: ULTRASOUND-GUIDED INSERTION OF TUNNELED INDWELLING PLEURAL CATHETER\n- Moderate IV sedation; patient in supine position with head elevated.\n- Bedside ultrasound confirmed large free-flowing left pleural effusion, no loculations.\n- Entry site marked in midaxillary line; local anesthesia with lidocaine.\n- Pleural space entered using Seldinger technique; wire advanced under ultrasound.\n- Subcutaneous tunnel created; tunneled catheter (PleurX) pulled through tunnel.\n- Catheter advanced into pleural space; cuff positioned in tunnel; sutured and dressing applied.\n- Approximately 1.5 L clear yellow fluid drained without hemodynamic compromise.\n- No pleurodesis agent instilled.\n\nPLAN: Home drainage three times weekly with visiting nurse; follow up in liver clinic.\n",
     "cpt_codes": [
       32550
     ],
@@ -2152,13 +2086,6 @@
       "comments": [
         "Ultrasound-guided placement of a tunneled pleural catheter with cuff for recurrent effusion is accurately coded with 32550.",
         "No thoracentesis, thoracoscopy, or pleurodesis is documented beyond the IPC insertion, so no additional pleural CPT codes are assigned."
-      ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
       ]
     }
   }

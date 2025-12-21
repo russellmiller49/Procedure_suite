@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 65/M\nDate: <DATE_TIME>\nIndication: Left mainstem obstruction from metastatic renal cell carcinoma with dyspnea and post-obstructive pneumonia.\nProcedure: Rigid bronchoscopy with mechanical debulking of left mainstem tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Polypoid vascular tumor arising from lateral wall of proximal left mainstem causing ~80% lumen compromise; purulent secretions distally.\nIntervention: Tumor was debulked mechanically using rigid coring, suction, and forceps. A microdebrider was used to excise residual tumor tissue until a near-circular lumen was achieved. Multiple tumor fragments were removed and sent for pathology. Residual narrowing estimated at 25%; no stent placed due to anticipated systemic therapy response.\nComplications: Brisk bleeding during initial passes controlled with iced saline, topical epinephrine, and temporary tamponade with the rigid barrel.\nDisposition: Remained intubated and transferred to the MICU for overnight observation and treatment of pneumonia.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Ian Murphy  MRN: SYNIP0011  Age/Sex: 65/M\nDate: 2025-02-28\nIndication: Left mainstem obstruction from metastatic renal cell carcinoma with dyspnea and post-obstructive pneumonia.\nProcedure: Rigid bronchoscopy with mechanical debulking of left mainstem tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Polypoid vascular tumor arising from lateral wall of proximal left mainstem causing ~80% lumen compromise; purulent secretions distally.\nIntervention: Tumor was debulked mechanically using rigid coring, suction, and forceps. A microdebrider was used to excise residual tumor tissue until a near-circular lumen was achieved. Multiple tumor fragments were removed and sent for pathology. Residual narrowing estimated at 25%; no stent placed due to anticipated systemic therapy response.\nComplications: Brisk bleeding during initial passes controlled with iced saline, topical epinephrine, and temporary tamponade with the rigid barrel.\nDisposition: Remained intubated and transferred to the MICU for overnight observation and treatment of pneumonia.",
     "cpt_codes": [
       31640
     ],
@@ -34,7 +34,7 @@
       "bronch_guidance": "Rigid bronchoscopy",
       "bronch_immediate_complications": "Moderate bleeding, controlled",
       "ebl_ml": 120,
-      "bleeding_severity": "Moderate (50–200mL)",
+      "bleeding_severity": "Moderate (50\u2013200mL)",
       "pneumothorax": false,
       "pneumothorax_intervention": null,
       "hypoxia_respiratory_failure": false,
@@ -111,18 +111,10 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 74/F\nDate: <DATE_TIME>\nIndication: Right bronchus intermedius obstruction from non-small cell lung cancer with recurrent post-obstructive pneumonia.\nProcedure: Rigid bronchoscopy with mechanical debulking of tumor in bronchus intermedius.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Exophytic tumor in bronchus intermedius just distal to right upper lobe takeoff causing ~75% obstruction with distal mucous plugging.\nIntervention: Mechanical debulking was performed using the rigid barrel, suction, and forceps to core out tumor and remove large fragments. A microdebrider was then used to excise residual tumor and smooth the airway wall. Final airway lumen had ~30% residual narrowing; no stent was placed.\nComplications: Mild bleeding controlled with cold saline and dilute epinephrine.\nDisposition: Extubated in OR and admitted to medical floor for pneumonia management.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Doris Hill  MRN: SYNIP0012  Age/Sex: 74/F\nDate: 2025-04-09\nIndication: Right bronchus intermedius obstruction from non-small cell lung cancer with recurrent post-obstructive pneumonia.\nProcedure: Rigid bronchoscopy with mechanical debulking of tumor in bronchus intermedius.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Exophytic tumor in bronchus intermedius just distal to right upper lobe takeoff causing ~75% obstruction with distal mucous plugging.\nIntervention: Mechanical debulking was performed using the rigid barrel, suction, and forceps to core out tumor and remove large fragments. A microdebrider was then used to excise residual tumor and smooth the airway wall. Final airway lumen had ~30% residual narrowing; no stent was placed.\nComplications: Mild bleeding controlled with cold saline and dilute epinephrine.\nDisposition: Extubated in OR and admitted to medical floor for pneumonia management.",
     "cpt_codes": [
       31640
     ],
@@ -163,7 +155,7 @@
       "final_diagnosis_prelim": "Central NSCLC involving bronchus intermedius",
       "molecular_testing_requested": true,
       "disposition": "Floor admission",
-      "follow_up_plan": "Bronchoscopy in 4–6 weeks to assess for recurrent obstruction; coordination with oncology for systemic therapy.",
+      "follow_up_plan": "Bronchoscopy in 4\u20136 weeks to assess for recurrent obstruction; coordination with oncology for systemic therapy.",
       "billing": {
         "cpt_codes": [
           {
@@ -233,18 +225,10 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 68/M\nDate: <DATE_TIME>\nIndication: Distal tracheal tumor with near-critical obstruction and impending respiratory failure.\nProcedure: Rigid bronchoscopy with mechanical debulking of tracheal tumor and silicone tracheal stent placement.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: Bulky exophytic tumor at distal trachea extending to carina causing ~95% obstruction; right mainstem partially involved; significant work of breathing pre-procedure.\nIntervention: Aggressive mechanical debulking was performed using rigid coring, suction, forceps, and microdebrider until a patent lumen was created. Multiple tumor fragments were removed and sent for histology. A 14 x 40 mm silicone stent was then deployed across the distal tracheal lesion, bridging the carina, with good expansion and coverage. Final lumen showed approximately 30% residual narrowing but robust airflow to both mainstem bronchi.\nComplications: Mild bleeding controlled with iced saline and topical epinephrine; no major complications.\nDisposition: Remained intubated and transferred to ICU for close airway monitoring.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Anthony Green  MRN: SYNIP0013  Age/Sex: 68/M\nDate: 2025-03-01\nIndication: Distal tracheal tumor with near-critical obstruction and impending respiratory failure.\nProcedure: Rigid bronchoscopy with mechanical debulking of tracheal tumor and silicone tracheal stent placement.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: Bulky exophytic tumor at distal trachea extending to carina causing ~95% obstruction; right mainstem partially involved; significant work of breathing pre-procedure.\nIntervention: Aggressive mechanical debulking was performed using rigid coring, suction, forceps, and microdebrider until a patent lumen was created. Multiple tumor fragments were removed and sent for histology. A 14 x 40 mm silicone stent was then deployed across the distal tracheal lesion, bridging the carina, with good expansion and coverage. Final lumen showed approximately 30% residual narrowing but robust airflow to both mainstem bronchi.\nComplications: Mild bleeding controlled with iced saline and topical epinephrine; no major complications.\nDisposition: Remained intubated and transferred to ICU for close airway monitoring.",
     "cpt_codes": [
       31640,
       31631
@@ -279,14 +263,14 @@
       "bronch_guidance": "Rigid bronchoscopy",
       "bronch_immediate_complications": "Mild bleeding only",
       "ebl_ml": 60,
-      "bleeding_severity": "Mild (<50–75mL documented)",
+      "bleeding_severity": "Mild (<50\u201375mL documented)",
       "pneumothorax": false,
       "pneumothorax_intervention": null,
       "hypoxia_respiratory_failure": false,
       "final_diagnosis_prelim": "Endobronchial carcinoma causing distal tracheal obstruction, debulked and stented",
       "molecular_testing_requested": true,
       "disposition": "ICU admission",
-      "follow_up_plan": "ICU monitoring; repeat bronchoscopy in 2–4 weeks for stent assessment and debulking of any recurrent tumor.",
+      "follow_up_plan": "ICU monitoring; repeat bronchoscopy in 2\u20134 weeks for stent assessment and debulking of any recurrent tumor.",
       "billing": {
         "cpt_codes": [
           {
@@ -382,18 +366,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 67/F\nDate: <DATE_TIME>\nIndication: Post-radiation polypoid granulation tissue in trachea causing exertional dyspnea and cough.\nProcedure: Flexible and rigid bronchoscopy with mechanical resection of tracheal granulation tissue.\nAnesthesia: General anesthesia with ETT.\nFindings: Pedunculated polypoid tissue on anterior tracheal wall ~3 cm above carina causing ~60% narrowing; surrounding mucosa fibrotic.\nIntervention: Lesion was grasped and removed using snare resection, followed by microdebrider shaving of residual granulation and rigid coring to smooth the airway. Small fragments were suctioned and sent to pathology. Final lumen with ~15% residual narrowing; no stent placed.\nComplications: Minimal bleeding controlled with cold saline.\nDisposition: Extubated in OR and discharged to home the same day after observation.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Nina Alvarez  MRN: SYNIP0014  Age/Sex: 67/F\nDate: 2025-02-05\nIndication: Post-radiation polypoid granulation tissue in trachea causing exertional dyspnea and cough.\nProcedure: Flexible and rigid bronchoscopy with mechanical resection of tracheal granulation tissue.\nAnesthesia: General anesthesia with ETT.\nFindings: Pedunculated polypoid tissue on anterior tracheal wall ~3 cm above carina causing ~60% narrowing; surrounding mucosa fibrotic.\nIntervention: Lesion was grasped and removed using snare resection, followed by microdebrider shaving of residual granulation and rigid coring to smooth the airway. Small fragments were suctioned and sent to pathology. Final lumen with ~15% residual narrowing; no stent placed.\nComplications: Minimal bleeding controlled with cold saline.\nDisposition: Extubated in OR and discharged to home the same day after observation.",
     "cpt_codes": [
       31640
     ],
@@ -434,7 +410,7 @@
       "final_diagnosis_prelim": "Benign granulation tissue in trachea, resected",
       "molecular_testing_requested": false,
       "disposition": "Outpatient discharge",
-      "follow_up_plan": "Flexible bronchoscopy in 6–8 weeks to evaluate for recurrent granulation tissue.",
+      "follow_up_plan": "Flexible bronchoscopy in 6\u20138 weeks to evaluate for recurrent granulation tissue.",
       "billing": {
         "cpt_codes": [
           {
@@ -504,18 +480,10 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 52/M\nDate: <DATE_TIME>\nIndication: Left mainstem endobronchial carcinoid tumor discovered on surveillance CT with intermittent hemoptysis.\nProcedure: Rigid bronchoscopy with mechanical excision of carcinoid tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Smooth, vascular, pedunculated lesion arising from the medial wall of proximal left mainstem bronchus causing ~65% obstruction; distal lung aerated.\nIntervention: Tumor stalk was snared and resected en bloc, followed by rigid coring and microdebrider removal of residual tissue at the base. Margins appeared grossly clear. Specimen sent for histology. Airway lumen restored with ~10–15% residual irregularity.\nComplications: Mild bleeding controlled with iced saline and topical epinephrine.\nDisposition: Extubated in OR and discharged to ward in stable condition.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: James Porter  MRN: SYNIP0015  Age/Sex: 52/M\nDate: 2025-04-15\nIndication: Left mainstem endobronchial carcinoid tumor discovered on surveillance CT with intermittent hemoptysis.\nProcedure: Rigid bronchoscopy with mechanical excision of carcinoid tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Smooth, vascular, pedunculated lesion arising from the medial wall of proximal left mainstem bronchus causing ~65% obstruction; distal lung aerated.\nIntervention: Tumor stalk was snared and resected en bloc, followed by rigid coring and microdebrider removal of residual tissue at the base. Margins appeared grossly clear. Specimen sent for histology. Airway lumen restored with ~10\u201315% residual irregularity.\nComplications: Mild bleeding controlled with iced saline and topical epinephrine.\nDisposition: Extubated in OR and discharged to ward in stable condition.",
     "cpt_codes": [
       31640
     ],
@@ -626,18 +594,10 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 62/F\nDate: <DATE_TIME>\nIndication: Bronchus intermedius tumor with acute worsening dyspnea and wheeze.\nProcedure: Rigid bronchoscopy with mechanical debulking of tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Irregular friable tumor occupying ~85% of the bronchus intermedius lumen with distal mucous plugging.\nIntervention: Tumor was cored out mechanically using the rigid barrel; large fragments were removed with suction and forceps. A microdebrider was used to excise residual tumor along the airway wall. Final lumen with ~30% residual narrowing; no stent was placed due to anticipated systemic therapy.\nComplications: Mild bleeding controlled with cold saline and topical epinephrine.\nDisposition: Extubated in OR and admitted to oncology ward.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Harriet Cole  MRN: SYNIP0016  Age/Sex: 62/F\nDate: 2025-03-19\nIndication: Bronchus intermedius tumor with acute worsening dyspnea and wheeze.\nProcedure: Rigid bronchoscopy with mechanical debulking of tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Irregular friable tumor occupying ~85% of the bronchus intermedius lumen with distal mucous plugging.\nIntervention: Tumor was cored out mechanically using the rigid barrel; large fragments were removed with suction and forceps. A microdebrider was used to excise residual tumor along the airway wall. Final lumen with ~30% residual narrowing; no stent was placed due to anticipated systemic therapy.\nComplications: Mild bleeding controlled with cold saline and topical epinephrine.\nDisposition: Extubated in OR and admitted to oncology ward.",
     "cpt_codes": [
       31640
     ],
@@ -748,18 +708,10 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 80/M\nDate: <DATE_TIME>\nIndication: Emergent central airway obstruction from endobronchial tumor with acute respiratory distress.\nProcedure: Emergent rigid bronchoscopy with mechanical debulking of tracheal and carinal tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Large friable tumor occupying distal trachea and carina with involvement of right mainstem, causing >90% obstruction; copious secretions.\nIntervention: Rapid mechanical debulking using rigid coring, suction, and forceps was performed to remove obstructing tumor bulk. Microdebrider was used to excise residual tumor at carina. Airway patency restored with ~30–40% residual narrowing; no stent placed due to hemodynamic instability and need for short procedure.\nComplications: Transient hypotension and tachycardia responded to fluids and vasopressors; bleeding moderate but controlled.\nDisposition: Remained intubated and transferred to MICU for continued care.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Walter Young  MRN: SYNIP0017  Age/Sex: 80/M\nDate: 2025-01-30\nIndication: Emergent central airway obstruction from endobronchial tumor with acute respiratory distress.\nProcedure: Emergent rigid bronchoscopy with mechanical debulking of tracheal and carinal tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Large friable tumor occupying distal trachea and carina with involvement of right mainstem, causing >90% obstruction; copious secretions.\nIntervention: Rapid mechanical debulking using rigid coring, suction, and forceps was performed to remove obstructing tumor bulk. Microdebrider was used to excise residual tumor at carina. Airway patency restored with ~30\u201340% residual narrowing; no stent placed due to hemodynamic instability and need for short procedure.\nComplications: Transient hypotension and tachycardia responded to fluids and vasopressors; bleeding moderate but controlled.\nDisposition: Remained intubated and transferred to MICU for continued care.",
     "cpt_codes": [
       31640
     ],
@@ -793,7 +745,7 @@
       "bronch_guidance": "Rigid bronchoscopy",
       "bronch_immediate_complications": "Moderate bleeding and transient hypotension",
       "ebl_ml": 150,
-      "bleeding_severity": "Moderate (50–200mL)",
+      "bleeding_severity": "Moderate (50\u2013200mL)",
       "pneumothorax": false,
       "pneumothorax_intervention": null,
       "hypoxia_respiratory_failure": false,
@@ -872,18 +824,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 55/F\nDate: <DATE_TIME>\nIndication: Right mainstem endobronchial tumor with cough and wheezing, incidentally found on CT.\nProcedure: Rigid bronchoscopy with mechanical excision of right mainstem tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Sessile lesion along lateral wall of proximal right mainstem causing ~60% narrowing; no collapse distally.\nIntervention: Mechanical debulking using snare resection, rigid coring, and microdebrider was performed. All visible tumor was removed; fragments were sent for histology. Final lumen had ~10% residual irregularity.\nComplications: Minimal bleeding; no hypoxia.\nDisposition: Extubated in OR and discharged home after observation.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Chloe Harris  MRN: SYNIP0018  Age/Sex: 55/F\nDate: 2025-02-11\nIndication: Right mainstem endobronchial tumor with cough and wheezing, incidentally found on CT.\nProcedure: Rigid bronchoscopy with mechanical excision of right mainstem tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Sessile lesion along lateral wall of proximal right mainstem causing ~60% narrowing; no collapse distally.\nIntervention: Mechanical debulking using snare resection, rigid coring, and microdebrider was performed. All visible tumor was removed; fragments were sent for histology. Final lumen had ~10% residual irregularity.\nComplications: Minimal bleeding; no hypoxia.\nDisposition: Extubated in OR and discharged home after observation.",
     "cpt_codes": [
       31640
     ],
@@ -994,18 +938,10 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 69/M\nDate: <DATE_TIME>\nIndication: Mid-tracheal squamous cell carcinoma with progressive dyspnea and cough.\nProcedure: Rigid bronchoscopy with mechanical debulking of mid-tracheal tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Fungating mass on posterior mid-tracheal wall causing ~75% narrowing; distal airways patent.\nIntervention: Tumor was debulked using rigid coring, snare excision, and microdebrider until a patent lumen was achieved. Multiple tumor fragments were removed and sent to pathology. No stent was placed given adequate residual lumen and planned radiation.\nComplications: Mild bleeding controlled with cold saline and dilute epinephrine.\nDisposition: Extubated in OR and admitted overnight for observation.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Xavier Bennett  MRN: SYNIP0019  Age/Sex: 69/M\nDate: 2025-04-01\nIndication: Mid-tracheal squamous cell carcinoma with progressive dyspnea and cough.\nProcedure: Rigid bronchoscopy with mechanical debulking of mid-tracheal tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Fungating mass on posterior mid-tracheal wall causing ~75% narrowing; distal airways patent.\nIntervention: Tumor was debulked using rigid coring, snare excision, and microdebrider until a patent lumen was achieved. Multiple tumor fragments were removed and sent to pathology. No stent was placed given adequate residual lumen and planned radiation.\nComplications: Mild bleeding controlled with cold saline and dilute epinephrine.\nDisposition: Extubated in OR and admitted overnight for observation.",
     "cpt_codes": [
       31640
     ],
@@ -1046,7 +982,7 @@
       "final_diagnosis_prelim": "Mid-tracheal squamous cell carcinoma, debulked",
       "molecular_testing_requested": true,
       "disposition": "Floor admission",
-      "follow_up_plan": "Radiation oncology consultation; repeat bronchoscopy in 4–6 weeks.",
+      "follow_up_plan": "Radiation oncology consultation; repeat bronchoscopy in 4\u20136 weeks.",
       "billing": {
         "cpt_codes": [
           {
@@ -1116,18 +1052,10 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: <PERSON>  MRN: <MRN>  Age/Sex: 73/F\nDate: <DATE_TIME>\nIndication: Distal tracheal tumor recurrence after chemoradiation with new dyspnea.\nProcedure: Rigid bronchoscopy with mechanical debulking of distal tracheal tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Irregular nodular tumor at distal trachea just above carina causing ~70% narrowing; prior scar present.\nIntervention: Mechanical debulking with rigid coring, microdebrider, and forceps was used to excise tumor tissue and widen the lumen. Multiple fragments removed and sent for pathology. Final lumen with ~25% residual narrowing; no stent placed given adequate caliber and prior radiation changes.\nComplications: Mild bleeding; no hypoxia or pneumothorax.\nDisposition: Extubated in OR and admitted overnight for observation.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: Evelyn Ross  MRN: SYNIP0020  Age/Sex: 73/F\nDate: 2025-03-10\nIndication: Distal tracheal tumor recurrence after chemoradiation with new dyspnea.\nProcedure: Rigid bronchoscopy with mechanical debulking of distal tracheal tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy.\nFindings: Irregular nodular tumor at distal trachea just above carina causing ~70% narrowing; prior scar present.\nIntervention: Mechanical debulking with rigid coring, microdebrider, and forceps was used to excise tumor tissue and widen the lumen. Multiple fragments removed and sent for pathology. Final lumen with ~25% residual narrowing; no stent placed given adequate caliber and prior radiation changes.\nComplications: Mild bleeding; no hypoxia or pneumothorax.\nDisposition: Extubated in OR and admitted overnight for observation.",
     "cpt_codes": [
       31640
     ],
@@ -1168,7 +1096,7 @@
       "final_diagnosis_prelim": "Recurrent distal tracheal squamous cell carcinoma, debulked",
       "molecular_testing_requested": true,
       "disposition": "Floor admission",
-      "follow_up_plan": "Oncology follow-up; consider further systemic therapy; repeat bronchoscopy in 4–6 weeks.",
+      "follow_up_plan": "Oncology follow-up; consider further systemic therapy; repeat bronchoscopy in 4\u20136 weeks.",
       "billing": {
         "cpt_codes": [
           {
@@ -1238,14 +1166,6 @@
           "global_comments": []
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   }
 ]

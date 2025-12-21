@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Patient: Jennifer Wang | ID: RR-3847-P | Birth Date: <DATE_TIME>\nDate of Service: <DATE_TIME> | Time: 10:30 AM\n\nChief Indication: RUL mass with mediastinal LAD, diagnostic + staging\n\nHPI: 61F, 35 pack-year smoker (active), presents with 3-month history of cough and right-sided chest discomfort. CT chest shows 3.2cm RUL mass with bulky mediastinal lymphadenopathy. PET-CT reveals primary lesion SUV 9.4, multiple N2 stations PET-avid (4R, 7, 2R).\n\nProcedure Performed:\n1. EBUS-TBNA for staging\n2. Flexible bronchoscopy with endobronchial biopsy\n\nAnesthesia: Moderate sedation\n- Midazolam 3mg IV + Fentanyl 75mcg IV\n- Ramsay sedation scale: 3 (responds to commands)\n- Monitoring: BP q5min (stable 125-135/72-85), continuous SpO2 (96-99%)\n\nProcedure Details:\n\nEBUS Component:\nSystematic mediastinal evaluation following N3→N2→N1 protocol.\n\nStation 2R (12mm):\n- 4 passes with 22G needle\n- ROSE: Positive for malignant cells\n- PET+\n\nStation 4R (18mm):\n- 5 passes (extra for molecular)\n- ROSE: Positive for malignant cells\n- PET+\n- Sent for NGS panel\n\nStation 7 (21mm):\n- 4 passes\n- ROSE: Positive for malignant cells\n- PET+\n\nStation 10R (9mm):\n- 3 passes\n- ROSE: Adequate, benign\n\nComplete photodocumentation of accessible stations performed ✓\n\nBronchoscopy Component:\nExamination of airways revealed mass effect from RUL tumor with partial narrowing of RUL bronchus (~40%). Multiple forceps biopsies obtained from tumor (n=6). Brush cytology x2 also performed.\n\nModerate bleeding from biopsy sites controlled with topical epinephrine 1:20,000 + iced saline lavage.\n\nAssessment:\n- N2/N3 disease confirmed (multi-level, multi-station)\n- Primary tumor biopsied\n- Adequate tissue for histologic diagnosis and molecular profiling\n- Stage IIIB (clinical)\n\nComplications:\n- Moderate airway bleeding (controlled, no intervention required beyond topical measures)\n- Severity: Moderate\n\nPlan:\n- Multidisciplinary tumor board presentation\n- Await molecular results (EGFR, ALK, ROS1, PD-L1)\n- Likely concurrent chemoradiation vs neoadjuvant approach\n\nPatient Recovery: Stable, discharged after 2 hours",
+    "note_text": "Patient: Jennifer Wang | ID: RR-3847-P | Birth Date: 06/28/1963\nDate of Service: 10/22/2024 | Time: 10:30 AM\n\nChief Indication: RUL mass with mediastinal LAD, diagnostic + staging\n\nHPI: 61F, 35 pack-year smoker (active), presents with 3-month history of cough and right-sided chest discomfort. CT chest shows 3.2cm RUL mass with bulky mediastinal lymphadenopathy. PET-CT reveals primary lesion SUV 9.4, multiple N2 stations PET-avid (4R, 7, 2R).\n\nProcedure Performed:\n1. EBUS-TBNA for staging\n2. Flexible bronchoscopy with endobronchial biopsy\n\nAnesthesia: Moderate sedation\n- Midazolam 3mg IV + Fentanyl 75mcg IV\n- Ramsay sedation scale: 3 (responds to commands)\n- Monitoring: BP q5min (stable 125-135/72-85), continuous SpO2 (96-99%)\n\nProcedure Details:\n\nEBUS Component:\nSystematic mediastinal evaluation following N3\u2192N2\u2192N1 protocol.\n\nStation 2R (12mm):\n- 4 passes with 22G needle\n- ROSE: Positive for malignant cells\n- PET+\n\nStation 4R (18mm):\n- 5 passes (extra for molecular)\n- ROSE: Positive for malignant cells\n- PET+\n- Sent for NGS panel\n\nStation 7 (21mm):\n- 4 passes\n- ROSE: Positive for malignant cells\n- PET+\n\nStation 10R (9mm):\n- 3 passes\n- ROSE: Adequate, benign\n\nComplete photodocumentation of accessible stations performed \u2713\n\nBronchoscopy Component:\nExamination of airways revealed mass effect from RUL tumor with partial narrowing of RUL bronchus (~40%). Multiple forceps biopsies obtained from tumor (n=6). Brush cytology x2 also performed.\n\nModerate bleeding from biopsy sites controlled with topical epinephrine 1:20,000 + iced saline lavage.\n\nAssessment:\n- N2/N3 disease confirmed (multi-level, multi-station)\n- Primary tumor biopsied\n- Adequate tissue for histologic diagnosis and molecular profiling\n- Stage IIIB (clinical)\n\nComplications:\n- Moderate airway bleeding (controlled, no intervention required beyond topical measures)\n- Severity: Moderate\n\nPlan:\n- Multidisciplinary tumor board presentation\n- Await molecular results (EGFR, ALK, ROS1, PD-L1)\n- Likely concurrent chemoradiation vs neoadjuvant approach\n\nPatient Recovery: Stable, discharged after 2 hours",
     "cpt_codes": [
       31653,
       31625
@@ -219,17 +219,10 @@
         "Code selection: EBUS-TBNA of 4 stations supports 31653. Endobronchial biopsy of the primary mass supports 31625.",
         "Bundling: 31625 is generally payable with 31653 when performed on a separate lesion (primary tumor vs nodes)."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Patient: Mark Thompson | MRN# <MRN> | Born: <DATE_TIME>\n\nINDICATION: RLL 21mm solid nodule with clear bronchus sign on CT, PET SUV 4.8\n\nANESTHESIA: Moderate sedation, midazolam 3mg + fentanyl 75mcg\nRamsay 3 throughout, monitoring BP q5min, SpO2 continuous\n\nTECHNIQUE: Traditional bronchoscopy (no navigation system needed due to bronchus sign)\n\nProcedure:\n- Thin bronchoscope advanced to RLL\n- Bronchus sign followed to nodule location\n- Lesion visualized endobronchially as subtle mucosal irregularity\n- Radial EBUS probe: Solid eccentric pattern consistent with lesion\n- Fluoroscopy used for confirmation: 3.1 minutes, DAP 124 cGy*cm²\n\nSampling performed:\n- Transbronchial needle aspiration ×3 (22G Wang needle)\n- Transbronchial forceps biopsy ×5\n- Brush cytology ×2\n- Additional forceps biopsies ×3 for molecular testing\n\nTool approach successful, diagnostic yield anticipated given direct visualization\n\nComplications: Minor self-limited bleeding after forceps biopsies, resolved with gentle suction\n\nPost-procedure: CXR showed small basilar atelectasis, no PTX. Patient stable, discharged.",
+    "note_text": "Patient: Mark Thompson | MRN# TK-9472 | Born: 09/03/1964\n\nINDICATION: RLL 21mm solid nodule with clear bronchus sign on CT, PET SUV 4.8\n\nANESTHESIA: Moderate sedation, midazolam 3mg + fentanyl 75mcg\nRamsay 3 throughout, monitoring BP q5min, SpO2 continuous\n\nTECHNIQUE: Traditional bronchoscopy (no navigation system needed due to bronchus sign)\n\nProcedure:\n- Thin bronchoscope advanced to RLL\n- Bronchus sign followed to nodule location\n- Lesion visualized endobronchially as subtle mucosal irregularity\n- Radial EBUS probe: Solid eccentric pattern consistent with lesion\n- Fluoroscopy used for confirmation: 3.1 minutes, DAP 124 cGy*cm\u00b2\n\nSampling performed:\n- Transbronchial needle aspiration \u00d73 (22G Wang needle)\n- Transbronchial forceps biopsy \u00d75\n- Brush cytology \u00d72\n- Additional forceps biopsies \u00d73 for molecular testing\n\nTool approach successful, diagnostic yield anticipated given direct visualization\n\nComplications: Minor self-limited bleeding after forceps biopsies, resolved with gentle suction\n\nPost-procedure: CXR showed small basilar atelectasis, no PTX. Patient stable, discharged.",
     "cpt_codes": [
       31628,
       31629,
@@ -442,17 +435,10 @@
         "Procedure: Navigation-assisted (via fluoroscopy/REBUS) sampling of RLL nodule.",
         "Codes: 31654 for REBUS. 31629 (TBNA) and 31628 (TBLB) both performed on same lesion. NCCI typically allows only one biopsy method per lesion; documentation supports both, but billing both risks denial."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Patient: Sandra Lopez | MRN: <MRN> | DOB: <DATE_TIME>\n\nPROBLEM LIST:\n#1 Mediastinal lymphadenopathy - needs tissue diagnosis\n#2 History of breast cancer (2019) - in remission\n#3 Chronic kidney disease stage 3\n\nSUBJECTIVE: 70F referred for EBUS evaluation of mediastinal nodes found on surveillance CT. Denies chest pain, hemoptysis, dyspnea. No PET scan performed due to renal dysfunction.\n\nOBJECTIVE:\nProcedure: EBUS-TBNA\nSedation: Moderate (midazolam 2mg, fentanyl 50mcg) - limited doses due to CKD\nRamsay: 3\nVitals: Stable throughout, BP 128-142/75-82, SpO2 96-99% on RA\n\nFindings:\n- Station 2R: 8mm, sampled x3, ROSE shows metastatic adenocarcinoma consistent with breast primary\n- Station 4R: 12mm, sampled x4, ROSE positive for metastatic carcinoma\n- Station 7: 9mm, sampled x3, ROSE positive for metastatic carcinoma\n\nSystematic evaluation performed. All accessible stations photographed.\n\nASSESSMENT:\n#1 Mediastinal lymphadenopathy - metastatic breast cancer confirmed\n#2 Breast cancer - recurrent disease, N2/N3 nodal involvement\n#3 CKD - tolerated sedation without issues\n\nPLAN:\n#1 Oncology referral for systemic therapy planning\n#2 Molecular profiling from station 4R sample\n#3 F/u renal function post-procedure\n\nComplications: None",
+    "note_text": "Patient: Sandra Lopez | MRN: TT-6849 | DOB: 12/05/1954\n\nPROBLEM LIST:\n#1 Mediastinal lymphadenopathy - needs tissue diagnosis\n#2 History of breast cancer (2019) - in remission\n#3 Chronic kidney disease stage 3\n\nSUBJECTIVE: 70F referred for EBUS evaluation of mediastinal nodes found on surveillance CT. Denies chest pain, hemoptysis, dyspnea. No PET scan performed due to renal dysfunction.\n\nOBJECTIVE:\nProcedure: EBUS-TBNA\nSedation: Moderate (midazolam 2mg, fentanyl 50mcg) - limited doses due to CKD\nRamsay: 3\nVitals: Stable throughout, BP 128-142/75-82, SpO2 96-99% on RA\n\nFindings:\n- Station 2R: 8mm, sampled x3, ROSE shows metastatic adenocarcinoma consistent with breast primary\n- Station 4R: 12mm, sampled x4, ROSE positive for metastatic carcinoma\n- Station 7: 9mm, sampled x3, ROSE positive for metastatic carcinoma\n\nSystematic evaluation performed. All accessible stations photographed.\n\nASSESSMENT:\n#1 Mediastinal lymphadenopathy - metastatic breast cancer confirmed\n#2 Breast cancer - recurrent disease, N2/N3 nodal involvement\n#3 CKD - tolerated sedation without issues\n\nPLAN:\n#1 Oncology referral for systemic therapy planning\n#2 Molecular profiling from station 4R sample\n#3 F/u renal function post-procedure\n\nComplications: None",
     "cpt_codes": [
       31653
     ],
@@ -648,17 +634,10 @@
       "rationale": [
         "Straightforward EBUS-TBNA of 3 stations (2R, 4R, 7). 31653 is the correct code."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "TEACHING CASE - BRONCHOSCOPY WITH FELLOW PARTICIPATION\n\nPatient: Donald Martinez | MRN: <MRN> | DOB: <DATE_TIME>\n\nTEAM:\nAttending: [De-identified per protocol]\nFellow: [De-identified per protocol]\nROSE Technician: [De-identified per protocol]\n\nINDICATION: Mediastinal staging, LUL adenocarcinoma\n\nEDUCATIONAL OBJECTIVES FOR FELLOW:\n1. Systematic N3→N2→N1 EBUS evaluation\n2. ROSE interpretation and real-time decision-making\n3. Optimal needle pass technique\n4. Management of technical challenges\n\nSEDATION: Moderate (midazolam 3mg, fentanyl 75mcg), Ramsay 3",
+    "note_text": "TEACHING CASE - BRONCHOSCOPY WITH FELLOW PARTICIPATION\n\nPatient: Donald Martinez | MRN: TT-9482-L | DOB: 12/11/1956\n\nTEAM:\nAttending: [De-identified per protocol]\nFellow: [De-identified per protocol]\nROSE Technician: [De-identified per protocol]\n\nINDICATION: Mediastinal staging, LUL adenocarcinoma\n\nEDUCATIONAL OBJECTIVES FOR FELLOW:\n1. Systematic N3\u2192N2\u2192N1 EBUS evaluation\n2. ROSE interpretation and real-time decision-making\n3. Optimal needle pass technique\n4. Management of technical challenges\n\nSEDATION: Moderate (midazolam 3mg, fentanyl 75mcg), Ramsay 3",
     "cpt_codes": [
       31653
     ],
@@ -842,17 +821,10 @@
       "rationale": [
         "Teaching case indicated as systematic N3->N2->N1 evaluation. Assuming 3+ stations were sampled as per the assigned code 31653."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "TELEPHONE CONSULTATION PROCEDURE NOTE\n\nFROM: Bronchoscopy Suite\nTO: Referring Physician (Dr. Adams)\nRE: Patient Kevin Brown, MRN VV-8374-M, DOB <DATE_TIME>\nDATE: <DATE_TIME>\n\nCalled to discuss procedure results for your patient who underwent EBUS-TBNA today.\n\nBRIEF SUMMARY:\n66M with RUL mass underwent combined EBUS staging and endobronchial biopsy under moderate sedation (midazolam 3mg + fentanyl 100mcg, Ramsay 3, vitals stable throughout).\n\nEBUS RESULTS:\n- Station 4R (12mm): 4 passes, preliminary ROSE positive for adenocarcinoma, PET+\n- Station 7 (15mm): 4 passes, preliminary ROSE positive for adenocarcinoma, PET+\n- Station 10R (8mm): 3 passes, ROSE benign\n\nSystematic N3→N2→N1 evaluation completed with full photodocumentation.\n\nTUMOR BIOPSY:\nPrimary RUL endobronchial component biopsied (×6 specimens). Adequate tissue obtained.\n\nSTAGING:\nAppears to be N2 disease (multi-station involvement at levels 4R and 7).\nMolecular testing sent from station 4R sample - should have results in 7-10 days.\n\nCOMPLICATIONS:\nNone. Patient tolerated well and discharged home stable.\n\nNEXT STEPS:\n1. Final pathology in 3-5 days\n2. Molecular results in 7-10 days\n3. Recommend tumor board discussion\n4. Patient follow-up in your clinic next week per discussion\n\nWill send formal typed report tomorrow. Feel free to call with questions.",
+    "note_text": "TELEPHONE CONSULTATION PROCEDURE NOTE\n\nFROM: Bronchoscopy Suite\nTO: Referring Physician (Dr. Adams)\nRE: Patient Kevin Brown, MRN VV-8374-M, DOB 09/14/1958\nDATE: 10/27/2024 15:30\n\nCalled to discuss procedure results for your patient who underwent EBUS-TBNA today.\n\nBRIEF SUMMARY:\n66M with RUL mass underwent combined EBUS staging and endobronchial biopsy under moderate sedation (midazolam 3mg + fentanyl 100mcg, Ramsay 3, vitals stable throughout).\n\nEBUS RESULTS:\n- Station 4R (12mm): 4 passes, preliminary ROSE positive for adenocarcinoma, PET+\n- Station 7 (15mm): 4 passes, preliminary ROSE positive for adenocarcinoma, PET+\n- Station 10R (8mm): 3 passes, ROSE benign\n\nSystematic N3\u2192N2\u2192N1 evaluation completed with full photodocumentation.\n\nTUMOR BIOPSY:\nPrimary RUL endobronchial component biopsied (\u00d76 specimens). Adequate tissue obtained.\n\nSTAGING:\nAppears to be N2 disease (multi-station involvement at levels 4R and 7).\nMolecular testing sent from station 4R sample - should have results in 7-10 days.\n\nCOMPLICATIONS:\nNone. Patient tolerated well and discharged home stable.\n\nNEXT STEPS:\n1. Final pathology in 3-5 days\n2. Molecular results in 7-10 days\n3. Recommend tumor board discussion\n4. Patient follow-up in your clinic next week per discussion\n\nWill send formal typed report tomorrow. Feel free to call with questions.",
     "cpt_codes": [
       31653,
       31625
@@ -1058,17 +1030,10 @@
       "rationale": [
         "Documentation confirms EBUS staging of 3 stations and separate endobronchial biopsy."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURAL FLEXIBLE BRONCHOSCOPY WITH EBUS-TBNA\n\nPATIENT: [Nancy Rodriguez]\nMRN: [WW-8372-Q]\nDOB: [<DATE_TIME>]\nDATE: [<DATE_TIME>]\n\nCLINICAL INDICATION: [Mediastinal staging for right lower lobe adenocarcinoma]\n\nSEDATION:\nType: [Moderate]\nMedications: [Midazolam 3mg IV, Fentanyl 75mcg IV]\nMaximum Ramsay: [3]\nMonitoring: [BP q5min, continuous SpO2]\nVitals: [Stable - BP 118-132/68-78, SpO2 96-99%]\n\nEBUS-TBNA FINDINGS:\n\nSystematic Evaluation: [Yes] N3→N2→N1 sequence\n\nStation [4R]: Size [13mm], Passes [4], ROSE [Positive-malignant], PET [Positive]\nStation [7]: Size [19mm], Passes [4], ROSE [Positive-malignant], PET [Positive]\nStation [10R]: Size [8mm], Passes [3], ROSE [Adequate-benign], PET [Negative]\n\nPhotodocumentation: [Complete]\nMolecular Testing: [Sent from station 4R]\n\nCOMPLICATIONS: [None]\n\nDIAGNOSTIC IMPRESSION: [N2 disease confirmed, multi-station involvement]\n\nFOLLOW-UP PLAN: [MDT discussion, neoadjuvant therapy consideration]",
+    "note_text": "PROCEDURAL FLEXIBLE BRONCHOSCOPY WITH EBUS-TBNA\n\nPATIENT: [Nancy Rodriguez]\nMRN: [WW-8372-Q]\nDOB: [04/15/1955]\nDATE: [10/25/2024]\n\nCLINICAL INDICATION: [Mediastinal staging for right lower lobe adenocarcinoma]\n\nSEDATION:\nType: [Moderate]\nMedications: [Midazolam 3mg IV, Fentanyl 75mcg IV]\nMaximum Ramsay: [3]\nMonitoring: [BP q5min, continuous SpO2]\nVitals: [Stable - BP 118-132/68-78, SpO2 96-99%]\n\nEBUS-TBNA FINDINGS:\n\nSystematic Evaluation: [Yes] N3\u2192N2\u2192N1 sequence\n\nStation [4R]: Size [13mm], Passes [4], ROSE [Positive-malignant], PET [Positive]\nStation [7]: Size [19mm], Passes [4], ROSE [Positive-malignant], PET [Positive]\nStation [10R]: Size [8mm], Passes [3], ROSE [Adequate-benign], PET [Negative]\n\nPhotodocumentation: [Complete]\nMolecular Testing: [Sent from station 4R]\n\nCOMPLICATIONS: [None]\n\nDIAGNOSTIC IMPRESSION: [N2 disease confirmed, multi-station involvement]\n\nFOLLOW-UP PLAN: [MDT discussion, neoadjuvant therapy consideration]",
     "cpt_codes": [
       31653
     ],
@@ -1260,17 +1225,10 @@
       "rationale": [
         "Confirmed sampling of 3 stations. 31653 is appropriate."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Name: Paul Anderson / MRN: <MRN> / Date of Birth: <DATE_TIME>\n\nIndication → RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)\n\nDeep sedation: Propofol infusion 50-75 mcg/kg/min\nRamsay 4, airway maintained with LMA\nMonitoring: Continuous BP via arterial line, SpO2, ETCO2\n\nTechnology: Cone beam CT integrated with EM navigation system\n\nProcedure:\n1. Initial CBCT acquired for registration\n2. EM navigation tracking deployed\n3. Target: RUL posterior segment nodule\n4. Guide sheath advanced under EM + fluoroscopic guidance\n5. Radial EBUS: Concentric pattern confirmed ✓\n6. Sampling completed\n7. CBCT repeated to confirm sheath position and check for pneumothorax\n\nFluoroscopy metrics:\n- Time: 4.8 minutes\n- DAP: 178 cGy*cm² (including CBCT)\n\nSamples:\n- Needle aspiration ×2\n- Forceps biopsy ×4\n- Brush cytology ×2\n\nTool-in-lesion: CONFIRMED\nLocalization success: YES\nProtocol adherent: YES\n\nPost-procedure CBCT: No pneumothorax identified\n\nNo complications. Patient recovered smoothly, discharged after 2 hours.",
+    "note_text": "Name: Paul Anderson / MRN: XL-9284-P / Date of Birth: 11/22/1961\n\nIndication \u2192 RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)\n\nDeep sedation: Propofol infusion 50-75 mcg/kg/min\nRamsay 4, airway maintained with LMA\nMonitoring: Continuous BP via arterial line, SpO2, ETCO2\n\nTechnology: Cone beam CT integrated with EM navigation system\n\nProcedure:\n1. Initial CBCT acquired for registration\n2. EM navigation tracking deployed\n3. Target: RUL posterior segment nodule\n4. Guide sheath advanced under EM + fluoroscopic guidance\n5. Radial EBUS: Concentric pattern confirmed \u2713\n6. Sampling completed\n7. CBCT repeated to confirm sheath position and check for pneumothorax\n\nFluoroscopy metrics:\n- Time: 4.8 minutes\n- DAP: 178 cGy*cm\u00b2 (including CBCT)\n\nSamples:\n- Needle aspiration \u00d72\n- Forceps biopsy \u00d74\n- Brush cytology \u00d72\n\nTool-in-lesion: CONFIRMED\nLocalization success: YES\nProtocol adherent: YES\n\nPost-procedure CBCT: No pneumothorax identified\n\nNo complications. Patient recovered smoothly, discharged after 2 hours.",
     "cpt_codes": [
       31627,
       31654,
@@ -1283,7 +1241,7 @@
       "patient_age": 65,
       "gender": "Other",
       "asa_class": 3,
-      "primary_indication": "Indication → RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)",
+      "primary_indication": "Indication \u2192 RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)",
       "sedation_type": "Deep",
       "airway_type": "LMA",
       "final_diagnosis_prelim": "Other",
@@ -1296,7 +1254,7 @@
       "evidence": {
         "procedure_date": "Name: Paul Anderson / MRN: XL-9284-P / Date of Birth: 11/22/1961",
         "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
-        "primary_indication": "Indication → RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)",
+        "primary_indication": "Indication \u2192 RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)",
         "sedation_type": "deep or MAC sedation",
         "airway_type": "LMA mentioned"
       },
@@ -1492,17 +1450,10 @@
       "rationale": [
         "Navigation bronchoscopy with both needle and forceps biopsies of a peripheral nodule. All add-ons (31627, 31654) supported."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT DATA\n│ Field                  │ Value                                    │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Name                   │ William Taylor                          │\n│ <PERSON>│ XX-8473-MM                              │\n│ <PERSON>│ <DATE_TIME>                              │\n│ Procedure Date         │ <DATE_TIME>                              │\n│ Indication             │ Peripheral LLL nodule 16mm              │\n\nSEDATION DATA\n│ Parameter              │ Value                                    │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Type                   │ Deep sedation                           │\n│ Agent 1                │ Propofol infusion 50-100 mcg/kg/min    │\n│ Airway                 │ LMA                                      │\n│ Max Ramsay             │ 4                                        │\n│ BP Monitoring          │ Every 5 minutes                         │\n│ SpO2                   │ Continuous (maintained 95-98%)          │\n\nNAVIGATION DATA\n│ Parameter              │ Value                                    │\n├────────────────────────┼─────────────────────────────────────────┤\n│ System                 │ Electromagnetic                         │\n│ Target                 │ LLL superior segment                    │\n│ Registration           │ Successful                              │\n│ Tool-in-Lesion         │ Confirmed (radial EBUS concentric)     │\n│ Fluoroscopy Time       │ 4.7 minutes                             │\n│ DAP                    │ 182 cGy*cm²                             │\n\nSAMPLING DATA\n│ Sample Type            │ Quantity                                 │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Needle aspirate        │ 3                                        │\n│ Forceps biopsy         │ 4                                        │\n│ Brush cytology         │ 2                                        │\n\nOUTCOME DATA\n│ Metric                 │ Status                                   │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Localization Success   │ YES                                      │\n│ Protocol Adherent      │ YES                                      │\n│ Complications          │ None                                     │\n│ Post-XR Pneumothorax   │ No                                       │",
+    "note_text": "PATIENT DATA\n\u2502 Field                  \u2502 Value                                    \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Name                   \u2502 William Taylor                          \u2502\n\u2502 MRN                    \u2502 XX-8473-MM                              \u2502\n\u2502 DOB                    \u2502 08/17/1959                              \u2502\n\u2502 Procedure Date         \u2502 10/20/2024                              \u2502\n\u2502 Indication             \u2502 Peripheral LLL nodule 16mm              \u2502\n\nSEDATION DATA\n\u2502 Parameter              \u2502 Value                                    \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Type                   \u2502 Deep sedation                           \u2502\n\u2502 Agent 1                \u2502 Propofol infusion 50-100 mcg/kg/min    \u2502\n\u2502 Airway                 \u2502 LMA                                      \u2502\n\u2502 Max Ramsay             \u2502 4                                        \u2502\n\u2502 BP Monitoring          \u2502 Every 5 minutes                         \u2502\n\u2502 SpO2                   \u2502 Continuous (maintained 95-98%)          \u2502\n\nNAVIGATION DATA\n\u2502 Parameter              \u2502 Value                                    \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 System                 \u2502 Electromagnetic                         \u2502\n\u2502 Target                 \u2502 LLL superior segment                    \u2502\n\u2502 Registration           \u2502 Successful                              \u2502\n\u2502 Tool-in-Lesion         \u2502 Confirmed (radial EBUS concentric)     \u2502\n\u2502 Fluoroscopy Time       \u2502 4.7 minutes                             \u2502\n\u2502 DAP                    \u2502 182 cGy*cm\u00b2                             \u2502\n\nSAMPLING DATA\n\u2502 Sample Type            \u2502 Quantity                                 \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Needle aspirate        \u2502 3                                        \u2502\n\u2502 Forceps biopsy         \u2502 4                                        \u2502\n\u2502 Brush cytology         \u2502 2                                        \u2502\n\nOUTCOME DATA\n\u2502 Metric                 \u2502 Status                                   \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Localization Success   \u2502 YES                                      \u2502\n\u2502 Protocol Adherent      \u2502 YES                                      \u2502\n\u2502 Complications          \u2502 None                                     \u2502\n\u2502 Post-XR Pneumothorax   \u2502 No                                       \u2502",
     "cpt_codes": [
       31627,
       31654,
@@ -1515,7 +1466,7 @@
       "patient_age": 65,
       "gender": "Other",
       "asa_class": 3,
-      "primary_indication": "│ Indication             │ Peripheral LLL nodule 16mm              │",
+      "primary_indication": "\u2502 Indication             \u2502 Peripheral LLL nodule 16mm              \u2502",
       "sedation_type": "Deep",
       "airway_type": "LMA",
       "final_diagnosis_prelim": "Other",
@@ -1526,10 +1477,10 @@
         31628
       ],
       "evidence": {
-        "procedure_date": "│ Procedure Date         │ 10/20/2024                              │",
-        "dob": "│ DOB                    │ 08/17/1959                              │",
+        "procedure_date": "\u2502 Procedure Date         \u2502 10/20/2024                              \u2502",
+        "dob": "\u2502 DOB                    \u2502 08/17/1959                              \u2502",
         "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
-        "primary_indication": "│ Indication             │ Peripheral LLL nodule 16mm              │",
+        "primary_indication": "\u2502 Indication             \u2502 Peripheral LLL nodule 16mm              \u2502",
         "sedation_type": "deep or MAC sedation",
         "airway_type": "LMA mentioned"
       },
@@ -1725,19 +1676,10 @@
       "rationale": [
         "Navigation bronchoscopy with both needle and forceps biopsies of a peripheral nodule."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "PERSON",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Michael Torres\nMRN XY-4829\nDOB: <DATE_TIME>\n\nCLINICAL: Staging for centrally located NSCLC, extensive mediastinal involvement on imaging\n\nSedation approach: Moderate sedation, midazolam 4mg + fentanyl 100mcg\nRamsay score peaked at 3\nBP monitoring every 5 minutes, continuous pulse oximetry maintained >94%\n\nEBUS-TBNA findings:\nSystematic mediastinal evaluation performed.\n\nStation 2R: 11mm, 3 passes, PET+, ROSE+ for malignancy\nStation 4R: 15mm, 4 passes, PET+, ROSE+ for malignancy\nStation 4L: 12mm, 4 passes, PET+, ROSE+ for malignancy\nStation 7: 24mm, 5 passes, PET+, ROSE+ for malignancy\nStation 10R: 9mm, 3 passes, PET+, ROSE+ for malignancy\n\nAll nodes with adequate cellularity. Molecular testing panels sent from stations 4R and 7.\nComplete photodocumentation of accessible stations archived.\n\nNo procedural complications. Patient hemodynamically stable throughout.\n\nIMPRESSION: Extensive N2/N3 disease confirmed. Adequate tissue for complete molecular characterization obtained.",
+    "note_text": "Pt: Michael Torres\nMRN XY-4829\nDOB: 06/25/1960\n\nCLINICAL: Staging for centrally located NSCLC, extensive mediastinal involvement on imaging\n\nSedation approach: Moderate sedation, midazolam 4mg + fentanyl 100mcg\nRamsay score peaked at 3\nBP monitoring every 5 minutes, continuous pulse oximetry maintained >94%\n\nEBUS-TBNA findings:\nSystematic mediastinal evaluation performed.\n\nStation 2R: 11mm, 3 passes, PET+, ROSE+ for malignancy\nStation 4R: 15mm, 4 passes, PET+, ROSE+ for malignancy\nStation 4L: 12mm, 4 passes, PET+, ROSE+ for malignancy\nStation 7: 24mm, 5 passes, PET+, ROSE+ for malignancy\nStation 10R: 9mm, 3 passes, PET+, ROSE+ for malignancy\n\nAll nodes with adequate cellularity. Molecular testing panels sent from stations 4R and 7.\nComplete photodocumentation of accessible stations archived.\n\nNo procedural complications. Patient hemodynamically stable throughout.\n\nIMPRESSION: Extensive N2/N3 disease confirmed. Adequate tissue for complete molecular characterization obtained.",
     "cpt_codes": [
       31653
     ],
@@ -1924,16 +1866,10 @@
       "rationale": [
         "Standard EBUS-TBNA of 3+ stations."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Patient Name: Maria Rodriguez\nMedical Record: <MRN>\nDate of Birth: <DATE_TIME>\nProcedure: <DATE_TIME>\n\nClinical context: 53F with bilateral hilar lymphadenopathy on CXR, concern for sarcoidosis vs lymphoma\n\nConscious sedation: Versed 2mg, Fentanyl 50mcg - patient remained conversant, Ramsay 2-3\nVital signs: SpO2 98-100% RA, BP q10min stable 120s-130s/70s-80s\n\nEBUS-TBNA performed:\n→ Station 4R (14mm) - 3 passes - ROSE shows non-necrotizing granulomas\n→ Station 4L (16mm) - 3 passes - ROSE consistent with granulomatous inflammation\n→ Station 7 (20mm) - 4 passes - ROSE adequate, similar findings\n→ Station 11R (9mm) - 3 passes - ROSE adequate\n\nAll samples adequate for flow cytometry and microbiological culture sent.\n\nNo complications. Patient tolerated well. Discharge home same day.\n\nAssessment: Adequate tissue obtained for sarcoidosis vs lymphoma differentiation.",
+    "note_text": "Patient Name: Maria Rodriguez\nMedical Record: ZX-1847-QP\nDate of Birth: 05/30/1971\nProcedure: 10/08/2024\n\nClinical context: 53F with bilateral hilar lymphadenopathy on CXR, concern for sarcoidosis vs lymphoma\n\nConscious sedation: Versed 2mg, Fentanyl 50mcg - patient remained conversant, Ramsay 2-3\nVital signs: SpO2 98-100% RA, BP q10min stable 120s-130s/70s-80s\n\nEBUS-TBNA performed:\n\u2192 Station 4R (14mm) - 3 passes - ROSE shows non-necrotizing granulomas\n\u2192 Station 4L (16mm) - 3 passes - ROSE consistent with granulomatous inflammation\n\u2192 Station 7 (20mm) - 4 passes - ROSE adequate, similar findings\n\u2192 Station 11R (9mm) - 3 passes - ROSE adequate\n\nAll samples adequate for flow cytometry and microbiological culture sent.\n\nNo complications. Patient tolerated well. Discharge home same day.\n\nAssessment: Adequate tissue obtained for sarcoidosis vs lymphoma differentiation.",
     "cpt_codes": [
       31653
     ],
@@ -2125,14 +2061,6 @@
         },
         "bundling_considerations": "No bronchial biopsies or peripheral lesion work are documented; 31653 alone is appropriate."
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   }
 ]

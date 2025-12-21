@@ -998,7 +998,7 @@
     }
   },
   {
-    "note_text": "PATIENT: 69-year-old female with advanced emphysema.\n\nINDICATION: Severe heterogeneous upper-lobe–predominant emphysema with hyperinflation and persistent dyspnea despite maximal medical therapy; candidate for bronchoscopic lung volume reduction.\n\nPROCEDURE: Flexible bronchoscopy under general anesthesia via ETT. The right upper lobe airways were carefully inspected. Four Zephyr endobronchial valves were placed sequentially into segmental bronchi of the right upper lobe using the manufacturer deployment catheter, with good seating and immediate lobar collapse on fluoroscopy. No valves were placed in other lobes. No Chartis measurements, BAL, transbronchial biopsies, or EBUS procedures were performed during this session. The patient was extubated in PACU and admitted to telemetry for post-BLVR monitoring.",
+    "note_text": "PATIENT: 69-year-old female with advanced emphysema.\n\nINDICATION: Severe heterogeneous upper-lobe\u2013predominant emphysema with hyperinflation and persistent dyspnea despite maximal medical therapy; candidate for bronchoscopic lung volume reduction.\n\nPROCEDURE: Flexible bronchoscopy under general anesthesia via ETT. The right upper lobe airways were carefully inspected. Four Zephyr endobronchial valves were placed sequentially into segmental bronchi of the right upper lobe using the manufacturer deployment catheter, with good seating and immediate lobar collapse on fluoroscopy. No valves were placed in other lobes. No Chartis measurements, BAL, transbronchial biopsies, or EBUS procedures were performed during this session. The patient was extubated in PACU and admitted to telemetry for post-BLVR monitoring.",
     "cpt_codes": [
       31647
     ],
@@ -1008,7 +1008,7 @@
       "patient_age": 69,
       "gender": "Female",
       "asa_class": 3,
-      "primary_indication": "Bronchoscopic lung volume reduction for severe upper-lobe–predominant emphysema",
+      "primary_indication": "Bronchoscopic lung volume reduction for severe upper-lobe\u2013predominant emphysema",
       "sedation_type": "General",
       "airway_type": "ETT",
       "final_diagnosis_prelim": "Successful BLVR with Zephyr valves in the right upper lobe",

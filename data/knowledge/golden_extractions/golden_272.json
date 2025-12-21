@@ -89,7 +89,7 @@
       "final_diagnosis_prelim": "Organic foreign body aspiration, status post complete bronchoscopic removal",
       "molecular_testing_requested": false,
       "disposition": "Outpatient discharge",
-      "follow_up_plan": "Clinic follow-up in 2–4 weeks; repeat chest imaging only if symptoms persist",
+      "follow_up_plan": "Clinic follow-up in 2\u20134 weeks; repeat chest imaging only if symptoms persist",
       "cpt_codes": [
         31635
       ],
@@ -628,7 +628,7 @@
       "final_diagnosis_prelim": "Peripheral right upper lobe malignant-appearing nodule treated with microwave ablation",
       "molecular_testing_requested": false,
       "disposition": "Floor admission",
-      "follow_up_plan": "Overnight observation with chest X-ray; interval CT chest in 4–6 weeks and multidisciplinary tumor board review",
+      "follow_up_plan": "Overnight observation with chest X-ray; interval CT chest in 4\u20136 weeks and multidisciplinary tumor board review",
       "cpt_codes": [
         31641,
         31627,
@@ -778,7 +778,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Navigational bronchoscopy with radiofrequency ablation of a peripheral right lower lobe nodule.\nIndication: 2.0 cm peripheral right lower lobe nodule, biopsy-proven adenocarcinoma, in a patient with limited pulmonary reserve.\nPatient: 66-year-old male with GOLD III COPD.\nSedation/airway: General anesthesia with endotracheal tube.\nProcedure description: After induction of general anesthesia and ETT placement, flexible bronchoscopy was performed to survey the central airways, which were free of endobronchial tumor. A navigation catheter was advanced using CT-based virtual bronchoscopy planning to a superior segment right lower lobe target. Radial EBUS confirmed an eccentric but in-branch image corresponding to the lesion. The catheter position was refined and rechecked. A radiofrequency ablation catheter was then advanced through the extended working channel to the lesion. Three overlapping ablation cycles (each 50 W for 5 minutes) were delivered with careful monitoring of impedance and tip temperature, reaching approximately 105 °C. Post-ablation cone-beam CT demonstrated an ablation zone encompassing the nodule. No biopsies or additional sampling were performed during this session.\nFindings: Peripheral superior segment right lower lobe malignant nodule treated with radiofrequency ablation; no significant central airway pathology.\nComplications: None. No pneumothorax, significant hemorrhage, or sustained hypoxia.\nDisposition: Extubated and monitored in PACU before overnight admission for observation.\nImpression: Peripheral right lower lobe adenocarcinoma treated with navigation-guided bronchoscopic radiofrequency ablation.",
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Navigational bronchoscopy with radiofrequency ablation of a peripheral right lower lobe nodule.\nIndication: 2.0 cm peripheral right lower lobe nodule, biopsy-proven adenocarcinoma, in a patient with limited pulmonary reserve.\nPatient: 66-year-old male with GOLD III COPD.\nSedation/airway: General anesthesia with endotracheal tube.\nProcedure description: After induction of general anesthesia and ETT placement, flexible bronchoscopy was performed to survey the central airways, which were free of endobronchial tumor. A navigation catheter was advanced using CT-based virtual bronchoscopy planning to a superior segment right lower lobe target. Radial EBUS confirmed an eccentric but in-branch image corresponding to the lesion. The catheter position was refined and rechecked. A radiofrequency ablation catheter was then advanced through the extended working channel to the lesion. Three overlapping ablation cycles (each 50 W for 5 minutes) were delivered with careful monitoring of impedance and tip temperature, reaching approximately 105 \u00b0C. Post-ablation cone-beam CT demonstrated an ablation zone encompassing the nodule. No biopsies or additional sampling were performed during this session.\nFindings: Peripheral superior segment right lower lobe malignant nodule treated with radiofrequency ablation; no significant central airway pathology.\nComplications: None. No pneumothorax, significant hemorrhage, or sustained hypoxia.\nDisposition: Extubated and monitored in PACU before overnight admission for observation.\nImpression: Peripheral right lower lobe adenocarcinoma treated with navigation-guided bronchoscopic radiofrequency ablation.",
     "cpt_codes": [
       31641,
       31627,
@@ -871,7 +871,7 @@
       "final_diagnosis_prelim": "Peripheral right lower lobe adenocarcinoma treated with radiofrequency ablation",
       "molecular_testing_requested": false,
       "disposition": "Floor admission",
-      "follow_up_plan": "Overnight observation; CT chest in 4–6 weeks to assess ablation zone and ongoing oncology follow-up",
+      "follow_up_plan": "Overnight observation; CT chest in 4\u20136 weeks to assess ablation zone and ongoing oncology follow-up",
       "cpt_codes": [
         31641,
         31627,
@@ -1020,7 +1020,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Navigational bronchoscopy with cryoablation of a peripheral left lower lobe nodule.\nIndication: 1.4 cm peripheral left lower lobe pulmonary nodule with intermediate PET uptake in a patient with prior contralateral lobectomy.\nPatient: 59-year-old female with history of right upper lobectomy for NSCLC and reduced pulmonary reserve.\nSedation/airway: General anesthesia with endotracheal tube.\nProcedure description: Under general anesthesia, a flexible bronchoscope was advanced via endotracheal tube and the central airways inspected. Using CT-based navigational bronchoscopy, a steerable catheter was guided to a lateral basal segment left lower lobe target. Radial EBUS confirmed a concentric image consistent with an in-lesion position. A dedicated endobronchial cryoprobe was advanced through the extended working channel into the lesion. Three freeze–thaw cycles were performed (10-minute freeze followed by passive thaw for each cycle), with probe temperatures reaching approximately −60 °C. Cone-beam CT after the final cycle demonstrated an ice ball encompassing the nodule with appropriate margins. No biopsies or lavage were performed in this session.\nFindings: 1.4 cm peripheral left lower lobe nodule treated with bronchoscopic cryoablation; no central airway tumor.\nComplications: None. No pneumothorax or significant bleeding on post-procedure imaging.\nDisposition: Extubated and monitored in PACU, then admitted overnight for observation given limited lung reserve.\nImpression: Peripheral left lower lobe nodule treated with navigation-guided bronchoscopic cryoablation.",
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Navigational bronchoscopy with cryoablation of a peripheral left lower lobe nodule.\nIndication: 1.4 cm peripheral left lower lobe pulmonary nodule with intermediate PET uptake in a patient with prior contralateral lobectomy.\nPatient: 59-year-old female with history of right upper lobectomy for NSCLC and reduced pulmonary reserve.\nSedation/airway: General anesthesia with endotracheal tube.\nProcedure description: Under general anesthesia, a flexible bronchoscope was advanced via endotracheal tube and the central airways inspected. Using CT-based navigational bronchoscopy, a steerable catheter was guided to a lateral basal segment left lower lobe target. Radial EBUS confirmed a concentric image consistent with an in-lesion position. A dedicated endobronchial cryoprobe was advanced through the extended working channel into the lesion. Three freeze\u2013thaw cycles were performed (10-minute freeze followed by passive thaw for each cycle), with probe temperatures reaching approximately \u221260 \u00b0C. Cone-beam CT after the final cycle demonstrated an ice ball encompassing the nodule with appropriate margins. No biopsies or lavage were performed in this session.\nFindings: 1.4 cm peripheral left lower lobe nodule treated with bronchoscopic cryoablation; no central airway tumor.\nComplications: None. No pneumothorax or significant bleeding on post-procedure imaging.\nDisposition: Extubated and monitored in PACU, then admitted overnight for observation given limited lung reserve.\nImpression: Peripheral left lower lobe nodule treated with navigation-guided bronchoscopic cryoablation.",
     "cpt_codes": [
       31641,
       31627,
@@ -1113,7 +1113,7 @@
       "final_diagnosis_prelim": "Peripheral left lower lobe nodule treated with cryoablation",
       "molecular_testing_requested": false,
       "disposition": "Floor admission",
-      "follow_up_plan": "Overnight observation with chest X-ray; CT chest in 4–6 weeks to assess cryoablation zone; continued thoracic oncology follow-up",
+      "follow_up_plan": "Overnight observation with chest X-ray; CT chest in 4\u20136 weeks to assess cryoablation zone; continued thoracic oncology follow-up",
       "cpt_codes": [
         31641,
         31627,

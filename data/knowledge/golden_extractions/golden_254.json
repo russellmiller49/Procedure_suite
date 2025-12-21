@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Pt: Nelson, Mary || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: University of Michigan Hospital, Ann Arbor, MI\nMD: Dr. Emily Thompson\n\nIndication: Malignant pleural effusion - breast cancer\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nReal-time ultrasound used throughout procedure.\nSite: 8th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1464mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nThompson, MD",
+    "note_text": "Pt: Nelson, Mary || MRN: 9632574 || DOB: 2/23/1960\nDate: 07/01/2025 || Location: University of Michigan Hospital, Ann Arbor, MI\nMD: Dr. Emily Thompson\n\nIndication: Malignant pleural effusion - breast cancer\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nReal-time ultrasound used throughout procedure.\nSite: 8th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1464mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nThompson, MD",
     "cpt_codes": [
       32557
     ],
@@ -79,18 +79,10 @@
         "32557"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Ramirez, David || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Johns Hopkins Hospital, Baltimore, MD\nMD: Dr. Rachel Kim\n\nIndication: Malignant pleural effusion - unknown primary\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 5th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 2300mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nKim, MD",
+    "note_text": "Pt: Ramirez, David || MRN: 1211095 || DOB: 8/20/1963\nDate: 12/02/2025 || Location: Johns Hopkins Hospital, Baltimore, MD\nMD: Dr. Rachel Kim\n\nIndication: Malignant pleural effusion - unknown primary\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 5th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 2300mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nKim, MD",
     "cpt_codes": [
       32550
     ],
@@ -169,18 +161,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Martinez, Emily || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Memorial Sloan Kettering, New York, NY\nMD: Dr. Michael Chen\n\nIndication: Complicated parapneumonic effusion\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nReal-time ultrasound used throughout procedure.\nSite: 6th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1405mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nChen, MD",
+    "note_text": "Pt: Martinez, Emily || MRN: 2187061 || DOB: 8/2/1970\nDate: 10/20/2025 || Location: Memorial Sloan Kettering, New York, NY\nMD: Dr. Michael Chen\n\nIndication: Complicated parapneumonic effusion\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nReal-time ultrasound used throughout procedure.\nSite: 6th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1405mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nChen, MD",
     "cpt_codes": [
       32557
     ],
@@ -259,18 +243,10 @@
         "32557"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Thompson, William || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Cedars-Sinai Medical Center, Los Angeles, CA\nMD: CAPT Russell Miller, MD\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side up.\nReal-time ultrasound used throughout procedure.\nSite: 7th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 12Fr pigtail catheter inserted.\n1531mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nMiller, MD",
+    "note_text": "Pt: Thompson, William || MRN: 4928776 || DOB: 3/17/1968\nDate: 12/04/2025 || Location: Cedars-Sinai Medical Center, Los Angeles, CA\nMD: CAPT Russell Miller, MD\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side up.\nReal-time ultrasound used throughout procedure.\nSite: 7th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 12Fr pigtail catheter inserted.\n1531mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nMiller, MD",
     "cpt_codes": [
       32557
     ],
@@ -349,18 +325,10 @@
         "32557"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Perez, Lisa || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Scripps Memorial Hospital, La Jolla, CA\nMD: Dr. Emily Thompson\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nImmediate drainage: 1686mL turbid fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nThompson, MD",
+    "note_text": "Pt: Perez, Lisa || MRN: 9377497 || DOB: 4/17/1972\nDate: 10/02/2025 || Location: Scripps Memorial Hospital, La Jolla, CA\nMD: Dr. Emily Thompson\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nImmediate drainage: 1686mL turbid fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nThompson, MD",
     "cpt_codes": [
       32551
     ],
@@ -439,18 +407,10 @@
         "32551"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Anderson, Mary || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Sharp Memorial Hospital, San Diego, CA\nMD: Dr. Christopher Brown\n\nIndication: Malignant pleural effusion - unknown primary\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 7th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1905mL straw-colored fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nBrown, MD",
+    "note_text": "Pt: Anderson, Mary || MRN: 4808058 || DOB: 4/13/1949\nDate: 12/03/2025 || Location: Sharp Memorial Hospital, San Diego, CA\nMD: Dr. Christopher Brown\n\nIndication: Malignant pleural effusion - unknown primary\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 7th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1905mL straw-colored fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nBrown, MD",
     "cpt_codes": [
       32550
     ],
@@ -529,18 +489,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Jones, Ashley || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Johns Hopkins Hospital, Baltimore, MD\nMD: Dr. James Rodriguez\n\nIndication: Parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 4th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 24Fr chest tube inserted.\nImmediate drainage: 1202mL straw-colored fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nRodriguez, MD",
+    "note_text": "Pt: Jones, Ashley || MRN: 8968470 || DOB: 2/22/1994\nDate: 08/15/2025 || Location: Johns Hopkins Hospital, Baltimore, MD\nMD: Dr. James Rodriguez\n\nIndication: Parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 4th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 24Fr chest tube inserted.\nImmediate drainage: 1202mL straw-colored fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nRodriguez, MD",
     "cpt_codes": [
       32551
     ],
@@ -619,18 +571,10 @@
         "32551"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: White, John || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: University of Michigan Hospital, Ann Arbor, MI\nMD: Dr. Sarah Williams\n\nIndication: Recurrent symptomatic malignant effusion\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 7th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1126mL serosanguinous fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nWilliams, MD",
+    "note_text": "Pt: White, John || MRN: 3477246 || DOB: 3/2/1968\nDate: 09/04/2025 || Location: University of Michigan Hospital, Ann Arbor, MI\nMD: Dr. Sarah Williams\n\nIndication: Recurrent symptomatic malignant effusion\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 7th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1126mL serosanguinous fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nWilliams, MD",
     "cpt_codes": [
       32550
     ],
@@ -709,18 +653,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Williams, Jennifer || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Cleveland Clinic, Cleveland, OH\nMD: Dr. Emily Thompson\n\nIndication: Malignant pleural effusion - unknown primary\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 6th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1381mL straw-colored fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nThompson, MD",
+    "note_text": "Pt: Williams, Jennifer || MRN: 1672478 || DOB: 7/24/1951\nDate: 09/25/2025 || Location: Cleveland Clinic, Cleveland, OH\nMD: Dr. Emily Thompson\n\nIndication: Malignant pleural effusion - unknown primary\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 6th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1381mL straw-colored fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nThompson, MD",
     "cpt_codes": [
       32550
     ],
@@ -799,18 +735,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Rivera, Ashley || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Cedars-Sinai Medical Center, Los Angeles, CA\nMD: Dr. Mark Taylor\n\nIndication: Parapneumonic effusion\nSide: Right\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 24Fr chest tube inserted.\nImmediate drainage: 828mL turbid fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nTaylor, MD",
+    "note_text": "Pt: Rivera, Ashley || MRN: 6657106 || DOB: 1/24/1959\nDate: 07/21/2025 || Location: Cedars-Sinai Medical Center, Los Angeles, CA\nMD: Dr. Mark Taylor\n\nIndication: Parapneumonic effusion\nSide: Right\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 24Fr chest tube inserted.\nImmediate drainage: 828mL turbid fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nTaylor, MD",
     "cpt_codes": [
       32551
     ],
@@ -889,18 +817,10 @@
         "32551"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Moore, John || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Johns Hopkins Hospital, Baltimore, MD\nMD: Dr. Rachel Kim\n\nIndication: Hepatic hydrothorax\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side up.\nSite: 5th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 14Fr pigtail catheter inserted.\n996mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nKim, MD",
+    "note_text": "Pt: Moore, John || MRN: 4652232 || DOB: 8/12/1977\nDate: 08/26/2025 || Location: Johns Hopkins Hospital, Baltimore, MD\nMD: Dr. Rachel Kim\n\nIndication: Hepatic hydrothorax\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side up.\nSite: 5th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 14Fr pigtail catheter inserted.\n996mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nKim, MD",
     "cpt_codes": [
       32556
     ],
@@ -979,18 +899,10 @@
         "32556"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Miller, Donald || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: UCSF Medical Center, <LOCATION>, CA\nMD: CDR Patricia Davis, MD\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 6th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nImmediate drainage: 670mL serosanguinous fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nDavis, MD",
+    "note_text": "Pt: Miller, Donald || MRN: 3343329 || DOB: 5/1/1956\nDate: 11/12/2025 || Location: UCSF Medical Center, San Francisco, CA\nMD: CDR Patricia Davis, MD\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 6th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nImmediate drainage: 670mL serosanguinous fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nDavis, MD",
     "cpt_codes": [
       32551
     ],
@@ -1069,19 +981,10 @@
         "32551"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Pt: Flores, Anthony || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Massachusetts General Hospital, Boston, MA\nMD: CDR Patricia Davis, MD\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 6th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 2055mL serosanguinous fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nDavis, MD",
+    "note_text": "Pt: Flores, Anthony || MRN: 1080868 || DOB: 12/10/1959\nDate: 10/13/2025 || Location: Massachusetts General Hospital, Boston, MA\nMD: CDR Patricia Davis, MD\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 6th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 2055mL serosanguinous fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nDavis, MD",
     "cpt_codes": [
       32550
     ],
@@ -1160,18 +1063,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Walker, Betty || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: UC San Diego Health, La Jolla, CA\nMD: Dr. Sarah Williams\n\nIndication: Complicated parapneumonic effusion\nSide: Right\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nSite: 7th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1400mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nWilliams, MD",
+    "note_text": "Pt: Walker, Betty || MRN: 7954504 || DOB: 3/17/1981\nDate: 11/26/2025 || Location: UC San Diego Health, La Jolla, CA\nMD: Dr. Sarah Williams\n\nIndication: Complicated parapneumonic effusion\nSide: Right\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nSite: 7th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1400mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nWilliams, MD",
     "cpt_codes": [
       32556
     ],
@@ -1250,18 +1145,10 @@
         "32556"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Harris, Timothy || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Cleveland Clinic, Cleveland, OH\nMD: Dr. Amanda Garcia\n\nIndication: Iatrogenic pneumothorax post-procedure\nSide: Right\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side accessible.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 24Fr chest tube inserted.\nRush of air upon entry. Tube fogging noted.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: ICU admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nGarcia, MD",
+    "note_text": "Pt: Harris, Timothy || MRN: 4673789 || DOB: 3/12/1962\nDate: 10/28/2025 || Location: Cleveland Clinic, Cleveland, OH\nMD: Dr. Amanda Garcia\n\nIndication: Iatrogenic pneumothorax post-procedure\nSide: Right\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side accessible.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 24Fr chest tube inserted.\nRush of air upon entry. Tube fogging noted.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: ICU admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nGarcia, MD",
     "cpt_codes": [
       32551
     ],
@@ -1340,18 +1227,10 @@
         "32551"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Nguyen, Timothy || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: MD Anderson Cancer Center, <LOCATION>, TX\nMD: LCDR John Park, MD\n\nIndication: Malignant pleural effusion - mesothelioma\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 6th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1817mL bloody fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nPark, MD",
+    "note_text": "Pt: Nguyen, Timothy || MRN: 8147797 || DOB: 11/27/1948\nDate: 07/31/2025 || Location: MD Anderson Cancer Center, Houston, TX\nMD: LCDR John Park, MD\n\nIndication: Malignant pleural effusion - mesothelioma\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 6th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1817mL bloody fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nPark, MD",
     "cpt_codes": [
       32550
     ],
@@ -1430,19 +1309,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Pt: Miller, Mary || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: University of Michigan Hospital, Ann Arbor, MI\nMD: Dr. Mark Taylor\n\nIndication: Complicated parapneumonic effusion\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nReal-time ultrasound used throughout procedure.\nSite: 8th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 8Fr pigtail catheter inserted.\n1310mL bloody fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nTaylor, MD",
+    "note_text": "Pt: Miller, Mary || MRN: 7486613 || DOB: 1/19/1973\nDate: 06/21/2025 || Location: University of Michigan Hospital, Ann Arbor, MI\nMD: Dr. Mark Taylor\n\nIndication: Complicated parapneumonic effusion\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nReal-time ultrasound used throughout procedure.\nSite: 8th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 8Fr pigtail catheter inserted.\n1310mL bloody fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nTaylor, MD",
     "cpt_codes": [
       32557
     ],
@@ -1521,18 +1391,10 @@
         "32557"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Scott, Jonathan || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Massachusetts General Hospital, Boston, MA\nMD: Dr. James Rodriguez\n\nIndication: Empyema\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nImmediate drainage: 792mL loculated fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nRodriguez, MD",
+    "note_text": "Pt: Scott, Jonathan || MRN: 5709732 || DOB: 10/25/1984\nDate: 09/10/2025 || Location: Massachusetts General Hospital, Boston, MA\nMD: Dr. James Rodriguez\n\nIndication: Empyema\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nImmediate drainage: 792mL loculated fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nRodriguez, MD",
     "cpt_codes": [
       32551
     ],
@@ -1611,18 +1473,10 @@
         "32551"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Perez, Charles || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Massachusetts General Hospital, Boston, MA\nMD: Dr. Lisa Anderson\n\nIndication: Malignant pleural effusion - breast cancer\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side up.\nSite: 7th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 8Fr pigtail catheter inserted.\n1337mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nAnderson, MD",
+    "note_text": "Pt: Perez, Charles || MRN: 7522392 || DOB: 6/25/1979\nDate: 06/14/2025 || Location: Massachusetts General Hospital, Boston, MA\nMD: Dr. Lisa Anderson\n\nIndication: Malignant pleural effusion - breast cancer\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side up.\nSite: 7th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 8Fr pigtail catheter inserted.\n1337mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nAnderson, MD",
     "cpt_codes": [
       32556
     ],
@@ -1701,18 +1555,10 @@
         "32556"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Thompson, Amy || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: MD Anderson Cancer Center, <LOCATION>, TX\nMD: Dr. Lisa Anderson\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 32Fr chest tube inserted.\nImmediate drainage: 1587mL serosanguinous fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nAnderson, MD",
+    "note_text": "Pt: Thompson, Amy || MRN: 3560623 || DOB: 1/5/1972\nDate: 06/10/2025 || Location: MD Anderson Cancer Center, Houston, TX\nMD: Dr. Lisa Anderson\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 32Fr chest tube inserted.\nImmediate drainage: 1587mL serosanguinous fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nAnderson, MD",
     "cpt_codes": [
       32551
     ],
@@ -1791,19 +1637,10 @@
         "32551"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Pt: Robinson, Gary || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Sharp Memorial Hospital, San Diego, CA\nMD: Dr. Rachel Kim\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Left\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Left side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 5th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 2104mL serosanguinous fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nKim, MD",
+    "note_text": "Pt: Robinson, Gary || MRN: 447155 || DOB: 4/21/1960\nDate: 11/13/2025 || Location: Sharp Memorial Hospital, San Diego, CA\nMD: Dr. Rachel Kim\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Left\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Left side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 5th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 2104mL serosanguinous fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nKim, MD",
     "cpt_codes": [
       32550
     ],
@@ -1882,18 +1719,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Lopez, Sandra || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Cleveland Clinic, Cleveland, OH\nMD: Dr. James Rodriguez\n\nIndication: Malignant pleural effusion - ovarian cancer\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 7th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1323mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nRodriguez, MD",
+    "note_text": "Pt: Lopez, Sandra || MRN: 8497817 || DOB: 9/27/1972\nDate: 08/04/2025 || Location: Cleveland Clinic, Cleveland, OH\nMD: Dr. James Rodriguez\n\nIndication: Malignant pleural effusion - ovarian cancer\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 7th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1323mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nRodriguez, MD",
     "cpt_codes": [
       32550
     ],
@@ -1972,18 +1801,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Campbell, Stephen || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Memorial Sloan Kettering, New York, NY\nMD: CAPT Russell Miller, MD\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Left\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Left side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 5th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1221mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nMiller, MD",
+    "note_text": "Pt: Campbell, Stephen || MRN: 9266882 || DOB: 7/22/1952\nDate: 11/15/2025 || Location: Memorial Sloan Kettering, New York, NY\nMD: CAPT Russell Miller, MD\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Left\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Left side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 5th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1221mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nMiller, MD",
     "cpt_codes": [
       32550
     ],
@@ -2062,18 +1883,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Allen, Larry || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: UC San Diego Health, La Jolla, CA\nMD: Dr. Michael Chen\n\nIndication: Hepatic hydrothorax\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nReal-time ultrasound used throughout procedure.\nSite: 5th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 14Fr pigtail catheter inserted.\n1011mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nChen, MD",
+    "note_text": "Pt: Allen, Larry || MRN: 3392649 || DOB: 4/23/1953\nDate: 09/09/2025 || Location: UC San Diego Health, La Jolla, CA\nMD: Dr. Michael Chen\n\nIndication: Hepatic hydrothorax\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nReal-time ultrasound used throughout procedure.\nSite: 5th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 14Fr pigtail catheter inserted.\n1011mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nChen, MD",
     "cpt_codes": [
       32557
     ],
@@ -2152,18 +1965,10 @@
         "32557"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Martinez, Sharon || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: University of Michigan Hospital, Ann Arbor, MI\nMD: CDR Patricia Davis, MD\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nReal-time ultrasound used throughout procedure.\nSite: 6th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n604mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nDavis, MD",
+    "note_text": "Pt: Martinez, Sharon || MRN: 3388681 || DOB: 2/16/1950\nDate: 11/25/2025 || Location: University of Michigan Hospital, Ann Arbor, MI\nMD: CDR Patricia Davis, MD\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nReal-time ultrasound used throughout procedure.\nSite: 6th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n604mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nDavis, MD",
     "cpt_codes": [
       32557
     ],
@@ -2242,18 +2047,10 @@
         "32557"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Young, Edward || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Memorial Sloan Kettering, New York, NY\nMD: Dr. James Rodriguez\n\nIndication: Traumatic pneumothorax\nSide: Right\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side accessible.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nRush of air upon entry. Tube fogging noted.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: ICU admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nRodriguez, MD",
+    "note_text": "Pt: Young, Edward || MRN: 6816714 || DOB: 3/28/1979\nDate: 09/06/2025 || Location: Memorial Sloan Kettering, New York, NY\nMD: Dr. James Rodriguez\n\nIndication: Traumatic pneumothorax\nSide: Right\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side accessible.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nRush of air upon entry. Tube fogging noted.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: ICU admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nRodriguez, MD",
     "cpt_codes": [
       32551
     ],
@@ -2332,18 +2129,10 @@
         "32551"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Campbell, Angela || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: MD Anderson Cancer Center, <LOCATION>, TX\nMD: Dr. Jennifer Lee\n\nIndication: Malignant pleural effusion - breast cancer\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side up.\nSite: 5th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1599mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nLee, MD",
+    "note_text": "Pt: Campbell, Angela || MRN: 2992994 || DOB: 8/25/1978\nDate: 08/07/2025 || Location: MD Anderson Cancer Center, Houston, TX\nMD: Dr. Jennifer Lee\n\nIndication: Malignant pleural effusion - breast cancer\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side up.\nSite: 5th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1599mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nLee, MD",
     "cpt_codes": [
       32556
     ],
@@ -2422,19 +2211,10 @@
         "32556"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Pt: Allen, John || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Memorial Sloan Kettering, New York, NY\nMD: Dr. Michael Chen\n\nIndication: Malignant pleural effusion - mesothelioma\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 6th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1865mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nChen, MD",
+    "note_text": "Pt: Allen, John || MRN: 9309538 || DOB: 5/21/1941\nDate: 11/20/2025 || Location: Memorial Sloan Kettering, New York, NY\nMD: Dr. Michael Chen\n\nIndication: Malignant pleural effusion - mesothelioma\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite marked at 6th intercostal space, mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1865mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nChen, MD",
     "cpt_codes": [
       32550
     ],
@@ -2513,18 +2293,10 @@
         "32550"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Torres, Kevin || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Memorial Sloan Kettering, New York, NY\nMD: LCDR John Park, MD\n\nIndication: Empyema\nSide: Right\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nSite: 7th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 12Fr pigtail catheter inserted.\n895mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nPark, MD",
+    "note_text": "Pt: Torres, Kevin || MRN: 5032180 || DOB: 9/21/1958\nDate: 12/02/2025 || Location: Memorial Sloan Kettering, New York, NY\nMD: LCDR John Park, MD\n\nIndication: Empyema\nSide: Right\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Right side up.\nSite: 7th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 12Fr pigtail catheter inserted.\n895mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nPark, MD",
     "cpt_codes": [
       32556
     ],
@@ -2603,18 +2375,10 @@
         "32556"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Martinez, Sandra || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Aurora Medical Center, Milwaukee, WI\nMD: Dr. Jennifer Lee\n\nIndication: Malignant pleural effusion - ovarian cancer\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side up.\nSite: 6th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 14Fr pigtail catheter inserted.\n1231mL straw-colored fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nLee, MD",
+    "note_text": "Pt: Martinez, Sandra || MRN: 2912934 || DOB: 4/13/1979\nDate: 06/24/2025 || Location: Aurora Medical Center, Milwaukee, WI\nMD: Dr. Jennifer Lee\n\nIndication: Malignant pleural effusion - ovarian cancer\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient positioned, Left side up.\nSite: 6th intercostal space.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 14Fr pigtail catheter inserted.\n1231mL straw-colored fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nLee, MD",
     "cpt_codes": [
       32556
     ],
@@ -2693,14 +2457,6 @@
         "32556"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   }
 ]

@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "PATIENT: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (68 years)\nDATE OF PROCEDURE: <DATE_TIME>\nLOCATION: Naval Medical Center San Diego – Bronchoscopy Suite\n\nPROCEDURE: Flexible bronchoscopy with linear endobronchial ultrasound–guided transbronchial needle aspiration (EBUS-TBNA) of mediastinal and hilar lymph nodes.\nOPERATORS:\n  Primary Operator: David Kim, MD – Interventional Pulmonology (Attending)\n  Assistant: Maria Lopez, MD – Pulmonary Fellow (PGY-5)\n  Bronchoscopy RN: Jonathan Johnson, RN\n  RT: Erica White, RRT\n\nINDICATION:\n68-year-old male with 3.2 cm left upper lobe mass and PET-avid mediastinal/hilar adenopathy (stations 4R, 4L, 7, 10L) requiring tissue for lung cancer staging and diagnosis.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia provided by Anesthesia service. Orotracheal intubation with 8.5 mm ETT. Patient positioned supine. Continuous cardiac monitoring, pulse oximetry, NIBP.\n\nPROCEDURE DESCRIPTION:\nTime-out was performed confirming patient, procedure, and site. The bronchoscope was advanced through the ETT under direct visualization. Trachea and bilateral bronchial tree were inspected to subsegmental level. No endobronchial tumor, secretions, or active bleeding was seen.\n\nEBUS TECHNIQUE:\nThe diagnostic scope was exchanged for a convex linear EBUS bronchoscope (Olympus BF-UC180F). Complete systematic nodal survey was performed. Target stations were identified by ultrasound and measured.\n\nSTATIONS SAMPLED:\n• Station 4R: 1.5 x 1.3 cm oval node, heterogeneous with distinct margins. Three passes with 22G EBUS needle; ROSE adequate with malignant cells.\n• Station 4L: 1.2 x 1.0 cm node, mildly enlarged. Three passes with 22G needle; ROSE adequate lymphocytes, no definite malignancy.\n• Station 7 (subcarinal): 2.0 x 1.6 cm node, heterogeneous with central necrosis. Four passes; ROSE suspicious for malignancy.\n• Station 10L: 1.0 x 0.8 cm node. Two passes; ROSE adequate lymphocytes.\n\nA total of 12 needle passes were performed. Specimens were sent for cytology, cell block, and molecular profiling (EGFR/ALK/ROS1/BRAF, PD-L1) per lung cancer protocol.\n\nCOMPLICATIONS:\nNo significant bleeding, hypoxia, or arrhythmia occurred. Estimated blood loss < 5 mL. No immediate complications were observed.\n\nDISPOSITION / PLAN:\nPatient was extubated in the procedure room and transferred to PACU in stable condition on 2 L/min nasal cannula. Planned outpatient follow-up in IP clinic in 1–2 weeks to review final pathology and staging. CT chest with contrast and brain MRI are already scheduled.\n\nPRELIMINARY IMPRESSION:\nSuccessful systematic EBUS-TBNA of mediastinal and hilar lymph nodes (stations 4R, 4L, 7, 10L) for lung cancer staging. ROSE suggests malignant involvement at 4R and 7; final cytology and molecular testing pending.\n\nSIGNED:\nDavid Kim, MD\nInterventional Pulmonology",
+    "note_text": "PATIENT: Robert McNeil\nMRN: 700001\nDOB: 02/11/1957 (68 years)\nDATE OF PROCEDURE: 03/18/2025\nLOCATION: Naval Medical Center San Diego \u2013 Bronchoscopy Suite\n\nPROCEDURE: Flexible bronchoscopy with linear endobronchial ultrasound\u2013guided transbronchial needle aspiration (EBUS-TBNA) of mediastinal and hilar lymph nodes.\nOPERATORS:\n  Primary Operator: David Kim, MD \u2013 Interventional Pulmonology (Attending)\n  Assistant: Maria Lopez, MD \u2013 Pulmonary Fellow (PGY-5)\n  Bronchoscopy RN: Jonathan Johnson, RN\n  RT: Erica White, RRT\n\nINDICATION:\n68-year-old male with 3.2 cm left upper lobe mass and PET-avid mediastinal/hilar adenopathy (stations 4R, 4L, 7, 10L) requiring tissue for lung cancer staging and diagnosis.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia provided by Anesthesia service. Orotracheal intubation with 8.5 mm ETT. Patient positioned supine. Continuous cardiac monitoring, pulse oximetry, NIBP.\n\nPROCEDURE DESCRIPTION:\nTime-out was performed confirming patient, procedure, and site. The bronchoscope was advanced through the ETT under direct visualization. Trachea and bilateral bronchial tree were inspected to subsegmental level. No endobronchial tumor, secretions, or active bleeding was seen.\n\nEBUS TECHNIQUE:\nThe diagnostic scope was exchanged for a convex linear EBUS bronchoscope (Olympus BF-UC180F). Complete systematic nodal survey was performed. Target stations were identified by ultrasound and measured.\n\nSTATIONS SAMPLED:\n\u2022 Station 4R: 1.5 x 1.3 cm oval node, heterogeneous with distinct margins. Three passes with 22G EBUS needle; ROSE adequate with malignant cells.\n\u2022 Station 4L: 1.2 x 1.0 cm node, mildly enlarged. Three passes with 22G needle; ROSE adequate lymphocytes, no definite malignancy.\n\u2022 Station 7 (subcarinal): 2.0 x 1.6 cm node, heterogeneous with central necrosis. Four passes; ROSE suspicious for malignancy.\n\u2022 Station 10L: 1.0 x 0.8 cm node. Two passes; ROSE adequate lymphocytes.\n\nA total of 12 needle passes were performed. Specimens were sent for cytology, cell block, and molecular profiling (EGFR/ALK/ROS1/BRAF, PD-L1) per lung cancer protocol.\n\nCOMPLICATIONS:\nNo significant bleeding, hypoxia, or arrhythmia occurred. Estimated blood loss < 5 mL. No immediate complications were observed.\n\nDISPOSITION / PLAN:\nPatient was extubated in the procedure room and transferred to PACU in stable condition on 2 L/min nasal cannula. Planned outpatient follow-up in IP clinic in 1\u20132 weeks to review final pathology and staging. CT chest with contrast and brain MRI are already scheduled.\n\nPRELIMINARY IMPRESSION:\nSuccessful systematic EBUS-TBNA of mediastinal and hilar lymph nodes (stations 4R, 4L, 7, 10L) for lung cancer staging. ROSE suggests malignant involvement at 4R and 7; final cytology and molecular testing pending.\n\nSIGNED:\nDavid Kim, MD\nInterventional Pulmonology",
     "cpt_codes": [
       31653
     ],
@@ -21,7 +21,7 @@
       "evidence": {
         "procedure_date": "DATE OF PROCEDURE: 03/18/2025",
         "patient_mrn": "MRN: 700001",
-        "attending_name": "Primary Operator: David Kim, MD – Interventional Pulmonology (Attending)",
+        "attending_name": "Primary Operator: David Kim, MD \u2013 Interventional Pulmonology (Attending)",
         "ebus_stations_sampled": "STATIONS SAMPLED: 4R, 4L, 7, 10L described in detail in the EBUS TECHNIQUE section."
       },
       "institution_name": "Naval Medical Center San Diego",
@@ -174,19 +174,10 @@
         "Systematic EBUS-TBNA staging of 4 stations supports 31653.",
         "Diagnostic bronchoscopy (31622) is bundled into 31653."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Name: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (59 years)\nDate of Service: <DATE_TIME>\nLocation: Bronchoscopy/Procedural Suite\n\nProcedure: Robotic navigational bronchoscopy with radial EBUS confirmation and transbronchial biopsies of peripheral RUL nodule.\nOperating Physician: Michael Thompson, MD (Interventional Pulmonology)\nAssistant: Brian Wu, MD (Pulmonary Fellow)\nRT: Sarah Long, RRT\nRN: Casey Nguyen, RN\n\nIndication:\n59-year-old female with 8 mm posterior segment right upper lobe nodule, intensely PET-avid, bronchus sign positive on CT, no clear mediastinal adenopathy. Referred for minimally invasive diagnostic biopsy.\n\nAnesthesia/Airway:\nGeneral anesthesia with LMA provided by Anesthesia team. Patient in supine position. Standard ASA monitors in place.\n\nProcedure Description:\nFollowing time-out, the robotic bronchoscopy platform was docked (Monarch system). Pre-procedure CT was loaded and registration performed using automatic airway mapping with final registration error < 2 mm.\n\nUsing the navigation interface, the robotic scope was advanced to the posterior segment of the RUL following the virtual pathway. The working channel was aligned to the target; divergence from the target center was < 3 mm.\n\nRadial EBUS:\nA radial EBUS probe with guide sheath was advanced through the working channel. A concentric, solid lesion was visualized corresponding to the CT target. The guide sheath was left in place at the point of maximal signal.\n\nSampling:\nThrough the guide sheath, the following samples were obtained:\n• Transbronchial forceps biopsies: 6 passes from the RUL posterior segment nodule.\n• Transbronchial needle aspiration: 3 passes with a 21G needle targeting the same lesion.\n• Cytology brushings: 2 passes from the nodule.\n\nAll samples were sent for histology, cytology, microbiology, and molecular profiling including PD-L1. No significant bleeding occurred; minor oozing resolved with wedging and suction.\n\nComplications:\nNo hypoxia, arrhythmia, or pneumothorax was observed. Fluoroscopy was used intermittently to confirm tool position. Estimated blood loss < 5 mL.\n\nDisposition/Plan:\nPatient was extubated and transported to PACU in stable condition. Post-procedure CXR to evaluate for pneumothorax was ordered. Follow-up visit in IP clinic in 1–2 weeks to discuss results and management options.\n\nImpression:\nSuccessful robotic navigational bronchoscopy with radial EBUS confirmation and transbronchial sampling of an 8 mm RUL posterior segment nodule. Final pathology pending.",
+    "note_text": "Name: Angela Rivera\nMRN: 700002\nDOB: 06/04/1965 (59 years)\nDate of Service: 04/09/2025\nLocation: Bronchoscopy/Procedural Suite\n\nProcedure: Robotic navigational bronchoscopy with radial EBUS confirmation and transbronchial biopsies of peripheral RUL nodule.\nOperating Physician: Michael Thompson, MD (Interventional Pulmonology)\nAssistant: Brian Wu, MD (Pulmonary Fellow)\nRT: Sarah Long, RRT\nRN: Casey Nguyen, RN\n\nIndication:\n59-year-old female with 8 mm posterior segment right upper lobe nodule, intensely PET-avid, bronchus sign positive on CT, no clear mediastinal adenopathy. Referred for minimally invasive diagnostic biopsy.\n\nAnesthesia/Airway:\nGeneral anesthesia with LMA provided by Anesthesia team. Patient in supine position. Standard ASA monitors in place.\n\nProcedure Description:\nFollowing time-out, the robotic bronchoscopy platform was docked (Monarch system). Pre-procedure CT was loaded and registration performed using automatic airway mapping with final registration error < 2 mm.\n\nUsing the navigation interface, the robotic scope was advanced to the posterior segment of the RUL following the virtual pathway. The working channel was aligned to the target; divergence from the target center was < 3 mm.\n\nRadial EBUS:\nA radial EBUS probe with guide sheath was advanced through the working channel. A concentric, solid lesion was visualized corresponding to the CT target. The guide sheath was left in place at the point of maximal signal.\n\nSampling:\nThrough the guide sheath, the following samples were obtained:\n\u2022 Transbronchial forceps biopsies: 6 passes from the RUL posterior segment nodule.\n\u2022 Transbronchial needle aspiration: 3 passes with a 21G needle targeting the same lesion.\n\u2022 Cytology brushings: 2 passes from the nodule.\n\nAll samples were sent for histology, cytology, microbiology, and molecular profiling including PD-L1. No significant bleeding occurred; minor oozing resolved with wedging and suction.\n\nComplications:\nNo hypoxia, arrhythmia, or pneumothorax was observed. Fluoroscopy was used intermittently to confirm tool position. Estimated blood loss < 5 mL.\n\nDisposition/Plan:\nPatient was extubated and transported to PACU in stable condition. Post-procedure CXR to evaluate for pneumothorax was ordered. Follow-up visit in IP clinic in 1\u20132 weeks to discuss results and management options.\n\nImpression:\nSuccessful robotic navigational bronchoscopy with radial EBUS confirmation and transbronchial sampling of an 8 mm RUL posterior segment nodule. Final pathology pending.",
     "cpt_codes": [
       31629,
       31628,
@@ -203,7 +194,7 @@
       "primary_indication": "PET-avid 8 mm posterior segment RUL nodule with positive bronchus sign; navigational bronchoscopy for diagnosis.",
       "sedation_type": "General",
       "airway_type": "LMA",
-      "final_diagnosis_prelim": "Peripheral lung nodule; malignancy vs infection – pathology pending.",
+      "final_diagnosis_prelim": "Peripheral lung nodule; malignancy vs infection \u2013 pathology pending.",
       "cpt_codes": [
         31627,
         31654,
@@ -216,7 +207,7 @@
         "radial_ebus": "Radial EBUS with concentric view confirming the RUL posterior segment lesion.",
         "sampling": "Transbronchial forceps biopsies (6), TBNA (3), and brushings (2) from the targeted nodule."
       },
-      "institution_name": "Naval Medical Center – Bronchoscopy Suite",
+      "institution_name": "Naval Medical Center \u2013 Bronchoscopy Suite",
       "disposition": "Outpatient discharge",
       "bronch_indication": "Lung Nodule Evaluation",
       "bronch_location_lobe": "RUL",
@@ -421,19 +412,10 @@
         "Added 31629 (TBNA) and 31623 (Brush) as they were documented in the note but missing from the registry extraction.",
         "Robotic navigation (31627) and radial EBUS (31654) are appropriate add-ons."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (73 years)\nDATE: <DATE_TIME>\nLOCATION: Main OR – Hybrid Suite\n\nPREOPERATIVE DIAGNOSIS: Severe mid-tracheal obstruction from squamous cell carcinoma.\nPOSTOPERATIVE DIAGNOSIS: Same.\n\nPROCEDURE:\n1. Rigid therapeutic bronchoscopy with destruction of endobronchial tumor.\n2. Flexible bronchoscopy.\n3. Tracheal silicone stent placement.\n\nSURGEON: Laura Bennett, MD (Interventional Pulmonology)\nASSISTANT: Andrew Park, MD (Thoracic Surgery Fellow)\nANESTHESIA: General anesthesia with rigid bronchoscopy and jet ventilation.\n\nINDICATION:\n73-year-old male with known squamous cell carcinoma of the mid-trachea, presenting with stridor and 80% luminal obstruction on CT and bronchoscopy. Planned rigid therapeutic bronchoscopy with debulking and airway stent placement for palliation and airway stabilization.\n\nPROCEDURE DETAILS:\nAfter induction of general anesthesia, a rigid tracheobronchoscope was introduced under direct visualization. Tumor causing near circumferential narrowing of the mid-trachea over ~3 cm was identified.\n\nTumor Debulking:\nMechanical debulking was performed using the bevel of the rigid scope and large forceps to core out the intraluminal mass. Argon plasma coagulation (APC) at 35 W and 1.5 L/min flow was then applied circumferentially to residual tumor and bleeding points until a widely patent lumen was obtained. Approximate residual obstruction was < 20% with smooth mucosal surface.\n\nStent Placement:\nA 16 x 50 mm straight silicone Dumon stent was selected. Under direct bronchoscopic visualization, the stent was mounted on the rigid stent loader and deployed across the involved segment. Final position covered the entire tumor bed with adequate proximal and distal margins. The stent was well seated with no migration and good distal ventilation.\n\nThe airway was reinspected distally with a flexible bronchoscope through the rigid barrel. No additional endobronchial disease was identified. Secretions were suctioned.\n\nCOMPLICATIONS:\nTotal estimated blood loss ~20 mL. No significant hypoxia, arrhythmia, or airway perforation. No intraoperative complications.\n\nDISPOSITION:\nThe rigid scope was removed and the patient was transitioned back to a standard ETT and subsequently extubated in the OR. He was transported to PACU on 4 L/min nasal cannula in stable condition. Follow-up CT and bronchoscopy are planned in 4–6 weeks.\n\nIMPRESSION:\nSuccessful rigid therapeutic bronchoscopy with tumor destruction and silicone tracheal stent placement for malignant tracheal obstruction, with marked improvement in airway patency.",
+    "note_text": "PATIENT: James Caldwell\nMRN: 700003\nDOB: 01/22/1952 (73 years)\nDATE: 05/01/2025\nLOCATION: Main OR \u2013 Hybrid Suite\n\nPREOPERATIVE DIAGNOSIS: Severe mid-tracheal obstruction from squamous cell carcinoma.\nPOSTOPERATIVE DIAGNOSIS: Same.\n\nPROCEDURE:\n1. Rigid therapeutic bronchoscopy with destruction of endobronchial tumor.\n2. Flexible bronchoscopy.\n3. Tracheal silicone stent placement.\n\nSURGEON: Laura Bennett, MD (Interventional Pulmonology)\nASSISTANT: Andrew Park, MD (Thoracic Surgery Fellow)\nANESTHESIA: General anesthesia with rigid bronchoscopy and jet ventilation.\n\nINDICATION:\n73-year-old male with known squamous cell carcinoma of the mid-trachea, presenting with stridor and 80% luminal obstruction on CT and bronchoscopy. Planned rigid therapeutic bronchoscopy with debulking and airway stent placement for palliation and airway stabilization.\n\nPROCEDURE DETAILS:\nAfter induction of general anesthesia, a rigid tracheobronchoscope was introduced under direct visualization. Tumor causing near circumferential narrowing of the mid-trachea over ~3 cm was identified.\n\nTumor Debulking:\nMechanical debulking was performed using the bevel of the rigid scope and large forceps to core out the intraluminal mass. Argon plasma coagulation (APC) at 35 W and 1.5 L/min flow was then applied circumferentially to residual tumor and bleeding points until a widely patent lumen was obtained. Approximate residual obstruction was < 20% with smooth mucosal surface.\n\nStent Placement:\nA 16 x 50 mm straight silicone Dumon stent was selected. Under direct bronchoscopic visualization, the stent was mounted on the rigid stent loader and deployed across the involved segment. Final position covered the entire tumor bed with adequate proximal and distal margins. The stent was well seated with no migration and good distal ventilation.\n\nThe airway was reinspected distally with a flexible bronchoscope through the rigid barrel. No additional endobronchial disease was identified. Secretions were suctioned.\n\nCOMPLICATIONS:\nTotal estimated blood loss ~20 mL. No significant hypoxia, arrhythmia, or airway perforation. No intraoperative complications.\n\nDISPOSITION:\nThe rigid scope was removed and the patient was transitioned back to a standard ETT and subsequently extubated in the OR. He was transported to PACU on 4 L/min nasal cannula in stable condition. Follow-up CT and bronchoscopy are planned in 4\u20136 weeks.\n\nIMPRESSION:\nSuccessful rigid therapeutic bronchoscopy with tumor destruction and silicone tracheal stent placement for malignant tracheal obstruction, with marked improvement in airway patency.",
     "cpt_codes": [
       31641,
       31636
@@ -458,7 +440,7 @@
         "tumor_destruction": "Mechanical debulking plus APC applied to residual tumor in the mid-trachea.",
         "stent": "16 x 50 mm straight silicone Dumon stent placed across the mid-tracheal tumor bed."
       },
-      "institution_name": "Hybrid OR – Tertiary Military Medical Center",
+      "institution_name": "Hybrid OR \u2013 Tertiary Military Medical Center",
       "disposition": "Outpatient discharge",
       "bronch_indication": "Airway Obstruction",
       "bronch_location_lobe": "Trachea",
@@ -615,19 +597,10 @@
         "Therapeutic rigid bronchoscopy with tumor destruction (31641) and stent placement (31636).",
         "Diagnostic bronchoscopy is bundled."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>\nMRN: <MRN>\nAGE: 56 years\nDATE OF PROCEDURE: <DATE_TIME>\nLOCATION: ICU Bedside\n\nPRE-OP DIAGNOSIS: Right parapneumonic effusion with suspected empyema.\nPOST-OP DIAGNOSIS: Same.\n\nPROCEDURES:\n1. Ultrasound-guided diagnostic and therapeutic right thoracentesis.\n2. Insertion of right large-bore chest tube for ongoing drainage.\n\nOPERATOR: Emily Rogers, MD (Pulmonary/Critical Care)\nASSISTANT: ICU Resident PGY-2\n\nINDICATION:\n56-year-old male with severe community-acquired pneumonia and enlarging right pleural effusion with loculations and fevers despite antibiotics. Ultrasound reveals complex septated effusion. Bedside thoracentesis for diagnosis followed by chest tube for continued drainage.\n\nULTRASOUND-GUIDED THORACENTESIS:\nThe patient was positioned sitting upright. Right posterolateral chest was prepped and draped in sterile fashion. Ultrasound identified a moderate, complex right pleural effusion with diaphragmatic excursion and no obvious lung entrapment. A safe window in the right posterior axillary line at the 8th intercostal space was chosen.\n\nLocal anesthesia with 1% lidocaine was infiltrated down to the pleura. A 19G needle with catheter was advanced above the rib under real-time ultrasound guidance into the pleural space with return of turbid, yellow fluid. Approximately 40 mL of fluid was aspirated for diagnostic studies (chemistry, cell count, Gram stain/culture, cytology, pH, LDH, glucose).\n\nCHEST TUBE INSERTION:\nGiven the thick, loculated nature of the effusion and sepsis, a decision was made to place a large-bore chest tube. A 28 Fr straight chest tube was inserted via a separate incision at the mid-axillary line in the 6th intercostal space using blunt dissection and Seldinger technique into the posterolateral collection. The tube was secured with sutures and connected to -20 cm H2O suction.\n\nInitial drainage was approximately 900 mL of turbid, malodorous fluid. The patient tolerated the procedure without hypotension or significant desaturation. Post-procedure ultrasound confirmed lung expansion, and a CXR was ordered to confirm position and evaluate for complications.\n\nCOMPLICATIONS:\nNo immediate pneumothorax, bleeding, or organ injury was observed.\n\nDISPOSITION:\nPatient remained in the ICU on existing vasopressor and ventilator settings. Plan for intrapleural fibrinolytics if imaging shows persistent loculations.\n\nIMPRESSION:\nSuccessful ultrasound-guided right thoracentesis with large-volume purulent fluid removal and placement of a large-bore right chest tube for ongoing drainage of presumed empyema.",
+    "note_text": "PATIENT: Matthew Li\nMRN: 700004\nAGE: 56 years\nDATE OF PROCEDURE: 02/20/2025\nLOCATION: ICU Bedside\n\nPRE-OP DIAGNOSIS: Right parapneumonic effusion with suspected empyema.\nPOST-OP DIAGNOSIS: Same.\n\nPROCEDURES:\n1. Ultrasound-guided diagnostic and therapeutic right thoracentesis.\n2. Insertion of right large-bore chest tube for ongoing drainage.\n\nOPERATOR: Emily Rogers, MD (Pulmonary/Critical Care)\nASSISTANT: ICU Resident PGY-2\n\nINDICATION:\n56-year-old male with severe community-acquired pneumonia and enlarging right pleural effusion with loculations and fevers despite antibiotics. Ultrasound reveals complex septated effusion. Bedside thoracentesis for diagnosis followed by chest tube for continued drainage.\n\nULTRASOUND-GUIDED THORACENTESIS:\nThe patient was positioned sitting upright. Right posterolateral chest was prepped and draped in sterile fashion. Ultrasound identified a moderate, complex right pleural effusion with diaphragmatic excursion and no obvious lung entrapment. A safe window in the right posterior axillary line at the 8th intercostal space was chosen.\n\nLocal anesthesia with 1% lidocaine was infiltrated down to the pleura. A 19G needle with catheter was advanced above the rib under real-time ultrasound guidance into the pleural space with return of turbid, yellow fluid. Approximately 40 mL of fluid was aspirated for diagnostic studies (chemistry, cell count, Gram stain/culture, cytology, pH, LDH, glucose).\n\nCHEST TUBE INSERTION:\nGiven the thick, loculated nature of the effusion and sepsis, a decision was made to place a large-bore chest tube. A 28 Fr straight chest tube was inserted via a separate incision at the mid-axillary line in the 6th intercostal space using blunt dissection and Seldinger technique into the posterolateral collection. The tube was secured with sutures and connected to -20 cm H2O suction.\n\nInitial drainage was approximately 900 mL of turbid, malodorous fluid. The patient tolerated the procedure without hypotension or significant desaturation. Post-procedure ultrasound confirmed lung expansion, and a CXR was ordered to confirm position and evaluate for complications.\n\nCOMPLICATIONS:\nNo immediate pneumothorax, bleeding, or organ injury was observed.\n\nDISPOSITION:\nPatient remained in the ICU on existing vasopressor and ventilator settings. Plan for intrapleural fibrinolytics if imaging shows persistent loculations.\n\nIMPRESSION:\nSuccessful ultrasound-guided right thoracentesis with large-volume purulent fluid removal and placement of a large-bore right chest tube for ongoing drainage of presumed empyema.",
     "cpt_codes": [
       32555,
       32551
@@ -652,7 +625,7 @@
         "thoracentesis": "Ultrasound-guided diagnostic and therapeutic right thoracentesis via 8th intercostal space.",
         "tube_thoracostomy": "28 Fr straight chest tube placed in right mid-axillary line with immediate drainage of purulent fluid."
       },
-      "institution_name": "ICU – Tertiary Military Facility",
+      "institution_name": "ICU \u2013 Tertiary Military Facility",
       "disposition": "ICU admission",
       "pleural_procedure_type": "Thoracentesis + chest tube",
       "pleural_side": "Right",
@@ -796,18 +769,10 @@
       "note_level_rationale": [
         "Both thoracentesis (32555) and chest tube placement (32551) are supported as they were distinct procedures (sampling then large-bore tube placement)."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (82 years)\nDATE: <DATE_TIME>\nLOCATION: Outpatient Procedure Room\n\nPROCEDURE: Bedside diagnostic and therapeutic left thoracentesis without imaging guidance.\nPHYSICIAN: Hannah Patel, MD\n\nINDICATION:\n82-year-old female with chronic systolic heart failure (EF 25%), progressive dyspnea, and large left pleural effusion on chest radiograph. No ultrasound available in the clinic procedure room. Thoracentesis was requested for symptomatic relief and to confirm a transudative effusion.\n\nPROCEDURE DESCRIPTION:\nThe patient was seated upright, leaning forward over a bedside table. Left posterior hemithorax was prepped and draped in sterile fashion. Percussion and auscultation identified a level of dullness consistent with a moderate free-flowing effusion.\n\nLocal anesthesia was achieved with 1% lidocaine infiltrated into skin, subcutaneous tissue, and intercostal muscles at the left posterior 8th intercostal space in the mid-scapular line. Using landmark technique, an 18G over-the-needle catheter was advanced just superior to the rib into the pleural space with immediate return of straw-colored fluid.\n\nApproximately 60 mL of fluid was aspirated into syringes and sent for chemistry (protein, LDH), cell count/differential, Gram stain/culture, and cytology. An additional 900 mL was drained slowly by gravity with the patient monitored for cough, chest discomfort, or hypotension. The catheter was then removed and a sterile dressing applied.\n\nCOMPLICATIONS:\nThe patient experienced mild coughing toward the end of the drainage but no significant pleuritic pain or hypotension. No immediate pneumothorax was evident clinically. Post-procedure CXR was ordered.\n\nDISPOSITION:\nThe patient remained in the clinic for a brief observation period and was then discharged home with instructions to return for worsening dyspnea. Outpatient follow-up with cardiology and pulmonary clinic is arranged.\n\nIMPRESSION:\nLandmark-guided diagnostic and therapeutic left thoracentesis for presumed heart failure-related effusion; fluid characteristics pending.",
+    "note_text": "PATIENT: Lucille Brown\nMRN: 700005\nDOB: 09/30/1942 (82 years)\nDATE: 01/14/2025\nLOCATION: Outpatient Procedure Room\n\nPROCEDURE: Bedside diagnostic and therapeutic left thoracentesis without imaging guidance.\nPHYSICIAN: Hannah Patel, MD\n\nINDICATION:\n82-year-old female with chronic systolic heart failure (EF 25%), progressive dyspnea, and large left pleural effusion on chest radiograph. No ultrasound available in the clinic procedure room. Thoracentesis was requested for symptomatic relief and to confirm a transudative effusion.\n\nPROCEDURE DESCRIPTION:\nThe patient was seated upright, leaning forward over a bedside table. Left posterior hemithorax was prepped and draped in sterile fashion. Percussion and auscultation identified a level of dullness consistent with a moderate free-flowing effusion.\n\nLocal anesthesia was achieved with 1% lidocaine infiltrated into skin, subcutaneous tissue, and intercostal muscles at the left posterior 8th intercostal space in the mid-scapular line. Using landmark technique, an 18G over-the-needle catheter was advanced just superior to the rib into the pleural space with immediate return of straw-colored fluid.\n\nApproximately 60 mL of fluid was aspirated into syringes and sent for chemistry (protein, LDH), cell count/differential, Gram stain/culture, and cytology. An additional 900 mL was drained slowly by gravity with the patient monitored for cough, chest discomfort, or hypotension. The catheter was then removed and a sterile dressing applied.\n\nCOMPLICATIONS:\nThe patient experienced mild coughing toward the end of the drainage but no significant pleuritic pain or hypotension. No immediate pneumothorax was evident clinically. Post-procedure CXR was ordered.\n\nDISPOSITION:\nThe patient remained in the clinic for a brief observation period and was then discharged home with instructions to return for worsening dyspnea. Outpatient follow-up with cardiology and pulmonary clinic is arranged.\n\nIMPRESSION:\nLandmark-guided diagnostic and therapeutic left thoracentesis for presumed heart failure-related effusion; fluid characteristics pending.",
     "cpt_codes": [
       32554
     ],
@@ -945,19 +910,10 @@
       "note_level_rationale": [
         "Landmark-guided thoracentesis supports 32554."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>\nMRN: <MRN>\nAGE: 69 years\nDATE OF PROCEDURE: <DATE_TIME>\nLOCATION: Pleural Procedure Suite\n\nPRE-PROCEDURE DIAGNOSIS: Recurrent right malignant pleural effusion secondary to metastatic lung adenocarcinoma.\nPOST-PROCEDURE DIAGNOSIS: Same.\n\nPROCEDURE: Ultrasound-guided tunneled indwelling pleural catheter placement (PleurX) with large-volume drainage.\n\nPHYSICIAN: Rachel Green, MD (Interventional Pulmonology)\nASSISTANT: Pulmonary Fellow PGY-6\n\nINDICATION:\n69-year-old male with metastatic lung adenocarcinoma and recurrent symptomatic right pleural effusion requiring thoracentesis every 7–10 days. Shared decision-making favored tunneled indwelling pleural catheter placement for symptom control and outpatient management.\n\nPROCEDURE DESCRIPTION:\nPre-procedure ultrasound confirmed a large free-flowing right pleural effusion with no significant loculations. Patient was positioned supine with head of bed elevated.\n\nAfter time-out, the right lateral chest wall was prepped and draped. Local anesthesia was obtained with 1% lidocaine at the planned entry and exit sites. Under real-time ultrasound guidance, an 18G finder needle was advanced into the pleural space at the right mid-axillary line, 6th intercostal space, with return of serosanguinous fluid.\n\nA guidewire was advanced and serial dilation performed. A subcutaneous tunnel approximately 7 cm in length was created anteriorly, and the PleurX catheter was pulled through the tunnel exiting at the anterior chest wall. The peel-away sheath was then advanced into the pleural space over the guidewire, and the catheter was inserted and the sheath removed.\n\nThe catheter was connected to a vacuum drainage bottle; approximately 1,500 mL of serosanguinous fluid was drained slowly with monitoring for chest discomfort and blood pressure changes. The catheter tip position was confirmed by ultrasound. The exit site and entry site were secured with sutures and sterile dressings.\n\nCOMPLICATIONS:\nNo significant pain, hypotension, or re-expansion pulmonary edema occurred. No immediate bleeding or air leak was noted.\n\nDISPOSITION:\nThe patient was discharged home the same day with home health nursing arranged for drainage three times per week and instructions for signs of infection or catheter malfunction.\n\nIMPRESSION:\nTechnically successful ultrasound-guided placement of a tunneled right PleurX catheter with large-volume drainage of recurrent malignant effusion.",
+    "note_text": "PATIENT: Samuel Patel\nMRN: 700006\nAGE: 69 years\nDATE OF PROCEDURE: 03/05/2025\nLOCATION: Pleural Procedure Suite\n\nPRE-PROCEDURE DIAGNOSIS: Recurrent right malignant pleural effusion secondary to metastatic lung adenocarcinoma.\nPOST-PROCEDURE DIAGNOSIS: Same.\n\nPROCEDURE: Ultrasound-guided tunneled indwelling pleural catheter placement (PleurX) with large-volume drainage.\n\nPHYSICIAN: Rachel Green, MD (Interventional Pulmonology)\nASSISTANT: Pulmonary Fellow PGY-6\n\nINDICATION:\n69-year-old male with metastatic lung adenocarcinoma and recurrent symptomatic right pleural effusion requiring thoracentesis every 7\u201310 days. Shared decision-making favored tunneled indwelling pleural catheter placement for symptom control and outpatient management.\n\nPROCEDURE DESCRIPTION:\nPre-procedure ultrasound confirmed a large free-flowing right pleural effusion with no significant loculations. Patient was positioned supine with head of bed elevated.\n\nAfter time-out, the right lateral chest wall was prepped and draped. Local anesthesia was obtained with 1% lidocaine at the planned entry and exit sites. Under real-time ultrasound guidance, an 18G finder needle was advanced into the pleural space at the right mid-axillary line, 6th intercostal space, with return of serosanguinous fluid.\n\nA guidewire was advanced and serial dilation performed. A subcutaneous tunnel approximately 7 cm in length was created anteriorly, and the PleurX catheter was pulled through the tunnel exiting at the anterior chest wall. The peel-away sheath was then advanced into the pleural space over the guidewire, and the catheter was inserted and the sheath removed.\n\nThe catheter was connected to a vacuum drainage bottle; approximately 1,500 mL of serosanguinous fluid was drained slowly with monitoring for chest discomfort and blood pressure changes. The catheter tip position was confirmed by ultrasound. The exit site and entry site were secured with sutures and sterile dressings.\n\nCOMPLICATIONS:\nNo significant pain, hypotension, or re-expansion pulmonary edema occurred. No immediate bleeding or air leak was noted.\n\nDISPOSITION:\nThe patient was discharged home the same day with home health nursing arranged for drainage three times per week and instructions for signs of infection or catheter malfunction.\n\nIMPRESSION:\nTechnically successful ultrasound-guided placement of a tunneled right PleurX catheter with large-volume drainage of recurrent malignant effusion.",
     "cpt_codes": [
       32550
     ],
@@ -1095,18 +1051,10 @@
       "note_level_rationale": [
         "Tunneled catheter placement (32550) is the correct code."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>\nMRN: <MRN>\nAGE: 64 years\nDATE OF PROCEDURE: <DATE_TIME>\nLOCATION: Outpatient Procedure Room\n\nPRE-PROCEDURE DIAGNOSIS: Right malignant pleural effusion status post tunneled pleural catheter with clinical autopleurodesis.\nPOST-PROCEDURE DIAGNOSIS: Same.\n\nPROCEDURE: Removal of tunneled indwelling pleural catheter.\n\nPHYSICIAN: Thomas Nguyen, MD (Interventional Pulmonology)\n\nINDICATION:\n64-year-old female with metastatic breast cancer and right malignant pleural effusion managed with a PleurX catheter placed 7 months ago. She has had no drainage for 6 weeks and imaging shows a small residual effusion with lung expansion, consistent with spontaneous pleurodesis. The catheter site is mildly irritated and the patient wishes to have it removed.\n\nPROCEDURE DESCRIPTION:\nThe patient was placed in the supine position. The right lateral chest and catheter exit site were prepped and draped in sterile fashion. Local anesthesia was provided with 1% lidocaine infiltrated around the cuff and exit site.\n\nThe tunnel tract and cuff were gently dissected free using a small scalpel and blunt dissection. Once the cuff was fully mobilized, steady traction was applied and the PleurX catheter was removed intact without resistance. The tunnel was probed digitally to confirm no retained cuff material.\n\nHemostasis was achieved with gauze and direct pressure. The exit site was closed with a single 3-0 nylon suture and covered with a sterile dressing.\n\nCOMPLICATIONS:\nMinimal bleeding, no pneumothorax, no air leak. The patient tolerated the procedure well.\n\nDISPOSITION:\nThe patient was observed for 30 minutes and discharged home in stable condition with instructions for wound care and removal of sutures in 7–10 days.\n\nIMPRESSION:\nUncomplicated removal of tunneled right pleural catheter after successful autopleurodesis.",
+    "note_text": "PATIENT: Diane Curry\nMRN: 700007\nAGE: 64 years\nDATE OF PROCEDURE: 06/02/2025\nLOCATION: Outpatient Procedure Room\n\nPRE-PROCEDURE DIAGNOSIS: Right malignant pleural effusion status post tunneled pleural catheter with clinical autopleurodesis.\nPOST-PROCEDURE DIAGNOSIS: Same.\n\nPROCEDURE: Removal of tunneled indwelling pleural catheter.\n\nPHYSICIAN: Thomas Nguyen, MD (Interventional Pulmonology)\n\nINDICATION:\n64-year-old female with metastatic breast cancer and right malignant pleural effusion managed with a PleurX catheter placed 7 months ago. She has had no drainage for 6 weeks and imaging shows a small residual effusion with lung expansion, consistent with spontaneous pleurodesis. The catheter site is mildly irritated and the patient wishes to have it removed.\n\nPROCEDURE DESCRIPTION:\nThe patient was placed in the supine position. The right lateral chest and catheter exit site were prepped and draped in sterile fashion. Local anesthesia was provided with 1% lidocaine infiltrated around the cuff and exit site.\n\nThe tunnel tract and cuff were gently dissected free using a small scalpel and blunt dissection. Once the cuff was fully mobilized, steady traction was applied and the PleurX catheter was removed intact without resistance. The tunnel was probed digitally to confirm no retained cuff material.\n\nHemostasis was achieved with gauze and direct pressure. The exit site was closed with a single 3-0 nylon suture and covered with a sterile dressing.\n\nCOMPLICATIONS:\nMinimal bleeding, no pneumothorax, no air leak. The patient tolerated the procedure well.\n\nDISPOSITION:\nThe patient was observed for 30 minutes and discharged home in stable condition with instructions for wound care and removal of sutures in 7\u201310 days.\n\nIMPRESSION:\nUncomplicated removal of tunneled right pleural catheter after successful autopleurodesis.",
     "cpt_codes": [
       32552
     ],
@@ -1232,18 +1180,10 @@
       "note_level_rationale": [
         "Removal of IPC supports 32552."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>\nMRN: <MRN>\nAGE: 49 years\nDATE OF PROCEDURE: <DATE_TIME>\nLOCATION: Interventional Radiology/Pleural Suite\n\nPRE-PROCEDURE DIAGNOSIS: Loculated right malignant pleural effusion, not amenable to simple thoracentesis.\nPOST-PROCEDURE DIAGNOSIS: Same.\n\nPROCEDURE: Ultrasound-guided placement of small-bore pleural drainage catheter (pigtail) for malignant effusion.\n\nPHYSICIAN: Olivia Harris, MD (Interventional Pulmonology)\n\nINDICATION:\n49-year-old male with metastatic renal cell carcinoma and recurrent right pleural effusion. Prior thoracenteses provided temporary relief; current ultrasound demonstrates loculated collections along the posterolateral chest wall. Decision made to place a small-bore pigtail catheter for ongoing drainage.\n\nPROCEDURE DESCRIPTION:\nWith the patient in the left lateral decubitus position, a comprehensive ultrasound exam localized a large posterolateral fluid pocket without diaphragmatic or lung adhesions. Skin was marked in the mid-axillary line at the level of the 7th intercostal space.\n\nAfter sterile prep and drape, local anesthesia was obtained with 1% lidocaine. Under real-time ultrasound guidance, an 18G needle was advanced into the collection with return of blood-tinged serous fluid. A 0.035\" guidewire was passed and the tract was dilated.\n\nA 12 Fr pigtail catheter was advanced over the wire into the pleural space and the pigtail was formed. The catheter was attached to a closed drainage system and secured with suture and anchoring device.\n\nApproximately 700 mL of serosanguinous fluid drained during the procedure. The patient tolerated the procedure well.\n\nCOMPLICATIONS:\nNo evidence of pneumothorax or bleeding on immediate post-procedure ultrasound. Estimated blood loss < 10 mL.\n\nDISPOSITION:\nPatient returned to the oncology floor with the catheter to continuous drainage and plan for daily monitoring of output and consideration of talc slurry pleurodesis if lung remains expandable.\n\nIMPRESSION:\nSuccessful ultrasound-guided placement of a right pleural pigtail catheter (12 Fr) for ongoing drainage of malignant effusion.",
+    "note_text": "PATIENT: Miguel Sanchez\nMRN: 700008\nAGE: 49 years\nDATE OF PROCEDURE: 07/11/2025\nLOCATION: Interventional Radiology/Pleural Suite\n\nPRE-PROCEDURE DIAGNOSIS: Loculated right malignant pleural effusion, not amenable to simple thoracentesis.\nPOST-PROCEDURE DIAGNOSIS: Same.\n\nPROCEDURE: Ultrasound-guided placement of small-bore pleural drainage catheter (pigtail) for malignant effusion.\n\nPHYSICIAN: Olivia Harris, MD (Interventional Pulmonology)\n\nINDICATION:\n49-year-old male with metastatic renal cell carcinoma and recurrent right pleural effusion. Prior thoracenteses provided temporary relief; current ultrasound demonstrates loculated collections along the posterolateral chest wall. Decision made to place a small-bore pigtail catheter for ongoing drainage.\n\nPROCEDURE DESCRIPTION:\nWith the patient in the left lateral decubitus position, a comprehensive ultrasound exam localized a large posterolateral fluid pocket without diaphragmatic or lung adhesions. Skin was marked in the mid-axillary line at the level of the 7th intercostal space.\n\nAfter sterile prep and drape, local anesthesia was obtained with 1% lidocaine. Under real-time ultrasound guidance, an 18G needle was advanced into the collection with return of blood-tinged serous fluid. A 0.035\" guidewire was passed and the tract was dilated.\n\nA 12 Fr pigtail catheter was advanced over the wire into the pleural space and the pigtail was formed. The catheter was attached to a closed drainage system and secured with suture and anchoring device.\n\nApproximately 700 mL of serosanguinous fluid drained during the procedure. The patient tolerated the procedure well.\n\nCOMPLICATIONS:\nNo evidence of pneumothorax or bleeding on immediate post-procedure ultrasound. Estimated blood loss < 10 mL.\n\nDISPOSITION:\nPatient returned to the oncology floor with the catheter to continuous drainage and plan for daily monitoring of output and consideration of talc slurry pleurodesis if lung remains expandable.\n\nIMPRESSION:\nSuccessful ultrasound-guided placement of a right pleural pigtail catheter (12 Fr) for ongoing drainage of malignant effusion.",
     "cpt_codes": [
       32557
     ],
@@ -1267,7 +1207,7 @@
         "volume": "Approximately 700 mL serosanguinous fluid drained.",
         "side": "Right pleural space described throughout the procedure."
       },
-      "institution_name": "Pleural Suite – Oncology Floor",
+      "institution_name": "Pleural Suite \u2013 Oncology Floor",
       "disposition": "Floor admission",
       "pleural_procedure_type": "Pleural drainage catheter",
       "pleural_side": "Right",
@@ -1390,18 +1330,10 @@
       "note_level_rationale": [
         "US-guided pigtail catheter placement supports 32557."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (71 years)\nDATE OF SERVICE: <DATE_TIME>\nLOCATION: Bronchoscopy Suite\n\nPROCEDURES:\n1. Flexible bronchoscopy with linear EBUS-TBNA of mediastinal/hilar lymph nodes.\n2. Electromagnetic navigational bronchoscopy to right lower lobe lesion.\n3. Transbronchial lung biopsies of right lower lobe lesion.\n\nOPERATOR: Jason Miller, MD (Interventional Pulmonology)\nFELLOW: Priya Shah, MD (PGY-6)\n\nINDICATION:\n71-year-old female with a 2.5 cm right lower lobe mass and enlarged PET-avid subcarinal and right paratracheal nodes. Referred for combined mediastinal staging and bronchoscopic diagnosis of the parenchymal lesion.\n\nANESTHESIA/AIRWAY:\nGeneral anesthesia with ETT. Patient in supine position.\n\nEBUS-TBNA:\nA convex probe EBUS bronchoscope was used for systematic mediastinal staging. Nodes were identified and sampled as follows:\n• Station 4R: 1.4 cm, oval; 3 passes with 22G needle.\n• Station 7: 2.0 cm, heterogeneous; 4 passes with 22G needle.\n• Station 11R: 1.1 cm; 3 passes with 22G needle.\nROSE was adequate at all stations, with malignant cells seen at 4R and 7.\n\nNAVIGATIONAL BRONCHOSCOPY/TBLB:\nAfter completing EBUS, an electromagnetic navigation system (superDimension) was used. The pre-procedure CT was registered and the right lower lobe lesion target planned. Navigation error was approximately 2.5 mm.\n\nA thin bronchoscope was advanced along the projected path to a subsegmental bronchus in the basilar segment of the RLL. The target lesion was reached and confirmed by fluoroscopy. Multiple transbronchial biopsies (5 forceps samples) and cytology brushings (2) were obtained from the lesion.\n\nCOMPLICATIONS:\nMinor bleeding controlled with cold saline and suction. No significant hypoxia or pneumothorax observed. Estimated blood loss < 10 mL.\n\nDISPOSITION:\nThe patient was extubated and transferred to PACU in stable condition, with a post-procedure CXR ordered. She will follow up in IP clinic in 1–2 weeks.\n\nIMPRESSION:\nCombined EBUS-TBNA of 4R, 7, and 11R nodes and navigational bronchoscopy with fluoroscopic confirmation and transbronchial biopsies of an RLL mass.",
+    "note_text": "PATIENT: Linda Ngo\nMRN: 700009\nDOB: 10/09/1953 (71 years)\nDATE OF SERVICE: 08/19/2025\nLOCATION: Bronchoscopy Suite\n\nPROCEDURES:\n1. Flexible bronchoscopy with linear EBUS-TBNA of mediastinal/hilar lymph nodes.\n2. Electromagnetic navigational bronchoscopy to right lower lobe lesion.\n3. Transbronchial lung biopsies of right lower lobe lesion.\n\nOPERATOR: Jason Miller, MD (Interventional Pulmonology)\nFELLOW: Priya Shah, MD (PGY-6)\n\nINDICATION:\n71-year-old female with a 2.5 cm right lower lobe mass and enlarged PET-avid subcarinal and right paratracheal nodes. Referred for combined mediastinal staging and bronchoscopic diagnosis of the parenchymal lesion.\n\nANESTHESIA/AIRWAY:\nGeneral anesthesia with ETT. Patient in supine position.\n\nEBUS-TBNA:\nA convex probe EBUS bronchoscope was used for systematic mediastinal staging. Nodes were identified and sampled as follows:\n\u2022 Station 4R: 1.4 cm, oval; 3 passes with 22G needle.\n\u2022 Station 7: 2.0 cm, heterogeneous; 4 passes with 22G needle.\n\u2022 Station 11R: 1.1 cm; 3 passes with 22G needle.\nROSE was adequate at all stations, with malignant cells seen at 4R and 7.\n\nNAVIGATIONAL BRONCHOSCOPY/TBLB:\nAfter completing EBUS, an electromagnetic navigation system (superDimension) was used. The pre-procedure CT was registered and the right lower lobe lesion target planned. Navigation error was approximately 2.5 mm.\n\nA thin bronchoscope was advanced along the projected path to a subsegmental bronchus in the basilar segment of the RLL. The target lesion was reached and confirmed by fluoroscopy. Multiple transbronchial biopsies (5 forceps samples) and cytology brushings (2) were obtained from the lesion.\n\nCOMPLICATIONS:\nMinor bleeding controlled with cold saline and suction. No significant hypoxia or pneumothorax observed. Estimated blood loss < 10 mL.\n\nDISPOSITION:\nThe patient was extubated and transferred to PACU in stable condition, with a post-procedure CXR ordered. She will follow up in IP clinic in 1\u20132 weeks.\n\nIMPRESSION:\nCombined EBUS-TBNA of 4R, 7, and 11R nodes and navigational bronchoscopy with fluoroscopic confirmation and transbronchial biopsies of an RLL mass.",
     "cpt_codes": [
       31653,
       31627,
@@ -1430,7 +1362,7 @@
         "navigation": "Electromagnetic navigation with superDimension system to RLL lesion.",
         "tblb": "Five transbronchial biopsies obtained from the RLL mass."
       },
-      "institution_name": "Bronchoscopy Suite – Academic Medical Center",
+      "institution_name": "Bronchoscopy Suite \u2013 Academic Medical Center",
       "disposition": "Outpatient discharge",
       "bronch_indication": "Lung Cancer Diagnosis",
       "bronch_location_lobe": "RLL",
@@ -1637,19 +1569,10 @@
         "EBUS of 3 stations (4R, 7, 11R) maps to 31653. 31652 (1-2 stations) was removed.",
         "Navigation and TBLB codes retained."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>\nMRN: <MRN>\nDOB: <DATE_TIME> (64 years)\nDATE OF SERVICE: <DATE_TIME>\nLOCATION: Bronchoscopy Suite\n\nPROCEDURES:\n1. Flexible bronchoscopy with transbronchial lung biopsy (TBLB), left lower lobe.\n2. Electromagnetic navigational bronchoscopy to left lower lobe lesion.\n3. Linear EBUS-TBNA of station 7.\n\nOPERATOR: Karen Lee, MD (Interventional Pulmonology)\n\nINDICATION:\n64-year-old male with a 2.0 cm left lower lobe superior segment nodule and mildly enlarged subcarinal lymph node (station 7). PET shows moderate uptake in both sites. Combined nodal and parenchymal sampling requested.\n\nPROCEDURE SUMMARY:\nUnder general anesthesia via ETT, a flexible bronchoscope was passed to the segmental bronchi. No endobronchial tumor was seen.\n\nEBUS-TBNA (station 7):\nA convex EBUS scope was used to sample a 1.4 cm subcarinal node. Three passes were performed with a 22G needle. ROSE was adequate with benign-appearing lymphocytes.\n\nEM NAVIGATION + TBLB (LLL superior segment):\nAn EM navigation system was used to register the pre-procedure CT. The lesion in the LLL superior segment was targeted; registration error ~3 mm. The scope was advanced to the LLL superior segment, and navigation confirmed proximity to the lesion. Fluoroscopy confirmed the biopsy forceps at the lesion margin. Four transbronchial biopsies were obtained; specimens were sent for histology and molecular studies.\n\nNo significant bleeding or hypoxia occurred. The patient was extubated and transferred to PACU in stable condition.\n\nIMPRESSION:\nCombined EM-navigated transbronchial biopsies of LLL lesion and single-station EBUS-TBNA of station 7 for staging.",
+    "note_text": "PATIENT: Omar Rahman\nMRN: 700010\nDOB: 12/03/1960 (64 years)\nDATE OF SERVICE: 09/22/2025\nLOCATION: Bronchoscopy Suite\n\nPROCEDURES:\n1. Flexible bronchoscopy with transbronchial lung biopsy (TBLB), left lower lobe.\n2. Electromagnetic navigational bronchoscopy to left lower lobe lesion.\n3. Linear EBUS-TBNA of station 7.\n\nOPERATOR: Karen Lee, MD (Interventional Pulmonology)\n\nINDICATION:\n64-year-old male with a 2.0 cm left lower lobe superior segment nodule and mildly enlarged subcarinal lymph node (station 7). PET shows moderate uptake in both sites. Combined nodal and parenchymal sampling requested.\n\nPROCEDURE SUMMARY:\nUnder general anesthesia via ETT, a flexible bronchoscope was passed to the segmental bronchi. No endobronchial tumor was seen.\n\nEBUS-TBNA (station 7):\nA convex EBUS scope was used to sample a 1.4 cm subcarinal node. Three passes were performed with a 22G needle. ROSE was adequate with benign-appearing lymphocytes.\n\nEM NAVIGATION + TBLB (LLL superior segment):\nAn EM navigation system was used to register the pre-procedure CT. The lesion in the LLL superior segment was targeted; registration error ~3 mm. The scope was advanced to the LLL superior segment, and navigation confirmed proximity to the lesion. Fluoroscopy confirmed the biopsy forceps at the lesion margin. Four transbronchial biopsies were obtained; specimens were sent for histology and molecular studies.\n\nNo significant bleeding or hypoxia occurred. The patient was extubated and transferred to PACU in stable condition.\n\nIMPRESSION:\nCombined EM-navigated transbronchial biopsies of LLL lesion and single-station EBUS-TBNA of station 7 for staging.",
     "cpt_codes": [
       31652,
       31627,
@@ -1678,7 +1601,7 @@
         "navigation": "EM navigation used to target LLL superior segment lesion with ~3 mm error.",
         "tblb": "Four transbronchial biopsies of the LLL lesion obtained under fluoroscopic guidance."
       },
-      "institution_name": "Bronchoscopy Suite – Military Hospital",
+      "institution_name": "Bronchoscopy Suite \u2013 Military Hospital",
       "disposition": "Outpatient discharge",
       "bronch_indication": "Lung Nodule Evaluation",
       "bronch_location_lobe": "LLL",
@@ -1881,15 +1804,6 @@
       "note_level_rationale": [
         "EBUS of 1 station maps to 31652.",
         "Removed 31623 (Brush) as it was not documented in the procedure summary for this specific note."
-      ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
       ]
     }
   }

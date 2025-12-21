@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "BRONCHOSCOPY NOTE - ICU BEDSIDE\nDate: <DATE_TIME>\nPatient: Lopez, Maria | 68F | MRN 781244\nLocation: ICU Bed 12\nAttending: Dr. James Holloway\nIndication: Acute hypoxemic respiratory failure with suspected mucus plugging of right lung in patient with severe COPD and pneumonia on mechanical ventilation.\nAirway: 7.5 ETT at 22 cm, ventilator VC 16/400/5/60%\nSedation: Propofol and fentanyl infusions running; no additional IV pushes documented.\n\nProcedure:\n- Flexible bronchoscope passed through the ETT under continuous cardiac and pulse ox monitoring.\n- Large amounts of thick tenacious secretions suctioned from right mainstem, right middle lobe and right lower lobe bronchi.\n- Saline instillation and repeated therapeutic aspiration until airways cleared.\n- No biopsies, brushings, BAL or EBUS performed.\n- Left lung inspected; minimal thin secretions suctioned, no lesions.\n\nFindings:\n- Diffuse purulent secretions consistent with pneumonia.\n- No endobronchial mass or foreign body.\n\nComplications: None. Estimated blood loss <5 mL.\nDisposition: Remains intubated in ICU with improved breath sounds and lower peak pressures; repeat bronchoscopy only if clinically indicated.",
+    "note_text": "BRONCHOSCOPY NOTE - ICU BEDSIDE\nDate: 10/14/2025\nPatient: Lopez, Maria | 68F | MRN 781244\nLocation: ICU Bed 12\nAttending: Dr. James Holloway\nIndication: Acute hypoxemic respiratory failure with suspected mucus plugging of right lung in patient with severe COPD and pneumonia on mechanical ventilation.\nAirway: 7.5 ETT at 22 cm, ventilator VC 16/400/5/60%\nSedation: Propofol and fentanyl infusions running; no additional IV pushes documented.\n\nProcedure:\n- Flexible bronchoscope passed through the ETT under continuous cardiac and pulse ox monitoring.\n- Large amounts of thick tenacious secretions suctioned from right mainstem, right middle lobe and right lower lobe bronchi.\n- Saline instillation and repeated therapeutic aspiration until airways cleared.\n- No biopsies, brushings, BAL or EBUS performed.\n- Left lung inspected; minimal thin secretions suctioned, no lesions.\n\nFindings:\n- Diffuse purulent secretions consistent with pneumonia.\n- No endobronchial mass or foreign body.\n\nComplications: None. Estimated blood loss <5 mL.\nDisposition: Remains intubated in ICU with improved breath sounds and lower peak pressures; repeat bronchoscopy only if clinically indicated.",
     "cpt_codes": [
       31645
     ],
@@ -141,16 +141,10 @@
       "rationale": [
         "31645 is supported because the procedure was limited to therapeutic aspiration of mucus in an intubated ICU patient without BAL, biopsy, EBUS, or stent work. General anesthesia is inherent to the bronchoscopy and no separate sedation code is billed."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: Samuel Norris, 63-year-old Male\nMRN: <MRN>\nDATE OF PROCEDURE: <DATE_TIME>\nPROCEDURE: Flexible bronchoscopy with bronchial stent revision (CPT 31638)\nINDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.\nATTENDING PHYSICIAN: Dr. Priya Mehta\nASSISTANT: Dr. Alan Rivera (IP fellow)\nANESTHESIA: General anesthesia with endotracheal intubation\nAIRWAY: 8.0 ETT\n\nPROCEDURE DESCRIPTION:\nAfter induction of general anesthesia, flexible bronchoscope was introduced through the ETT. A 12 x 40 mm covered metal stent was visualized in the left mainstem bronchus with proximal migration and approximately 30–40% overhang into the distal trachea.\n\nUsing alligator forceps and a snare, the stent was carefully mobilized distally and re-centered in the left mainstem bronchus under direct visualization. No new stent was placed. Balloon dilation (10–12 mm) was performed within the existing stent to improve apposition to the airway wall.\n\nNo tumor debulking, mechanical destruction, laser or APC was performed; the intervention was limited to revision/repositioning of the pre-existing stent and balloon dilation inside the stent.\n\nFINDINGS:\n- Malignant-appearing narrowing at distal left mainstem with prior stent in place\n- Proximal stent migration successfully corrected with revision maneuvers\n\nSPECIMENS: None\nCOMPLICATIONS: None; mild mucosal oozing controlled with cold saline.\nDISPOSITION: Extubated in the OR, monitored in PACU then admitted to telemetry overnight.",
+    "note_text": "PATIENT: Samuel Norris, 63-year-old Male\nMRN: 442918\nDATE OF PROCEDURE: 09/03/2025\nPROCEDURE: Flexible bronchoscopy with bronchial stent revision (CPT 31638)\nINDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.\nATTENDING PHYSICIAN: Dr. Priya Mehta\nASSISTANT: Dr. Alan Rivera (IP fellow)\nANESTHESIA: General anesthesia with endotracheal intubation\nAIRWAY: 8.0 ETT\n\nPROCEDURE DESCRIPTION:\nAfter induction of general anesthesia, flexible bronchoscope was introduced through the ETT. A 12 x 40 mm covered metal stent was visualized in the left mainstem bronchus with proximal migration and approximately 30\u201340% overhang into the distal trachea.\n\nUsing alligator forceps and a snare, the stent was carefully mobilized distally and re-centered in the left mainstem bronchus under direct visualization. No new stent was placed. Balloon dilation (10\u201312 mm) was performed within the existing stent to improve apposition to the airway wall.\n\nNo tumor debulking, mechanical destruction, laser or APC was performed; the intervention was limited to revision/repositioning of the pre-existing stent and balloon dilation inside the stent.\n\nFINDINGS:\n- Malignant-appearing narrowing at distal left mainstem with prior stent in place\n- Proximal stent migration successfully corrected with revision maneuvers\n\nSPECIMENS: None\nCOMPLICATIONS: None; mild mucosal oozing controlled with cold saline.\nDISPOSITION: Extubated in the OR, monitored in PACU then admitted to telemetry overnight.",
     "cpt_codes": [
       31638
     ],
@@ -171,7 +165,7 @@
         "patient_age": "PATIENT: Samuel Norris, 63-year-old Male",
         "gender": "PATIENT: Samuel Norris, 63-year-old Male",
         "procedure_date": "DATE OF PROCEDURE: 09/03/2025",
-        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non–small cell lung cancer.",
+        "primary_indication": "INDICATION: Symptomatic migration of left mainstem covered metal stent placed 4 months ago for malignant obstruction from non\u2013small cell lung cancer.",
         "sedation_type": "ANESTHESIA: General anesthesia with endotracheal intubation",
         "airway_type": "AIRWAY: 8.0 ETT",
         "stent_location": "stent was visualized in the left mainstem bronchus with proximal migration",
@@ -300,17 +294,10 @@
       "rationale": [
         "31638 is appropriate because the note describes revision and repositioning of a pre-existing bronchial stent using balloon dilation, without placement of a new stent or tumor debulking. No separate EBUS, biopsy, or dilation code is needed."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PT: Keller, Hannah | 47F | MRN 739185\nDATE: <DATE_TIME>\nLOCATION: OR 5 – IP suite\nATTENDING: Dr. Miguel Alvarez\n\nPREOP DX: Idiopathic subglottic/tracheal stenosis\nPOSTOP DX: Same\n\nPROCEDURE PERFORMED: Flexible bronchoscopy with endobronchial balloon dilation of tracheal stenosis (CPT 31630)\n\nANESTHESIA: General anesthesia with endotracheal intubation via 6.5 ETT\n\nBRIEF DESCRIPTION:\nFlexible bronchoscope was passed through the ETT. A short segment circumferential stenosis was identified approximately 2.5 cm below the vocal cords with roughly 60% luminal narrowing.\n\nA CRE balloon catheter (8/10/12 mm) was positioned across the stenosis under direct visualization. Serial inflations were performed:\n- 8 mm x 60 seconds\n- 10 mm x 60 seconds\n- 12 mm x 90 seconds\n\nAfter the final inflation, tracheal lumen improved to approximately 80% patency with minimal mucosal splitting. No stent placement, no ablative therapy and no biopsies were performed.\n\nCOMPLICATIONS: None. Estimated blood loss <5 mL.\nDISPOSITION: Extubated in the OR, transferred to PACU in stable condition and discharged home later the same day with ENT and IP follow up.",
+    "note_text": "PT: Keller, Hannah | 47F | MRN 739185\nDATE: 08/19/2025\nLOCATION: OR 5 \u2013 IP suite\nATTENDING: Dr. Miguel Alvarez\n\nPREOP DX: Idiopathic subglottic/tracheal stenosis\nPOSTOP DX: Same\n\nPROCEDURE PERFORMED: Flexible bronchoscopy with endobronchial balloon dilation of tracheal stenosis (CPT 31630)\n\nANESTHESIA: General anesthesia with endotracheal intubation via 6.5 ETT\n\nBRIEF DESCRIPTION:\nFlexible bronchoscope was passed through the ETT. A short segment circumferential stenosis was identified approximately 2.5 cm below the vocal cords with roughly 60% luminal narrowing.\n\nA CRE balloon catheter (8/10/12 mm) was positioned across the stenosis under direct visualization. Serial inflations were performed:\n- 8 mm x 60 seconds\n- 10 mm x 60 seconds\n- 12 mm x 90 seconds\n\nAfter the final inflation, tracheal lumen improved to approximately 80% patency with minimal mucosal splitting. No stent placement, no ablative therapy and no biopsies were performed.\n\nCOMPLICATIONS: None. Estimated blood loss <5 mL.\nDISPOSITION: Extubated in the OR, transferred to PACU in stable condition and discharged home later the same day with ENT and IP follow up.",
     "cpt_codes": [
       31630
     ],
@@ -451,16 +438,10 @@
       "rationale": [
         "31630 is supported because the procedure involved bronchoscopic balloon dilation of subglottic/tracheal stenosis without stent placement, tumor resection, or additional biopsy. Diagnostic bronchoscopy is bundled into the therapeutic dilation service."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "EMERGENCY BRONCHOSCOPY – FOREIGN BODY\nDate: <DATE_TIME>\nPatient: Carter, Jacob | 32M | MRN 502118\nLocation: ICU Bed 4\nAttending: Dr. Alexis Nguyen\n\nINDICATION:\nAcute airway obstruction after aspiration of peanut while eating at home. EMS performed rapid sequence intubation en route. Persistent high peak pressures and right lung collapse on portable CXR.\n\nAIRWAY / VENTILATION:\n8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.\nSedation with propofol and fentanyl infusions (general anesthesia–equivalent).\n\nPROCEDURE:\nFlexible bronchoscope was passed through the ETT. A large amount of particulate material was visualized in the right mainstem bronchus with near-complete occlusion and extension into the right lower lobe bronchus.\n\nUsing a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed piecemeal from the right mainstem and right lower lobe bronchi. Airways were suctioned thoroughly until patent with visible subsegmental branches.\n\nLeft lung inspection was normal. No tumor, mass or blood clot identified.\n\nCOMPLICATIONS: None. Estimated blood loss <5 mL.\nPLAN: Repeat portable CXR to confirm re-expansion of the right lung. Continue mechanical ventilation overnight for airway protection.",
+    "note_text": "EMERGENCY BRONCHOSCOPY \u2013 FOREIGN BODY\nDate: 07/02/2025 21:15\nPatient: Carter, Jacob | 32M | MRN 502118\nLocation: ICU Bed 4\nAttending: Dr. Alexis Nguyen\n\nINDICATION:\nAcute airway obstruction after aspiration of peanut while eating at home. EMS performed rapid sequence intubation en route. Persistent high peak pressures and right lung collapse on portable CXR.\n\nAIRWAY / VENTILATION:\n8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.\nSedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).\n\nPROCEDURE:\nFlexible bronchoscope was passed through the ETT. A large amount of particulate material was visualized in the right mainstem bronchus with near-complete occlusion and extension into the right lower lobe bronchus.\n\nUsing a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed piecemeal from the right mainstem and right lower lobe bronchi. Airways were suctioned thoroughly until patent with visible subsegmental branches.\n\nLeft lung inspection was normal. No tumor, mass or blood clot identified.\n\nCOMPLICATIONS: None. Estimated blood loss <5 mL.\nPLAN: Repeat portable CXR to confirm re-expansion of the right lung. Continue mechanical ventilation overnight for airway protection.",
     "cpt_codes": [
       31635
     ],
@@ -482,7 +463,7 @@
         "gender": "Patient: Carter, Jacob | 32M | MRN 502118",
         "procedure_date": "Date: 07/02/2025 21:15",
         "primary_indication": "Acute airway obstruction after aspiration of peanut while eating at home.",
-        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia–equivalent).",
+        "sedation_type": "Sedation with propofol and fentanyl infusions (general anesthesia\u2013equivalent).",
         "airway_type": "8.0 ETT at 24 cm, volume-control ventilation 18/450/5/100%.",
         "fb_object_type": "peanut fragments were removed piecemeal",
         "fb_tools": "Using a 4-wire retrieval basket and alligator forceps, multiple peanut fragments were removed"
@@ -608,16 +589,10 @@
       "rationale": [
         "31635 is appropriate because the emergency bronchoscopy was performed solely to remove aspirated peanut fragments with retrieval devices, without additional biopsy, BAL, or stent work. Other diagnostic bronchoscopy codes are bundled."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: Reyes, Linda | 61F | MRN 882041\nDATE OF PROCEDURE: <DATE_TIME>\nPROCEDURE: Flexible bronchoscopy with endobronchial ultrasound–guided transbronchial needle aspiration (EBUS-TBNA) of mediastinal and hilar lymph nodes (CPT 31652)\nINDICATION: Mediastinal adenopathy on PET-CT in patient with suspected sarcoidosis.\n\nATTENDING: Dr. Benjamin Cole\nANESTHESIA: General anesthesia with 8.0 ETT\n\nPROCEDURE SUMMARY:\nAfter induction of general anesthesia, a linear EBUS bronchoscope was introduced through the ETT. Systematic ultrasound survey of mediastinal and hilar lymph node stations was performed.\n\nStations sampled:\n- Station 7 (subcarinal), short axis 1.8 cm – 4 passes with 22G needle\n- Station 11R (right interlobar), short axis 1.2 cm – 3 passes with 22G needle\n\nRapid on-site cytology suggested non-caseating granulomas. No peripheral lesions were targeted. No radial EBUS, navigation or transbronchial lung biopsies were performed.\n\nThere was no endobronchial mass and no significant bleeding. All EBUS images were saved to PACS.\n\nCOMPLICATIONS: None. Estimated blood loss <10 mL.\nDISPOSITION: Extubated in the OR, discharged from PACU to home with follow up in ILD clinic.",
+    "note_text": "PATIENT: Reyes, Linda | 61F | MRN 882041\nDATE OF PROCEDURE: 09/25/2025\nPROCEDURE: Flexible bronchoscopy with endobronchial ultrasound\u2013guided transbronchial needle aspiration (EBUS-TBNA) of mediastinal and hilar lymph nodes (CPT 31652)\nINDICATION: Mediastinal adenopathy on PET-CT in patient with suspected sarcoidosis.\n\nATTENDING: Dr. Benjamin Cole\nANESTHESIA: General anesthesia with 8.0 ETT\n\nPROCEDURE SUMMARY:\nAfter induction of general anesthesia, a linear EBUS bronchoscope was introduced through the ETT. Systematic ultrasound survey of mediastinal and hilar lymph node stations was performed.\n\nStations sampled:\n- Station 7 (subcarinal), short axis 1.8 cm \u2013 4 passes with 22G needle\n- Station 11R (right interlobar), short axis 1.2 cm \u2013 3 passes with 22G needle\n\nRapid on-site cytology suggested non-caseating granulomas. No peripheral lesions were targeted. No radial EBUS, navigation or transbronchial lung biopsies were performed.\n\nThere was no endobronchial mass and no significant bleeding. All EBUS images were saved to PACS.\n\nCOMPLICATIONS: None. Estimated blood loss <10 mL.\nDISPOSITION: Extubated in the OR, discharged from PACU to home with follow up in ILD clinic.",
     "cpt_codes": [
       31652
     ],
@@ -772,16 +747,10 @@
       "rationale": [
         "31652 is supported because the bronchoscopy used linear EBUS with transbronchial needle aspiration of stations 7 and 11R. No radial EBUS, peripheral lung biopsy, or sampling of three or more nodal stations to justify 31653 is documented."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "BRONCHIAL THERMOPLASTY – SESSION 2\nDate: <DATE_TIME>\nPatient: Morgan, Danielle | 49F | MRN 774930\nLocation: OR 4\nAttending: Dr. Steven Park\n\nINDICATION: Severe persistent asthma uncontrolled on maximal inhaled therapy and biologic agent; patient enrolled in bronchial thermoplasty protocol.\n\nPROCEDURE PERFORMED: Flexible bronchoscopy with bronchial thermoplasty of multiple lobes (CPT 31661)\n\nANESTHESIA: General anesthesia with 8.0 ETT\n\nPROCEDURE SUMMARY:\nThis is session 2 of 3 (lower lobes treated today). Flexible bronchoscope was advanced via the ETT. The radiofrequency BT catheter was deployed sequentially in segmental and subsegmental bronchi of the right lower lobe and left lower lobe.\n\nTotal of 92 activations were delivered (RLL 48, LLL 44) per standard BT protocol. No biopsies, BAL or EBUS were performed.\n\nFINDINGS: Normal tracheobronchial anatomy without mucus plugging or endobronchial lesions.\n\nCOMPLICATIONS: Mild transient bronchospasm during the case, resolved with inhaled albuterol and IV methylprednisolone. No bleeding.\nDISPOSITION: Extubated in the OR, observed in PACU and discharged home after 4 hours of monitoring.",
+    "note_text": "BRONCHIAL THERMOPLASTY \u2013 SESSION 2\nDate: 06/11/2025\nPatient: Morgan, Danielle | 49F | MRN 774930\nLocation: OR 4\nAttending: Dr. Steven Park\n\nINDICATION: Severe persistent asthma uncontrolled on maximal inhaled therapy and biologic agent; patient enrolled in bronchial thermoplasty protocol.\n\nPROCEDURE PERFORMED: Flexible bronchoscopy with bronchial thermoplasty of multiple lobes (CPT 31661)\n\nANESTHESIA: General anesthesia with 8.0 ETT\n\nPROCEDURE SUMMARY:\nThis is session 2 of 3 (lower lobes treated today). Flexible bronchoscope was advanced via the ETT. The radiofrequency BT catheter was deployed sequentially in segmental and subsegmental bronchi of the right lower lobe and left lower lobe.\n\nTotal of 92 activations were delivered (RLL 48, LLL 44) per standard BT protocol. No biopsies, BAL or EBUS were performed.\n\nFINDINGS: Normal tracheobronchial anatomy without mucus plugging or endobronchial lesions.\n\nCOMPLICATIONS: Mild transient bronchospasm during the case, resolved with inhaled albuterol and IV methylprednisolone. No bleeding.\nDISPOSITION: Extubated in the OR, observed in PACU and discharged home after 4 hours of monitoring.",
     "cpt_codes": [
       31661
     ],
@@ -924,16 +893,10 @@
       "rationale": [
         "31661 is appropriate because bronchial thermoplasty was delivered to two lobes (right and left lower lobes) in a protocolized session. No additional BAL, biopsy, or EBUS procedures are documented, so no other bronchoscopic CPT codes are added."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "THORACENTESIS PROCEDURE NOTE\nDate: <DATE_TIME>\nPatient: Patel, Anil | 73M | MRN 660219\nLocation: Ultrasound procedure room\nAttending: Dr. Laura Simmons\n\nINDICATION: Symptomatic recurrent left pleural effusion in the setting of heart failure and chronic kidney disease.\n\nPROCEDURE: Ultrasound-guided diagnostic and therapeutic left thoracentesis (CPT 32555)\n\nANESTHESIA: Local anesthesia with 1% lidocaine only; no IV sedation administered.\n\nTECHNIQUE:\nPatient was seated upright leaning forward. Bedside ultrasound was used to identify the largest fluid pocket in the left posterior axillary line at the 8th intercostal space. The skin was prepped and draped in sterile fashion.\n\nA 5 Fr thoracentesis catheter was advanced over a needle into the pleural space using the Seldinger technique under real-time ultrasound guidance. A total of 1.3 L of clear straw-colored fluid was removed, with drainage halted for mild cough.\n\nPleural fluid was sent for cell count, chemistries, microbiology and cytology.\n\nPost-procedure ultrasound demonstrated a small residual effusion and good lung sliding. No chest tube was placed.\n\nCOMPLICATIONS: None.\nDISPOSITION: Returned to the medical ward with improved dyspnea.",
+    "note_text": "THORACENTESIS PROCEDURE NOTE\nDate: 05/03/2025\nPatient: Patel, Anil | 73M | MRN 660219\nLocation: Ultrasound procedure room\nAttending: Dr. Laura Simmons\n\nINDICATION: Symptomatic recurrent left pleural effusion in the setting of heart failure and chronic kidney disease.\n\nPROCEDURE: Ultrasound-guided diagnostic and therapeutic left thoracentesis (CPT 32555)\n\nANESTHESIA: Local anesthesia with 1% lidocaine only; no IV sedation administered.\n\nTECHNIQUE:\nPatient was seated upright leaning forward. Bedside ultrasound was used to identify the largest fluid pocket in the left posterior axillary line at the 8th intercostal space. The skin was prepped and draped in sterile fashion.\n\nA 5 Fr thoracentesis catheter was advanced over a needle into the pleural space using the Seldinger technique under real-time ultrasound guidance. A total of 1.3 L of clear straw-colored fluid was removed, with drainage halted for mild cough.\n\nPleural fluid was sent for cell count, chemistries, microbiology and cytology.\n\nPost-procedure ultrasound demonstrated a small residual effusion and good lung sliding. No chest tube was placed.\n\nCOMPLICATIONS: None.\nDISPOSITION: Returned to the medical ward with improved dyspnea.",
     "cpt_codes": [
       32555
     ],
@@ -1075,16 +1038,10 @@
       "rationale": [
         "32555 is supported because the procedure was an ultrasound-guided diagnostic and therapeutic thoracentesis with catheter placement and drainage of 1.3 L of fluid. Imaging guidance is included in 32555, so a separate ultrasound code is not billed."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "CHEST TUBE INSERTION NOTE\nDate: <DATE_TIME>\nPatient: Nguyen, Thomas | 27M | MRN 559103\nLocation: ED Resuscitation Bay\nOperator: Dr. Rachel O'Connor (Interventional Pulmonology)\n\nINDICATION: Large right spontaneous pneumothorax with dyspnea in otherwise healthy young male; failure of small-bore pigtail catheter placed at outside hospital.\n\nPROCEDURE: Tube thoracostomy, right chest (CPT 32551)\n\nANESTHESIA: Local 1% lidocaine with epinephrine plus small IV fentanyl boluses (moderate analgesia; no continuous procedural sedation).\n\nPROCEDURE SUMMARY:\nPatient positioned supine with right arm above head. Landmark-based insertion was performed at the right 5th intercostal space, mid-axillary line. Blunt dissection was used to enter the pleural space.\n\nA 28 Fr chest tube was inserted and directed apically. Immediate rush of air was noted with improvement in breath sounds and oxygen saturation. The tube was secured with heavy silk sutures and connected to -20 cm H2O suction.\n\nPost-procedure portable CXR showed full re-expansion of the right lung without residual large pneumothorax.\n\nCOMPLICATIONS: None.\nDISPOSITION: Admitted to pulmonary ward for ongoing management.",
+    "note_text": "CHEST TUBE INSERTION NOTE\nDate: 04/18/2025 03:10\nPatient: Nguyen, Thomas | 27M | MRN 559103\nLocation: ED Resuscitation Bay\nOperator: Dr. Rachel O'Connor (Interventional Pulmonology)\n\nINDICATION: Large right spontaneous pneumothorax with dyspnea in otherwise healthy young male; failure of small-bore pigtail catheter placed at outside hospital.\n\nPROCEDURE: Tube thoracostomy, right chest (CPT 32551)\n\nANESTHESIA: Local 1% lidocaine with epinephrine plus small IV fentanyl boluses (moderate analgesia; no continuous procedural sedation).\n\nPROCEDURE SUMMARY:\nPatient positioned supine with right arm above head. Landmark-based insertion was performed at the right 5th intercostal space, mid-axillary line. Blunt dissection was used to enter the pleural space.\n\nA 28 Fr chest tube was inserted and directed apically. Immediate rush of air was noted with improvement in breath sounds and oxygen saturation. The tube was secured with heavy silk sutures and connected to -20 cm H2O suction.\n\nPost-procedure portable CXR showed full re-expansion of the right lung without residual large pneumothorax.\n\nCOMPLICATIONS: None.\nDISPOSITION: Admitted to pulmonary ward for ongoing management.",
     "cpt_codes": [
       32551
     ],
@@ -1224,16 +1181,10 @@
       "rationale": [
         "32551 is appropriate because the note documents tube thoracostomy with blunt dissection and placement of a 28 Fr chest tube to suction for spontaneous pneumothorax. Brief IV opioid analgesia without formal time-based moderate sedation is described; post-procedure chest radiography is bundled per NCCI policy."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "MEDICAL THORACOSCOPY WITH PLEURAL BIOPSY\nDate: <DATE_TIME>\nPatient: Sanders, Evelyn | 69F | MRN 940211\nLocation: OR 6\nAttending: Dr. Omar Rahman\n\nPREOPERATIVE DIAGNOSIS: Unexplained exudative right pleural effusion with pleural nodularity on CT\nPOSTOPERATIVE DIAGNOSIS: Same (pathology pending)\n\nPROCEDURE: Medical thoracoscopy with pleural biopsy (CPT 32604)\n\nANESTHESIA: Moderate sedation with midazolam and fentanyl; local anesthesia to chest wall. Patient breathing spontaneously with supplemental oxygen via nasal cannula.\n\nTECHNIQUE:\nUltrasound confirmed a large free-flowing right pleural effusion. A 1-cm incision was made in the right mid-axillary line at the 6th intercostal space. A trocar and thoracoscope were introduced into the pleural space.\n\nApproximately 900 mL of straw-colored fluid was evacuated. The parietal pleura demonstrated diffuse studding with small nodules over the diaphragmatic and posterolateral pleura. Ten large forceps biopsies were taken from abnormal areas and sent for histology and culture.\n\nNo talc pleurodesis was performed and no chest tube was left in place; a single 16 Fr pigtail catheter was used for drainage during the case and removed at the end after confirming lung expansion.\n\nCOMPLICATIONS: None.\nDISPOSITION: Observed in PACU then admitted overnight for monitoring.",
+    "note_text": "MEDICAL THORACOSCOPY WITH PLEURAL BIOPSY\nDate: 08/05/2025\nPatient: Sanders, Evelyn | 69F | MRN 940211\nLocation: OR 6\nAttending: Dr. Omar Rahman\n\nPREOPERATIVE DIAGNOSIS: Unexplained exudative right pleural effusion with pleural nodularity on CT\nPOSTOPERATIVE DIAGNOSIS: Same (pathology pending)\n\nPROCEDURE: Medical thoracoscopy with pleural biopsy (CPT 32604)\n\nANESTHESIA: Moderate sedation with midazolam and fentanyl; local anesthesia to chest wall. Patient breathing spontaneously with supplemental oxygen via nasal cannula.\n\nTECHNIQUE:\nUltrasound confirmed a large free-flowing right pleural effusion. A 1-cm incision was made in the right mid-axillary line at the 6th intercostal space. A trocar and thoracoscope were introduced into the pleural space.\n\nApproximately 900 mL of straw-colored fluid was evacuated. The parietal pleura demonstrated diffuse studding with small nodules over the diaphragmatic and posterolateral pleura. Ten large forceps biopsies were taken from abnormal areas and sent for histology and culture.\n\nNo talc pleurodesis was performed and no chest tube was left in place; a single 16 Fr pigtail catheter was used for drainage during the case and removed at the end after confirming lung expansion.\n\nCOMPLICATIONS: None.\nDISPOSITION: Observed in PACU then admitted overnight for monitoring.",
     "cpt_codes": [
       32604
     ],
@@ -1378,16 +1329,10 @@
       "rationale": [
         "32604 is supported because the procedure was a diagnostic medical thoracoscopy with pleural inspection, evacuation of effusion, and multiple pleural biopsies, without talc pleurodesis, decortication, or other major thoracoscopic surgery. The thoracentesis component is inherent to the thoracoscopy and not coded separately."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "ROBOTIC NAVIGATIONAL BRONCHOSCOPY NOTE\nPatient: Johnson, Teresa | 59F | MRN 821540\nDate: <DATE_TIME>\nInstitution: Valley Regional Medical Center\nAttending: Dr. Kevin Li\nFellow: Dr. Nora Steele\n\nINDICATION:\nTwo enlarging peripheral pulmonary nodules (right upper lobe posterior segment 1.6 cm; right lower lobe superior segment 2.1 cm) in a 30-pack-year former smoker with COPD. PET shows both nodules mildly FDG-avid without clear nodal disease.\n\nPROCEDURES PERFORMED:\n- Robotic navigational bronchoscopy with computer-assisted image-guided navigation (CPT 31627)\n- Radial EBUS for peripheral lesion localization (CPT 31654)\n- Transbronchial lung biopsy, first lobe (CPT 31628)\n- Transbronchial lung biopsy, additional lobe (add-on CPT +31632)\n\nANESTHESIA: General anesthesia with 8.0 ETT\n\nPROCEDURE SUMMARY:\nPre-procedure planning CT was loaded into the robotic platform and pathways were created to the RUL posterior segment and RLL superior segment targets.\n\nAfter induction, the robotic bronchoscope was navigated to the RUL target. Radial EBUS demonstrated a concentric hypoechoic lesion. Three transbronchial forceps biopsies and one cytology brush were obtained from the RUL posterior segment.\n\nThe robot was then redirected to the RLL superior segment. Radial EBUS again confirmed an eccentric lesion abutting an airway. Four forceps biopsies were obtained from the RLL.\n\nNo linear EBUS was performed and no fiducial markers or ablation were placed. Fluoroscopy showed no immediate pneumothorax.\n\nCOMPLICATIONS: None; estimated blood loss ~15 mL.\nDISPOSITION: Extubated in the OR, recovered in PACU and discharged home the same day with clinic and CT follow up arranged.",
+    "note_text": "ROBOTIC NAVIGATIONAL BRONCHOSCOPY NOTE\nPatient: Johnson, Teresa | 59F | MRN 821540\nDate: 11/22/2025\nInstitution: Valley Regional Medical Center\nAttending: Dr. Kevin Li\nFellow: Dr. Nora Steele\n\nINDICATION:\nTwo enlarging peripheral pulmonary nodules (right upper lobe posterior segment 1.6 cm; right lower lobe superior segment 2.1 cm) in a 30-pack-year former smoker with COPD. PET shows both nodules mildly FDG-avid without clear nodal disease.\n\nPROCEDURES PERFORMED:\n- Robotic navigational bronchoscopy with computer-assisted image-guided navigation (CPT 31627)\n- Radial EBUS for peripheral lesion localization (CPT 31654)\n- Transbronchial lung biopsy, first lobe (CPT 31628)\n- Transbronchial lung biopsy, additional lobe (add-on CPT +31632)\n\nANESTHESIA: General anesthesia with 8.0 ETT\n\nPROCEDURE SUMMARY:\nPre-procedure planning CT was loaded into the robotic platform and pathways were created to the RUL posterior segment and RLL superior segment targets.\n\nAfter induction, the robotic bronchoscope was navigated to the RUL target. Radial EBUS demonstrated a concentric hypoechoic lesion. Three transbronchial forceps biopsies and one cytology brush were obtained from the RUL posterior segment.\n\nThe robot was then redirected to the RLL superior segment. Radial EBUS again confirmed an eccentric lesion abutting an airway. Four forceps biopsies were obtained from the RLL.\n\nNo linear EBUS was performed and no fiducial markers or ablation were placed. Fluoroscopy showed no immediate pneumothorax.\n\nCOMPLICATIONS: None; estimated blood loss ~15 mL.\nDISPOSITION: Extubated in the OR, recovered in PACU and discharged home the same day with clinic and CT follow up arranged.",
     "cpt_codes": [
       31628,
       31632,
@@ -1639,12 +1584,6 @@
       ],
       "rationale": [
         "31627 is supported by documentation of robotic, CT-based image-guided navigation to two peripheral right lung nodules. 31654 is appropriate for radial EBUS localization at each target. 31628 and 31632 capture transbronchial lung biopsies in the first and additional lobes (RUL and RLL). No linear EBUS, fiducial placement, or ablation is documented, and diagnostic bronchoscopy, BAL, and brushings are bundled into the higher-valued navigation and biopsy services."
-      ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
       ]
     }
   }

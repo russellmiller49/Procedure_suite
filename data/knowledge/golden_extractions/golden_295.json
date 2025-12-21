@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Pt: Harrison, William || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Emory University Hospital, Atlanta, GA\nMD: Dr. Rebecca Chen\n\nDx: RUL endobronchial mass seen on CT, suspected lung cancer\nProcedure: Bronchoscopy with endobronchial biopsy\n\nUnder moderate sedation (midazolam 4mg, fentanyl 100mcg IV), flexible bronchoscopy performed via oral route with 6.0mm Olympus scope. Airways inspected systematically. Exophytic polypoid mass identified at RB1 orifice, near-completely occluding the segment. Pink-red, friable appearance. 4 endobronchial biopsies obtained with cold forceps. Moderate bleeding controlled with cold saline irrigation. Bronchial washings sent. No other airway abnormalities. Patient tolerated procedure well.\n\nPost-procedure: Stable, SpO2 96% on 2L NC. D/C home with path f/u in 5 days.\n\nR. Chen, MD",
+    "note_text": "Pt: Harrison, William || MRN: 782341 || DOB: 03/15/1961\nDate: 11/18/2025 || Location: Emory University Hospital, Atlanta, GA\nMD: Dr. Rebecca Chen\n\nDx: RUL endobronchial mass seen on CT, suspected lung cancer\nProcedure: Bronchoscopy with endobronchial biopsy\n\nUnder moderate sedation (midazolam 4mg, fentanyl 100mcg IV), flexible bronchoscopy performed via oral route with 6.0mm Olympus scope. Airways inspected systematically. Exophytic polypoid mass identified at RB1 orifice, near-completely occluding the segment. Pink-red, friable appearance. 4 endobronchial biopsies obtained with cold forceps. Moderate bleeding controlled with cold saline irrigation. Bronchial washings sent. No other airway abnormalities. Patient tolerated procedure well.\n\nPost-procedure: Stable, SpO2 96% on 2L NC. D/C home with path f/u in 5 days.\n\nR. Chen, MD",
     "cpt_codes": [
       31625
     ],
@@ -116,18 +116,10 @@
         "conversion_factor": 32.3562
       },
       "overall_assessment": "Verified. Single unit 31625 appropriate for multiple biopsies."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Martinez, Sofia || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: UCLA Medical Center, Los Angeles, CA\nMD: Dr. Michael Thornton\n\nDx: Bilateral hilar adenopathy, suspected sarcoidosis\nProcedure: Bronchoscopy with endobronchial biopsy, BAL\n\nModerate sedation achieved. Olympus BF-P190 scope advanced. Diffuse mucosal nodularity and cobblestoning noted at main carina, bilateral mainstem bronchi. Classic sarcoid appearance. 6 endobronchial biopsies taken (3 carina, 2 RMS, 1 LMS). Minimal bleeding. BAL performed at RML (100mL instilled, 55mL returned, clear). No endobronchial obstruction. Procedure uneventful.\n\nPlan: Await pathology for non-caseating granulomas. PFTs if confirmed. F/U pulm clinic 2 weeks.\n\nM. Thornton, MD",
+    "note_text": "Pt: Martinez, Sofia || MRN: 493827 || DOB: 07/22/1975\nDate: 11/20/2025 || Location: UCLA Medical Center, Los Angeles, CA\nMD: Dr. Michael Thornton\n\nDx: Bilateral hilar adenopathy, suspected sarcoidosis\nProcedure: Bronchoscopy with endobronchial biopsy, BAL\n\nModerate sedation achieved. Olympus BF-P190 scope advanced. Diffuse mucosal nodularity and cobblestoning noted at main carina, bilateral mainstem bronchi. Classic sarcoid appearance. 6 endobronchial biopsies taken (3 carina, 2 RMS, 1 LMS). Minimal bleeding. BAL performed at RML (100mL instilled, 55mL returned, clear). No endobronchial obstruction. Procedure uneventful.\n\nPlan: Await pathology for non-caseating granulomas. PFTs if confirmed. F/U pulm clinic 2 weeks.\n\nM. Thornton, MD",
     "cpt_codes": [
       31625,
       31624
@@ -262,18 +254,10 @@
         "conversion_factor": 32.3562
       },
       "overall_assessment": "Verified. BAL supported as distinct service (separate lobe)."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Thompson, Marcus || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Johns Hopkins Hospital, Baltimore, MD\nMD: Dr. Amanda Williams, Fellow: Dr. James Park (PGY-5)\n\nDx: LLL endobronchial lesion, known NSCLC s/p chemo, ? recurrence\nProcedure: Flex bronch with endobronchial biopsy\n\nGeneral anesthesia via LMA. Olympus therapeutic scope used. Prior radiation changes noted at LUL. New polypoid lesion at LB6 origin, 50% obstruction. Appears necrotic with surface ulceration. 5 endobronchial biopsies obtained. APC applied (40W, 0.8L/min) for hemostasis after moderate bleeding. Airways otherwise patent. Scope withdrawn, LMA removed, patient extubated.\n\nStable in PACU. CXR post-procedure unremarkable. D/C to home. Oncology f/u with results.\n\nA. Williams, MD / J. Park, MD",
+    "note_text": "Pt: Thompson, Marcus || MRN: 651294 || DOB: 11/03/1958\nDate: 11/22/2025 || Location: Johns Hopkins Hospital, Baltimore, MD\nMD: Dr. Amanda Williams, Fellow: Dr. James Park (PGY-5)\n\nDx: LLL endobronchial lesion, known NSCLC s/p chemo, ? recurrence\nProcedure: Flex bronch with endobronchial biopsy\n\nGeneral anesthesia via LMA. Olympus therapeutic scope used. Prior radiation changes noted at LUL. New polypoid lesion at LB6 origin, 50% obstruction. Appears necrotic with surface ulceration. 5 endobronchial biopsies obtained. APC applied (40W, 0.8L/min) for hemostasis after moderate bleeding. Airways otherwise patent. Scope withdrawn, LMA removed, patient extubated.\n\nStable in PACU. CXR post-procedure unremarkable. D/C to home. Oncology f/u with results.\n\nA. Williams, MD / J. Park, MD",
     "cpt_codes": [
       31625
     ],
@@ -385,18 +369,10 @@
         "conversion_factor": 32.3562
       },
       "overall_assessment": "Verified. APC for bleeding control is incidental."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: O'Brien, Kathleen || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Cleveland Clinic, Cleveland, OH\nMD: Dr. David Kim\n\nDx: Recurrent hemoptysis, RML bronchial lesion on CT\nProcedure: Bronchoscopy with endobronchial biopsy\n\nModerate sedation. Bronchoscopy via nasal approach with 4.9mm scope. Blood-tinged secretions in RML. Sessile raised lesion at RB4 with overlying clot. Clot gently removed with suction. Underlying 8mm reddish lesion visualized. 3 biopsies taken with small cup forceps. Brisk bleeding controlled with ice saline and topical epinephrine (1:10,000). No active bleeding at end. Remainder of airways normal.\n\nPost-procedure stable. No further hemoptysis. F/U path in 1 week. Return precautions given.\n\nD. Kim, MD",
+    "note_text": "Pt: O'Brien, Kathleen || MRN: 829174 || DOB: 05/18/1969\nDate: 11/25/2025 || Location: Cleveland Clinic, Cleveland, OH\nMD: Dr. David Kim\n\nDx: Recurrent hemoptysis, RML bronchial lesion on CT\nProcedure: Bronchoscopy with endobronchial biopsy\n\nModerate sedation. Bronchoscopy via nasal approach with 4.9mm scope. Blood-tinged secretions in RML. Sessile raised lesion at RB4 with overlying clot. Clot gently removed with suction. Underlying 8mm reddish lesion visualized. 3 biopsies taken with small cup forceps. Brisk bleeding controlled with ice saline and topical epinephrine (1:10,000). No active bleeding at end. Remainder of airways normal.\n\nPost-procedure stable. No further hemoptysis. F/U path in 1 week. Return precautions given.\n\nD. Kim, MD",
     "cpt_codes": [
       31625
     ],
@@ -504,18 +480,10 @@
         "conversion_factor": 32.3562
       },
       "overall_assessment": "Verified."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Nguyen, Tran || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: UCSF Medical Center, <LOCATION>, CA\nMD: Dr. Elizabeth Foster\n\nDx: HIV+ (CD4 120), multiple pulmonary Kaposi sarcoma lesions\nProcedure: Bronchoscopy with endobronchial biopsy, bronchial wash\n\nModerate sedation with propofol infusion. Standard bronchoscopy. Multiple violaceous raised plaques noted: 2 in trachea, 3 in RMS, 2 in LMS, consistent with endobronchial KS. Representative biopsies taken from RMS (2) and LMS (2) lesions. Minimal bleeding. Bronchial wash from LLL for PCP rule-out.\n\nPatient stable. ID and oncology aware. D/C with close outpatient f/u. ART optimization planned.\n\nE. Foster, MD",
+    "note_text": "Pt: Nguyen, Tran || MRN: 374618 || DOB: 02/28/1982\nDate: 11/28/2025 || Location: UCSF Medical Center, San Francisco, CA\nMD: Dr. Elizabeth Foster\n\nDx: HIV+ (CD4 120), multiple pulmonary Kaposi sarcoma lesions\nProcedure: Bronchoscopy with endobronchial biopsy, bronchial wash\n\nModerate sedation with propofol infusion. Standard bronchoscopy. Multiple violaceous raised plaques noted: 2 in trachea, 3 in RMS, 2 in LMS, consistent with endobronchial KS. Representative biopsies taken from RMS (2) and LMS (2) lesions. Minimal bleeding. Bronchial wash from LLL for PCP rule-out.\n\nPatient stable. ID and oncology aware. D/C with close outpatient f/u. ART optimization planned.\n\nE. Foster, MD",
     "cpt_codes": [
       31625
     ],
@@ -636,19 +604,10 @@
         "conversion_factor": 32.3562
       },
       "overall_assessment": "Corrected: Removed bundled 31622."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME",
-        "LOCATION"
-      ]
     }
   },
   {
-    "note_text": "Pt: Davis, Robert || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Duke University Hospital, Durham, NC\nMD: Dr. Sarah Mitchell, Fellow: Dr. Kevin Lee (PGY-6)\n\nDx: Tracheal mass, stridor\nProcedure: Rigid bronchoscopy with endobronchial biopsy\n\nGeneral anesthesia, jet ventilation. Rigid bronchoscope (Karl Storz 12mm) inserted. Large pedunculated mass arising from posterior trachea, 2cm above carina, causing 70% obstruction. Mobile, well-vascularized. 4 biopsies with rigid cup forceps. Moderate bleeding - controlled with suction and pressure. Decision to await pathology before debulking. Scope exchanged for ETT, patient ventilated and transferred to PACU intubated for airway monitoring.\n\nAdmit to stepdown. Repeat bronch for potential debulking pending path.\n\nS. Mitchell, MD / K. Lee, MD",
+    "note_text": "Pt: Davis, Robert || MRN: 582736 || DOB: 08/14/1955\nDate: 12/01/2025 || Location: Duke University Hospital, Durham, NC\nMD: Dr. Sarah Mitchell, Fellow: Dr. Kevin Lee (PGY-6)\n\nDx: Tracheal mass, stridor\nProcedure: Rigid bronchoscopy with endobronchial biopsy\n\nGeneral anesthesia, jet ventilation. Rigid bronchoscope (Karl Storz 12mm) inserted. Large pedunculated mass arising from posterior trachea, 2cm above carina, causing 70% obstruction. Mobile, well-vascularized. 4 biopsies with rigid cup forceps. Moderate bleeding - controlled with suction and pressure. Decision to await pathology before debulking. Scope exchanged for ETT, patient ventilated and transferred to PACU intubated for airway monitoring.\n\nAdmit to stepdown. Repeat bronch for potential debulking pending path.\n\nS. Mitchell, MD / K. Lee, MD",
     "cpt_codes": [
       31625
     ],
@@ -757,18 +716,10 @@
         "conversion_factor": 32.3562
       },
       "overall_assessment": "Verified. Single code appropriate."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Anderson, Linda || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Northwestern Memorial Hospital, Chicago, IL\nMD: Dr. Richard Patel\n\nDx: RUL mass with endobronchial extension seen on PET (SUV 12.4)\nProcedure: Bronchoscopy with endobronchial biopsy, brushings\n\nModerate sedation. Oral bronchoscopy. RUL apical segment (RB1) shows extrinsic compression with mucosal invasion - erythematous, irregular mucosa extending into lumen. 5 endobronchial biopsies obtained. Protected brush specimen from same site. LUL, LLL, RML, RLL all normal. No secretions or blood.\n\nROSE: Atypical cells, suspicious for malignancy.\n\nD/C home. Path results to be discussed at tumor board. PET staging complete.\n\nR. Patel, MD",
+    "note_text": "Pt: Anderson, Linda || MRN: 419283 || DOB: 12/07/1970\nDate: 12/03/2025 || Location: Northwestern Memorial Hospital, Chicago, IL\nMD: Dr. Richard Patel\n\nDx: RUL mass with endobronchial extension seen on PET (SUV 12.4)\nProcedure: Bronchoscopy with endobronchial biopsy, brushings\n\nModerate sedation. Oral bronchoscopy. RUL apical segment (RB1) shows extrinsic compression with mucosal invasion - erythematous, irregular mucosa extending into lumen. 5 endobronchial biopsies obtained. Protected brush specimen from same site. LUL, LLL, RML, RLL all normal. No secretions or blood.\n\nROSE: Atypical cells, suspicious for malignancy.\n\nD/C home. Path results to be discussed at tumor board. PET staging complete.\n\nR. Patel, MD",
     "cpt_codes": [
       31625
     ],
@@ -890,18 +841,10 @@
         "conversion_factor": 32.3562
       },
       "overall_assessment": "Corrected: Removed 31623 (same site bundling)."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Wilson, James || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Mayo Clinic, Rochester, MN\nMD: Dr. Catherine Moore\n\nDx: Post-lung transplant, new endobronchial lesions at anastomosis\nProcedure: Surveillance bronchoscopy with endobronchial biopsy, TBBx\n\nGeneral anesthesia via ETT. Bilateral lung transplant 18 months ago. RMS anastomosis with granulation tissue and 2 small polyps. LMS anastomosis with single granuloma. Endobronchial biopsies: 2 from RMS, 1 from LMS. TBBx from RLL (4 specimens) and LLL (4 specimens) for rejection surveillance. BAL from RML. Minimal bleeding throughout.\n\nPath pending. Continue current immunosuppression. F/U transplant clinic.\n\nC. Moore, MD",
+    "note_text": "Pt: Wilson, James || MRN: 736492 || DOB: 04/25/1963\nDate: 12/05/2025 || Location: Mayo Clinic, Rochester, MN\nMD: Dr. Catherine Moore\n\nDx: Post-lung transplant, new endobronchial lesions at anastomosis\nProcedure: Surveillance bronchoscopy with endobronchial biopsy, TBBx\n\nGeneral anesthesia via ETT. Bilateral lung transplant 18 months ago. RMS anastomosis with granulation tissue and 2 small polyps. LMS anastomosis with single granuloma. Endobronchial biopsies: 2 from RMS, 1 from LMS. TBBx from RLL (4 specimens) and LLL (4 specimens) for rejection surveillance. BAL from RML. Minimal bleeding throughout.\n\nPath pending. Continue current immunosuppression. F/U transplant clinic.\n\nC. Moore, MD",
     "cpt_codes": [
       31625,
       31628,
@@ -1069,18 +1012,10 @@
         "conversion_factor": 32.3562
       },
       "overall_assessment": "Verified. Complex transplant surveillance coding accurate."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Garcia, Maria || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: UT Southwestern, Dallas, TX\nMD: Dr. Thomas Green, Fellow: Dr. Amy Zhao (PGY-5)\n\nDx: Chronic cough, CT shows RML bronchial narrowing with thickening\nProcedure: Bronchoscopy with endobronchial biopsy\n\nModerate sedation. Flexible bronchoscopy. RML orifice shows circumferential mucosal thickening with narrowing to ~5mm. No exophytic mass. Mucosa appears edematous and erythematous. 4 biopsies obtained circumferentially. Appearance concerning for possible carcinoid or inflammatory stricture. Airways otherwise unremarkable. No complications.\n\nD/C with return precautions. Path f/u next week.\n\nT. Green, MD / A. Zhao, MD",
+    "note_text": "Pt: Garcia, Maria || MRN: 284719 || DOB: 09/30/1978\nDate: 12/06/2025 || Location: UT Southwestern, Dallas, TX\nMD: Dr. Thomas Green, Fellow: Dr. Amy Zhao (PGY-5)\n\nDx: Chronic cough, CT shows RML bronchial narrowing with thickening\nProcedure: Bronchoscopy with endobronchial biopsy\n\nModerate sedation. Flexible bronchoscopy. RML orifice shows circumferential mucosal thickening with narrowing to ~5mm. No exophytic mass. Mucosa appears edematous and erythematous. 4 biopsies obtained circumferentially. Appearance concerning for possible carcinoid or inflammatory stricture. Airways otherwise unremarkable. No complications.\n\nD/C with return precautions. Path f/u next week.\n\nT. Green, MD / A. Zhao, MD",
     "cpt_codes": [
       31625
     ],
@@ -1184,18 +1119,10 @@
         "conversion_factor": 32.3562
       },
       "overall_assessment": "Verified."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Brown, Charles || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Stanford Health Care, Palo Alto, CA\nMD: Dr. Jennifer Wu\n\nDx: Metastatic melanoma, new cough, CT with multiple endobronchial nodules\nProcedure: Bronchoscopy with endobronchial biopsy\n\nGeneral anesthesia via LMA for airway protection given bulky disease. Multiple pigmented nodular lesions seen: 3 in trachea, 4 in RMS, 2 in LMS, 2 in BI, consistent with metastatic melanoma. Representative biopsies from trachea (2), RMS (2), LMS (1). Dark pigmented tissue obtained. Minimal bleeding. Airways remain patent despite diffuse disease.\n\nMedical oncology consulted. Immunotherapy to be considered. Palliative care referral. D/C home.\n\nJ. Wu, MD",
+    "note_text": "Pt: Brown, Charles || MRN: 927364 || DOB: 01/11/1950\nDate: 12/08/2025 || Location: Stanford Health Care, Palo Alto, CA\nMD: Dr. Jennifer Wu\n\nDx: Metastatic melanoma, new cough, CT with multiple endobronchial nodules\nProcedure: Bronchoscopy with endobronchial biopsy\n\nGeneral anesthesia via LMA for airway protection given bulky disease. Multiple pigmented nodular lesions seen: 3 in trachea, 4 in RMS, 2 in LMS, 2 in BI, consistent with metastatic melanoma. Representative biopsies from trachea (2), RMS (2), LMS (1). Dark pigmented tissue obtained. Minimal bleeding. Airways remain patent despite diffuse disease.\n\nMedical oncology consulted. Immunotherapy to be considered. Palliative care referral. D/C home.\n\nJ. Wu, MD",
     "cpt_codes": [
       31625
     ],
@@ -1305,14 +1232,6 @@
         "conversion_factor": 32.3562
       },
       "overall_assessment": "Verified."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   }
 ]

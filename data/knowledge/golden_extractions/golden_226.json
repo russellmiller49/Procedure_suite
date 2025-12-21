@@ -1040,7 +1040,7 @@
     }
   },
   {
-    "note_text": "Pt: <LOCATION>: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Aurora Medical Center, Milwaukee, WI\nMD: Dr. Carol Stevens\n\nDx: RLL nodule 2.2cm, squamous cell CA\nProcedure: Bronch w/ RFA\n\nUnder GA, bronchoscopy performed. ENB to RLL superior segment. R-EBUS confirmed target. RFA probe placed (RITA 1500X, 2cm tines). Treatment: 105°C x 10min. Good ablation zone. No bleeding, no complications. Extubated, stable.\n\nCXR today. CT tomorrow. D/C if OK. F/U 1mo.\n\nC. Stevens MD",
+    "note_text": "Pt: Jackson, Dennis || MRN: 445892 || DOB: 9/12/1959\nDate: 11/10/2025 || Location: Aurora Medical Center, Milwaukee, WI\nMD: Dr. Carol Stevens\n\nDx: RLL nodule 2.2cm, squamous cell CA\nProcedure: Bronch w/ RFA\n\nUnder GA, bronchoscopy performed. ENB to RLL superior segment. R-EBUS confirmed target. RFA probe placed (RITA 1500X, 2cm tines). Treatment: 105\u00b0C x 10min. Good ablation zone. No bleeding, no complications. Extubated, stable.\n\nCXR today. CT tomorrow. D/C if OK. F/U 1mo.\n\nC. Stevens MD",
     "cpt_codes": [
       "31641",
       "31627",
@@ -1167,15 +1167,6 @@
         "total": 445
       },
       "rationale": "Bronchoscopy with radiofrequency ablation of a 2.2 cm RLL nodule using ENB and radial EBUS confirmation. Ablation code 31641 is primary, with navigation 31627 and radial EBUS add-on 31654. Diagnostic bronchoscopy 31622 is bundled into the therapeutic ablation service."
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "LOCATION",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   }
 ]

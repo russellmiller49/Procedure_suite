@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "Pt: Allen, Jennifer || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. Amanda Garcia\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Suspected mesothelioma\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Normal-appearing pleura\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nGarcia, MD",
+    "note_text": "Pt: Allen, Jennifer || MRN: 8832004 || DOB: 8/13/1970\nDate: 07/08/2025 || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. Amanda Garcia\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Suspected mesothelioma\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Normal-appearing pleura\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nGarcia, MD",
     "cpt_codes": [
       32601
     ],
@@ -77,18 +77,10 @@
         "32601"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Lee, Sharon || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Cedars-Sinai Medical Center, Los Angeles, CA\nAttending: Dr. Emily Thompson\n\nIndication: Staging for lung cancer pleural involvement\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Visceral pleural tumor implants\nMultiple biopsies obtained from parietal pleura (11 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nThompson, MD",
+    "note_text": "Pt: Lee, Sharon || MRN: 6346626 || DOB: 9/9/1954\nDate: 09/27/2025 || Location: Cedars-Sinai Medical Center, Los Angeles, CA\nAttending: Dr. Emily Thompson\n\nIndication: Staging for lung cancer pleural involvement\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Visceral pleural tumor implants\nMultiple biopsies obtained from parietal pleura (11 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nThompson, MD",
     "cpt_codes": [
       32609,
       32650
@@ -175,18 +167,10 @@
         "32560"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Green, Angela || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: CAPT Russell Miller, MD\n\nIndication: Persistent effusion despite thoracentesis\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Visceral pleural tumor implants\nMultiple biopsies obtained from parietal pleura (8 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nMiller, MD",
+    "note_text": "Pt: Green, Angela || MRN: 7464709 || DOB: 9/9/1963\nDate: 10/16/2025 || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: CAPT Russell Miller, MD\n\nIndication: Persistent effusion despite thoracentesis\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Visceral pleural tumor implants\nMultiple biopsies obtained from parietal pleura (8 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nMiller, MD",
     "cpt_codes": [
       32609,
       32650
@@ -273,18 +257,10 @@
         "32560"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Allen, Kevin || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: UC San Diego Health, La Jolla, CA\nAttending: CDR Patricia Davis, MD\n\nIndication: Undiagnosed exudative pleural effusion\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Diffuse pleural nodularity\nParietal, visceral, and diaphragmatic pleura visualized.\nTalc poudrage performed for pleurodesis after drainage.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nDavis, MD",
+    "note_text": "Pt: Allen, Kevin || MRN: 6984578 || DOB: 4/11/1971\nDate: 07/30/2025 || Location: UC San Diego Health, La Jolla, CA\nAttending: CDR Patricia Davis, MD\n\nIndication: Undiagnosed exudative pleural effusion\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Diffuse pleural nodularity\nParietal, visceral, and diaphragmatic pleura visualized.\nTalc poudrage performed for pleurodesis after drainage.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nDavis, MD",
     "cpt_codes": [
       32650
     ],
@@ -362,18 +338,10 @@
         "32560"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Taylor, Patricia || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. Emily Thompson\nFellow: Dr. Alex Chen (PGY-5)\n\nIndication: Biopsy-negative suspected malignancy\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Visceral pleural tumor implants\nMultiple biopsies obtained from parietal pleura (6 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nThompson, MD",
+    "note_text": "Pt: Taylor, Patricia || MRN: 8139600 || DOB: 5/20/1966\nDate: 09/22/2025 || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. Emily Thompson\nFellow: Dr. Alex Chen (PGY-5)\n\nIndication: Biopsy-negative suspected malignancy\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Visceral pleural tumor implants\nMultiple biopsies obtained from parietal pleura (6 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nThompson, MD",
     "cpt_codes": [
       32609
     ],
@@ -451,18 +419,10 @@
         "32609"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Allen, Brian || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Scripps Memorial Hospital, La Jolla, CA\nAttending: LCDR John Park, MD\nFellow: Dr. James Liu (PGY-5)\n\nIndication: Staging for lung cancer pleural involvement\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Inflammatory changes without nodularity\nMultiple biopsies obtained from parietal pleura (6 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nPark, MD",
+    "note_text": "Pt: Allen, Brian || MRN: 9094434 || DOB: 7/1/1947\nDate: 12/01/2025 || Location: Scripps Memorial Hospital, La Jolla, CA\nAttending: LCDR John Park, MD\nFellow: Dr. James Liu (PGY-5)\n\nIndication: Staging for lung cancer pleural involvement\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Inflammatory changes without nodularity\nMultiple biopsies obtained from parietal pleura (6 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nPark, MD",
     "cpt_codes": [
       32609,
       32650
@@ -549,18 +509,10 @@
         "32560"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Jackson, Betty || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: University of Michigan Hospital, Ann Arbor, MI\nAttending: Dr. Michael Chen\n\nIndication: Pleural nodularity on imaging\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Mass lesion on diaphragmatic pleura\nMultiple biopsies obtained from parietal pleura (6 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nChen, MD",
+    "note_text": "Pt: Jackson, Betty || MRN: 8866356 || DOB: 12/9/1975\nDate: 08/06/2025 || Location: University of Michigan Hospital, Ann Arbor, MI\nAttending: Dr. Michael Chen\n\nIndication: Pleural nodularity on imaging\nSide: Left\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Mass lesion on diaphragmatic pleura\nMultiple biopsies obtained from parietal pleura (6 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nChen, MD",
     "cpt_codes": [
       32609,
       32650
@@ -647,18 +599,10 @@
         "32560"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Carter, Kathleen || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. Rachel Kim\n\nIndication: Undiagnosed exudative pleural effusion\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Normal-appearing pleura\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nKim, MD",
+    "note_text": "Pt: Carter, Kathleen || MRN: 9388499 || DOB: 2/24/1969\nDate: 10/08/2025 || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. Rachel Kim\n\nIndication: Undiagnosed exudative pleural effusion\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Normal-appearing pleura\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nKim, MD",
     "cpt_codes": [
       32601
     ],
@@ -735,18 +679,10 @@
         "32601"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Garcia, David || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. Christopher Brown\nFellow: Dr. Lauren Walsh (PGY-6)\n\nIndication: Pleural nodularity on imaging\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Mass lesion on diaphragmatic pleura\nMultiple biopsies obtained from parietal pleura (11 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nBrown, MD",
+    "note_text": "Pt: Garcia, David || MRN: 8817657 || DOB: 9/26/1957\nDate: 07/16/2025 || Location: Naval Medical Center San Diego, San Diego, CA\nAttending: Dr. Christopher Brown\nFellow: Dr. Lauren Walsh (PGY-6)\n\nIndication: Pleural nodularity on imaging\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Mass lesion on diaphragmatic pleura\nMultiple biopsies obtained from parietal pleura (11 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nBrown, MD",
     "cpt_codes": [
       32609
     ],
@@ -824,18 +760,10 @@
         "32609"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Pt: Johnson, William || MRN: <MRN> || DOB: <DATE_TIME>\nDate: <DATE_TIME> || Location: University of Michigan Hospital, Ann Arbor, MI\nAttending: Dr. David Wilson\n\nIndication: Biopsy-negative suspected malignancy\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Thickened parietal pleura with nodules\nMultiple biopsies obtained from parietal pleura (12 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nWilson, MD",
+    "note_text": "Pt: Johnson, William || MRN: 6968886 || DOB: 10/28/1959\nDate: 09/11/2025 || Location: University of Michigan Hospital, Ann Arbor, MI\nAttending: Dr. David Wilson\n\nIndication: Biopsy-negative suspected malignancy\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy with Pleural Biopsy\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted. Pleural space inspected.\n\nFINDINGS: Thickened parietal pleura with nodules\nMultiple biopsies obtained from parietal pleura (12 specimens).\nAdditional biopsies from diaphragmatic pleura.\nSpecimens sent for histopathology and immunohistochemistry.\nGiven findings, talc poudrage performed for pleurodesis.\nAll fluid evacuated. Chest tube placed.\nHemostasis confirmed. No air leak.\n\nDISPOSITION: Floor admission. Chest tube to suction.\nF/U: Path results in 5-7 days. Oncology consultation if malignant.\n\nWilson, MD",
     "cpt_codes": [
       32609,
       32650
@@ -922,14 +850,6 @@
         "32560"
       ],
       "invalid_codes": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   }
 ]

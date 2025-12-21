@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "OPERATIVE REPORT: COMPLEX AIRWAY INTERVENTION\n\nPatient: Octavia Butler (MRN: <MRN>)\nDate: <DATE_TIME>\nAttending: Dr. V. Frankenstein\n\n**Indication:** 65F with adenoid cystic carcinoma of the trachea. Status post silicone stent placement 6 months ago. Presents with worsening stridor. CT shows stent migration distally and tumor ingrowth at the proximal stent edge.\n\n**Procedure:** Rigid Bronchoscopy, Stent Removal, Laser Resection, New Stent Placement.\n**Anesthesia:** General (TIVA). Jet Ventilation.\n\n**Details:**\nRigid bronchoscope (14mm) inserted. The existing silicone stent was found migrated into the right mainstem, partially obstructing the RUL. Using rigid forceps, the stent was grasped, folded, and removed en bloc.\n\nInspection revealed exophytic tumor regrowth at the mid-trachea (proximal to old stent site) causing 70% obstruction. \nNd:YAG Laser was applied (40W) to coagulate and vaporize the tumor. Mechanical coring with the rigid barrel was performed. \nBalloon dilation (CRE balloon, 12mm) was performed at the stenotic segment to 14mm.\n\nOnce patency improved to >90%, a new 16x50mm Dumon silicone stent was loaded and deployed covering the mid-to-distal trachea. Position confirmed with flexible scope. RUL patent. Stent stable.\n\n**EBL:** 50cc.\n**Complications:** Minor hemorrhage controlled with cold saline and laser.",
+    "note_text": "OPERATIVE REPORT: COMPLEX AIRWAY INTERVENTION\n\nPatient: Octavia Butler (MRN: 772194)\nDate: 12/12/2025\nAttending: Dr. V. Frankenstein\n\n**Indication:** 65F with adenoid cystic carcinoma of the trachea. Status post silicone stent placement 6 months ago. Presents with worsening stridor. CT shows stent migration distally and tumor ingrowth at the proximal stent edge.\n\n**Procedure:** Rigid Bronchoscopy, Stent Removal, Laser Resection, New Stent Placement.\n**Anesthesia:** General (TIVA). Jet Ventilation.\n\n**Details:**\nRigid bronchoscope (14mm) inserted. The existing silicone stent was found migrated into the right mainstem, partially obstructing the RUL. Using rigid forceps, the stent was grasped, folded, and removed en bloc.\n\nInspection revealed exophytic tumor regrowth at the mid-trachea (proximal to old stent site) causing 70% obstruction. \nNd:YAG Laser was applied (40W) to coagulate and vaporize the tumor. Mechanical coring with the rigid barrel was performed. \nBalloon dilation (CRE balloon, 12mm) was performed at the stenotic segment to 14mm.\n\nOnce patency improved to >90%, a new 16x50mm Dumon silicone stent was loaded and deployed covering the mid-to-distal trachea. Position confirmed with flexible scope. RUL patent. Stent stable.\n\n**EBL:** 50cc.\n**Complications:** Minor hemorrhage controlled with cold saline and laser.",
     "cpt_codes": [
       31638,
       31641
@@ -168,17 +168,10 @@
         "Augmented coding_review with 2025 facility RVUs/payments and edge-case labeling"
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Electromagnetic Navigation Bronchoscopy & EBUS\nPATIENT: Leo Spaceman | MRN: <MRN>\nDATE: <DATE_TIME>\n\n**Plan:** Biopsy of 1.8cm RUL nodule and mediastinal staging.\n\n**EBUS-TBNA:**\nLinear EBUS scope inserted. \n- Station 7 (Subcarinal): 12mm node. Sampled x 3 passes. ROSE: Benign lymphocytes.\n- Station 4R (Right Paratracheal): 10mm node. Sampled x 3 passes. ROSE: Benign lymphocytes.\n- Station 4L: 8mm node. Sampled x 2 passes. ROSE: Benign lymphocytes.\n\n**Navigation:**\nScope exchanged for therapeutic bronchoscope. Electromagnetic navigation (Veran) attempted to RUL apical segment nodule. Registration error 5mm. \nDespite multiple attempts and catheter adjustments, the target could not be successfully localized. Radial EBUS probe passed but no distinct lesion visualized (only normal lung parenchyma). \n\n**Decision:** \nBiopsy of the peripheral nodule was ABORTED due to lack of confirmation. No samples taken from RUL.\n\n**Procedure concluded.**",
+    "note_text": "PROCEDURE: Electromagnetic Navigation Bronchoscopy & EBUS\nPATIENT: Leo Spaceman | MRN: 991283\nDATE: 01/20/2025\n\n**Plan:** Biopsy of 1.8cm RUL nodule and mediastinal staging.\n\n**EBUS-TBNA:**\nLinear EBUS scope inserted. \n- Station 7 (Subcarinal): 12mm node. Sampled x 3 passes. ROSE: Benign lymphocytes.\n- Station 4R (Right Paratracheal): 10mm node. Sampled x 3 passes. ROSE: Benign lymphocytes.\n- Station 4L: 8mm node. Sampled x 2 passes. ROSE: Benign lymphocytes.\n\n**Navigation:**\nScope exchanged for therapeutic bronchoscope. Electromagnetic navigation (Veran) attempted to RUL apical segment nodule. Registration error 5mm. \nDespite multiple attempts and catheter adjustments, the target could not be successfully localized. Radial EBUS probe passed but no distinct lesion visualized (only normal lung parenchyma). \n\n**Decision:** \nBiopsy of the peripheral nodule was ABORTED due to lack of confirmation. No samples taken from RUL.\n\n**Procedure concluded.**",
     "cpt_codes": [
       31653,
       31627
@@ -328,17 +321,10 @@
         "Augmented coding_review with 2025 facility RVUs/payments and edge-case labeling"
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "**Procedure Note: Pleural Intervention**\n**Date:** <DATE_TIME>\n**Patient:** G. Washington (MRN: <MRN>)\n**Attending:** Dr. B. Ross\n\n**History:** Recurrent large left pleural effusion. Previous thoracentesis showed exudate, cytology negative. \n\n**Procedure:**\nUS guidance used to mark site. 1% Lidocaine. \nAttempted thoracentesis with 18G needle - no fluid returned (Dry Tap). Repositioned 2 interspaces lower. \n\nSuccessfully accessed pleural space with 18G needle. Guide wire passed. Dilated tract. 8Fr Pigtail catheter placed. \nDrained 1400cc clear yellow fluid. \n\n**Plan:** Leave pigtail in place for drainage. Send fluid for culture/cyto.",
+    "note_text": "**Procedure Note: Pleural Intervention**\n**Date:** 07/04/2025\n**Patient:** G. Washington (MRN: 1776)\n**Attending:** Dr. B. Ross\n\n**History:** Recurrent large left pleural effusion. Previous thoracentesis showed exudate, cytology negative. \n\n**Procedure:**\nUS guidance used to mark site. 1% Lidocaine. \nAttempted thoracentesis with 18G needle - no fluid returned (Dry Tap). Repositioned 2 interspaces lower. \n\nSuccessfully accessed pleural space with 18G needle. Guide wire passed. Dilated tract. 8Fr Pigtail catheter placed. \nDrained 1400cc clear yellow fluid. \n\n**Plan:** Leave pigtail in place for drainage. Send fluid for culture/cyto.",
     "cpt_codes": [
       32557
     ],
@@ -442,17 +428,10 @@
         "Augmented coding_review with 2025 facility RVUs/payments and edge-case labeling"
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "MRN"
-      ]
     }
   },
   {
-    "note_text": "Bronchoscopy Sedation Note\nPatient: M. Scott\nDate: <DATE_TIME>\n\nStart Time: 10:00 AM\nEnd Time: 10:48 AM\nTotal Duration: 48 minutes\n\nProcedure: Bronchoscopy with BAL (RML) and Brushing (RML).\nPhysician: Dr. J. Halpert (Performed Bronch + Administered Sedation)\nObserver: RN P. Beesly (Dedicated monitor)\n\nMedications: Fentanyl 100mcg, Versed 4mg.\nVitals stable. No hypoxia.\n\nProcedure findings: RML infiltrate. Mucous plug suctioned. BAL obtained. Brush obtained.",
+    "note_text": "Bronchoscopy Sedation Note\nPatient: M. Scott\nDate: 02/14/2025\n\nStart Time: 10:00 AM\nEnd Time: 10:48 AM\nTotal Duration: 48 minutes\n\nProcedure: Bronchoscopy with BAL (RML) and Brushing (RML).\nPhysician: Dr. J. Halpert (Performed Bronch + Administered Sedation)\nObserver: RN P. Beesly (Dedicated monitor)\n\nMedications: Fentanyl 100mcg, Versed 4mg.\nVitals stable. No hypoxia.\n\nProcedure findings: RML infiltrate. Mucous plug suctioned. BAL obtained. Brush obtained.",
     "cpt_codes": [
       31623,
       31624,
@@ -617,16 +596,10 @@
         "Augmented coding_review with 2025 facility RVUs/payments and edge-case labeling"
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Transbronchial Cryobiopsy for ILD\nDATE: <DATE_TIME>\nPATIENT: Bruce Wayne (MRN: <MRN>)\n\nIndication: Progressive fibrotic ILD, UIP vs NSIP pattern.\n\nTechnique: LMA placed. Flexible bronchoscopy. \nRadial EBUS used to confirm absence of large vessels in RLL basilar segments. \nCryoprobe (1.9mm) advanced to RLL Posterior Basal segment. \nFreezing performed x 5 seconds. \nProbe and scope withdrawn en bloc. \nFogarty balloon inflated for hemostasis (prophylactic).\nSpecimen: Large lung chunk (10mm) obtained. \nRepeated in RLL Lateral Basal segment x 1.\n\nTotal 2 biopsies. Fluoroscopy used.\nNo pneumothorax on post-op ultrasound.",
+    "note_text": "PROCEDURE: Transbronchial Cryobiopsy for ILD\nDATE: 10/31/2025\nPATIENT: Bruce Wayne (MRN: 10001)\n\nIndication: Progressive fibrotic ILD, UIP vs NSIP pattern.\n\nTechnique: LMA placed. Flexible bronchoscopy. \nRadial EBUS used to confirm absence of large vessels in RLL basilar segments. \nCryoprobe (1.9mm) advanced to RLL Posterior Basal segment. \nFreezing performed x 5 seconds. \nProbe and scope withdrawn en bloc. \nFogarty balloon inflated for hemostasis (prophylactic).\nSpecimen: Large lung chunk (10mm) obtained. \nRepeated in RLL Lateral Basal segment x 1.\n\nTotal 2 biopsies. Fluoroscopy used.\nNo pneumothorax on post-op ultrasound.",
     "cpt_codes": [
       31628,
       31654
@@ -783,13 +756,6 @@
         "Removed additional-lobe code 31632 from cpt_codes (same-lobe cryobiopsies)"
       ],
       "warnings": []
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "MRN"
-      ]
     }
   }
 ]

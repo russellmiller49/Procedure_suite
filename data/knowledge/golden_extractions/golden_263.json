@@ -1,7 +1,7 @@
 [
   {
     "note_id": "RAB001",
-    "note_text": "PATIENT: Case 01, 62-year-old male. MRN: <MRN>. INDICATION FOR OPERATION: 62-year-old former smoker with a 1.8 cm left lower lobe lateral basal segment pulmonary nodule (SUV 3.5) with bronchus sign present, referred for diagnostic robotic navigational bronchoscopy. PREOPERATIVE DIAGNOSIS: Left lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same, malignancy suspected. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with endotracheal intubation, a timeout was performed and standard ASA monitoring was used. A CT-based navigation plan was loaded to the Ion platform and automatic complete registration was achieved with low fiducial error. The robotic catheter was advanced to the LLL lateral basal segment; radial EBUS showed a concentric heterogeneous 18 mm lesion without major vessels. Cone‑beam CT confirmed tool-in-lesion. Multiple forceps biopsies and brushings were obtained through the extended working channel with minimal bleeding. Final airway inspection showed no active hemorrhage or airway compromise. The patient tolerated the procedure well without immediate complications; post-procedure CXR showed no pneumothorax.",
+    "note_text": "PATIENT: Case 01, 62-year-old male. MRN: RAB-0001. INDICATION FOR OPERATION: 62-year-old former smoker with a 1.8 cm left lower lobe lateral basal segment pulmonary nodule (SUV 3.5) with bronchus sign present, referred for diagnostic robotic navigational bronchoscopy. PREOPERATIVE DIAGNOSIS: Left lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same, malignancy suspected. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with endotracheal intubation, a timeout was performed and standard ASA monitoring was used. A CT-based navigation plan was loaded to the Ion platform and automatic complete registration was achieved with low fiducial error. The robotic catheter was advanced to the LLL lateral basal segment; radial EBUS showed a concentric heterogeneous 18 mm lesion without major vessels. Cone\u2011beam CT confirmed tool-in-lesion. Multiple forceps biopsies and brushings were obtained through the extended working channel with minimal bleeding. Final airway inspection showed no active hemorrhage or airway compromise. The patient tolerated the procedure well without immediate complications; post-procedure CXR showed no pneumothorax.",
     "cpt_codes": [
       31627,
       31654,
@@ -55,8 +55,8 @@
       "pet_avid": true,
       "bronchus_sign_present": true,
       "follow_up_plan": [
-        "Review pathology in 3–5 days",
-        "If benign, repeat CT chest in 3–6 months",
+        "Review pathology in 3\u20135 days",
+        "If benign, repeat CT chest in 3\u20136 months",
         "If malignant, present at multidisciplinary tumor board"
       ],
       "providers": {
@@ -107,17 +107,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB002",
-    "note_text": "PATIENT: Case 02, 74-year-old female. MRN: <MRN>. INDICATION FOR OPERATION: 74-year-old woman with enlarging 2.2 cm posterior segment right upper lobe nodule, intensely FDG-avid on PET (SUV 8.1) with bronchus sign present, referred for robotic biopsy. PREOPERATIVE DIAGNOSIS: Right upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same, likely primary lung cancer. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia and ETT, complete automatic registration was achieved. The robotic catheter was advanced to the RUL posterior segment; radial EBUS demonstrated an eccentric 22 mm lesion with heterogeneous internal echoes and no large vessels. CBCT confirmed the sampling catheter within the lesion. Six forceps biopsies and two brushings were obtained; mild oozing was controlled with iced saline. Final bronchoscopic survey showed hemostasis and patent segmental bronchi. The patient was extubated in the procedure room and recovered without immediate complications.",
+    "note_text": "PATIENT: Case 02, 74-year-old female. MRN: RAB-0002. INDICATION FOR OPERATION: 74-year-old woman with enlarging 2.2 cm posterior segment right upper lobe nodule, intensely FDG-avid on PET (SUV 8.1) with bronchus sign present, referred for robotic biopsy. PREOPERATIVE DIAGNOSIS: Right upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same, likely primary lung cancer. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia and ETT, complete automatic registration was achieved. The robotic catheter was advanced to the RUL posterior segment; radial EBUS demonstrated an eccentric 22 mm lesion with heterogeneous internal echoes and no large vessels. CBCT confirmed the sampling catheter within the lesion. Six forceps biopsies and two brushings were obtained; mild oozing was controlled with iced saline. Final bronchoscopic survey showed hemostasis and patent segmental bronchi. The patient was extubated in the procedure room and recovered without immediate complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -143,7 +137,7 @@
       "institution_name": null,
       "molecular_testing_requested": true,
       "disposition": "Outpatient discharge",
-      "bleeding_severity": "Mild (10–20 mL)",
+      "bleeding_severity": "Mild (10\u201320 mL)",
       "pneumothorax": false,
       "pneumothorax_intervention": null,
       "hypoxia_respiratory_failure": false,
@@ -222,17 +216,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB003",
-    "note_text": "PATIENT: Case 03, 59-year-old female. MRN: <MRN>. INDICATION FOR OPERATION: 59-year-old never smoker with incidentally detected 1.2 cm right middle lobe lateral segment nodule, mildly FDG-avid (SUV 2.1), undergoing robotic biopsy for tissue diagnosis. PREOPERATIVE DIAGNOSIS: Right middle lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same, low to intermediate suspicion lesion. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628). After induction of general anesthesia and ETT placement, a CT-based plan was loaded and complete automatic registration performed. The Ion catheter was advanced to the RML lateral segment; radial EBUS demonstrated an adjacent 12 mm lesion with intact surrounding lung and no major vessel. Augmented fluoroscopy was used to refine catheter position and confirm tool-in-lesion. Five forceps biopsies were obtained with minimal bleeding and good specimen volume. No brushing or BAL was performed. Final survey showed no endobronchial abnormality beyond the biopsy site and no active hemorrhage. The patient tolerated the procedure well and was discharged after routine observation.",
+    "note_text": "PATIENT: Case 03, 59-year-old female. MRN: RAB-0003. INDICATION FOR OPERATION: 59-year-old never smoker with incidentally detected 1.2 cm right middle lobe lateral segment nodule, mildly FDG-avid (SUV 2.1), undergoing robotic biopsy for tissue diagnosis. PREOPERATIVE DIAGNOSIS: Right middle lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same, low to intermediate suspicion lesion. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628). After induction of general anesthesia and ETT placement, a CT-based plan was loaded and complete automatic registration performed. The Ion catheter was advanced to the RML lateral segment; radial EBUS demonstrated an adjacent 12 mm lesion with intact surrounding lung and no major vessel. Augmented fluoroscopy was used to refine catheter position and confirm tool-in-lesion. Five forceps biopsies were obtained with minimal bleeding and good specimen volume. No brushing or BAL was performed. Final survey showed no endobronchial abnormality beyond the biopsy site and no active hemorrhage. The patient tolerated the procedure well and was discharged after routine observation.",
     "cpt_codes": [
       31627,
       31654,
@@ -329,17 +317,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB004",
-    "note_text": "PATIENT: Case 04, 67-year-old male. MRN: <MRN>. INDICATION FOR OPERATION: 67-year-old ex-smoker with 9 mm apicoposterior left upper lobe nodule (SUV 2.8) and mildly enlarged mediastinal nodes, referred for robotic biopsy plus transbronchial needle aspiration. PREOPERATIVE DIAGNOSIS: Left upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same; associated peribronchial soft tissue. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial needle aspiration (CPT 31629). After general anesthesia and ETT placement, the CT-based plan was loaded and complete automatic registration achieved. The robotic catheter was advanced to the apicoposterior LUL; radial EBUS showed a small concentric 9 mm lesion. Forceps biopsies were taken, followed by TBNA passes into peribronchial tissue along the same trajectory. No CBCT was used due to small size and stable alignment. Mild oozing occurred and resolved with iced saline; no endobronchial obstruction was seen. The patient tolerated the procedure without immediate complications.",
+    "note_text": "PATIENT: Case 04, 67-year-old male. MRN: RAB-0004. INDICATION FOR OPERATION: 67-year-old ex-smoker with 9 mm apicoposterior left upper lobe nodule (SUV 2.8) and mildly enlarged mediastinal nodes, referred for robotic biopsy plus transbronchial needle aspiration. PREOPERATIVE DIAGNOSIS: Left upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same; associated peribronchial soft tissue. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial needle aspiration (CPT 31629). After general anesthesia and ETT placement, the CT-based plan was loaded and complete automatic registration achieved. The robotic catheter was advanced to the apicoposterior LUL; radial EBUS showed a small concentric 9 mm lesion. Forceps biopsies were taken, followed by TBNA passes into peribronchial tissue along the same trajectory. No CBCT was used due to small size and stable alignment. Mild oozing occurred and resolved with iced saline; no endobronchial obstruction was seen. The patient tolerated the procedure without immediate complications.",
     "cpt_codes": [
       31629,
       31627,
@@ -391,7 +373,7 @@
       "bronchus_sign_present": true,
       "follow_up_plan": [
         "Review combined forceps and TBNA pathology",
-        "If benign, consider repeat CT at 6–12 months",
+        "If benign, consider repeat CT at 6\u201312 months",
         "If malignant, incorporate into staging and treatment planning"
       ],
       "providers": {
@@ -438,17 +420,11 @@
         "Dropped 31628 (TBLB) as bundled/mutually exclusive with 31629 (TBNA) at same site",
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB005",
-    "note_text": "PATIENT: Case 05, 71-year-old male. MRN: <MRN>. INDICATION FOR OPERATION: 71-year-old man with 2.5 cm superior segment right lower lobe nodule in the setting of fibrotic interstitial lung disease, undergoing robotic-assisted cryobiopsy to establish diagnosis and evaluate for malignancy. PREOPERATIVE DIAGNOSIS: Right lower lobe pulmonary nodule in ILD. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial cryobiopsy (CPT 31632), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, CT-based plan was loaded and automatic complete registration achieved. The Ion catheter was advanced to the RLL superior segment; radial EBUS revealed a heterogeneous 25 mm lesion without major vessels. An endobronchial blocker was positioned proximally. Two cryobiopsy samples were obtained using a 1.7 mm cryoprobe through the extended working channel with brief freeze times, followed by one cytology brushing. There was moderate but self-limited bleeding controlled by balloon tamponade and iced saline. No radiographic evidence of pneumothorax was seen. The patient remained stable and was admitted overnight for observation.",
+    "note_text": "PATIENT: Case 05, 71-year-old male. MRN: RAB-0005. INDICATION FOR OPERATION: 71-year-old man with 2.5 cm superior segment right lower lobe nodule in the setting of fibrotic interstitial lung disease, undergoing robotic-assisted cryobiopsy to establish diagnosis and evaluate for malignancy. PREOPERATIVE DIAGNOSIS: Right lower lobe pulmonary nodule in ILD. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial cryobiopsy (CPT 31632), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, CT-based plan was loaded and automatic complete registration achieved. The Ion catheter was advanced to the RLL superior segment; radial EBUS revealed a heterogeneous 25 mm lesion without major vessels. An endobronchial blocker was positioned proximally. Two cryobiopsy samples were obtained using a 1.7 mm cryoprobe through the extended working channel with brief freeze times, followed by one cytology brushing. There was moderate but self-limited bleeding controlled by balloon tamponade and iced saline. No radiographic evidence of pneumothorax was seen. The patient remained stable and was admitted overnight for observation.",
     "cpt_codes": [
       31628,
       31623,
@@ -554,17 +530,11 @@
         "Corrected 31632 (add-on) to 31628 (primary) for single lobe cryobiopsy",
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB006",
-    "note_text": "PATIENT: Case 06, 64-year-old female. MRN: <MRN>. INDICATION FOR OPERATION: 64-year-old woman with solitary 1.5 cm basilar segment left lower lobe nodule, PET SUV 4.0, selected for partial Ion registration to optimize efficiency. PREOPERATIVE DIAGNOSIS: Left lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system with partial registration strategy (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). After general anesthesia and ETT placement, partial registration limited to the left-sided tracheobronchial tree was performed with automatic methods, yielding low fiducial error. The catheter was advanced along the planned pathway to the basilar LLL; radial EBUS showed an eccentric 15 mm lesion near the pleura. Augmented fluoroscopy was used for tool-in-lesion confirmation. Four forceps biopsies and one brushing were obtained with minimal bleeding. There were no immediate complications and the patient recovered uneventfully in the PACU.",
+    "note_text": "PATIENT: Case 06, 64-year-old female. MRN: RAB-0006. INDICATION FOR OPERATION: 64-year-old woman with solitary 1.5 cm basilar segment left lower lobe nodule, PET SUV 4.0, selected for partial Ion registration to optimize efficiency. PREOPERATIVE DIAGNOSIS: Left lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system with partial registration strategy (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). After general anesthesia and ETT placement, partial registration limited to the left-sided tracheobronchial tree was performed with automatic methods, yielding low fiducial error. The catheter was advanced along the planned pathway to the basilar LLL; radial EBUS showed an eccentric 15 mm lesion near the pleura. Augmented fluoroscopy was used for tool-in-lesion confirmation. Four forceps biopsies and one brushing were obtained with minimal bleeding. There were no immediate complications and the patient recovered uneventfully in the PACU.",
     "cpt_codes": [
       31627,
       31654,
@@ -619,7 +589,7 @@
       "follow_up_plan": [
         "Review pathology and molecular results",
         "If malignant, refer to thoracic surgery and medical oncology",
-        "If benign, CT surveillance at 6–12 months"
+        "If benign, CT surveillance at 6\u201312 months"
       ],
       "providers": {
         "attending_name": "Dr. Robert King",
@@ -669,17 +639,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB007",
-    "note_text": "PATIENT: Case 07, 58-year-old male. MRN: <MRN>. INDICATION FOR OPERATION: 58-year-old man with 1.9 cm apical segment right upper lobe nodule; CT suggests bronchus sign and minimal motion artifact, undergoing Ion robotic biopsy. PREOPERATIVE DIAGNOSIS: Right upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Automatic registration was performed but registration drift was noted mid-case, likely due to atelectasis and PEEP changes. Re-registration with additional tertiary landmarks was performed with improved alignment. The catheter was advanced to the RUL apical segment; radial EBUS demonstrated a concentric 19 mm lesion. CBCT confirmed catheter tip within the lesion. Multiple forceps biopsies and brushings were obtained, with mild self-limited bleeding. Final inspection showed no active bleeding and widely patent airways. The patient tolerated the procedure well and was discharged home the same day.",
+    "note_text": "PATIENT: Case 07, 58-year-old male. MRN: RAB-0007. INDICATION FOR OPERATION: 58-year-old man with 1.9 cm apical segment right upper lobe nodule; CT suggests bronchus sign and minimal motion artifact, undergoing Ion robotic biopsy. PREOPERATIVE DIAGNOSIS: Right upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Automatic registration was performed but registration drift was noted mid-case, likely due to atelectasis and PEEP changes. Re-registration with additional tertiary landmarks was performed with improved alignment. The catheter was advanced to the RUL apical segment; radial EBUS demonstrated a concentric 19 mm lesion. CBCT confirmed catheter tip within the lesion. Multiple forceps biopsies and brushings were obtained, with mild self-limited bleeding. Final inspection showed no active bleeding and widely patent airways. The patient tolerated the procedure well and was discharged home the same day.",
     "cpt_codes": [
       31627,
       31654,
@@ -784,17 +748,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB008",
-    "note_text": "PATIENT: Case 08, 63-year-old male. MRN: <MRN>. INDICATION FOR OPERATION: 63-year-old former smoker with a 1.4 cm basilar right lower lobe nodule (SUV 3.0) referred for robotic biopsy using the Monarch platform. PREOPERATIVE DIAGNOSIS: Right lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, a CT-based navigation plan was loaded and airway registration completed. The robotic catheter and sheath were advanced to the basilar RLL under navigation guidance. Radial EBUS demonstrated a concentric 14 mm lesion with no large vessel signal. CBCT confirmed appropriate catheter position within the nodule. Five forceps biopsies and one brushing were obtained through the working channel. Hemostasis was confirmed endoscopically and by stable ventilatory parameters. The patient tolerated the procedure well without immediate complications.",
+    "note_text": "PATIENT: Case 08, 63-year-old male. MRN: RAB-0008. INDICATION FOR OPERATION: 63-year-old former smoker with a 1.4 cm basilar right lower lobe nodule (SUV 3.0) referred for robotic biopsy using the Monarch platform. PREOPERATIVE DIAGNOSIS: Right lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, a CT-based navigation plan was loaded and airway registration completed. The robotic catheter and sheath were advanced to the basilar RLL under navigation guidance. Radial EBUS demonstrated a concentric 14 mm lesion with no large vessel signal. CBCT confirmed appropriate catheter position within the nodule. Five forceps biopsies and one brushing were obtained through the working channel. Hemostasis was confirmed endoscopically and by stable ventilatory parameters. The patient tolerated the procedure well without immediate complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -849,7 +807,7 @@
       "follow_up_plan": [
         "Review pathology and molecular markers",
         "If malignant, stage and present at tumor board",
-        "If benign, surveillance CT at 6–12 months"
+        "If benign, surveillance CT at 6\u201312 months"
       ],
       "providers": {
         "attending_name": "Dr. Gabriel Flores",
@@ -899,17 +857,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB009",
-    "note_text": "PATIENT: Case 09, 52-year-old female. MRN: <MRN>. INDICATION FOR OPERATION: 52-year-old never smoker with a 1.0 cm lingular pulmonary nodule, noncalcified and mildly FDG-avid, referred for Monarch robotic biopsy. PREOPERATIVE DIAGNOSIS: Lingular pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628). With the patient under general anesthesia and ETT, CT-based plan was loaded and airway registration completed. The robotic catheter and sheath were advanced along the planned path to the lingular segment. Radial EBUS demonstrated an adjacent 10 mm lesion immediately subpleural. Augmented fluoroscopy without CBCT was used to refine position, confirming tool-in-lesion. Four forceps biopsies were obtained with minimal bleeding. No brushing or BAL was performed. The patient tolerated the procedure well and was discharged after routine recovery.",
+    "note_text": "PATIENT: Case 09, 52-year-old female. MRN: RAB-0009. INDICATION FOR OPERATION: 52-year-old never smoker with a 1.0 cm lingular pulmonary nodule, noncalcified and mildly FDG-avid, referred for Monarch robotic biopsy. PREOPERATIVE DIAGNOSIS: Lingular pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628). With the patient under general anesthesia and ETT, CT-based plan was loaded and airway registration completed. The robotic catheter and sheath were advanced along the planned path to the lingular segment. Radial EBUS demonstrated an adjacent 10 mm lesion immediately subpleural. Augmented fluoroscopy without CBCT was used to refine position, confirming tool-in-lesion. Four forceps biopsies were obtained with minimal bleeding. No brushing or BAL was performed. The patient tolerated the procedure well and was discharged after routine recovery.",
     "cpt_codes": [
       31627,
       31654,
@@ -1006,17 +958,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB010",
-    "note_text": "PATIENT: Case 10, 69-year-old male. MRN: <MRN>. INDICATION FOR OPERATION: 69-year-old ex-smoker with 3.0 cm central right upper lobe mass causing mild cough and weight loss, undergoing Monarch robotic bronchoscopy with BAL and biopsy. PREOPERATIVE DIAGNOSIS: Right upper lobe mass. POSTOPERATIVE DIAGNOSIS: Same, highly suspicious for malignancy. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), bronchoalveolar lavage (CPT 31624). Following general anesthesia and airway stabilization, CT-based plan was loaded and registration completed. The robotic catheter was directed to the central RUL target; radial EBUS showed an eccentric mass signal. Forceps biopsies were obtained followed by BAL in the involved segment. CBCT was used to confirm tool position along the dominant portion of the lesion. Bleeding was minimal and controlled with suction. The patient tolerated the procedure without immediate complications.",
+    "note_text": "PATIENT: Case 10, 69-year-old male. MRN: RAB-0010. INDICATION FOR OPERATION: 69-year-old ex-smoker with 3.0 cm central right upper lobe mass causing mild cough and weight loss, undergoing Monarch robotic bronchoscopy with BAL and biopsy. PREOPERATIVE DIAGNOSIS: Right upper lobe mass. POSTOPERATIVE DIAGNOSIS: Same, highly suspicious for malignancy. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), bronchoalveolar lavage (CPT 31624). Following general anesthesia and airway stabilization, CT-based plan was loaded and registration completed. The robotic catheter was directed to the central RUL target; radial EBUS showed an eccentric mass signal. Forceps biopsies were obtained followed by BAL in the involved segment. CBCT was used to confirm tool position along the dominant portion of the lesion. Bleeding was minimal and controlled with suction. The patient tolerated the procedure without immediate complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -1121,17 +1067,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB011",
-    "note_text": "PATIENT: Case 11, 61-year-old female. MRN: <MRN>. INDICATION FOR OPERATION: 61-year-old woman with two closely clustered nodules in the lateral basal left lower lobe measuring 1.1 and 1.4 cm, undergoing Ion robotic biopsy with partial registration. PREOPERATIVE DIAGNOSIS: Multiple left lower lobe pulmonary nodules. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). After general anesthesia and ETT, a partial ipsilateral registration (left tree) was performed. Navigation was directed to the dominant 1.4 cm nodule; radial EBUS showed a concentric lesion. Augmented fluoroscopy confirmed tool-in-lesion. Multiple forceps biopsies and a single brushing were obtained; the smaller adjacent nodule was sampled along the same trajectory with additional forceps passes. Bleeding was minimal and there were no complications.",
+    "note_text": "PATIENT: Case 11, 61-year-old female. MRN: RAB-0011. INDICATION FOR OPERATION: 61-year-old woman with two closely clustered nodules in the lateral basal left lower lobe measuring 1.1 and 1.4 cm, undergoing Ion robotic biopsy with partial registration. PREOPERATIVE DIAGNOSIS: Multiple left lower lobe pulmonary nodules. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). After general anesthesia and ETT, a partial ipsilateral registration (left tree) was performed. Navigation was directed to the dominant 1.4 cm nodule; radial EBUS showed a concentric lesion. Augmented fluoroscopy confirmed tool-in-lesion. Multiple forceps biopsies and a single brushing were obtained; the smaller adjacent nodule was sampled along the same trajectory with additional forceps passes. Bleeding was minimal and there were no complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -1236,17 +1176,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB012",
-    "note_text": "PATIENT: Case 12, 56-year-old male. MRN: <MRN>. INDICATION FOR OPERATION: 56-year-old man with a 1.3 cm posterior segment right lower lobe ground-glass predominant nodule, PET-negative, undergoing Ion robotic biopsy to rule out early adenocarcinoma. PREOPERATIVE DIAGNOSIS: Right lower lobe ground-glass nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628). After general anesthesia and ETT placement, CT-based navigation was planned and automatic registration was successful. The catheter was advanced to the posterior RLL; radial EBUS showed a faint adjacent halo consistent with ground-glass density. Augmented fluoroscopy and respiratory-gated breath-hold were used to optimize alignment. Four forceps biopsies were obtained with minimal bleeding. No brushing or BAL performed. The patient tolerated the procedure well with no immediate complications.",
+    "note_text": "PATIENT: Case 12, 56-year-old male. MRN: RAB-0012. INDICATION FOR OPERATION: 56-year-old man with a 1.3 cm posterior segment right lower lobe ground-glass predominant nodule, PET-negative, undergoing Ion robotic biopsy to rule out early adenocarcinoma. PREOPERATIVE DIAGNOSIS: Right lower lobe ground-glass nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628). After general anesthesia and ETT placement, CT-based navigation was planned and automatic registration was successful. The catheter was advanced to the posterior RLL; radial EBUS showed a faint adjacent halo consistent with ground-glass density. Augmented fluoroscopy and respiratory-gated breath-hold were used to optimize alignment. Four forceps biopsies were obtained with minimal bleeding. No brushing or BAL performed. The patient tolerated the procedure well with no immediate complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -1343,17 +1277,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB013",
-    "note_text": "PATIENT: Case 13, 73-year-old female. MRN: <MRN>. INDICATION FOR OPERATION: 73-year-old woman with COPD and 2.0 cm right middle lobe medial segment nodule, PET SUV 5.5, undergoing Monarch robotic biopsy. PREOPERATIVE DIAGNOSIS: Right middle lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, CT-based plan was loaded and airway registration completed. The robotic catheter was advanced to the medial RML; radial EBUS revealed an eccentric 20 mm lesion. CBCT demonstrated catheter tip across the most solid portion of the nodule. Multiple forceps biopsies and one brushing were obtained without significant bleeding. The patient was extubated and returned to baseline oxygen requirement.",
+    "note_text": "PATIENT: Case 13, 73-year-old female. MRN: RAB-0013. INDICATION FOR OPERATION: 73-year-old woman with COPD and 2.0 cm right middle lobe medial segment nodule, PET SUV 5.5, undergoing Monarch robotic biopsy. PREOPERATIVE DIAGNOSIS: Right middle lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, CT-based plan was loaded and airway registration completed. The robotic catheter was advanced to the medial RML; radial EBUS revealed an eccentric 20 mm lesion. CBCT demonstrated catheter tip across the most solid portion of the nodule. Multiple forceps biopsies and one brushing were obtained without significant bleeding. The patient was extubated and returned to baseline oxygen requirement.",
     "cpt_codes": [
       31627,
       31654,
@@ -1458,17 +1386,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB014",
-    "note_text": "PATIENT: Case 14, 65-year-old male. MRN: <MRN>. INDICATION FOR OPERATION: 65-year-old man with 1.6 cm left upper lobe anterior segment nodule, PET SUV 3.9, referred for Ion robotic biopsy. PREOPERATIVE DIAGNOSIS: Left upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). After induction of general anesthesia and ETT placement, CT-based navigation plan was loaded and complete automatic registration achieved. The catheter was advanced to the anterior LUL; radial EBUS showed a concentric 16 mm lesion. CBCT confirmed tool-in-lesion without pleural transgression. Forceps biopsies and a single brushing were obtained, with minimal oozing that resolved spontaneously. The procedure was completed without complications.",
+    "note_text": "PATIENT: Case 14, 65-year-old male. MRN: RAB-0014. INDICATION FOR OPERATION: 65-year-old man with 1.6 cm left upper lobe anterior segment nodule, PET SUV 3.9, referred for Ion robotic biopsy. PREOPERATIVE DIAGNOSIS: Left upper lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Intuitive Ion system (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). After induction of general anesthesia and ETT placement, CT-based navigation plan was loaded and complete automatic registration achieved. The catheter was advanced to the anterior LUL; radial EBUS showed a concentric 16 mm lesion. CBCT confirmed tool-in-lesion without pleural transgression. Forceps biopsies and a single brushing were obtained, with minimal oozing that resolved spontaneously. The procedure was completed without complications.",
     "cpt_codes": [
       31627,
       31654,
@@ -1573,17 +1495,11 @@
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
-      ]
     }
   },
   {
     "note_id": "RAB015",
-    "note_text": "PATIENT: Case 15, 60-year-old female. MRN: <MRN>. INDICATION FOR OPERATION: 60-year-old woman with 1.7 cm left lower lobe superior segment nodule and mild hilar adenopathy, undergoing Monarch robotic bronchoscopy for parenchymal sampling. PREOPERATIVE DIAGNOSIS: Left lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, CT-based plan was loaded and registration completed. The robotic catheter and sheath were advanced to the LLL superior segment; radial EBUS showed an eccentric 17 mm lesion. Augmented fluoroscopy was used to refine alignment, and CBCT was not required. Several forceps biopsies and a brushing were obtained; bleeding was minimal. The patient remained hemodynamically stable and was discharged after observation.",
+    "note_text": "PATIENT: Case 15, 60-year-old female. MRN: RAB-0015. INDICATION FOR OPERATION: 60-year-old woman with 1.7 cm left lower lobe superior segment nodule and mild hilar adenopathy, undergoing Monarch robotic bronchoscopy for parenchymal sampling. PREOPERATIVE DIAGNOSIS: Left lower lobe pulmonary nodule. POSTOPERATIVE DIAGNOSIS: Same. PROCEDURE: Robotic navigational bronchoscopy using Monarch platform (CPT 31627), radial EBUS (CPT 31654), transbronchial lung biopsy (CPT 31628), transbronchial brushing (CPT 31623). Under general anesthesia with ETT, CT-based plan was loaded and registration completed. The robotic catheter and sheath were advanced to the LLL superior segment; radial EBUS showed an eccentric 17 mm lesion. Augmented fluoroscopy was used to refine alignment, and CBCT was not required. Several forceps biopsies and a brushing were obtained; bleeding was minimal. The patient remained hemodynamically stable and was discharged after observation.",
     "cpt_codes": [
       31627,
       31654,
@@ -1687,12 +1603,6 @@
       "patch_date": "2025-12-07T06:33:00",
       "changes": [
         "Populated billing object with 2025 Facility RVUs"
-      ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "MRN"
       ]
     }
   }

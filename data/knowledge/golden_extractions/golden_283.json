@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY – MECHANICAL DEBULKING OF TRACHEAL GRANULATION\n\nPatient: Michael Brown, 70-year-old male\nMRN: <MRN>\nDate: <DATE_TIME>\nLocation: Riverside Community Hospital – Bronchoscopy Suite\nAttending: Dr. Nina Patel\n\nIndication:\nChronic cough and wheeze from tracheal granulation tissue around an old tracheostomy site, now decannulated.\n\nProcedure:\nFlexible bronchoscopy with mechanical debulking of tracheal granulation tissue (CPT 31640).\n\nAnesthesia / Sedation:\nModerate sedation (midazolam, fentanyl) and topical lidocaine. Native airway. ASA class II.\n\nFindings:\nIrregular granulation tissue circumferentially at the mid-trachea where prior tracheostomy had been, narrowing the lumen to about 60%.\n\nInterventions:\nMultiple passes of forceps debulking were performed to remove the granulation tissue in piecemeal fashion. Snare resection was used for a pedunculated portion. The procedure consisted solely of mechanical excision and debulking; no ablation or thermal therapy was delivered.\n\nHemostasis:\nMinor oozing controlled with cold saline.\n\nEBL:\n5–10 mL.\n\nComplications:\nNone.\n\nDisposition:\nObserved in recovery and discharged home with inhaled corticosteroid and PPI therapy. Planned surveillance bronchoscopy in 3 months.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY \u2013 MECHANICAL DEBULKING OF TRACHEAL GRANULATION\n\nPatient: Michael Brown, 70-year-old male\nMRN: S31640-011\nDate: 2024-06-30\nLocation: Riverside Community Hospital \u2013 Bronchoscopy Suite\nAttending: Dr. Nina Patel\n\nIndication:\nChronic cough and wheeze from tracheal granulation tissue around an old tracheostomy site, now decannulated.\n\nProcedure:\nFlexible bronchoscopy with mechanical debulking of tracheal granulation tissue (CPT 31640).\n\nAnesthesia / Sedation:\nModerate sedation (midazolam, fentanyl) and topical lidocaine. Native airway. ASA class II.\n\nFindings:\nIrregular granulation tissue circumferentially at the mid-trachea where prior tracheostomy had been, narrowing the lumen to about 60%.\n\nInterventions:\nMultiple passes of forceps debulking were performed to remove the granulation tissue in piecemeal fashion. Snare resection was used for a pedunculated portion. The procedure consisted solely of mechanical excision and debulking; no ablation or thermal therapy was delivered.\n\nHemostasis:\nMinor oozing controlled with cold saline.\n\nEBL:\n5\u201310 mL.\n\nComplications:\nNone.\n\nDisposition:\nObserved in recovery and discharged home with inhaled corticosteroid and PPI therapy. Planned surveillance bronchoscopy in 3 months.",
     "cpt_codes": [
       31640
     ],
@@ -107,17 +107,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY OPERATIVE REPORT – MECHANICAL DEBULKING\n\nPatient: Hannah Lee, 47-year-old female\nMRN: <MRN>\nDate: <DATE_TIME>\nFacility: Mountain View Medical Center – OR\nAttending: Dr. Victor Chang\n\nIndication:\nMalignant obstruction of the bronchus intermedius from small cell lung cancer with collapse of right lower lobe.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of bronchus intermedius tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia with rigid bronchoscope. ASA class III.\n\nFindings:\nBulky endobronchial tumor in the bronchus intermedius with 90% obstruction; distal RLL bronchus occluded with mucus.\n\nInterventions:\nRigid coring performed with the rigid bronchoscope to mechanically debulk the tumor. Forceps debulking removed remaining tumor fragments. The lumen was mechanically reopened to approximately 50–60% patency. No balloon dilation or thermal ablation was used.\n\nHemostasis:\nControlled with cold saline irrigation and topical epinephrine.\n\nEBL:\n40 mL.\n\nComplications:\nNone.\n\nDisposition:\nRemained intubated for postoperative ventilatory support in ICU.",
+    "note_text": "BRONCHOSCOPY OPERATIVE REPORT \u2013 MECHANICAL DEBULKING\n\nPatient: Hannah Lee, 47-year-old female\nMRN: S31640-012\nDate: 2024-07-14\nFacility: Mountain View Medical Center \u2013 OR\nAttending: Dr. Victor Chang\n\nIndication:\nMalignant obstruction of the bronchus intermedius from small cell lung cancer with collapse of right lower lobe.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of bronchus intermedius tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia with rigid bronchoscope. ASA class III.\n\nFindings:\nBulky endobronchial tumor in the bronchus intermedius with 90% obstruction; distal RLL bronchus occluded with mucus.\n\nInterventions:\nRigid coring performed with the rigid bronchoscope to mechanically debulk the tumor. Forceps debulking removed remaining tumor fragments. The lumen was mechanically reopened to approximately 50\u201360% patency. No balloon dilation or thermal ablation was used.\n\nHemostasis:\nControlled with cold saline irrigation and topical epinephrine.\n\nEBL:\n40 mL.\n\nComplications:\nNone.\n\nDisposition:\nRemained intubated for postoperative ventilatory support in ICU.",
     "cpt_codes": [
       31640
     ],
@@ -224,17 +217,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY – RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING\n\nPatient: Christopher Adams, 62-year-old male\nMRN: <MRN>\nDate: <DATE_TIME>\nSite: Harborview Cancer Institute – OR\nAttending: Dr. Elena Rossi\n\nIndication:\nMixed obstructive lesion at the distal trachea and carina from squamous cell lung cancer.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of distal tracheal and carinal tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope; ASA class III.\n\nFindings:\nTumor occupying the distal trachea and encroaching on the carina, reducing lumen by ~75% and preferentially obstructing the right mainstem.\n\nInterventions:\nMechanical debulking performed using rigid coring with the bronchoscope and forceps debulking of tumor at the distal trachea and carina. Snare resection was used for a polypoid component. No ablation (RFA, PDT, or cryotherapy) was used. Final airway patency improved with visible mainstem orifices and free airflow.\n\nHemostasis:\nMild bleeding controlled with cold saline.\n\nEBL:\n25 mL.\n\nComplications:\nNone.\n\nDisposition:\nExtubated, monitored in PACU, then admitted to oncology floor overnight.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY \u2013 RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING\n\nPatient: Christopher Adams, 62-year-old male\nMRN: S31640-013\nDate: 2024-07-29\nSite: Harborview Cancer Institute \u2013 OR\nAttending: Dr. Elena Rossi\n\nIndication:\nMixed obstructive lesion at the distal trachea and carina from squamous cell lung cancer.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of distal tracheal and carinal tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope; ASA class III.\n\nFindings:\nTumor occupying the distal trachea and encroaching on the carina, reducing lumen by ~75% and preferentially obstructing the right mainstem.\n\nInterventions:\nMechanical debulking performed using rigid coring with the bronchoscope and forceps debulking of tumor at the distal trachea and carina. Snare resection was used for a polypoid component. No ablation (RFA, PDT, or cryotherapy) was used. Final airway patency improved with visible mainstem orifices and free airflow.\n\nHemostasis:\nMild bleeding controlled with cold saline.\n\nEBL:\n25 mL.\n\nComplications:\nNone.\n\nDisposition:\nExtubated, monitored in PACU, then admitted to oncology floor overnight.",
     "cpt_codes": [
       31640
     ],
@@ -341,17 +327,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY NOTE – MECHANICAL DEBULKING OF RUL BRONCHUS TUMOR\n\nPatient: Aisha Khan, 59-year-old female\nMRN: <MRN>\nDate: <DATE_TIME>\nLocation: Cityside Medical Center – Bronchoscopy Suite\nAttending: Dr. Jason Miller\n\nIndication:\nPersistent collapse of right upper lobe due to endobronchial tumor at RUL bronchus.\n\nProcedure:\nFlexible bronchoscopy with mechanical debulking of RUL tumor (CPT 31640).\n\nAnesthesia / Sedation:\nModerate sedation (propofol, fentanyl) via LMA. ASA class III.\n\nFindings:\nPolypoid tumor at the origin of the RUL bronchus causing 80% obstruction. No other central lesions.\n\nInterventions:\nMechanical debulking performed using forceps and snare resection of the tumor. Tumor removed in piecemeal fashion until the RUL bronchus was widely patent. No thermal techniques (APC, laser, cryotherapy, PDT, or RFA) were used.\n\nHemostasis:\nMinimal; controlled with cold saline.\n\nEBL:\n10 mL.\n\nComplications:\nNone.\n\nDisposition:\nObserved post-procedure and discharged home; CT chest ordered in 6 weeks to evaluate re-expansion.",
+    "note_text": "BRONCHOSCOPY NOTE \u2013 MECHANICAL DEBULKING OF RUL BRONCHUS TUMOR\n\nPatient: Aisha Khan, 59-year-old female\nMRN: S31640-014\nDate: 2024-08-09\nLocation: Cityside Medical Center \u2013 Bronchoscopy Suite\nAttending: Dr. Jason Miller\n\nIndication:\nPersistent collapse of right upper lobe due to endobronchial tumor at RUL bronchus.\n\nProcedure:\nFlexible bronchoscopy with mechanical debulking of RUL tumor (CPT 31640).\n\nAnesthesia / Sedation:\nModerate sedation (propofol, fentanyl) via LMA. ASA class III.\n\nFindings:\nPolypoid tumor at the origin of the RUL bronchus causing 80% obstruction. No other central lesions.\n\nInterventions:\nMechanical debulking performed using forceps and snare resection of the tumor. Tumor removed in piecemeal fashion until the RUL bronchus was widely patent. No thermal techniques (APC, laser, cryotherapy, PDT, or RFA) were used.\n\nHemostasis:\nMinimal; controlled with cold saline.\n\nEBL:\n10 mL.\n\nComplications:\nNone.\n\nDisposition:\nObserved post-procedure and discharged home; CT chest ordered in 6 weeks to evaluate re-expansion.",
     "cpt_codes": [
       31640
     ],
@@ -458,17 +437,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE NOTE\n\nPatient: Robert Wilson, 73-year-old male\nMRN: <MRN>\nDate: <DATE_TIME>\nLocation: Evergreen Thoracic Center – OR\nAttending: Dr. Karen Li\n\nIndication:\nSevere dyspnea and wheezing from carinal and right mainstem tumor due to non–small cell lung cancer.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of carinal/right mainstem tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope. ASA class III.\n\nFindings:\nTumor occupying the right side of the carina and proximal right mainstem with 80–85% obstruction, clot and mucus distally.\n\nInterventions:\nMechanical debulking with rigid coring and forceps was performed at the carina and right mainstem. Microdebrider used to smooth the tumor base. Debulking was entirely mechanical without thermal ablation. Lumen patency improved to ~50%.\n\nHemostasis:\nModerate oozing controlled with cold saline and topical epinephrine.\n\nEBL:\n45 mL.\n\nComplications:\nTransient desaturation to 90%, resolved with recruitment.\n\nDisposition:\nAdmitted to ICU intubated for close monitoring given high tumor burden.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE NOTE\n\nPatient: Robert Wilson, 73-year-old male\nMRN: S31640-015\nDate: 2024-08-26\nLocation: Evergreen Thoracic Center \u2013 OR\nAttending: Dr. Karen Li\n\nIndication:\nSevere dyspnea and wheezing from carinal and right mainstem tumor due to non\u2013small cell lung cancer.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of carinal/right mainstem tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope. ASA class III.\n\nFindings:\nTumor occupying the right side of the carina and proximal right mainstem with 80\u201385% obstruction, clot and mucus distally.\n\nInterventions:\nMechanical debulking with rigid coring and forceps was performed at the carina and right mainstem. Microdebrider used to smooth the tumor base. Debulking was entirely mechanical without thermal ablation. Lumen patency improved to ~50%.\n\nHemostasis:\nModerate oozing controlled with cold saline and topical epinephrine.\n\nEBL:\n45 mL.\n\nComplications:\nTransient desaturation to 90%, resolved with recruitment.\n\nDisposition:\nAdmitted to ICU intubated for close monitoring given high tumor burden.",
     "cpt_codes": [
       31640
     ],
@@ -478,7 +450,7 @@
       "patient_age": 73,
       "gender": "Male",
       "asa_class": 3,
-      "primary_indication": "Carinal and right mainstem obstruction from non–small cell lung carcinoma.",
+      "primary_indication": "Carinal and right mainstem obstruction from non\u2013small cell lung carcinoma.",
       "indication_category": "Airway Obstruction",
       "radiographic_findings": "Central mass at carina with right lung volume loss.",
       "lesion_size_mm": 32.0,
@@ -497,7 +469,7 @@
       "bronch_guidance": "Rigid bronchoscopy",
       "ebl_ml": 45,
       "hypoxia_respiratory_failure": true,
-      "final_diagnosis_prelim": "Centrally obstructing non–small cell lung carcinoma involving the carina and right mainstem.",
+      "final_diagnosis_prelim": "Centrally obstructing non\u2013small cell lung carcinoma involving the carina and right mainstem.",
       "cpt_codes": [
         31640
       ],
@@ -575,17 +547,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE – MECHANICAL DEBULKING OF LLL BRONCHUS MASS\n\nPatient: Emily Garcia, 52-year-old female\nMRN: <MRN>\nDate: <DATE_TIME>\nFacility: Westside Pulmonary Institute – Bronchoscopy Suite\nAttending: Dr. Sean O’Neill\n\nIndication:\nRecurrent post-obstructive pneumonia of the left lower lobe due to endobronchial mass at LLL bronchus.\n\nProcedure:\nFlexible bronchoscopy with mechanical debulking of LLL endobronchial tumor (CPT 31640).\n\nAnesthesia / Sedation:\nModerate sedation with propofol; LMA. ASA class II.\n\nFindings:\nExophytic lesion at the origin of the LLL bronchus with 75% obstruction and purulent secretions distally.\n\nInterventions:\nAfter suctioning secretions and lavage, forceps debulking and snare resection were used to mechanically debulk and excise the tumor. No cryotherapy, PDT, RFA, or APC were used.\n\nHemostasis:\nMinimal; controlled with cold saline.\n\nEBL:\n10 mL.\n\nComplications:\nNone.\n\nDisposition:\nDischarged home from recovery with oral antibiotics and follow-up bronchoscopy in 3 months.",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE \u2013 MECHANICAL DEBULKING OF LLL BRONCHUS MASS\n\nPatient: Emily Garcia, 52-year-old female\nMRN: S31640-016\nDate: 2024-09-03\nFacility: Westside Pulmonary Institute \u2013 Bronchoscopy Suite\nAttending: Dr. Sean O\u2019Neill\n\nIndication:\nRecurrent post-obstructive pneumonia of the left lower lobe due to endobronchial mass at LLL bronchus.\n\nProcedure:\nFlexible bronchoscopy with mechanical debulking of LLL endobronchial tumor (CPT 31640).\n\nAnesthesia / Sedation:\nModerate sedation with propofol; LMA. ASA class II.\n\nFindings:\nExophytic lesion at the origin of the LLL bronchus with 75% obstruction and purulent secretions distally.\n\nInterventions:\nAfter suctioning secretions and lavage, forceps debulking and snare resection were used to mechanically debulk and excise the tumor. No cryotherapy, PDT, RFA, or APC were used.\n\nHemostasis:\nMinimal; controlled with cold saline.\n\nEBL:\n10 mL.\n\nComplications:\nNone.\n\nDisposition:\nDischarged home from recovery with oral antibiotics and follow-up bronchoscopy in 3 months.",
     "cpt_codes": [
       31640
     ],
@@ -619,7 +584,7 @@
         31640
       ],
       "providers": {
-        "attending_name": "Dr. Sean O’Neill",
+        "attending_name": "Dr. Sean O\u2019Neill",
         "fellow_name": null,
         "assistant_name": "Laura White, RN",
         "assistant_role": "Procedure nurse",
@@ -692,17 +657,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY – RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING\n\nPatient: Steven Park, 60-year-old male\nMRN: <MRN>\nDate: <DATE_TIME>\nHospital: Granite Peak Medical Center – OR\nAttending: Dr. Lina Torres\n\nIndication:\nCritical distal tracheal obstruction from bulky squamous cell carcinoma.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of distal tracheal tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia, rigid bronchoscope, ASA class IV.\n\nFindings:\nNearly occlusive exophytic tumor in the distal trachea just above the carina, leaving a pinpoint lumen with severe airflow limitation.\n\nInterventions:\nRigid coring performed repeatedly through the tumor. Tumor fragments were removed with forceps and suction. Microdebrider used to further debulk residual tumor and restore lumen diameter. Debulking was entirely mechanical with explicit tumor excision; no ablation used.\n\nHemostasis:\nModerate bleeding controlled with cold saline, topical epinephrine, and short tamponade with the rigid bronchoscope.\n\nEBL:\n70 mL.\n\nComplications:\nDesaturation into mid-80s during initial passes, improved with recruitment.\n\nDisposition:\nRemained intubated and admitted to ICU for ventilatory support and further oncologic management.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY \u2013 RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING\n\nPatient: Steven Park, 60-year-old male\nMRN: S31640-017\nDate: 2024-09-20\nHospital: Granite Peak Medical Center \u2013 OR\nAttending: Dr. Lina Torres\n\nIndication:\nCritical distal tracheal obstruction from bulky squamous cell carcinoma.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of distal tracheal tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia, rigid bronchoscope, ASA class IV.\n\nFindings:\nNearly occlusive exophytic tumor in the distal trachea just above the carina, leaving a pinpoint lumen with severe airflow limitation.\n\nInterventions:\nRigid coring performed repeatedly through the tumor. Tumor fragments were removed with forceps and suction. Microdebrider used to further debulk residual tumor and restore lumen diameter. Debulking was entirely mechanical with explicit tumor excision; no ablation used.\n\nHemostasis:\nModerate bleeding controlled with cold saline, topical epinephrine, and short tamponade with the rigid bronchoscope.\n\nEBL:\n70 mL.\n\nComplications:\nDesaturation into mid-80s during initial passes, improved with recruitment.\n\nDisposition:\nRemained intubated and admitted to ICU for ventilatory support and further oncologic management.",
     "cpt_codes": [
       31640
     ],
@@ -809,17 +767,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY NOTE – MECHANICAL DEBULKING OF BENIGN TRACHEAL STENOSIS\n\nPatient: Laura Perez, 44-year-old female\nMRN: <MRN>\nDate: <DATE_TIME>\nLocation: Southside Medical Pavilion – Bronchoscopy Suite\nAttending: Dr. Henry Wallace\n\nIndication:\nBenign post-intubation tracheal stenosis with exertional dyspnea.\n\nProcedure:\nFlexible bronchoscopy with mechanical debulking of granulation tissue and scar (CPT 31640).\n\nAnesthesia / Sedation:\nModerate sedation with midazolam and fentanyl, topical lidocaine. Native airway. ASA class II.\n\nFindings:\nShort-segment circumferential granulation and scar in mid-trachea narrowing lumen by ~65%.\n\nInterventions:\nMechanical debulking done with forceps to remove granulation tissue; snare resection of a fibrotic ridge. No balloon dilation, no ablation. Tracheal lumen improved to mild residual narrowing.\n\nHemostasis:\nMinimal oozing controlled with cold saline.\n\nEBL:\n5 mL.\n\nComplications:\nNone.\n\nDisposition:\nDischarged home after observation; plan for repeat bronchoscopy and possible balloon dilation in future if restenosis occurs.",
+    "note_text": "BRONCHOSCOPY NOTE \u2013 MECHANICAL DEBULKING OF BENIGN TRACHEAL STENOSIS\n\nPatient: Laura Perez, 44-year-old female\nMRN: S31640-018\nDate: 2024-10-08\nLocation: Southside Medical Pavilion \u2013 Bronchoscopy Suite\nAttending: Dr. Henry Wallace\n\nIndication:\nBenign post-intubation tracheal stenosis with exertional dyspnea.\n\nProcedure:\nFlexible bronchoscopy with mechanical debulking of granulation tissue and scar (CPT 31640).\n\nAnesthesia / Sedation:\nModerate sedation with midazolam and fentanyl, topical lidocaine. Native airway. ASA class II.\n\nFindings:\nShort-segment circumferential granulation and scar in mid-trachea narrowing lumen by ~65%.\n\nInterventions:\nMechanical debulking done with forceps to remove granulation tissue; snare resection of a fibrotic ridge. No balloon dilation, no ablation. Tracheal lumen improved to mild residual narrowing.\n\nHemostasis:\nMinimal oozing controlled with cold saline.\n\nEBL:\n5 mL.\n\nComplications:\nNone.\n\nDisposition:\nDischarged home after observation; plan for repeat bronchoscopy and possible balloon dilation in future if restenosis occurs.",
     "cpt_codes": [
       31640
     ],
@@ -926,17 +877,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "INTERVENTIONAL PULMONOLOGY – RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING\n\nPatient: Daniel Scott, 68-year-old male\nMRN: <MRN>\nDate: <DATE_TIME>\nHospital: Northern Plains Medical Center – OR\nAttending: Dr. Priya Mehta\n\nIndication:\nCentral obstruction of left mainstem from non–small cell lung cancer with uncontrolled wheeze and dyspnea.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of left mainstem tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope. ASA class III.\n\nFindings:\nFriable tumor filling ~85% of the left mainstem lumen with distal atelectasis.\n\nInterventions:\nRigid coring and forceps debulking were used to mechanically debulk and excise the obstructing tumor. No ablation or balloon dilation performed. Lumen improved to moderate residual narrowing with visible lobar orifices.\n\nHemostasis:\nControlled with cold saline and epinephrine.\n\nEBL:\n40 mL.\n\nComplications:\nNone.\n\nDisposition:\nExtubated and admitted to oncology floor.",
+    "note_text": "INTERVENTIONAL PULMONOLOGY \u2013 RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING\n\nPatient: Daniel Scott, 68-year-old male\nMRN: S31640-019\nDate: 2024-10-23\nHospital: Northern Plains Medical Center \u2013 OR\nAttending: Dr. Priya Mehta\n\nIndication:\nCentral obstruction of left mainstem from non\u2013small cell lung cancer with uncontrolled wheeze and dyspnea.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of left mainstem tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope. ASA class III.\n\nFindings:\nFriable tumor filling ~85% of the left mainstem lumen with distal atelectasis.\n\nInterventions:\nRigid coring and forceps debulking were used to mechanically debulk and excise the obstructing tumor. No ablation or balloon dilation performed. Lumen improved to moderate residual narrowing with visible lobar orifices.\n\nHemostasis:\nControlled with cold saline and epinephrine.\n\nEBL:\n40 mL.\n\nComplications:\nNone.\n\nDisposition:\nExtubated and admitted to oncology floor.",
     "cpt_codes": [
       31640
     ],
@@ -946,7 +890,7 @@
       "patient_age": 68,
       "gender": "Male",
       "asa_class": 3,
-      "primary_indication": "Left mainstem central obstruction from non–small cell lung carcinoma.",
+      "primary_indication": "Left mainstem central obstruction from non\u2013small cell lung carcinoma.",
       "indication_category": "Airway Obstruction",
       "radiographic_findings": "Left mainstem mass with left lung atelectasis.",
       "lesion_size_mm": 31.0,
@@ -965,7 +909,7 @@
       "bronch_guidance": "Rigid bronchoscopy",
       "ebl_ml": 40,
       "hypoxia_respiratory_failure": false,
-      "final_diagnosis_prelim": "Centrally obstructing non–small cell carcinoma of the left mainstem bronchus.",
+      "final_diagnosis_prelim": "Centrally obstructing non\u2013small cell carcinoma of the left mainstem bronchus.",
       "cpt_codes": [
         31640
       ],
@@ -1043,17 +987,10 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "BRONCHOSCOPY PROCEDURE NOTE – MECHANICAL DEBULKING OF BII MASS\n\nPatient: Isabel Ramos, 57-year-old female\nMRN: <MRN>\nDate: <DATE_TIME>\nLocation: Metro Lung Center – OR\nAttending: Dr. Colin Hayes\n\nIndication:\nObstruction of bronchus intermedius (BI) from endobronchial tumor with chronic cough and dyspnea.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of BI tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope; ASA class III.\n\nFindings:\nPolypoid mass in the bronchus intermedius with ~80% obstruction.\n\nInterventions:\nRigid coring and forceps debulking were used to mechanically debulk and excise the tumor. Tumor removed in piecemeal fashion until the lumen was ~60% patent. No thermal ablation or balloon used.\n\nHemostasis:\nMild; controlled with cold saline.\n\nEBL:\n15 mL.\n\nComplications:\nNone.\n\nDisposition:\nExtubated and discharged to floor for overnight observation.",
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE \u2013 MECHANICAL DEBULKING OF BII MASS\n\nPatient: Isabel Ramos, 57-year-old female\nMRN: S31640-020\nDate: 2024-11-04\nLocation: Metro Lung Center \u2013 OR\nAttending: Dr. Colin Hayes\n\nIndication:\nObstruction of bronchus intermedius (BI) from endobronchial tumor with chronic cough and dyspnea.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of BI tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope; ASA class III.\n\nFindings:\nPolypoid mass in the bronchus intermedius with ~80% obstruction.\n\nInterventions:\nRigid coring and forceps debulking were used to mechanically debulk and excise the tumor. Tumor removed in piecemeal fashion until the lumen was ~60% patent. No thermal ablation or balloon used.\n\nHemostasis:\nMild; controlled with cold saline.\n\nEBL:\n15 mL.\n\nComplications:\nNone.\n\nDisposition:\nExtubated and discharged to floor for overnight observation.",
     "cpt_codes": [
       31640
     ],
@@ -1160,13 +1097,6 @@
           ]
         }
       }
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   }
 ]

@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "PROCEDURE NOTE: INDWELLING PLEURAL CATHETER REMOVAL\n\nPatient: Eleanor Rigby (MRN: <MRN>)\nDate: <DATE_TIME>\nAttending: Dr. McKenzie\n\nIndication: Patient with history of malignant pleural effusion (breast cancer) and trapped lung who had a PleurX catheter placed 3 months ago. Drainage has decreased to <20cc per week for the last 3 weeks. Pleurodesis appears to have occurred spontaneously or fluid production has ceased.\n\nPre-procedure: Ultrasound shows no significant fluid. Tract is clean. Consent obtained.\n\nProcedure: Local anesthesia (Lidocaine 1%) infiltrated around the cuff site. Dissection performed to free the Dacron cuff from the subcutaneous tissue. The catheter was pulled smoothly without resistance. Purse-string suture placed to close the site. Occlusive dressing applied.\n\nComplications: None.\nDisposition: Home.",
+    "note_text": "PROCEDURE NOTE: INDWELLING PLEURAL CATHETER REMOVAL\n\nPatient: Eleanor Rigby (MRN: 9928174)\nDate: 08/12/2025\nAttending: Dr. McKenzie\n\nIndication: Patient with history of malignant pleural effusion (breast cancer) and trapped lung who had a PleurX catheter placed 3 months ago. Drainage has decreased to <20cc per week for the last 3 weeks. Pleurodesis appears to have occurred spontaneously or fluid production has ceased.\n\nPre-procedure: Ultrasound shows no significant fluid. Tract is clean. Consent obtained.\n\nProcedure: Local anesthesia (Lidocaine 1%) infiltrated around the cuff site. Dissection performed to free the Dacron cuff from the subcutaneous tissue. The catheter was pulled smoothly without resistance. Purse-string suture placed to close the site. Occlusive dressing applied.\n\nComplications: None.\nDisposition: Home.",
     "cpt_codes": [
       32552
     ],
@@ -70,17 +70,10 @@
       "changes": [
         "Verified CPT 32552 against v2.7 knowledge base."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "**BRONCHOSCOPY REPORT**\n**Patient:** Chen, Wei | **MRN:** 4452109 | **Date:** <DATE_TIME>\n**Provider:** Dr. L. McCoy\n**Diagnosis:** Foreign Body Aspiration\n\n**History:** 72yo M with history of stroke and dysphagia, aspirated a chicken bone 2 days ago. Presents with cough and RLL infiltrate.\n\n**Procedure:** Therapeutic Bronchoscopy (Rigid)\n**Sedation:** General Anesthesia (ETT)\n\n**Details:**\nRigid bronchoscope introduced. Right mainstem entered. Mucopurulent secretions suctioned from RLL. A jagged bone fragment was visualized wedged in the RLL basilar segments. \n\nUsing optical forceps through the rigid barrel, the object was grasped. It could not be pulled through the glottis easily, so the object and scope were withdrawn en bloc. \n\nRepeat inspection showed minor mucosal abrasion but no perforation. Airways cleared of secretions. \n\n**Plan:** Antibiotics for post-obstructive pneumonia. Speech therapy consult.",
+    "note_text": "**BRONCHOSCOPY REPORT**\n**Patient:** Chen, Wei | **MRN:** 4452109 | **Date:** 03/03/2025\n**Provider:** Dr. L. McCoy\n**Diagnosis:** Foreign Body Aspiration\n\n**History:** 72yo M with history of stroke and dysphagia, aspirated a chicken bone 2 days ago. Presents with cough and RLL infiltrate.\n\n**Procedure:** Therapeutic Bronchoscopy (Rigid)\n**Sedation:** General Anesthesia (ETT)\n\n**Details:**\nRigid bronchoscope introduced. Right mainstem entered. Mucopurulent secretions suctioned from RLL. A jagged bone fragment was visualized wedged in the RLL basilar segments. \n\nUsing optical forceps through the rigid barrel, the object was grasped. It could not be pulled through the glottis easily, so the object and scope were withdrawn en bloc. \n\nRepeat inspection showed minor mucosal abrasion but no perforation. Airways cleared of secretions. \n\n**Plan:** Antibiotics for post-obstructive pneumonia. Speech therapy consult.",
     "cpt_codes": [
       31635
     ],
@@ -152,16 +145,10 @@
       "changes": [
         "Verified CPT 31635 against v2.7 knowledge base."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 1,
-      "entity_types": [
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PROCEDURE: Bronchial Thermoplasty (Session 3 of 3)\nDATE: <DATE_TIME>\nPATIENT: Sarah Connors (MRN: <MRN>)\nPHYSICIAN: Dr. T. Dyson\n\nINDICATION: Severe refractory asthma.\n\nPROCEDURE: \nGeneral anesthesia. ETT #8.0.\nAlair Catheter used.\nTarget: Bilateral Upper Lobes (RUL and LUL).\n\nRight Upper Lobe:\n- Apical: 8 activations\n- Posterior: 10 activations\n- Anterior: 12 activations\n\nLeft Upper Lobe:\n- Apical-Posterior: 18 activations\n- Anterior: 14 activations\n- Lingula: Not treated (treated in session 2)\n\nTotal activations: 62. \nPatient tolerated well. No pneumothorax. Extubated to recovery.",
+    "note_text": "PROCEDURE: Bronchial Thermoplasty (Session 3 of 3)\nDATE: 09/15/2025\nPATIENT: Sarah Connors (MRN: 881204)\nPHYSICIAN: Dr. T. Dyson\n\nINDICATION: Severe refractory asthma.\n\nPROCEDURE: \nGeneral anesthesia. ETT #8.0.\nAlair Catheter used.\nTarget: Bilateral Upper Lobes (RUL and LUL).\n\nRight Upper Lobe:\n- Apical: 8 activations\n- Posterior: 10 activations\n- Anterior: 12 activations\n\nLeft Upper Lobe:\n- Apical-Posterior: 18 activations\n- Anterior: 14 activations\n- Lingula: Not treated (treated in session 2)\n\nTotal activations: 62. \nPatient tolerated well. No pneumothorax. Extubated to recovery.",
     "cpt_codes": [
       31661
     ],
@@ -230,17 +217,10 @@
       "changes": [
         "Verified CPT 31661 against v2.7 knowledge base."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "DATE_TIME",
-        "MRN"
-      ]
     }
   },
   {
-    "note_text": "OPERATIVE REPORT: BRONCHOSCOPIC LUNG VOLUME REDUCTION\n\nPATIENT: <PERSON>\nMRN: <MRN>\nDATE: <DATE_TIME>\n\nINDICATION: Severe heterogeneous emphysema, LUL predominant. PFTs: FEV1 28%, RV 210%. CT shows intact fissures. Presented for valve placement.\n\nPROCEDURE:\nFlexible bronchoscopy via ETT/General Anesthesia. \n\n1. CHARTIS ASSESSMENT:\n   The Chartis balloon catheter was advanced to the LUL bronchus. Balloon inflated. \n   Result: CV Negative (Flow dropped to zero, pressure separation maintained). Fissure integrity confirmed.\n\n2. VALVE DEPLOYMENT (Zephyr):\n   Target: Left Upper Lobe.\n   - LB 1+2 (Apical-Posterior): Zephyr 4.0 deployed. Good seal.\n   - LB 3 (Anterior): Zephyr 4.0 deployed. Good seal.\n   - LB 4 (Lingula Superior): Zephyr 5.5-LP deployed. Good seal.\n   - LB 5 (Lingula Inferior): Zephyr 5.5 deployed. Good seal.\n\nTotal 4 valves placed. Lobar occlusion confirmed. No complications.\n\nIMPRESSION: Successful BLVR of LUL.",
+    "note_text": "OPERATIVE REPORT: BRONCHOSCOPIC LUNG VOLUME REDUCTION\n\nPATIENT: Arthur Dent\nMRN: 424242\nDATE: 11/01/2025\n\nINDICATION: Severe heterogeneous emphysema, LUL predominant. PFTs: FEV1 28%, RV 210%. CT shows intact fissures. Presented for valve placement.\n\nPROCEDURE:\nFlexible bronchoscopy via ETT/General Anesthesia. \n\n1. CHARTIS ASSESSMENT:\n   The Chartis balloon catheter was advanced to the LUL bronchus. Balloon inflated. \n   Result: CV Negative (Flow dropped to zero, pressure separation maintained). Fissure integrity confirmed.\n\n2. VALVE DEPLOYMENT (Zephyr):\n   Target: Left Upper Lobe.\n   - LB 1+2 (Apical-Posterior): Zephyr 4.0 deployed. Good seal.\n   - LB 3 (Anterior): Zephyr 4.0 deployed. Good seal.\n   - LB 4 (Lingula Superior): Zephyr 5.5-LP deployed. Good seal.\n   - LB 5 (Lingula Inferior): Zephyr 5.5 deployed. Good seal.\n\nTotal 4 valves placed. Lobar occlusion confirmed. No complications.\n\nIMPRESSION: Successful BLVR of LUL.",
     "cpt_codes": [
       31647
     ],
@@ -346,18 +326,10 @@
       "changes": [
         "Verified CPT 31647 and bundling of Chartis (31634)."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 3,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "Fellow Procedure Note\n\nPatient: John Doe (MRN: <MRN>)\nAttending: Dr. Z. Smith\nDate: <DATE_TIME>\n\nPerformed standard bronchoscopy via oral route (moderate sedation). Vocal cords normal. \n\n**EBUS-TBNA:**\nUsed linear scope. Sampled station 7 (subcarinal) and 4R (right paratracheal). Both small (<1cm) but PET avid. \n- 7: 3 passes, ROSE negative.\n- 4R: 3 passes, ROSE negative.\n\n**Peripheral Nodule Assessment:**\nExchanged for thin bronchoscope (P190). Advanced to RUL apical segment. Inserted **Radial EBUS** probe. Visualized lesion - eccentric view (not concentric). Adjusted scope, still eccentric but tool-in-lesion confirmed. \n\nPerformed **transbronchial biopsies** (fluoroscopy guidance) x 5. \nPerformed **brushing** x 1.\n\nROSE: Non-diagnostic / inflammation.\n\nPlan: Await final path. If negative, consider TTNA.",
+    "note_text": "Fellow Procedure Note\n\nPatient: John Doe (MRN: 555123)\nAttending: Dr. Z. Smith\nDate: May 5, 2025\n\nPerformed standard bronchoscopy via oral route (moderate sedation). Vocal cords normal. \n\n**EBUS-TBNA:**\nUsed linear scope. Sampled station 7 (subcarinal) and 4R (right paratracheal). Both small (<1cm) but PET avid. \n- 7: 3 passes, ROSE negative.\n- 4R: 3 passes, ROSE negative.\n\n**Peripheral Nodule Assessment:**\nExchanged for thin bronchoscope (P190). Advanced to RUL apical segment. Inserted **Radial EBUS** probe. Visualized lesion - eccentric view (not concentric). Adjusted scope, still eccentric but tool-in-lesion confirmed. \n\nPerformed **transbronchial biopsies** (fluoroscopy guidance) x 5. \nPerformed **brushing** x 1.\n\nROSE: Non-diagnostic / inflammation.\n\nPlan: Await final path. If negative, consider TTNA.",
     "cpt_codes": [
       31652,
       31654,
@@ -468,13 +440,6 @@
       "patch_date": "2025-12-09",
       "changes": [
         "Verified multi-modal sampling codes (31652, 31654, 31628, 31623) against v2.7 knowledge base."
-      ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 2,
-      "entity_types": [
-        "MRN",
-        "DATE_TIME"
       ]
     }
   }

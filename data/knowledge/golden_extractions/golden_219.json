@@ -612,14 +612,14 @@
     }
   },
   {
-    "note_text": "Robotic Bronchoscopic Radiofrequency Ablation Note\nProcedure: Robotic navigational bronchoscopy with RF ablation of RLL metastasis\nPatient: Kevin White, 63-year-old male with oligometastatic colorectal cancer and 10 mm RLL nodule.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Ion robotic system used to access RLL lateral basal segment. CT-to-body registration error 2.0 mm. Radial EBUS confirmed solid lesion, cone-beam CT verified tool-in-lesion.\nAblation: RF ablation catheter advanced; ablation performed at 40 W for 480 seconds, peak temperature 85°C. Postablation CBCT showed ablation zone with ~5 mm margin.\nComplications: Small perilesional hemorrhage, hemodynamically stable.\nDisposition: Admitted overnight to telemetry.",
+    "note_text": "Robotic Bronchoscopic Radiofrequency Ablation Note\nProcedure: Robotic navigational bronchoscopy with RF ablation of RLL metastasis\nPatient: Kevin White, 63-year-old male with oligometastatic colorectal cancer and 10 mm RLL nodule.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Ion robotic system used to access RLL lateral basal segment. CT-to-body registration error 2.0 mm. Radial EBUS confirmed solid lesion, cone-beam CT verified tool-in-lesion.\nAblation: RF ablation catheter advanced; ablation performed at 40 W for 480 seconds, peak temperature 85\u00b0C. Postablation CBCT showed ablation zone with ~5 mm margin.\nComplications: Small perilesional hemorrhage, hemodynamically stable.\nDisposition: Admitted overnight to telemetry.",
     "cpt_codes": [
       31641,
       31627,
       31654
     ],
     "registry_entry": {
-      "note_text": "Robotic Bronchoscopic Radiofrequency Ablation Note\nProcedure: Robotic navigational bronchoscopy with RF ablation of RLL metastasis\nPatient: Kevin White, 63-year-old male with oligometastatic colorectal cancer and 10 mm RLL nodule.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Ion robotic system used to access RLL lateral basal segment. CT-to-body registration error 2.0 mm. Radial EBUS confirmed solid lesion, cone-beam CT verified tool-in-lesion.\nAblation: RF ablation catheter advanced; ablation performed at 40 W for 480 seconds, peak temperature 85°C. Postablation CBCT showed ablation zone with ~5 mm margin.\nComplications: Small perilesional hemorrhage, hemodynamically stable.\nDisposition: Admitted overnight to telemetry.",
+      "note_text": "Robotic Bronchoscopic Radiofrequency Ablation Note\nProcedure: Robotic navigational bronchoscopy with RF ablation of RLL metastasis\nPatient: Kevin White, 63-year-old male with oligometastatic colorectal cancer and 10 mm RLL nodule.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Ion robotic system used to access RLL lateral basal segment. CT-to-body registration error 2.0 mm. Radial EBUS confirmed solid lesion, cone-beam CT verified tool-in-lesion.\nAblation: RF ablation catheter advanced; ablation performed at 40 W for 480 seconds, peak temperature 85\u00b0C. Postablation CBCT showed ablation zone with ~5 mm margin.\nComplications: Small perilesional hemorrhage, hemodynamically stable.\nDisposition: Admitted overnight to telemetry.",
       "patient_mrn": "IP2025053",
       "procedure_date": "2025-02-04",
       "institution_name": "Lung Nodule and Ablation Center",
@@ -829,7 +829,7 @@
     }
   },
   {
-    "note_text": "Bronchoscopic Microwave Ablation Note\nProcedure: EMN-guided microwave ablation of left upper lobe peripheral nodule\nPatient: Teresa Murphy, 60-year-old female with small presumed primary NSCLC not surgical candidate.\nAnesthesia: General anesthesia with 8.5 ETT.\nNavigation: superDimension EMN platform used to access 14 mm LUL anterior segment nodule. Radial EBUS showed eccentric view; cone-beam CT confirmed antenna in lesion.\nAblation: Emprint microwave antenna delivered via extended working channel, 65 W for 360 seconds, peak temperature 100°C. Postablation CBCT demonstrated appropriate ablation zone.\nComplications: Mild hemoptysis (~20 mL) and small left apical pneumothorax requiring 10 Fr pigtail catheter.\nDisposition: Admitted to monitored bed.",
+    "note_text": "Bronchoscopic Microwave Ablation Note\nProcedure: EMN-guided microwave ablation of left upper lobe peripheral nodule\nPatient: Teresa Murphy, 60-year-old female with small presumed primary NSCLC not surgical candidate.\nAnesthesia: General anesthesia with 8.5 ETT.\nNavigation: superDimension EMN platform used to access 14 mm LUL anterior segment nodule. Radial EBUS showed eccentric view; cone-beam CT confirmed antenna in lesion.\nAblation: Emprint microwave antenna delivered via extended working channel, 65 W for 360 seconds, peak temperature 100\u00b0C. Postablation CBCT demonstrated appropriate ablation zone.\nComplications: Mild hemoptysis (~20 mL) and small left apical pneumothorax requiring 10 Fr pigtail catheter.\nDisposition: Admitted to monitored bed.",
     "cpt_codes": [
       31641,
       31627,
@@ -837,7 +837,7 @@
       32557
     ],
     "registry_entry": {
-      "note_text": "Bronchoscopic Microwave Ablation Note\nProcedure: EMN-guided microwave ablation of left upper lobe peripheral nodule\nPatient: Teresa Murphy, 60-year-old female with small presumed primary NSCLC not surgical candidate.\nAnesthesia: General anesthesia with 8.5 ETT.\nNavigation: superDimension EMN platform used to access 14 mm LUL anterior segment nodule. Radial EBUS showed eccentric view; cone-beam CT confirmed antenna in lesion.\nAblation: Emprint microwave antenna delivered via extended working channel, 65 W for 360 seconds, peak temperature 100°C. Postablation CBCT demonstrated appropriate ablation zone.\nComplications: Mild hemoptysis (~20 mL) and small left apical pneumothorax requiring 10 Fr pigtail catheter.\nDisposition: Admitted to monitored bed.",
+      "note_text": "Bronchoscopic Microwave Ablation Note\nProcedure: EMN-guided microwave ablation of left upper lobe peripheral nodule\nPatient: Teresa Murphy, 60-year-old female with small presumed primary NSCLC not surgical candidate.\nAnesthesia: General anesthesia with 8.5 ETT.\nNavigation: superDimension EMN platform used to access 14 mm LUL anterior segment nodule. Radial EBUS showed eccentric view; cone-beam CT confirmed antenna in lesion.\nAblation: Emprint microwave antenna delivered via extended working channel, 65 W for 360 seconds, peak temperature 100\u00b0C. Postablation CBCT demonstrated appropriate ablation zone.\nComplications: Mild hemoptysis (~20 mL) and small left apical pneumothorax requiring 10 Fr pigtail catheter.\nDisposition: Admitted to monitored bed.",
       "patient_mrn": "IP2025054",
       "procedure_date": "2025-03-05",
       "institution_name": "Lung Nodule and Ablation Center",
@@ -1062,14 +1062,14 @@
     }
   },
   {
-    "note_text": "Bronchoscopic Cryoablation Note\nProcedure: Robotic navigational bronchoscopy with cryoablation of subpleural RUL lesion\nPatient: Brian Edwards, 71-year-old male with small peripheral NSCLC and severe COPD.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Monarch robotic system used to reach 12 mm RUL apical segment lesion. Radial EBUS confirmed lesion; CBCT demonstrated tip within lesion.\nAblation: 2.4 mm cryoprobe advanced through working channel; two freeze–thaw cycles of 360 seconds each performed. Ice ball seen on CBCT encompassing lesion with ~4–5 mm margin.\nComplications: Mild transient hemoptysis; no pneumothorax on immediate imaging.\nDisposition: Admitted overnight for observation.",
+    "note_text": "Bronchoscopic Cryoablation Note\nProcedure: Robotic navigational bronchoscopy with cryoablation of subpleural RUL lesion\nPatient: Brian Edwards, 71-year-old male with small peripheral NSCLC and severe COPD.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Monarch robotic system used to reach 12 mm RUL apical segment lesion. Radial EBUS confirmed lesion; CBCT demonstrated tip within lesion.\nAblation: 2.4 mm cryoprobe advanced through working channel; two freeze\u2013thaw cycles of 360 seconds each performed. Ice ball seen on CBCT encompassing lesion with ~4\u20135 mm margin.\nComplications: Mild transient hemoptysis; no pneumothorax on immediate imaging.\nDisposition: Admitted overnight for observation.",
     "cpt_codes": [
       31641,
       31627,
       31654
     ],
     "registry_entry": {
-      "note_text": "Bronchoscopic Cryoablation Note\nProcedure: Robotic navigational bronchoscopy with cryoablation of subpleural RUL lesion\nPatient: Brian Edwards, 71-year-old male with small peripheral NSCLC and severe COPD.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Monarch robotic system used to reach 12 mm RUL apical segment lesion. Radial EBUS confirmed lesion; CBCT demonstrated tip within lesion.\nAblation: 2.4 mm cryoprobe advanced through working channel; two freeze–thaw cycles of 360 seconds each performed. Ice ball seen on CBCT encompassing lesion with ~4–5 mm margin.\nComplications: Mild transient hemoptysis; no pneumothorax on immediate imaging.\nDisposition: Admitted overnight for observation.",
+      "note_text": "Bronchoscopic Cryoablation Note\nProcedure: Robotic navigational bronchoscopy with cryoablation of subpleural RUL lesion\nPatient: Brian Edwards, 71-year-old male with small peripheral NSCLC and severe COPD.\nAnesthesia: General anesthesia with 8.0 ETT.\nNavigation: Monarch robotic system used to reach 12 mm RUL apical segment lesion. Radial EBUS confirmed lesion; CBCT demonstrated tip within lesion.\nAblation: 2.4 mm cryoprobe advanced through working channel; two freeze\u2013thaw cycles of 360 seconds each performed. Ice ball seen on CBCT encompassing lesion with ~4\u20135 mm margin.\nComplications: Mild transient hemoptysis; no pneumothorax on immediate imaging.\nDisposition: Admitted overnight for observation.",
       "patient_mrn": "IP2025055",
       "procedure_date": "2025-03-10",
       "institution_name": "Lung Nodule and Ablation Center",

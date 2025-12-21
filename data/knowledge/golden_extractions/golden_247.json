@@ -1,6 +1,6 @@
 [
   {
-    "note_text": "PATIENT: <PERSON>   MRN: <MRN>   DOB: <DATE_TIME>\nDATE: <DATE_TIME>   LOCATION: Bronchoscopy Suite\nPROCEDURE: Flexible bronchoscopy with bronchoalveolar lavage (BAL)\nINDICATION: 64-year-old female with non-resolving right lower lobe pneumonia despite broad-spectrum antibiotics.\n\nSEDATION / MONITORING:\nModerate sedation with IV fentanyl and midazolam, titrated to comfort. Continuous pulse oximetry, ECG, and noninvasive blood pressure monitoring. Supplemental O2 via nasal cannula.\n\nPROCEDURE DESCRIPTION:\nAfter topical lidocaine to the oropharynx, a flexible bronchoscope was advanced through the mouth in the native airway. Vocal cords, trachea, and main bronchi were inspected to subsegmental level. No endobronchial mass or foreign body was seen. Copious mucopurulent secretions were present in the right lower lobe (RLL) bronchus; these were suctioned.\nBAL was performed in the RLL posterior segment with four 30 mL aliquots of sterile saline (total 120 mL), with approximately 60 mL of turbid return. Samples sent for cell count/differential, bacterial culture, fungal culture, AFB smear/culture, and cytology.\nNo biopsies, brushings, navigation, or EBUS were performed.\n\nCOMPLICATIONS:\nNone. Oxygen saturation remained >92% throughout. No bleeding beyond scant blood-tinged secretions.\n\nPOST-PROCEDURE PLAN:\nObserve in PACU then discharge home if stable. Continue antibiotics. Follow up CT chest in 8 weeks or sooner if clinical status worsens.",
+    "note_text": "PATIENT: Maria Lopez   MRN: BRN00123   DOB: 07/02/1960\nDATE: 02/14/2025   LOCATION: Bronchoscopy Suite\nPROCEDURE: Flexible bronchoscopy with bronchoalveolar lavage (BAL)\nINDICATION: 64-year-old female with non-resolving right lower lobe pneumonia despite broad-spectrum antibiotics.\n\nSEDATION / MONITORING:\nModerate sedation with IV fentanyl and midazolam, titrated to comfort. Continuous pulse oximetry, ECG, and noninvasive blood pressure monitoring. Supplemental O2 via nasal cannula.\n\nPROCEDURE DESCRIPTION:\nAfter topical lidocaine to the oropharynx, a flexible bronchoscope was advanced through the mouth in the native airway. Vocal cords, trachea, and main bronchi were inspected to subsegmental level. No endobronchial mass or foreign body was seen. Copious mucopurulent secretions were present in the right lower lobe (RLL) bronchus; these were suctioned.\nBAL was performed in the RLL posterior segment with four 30 mL aliquots of sterile saline (total 120 mL), with approximately 60 mL of turbid return. Samples sent for cell count/differential, bacterial culture, fungal culture, AFB smear/culture, and cytology.\nNo biopsies, brushings, navigation, or EBUS were performed.\n\nCOMPLICATIONS:\nNone. Oxygen saturation remained >92% throughout. No bleeding beyond scant blood-tinged secretions.\n\nPOST-PROCEDURE PLAN:\nObserve in PACU then discharge home if stable. Continue antibiotics. Follow up CT chest in 8 weeks or sooner if clinical status worsens.",
     "cpt_codes": [
       31624
     ],
@@ -97,19 +97,10 @@
         "31624 is the correct code for BAL.",
         "Diagnostic bronchoscopy (31622) is bundled."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>   MRN: <MRN>   DOB: <DATE_TIME>\nDATE: <DATE_TIME>   LOCATION: ICU bedside\nPROCEDURE: Flexible bronchoscopy with therapeutic aspiration of secretions\nINDICATION: 71-year-old male with severe COPD and mucus plugging causing complete left lower lobe collapse on chest radiograph.\n\nSEDATION / MONITORING:\nModerate sedation with IV fentanyl and midazolam. Continuous cardiorespiratory monitoring and supplemental oxygen via high-flow nasal cannula. Native airway maintained.\n\nBRONCHOSCOPIC FINDINGS / INTERVENTION:\nFlexible bronchoscope introduced orally with topical lidocaine. Diffuse mucus plugging noted in the left mainstem and left lower lobe bronchi with no discrete mass or foreign body. No biopsies, brushings, or BAL performed.\n\nTherapeutic aspiration was performed with repeated suctioning and intermittent instillation of warm saline until large mucus casts were removed. After clearance, the left lower lobe bronchus was widely patent with visible subsegmental airways. No bleeding beyond trace mucosal oozing.\n\nCOMPLICATIONS:\nNone. Transient desaturations to 88% improved with suctioning, recruitment, and increased FiO2.\n\nPLAN:\nContinue aggressive pulmonary toilet and bronchodilators. Repeat chest radiograph this afternoon to confirm re-expansion of the left lower lobe.",
+    "note_text": "PATIENT: Daniel Green   MRN: BRN00124   DOB: 03/19/1953\nDATE: 03/01/2025   LOCATION: ICU bedside\nPROCEDURE: Flexible bronchoscopy with therapeutic aspiration of secretions\nINDICATION: 71-year-old male with severe COPD and mucus plugging causing complete left lower lobe collapse on chest radiograph.\n\nSEDATION / MONITORING:\nModerate sedation with IV fentanyl and midazolam. Continuous cardiorespiratory monitoring and supplemental oxygen via high-flow nasal cannula. Native airway maintained.\n\nBRONCHOSCOPIC FINDINGS / INTERVENTION:\nFlexible bronchoscope introduced orally with topical lidocaine. Diffuse mucus plugging noted in the left mainstem and left lower lobe bronchi with no discrete mass or foreign body. No biopsies, brushings, or BAL performed.\n\nTherapeutic aspiration was performed with repeated suctioning and intermittent instillation of warm saline until large mucus casts were removed. After clearance, the left lower lobe bronchus was widely patent with visible subsegmental airways. No bleeding beyond trace mucosal oozing.\n\nCOMPLICATIONS:\nNone. Transient desaturations to 88% improved with suctioning, recruitment, and increased FiO2.\n\nPLAN:\nContinue aggressive pulmonary toilet and bronchodilators. Repeat chest radiograph this afternoon to confirm re-expansion of the left lower lobe.",
     "cpt_codes": [
       31645
     ],
@@ -205,19 +196,10 @@
         "31645 covers initial therapeutic aspiration.",
         "No other procedures performed."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>   MRN: <MRN>   DOB: <DATE_TIME>\nDATE: <DATE_TIME>   LOCATION: OR\nPROCEDURE: Rigid bronchoscopy with removal of foreign body\nINDICATION: 5-year-old male with acute onset cough and wheeze after choking on peanuts; radiograph with hyperinflation of right lung.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with orotracheal intubation. Rigid pediatric bronchoscope introduced through the ETT under direct visualization.\n\nFINDINGS / INTERVENTION:\nA tan organic foreign body consistent with a peanut fragment was lodged in the right mainstem bronchus with surrounding granulation tissue. No intrinsic tumor.\n\nUsing rigid forceps passed through the bronchoscope, the peanut and several smaller fragments were grasped and removed in multiple passes. Therapeutic suctioning cleared residual debris. Final inspection confirmed a patent right mainstem bronchus with visible segmental bronchi and no residual foreign material.\n\nNo BAL, biopsies, or EBUS were performed.\n\nCOMPLICATIONS:\nNone. No significant bleeding or desaturation events.\n\nDISPOSITION / PLAN:\nExtubated in OR and transferred to PACU in stable condition. Planned overnight floor observation with pulse oximetry and bronchodilator therapy as needed.",
+    "note_text": "PATIENT: Liam Carter   MRN: BRN00125   DOB: 09/11/2019\nDATE: 04/05/2025   LOCATION: OR\nPROCEDURE: Rigid bronchoscopy with removal of foreign body\nINDICATION: 5-year-old male with acute onset cough and wheeze after choking on peanuts; radiograph with hyperinflation of right lung.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with orotracheal intubation. Rigid pediatric bronchoscope introduced through the ETT under direct visualization.\n\nFINDINGS / INTERVENTION:\nA tan organic foreign body consistent with a peanut fragment was lodged in the right mainstem bronchus with surrounding granulation tissue. No intrinsic tumor.\n\nUsing rigid forceps passed through the bronchoscope, the peanut and several smaller fragments were grasped and removed in multiple passes. Therapeutic suctioning cleared residual debris. Final inspection confirmed a patent right mainstem bronchus with visible segmental bronchi and no residual foreign material.\n\nNo BAL, biopsies, or EBUS were performed.\n\nCOMPLICATIONS:\nNone. No significant bleeding or desaturation events.\n\nDISPOSITION / PLAN:\nExtubated in OR and transferred to PACU in stable condition. Planned overnight floor observation with pulse oximetry and bronchodilator therapy as needed.",
     "cpt_codes": [
       31635
     ],
@@ -234,7 +216,7 @@
       "cpt_codes": [
         31635
       ],
-      "institution_name": "Synthetic Children’s Hospital",
+      "institution_name": "Synthetic Children\u2019s Hospital",
       "disposition": "Floor admission",
       "pleural_procedure_type": null,
       "pleural_guidance": null,
@@ -316,19 +298,10 @@
       "comments": [
         "31635 correctly describes foreign body removal."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>   MRN: <MRN>   DOB: <DATE_TIME>\nDATE: <DATE_TIME>   LOCATION: Endoscopy Suite\nPROCEDURE: Linear EBUS bronchoscopy with transbronchial needle aspiration (TBNA) of mediastinal lymph nodes\nINDICATION: 67-year-old male with biopsy-proven left lower lobe adenocarcinoma requiring mediastinal staging prior to surgical resection.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal intubation. Standard ASA monitoring.\n\nEBUS PROCEDURE:\nAn EBUS bronchoscope was advanced via the ETT. Systematic survey of mediastinal and hilar nodes was performed. Station 4R (1.1 cm) and station 7 (1.5 cm) were sampled with a 21G needle, 3 passes per station. On-site cytology was present; ROSE for station 7 was positive for malignant cells, station 4R negative.\nNo additional nodal stations were sampled. No peripheral EBUS or navigation bronchoscopy was performed.\n\nCOMPLICATIONS:\nNone. No significant bleeding or hypoxemia.\n\nPLAN:\nProceed with multidisciplinary tumor board review. Patient likely candidate for lobectomy with mediastinal lymph node dissection given limited nodal involvement.",
+    "note_text": "PATIENT: Steven Brooks   MRN: BRN00126   DOB: 01/29/1958\nDATE: 05/10/2025   LOCATION: Endoscopy Suite\nPROCEDURE: Linear EBUS bronchoscopy with transbronchial needle aspiration (TBNA) of mediastinal lymph nodes\nINDICATION: 67-year-old male with biopsy-proven left lower lobe adenocarcinoma requiring mediastinal staging prior to surgical resection.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal intubation. Standard ASA monitoring.\n\nEBUS PROCEDURE:\nAn EBUS bronchoscope was advanced via the ETT. Systematic survey of mediastinal and hilar nodes was performed. Station 4R (1.1 cm) and station 7 (1.5 cm) were sampled with a 21G needle, 3 passes per station. On-site cytology was present; ROSE for station 7 was positive for malignant cells, station 4R negative.\nNo additional nodal stations were sampled. No peripheral EBUS or navigation bronchoscopy was performed.\n\nCOMPLICATIONS:\nNone. No significant bleeding or hypoxemia.\n\nPLAN:\nProceed with multidisciplinary tumor board review. Patient likely candidate for lobectomy with mediastinal lymph node dissection given limited nodal involvement.",
     "cpt_codes": [
       31652
     ],
@@ -425,19 +398,10 @@
       "comments": [
         "Sampling of 1-2 nodal stations maps to 31652."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>   MRN: <MRN>   DOB: <DATE_TIME>\nDATE: <DATE_TIME>   LOCATION: Hybrid bronchoscopy suite\nPROCEDURE: Ion robotic navigation bronchoscopy with radial EBUS and transbronchial lung biopsy of right upper lobe (RUL) nodule\nINDICATION: 72-year-old female with a 1.5 cm spiculated RUL pulmonary nodule, PET-avid, no enlarged mediastinal nodes.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal intubation.\n\nPROCEDURE SUMMARY (checklist style):\n- Navigation platform: Ion robotic bronchoscopy\n- Guidance: Pre-procedure CT loaded; virtual plan created to RUL apical segment nodule.\n- Robotic scope advanced to target per navigational plan.\n- Radial EBUS probe used: Concentric solid lesion pattern obtained.\n- Imaging confirmation: Cone beam CT showed tool-in-lesion.\n- Sampling tools: Transbronchial forceps biopsies (6 passes), brushings (2 passes), BAL (60 mL instilled, 30 mL return).\n- No EBUS mediastinal staging performed.\n\nNo immediate complications. Fluoroscopy showed no pneumothorax. Minimal bleeding controlled with cold saline.\n\nPLAN:\nObserve in PACU then home same day. Arrange oncology and surgical consultations pending pathology.",
+    "note_text": "PATIENT: Evelyn Martin   MRN: BRN00127   DOB: 08/06/1952\nDATE: 06/03/2025   LOCATION: Hybrid bronchoscopy suite\nPROCEDURE: Ion robotic navigation bronchoscopy with radial EBUS and transbronchial lung biopsy of right upper lobe (RUL) nodule\nINDICATION: 72-year-old female with a 1.5 cm spiculated RUL pulmonary nodule, PET-avid, no enlarged mediastinal nodes.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal intubation.\n\nPROCEDURE SUMMARY (checklist style):\n- Navigation platform: Ion robotic bronchoscopy\n- Guidance: Pre-procedure CT loaded; virtual plan created to RUL apical segment nodule.\n- Robotic scope advanced to target per navigational plan.\n- Radial EBUS probe used: Concentric solid lesion pattern obtained.\n- Imaging confirmation: Cone beam CT showed tool-in-lesion.\n- Sampling tools: Transbronchial forceps biopsies (6 passes), brushings (2 passes), BAL (60 mL instilled, 30 mL return).\n- No EBUS mediastinal staging performed.\n\nNo immediate complications. Fluoroscopy showed no pneumothorax. Minimal bleeding controlled with cold saline.\n\nPLAN:\nObserve in PACU then home same day. Arrange oncology and surgical consultations pending pathology.",
     "cpt_codes": [
       31628,
       31654,
@@ -558,19 +522,10 @@
         "31628 is the primary code for parenchymal biopsy.",
         "31654 covers the radial EBUS component."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>   MRN: <MRN>   DOB: <DATE_TIME>\nDATE: <DATE_TIME>   LOCATION: Bronchoscopy Suite\nPROCEDURE: Bronchoscopy with balloon occlusion assessment of collateral ventilation (Chartis) for bronchoscopic lung volume reduction candidate\nINDICATION: 68-year-old female with GOLD IV COPD, hyperinflation, and heterogeneous emphysema being evaluated for endobronchial valve therapy.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal tube.\n\nPROCEDURE SUMMARY:\nFlexible bronchoscope advanced via ETT. A balloon catheter was sequentially positioned in the segmental bronchi of the left upper lobe (LUL) and left lower lobe (LLL). Chartis measurements showed persistent airflow and lack of complete flow cessation in all tested segments, consistent with significant collateral ventilation.\n\nNo endobronchial valves were placed. No biopsies, BAL, navigation, or EBUS performed.\n\nCOMPLICATIONS:\nNone.\n\nPLAN:\nPatient is not a candidate for valve-based BLVR due to positive collateral ventilation. Continue maximal inhaler therapy, pulmonary rehabilitation, and evaluate for lung transplant referral.",
+    "note_text": "PATIENT: Helen Ortiz   MRN: BRN00128   DOB: 05/30/1957\nDATE: 07/12/2025   LOCATION: Bronchoscopy Suite\nPROCEDURE: Bronchoscopy with balloon occlusion assessment of collateral ventilation (Chartis) for bronchoscopic lung volume reduction candidate\nINDICATION: 68-year-old female with GOLD IV COPD, hyperinflation, and heterogeneous emphysema being evaluated for endobronchial valve therapy.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal tube.\n\nPROCEDURE SUMMARY:\nFlexible bronchoscope advanced via ETT. A balloon catheter was sequentially positioned in the segmental bronchi of the left upper lobe (LUL) and left lower lobe (LLL). Chartis measurements showed persistent airflow and lack of complete flow cessation in all tested segments, consistent with significant collateral ventilation.\n\nNo endobronchial valves were placed. No biopsies, BAL, navigation, or EBUS performed.\n\nCOMPLICATIONS:\nNone.\n\nPLAN:\nPatient is not a candidate for valve-based BLVR due to positive collateral ventilation. Continue maximal inhaler therapy, pulmonary rehabilitation, and evaluate for lung transplant referral.",
     "cpt_codes": [
       31634
     ],
@@ -665,19 +620,10 @@
       "comments": [
         "31634 is correct for balloon occlusion assessment without concurrent valve placement."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>   MRN: <MRN>   DOB: <DATE_TIME>\nDATE: <DATE_TIME>   LOCATION: Hybrid bronchoscopy suite\nPROCEDURE: Bronchoscopic lung volume reduction with endobronchial valve placement, left upper lobe\nINDICATION: 73-year-old male with heterogeneous emphysema and hyperinflation, dyspnea despite maximal medical therapy; prior Chartis assessment negative for collateral ventilation in the left upper lobe.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal intubation.\n\nPROCEDURE SUMMARY:\nFlexible bronchoscope advanced via ETT. Left upper lobe anatomy inspected; no endobronchial lesions. Three Zephyr valves were placed in the LUL segmental bronchi using standard delivery catheters (apicoposterior, anterior, and lingular segments). Chartis data from a prior session confirmed absent collateral ventilation, so repeat balloon occlusion was not performed.\n\nNo biopsies, BAL, navigation, or EBUS were performed.\n\nPost-placement inspection showed good valve position with complete occlusion of treated segments and no evidence of migration.\n\nCOMPLICATIONS:\nNone intra-procedure. Immediate post-procedure chest radiograph without pneumothorax.\n\nPLAN:\nAdmit to monitored bed. Daily chest radiographs for 72 hours. Outpatient follow-up in 6 weeks with spirometry.",
+    "note_text": "PATIENT: Robert James   MRN: BRN00129   DOB: 10/22/1951\nDATE: 08/20/2025   LOCATION: Hybrid bronchoscopy suite\nPROCEDURE: Bronchoscopic lung volume reduction with endobronchial valve placement, left upper lobe\nINDICATION: 73-year-old male with heterogeneous emphysema and hyperinflation, dyspnea despite maximal medical therapy; prior Chartis assessment negative for collateral ventilation in the left upper lobe.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal intubation.\n\nPROCEDURE SUMMARY:\nFlexible bronchoscope advanced via ETT. Left upper lobe anatomy inspected; no endobronchial lesions. Three Zephyr valves were placed in the LUL segmental bronchi using standard delivery catheters (apicoposterior, anterior, and lingular segments). Chartis data from a prior session confirmed absent collateral ventilation, so repeat balloon occlusion was not performed.\n\nNo biopsies, BAL, navigation, or EBUS were performed.\n\nPost-placement inspection showed good valve position with complete occlusion of treated segments and no evidence of migration.\n\nCOMPLICATIONS:\nNone intra-procedure. Immediate post-procedure chest radiograph without pneumothorax.\n\nPLAN:\nAdmit to monitored bed. Daily chest radiographs for 72 hours. Outpatient follow-up in 6 weeks with spirometry.",
     "cpt_codes": [
       31647
     ],
@@ -776,19 +722,10 @@
         "31647 covers valve placement in the initial lobe regardless of the number of valves.",
         "31651 is only for additional *lobes*, not additional valves/segments in the same lobe."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>   MRN: <MRN>   DOB: <DATE_TIME>\nDATE: <DATE_TIME>   LOCATION: Procedure Room\nPROCEDURE: Ultrasound-guided tunneled pleural catheter (TPC) placement, right hemithorax\nINDICATION: 59-year-old female with metastatic breast cancer and recurrent right malignant pleural effusion causing dyspnea despite multiple thoracenteses.\n\nANESTHESIA:\nModerate sedation with IV midazolam and fentanyl. Local anesthesia with lidocaine at entry and exit sites.\n\nPROCEDURE DESCRIPTION:\nPoint-of-care ultrasound confirmed a large free-flowing right pleural effusion without loculations. Under real-time ultrasound guidance, an entry site was chosen in the right mid-axillary line. After guidewire placement and tunnel creation, a tunneled pleural catheter was advanced and positioned in the right pleural space. Catheter position confirmed by free flow of pleural fluid and ultrasound.\n\nA total of 1.5 L of serosanguinous fluid was drained slowly. No talc or other sclerosing agent was instilled.\n\nCOMPLICATIONS:\nNone. Post-procedure chest radiograph showed good catheter position and no large pneumothorax.\n\nPLAN:\nTeach patient and caregiver home drainage protocol. Drain to dryness once daily for the first week, then as needed. Arrange home health nursing and oncology follow-up.",
+    "note_text": "PATIENT: Angela Rivera   MRN: BRN00130   DOB: 02/17/1966\nDATE: 09/02/2025   LOCATION: Procedure Room\nPROCEDURE: Ultrasound-guided tunneled pleural catheter (TPC) placement, right hemithorax\nINDICATION: 59-year-old female with metastatic breast cancer and recurrent right malignant pleural effusion causing dyspnea despite multiple thoracenteses.\n\nANESTHESIA:\nModerate sedation with IV midazolam and fentanyl. Local anesthesia with lidocaine at entry and exit sites.\n\nPROCEDURE DESCRIPTION:\nPoint-of-care ultrasound confirmed a large free-flowing right pleural effusion without loculations. Under real-time ultrasound guidance, an entry site was chosen in the right mid-axillary line. After guidewire placement and tunnel creation, a tunneled pleural catheter was advanced and positioned in the right pleural space. Catheter position confirmed by free flow of pleural fluid and ultrasound.\n\nA total of 1.5 L of serosanguinous fluid was drained slowly. No talc or other sclerosing agent was instilled.\n\nCOMPLICATIONS:\nNone. Post-procedure chest radiograph showed good catheter position and no large pneumothorax.\n\nPLAN:\nTeach patient and caregiver home drainage protocol. Drain to dryness once daily for the first week, then as needed. Arrange home health nursing and oncology follow-up.",
     "cpt_codes": [
       32550
     ],
@@ -883,19 +820,10 @@
       "comments": [
         "32550 includes tunneling and cuff placement."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>   MRN: <MRN>   DOB: <DATE_TIME>\nDATE: <DATE_TIME>   LOCATION: Procedure Room\nPROCEDURE: Ultrasound-guided therapeutic thoracentesis, left\nINDICATION: 66-year-old male with new moderate left pleural effusion and dyspnea; suspected parapneumonic effusion.\n\nANESTHESIA:\nLocal anesthesia with lidocaine; no systemic sedation (patient cooperative).\n\nPROCEDURE DESCRIPTION:\nPoint-of-care ultrasound demonstrated a moderate free-flowing anechoic effusion on the left without septations. Under sterile conditions, the left posterior axillary line was marked. After local infiltration, a thoracentesis catheter was advanced into the pleural space with ultrasound guidance.\n\nA total of 1.2 L of clear yellow fluid was removed and sent for cell count, Gram stain and culture, pH, LDH, protein, and cytology. The catheter was then removed and a dressing applied.\n\nCOMPLICATIONS:\nNone. No cough, chest pain, or air aspiration. Post-procedure chest radiograph showed interval decrease in effusion without pneumothorax.\n\nPLAN:\nResume antibiotics. Review pleural fluid studies to differentiate transudate vs exudate. Outpatient pulmonary follow-up in 1–2 weeks.",
+    "note_text": "PATIENT: Marcus Hill   MRN: BRN00131   DOB: 12/09/1958\nDATE: 10/15/2025   LOCATION: Procedure Room\nPROCEDURE: Ultrasound-guided therapeutic thoracentesis, left\nINDICATION: 66-year-old male with new moderate left pleural effusion and dyspnea; suspected parapneumonic effusion.\n\nANESTHESIA:\nLocal anesthesia with lidocaine; no systemic sedation (patient cooperative).\n\nPROCEDURE DESCRIPTION:\nPoint-of-care ultrasound demonstrated a moderate free-flowing anechoic effusion on the left without septations. Under sterile conditions, the left posterior axillary line was marked. After local infiltration, a thoracentesis catheter was advanced into the pleural space with ultrasound guidance.\n\nA total of 1.2 L of clear yellow fluid was removed and sent for cell count, Gram stain and culture, pH, LDH, protein, and cytology. The catheter was then removed and a dressing applied.\n\nCOMPLICATIONS:\nNone. No cough, chest pain, or air aspiration. Post-procedure chest radiograph showed interval decrease in effusion without pneumothorax.\n\nPLAN:\nResume antibiotics. Review pleural fluid studies to differentiate transudate vs exudate. Outpatient pulmonary follow-up in 1\u20132 weeks.",
     "cpt_codes": [
       32555
     ],
@@ -933,7 +861,7 @@
       "nav_sampling_tools": [],
       "follow_up_plan": [
         "Review pleural fluid data when available.",
-        "Outpatient pulmonary follow-up in 1–2 weeks."
+        "Outpatient pulmonary follow-up in 1\u20132 weeks."
       ],
       "evidence": {
         "pleural_procedure_type": "Procedure description clearly states therapeutic thoracentesis.",
@@ -990,19 +918,10 @@
       "comments": [
         "32555 is correct for thoracentesis with imaging guidance."
       ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
-      ]
     }
   },
   {
-    "note_text": "PATIENT: <PERSON>   MRN: <MRN>   DOB: <DATE_TIME>\nDATE: <DATE_TIME>   LOCATION: OR\nPROCEDURE: Medical thoracoscopy with talc poudrage pleurodesis, left\nINDICATION: 74-year-old male with recurrent left malignant pleural effusion from non–small cell lung cancer, symptomatic despite prior thoracenteses.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with single-lumen endotracheal tube and lung isolation via bronchial blocker.\n\nPROCEDURE DESCRIPTION:\nPatient placed in right lateral decubitus position. After entry into the left pleural space in the mid-axillary line, a rigid medical thoracoscope was introduced. Diffuse pleural nodularity was seen over the parietal pleura; multiple biopsies were obtained. Approximately 1.8 L of serosanguinous fluid was evacuated.\n\nTalc poudrage pleurodesis was then performed with insufflation of 4 g of sterile talc over the parietal pleura under thoracoscopic visualization. A 24 Fr chest tube was placed at the conclusion of the case and connected to suction.\n\nCOMPLICATIONS:\nNone intra-procedure.\n\nPLAN:\nAdmit to floor. Maintain chest tube to -20 cmH2O suction overnight, then water seal if output and air leak allow. Daily chest radiographs until tube removal.",
+    "note_text": "PATIENT: Charles Young   MRN: BRN00132   DOB: 06/04/1951\nDATE: 11/07/2025   LOCATION: OR\nPROCEDURE: Medical thoracoscopy with talc poudrage pleurodesis, left\nINDICATION: 74-year-old male with recurrent left malignant pleural effusion from non\u2013small cell lung cancer, symptomatic despite prior thoracenteses.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with single-lumen endotracheal tube and lung isolation via bronchial blocker.\n\nPROCEDURE DESCRIPTION:\nPatient placed in right lateral decubitus position. After entry into the left pleural space in the mid-axillary line, a rigid medical thoracoscope was introduced. Diffuse pleural nodularity was seen over the parietal pleura; multiple biopsies were obtained. Approximately 1.8 L of serosanguinous fluid was evacuated.\n\nTalc poudrage pleurodesis was then performed with insufflation of 4 g of sterile talc over the parietal pleura under thoracoscopic visualization. A 24 Fr chest tube was placed at the conclusion of the case and connected to suction.\n\nCOMPLICATIONS:\nNone intra-procedure.\n\nPLAN:\nAdmit to floor. Maintain chest tube to -20 cmH2O suction overnight, then water seal if output and air leak allow. Daily chest radiographs until tube removal.",
     "cpt_codes": [
       32650
     ],
@@ -1096,15 +1015,6 @@
       "estimated_total_facility_payment_2025": 485.0,
       "comments": [
         "32650 (thoracoscopy with pleurodesis) typically bundles 32601/32604 (diagnostic/biopsy) when performed in the same session on the same side."
-      ]
-    },
-    "scrub_metadata": {
-      "entities_redacted": 4,
-      "entity_types": [
-        "PERSON",
-        "MRN",
-        "DATE_TIME",
-        "DATE_TIME"
       ]
     }
   }

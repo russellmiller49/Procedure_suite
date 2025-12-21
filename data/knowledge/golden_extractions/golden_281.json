@@ -60,7 +60,7 @@
       "final_diagnosis_prelim": "Undiagnosed exudative pleural effusion; pleural biopsies pending",
       "molecular_testing_requested": false,
       "disposition": "Floor admission",
-      "follow_up_plan": "Await histopathology and microbiology; IP clinic follow-up in 7–10 days",
+      "follow_up_plan": "Await histopathology and microbiology; IP clinic follow-up in 7\u201310 days",
       "cpt_codes": [
         32609
       ],
@@ -735,7 +735,7 @@
     }
   },
   {
-    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for unilateral transudative-appearing effusion in heart failure.\nPatient: William Scott, 74-year-old male with heart failure with reduced ejection fraction and large right pleural effusion that appears transudative by Light’s criteria but has atypical cytology.\nAnesthesia: Moderate sedation with midazolam and fentanyl.\nIndication: Atypical cells noted on pleural cytology in otherwise transudative-appearing effusion; need pleural biopsy to exclude malignancy.\nProcedure details: Ultrasound-guided entry at the right 7th intercostal space. 1.5 L of clear, straw-colored fluid was drained. Thoracoscopy revealed smooth glistening pleura without nodules. Multiple random biopsies (6 samples) of parietal pleura were obtained. No pleurodesis performed. A 20 Fr chest tube was left in place on water seal.\nComplications: None.\nEstimated blood loss: 15 mL.\nDisposition: Admitted to cardiology floor.\nPlan: Await pathology; adjust diuretic therapy for heart failure; consider repeat cytology if effusion recurs.",
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Medical thoracoscopy with pleural biopsies for unilateral transudative-appearing effusion in heart failure.\nPatient: William Scott, 74-year-old male with heart failure with reduced ejection fraction and large right pleural effusion that appears transudative by Light\u2019s criteria but has atypical cytology.\nAnesthesia: Moderate sedation with midazolam and fentanyl.\nIndication: Atypical cells noted on pleural cytology in otherwise transudative-appearing effusion; need pleural biopsy to exclude malignancy.\nProcedure details: Ultrasound-guided entry at the right 7th intercostal space. 1.5 L of clear, straw-colored fluid was drained. Thoracoscopy revealed smooth glistening pleura without nodules. Multiple random biopsies (6 samples) of parietal pleura were obtained. No pleurodesis performed. A 20 Fr chest tube was left in place on water seal.\nComplications: None.\nEstimated blood loss: 15 mL.\nDisposition: Admitted to cardiology floor.\nPlan: Await pathology; adjust diuretic therapy for heart failure; consider repeat cytology if effusion recurs.",
     "cpt_codes": [
       32609
     ],
