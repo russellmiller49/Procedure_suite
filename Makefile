@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver build-phi-platinum dev-iu pull-model-pytorch
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver build-phi-platinum dev-iu pull-model-pytorch
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -60,6 +60,11 @@ distill-phi-silver:
 		--teacher-model data/models/hf/piiranha-v1-detect-personal-information \
 		--label-schema standard \
 		--device $(DEVICE)
+
+sanitize-phi-silver:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/sanitize_dataset.py \
+		--in data/ml_training/distilled_phi_labels.jsonl \
+		--out data/ml_training/distilled_phi_CLEANED.jsonl
 
 build-phi-platinum:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
@@ -127,6 +132,7 @@ help:
 	@echo "  run-coder      - Run smart-hybrid coder over notes"
 	@echo "  distill-phi    - Distill PHI labels for student NER training"
 	@echo "  distill-phi-silver - Distill Piiranha silver PHI labels"
+	@echo "  sanitize-phi-silver - Post-hoc sanitizer for silver PHI labels"
 	@echo "  build-phi-platinum - Build hybrid redactor PHI spans"
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"

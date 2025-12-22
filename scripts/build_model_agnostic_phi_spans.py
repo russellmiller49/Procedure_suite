@@ -194,6 +194,8 @@ PROTECTED_PERSON_VETO_TERMS = {
     if isinstance(term, str) and term.strip()
 }
 
+DEVICE_KEYWORDS = ("stent", "valve")
+
 STATION_RE = re.compile(r"^\d{1,2}[LR](?:[is])?$", re.IGNORECASE)
 SEGMENT_RE = re.compile(r"^[LR][Bb]\d{1,2}$", re.IGNORECASE)
 
@@ -227,6 +229,13 @@ def _is_station_adjacent_digits(text: str, start: int, end: int) -> bool:
 
 def _normalize_span_text(span_text: str) -> str:
     return span_text.lower().strip().strip(".,;:()[]{}")
+
+
+def _contains_device_keyword(span_text: str) -> bool:
+    normalized = _normalize_span_text(span_text)
+    if not normalized:
+        return False
+    return any(keyword in normalized for keyword in DEVICE_KEYWORDS)
 
 
 def _has_station_hint(line_text: str) -> bool:
@@ -418,6 +427,12 @@ def filter_detections(
             if _is_station_adjacent_digits(note_text, start, end):
                 counters["spans_dropped_station_adjacent_digits"] += 1
                 continue
+            if _is_ln_station(span_text, line_text):
+                counters["spans_dropped_ln_station"] += 1
+                continue
+            if _contains_device_keyword(span_text):
+                counters["spans_dropped_device_keyword"] += 1
+                continue
             if is_protected_for_geo(span_text, line_text):
                 counters["spans_dropped_protected_geo"] += 1
                 continue
@@ -488,6 +503,8 @@ def main() -> int:
         "spans_dropped_temperature": 0,
         "spans_dropped_protected_geo": 0,
         "spans_dropped_protected_person": 0,
+        "spans_dropped_ln_station": 0,
+        "spans_dropped_device_keyword": 0,
         "spans_dropped_station_adjacent_digits": 0,
         "spans_dropped_unplausible_address": 0,
     }
@@ -559,6 +576,8 @@ def main() -> int:
     logger.info("Spans dropped (temperature): %s", counters["spans_dropped_temperature"])
     logger.info("Spans dropped (protected geo): %s", counters["spans_dropped_protected_geo"])
     logger.info("Spans dropped (protected person): %s", counters["spans_dropped_protected_person"])
+    logger.info("Spans dropped (LN station): %s", counters["spans_dropped_ln_station"])
+    logger.info("Spans dropped (device keyword): %s", counters["spans_dropped_device_keyword"])
     logger.info(
         "Spans dropped (station adjacent digits): %s",
         counters["spans_dropped_station_adjacent_digits"],

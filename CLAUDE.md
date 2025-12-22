@@ -144,6 +144,17 @@ make distill-phi-silver
 
 **Output:** `data/ml_training/distilled_phi_labels.jsonl`
 
+**Sanitizer (post-hoc):** clean older distills or add belt-and-suspenders protection.
+```bash
+python scripts/sanitize_dataset.py
+```
+Or:
+```bash
+make sanitize-phi-silver
+```
+**Output:** `data/ml_training/distilled_phi_CLEANED.jsonl`
+**Workflow:** distill → sanitize → train on the CLEANED file for client models.
+
 **Refinery:** drops common false positives (e.g., temps like `105C`, CPT codes in ZIPCODE).
 **Label schema:** `--label-schema standard` maps Piiranha labels into `PATIENT/GEO/PROVIDER/...`.
 
@@ -161,6 +172,13 @@ make build-phi-platinum
 **Output:** `data/ml_training/phi_platinum_spans.jsonl`
 **Note:** Platinum is the long-term source of truth; fix edge cases in the hybrid redactor, regenerate, and retrain both models.
 
+**Optional sanitizer:** retroactive cleanup for platinum spans.
+```bash
+python scripts/sanitize_platinum_spans.py
+```
+**Output:** `data/ml_training/phi_platinum_spans_CLEANED.jsonl`
+**Workflow:** build → optional sanitize → train (align char spans to tokenizer outputs).
+
 **Provider policy:** default is `drop` (name-like spans in provider contexts are removed).
 
 **Shared safeguards (Silver + Platinum):**
@@ -171,7 +189,7 @@ make build-phi-platinum
 - Address plausibility gate for GEO-like spans.
 - Standard schema mapping for downstream alignment.
 
-**Differences:** Silver applies tokenizer-aware subword wipes (CPT/LN stations), while Platinum applies equivalent span-level filters using line context.
+**Differences:** Silver applies tokenizer-aware subword wipes (CPT/LN stations) plus an optional post-hoc sanitizer, while Platinum applies equivalent span-level filters using line context with an optional span sanitizer for retroactive cleanup.
 
 ---
 

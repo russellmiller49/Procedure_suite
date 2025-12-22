@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from scripts.build_model_agnostic_phi_spans import filter_detections
+from scripts.sanitize_platinum_spans import init_counters, should_drop_span
 
 
 def _run_filter(note_text: str, detections: list[dict[str, object]], provider_policy: str = "drop"):
@@ -10,6 +11,8 @@ def _run_filter(note_text: str, detections: list[dict[str, object]], provider_po
         "spans_dropped_temperature": 0,
         "spans_dropped_protected_geo": 0,
         "spans_dropped_protected_person": 0,
+        "spans_dropped_ln_station": 0,
+        "spans_dropped_device_keyword": 0,
         "spans_dropped_station_adjacent_digits": 0,
         "spans_dropped_unplausible_address": 0,
     }
@@ -66,7 +69,7 @@ def test_platinum_drops_station_geo_span() -> None:
     spans, counters = _run_filter(text, detections)
 
     assert spans == []
-    assert counters["spans_dropped_protected_geo"] == 1
+    assert counters["spans_dropped_ln_station"] == 1
 
 
 def test_platinum_drops_provider_context_name() -> None:
@@ -103,3 +106,26 @@ def test_platinum_drops_station_number_as_person() -> None:
 
     assert spans == []
     assert counters["spans_dropped_protected_person"] == 1
+
+
+def test_platinum_sanitizer_drops_cpt_like_geo_span_in_code_line() -> None:
+    text = "Codes submitted: 31654"
+    start = text.index("31654")
+    span = {"start": start, "end": start + 5, "label": "GEO", "text": "31654"}
+    counters = init_counters()
+
+    should_drop = should_drop_span(span, text, counters)
+
+    assert should_drop is True
+    assert counters["spans_dropped_cpt"] == 1
+
+
+def test_platinum_sanitizer_keeps_zip_in_address_line() -> None:
+    text = "La Jolla, CA 92037"
+    start = text.index("92037")
+    span = {"start": start, "end": start + 5, "label": "GEO", "text": "92037"}
+    counters = init_counters()
+
+    should_drop = should_drop_span(span, text, counters)
+
+    assert should_drop is False
