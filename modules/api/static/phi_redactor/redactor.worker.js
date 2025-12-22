@@ -3,14 +3,10 @@ import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transfo
 env.allowLocalModels = false;
 env.useBrowserCache = true;
 
-// Safely configure WASM paths if the property chain exists
-try {
-  if (env.backends?.onnx?.wasm) {
-    env.backends.onnx.wasm.wasmPaths =
-      "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0/dist/";
-  }
-} catch (e) {
-  console.warn("Could not configure WASM paths:", e);
+// Official WASM path setting (best-effort if shape differs across versions)
+if (env.backends?.onnx?.wasm) {
+  env.backends.onnx.wasm.wasmPaths =
+    "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0/dist/";
 }
 
 const MODEL_ID = "onnx-community/piiranha-v1-detect-personal-information-ONNX";
@@ -26,6 +22,9 @@ let maxTermLen = 48;
 
 let cancelled = false;
 let running = false;
+let allowlistPromise = null;
+let nerPromise = null;
+let nerLoadFailed = false;
 
 function post(type, payload = {}) {
   self.postMessage({ type, ...payload });
@@ -196,10 +195,14 @@ function mergeOverlaps(spans) {
 }
 
 async function loadNER() {
+  // Prompt spec asks for device:"cpu", but Transformers.js v3 uses device:"wasm" for CPU execution.
+  // We attempt the requested options and transparently remap cpu -> wasm when needed.
   const tries = [
-    { quantized: true },
-    { dtype: "q8" },
-    {},
+    { dtype: "uint8", device: "cpu", subfolder: "onnx", model_file_name: "model_uint8.onnx" },
+    { dtype: "q8", device: "cpu", subfolder: "onnx", model_file_name: "model_int8.onnx" },
+    { quantized: true, device: "cpu", subfolder: "onnx", model_file_name: "model_quantized.onnx" },
+    // Final fallback still uses a quantized file to avoid downloading the >1GB fp32 artifact.
+    { device: "cpu", subfolder: "onnx", model_file_name: "model_int8.onnx" },
   ];
 
   let lastErr = null;
@@ -210,7 +213,24 @@ async function loadNER() {
       console.log("[PHI Worker] NER model loaded successfully");
       return p;
     } catch (e) {
-      console.warn("[PHI Worker] NER load attempt failed:", e?.message || e);
+      const msg = String(e?.message || e);
+      // Transformers.js uses { device: "wasm" } (and optionally "webgpu"), not "cpu".
+      if (opts.device === "cpu" && msg.includes('Unsupported device: "cpu"')) {
+        const remapped = { ...opts, device: "wasm" };
+        try {
+          console.log("[PHI Worker] Remapping device cpu -> wasm:", remapped);
+          const p2 = await pipeline(TASK, MODEL_ID, remapped);
+          console.log("[PHI Worker] NER model loaded successfully");
+          return p2;
+        } catch (e2) {
+          const msg2 = String(e2?.message || e2);
+          console.warn("[PHI Worker] NER load attempt failed:", msg2);
+          lastErr = e2;
+          continue;
+        }
+      }
+
+      console.warn("[PHI Worker] NER load attempt failed:", msg);
       lastErr = e;
     }
   }
@@ -243,36 +263,64 @@ async function runNER(chunk, aiThreshold) {
   return spans;
 }
 
-async function ensureReady() {
-  if (allowlistTrie !== null) return; // Already initialized
+async function ensureAllowlistReady() {
+  if (allowlistTrie !== null) return;
+  if (allowlistPromise) return allowlistPromise;
 
-  console.log("[PHI Worker] Initializing...");
+  allowlistPromise = (async () => {
+    console.log("[PHI Worker] Loading allowlist...");
+    post("progress", { windowIndex: 0, windowCount: 0, stage: "Loading allowlist…" });
+    try {
+      const trieUrl = new URL("./allowlist_trie.json", import.meta.url);
+      const trieJson = await fetch(trieUrl).then((r) => {
+        if (!r.ok) throw new Error(`Failed to load allowlist_trie.json (${r.status})`);
+        return r.json();
+      });
+      allowlistTrie = trieJson.trie || trieJson;
+      maxTermLen = trieJson.max_term_len || 48;
+    } catch (e) {
+      console.warn("[PHI Worker] Failed to load allowlist trie, using empty:", e?.message);
+      allowlistTrie = {};
+      maxTermLen = 48;
+    }
+  })();
 
-  // Load allowlist trie (required)
   try {
-    const trieUrl = new URL("./allowlist_trie.json", import.meta.url);
-    const trieJson = await fetch(trieUrl).then((r) => {
-      if (!r.ok) throw new Error(`Failed to load allowlist_trie.json (${r.status})`);
-      return r.json();
+    await allowlistPromise;
+  } finally {
+    // keep promise for reuse; no-op
+  }
+}
+
+function ensureNERLoadingStarted() {
+  if (nerPipeline || nerLoadFailed) return;
+  if (nerPromise) return;
+
+  nerPromise = (async () => {
+    post("progress", {
+      windowIndex: 0,
+      windowCount: 0,
+      stage: "Downloading AI model… (runs locally; may take minutes)",
     });
-    allowlistTrie = trieJson.trie || trieJson;
-    maxTermLen = trieJson.max_term_len || 48;
-    console.log("[PHI Worker] Allowlist trie loaded");
-  } catch (e) {
-    console.warn("[PHI Worker] Failed to load allowlist trie, using empty:", e?.message);
-    allowlistTrie = {};
-    maxTermLen = 48;
-  }
-
-  // Load NER model (optional - falls back to regex-only)
-  try {
-    nerPipeline = await loadNER();
-  } catch (e) {
-    console.warn("[PHI Worker] NER model not available, using regex-only detection:", e?.message);
-    nerPipeline = null;
-  }
-
-  console.log("[PHI Worker] Initialization complete. NER available:", !!nerPipeline);
+    try {
+      nerPipeline = await loadNER();
+      post("progress", {
+        windowIndex: 0,
+        windowCount: 0,
+        stage: "AI model ready (rerun detection to include AI spans)",
+      });
+    } catch (e) {
+      nerLoadFailed = true;
+      nerPipeline = null;
+      const msg = String(e?.message || e);
+      console.warn("[PHI Worker] NER model unavailable; regex-only mode:", msg);
+      post("progress", {
+        windowIndex: 0,
+        windowCount: 0,
+        stage: `AI model failed to load: ${msg}`,
+      });
+    }
+  })();
 }
 
 self.onmessage = async (e) => {
@@ -286,7 +334,8 @@ self.onmessage = async (e) => {
 
   if (msg.type === "init") {
     try {
-      await ensureReady();
+      await ensureAllowlistReady();
+      ensureNERLoadingStarted(); // load in background; don't block readiness
       post("ready");
     } catch (err) {
       post("error", { message: String(err?.message || err) });
@@ -299,7 +348,8 @@ self.onmessage = async (e) => {
     running = true;
     cancelled = false;
     try {
-      await ensureReady();
+      await ensureAllowlistReady();
+      ensureNERLoadingStarted();
 
       const text = String(msg.text || "");
       const config = msg.config || {};
@@ -316,6 +366,14 @@ self.onmessage = async (e) => {
         Math.ceil(Math.max(0, text.length - OVERLAP) / STEP)
       );
       let windowIndex = 0;
+
+      post("progress", {
+        windowIndex: 0,
+        windowCount,
+        stage: nerPipeline
+          ? "Running detection (AI + regex)…"
+          : "Running detection (regex-only; AI model downloading)…",
+      });
 
       for (let start = 0; start < text.length; start += STEP) {
         const end = Math.min(text.length, start + WINDOW);
@@ -356,4 +414,3 @@ self.onmessage = async (e) => {
     }
   }
 };
-

@@ -26,6 +26,30 @@ def test_phi_redactor_index_has_coop_coep_headers(client: TestClient) -> None:
     assert resp.headers.get("Cross-Origin-Opener-Policy") == "same-origin"
     assert resp.headers.get("Cross-Origin-Embedder-Policy") == "require-corp"
 
+def test_phi_redactor_redirects_trailing_slash(client: TestClient) -> None:
+    resp = client.get("/ui/phi_redactor", follow_redirects=False)
+    assert resp.status_code in (301, 302, 303, 307, 308)
+    assert resp.headers.get("location") == "/ui/phi_redactor/"
+    # Even the redirect response should carry headers for debugging/consistency.
+    assert resp.headers.get("Cross-Origin-Opener-Policy") == "same-origin"
+    assert resp.headers.get("Cross-Origin-Embedder-Policy") == "require-corp"
+
+
+def test_phi_redactor_assets_have_coop_coep_headers(client: TestClient) -> None:
+    """Test that all PHI redactor static assets have COOP/COEP headers."""
+    for path in (
+        "/ui/phi_redactor/index.html",
+        "/ui/phi_redactor/app.js",
+        "/ui/phi_redactor/redactor.worker.js",
+        "/ui/phi_redactor/styles.css",
+        "/ui/phi_redactor/allowlist_trie.json",
+        "/ui/phi_redactor/sw.js",
+    ):
+        resp = client.get(path)
+        assert resp.status_code == 200, path
+        assert resp.headers.get("Cross-Origin-Opener-Policy") == "same-origin", f"Missing COOP header for {path}"
+        assert resp.headers.get("Cross-Origin-Embedder-Policy") == "require-corp", f"Missing COEP header for {path}"
+
 
 def test_unified_process_already_scrubbed_bypasses_server_scrubber(monkeypatch, client: TestClient) -> None:
     class StubRegistryService:
@@ -88,4 +112,3 @@ def test_unified_process_already_scrubbed_bypasses_server_scrubber(monkeypatch, 
         assert stub_registry.seen_note == note
     finally:
         app.dependency_overrides.clear()
-

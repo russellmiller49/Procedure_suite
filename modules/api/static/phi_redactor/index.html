@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="./styles.css" />
 
     <!-- Monaco Editor (AMD loader) -->
-    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+    <!-- COEP=require-corp requires CORS-enabled cross-origin scripts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"
+      crossorigin="anonymous"
+    ></script>
     <script>
       window.__monacoReady = new Promise((resolve, reject) => {
         try {
@@ -15,11 +19,19 @@
             paths: {
               vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs",
             },
+            onNodeCreated: function (node) {
+              // Ensure scripts injected by the AMD loader are fetched with CORS under COEP.
+              node.crossOrigin = "anonymous";
+            },
           });
           require(["vs/editor/editor.main"], () => resolve(), reject);
         } catch (e) {
           reject(e);
         }
+      });
+      window.__monacoReady.catch((e) => {
+        const el = document.getElementById("statusText");
+        if (el) el.textContent = `Monaco failed to load: ${e?.message || e}`;
       });
     </script>
     <script type="module" src="./app.js"></script>
@@ -78,4 +90,3 @@
     </main>
   </body>
 </html>
-

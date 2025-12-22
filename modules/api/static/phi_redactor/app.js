@@ -16,6 +16,12 @@ const WORKER_CONFIG = {
   aiThreshold: 0.85,
 };
 
+runBtn.disabled = true;
+cancelBtn.disabled = true;
+applyBtn.disabled = true;
+revertBtn.disabled = true;
+submitBtn.disabled = true;
+
 function setStatus(text) {
   statusTextEl.textContent = text;
 }
@@ -90,6 +96,17 @@ async function main() {
     return;
   }
   await window.__monacoReady;
+
+  if (!globalThis.crossOriginIsolated) {
+    setStatus(
+      "Cross-origin isolation is OFF (SharedArrayBuffer unavailable). Open /ui/phi_redactor/ and verify COOP/COEP headers."
+    );
+    runBtn.disabled = true;
+    cancelBtn.disabled = true;
+    applyBtn.disabled = true;
+    revertBtn.disabled = true;
+    submitBtn.disabled = true;
+  }
 
   const editor = monaco.editor.create(document.getElementById("editor"), {
     value: "",
@@ -240,22 +257,80 @@ async function main() {
   });
 
   const worker = new Worker("./redactor.worker.js", { type: "module" });
+  let workerReady = false;
+  let lastWorkerMessageAt = Date.now();
+  let aiModelReady = false;
+  let aiModelFailed = false;
+  let aiModelError = null;
+
+  worker.addEventListener("error", (ev) => {
+    setStatus(`Worker error: ${ev.message || "failed to load"}`);
+    setProgress("");
+    running = false;
+    cancelBtn.disabled = true;
+    runBtn.disabled = true;
+    applyBtn.disabled = true;
+  });
+
+  worker.addEventListener("messageerror", () => {
+    setStatus("Worker message error (serialization failed)");
+    setProgress("");
+    running = false;
+    cancelBtn.disabled = true;
+    runBtn.disabled = true;
+    applyBtn.disabled = true;
+  });
+
   worker.postMessage({ type: "init" });
 
   worker.onmessage = (e) => {
     const msg = e.data;
     if (!msg || typeof msg.type !== "string") return;
+    lastWorkerMessageAt = Date.now();
 
     if (msg.type === "ready") {
-      setStatus("Ready");
+      workerReady = true;
+      setStatus("Ready (AI model may still be downloading)");
       setProgress("");
-      runBtn.disabled = false;
+      runBtn.disabled = !globalThis.crossOriginIsolated;
       return;
     }
 
     if (msg.type === "progress") {
-      const percent = Math.round((msg.windowIndex / msg.windowCount) * 100);
-      setProgress(`Processing window ${msg.windowIndex}/${msg.windowCount} (${percent}%)`);
+      const stage = msg.stage ? String(msg.stage) : null;
+      if (stage) {
+        if (stage.startsWith("AI model ready")) {
+          aiModelReady = true;
+          aiModelFailed = false;
+          aiModelError = null;
+          if (!running) setStatus("Ready (AI model loaded)");
+        } else if (stage.startsWith("AI model failed")) {
+          aiModelReady = false;
+          aiModelFailed = true;
+          aiModelError = stage.includes(":") ? stage.split(":").slice(1).join(":").trim() : null;
+          const shortErr =
+            aiModelError && aiModelError.length > 120
+              ? `${aiModelError.slice(0, 117)}…`
+              : aiModelError;
+          if (!running) {
+            setStatus(
+              shortErr
+                ? `Ready (regex-only; AI failed: ${shortErr})`
+                : "Ready (regex-only; AI model failed)"
+            );
+          }
+        }
+        if (msg.windowCount && msg.windowIndex) {
+          setProgress(`${stage} (${msg.windowIndex}/${msg.windowCount})`);
+        } else {
+          setProgress(stage);
+        }
+      } else {
+        const percent = msg.windowCount
+          ? Math.round((msg.windowIndex / msg.windowCount) * 100)
+          : 0;
+        setProgress(`Processing window ${msg.windowIndex}/${msg.windowCount} (${percent}%)`);
+      }
       return;
     }
 
@@ -269,7 +344,7 @@ async function main() {
     if (msg.type === "done") {
       running = false;
       cancelBtn.disabled = true;
-      runBtn.disabled = false;
+      runBtn.disabled = !workerReady || !globalThis.crossOriginIsolated;
       applyBtn.disabled = false; // Enable even with 0 detections
       revertBtn.disabled = originalText === model.getValue();
 
@@ -278,9 +353,21 @@ async function main() {
 
       const detectionCount = detections.length;
       if (detectionCount === 0) {
-        setStatus("Done (0 detections) - You can apply redactions to enable submit");
+        const modeNote = aiModelReady
+          ? "AI+regex"
+          : aiModelFailed
+          ? "regex-only (AI failed)"
+          : "regex-only (AI loading)";
+        setStatus(`Done (0 detections) — ${modeNote}`);
       } else {
-        setStatus(`Done (${detectionCount} detection${detectionCount === 1 ? "" : "s"})`);
+        const modeNote = aiModelReady
+          ? "AI+regex"
+          : aiModelFailed
+          ? "regex-only (AI failed)"
+          : "regex-only (AI loading)";
+        setStatus(
+          `Done (${detectionCount} detection${detectionCount === 1 ? "" : "s"}) — ${modeNote}`
+        );
       }
       setProgress("");
       renderDetections();
@@ -290,7 +377,7 @@ async function main() {
     if (msg.type === "error") {
       running = false;
       cancelBtn.disabled = true;
-      runBtn.disabled = false;
+      runBtn.disabled = !workerReady || !globalThis.crossOriginIsolated;
       applyBtn.disabled = !hasRunDetection;
       setStatus(`Error: ${msg.message || "unknown"}`);
       setProgress("");
@@ -306,6 +393,10 @@ async function main() {
 
   runBtn.addEventListener("click", () => {
     if (running) return;
+    if (!workerReady) {
+      setStatus("Worker still loading… (first run may take minutes)");
+      return;
+    }
     hasRunDetection = true;
     setScrubbedConfirmed(false);
 
@@ -405,11 +496,15 @@ async function main() {
       });
       
       console.log("Response status:", res.status, res.statusText);
-      
-      const data = await res.json().catch((parseErr) => {
+
+      const bodyText = await res.text();
+      let data;
+      try {
+        data = bodyText ? JSON.parse(bodyText) : null;
+      } catch (parseErr) {
         console.error("Failed to parse JSON response:", parseErr);
-        return { error: "Invalid JSON response", raw: await res.text().catch(() => "(unable to read)") };
-      });
+        data = { error: "Invalid JSON response", raw: bodyText };
+      }
       
       if (!res.ok) {
         console.error("Request failed:", res.status, data);
@@ -439,7 +534,7 @@ async function main() {
   });
 
   // Optional: service worker (local assets only)
-  if ("serviceWorker" in navigator) {
+  if ("serviceWorker" in navigator && new URL(location.href).searchParams.get("sw") === "1") {
     try {
       await navigator.serviceWorker.register("./sw.js");
     } catch {
@@ -447,7 +542,15 @@ async function main() {
     }
   }
 
-  setStatus("Initializing worker…");
+  setStatus("Initializing worker… (AI model downloads run locally; first load may take minutes)");
+
+  setInterval(() => {
+    if (!running) return;
+    const quietMs = Date.now() - lastWorkerMessageAt;
+    if (quietMs > 15_000) {
+      setProgress("Still working… (model download/inference can take a while)");
+    }
+  }, 2_000);
 }
 
 main().catch((e) => {

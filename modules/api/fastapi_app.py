@@ -279,14 +279,84 @@ app.include_router(phi_demo_router)
 # Registry extraction router (hybrid-first pipeline)
 app.include_router(registry_extract_router, tags=["registry"])
 
-@app.get("/ui/phi_redactor/")
-def phi_redactor_index() -> FileResponse:
-    static_dir = Path(__file__).parent / "static"
-    index_path = static_dir / "phi_redactor" / "index.html"
-    resp = FileResponse(index_path)
+def _phi_redactor_response(path: Path) -> FileResponse:
+    resp = FileResponse(path)
+    # Required for SharedArrayBuffer in modern browsers (cross-origin isolation).
     resp.headers["Cross-Origin-Opener-Policy"] = "same-origin"
     resp.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+    # Avoid stale client-side caching during rapid iteration/debugging.
+    resp.headers["Cache-Control"] = "no-store"
     return resp
+
+
+def _phi_redactor_static_dir() -> Path:
+    return Path(__file__).parent / "static" / "phi_redactor"
+
+
+def _static_files_enabled() -> bool:
+    return os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes")
+
+
+@app.get("/ui/phi_redactor")
+def phi_redactor_redirect() -> RedirectResponse:
+    # Avoid "/ui/phi_redactor" being treated as a file path in the browser (breaks relative URLs).
+    # Redirect ensures relative module imports resolve to "/ui/phi_redactor/...".
+    resp = RedirectResponse(url="/ui/phi_redactor/")
+    resp.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+    resp.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@app.get("/ui/phi_redactor/")
+def phi_redactor_index() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    index_path = _phi_redactor_static_dir() / "index.html"
+    return _phi_redactor_response(index_path)
+
+
+@app.get("/ui/phi_redactor/index.html")
+def phi_redactor_index_html() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    index_path = _phi_redactor_static_dir() / "index.html"
+    return _phi_redactor_response(index_path)
+
+
+@app.get("/ui/phi_redactor/app.js")
+def phi_redactor_app_js() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "app.js")
+
+
+@app.get("/ui/phi_redactor/redactor.worker.js")
+def phi_redactor_worker_js() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "redactor.worker.js")
+
+
+@app.get("/ui/phi_redactor/styles.css")
+def phi_redactor_styles_css() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "styles.css")
+
+
+@app.get("/ui/phi_redactor/allowlist_trie.json")
+def phi_redactor_allowlist() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "allowlist_trie.json")
+
+
+@app.get("/ui/phi_redactor/sw.js")
+def phi_redactor_sw() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "sw.js")
 
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
