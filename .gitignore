@@ -39,5 +39,13 @@ artifacts/phi_audit/
 distilled/
 dist/registry_bundle/
 
+# Hugging Face model snapshots (large; keep out of git)
+modules/api/static/phi_redactor/vendor/**
+!modules/api/static/phi_redactor/vendor/.gitkeep
+
+# Hugging Face model snapshots (downloaded locally; keep out of git)
+data/models/hf/**
+!data/models/hf/.gitkeep
+
 # Explicit: prevent committing the large distill checkpoint if it exists locally
 data/models/RoBERTa-base-PM-M3-Voc-distill/RoBERTa-base-PM-M3-Voc-distill-hf/pytorch_model.bin

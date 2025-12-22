@@ -129,6 +129,52 @@ python scripts/train_roberta.py \
 
 ---
 
+## 🔒 PHI Label Distillation (Silver vs Platinum)
+
+**Silver (Piiranha → token BIO):** fast offline distillation for client-sized models.
+
+**Run:**
+```bash
+python scripts/distill_phi_labels.py --limit-notes 50 --device cpu
+```
+Or:
+```bash
+make distill-phi-silver
+```
+
+**Output:** `data/ml_training/distilled_phi_labels.jsonl`
+
+**Refinery:** drops common false positives (e.g., temps like `105C`, CPT codes in ZIPCODE).
+**Label schema:** `--label-schema standard` maps Piiranha labels into `PATIENT/GEO/PROVIDER/...`.
+
+**Platinum (Hybrid Redactor → char spans):** highest-precision, model-agnostic spans for both server and client training.
+
+**Run:**
+```bash
+python scripts/build_model_agnostic_phi_spans.py --limit-notes 50
+```
+Or:
+```bash
+make build-phi-platinum
+```
+
+**Output:** `data/ml_training/phi_platinum_spans.jsonl`
+**Note:** Platinum is the long-term source of truth; fix edge cases in the hybrid redactor, regenerate, and retrain both models.
+
+**Provider policy:** default is `drop` (name-like spans in provider contexts are removed).
+
+**Shared safeguards (Silver + Platinum):**
+- CPT false-positive suppression (token-level wipes vs span-level drops in CPT context).
+- Temperature false-positive suppression (token-level wipes vs span-level drops).
+- Provider suppression (doctors are not redacted by default).
+- Protected clinical term veto (anatomy/device/allow-list, LN stations, segments).
+- Address plausibility gate for GEO-like spans.
+- Standard schema mapping for downstream alignment.
+
+**Differences:** Silver applies tokenizer-aware subword wipes (CPT/LN stations), while Platinum applies equivalent span-level filters using line context.
+
+---
+
 ## 🚀 Implementation Roadmap
 
 ### Phase 1: Data Preparation (Local)

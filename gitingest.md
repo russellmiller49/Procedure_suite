@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2025-12-17T15:04:41-08:00`
-Git: `main` @ `a7ae51a`
+Generated: `2025-12-22T09:07:17-08:00`
+Git: `v18` @ `00dffde`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -16,6 +16,7 @@ Git: `main` @ `a7ae51a`
 - proc_suite/
   - .claude/
     - .claude/settings.local.json
+  - .cursor/
   - .github/
     - .github/workflows/
       - .github/workflows/ci.yml
@@ -71,7 +72,57 @@ Git: `main` @ `a7ae51a`
       - artifacts/phi_audit/20251217_223841Z.json
       - artifacts/phi_audit/20251217_224125Z.json
       - artifacts/phi_audit/20251217_224849Z.json
+      - artifacts/phi_audit/20251218_005750Z.json
+      - artifacts/phi_audit/20251218_010431Z.json
+      - artifacts/phi_audit/20251218_010541Z.json
+      - artifacts/phi_audit/20251218_010638Z.json
+      - artifacts/phi_audit/20251218_010842Z.json
+      - artifacts/phi_audit/20251218_010958Z.json
+      - artifacts/phi_audit/20251218_012830Z.json
+      - artifacts/phi_audit/20251218_012935Z.json
+      - artifacts/phi_audit/20251218_013017Z.json
+      - artifacts/phi_audit/20251218_013059Z.json
+      - artifacts/phi_audit/20251218_013138Z.json
+      - artifacts/phi_audit/20251218_013217Z.json
+      - artifacts/phi_audit/20251218_013931Z.json
+      - artifacts/phi_audit/20251218_014012Z.json
+      - artifacts/phi_audit/20251218_014057Z.json
+      - artifacts/phi_audit/20251218_014142Z.json
+      - artifacts/phi_audit/20251218_014226Z.json
+      - artifacts/phi_audit/20251218_014424Z.json
+      - artifacts/phi_audit/20251218_014526Z.json
+      - artifacts/phi_audit/20251218_014601Z.json
+      - artifacts/phi_audit/20251218_014635Z.json
+      - artifacts/phi_audit/20251218_014719Z.json
+      - artifacts/phi_audit/20251218_021519Z.json
+      - artifacts/phi_audit/20251218_021625Z.json
+      - artifacts/phi_audit/20251218_021739Z.json
+      - artifacts/phi_audit/20251218_021828Z.json
+      - artifacts/phi_audit/20251218_021938Z.json
+      - artifacts/phi_audit/20251218_022039Z.json
+      - artifacts/phi_audit/20251218_161236Z.json
+      - artifacts/phi_audit/20251218_161332Z.json
+      - artifacts/phi_audit/20251218_161437Z.json
+      - artifacts/phi_audit/20251218_161520Z.json
+      - artifacts/phi_audit/20251218_161559Z.json
+      - artifacts/phi_audit/20251218_185222Z.json
+      - artifacts/phi_audit/20251218_185314Z.json
+      - artifacts/phi_audit/20251218_191312Z.json
+      - artifacts/phi_audit/20251218_191354Z.json
+      - artifacts/phi_audit/20251218_191626Z.json
+      - artifacts/phi_audit/20251218_203224Z.json
+      - artifacts/phi_audit/20251219_161429Z.json
+      - artifacts/phi_audit/20251219_161613Z.json
+      - artifacts/phi_audit/20251219_161710Z.json
+      - artifacts/phi_audit/20251219_161836Z.json
+      - artifacts/phi_audit/20251219_162003Z.json
+      - artifacts/phi_audit/20251219_162139Z.json
+      - artifacts/phi_audit/20251219_164515Z.json
+      - artifacts/phi_audit/20251219_165101Z.json
+      - artifacts/phi_audit/20251219_170856Z.json
+      - artifacts/phi_audit/20251219_190050Z.json
       - artifacts/phi_audit/redaction_decisions.jsonl
+    - artifacts/redactions.jsonl
   - cms_rvu_tools/
     - cms_rvu_tools/cms_rvus_2025_ip.csv
     - cms_rvu_tools/IP_Registry_Enhanced_v2.json
@@ -296,6 +347,53 @@ Git: `main` @ `a7ae51a`
         - modules/api/services/__init__.py
         - modules/api/services/qa_pipeline.py
       - modules/api/static/
+        - modules/api/static/phi_redactor/
+          - modules/api/static/phi_redactor/vendor/
+            - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/
+                - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/
+                  - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_bnb4.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_bnb4.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_fp16.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_fp16.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_int8.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_int8.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4f16.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4f16.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_quantized.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_quantized.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_uint8.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_uint8.onnx.metadata
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/config.json.lock
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/config.json.metadata
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/quantize_config.json.lock
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/quantize_config.json.metadata
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/special_tokens_map.json.lock
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/special_tokens_map.json.metadata
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer.json.lock
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer.json.metadata
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer_config.json.lock
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer_config.json.metadata
+                  - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/.gitignore
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/onnx/
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/config.json
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/quantize_config.json
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/special_tokens_map.json
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer.json
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer_config.json
+            - modules/api/static/phi_redactor/vendor/.gitkeep
+          - modules/api/static/phi_redactor/allowlist_trie.json
+          - modules/api/static/phi_redactor/app.js
+          - modules/api/static/phi_redactor/index.html
+          - modules/api/static/phi_redactor/redactor.worker.js
+          - modules/api/static/phi_redactor/styles.css
+          - modules/api/static/phi_redactor/sw.js
         - modules/api/static/app.js
         - modules/api/static/index.html
         - modules/api/static/phi_demo.html
@@ -309,6 +407,7 @@ Git: `main` @ `a7ae51a`
       - modules/api/normalization.py
       - modules/api/phi_demo_store.py
       - modules/api/phi_dependencies.py
+      - modules/api/phi_redaction.py
       - modules/api/readiness.py
       - modules/api/routes_registry.py
     - modules/autocode/
@@ -465,7 +564,9 @@ Git: `main` @ `a7ae51a`
         - modules/phi/adapters/audit_logger_db.py
         - modules/phi/adapters/encryption_insecure_demo.py
         - modules/phi/adapters/fernet_encryption.py
+        - modules/phi/adapters/phi_redactor_hybrid.py
         - modules/phi/adapters/presidio_scrubber.py
+        - modules/phi/adapters/redaction-service.js
         - modules/phi/adapters/scrubber_stub.py
       - modules/phi/__init__.py
       - modules/phi/db.py
@@ -550,8 +651,10 @@ Git: `main` @ `a7ae51a`
       - modules/registry/prompts.py
       - modules/registry/registry_system_prompt.txt
       - modules/registry/schema.py
+      - modules/registry/schema_filter.py
       - modules/registry/schema_granular.py
       - modules/registry/summarize.py
+      - modules/registry/tags.py
       - modules/registry/transform.py
       - modules/registry/v2_booleans.py
     - modules/registry_cleaning/
@@ -731,17 +834,20 @@ Git: `main` @ `a7ae51a`
   - schemas/
     - schemas/IP_Registry.json
   - scripts/
+    - scripts/build_phi_allowlist_trie.py
     - scripts/build_registry_bundle.py
     - scripts/check_pydantic_models.py
     - scripts/dev_pull_model.sh
     - scripts/devserver.sh
     - scripts/discover_aws_region.sh
+    - scripts/download_piiranha_model.py
     - scripts/eval_hybrid_pipeline.py
     - scripts/evaluate_coder.py
     - scripts/evaluate_cpt.py
     - scripts/fit_thresholds_from_eval.py
     - scripts/generate_addon_templates.py
     - scripts/generate_gitingest.py
+    - scripts/patch.py
     - scripts/phi_audit.py
     - scripts/preflight.py
     - scripts/prepare_data.py
@@ -751,9 +857,10 @@ Git: `main` @ `a7ae51a`
     - scripts/render_report.py
     - scripts/review_llm_fallback_errors.py
     - scripts/run_coder_hybrid.py
+    - scripts/scrub_golden_jsons.py
     - scripts/self_correct_registry.py
     - scripts/smoke_run.sh
-    - scripts/train_cpt_custom.py
+    - scripts/train_registry_sklearn.py
     - scripts/train_roberta.py
     - scripts/train_roberta_pm3.py
     - scripts/upload_registry_bundle.sh
@@ -767,6 +874,8 @@ Git: `main` @ `a7ae51a`
       - tests/api/test_fastapi.py
       - tests/api/test_phi_demo_cases.py
       - tests/api/test_phi_endpoints.py
+      - tests/api/test_phi_redaction.py
+      - tests/api/test_phi_redactor_ui.py
       - tests/api/test_registry_extract_endpoint.py
       - tests/api/test_ui.py
     - tests/coder/
@@ -888,6 +997,7 @@ Git: `main` @ `a7ae51a`
       - tests/registry/test_registry_extraction_ebus.py
       - tests/registry/test_registry_qa_regressions.py
       - tests/registry/test_registry_service_hybrid_flow.py
+      - tests/registry/test_schema_filter.py
       - tests/registry/test_sedation_blvr.py
       - tests/registry/test_self_correction_loop.py
       - tests/registry/test_slots_ebus_tblb.py
@@ -2023,7 +2133,7 @@ dependencies = [
   "medspacy>=1.0,<2",
   "sqlalchemy>=2.0,<3",
   "alembic>=1.13,<2",
-  "scikit-learn>=1.5,<2.0",
+  "scikit-learn>=1.5.2,<2.0",
   "scikit-multilearn>=0.2.0,<1",
   "pandas>=2.0,<3",
   "psycopg[binary,pool]>=3.2,<4",
@@ -2114,7 +2224,7 @@ explicit_package_bases = true
 
 [[tool.mypy.overrides]]
 module = "modules.*"
-ignore_errors = true
+ignore_errors = false
 
 [[tool.mypy.overrides]]
 module = "modules.api.*"
@@ -2158,7 +2268,7 @@ en-core-sci-sm @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.
 medspacy>=1.0,<2
 sqlalchemy>=2.0,<3
 alembic>=1.13,<2
-scikit-learn>=1.7,<1.8
+scikit-learn>=1.5.2,<2.0
 scikit-multilearn>=0.2.0,<1
 pandas>=2.0,<3
 psycopg[binary,pool]>=3.2,<4
@@ -2185,6 +2295,7 @@ fastapi>=0.115
 uvicorn>=0.30
 
 pydantic-settings>=2.0.0
+
 
 ```
 
@@ -2354,7 +2465,7 @@ from pathlib import Path
 from typing import Any, AsyncIterator, List
 
 from fastapi import FastAPI, Request, Depends, HTTPException
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -2410,6 +2521,8 @@ from modules.api.dependencies import (
     get_qa_pipeline_service,
     get_registry_service,
 )
+from modules.api.phi_dependencies import get_phi_scrubber
+from modules.api.phi_redaction import apply_phi_redaction
 
 from config.settings import CoderSettings
 from modules.coder.schema import CodeDecision, CoderOutput
@@ -2472,6 +2585,17 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
     settings = get_infra_settings()
     logger = logging.getLogger(__name__)
+    from modules.registry.model_runtime import get_registry_runtime_dir, resolve_model_backend
+
+    def _verify_registry_onnx_bundle() -> None:
+        if resolve_model_backend() != "onnx":
+            return
+        runtime_dir = get_registry_runtime_dir()
+        model_path = runtime_dir / "registry_model_int8.onnx"
+        if not model_path.exists():
+            raise RuntimeError(
+                f"MODEL_BACKEND=onnx but missing registry model at {model_path}."
+            )
 
     # Readiness state (liveness vs readiness)
     app.state.model_ready = False
@@ -2487,6 +2611,19 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
             pool=30.0,
         )
     )
+
+    # Ensure PHI database tables exist (auto-create on startup)
+    try:
+        from modules.phi.db import Base as PHIBase
+        from modules.api.phi_dependencies import engine as phi_engine
+        from modules.phi import models as _phi_models  # noqa: F401 - register models
+
+        PHIBase.metadata.create_all(bind=phi_engine)
+        logger.info("PHI database tables verified/created")
+    except Exception as e:
+        logger.warning(f"Could not initialize PHI tables: {e}")
+
+    _verify_registry_onnx_bundle()
 
     loop = asyncio.get_running_loop()
 
@@ -2569,6 +2706,85 @@ app.include_router(metrics_router, tags=["metrics"])
 app.include_router(phi_demo_router)
 # Registry extraction router (hybrid-first pipeline)
 app.include_router(registry_extract_router, tags=["registry"])
+
+def _phi_redactor_response(path: Path) -> FileResponse:
+    resp = FileResponse(path)
+    # Required for SharedArrayBuffer in modern browsers (cross-origin isolation).
+    resp.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+    resp.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+    # Avoid stale client-side caching during rapid iteration/debugging.
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+def _phi_redactor_static_dir() -> Path:
+    return Path(__file__).parent / "static" / "phi_redactor"
+
+
+def _static_files_enabled() -> bool:
+    return os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes")
+
+
+@app.get("/ui/phi_redactor")
+def phi_redactor_redirect() -> RedirectResponse:
+    # Avoid "/ui/phi_redactor" being treated as a file path in the browser (breaks relative URLs).
+    # Redirect ensures relative module imports resolve to "/ui/phi_redactor/...".
+    resp = RedirectResponse(url="/ui/phi_redactor/")
+    resp.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+    resp.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@app.get("/ui/phi_redactor/")
+def phi_redactor_index() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    index_path = _phi_redactor_static_dir() / "index.html"
+    return _phi_redactor_response(index_path)
+
+
+@app.get("/ui/phi_redactor/index.html")
+def phi_redactor_index_html() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    index_path = _phi_redactor_static_dir() / "index.html"
+    return _phi_redactor_response(index_path)
+
+
+@app.get("/ui/phi_redactor/app.js")
+def phi_redactor_app_js() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "app.js")
+
+
+@app.get("/ui/phi_redactor/redactor.worker.js")
+def phi_redactor_worker_js() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "redactor.worker.js")
+
+
+@app.get("/ui/phi_redactor/styles.css")
+def phi_redactor_styles_css() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "styles.css")
+
+
+@app.get("/ui/phi_redactor/allowlist_trie.json")
+def phi_redactor_allowlist() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "allowlist_trie.json")
+
+
+@app.get("/ui/phi_redactor/sw.js")
+def phi_redactor_sw() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "sw.js")
 
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
@@ -2896,22 +3112,18 @@ async def registry_run(
     req: RegistryRequest,
     request: Request,
     _ready: None = Depends(require_ready),
+    phi_scrubber=Depends(get_phi_scrubber),
 ) -> RegistryResponse:
+    # Early PHI redaction - scrub once at entry
+    redaction = apply_phi_redaction(req.note, phi_scrubber)
+    note_text = redaction.text
+
     eng = RegistryEngine()
-    # For interactive/demo usage, best-effort extraction should return 200 whenever possible.
-    # RegistryEngine.run now attempts internal pruning on validation issues; if something still
-    # raises, fall back to an empty record rather than failing the request.
-    try:
-        result = await run_cpu(request.app, eng.run, req.note, explain=req.explain)
-    except Exception as exc:
-        _logger.warning("registry_run failed; returning empty record", exc_info=True)
-        record = RegistryResponse()
-        evidence = {}
+    result = await run_cpu(request.app, eng.run, note_text, explain=req.explain)
+    if isinstance(result, tuple):
+        record, evidence = result
     else:
-        if isinstance(result, tuple):
-            record, evidence = result
-        else:
-            record, evidence = result, getattr(result, "evidence", {})
+        record, evidence = result, getattr(result, "evidence", {})
 
     payload = _shape_registry_payload(record, evidence)
     return JSONResponse(content=payload)
@@ -3014,6 +3226,7 @@ async def unified_process(
     _ready: None = Depends(require_ready),
     registry_service: RegistryService = Depends(get_registry_service),
     coding_service: CodingService = Depends(get_coding_service),
+    phi_scrubber=Depends(get_phi_scrubber),
 ) -> UnifiedProcessResponse:
     """Unified endpoint combining registry extraction and CPT code derivation.
 
@@ -3033,9 +3246,16 @@ async def unified_process(
 
     start_time = time.time()
 
+    if req.already_scrubbed:
+        note_text = req.note
+    else:
+        # Early PHI redaction - scrub once at entry, use scrubbed text downstream
+        redaction = apply_phi_redaction(req.note, phi_scrubber)
+        note_text = redaction.text
+
     # Step 1: Registry extraction
     try:
-        extraction_result = await run_cpu(request.app, registry_service.extract_fields, req.note)
+        extraction_result = await run_cpu(request.app, registry_service.extract_fields, note_text)
     except httpx.HTTPStatusError as exc:
         if exc.response is not None and exc.response.status_code == 429:
             retry_after = exc.response.headers.get("Retry-After") or "10"
@@ -3356,74 +3576,51 @@ __all__ = ["app"]
 ---
 ### `modules/coder/application/coding_service.py`
 ```
-"""Coding Service - orchestrates the 8-step coding pipeline.
+"""Coding Service - orchestrates the extraction-first coding pipeline.
 
-This service coordinates rule-based coding, LLM advisor suggestions,
-smart hybrid merge, evidence validation, NCCI/MER compliance, and
-produces CodeSuggestion objects for review.
-
-Supports two pipeline modes (controlled by PROCSUITE_PIPELINE_MODE env var):
-- "current" (default): 8-step hybrid pipeline (Rules + LLM + ML)
-- "extraction_first": Registry extraction → Deterministic CPT derivation → ML audit
+This service coordinates registry extraction, deterministic CPT derivation,
+and audit metadata to produce CodeSuggestion objects for review.
 """
 
 from __future__ import annotations
 
-import os
 import time
 import uuid
 from datetime import datetime
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from config.settings import CoderSettings
 from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
-from modules.domain.coding_rules import apply_ncci_edits, apply_mer_rules
 from modules.domain.coding_rules.rule_engine import RuleEngine
 from modules.coder.adapters.nlp.keyword_mapping_loader import KeywordMappingRepository
 from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDetector
 from modules.coder.adapters.llm.gemini_advisor import LLMAdvisorPort
-from modules.coder.adapters.ml_ranker import MLRankerPort, MLRankingResult
-from modules.coder.application.smart_hybrid_policy import (
-    HybridPolicy,
-    HybridCandidate,
-    HybridDecision,
-    RuleResult,
-    AdvisorResult,
-)
+from modules.coder.adapters.ml_ranker import MLRankerPort
 from modules.coder.application.procedure_type_detector import detect_procedure_type
-from modules.coder.domain_rules import (
-    apply_addon_family_rules,
-    apply_all_ncci_bundles,
-)
-from modules.coder.sectionizer import (
-    accordion_truncate,
-    sectionizer_enabled,
-    max_llm_input_tokens,
-)
 from modules.phi.ports import PHIScrubberPort
 from proc_schemas.coding import CodeSuggestion, CodingResult
 from proc_schemas.reasoning import ReasoningFields
 from observability.timing import timed
 from observability.logging_config import get_logger
 
+if TYPE_CHECKING:
+    from modules.registry.application.registry_service import RegistryService
+
 logger = get_logger("coding_service")
 
 
 class CodingService:
-    """Orchestrates the 8-step coding pipeline.
+    """Orchestrates the extraction-first coding pipeline.
 
     Pipeline Steps:
-    1. Rule engine → rule_codes + rule_confidence
-    2. (Optional) ML ranker → ml_confidence
-    3. LLM advisor → advisor_codes + advisor_confidence
-    4. Smart hybrid merge → merged_codes with HybridDecision flags
-    5. Evidence validation → verify each code in text
-    6. Non-negotiable rules (NCCI/MER) → remove invalid combinations
-    7. Confidence aggregation → compute final_confidence, set review_flag
-    8. Build CodeSuggestion[] → return for review
+    1. Registry extraction → RegistryRecord
+    2. Deterministic Registry → CPT derivation
+    3. RAW-ML audit metadata (if enabled by RegistryService)
+    4. Build CodeSuggestion[] → return for review
     """
 
     VERSION = "coding_service_v1"
+    POLICY_VERSION = "extraction_first_v1"
 
     def __init__(
         self,
@@ -3435,6 +3632,7 @@ class CodingService:
         config: CoderSettings,
         phi_scrubber: Optional[PHIScrubberPort] = None,
         ml_ranker: Optional[MLRankerPort] = None,
+        registry_service: "RegistryService | None" = None,
     ):
         self.kb_repo = kb_repo
         self.keyword_repo = keyword_repo
@@ -3444,27 +3642,16 @@ class CodingService:
         self.config = config
         self.phi_scrubber = phi_scrubber
         self.ml_ranker = ml_ranker
+        self.registry_service = registry_service
 
-        # Initialize hybrid policy
-        self.hybrid_policy = HybridPolicy(
-            kb_repo=kb_repo,
-            keyword_repo=keyword_repo,
-            negation_detector=negation_detector,
-            config=config,
-        )
-
-        # Log PHI scrubber status
-        if llm_advisor and not phi_scrubber:
-            logger.warning(
-                "LLM advisor enabled but no PHI scrubber configured. "
-                "Raw text may be sent to external LLM service."
+        # Note: PHI scrubbing is now handled at route level (modules/api/phi_redaction.py).
+        # The phi_scrubber parameter is deprecated and ignored.
+        if phi_scrubber:
+            logger.debug(
+                "phi_scrubber parameter is deprecated; PHI redaction is now handled at route level"
             )
 
-        # Log ML ranker status
-        if ml_ranker and ml_ranker.available:
-            logger.info("ML ranker enabled: %s", ml_ranker.version)
-        elif ml_ranker:
-            logger.warning("ML ranker provided but not available (models not loaded)")
+        # Hybrid pipeline dependencies are accepted for compatibility, but unused in extraction-first.
 
     def generate_suggestions(
         self,
@@ -3477,83 +3664,12 @@ class CodingService:
         Args:
             procedure_id: Unique identifier for the procedure.
             report_text: The procedure note text.
-            use_llm: Whether to use the LLM advisor.
+            use_llm: Ignored (LLM advisor is not used in extraction-first).
 
         Returns:
             Tuple of (List of CodeSuggestion objects, LLM latency in ms).
         """
-        # Check pipeline mode
-        pipeline_mode = os.getenv("PROCSUITE_PIPELINE_MODE", "current").strip().lower()
-
-        if pipeline_mode == "extraction_first":
-            return self._generate_suggestions_extraction_first(procedure_id, report_text)
-
-        # Default: existing 8-step hybrid pipeline
-        return self._generate_suggestions_hybrid(procedure_id, report_text, use_llm)
-
-    def _generate_suggestions_hybrid(
-        self,
-        procedure_id: str,
-        report_text: str,
-        use_llm: bool = True,
-    ) -> tuple[list[CodeSuggestion], float]:
-        """Hybrid pipeline: Rules + LLM + ML merge (original 8-step pipeline)."""
-        llm_latency_ms = 0.0
-
-        # Log input text size for debugging truncation issues
-        text_length = len(report_text)
-        logger.info(
-            "Starting coding pipeline (hybrid mode)",
-            extra={
-                "procedure_id": procedure_id,
-                "text_length_chars": text_length,
-                "use_llm": use_llm,
-            },
-        )
-        if text_length > 20000:
-            logger.warning(
-                f"Large procedure note detected ({text_length} chars). "
-                "Potential for truncation in LLM processing.",
-                extra={"procedure_id": procedure_id, "text_length_chars": text_length},
-            )
-
-        with timed("coding_service.generate_suggestions") as timing:
-            # Step 1: Rule-based coding
-            rule_result = self._run_rule_engine(report_text)
-
-            # Step 2: Optional ML ranking
-            ml_result = self._run_ml_ranker(report_text, rule_result)
-
-            # Step 3: LLM advisor (track latency separately)
-            advisor_result, llm_latency_ms = self._run_llm_advisor(report_text, use_llm)
-
-            # Step 4: Smart hybrid merge
-            candidates = self._run_hybrid_merge(rule_result, advisor_result, report_text)
-
-            # Step 5: Evidence validation is done in hybrid merge
-
-            # Step 6: NCCI/MER compliance
-            candidates, ncci_warnings, mer_warnings = self._apply_compliance_rules(candidates)
-
-            # Step 7-8: Build suggestions
-            suggestions = self._build_suggestions(
-                candidates=candidates,
-                procedure_id=procedure_id,
-                ncci_warnings=ncci_warnings,
-                mer_warnings=mer_warnings,
-            )
-
-        logger.info(
-            "Coding complete",
-            extra={
-                "procedure_id": procedure_id,
-                "num_suggestions": len(suggestions),
-                "processing_time_ms": timing.elapsed_ms,
-                "llm_latency_ms": llm_latency_ms,
-            },
-        )
-
-        return suggestions, llm_latency_ms
+        return self._generate_suggestions_extraction_first(procedure_id, report_text)
 
     def generate_result(
         self,
@@ -3567,7 +3683,7 @@ class CodingService:
         Args:
             procedure_id: Unique identifier for the procedure.
             report_text: The procedure note text.
-            use_llm: Whether to use the LLM advisor.
+            use_llm: Ignored (LLM advisor is not used in extraction-first).
             procedure_type: Classification of the procedure (e.g., bronch_diagnostic,
                           bronch_ebus, pleural, blvr). Used for metrics segmentation.
                           If None or "unknown", auto-detection is attempted.
@@ -3606,327 +3722,22 @@ class CodingService:
             ncci_notes=[],
             mer_notes=[],
             kb_version=self.kb_repo.version,
-            policy_version=self.hybrid_policy.version,
-            model_version=self.llm_advisor.version if self.llm_advisor else "",
+            policy_version=self.POLICY_VERSION,
+            model_version="",
             processing_time_ms=timing.elapsed_ms,
             llm_latency_ms=llm_latency_ms,
         )
 
-    def _run_rule_engine(self, report_text: str) -> RuleResult:
-        """Step 1: Run the rule-based coding engine."""
-        with timed("coding_service.rule_engine"):
-            result = self.rule_engine.generate_candidates(report_text)
-
-        return RuleResult(
-            codes=result.codes,
-            confidence=result.confidence,
-        )
-
-    def _run_ml_ranker(
-        self,
-        report_text: str,
-        rule_result: RuleResult,
-    ) -> Optional[MLRankingResult]:
-        """Step 2: Run the ML ranker to get confidence scores.
-
-        If an ML ranker is configured, this augments rule-based codes with
-        ML-derived confidence scores. High-confidence ML predictions may
-        also be added if not already present from rules.
-
-        Args:
-            report_text: The procedure note text.
-            rule_result: Result from the rule engine (Step 1).
-
-        Returns:
-            MLRankingResult with predictions and confidence scores,
-            or None if ML ranker is not available.
-        """
-        if not self.ml_ranker or not self.ml_ranker.available:
-            return None
-
-        with timed("coding_service.ml_ranker"):
-            ml_result = self.ml_ranker.rank_codes(
-                note_text=report_text,
-                candidate_codes=None,  # Score all known codes
-            )
-
-        # Log ML ranking results
-        logger.info(
-            "ML ranking complete",
-            extra={
-                "difficulty": ml_result.difficulty,
-                "high_conf_count": len(ml_result.high_conf_codes),
-                "gray_zone_count": len(ml_result.gray_zone_codes),
-                "total_predictions": len(ml_result.predictions),
-            },
-        )
-
-        # Augment rule result confidence with ML scores
-        for code in rule_result.codes:
-            if code in ml_result.confidence_map:
-                ml_conf = ml_result.confidence_map[code]
-                rule_conf = rule_result.confidence.get(code, 0.0)
-                # Boost confidence if ML agrees, average otherwise
-                if ml_conf > 0.5:
-                    rule_result.confidence[code] = max(rule_conf, ml_conf * 0.9)
-                logger.debug(
-                    "ML augmented rule confidence",
-                    extra={
-                        "code": code,
-                        "rule_conf": rule_conf,
-                        "ml_conf": ml_conf,
-                        "final_conf": rule_result.confidence[code],
-                    },
-                )
-
-        return ml_result
-
-    def _run_llm_advisor(self, report_text: str, use_llm: bool) -> tuple[AdvisorResult, float]:
-        """Step 3: Run the LLM advisor.
-
-        PHI Guardrail: If a PHI scrubber is configured, the text is scrubbed
-        before being sent to the external LLM service. This prevents PHI
-        from being transmitted to third-party APIs.
-
-        Returns:
-            Tuple of (AdvisorResult, latency_ms)
-        """
-        if not use_llm or not self.llm_advisor:
-            return AdvisorResult(codes=[], confidence={}), 0.0
-
-        # PHI Guardrail: Scrub text before sending to LLM
-        text_for_llm = report_text
-        if self.phi_scrubber:
-            try:
-                scrub_result = self.phi_scrubber.scrub(report_text)
-                text_for_llm = scrub_result.scrubbed_text
-                logger.debug(
-                    "PHI scrubbed before LLM call",
-                    extra={"entities_found": len(scrub_result.entities)},
-                )
-            except Exception as e:
-                logger.error(f"PHI scrubbing failed: {e}", exc_info=True)
-                # Fail safely: don't send potentially unscrubbed text to LLM
-                logger.warning("Skipping LLM advisor due to scrubbing failure")
-                return AdvisorResult(codes=[], confidence={}), 0.0
-
-        text_for_llm = self._prepare_llm_context(text_for_llm)
-
-        with timed("coding_service.llm_advisor") as timing:
-            suggestions = self.llm_advisor.suggest_codes(text_for_llm)
-
-        return AdvisorResult(
-            codes=[s.code for s in suggestions],
-            confidence={s.code: s.confidence for s in suggestions},
-        ), timing.elapsed_ms
-
-    def _run_hybrid_merge(
-        self,
-        rule_result: RuleResult,
-        advisor_result: AdvisorResult,
-        report_text: str,
-    ) -> list:
-        """Step 4: Run the smart hybrid merge."""
-        with timed("coding_service.hybrid_merge"):
-            candidates = self.hybrid_policy.merge(
-                rule_result=rule_result,
-                advisor_result=advisor_result,
-                report_text=report_text,
-            )
-
-        return candidates
-
-    def _apply_compliance_rules(
-        self,
-        candidates: list[HybridCandidate],
-    ) -> tuple[list[HybridCandidate], list[str], list[str]]:
-        """Step 6: Apply domain rules and NCCI/MER compliance rules.
-
-        This applies rules in the following order:
-        1. Add-on family consistency (e.g., 31636 -> +31637 when 31631 present)
-        2. EBUS-Aspiration bundling (31645/31646 bundled into 31652/31653)
-        3. NCCI edits from knowledge base
-        4. MER (Multiple Endoscopy Rule) reductions
-        """
-        # Get accepted codes for compliance checking
-        accepted_codes = self.hybrid_policy.get_accepted_codes(candidates)
-
-        # Step 6a: Apply add-on family rules (hierarchy fix)
-        # This ensures codes like 31636 become +31637 when 31631 is present
-        family_result = apply_addon_family_rules(accepted_codes)
-        for original, converted, reason in family_result.conversions:
-            # Update the candidate code
-            for candidate in candidates:
-                if candidate.code == original:
-                    candidate.code = converted
-                    candidate.flags.append(f"FAMILY_CONVERSION: {reason}")
-                    logger.info(
-                        "Applied family conversion",
-                        extra={"original": original, "converted": converted, "reason": reason},
-                    )
-                    break  # Only convert first occurrence per conversion
-
-        # Refresh accepted codes after family conversions
-        accepted_codes = self.hybrid_policy.get_accepted_codes(candidates)
-
-        # Step 6b: Apply all NCCI bundling rules
-        # This removes:
-        # - Aspiration codes (31645/31646) when EBUS codes (31652/31653) are present
-        # - Thoracentesis codes (32554/32555) when IPC placement (32550) is present
-        # - Tumor excision (31640) when destruction (31641) is present
-        bundle_result = apply_all_ncci_bundles(accepted_codes)
-        bundled_codes = set(bundle_result.removed_codes)
-
-        ncci_warnings: list[str] = []
-        for primary, removed, reason in bundle_result.bundle_reasons:
-            ncci_warnings.append(f"NCCI_BUNDLE: {removed} bundled into {primary} - {reason}")
-            logger.info(
-                "Applied NCCI bundle",
-                extra={"primary": primary, "removed": removed, "reason": reason},
-            )
-
-        # Mark bundled candidates as rejected
-        for candidate in candidates:
-            if candidate.code in bundled_codes:
-                candidate.decision = HybridDecision.REJECTED_HYBRID
-                candidate.flags.append(f"NCCI_BUNDLED: Code bundled into primary procedure")
-
-        # Refresh accepted codes after bundling
-        accepted_codes = self.hybrid_policy.get_accepted_codes(candidates)
-
-        # Step 6c: Apply NCCI edits from knowledge base
-        ncci_result = apply_ncci_edits(accepted_codes, self.kb_repo)
-        ncci_warnings.extend(ncci_result.warnings)
-
-        # Step 6d: Apply MER rules
-        mer_result = apply_mer_rules(ncci_result.kept_codes, self.kb_repo)
-        mer_warnings = mer_result.warnings
-
-        # Filter candidates based on compliance results
-        final_codes = set(mer_result.kept_codes)
-        filtered_candidates: list[HybridCandidate] = []
-
-        for candidate in candidates:
-            if candidate.code in final_codes:
-                filtered_candidates.append(candidate)
-            elif candidate.code in bundled_codes:
-                # Already marked as rejected above
-                filtered_candidates.append(candidate)
-            elif candidate.code in ncci_result.removed_codes:
-                # Update the candidate to show it was removed by NCCI
-                candidate.decision = HybridDecision.REJECTED_HYBRID
-                candidate.flags.append(f"NCCI_REMOVED: {ncci_warnings}")
-                filtered_candidates.append(candidate)
-            elif candidate.code in mer_result.removed_codes:
-                # Update the candidate to show it was removed by MER
-                candidate.decision = HybridDecision.REJECTED_HYBRID
-                candidate.flags.append(f"MER_REMOVED: {mer_warnings}")
-                filtered_candidates.append(candidate)
-            else:
-                filtered_candidates.append(candidate)
-
-        return filtered_candidates, ncci_warnings, mer_warnings
-
-    def _build_suggestions(
-        self,
-        candidates: list,
-        procedure_id: str,
-        ncci_warnings: list[str],
-        mer_warnings: list[str],
-    ) -> list[CodeSuggestion]:
-        """Steps 7-8: Build CodeSuggestion objects."""
-        suggestions = []
-
-        for candidate in candidates:
-            # Determine source
-            if candidate.decision == HybridDecision.ACCEPTED_AGREEMENT:
-                source = "hybrid"
-            elif candidate.decision in (
-                HybridDecision.ACCEPTED_HYBRID,
-                HybridDecision.HUMAN_REVIEW_REQUIRED,
-            ):
-                source = "llm"
-            elif candidate.decision in (
-                HybridDecision.KEPT_RULE_PRIORITY,
-                HybridDecision.DROPPED_LOW_CONFIDENCE,
-            ):
-                source = "rule"
-            else:
-                source = "hybrid"
-
-            # Compute final confidence
-            rule_conf = candidate.rule_confidence or 0.0
-            llm_conf = candidate.llm_confidence or 0.0
-
-            if candidate.decision == HybridDecision.ACCEPTED_AGREEMENT:
-                # Agreement boosts confidence
-                final_confidence = max(rule_conf, llm_conf) * 1.1
-            elif candidate.decision == HybridDecision.ACCEPTED_HYBRID:
-                final_confidence = llm_conf
-            elif candidate.decision == HybridDecision.KEPT_RULE_PRIORITY:
-                final_confidence = rule_conf
-            else:
-                final_confidence = max(rule_conf, llm_conf, 0.5)
-
-            final_confidence = min(1.0, final_confidence)  # Cap at 1.0
-
-            # Determine review flag
-            if candidate.decision == HybridDecision.HUMAN_REVIEW_REQUIRED:
-                review_flag = "required"
-            elif candidate.decision in (
-                HybridDecision.DROPPED_LOW_CONFIDENCE,
-                HybridDecision.REJECTED_HYBRID,
-            ):
-                review_flag = "recommended"
-            elif final_confidence < 0.8:
-                review_flag = "recommended"
-            else:
-                review_flag = "optional"
-
-            # Get procedure info for description
-            proc_info = self.kb_repo.get_procedure_info(candidate.code)
-            description = proc_info.description if proc_info else ""
-
-            # Build reasoning
-            reasoning = ReasoningFields(
-                trigger_phrases=candidate.trigger_phrases,
-                rule_paths=candidate.flags,
-                confidence=final_confidence,
-                kb_version=self.kb_repo.version,
-                policy_version=self.hybrid_policy.version,
-                model_version=self.llm_advisor.version if self.llm_advisor else "",
-                keyword_map_version=self.keyword_repo.version,
-                negation_detector_version=self.negation_detector.version,
-                ncci_notes="; ".join(ncci_warnings) if ncci_warnings else "",
-                mer_notes="; ".join(mer_warnings) if mer_warnings else "",
-            )
-
-            suggestion = CodeSuggestion(
-                code=candidate.code,
-                description=description,
-                source=source,
-                hybrid_decision=candidate.decision.value,
-                rule_confidence=candidate.rule_confidence,
-                llm_confidence=candidate.llm_confidence,
-                final_confidence=final_confidence,
-                reasoning=reasoning,
-                review_flag=review_flag,
-                trigger_phrases=candidate.trigger_phrases,
-                evidence_verified=candidate.evidence_verified,
-                suggestion_id=str(uuid.uuid4()),
-                procedure_id=procedure_id,
-            )
-
-            suggestions.append(suggestion)
-
-        return suggestions
-    def _prepare_llm_context(self, scrubbed_text: str) -> str:
-        if not scrubbed_text:
-            return scrubbed_text
-        if not sectionizer_enabled():
-            return scrubbed_text
-        tokens = max_llm_input_tokens()
-        return accordion_truncate(scrubbed_text, tokens)
+    @staticmethod
+    def _base_confidence_from_difficulty(difficulty: str) -> float:
+        normalized = (difficulty or "").strip().upper()
+        if normalized == "HIGH_CONF":
+            return 0.95
+        if normalized in ("MEDIUM", "GRAY_ZONE"):
+            return 0.80
+        if normalized in ("LOW_CONF", "LOW"):
+            return 0.70
+        return 0.70
 
     def _generate_suggestions_extraction_first(
         self,
@@ -3944,10 +3755,6 @@ class CodingService:
             Tuple of (List of CodeSuggestion objects, processing latency in ms).
         """
         from modules.registry.application.registry_service import RegistryService
-        from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
-            derive_all_codes_with_meta,
-        )
-        from modules.registry.schema import RegistryRecord
 
         start_time = time.time()
 
@@ -3959,35 +3766,27 @@ class CodingService:
             },
         )
 
-        # Step 1: Extract registry fields
-        registry_service = RegistryService()
-        extraction_result = registry_service.extract_fields(report_text)
+        # Step 1: Extract registry fields + deterministic CPT codes
+        registry_service = self.registry_service or RegistryService()
+        extraction_result = registry_service.extract_fields_extraction_first(report_text)
 
-        # Step 2: Derive CPT codes from registry fields
-        if extraction_result.record:
-            record = extraction_result.record
-        else:
-            # Build a minimal RegistryRecord from mapped_fields
-            record = RegistryRecord.model_validate(extraction_result.mapped_fields)
+        codes = list(extraction_result.cpt_codes or [])
+        rationales = dict(extraction_result.code_rationales or {})
+        derivation_warnings = list(extraction_result.derivation_warnings or [])
 
-        codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
-
-        # Step 3: Build audit warnings
+        # Step 2: Build audit warnings
         audit_warnings: list[str] = list(extraction_result.audit_warnings or [])
         audit_warnings.extend(derivation_warnings)
 
         # Determine difficulty level
-        if extraction_result.coder_difficulty == "HIGH_CONF":
-            base_confidence = 0.95
-        elif extraction_result.coder_difficulty == "MEDIUM":
-            base_confidence = 0.80
-        else:
-            base_confidence = 0.70
+        base_confidence = self._base_confidence_from_difficulty(
+            extraction_result.coder_difficulty
+        )
 
-        # Step 4: Build CodeSuggestion objects
+        # Step 3: Build CodeSuggestion objects
         suggestions: list[CodeSuggestion] = []
         for code in codes:
-            rationale = rationales.get(code, "")
+            rationale = rationales.get(code, "derived")
 
             # Format audit warnings for mer_notes
             mer_notes = ""
@@ -4002,7 +3801,7 @@ class CodingService:
                 mer_notes=mer_notes,
                 confidence=base_confidence,
                 kb_version=self.kb_repo.version,
-                policy_version="extraction_first_v1",
+                policy_version=self.POLICY_VERSION,
             )
 
             # Determine review flag
@@ -4199,6 +3998,8 @@ class RegistryExtractionResult:
         coder_difficulty: Case difficulty (HIGH_CONF/GRAY_ZONE/LOW_CONF).
         coder_source: Where codes came from (ml_rules_fastpath/hybrid_llm_fallback).
         mapped_fields: Registry fields derived from CPT mapping.
+        code_rationales: Deterministic derivation rationales keyed by CPT code.
+        derivation_warnings: Warnings emitted during deterministic CPT derivation.
         warnings: Non-blocking warnings about the extraction.
         needs_manual_review: Whether this case requires human review.
         validation_errors: List of validation errors found during reconciliation.
@@ -4210,6 +4011,8 @@ class RegistryExtractionResult:
     coder_difficulty: str
     coder_source: str
     mapped_fields: dict[str, Any]
+    code_rationales: dict[str, str] = field(default_factory=dict)
+    derivation_warnings: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     needs_manual_review: bool = False
     validation_errors: list[str] = field(default_factory=list)
@@ -4263,8 +4066,8 @@ class RegistryService:
         """Get registry ML predictor with lazy initialization.
 
         Behavior:
-        - If MODEL_BACKEND is set to "pytorch" or "onnx", prefer that backend and
-          fall back to sklearn if unavailable.
+        - If MODEL_BACKEND is set to "onnx", require ONNX and fail fast if unavailable.
+        - If MODEL_BACKEND is set to "pytorch", prefer Torch and fall back to sklearn if unavailable.
         - Otherwise ("auto"), keep legacy behavior: try ONNX first (if available),
           then sklearn TF-IDF.
 
@@ -4345,9 +4148,14 @@ class RegistryService:
                 return self._registry_ml_predictor
         elif backend == "onnx":
             predictor = _try_onnx()
-            if predictor is not None:
-                self._registry_ml_predictor = predictor
-                return self._registry_ml_predictor
+            if predictor is None:
+                model_path = runtime_dir / "registry_model_int8.onnx"
+                raise RuntimeError(
+                    "MODEL_BACKEND=onnx but ONNXRegistryPredictor failed to initialize. "
+                    f"Expected model at {model_path}."
+                )
+            self._registry_ml_predictor = predictor
+            return self._registry_ml_predictor
         else:
             predictor = _try_onnx()
             if predictor is not None:
@@ -4700,6 +4508,16 @@ class RegistryService:
 
         return final_result
 
+    def extract_fields_extraction_first(self, note_text: str) -> RegistryExtractionResult:
+        """Extract registry fields using extraction-first flow.
+
+        This bypasses the hybrid-first pipeline and always runs:
+        1) Registry extraction
+        2) Deterministic Registry→CPT derivation
+        3) RAW-ML audit (if enabled)
+        """
+        return self._extract_fields_extraction_first(note_text)
+
     # -------------------------------------------------------------------------
     # Extraction-First Registry → Deterministic CPT → RAW-ML Audit
     # -------------------------------------------------------------------------
@@ -4986,13 +4804,17 @@ class RegistryService:
                     "but deterministic derivation missed it"
                 )
 
-        warnings = list(base_warnings) + list(derivation.warnings) + list(self_correct_warnings)
+        derivation_warnings = list(derivation.warnings)
+        warnings = list(base_warnings) + derivation_warnings + list(self_correct_warnings)
+        code_rationales = {c.code: c.rationale for c in derivation.codes}
         return RegistryExtractionResult(
             record=record,
             cpt_codes=derived_codes,
             coder_difficulty=coder_difficulty,
             coder_source="extraction_first",
             mapped_fields={},
+            code_rationales=code_rationales,
+            derivation_warnings=derivation_warnings,
             warnings=warnings,
             needs_manual_review=needs_manual_review,
             validation_errors=[],
@@ -6962,7 +6784,14 @@ Lower thresholds = more cases use fast path (faster but may miss edge cases)
 - **Questions**: Open an issue on the repository
 
 ---
+Redaction Scripts:
+python scripts/phi_audit.py --note-path test_redact.txt
 
+
+python scripts/scrub_golden_jsons.py \
+  --input-dir data/knowledge/golden_extractions \
+  --pattern 'golden_*.json' \
+  --report-path artifacts/redactions.jsonl
 *Last updated: December 2025*
 
 ```

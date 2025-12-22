@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder dev-iu pull-model-pytorch
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver build-phi-platinum dev-iu pull-model-pytorch
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -12,6 +12,7 @@ PORT ?= 8000
 MODEL_BACKEND ?= pytorch
 PROCSUITE_SKIP_WARMUP ?= 1
 REGISTRY_RUNTIME_DIR ?= data/models/registry_runtime
+DEVICE ?= cpu
 
 setup:
 	@if [ -f $(SETUP_STAMP) ]; then echo "Setup already done"; exit 0; fi
@@ -44,6 +45,26 @@ run-coder:
 		--kb $(KB_PATH) \
 		--keyword-dir data/keyword_mappings \
 		--out-json outputs/coder_suggestions.jsonl
+
+distill-phi:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/distill_phi_labels.py \
+		--in-dir data/knowledge/golden_extractions \
+		--out data/ml_training/distilled_phi_labels.jsonl \
+		--teacher-model data/models/hf/piiranha-v1-detect-personal-information \
+		--device cpu
+
+distill-phi-silver:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/distill_phi_labels.py \
+		--in-dir data/knowledge/golden_extractions \
+		--out data/ml_training/distilled_phi_labels.jsonl \
+		--teacher-model data/models/hf/piiranha-v1-detect-personal-information \
+		--label-schema standard \
+		--device $(DEVICE)
+
+build-phi-platinum:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
+		--in-dir data/knowledge/golden_extractions \
+		--out data/ml_training/phi_platinum_spans.jsonl
 
 pull-model-pytorch:
 	MODEL_BUNDLE_S3_URI_PYTORCH="$(MODEL_BUNDLE_S3_URI_PYTORCH)" REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" ./scripts/dev_pull_model.sh
@@ -104,6 +125,9 @@ help:
 	@echo "  validate-schemas - Validate JSON schemas and Pydantic models"
 	@echo "  validate-kb    - Validate knowledge base"
 	@echo "  run-coder      - Run smart-hybrid coder over notes"
+	@echo "  distill-phi    - Distill PHI labels for student NER training"
+	@echo "  distill-phi-silver - Distill Piiranha silver PHI labels"
+	@echo "  build-phi-platinum - Build hybrid redactor PHI spans"
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"
 	@echo "  codex-train    - Full training pipeline"

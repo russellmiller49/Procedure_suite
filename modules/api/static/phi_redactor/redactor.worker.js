@@ -1,15 +1,67 @@
 import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0";
 
-env.allowLocalModels = false;
+// Allow loading model artifacts from same-origin static files (vendored snapshot).
+env.allowLocalModels = true;
 env.useBrowserCache = true;
 
 // Official WASM path setting (best-effort if shape differs across versions)
 if (env.backends?.onnx?.wasm) {
+  // Important for COOP/COEP pages: Transformers.js may try to spin up an ONNXRuntime "proxy worker".
+  // If the Transformers.js bundle is imported cross-origin (e.g. from jsDelivr), that nested Worker
+  // can fail with a SecurityError due to CORS. We disable the proxy worker and run WASM in-process.
+  env.backends.onnx.wasm.proxy = false;
+  // Avoid threaded WASM (which also spawns extra workers) unless we explicitly vendor runtime assets.
+  env.backends.onnx.wasm.numThreads = 1;
   env.backends.onnx.wasm.wasmPaths =
     "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0/dist/";
 }
 
-const MODEL_ID = "onnx-community/piiranha-v1-detect-personal-information-ONNX";
+const REMOTE_MODEL_ID = "onnx-community/piiranha-v1-detect-personal-information-ONNX";
+// Local vendor folder name (served from `/ui/phi_redactor/vendor/...` by FastAPI static files)
+const LOCAL_MODEL_ID = "piiranha-v1-detect-personal-information-ONNX";
+const LOCAL_VENDOR_ROOT = new URL("./vendor/", import.meta.url).toString(); // ends with /
+let resolvedModelId = null;
+let resolveModelPromise = null;
+
+async function getModelId() {
+  if (resolvedModelId) return resolvedModelId;
+  if (resolveModelPromise) return resolveModelPromise;
+
+  resolveModelPromise = (async () => {
+    // If a vendored snapshot exists, prefer it. Otherwise, fall back to Hugging Face.
+    try {
+      const cfg = new URL(`./vendor/${LOCAL_MODEL_ID}/config.json`, import.meta.url).toString();
+      const r = await fetch(cfg, { method: "HEAD" });
+      if (r.ok) {
+        // Point Transformers.js downloads at our same-origin vendor folder.
+        // Default is:
+        //   remoteHost: "https://huggingface.co/"
+        //   remotePathTemplate: "{model}/resolve/{revision}/"
+        // For local vendoring we keep it simple and fetch:
+        //   `${LOCAL_VENDOR_ROOT}{model}/{file}`
+        env.remoteHost = LOCAL_VENDOR_ROOT;
+        env.remotePathTemplate = "{model}/";
+
+        console.log(
+          "[PHI Worker] Using vendored Piiranha model:",
+          `${LOCAL_VENDOR_ROOT}${LOCAL_MODEL_ID}/`
+        );
+        resolvedModelId = LOCAL_MODEL_ID;
+        return resolvedModelId;
+      }
+    } catch (e) {
+      // ignore; we'll fall back to remote
+    }
+    // Restore default Hugging Face host/template for remote fetch.
+    env.remoteHost = "https://huggingface.co/";
+    env.remotePathTemplate = "{model}/resolve/{revision}/";
+    console.log("[PHI Worker] Using remote Piiranha model:", REMOTE_MODEL_ID);
+    resolvedModelId = REMOTE_MODEL_ID;
+    return resolvedModelId;
+  })();
+
+  return resolveModelPromise;
+}
 const TASK = "token-classification";
 
 const WINDOW = 2500;
@@ -195,41 +247,39 @@ function mergeOverlaps(spans) {
 }
 
 async function loadNER() {
-  // Prompt spec asks for device:"cpu", but Transformers.js v3 uses device:"wasm" for CPU execution.
-  // We attempt the requested options and transparently remap cpu -> wasm when needed.
+  // Transformers.js v3 executes CPU inference via `device: "wasm"` (or "webgpu" when available),
+  // not `device: "cpu"`. Also, some combinations of `dtype` + `model_file_name` can cause
+  // Transformers.js to synthesize a filename that doesn't exist on Hugging Face (e.g.
+  // `model_int8.onnx_quantized.onnx`). To keep things robust, we try only known-good filenames.
+  //
+  // See: onnx-community/piiranha-v1-detect-personal-information-ONNX artifacts (e.g.
+  // `onnx/model_quantized.onnx`, `onnx/model_int8.onnx`, `onnx/model_uint8.onnx`, `onnx/model.onnx`).
   const tries = [
-    { dtype: "uint8", device: "cpu", subfolder: "onnx", model_file_name: "model_uint8.onnx" },
-    { dtype: "q8", device: "cpu", subfolder: "onnx", model_file_name: "model_int8.onnx" },
-    { quantized: true, device: "cpu", subfolder: "onnx", model_file_name: "model_quantized.onnx" },
-    // Final fallback still uses a quantized file to avoid downloading the >1GB fp32 artifact.
-    { device: "cpu", subfolder: "onnx", model_file_name: "model_int8.onnx" },
+    // Prefer quantized variants (smaller download, faster local inference).
+    // NOTE: In Transformers.js v3, the ONNX filename is built as:
+    //   `${subfolder}/${model_file_name}${dtype_suffix}.onnx`
+    // So `model_file_name` must NOT include ".onnx" or you can end up with
+    // "model.onnx_quantized.onnx". We therefore pass base names here.
+    //
+    // We also set dtype:"fp32" to prevent Transformers.js from auto-appending a dtype suffix
+    // (e.g. "_quantized") based on the device default.
+    { device: "wasm", dtype: "fp32", subfolder: "onnx", model_file_name: "model_quantized" },
+    { device: "wasm", dtype: "fp32", subfolder: "onnx", model_file_name: "model_int8" },
+    { device: "wasm", dtype: "fp32", subfolder: "onnx", model_file_name: "model_uint8" },
+    // Last resort: unquantized model (can be much larger).
+    { device: "wasm", dtype: "fp32", subfolder: "onnx", model_file_name: "model" },
   ];
 
   let lastErr = null;
+  const modelId = await getModelId();
   for (const opts of tries) {
     try {
       console.log("[PHI Worker] Trying to load NER model with options:", opts);
-      const p = await pipeline(TASK, MODEL_ID, opts);
+      const p = await pipeline(TASK, modelId, opts);
       console.log("[PHI Worker] NER model loaded successfully");
       return p;
     } catch (e) {
       const msg = String(e?.message || e);
-      // Transformers.js uses { device: "wasm" } (and optionally "webgpu"), not "cpu".
-      if (opts.device === "cpu" && msg.includes('Unsupported device: "cpu"')) {
-        const remapped = { ...opts, device: "wasm" };
-        try {
-          console.log("[PHI Worker] Remapping device cpu -> wasm:", remapped);
-          const p2 = await pipeline(TASK, MODEL_ID, remapped);
-          console.log("[PHI Worker] NER model loaded successfully");
-          return p2;
-        } catch (e2) {
-          const msg2 = String(e2?.message || e2);
-          console.warn("[PHI Worker] NER load attempt failed:", msg2);
-          lastErr = e2;
-          continue;
-        }
-      }
-
       console.warn("[PHI Worker] NER load attempt failed:", msg);
       lastErr = e;
     }
