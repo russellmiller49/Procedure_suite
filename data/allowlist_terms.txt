@@ -1,0 +1,63 @@
+# Terms that should NEVER be redacted by the client-side PHI redactor.
+# These are common IP procedure abbreviations, device/platform names, and clinical terms
+# that can be misclassified as person names by generic NER.
+#
+# One term per line. Matching is case-insensitive and uses word boundaries.
+
+# Core procedure abbreviations
+ebus
+tbna
+bal
+tbbx
+tblb
+fna
+eus
+rose
+
+# Robotic / navigation platforms
+ion
+monarch
+superdimension
+illumisite
+lungvision
+veran
+spin
+archimedes
+body vision
+
+# Valves / BLVR / pleural devices (brand names)
+zephyr
+spiration
+chartis
+pleurx
+aspira
+
+# Airway stents / interventional devices
+dumon
+ultraflex
+alair
+aero
+
+# Common scope / equipment brands (not people)
+olympus
+fujifilm
+pentax
+karl storz
+medtronic
+stryker
+boston scientific
+cook medical
+intuitive
+auris
+
+# Anatomy / station keywords frequently seen in notes
+station 2r
+station 2l
+station 4r
+station 4l
+station 7
+station 10r
+station 10l
+station 11r
+station 11l
+

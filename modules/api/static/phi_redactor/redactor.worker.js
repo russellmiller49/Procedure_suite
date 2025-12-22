@@ -1,0 +1,359 @@
+import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0";
+
+env.allowLocalModels = false;
+env.useBrowserCache = true;
+
+// Safely configure WASM paths if the property chain exists
+try {
+  if (env.backends?.onnx?.wasm) {
+    env.backends.onnx.wasm.wasmPaths =
+      "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0/dist/";
+  }
+} catch (e) {
+  console.warn("Could not configure WASM paths:", e);
+}
+
+const MODEL_ID = "onnx-community/piiranha-v1-detect-personal-information-ONNX";
+const TASK = "token-classification";
+
+const WINDOW = 2500;
+const OVERLAP = 250;
+const STEP = WINDOW - OVERLAP;
+
+let nerPipeline = null;
+let allowlistTrie = null;
+let maxTermLen = 48;
+
+let cancelled = false;
+let running = false;
+
+function post(type, payload = {}) {
+  self.postMessage({ type, ...payload });
+}
+
+function isAlphaNum(ch) {
+  const code = ch.charCodeAt(0);
+  return (
+    (code >= 48 && code <= 57) ||
+    (code >= 65 && code <= 90) ||
+    (code >= 97 && code <= 122)
+  );
+}
+
+function overlaps(aStart, aEnd, bStart, bEnd) {
+  return aStart < bEnd && bStart < aEnd;
+}
+
+function binarySearchLastLE(arr, x) {
+  let lo = 0;
+  let hi = arr.length - 1;
+  let best = -1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (arr[mid].start <= x) {
+      best = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  return best;
+}
+
+function makeProtectedChecker(protectedRanges) {
+  const sorted = [...protectedRanges].sort((a, b) => a.start - b.start);
+  return (start, end) => {
+    if (!sorted.length) return false;
+    const idx = binarySearchLastLE(sorted, start);
+    const cand = [];
+    if (idx >= 0) cand.push(sorted[idx]);
+    if (idx + 1 < sorted.length) cand.push(sorted[idx + 1]);
+    for (const r of cand) {
+      if (overlaps(start, end, r.start, r.end)) return true;
+    }
+    return false;
+  };
+}
+
+function trieScanProtectedRanges(text, trie) {
+  if (!trie) return [];
+  const lower = text.toLowerCase();
+  const ranges = [];
+
+  for (let i = 0; i < lower.length; i++) {
+    let node = trie;
+    for (let j = i; j < lower.length && j - i < maxTermLen; j++) {
+      const ch = lower[j];
+      node = node?.[ch];
+      if (!node) break;
+      if (node.$) {
+        const start = i;
+        const end = j + 1;
+        const leftOk = start === 0 || !isAlphaNum(text[start - 1]);
+        const rightOk = end === text.length || !isAlphaNum(text[end]);
+        if (leftOk && rightOk) ranges.push({ start, end });
+      }
+    }
+  }
+
+  ranges.sort((a, b) => a.start - b.start);
+  const merged = [];
+  for (const r of ranges) {
+    const last = merged[merged.length - 1];
+    if (!last || r.start > last.end) merged.push({ ...r });
+    else last.end = Math.max(last.end, r.end);
+  }
+  return merged;
+}
+
+function normalizeLabel(entity) {
+  if (!entity) return "PHI";
+  const raw = String(entity).toUpperCase();
+  const stripped = raw.replace(/^B-/, "").replace(/^I-/, "");
+  return stripped;
+}
+
+function makeId(span) {
+  return `${span.source}:${span.label}:${span.start}:${span.end}`;
+}
+
+function maskSpans(text, spans) {
+  if (!spans.length) return text;
+  const chars = text.split("");
+  for (const s of spans) {
+    const start = Math.max(0, Math.min(text.length, s.start));
+    const end = Math.max(0, Math.min(text.length, s.end));
+    for (let i = start; i < end; i++) chars[i] = " ";
+  }
+  return chars.join("");
+}
+
+function runRegexDetections(maskedText) {
+  const detections = [];
+
+  const patterns = [
+    // Patient name from header (e.g., "Patient: Thompson, Margaret A.")
+    { label: "PATIENT_NAME", score: 0.95, re: /(?:^|\n)\s*(?:Patient(?:\s+Name)?|Pt|Name|Subject)\s*[:\-]\s*([A-Z][a-z]+(?:,\s*[A-Z][a-z]+(?:\s+[A-Z]\.?)?)?)/gm },
+    { label: "EMAIL", score: 0.98, re: /\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b/g },
+    { label: "SSN", score: 0.98, re: /\b\d{3}-\d{2}-\d{4}\b/g },
+    { label: "PHONE", score: 0.9, re: /\b(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b/g },
+    { label: "DOB", score: 0.95, re: /\b(?:DOB|Date\s*of\s*Birth|Birth\s*Date|Born)\s*[:\-]?\s*\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/gi },
+    { label: "MRN", score: 0.95, re: /\b(?:MRN|Medical\s*Record(?:\s*Number)?|Patient\s*ID|ID|Accession|CSN)\s*[:#\-]?\s*[A-Z0-9\-]{4,15}\b/gi },
+    { label: "ADDRESS", score: 0.6, re: /\b\d{1,5}\s+[A-Za-z0-9][A-Za-z0-9.\-]*(?:\s+[A-Za-z0-9][A-Za-z0-9.\-]*){0,4}\s+(?:St|Street|Ave|Avenue|Rd|Road|Blvd|Boulevard|Ln|Lane|Dr|Drive|Ct|Court|Way|Pkwy|Parkway)\b\.?/g },
+    { label: "DATE", score: 0.55, re: /\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/g },
+    // Facility with City, State pattern
+    { label: "FACILITY", score: 0.85, re: /\b(?:Facility|Location|Hospital|Clinic)\s*[:\-]\s*([A-Z][a-zA-Z\s]+(?:Medical\s+Center|Hospital|Clinic|Healthcare)[,\s]+[A-Z][a-z]+[,\s]+[A-Z]{2})\b/g },
+  ];
+
+  for (const p of patterns) {
+    p.re.lastIndex = 0;
+    let m;
+    while ((m = p.re.exec(maskedText)) !== null) {
+      const start = m.index;
+      const end = m.index + m[0].length;
+      detections.push({
+        start,
+        end,
+        label: p.label,
+        score: p.score,
+        source: "regex",
+      });
+      if (m.index === p.re.lastIndex) p.re.lastIndex++;
+    }
+  }
+
+  return detections;
+}
+
+function mergeOverlaps(spans) {
+  const sorted = [...spans].sort((a, b) => {
+    if (a.start !== b.start) return a.start - b.start;
+    return (b.score ?? 0) - (a.score ?? 0);
+  });
+
+  const out = [];
+  for (const s of sorted) {
+    const last = out[out.length - 1];
+    if (!last) {
+      out.push({ ...s });
+      continue;
+    }
+    if (!overlaps(last.start, last.end, s.start, s.end)) {
+      out.push({ ...s });
+      continue;
+    }
+    const lastScore = last.score ?? 0;
+    const thisScore = s.score ?? 0;
+
+    if (last.label === s.label) {
+      last.end = Math.max(last.end, s.end);
+      last.score = Math.max(lastScore, thisScore);
+    } else if (thisScore > lastScore) {
+      out[out.length - 1] = { ...s };
+    }
+  }
+  return out;
+}
+
+async function loadNER() {
+  const tries = [
+    { quantized: true },
+    { dtype: "q8" },
+    {},
+  ];
+
+  let lastErr = null;
+  for (const opts of tries) {
+    try {
+      console.log("[PHI Worker] Trying to load NER model with options:", opts);
+      const p = await pipeline(TASK, MODEL_ID, opts);
+      console.log("[PHI Worker] NER model loaded successfully");
+      return p;
+    } catch (e) {
+      console.warn("[PHI Worker] NER load attempt failed:", e?.message || e);
+      lastErr = e;
+    }
+  }
+  console.error("[PHI Worker] All NER load attempts failed");
+  throw lastErr;
+}
+
+async function runNER(chunk, aiThreshold) {
+  if (!nerPipeline) {
+    console.log("[PHI Worker] NER pipeline not available, skipping AI detection");
+    return [];
+  }
+
+  const raw = await nerPipeline(chunk, { aggregation_strategy: "simple" });
+  const spans = [];
+  for (const ent of raw || []) {
+    const start = ent.start ?? null;
+    const end = ent.end ?? null;
+    const score = ent.score ?? null;
+    if (typeof start !== "number" || typeof end !== "number" || end <= start) continue;
+    if (typeof score === "number" && score < aiThreshold) continue;
+    spans.push({
+      start,
+      end,
+      label: normalizeLabel(ent.entity_group || ent.entity),
+      score: typeof score === "number" ? score : 0.0,
+      source: "ner",
+    });
+  }
+  return spans;
+}
+
+async function ensureReady() {
+  if (allowlistTrie !== null) return; // Already initialized
+
+  console.log("[PHI Worker] Initializing...");
+
+  // Load allowlist trie (required)
+  try {
+    const trieUrl = new URL("./allowlist_trie.json", import.meta.url);
+    const trieJson = await fetch(trieUrl).then((r) => {
+      if (!r.ok) throw new Error(`Failed to load allowlist_trie.json (${r.status})`);
+      return r.json();
+    });
+    allowlistTrie = trieJson.trie || trieJson;
+    maxTermLen = trieJson.max_term_len || 48;
+    console.log("[PHI Worker] Allowlist trie loaded");
+  } catch (e) {
+    console.warn("[PHI Worker] Failed to load allowlist trie, using empty:", e?.message);
+    allowlistTrie = {};
+    maxTermLen = 48;
+  }
+
+  // Load NER model (optional - falls back to regex-only)
+  try {
+    nerPipeline = await loadNER();
+  } catch (e) {
+    console.warn("[PHI Worker] NER model not available, using regex-only detection:", e?.message);
+    nerPipeline = null;
+  }
+
+  console.log("[PHI Worker] Initialization complete. NER available:", !!nerPipeline);
+}
+
+self.onmessage = async (e) => {
+  const msg = e.data;
+  if (!msg || typeof msg.type !== "string") return;
+
+  if (msg.type === "cancel") {
+    cancelled = true;
+    return;
+  }
+
+  if (msg.type === "init") {
+    try {
+      await ensureReady();
+      post("ready");
+    } catch (err) {
+      post("error", { message: String(err?.message || err) });
+    }
+    return;
+  }
+
+  if (msg.type === "start") {
+    if (running) return;
+    running = true;
+    cancelled = false;
+    try {
+      await ensureReady();
+
+      const text = String(msg.text || "");
+      const config = msg.config || {};
+      const aiThreshold =
+        typeof config.aiThreshold === "number" ? config.aiThreshold : 0.85;
+
+      const protectedRanges = trieScanProtectedRanges(text, allowlistTrie);
+      const isProtected = makeProtectedChecker(protectedRanges);
+
+      const allSpans = [];
+
+      const windowCount = Math.max(
+        1,
+        Math.ceil(Math.max(0, text.length - OVERLAP) / STEP)
+      );
+      let windowIndex = 0;
+
+      for (let start = 0; start < text.length; start += STEP) {
+        const end = Math.min(text.length, start + WINDOW);
+        const chunk = text.slice(start, end);
+        windowIndex += 1;
+
+        const nerSpansLocal = await runNER(chunk, aiThreshold);
+        const masked = maskSpans(chunk, nerSpansLocal);
+        const regexSpansLocal = runRegexDetections(masked);
+
+        const mergedLocal = mergeOverlaps([...nerSpansLocal, ...regexSpansLocal]);
+        const abs = mergedLocal
+          .map((s) => ({
+            ...s,
+            start: s.start + start,
+            end: s.end + start,
+          }))
+          .filter((s) => !isProtected(s.start, s.end))
+          .map((s) => ({ ...s, id: makeId(s) }));
+
+        allSpans.push(...abs);
+
+        post("progress", { windowIndex, windowCount });
+        post("detections_delta", { windowIndex, detections: abs });
+
+        if (cancelled) break;
+      }
+
+      const mergedAll = mergeOverlaps(allSpans)
+        .filter((s) => !isProtected(s.start, s.end))
+        .map((s) => ({ ...s, id: makeId(s) }));
+
+      post("done", { detections: mergedAll });
+    } catch (err) {
+      post("error", { message: String(err?.message || err) });
+    } finally {
+      running = false;
+    }
+  }
+};
+

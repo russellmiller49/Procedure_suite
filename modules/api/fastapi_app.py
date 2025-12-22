@@ -37,7 +37,7 @@ from pathlib import Path
 from typing import Any, AsyncIterator, List
 
 from fastapi import FastAPI, Request, Depends, HTTPException
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -278,6 +278,15 @@ app.include_router(metrics_router, tags=["metrics"])
 app.include_router(phi_demo_router)
 # Registry extraction router (hybrid-first pipeline)
 app.include_router(registry_extract_router, tags=["registry"])
+
+@app.get("/ui/phi_redactor/")
+def phi_redactor_index() -> FileResponse:
+    static_dir = Path(__file__).parent / "static"
+    index_path = static_dir / "phi_redactor" / "index.html"
+    resp = FileResponse(index_path)
+    resp.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+    resp.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+    return resp
 
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
@@ -739,9 +748,12 @@ async def unified_process(
 
     start_time = time.time()
 
-    # Early PHI redaction - scrub once at entry, use scrubbed text downstream
-    redaction = apply_phi_redaction(req.note, phi_scrubber)
-    note_text = redaction.text
+    if req.already_scrubbed:
+        note_text = req.note
+    else:
+        # Early PHI redaction - scrub once at entry, use scrubbed text downstream
+        redaction = apply_phi_redaction(req.note, phi_scrubber)
+        note_text = redaction.text
 
     # Step 1: Registry extraction
     try:

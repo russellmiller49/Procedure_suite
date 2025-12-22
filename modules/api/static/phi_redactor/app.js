@@ -1,0 +1,456 @@
+/* global monaco */
+
+const statusTextEl = document.getElementById("statusText");
+const progressTextEl = document.getElementById("progressText");
+const detectionsListEl = document.getElementById("detectionsList");
+const detectionsCountEl = document.getElementById("detectionsCount");
+const serverResponseEl = document.getElementById("serverResponse");
+
+const runBtn = document.getElementById("runBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+const applyBtn = document.getElementById("applyBtn");
+const revertBtn = document.getElementById("revertBtn");
+const submitBtn = document.getElementById("submitBtn");
+
+const WORKER_CONFIG = {
+  aiThreshold: 0.85,
+};
+
+function setStatus(text) {
+  statusTextEl.textContent = text;
+}
+
+function setProgress(text) {
+  progressTextEl.textContent = text || "";
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function buildLineStartOffsets(text) {
+  const starts = [0];
+  for (let i = 0; i < text.length; i++) {
+    if (text.charCodeAt(i) === 10) starts.push(i + 1);
+  }
+  return starts;
+}
+
+function offsetToPosition(offset, lineStarts, textLength) {
+  const safeOffset = clamp(offset, 0, textLength);
+
+  let lo = 0;
+  let hi = lineStarts.length - 1;
+  let best = 0;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (lineStarts[mid] <= safeOffset) {
+      best = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  const lineStart = lineStarts[best] ?? 0;
+  return { lineNumber: best + 1, column: safeOffset - lineStart + 1 };
+}
+
+function formatScore(score) {
+  if (typeof score !== "number") return "—";
+  return score.toFixed(2);
+}
+
+function el(tag, attrs = {}, children = []) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "className") node.className = v;
+    else if (k === "text") node.textContent = v;
+    else if (k.startsWith("on") && typeof v === "function") {
+      node.addEventListener(k.slice(2).toLowerCase(), v);
+    } else if (v != null) {
+      node.setAttribute(k, String(v));
+    }
+  }
+  for (const child of children) node.appendChild(child);
+  return node;
+}
+
+function safeSnippet(text, start, end) {
+  const s = clamp(start, 0, text.length);
+  const e = clamp(end, 0, text.length);
+  const raw = text.slice(s, e);
+  const oneLine = raw.replace(/\s+/g, " ").trim();
+  if (oneLine.length <= 120) return oneLine || "(empty)";
+  return `${oneLine.slice(0, 117)}…`;
+}
+
+async function main() {
+  if (!window.__monacoReady) {
+    setStatus("Monaco loader missing");
+    return;
+  }
+  await window.__monacoReady;
+
+  const editor = monaco.editor.create(document.getElementById("editor"), {
+    value: "",
+    language: "plaintext",
+    theme: "vs-dark",
+    minimap: { enabled: false },
+    wordWrap: "on",
+    fontSize: 13,
+    automaticLayout: true,
+  });
+
+  const model = editor.getModel();
+  let originalText = model.getValue();
+  let hasRunDetection = false;
+  let scrubbedConfirmed = false;
+  let suppressDirtyFlag = false;
+
+  let detections = [];
+  let detectionsById = new Map();
+  let excluded = new Set();
+  let decorations = [];
+
+  let running = false;
+
+  function setScrubbedConfirmed(value) {
+    scrubbedConfirmed = value;
+    submitBtn.disabled = !scrubbedConfirmed || running;
+    // Update button title for better UX
+    if (submitBtn.disabled) {
+      if (running) {
+        submitBtn.title = "Wait for detection to complete";
+      } else if (!scrubbedConfirmed) {
+        submitBtn.title = "Click 'Apply redactions' first";
+      }
+    } else {
+      submitBtn.title = "Submit the scrubbed note to the server";
+    }
+  }
+
+  function clearDetections() {
+    detections = [];
+    detectionsById = new Map();
+    excluded = new Set();
+    decorations = editor.deltaDecorations(decorations, []);
+    detectionsListEl.innerHTML = "";
+    detectionsCountEl.textContent = "0";
+    applyBtn.disabled = true;
+    revertBtn.disabled = true;
+  }
+
+  function updateDecorations() {
+    const text = model.getValue();
+    const lineStarts = buildLineStartOffsets(text);
+    const textLength = text.length;
+
+    const included = detections.filter((d) => !excluded.has(d.id));
+    const newDecorations = included
+      .filter((d) => Number.isFinite(d.start) && Number.isFinite(d.end) && d.end > d.start)
+      .map((d) => {
+        const startPos = offsetToPosition(d.start, lineStarts, textLength);
+        const endPos = offsetToPosition(d.end, lineStarts, textLength);
+        return {
+          range: new monaco.Range(
+            startPos.lineNumber,
+            startPos.column,
+            endPos.lineNumber,
+            endPos.column
+          ),
+          options: {
+            inlineClassName: "phi-detection",
+            hoverMessage: {
+              value: `**${d.label}** (${d.source}, score ${formatScore(d.score)})`,
+            },
+          },
+        };
+      });
+
+    decorations = editor.deltaDecorations(decorations, newDecorations);
+  }
+
+  function renderDetections() {
+    const text = model.getValue();
+    detectionsCountEl.textContent = String(detections.length);
+    detectionsListEl.innerHTML = "";
+
+    const sorted = [...detections].sort((a, b) => {
+      if (a.start !== b.start) return a.start - b.start;
+      return (b.score ?? 0) - (a.score ?? 0);
+    });
+
+    for (const d of sorted) {
+      const checked = !excluded.has(d.id);
+      const checkbox = el("input", {
+        type: "checkbox",
+        checked: checked ? "checked" : null,
+        onChange: (ev) => {
+          const on = ev.target.checked;
+          if (!on) excluded.add(d.id);
+          else excluded.delete(d.id);
+          updateDecorations();
+        },
+      });
+      checkbox.checked = checked;
+
+      const meta = el("div", { className: "detMeta" }, [
+        el("span", { className: "pill label", text: d.label }),
+        el("span", { className: "pill source", text: d.source }),
+        el("span", { className: "pill score", text: `score ${formatScore(d.score)}` }),
+        el("span", { className: "pill", text: `${d.start}–${d.end}` }),
+      ]);
+
+      const snippet = el("div", {
+        className: "snippet",
+        text: safeSnippet(text, d.start, d.end),
+      });
+
+      detectionsListEl.appendChild(
+        el("div", { className: "detRow" }, [
+          checkbox,
+          el("div", {}, [meta, snippet]),
+        ])
+      );
+    }
+
+    if (detections.length === 0 && hasRunDetection && !running) {
+      detectionsListEl.innerHTML = '<div class="subtle" style="padding: 1rem; text-align: center;">No PHI detected. Click "Apply redactions" to enable submit.</div>';
+    }
+
+    updateDecorations();
+    // Enable apply button if detection has completed (even with 0 detections)
+    applyBtn.disabled = running || !hasRunDetection;
+    if (applyBtn.disabled) {
+      if (running) {
+        applyBtn.title = "Wait for detection to complete";
+      } else if (!hasRunDetection) {
+        applyBtn.title = "Click 'Run detection' first";
+      }
+    } else {
+      applyBtn.title = "Apply redactions to enable submit button";
+    }
+    revertBtn.disabled = running || originalText === model.getValue();
+  }
+
+  model.onDidChangeContent(() => {
+    if (suppressDirtyFlag) return;
+    setScrubbedConfirmed(false);
+    revertBtn.disabled = running || originalText === model.getValue();
+  });
+
+  const worker = new Worker("./redactor.worker.js", { type: "module" });
+  worker.postMessage({ type: "init" });
+
+  worker.onmessage = (e) => {
+    const msg = e.data;
+    if (!msg || typeof msg.type !== "string") return;
+
+    if (msg.type === "ready") {
+      setStatus("Ready");
+      setProgress("");
+      runBtn.disabled = false;
+      return;
+    }
+
+    if (msg.type === "progress") {
+      const percent = Math.round((msg.windowIndex / msg.windowCount) * 100);
+      setProgress(`Processing window ${msg.windowIndex}/${msg.windowCount} (${percent}%)`);
+      return;
+    }
+
+    if (msg.type === "detections_delta") {
+      for (const det of msg.detections || []) detectionsById.set(det.id, det);
+      detections = Array.from(detectionsById.values());
+      renderDetections();
+      return;
+    }
+
+    if (msg.type === "done") {
+      running = false;
+      cancelBtn.disabled = true;
+      runBtn.disabled = false;
+      applyBtn.disabled = false; // Enable even with 0 detections
+      revertBtn.disabled = originalText === model.getValue();
+
+      detections = Array.isArray(msg.detections) ? msg.detections : [];
+      detectionsById = new Map(detections.map((d) => [d.id, d]));
+
+      const detectionCount = detections.length;
+      if (detectionCount === 0) {
+        setStatus("Done (0 detections) - You can apply redactions to enable submit");
+      } else {
+        setStatus(`Done (${detectionCount} detection${detectionCount === 1 ? "" : "s"})`);
+      }
+      setProgress("");
+      renderDetections();
+      return;
+    }
+
+    if (msg.type === "error") {
+      running = false;
+      cancelBtn.disabled = true;
+      runBtn.disabled = false;
+      applyBtn.disabled = !hasRunDetection;
+      setStatus(`Error: ${msg.message || "unknown"}`);
+      setProgress("");
+      return;
+    }
+  };
+
+  cancelBtn.addEventListener("click", () => {
+    if (!running) return;
+    worker.postMessage({ type: "cancel" });
+    setStatus("Cancelling…");
+  });
+
+  runBtn.addEventListener("click", () => {
+    if (running) return;
+    hasRunDetection = true;
+    setScrubbedConfirmed(false);
+
+    originalText = model.getValue();
+    clearDetections();
+
+    running = true;
+    runBtn.disabled = true;
+    cancelBtn.disabled = false;
+    applyBtn.disabled = true;
+    revertBtn.disabled = false;
+    submitBtn.disabled = true;
+
+    setStatus("Detecting… (client-side)");
+    setProgress("");
+
+    worker.postMessage({
+      type: "start",
+      text: originalText,
+      config: WORKER_CONFIG,
+    });
+  });
+
+  applyBtn.addEventListener("click", () => {
+    if (!hasRunDetection) return;
+
+    const included = detections.filter((d) => !excluded.has(d.id));
+    const spans = included
+      .filter((d) => Number.isFinite(d.start) && Number.isFinite(d.end) && d.end > d.start)
+      .sort((a, b) => b.start - a.start);
+
+    const text = model.getValue();
+    const lineStarts = buildLineStartOffsets(text);
+    const textLength = text.length;
+
+    const edits = spans.map((d) => {
+      const startPos = offsetToPosition(d.start, lineStarts, textLength);
+      const endPos = offsetToPosition(d.end, lineStarts, textLength);
+      return {
+        range: new monaco.Range(
+          startPos.lineNumber,
+          startPos.column,
+          endPos.lineNumber,
+          endPos.column
+        ),
+        text: "[REDACTED]",
+      };
+    });
+
+    suppressDirtyFlag = true;
+    try {
+      editor.executeEdits("phi-redactor", edits);
+    } finally {
+      suppressDirtyFlag = false;
+    }
+
+    setScrubbedConfirmed(true);
+    setStatus("Redactions applied (scrubbed text ready to submit)");
+    revertBtn.disabled = false;
+  });
+
+  revertBtn.addEventListener("click", () => {
+    suppressDirtyFlag = true;
+    try {
+      editor.setValue(originalText);
+    } finally {
+      suppressDirtyFlag = false;
+    }
+    clearDetections();
+    hasRunDetection = false;
+    setScrubbedConfirmed(false);
+    setStatus("Reverted to baseline");
+    setProgress("");
+  });
+
+  submitBtn.addEventListener("click", async () => {
+    if (!scrubbedConfirmed) {
+      console.warn("Submit blocked: redactions not confirmed. Click 'Apply redactions' first.");
+      setStatus("Error: Apply redactions before submitting");
+      return;
+    }
+    submitBtn.disabled = true;
+    setStatus("Submitting scrubbed note…");
+    serverResponseEl.textContent = "(submitting...)";
+
+    try {
+      const requestBody = {
+        note: model.getValue(),
+        already_scrubbed: true,
+      };
+      console.log("Submitting to /api/v1/process", { noteLength: requestBody.note.length });
+      
+      const res = await fetch("/api/v1/process", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
+      
+      console.log("Response status:", res.status, res.statusText);
+      
+      const data = await res.json().catch((parseErr) => {
+        console.error("Failed to parse JSON response:", parseErr);
+        return { error: "Invalid JSON response", raw: await res.text().catch(() => "(unable to read)") };
+      });
+      
+      if (!res.ok) {
+        console.error("Request failed:", res.status, data);
+        serverResponseEl.textContent = JSON.stringify(
+          { error: data, status: res.status, statusText: res.statusText },
+          null,
+          2
+        );
+        setStatus(`Submit failed (${res.status})`);
+        return;
+      }
+      
+      console.log("Success:", data);
+      serverResponseEl.textContent = JSON.stringify(data, null, 2);
+      setStatus("Submitted (scrubbed text only)");
+    } catch (err) {
+      console.error("Submit error:", err);
+      serverResponseEl.textContent = JSON.stringify(
+        { error: String(err?.message || err), type: err?.name || "UnknownError" },
+        null,
+        2
+      );
+      setStatus("Submit error - check console for details");
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  // Optional: service worker (local assets only)
+  if ("serviceWorker" in navigator) {
+    try {
+      await navigator.serviceWorker.register("./sw.js");
+    } catch {
+      // ignore
+    }
+  }
+
+  setStatus("Initializing worker…");
+}
+
+main().catch((e) => {
+  console.error(e);
+  statusTextEl.textContent = `Init failed: ${e?.message || e}`;
+});

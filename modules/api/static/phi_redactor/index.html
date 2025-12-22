@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PHI Redactor (Client-Side)</title>
+    <link rel="stylesheet" href="./styles.css" />
+
+    <!-- Monaco Editor (AMD loader) -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+    <script>
+      window.__monacoReady = new Promise((resolve, reject) => {
+        try {
+          require.config({
+            paths: {
+              vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs",
+            },
+          });
+          require(["vs/editor/editor.main"], () => resolve(), reject);
+        } catch (e) {
+          reject(e);
+        }
+      });
+    </script>
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="title">
+        <div class="h1">Procedure Suite — PHI Redactor</div>
+        <div class="subtle">
+          Client-side detection and redaction. Never submits raw notes.
+        </div>
+      </div>
+      <div class="status">
+        <span id="statusText">Loading…</span>
+        <span id="progressText" class="progress"></span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="editorPane">
+        <div class="controls">
+          <button id="runBtn">Run detection</button>
+          <button id="cancelBtn" class="secondary" disabled>Cancel</button>
+          <div class="spacer"></div>
+          <button id="applyBtn" class="primary" disabled>Apply redactions</button>
+          <button id="revertBtn" class="secondary" disabled>Revert all</button>
+          <button id="submitBtn" class="success" disabled>Submit scrubbed note</button>
+        </div>
+
+        <div class="warning">
+          <strong>No PHI policy:</strong> This page runs detection locally in your browser.
+          You must apply redactions before submitting. The server receives only scrubbed text.
+        </div>
+
+        <div id="editor" class="editor"></div>
+
+        <div class="result">
+          <div class="resultHeader">Server response</div>
+          <pre id="serverResponse" class="resultBody">(none)</pre>
+        </div>
+      </section>
+
+      <aside class="sidePane">
+        <div class="sideHeader">
+          <div class="sideTitle">Detections</div>
+          <div class="sideMeta">
+            <span id="detectionsCount">0</span>
+            <span class="subtle">items</span>
+          </div>
+        </div>
+        <div id="detectionsList" class="detectionsList"></div>
+        <div class="sideFooter subtle">
+          Uncheck items to exclude from redaction.
+        </div>
+      </aside>
+    </main>
+  </body>
+</html>
+

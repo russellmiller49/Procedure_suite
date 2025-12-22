@@ -108,6 +108,10 @@ class UnifiedProcessRequest(BaseModel):
     """Request schema for unified registry + coder endpoint (extraction-first)."""
 
     note: str = Field(..., description="The procedure note text to process")
+    already_scrubbed: bool = Field(
+        False,
+        description="If true, the server will skip PHI scrubbing and treat the note as already de-identified/scrubbed.",
+    )
     locality: str = Field("00", description="Geographic locality for RVU calculations")
     include_financials: bool = Field(True, description="Whether to include RVU/payment info")
     explain: bool = Field(False, description="Include extraction evidence/rationales")

@@ -19,5 +19,10 @@ def _fake_umls_link(_: str):
 
 @pytest.fixture(autouse=True)
 def stub_umls(monkeypatch):
-    monkeypatch.setattr(report_engine, "umls_link", _fake_umls_link)
+    # The reporting engine may expose different UMLS integration points over time.
+    # Patch whichever is present to keep tests offline-friendly.
+    if hasattr(report_engine, "umls_link"):
+        monkeypatch.setattr(report_engine, "umls_link", _fake_umls_link)
+    elif hasattr(report_engine, "_safe_umls_link"):
+        monkeypatch.setattr(report_engine, "_safe_umls_link", _fake_umls_link)
     yield
