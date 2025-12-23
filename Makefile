@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum dev-iu pull-model-pytorch
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg dev-iu pull-model-pytorch
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -72,6 +72,31 @@ normalize-phi-silver:
 		--out data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
 		--password-policy id
 
+eval-phi-client:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--data data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
+		--output-dir artifacts/phi_distilbert_ner \
+		--eval-only
+
+audit-phi-client:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/audit_model_fp.py \
+		--model-dir artifacts/phi_distilbert_ner \
+		--data data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
+		--limit 5000
+
+patch-phi-client-hardneg:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_hard_negative_patch.py \
+		--audit-report artifacts/phi_distilbert_ner/audit_report.json \
+		--data-in data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
+		--data-out data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl
+
+finetune-phi-client-hardneg:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--resume-from artifacts/phi_distilbert_ner \
+		--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl \
+		--epochs 1 \
+		--lr 1e-5
+
 build-phi-platinum:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
 		--in-dir data/knowledge/golden_extractions \
@@ -141,6 +166,10 @@ help:
 	@echo "  sanitize-phi-silver - Post-hoc sanitizer for silver PHI labels"
 	@echo "  normalize-phi-silver - Normalize silver labels to stable schema"
 	@echo "  build-phi-platinum - Build hybrid redactor PHI spans"
+	@echo "  eval-phi-client - Evaluate DistilBERT NER model (no retraining)"
+	@echo "  audit-phi-client - Run false-positive audit guardrails"
+	@echo "  patch-phi-client-hardneg - Patch training data with audit violations"
+	@echo "  finetune-phi-client-hardneg - Finetune model for 1 epoch on hard negatives"
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"
 	@echo "  codex-train    - Full training pipeline"

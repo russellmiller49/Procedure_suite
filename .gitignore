@@ -49,3 +49,9 @@ data/models/hf/**
 
 # Explicit: prevent committing the large distill checkpoint if it exists locally
 data/models/RoBERTa-base-PM-M3-Voc-distill/RoBERTa-base-PM-M3-Voc-distill-hf/pytorch_model.bin
+
+# model artifacts
+artifacts/
+
+# model artifacts
+artifacts/

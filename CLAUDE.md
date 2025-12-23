@@ -167,6 +167,27 @@ make normalize-phi-silver
 
 **Password policy:** default is `id` (recommended) which maps `PASSWORD → ID`; optional `--password-policy drop` maps `PASSWORD → O`.
 
+---
+
+## ✅ Client NER Evaluation (DistilBERT)
+
+**Evaluate without retraining:**
+```bash
+make eval-phi-client
+```
+
+**Safety regression audit (must-not-redact guardrails):**
+```bash
+make audit-phi-client
+```
+
+**If seqeval missing:**
+```bash
+pip install evaluate seqeval
+```
+
+**Interpretation:** review `artifacts/phi_distilbert_ner/eval_metrics.json` for `overall_f1`; must-not-redact violations should be 0.
+
 **Refinery:** drops common false positives (e.g., temps like `105C`, CPT codes in ZIPCODE).
 **Label schema:** `--label-schema standard` maps Piiranha labels into `PATIENT/GEO/PROVIDER/...`.
 

@@ -84,6 +84,77 @@ def build_label_maps(rows: List[Dict[str, Any]]) -> Tuple[List[str], Dict[str, i
     return label_list, label2id, id2label
 
 
+def normalize_id2label(raw: Dict[Any, Any]) -> Dict[int, str]:
+    id2label: Dict[int, str] = {}
+    for key, value in raw.items():
+        try:
+            idx = int(key)
+        except (TypeError, ValueError):
+            continue
+        id2label[idx] = str(value)
+    return id2label
+
+
+def normalize_label2id(raw: Dict[Any, Any]) -> Dict[str, int]:
+    label2id: Dict[str, int] = {}
+    for key, value in raw.items():
+        try:
+            label2id[str(key)] = int(value)
+        except (TypeError, ValueError):
+            continue
+    return label2id
+
+
+def load_label_map_from_dir(model_dir: str) -> Tuple[List[str], Dict[str, int], Dict[int, str]] | None:
+    label_map_path = os.path.join(model_dir, "label_map.json")
+    if not os.path.exists(label_map_path):
+        return None
+    with open(label_map_path, "r") as f:
+        data = json.load(f)
+    label_list = data.get("label_list")
+    label2id = normalize_label2id(data.get("label2id", {}))
+    id2label = normalize_id2label(data.get("id2label", {}))
+    if not label_list and id2label:
+        label_list = [id2label[i] for i in sorted(id2label)]
+    if id2label and not label2id:
+        label2id = {v: k for k, v in id2label.items()}
+    if label2id and not id2label:
+        id2label = {v: k for k, v in label2id.items()}
+    if not label_list:
+        return None
+    return label_list, label2id, id2label
+
+
+def label_maps_from_model(model: Any) -> Tuple[List[str], Dict[str, int], Dict[int, str]] | None:
+    if model is None or not hasattr(model, "config"):
+        return None
+    id2label = normalize_id2label(getattr(model.config, "id2label", {}) or {})
+    if id2label:
+        label_list = [id2label[i] for i in sorted(id2label)]
+        label2id = {v: k for k, v in id2label.items()}
+        return label_list, label2id, id2label
+    label2id = normalize_label2id(getattr(model.config, "label2id", {}) or {})
+    if label2id:
+        id2label = {v: k for k, v in label2id.items()}
+        label_list = [id2label[i] for i in sorted(id2label)]
+        return label_list, label2id, id2label
+    return None
+
+
+def resolve_label_maps(
+    rows: List[Dict[str, Any]],
+    model: Any | None = None,
+    model_dir: str | None = None,
+) -> Tuple[List[str], Dict[str, int], Dict[int, str]]:
+    from_dir = load_label_map_from_dir(model_dir) if model_dir else None
+    if from_dir:
+        return from_dir
+    from_model = label_maps_from_model(model)
+    if from_model:
+        return from_model
+    return build_label_maps(rows)
+
+
 def normalize_tag(tag: str) -> str:
     # Accept already-normalized BIO tags; treat unknown as O to be safe.
     if not tag:
@@ -179,9 +250,11 @@ def split_train_eval(rows: List[Dict[str, Any]], eval_ratio: float, seed: int) -
 
 def build_compute_metrics(id2label: Dict[int, str]):
     if not _HAVE_EVALUATE:
-        return None
-
-    seqeval = evaluate.load("seqeval")
+        return None, "evaluate/seqeval not installed; metrics limited to eval_loss."
+    try:
+        seqeval = evaluate.load("seqeval")
+    except Exception as exc:
+        return None, f"seqeval unavailable ({exc}); metrics limited to eval_loss."
 
     def compute_metrics(p):
         predictions, labels = p
@@ -210,14 +283,21 @@ def build_compute_metrics(id2label: Dict[int, str]):
             "accuracy": results.get("overall_accuracy", 0.0),
         }
 
-    return compute_metrics
+    return compute_metrics, None
 
 
-def main():
+def build_arg_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl")
+    ap.add_argument("--train-data", default=None)
+    ap.add_argument("--patched-data", default=None)
+    ap.add_argument("--hard-negative-jsonl", default=None)
     ap.add_argument("--model", default="distilbert-base-uncased")
+    ap.add_argument("--resume-from", default=None)
     ap.add_argument("--output-dir", default="artifacts/phi_distilbert_ner")
+    ap.add_argument("--model-dir", default=None)
+    ap.add_argument("--eval-only", action="store_true")
+    ap.add_argument("--eval-split", choices=["heldout", "all"], default="heldout")
     ap.add_argument("--max-length", type=int, default=512)
     ap.add_argument("--eval-ratio", type=float, default=0.1)
     ap.add_argument("--seed", type=int, default=1337)
@@ -235,49 +315,131 @@ def main():
     ap.add_argument("--save-steps", type=int, default=500)
     ap.add_argument("--eval-steps", type=int, default=500)
     ap.add_argument("--logging-steps", type=int, default=50)
-    args = ap.parse_args()
+    return ap
+
+
+def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
+    return build_arg_parser().parse_args(argv)
+
+
+def resolve_model_dir(args: argparse.Namespace) -> str:
+    return args.model_dir or args.output_dir
+
+
+def resolve_data_path(args: argparse.Namespace) -> str:
+    if args.patched_data and args.hard_negative_jsonl:
+        raise ValueError("Use only one of --patched-data or --hard-negative-jsonl.")
+    if args.patched_data:
+        return args.patched_data
+    if args.hard_negative_jsonl:
+        return args.hard_negative_jsonl
+    return args.train_data or args.data
+
+
+def resolve_resume_dir(args: argparse.Namespace) -> str | None:
+    return args.resume_from
+
+
+def validate_paths(args: argparse.Namespace, model_dir: str, data_path: str) -> None:
+    if not os.path.isfile(data_path):
+        raise FileNotFoundError(f"Data file not found: {data_path}")
+    if args.eval_only and not os.path.isdir(model_dir):
+        raise FileNotFoundError(f"Model directory not found: {model_dir}")
+    if args.resume_from and not os.path.isdir(args.resume_from):
+        raise FileNotFoundError(f"Resume model directory not found: {args.resume_from}")
+
+
+def main():
+    args = parse_args()
+    model_dir = resolve_model_dir(args)
+    data_path = resolve_data_path(args)
+    validate_paths(args, model_dir, data_path)
 
     set_seed(args.seed)
 
-    rows = read_jsonl(args.data, limit=args.limit)
-    if not rows:
-        raise RuntimeError(f"No rows loaded from {args.data}")
-
-    label_list, label2id, id2label = build_label_maps(rows)
-
-    os.makedirs(args.output_dir, exist_ok=True)
-    with open(os.path.join(args.output_dir, "label_map.json"), "w") as f:
-        json.dump(
-            {"label_list": label_list, "label2id": label2id, "id2label": {str(k): v for k, v in id2label.items()}},
-            f,
-            indent=2,
+    # --- Device / CUDA visibility diagnostics ---
+    # Hugging Face `Trainer` will automatically use CUDA when available.
+    cuda_available = torch.cuda.is_available()
+    if cuda_available:
+        try:
+            device_name = torch.cuda.get_device_name(0)
+        except Exception:
+            device_name = "unknown"
+        print(
+            f"[device] cuda available: True | "
+            f"torch={torch.__version__} | "
+            f"cuda={torch.version.cuda} | "
+            f"gpus={torch.cuda.device_count()} | "
+            f"gpu0={device_name} | "
+            f"fp16={bool(args.fp16)} | bf16={bool(args.bf16)}"
+        )
+    else:
+        print(
+            f"[device] cuda available: False (CPU mode) | "
+            f"torch={torch.__version__} | "
+            f"fp16={bool(args.fp16)} | bf16={bool(args.bf16)}"
         )
 
-    tokenizer = AutoTokenizer.from_pretrained(args.model, use_fast=True)
+    rows = read_jsonl(data_path, limit=args.limit)
+    if not rows:
+        raise RuntimeError(f"No rows loaded from {data_path}")
 
-    train_rows, eval_rows = split_train_eval(rows, eval_ratio=args.eval_ratio, seed=args.seed)
+    if args.eval_only:
+        tokenizer = AutoTokenizer.from_pretrained(model_dir, use_fast=True)
+        model = AutoModelForTokenClassification.from_pretrained(model_dir)
+        label_list, label2id, id2label = resolve_label_maps(rows, model=model, model_dir=model_dir)
+    else:
+        resume_dir = resolve_resume_dir(args)
+        if resume_dir:
+            tokenizer = AutoTokenizer.from_pretrained(resume_dir, use_fast=True)
+            model = AutoModelForTokenClassification.from_pretrained(resume_dir)
+            label_list, label2id, id2label = resolve_label_maps(rows, model=model, model_dir=resume_dir)
+        else:
+            label_list, label2id, id2label = build_label_maps(rows)
+            tokenizer = AutoTokenizer.from_pretrained(args.model, use_fast=True)
+            model = AutoModelForTokenClassification.from_pretrained(
+                args.model,
+                num_labels=len(label_list),
+                id2label=id2label,
+                label2id=label2id,
+            )
 
-    train_ds = WordPieceNERDataset(train_rows, tokenizer, label2id, max_length=args.max_length)
+        os.makedirs(args.output_dir, exist_ok=True)
+        with open(os.path.join(args.output_dir, "label_map.json"), "w") as f:
+            json.dump(
+                {"label_list": label_list, "label2id": label2id, "id2label": {str(k): v for k, v in id2label.items()}},
+                f,
+                indent=2,
+            )
+
+    if args.eval_only:
+        if args.eval_split == "all":
+            eval_rows = rows
+        else:
+            _, eval_rows = split_train_eval(rows, eval_ratio=args.eval_ratio, seed=args.seed)
+        train_rows = []
+    else:
+        train_rows, eval_rows = split_train_eval(rows, eval_ratio=args.eval_ratio, seed=args.seed)
+
+    if args.eval_only and not eval_rows:
+        raise RuntimeError("Eval split produced no rows. Adjust --eval-split/--eval-ratio/--limit.")
+
+    train_ds = WordPieceNERDataset(train_rows, tokenizer, label2id, max_length=args.max_length) if train_rows else None
     eval_ds = WordPieceNERDataset(eval_rows, tokenizer, label2id, max_length=args.max_length)
-
-    model = AutoModelForTokenClassification.from_pretrained(
-        args.model,
-        num_labels=len(label_list),
-        id2label=id2label,
-        label2id=label2id,
-    )
 
     data_collator = DataCollatorForTokenClassification(tokenizer=tokenizer, padding=True)
 
-    compute_metrics = build_compute_metrics(id2label)
+    compute_metrics, metrics_note = build_compute_metrics(id2label)
+    if metrics_note:
+        print(f"[metrics] {metrics_note}")
 
     # --- Build TrainingArguments with backwards/forwards compatibility ---
     # Some transformers versions use `evaluation_strategy`, others use `eval_strategy`.
     # We'll try evaluation_strategy first, then fall back.
-    eval_mode = "steps" if len(eval_rows) > 0 else "no"
+    eval_mode = "no" if args.eval_only else ("steps" if len(eval_rows) > 0 else "no")
 
     training_args_kwargs: dict[str, object] = dict(
-        output_dir=args.output_dir,
+        output_dir=model_dir if args.eval_only else args.output_dir,
         learning_rate=args.lr,
         per_device_train_batch_size=args.train_batch,
         per_device_eval_batch_size=args.eval_batch,
@@ -288,12 +450,11 @@ def main():
         save_steps=args.save_steps,
         logging_steps=args.logging_steps,
         save_total_limit=2,
-        load_best_model_at_end=True if len(eval_rows) > 0 else False,
+        load_best_model_at_end=False if args.eval_only else (True if len(eval_rows) > 0 else False),
         fp16=args.fp16,
         bf16=args.bf16,
         report_to="none",
-        no_cuda=False,
-        use_mps_device=True,
+
     )
     if compute_metrics and len(eval_rows) > 0:
         training_args_kwargs["metric_for_best_model"] = "f1"
@@ -319,6 +480,14 @@ def main():
         tokenizer=tokenizer,
         compute_metrics=compute_metrics,
     )
+
+    if args.eval_only:
+        metrics = trainer.evaluate()
+        metrics_path = os.path.join(model_dir, "eval_metrics.json")
+        with open(metrics_path, "w") as f:
+            json.dump(metrics, f, indent=2)
+        print(json.dumps(metrics, indent=2, sort_keys=True))
+        return
 
     trainer.train()
 
