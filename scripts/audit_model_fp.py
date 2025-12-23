@@ -37,11 +37,12 @@ CPT_PUNCT_TOKENS = {",", ";", ":", "/", "(", ")", "[", "]"}
 LN_STATION_RE = re.compile(r"^\d{1,2}[lr](?:[is])?$")
 UNIT_TOKENS = {"l", "liter", "liters", "ml", "cc"}
 VOLUME_VERBS = {"drained", "output", "removed"}
-DEVICE_TERM_SET = {normalize(term) for term in DEVICE_MANUFACTURERS} | {
-    normalize(term) for term in PROTECTED_DEVICE_NAMES
-}
-# Audit-only skip list to reduce false positives on common surnames.
-AMBIGUOUS_DEVICE_TOKENS = {"young", "noah", "rogers"}
+EXTRA_DEVICE_TERMS = {"chartis"}
+DEVICE_TERM_SET = (
+    {normalize(term) for term in DEVICE_MANUFACTURERS}
+    | {normalize(term) for term in PROTECTED_DEVICE_NAMES}
+    | {normalize(term) for term in EXTRA_DEVICE_TERMS}
+)
 
 
 @dataclass
@@ -251,7 +252,7 @@ def find_left_upper_lobe(words: List[str], word_to_pieces: List[List[int]]) -> L
 def find_device_terms(words: List[str], word_to_pieces: List[List[int]]) -> List[Violation]:
     violations: List[Violation] = []
     for word, indices in zip(words, word_to_pieces):
-        if word in DEVICE_TERM_SET and word not in AMBIGUOUS_DEVICE_TOKENS:
+        if word in DEVICE_TERM_SET:
             violations.append(Violation(kind="device_term", indices=indices, phrase=word))
     return violations
 
