@@ -37,6 +37,7 @@ from pathlib import Path
 from typing import Any, AsyncIterator, List
 
 from fastapi import FastAPI, Request, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -54,6 +55,7 @@ from modules.api.routes.phi_demo_cases import router as phi_demo_router
 from modules.api.routes_registry import router as registry_extract_router
 from modules.api.readiness import require_ready
 from modules.infra.executors import run_cpu
+from modules.api.routes.unified_process import router as unified_process_router
 
 # All API schemas (base + QA pipeline)
 from modules.api.schemas import (
@@ -266,6 +268,46 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+# CORS (dev-friendly defaults)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # dev: allow all
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.middleware("http")
+async def _phi_redactor_headers(request: Request, call_next):
+    """
+    Ensure the PHI redactor UI (including /vendor/* model assets) works in
+    cross-origin isolated contexts and when embedded/loaded from other origins
+    during development.
+    """
+    resp = await call_next(request)
+    path = request.url.path
+    if path.startswith("/ui/phi_redactor"):
+        # Required for SharedArrayBuffer in modern browsers (cross-origin isolation).
+        resp.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+        resp.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+        # Allow these assets to be requested as subresources in COEP contexts.
+        resp.headers["Cross-Origin-Resource-Policy"] = "cross-origin"
+        # Dev convenience: make vendor assets fetchable from any origin.
+        # (CORSMiddleware adds CORS headers when an Origin header is present,
+        # but some contexts can still surface this as a "CORS error" without it.)
+        resp.headers.setdefault("Access-Control-Allow-Origin", "*")
+        resp.headers.setdefault("Access-Control-Allow-Methods", "*")
+        resp.headers.setdefault("Access-Control-Allow-Headers", "*")
+        # Chrome Private Network Access (PNA): when the UI is loaded from a
+        # "public" secure context (e.g., an https webview) and it fetches
+        # localhost resources, Chrome sends a preflight with
+        # Access-Control-Request-Private-Network: true and expects this header.
+        if request.headers.get("access-control-request-private-network", "").lower() == "true":
+            resp.headers["Access-Control-Allow-Private-Network"] = "true"
+        # Avoid stale caching during rapid iteration/debugging.
+        resp.headers.setdefault("Cache-Control", "no-store")
+    return resp
+
 # Include ML Advisor router
 app.include_router(ml_advisor_router, prefix="/api/v1", tags=["ML Advisor"])
 # Include PHI router
@@ -278,6 +320,8 @@ app.include_router(metrics_router, tags=["metrics"])
 app.include_router(phi_demo_router)
 # Registry extraction router (hybrid-first pipeline)
 app.include_router(registry_extract_router, tags=["registry"])
+# Unified process router (UI entry point)
+app.include_router(unified_process_router, prefix="/api")
 
 def _phi_redactor_response(path: Path) -> FileResponse:
     resp = FileResponse(path)

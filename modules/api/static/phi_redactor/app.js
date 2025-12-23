@@ -14,6 +14,7 @@ const submitBtn = document.getElementById("submitBtn");
 
 const WORKER_CONFIG = {
   aiThreshold: 0.85,
+  debug: false,
 };
 
 runBtn.disabled = true;
@@ -281,7 +282,7 @@ async function main() {
     applyBtn.disabled = true;
   });
 
-  worker.postMessage({ type: "init" });
+  worker.postMessage({ type: "init", debug: WORKER_CONFIG.debug });
 
   worker.onmessage = (e) => {
     const msg = e.data;
@@ -290,7 +291,7 @@ async function main() {
 
     if (msg.type === "ready") {
       workerReady = true;
-      setStatus("Ready (AI model may still be downloading)");
+      setStatus("Ready (local model loaded)");
       setProgress("");
       runBtn.disabled = !globalThis.crossOriginIsolated;
       return;
@@ -542,7 +543,7 @@ async function main() {
     }
   }
 
-  setStatus("Initializing worker… (AI model downloads run locally; first load may take minutes)");
+  setStatus("Initializing local PHI model (first load downloads ONNX)…");
 
   setInterval(() => {
     if (!running) return;

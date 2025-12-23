@@ -188,6 +188,27 @@ pip install evaluate seqeval
 
 **Interpretation:** review `artifacts/phi_distilbert_ner/eval_metrics.json` for `overall_f1`; must-not-redact violations should be 0.
 
+---
+
+## 🌐 Client-side PHI Redactor (Transformers.js)
+
+**Export local ONNX bundle:**
+```bash
+make export-phi-client-model
+```
+
+**Smoke test:**
+1. Start dev server and open `/ui/phi_redactor/`.
+2. Paste text containing:
+   - Codes: `31653`, `77012`
+   - LN stations: `4R`, `7` (with "station" nearby), `10R`, `11Ri`
+   - Anatomy: `Left Upper Lobe`
+   - Devices: `Dumon`, `Chartis`, `Zephyr`, `PleurX`
+   - Real PHI: patient name, DOB, phone, address
+3. Expected:
+   - PHI highlights for patient/DOB/phone/address
+   - Must-not-redact items are NOT highlighted
+
 **Refinery:** drops common false positives (e.g., temps like `105C`, CPT codes in ZIPCODE).
 **Label schema:** `--label-schema standard` maps Piiranha labels into `PATIENT/GEO/PROVIDER/...`.
 
