@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver build-phi-platinum dev-iu pull-model-pytorch
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum dev-iu pull-model-pytorch
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -65,6 +65,12 @@ sanitize-phi-silver:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/sanitize_dataset.py \
 		--in data/ml_training/distilled_phi_labels.jsonl \
 		--out data/ml_training/distilled_phi_CLEANED.jsonl
+
+normalize-phi-silver:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/normalize_phi_labels.py \
+		--in data/ml_training/distilled_phi_CLEANED.jsonl \
+		--out data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
+		--password-policy id
 
 build-phi-platinum:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
@@ -133,6 +139,7 @@ help:
 	@echo "  distill-phi    - Distill PHI labels for student NER training"
 	@echo "  distill-phi-silver - Distill Piiranha silver PHI labels"
 	@echo "  sanitize-phi-silver - Post-hoc sanitizer for silver PHI labels"
+	@echo "  normalize-phi-silver - Normalize silver labels to stable schema"
 	@echo "  build-phi-platinum - Build hybrid redactor PHI spans"
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"

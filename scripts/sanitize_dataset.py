@@ -44,6 +44,20 @@ GEO_LABELS = {"GEO", "STREET", "CITY", "LOCATION", "ADDRESS", "ZIPCODE", "BUILDI
 GEO_STREET_LABELS = {"GEO", "STREET"}
 DEVICE_KEYWORDS = ("stent", "valve")
 CPT_CUES = {"cpt", "code", "codes", "billing", "submitted", "justification", "rvu", "coding", "icd", "procedure"}
+CODE_CONTEXT_CUES = {
+    "cpt",
+    "code",
+    "codes",
+    "coding",
+    "billing",
+    "submitted",
+    "justification",
+    "rationale",
+    "rvu",
+}
+RADIOLOGY_CONTEXT_CUES = {"radiology", "radiologic"}
+PROCEDURE_CODE_CUES = {"tbna", "ebus", "rebus", "nav"}
+CODE_PUNCT_CUES = {"(", ")", ":", "•", "-"}
 ADDRESS_CUES = {"address", "addr", "street", "city", "zip", "zipcode", "state"}
 US_STATE_CODES = {
     "al",
@@ -195,32 +209,79 @@ def iter_wordpiece_spans(tokens: list[str]) -> Iterable[tuple[int, int, str, str
         yield start, idx, combined.lower(), combined
 
 
-def _context_window(tokens: list[str], start: int, end: int, window_size: int = 10) -> tuple[list[str], list[str]]:
+def _context_window(tokens: list[str], start: int, end: int, window_size: int = 10) -> tuple[list[str], list[str], list[str]]:
     left = max(0, start - window_size)
     right = min(len(tokens), end + window_size)
     raw_tokens = [tokens[idx] for idx in range(left, right)]
     normalized = [token.replace("##", "").lower() for token in raw_tokens]
     cue_tokens = [tok.strip(string.punctuation) for tok in normalized if tok.strip(string.punctuation)]
-    return normalized, cue_tokens
+    combined_cues: list[str] = []
+    idx = 0
+    while idx < len(raw_tokens):
+        token = raw_tokens[idx]
+        parts = [token[2:] if token.startswith("##") else token]
+        idx += 1
+        while idx < len(raw_tokens) and raw_tokens[idx].startswith("##"):
+            parts.append(raw_tokens[idx][2:])
+            idx += 1
+        combined = "".join(parts).lower()
+        stripped = combined.strip(string.punctuation)
+        if stripped:
+            combined_cues.append(stripped)
+    return normalized, cue_tokens, combined_cues
 
 
-def _has_cpt_context(tokens: list[str], start: int, end: int) -> bool:
-    normalized, cue_tokens = _context_window(tokens, start, end)
-    if any(tok in CPT_CUES for tok in cue_tokens):
-        return True
-    for idx, token in enumerate(normalized[:-1]):
-        if token in {"code", "codes", "cpt"} and normalized[idx + 1] in {":", "("}:
+def _punct_near_span(tokens: list[str], start: int, end: int) -> bool:
+    left = max(0, start - 2)
+    right = min(len(tokens), end + 2)
+    for token in tokens[left:right]:
+        normalized = token.replace("##", "").lower()
+        if normalized in CODE_PUNCT_CUES:
             return True
     return False
 
 
+def _has_cpt_context(tokens: list[str], start: int, end: int) -> bool:
+    normalized, cue_tokens, combined_cues = _context_window(tokens, start, end)
+    cue_set = set(cue_tokens) | set(combined_cues)
+
+    if cue_set & (CPT_CUES | CODE_CONTEXT_CUES):
+        return True
+    if cue_set & PROCEDURE_CODE_CUES:
+        return True
+    if "•" in normalized:
+        return True
+    if _punct_near_span(tokens, start, end):
+        return True
+
+    if (cue_set & RADIOLOGY_CONTEXT_CUES) and "guidance" in cue_set and ("ct" in cue_set or "needle" in cue_set):
+        return True
+    for idx, token in enumerate(normalized[:-1]):
+        if token in {"code", "codes", "cpt"} and normalized[idx + 1] in {":", "("}:
+            return True
+        if token == "code" and normalized[idx + 1] == "s":
+            if idx + 2 < len(normalized) and normalized[idx + 2] in {":", "("}:
+                return True
+    return False
+
+
 def _is_address_like(tokens: list[str], start: int, end: int) -> bool:
-    _, cue_tokens = _context_window(tokens, start, end)
+    _, cue_tokens, _ = _context_window(tokens, start, end)
     if any(tok in ADDRESS_CUES for tok in cue_tokens):
         return True
     if any(tok in US_STATE_CODES for tok in cue_tokens):
         return True
     return False
+
+
+_CODE_HEADER_RE = re.compile(r"\bcode(?:s)?\s*:", re.IGNORECASE)
+_CPT_RE = re.compile(r"\bcpt\b", re.IGNORECASE)
+
+
+def _record_force_code_context(record_text: str | None) -> bool:
+    if not record_text:
+        return False
+    return bool(_CODE_HEADER_RE.search(record_text) or _CPT_RE.search(record_text))
 
 
 def _is_entity_start(index: int, tags: list[str]) -> bool:
@@ -272,7 +333,9 @@ def _has_person_tag(span_tags: list[str]) -> bool:
     return any("PATIENT" in tag for tag in span_tags)
 
 
-def _apply_wordpiece_sanitizer(tokens: list[str], tags: list[str], stats: dict[str, int]) -> list[str]:
+def _apply_wordpiece_sanitizer(
+    tokens: list[str], tags: list[str], stats: dict[str, int], *, force_code_context: bool = False
+) -> list[str]:
     new_tags = list(tags)
     for start, end, combined_lower, combined_raw in iter_wordpiece_spans(tokens):
         span_tags = new_tags[start:end]
@@ -289,8 +352,8 @@ def _apply_wordpiece_sanitizer(tokens: list[str], tags: list[str], stats: dict[s
 
         is_cpt_candidate = bool(re.fullmatch(r"\d{5}", combined_lower))
         if is_cpt_candidate and span_has_geo:
-            has_cpt_context = _has_cpt_context(tokens, start, end)
             address_like = _is_address_like(tokens, start, end)
+            has_cpt_context = force_code_context or _has_cpt_context(tokens, start, end)
             if has_cpt_context or not address_like:
                 _wipe_span(new_tags, start, end)
                 stats["wiped_cpt_wordpieces"] += 1
@@ -331,7 +394,11 @@ def repair_bio(tags: list[str]) -> list[str]:
 
 
 def sanitize_record(
-    tokens: list[str], tags: list[str], stats: dict[str, int] | None = None
+    tokens: list[str],
+    tags: list[str],
+    stats: dict[str, int] | None = None,
+    *,
+    record_text: str | None = None,
 ) -> list[str]:
     if stats is None:
         stats = init_stats()
@@ -339,7 +406,7 @@ def sanitize_record(
         return list(tags)
 
     original_tags = list(tags)
-    new_tags = _apply_wordpiece_sanitizer(tokens, tags, stats)
+    new_tags = _apply_wordpiece_sanitizer(tokens, tags, stats, force_code_context=_record_force_code_context(record_text))
     idx = 0
     while idx < len(tokens):
         tag = new_tags[idx]
@@ -412,7 +479,8 @@ def main() -> int:
             if not isinstance(tokens, list) or not isinstance(tags, list):
                 out_f.write(line)
                 continue
-            new_tags = sanitize_record(tokens, tags, stats)
+            record_text = record.get("text") if isinstance(record.get("text"), str) else None
+            new_tags = sanitize_record(tokens, tags, stats, record_text=record_text)
             if new_tags != tags:
                 lines_changed += 1
                 record = dict(record)

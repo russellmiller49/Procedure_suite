@@ -153,7 +153,19 @@ Or:
 make sanitize-phi-silver
 ```
 **Output:** `data/ml_training/distilled_phi_CLEANED.jsonl`
-**Workflow:** distill → sanitize → train on the CLEANED file for client models.
+**Normalize (post-hoc):** collapse remaining granular Piiranha classes (e.g., `PASSWORD`) into a small stable schema for client training.
+```bash
+python scripts/normalize_phi_labels.py
+```
+Or:
+```bash
+make normalize-phi-silver
+```
+**Output:** `data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl`
+
+**Workflow:** distill → sanitize → normalize → train on the STANDARD file for client models.
+
+**Password policy:** default is `id` (recommended) which maps `PASSWORD → ID`; optional `--password-policy drop` maps `PASSWORD → O`.
 
 **Refinery:** drops common false positives (e.g., temps like `105C`, CPT codes in ZIPCODE).
 **Label schema:** `--label-schema standard` maps Piiranha labels into `PATIENT/GEO/PROVIDER/...`.

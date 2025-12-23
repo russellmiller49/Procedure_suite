@@ -46,6 +46,60 @@ def test_cpt_wordpiece_wipe_in_code_context() -> None:
     assert new_tags == ["O", "O", "O", "O", "O"]
 
 
+def test_cpt_wordpiece_wipe_in_codes_context() -> None:
+    tokens = ["codes", ":", "316", "##53", "("]
+    tags = ["O", "O", "B-GEO", "I-GEO", "O"]
+
+    new_tags = sanitize_record(tokens, tags)
+
+    assert new_tags == ["O", "O", "O", "O", "O"]
+
+
+def test_cpt_wordpiece_wipe_when_codes_is_split() -> None:
+    tokens = ["code", "##s", ":", "316", "##53"]
+    tags = ["O", "O", "O", "B-GEO", "I-GEO"]
+
+    new_tags = sanitize_record(tokens, tags)
+
+    assert new_tags == ["O", "O", "O", "O", "O"]
+
+
+def test_cpt_wordpiece_wipe_in_radiology_guidance_ct_context() -> None:
+    tokens = ["radiology", "guidance", "ct", "316", "##53"]
+    tags = ["O", "O", "O", "B-GEO", "I-GEO"]
+
+    new_tags = sanitize_record(tokens, tags)
+
+    assert new_tags == ["O", "O", "O", "O", "O"]
+
+
+def test_cpt_wordpiece_wipe_bullet_radiology_guidance_ct_context() -> None:
+    tokens = ["•", "770", "##12", "radiology", "guidance", "ct"]
+    tags = ["O", "B-GEO", "I-GEO", "O", "O", "O"]
+
+    new_tags = sanitize_record(tokens, tags)
+
+    assert new_tags == ["O", "O", "O", "O", "O", "O"]
+
+
+def test_cpt_wordpiece_wipe_with_bullet_token() -> None:
+    tokens = ["•", "316", "##53"]
+    tags = ["O", "B-GEO", "I-GEO"]
+
+    new_tags = sanitize_record(tokens, tags)
+
+    assert new_tags == ["O", "O", "O"]
+
+
+def test_cpt_wordpiece_wipe_with_record_level_code_header() -> None:
+    tokens = ["la", "jolla", ",", "ca", "920", "##37"]
+    tags = ["O", "O", "O", "O", "B-GEO", "I-GEO"]
+
+    new_tags = sanitize_record(tokens, tags, record_text="Codes: 31653")
+
+    assert new_tags == ["O", "O", "O", "O", "O", "O"]
+
+
 def test_cpt_not_wiped_without_code_context() -> None:
     tokens = ["la", "jolla", ",", "ca", "920", "##37"]
     tags = ["O", "O", "O", "O", "B-GEO", "I-GEO"]
