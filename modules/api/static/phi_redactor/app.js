@@ -13,8 +13,11 @@ const revertBtn = document.getElementById("revertBtn");
 const submitBtn = document.getElementById("submitBtn");
 
 const WORKER_CONFIG = {
-  aiThreshold: 0.85,
-  debug: false,
+  aiThreshold: 0.5,
+  debug: true,
+  // Quantized INT8 ONNX can silently collapse to all-"O" under WASM.
+  // Keep this ON until quantized inference is validated end-to-end.
+  forceUnquantized: true,
 };
 
 runBtn.disabled = true;
@@ -257,7 +260,9 @@ async function main() {
     revertBtn.disabled = running || originalText === model.getValue();
   });
 
-  const worker = new Worker("./redactor.worker.js", { type: "module" });
+  const worker = new Worker(`/ui/phi_redactor/redactor.worker.js?v=${Date.now()}`, {
+    type: "module",
+  });
   let workerReady = false;
   let lastWorkerMessageAt = Date.now();
   let aiModelReady = false;
@@ -282,7 +287,7 @@ async function main() {
     applyBtn.disabled = true;
   });
 
-  worker.postMessage({ type: "init", debug: WORKER_CONFIG.debug });
+  worker.postMessage({ type: "init", debug: WORKER_CONFIG.debug, config: WORKER_CONFIG });
 
   worker.onmessage = (e) => {
     const msg = e.data;

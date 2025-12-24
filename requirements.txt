@@ -30,14 +30,15 @@ presidio-analyzer>=2.2,<3
 pyyaml>=6.0,<7
 
 # ONNX inference (for BiomedBERT registry predictor)
+onnx>=1.16,<2
 onnxruntime>=1.16,<2
 transformers>=4.35,<5
+optimum[onnxruntime]>=1.20,<2
 
 # API dependencies (required for FastAPI server)
 fastapi>=0.115
 uvicorn>=0.30
 
 pydantic-settings>=2.0.0
-
 
 

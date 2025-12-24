@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg export-phi-client-model dev-iu pull-model-pytorch
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -100,6 +100,11 @@ finetune-phi-client-hardneg:
 export-phi-client-model:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
 		--model-dir artifacts/phi_distilbert_ner \
+		--out-dir modules/api/static/phi_redactor/vendor/phi_distilbert_ner
+
+export-phi-client-model-quant:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
+		--model-dir artifacts/phi_distilbert_ner \
 		--out-dir modules/api/static/phi_redactor/vendor/phi_distilbert_ner \
 		--quantize
 
@@ -176,7 +181,8 @@ help:
 	@echo "  audit-phi-client - Run false-positive audit guardrails"
 	@echo "  patch-phi-client-hardneg - Patch training data with audit violations"
 	@echo "  finetune-phi-client-hardneg - Finetune model for 1 epoch on hard negatives"
-	@echo "  export-phi-client-model - Export client-side ONNX bundle for transformers.js"
+	@echo "  export-phi-client-model - Export client-side ONNX bundle (unquantized) for transformers.js"
+	@echo "  export-phi-client-model-quant - Export client-side ONNX bundle + INT8 quantized model"
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"
 	@echo "  codex-train    - Full training pipeline"

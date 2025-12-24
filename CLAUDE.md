@@ -181,12 +181,23 @@ make eval-phi-client
 make audit-phi-client
 ```
 
+> **SAFETY INVARIANT**: Post-veto must-not-redact audit violations **must be 0**.
+> Raw model violations may be non-zero; the post-processing veto layer guarantees safety.
+> The audit specifically checks: CPT codes, LN stations, anatomy terms, and device terms.
+
+**Hard-negative finetuning workflow** (optional if post-veto is already 0):
+```bash
+make audit-phi-client           # Identify violations
+make patch-phi-client-hardneg   # Patch training data with hard negatives
+make finetune-phi-client-hardneg # Finetune model on patched data
+```
+
 **If seqeval missing:**
 ```bash
 pip install evaluate seqeval
 ```
 
-**Interpretation:** review `artifacts/phi_distilbert_ner/eval_metrics.json` for `overall_f1`; must-not-redact violations should be 0.
+**Interpretation:** review `artifacts/phi_distilbert_ner/eval_metrics.json` for `overall_f1`.
 
 ---
 
@@ -196,6 +207,42 @@ pip install evaluate seqeval
 ```bash
 make export-phi-client-model
 ```
+
+**Export quantized (opt-in):**
+```bash
+make export-phi-client-model-quant
+```
+
+### Bundle Layout
+
+The ONNX model **must** live in an `onnx/` subfolder:
+```
+ui/phi_redactor/vendor/phi_distilbert_ner/
+├── config.json
+├── tokenizer.json
+├── tokenizer_config.json
+├── vocab.txt
+├── protected_terms.json
+└── onnx/
+    ├── model.onnx
+    └── model_quantized.onnx (optional)
+```
+
+The worker reads these files at runtime:
+- `/ui/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json`
+- `/ui/phi_redactor/vendor/phi_distilbert_ner/onnx/model*.onnx`
+
+### Quantization Warning
+
+> **Known issue**: Quantized ONNX models may produce "all-O / empty output" in WASM runtime.
+> **Recommendation**: Start with unquantized model (`forceUnquantized: true`). Only enable quantized after verification.
+
+### Configuration Defaults
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `aiThreshold` | `0.5` | Confidence threshold for PHI detection |
+| `forceUnquantized` | `true` | Use unquantized model (safe default) |
 
 **Smoke test:**
 1. Start dev server and open `/ui/phi_redactor/`.
@@ -208,6 +255,35 @@ make export-phi-client-model
 3. Expected:
    - PHI highlights for patient/DOB/phone/address
    - Must-not-redact items are NOT highlighted
+
+### Troubleshooting (0 detections / empty output)
+
+If the UI returns **0 detections** on obvious PHI:
+
+1. Re-export **unquantized** bundle:
+   ```bash
+   make export-phi-client-model
+   ```
+2. Confirm ONNX signature includes `attention_mask`:
+   ```bash
+   python scripts/check_onnx_inputs.py modules/api/static/phi_redactor/vendor/phi_distilbert_ner/onnx/model.onnx
+   ```
+   - If missing: the export is invalid for token-classification; re-export until `attention_mask` is present.
+3. Run `/ui/phi_redactor/` with `forceUnquantized: true` and `debug: true`, then paste:
+   ```
+   Patient: John Doe. DOB: 01/01/1970. Phone: 555-123-4567.
+   ```
+4. Check browser console:
+   - `[PHI] token preds label counts` proves whether the model is predicting **all `O`**.
+   - If token list is empty, the worker logs a one-time `logits` sample to distinguish formatting vs inference failure.
+5. Only after unquantized works, export quantized and test with `forceUnquantized: false`:
+   ```bash
+   make export-phi-client-model-quant
+   ```
+   If quantized collapses to all-`O`, keep unquantized.
+
+> **DEPLOYMENT REQUIREMENT**: Post-veto must-not-redact audit violations **must be 0**.
+> Raw model violations may be non-zero; the veto layer guarantees safety.
 
 **Refinery:** drops common false positives (e.g., temps like `105C`, CPT codes in ZIPCODE).
 **Label schema:** `--label-schema standard` maps Piiranha labels into `PATIENT/GEO/PROVIDER/...`.
@@ -948,6 +1024,19 @@ Check that background warmup is working:
 2. `/ready` should return 503 during warmup
 3. After warmup, `/ready` returns 200
 
+**Dev server fails with MODEL_BACKEND=onnx missing registry model:**
+```
+missing registry model at data/models/registry_runtime/registry_model_int8.onnx
+```
+Solutions:
+- Set `MODEL_BACKEND` to a non-onnx mode for local UI work, or
+- Copy `data/models/registry_runtime/` from your GPU machine
+
+**PHI UI shows "Failed to fetch" for tokenizer/config/model files:**
+- Ensure FastAPI serves `/ui/phi_redactor/vendor/...` as static files
+- Ensure CORS allows worker fetches (Origin `null` can happen in Web Workers)
+- Check browser DevTools Network tab for 404s or CORS errors
+
 ---
 
 ## Contact & Resources
@@ -962,7 +1051,7 @@ Check that background warmup is working:
 
 ---
 
-*Last updated: December 17, 2025*
+*Last updated: December 23, 2025*
 *Architecture: Extraction-First with RoBERTa ML + Deterministic Rules Engine*
 *Runtime: Async FastAPI + ThreadPool CPU offload + LLM concurrency control*
 *Deployment Target: Railway (ONNX INT8, Uvicorn single-worker)*

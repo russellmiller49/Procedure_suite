@@ -1,14 +1,31 @@
 #!/usr/bin/env python3
-"""Export PHI DistilBERT model to transformers.js-compatible ONNX bundle."""
+"""Export PHI DistilBERT model to a transformers.js-compatible ONNX bundle.
+
+Target layout (Xenova/transformers.js friendly):
+  <out_dir>/
+    config.json
+    tokenizer.json
+    ...
+    protected_terms.json
+    onnx/model.onnx
+    onnx/model_quantized.onnx (optional, opt-in)
+"""
 
 from __future__ import annotations
 
 import argparse
 import json
-import platform
 import shutil
 import subprocess
+import sys
+import tempfile
 from pathlib import Path
+from typing import Iterable
+
+# Ensure repo root is on sys.path (so `import modules.*` works when running as a script).
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
 
 from modules.phi.adapters.phi_redactor_hybrid import (
     ANATOMICAL_TERMS,
@@ -25,6 +42,22 @@ MODEL_FILES = [
     "label_map.json",
 ]
 
+REQUIRED_ONNX_INPUTS = ("input_ids", "attention_mask")
+
+
+def parse_bool(value: str | bool | None) -> bool:
+    """Parse bool-ish CLI args while supporting `--flag false` and `--flag`."""
+    if isinstance(value, bool):
+        return value
+    if value is None:
+        return True
+    normalized = value.strip().lower()
+    if normalized in {"1", "true", "t", "yes", "y", "on"}:
+        return True
+    if normalized in {"0", "false", "f", "no", "n", "off"}:
+        return False
+    raise argparse.ArgumentTypeError(f"Invalid boolean value: {value!r}")
+
 
 def build_arg_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
@@ -33,13 +66,22 @@ def build_arg_parser() -> argparse.ArgumentParser:
         "--out-dir",
         default="modules/api/static/phi_redactor/vendor/phi_distilbert_ner",
     )
-    ap.add_argument("--quantize", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument(
-        "--quantize-target",
-        choices=["arm64", "avx2", "avx512", "avx512_vnni", "ppc64le", "tensorrt"],
-        default=None,
+        "--quantize",
+        nargs="?",
+        const=True,
+        default=False,
+        type=parse_bool,
+        help="Also export `onnx/model_quantized.onnx` (opt-in; WASM INT8 may misbehave).",
     )
-    ap.add_argument("--quantize-config", default=None)
+    ap.add_argument(
+        "--clean",
+        nargs="?",
+        const=True,
+        default=True,
+        type=parse_bool,
+        help="Remove prior export artifacts from --out-dir before exporting.",
+    )
     return ap
 
 
@@ -48,27 +90,32 @@ def run(cmd: list[str]) -> None:
         subprocess.run(cmd, check=True)
     except FileNotFoundError as exc:
         tool = cmd[0]
-        raise RuntimeError(
-            f"{tool} not found. Install with: pip install 'optimum[onnxruntime]' onnxruntime"
-        ) from exc
+        raise RuntimeError(f"{tool} not found. Install with: pip install 'optimum[onnxruntime]'") from exc
 
 
-def ensure_model_onnx(out_dir: Path, onnx_dir: Path) -> Path:
-    onnx_dir.mkdir(parents=True, exist_ok=True)
-    model_path = onnx_dir / "model.onnx"
-    if model_path.exists():
-        return model_path
+def locate_exported_onnx(export_dir: Path) -> Path:
+    """Locate the exported ONNX model within an Optimum output directory."""
+    direct = [
+        export_dir / "model.onnx",
+        export_dir / "onnx" / "model.onnx",
+    ]
+    for candidate in direct:
+        if candidate.exists():
+            return candidate
 
-    root_model = out_dir / "model.onnx"
-    if root_model.exists():
-        root_model.rename(model_path)
-        return model_path
+    candidates: list[Path] = []
+    candidates.extend(export_dir.glob("*.onnx"))
+    onnx_subdir = export_dir / "onnx"
+    if onnx_subdir.exists():
+        candidates.extend(onnx_subdir.glob("*.onnx"))
 
-    candidates = sorted(out_dir.glob("*.onnx"))
+    candidates = [p for p in candidates if p.is_file()]
     if not candidates:
-        raise FileNotFoundError(f"No ONNX files found in {out_dir}")
-    candidates[0].rename(model_path)
-    return model_path
+        raise FileNotFoundError(f"No ONNX files found in Optimum export dir: {export_dir}")
+
+    # Prefer the largest ONNX file if multiple exist.
+    candidates.sort(key=lambda p: p.stat().st_size, reverse=True)
+    return candidates[0]
 
 
 def write_protected_terms(out_dir: Path) -> None:
@@ -123,75 +170,116 @@ def write_protected_terms(out_dir: Path) -> None:
         json.dump(terms, f, indent=2)
 
 
-def resolve_quantize_args(args: argparse.Namespace) -> list[str]:
-    if args.quantize_config:
-        return ["--config", args.quantize_config]
-    if args.quantize_target:
-        return [f"--{args.quantize_target}"]
-    system = platform.system().lower()
-    machine = platform.machine().lower()
-    if system == "darwin" and machine in ("arm64", "aarch64"):
-        return ["--arm64"]
-    if machine in ("x86_64", "amd64"):
-        return ["--avx2"]
-    raise RuntimeError("Unable to infer quantize target. Pass --quantize-target or --quantize-config.")
-
-
 def format_size(size_bytes: int) -> str:
     return f"{size_bytes / (1024 * 1024):.1f} MB"
+
+
+def find_optimum_cli() -> str:
+    """Find optimum-cli in the current Python environment."""
+    # First try to find it in the same Python environment's bin directory
+    python_bin = Path(sys.executable).parent
+    optimum_cli = python_bin / "optimum-cli"
+    if optimum_cli.exists():
+        return str(optimum_cli)
+    
+    # Fall back to which (may find system version, but better than nothing)
+    which_cli = shutil.which("optimum-cli")
+    if which_cli:
+        return which_cli
+
+    raise RuntimeError("optimum-cli not found. Install with: pip install 'optimum[onnxruntime]'")
+
+
+def validate_onnx_inputs(model_onnx: Path, required: Iterable[str] = REQUIRED_ONNX_INPUTS) -> None:
+    try:
+        import onnx  # type: ignore[import-untyped]
+    except ImportError as exc:
+        raise RuntimeError(
+            "onnx is required to validate exported model signatures. Install with: pip install onnx"
+        ) from exc
+
+    m = onnx.load(str(model_onnx))
+    input_names = [i.name for i in m.graph.input]
+    missing = [name for name in required if name not in input_names]
+    if missing:
+        raise RuntimeError(
+            "Re-export failed: token-classification ONNX must have attention_mask.\n"
+            f"ONNX missing required inputs: {missing}. Found: {input_names}"
+        )
+
+
+def quantize_onnx_model(model_onnx: Path, quantized_onnx: Path) -> None:
+    try:
+        from onnxruntime.quantization import QuantType, quantize_dynamic  # type: ignore[import-untyped]
+    except ImportError as exc:
+        raise RuntimeError(
+            "onnxruntime is required for quantization. Install with: pip install onnxruntime"
+        ) from exc
+
+    quantized_onnx.parent.mkdir(parents=True, exist_ok=True)
+    quantize_dynamic(str(model_onnx), str(quantized_onnx), weight_type=QuantType.QInt8)
+
+
+def clean_export_dir(out_dir: Path) -> None:
+    """Remove generated artifacts so output layout is deterministic."""
+    onnx_dir = out_dir / "onnx"
+    if onnx_dir.exists():
+        shutil.rmtree(onnx_dir)
+    for filename in [*MODEL_FILES, "protected_terms.json", "model.onnx", "model_quantized.onnx"]:
+        path = out_dir / filename
+        if path.exists():
+            path.unlink()
 
 
 def main() -> None:
     args = build_arg_parser().parse_args()
     model_dir = Path(args.model_dir)
     out_dir = Path(args.out_dir)
+    if not model_dir.exists():
+        raise FileNotFoundError(f"--model-dir not found: {model_dir}")
+
     out_dir.mkdir(parents=True, exist_ok=True)
+    if args.clean:
+        clean_export_dir(out_dir)
 
-    if shutil.which("optimum-cli") is None:
-        raise RuntimeError(
-            "optimum-cli not found. Install with: pip install 'optimum[onnxruntime]' onnxruntime"
-        )
-
-    run(
-        [
-            "optimum-cli",
-            "export",
-            "onnx",
-            "--model",
-            str(model_dir),
-            "--task",
-            "token-classification",
-            str(out_dir),
-        ]
-    )
+    optimum_cli = find_optimum_cli()
 
     onnx_dir = out_dir / "onnx"
-    model_path = ensure_model_onnx(out_dir, onnx_dir)
+    onnx_dir.mkdir(parents=True, exist_ok=True)
+    model_path = onnx_dir / "model.onnx"
+
+    with tempfile.TemporaryDirectory(prefix="phi_onnx_export_") as tmp:
+        tmp_dir = Path(tmp)
+        run(
+            [
+                optimum_cli,
+                "export",
+                "onnx",
+                "--model",
+                str(model_dir),
+                "--task",
+                "token-classification",
+                str(tmp_dir),
+            ]
+        )
+        exported_onnx = locate_exported_onnx(tmp_dir)
+        shutil.copy2(exported_onnx, model_path)
+
     if not model_path.exists():
         raise RuntimeError("Export failed: model.onnx not found.")
     model_size = model_path.stat().st_size
     if model_size < 5_000_000:
         raise RuntimeError("Export failed: model.onnx is unexpectedly small.")
+    validate_onnx_inputs(model_path)
     print(f"Exported model.onnx size: {format_size(model_size)}")
 
     if args.quantize:
-        quant_args = resolve_quantize_args(args)
-        run(
-            [
-                "optimum-cli",
-                "onnxruntime",
-                "quantize",
-                "--onnx_model",
-                str(model_path),
-                "--output",
-                str(onnx_dir / "model_quantized.onnx"),
-                *quant_args,
-            ]
-        )
-        qpath = onnx_dir / "model_quantized.onnx"
-        if not qpath.exists() or qpath.stat().st_size < 5_000_000:
+        quantized_path = onnx_dir / "model_quantized.onnx"
+        quantize_onnx_model(model_path, quantized_path)
+        if not quantized_path.exists() or quantized_path.stat().st_size < 5_000_000:
             raise RuntimeError("Quantization failed: model_quantized.onnx missing or too small.")
-        print(f"Quantized model_quantized.onnx size: {format_size(qpath.stat().st_size)}")
+        validate_onnx_inputs(quantized_path)
+        print(f"Quantized model_quantized.onnx size: {format_size(quantized_path.stat().st_size)}")
 
     for name in MODEL_FILES:
         src = model_dir / name
