@@ -25,7 +25,9 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Tuple
 
 import torch
+import torch.nn as nn
 from torch.utils.data import Dataset
+from collections import Counter
 
 from transformers import (
     AutoTokenizer,
@@ -34,6 +36,58 @@ from transformers import (
     Trainer,
     TrainingArguments,
 )
+
+
+class WeightedLossTrainer(Trainer):
+    """Custom Trainer that applies class weights to handle label imbalance."""
+
+    def __init__(self, class_weights: torch.Tensor | None = None, **kwargs):
+        super().__init__(**kwargs)
+        self.class_weights = class_weights
+
+    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+        labels = inputs.pop("labels")
+        outputs = model(**inputs)
+        logits = outputs.logits
+
+        if self.class_weights is not None:
+            loss_fct = nn.CrossEntropyLoss(
+                weight=self.class_weights.to(logits.device),
+                ignore_index=-100,
+            )
+        else:
+            loss_fct = nn.CrossEntropyLoss(ignore_index=-100)
+
+        # Reshape for cross entropy: (batch * seq_len, num_labels)
+        loss = loss_fct(logits.view(-1, model.config.num_labels), labels.view(-1))
+
+        return (loss, outputs) if return_outputs else loss
+
+
+def compute_class_weights(rows: list, label2id: dict, smoothing: float = 0.1) -> torch.Tensor:
+    """Compute inverse frequency class weights with smoothing."""
+    label_counts = Counter()
+    for row in rows:
+        for tag in row.get("ner_tags", []):
+            norm_tag = normalize_tag(tag)
+            label_id = label2id.get(norm_tag, label2id["O"])
+            label_counts[label_id] += 1
+
+    num_labels = len(label2id)
+    total = sum(label_counts.values())
+
+    weights = []
+    for i in range(num_labels):
+        count = label_counts.get(i, 1)
+        # Inverse frequency with smoothing to avoid extreme weights
+        weight = (total / (num_labels * count)) ** smoothing
+        weights.append(weight)
+
+    # Normalize so mean weight is 1.0
+    weights_tensor = torch.tensor(weights, dtype=torch.float32)
+    weights_tensor = weights_tensor / weights_tensor.mean()
+
+    return weights_tensor
 
 # Optional but recommended for evaluation:
 # pip install seqeval
@@ -315,6 +369,8 @@ def build_arg_parser() -> argparse.ArgumentParser:
     ap.add_argument("--save-steps", type=int, default=500)
     ap.add_argument("--eval-steps", type=int, default=500)
     ap.add_argument("--logging-steps", type=int, default=50)
+    ap.add_argument("--class-weights", action="store_true", help="Use class weights for imbalanced labels")
+    ap.add_argument("--weight-smoothing", type=float, default=0.3, help="Smoothing factor for class weights (0-1)")
     return ap
 
 
@@ -357,9 +413,11 @@ def main():
 
     set_seed(args.seed)
 
-    # --- Device / CUDA visibility diagnostics ---
-    # Hugging Face `Trainer` will automatically use CUDA when available.
+    # --- Device / CUDA / MPS visibility diagnostics ---
+    # Hugging Face `Trainer` will automatically use CUDA or MPS when available.
     cuda_available = torch.cuda.is_available()
+    mps_available = torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False
+
     if cuda_available:
         try:
             device_name = torch.cuda.get_device_name(0)
@@ -373,9 +431,15 @@ def main():
             f"gpu0={device_name} | "
             f"fp16={bool(args.fp16)} | bf16={bool(args.bf16)}"
         )
+    elif mps_available:
+        print(
+            f"[device] MPS (Apple Silicon) available: True | "
+            f"torch={torch.__version__} | "
+            f"Using Metal Performance Shaders for GPU acceleration"
+        )
     else:
         print(
-            f"[device] cuda available: False (CPU mode) | "
+            f"[device] cuda available: False, mps available: False (CPU mode) | "
             f"torch={torch.__version__} | "
             f"fp16={bool(args.fp16)} | bf16={bool(args.bf16)}"
         )
@@ -438,6 +502,9 @@ def main():
     # We'll try evaluation_strategy first, then fall back.
     eval_mode = "no" if args.eval_only else ("steps" if len(eval_rows) > 0 else "no")
 
+    # Determine if we should use MPS (Apple Silicon GPU)
+    use_mps = mps_available and not cuda_available
+
     training_args_kwargs: dict[str, object] = dict(
         output_dir=model_dir if args.eval_only else args.output_dir,
         learning_rate=args.lr,
@@ -454,7 +521,7 @@ def main():
         fp16=args.fp16,
         bf16=args.bf16,
         report_to="none",
-
+        use_mps_device=use_mps,
     )
     if compute_metrics and len(eval_rows) > 0:
         training_args_kwargs["metric_for_best_model"] = "f1"
@@ -471,15 +538,28 @@ def main():
             **training_args_kwargs,
         )
 
-    trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=train_ds,
-        eval_dataset=eval_ds if len(eval_rows) > 0 else None,
-        data_collator=data_collator,
-        tokenizer=tokenizer,
-        compute_metrics=compute_metrics,
-    )
+    # Compute class weights if requested
+    class_weights = None
+    if args.class_weights and train_rows:
+        print("[training] Computing class weights for imbalanced labels...")
+        class_weights = compute_class_weights(train_rows, label2id, smoothing=args.weight_smoothing)
+        print(f"[training] Class weights: {class_weights.tolist()}")
+
+    # Use WeightedLossTrainer if class weights are provided, otherwise standard Trainer
+    trainer_cls = WeightedLossTrainer if class_weights is not None else Trainer
+    trainer_kwargs = {
+        "model": model,
+        "args": training_args,
+        "train_dataset": train_ds,
+        "eval_dataset": eval_ds if len(eval_rows) > 0 else None,
+        "data_collator": data_collator,
+        "tokenizer": tokenizer,
+        "compute_metrics": compute_metrics,
+    }
+    if class_weights is not None:
+        trainer_kwargs["class_weights"] = class_weights
+
+    trainer = trainer_cls(**trainer_kwargs)
 
     if args.eval_only:
         metrics = trainer.evaluate()

@@ -12,7 +12,9 @@ const STEP = WINDOW - OVERLAP;
 env.allowLocalModels = true;
 env.allowRemoteModels = false;
 env.localModelPath = MODEL_BASE_URL;
-env.useBrowserCache = true;
+// Temporarily disable browser cache to force reload of updated model (v2)
+// Can re-enable once all users have the new model cached
+env.useBrowserCache = false;
 if (env.backends?.onnx?.wasm) {
   env.backends.onnx.wasm.proxy = false;
   // Avoid cross-origin worker requirements under COEP by staying single-threaded.
@@ -40,8 +42,11 @@ function post(type, payload = {}) {
   self.postMessage({ type, ...payload });
 }
 
-function overlaps(aStart, aEnd, bStart, bEnd) {
-  return aStart < bEnd && bStart < aEnd;
+function overlapsOrAdjacent(aStart, aEnd, bStart, bEnd) {
+  // Use <= to include adjacent spans (where aEnd === bStart)
+  // This ensures entities like dates "01/01/1970" get merged even when
+  // tokenized into adjacent pieces: (24,26), (26,27), (27,29), etc.
+  return aStart <= bEnd && bStart <= aEnd;
 }
 
 function mergeOverlaps(spans) {
@@ -53,7 +58,7 @@ function mergeOverlaps(spans) {
   const out = [];
   for (const s of sorted) {
     const last = out[out.length - 1];
-    if (!last || !overlaps(last.start, last.end, s.start, s.end)) {
+    if (!last || !overlapsOrAdjacent(last.start, last.end, s.start, s.end)) {
       out.push({ ...s });
       continue;
     }
@@ -299,36 +304,41 @@ async function runNER(chunk, aiThreshold) {
       }
 
       // Last-resort: find the token text in the chunk.
+      // Use case-insensitive search because tokenizer may lowercase tokens
+      // (e.g., "john" from tokenizer vs "John" in original text).
       if (typeof start !== "number" || typeof end !== "number" || end <= start) {
         const tokenText = getEntityText(ent);
         if (tokenText) {
           const candidates = tokenText.trim() !== tokenText ? [tokenText, tokenText.trim()] : [tokenText];
+          const chunkLower = chunk.toLowerCase();
 
           let found = -1;
-          let foundText = null;
+          let foundLen = 0;
           for (const t of candidates) {
-            const idx = chunk.indexOf(t, searchCursor);
+            const tLower = t.toLowerCase();
+            const idx = chunkLower.indexOf(tLower, searchCursor);
             if (idx !== -1) {
               found = idx;
-              foundText = t;
+              foundLen = t.length;
               break;
             }
           }
 
           if (found === -1 && searchCursor > 0) {
             for (const t of candidates) {
-              const idx = chunk.indexOf(t);
+              const tLower = t.toLowerCase();
+              const idx = chunkLower.indexOf(tLower);
               if (idx !== -1) {
                 found = idx;
-                foundText = t;
+                foundLen = t.length;
                 break;
               }
             }
           }
 
-          if (found !== -1 && foundText) {
+          if (found !== -1 && foundLen > 0) {
             start = found;
-            end = found + foundText.length;
+            end = found + foundLen;
           }
         }
       }
@@ -468,7 +478,9 @@ self.onmessage = async (e) => {
       workerConfig = config;
       debug = Boolean(config.debug);
       await loadModel(config);
-      const aiThreshold = typeof config.aiThreshold === "number" ? config.aiThreshold : 0.5;
+      // Lower default threshold slightly (0.45) to catch borderline entity detections
+      // while still filtering low-confidence noise.
+      const aiThreshold = typeof config.aiThreshold === "number" ? config.aiThreshold : 0.45;
 
       const allSpans = [];
       const windowCount = Math.max(1, Math.ceil(Math.max(0, text.length - OVERLAP) / STEP));
