@@ -241,8 +241,79 @@ The worker reads these files at runtime:
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `aiThreshold` | `0.5` | Confidence threshold for PHI detection |
+| `aiThreshold` | `0.45` | Confidence threshold for PHI detection |
 | `forceUnquantized` | `true` | Use unquantized model (safe default) |
+
+### Hybrid Detection Architecture (ML + Regex)
+
+The client-side PHI redactor uses a **hybrid detection pipeline** to guarantee detection of structured header PHI even during ML "cold start" when the model may return 0 entities.
+
+**Pipeline flow:**
+```
+┌─────────────────────────────────────────────────────────────┐
+│  FOR EACH CHUNK (2500 chars, 250 overlap):                  │
+│                                                             │
+│    1. ML NER (DistilBERT via Transformers.js)               │
+│       └── Returns spans with label/score/source="ner"       │
+│                                                             │
+│    2. Regex Detectors (deterministic)                       │
+│       ├── PATIENT_HEADER_RE → PATIENT span (score=1.0)      │
+│       └── MRN_RE → ID span (score=1.0, source="regex_*")    │
+│                                                             │
+│    3. Dedupe exact duplicates within chunk                  │
+│    4. Convert to absolute offsets                           │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│  POST-PROCESSING (after all chunks):                        │
+│                                                             │
+│    5. mergeOverlapsBestOf — prefer regex on overlap         │
+│    6. expandToWordBoundaries — fix partial-word redactions  │
+│    7. mergeOverlapsBestOf — re-merge after expansion        │
+│    8. applyVeto (protectedVeto.js) — filter false positives │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+                    Final Detections
+```
+
+**Key files:**
+- `modules/api/static/phi_redactor/redactor.worker.js` — Hybrid detection worker
+- `modules/api/static/phi_redactor/protectedVeto.js` — Veto/allow-list layer
+
+**Regex patterns (guaranteed detection):**
+```javascript
+// Patient header names: "Patient: Smith, John" or "Pt Name: John Smith"
+const PATIENT_HEADER_RE = /(?:Patient(?:\s+Name)?|Pt|Name|Subject)\s*[:\-]?\s*([A-Z][a-z]+,...)/gim;
+
+// MRN / IDs: "MRN: 12345" or "ID: 55-22-11"
+const MRN_RE = /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID|EDIPI|DOD\s*ID)\s*[:\#]?\s*([A-Z0-9\-]{4,15})\b/gi;
+```
+
+**Why hybrid is needed:**
+- ML models can return 0 entities on first inference ("cold start")
+- Header PHI (patient name, MRN) is critical and must never be missed
+- Regex provides deterministic guarantees while ML catches free-text PHI
+- Regex spans have `score: 1.0` to survive thresholding
+
+**Key merge behaviors (`mergeOverlapsBestOf`):**
+- On overlap: prefer regex spans over ML spans (avoids double-highlights)
+- Same label + adjacent/overlapping: union into single span
+- Different labels + ≥80% overlap: keep higher-scoring span
+- Different labels + <80% overlap: keep both spans
+
+**Word boundary expansion (`expandToWordBoundaries`):**
+- Fixes partial-word redactions like `"id[REDACTED]"` → `"[REDACTED]"`
+- Expands span start/end to include adjacent alphanumeric chars
+- Treats apostrophe/hyphen as word-chars when adjacent to alnum (e.g., "O'Brien")
+
+**Veto layer (protectedVeto.js):**
+The veto layer runs AFTER detection to filter false positives:
+- LN stations (4R, 7, 11Rs) — anatomy, not PHI
+- Segments (RB1, LB1+2) — anatomy, not PHI
+- Measurements (5ml, 24 French) — clinical, not PHI
+- Provider names (Dr. Smith, Attending: Jones) — staff, not patient PHI
+- CPT codes in billing context (31653) — codes, not PHI
+- Clinical terms (EBUS, TBNA, BAL) — procedures, not PHI
 
 **Smoke test:**
 1. Start dev server and open `/ui/phi_redactor/`.
@@ -585,6 +656,10 @@ procedure-suite/
 │   │   ├── fastapi_app.py             # Main FastAPI backend (NOT api/app.py!)
 │   │   ├── readiness.py               # require_ready dependency for endpoints
 │   │   ├── routes_registry.py         # Registry API routes
+│   │   ├── static/phi_redactor/       # Client-side PHI redactor UI
+│   │   │   ├── redactor.worker.js     # Hybrid ML+Regex detection worker
+│   │   │   ├── protectedVeto.js       # Veto/allow-list layer
+│   │   │   └── vendor/phi_distilbert_ner/  # ONNX model bundle
 │   │   └── services/
 │   │       └── qa_pipeline.py         # Parallelized QA pipeline
 │   ├── infra/                         # Infrastructure & optimization
@@ -1048,10 +1123,13 @@ Solutions:
 - **Rules Engine**: `data/rules/coding_rules.py`
 - **Optimization Roadmap**: `docs/optimization_12_16_25.md`
 - **Settings Reference**: `modules/infra/settings.py`
+- **PHI Redactor Worker**: `modules/api/static/phi_redactor/redactor.worker.js`
+- **PHI Veto Layer**: `modules/api/static/phi_redactor/protectedVeto.js`
 
 ---
 
-*Last updated: December 23, 2025*
+*Last updated: December 24, 2025*
 *Architecture: Extraction-First with RoBERTa ML + Deterministic Rules Engine*
 *Runtime: Async FastAPI + ThreadPool CPU offload + LLM concurrency control*
 *Deployment Target: Railway (ONNX INT8, Uvicorn single-worker)*
+*PHI Redactor: Hybrid ML+Regex detection with veto layer*

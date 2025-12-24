@@ -1,3 +1,13 @@
+/**
+ * redactor.worker.js — “Best-of” Hybrid PHI Detector (ML + Regex)
+ *
+ * Combines:
+ *  - Version B robustness: quantized→unquantized fallback, offset recovery, cancel, debug hooks
+ *  - Version A fix: expand spans to word boundaries to prevent partial-word redactions
+ *  - Hybrid regex injection BEFORE veto (cold-start header guarantees)
+ *  - Smarter merge rules: prefer regex spans over overlapping ML spans to avoid double-highlights
+ */
+
 import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2";
 import { applyVeto } from "./protectedVeto.js";
 
@@ -5,12 +15,14 @@ const MODEL_PATH = "./vendor/phi_distilbert_ner/";
 const MODEL_ID = "phi_distilbert_ner";
 const MODEL_BASE_URL = new URL("./vendor/", import.meta.url).toString();
 const TASK = "token-classification";
+
+// Character windowing (simple + robust)
 const WINDOW = 2500;
 const OVERLAP = 250;
 const STEP = WINDOW - OVERLAP;
 
 // =============================================================================
-// HYBRID REGEX DETECTION (ported from phi_redactor_hybrid.py)
+// HYBRID REGEX DETECTION (guarantees headers/IDs)
 // =============================================================================
 
 // Matches: "Patient: Smith, John" or "Pt Name: John Smith"
@@ -21,30 +33,40 @@ const PATIENT_HEADER_RE =
 const MRN_RE =
   /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID|EDIPI|DOD\s*ID)\s*[:\#]?\s*([A-Z0-9\-]{4,15})\b/gi;
 
+// =============================================================================
+// Transformers.js env
+// =============================================================================
+
 env.allowLocalModels = true;
 env.allowRemoteModels = false;
 env.localModelPath = MODEL_BASE_URL;
-// Temporarily disable browser cache to force reload of updated model (v2)
-// Can re-enable once all users have the new model cached
+
+// Disable browser cache temporarily while iterating (you can re-enable later)
 env.useBrowserCache = false;
+
 if (env.backends?.onnx?.wasm) {
   env.backends.onnx.wasm.proxy = false;
-  // Avoid cross-origin worker requirements under COEP by staying single-threaded.
   env.backends.onnx.wasm.numThreads = 1;
 }
+
+// =============================================================================
+// Worker state
+// =============================================================================
 
 let classifier = null;
 let classifierQuantized = null;
 let classifierUnquantized = null;
-let protectedTerms = null;
+
 let modelPromiseQuantized = null;
 let modelPromiseUnquantized = null;
+
+let protectedTerms = null;
 let termsPromise = null;
+
 let cancelled = false;
 let debug = false;
-let workerConfig = {};
-let didLogitsDebug = false;
 let didTokenDebug = false;
+let didLogitsDebug = false;
 
 function log(...args) {
   if (debug) console.log(...args);
@@ -54,45 +76,13 @@ function post(type, payload = {}) {
   self.postMessage({ type, ...payload });
 }
 
-function overlapsOrAdjacent(aStart, aEnd, bStart, bEnd) {
-  // Use <= to include adjacent spans (where aEnd === bStart)
-  // This ensures entities like dates "01/01/1970" get merged even when
-  // tokenized into adjacent pieces: (24,26), (26,27), (27,29), etc.
-  return aStart <= bEnd && bStart <= aEnd;
+function toFiniteNumber(value) {
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
-function mergeOverlaps(spans) {
-  const sorted = [...spans].sort((a, b) => {
-    if (a.start !== b.start) return a.start - b.start;
-    return (b.score ?? 0) - (a.score ?? 0);
-  });
-
-  const out = [];
-  for (const s of sorted) {
-    const last = out[out.length - 1];
-    if (!last || !overlapsOrAdjacent(last.start, last.end, s.start, s.end)) {
-      out.push({ ...s });
-      continue;
-    }
-    if (last.label === s.label) {
-      last.end = Math.max(last.end, s.end);
-      last.score = Math.max(last.score ?? 0, s.score ?? 0);
-    } else {
-      // If labels differ, be conservative: don't drop one unless overlap is substantial.
-      const overlapLen = Math.max(0, Math.min(last.end, s.end) - Math.max(last.start, s.start));
-      const lastLen = Math.max(1, last.end - last.start);
-      const sLen = Math.max(1, s.end - s.start);
-      const overlapRatio = overlapLen / Math.min(lastLen, sLen);
-
-      // Only replace when the overlap is very large; otherwise keep both.
-      if (overlapRatio >= 0.8) {
-        if ((s.score ?? 0) > (last.score ?? 0)) out[out.length - 1] = { ...s };
-      } else {
-        out.push({ ...s });
-      }
-    }
-  }
-  return out;
+function toFiniteInt(value) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return null;
+  return Number.isInteger(value) ? value : Math.trunc(value);
 }
 
 function normalizeLabel(entity) {
@@ -101,9 +91,22 @@ function normalizeLabel(entity) {
   return raw.replace(/^B-/, "").replace(/^I-/, "");
 }
 
+function normalizeRawOutput(raw) {
+  if (Array.isArray(raw)) return raw;
+  if (!raw || typeof raw !== "object") return [];
+  if (Array.isArray(raw.data)) return raw.data;
+  if (Array.isArray(raw.entities)) return raw.entities;
+  return [];
+}
+
+// =============================================================================
+// Protected terms (veto list) loader
+// =============================================================================
+
 async function loadProtectedTerms() {
   if (protectedTerms) return protectedTerms;
   if (termsPromise) return termsPromise;
+
   termsPromise = (async () => {
     const termsUrl = new URL(`${MODEL_PATH}protected_terms.json`, import.meta.url);
     const res = await fetch(termsUrl);
@@ -111,12 +114,18 @@ async function loadProtectedTerms() {
     protectedTerms = await res.json();
     return protectedTerms;
   })();
+
   return termsPromise;
 }
+
+// =============================================================================
+// Model loading (quantized -> fallback unquantized)
+// =============================================================================
 
 async function loadQuantizedModel() {
   if (classifierQuantized) return classifierQuantized;
   if (modelPromiseQuantized) return modelPromiseQuantized;
+
   modelPromiseQuantized = pipeline(TASK, MODEL_ID, { device: "wasm", quantized: true })
     .then((c) => {
       classifierQuantized = c;
@@ -127,12 +136,14 @@ async function loadQuantizedModel() {
       classifierQuantized = null;
       throw err;
     });
+
   return modelPromiseQuantized;
 }
 
 async function loadUnquantizedModel() {
   if (classifierUnquantized) return classifierUnquantized;
   if (modelPromiseUnquantized) return modelPromiseUnquantized;
+
   modelPromiseUnquantized = pipeline(TASK, MODEL_ID, { device: "wasm", quantized: false })
     .then((c) => {
       classifierUnquantized = c;
@@ -143,11 +154,13 @@ async function loadUnquantizedModel() {
       classifierUnquantized = null;
       throw err;
     });
+
   return modelPromiseUnquantized;
 }
 
 async function loadModel(config = {}) {
   const forceUnquantized = Boolean(config.forceUnquantized);
+
   if (forceUnquantized) {
     post("progress", { stage: "Loading local PHI model (unquantized; forced)…" });
     classifier = await loadUnquantizedModel();
@@ -155,7 +168,6 @@ async function loadModel(config = {}) {
     return classifier;
   }
 
-  // Try quantized first (optional). If missing/unsupported, fall back to unquantized.
   post("progress", { stage: "Loading local PHI model (quantized)…" });
   try {
     classifier = await loadQuantizedModel();
@@ -172,22 +184,55 @@ async function loadModel(config = {}) {
   return classifier;
 }
 
-function normalizeRawOutput(raw) {
-  if (Array.isArray(raw)) return raw;
-  if (!raw || typeof raw !== "object") return [];
-  if (Array.isArray(raw.data)) return raw.data;
-  if (Array.isArray(raw.entities)) return raw.entities;
-  return [];
+// =============================================================================
+// Regex injection (deterministic)
+// =============================================================================
+
+function runRegexDetectors(text) {
+  const spans = [];
+
+  // Reset global regex state
+  PATIENT_HEADER_RE.lastIndex = 0;
+  MRN_RE.lastIndex = 0;
+
+  // 1) Patient header names
+  for (const match of text.matchAll(PATIENT_HEADER_RE)) {
+    const fullMatch = match[0];
+    const nameGroup = match[1];
+    const groupOffset = fullMatch.indexOf(nameGroup);
+    if (groupOffset !== -1 && match.index != null) {
+      spans.push({
+        start: match.index + groupOffset,
+        end: match.index + groupOffset + nameGroup.length,
+        label: "PATIENT",
+        score: 1.0,
+        source: "regex_header",
+      });
+    }
+  }
+
+  // 2) MRN / IDs
+  for (const match of text.matchAll(MRN_RE)) {
+    const fullMatch = match[0];
+    const idGroup = match[1];
+    const groupOffset = fullMatch.indexOf(idGroup);
+    if (groupOffset !== -1 && match.index != null) {
+      spans.push({
+        start: match.index + groupOffset,
+        end: match.index + groupOffset + idGroup.length,
+        label: "ID",
+        score: 1.0,
+        source: "regex_mrn",
+      });
+    }
+  }
+
+  return spans;
 }
 
-function toFiniteNumber(value) {
-  return typeof value === "number" && Number.isFinite(value) ? value : null;
-}
-
-function toFiniteInt(value) {
-  if (typeof value !== "number" || !Number.isFinite(value)) return null;
-  return Number.isInteger(value) ? value : Math.trunc(value);
-}
+// =============================================================================
+// NER: robust offsets
+// =============================================================================
 
 function getOffsetsMappingFromTokenizerEncoding(encoding) {
   const mapping = encoding?.offset_mapping ?? encoding?.offsets ?? encoding?.offsetMapping;
@@ -231,33 +276,37 @@ function getEntityText(ent) {
 
 async function runNER(chunk, aiThreshold) {
   if (!classifier) return [];
-  log("[PHI] aiThreshold", aiThreshold);
   const raw = await classifier(chunk, {
     aggregation_strategy: "simple",
     ignore_labels: ["O"],
   });
+
   const rawList = normalizeRawOutput(raw);
   log("[PHI] raw spans (simple) count:", rawList.length);
-  log("[PHI] rawList[0] keys", rawList[0] ? Object.keys(rawList[0]) : null);
-  log("[PHI] rawList sample", rawList.slice(0, 2));
-  if (rawList.length === 0 && !didTokenDebug) {
-    didTokenDebug = true;
-    await debugTokenPredictions(chunk);
-  }
+
   const spans = [];
   let offsets = null;
   let offsetsTried = false;
   let searchCursor = 0;
+
   for (const ent of rawList) {
-    let start = toFiniteNumber(ent?.start) ?? toFiniteNumber(ent?.start_offset) ?? toFiniteNumber(ent?.begin);
-    let end = toFiniteNumber(ent?.end) ?? toFiniteNumber(ent?.end_offset) ?? toFiniteNumber(ent?.finish);
+    let start =
+      toFiniteNumber(ent?.start) ??
+      toFiniteNumber(ent?.start_offset) ??
+      toFiniteNumber(ent?.begin);
+
+    let end =
+      toFiniteNumber(ent?.end) ??
+      toFiniteNumber(ent?.end_offset) ??
+      toFiniteNumber(ent?.finish);
+
     const score =
       toFiniteNumber(ent?.score) ??
       toFiniteNumber(ent?.confidence) ??
       toFiniteNumber(ent?.probability) ??
-      null;
+      0.0;
 
-    // Some pipeline outputs omit char offsets (or return token indices); recover via tokenizer offsets.
+    // If offsets are missing/bad, try to recover.
     if (typeof start !== "number" || typeof end !== "number" || end <= start) {
       const tokenIndex =
         toFiniteInt(ent?.index) ??
@@ -282,7 +331,11 @@ async function runNER(chunk, aiThreshold) {
         null;
 
       const needsOffsets =
-        tokenIndex !== null || startTokenIndex !== null || endTokenIndex !== null || Boolean(getEntityText(ent));
+        tokenIndex !== null ||
+        startTokenIndex !== null ||
+        endTokenIndex !== null ||
+        Boolean(getEntityText(ent));
+
       if (needsOffsets && !offsetsTried) {
         offsetsTried = true;
         try {
@@ -315,9 +368,7 @@ async function runNER(chunk, aiThreshold) {
         }
       }
 
-      // Last-resort: find the token text in the chunk.
-      // Use case-insensitive search because tokenizer may lowercase tokens
-      // (e.g., "john" from tokenizer vs "John" in original text).
+      // Last-resort: find token text in the chunk (case-insensitive) with cursor.
       if (typeof start !== "number" || typeof end !== "number" || end <= start) {
         const tokenText = getEntityText(ent);
         if (tokenText) {
@@ -326,6 +377,7 @@ async function runNER(chunk, aiThreshold) {
 
           let found = -1;
           let foundLen = 0;
+
           for (const t of candidates) {
             const tLower = t.toLowerCase();
             const idx = chunkLower.indexOf(tLower, searchCursor);
@@ -357,78 +409,38 @@ async function runNER(chunk, aiThreshold) {
     }
 
     if (typeof start !== "number" || typeof end !== "number" || end <= start) continue;
-    // Minimum span length guard: filter single-character/punctuation detections.
     if (end - start < 1) continue;
     if (typeof score === "number" && score < aiThreshold) continue;
+
     searchCursor = Math.max(searchCursor, end);
+
     spans.push({
       start,
       end,
-      label: normalizeLabel(ent.entity_group || ent.entity || ent.label),
+      label: normalizeLabel(ent?.entity_group || ent?.entity || ent?.label),
       score: typeof score === "number" ? score : 0.0,
       source: "ner",
     });
   }
-  return spans;
-}
 
-/**
- * Deterministic regex detectors for structured header PHI.
- * Returns spans with score 1.0 so they survive thresholding.
- * IMPORTANT: reset lastIndex because these are global regexes reused across chunks.
- */
-function runRegexDetectors(text) {
-  const spans = [];
-
-  // Reset regex state (global regexes can carry lastIndex across calls)
-  PATIENT_HEADER_RE.lastIndex = 0;
-  MRN_RE.lastIndex = 0;
-
-  // 1) Patient header names
-  for (const match of text.matchAll(PATIENT_HEADER_RE)) {
-    const fullMatch = match[0];
-    const nameGroup = match[1];
-    const groupOffset = fullMatch.indexOf(nameGroup);
-
-    if (groupOffset !== -1 && match.index != null) {
-      spans.push({
-        start: match.index + groupOffset,
-        end: match.index + groupOffset + nameGroup.length,
-        label: "PATIENT", // align with existing label schema
-        score: 1.0,
-        source: "regex_header",
-      });
-    }
-  }
-
-  // 2) MRN / IDs
-  for (const match of text.matchAll(MRN_RE)) {
-    const fullMatch = match[0];
-    const idGroup = match[1];
-    const groupOffset = fullMatch.indexOf(idGroup);
-
-    if (groupOffset !== -1 && match.index != null) {
-      spans.push({
-        start: match.index + groupOffset,
-        end: match.index + groupOffset + idGroup.length,
-        label: "ID",
-        score: 1.0,
-        source: "regex_mrn",
-      });
-    }
+  // If model returns nothing, optionally dump token debug once per run.
+  if (spans.length === 0 && debug && !didTokenDebug) {
+    didTokenDebug = true;
+    await debugTokenPredictions(chunk);
   }
 
   return spans;
 }
 
-/**
- * Deduplicate spans to prevent double-highlights when ML + regex find the same span.
- */
+// =============================================================================
+// Span utilities: dedupe, merge, word-boundary expansion
+// =============================================================================
+
 function dedupeSpans(spans) {
   const seen = new Set();
   const out = [];
   for (const s of spans) {
-    const k = `${s.start}:${s.end}:${s.label}`;
+    const k = `${s.start}:${s.end}:${s.label}:${s.source || ""}`;
     if (!seen.has(k)) {
       seen.add(k);
       out.push(s);
@@ -436,6 +448,108 @@ function dedupeSpans(spans) {
   }
   return out;
 }
+
+function isRegexSpan(s) {
+  return typeof s?.source === "string" && s.source.startsWith("regex_");
+}
+
+function overlapsOrAdjacent(aStart, aEnd, bStart, bEnd) {
+  // include adjacency (aEnd === bStart)
+  return aStart <= bEnd && bStart <= aEnd;
+}
+
+function mergeOverlapsBestOf(spans) {
+  const sorted = [...spans].sort((a, b) => {
+    if (a.start !== b.start) return a.start - b.start;
+    // Prefer regex then higher score
+    const aR = isRegexSpan(a) ? 1 : 0;
+    const bR = isRegexSpan(b) ? 1 : 0;
+    if (aR !== bR) return bR - aR;
+    return (b.score ?? 0) - (a.score ?? 0);
+  });
+
+  const out = [];
+  for (const s of sorted) {
+    const last = out[out.length - 1];
+    if (!last || !overlapsOrAdjacent(last.start, last.end, s.start, s.end)) {
+      out.push({ ...s });
+      continue;
+    }
+
+    // Overlapping or adjacent
+    const overlapLen = Math.max(0, Math.min(last.end, s.end) - Math.max(last.start, s.start));
+    const lastIsRegex = isRegexSpan(last);
+    const sIsRegex = isRegexSpan(s);
+
+    // If either is regex and they overlap, prefer regex to avoid double-highlights and prefix-capture.
+    if (overlapLen > 0 && (lastIsRegex || sIsRegex)) {
+      const keep = lastIsRegex ? last : s;
+      out[out.length - 1] = { ...keep };
+      continue;
+    }
+
+    // If same label, union them (also merges adjacent token pieces nicely)
+    if (last.label === s.label) {
+      out[out.length - 1] = {
+        ...last,
+        start: Math.min(last.start, s.start),
+        end: Math.max(last.end, s.end),
+        score: Math.max(last.score ?? 0, s.score ?? 0),
+        source: last.source || s.source,
+      };
+      continue;
+    }
+
+    // Different labels: only replace if overlap is huge; otherwise keep both.
+    const lastLen = Math.max(1, last.end - last.start);
+    const sLen = Math.max(1, s.end - s.start);
+    const overlapRatio = overlapLen / Math.min(lastLen, sLen);
+
+    if (overlapRatio >= 0.8) {
+      if ((s.score ?? 0) > (last.score ?? 0)) out[out.length - 1] = { ...s };
+    } else {
+      out.push({ ...s });
+    }
+  }
+
+  return out;
+}
+
+/**
+ * Expand spans to full word boundaries to prevent partial-word redactions.
+ * - Fixes cases like "id[REDACTED]" when the model only tagged part of a token.
+ */
+function expandToWordBoundaries(spans, fullText) {
+  function isWordCharAt(i) {
+    if (i < 0 || i >= fullText.length) return false;
+    const ch = fullText[i];
+    if (/[A-Za-z0-9]/.test(ch)) return true;
+
+    // Treat apostrophe/hyphen as word-char only when adjacent to alnum
+    if (ch === "'" || ch === "’" || ch === "-") {
+      const left = i > 0 ? fullText[i - 1] : "";
+      const right = i + 1 < fullText.length ? fullText[i + 1] : "";
+      return /[A-Za-z0-9]/.test(left) || /[A-Za-z0-9]/.test(right);
+    }
+    return false;
+  }
+
+  return spans.map((span) => {
+    let { start, end } = span;
+
+    while (start > 0 && isWordCharAt(start - 1)) start--;
+    while (end < fullText.length && isWordCharAt(end)) end++;
+
+    if (start !== span.start || end !== span.end) {
+      return { ...span, start, end, text: fullText.slice(start, end) };
+    }
+    return span;
+  });
+}
+
+// =============================================================================
+// Debug helpers (optional)
+// =============================================================================
 
 function formatTokenPreview(token) {
   const word =
@@ -460,18 +574,15 @@ async function debugTokenPredictions(chunk) {
     try {
       tokenRaw = await classifier(chunk, {
         aggregation_strategy: "none",
-        ignore_labels: [], // critical: reveal O tokens
+        ignore_labels: [],
         return_offsets_mapping: true,
         topk: 1,
       });
     } catch (err) {
-      log(
-        "[PHI] token preds debug (with return_offsets_mapping) failed; retrying without offsets:",
-        err
-      );
+      log("[PHI] token preds debug (with offsets) failed; retrying without offsets:", err);
       tokenRaw = await classifier(chunk, {
         aggregation_strategy: "none",
-        ignore_labels: [], // critical: reveal O tokens
+        ignore_labels: [],
         topk: 1,
       });
     }
@@ -479,25 +590,7 @@ async function debugTokenPredictions(chunk) {
     const tokenList = normalizeRawOutput(tokenRaw);
     log("[PHI] token preds count:", tokenList.length);
     if (tokenList.length > 0) {
-      let oCount = 0;
-      for (const t of tokenList) {
-        if (normalizeLabel(t?.entity || t?.entity_group || t?.label) === "O") oCount += 1;
-      }
-      const nonOCount = tokenList.length - oCount;
-      log(`[PHI] token preds label counts: total=${tokenList.length} O=${oCount} nonO=${nonOCount}`);
-      log(
-        "[PHI] token has offsets? (word,start,end,label):",
-        tokenList.slice(0, 5).map((t) => [
-          t?.word ?? t?.token ?? t?.text ?? "(tok)",
-          t?.start,
-          t?.end,
-          t?.entity ?? t?.label,
-        ])
-      );
-      log(
-        "[PHI] token preds preview (incl O):",
-        tokenList.slice(0, 10).map(formatTokenPreview)
-      );
+      log("[PHI] token preds preview:", tokenList.slice(0, 10).map(formatTokenPreview));
       return;
     }
   } catch (err) {
@@ -507,10 +600,8 @@ async function debugTokenPredictions(chunk) {
   if (didLogitsDebug) return;
   didLogitsDebug = true;
 
-  // Definitive fallback: run the model directly and inspect logits.
   try {
     const inputs = await classifier.tokenizer(chunk, { return_tensors: "np" });
-    log("[PHI] tokenizer inputs keys:", Object.keys(inputs || {}));
     const out = await classifier.model(inputs);
     const logits = out?.logits;
     log("[PHI] logits dims:", logits?.dims);
@@ -520,6 +611,10 @@ async function debugTokenPredictions(chunk) {
     log("[PHI] logits debug failed:", err);
   }
 }
+
+// =============================================================================
+// Worker message loop
+// =============================================================================
 
 self.onmessage = async (e) => {
   const msg = e.data;
@@ -531,11 +626,16 @@ self.onmessage = async (e) => {
   }
 
   if (msg.type === "init") {
-    workerConfig = msg.config && typeof msg.config === "object" ? msg.config : {};
-    debug = Boolean(msg.debug ?? workerConfig.debug);
+    cancelled = false;
+    didTokenDebug = false;
+    didLogitsDebug = false;
+
+    const config = msg.config && typeof msg.config === "object" ? msg.config : {};
+    debug = Boolean(msg.debug ?? config.debug);
+
     try {
       await loadProtectedTerms();
-      await loadModel(workerConfig);
+      await loadModel(config);
       post("ready");
     } catch (err) {
       post("error", { message: String(err?.message || err) });
@@ -545,18 +645,18 @@ self.onmessage = async (e) => {
 
   if (msg.type === "start") {
     cancelled = false;
-    didLogitsDebug = false;
     didTokenDebug = false;
+    didLogitsDebug = false;
+
     try {
       await loadProtectedTerms();
 
       const text = String(msg.text || "");
       const config = msg.config && typeof msg.config === "object" ? msg.config : {};
-      workerConfig = config;
       debug = Boolean(config.debug);
+
       await loadModel(config);
-      // Lower default threshold slightly (0.45) to catch borderline entity detections
-      // while still filtering low-confidence noise.
+
       const aiThreshold = typeof config.aiThreshold === "number" ? config.aiThreshold : 0.45;
 
       const allSpans = [];
@@ -568,37 +668,45 @@ self.onmessage = async (e) => {
       for (let start = 0; start < text.length; start += STEP) {
         const end = Math.min(text.length, start + WINDOW);
         const chunk = text.slice(start, end);
-        // Avoid an extra tiny tail window (often low signal / higher false positives).
+
+        // Avoid an extra tiny tail window (often low signal / higher false positives)
         if (start > 0 && chunk.length < 50) break;
+
         windowIndex += 1;
 
-        // 1) Run ML model
+        // 1) ML spans (robust offsets)
         const nerSpans = await runNER(chunk, aiThreshold);
 
-        // 2) Run regex injection (hybrid detection)
+        // 2) Regex injection spans (header guarantees)
         const regexSpans = runRegexDetectors(chunk);
-        log("[PHI] regex spans in chunk:", regexSpans.length);
 
-        // 3) Merge and dedupe results
-        const combinedSpans = dedupeSpans([...nerSpans, ...regexSpans]);
+        // 3) Combine (still chunk-relative)
+        const combined = dedupeSpans([...nerSpans, ...regexSpans]);
 
-        // 4) Convert to absolute offsets (chunk -> full text)
-        const abs = combinedSpans.map((s) => ({
-          ...s,
-          start: s.start + start,
-          end: s.end + start,
-        }));
-
-        allSpans.push(...abs);
+        // 4) Convert to absolute offsets
+        for (const s of combined) {
+          allSpans.push({
+            ...s,
+            start: s.start + start,
+            end: s.end + start,
+          });
+        }
 
         post("progress", { windowIndex, windowCount });
         if (cancelled) break;
       }
 
-      let merged = mergeOverlaps(allSpans);
-      log("[PHI] spans before veto", merged.length);
+      // 5) Merge/dedupe across windows
+      let merged = mergeOverlapsBestOf(allSpans);
+
+      // 6) Expand to word boundaries (fixes partial-word redactions)
+      merged = expandToWordBoundaries(merged, text);
+
+      // 7) Re-merge after expansion
+      merged = mergeOverlapsBestOf(merged);
+
+      // 8) Apply veto (protected allow-list)
       merged = applyVeto(merged, text, protectedTerms, { debug });
-      log("[PHI] spans after veto", merged.length);
 
       post("done", { detections: merged });
     } catch (err) {
