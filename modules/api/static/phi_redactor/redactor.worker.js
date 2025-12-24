@@ -9,6 +9,18 @@ const WINDOW = 2500;
 const OVERLAP = 250;
 const STEP = WINDOW - OVERLAP;
 
+// =============================================================================
+// HYBRID REGEX DETECTION (ported from phi_redactor_hybrid.py)
+// =============================================================================
+
+// Matches: "Patient: Smith, John" or "Pt Name: John Smith"
+const PATIENT_HEADER_RE =
+  /(?:Patient(?:\s+Name)?|Pt|Name|Subject)\s*[:\-]?\s*([A-Z][a-z]+,\s*[A-Z][a-z]+(?:\s+[A-Z]\.?)?|[A-Z][a-z]+\s+[A-Z]'?[A-Za-z]+|[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/gim;
+
+// Matches: "MRN: 12345" or "ID: 55-22-11"
+const MRN_RE =
+  /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID|EDIPI|DOD\s*ID)\s*[:\#]?\s*([A-Z0-9\-]{4,15})\b/gi;
+
 env.allowLocalModels = true;
 env.allowRemoteModels = false;
 env.localModelPath = MODEL_BASE_URL;
@@ -360,6 +372,71 @@ async function runNER(chunk, aiThreshold) {
   return spans;
 }
 
+/**
+ * Deterministic regex detectors for structured header PHI.
+ * Returns spans with score 1.0 so they survive thresholding.
+ * IMPORTANT: reset lastIndex because these are global regexes reused across chunks.
+ */
+function runRegexDetectors(text) {
+  const spans = [];
+
+  // Reset regex state (global regexes can carry lastIndex across calls)
+  PATIENT_HEADER_RE.lastIndex = 0;
+  MRN_RE.lastIndex = 0;
+
+  // 1) Patient header names
+  for (const match of text.matchAll(PATIENT_HEADER_RE)) {
+    const fullMatch = match[0];
+    const nameGroup = match[1];
+    const groupOffset = fullMatch.indexOf(nameGroup);
+
+    if (groupOffset !== -1 && match.index != null) {
+      spans.push({
+        start: match.index + groupOffset,
+        end: match.index + groupOffset + nameGroup.length,
+        label: "PATIENT", // align with existing label schema
+        score: 1.0,
+        source: "regex_header",
+      });
+    }
+  }
+
+  // 2) MRN / IDs
+  for (const match of text.matchAll(MRN_RE)) {
+    const fullMatch = match[0];
+    const idGroup = match[1];
+    const groupOffset = fullMatch.indexOf(idGroup);
+
+    if (groupOffset !== -1 && match.index != null) {
+      spans.push({
+        start: match.index + groupOffset,
+        end: match.index + groupOffset + idGroup.length,
+        label: "ID",
+        score: 1.0,
+        source: "regex_mrn",
+      });
+    }
+  }
+
+  return spans;
+}
+
+/**
+ * Deduplicate spans to prevent double-highlights when ML + regex find the same span.
+ */
+function dedupeSpans(spans) {
+  const seen = new Set();
+  const out = [];
+  for (const s of spans) {
+    const k = `${s.start}:${s.end}:${s.label}`;
+    if (!seen.has(k)) {
+      seen.add(k);
+      out.push(s);
+    }
+  }
+  return out;
+}
+
 function formatTokenPreview(token) {
   const word =
     typeof token?.word === "string"
@@ -495,12 +572,23 @@ self.onmessage = async (e) => {
         if (start > 0 && chunk.length < 50) break;
         windowIndex += 1;
 
+        // 1) Run ML model
         const nerSpans = await runNER(chunk, aiThreshold);
-        const abs = nerSpans.map((s) => ({
+
+        // 2) Run regex injection (hybrid detection)
+        const regexSpans = runRegexDetectors(chunk);
+        log("[PHI] regex spans in chunk:", regexSpans.length);
+
+        // 3) Merge and dedupe results
+        const combinedSpans = dedupeSpans([...nerSpans, ...regexSpans]);
+
+        // 4) Convert to absolute offsets (chunk -> full text)
+        const abs = combinedSpans.map((s) => ({
           ...s,
           start: s.start + start,
           end: s.end + start,
         }));
+
         allSpans.push(...abs);
 
         post("progress", { windowIndex, windowCount });
