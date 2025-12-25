@@ -459,7 +459,6 @@ def main():
         )
         # Set MPS high watermark ratio if specified
         if args.mps_high_watermark_ratio is not None:
-            import os
             os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = str(args.mps_high_watermark_ratio)
             print(f"[device] MPS high watermark ratio set to: {args.mps_high_watermark_ratio}")
         # Verify MPS is actually working
@@ -578,7 +577,7 @@ def main():
         bf16=args.bf16,
         report_to="none",
         use_mps_device=use_mps,
-        no_cuda=args.cpu,  # Force CPU mode when --cpu flag is set
+        use_cpu=args.cpu,  # Force CPU mode when --cpu flag is set (modern replacement for no_cuda)
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         gradient_checkpointing=args.gradient_checkpointing,
     )

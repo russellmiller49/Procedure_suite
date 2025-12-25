@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -90,12 +90,34 @@ patch-phi-client-hardneg:
 		--data-in data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
 		--data-out data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl
 
+# Default: MPS with memory-saving options (gradient accumulation, smaller batches)
+# If OOM on Apple Silicon, use: make finetune-phi-client-hardneg-cpu
 finetune-phi-client-hardneg:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
 		--resume-from artifacts/phi_distilbert_ner \
 		--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl \
 		--epochs 1 \
-		--lr 1e-5
+		--lr 1e-5 \
+		--train-batch 8 \
+		--eval-batch 16 \
+		--gradient-accumulation-steps 2 \
+		--save-steps 500 \
+		--eval-steps 500 \
+		--logging-steps 50
+
+# CPU fallback: reliable but slower (~5-6 hours for 1 epoch)
+finetune-phi-client-hardneg-cpu:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--resume-from artifacts/phi_distilbert_ner \
+		--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl \
+		--epochs 1 \
+		--lr 1e-5 \
+		--train-batch 8 \
+		--eval-batch 16 \
+		--save-steps 500 \
+		--eval-steps 500 \
+		--logging-steps 50 \
+		--cpu
 
 export-phi-client-model:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
@@ -180,7 +202,8 @@ help:
 	@echo "  eval-phi-client - Evaluate DistilBERT NER model (no retraining)"
 	@echo "  audit-phi-client - Run false-positive audit guardrails"
 	@echo "  patch-phi-client-hardneg - Patch training data with audit violations"
-	@echo "  finetune-phi-client-hardneg - Finetune model for 1 epoch on hard negatives"
+	@echo "  finetune-phi-client-hardneg - Finetune model on hard negatives (MPS w/ gradient accumulation)"
+	@echo "  finetune-phi-client-hardneg-cpu - Finetune on CPU (slower but reliable fallback)"
 	@echo "  export-phi-client-model - Export client-side ONNX bundle (unquantized) for transformers.js"
 	@echo "  export-phi-client-model-quant - Export client-side ONNX bundle + INT8 quantized model"
 	@echo "  autopatch      - Generate patches for registry cleaning"
