@@ -93,9 +93,11 @@ def compute_class_weights(rows: list, label2id: dict, smoothing: float = 0.1) ->
 # pip install seqeval
 try:
     import evaluate  # type: ignore
+    from seqeval.metrics import classification_report
     _HAVE_EVALUATE = True
 except Exception:
     _HAVE_EVALUATE = False
+    classification_report = None
 
 
 def set_seed(seed: int) -> None:
@@ -329,6 +331,14 @@ def build_compute_metrics(id2label: Dict[int, str]):
             true_labels.append(lab_tags)
 
         results = seqeval.compute(predictions=true_predictions, references=true_labels)
+        
+        # Print per-entity breakdown using seqeval's classification_report
+        if classification_report is not None:
+            print("\n" + "=" * 80)
+            print("SEQEVAL PER-ENTITY REPORT (entity-level)")
+            print(classification_report(true_labels, true_predictions, digits=4))
+            print("=" * 80 + "\n")
+        
         # Return the common aggregate numbers
         return {
             "precision": results.get("overall_precision", 0.0),
@@ -371,6 +381,10 @@ def build_arg_parser() -> argparse.ArgumentParser:
     ap.add_argument("--logging-steps", type=int, default=50)
     ap.add_argument("--class-weights", action="store_true", help="Use class weights for imbalanced labels")
     ap.add_argument("--weight-smoothing", type=float, default=0.3, help="Smoothing factor for class weights (0-1)")
+    ap.add_argument("--cpu", action="store_true", help="Force CPU mode (disable MPS/CUDA)")
+    ap.add_argument("--gradient-accumulation-steps", type=int, default=1, help="Number of gradient accumulation steps (reduces memory usage)")
+    ap.add_argument("--gradient-checkpointing", action="store_true", help="Enable gradient checkpointing to save memory")
+    ap.add_argument("--mps-high-watermark-ratio", type=float, default=None, help="MPS memory limit ratio (0.0=unlimited, default=auto)")
     return ap
 
 
@@ -415,8 +429,14 @@ def main():
 
     # --- Device / CUDA / MPS visibility diagnostics ---
     # Hugging Face `Trainer` will automatically use CUDA or MPS when available.
-    cuda_available = torch.cuda.is_available()
-    mps_available = torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False
+    # --cpu flag forces CPU mode
+    if args.cpu:
+        cuda_available = False
+        mps_available = False
+        print(f"[device] --cpu flag set, forcing CPU mode | torch={torch.__version__}")
+    else:
+        cuda_available = torch.cuda.is_available()
+        mps_available = torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False
 
     if cuda_available:
         try:
@@ -437,6 +457,18 @@ def main():
             f"torch={torch.__version__} | "
             f"Using Metal Performance Shaders for GPU acceleration"
         )
+        # Set MPS high watermark ratio if specified
+        if args.mps_high_watermark_ratio is not None:
+            import os
+            os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = str(args.mps_high_watermark_ratio)
+            print(f"[device] MPS high watermark ratio set to: {args.mps_high_watermark_ratio}")
+        # Verify MPS is actually working
+        try:
+            test_tensor = torch.zeros(1, device="mps")
+            print(f"[device] MPS device verified: {test_tensor.device}")
+        except Exception as e:
+            print(f"[device] WARNING: MPS device test failed: {e}")
+            mps_available = False
     else:
         print(
             f"[device] cuda available: False, mps available: False (CPU mode) | "
@@ -448,15 +480,29 @@ def main():
     if not rows:
         raise RuntimeError(f"No rows loaded from {data_path}")
 
+    # Determine device for model placement
+    if args.cpu:
+        device = torch.device("cpu")
+    elif cuda_available:
+        device = torch.device("cuda")
+    elif mps_available:
+        device = torch.device("mps")
+    else:
+        device = torch.device("cpu")
+    
+    print(f"[device] Model will be placed on: {device}")
+
     if args.eval_only:
         tokenizer = AutoTokenizer.from_pretrained(model_dir, use_fast=True)
         model = AutoModelForTokenClassification.from_pretrained(model_dir)
+        model = model.to(device)  # Explicitly move to device
         label_list, label2id, id2label = resolve_label_maps(rows, model=model, model_dir=model_dir)
     else:
         resume_dir = resolve_resume_dir(args)
         if resume_dir:
             tokenizer = AutoTokenizer.from_pretrained(resume_dir, use_fast=True)
             model = AutoModelForTokenClassification.from_pretrained(resume_dir)
+            model = model.to(device)  # Explicitly move to device
             label_list, label2id, id2label = resolve_label_maps(rows, model=model, model_dir=resume_dir)
         else:
             label_list, label2id, id2label = build_label_maps(rows)
@@ -467,6 +513,12 @@ def main():
                 id2label=id2label,
                 label2id=label2id,
             )
+            # Enable gradient checkpointing if requested (before moving to device)
+            if args.gradient_checkpointing:
+                if hasattr(model, "gradient_checkpointing_enable"):
+                    model.gradient_checkpointing_enable()
+                    print("[memory] Gradient checkpointing enabled")
+            model = model.to(device)  # Explicitly move to device
 
         os.makedirs(args.output_dir, exist_ok=True)
         with open(os.path.join(args.output_dir, "label_map.json"), "w") as f:
@@ -475,6 +527,9 @@ def main():
                 f,
                 indent=2,
             )
+    
+    # Verify model is on the correct device
+    print(f"[device] Model is on device: {next(model.parameters()).device}")
 
     if args.eval_only:
         if args.eval_split == "all":
@@ -503,7 +558,8 @@ def main():
     eval_mode = "no" if args.eval_only else ("steps" if len(eval_rows) > 0 else "no")
 
     # Determine if we should use MPS (Apple Silicon GPU)
-    use_mps = mps_available and not cuda_available
+    # Update use_mps in case it was disabled due to device test failure
+    use_mps = mps_available and not cuda_available and not args.cpu
 
     training_args_kwargs: dict[str, object] = dict(
         output_dir=model_dir if args.eval_only else args.output_dir,
@@ -522,6 +578,9 @@ def main():
         bf16=args.bf16,
         report_to="none",
         use_mps_device=use_mps,
+        no_cuda=args.cpu,  # Force CPU mode when --cpu flag is set
+        gradient_accumulation_steps=args.gradient_accumulation_steps,
+        gradient_checkpointing=args.gradient_checkpointing,
     )
     if compute_metrics and len(eval_rows) > 0:
         training_args_kwargs["metric_for_best_model"] = "f1"
