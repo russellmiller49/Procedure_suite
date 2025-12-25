@@ -300,6 +300,7 @@ const CLINICAL_ALLOW_LIST = makeNormalizedSet([
 
   // Common clinical words that appear capitalized at sentence start
   "imaging", "scanning", "screening", "testing", "sampling",
+  "suction", "suctioning", "irrigation", "lavage", "washings",
   "aspiration", "instillation", "injection", "infusion", "transfusion",
   "inspection", "palpation", "auscultation", "percussion",
   "analgesia", "sedation", "paralysis", "relaxation",
@@ -314,7 +315,29 @@ const CLINICAL_ALLOW_LIST = makeNormalizedSet([
   "significant", "unremarkable", "remarkable", "notable", "prominent",
   "diffuse", "focal", "localized", "generalized", "widespread",
   "acute", "chronic", "subacute", "recurrent", "persistent",
-  "primary", "secondary", "tertiary", "initial", "subsequent"
+  "primary", "secondary", "tertiary", "initial", "subsequent",
+
+  // === Additional medical terms from testing feedback ===
+  // Pathology/lab terms
+  "histopathological", "histopathology", "cytopathology", "cytopathological",
+  "histologic", "histological", "cytologic", "cytological",
+  "examination", "examinations", "documentation", "documentation",
+
+  // Facility/location terms (prevent "Center, Main" truncation)
+  "center", "medical center", "hospital", "clinic", "facility",
+  "main", "main or", "operating room", "recovery room", "procedure room",
+  "suite", "unit", "department", "division", "service",
+
+  // === Clinical sentence-starters (Dec 2025 testing feedback) ===
+  // These capitalized words at sentence start are clinical terms, not names
+  "flow", "pain", "patency", "tracheal", "obstruction",
+  "viscosity", "morphine", "medications", "administered",
+  "secretions", "bleeding", "hemostasis", "recovery", "emergence",
+  "induction", "maintenance", "reversal", "awakening",
+  "airflow", "oxygenation", "saturation", "pressure",
+  "resistance", "compliance", "capacity", "volume", "rate",
+  "output", "input", "drainage", "effluent", "aspirate",
+  "specimen", "samples", "cultures", "cytology", "pathology"
 ]);
 
 // =============================================================================
@@ -646,6 +669,75 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     }
 
     // -------------------------------------------------------------------------
+    // 0g) "The X was/is" patterns: "The procedure was", "The pleura was", "The scope was"
+    // When span starts with "The" + noun and is followed by "was/is/were/are", it's not a name.
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      const lowerTrimmed = trimmed.toLowerCase();
+      // Check if span starts with "the" + word (noun phrase)
+      if (/^the\s+[a-z]+/i.test(lowerTrimmed)) {
+        // Check if followed by auxiliary verb
+        if (/^\s*(?:was|is|were|are|has|had|will|would|can|could)\b/i.test(nextLower)) {
+          veto = true; reason = "the_noun_followed_by_verb";
+        }
+        // Also veto common "The [clinical term]" patterns
+        const theNoun = lowerTrimmed.replace(/^the\s+/, "").split(/\s+/)[0];
+        const clinicalNouns = new Set([
+          "procedure", "patient", "scope", "pleura", "lesion", "tumor", "mass",
+          "nodule", "stenosis", "airway", "catheter", "stent", "balloon", "needle",
+          "biopsy", "sample", "specimen", "tissue", "mucosa", "lumen", "bronchoscope",
+          "finding", "impression", "diagnosis", "plan", "technique", "approach"
+        ]);
+        if (clinicalNouns.has(theNoun)) {
+          veto = true; reason = "the_clinical_noun";
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 0h) "This/That X" patterns: "This lesion", "That finding"
+    // Demonstrative + noun phrases are not names.
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      const lowerTrimmed = trimmed.toLowerCase();
+      // Check if span starts with demonstrative + word
+      if (/^(?:this|that|these|those)\s+[a-z]+/i.test(lowerTrimmed)) {
+        veto = true; reason = "demonstrative_noun_phrase";
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 0i) Compound clinical terms: "Tissue sampling", "Tumor debulking"
+    // Capitalized clinical compound nouns followed by "was/is" are not names.
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      const lowerTrimmed = trimmed.toLowerCase();
+      const words = lowerTrimmed.split(/\s+/);
+      const clinicalFirstWords = new Set([
+        "tissue", "tumor", "lesion", "airway", "bronchial", "endobronchial",
+        "transbronchial", "pleural", "pulmonary", "respiratory", "surgical",
+        "thermal", "mechanical", "ultrasound", "needle", "biopsy", "sampling"
+      ]);
+      if (words.length >= 2 && clinicalFirstWords.has(words[0])) {
+        veto = true; reason = "clinical_compound_term";
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 0j) Header field protection: [Indication], [Diagnosis], [Findings]
+    // Terms appearing after clinical headers are diagnoses, not names.
+    // Fixes: "[Indication] Tracheal Obstruction" being flagged as PATIENT
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      const beforeWindow = fullText.slice(Math.max(0, start - 50), start);
+      // Check for bracketed clinical headers or colon-delimited headers
+      if (/\[(?:indication|diagnosis|findings|impression|assessment|plan|anesthesia|description)\]\s*\n?\s*$/i.test(beforeWindow) ||
+          /(?:indication|diagnosis|findings|impression|assessment|plan|anesthesia|description)\s*:\s*$/i.test(beforeWindow)) {
+        veto = true; reason = "clinical_header_field";
+      }
+    }
+
+    // -------------------------------------------------------------------------
     // 1) Explicit anatomy list
     // -------------------------------------------------------------------------
     if (!veto && activeIndex.anatomySet.has(norm)) {
@@ -771,12 +863,26 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     }
 
     // -------------------------------------------------------------------------
-    // 9) CPT 5-digit protection (context-based)
+    // 9) CPT/ICD 4-6 digit protection (context-based)
+    // Enhanced with CBCT, fluoroscopy, and coding context
     // -------------------------------------------------------------------------
-    if (!veto && /^\d{5}$/.test(compact)) {
+    if (!veto && /^\d{4,6}$/.test(compact)) {
       const ctx = getContext(fullText, start, end, 90);
-      if (/\b(?:cpt|code|billing|rvu)\b/i.test(ctx) || hasMarker(ctx, activeIndex.codeMarkers)) {
+      // Primary: CPT/billing context words
+      if (/\b(?:cpt|code|codes|billing|rvu|coding|submitted|justification|rationale)\b/i.test(ctx)) {
         veto = true; reason = "cpt_context";
+      }
+      // Secondary: CBCT/fluoro imaging context (these often have CPT codes)
+      if (!veto && /\b(?:cbct|ct|fluoro(?:scopy)?|radiology|guidance|localization)\b/i.test(ctx)) {
+        veto = true; reason = "cpt_imaging_context";
+      }
+      // Tertiary: Slash-separated in parentheses pattern like "(76000/77002)"
+      if (!veto && /\(\s*\d{4,6}\s*\/\s*\d{4,6}\s*\)/.test(ctx)) {
+        veto = true; reason = "cpt_parens_slash_pattern";
+      }
+      // External markers
+      if (!veto && hasMarker(ctx, activeIndex.codeMarkers)) {
+        veto = true; reason = "cpt_marker";
       }
     }
 
@@ -806,13 +912,19 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
 
     // -------------------------------------------------------------------------
     // 12) Noise filter (label-aware)
-    // - Don’t veto short PATIENT spans (avoid breaking “Li/Ng” redactions if you need them)
+    // - Don't veto short PATIENT spans (avoid breaking "Li/Ng" redactions if you need them)
     // - Do veto single punctuation always
     // - For non-PATIENT, veto tiny non-numeric junk
+    // - Veto spans that start with punctuation (e.g., "(", ",")
     // -------------------------------------------------------------------------
     if (!veto) {
       if (SINGLE_CHAR_PUNCT_RE.test(trimmed)) {
         veto = true; reason = "single_char_punct";
+      }
+
+      // Spans starting with punctuation are likely tokenization artifacts
+      if (!veto && /^[^a-zA-Z0-9]/.test(trimmed)) {
+        veto = true; reason = "starts_with_punct";
       }
 
       if (!veto && trimmed.length <= 2) {

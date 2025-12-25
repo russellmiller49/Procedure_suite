@@ -364,4 +364,7 @@ python scripts/scrub_golden_jsons.py \
 MODEL_BACKEND=pytorch ./scripts/devserver.sh
 MODEL_BACKEND=auto ./scripts/devserver.sh
 
+cd scripts/phi_test_node
 node test_phi_redaction.mjs --count 30
+
+make finetune-phi-client-hardneg

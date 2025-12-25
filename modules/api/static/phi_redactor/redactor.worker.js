@@ -74,6 +74,16 @@ const TITLE_NAME_RE =
 const NARRATIVE_FOR_NAME_RE =
   /\bfor\s+([A-Z][a-z]+(?:'[A-Z][a-z]+)?(?:\s+[A-Z][a-z]+(?:'[A-Z][a-z]+)?)?)\s+(?:who|with|has|had|massive|severe|acute|chronic|presenting|underwent|scheduled|referred)\b/g;
 
+// Matches "did an EBUS on [Name]", "did a bronchoscopy on [Name]"
+// Fixes: "We did an EBUS on Gregory Martinez today" - verb "did" with intervening procedure name
+const DID_PROCEDURE_NAME_RE =
+  /\bdid\s+(?:an?\s+)?(?:EBUS|bronch(?:oscopy)?|procedure|biopsy|tbna|bal|navigation|bronch)\s+on\s+([A-Z][a-z]+(?:'[A-Z][a-z]+)?\s+[A-Z][a-z]+(?:'[A-Z][a-z]+)?)\b/gi;
+
+// Matches "EBUS for [Name]", "procedure for [Name]" followed by sentence boundary or common words
+// Fixes: "EBUS for Arthur Curry. We looked at all the nodes."
+const PROCEDURE_FOR_NAME_RE =
+  /\b(?:EBUS|bronch(?:oscopy)?|procedure|biopsy|tbna|bal|navigation)\s+for\s+([A-Z][a-z]+(?:'[A-Z][a-z]+)?\s+[A-Z][a-z]+(?:'[A-Z][a-z]+)?)(?=\s*[\.!\?,;:]|\s+(?:we|he|she|they|who|with|has|had|is|was|were|today|yesterday|this|that|the|a|an|and|but|or|so|then|now|here|there)\b)/gi;
+
 // Matches de-identification placeholders/artifacts: "<PERSON>", "[Name]", "[REDACTED]", "***NAME***"
 // These appear in pre-processed or dirty data and should be redacted to prevent leakage
 const PLACEHOLDER_NAME_RE =
@@ -94,6 +104,12 @@ const SENTENCE_START_NAME_RE =
 // For notes that begin directly with patient name without a header label
 const LINE_START_NAME_RE =
   /^([A-Z][a-z]+\s+[A-Z][a-z]+)\s*[.,]/gm;
+
+// Matches names at line start followed by clinical abbreviations/terms
+// Fixes: "Daniel Rivera LLL nodule small 14mm." - name at absolute start
+// Fixes: "Ryan Williams procedure note" - name at start of procedure note
+const LINE_START_CLINICAL_NAME_RE =
+  /^([A-Z][a-z]+\s+[A-Z][a-z]+)\s+(?:LLL|RLL|RUL|LUL|RML|RB\d|LB\d|nodule|mass|lesion|lung|lobe|procedure|bronch|ebus|ion|underwent|scheduled|post|status|transplant|bilateral|unilateral)\b/gim;
 
 // Matches informal/lowercase names followed by "here for": "jason phillips here for right lung lavage"
 // Case-insensitive to catch dictation notes where names aren't capitalized
@@ -165,6 +181,12 @@ const NAME_START_CLINICAL_CONTEXT_RE =
 // Requires pronoun or clinical word after name to confirm patient context
 const LOWERCASE_FOR_NAME_RE =
   /\bfor\s+([a-z]+\s+[a-z]+)\s+(?:she|he|they|who|to|we|and|patient|pt|with|has|had|is|was|the|a|for|due|because|secondary)\b/gi;
+
+// Matches "Last, First M" or "Last , First M" format with trailing initial/suffix
+// Common in footers, headers, and patient identifiers: "Carey , Cloyd D", "Smith, John Jr"
+// Captures full name including trailing initial (D, M, etc.) or suffix (Jr, Sr, III)
+const LAST_FIRST_INITIAL_RE =
+  /\b([A-Z][a-z]+\s*,\s*[A-Z][a-z]+(?:\s+[A-Z]\.?|\s+(?:Jr|Sr|II|III|IV)\.?)?)\b/g;
 
 // Date patterns - various formats commonly found in medical notes
 // Matches: "18Apr2022", "18-Apr-2022", "18 Apr 2022" (DDMMMYYYY variants)
@@ -351,10 +373,13 @@ function runRegexDetectors(text) {
   PT_STANDALONE_RE.lastIndex = 0;
   TITLE_NAME_RE.lastIndex = 0;
   NARRATIVE_FOR_NAME_RE.lastIndex = 0;
+  DID_PROCEDURE_NAME_RE.lastIndex = 0;
+  PROCEDURE_FOR_NAME_RE.lastIndex = 0;
   PLACEHOLDER_NAME_RE.lastIndex = 0;
   PATIENT_SHORTHAND_RE.lastIndex = 0;
   SENTENCE_START_NAME_RE.lastIndex = 0;
   LINE_START_NAME_RE.lastIndex = 0;
+  LINE_START_CLINICAL_NAME_RE.lastIndex = 0;
   INFORMAL_NAME_HERE_RE.lastIndex = 0;
   UNDERSCORE_NAME_RE.lastIndex = 0;
   UNDERSCORE_ID_RE.lastIndex = 0;
@@ -370,6 +395,7 @@ function runRegexDetectors(text) {
   LOWERCASE_NAME_NOTE_RE.lastIndex = 0;
   NAME_START_CLINICAL_CONTEXT_RE.lastIndex = 0;
   LOWERCASE_FOR_NAME_RE.lastIndex = 0;
+  LAST_FIRST_INITIAL_RE.lastIndex = 0;
   DATE_DDMMMYYYY_RE.lastIndex = 0;
   DATE_SLASH_RE.lastIndex = 0;
   DATE_ISO_RE.lastIndex = 0;
@@ -592,6 +618,52 @@ function runRegexDetectors(text) {
     }
   }
 
+  // 5b2) "did an EBUS on [Name]" pattern: "We did an EBUS on Gregory Martinez today"
+  for (const match of text.matchAll(DID_PROCEDURE_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.indexOf(nameGroup);
+      if (groupOffset !== -1) {
+        const nameStart = match.index + groupOffset;
+        const nameEnd = nameStart + nameGroup.length;
+        // Skip if followed by credentials (likely provider)
+        if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+          spans.push({
+            start: nameStart,
+            end: nameEnd,
+            label: "PATIENT",
+            score: 0.9,
+            source: "regex_did_procedure",
+          });
+        }
+      }
+    }
+  }
+
+  // 5b3) "EBUS for [Name]" pattern: "EBUS for Arthur Curry. We looked at all the nodes."
+  for (const match of text.matchAll(PROCEDURE_FOR_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.indexOf(nameGroup);
+      if (groupOffset !== -1) {
+        const nameStart = match.index + groupOffset;
+        const nameEnd = nameStart + nameGroup.length;
+        // Skip if followed by credentials (likely provider)
+        if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+          spans.push({
+            start: nameStart,
+            end: nameEnd,
+            label: "PATIENT",
+            score: 0.9,
+            source: "regex_procedure_for",
+          });
+        }
+      }
+    }
+  }
+
   // 5c) Sentence-start name pattern: "Robert Smith has a LLL nodule..."
   for (const match of text.matchAll(SENTENCE_START_NAME_RE)) {
     const nameGroup = match[1];
@@ -628,6 +700,24 @@ function runRegexDetectors(text) {
           label: "PATIENT",
           score: 0.8,
           source: "regex_line_start",
+        });
+      }
+    }
+  }
+
+  // 5d2) Line-start name with clinical context: "Daniel Rivera LLL nodule small 14mm."
+  for (const match of text.matchAll(LINE_START_CLINICAL_NAME_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameEnd = match.index + nameGroup.length;
+      // Skip if followed by credentials (likely provider)
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.9,
+          source: "regex_line_start_clinical",
         });
       }
     }
@@ -901,6 +991,24 @@ function runRegexDetectors(text) {
             source: "regex_lowercase_for",
           });
         }
+      }
+    }
+  }
+
+  // 5o) "Last, First M" format with trailing initial: "Carey , Cloyd D", "Smith, John Jr"
+  for (const match of text.matchAll(LAST_FIRST_INITIAL_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameEnd = match.index + nameGroup.length;
+      // Skip if followed by credentials (likely provider) or preceded by provider context
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.9,
+          source: "regex_last_first_initial",
+        });
       }
     }
   }
@@ -1219,7 +1327,19 @@ function mergeOverlapsBestOf(spans) {
     const lastIsRegex = isRegexSpan(last);
     const sIsRegex = isRegexSpan(s);
 
-    // If either is regex and they overlap, prefer regex to avoid double-highlights and prefix-capture.
+    // If same label and either is regex, UNION the spans (take min start, max end)
+    // This ensures trailing initials like "D" in "Carey , Cloyd D" are captured
+    if (overlapLen > 0 && last.label === s.label && (lastIsRegex || sIsRegex)) {
+      out[out.length - 1] = {
+        ...(lastIsRegex ? last : s), // Keep regex span's metadata
+        start: Math.min(last.start, s.start),
+        end: Math.max(last.end, s.end),
+        score: Math.max(last.score ?? 0, s.score ?? 0),
+      };
+      continue;
+    }
+
+    // If different labels and either is regex, prefer the regex span
     if (overlapLen > 0 && (lastIsRegex || sIsRegex)) {
       const keep = lastIsRegex ? last : s;
       out[out.length - 1] = { ...keep };
@@ -1295,13 +1415,23 @@ const CITY_PREFIXES = new Set([
   "lake", "palm", "long", "grand", "great", "little", "old", "big"
 ]);
 
+// Facility suffix words that should be included in GEO spans
+// Fixes: "Horizon University Medical Center" being split, leaving "Center" as separate
+const FACILITY_SUFFIXES = new Set([
+  "center", "hospital", "clinic", "institute", "university", "foundation",
+  "medical", "health", "healthcare", "memorial", "regional", "general",
+  "community", "children", "childrens", "pediatric", "veterans", "va"
+]);
+
 function extendGeoSpans(spans, fullText) {
   return spans.map((span) => {
     // Only extend GEO-labeled spans
     const label = String(span.label || "").toUpperCase().replace(/^[BI]-/, "");
     if (label !== "GEO") return span;
 
-    let { start } = span;
+    let { start, end } = span;
+    let newStart = start;
+    let newEnd = end;
 
     // Look for city prefix word before the span
     const beforeWindow = fullText.slice(Math.max(0, start - 20), start);
@@ -1311,14 +1441,59 @@ function extendGeoSpans(spans, fullText) {
       const prefix = prefixMatch[1].toLowerCase();
       if (CITY_PREFIXES.has(prefix)) {
         // Extend start to include the prefix
-        const prefixStart = start - prefixMatch[0].length;
-        return {
-          ...span,
-          start: prefixStart,
-          end: span.end,
-          text: fullText.slice(prefixStart, span.end)
-        };
+        newStart = start - prefixMatch[0].length;
       }
+    }
+
+    // Look for facility suffix words AFTER the span
+    // Fixes: "Horizon University Medical Center" where "Center" was split off
+    const afterWindow = fullText.slice(end, Math.min(fullText.length, end + 40));
+    // Match optional comma/space + one or more facility suffix words
+    const suffixMatch = afterWindow.match(/^(\s*,?\s*(?:(?:Medical|Health|Healthcare)\s+)?(?:Center|Hospital|Clinic|Institute|University|Foundation|Memorial|Regional|General|Community|Children(?:'?s)?|Pediatric|Veterans|VA)(?:\s+(?:Medical\s+)?(?:Center|Hospital|Clinic))?)/i);
+
+    if (suffixMatch) {
+      newEnd = end + suffixMatch[1].length;
+    }
+
+    // Return extended span if any extension occurred
+    if (newStart !== start || newEnd !== end) {
+      return {
+        ...span,
+        start: newStart,
+        end: newEnd,
+        text: fullText.slice(newStart, newEnd)
+      };
+    }
+
+    return span;
+  });
+}
+
+/**
+ * Extend PATIENT spans to include trailing initials (D, M, Jr, Sr, II, III, IV)
+ * Fixes cases like "Carey , Cloyd D" where "D" is left as a dangling initial
+ */
+function extendPatientSpansForTrailingInitials(spans, fullText) {
+  return spans.map((span) => {
+    // Only extend PATIENT-labeled spans
+    const label = String(span.label || "").toUpperCase().replace(/^[BI]-/, "");
+    if (label !== "PATIENT") return span;
+
+    const { end } = span;
+
+    // Look for trailing initial or suffix after the span
+    const afterWindow = fullText.slice(end, Math.min(fullText.length, end + 10));
+
+    // Match: space + single capital letter (optional period) OR suffix like Jr, Sr, II, III, IV
+    const trailingMatch = afterWindow.match(/^(\s+[A-Z]\.?|\s+(?:Jr|Sr|II|III|IV)\.?)(?:\s|$|,|;)/i);
+
+    if (trailingMatch) {
+      const newEnd = end + trailingMatch[1].length;
+      return {
+        ...span,
+        end: newEnd,
+        text: fullText.slice(span.start, newEnd)
+      };
     }
 
     return span;
@@ -1480,13 +1655,16 @@ self.onmessage = async (e) => {
       // 6) Expand to word boundaries (fixes partial-word redactions)
       merged = expandToWordBoundaries(merged, text);
 
-      // 7) Extend GEO spans to include city prefixes (fixes "San [REDACTED]" → "[REDACTED]")
+      // 7) Extend PATIENT spans for trailing initials (fixes "Carey , Cloyd [REDACTED] D" → "[REDACTED]")
+      merged = extendPatientSpansForTrailingInitials(merged, text);
+
+      // 8) Extend GEO spans to include city prefixes (fixes "San [REDACTED]" → "[REDACTED]")
       merged = extendGeoSpans(merged, text);
 
-      // 8) Re-merge after expansion
+      // 9) Re-merge after expansion
       merged = mergeOverlapsBestOf(merged);
 
-      // 9) Apply veto (protected allow-list)
+      // 10) Apply veto (protected allow-list)
       merged = applyVeto(merged, text, protectedTerms, { debug });
 
       post("done", { detections: merged });

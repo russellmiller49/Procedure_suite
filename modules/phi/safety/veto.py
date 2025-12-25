@@ -1,4 +1,17 @@
-from typing import List
+"""
+PHI Redactor Veto Module - Post-processing to prevent false positives.
+
+This module implements the "drop whole entity on veto hit" pattern:
+- If ANY protected term is found inside a predicted entity span, the ENTIRE entity is dropped
+- This prevents dangling leftover tokens after IOB repair (e.g., "a" from "a chartis")
+
+Key changes (Dec 2025):
+- Drop-whole-entity logic: veto clears entire contiguous entity spans, not just matched tokens
+- Atomic numeric spans: CPT/ICD-like codes are treated as units
+- Enhanced CBCT/coding context detection for numeric allowlist
+"""
+
+from typing import List, Tuple
 
 from modules.phi.safety.protected_terms import (
     LN_CONTEXT_WORDS,
@@ -8,6 +21,14 @@ from modules.phi.safety.protected_terms import (
     normalize,
     reconstruct_wordpiece,
 )
+
+# Stopwords that should never be standalone entity spans
+STOPWORDS = {
+    "a", "an", "the", "of", "in", "and", "with", "to", "for", "or", "by", "at",
+    "is", "was", "are", "were", "be", "been", "being", "has", "had", "have",
+    "did", "does", "do", "will", "would", "could", "should", "may", "might",
+    "on", "as", "from", "but", "not", "no", "yes", "so", "if", "then",
+}
 
 CPT_CONTEXT_WORDS = {
     "cpt",
@@ -21,6 +42,11 @@ CPT_CONTEXT_WORDS = {
     "radiology",
     "guidance",
     "ct",
+    "cbct",
+    "fluoro",
+    "fluoroscopy",
+    "localization",
+    "rationale",
 }
 CPT_PUNCT_TOKENS = {",", ";", ":", "/", "(", ")", "[", "]"}
 UNIT_TOKENS = {"l", "liter", "liters", "ml", "cc"}
@@ -33,6 +59,104 @@ def _normalize_token(token: str) -> str:
     return normalize(token)
 
 
+def _extract_entity_spans(tags: List[str]) -> List[Tuple[int, int, str]]:
+    """Extract contiguous entity spans from BIO tags.
+
+    Returns list of (start_idx, end_idx_inclusive, entity_type).
+    A span is B-X followed by any number of I-X (same X).
+    """
+    spans: List[Tuple[int, int, str]] = []
+    i = 0
+    while i < len(tags):
+        tag = tags[i]
+        if not tag or tag == "O" or "-" not in tag:
+            i += 1
+            continue
+        prefix, label = tag.split("-", 1)
+        if prefix != "B":
+            # Orphan I- tag, treat as start of span
+            start = i
+            end = i
+            while end + 1 < len(tags):
+                next_tag = tags[end + 1]
+                if next_tag == f"I-{label}":
+                    end += 1
+                else:
+                    break
+            spans.append((start, end, label))
+            i = end + 1
+            continue
+        # B- tag starts a span
+        start = i
+        end = i
+        while end + 1 < len(tags):
+            next_tag = tags[end + 1]
+            if next_tag == f"I-{label}":
+                end += 1
+            else:
+                break
+        spans.append((start, end, label))
+        i = end + 1
+    return spans
+
+
+def _reconstruct_span_text(tokens: List[str], start: int, end: int) -> str:
+    """Reconstruct surface text from a span of tokens, handling wordpieces."""
+    result = []
+    for i in range(start, end + 1):
+        tok = tokens[i]
+        if tok.startswith("##"):
+            if result:
+                result[-1] += tok[2:]
+            else:
+                result.append(tok[2:])
+        else:
+            result.append(tok)
+    return " ".join(result)
+
+
+def _is_protected_in_span(tokens: List[str], start: int, end: int) -> bool:
+    """Check if any reconstructed word in the span matches a protected term."""
+    idx = start
+    while idx <= end:
+        word, word_end = reconstruct_wordpiece(tokens, idx)
+        word_end = min(word_end, end)  # Don't extend beyond span
+        norm_word = normalize(word)
+        if is_protected_device(norm_word) or is_protected_anatomy_phrase(norm_word):
+            return True
+        idx = word_end + 1
+    return False
+
+
+def _is_stopword_only_span(tokens: List[str], start: int, end: int) -> bool:
+    """Check if the span consists only of stopwords or very short tokens."""
+    text = _reconstruct_span_text(tokens, start, end)
+    norm = normalize(text)
+    # Single word that's a stopword
+    if norm in STOPWORDS:
+        return True
+    # Very short span (< 2 chars after normalization)
+    if len(norm) < 2:
+        return True
+    # Check if all words are stopwords
+    words = norm.split()
+    if all(w in STOPWORDS for w in words):
+        return True
+    return False
+
+
+def _is_punctuation_token(token: str) -> bool:
+    """Check if token is purely punctuation."""
+    return all(c in "()[]{},.;:!?/\\-_\"'" for c in token)
+
+
+def _span_starts_with_punct(tokens: List[str], start: int) -> bool:
+    """Check if span starts with punctuation token."""
+    if start < len(tokens):
+        return _is_punctuation_token(tokens[start])
+    return False
+
+
 def _is_stable_cpt_split(tokens: List[str], i: int) -> str | None:
     if i + 1 >= len(tokens):
         return None
@@ -43,18 +167,56 @@ def _is_stable_cpt_split(tokens: List[str], i: int) -> str | None:
     return None
 
 
+def _reconstruct_numeric_code(tokens: List[str], start: int) -> Tuple[str, int]:
+    """Reconstruct a numeric code from wordpieces.
+
+    Returns (code_string, end_index).
+    Handles patterns like "760" + "##00" => "76000"
+    """
+    if start >= len(tokens):
+        return "", start
+    code = tokens[start]
+    end = start
+    while end + 1 < len(tokens) and tokens[end + 1].startswith("##"):
+        piece = tokens[end + 1][2:]
+        code += piece
+        end += 1
+    return code, end
+
+
+def _is_numeric_code(code: str) -> bool:
+    """Check if string is a 4-6 digit numeric code (CPT/ICD-like)."""
+    return code.isdigit() and 4 <= len(code) <= 6
+
+
 def _has_cpt_context(tokens: List[str], i: int, j: int, text: str | None) -> bool:
+    """Check if numeric code appears in CPT/billing context.
+
+    Returns True if:
+    - CPT context words are nearby (cpt, coding, cbct, etc.)
+    - Slash-separated in parentheses pattern: "(76000/77002)"
+    - Text contains CPT context words
+    """
     start = max(0, i - 10)
     end = min(len(tokens), j + 11)
     context_tokens = tokens[start:end]
     norm_context = {_normalize_token(tok) for tok in context_tokens}
+
+    # Primary: CPT context words nearby
     if any(word in norm_context for word in CPT_CONTEXT_WORDS):
         return True
-    if any(tok in CPT_PUNCT_TOKENS for tok in context_tokens):
+
+    # Secondary: Slash-separated in parentheses pattern - needs both ( and /
+    has_parens = "(" in context_tokens or ")" in context_tokens
+    has_slash = "/" in context_tokens
+    if has_parens and has_slash:
         return True
+
+    # Tertiary: Text contains CPT context words
     if text:
         text_norm = normalize(text)
         return any(word in text_norm.split() for word in CPT_CONTEXT_WORDS)
+
     return False
 
 
@@ -99,12 +261,52 @@ def apply_protected_veto(
     pred_tags: List[str],
     text: str | None = None,
 ) -> List[str]:
+    """Apply protected term veto to predicted tags.
+
+    Key behavior: If ANY protected term is found INSIDE a predicted entity span,
+    the ENTIRE contiguous entity span is dropped (set to "O"). This prevents
+    dangling leftover tokens after IOB repair.
+
+    Example:
+        tokens: ["did", "a", "chart", "##is", "on", "gloria", "ortiz"]
+        preds:  ["O", "I-PATIENT", "I-PATIENT", "I-PATIENT", "O", "B-PATIENT", "I-PATIENT"]
+
+        The span ["a", "chart", "##is"] contains protected device "chartis".
+        After veto: ["O", "O", "O", "O", "O", "B-PATIENT", "I-PATIENT"]
+
+        Without drop-whole-entity, IOB repair would turn "a" into B-PATIENT (wrong!).
+    """
     if len(tokens) != len(pred_tags):
         raise ValueError("Tokens and predicted tags must be the same length.")
 
     corrected = pred_tags[:]
 
-    # Wordpiece reconstruction for device/anatomy terms.
+    # PHASE 1: Drop entire entity spans if they contain protected terms
+    # or are stopword-only, or start with punctuation
+    entity_spans = _extract_entity_spans(pred_tags)
+
+    for start, end, label in entity_spans:
+        should_drop = False
+
+        # Check if span contains protected device/anatomy term
+        if _is_protected_in_span(tokens, start, end):
+            should_drop = True
+
+        # Check if span is stopword-only (e.g., just "a")
+        elif _is_stopword_only_span(tokens, start, end):
+            should_drop = True
+
+        # Check if span starts with punctuation (e.g., "(")
+        elif _span_starts_with_punct(tokens, start):
+            should_drop = True
+
+        if should_drop:
+            for j in range(start, end + 1):
+                corrected[j] = "O"
+
+    # PHASE 2: Per-token veto rules (for tokens not already cleared)
+
+    # Wordpiece reconstruction for device/anatomy terms (catch any missed)
     idx = 0
     while idx < len(tokens):
         word, end_idx = reconstruct_wordpiece(tokens, idx)
@@ -114,7 +316,7 @@ def apply_protected_veto(
                 corrected[j] = "O"
         idx = end_idx + 1
 
-    # Anatomy phrase scan: left/right + upper/lower/middle + lobe.
+    # Anatomy phrase scan: left/right + upper/lower/middle + lobe
     words: List[str] = []
     word_spans: List[List[int]] = []
     idx = 0
@@ -128,7 +330,7 @@ def apply_protected_veto(
             for j in word_spans[i] + word_spans[i + 1] + word_spans[i + 2]:
                 corrected[j] = "O"
 
-    # CPT codes via stable split with context cues.
+    # CPT codes via stable split with context cues
     for i in range(len(tokens) - 1):
         cpt = _is_stable_cpt_split(tokens, i)
         if not cpt:
@@ -137,7 +339,18 @@ def apply_protected_veto(
             corrected[i] = "O"
             corrected[i + 1] = "O"
 
-    # LN stations via digit+side (+ optional i/s) and station 7 context.
+    # Numeric codes with CPT/CBCT context (atomic spans)
+    i = 0
+    while i < len(tokens):
+        code, end_i = _reconstruct_numeric_code(tokens, i)
+        if _is_numeric_code(code) and _has_cpt_context(tokens, i, end_i, text):
+            for j in range(i, end_i + 1):
+                corrected[j] = "O"
+            i = end_i + 1
+        else:
+            i += 1
+
+    # LN stations via digit+side (+ optional i/s) and station 7 context
     for i in range(len(tokens) - 1):
         if tokens[i].isdigit() and len(tokens[i]) in (1, 2) and tokens[i + 1].startswith("##"):
             side = tokens[i + 1][2:].lower()

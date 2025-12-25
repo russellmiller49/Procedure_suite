@@ -2,8 +2,13 @@
 """
 Safety regression audit for PHI NER false positives (must-not-redact terms).
 
-Checks CPT splits, LN station patterns, device terms, and "Left Upper Lobe"
-for any non-O predictions and reports raw vs vetoed violations.
+Checks CPT splits, LN station patterns, device terms, "Left Upper Lobe",
+and new (Dec 2025) audit checks:
+- dangling_entity: stopwords, very short spans, purely punctuation
+- leading_punct_entity: entity spans starting with punctuation
+- numeric_code_fp: 4-6 digit codes in CPT/CBCT context tagged as PHI
+
+Reports raw vs vetoed violations. Post-veto violations should ALWAYS be 0.
 """
 
 import argparse
@@ -32,6 +37,11 @@ CPT_CONTEXT_WORDS = {
     "radiology",
     "guidance",
     "ct",
+    "cbct",
+    "fluoro",
+    "fluoroscopy",
+    "localization",
+    "rationale",
 }
 CPT_PUNCT_TOKENS = {",", ";", ":", "/", "(", ")", "[", "]"}
 LN_STATION_RE = re.compile(r"^\d{1,2}[lr](?:[is])?$")
@@ -43,6 +53,16 @@ DEVICE_TERM_SET = (
     | {normalize(term) for term in PROTECTED_DEVICE_NAMES}
     | {normalize(term) for term in EXTRA_DEVICE_TERMS}
 )
+
+# Stopwords for dangling entity detection
+STOPWORDS = {
+    "a", "an", "the", "of", "in", "and", "with", "to", "for", "or", "by", "at",
+    "is", "was", "are", "were", "be", "been", "being", "has", "had", "have",
+    "did", "does", "do", "will", "would", "could", "should", "may", "might",
+    "on", "as", "from", "but", "not", "no", "yes", "so", "if", "then",
+}
+
+PUNCTUATION_CHARS = set("()[]{},.;:!?/\\-_\"'")
 
 
 @dataclass
@@ -193,7 +213,10 @@ def has_cpt_context(tokens: List[str], i: int, j: int, text: str | None) -> bool
     norm_context = {normalize_token(tok) for tok in context_tokens}
     if any(word in norm_context for word in CPT_CONTEXT_WORDS):
         return True
-    if any(tok in CPT_PUNCT_TOKENS for tok in context_tokens):
+    # Slash-separated in parentheses pattern
+    has_parens = "(" in context_tokens or ")" in context_tokens
+    has_slash = "/" in context_tokens
+    if has_parens and has_slash:
         return True
     if text:
         text_norm = normalize(text)
@@ -257,6 +280,153 @@ def find_device_terms(words: List[str], word_to_pieces: List[List[int]]) -> List
     return violations
 
 
+# =============================================================================
+# NEW AUDIT CHECKS (Dec 2025)
+# =============================================================================
+
+
+def extract_entity_spans(labels: List[str]) -> List[Tuple[int, int, str]]:
+    """Extract entity spans from BIO labels.
+
+    Returns list of (start_idx, end_idx_inclusive, entity_type).
+    """
+    spans: List[Tuple[int, int, str]] = []
+    i = 0
+    while i < len(labels):
+        label = labels[i]
+        if not label or label == "O" or "-" not in label:
+            i += 1
+            continue
+        prefix, entity_type = label.split("-", 1)
+        start = i
+        end = i
+        # Extend to include I- continuations
+        while end + 1 < len(labels):
+            next_label = labels[end + 1]
+            if next_label == f"I-{entity_type}":
+                end += 1
+            else:
+                break
+        spans.append((start, end, entity_type))
+        i = end + 1
+    return spans
+
+
+def reconstruct_span_text(tokens: List[str], start: int, end: int) -> str:
+    """Reconstruct surface text from a token span, handling wordpieces."""
+    result = []
+    for i in range(start, end + 1):
+        tok = tokens[i]
+        if tok.startswith("##"):
+            if result:
+                result[-1] += tok[2:]
+            else:
+                result.append(tok[2:])
+        else:
+            result.append(tok)
+    return " ".join(result)
+
+
+def is_punctuation_token(token: str) -> bool:
+    """Check if token is purely punctuation."""
+    return all(c in PUNCTUATION_CHARS for c in token)
+
+
+def is_numeric_code(text: str) -> bool:
+    """Check if text is a 4-6 digit numeric code."""
+    clean = text.replace(" ", "")
+    return clean.isdigit() and 4 <= len(clean) <= 6
+
+
+def find_dangling_entities(tokens: List[str], labels: List[str]) -> List[Violation]:
+    """Find dangling entity violations.
+
+    Dangling entity = entity span that is:
+    - A stopword/article (a, an, the, of, for, etc.)
+    - Length < 3 chars after stripping punctuation
+    - Purely punctuation
+    """
+    violations: List[Violation] = []
+    spans = extract_entity_spans(labels)
+
+    for start, end, entity_type in spans:
+        text = reconstruct_span_text(tokens, start, end)
+        norm = normalize(text)
+
+        # Check if it's a stopword
+        if norm in STOPWORDS:
+            violations.append(Violation(
+                kind="dangling_entity",
+                indices=list(range(start, end + 1)),
+                phrase=f"{text} (stopword)"
+            ))
+            continue
+
+        # Check if very short (< 2 chars after normalization)
+        if len(norm) < 2:
+            violations.append(Violation(
+                kind="dangling_entity",
+                indices=list(range(start, end + 1)),
+                phrase=f"{text} (too_short)"
+            ))
+            continue
+
+        # Check if all words are stopwords
+        words = norm.split()
+        if all(w in STOPWORDS for w in words):
+            violations.append(Violation(
+                kind="dangling_entity",
+                indices=list(range(start, end + 1)),
+                phrase=f"{text} (all_stopwords)"
+            ))
+            continue
+
+        # Check if purely punctuation
+        if all(is_punctuation_token(tokens[i]) for i in range(start, end + 1)):
+            violations.append(Violation(
+                kind="dangling_entity",
+                indices=list(range(start, end + 1)),
+                phrase=f"{text} (punctuation_only)"
+            ))
+
+    return violations
+
+
+def find_leading_punct_entities(tokens: List[str], labels: List[str]) -> List[Violation]:
+    """Find entities that start with punctuation token."""
+    violations: List[Violation] = []
+    spans = extract_entity_spans(labels)
+
+    for start, end, entity_type in spans:
+        if start < len(tokens) and is_punctuation_token(tokens[start]):
+            text = reconstruct_span_text(tokens, start, end)
+            violations.append(Violation(
+                kind="leading_punct_entity",
+                indices=list(range(start, end + 1)),
+                phrase=text
+            ))
+
+    return violations
+
+
+def find_numeric_code_fps(tokens: List[str], labels: List[str], text: str | None) -> List[Violation]:
+    """Find numeric codes in CPT/CBCT context tagged as PHI (false positives)."""
+    violations: List[Violation] = []
+    spans = extract_entity_spans(labels)
+
+    for start, end, entity_type in spans:
+        span_text = reconstruct_span_text(tokens, start, end)
+        # Check if it's a numeric code in CPT context
+        if is_numeric_code(span_text) and has_cpt_context(tokens, start, end, text):
+            violations.append(Violation(
+                kind="numeric_code_fp",
+                indices=list(range(start, end + 1)),
+                phrase=span_text
+            ))
+
+    return violations
+
+
 def find_violations(tokens: List[str], labels: List[str], text: str | None) -> List[Violation]:
     violations: List[Violation] = []
 
@@ -292,6 +462,11 @@ def find_violations(tokens: List[str], labels: List[str], text: str | None) -> L
     for violation in find_device_terms(words, word_to_pieces):
         if any(is_non_o(labels[idx]) for idx in violation.indices):
             violations.append(violation)
+
+    # NEW: Add dangling entity, leading punct, and numeric code FP checks
+    violations.extend(find_dangling_entities(tokens, labels))
+    violations.extend(find_leading_punct_entities(tokens, labels))
+    violations.extend(find_numeric_code_fps(tokens, labels, text))
 
     return violations
 

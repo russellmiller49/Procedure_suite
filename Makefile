@@ -91,6 +91,7 @@ patch-phi-client-hardneg:
 		--data-out data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl
 
 # Default: MPS with memory-saving options (gradient accumulation, smaller batches)
+# Removes MPS memory limits to use available system RAM
 # If OOM on Apple Silicon, use: make finetune-phi-client-hardneg-cpu
 finetune-phi-client-hardneg:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
@@ -98,9 +99,10 @@ finetune-phi-client-hardneg:
 		--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl \
 		--epochs 1 \
 		--lr 1e-5 \
-		--train-batch 8 \
+		--train-batch 4 \
 		--eval-batch 16 \
 		--gradient-accumulation-steps 2 \
+		--mps-high-watermark-ratio 0.0 \
 		--save-steps 500 \
 		--eval-steps 500 \
 		--logging-steps 50
