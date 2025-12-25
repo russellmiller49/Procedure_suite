@@ -75,11 +75,30 @@ const ROBOTIC_PLATFORMS = new Set([
 ]);
 const ROBOTIC_CONTEXT_RE = /\b(?:robotic|bronchoscopy|system|platform|robot|catheter|controller|console)\b/i;
 
-// Stopwords to prevent “patient [REDACTED] stable” when the model hallucinates a name span
-// - ALWAYS: function words almost never names
+// Stopwords to prevent "patient [REDACTED] stable" when the model hallucinates a name span
+// - ALWAYS: function words and clinical verbs that are commonly mis-tagged as names
 // - CONTEXTUAL: common header words; applied only for name-like labels (PATIENT/GEO)
-const STOPWORDS_ALWAYS = new Set(["was", "is", "of", "in", "and", "with"]);
-const STOPWORDS_CONTEXTUAL = new Set(["patient", "pt", "procedure", "diagnosis", "history"]);
+const STOPWORDS_ALWAYS = new Set([
+  // Function words (almost never names)
+  "was", "is", "of", "in", "and", "with", "the", "a", "an", "to", "for", "or", "by", "at",
+  "did", "does", "had", "has", "have", "been", "being", "are", "were",
+  "will", "would", "could", "should", "may", "might", "must", "can", "shall",
+  "if", "then", "so", "but", "not", "no", "yes", "as", "from", "on", "be",
+  // Clinical verbs commonly mis-tagged (past participles that look like names)
+  "intubated", "extubated", "identified", "placed", "transferred", "discharged", "tolerated",
+  "performed", "removed", "obtained", "collected", "noted", "observed", "seen",
+  "inserted", "advanced", "positioned", "withdrawn", "administered", "given",
+  "sampled", "biopsied", "examined", "evaluated", "assessed", "confirmed",
+  "visualized", "located", "accessed", "secured", "completed", "terminated",
+  "transported", "admitted", "awakened", "recovered", "stable", "brought",
+  "prepared", "draped", "sterilized", "cleaned", "irrigated", "suctioned",
+  "prepped", "sedated", "anesthetized", "monitored", "extubated", "weaned",
+  "well", "done", "sent", "taken", "made", "used", "needed",
+  // Clinical context words that get mis-tagged
+  "acceptable", "parameters", "precautions", "under", "general", "anesthesia",
+  "sterilely", "aseptically", "routine", "standard", "usual", "uneventful"
+]);
+const STOPWORDS_CONTEXTUAL = new Set(["patient", "pt", "procedure", "diagnosis", "history", "indication", "findings"]);
 
 // --- IP-specific anatomy / stations / segments (normalized set) ---
 const IP_SPECIFIC_ANATOMY = makeNormalizedSet([
@@ -115,6 +134,8 @@ const IP_SPECIFIC_ANATOMY = makeNormalizedSet([
 ]);
 
 // Clinical allow list (normalized)
+// IMPORTANT: This list is checked for ALL labels (not just PATIENT/GEO like STOPWORDS_ALWAYS).
+// Clinical verbs MUST be here to prevent them slipping through when predicted as DATE/ID/CONTACT.
 const CLINICAL_ALLOW_LIST = makeNormalizedSet([
   // ROSE / path
   "rose", "rapid on-site evaluation", "lymphocytes", "atypical", "cells",
@@ -126,13 +147,122 @@ const CLINICAL_ALLOW_LIST = makeNormalizedSet([
   "radial", "linear", "endobronchial", "ultrasound",
   "forceps", "needle", "catheter", "scope", "probe", "basket", "snare",
   "cryoprobe", "apc", "microdebrider", "stent", "balloon", "pleurx", "aspira",
+  "medical thoracoscopy", "pleuroscopy", "rigid bronchoscopy", "flexible bronchoscopy",
+  "electromagnetic navigation", "robotic bronchoscopy", "robotic",
+  // Equipment - commonly mis-tagged
+  "bronchoscope", "videobronchoscope", "fiberoptic", "fiber optic", "optic",
+  "endoscope", "laryngoscope", "thoracoscope", "camera", "monitor", "processor",
 
   // meds/abbr
   "lidocaine", "fentanyl", "midazolam", "versed", "propofol", "epinephrine",
   "ga", "ett", "asa", "npo", "nkda", "ebl", "ptx", "cxr", "cbct", "pacu", "icu",
 
+  // IP-specific abbreviations (commonly mis-tagged)
+  "ip", "interventional pulmonology", "pulmonology",
+  "d/c", "dc", "dispo", "disposition",
+  "or", "operating room",
+  "micu", "sicu", "cvicu",
+  "f/u", "fu", "follow-up", "followup",
+
+  // Anatomical modifiers
+  "bilateral", "unilateral", "proximal", "distal", "central", "peripheral",
+  "anterior", "posterior", "superior", "inferior", "lateral", "medial",
+  "apical", "basal", "segmental", "subsegmental",
+
+  // Technique/procedure context
+  "sterile", "aseptic", "technique", "fashion", "manner",
+  "inspection", "examination", "visualization", "registration",
+
   // frequent mis-tags / tokens
-  "french", "fr", "suv"
+  "french", "fr", "suv", "uptake", "value", "uptake value",
+  "standardized uptake value", "maximum standardized uptake value",
+  "wks", "wk", "hrs", "mins", "mos", "yrs",
+  // Segment terminology
+  "segment", "segments", "segmental", "subsegmental",
+  // Service/team terminology
+  "ip consult", "consult team", "inpatient", "outpatient",
+  "consult", "consultation", "follow", "team",
+
+  // === CRITICAL FIX: Clinical Verbs (Fix for Veto Gap) ===
+  // These are often misclassified as DATE/ID/CONTACT by the ML model.
+  // STOPWORDS_ALWAYS only filters PATIENT/GEO labels, so these MUST be here.
+  "placed", "identified", "performed", "obtained", "removed", "inserted",
+  "advanced", "positioned", "withdrawn", "administered", "collected",
+  "sampled", "biopsied", "examined", "visualized", "located", "accessed",
+  "secured", "completed", "transported", "admitted", "discharged",
+  "intubated", "extubated", "tolerated", "prepared", "draped",
+  "noted", "observed", "seen", "confirmed", "stable", "well",
+  "transferred", "sterilely", "aseptically", "routine", "uneventful",
+  "cleaned", "irrigated", "suctioned", "awakened", "recovered",
+  "given", "taken", "made", "used", "needed", "done", "sent",
+  "terminated", "evaluated", "assessed", "sterilized",
+  // Safety net for passive voice auxiliaries (in case they get tagged alone)
+  "was", "were", "is", "are", "been", "being",
+  // Common clinical context words that get mis-tagged
+  "acceptable", "parameters", "precautions", "under", "general", "anesthesia",
+
+  // === Additional terms from testing ===
+  // Pathology/anatomy descriptors
+  "luminal", "mucosal", "submucosal", "endobronchial", "peribronchial",
+  "patent", "narrowed", "stenotic", "occluded", "obstructed",
+  "middle", "severe", "mild", "moderate", "significant", "minimal",
+
+  // Common phrase patterns that get tagged as entities
+  "did well", "will be", "has remained", "has been", "had been",
+  "with severe", "with mild", "with moderate",
+  "remained stable", "remained intubated", "remained sedated",
+  "optic was", "was introduced", "was brought", "was prepped",
+  "acceptable parameters", "and follow-up", "and follow up",
+  "tolerated the", "tolerated well", "patient tolerated",
+  "was sterilely", "was aseptically", "was draped",
+
+  // Additional verbs/auxiliaries
+  "will", "would", "could", "should", "may", "might", "must",
+  "remained", "continued", "underwent", "received", "required",
+
+  // Outcome descriptors
+  "successful", "unsuccessful", "uncomplicated", "complicated",
+  "adequate", "inadequate", "satisfactory", "unsatisfactory",
+  "good", "poor", "excellent", "fair",
+
+  // === Fix for "scheduled for pathology review" false positives ===
+  // Common words that appear after "scheduled for" or "procedure for"
+  "pathology", "review", "results", "analysis", "evaluation",
+  "core", "lesion", "biopsy", "specimen", "sample", "tissue",
+  "follow-up", "followup", "appointment", "consultation",
+
+  // === Fix for sedation terms being tagged as names ===
+  "moderate sedation", "deep sedation", "conscious sedation", "mac",
+  "monitored anesthesia care", "general anesthesia", "local anesthesia",
+  "sedation", "anesthesia", "moderate", "deep", "conscious",
+
+  // === Common procedure-related phrases ===
+  "performed on", "performed by", "performed at", "performed with",
+  "completed on", "completed by", "done on", "done by",
+  "scheduled on", "scheduled for",
+
+  // === Fix for clinical terms at sentence start being tagged as names ===
+  // These are common medical terms that appear capitalized at sentence start
+  "lymphadenopathy", "hemostasis", "biopsies", "biopsy", "navigation",
+  "sarcoidosis", "malignancy", "metastasis", "metastases", "neoplasm",
+  "carcinoma", "adenoma", "granuloma", "fibrosis", "inflammation",
+  "hemorrhage", "obstruction", "stenosis", "stricture", "lesion",
+  "nodule", "mass", "tumor", "tumour", "opacity", "consolidation",
+  "effusion", "pneumothorax", "atelectasis", "bronchiectasis",
+
+  // === Common sentence-start words that aren't names ===
+  "everything", "nothing", "something", "anything", "everyone", "someone",
+  "however", "therefore", "furthermore", "moreover", "meanwhile",
+  "overall", "initially", "subsequently", "finally", "ultimately",
+
+  // === Anatomical directional terms ===
+  "right side", "left side", "right lung", "left lung",
+  "right upper", "right lower", "right middle", "left upper", "left lower",
+  "bilateral", "unilateral", "ipsilateral", "contralateral",
+
+  // === Clinical action phrases (Confirm Sarcoidosis, Rule out X) ===
+  "confirm", "rule out", "exclude", "evaluate", "assess", "monitor",
+  "continue", "discontinue", "initiate", "recommend", "consider"
 ]);
 
 // =============================================================================
@@ -147,6 +277,12 @@ const MEASUREMENT_CONTEXT_PATTERN =
 
 const SINGLE_CHAR_PUNCT_RE = /^[^a-zA-Z0-9]$/;
 const ISOLATED_DIGIT_RE = /^\d{1,2}$/;
+
+// Bronchoscope/device model numbers: EB-1990i, EB-580S, BF-H190, Pentax EB19-J10, etc.
+const DEVICE_MODEL_RE = /^(?:EB|BF|CV|EU|GIF|CF|TJF|CLV|OTV|VME|ENF|EPK|EPX|MAJ|OSF|PCF|EG|EUS)[-\s]?[A-Z0-9]{2,10}$/i;
+
+// Duration patterns with unit attached: "1-2wks", "3-5days", "2hrs", "1-2 weeks"
+const DURATION_COMPACT_RE = /^\d+(?:\s*-\s*\d+)?\s*(?:wks?|days?|hrs?|mins?|mos?|yrs?|weeks?|hours?|minutes?|months?|years?)$/i;
 
 // Credentials anywhere at end of span (catches “Andrew Nakamura, MD” even if slice includes MD)
 const CREDENTIAL_IN_SLICE_RE = /\b(?:MD|DO|PHD|RN|RT|CRNA|PA|NP|FCCP|DAABIP)\b\.?\s*$/i;
@@ -380,6 +516,84 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     }
 
     // -------------------------------------------------------------------------
+    // 0b) Passive voice detection: "was placed", "was identified", etc.
+    // When preceded by "was/were", the span is likely a past participle, not a name.
+    // CRITICAL FIX: Apply to ALL labels (not just PATIENT/GEO) to catch clinical verbs
+    // predicted as DATE/ID/CONTACT.
+    // -------------------------------------------------------------------------
+    if (!veto) {
+      const beforeWindow = fullText.slice(Math.max(0, start - 12), start).toLowerCase();
+      if (/\b(?:was|were|is|are|been|being)\s*$/.test(beforeWindow)) {
+        // Check if the span looks like a past participle (ends in -ed/-en) or is a known clinical verb
+        if (/^[a-z]+(?:ed|en)$/i.test(trimmed) || STOPWORDS_ALWAYS.has(norm)) {
+          veto = true; reason = "passive_voice_verb";
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 0c) "Patient + verb" pattern: "Patient intubated", "Patient tolerated the"
+    // When immediately preceded by "patient", the span is likely a clinical verb, not a name.
+    // -------------------------------------------------------------------------
+    if (!veto) {
+      const beforeWindow = fullText.slice(Math.max(0, start - 12), start).toLowerCase();
+      if (/\bpatient\s*$/.test(beforeWindow)) {
+        // Check first word of span - if it's a verb or function word, veto the whole span
+        const firstWord = trimmed.split(/\s+/)[0].toLowerCase();
+        if (STOPWORDS_ALWAYS.has(firstWord) || /^[a-z]+(?:ed|en|ing|s)$/i.test(firstWord)) {
+          veto = true; reason = "patient_followed_by_verb";
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 0d) Decimal number protection: ".6" in "9.6", ".00" in "12.00"
+    // Decimals following digits are clinical values, not PHI.
+    // -------------------------------------------------------------------------
+    if (!veto && /^\.?\d+(?:\.\d+)?(?:-\d+(?:\.\d+)?)?$/.test(trimmed)) {
+      const beforeChar = start > 0 ? fullText[start - 1] : "";
+      // If preceded by a digit or decimal, it's part of a number
+      if (/[\d.]/.test(beforeChar)) {
+        veto = true; reason = "decimal_continuation";
+      }
+      // If it's just digits with decimal, check for measurement context
+      if (!veto) {
+        const ctx = getContext(fullText, start, end, 30);
+        if (/\b(?:suv|size|tube|gauge|french|fr|mm|cm|ml|mg|mcg|lpm|bpm)\b/i.test(ctx)) {
+          veto = true; reason = "decimal_measurement_context";
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 0e) Safe field protection: "Procedure Name:", "Procedure:", "Service:"
+    // Values after these headers are clinical terms, not PHI.
+    // -------------------------------------------------------------------------
+    if (!veto) {
+      const beforeWindow = fullText.slice(Math.max(0, start - 30), start).toLowerCase();
+      if (/\b(?:procedure(?:\s+name)?|service|technique|indication|diagnosis|impression|findings)\s*:\s*$/i.test(beforeWindow)) {
+        // The span following a safe field header is likely a procedure name, not PHI
+        if (/^[a-z]/i.test(trimmed) && trimmed.length < 50) {
+          veto = true; reason = "safe_field_value";
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 0f) "Patient + verb" spans: "Patient is", "Patient was", "Patient has"
+    // When the span STARTS with "patient" followed by a common verb, veto it.
+    // This catches ML model errors like tagging "Patient is" as a PATIENT entity.
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      const lowerTrimmed = trimmed.toLowerCase();
+      // Check if span starts with "patient" or "the patient" followed by verb
+      const patientVerbMatch = lowerTrimmed.match(/^(?:the\s+)?patient\s+(is|was|has|had|will|would|could|should|may|might|can|does|did|presents|presented|underwent|denies|denied|reports|reported|requires|required|needs|needed|appears|appeared|remains|remained|tolerated|developed)\b/);
+      if (patientVerbMatch) {
+        veto = true; reason = "patient_starts_with_verb";
+      }
+    }
+
+    // -------------------------------------------------------------------------
     // 1) Explicit anatomy list
     // -------------------------------------------------------------------------
     if (!veto && activeIndex.anatomySet.has(norm)) {
@@ -411,9 +625,19 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
         veto = true; reason = "segment_pattern";
       }
 
-      // “x3”
+      // "x3"
       if (!veto && FREQUENCY_COMPACT_RE.test(compact)) {
         veto = true; reason = "frequency_pattern";
+      }
+
+      // Device model numbers: "EB-1990i", "EB-580S", "BF-H190"
+      if (!veto && DEVICE_MODEL_RE.test(trimmed)) {
+        veto = true; reason = "device_model_number";
+      }
+
+      // Duration patterns: "1-2wks", "3-5days", "2hrs"
+      if (!veto && DURATION_COMPACT_RE.test(trimmed)) {
+        veto = true; reason = "duration_compact_pattern";
       }
     }
 

@@ -25,13 +25,151 @@ const STEP = WINDOW - OVERLAP;
 // HYBRID REGEX DETECTION (guarantees headers/IDs)
 // =============================================================================
 
-// Matches: "Patient: Smith, John" or "Pt Name: John Smith"
+// Matches: "Patient: Smith, John" or "Pt Name: John Smith" or "Patient Name: Carey , Cloyd D" (footer format)
+// Also matches "Pt: C. Rodriguez" (Initial. Lastname format) and "Pt: White, E." (Last, Initial format)
+// IMPORTANT: Requires colon/dash delimiter to avoid matching "patient went into" as a name
 const PATIENT_HEADER_RE =
-  /(?:Patient(?:\s+Name)?|Pt|Name|Subject)\s*[:\-]?\s*([A-Z][a-z]+,\s*[A-Z][a-z]+(?:\s+[A-Z]\.?)?|[A-Z][a-z]+\s+[A-Z]'?[A-Za-z]+|[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/gim;
+  /(?:Patient(?:\s+Name)?|Pt\.?(?:\s+Name)?|Pat\.?|Name|Subject)\s*[:\-]\s*([A-Z][a-z]+\s*,\s*[A-Z]\.?|[A-Z]\.?\s+[A-Z][a-z]+|[A-Z][a-z]+\s*,\s*[A-Z][a-z]+(?:\s+[A-Z]\.?)?|[A-Z][a-z]+\s+[A-Z]'?[A-Za-z]+|[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/gim;
 
 // Matches: "MRN: 12345" or "ID: 55-22-11"
+// IMPORTANT: Must contain at least one digit to avoid matching medical acronyms like "rEBUS"
 const MRN_RE =
-  /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID|EDIPI|DOD\s*ID)\s*[:\#]?\s*([A-Z0-9\-]{4,15})\b/gi;
+  /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID|EDIPI|DOD\s*ID)\s*[:\#]?\s*([A-Z0-9\-]*\d[A-Z0-9\-]*)\b/gi;
+
+// Matches: MRN with spaces like "A92 555" or "AB 123 456" (2-3 groups of alphanumerics)
+const MRN_SPACED_RE =
+  /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID)\s*[:\#]?\s*([A-Z0-9]{2,5}\s+[A-Z0-9]{2,5}(?:\s+[A-Z0-9]{2,5})?)\b/gi;
+
+// Matches inline narrative patient names followed by age: "Emma Jones, a 64-year-old male..."
+// Also supports "Last, First" format: "Belardes, Lisa is a 64-year-old..."
+// Captures: "Emma Jones" or "Belardes, Lisa" when followed by age descriptor
+// IMPORTANT: Excludes "The patient", "A patient", etc. via negative lookahead
+const INLINE_PATIENT_NAME_RE =
+  /\b(?!(?:The|A|An)\s+(?:patient|subject|candidate|individual|person)\b)([A-Z][a-z]+(?:(?:\s+|,\s*)[A-Z]\.?)?(?:\s+|,\s*)[A-Z][a-z]+),?\s+(?:(?:is|was)\s+)?(?:a\s+)?(?:\d{1,3}\s*-?\s*(?:year|yr|y\/?o|yo)[\s-]*old|aged?\s+\d{1,3})\b/gi;
+
+// Matches names after procedural verbs: "performed on Robert Chen", "procedure for Jane Doe"
+// Captures patient name when following "performed on/for", "procedure on/for", etc.
+// IMPORTANT: Case-sensitive (no 'i' flag) to avoid matching lowercase words like "the core"
+const PROCEDURAL_NAME_RE =
+  /\b(?:performed|completed|done|scheduled|procedure)\s+(?:on|for)\s+([A-Z][a-z]+(?:'[A-Z][a-z]+)?\s+[A-Z][a-z]+(?:'[A-Z][a-z]+)?)\b/g;
+
+// Matches: "pt Name mrn 1234" pattern common in IP notes
+// Captures the name between "pt" and "mrn"
+const PT_NAME_MRN_RE =
+  /\bpt\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s+mrn\s+\d+/gi;
+
+// Matches: "PT Name" standalone (without MRN) in unstructured text
+// E.g., "PT James Wilson ID MRN..."
+const PT_STANDALONE_RE =
+  /\bPT\s+([A-Z][a-z]+(?:'[A-Z][a-z]+)?(?:\s+[A-Z][a-z]+(?:'[A-Z][a-z]+)?)?)\b/g;
+
+// Matches: "Mr./Mrs./Ms./Miss Smith" or "Mr. John Smith" or "Mr. O'Brien"
+// IMPORTANT: Case-sensitive for name capture to avoid consuming lowercase verbs like "underwent"
+// Only matches names starting with capital letters, supports apostrophe surnames (O'Brien, D'Angelo)
+const TITLE_NAME_RE =
+  /\b(?:Mr|Mrs|Ms|Miss|Mister|Missus)\.?\s+([A-Z][a-z]*(?:'[A-Z][a-z]+)?(?:\s+[A-Z][a-z]+(?:'[A-Z][a-z]+)?)?)\b/g;
+
+// Matches narrative names: "for [Name]" in context like "bronch for Logan Roy massive bleeding"
+// Requires name to be followed by common clinical words to reduce false positives
+const NARRATIVE_FOR_NAME_RE =
+  /\bfor\s+([A-Z][a-z]+(?:'[A-Z][a-z]+)?(?:\s+[A-Z][a-z]+(?:'[A-Z][a-z]+)?)?)\s+(?:who|with|has|had|massive|severe|acute|chronic|presenting|underwent|scheduled|referred)\b/g;
+
+// Matches de-identification placeholders/artifacts: "<PERSON>", "[Name]", "[REDACTED]", "***NAME***"
+// These appear in pre-processed or dirty data and should be redacted to prevent leakage
+const PLACEHOLDER_NAME_RE =
+  /(?:Patient(?:\s+Name)?|Pt(?:\s+Name)?|Name|Subject)\s*[:\-]?\s*(<[A-Z]+>|\[[A-Za-z_]+\]|\*{2,}[A-Za-z_]+\*{2,})/gi;
+
+// Matches "Patient 69F" shorthand pattern (no colon, alphanumeric identifier)
+// Fallback for non-standard patient identifiers like age/gender clusters
+const PATIENT_SHORTHAND_RE =
+  /\bPatient\s+(\d{1,3}\s*[MF](?:emale)?)\b/gi;
+
+// Matches names at sentence start followed by clinical verbs: "Robert has a LLL nodule..."
+// Must be at sentence start (after period/newline) and followed by clinical context
+// Requires both first and last name to reduce false positives
+const SENTENCE_START_NAME_RE =
+  /(?:^|[.!?]\s+|\n\s*)([A-Z][a-z]+\s+[A-Z][a-z]+)\s+(?:has|had|is|was|presents|presented|underwent|undergoing|needs|needed|required|denies|denied|reports|reported|complained|complains|notes|noted|states|stated|describes|described|exhibits|exhibited|demonstrates|demonstrated|developed|shows|showed|appears|appeared)\b/gm;
+
+// Matches names at very start of line/document followed by period: "Kimberly Garcia. Ion Bronchoscopy."
+// For notes that begin directly with patient name without a header label
+const LINE_START_NAME_RE =
+  /^([A-Z][a-z]+\s+[A-Z][a-z]+)\s*[.,]/gm;
+
+// Matches informal/lowercase names followed by "here for": "jason phillips here for right lung lavage"
+// Case-insensitive to catch dictation notes where names aren't capitalized
+// The "here for" phrase is a strong indicator of patient context in informal notes
+const INFORMAL_NAME_HERE_RE =
+  /^([a-z]+\s+[a-z]+)\s+here\s+for\b/gim;
+
+// Matches underscore-wrapped template placeholders: "___Lisa Anderson___", "___BB-8472-K___", "___03/19/1961___"
+// These appear in de-identification templates where PHI is wrapped in triple underscores
+const UNDERSCORE_NAME_RE =
+  /___([A-Za-z][A-Za-z\s]+[A-Za-z])___/g;
+const UNDERSCORE_ID_RE =
+  /___([A-Z0-9][A-Z0-9\-]+)___/gi;
+const UNDERSCORE_DATE_RE =
+  /___(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})___/g;
+
+// Matches lowercase honorific + name patterns: "mrs lopez", "mr harris", "ms johnson"
+// Case-insensitive to catch dictation/informal notes where names aren't capitalized
+const TITLE_NAME_LOWERCASE_RE =
+  /\b((?:mr|mrs|ms|miss|mister|missus)\.?\s+[a-z]+(?:\s+[a-z]+)?)\b/gi;
+
+// Matches standalone first names followed by clinical verbs: "liam came in choking", "Frank underwent a procedure"
+// Requires first name to be followed by a verb to reduce false positives
+const FIRST_NAME_CLINICAL_RE =
+  /\b([A-Z][a-z]+)\s+(?:came|went|underwent|presents|presented|needs|needed|required|complains|complained|reports|reported|developed|has|had|is|was)\b/g;
+
+// Matches names after "Procedure note" header: "Procedure note Justin Fowler 71M."
+// Common format in procedure documentation headers
+const PROCEDURE_NOTE_NAME_RE =
+  /\bProcedure\s+note\s+([A-Z][a-z]+\s+[A-Z][a-z]+)\b/gi;
+
+// Matches alphanumeric MRN patterns without prefix: "LM-9283", "AB-1234-K"
+// For identifiers that look like MRNs but lack the "MRN:" prefix
+const STANDALONE_ALPHANUMERIC_ID_RE =
+  /\b([A-Z]{2,3}-\d{3,6}(?:-[A-Z0-9])?)\b/g;
+
+// Matches "pt [Name]" prefix patterns in informal notes: "pt Juan C R long term trach"
+// Supports mixed case and middle initials
+const PT_LOWERCASE_NAME_RE =
+  /\bpt\s+([A-Za-z][a-z]*(?:\s+[A-Z])?(?:\s+[A-Z])?(?:\s+[A-Za-z][a-z]+)?)\b/gi;
+
+// Matches lowercase full names at start of line followed by date: "oscar godsey 5/15/19"
+// Common in dictation notes where names aren't capitalized
+const LOWERCASE_NAME_DATE_RE =
+  /^([a-z]+\s+[a-z]+)\s+\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}/gim;
+
+// Matches lowercase names followed by age/gender: "barbara kim 69 female"
+// Common format in informal/dictated notes
+const LOWERCASE_NAME_AGE_GENDER_RE =
+  /^([a-z]+\s+[a-z]+)\s+\d{1,3}\s*(?:year|yr|y\/?o|yo|male|female|m|f)\b/gim;
+
+// Matches lowercase names followed by "here to" (variant of "here for"): "gilbert barkley here to get his stents out"
+const INFORMAL_NAME_HERE_TO_RE =
+  /^([a-z]+\s+[a-z]+)\s+here\s+to\b/gim;
+
+// Matches lowercase names followed by "note": "michael foster note hard to read"
+// Common in resident notes where patient name precedes "note"
+const LOWERCASE_NAME_NOTE_RE =
+  /^([a-z]+\s+[a-z]+)\s+note\b/gim;
+
+// Date patterns - various formats commonly found in medical notes
+// Matches: "18Apr2022", "18-Apr-2022", "18 Apr 2022" (DDMMMYYYY variants)
+const DATE_DDMMMYYYY_RE =
+  /\b(\d{1,2}[-\s]?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[-\s]?\d{2,4})\b/gi;
+
+// Matches: "6/3/2016", "06/03/2016", "6-3-2016" (M/D/YYYY or MM/DD/YYYY)
+const DATE_SLASH_RE =
+  /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
+
+// Matches: "2024-01-15" (YYYY-MM-DD ISO format)
+const DATE_ISO_RE =
+  /\b(\d{4}[-\/]\d{1,2}[-\/]\d{1,2})\b/g;
+
+// Matches: "DOB: 01/15/1960" or "Date of Birth: January 15, 1960"
+const DOB_HEADER_RE =
+  /\b(?:DOB|Date\s+of\s+Birth|Birth\s*Date|Birthdate)\s*[:\-]?\s*(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{1,2}[-\s]?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[-\s,]?\s*\d{1,2}[-,\s]+\d{2,4}|(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}[-,\s]+\d{2,4})\b/gi;
 
 // =============================================================================
 // Transformers.js env
@@ -194,6 +332,46 @@ function runRegexDetectors(text) {
   // Reset global regex state
   PATIENT_HEADER_RE.lastIndex = 0;
   MRN_RE.lastIndex = 0;
+  MRN_SPACED_RE.lastIndex = 0;
+  INLINE_PATIENT_NAME_RE.lastIndex = 0;
+  PROCEDURAL_NAME_RE.lastIndex = 0;
+  PT_NAME_MRN_RE.lastIndex = 0;
+  PT_STANDALONE_RE.lastIndex = 0;
+  TITLE_NAME_RE.lastIndex = 0;
+  NARRATIVE_FOR_NAME_RE.lastIndex = 0;
+  PLACEHOLDER_NAME_RE.lastIndex = 0;
+  PATIENT_SHORTHAND_RE.lastIndex = 0;
+  SENTENCE_START_NAME_RE.lastIndex = 0;
+  LINE_START_NAME_RE.lastIndex = 0;
+  INFORMAL_NAME_HERE_RE.lastIndex = 0;
+  UNDERSCORE_NAME_RE.lastIndex = 0;
+  UNDERSCORE_ID_RE.lastIndex = 0;
+  UNDERSCORE_DATE_RE.lastIndex = 0;
+  TITLE_NAME_LOWERCASE_RE.lastIndex = 0;
+  FIRST_NAME_CLINICAL_RE.lastIndex = 0;
+  PROCEDURE_NOTE_NAME_RE.lastIndex = 0;
+  STANDALONE_ALPHANUMERIC_ID_RE.lastIndex = 0;
+  PT_LOWERCASE_NAME_RE.lastIndex = 0;
+  LOWERCASE_NAME_DATE_RE.lastIndex = 0;
+  LOWERCASE_NAME_AGE_GENDER_RE.lastIndex = 0;
+  INFORMAL_NAME_HERE_TO_RE.lastIndex = 0;
+  LOWERCASE_NAME_NOTE_RE.lastIndex = 0;
+  DATE_DDMMMYYYY_RE.lastIndex = 0;
+  DATE_SLASH_RE.lastIndex = 0;
+  DATE_ISO_RE.lastIndex = 0;
+  DOB_HEADER_RE.lastIndex = 0;
+
+  // Helper: check if followed by provider credentials (to exclude provider names)
+  function isFollowedByCredentials(matchEnd) {
+    const after = text.slice(matchEnd, Math.min(text.length, matchEnd + 40));
+    return /^,?\s*(?:MD|DO|RN|RT|PA|NP|CRNA|PhD|FCCP|DAABIP)\b/i.test(after);
+  }
+
+  // Helper: check if preceded by provider context
+  function isPrecededByProviderContext(matchStart) {
+    const before = text.slice(Math.max(0, matchStart - 60), matchStart).toLowerCase();
+    return /(?:dr\.?|attending|proceduralist|assistant|fellow|resident|surgeon|operator|anesthesiologist|physician)\s*[:\-]?\s*$/i.test(before);
+  }
 
   // 1) Patient header names
   for (const match of text.matchAll(PATIENT_HEADER_RE)) {
@@ -211,6 +389,38 @@ function runRegexDetectors(text) {
     }
   }
 
+  // 1a) Placeholder/artifact names: "<PERSON>", "[Name]", "***NAME***"
+  for (const match of text.matchAll(PLACEHOLDER_NAME_RE)) {
+    const fullMatch = match[0];
+    const placeholderGroup = match[1];
+    const groupOffset = fullMatch.indexOf(placeholderGroup);
+    if (groupOffset !== -1 && match.index != null) {
+      spans.push({
+        start: match.index + groupOffset,
+        end: match.index + groupOffset + placeholderGroup.length,
+        label: "PATIENT",
+        score: 1.0,
+        source: "regex_placeholder",
+      });
+    }
+  }
+
+  // 1b) Patient shorthand: "Patient 69F" (age/gender cluster as identifier)
+  for (const match of text.matchAll(PATIENT_SHORTHAND_RE)) {
+    const fullMatch = match[0];
+    const shorthandGroup = match[1];
+    const groupOffset = fullMatch.indexOf(shorthandGroup);
+    if (groupOffset !== -1 && match.index != null) {
+      spans.push({
+        start: match.index + groupOffset,
+        end: match.index + groupOffset + shorthandGroup.length,
+        label: "PATIENT",
+        score: 0.9,
+        source: "regex_shorthand",
+      });
+    }
+  }
+
   // 2) MRN / IDs
   for (const match of text.matchAll(MRN_RE)) {
     const fullMatch = match[0];
@@ -223,6 +433,480 @@ function runRegexDetectors(text) {
         label: "ID",
         score: 1.0,
         source: "regex_mrn",
+      });
+    }
+  }
+
+  // 2a) MRN with spaces: "A92 555" or "AB 123 456"
+  for (const match of text.matchAll(MRN_SPACED_RE)) {
+    const fullMatch = match[0];
+    const idGroup = match[1];
+    const groupOffset = fullMatch.indexOf(idGroup);
+    if (groupOffset !== -1 && match.index != null) {
+      spans.push({
+        start: match.index + groupOffset,
+        end: match.index + groupOffset + idGroup.length,
+        label: "ID",
+        score: 1.0,
+        source: "regex_mrn_spaced",
+      });
+    }
+  }
+
+  // 3) Inline narrative names: "Emma Jones, a 64-year-old..."
+  for (const match of text.matchAll(INLINE_PATIENT_NAME_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const matchEnd = match.index + nameGroup.length;
+      // Skip if followed by credentials (likely provider, not patient)
+      if (!isFollowedByCredentials(matchEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: matchEnd,
+          label: "PATIENT",
+          score: 0.95,
+          source: "regex_inline_name",
+        });
+      }
+    }
+  }
+
+  // 3a) Procedural verb + name: "performed on Robert Chen", "procedure for Jane Doe"
+  for (const match of text.matchAll(PROCEDURAL_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.indexOf(nameGroup);
+      if (groupOffset !== -1) {
+        const nameStart = match.index + groupOffset;
+        const nameEnd = nameStart + nameGroup.length;
+        // Skip if followed by credentials (likely provider)
+        if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+          spans.push({
+            start: nameStart,
+            end: nameEnd,
+            label: "PATIENT",
+            score: 0.9,
+            source: "regex_procedural_name",
+          });
+        }
+      }
+    }
+  }
+
+  // 4) "pt Name mrn 1234" pattern
+  for (const match of text.matchAll(PT_NAME_MRN_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      // Find where the name starts within the match
+      const fullMatch = match[0];
+      const groupOffset = fullMatch.toLowerCase().indexOf(nameGroup.toLowerCase());
+      if (groupOffset !== -1) {
+        spans.push({
+          start: match.index + groupOffset,
+          end: match.index + groupOffset + nameGroup.length,
+          label: "PATIENT",
+          score: 0.95,
+          source: "regex_pt_mrn",
+        });
+      }
+    }
+  }
+
+  // 5) Title + Name: "Mr. Smith", "Mrs. Johnson"
+  for (const match of text.matchAll(TITLE_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const matchEnd = match.index + fullMatch.length;
+      // Skip if followed by credentials (likely provider)
+      if (!isFollowedByCredentials(matchEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: matchEnd,
+          label: "PATIENT",
+          score: 0.9,
+          source: "regex_title_name",
+        });
+      }
+    }
+  }
+
+  // 5a) PT standalone: "PT James Wilson" (without MRN pattern)
+  for (const match of text.matchAll(PT_STANDALONE_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.indexOf(nameGroup);
+      if (groupOffset !== -1) {
+        const nameStart = match.index + groupOffset;
+        const nameEnd = nameStart + nameGroup.length;
+        // Skip if followed by credentials (likely provider)
+        if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+          spans.push({
+            start: nameStart,
+            end: nameEnd,
+            label: "PATIENT",
+            score: 0.9,
+            source: "regex_pt_standalone",
+          });
+        }
+      }
+    }
+  }
+
+  // 5b) Narrative "for [Name]" pattern: "bronch for Logan Roy massive bleeding"
+  for (const match of text.matchAll(NARRATIVE_FOR_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.indexOf(nameGroup);
+      if (groupOffset !== -1) {
+        const nameStart = match.index + groupOffset;
+        const nameEnd = nameStart + nameGroup.length;
+        // Skip if followed by credentials (likely provider)
+        if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+          spans.push({
+            start: nameStart,
+            end: nameEnd,
+            label: "PATIENT",
+            score: 0.85,
+            source: "regex_narrative_for",
+          });
+        }
+      }
+    }
+  }
+
+  // 5c) Sentence-start name pattern: "Robert Smith has a LLL nodule..."
+  for (const match of text.matchAll(SENTENCE_START_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.indexOf(nameGroup);
+      if (groupOffset !== -1) {
+        const nameStart = match.index + groupOffset;
+        const nameEnd = nameStart + nameGroup.length;
+        // Skip if followed by credentials (likely provider)
+        if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+          spans.push({
+            start: nameStart,
+            end: nameEnd,
+            label: "PATIENT",
+            score: 0.85,
+            source: "regex_sentence_start",
+          });
+        }
+      }
+    }
+  }
+
+  // 5d) Line-start name pattern: "Kimberly Garcia. Ion Bronchoscopy." (name at very start of line)
+  for (const match of text.matchAll(LINE_START_NAME_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameEnd = match.index + nameGroup.length;
+      // Skip if followed by credentials (likely provider)
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.8,
+          source: "regex_line_start",
+        });
+      }
+    }
+  }
+
+  // 5e) Informal lowercase names: "jason phillips here for right lung lavage"
+  for (const match of text.matchAll(INFORMAL_NAME_HERE_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameEnd = match.index + nameGroup.length;
+      // Skip if followed by credentials (unlikely for lowercase but check anyway)
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.85,
+          source: "regex_informal_here",
+        });
+      }
+    }
+  }
+
+  // 5f) Underscore-wrapped template names: "___Lisa Anderson___"
+  for (const match of text.matchAll(UNDERSCORE_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      // Redact the entire match including underscores
+      spans.push({
+        start: match.index,
+        end: match.index + fullMatch.length,
+        label: "PATIENT",
+        score: 1.0,
+        source: "regex_underscore_name",
+      });
+    }
+  }
+
+  // 5g) Underscore-wrapped IDs: "___BB-8472-K___"
+  for (const match of text.matchAll(UNDERSCORE_ID_RE)) {
+    const idGroup = match[1];
+    const fullMatch = match[0];
+    if (idGroup && match.index != null) {
+      spans.push({
+        start: match.index,
+        end: match.index + fullMatch.length,
+        label: "ID",
+        score: 1.0,
+        source: "regex_underscore_id",
+      });
+    }
+  }
+
+  // 5h) Underscore-wrapped dates: "___03/19/1961___"
+  for (const match of text.matchAll(UNDERSCORE_DATE_RE)) {
+    const dateGroup = match[1];
+    const fullMatch = match[0];
+    if (dateGroup && match.index != null) {
+      spans.push({
+        start: match.index,
+        end: match.index + fullMatch.length,
+        label: "DATE",
+        score: 1.0,
+        source: "regex_underscore_date",
+      });
+    }
+  }
+
+  // 5i) Lowercase honorific + name: "mrs lopez", "mr harris"
+  for (const match of text.matchAll(TITLE_NAME_LOWERCASE_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const matchEnd = match.index + nameGroup.length;
+      // Skip if followed by credentials (likely provider)
+      if (!isFollowedByCredentials(matchEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: matchEnd,
+          label: "PATIENT",
+          score: 0.85,
+          source: "regex_title_lowercase",
+        });
+      }
+    }
+  }
+
+  // 5j) Standalone first name followed by clinical verb: "liam came in", "Frank underwent"
+  for (const match of text.matchAll(FIRST_NAME_CLINICAL_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameEnd = match.index + nameGroup.length;
+      // Skip if followed by credentials or preceded by provider context
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.75,
+          source: "regex_first_name_clinical",
+        });
+      }
+    }
+  }
+
+  // 5k) Procedure note header names: "Procedure note Justin Fowler 71M."
+  for (const match of text.matchAll(PROCEDURE_NOTE_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.toLowerCase().indexOf(nameGroup.toLowerCase());
+      if (groupOffset !== -1) {
+        const nameStart = match.index + groupOffset;
+        const nameEnd = nameStart + nameGroup.length;
+        // Skip if followed by credentials (likely provider)
+        if (!isFollowedByCredentials(nameEnd)) {
+          spans.push({
+            start: nameStart,
+            end: nameEnd,
+            label: "PATIENT",
+            score: 0.95,
+            source: "regex_procedure_note",
+          });
+        }
+      }
+    }
+  }
+
+  // 5l) Standalone alphanumeric IDs: "LM-9283", "AB-1234-K"
+  for (const match of text.matchAll(STANDALONE_ALPHANUMERIC_ID_RE)) {
+    const idGroup = match[1];
+    if (idGroup && match.index != null) {
+      // Check context to confirm this looks like an identifier (not a device model)
+      const ctx = text.slice(Math.max(0, match.index - 30), Math.min(text.length, match.index + idGroup.length + 30)).toLowerCase();
+      // Only match if in patient/ID context, not device context
+      if (/\b(?:mrn|patient|id|record|chart)\b/i.test(ctx) || !(/\b(?:model|scope|device|system|platform)\b/i.test(ctx))) {
+        spans.push({
+          start: match.index,
+          end: match.index + idGroup.length,
+          label: "ID",
+          score: 0.8,
+          source: "regex_alphanumeric_id",
+        });
+      }
+    }
+  }
+
+  // 5m) "pt [Name]" patterns in informal notes: "pt Juan C R long term trach"
+  for (const match of text.matchAll(PT_LOWERCASE_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.toLowerCase().indexOf(nameGroup.toLowerCase());
+      if (groupOffset !== -1) {
+        const nameStart = match.index + groupOffset;
+        const nameEnd = nameStart + nameGroup.length;
+        if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+          spans.push({
+            start: nameStart,
+            end: nameEnd,
+            label: "PATIENT",
+            score: 0.9,
+            source: "regex_pt_lowercase",
+          });
+        }
+      }
+    }
+  }
+
+  // 5n) Lowercase names followed by date: "oscar godsey 5/15/19"
+  for (const match of text.matchAll(LOWERCASE_NAME_DATE_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameEnd = match.index + nameGroup.length;
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.85,
+          source: "regex_lowercase_date",
+        });
+      }
+    }
+  }
+
+  // 5o) Lowercase names followed by age/gender: "barbara kim 69 female"
+  for (const match of text.matchAll(LOWERCASE_NAME_AGE_GENDER_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameEnd = match.index + nameGroup.length;
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.85,
+          source: "regex_lowercase_age_gender",
+        });
+      }
+    }
+  }
+
+  // 5p) Lowercase names followed by "here to": "gilbert barkley here to get his stents out"
+  for (const match of text.matchAll(INFORMAL_NAME_HERE_TO_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameEnd = match.index + nameGroup.length;
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.85,
+          source: "regex_informal_here_to",
+        });
+      }
+    }
+  }
+
+  // 5q) Lowercase names followed by "note": "michael foster note hard to read"
+  for (const match of text.matchAll(LOWERCASE_NAME_NOTE_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameEnd = match.index + nameGroup.length;
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.85,
+          source: "regex_lowercase_note",
+        });
+      }
+    }
+  }
+
+  // 6) DOB header dates: "DOB: 01/15/1960"
+  for (const match of text.matchAll(DOB_HEADER_RE)) {
+    const dateGroup = match[1];
+    const fullMatch = match[0];
+    if (dateGroup && match.index != null) {
+      const groupOffset = fullMatch.indexOf(dateGroup);
+      if (groupOffset !== -1) {
+        spans.push({
+          start: match.index + groupOffset,
+          end: match.index + groupOffset + dateGroup.length,
+          label: "DATE",
+          score: 1.0,
+          source: "regex_dob",
+        });
+      }
+    }
+  }
+
+  // 7) Date formats: "18Apr2022", "18-Apr-2022"
+  for (const match of text.matchAll(DATE_DDMMMYYYY_RE)) {
+    const dateGroup = match[1];
+    if (dateGroup && match.index != null) {
+      spans.push({
+        start: match.index,
+        end: match.index + dateGroup.length,
+        label: "DATE",
+        score: 0.95,
+        source: "regex_date_ddmmm",
+      });
+    }
+  }
+
+  // 8) Slash/dash dates: "6/3/2016", "06-03-2016"
+  for (const match of text.matchAll(DATE_SLASH_RE)) {
+    const dateGroup = match[1];
+    if (dateGroup && match.index != null) {
+      spans.push({
+        start: match.index,
+        end: match.index + dateGroup.length,
+        label: "DATE",
+        score: 0.9,
+        source: "regex_date_slash",
+      });
+    }
+  }
+
+  // 9) ISO dates: "2024-01-15" (YYYY-MM-DD)
+  for (const match of text.matchAll(DATE_ISO_RE)) {
+    const dateGroup = match[1];
+    if (dateGroup && match.index != null) {
+      spans.push({
+        start: match.index,
+        end: match.index + dateGroup.length,
+        label: "DATE",
+        score: 0.95,
+        source: "regex_date_iso",
       });
     }
   }
@@ -547,6 +1231,46 @@ function expandToWordBoundaries(spans, fullText) {
   });
 }
 
+/**
+ * Extend GEO spans to include common multi-word city prefixes.
+ * Fixes partial redactions like "San [REDACTED]" → "[REDACTED]" for "San Francisco".
+ */
+const CITY_PREFIXES = new Set([
+  "san", "los", "las", "new", "fort", "saint", "st", "santa", "el", "la",
+  "port", "mount", "mt", "north", "south", "east", "west", "upper", "lower",
+  "lake", "palm", "long", "grand", "great", "little", "old", "big"
+]);
+
+function extendGeoSpans(spans, fullText) {
+  return spans.map((span) => {
+    // Only extend GEO-labeled spans
+    const label = String(span.label || "").toUpperCase().replace(/^[BI]-/, "");
+    if (label !== "GEO") return span;
+
+    let { start } = span;
+
+    // Look for city prefix word before the span
+    const beforeWindow = fullText.slice(Math.max(0, start - 20), start);
+    const prefixMatch = beforeWindow.match(/\b([A-Za-z]+)\s+$/);
+
+    if (prefixMatch) {
+      const prefix = prefixMatch[1].toLowerCase();
+      if (CITY_PREFIXES.has(prefix)) {
+        // Extend start to include the prefix
+        const prefixStart = start - prefixMatch[0].length;
+        return {
+          ...span,
+          start: prefixStart,
+          end: span.end,
+          text: fullText.slice(prefixStart, span.end)
+        };
+      }
+    }
+
+    return span;
+  });
+}
+
 // =============================================================================
 // Debug helpers (optional)
 // =============================================================================
@@ -702,10 +1426,13 @@ self.onmessage = async (e) => {
       // 6) Expand to word boundaries (fixes partial-word redactions)
       merged = expandToWordBoundaries(merged, text);
 
-      // 7) Re-merge after expansion
+      // 7) Extend GEO spans to include city prefixes (fixes "San [REDACTED]" → "[REDACTED]")
+      merged = extendGeoSpans(merged, text);
+
+      // 8) Re-merge after expansion
       merged = mergeOverlapsBestOf(merged);
 
-      // 8) Apply veto (protected allow-list)
+      // 9) Apply veto (protected allow-list)
       merged = applyVeto(merged, text, protectedTerms, { debug });
 
       post("done", { detections: merged });

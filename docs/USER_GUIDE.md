@@ -359,3 +359,9 @@ python scripts/scrub_golden_jsons.py \
   --pattern 'golden_*.json' \
   --report-path artifacts/redactions.jsonl
 *Last updated: December 2025*
+
+# PHI without registry onnx IU start
+MODEL_BACKEND=pytorch ./scripts/devserver.sh
+MODEL_BACKEND=auto ./scripts/devserver.sh
+
+node test_phi_redaction.mjs --count 30
