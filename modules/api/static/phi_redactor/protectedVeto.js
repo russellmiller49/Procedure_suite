@@ -84,6 +84,10 @@ const STOPWORDS_ALWAYS = new Set([
   "did", "does", "had", "has", "have", "been", "being", "are", "were",
   "will", "would", "could", "should", "may", "might", "must", "can", "shall",
   "if", "then", "so", "but", "not", "no", "yes", "as", "from", "on", "be",
+  // Pronouns (commonly mis-tagged as names when capitalized at sentence start)
+  "we", "she", "he", "they", "it", "i", "you", "there", "this", "that", "these", "those",
+  "who", "what", "which", "whom", "whose", "where", "when", "why", "how",
+  "her", "him", "them", "us", "me", "his", "its", "their", "our", "my", "your",
   // Clinical verbs commonly mis-tagged (past participles that look like names)
   "intubated", "extubated", "identified", "placed", "transferred", "discharged", "tolerated",
   "performed", "removed", "obtained", "collected", "noted", "observed", "seen",
@@ -262,7 +266,55 @@ const CLINICAL_ALLOW_LIST = makeNormalizedSet([
 
   // === Clinical action phrases (Confirm Sarcoidosis, Rule out X) ===
   "confirm", "rule out", "exclude", "evaluate", "assess", "monitor",
-  "continue", "discontinue", "initiate", "recommend", "consider"
+  "continue", "discontinue", "initiate", "recommend", "consider",
+
+  // === SNOMED-CT Clinical Terms Subset (False Positive Prevention) ===
+  // Procedures commonly confused with names
+  "ablation", "cryoablation", "thermal ablation", "radiofrequency ablation", "rfa",
+  "microwave ablation", "mwa", "laser ablation", "photodynamic therapy", "pdt",
+  "ventilation", "mechanical ventilation", "jet ventilation", "high frequency ventilation",
+  "intubation", "extubation", "reintubation", "tracheostomy", "tracheotomy",
+  "resection", "lobectomy", "segmentectomy", "wedge resection", "pneumonectomy",
+  "pleurodesis", "thoracentesis", "paracentesis", "pericardiocentesis",
+  "debridement", "dilation", "dilatation", "stenting", "embolization",
+  "cryotherapy", "electrocautery", "argon plasma coagulation",
+
+  // Findings/diagnoses commonly confused with names
+  "infiltrate", "infiltration", "consolidation", "atelectasis", "collapse",
+  "effusion", "pleural effusion", "pericardial effusion", "ascites",
+  "stenosis", "stricture", "obstruction", "occlusion", "narrowing",
+  "hemorrhage", "bleeding", "hemoptysis", "hemothorax", "pneumothorax",
+  "fibrosis", "inflammation", "infection", "abscess", "empyema",
+  "adenopathy", "lymphadenopathy", "hilar adenopathy", "mediastinal adenopathy",
+  "carcinomatosis", "metastatic", "metastasis", "metastases",
+
+  // Equipment/supplies commonly confused with names
+  "catheter", "stent", "valve", "scope", "bronchoscope", "endoscope",
+  "forceps", "needle", "wire", "guidewire", "sheath", "dilator",
+  "balloon", "cuff", "tube", "drain", "port", "introducer",
+
+  // Clinical plans/dispositions commonly confused with names
+  "admit", "admission", "discharge", "transfer", "observation",
+  "telemetry", "admit telemetry", "floor", "step down", "stepdown",
+  "icu admission", "pacu", "recovery", "post-op", "postop", "pre-op", "preop",
+
+  // Common clinical words that appear capitalized at sentence start
+  "imaging", "scanning", "screening", "testing", "sampling",
+  "aspiration", "instillation", "injection", "infusion", "transfusion",
+  "inspection", "palpation", "auscultation", "percussion",
+  "analgesia", "sedation", "paralysis", "relaxation",
+  "hemostasis", "coagulation", "anticoagulation",
+  "prophylaxis", "prevention", "treatment", "therapy", "management",
+
+  // Anatomical regions that might be confused
+  "apex", "base", "hilum", "root", "trunk", "branch", "lobe", "segment",
+  "wall", "surface", "margin", "border", "edge", "tip",
+
+  // Descriptors commonly capitalized
+  "significant", "unremarkable", "remarkable", "notable", "prominent",
+  "diffuse", "focal", "localized", "generalized", "widespread",
+  "acute", "chronic", "subacute", "recurrent", "persistent",
+  "primary", "secondary", "tertiary", "initial", "subsequent"
 ]);
 
 // =============================================================================

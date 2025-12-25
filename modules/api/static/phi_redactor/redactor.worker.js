@@ -154,6 +154,18 @@ const INFORMAL_NAME_HERE_TO_RE =
 const LOWERCASE_NAME_NOTE_RE =
   /^([a-z]+\s+[a-z]+)\s+note\b/gim;
 
+// Matches names at absolute start followed by clinical context (no punctuation required)
+// E.g., "Brenda Lewis transplant patient with stenosis" or "John Smith status post lobectomy"
+// Requires clinical follow-word to reduce false positives
+const NAME_START_CLINICAL_CONTEXT_RE =
+  /^([A-Z][a-z]+\s+[A-Z][a-z]+)\s+(?:transplant|patient|pt|status|post|s\/p|here|presented|presenting|hx|history|scheduled|referred|admitted|seen|evaluated|is|was|with|who|underwent)\b/gim;
+
+// Matches lowercase names after "for" in narrative text (not just at line start)
+// E.g., "diag bronch for charlene king she has hilar adenopathy"
+// Requires pronoun or clinical word after name to confirm patient context
+const LOWERCASE_FOR_NAME_RE =
+  /\bfor\s+([a-z]+\s+[a-z]+)\s+(?:she|he|they|who|to|we|and|patient|pt|with|has|had|is|was|the|a|for|due|because|secondary)\b/gi;
+
 // Date patterns - various formats commonly found in medical notes
 // Matches: "18Apr2022", "18-Apr-2022", "18 Apr 2022" (DDMMMYYYY variants)
 const DATE_DDMMMYYYY_RE =
@@ -356,6 +368,8 @@ function runRegexDetectors(text) {
   LOWERCASE_NAME_AGE_GENDER_RE.lastIndex = 0;
   INFORMAL_NAME_HERE_TO_RE.lastIndex = 0;
   LOWERCASE_NAME_NOTE_RE.lastIndex = 0;
+  NAME_START_CLINICAL_CONTEXT_RE.lastIndex = 0;
+  LOWERCASE_FOR_NAME_RE.lastIndex = 0;
   DATE_DDMMMYYYY_RE.lastIndex = 0;
   DATE_SLASH_RE.lastIndex = 0;
   DATE_ISO_RE.lastIndex = 0;
@@ -847,6 +861,46 @@ function runRegexDetectors(text) {
           score: 0.85,
           source: "regex_lowercase_note",
         });
+      }
+    }
+  }
+
+  // 5m) Name at start with clinical context: "Brenda Lewis transplant patient with stenosis"
+  for (const match of text.matchAll(NAME_START_CLINICAL_CONTEXT_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameEnd = match.index + nameGroup.length;
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: match.index,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.85,
+          source: "regex_name_start_clinical",
+        });
+      }
+    }
+  }
+
+  // 5n) Lowercase name after "for": "diag bronch for charlene king she has hilar adenopathy"
+  for (const match of text.matchAll(LOWERCASE_FOR_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      // Find where the name starts within the match (after "for ")
+      const groupOffset = fullMatch.toLowerCase().indexOf(nameGroup.toLowerCase());
+      if (groupOffset !== -1) {
+        const nameStart = match.index + groupOffset;
+        const nameEnd = nameStart + nameGroup.length;
+        if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+          spans.push({
+            start: nameStart,
+            end: nameEnd,
+            label: "PATIENT",
+            score: 0.8,
+            source: "regex_lowercase_for",
+          });
+        }
       }
     }
   }
