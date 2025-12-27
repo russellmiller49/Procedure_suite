@@ -104,8 +104,8 @@ Edit `redactor.worker.js`:
 const INLINE_PATIENT_NAME_RE = /\b([A-Z][a-z]+\s+[A-Z][a-z]+),?\s+(?:a\s+)?\d+-year-old/gi;
 ```
 
-### 3. Retrain the Model
-When regex/veto isn't enough.
+### 3. Retrain the Model (From Scratch)
+When regex/veto isn't enough and you need fresh training data.
 
 ```bash
 # 1. Distill new training data
@@ -129,6 +129,47 @@ make audit-phi-client
 # 7. Export to ONNX
 make export-phi-client-model
 ```
+
+### 4. Iterative Correction with Prodigy (Recommended)
+Human-in-the-loop workflow using [Prodigy](https://prodi.gy/) for targeted improvements.
+
+```bash
+# Option A: From golden notes (random sample)
+make prodigy-prepare
+
+# Option B: From specific file (e.g., dense synthetic PHI)
+make prodigy-prepare-file PRODIGY_INPUT_FILE=synthetic_phi.jsonl
+
+# Launch Prodigy UI (opens at http://localhost:8080)
+make prodigy-annotate
+
+# After annotation, export corrections
+make prodigy-export
+
+# Fine-tune model (preserves learned weights - RECOMMENDED)
+make prodigy-finetune PRODIGY_EPOCHS=2
+
+# OR train from scratch (loses learned weights)
+make prodigy-retrain
+
+# Evaluate and export
+make eval-phi-client
+make export-phi-client-model
+```
+
+**Key Prodigy Files:**
+| File | Purpose |
+|------|---------|
+| `scripts/prodigy_prepare_phi_batch.py` | Pre-annotate notes with DistilBERT |
+| `scripts/prodigy_export_corrections.py` | Convert Prodigy → BIO training format |
+| `data/ml_training/prodigy_manifest.json` | Track annotated windows |
+| `synthetic_phi.jsonl` | Dense synthetic PHI data (300 records) |
+
+**Tips:**
+- Use `prodigy-finetune` (not `prodigy-retrain`) to preserve learned weights
+- Drop dataset to re-annotate: `prodigy drop phi_corrections`
+- Override epochs: `make prodigy-finetune PRODIGY_EPOCHS=3`
+- Prodigy runs in system Python 3.12 (not conda)
 
 ### 4. Update Protected Terms Config
 Edit `modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json`:

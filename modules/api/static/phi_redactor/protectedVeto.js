@@ -85,7 +85,7 @@ const STOPWORDS_ALWAYS = new Set([
   "will", "would", "could", "should", "may", "might", "must", "can", "shall",
   "if", "then", "so", "but", "not", "no", "yes", "as", "from", "on", "be",
   // Pronouns (commonly mis-tagged as names when capitalized at sentence start)
-  "we", "she", "he", "they", "it", "i", "you", "there", "this", "that", "these", "those",
+  "we", "she", "he", "they", "it", "i", "you", "here", "there", "this", "that", "these", "those",
   "who", "what", "which", "whom", "whose", "where", "when", "why", "how",
   "her", "him", "them", "us", "me", "his", "its", "their", "our", "my", "your",
   // Clinical verbs commonly mis-tagged (past participles that look like names)
@@ -337,7 +337,29 @@ const CLINICAL_ALLOW_LIST = makeNormalizedSet([
   "airflow", "oxygenation", "saturation", "pressure",
   "resistance", "compliance", "capacity", "volume", "rate",
   "output", "input", "drainage", "effluent", "aspirate",
-  "specimen", "samples", "cultures", "cytology", "pathology"
+  "specimen", "samples", "cultures", "cytology", "pathology",
+
+  // === Additional clinical terms (Dec 25, 2025) ===
+  // Anatomy and findings that may appear capitalized at sentence start
+  "lung", "lungs", "plan", "plans", "date", "dates",
+  "airway", "airways", "lobe", "lobes", "node", "nodes",
+  "mass", "masses", "lesion", "lesions", "tumor", "tumors",
+  "nodule", "nodules", "history", "summary", "note", "notes",
+  "report", "reports", "time", "times", "record", "records",
+  "documentation", "assessment", "impression", "diagnosis",
+  "prognosis", "findings", "indication", "indications"
+]);
+
+// =============================================================================
+// CLINICAL_ALLOW_PARTIAL: Terms that veto if they appear ANYWHERE in a span
+// Use carefully - these are very specific medical terms unlikely to be names
+// =============================================================================
+const CLINICAL_ALLOW_PARTIAL = makeNormalizedSet([
+  "histopathological", "histopathology", "cytopathology", "cytopathological",
+  "histologic", "histological", "cytologic", "cytological",
+  "immunohistochemical", "immunohistochemistry",
+  "bronchoscopic", "bronchoscopically", "thoracoscopic", "thoracoscopically",
+  "endobronchial", "transbronchial", "mediastinoscopy", "mediastinoscopic"
 ]);
 
 // =============================================================================
@@ -738,6 +760,23 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     }
 
     // -------------------------------------------------------------------------
+    // 0k) Header/field words that start with capital
+    // "Date of Procedure", "History of Present Illness", "Documentation of"
+    // These are common header words mistaken for names when capitalized.
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      const headerWords = new Set([
+        "date", "time", "history", "summary", "note",
+        "documentation", "record", "report", "indication",
+        "assessment", "impression", "findings", "diagnosis"
+      ]);
+      const firstWord = norm.split(/\s+/)[0];
+      if (headerWords.has(firstWord)) {
+        veto = true; reason = "header_field_word";
+      }
+    }
+
+    // -------------------------------------------------------------------------
     // 1) Explicit anatomy list
     // -------------------------------------------------------------------------
     if (!veto && activeIndex.anatomySet.has(norm)) {
@@ -860,6 +899,18 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     // -------------------------------------------------------------------------
     if (!veto && CLINICAL_ALLOW_LIST.has(norm)) {
       veto = true; reason = "clinical_allow_list";
+    }
+
+    // -------------------------------------------------------------------------
+    // 8b) Partial clinical allowlist - veto if ANY word in span matches
+    // For specific medical terms that should veto even in multi-word spans
+    // e.g., "histopathological examination" vetoes because "histopathological" is in CLINICAL_ALLOW_PARTIAL
+    // -------------------------------------------------------------------------
+    if (!veto) {
+      const words = norm.split(/\s+/);
+      if (words.some(w => CLINICAL_ALLOW_PARTIAL.has(w))) {
+        veto = true; reason = "clinical_allow_partial";
+      }
     }
 
     // -------------------------------------------------------------------------

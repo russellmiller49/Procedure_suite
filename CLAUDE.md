@@ -201,6 +201,109 @@ pip install evaluate seqeval
 
 ---
 
+## 🔄 Prodigy-Based Iterative Label Correction
+
+Human-in-the-loop workflow for improving PHI detection using [Prodigy](https://prodi.gy/).
+
+### Workflow Overview
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. Sample Notes → Pre-annotate with DistilBERT             │
+│     make prodigy-prepare (or prodigy-prepare-file)          │
+└──────────────────────────┬──────────────────────────────────┘
+                           ↓
+┌─────────────────────────────────────────────────────────────┐
+│  2. Prodigy ner.manual - Review/correct annotations         │
+│     make prodigy-annotate                                   │
+└──────────────────────────┬──────────────────────────────────┘
+                           ↓
+┌─────────────────────────────────────────────────────────────┐
+│  3. Export corrections → Merge with training data           │
+│     make prodigy-export                                     │
+└──────────────────────────┬──────────────────────────────────┘
+                           ↓
+┌─────────────────────────────────────────────────────────────┐
+│  4. Fine-tune model (preserves learned weights)             │
+│     make prodigy-finetune                                   │
+└──────────────────────────┬──────────────────────────────────┘
+                           ↓
+                      Iterate → Back to Step 1
+```
+
+### Key Commands
+
+| Command | Purpose |
+|---------|---------|
+| `make prodigy-prepare` | Sample 100 golden notes, pre-annotate with DistilBERT |
+| `make prodigy-prepare-file` | Prepare from specific file (default: `synthetic_phi.jsonl`) |
+| `make prodigy-annotate` | Launch Prodigy annotation UI (ner.manual) |
+| `make prodigy-export` | Export corrections, merge with training data |
+| `make prodigy-finetune` | Fine-tune existing model (recommended) |
+| `make prodigy-retrain` | Train from scratch (loses learned weights) |
+| `make prodigy-cycle` | Run prepare + show next steps |
+
+### Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PRODIGY_COUNT` | `100` | Number of notes to sample |
+| `PRODIGY_DATASET` | `phi_corrections` | Prodigy dataset name |
+| `PRODIGY_INPUT_FILE` | `synthetic_phi.jsonl` | Input file for `prodigy-prepare-file` |
+| `PRODIGY_EPOCHS` | `1` | Fine-tuning epochs |
+
+### Example: Full Iteration Cycle
+
+```bash
+# 1. Prepare batch (from synthetic PHI data)
+make prodigy-prepare-file PRODIGY_COUNT=50
+
+# 2. Launch Prodigy UI - review/correct annotations
+make prodigy-annotate
+# (Annotate in browser at http://localhost:8080)
+
+# 3. Export corrections to training format
+make prodigy-export
+
+# 4. Fine-tune model on corrected data
+make prodigy-finetune PRODIGY_EPOCHS=2
+
+# 5. Evaluate model performance
+make eval-phi-client
+
+# 6. Export updated ONNX for browser
+make export-phi-client-model
+```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `scripts/prodigy_prepare_phi_batch.py` | Sample notes, run DistilBERT inference, output Prodigy JSONL |
+| `scripts/prodigy_export_corrections.py` | Convert Prodigy → BIO training format |
+| `data/ml_training/prodigy_manifest.json` | Track annotated windows (avoids re-sampling) |
+| `data/ml_training/prodigy_batch.jsonl` | Current batch for annotation |
+| `data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl` | Training data with Prodigy corrections |
+| `synthetic_phi.jsonl` | Dense synthetic PHI data (300 records) |
+
+### Tips
+
+- **Use `prodigy-finetune` (not `prodigy-retrain`)** to preserve learned weights
+- **Drop dataset to re-annotate**: `prodigy drop phi_corrections`
+- **Check Prodigy stats**: `prodigy stats phi_corrections`
+- **Synthetic data** (`synthetic_phi.jsonl`) has dense PHI for targeted training
+- **Fine-tune with more epochs**: `make prodigy-finetune PRODIGY_EPOCHS=3`
+
+### Prodigy Installation Note
+
+Prodigy requires a separate Python environment (system Python 3.12):
+```bash
+# Prodigy is installed in system Python, not conda
+/Library/Frameworks/Python.framework/Versions/3.12/bin/python3 -m prodigy --help
+```
+
+---
+
 ## 🌐 Client-side PHI Redactor (Transformers.js)
 
 **Export local ONNX bundle:**

@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2025-12-22T09:07:17-08:00`
-Git: `v18` @ `00dffde`
+Generated: `2025-12-25T13:52:02-08:00`
+Git: `v19` @ `5d3ac86`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -13,10 +13,12 @@ Git: `v18` @ `00dffde`
 
 ## Repo tree (pruned)
 ```
-- proc_suite/
+- Procedure_suite/
   - .claude/
+    - .claude/commands/
+      - .claude/commands/phi-redactor.md
+    - .claude/.DS_Store
     - .claude/settings.local.json
-  - .cursor/
   - .github/
     - .github/workflows/
       - .github/workflows/ci.yml
@@ -65,63 +67,34 @@ Git: `v18` @ `00dffde`
       - archive/scripts/verify_v4_enhancements.sh
     - archive/README.md
   - artifacts/
-    - artifacts/phi_audit/
-      - artifacts/phi_audit/20251217_211201Z.json
-      - artifacts/phi_audit/20251217_211512Z.json
-      - artifacts/phi_audit/20251217_223316Z.json
-      - artifacts/phi_audit/20251217_223841Z.json
-      - artifacts/phi_audit/20251217_224125Z.json
-      - artifacts/phi_audit/20251217_224849Z.json
-      - artifacts/phi_audit/20251218_005750Z.json
-      - artifacts/phi_audit/20251218_010431Z.json
-      - artifacts/phi_audit/20251218_010541Z.json
-      - artifacts/phi_audit/20251218_010638Z.json
-      - artifacts/phi_audit/20251218_010842Z.json
-      - artifacts/phi_audit/20251218_010958Z.json
-      - artifacts/phi_audit/20251218_012830Z.json
-      - artifacts/phi_audit/20251218_012935Z.json
-      - artifacts/phi_audit/20251218_013017Z.json
-      - artifacts/phi_audit/20251218_013059Z.json
-      - artifacts/phi_audit/20251218_013138Z.json
-      - artifacts/phi_audit/20251218_013217Z.json
-      - artifacts/phi_audit/20251218_013931Z.json
-      - artifacts/phi_audit/20251218_014012Z.json
-      - artifacts/phi_audit/20251218_014057Z.json
-      - artifacts/phi_audit/20251218_014142Z.json
-      - artifacts/phi_audit/20251218_014226Z.json
-      - artifacts/phi_audit/20251218_014424Z.json
-      - artifacts/phi_audit/20251218_014526Z.json
-      - artifacts/phi_audit/20251218_014601Z.json
-      - artifacts/phi_audit/20251218_014635Z.json
-      - artifacts/phi_audit/20251218_014719Z.json
-      - artifacts/phi_audit/20251218_021519Z.json
-      - artifacts/phi_audit/20251218_021625Z.json
-      - artifacts/phi_audit/20251218_021739Z.json
-      - artifacts/phi_audit/20251218_021828Z.json
-      - artifacts/phi_audit/20251218_021938Z.json
-      - artifacts/phi_audit/20251218_022039Z.json
-      - artifacts/phi_audit/20251218_161236Z.json
-      - artifacts/phi_audit/20251218_161332Z.json
-      - artifacts/phi_audit/20251218_161437Z.json
-      - artifacts/phi_audit/20251218_161520Z.json
-      - artifacts/phi_audit/20251218_161559Z.json
-      - artifacts/phi_audit/20251218_185222Z.json
-      - artifacts/phi_audit/20251218_185314Z.json
-      - artifacts/phi_audit/20251218_191312Z.json
-      - artifacts/phi_audit/20251218_191354Z.json
-      - artifacts/phi_audit/20251218_191626Z.json
-      - artifacts/phi_audit/20251218_203224Z.json
-      - artifacts/phi_audit/20251219_161429Z.json
-      - artifacts/phi_audit/20251219_161613Z.json
-      - artifacts/phi_audit/20251219_161710Z.json
-      - artifacts/phi_audit/20251219_161836Z.json
-      - artifacts/phi_audit/20251219_162003Z.json
-      - artifacts/phi_audit/20251219_162139Z.json
-      - artifacts/phi_audit/20251219_164515Z.json
-      - artifacts/phi_audit/20251219_165101Z.json
-      - artifacts/phi_audit/20251219_170856Z.json
-      - artifacts/phi_audit/20251219_190050Z.json
-      - artifacts/phi_audit/redaction_decisions.jsonl
+    - artifacts/phi_distilbert_ner/
+      - artifacts/phi_distilbert_ner/checkpoint-1223/
+        - artifacts/phi_distilbert_ner/checkpoint-1223/config.json
+        - artifacts/phi_distilbert_ner/checkpoint-1223/model.safetensors
+        - artifacts/phi_distilbert_ner/checkpoint-1223/special_tokens_map.json
+        - artifacts/phi_distilbert_ner/checkpoint-1223/tokenizer.json
+        - artifacts/phi_distilbert_ner/checkpoint-1223/tokenizer_config.json
+        - artifacts/phi_distilbert_ner/checkpoint-1223/trainer_state.json
+        - artifacts/phi_distilbert_ner/checkpoint-1223/vocab.txt
+      - artifacts/phi_distilbert_ner/checkpoint-500/
+        - artifacts/phi_distilbert_ner/checkpoint-500/config.json
+        - artifacts/phi_distilbert_ner/checkpoint-500/model.safetensors
+        - artifacts/phi_distilbert_ner/checkpoint-500/special_tokens_map.json
+        - artifacts/phi_distilbert_ner/checkpoint-500/tokenizer.json
+        - artifacts/phi_distilbert_ner/checkpoint-500/tokenizer_config.json
+        - artifacts/phi_distilbert_ner/checkpoint-500/trainer_state.json
+        - artifacts/phi_distilbert_ner/checkpoint-500/vocab.txt
+      - artifacts/phi_distilbert_ner/audit_report.json
+      - artifacts/phi_distilbert_ner/config.json
+      - artifacts/phi_distilbert_ner/eval_metrics.json
+      - artifacts/phi_distilbert_ner/label_map.json
+      - artifacts/phi_distilbert_ner/model.safetensors
+      - artifacts/phi_distilbert_ner/special_tokens_map.json
+      - artifacts/phi_distilbert_ner/tokenizer.json
+      - artifacts/phi_distilbert_ner/tokenizer_config.json
+      - artifacts/phi_distilbert_ner/vocab.txt
+    - artifacts/phi_distilbert_ner_mps/
+      - artifacts/phi_distilbert_ner_mps/label_map.json
     - artifacts/redactions.jsonl
   - cms_rvu_tools/
     - cms_rvu_tools/cms_rvus_2025_ip.csv
@@ -296,6 +269,7 @@ Git: `v18` @ `00dffde`
         - docs/phi_review_system/frontend/PHIReviewDemo.jsx
         - docs/phi_review_system/frontend/PHIReviewEditor.jsx
       - docs/phi_review_system/README.md
+    - docs/.DS_Store
     - docs/AGENTS.md
     - docs/ARCHITECTURE.md
     - docs/DEPLOY_ARCH.md
@@ -307,6 +281,8 @@ Git: `v18` @ `00dffde`
     - docs/ml_first_hybrid_policy.md
     - docs/model_release_runbook.md
     - docs/optimization_12_16_25.md
+    - docs/PHI Redactor Fix Plan (v2)
+    - docs/Production_Readiness_Review.md
     - docs/REFERENCES.md
     - docs/Registry_API.md
     - docs/Registry_ML_summary.md
@@ -339,6 +315,7 @@ Git: `v18` @ `00dffde`
         - modules/api/routes/phi.py
         - modules/api/routes/phi_demo_cases.py
         - modules/api/routes/procedure_codes.py
+        - modules/api/routes/unified_process.py
       - modules/api/schemas/
         - modules/api/schemas/__init__.py
         - modules/api/schemas/base.py
@@ -349,55 +326,32 @@ Git: `v18` @ `00dffde`
       - modules/api/static/
         - modules/api/static/phi_redactor/
           - modules/api/static/phi_redactor/vendor/
-            - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/
-              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/
-                - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/
-                  - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model.onnx.lock
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model.onnx.metadata
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_bnb4.onnx.lock
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_bnb4.onnx.metadata
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_fp16.onnx.lock
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_fp16.onnx.metadata
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_int8.onnx.lock
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_int8.onnx.metadata
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4.onnx.lock
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4.onnx.metadata
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4f16.onnx.lock
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4f16.onnx.metadata
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_quantized.onnx.lock
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_quantized.onnx.metadata
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_uint8.onnx.lock
-                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_uint8.onnx.metadata
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/config.json.lock
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/config.json.metadata
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/quantize_config.json.lock
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/quantize_config.json.metadata
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/special_tokens_map.json.lock
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/special_tokens_map.json.metadata
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer.json.lock
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer.json.metadata
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer_config.json.lock
-                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer_config.json.metadata
-                  - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/.gitignore
-              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/onnx/
-              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/config.json
-              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/quantize_config.json
-              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/special_tokens_map.json
-              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer.json
-              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer_config.json
+            - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/onnx/
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/.DS_Store
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/config.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/label_map.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer_config.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
+            - modules/api/static/phi_redactor/vendor/.DS_Store
             - modules/api/static/phi_redactor/vendor/.gitkeep
+          - modules/api/static/phi_redactor/.DS_Store
           - modules/api/static/phi_redactor/allowlist_trie.json
           - modules/api/static/phi_redactor/app.js
           - modules/api/static/phi_redactor/index.html
+          - modules/api/static/phi_redactor/protectedVeto.js
           - modules/api/static/phi_redactor/redactor.worker.js
           - modules/api/static/phi_redactor/styles.css
           - modules/api/static/phi_redactor/sw.js
+        - modules/api/static/.DS_Store
         - modules/api/static/app.js
         - modules/api/static/index.html
         - modules/api/static/phi_demo.html
         - modules/api/static/phi_demo.js
+      - modules/api/.DS_Store
       - modules/api/__init__.py
       - modules/api/coder_adapter.py
       - modules/api/dependencies.py
@@ -470,6 +424,7 @@ Git: `v18` @ `00dffde`
         - modules/coder/reconciliation/__init__.py
         - modules/coder/reconciliation/pipeline.py
         - modules/coder/reconciliation/reconciler.py
+      - modules/coder/.DS_Store
       - modules/coder/__init__.py
       - modules/coder/cli.py
       - modules/coder/code_families.py
@@ -568,6 +523,11 @@ Git: `v18` @ `00dffde`
         - modules/phi/adapters/presidio_scrubber.py
         - modules/phi/adapters/redaction-service.js
         - modules/phi/adapters/scrubber_stub.py
+      - modules/phi/safety/
+        - modules/phi/safety/__init__.py
+        - modules/phi/safety/protected_terms.py
+        - modules/phi/safety/veto.py
+      - modules/phi/.DS_Store
       - modules/phi/__init__.py
       - modules/phi/db.py
       - modules/phi/models.py
@@ -703,6 +663,7 @@ Git: `v18` @ `00dffde`
           - modules/reporting/templates/addons/chest_tube_removal.jinja
           - modules/reporting/templates/addons/cone_beam_ct_cbct_augmented_fluoroscopy_assisted_bronchoscopy.jinja
           - modules/reporting/templates/addons/control_of_minor_tracheostomy_bleeding_electrocautery.jinja
+          - modules/reporting/templates/addons/cryo_extraction_of_mucus_casts_secretions.jinja
           - modules/reporting/templates/addons/ebus_guided_19_gauge_core_fine_needle_biopsy_fnb.jinja
           - modules/reporting/templates/addons/ebus_guided_intranodal_forceps_biopsy_ifb.jinja
           - modules/reporting/templates/addons/ebus_tbna.jinja
@@ -796,6 +757,7 @@ Git: `v18` @ `00dffde`
       - modules/reporting/macro_engine.py
       - modules/reporting/metadata.py
       - modules/reporting/validation.py
+    - modules/.DS_Store
     - modules/__init__.py
   - observability/
     - observability/__init__.py
@@ -803,18 +765,12 @@ Git: `v18` @ `00dffde`
     - observability/logging_config.py
     - observability/metrics.py
     - observability/timing.py
-  - proc_autocode/
-    - proc_autocode/ip_kb/
-    - proc_autocode/rvu/
   - proc_kb/
     - proc_kb/ebus_config.yaml
   - proc_nlp/
     - proc_nlp/__init__.py
     - proc_nlp/normalize_proc.py
     - proc_nlp/umls_linker.py
-  - proc_registry/
-    - proc_registry/adapters/
-  - proc_report/
   - proc_schemas/
     - proc_schemas/clinical/
       - proc_schemas/clinical/__init__.py
@@ -834,19 +790,1978 @@ Git: `v18` @ `00dffde`
   - schemas/
     - schemas/IP_Registry.json
   - scripts/
+    - scripts/phi_test_node/
+      - scripts/phi_test_node/node_modules/
+        - scripts/phi_test_node/node_modules/@huggingface/
+          - scripts/phi_test_node/node_modules/@huggingface/jinja/
+            - scripts/phi_test_node/node_modules/@huggingface/jinja/src/
+              - scripts/phi_test_node/node_modules/@huggingface/jinja/src/ast.ts
+              - scripts/phi_test_node/node_modules/@huggingface/jinja/src/format.ts
+              - scripts/phi_test_node/node_modules/@huggingface/jinja/src/index.ts
+              - scripts/phi_test_node/node_modules/@huggingface/jinja/src/lexer.ts
+              - scripts/phi_test_node/node_modules/@huggingface/jinja/src/parser.ts
+              - scripts/phi_test_node/node_modules/@huggingface/jinja/src/runtime.ts
+              - scripts/phi_test_node/node_modules/@huggingface/jinja/src/utils.ts
+            - scripts/phi_test_node/node_modules/@huggingface/jinja/LICENSE
+            - scripts/phi_test_node/node_modules/@huggingface/jinja/package.json
+            - scripts/phi_test_node/node_modules/@huggingface/jinja/README.md
+            - scripts/phi_test_node/node_modules/@huggingface/jinja/tsconfig.json
+          - scripts/phi_test_node/node_modules/@huggingface/transformers/
+            - scripts/phi_test_node/node_modules/@huggingface/transformers/src/
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/backends/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/backends/onnx.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/base/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/base/feature_extraction_utils.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/base/image_processors_utils.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/base/processing_utils.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/generation/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/generation/configuration_utils.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/generation/logits_process.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/generation/logits_sampler.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/generation/parameters.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/generation/stopping_criteria.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/generation/streamers.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/audio_spectrogram_transformer/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/audio_spectrogram_transformer/feature_extraction_audio_spectrogram_transformer.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/auto/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/auto/feature_extraction_auto.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/auto/image_processing_auto.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/auto/processing_auto.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/beit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/beit/image_processing_beit.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/bit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/bit/image_processing_bit.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/chinese_clip/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/chinese_clip/image_processing_chinese_clip.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/clap/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/clap/feature_extraction_clap.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/clip/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/clip/image_processing_clip.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/convnext/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/convnext/image_processing_convnext.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/dac/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/dac/feature_extraction_dac.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/deit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/deit/image_processing_deit.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/detr/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/detr/image_processing_detr.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/dinov3_vit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/dinov3_vit/image_processing_dinov3_vit.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/donut/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/donut/image_processing_donut.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/dpt/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/dpt/image_processing_dpt.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/efficientnet/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/efficientnet/image_processing_efficientnet.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/encodec/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/encodec/feature_extraction_encodec.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/florence2/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/florence2/processing_florence2.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/gemma3n/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/gemma3n/feature_extraction_gemma3n.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/gemma3n/processing_gemma3n.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/glpn/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/glpn/image_processing_glpn.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/grounding_dino/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/grounding_dino/image_processing_grounding_dino.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/grounding_dino/processing_grounding_dino.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/idefics3/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/idefics3/image_processing_idefics3.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/idefics3/processing_idefics3.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/janus/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/janus/image_processing_janus.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/janus/processing_janus.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/jina_clip/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/jina_clip/image_processing_jina_clip.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/jina_clip/processing_jina_clip.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/llava/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/llava/processing_llava.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/llava_onevision/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/llava_onevision/image_processing_llava_onevision.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mask2former/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mask2former/image_processing_mask2former.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/maskformer/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/maskformer/image_processing_maskformer.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mgp_str/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mgp_str/processing_mgp_str.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mobilenet_v1/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mobilenet_v1/image_processing_mobilenet_v1.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mobilenet_v2/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mobilenet_v2/image_processing_mobilenet_v2.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mobilenet_v3/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mobilenet_v3/image_processing_mobilenet_v3.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mobilenet_v4/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mobilenet_v4/image_processing_mobilenet_v4.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mobilevit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/mobilevit/image_processing_mobilevit.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/moonshine/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/moonshine/feature_extraction_moonshine.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/moonshine/processing_moonshine.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/nougat/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/nougat/image_processing_nougat.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/owlv2/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/owlv2/image_processing_owlv2.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/owlvit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/owlvit/image_processing_owlvit.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/owlvit/processing_owlvit.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/paligemma/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/paligemma/processing_paligemma.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/parakeet/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/parakeet/feature_extraction_parakeet.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/phi3_v/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/phi3_v/image_processing_phi3_v.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/phi3_v/processing_phi3_v.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/pixtral/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/pixtral/image_processing_pixtral.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/pixtral/processing_pixtral.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/pvt/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/pvt/image_processing_pvt.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/pyannote/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/pyannote/feature_extraction_pyannote.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/pyannote/processing_pyannote.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/qwen2_vl/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/qwen2_vl/image_processing_qwen2_vl.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/qwen2_vl/processing_qwen2_vl.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/rt_detr/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/rt_detr/image_processing_rt_detr.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/sam/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/sam/image_processing_sam.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/sam/processing_sam.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/sam2/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/sam2/image_processing_sam2.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/sam2/processing_sam2.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/sam3/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/sam3/image_processing_sam3.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/sapiens/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/sapiens/image_processing_sapiens.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/seamless_m4t/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/seamless_m4t/feature_extraction_seamless_m4t.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/segformer/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/segformer/image_processing_segformer.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/siglip/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/siglip/image_processing_siglip.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/smolvlm/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/smolvlm/image_processing_smolvlm.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/smolvlm/processing_smolvlm.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/snac/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/snac/feature_extraction_snac.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/speecht5/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/speecht5/feature_extraction_speecht5.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/speecht5/processing_speecht5.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/swin2sr/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/swin2sr/image_processing_swin2sr.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/ultravox/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/ultravox/processing_ultravox.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/vit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/vit/image_processing_vit.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/vitmatte/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/vitmatte/image_processing_vitmatte.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/vitpose/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/vitpose/image_processing_vitpose.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/voxtral/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/voxtral/processing_voxtral.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/wav2vec2/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/wav2vec2/feature_extraction_wav2vec2.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/wav2vec2/processing_wav2vec2.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/wav2vec2_with_lm/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/wav2vec2_with_lm/processing_wav2vec2_with_lm.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/wespeaker/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/wespeaker/feature_extraction_wespeaker.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/whisper/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/whisper/common_whisper.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/whisper/feature_extraction_whisper.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/whisper/generation_whisper.js
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/whisper/processing_whisper.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/yolos/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/yolos/image_processing_yolos.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/feature_extractors.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/image_processors.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models/processors.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/ops/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/ops/registry.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/audio.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/constants.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/core.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/data-structures.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/devices.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/dtypes.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/generic.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/hub.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/image.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/maths.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/tensor.js
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/src/utils/video.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/configs.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/env.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/models.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/pipelines.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/tokenizers.js
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/src/transformers.js
+            - scripts/phi_test_node/node_modules/@huggingface/transformers/types/
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/backends/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/backends/onnx.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/backends/onnx.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/base/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/base/feature_extraction_utils.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/base/feature_extraction_utils.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/base/image_processors_utils.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/base/image_processors_utils.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/base/processing_utils.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/base/processing_utils.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/configuration_utils.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/configuration_utils.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/logits_process.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/logits_process.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/logits_sampler.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/logits_sampler.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/parameters.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/parameters.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/stopping_criteria.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/stopping_criteria.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/streamers.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/generation/streamers.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/audio_spectrogram_transformer/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/audio_spectrogram_transformer/feature_extraction_audio_spectrogram_transformer.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/audio_spectrogram_transformer/feature_extraction_audio_spectrogram_transformer.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/auto/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/auto/feature_extraction_auto.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/auto/feature_extraction_auto.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/auto/image_processing_auto.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/auto/image_processing_auto.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/auto/processing_auto.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/auto/processing_auto.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/beit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/beit/image_processing_beit.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/beit/image_processing_beit.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/bit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/bit/image_processing_bit.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/bit/image_processing_bit.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/chinese_clip/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/chinese_clip/image_processing_chinese_clip.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/chinese_clip/image_processing_chinese_clip.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/clap/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/clap/feature_extraction_clap.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/clap/feature_extraction_clap.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/clip/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/clip/image_processing_clip.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/clip/image_processing_clip.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/convnext/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/convnext/image_processing_convnext.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/convnext/image_processing_convnext.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/dac/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/dac/feature_extraction_dac.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/dac/feature_extraction_dac.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/deit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/deit/image_processing_deit.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/deit/image_processing_deit.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/detr/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/detr/image_processing_detr.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/detr/image_processing_detr.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/dinov3_vit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/dinov3_vit/image_processing_dinov3_vit.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/dinov3_vit/image_processing_dinov3_vit.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/donut/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/donut/image_processing_donut.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/donut/image_processing_donut.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/dpt/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/dpt/image_processing_dpt.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/dpt/image_processing_dpt.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/efficientnet/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/efficientnet/image_processing_efficientnet.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/efficientnet/image_processing_efficientnet.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/encodec/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/encodec/feature_extraction_encodec.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/encodec/feature_extraction_encodec.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/florence2/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/florence2/processing_florence2.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/florence2/processing_florence2.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/gemma3n/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/gemma3n/feature_extraction_gemma3n.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/gemma3n/feature_extraction_gemma3n.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/gemma3n/processing_gemma3n.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/gemma3n/processing_gemma3n.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/glpn/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/glpn/image_processing_glpn.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/glpn/image_processing_glpn.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/grounding_dino/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/grounding_dino/image_processing_grounding_dino.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/grounding_dino/image_processing_grounding_dino.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/grounding_dino/processing_grounding_dino.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/grounding_dino/processing_grounding_dino.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/idefics3/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/idefics3/image_processing_idefics3.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/idefics3/image_processing_idefics3.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/idefics3/processing_idefics3.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/idefics3/processing_idefics3.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/janus/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/janus/image_processing_janus.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/janus/image_processing_janus.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/janus/processing_janus.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/janus/processing_janus.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/jina_clip/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/jina_clip/image_processing_jina_clip.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/jina_clip/image_processing_jina_clip.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/jina_clip/processing_jina_clip.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/jina_clip/processing_jina_clip.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/llava/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/llava/processing_llava.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/llava/processing_llava.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/llava_onevision/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/llava_onevision/image_processing_llava_onevision.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/llava_onevision/image_processing_llava_onevision.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mask2former/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mask2former/image_processing_mask2former.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mask2former/image_processing_mask2former.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/maskformer/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/maskformer/image_processing_maskformer.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/maskformer/image_processing_maskformer.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mgp_str/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mgp_str/processing_mgp_str.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mgp_str/processing_mgp_str.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v1/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v1/image_processing_mobilenet_v1.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v1/image_processing_mobilenet_v1.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v2/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v2/image_processing_mobilenet_v2.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v2/image_processing_mobilenet_v2.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v3/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v3/image_processing_mobilenet_v3.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v3/image_processing_mobilenet_v3.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v4/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v4/image_processing_mobilenet_v4.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilenet_v4/image_processing_mobilenet_v4.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilevit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilevit/image_processing_mobilevit.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/mobilevit/image_processing_mobilevit.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/moonshine/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/moonshine/feature_extraction_moonshine.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/moonshine/feature_extraction_moonshine.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/moonshine/processing_moonshine.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/moonshine/processing_moonshine.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/nougat/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/nougat/image_processing_nougat.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/nougat/image_processing_nougat.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/owlv2/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/owlv2/image_processing_owlv2.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/owlv2/image_processing_owlv2.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/owlvit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/owlvit/image_processing_owlvit.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/owlvit/image_processing_owlvit.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/owlvit/processing_owlvit.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/owlvit/processing_owlvit.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/paligemma/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/paligemma/processing_paligemma.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/paligemma/processing_paligemma.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/parakeet/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/parakeet/feature_extraction_parakeet.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/parakeet/feature_extraction_parakeet.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/phi3_v/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/phi3_v/image_processing_phi3_v.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/phi3_v/image_processing_phi3_v.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/phi3_v/processing_phi3_v.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/phi3_v/processing_phi3_v.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pixtral/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pixtral/image_processing_pixtral.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pixtral/image_processing_pixtral.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pixtral/processing_pixtral.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pixtral/processing_pixtral.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pvt/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pvt/image_processing_pvt.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pvt/image_processing_pvt.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pyannote/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pyannote/feature_extraction_pyannote.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pyannote/feature_extraction_pyannote.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pyannote/processing_pyannote.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/pyannote/processing_pyannote.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/qwen2_vl/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/qwen2_vl/image_processing_qwen2_vl.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/qwen2_vl/image_processing_qwen2_vl.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/qwen2_vl/processing_qwen2_vl.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/qwen2_vl/processing_qwen2_vl.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/rt_detr/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/rt_detr/image_processing_rt_detr.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/rt_detr/image_processing_rt_detr.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam/image_processing_sam.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam/image_processing_sam.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam/processing_sam.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam/processing_sam.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam2/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam2/image_processing_sam2.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam2/image_processing_sam2.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam2/processing_sam2.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam2/processing_sam2.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam3/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam3/image_processing_sam3.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sam3/image_processing_sam3.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sapiens/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sapiens/image_processing_sapiens.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/sapiens/image_processing_sapiens.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/seamless_m4t/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/seamless_m4t/feature_extraction_seamless_m4t.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/seamless_m4t/feature_extraction_seamless_m4t.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/segformer/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/segformer/image_processing_segformer.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/segformer/image_processing_segformer.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/siglip/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/siglip/image_processing_siglip.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/siglip/image_processing_siglip.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/smolvlm/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/smolvlm/image_processing_smolvlm.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/smolvlm/image_processing_smolvlm.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/smolvlm/processing_smolvlm.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/smolvlm/processing_smolvlm.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/snac/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/snac/feature_extraction_snac.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/snac/feature_extraction_snac.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/speecht5/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/speecht5/feature_extraction_speecht5.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/speecht5/feature_extraction_speecht5.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/speecht5/processing_speecht5.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/speecht5/processing_speecht5.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/swin2sr/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/swin2sr/image_processing_swin2sr.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/swin2sr/image_processing_swin2sr.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/ultravox/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/ultravox/processing_ultravox.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/ultravox/processing_ultravox.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/vit/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/vit/image_processing_vit.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/vit/image_processing_vit.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/vitmatte/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/vitmatte/image_processing_vitmatte.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/vitmatte/image_processing_vitmatte.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/vitpose/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/vitpose/image_processing_vitpose.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/vitpose/image_processing_vitpose.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/voxtral/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/voxtral/processing_voxtral.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/voxtral/processing_voxtral.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wav2vec2/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wav2vec2/feature_extraction_wav2vec2.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wav2vec2/feature_extraction_wav2vec2.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wav2vec2/processing_wav2vec2.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wav2vec2/processing_wav2vec2.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wav2vec2_with_lm/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wav2vec2_with_lm/processing_wav2vec2_with_lm.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wav2vec2_with_lm/processing_wav2vec2_with_lm.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wespeaker/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wespeaker/feature_extraction_wespeaker.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/wespeaker/feature_extraction_wespeaker.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/whisper/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/whisper/common_whisper.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/whisper/common_whisper.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/whisper/feature_extraction_whisper.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/whisper/feature_extraction_whisper.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/whisper/generation_whisper.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/whisper/generation_whisper.d.ts.map
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/whisper/processing_whisper.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/whisper/processing_whisper.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/yolos/
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/yolos/image_processing_yolos.d.ts
+                  - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/yolos/image_processing_yolos.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/feature_extractors.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/feature_extractors.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/image_processors.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/image_processors.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/processors.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models/processors.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/ops/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/ops/registry.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/ops/registry.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/audio.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/audio.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/constants.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/constants.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/core.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/core.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/data-structures.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/data-structures.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/devices.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/devices.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/dtypes.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/dtypes.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/generic.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/generic.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/hub.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/hub.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/image.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/image.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/maths.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/maths.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/tensor.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/tensor.d.ts.map
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/video.d.ts
+                - scripts/phi_test_node/node_modules/@huggingface/transformers/types/utils/video.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/configs.d.ts
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/configs.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/env.d.ts
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/env.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models.d.ts
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/models.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/pipelines.d.ts
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/pipelines.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/tokenizers.d.ts
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/tokenizers.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/transformers.d.ts
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/transformers.d.ts.map
+              - scripts/phi_test_node/node_modules/@huggingface/transformers/types/tsconfig.tsbuildinfo
+            - scripts/phi_test_node/node_modules/@huggingface/transformers/LICENSE
+            - scripts/phi_test_node/node_modules/@huggingface/transformers/package.json
+            - scripts/phi_test_node/node_modules/@huggingface/transformers/README.md
+        - scripts/phi_test_node/node_modules/@img/
+          - scripts/phi_test_node/node_modules/@img/colour/
+            - scripts/phi_test_node/node_modules/@img/colour/color.cjs
+            - scripts/phi_test_node/node_modules/@img/colour/index.cjs
+            - scripts/phi_test_node/node_modules/@img/colour/LICENSE.md
+            - scripts/phi_test_node/node_modules/@img/colour/package.json
+            - scripts/phi_test_node/node_modules/@img/colour/README.md
+          - scripts/phi_test_node/node_modules/@img/sharp-darwin-arm64/
+            - scripts/phi_test_node/node_modules/@img/sharp-darwin-arm64/lib/
+              - scripts/phi_test_node/node_modules/@img/sharp-darwin-arm64/lib/sharp-darwin-arm64.node
+            - scripts/phi_test_node/node_modules/@img/sharp-darwin-arm64/LICENSE
+            - scripts/phi_test_node/node_modules/@img/sharp-darwin-arm64/package.json
+            - scripts/phi_test_node/node_modules/@img/sharp-darwin-arm64/README.md
+          - scripts/phi_test_node/node_modules/@img/sharp-libvips-darwin-arm64/
+            - scripts/phi_test_node/node_modules/@img/sharp-libvips-darwin-arm64/lib/
+              - scripts/phi_test_node/node_modules/@img/sharp-libvips-darwin-arm64/lib/glib-2.0/
+                - scripts/phi_test_node/node_modules/@img/sharp-libvips-darwin-arm64/lib/glib-2.0/include/
+                  - scripts/phi_test_node/node_modules/@img/sharp-libvips-darwin-arm64/lib/glib-2.0/include/glibconfig.h
+              - scripts/phi_test_node/node_modules/@img/sharp-libvips-darwin-arm64/lib/index.js
+              - scripts/phi_test_node/node_modules/@img/sharp-libvips-darwin-arm64/lib/libvips-cpp.8.17.3.dylib
+            - scripts/phi_test_node/node_modules/@img/sharp-libvips-darwin-arm64/package.json
+            - scripts/phi_test_node/node_modules/@img/sharp-libvips-darwin-arm64/README.md
+            - scripts/phi_test_node/node_modules/@img/sharp-libvips-darwin-arm64/versions.json
+        - scripts/phi_test_node/node_modules/@isaacs/
+          - scripts/phi_test_node/node_modules/@isaacs/fs-minipass/
+            - scripts/phi_test_node/node_modules/@isaacs/fs-minipass/LICENSE
+            - scripts/phi_test_node/node_modules/@isaacs/fs-minipass/package.json
+            - scripts/phi_test_node/node_modules/@isaacs/fs-minipass/README.md
+        - scripts/phi_test_node/node_modules/@protobufjs/
+          - scripts/phi_test_node/node_modules/@protobufjs/aspromise/
+            - scripts/phi_test_node/node_modules/@protobufjs/aspromise/tests/
+              - scripts/phi_test_node/node_modules/@protobufjs/aspromise/tests/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/aspromise/index.d.ts
+            - scripts/phi_test_node/node_modules/@protobufjs/aspromise/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/aspromise/LICENSE
+            - scripts/phi_test_node/node_modules/@protobufjs/aspromise/package.json
+            - scripts/phi_test_node/node_modules/@protobufjs/aspromise/README.md
+          - scripts/phi_test_node/node_modules/@protobufjs/base64/
+            - scripts/phi_test_node/node_modules/@protobufjs/base64/tests/
+              - scripts/phi_test_node/node_modules/@protobufjs/base64/tests/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/base64/index.d.ts
+            - scripts/phi_test_node/node_modules/@protobufjs/base64/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/base64/LICENSE
+            - scripts/phi_test_node/node_modules/@protobufjs/base64/package.json
+            - scripts/phi_test_node/node_modules/@protobufjs/base64/README.md
+          - scripts/phi_test_node/node_modules/@protobufjs/codegen/
+            - scripts/phi_test_node/node_modules/@protobufjs/codegen/tests/
+              - scripts/phi_test_node/node_modules/@protobufjs/codegen/tests/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/codegen/index.d.ts
+            - scripts/phi_test_node/node_modules/@protobufjs/codegen/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/codegen/LICENSE
+            - scripts/phi_test_node/node_modules/@protobufjs/codegen/package.json
+            - scripts/phi_test_node/node_modules/@protobufjs/codegen/README.md
+          - scripts/phi_test_node/node_modules/@protobufjs/eventemitter/
+            - scripts/phi_test_node/node_modules/@protobufjs/eventemitter/tests/
+              - scripts/phi_test_node/node_modules/@protobufjs/eventemitter/tests/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/eventemitter/index.d.ts
+            - scripts/phi_test_node/node_modules/@protobufjs/eventemitter/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/eventemitter/LICENSE
+            - scripts/phi_test_node/node_modules/@protobufjs/eventemitter/package.json
+            - scripts/phi_test_node/node_modules/@protobufjs/eventemitter/README.md
+          - scripts/phi_test_node/node_modules/@protobufjs/fetch/
+            - scripts/phi_test_node/node_modules/@protobufjs/fetch/tests/
+              - scripts/phi_test_node/node_modules/@protobufjs/fetch/tests/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/fetch/index.d.ts
+            - scripts/phi_test_node/node_modules/@protobufjs/fetch/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/fetch/LICENSE
+            - scripts/phi_test_node/node_modules/@protobufjs/fetch/package.json
+            - scripts/phi_test_node/node_modules/@protobufjs/fetch/README.md
+          - scripts/phi_test_node/node_modules/@protobufjs/float/
+            - scripts/phi_test_node/node_modules/@protobufjs/float/bench/
+              - scripts/phi_test_node/node_modules/@protobufjs/float/bench/index.js
+              - scripts/phi_test_node/node_modules/@protobufjs/float/bench/suite.js
+            - scripts/phi_test_node/node_modules/@protobufjs/float/tests/
+              - scripts/phi_test_node/node_modules/@protobufjs/float/tests/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/float/index.d.ts
+            - scripts/phi_test_node/node_modules/@protobufjs/float/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/float/LICENSE
+            - scripts/phi_test_node/node_modules/@protobufjs/float/package.json
+            - scripts/phi_test_node/node_modules/@protobufjs/float/README.md
+          - scripts/phi_test_node/node_modules/@protobufjs/inquire/
+            - scripts/phi_test_node/node_modules/@protobufjs/inquire/tests/
+              - scripts/phi_test_node/node_modules/@protobufjs/inquire/tests/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/inquire/.npmignore
+            - scripts/phi_test_node/node_modules/@protobufjs/inquire/index.d.ts
+            - scripts/phi_test_node/node_modules/@protobufjs/inquire/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/inquire/LICENSE
+            - scripts/phi_test_node/node_modules/@protobufjs/inquire/package.json
+            - scripts/phi_test_node/node_modules/@protobufjs/inquire/README.md
+          - scripts/phi_test_node/node_modules/@protobufjs/path/
+            - scripts/phi_test_node/node_modules/@protobufjs/path/tests/
+              - scripts/phi_test_node/node_modules/@protobufjs/path/tests/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/path/index.d.ts
+            - scripts/phi_test_node/node_modules/@protobufjs/path/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/path/LICENSE
+            - scripts/phi_test_node/node_modules/@protobufjs/path/package.json
+            - scripts/phi_test_node/node_modules/@protobufjs/path/README.md
+          - scripts/phi_test_node/node_modules/@protobufjs/pool/
+            - scripts/phi_test_node/node_modules/@protobufjs/pool/tests/
+              - scripts/phi_test_node/node_modules/@protobufjs/pool/tests/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/pool/.npmignore
+            - scripts/phi_test_node/node_modules/@protobufjs/pool/index.d.ts
+            - scripts/phi_test_node/node_modules/@protobufjs/pool/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/pool/LICENSE
+            - scripts/phi_test_node/node_modules/@protobufjs/pool/package.json
+            - scripts/phi_test_node/node_modules/@protobufjs/pool/README.md
+          - scripts/phi_test_node/node_modules/@protobufjs/utf8/
+            - scripts/phi_test_node/node_modules/@protobufjs/utf8/tests/
+              - scripts/phi_test_node/node_modules/@protobufjs/utf8/tests/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/utf8/.npmignore
+            - scripts/phi_test_node/node_modules/@protobufjs/utf8/index.d.ts
+            - scripts/phi_test_node/node_modules/@protobufjs/utf8/index.js
+            - scripts/phi_test_node/node_modules/@protobufjs/utf8/LICENSE
+            - scripts/phi_test_node/node_modules/@protobufjs/utf8/package.json
+            - scripts/phi_test_node/node_modules/@protobufjs/utf8/README.md
+        - scripts/phi_test_node/node_modules/@types/
+          - scripts/phi_test_node/node_modules/@types/node/
+            - scripts/phi_test_node/node_modules/@types/node/assert/
+              - scripts/phi_test_node/node_modules/@types/node/assert/strict.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/compatibility/
+              - scripts/phi_test_node/node_modules/@types/node/compatibility/iterators.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/dns/
+              - scripts/phi_test_node/node_modules/@types/node/dns/promises.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/fs/
+              - scripts/phi_test_node/node_modules/@types/node/fs/promises.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/inspector/
+              - scripts/phi_test_node/node_modules/@types/node/inspector/promises.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/path/
+              - scripts/phi_test_node/node_modules/@types/node/path/posix.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/path/win32.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/readline/
+              - scripts/phi_test_node/node_modules/@types/node/readline/promises.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/stream/
+              - scripts/phi_test_node/node_modules/@types/node/stream/consumers.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/stream/promises.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/stream/web.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/test/
+              - scripts/phi_test_node/node_modules/@types/node/test/reporters.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/timers/
+              - scripts/phi_test_node/node_modules/@types/node/timers/promises.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/ts5.6/
+              - scripts/phi_test_node/node_modules/@types/node/ts5.6/compatibility/
+                - scripts/phi_test_node/node_modules/@types/node/ts5.6/compatibility/float16array.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/ts5.6/buffer.buffer.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/ts5.6/globals.typedarray.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/ts5.6/index.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/ts5.7/
+              - scripts/phi_test_node/node_modules/@types/node/ts5.7/compatibility/
+                - scripts/phi_test_node/node_modules/@types/node/ts5.7/compatibility/float16array.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/ts5.7/index.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/util/
+              - scripts/phi_test_node/node_modules/@types/node/util/types.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/web-globals/
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/abortcontroller.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/blob.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/console.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/crypto.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/domexception.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/encoding.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/events.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/fetch.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/importmeta.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/messaging.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/navigator.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/performance.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/storage.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/streams.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/timers.d.ts
+              - scripts/phi_test_node/node_modules/@types/node/web-globals/url.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/assert.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/async_hooks.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/buffer.buffer.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/buffer.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/child_process.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/cluster.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/console.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/constants.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/crypto.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/dgram.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/diagnostics_channel.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/dns.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/domain.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/events.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/fs.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/globals.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/globals.typedarray.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/http.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/http2.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/https.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/index.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/inspector.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/inspector.generated.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/LICENSE
+            - scripts/phi_test_node/node_modules/@types/node/module.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/net.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/os.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/package.json
+            - scripts/phi_test_node/node_modules/@types/node/path.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/perf_hooks.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/process.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/punycode.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/querystring.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/quic.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/readline.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/README.md
+            - scripts/phi_test_node/node_modules/@types/node/repl.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/sea.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/sqlite.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/stream.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/string_decoder.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/test.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/timers.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/tls.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/trace_events.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/tty.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/url.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/util.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/v8.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/vm.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/wasi.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/worker_threads.d.ts
+            - scripts/phi_test_node/node_modules/@types/node/zlib.d.ts
+        - scripts/phi_test_node/node_modules/boolean/
+          - scripts/phi_test_node/node_modules/boolean/build/
+            - scripts/phi_test_node/node_modules/boolean/build/lib/
+              - scripts/phi_test_node/node_modules/boolean/build/lib/boolean.d.ts
+              - scripts/phi_test_node/node_modules/boolean/build/lib/boolean.js
+              - scripts/phi_test_node/node_modules/boolean/build/lib/index.d.ts
+              - scripts/phi_test_node/node_modules/boolean/build/lib/index.js
+              - scripts/phi_test_node/node_modules/boolean/build/lib/isBooleanable.d.ts
+              - scripts/phi_test_node/node_modules/boolean/build/lib/isBooleanable.js
+          - scripts/phi_test_node/node_modules/boolean/lib/
+            - scripts/phi_test_node/node_modules/boolean/lib/boolean.ts
+            - scripts/phi_test_node/node_modules/boolean/lib/index.ts
+            - scripts/phi_test_node/node_modules/boolean/lib/isBooleanable.ts
+          - scripts/phi_test_node/node_modules/boolean/.eslintrc.json
+          - scripts/phi_test_node/node_modules/boolean/.npmpackagejsonlintrc.json
+          - scripts/phi_test_node/node_modules/boolean/.releaserc.json
+          - scripts/phi_test_node/node_modules/boolean/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/boolean/LICENSE.txt
+          - scripts/phi_test_node/node_modules/boolean/licenseCheck.json
+          - scripts/phi_test_node/node_modules/boolean/package.json
+          - scripts/phi_test_node/node_modules/boolean/README.md
+          - scripts/phi_test_node/node_modules/boolean/tsconfig.json
+        - scripts/phi_test_node/node_modules/chownr/
+          - scripts/phi_test_node/node_modules/chownr/LICENSE.md
+          - scripts/phi_test_node/node_modules/chownr/package.json
+          - scripts/phi_test_node/node_modules/chownr/README.md
+        - scripts/phi_test_node/node_modules/define-data-property/
+          - scripts/phi_test_node/node_modules/define-data-property/.github/
+            - scripts/phi_test_node/node_modules/define-data-property/.github/FUNDING.yml
+          - scripts/phi_test_node/node_modules/define-data-property/test/
+            - scripts/phi_test_node/node_modules/define-data-property/test/index.js
+          - scripts/phi_test_node/node_modules/define-data-property/.eslintrc
+          - scripts/phi_test_node/node_modules/define-data-property/.nycrc
+          - scripts/phi_test_node/node_modules/define-data-property/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/define-data-property/index.d.ts
+          - scripts/phi_test_node/node_modules/define-data-property/index.js
+          - scripts/phi_test_node/node_modules/define-data-property/LICENSE
+          - scripts/phi_test_node/node_modules/define-data-property/package.json
+          - scripts/phi_test_node/node_modules/define-data-property/README.md
+          - scripts/phi_test_node/node_modules/define-data-property/tsconfig.json
+        - scripts/phi_test_node/node_modules/define-properties/
+          - scripts/phi_test_node/node_modules/define-properties/.github/
+            - scripts/phi_test_node/node_modules/define-properties/.github/FUNDING.yml
+          - scripts/phi_test_node/node_modules/define-properties/.editorconfig
+          - scripts/phi_test_node/node_modules/define-properties/.eslintrc
+          - scripts/phi_test_node/node_modules/define-properties/.nycrc
+          - scripts/phi_test_node/node_modules/define-properties/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/define-properties/index.js
+          - scripts/phi_test_node/node_modules/define-properties/LICENSE
+          - scripts/phi_test_node/node_modules/define-properties/package.json
+          - scripts/phi_test_node/node_modules/define-properties/README.md
+        - scripts/phi_test_node/node_modules/detect-libc/
+          - scripts/phi_test_node/node_modules/detect-libc/lib/
+            - scripts/phi_test_node/node_modules/detect-libc/lib/detect-libc.js
+            - scripts/phi_test_node/node_modules/detect-libc/lib/elf.js
+            - scripts/phi_test_node/node_modules/detect-libc/lib/filesystem.js
+            - scripts/phi_test_node/node_modules/detect-libc/lib/process.js
+          - scripts/phi_test_node/node_modules/detect-libc/index.d.ts
+          - scripts/phi_test_node/node_modules/detect-libc/LICENSE
+          - scripts/phi_test_node/node_modules/detect-libc/package.json
+          - scripts/phi_test_node/node_modules/detect-libc/README.md
+        - scripts/phi_test_node/node_modules/detect-node/
+          - scripts/phi_test_node/node_modules/detect-node/browser.js
+          - scripts/phi_test_node/node_modules/detect-node/index.esm.js
+          - scripts/phi_test_node/node_modules/detect-node/index.js
+          - scripts/phi_test_node/node_modules/detect-node/LICENSE
+          - scripts/phi_test_node/node_modules/detect-node/package.json
+          - scripts/phi_test_node/node_modules/detect-node/Readme.md
+        - scripts/phi_test_node/node_modules/es-define-property/
+          - scripts/phi_test_node/node_modules/es-define-property/.github/
+            - scripts/phi_test_node/node_modules/es-define-property/.github/FUNDING.yml
+          - scripts/phi_test_node/node_modules/es-define-property/test/
+            - scripts/phi_test_node/node_modules/es-define-property/test/index.js
+          - scripts/phi_test_node/node_modules/es-define-property/.eslintrc
+          - scripts/phi_test_node/node_modules/es-define-property/.nycrc
+          - scripts/phi_test_node/node_modules/es-define-property/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/es-define-property/index.d.ts
+          - scripts/phi_test_node/node_modules/es-define-property/index.js
+          - scripts/phi_test_node/node_modules/es-define-property/LICENSE
+          - scripts/phi_test_node/node_modules/es-define-property/package.json
+          - scripts/phi_test_node/node_modules/es-define-property/README.md
+          - scripts/phi_test_node/node_modules/es-define-property/tsconfig.json
+        - scripts/phi_test_node/node_modules/es-errors/
+          - scripts/phi_test_node/node_modules/es-errors/.github/
+            - scripts/phi_test_node/node_modules/es-errors/.github/FUNDING.yml
+          - scripts/phi_test_node/node_modules/es-errors/test/
+            - scripts/phi_test_node/node_modules/es-errors/test/index.js
+          - scripts/phi_test_node/node_modules/es-errors/.eslintrc
+          - scripts/phi_test_node/node_modules/es-errors/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/es-errors/eval.d.ts
+          - scripts/phi_test_node/node_modules/es-errors/eval.js
+          - scripts/phi_test_node/node_modules/es-errors/index.d.ts
+          - scripts/phi_test_node/node_modules/es-errors/index.js
+          - scripts/phi_test_node/node_modules/es-errors/LICENSE
+          - scripts/phi_test_node/node_modules/es-errors/package.json
+          - scripts/phi_test_node/node_modules/es-errors/range.d.ts
+          - scripts/phi_test_node/node_modules/es-errors/range.js
+          - scripts/phi_test_node/node_modules/es-errors/README.md
+          - scripts/phi_test_node/node_modules/es-errors/ref.d.ts
+          - scripts/phi_test_node/node_modules/es-errors/ref.js
+          - scripts/phi_test_node/node_modules/es-errors/syntax.d.ts
+          - scripts/phi_test_node/node_modules/es-errors/syntax.js
+          - scripts/phi_test_node/node_modules/es-errors/tsconfig.json
+          - scripts/phi_test_node/node_modules/es-errors/type.d.ts
+          - scripts/phi_test_node/node_modules/es-errors/type.js
+          - scripts/phi_test_node/node_modules/es-errors/uri.d.ts
+          - scripts/phi_test_node/node_modules/es-errors/uri.js
+        - scripts/phi_test_node/node_modules/es6-error/
+          - scripts/phi_test_node/node_modules/es6-error/es6/
+            - scripts/phi_test_node/node_modules/es6-error/es6/index.js
+          - scripts/phi_test_node/node_modules/es6-error/lib/
+            - scripts/phi_test_node/node_modules/es6-error/lib/index.js
+          - scripts/phi_test_node/node_modules/es6-error/typings/
+            - scripts/phi_test_node/node_modules/es6-error/typings/index.d.ts
+          - scripts/phi_test_node/node_modules/es6-error/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/es6-error/LICENSE.md
+          - scripts/phi_test_node/node_modules/es6-error/package.json
+          - scripts/phi_test_node/node_modules/es6-error/README.md
+        - scripts/phi_test_node/node_modules/escape-string-regexp/
+          - scripts/phi_test_node/node_modules/escape-string-regexp/index.d.ts
+          - scripts/phi_test_node/node_modules/escape-string-regexp/index.js
+          - scripts/phi_test_node/node_modules/escape-string-regexp/license
+          - scripts/phi_test_node/node_modules/escape-string-regexp/package.json
+          - scripts/phi_test_node/node_modules/escape-string-regexp/readme.md
+        - scripts/phi_test_node/node_modules/flatbuffers/
+          - scripts/phi_test_node/node_modules/flatbuffers/js/
+            - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/bit-width-util.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/bit-width-util.js
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/bit-width.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/bit-width.js
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/builder.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/builder.js
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/flexbuffers-util.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/flexbuffers-util.js
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/reference-util.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/reference-util.js
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/reference.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/reference.js
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/stack-value.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/stack-value.js
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/value-type-util.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/value-type-util.js
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/value-type.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers/value-type.js
+            - scripts/phi_test_node/node_modules/flatbuffers/js/builder.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/js/builder.js
+            - scripts/phi_test_node/node_modules/flatbuffers/js/byte-buffer.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/js/byte-buffer.js
+            - scripts/phi_test_node/node_modules/flatbuffers/js/constants.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/js/constants.js
+            - scripts/phi_test_node/node_modules/flatbuffers/js/encoding.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/js/encoding.js
+            - scripts/phi_test_node/node_modules/flatbuffers/js/flatbuffers.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/js/flatbuffers.js
+            - scripts/phi_test_node/node_modules/flatbuffers/js/flatbuffers.min.js
+            - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/js/flexbuffers.js
+            - scripts/phi_test_node/node_modules/flatbuffers/js/types.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/js/types.js
+            - scripts/phi_test_node/node_modules/flatbuffers/js/utils.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/js/utils.js
+          - scripts/phi_test_node/node_modules/flatbuffers/mjs/
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/bit-width-util.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/bit-width-util.js
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/bit-width.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/bit-width.js
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/builder.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/builder.js
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/flexbuffers-util.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/flexbuffers-util.js
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/reference-util.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/reference-util.js
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/reference.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/reference.js
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/stack-value.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/stack-value.js
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/value-type-util.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/value-type-util.js
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/value-type.d.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers/value-type.js
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/builder.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/builder.js
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/byte-buffer.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/byte-buffer.js
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/constants.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/constants.js
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/encoding.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/encoding.js
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/flatbuffers.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/flatbuffers.js
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/flexbuffers.js
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/types.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/types.js
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/utils.d.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/mjs/utils.js
+          - scripts/phi_test_node/node_modules/flatbuffers/ts/
+            - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers/
+              - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers/bit-width-util.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers/bit-width.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers/builder.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers/flexbuffers-util.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers/reference-util.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers/reference.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers/stack-value.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers/value-type-util.ts
+              - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers/value-type.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/ts/builder.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/ts/byte-buffer.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/ts/constants.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/ts/encoding.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/ts/flatbuffers.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/ts/flexbuffers.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/ts/types.ts
+            - scripts/phi_test_node/node_modules/flatbuffers/ts/utils.ts
+          - scripts/phi_test_node/node_modules/flatbuffers/LICENSE
+          - scripts/phi_test_node/node_modules/flatbuffers/package.json
+          - scripts/phi_test_node/node_modules/flatbuffers/README.md
+        - scripts/phi_test_node/node_modules/global-agent/
+          - scripts/phi_test_node/node_modules/global-agent/src/
+            - scripts/phi_test_node/node_modules/global-agent/src/classes/
+              - scripts/phi_test_node/node_modules/global-agent/src/classes/Agent.js
+              - scripts/phi_test_node/node_modules/global-agent/src/classes/HttpProxyAgent.js
+              - scripts/phi_test_node/node_modules/global-agent/src/classes/HttpsProxyAgent.js
+              - scripts/phi_test_node/node_modules/global-agent/src/classes/index.js
+            - scripts/phi_test_node/node_modules/global-agent/src/factories/
+              - scripts/phi_test_node/node_modules/global-agent/src/factories/createGlobalProxyAgent.js
+              - scripts/phi_test_node/node_modules/global-agent/src/factories/createProxyController.js
+              - scripts/phi_test_node/node_modules/global-agent/src/factories/index.js
+            - scripts/phi_test_node/node_modules/global-agent/src/routines/
+              - scripts/phi_test_node/node_modules/global-agent/src/routines/bootstrap.js
+              - scripts/phi_test_node/node_modules/global-agent/src/routines/index.js
+            - scripts/phi_test_node/node_modules/global-agent/src/utilities/
+              - scripts/phi_test_node/node_modules/global-agent/src/utilities/bindHttpMethod.js
+              - scripts/phi_test_node/node_modules/global-agent/src/utilities/index.js
+              - scripts/phi_test_node/node_modules/global-agent/src/utilities/isUrlMatchingNoProxy.js
+              - scripts/phi_test_node/node_modules/global-agent/src/utilities/parseProxyUrl.js
+            - scripts/phi_test_node/node_modules/global-agent/src/errors.js
+            - scripts/phi_test_node/node_modules/global-agent/src/index.js
+            - scripts/phi_test_node/node_modules/global-agent/src/Logger.js
+            - scripts/phi_test_node/node_modules/global-agent/src/types.js
+          - scripts/phi_test_node/node_modules/global-agent/.flowconfig
+          - scripts/phi_test_node/node_modules/global-agent/bootstrap.js
+          - scripts/phi_test_node/node_modules/global-agent/LICENSE
+          - scripts/phi_test_node/node_modules/global-agent/package.json
+          - scripts/phi_test_node/node_modules/global-agent/README.md
+        - scripts/phi_test_node/node_modules/globalthis/
+          - scripts/phi_test_node/node_modules/globalthis/test/
+            - scripts/phi_test_node/node_modules/globalthis/test/implementation.js
+            - scripts/phi_test_node/node_modules/globalthis/test/index.js
+            - scripts/phi_test_node/node_modules/globalthis/test/native.js
+            - scripts/phi_test_node/node_modules/globalthis/test/shimmed.js
+            - scripts/phi_test_node/node_modules/globalthis/test/tests.js
+          - scripts/phi_test_node/node_modules/globalthis/.eslintrc
+          - scripts/phi_test_node/node_modules/globalthis/.nycrc
+          - scripts/phi_test_node/node_modules/globalthis/auto.js
+          - scripts/phi_test_node/node_modules/globalthis/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/globalthis/implementation.browser.js
+          - scripts/phi_test_node/node_modules/globalthis/implementation.js
+          - scripts/phi_test_node/node_modules/globalthis/index.js
+          - scripts/phi_test_node/node_modules/globalthis/LICENSE
+          - scripts/phi_test_node/node_modules/globalthis/package.json
+          - scripts/phi_test_node/node_modules/globalthis/polyfill.js
+          - scripts/phi_test_node/node_modules/globalthis/README.md
+          - scripts/phi_test_node/node_modules/globalthis/shim.js
+        - scripts/phi_test_node/node_modules/gopd/
+          - scripts/phi_test_node/node_modules/gopd/.github/
+            - scripts/phi_test_node/node_modules/gopd/.github/FUNDING.yml
+          - scripts/phi_test_node/node_modules/gopd/test/
+            - scripts/phi_test_node/node_modules/gopd/test/index.js
+          - scripts/phi_test_node/node_modules/gopd/.eslintrc
+          - scripts/phi_test_node/node_modules/gopd/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/gopd/gOPD.d.ts
+          - scripts/phi_test_node/node_modules/gopd/gOPD.js
+          - scripts/phi_test_node/node_modules/gopd/index.d.ts
+          - scripts/phi_test_node/node_modules/gopd/index.js
+          - scripts/phi_test_node/node_modules/gopd/LICENSE
+          - scripts/phi_test_node/node_modules/gopd/package.json
+          - scripts/phi_test_node/node_modules/gopd/README.md
+          - scripts/phi_test_node/node_modules/gopd/tsconfig.json
+        - scripts/phi_test_node/node_modules/guid-typescript/
+          - scripts/phi_test_node/node_modules/guid-typescript/package.json
+          - scripts/phi_test_node/node_modules/guid-typescript/README.md
+        - scripts/phi_test_node/node_modules/has-property-descriptors/
+          - scripts/phi_test_node/node_modules/has-property-descriptors/.github/
+            - scripts/phi_test_node/node_modules/has-property-descriptors/.github/FUNDING.yml
+          - scripts/phi_test_node/node_modules/has-property-descriptors/test/
+            - scripts/phi_test_node/node_modules/has-property-descriptors/test/index.js
+          - scripts/phi_test_node/node_modules/has-property-descriptors/.eslintrc
+          - scripts/phi_test_node/node_modules/has-property-descriptors/.nycrc
+          - scripts/phi_test_node/node_modules/has-property-descriptors/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/has-property-descriptors/index.js
+          - scripts/phi_test_node/node_modules/has-property-descriptors/LICENSE
+          - scripts/phi_test_node/node_modules/has-property-descriptors/package.json
+          - scripts/phi_test_node/node_modules/has-property-descriptors/README.md
+        - scripts/phi_test_node/node_modules/json-stringify-safe/
+          - scripts/phi_test_node/node_modules/json-stringify-safe/test/
+            - scripts/phi_test_node/node_modules/json-stringify-safe/test/mocha.opts
+            - scripts/phi_test_node/node_modules/json-stringify-safe/test/stringify_test.js
+          - scripts/phi_test_node/node_modules/json-stringify-safe/.npmignore
+          - scripts/phi_test_node/node_modules/json-stringify-safe/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/json-stringify-safe/LICENSE
+          - scripts/phi_test_node/node_modules/json-stringify-safe/Makefile
+          - scripts/phi_test_node/node_modules/json-stringify-safe/package.json
+          - scripts/phi_test_node/node_modules/json-stringify-safe/README.md
+          - scripts/phi_test_node/node_modules/json-stringify-safe/stringify.js
+        - scripts/phi_test_node/node_modules/long/
+          - scripts/phi_test_node/node_modules/long/umd/
+            - scripts/phi_test_node/node_modules/long/umd/index.d.ts
+            - scripts/phi_test_node/node_modules/long/umd/index.js
+            - scripts/phi_test_node/node_modules/long/umd/package.json
+            - scripts/phi_test_node/node_modules/long/umd/types.d.ts
+          - scripts/phi_test_node/node_modules/long/index.d.ts
+          - scripts/phi_test_node/node_modules/long/index.js
+          - scripts/phi_test_node/node_modules/long/LICENSE
+          - scripts/phi_test_node/node_modules/long/package.json
+          - scripts/phi_test_node/node_modules/long/README.md
+          - scripts/phi_test_node/node_modules/long/types.d.ts
+        - scripts/phi_test_node/node_modules/matcher/
+          - scripts/phi_test_node/node_modules/matcher/index.d.ts
+          - scripts/phi_test_node/node_modules/matcher/index.js
+          - scripts/phi_test_node/node_modules/matcher/license
+          - scripts/phi_test_node/node_modules/matcher/package.json
+          - scripts/phi_test_node/node_modules/matcher/readme.md
+        - scripts/phi_test_node/node_modules/minipass/
+          - scripts/phi_test_node/node_modules/minipass/LICENSE
+          - scripts/phi_test_node/node_modules/minipass/package.json
+          - scripts/phi_test_node/node_modules/minipass/README.md
+        - scripts/phi_test_node/node_modules/minizlib/
+          - scripts/phi_test_node/node_modules/minizlib/LICENSE
+          - scripts/phi_test_node/node_modules/minizlib/package.json
+          - scripts/phi_test_node/node_modules/minizlib/README.md
+        - scripts/phi_test_node/node_modules/object-keys/
+          - scripts/phi_test_node/node_modules/object-keys/test/
+            - scripts/phi_test_node/node_modules/object-keys/test/index.js
+          - scripts/phi_test_node/node_modules/object-keys/.editorconfig
+          - scripts/phi_test_node/node_modules/object-keys/.eslintrc
+          - scripts/phi_test_node/node_modules/object-keys/.travis.yml
+          - scripts/phi_test_node/node_modules/object-keys/CHANGELOG.md
+          - scripts/phi_test_node/node_modules/object-keys/implementation.js
+          - scripts/phi_test_node/node_modules/object-keys/index.js
+          - scripts/phi_test_node/node_modules/object-keys/isArguments.js
+          - scripts/phi_test_node/node_modules/object-keys/LICENSE
+          - scripts/phi_test_node/node_modules/object-keys/package.json
+          - scripts/phi_test_node/node_modules/object-keys/README.md
+        - scripts/phi_test_node/node_modules/onnxruntime-common/
+          - scripts/phi_test_node/node_modules/onnxruntime-common/lib/
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/backend-impl.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/backend.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/env-impl.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/env.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/index.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/inference-session-impl.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/inference-session.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/onnx-model.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/onnx-value.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/tensor-conversion-impl.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/tensor-conversion.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/tensor-factory-impl.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/tensor-factory.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/tensor-impl-type-mapping.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/tensor-impl.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/tensor-utils-impl.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/tensor-utils.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/tensor.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/trace.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/type-helper.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-common/lib/version.ts
+          - scripts/phi_test_node/node_modules/onnxruntime-common/package.json
+          - scripts/phi_test_node/node_modules/onnxruntime-common/README.md
+        - scripts/phi_test_node/node_modules/onnxruntime-node/
+          - scripts/phi_test_node/node_modules/onnxruntime-node/bin/
+            - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/
+              - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/darwin/
+                - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/darwin/arm64/
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/darwin/arm64/libonnxruntime.1.21.0.dylib
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/darwin/arm64/onnxruntime_binding.node
+                - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/darwin/x64/
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/darwin/x64/libonnxruntime.1.21.0.dylib
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/darwin/x64/onnxruntime_binding.node
+              - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/linux/
+                - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/linux/arm64/
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/linux/arm64/libonnxruntime.so.1
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/linux/arm64/libonnxruntime.so.1.21.0
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/linux/arm64/onnxruntime_binding.node
+                - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/linux/x64/
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/linux/x64/libonnxruntime.so.1
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/linux/x64/libonnxruntime.so.1.21.0
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/linux/x64/libonnxruntime_providers_shared.so
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/linux/x64/onnxruntime_binding.node
+              - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/win32/
+                - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/win32/arm64/
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/win32/arm64/DirectML.dll
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/win32/arm64/onnxruntime.dll
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/win32/arm64/onnxruntime_binding.node
+                - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/win32/x64/
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/win32/x64/DirectML.dll
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/win32/x64/onnxruntime.dll
+                  - scripts/phi_test_node/node_modules/onnxruntime-node/bin/napi-v3/win32/x64/onnxruntime_binding.node
+          - scripts/phi_test_node/node_modules/onnxruntime-node/lib/
+            - scripts/phi_test_node/node_modules/onnxruntime-node/lib/backend.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-node/lib/binding.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-node/lib/index.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-node/lib/version.ts
+          - scripts/phi_test_node/node_modules/onnxruntime-node/script/
+            - scripts/phi_test_node/node_modules/onnxruntime-node/script/build.js
+            - scripts/phi_test_node/node_modules/onnxruntime-node/script/build.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-node/script/install.js
+            - scripts/phi_test_node/node_modules/onnxruntime-node/script/prepack.js
+            - scripts/phi_test_node/node_modules/onnxruntime-node/script/prepack.ts
+          - scripts/phi_test_node/node_modules/onnxruntime-node/package.json
+          - scripts/phi_test_node/node_modules/onnxruntime-node/README.md
+        - scripts/phi_test_node/node_modules/onnxruntime-web/
+          - scripts/phi_test_node/node_modules/onnxruntime-web/docs/
+            - scripts/phi_test_node/node_modules/onnxruntime-web/docs/webgl-operators.md
+            - scripts/phi_test_node/node_modules/onnxruntime-web/docs/webgpu-operators.md
+            - scripts/phi_test_node/node_modules/onnxruntime-web/docs/webnn-operators.md
+          - scripts/phi_test_node/node_modules/onnxruntime-web/lib/
+            - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/batch-normalization.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/batch-normalization.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/batch-normalization.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/binary-op.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/binary-op.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/binary-op.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/cast.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/cast.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/cast.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/concat-packed.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/concat-packed.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/concat-packed.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/concat.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/concat.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/concat.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv-grouped.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv-grouped.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv-grouped.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv-pack.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv-pack.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv-pack.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv-transpose.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv-transpose.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv-transpose.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/conv.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/depth-to-space.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/depth-to-space.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/depth-to-space.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/dot-product.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/dot-product.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/dot-product.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/flatten.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/flatten.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/flatten.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/fuse-utils.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/fuse-utils.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/fuse-utils.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/gather.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/gather.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/gather.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/gemm.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/gemm.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/gemm.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/im2col-pack.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/im2col-pack.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/im2col-pack.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/im2col.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/im2col.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/im2col.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/image-scaler.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/image-scaler.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/image-scaler.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/instance-normalization.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/instance-normalization.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/instance-normalization.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/lrn.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/lrn.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/lrn.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/matmul-pack.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/matmul-pack.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/matmul-pack.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/matmul.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/matmul.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/matmul.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/pack.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/pack.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/pack.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/packing-utils.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/packing-utils.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/packing-utils.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/pad.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/pad.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/pad.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/pool.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/pool.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/pool.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/reduce.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/reduce.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/reduce.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/reshape-packed.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/reshape-packed.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/reshape-packed.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/reshape.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/reshape.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/reshape.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/resize-packed.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/resize-packed.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/resize-packed.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/shape.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/shape.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/shape.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/slice.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/slice.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/slice.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/softmax.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/softmax.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/softmax.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/split.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/split.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/split.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/squeeze.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/squeeze.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/squeeze.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/sum.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/sum.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/sum.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/tile.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/tile.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/tile.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/transpose.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/transpose.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/transpose.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/uint8-encode.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/uint8-encode.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/uint8-encode.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/unary-op.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/unary-op.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/unary-op.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/unpack.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/unpack.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/unpack.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/unsqueeze.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/unsqueeze.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/unsqueeze.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/upsample.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/upsample.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/ops/upsample.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-array-lib.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-coordinate-lib.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-coordinate-lib.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-coordinate-lib.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-definitions.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-definitions.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-definitions.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-encoding-lib.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-encoding-lib.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-encoding-lib.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-fragcolor-lib.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-fragcolor-lib.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-fragcolor-lib.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-function-inliner.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-function-inliner.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-function-inliner.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-preprocessor.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-preprocessor.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-preprocessor.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-registered-libs.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-registered-libs.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-registered-libs.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-shape-utils-lib.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-shape-utils-lib.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-shape-utils-lib.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-source.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-source.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-source.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-vec-lib.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-vec-lib.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/glsl-vec-lib.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/inference-handler.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/inference-handler.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/inference-handler.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/op-resolve-rules.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/op-resolve-rules.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/op-resolve-rules.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/program-manager.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/program-manager.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/program-manager.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/session-handler.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/session-handler.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/session-handler.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-data-encoder.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-data-encoder.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-data-encoder.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-layout-strategy.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-layout-strategy.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-layout-strategy.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-layout.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-layout.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-layout.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-manager.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-manager.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/texture-manager.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/types.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/types.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/types.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/utils.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/utils.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/utils.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/webgl-context-factory.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/webgl-context-factory.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/webgl-context-factory.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/webgl-context.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/webgl-context.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/webgl/webgl-context.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/backend-webgl.js
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/backend-webgl.js.map
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backends/backend-webgl.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/arg-type-and-index.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/arg-type-and-index.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/arg-type-and-index.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/arg-type.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/arg-type.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/arg-type.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/attribute-type.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/attribute-type.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/attribute-type.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/attribute.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/attribute.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/attribute.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-kernel-create-infos.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-kernel-create-infos.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-kernel-create-infos.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-node-index-and-kernel-def-hash.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-node-index-and-kernel-def-hash.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-node-index-and-kernel-def-hash.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-session-state.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-session-state.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-session-state.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-sub-graph-session-state.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-sub-graph-session-state.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/deprecated-sub-graph-session-state.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/dimension-value-type.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/dimension-value-type.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/dimension-value-type.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/dimension-value.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/dimension-value.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/dimension-value.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/dimension.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/dimension.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/dimension.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/edge-end.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/edge-end.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/edge-end.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/graph.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/graph.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/graph.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/inference-session.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/inference-session.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/inference-session.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/kernel-type-str-args-entry.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/kernel-type-str-args-entry.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/kernel-type-str-args-entry.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/kernel-type-str-resolver.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/kernel-type-str-resolver.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/kernel-type-str-resolver.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/map-type.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/map-type.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/map-type.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/model.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/model.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/model.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/node-edge.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/node-edge.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/node-edge.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/node-type.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/node-type.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/node-type.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/node.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/node.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/node.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/nodes-to-optimize-indices.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/nodes-to-optimize-indices.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/nodes-to-optimize-indices.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/op-id-kernel-type-str-args-entry.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/op-id-kernel-type-str-args-entry.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/op-id-kernel-type-str-args-entry.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/operator-set-id.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/operator-set-id.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/operator-set-id.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/runtime-optimization-record-container-entry.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/runtime-optimization-record-container-entry.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/runtime-optimization-record-container-entry.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/runtime-optimization-record.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/runtime-optimization-record.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/runtime-optimization-record.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/runtime-optimizations.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/runtime-optimizations.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/runtime-optimizations.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/sequence-type.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/sequence-type.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/sequence-type.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/shape.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/shape.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/shape.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/sparse-tensor.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/sparse-tensor.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/sparse-tensor.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/string-string-entry.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/string-string-entry.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/string-string-entry.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/tensor-data-type.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/tensor-data-type.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/tensor-data-type.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/tensor-type-and-shape.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/tensor-type-and-shape.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/tensor-type-and-shape.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/tensor.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/tensor.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/tensor.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/type-info-value.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/type-info-value.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/type-info-value.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/type-info.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/type-info.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/type-info.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/value-info.js
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/value-info.js.map
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs/value-info.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs.js
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs.js.map
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/onnxruntime/fbs.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/ort-generated.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/ort-generated.js.map
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/ort-generated.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/flatbuffers/README.md
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/protobuf/
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/protobuf/onnx.d.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/protobuf/onnx.js
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/ort-schema/protobuf/README.md
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/attribute-with-cache-key.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/attribute-with-cache-key.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/attribute-with-cache-key.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/attribute.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/attribute.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/attribute.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backend.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backend.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/backend.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/execution-plan.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/execution-plan.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/execution-plan.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/graph.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/graph.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/graph.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/instrument.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/instrument.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/instrument.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/model.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/model.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/model.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/operators.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/operators.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/operators.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/opset.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/opset.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/opset.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/session-handler-inference.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/session.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/session.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/session.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/tensor.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/tensor.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/tensor.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/util.js
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/util.js.map
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/onnxjs/util.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/3rd-party/
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/3rd-party/activation_util.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/3rd-party/conv2d_mm_webgpu.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/3rd-party/conv3d_naive_webgpu.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/3rd-party/conv_backprop_mm_webgpu.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/3rd-party/conv_backprop_webgpu.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/3rd-party/conv_util.ts
+                      - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/3rd-party/matmul_packed_webgpu.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/argminmax.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/attention.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/batch-norm.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/bias-add.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/bias-split-gelu.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/binary-op.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/common.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/concat.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/conv-grouped.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/conv-transpose.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/conv.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/cumsum.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/depth-to-space.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/einsum.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/expand.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/fast-gelu.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/fuse-utils.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/gather-block-quantized.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/gather-elements.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/gather-nd.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/gather.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/gemm.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/grid-sample.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/group-query-attention.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/instance-norm.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/layer-norm.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/matmul-shaders.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/matmul.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/matmulnbits.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/multihead-attention.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/pad.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/pool.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/quantize-linear.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/range.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/reduce-shared.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/reduce.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/resize.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/rotary-embedding.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/scatter-nd.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/skip-layer-norm.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/slice.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/softmax.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/split.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/tile.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/transpose.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/unary-op.ts
+                    - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/ops/where.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/attribute-with-cache-key.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/gpu-data-manager.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/op-resolve-rules.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/program-manager.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webgpu/types.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webnn/
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webnn/tensor-manager.ts
+                  - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/webnn/webnn.d.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/backend-webgpu.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/backend-webnn.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/init.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/log.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/tensor-view.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/jsep/util.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/proxy-worker/
+                - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/proxy-worker/main.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/proxy-messages.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/proxy-wrapper.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/run-options.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/session-handler-inference.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/session-options.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/wasm-common.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/wasm-core-impl.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/wasm-factory.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/wasm-types.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/wasm-utils-env.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/wasm-utils-import.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/wasm-utils-load-file.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/lib/wasm/wasm-utils.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-web/lib/backend-onnxjs.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-web/lib/backend-wasm.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-web/lib/build-def.d.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-web/lib/index.ts
+            - scripts/phi_test_node/node_modules/onnxruntime-web/lib/version.ts
+          - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/
+            - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/
+              - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/backend-impl.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/backend.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/env-impl.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/env.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/index.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/inference-session-impl.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/inference-session.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/onnx-model.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/onnx-value.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/tensor-conversion-impl.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/tensor-conversion.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/tensor-factory-impl.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/tensor-factory.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/tensor-impl-type-mapping.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/tensor-impl.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/tensor-utils-impl.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/tensor-utils.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/tensor.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/trace.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/type-helper.ts
+                - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/lib/version.ts
+              - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/__commit.txt
+              - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/package.json
+              - scripts/phi_test_node/node_modules/onnxruntime-web/node_modules/onnxruntime-common/README.md
+          - scripts/phi_test_node/node_modules/onnxruntime-web/__commit.txt
+          - scripts/phi_test_node/node_modules/onnxruntime-web/package.json
+          - scripts/phi_test_node/node_modules/onnxruntime-web/README.md
+          - scripts/phi_test_node/node_modules/onnxruntime-web/types.d.ts
+        - scripts/phi_test_node/node_modules/platform/
+          - scripts/phi_test_node/node_modules/platform/LICENSE
+          - scripts/phi_test_node/node_modules/platform/package.json
+          - scripts/phi_test_node/node_modules/platform/platform.js
+          - scripts/phi_test_node/node_modules/platform/README.md
+        - scripts/phi_test_node/node_modules/protobufjs/
+          - scripts/phi_test_node/node_modules/protobufjs/ext/
+            - scripts/phi_test_node/node_modules/protobufjs/ext/debug/
+              - scripts/phi_test_node/node_modules/protobufjs/ext/debug/index.js
+              - scripts/phi_test_node/node_modules/protobufjs/ext/debug/README.md
+            - scripts/phi_test_node/node_modules/protobufjs/ext/descriptor/
+              - scripts/phi_test_node/node_modules/protobufjs/ext/descriptor/index.d.ts
+              - scripts/phi_test_node/node_modules/protobufjs/ext/descriptor/index.js
+              - scripts/phi_test_node/node_modules/protobufjs/ext/descriptor/README.md
+              - scripts/phi_test_node/node_modules/protobufjs/ext/descriptor/test.js
+          - scripts/phi_test_node/node_modules/protobufjs/google/
+            - scripts/phi_test_node/node_modules/protobufjs/google/api/
+              - scripts/phi_test_node/node_modules/protobufjs/google/api/annotations.json
+              - scripts/phi_test_node/node_modules/protobufjs/google/api/annotations.proto
+              - scripts/phi_test_node/node_modules/protobufjs/google/api/http.json
+              - scripts/phi_test_node/node_modules/protobufjs/google/api/http.proto
+            - scripts/phi_test_node/node_modules/protobufjs/google/protobuf/
+              - scripts/phi_test_node/node_modules/protobufjs/google/protobuf/api.json
+              - scripts/phi_test_node/node_modules/protobufjs/google/protobuf/api.proto
+              - scripts/phi_test_node/node_modules/protobufjs/google/protobuf/descriptor.json
+              - scripts/phi_test_node/node_modules/protobufjs/google/protobuf/descriptor.proto
+              - scripts/phi_test_node/node_modules/protobufjs/google/protobuf/source_context.json
+              - scripts/phi_test_node/node_modules/protobufjs/google/protobuf/source_context.proto
+              - scripts/phi_test_node/node_modules/protobufjs/google/protobuf/type.json
+              - scripts/phi_test_node/node_modules/protobufjs/google/protobuf/type.proto
+            - scripts/phi_test_node/node_modules/protobufjs/google/LICENSE
+            - scripts/phi_test_node/node_modules/protobufjs/google/README.md
+          - scripts/phi_test_node/node_modules/protobufjs/scripts/
+            - scripts/phi_test_node/node_modules/protobufjs/scripts/postinstall.js
+          - scripts/phi_test_node/node_modules/protobufjs/src/
+            - scripts/phi_test_node/node_modules/protobufjs/src/rpc/
+              - scripts/phi_test_node/node_modules/protobufjs/src/rpc/service.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/util/
+              - scripts/phi_test_node/node_modules/protobufjs/src/util/longbits.js
+              - scripts/phi_test_node/node_modules/protobufjs/src/util/minimal.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/common.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/converter.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/decoder.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/encoder.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/enum.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/field.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/index-light.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/index-minimal.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/index.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/mapfield.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/message.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/method.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/namespace.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/object.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/oneof.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/parse.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/reader.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/reader_buffer.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/root.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/roots.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/rpc.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/service.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/tokenize.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/type.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/types.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/typescript.jsdoc
+            - scripts/phi_test_node/node_modules/protobufjs/src/util.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/verifier.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/wrappers.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/writer.js
+            - scripts/phi_test_node/node_modules/protobufjs/src/writer_buffer.js
+          - scripts/phi_test_node/node_modules/protobufjs/index.d.ts
+          - scripts/phi_test_node/node_modules/protobufjs/index.js
+          - scripts/phi_test_node/node_modules/protobufjs/LICENSE
+          - scripts/phi_test_node/node_modules/protobufjs/light.d.ts
+          - scripts/phi_test_node/node_modules/protobufjs/light.js
+          - scripts/phi_test_node/node_modules/protobufjs/minimal.d.ts
+          - scripts/phi_test_node/node_modules/protobufjs/minimal.js
+          - scripts/phi_test_node/node_modules/protobufjs/package.json
+          - scripts/phi_test_node/node_modules/protobufjs/README.md
+          - scripts/phi_test_node/node_modules/protobufjs/tsconfig.json
+        - scripts/phi_test_node/node_modules/roarr/
+          - scripts/phi_test_node/node_modules/roarr/LICENSE
+          - scripts/phi_test_node/node_modules/roarr/package.json
+          - scripts/phi_test_node/node_modules/roarr/README.md
+        - scripts/phi_test_node/node_modules/semver/
+          - scripts/phi_test_node/node_modules/semver/bin/
+            - scripts/phi_test_node/node_modules/semver/bin/semver.js
+          - scripts/phi_test_node/node_modules/semver/classes/
+            - scripts/phi_test_node/node_modules/semver/classes/comparator.js
+            - scripts/phi_test_node/node_modules/semver/classes/index.js
+            - scripts/phi_test_node/node_modules/semver/classes/range.js
+            - scripts/phi_test_node/node_modules/semver/classes/semver.js
+          - scripts/phi_test_node/node_modules/semver/functions/
+            - scripts/phi_test_node/node_modules/semver/functions/clean.js
+            - scripts/phi_test_node/node_modules/semver/functions/cmp.js
+            - scripts/phi_test_node/node_modules/semver/functions/coerce.js
+            - scripts/phi_test_node/node_modules/semver/functions/compare-build.js
+            - scripts/phi_test_node/node_modules/semver/functions/compare-loose.js
+            - scripts/phi_test_node/node_modules/semver/functions/compare.js
+            - scripts/phi_test_node/node_modules/semver/functions/diff.js
+            - scripts/phi_test_node/node_modules/semver/functions/eq.js
+            - scripts/phi_test_node/node_modules/semver/functions/gt.js
+            - scripts/phi_test_node/node_modules/semver/functions/gte.js
+            - scripts/phi_test_node/node_modules/semver/functions/inc.js
+            - scripts/phi_test_node/node_modules/semver/functions/lt.js
+            - scripts/phi_test_node/node_modules/semver/functions/lte.js
+            - scripts/phi_test_node/node_modules/semver/functions/major.js
+            - scripts/phi_test_node/node_modules/semver/functions/minor.js
+            - scripts/phi_test_node/node_modules/semver/functions/neq.js
+            - scripts/phi_test_node/node_modules/semver/functions/parse.js
+            - scripts/phi_test_node/node_modules/semver/functions/patch.js
+            - scripts/phi_test_node/node_modules/semver/functions/prerelease.js
+            - scripts/phi_test_node/node_modules/semver/functions/rcompare.js
+            - scripts/phi_test_node/node_modules/semver/functions/rsort.js
+            - scripts/phi_test_node/node_modules/semver/functions/satisfies.js
+            - scripts/phi_test_node/node_modules/semver/functions/sort.js
+            - scripts/phi_test_node/node_modules/semver/functions/valid.js
+          - scripts/phi_test_node/node_modules/semver/internal/
+            - scripts/phi_test_node/node_modules/semver/internal/constants.js
+            - scripts/phi_test_node/node_modules/semver/internal/debug.js
+            - scripts/phi_test_node/node_modules/semver/internal/identifiers.js
+            - scripts/phi_test_node/node_modules/semver/internal/lrucache.js
+            - scripts/phi_test_node/node_modules/semver/internal/parse-options.js
+            - scripts/phi_test_node/node_modules/semver/internal/re.js
+          - scripts/phi_test_node/node_modules/semver/ranges/
+            - scripts/phi_test_node/node_modules/semver/ranges/gtr.js
+            - scripts/phi_test_node/node_modules/semver/ranges/intersects.js
+            - scripts/phi_test_node/node_modules/semver/ranges/ltr.js
+            - scripts/phi_test_node/node_modules/semver/ranges/max-satisfying.js
+            - scripts/phi_test_node/node_modules/semver/ranges/min-satisfying.js
+            - scripts/phi_test_node/node_modules/semver/ranges/min-version.js
+            - scripts/phi_test_node/node_modules/semver/ranges/outside.js
+            - scripts/phi_test_node/node_modules/semver/ranges/simplify.js
+            - scripts/phi_test_node/node_modules/semver/ranges/subset.js
+            - scripts/phi_test_node/node_modules/semver/ranges/to-comparators.js
+            - scripts/phi_test_node/node_modules/semver/ranges/valid.js
+          - scripts/phi_test_node/node_modules/semver/index.js
+          - scripts/phi_test_node/node_modules/semver/LICENSE
+          - scripts/phi_test_node/node_modules/semver/package.json
+          - scripts/phi_test_node/node_modules/semver/preload.js
+          - scripts/phi_test_node/node_modules/semver/range.bnf
+          - scripts/phi_test_node/node_modules/semver/README.md
+        - scripts/phi_test_node/node_modules/semver-compare/
+          - scripts/phi_test_node/node_modules/semver-compare/example/
+            - scripts/phi_test_node/node_modules/semver-compare/example/cmp.js
+            - scripts/phi_test_node/node_modules/semver-compare/example/lex.js
+          - scripts/phi_test_node/node_modules/semver-compare/test/
+            - scripts/phi_test_node/node_modules/semver-compare/test/cmp.js
+          - scripts/phi_test_node/node_modules/semver-compare/.travis.yml
+          - scripts/phi_test_node/node_modules/semver-compare/index.js
+          - scripts/phi_test_node/node_modules/semver-compare/LICENSE
+          - scripts/phi_test_node/node_modules/semver-compare/package.json
+          - scripts/phi_test_node/node_modules/semver-compare/readme.markdown
+        - scripts/phi_test_node/node_modules/serialize-error/
+          - scripts/phi_test_node/node_modules/serialize-error/index.d.ts
+          - scripts/phi_test_node/node_modules/serialize-error/index.js
+          - scripts/phi_test_node/node_modules/serialize-error/license
+          - scripts/phi_test_node/node_modules/serialize-error/package.json
+          - scripts/phi_test_node/node_modules/serialize-error/readme.md
+        - scripts/phi_test_node/node_modules/sharp/
+          - scripts/phi_test_node/node_modules/sharp/install/
+            - scripts/phi_test_node/node_modules/sharp/install/build.js
+            - scripts/phi_test_node/node_modules/sharp/install/check.js
+          - scripts/phi_test_node/node_modules/sharp/lib/
+            - scripts/phi_test_node/node_modules/sharp/lib/channel.js
+            - scripts/phi_test_node/node_modules/sharp/lib/colour.js
+            - scripts/phi_test_node/node_modules/sharp/lib/composite.js
+            - scripts/phi_test_node/node_modules/sharp/lib/constructor.js
+            - scripts/phi_test_node/node_modules/sharp/lib/index.d.ts
+            - scripts/phi_test_node/node_modules/sharp/lib/index.js
+            - scripts/phi_test_node/node_modules/sharp/lib/input.js
+            - scripts/phi_test_node/node_modules/sharp/lib/is.js
+            - scripts/phi_test_node/node_modules/sharp/lib/libvips.js
+            - scripts/phi_test_node/node_modules/sharp/lib/operation.js
+            - scripts/phi_test_node/node_modules/sharp/lib/output.js
+            - scripts/phi_test_node/node_modules/sharp/lib/resize.js
+            - scripts/phi_test_node/node_modules/sharp/lib/sharp.js
+            - scripts/phi_test_node/node_modules/sharp/lib/utility.js
+          - scripts/phi_test_node/node_modules/sharp/src/
+            - scripts/phi_test_node/node_modules/sharp/src/binding.gyp
+            - scripts/phi_test_node/node_modules/sharp/src/common.cc
+            - scripts/phi_test_node/node_modules/sharp/src/common.h
+            - scripts/phi_test_node/node_modules/sharp/src/metadata.cc
+            - scripts/phi_test_node/node_modules/sharp/src/metadata.h
+            - scripts/phi_test_node/node_modules/sharp/src/operations.cc
+            - scripts/phi_test_node/node_modules/sharp/src/operations.h
+            - scripts/phi_test_node/node_modules/sharp/src/pipeline.cc
+            - scripts/phi_test_node/node_modules/sharp/src/pipeline.h
+            - scripts/phi_test_node/node_modules/sharp/src/sharp.cc
+            - scripts/phi_test_node/node_modules/sharp/src/stats.cc
+            - scripts/phi_test_node/node_modules/sharp/src/stats.h
+            - scripts/phi_test_node/node_modules/sharp/src/utilities.cc
+            - scripts/phi_test_node/node_modules/sharp/src/utilities.h
+          - scripts/phi_test_node/node_modules/sharp/LICENSE
+          - scripts/phi_test_node/node_modules/sharp/package.json
+          - scripts/phi_test_node/node_modules/sharp/README.md
+        - scripts/phi_test_node/node_modules/sprintf-js/
+          - scripts/phi_test_node/node_modules/sprintf-js/src/
+            - scripts/phi_test_node/node_modules/sprintf-js/src/angular-sprintf.js
+            - scripts/phi_test_node/node_modules/sprintf-js/src/sprintf.js
+          - scripts/phi_test_node/node_modules/sprintf-js/CONTRIBUTORS.md
+          - scripts/phi_test_node/node_modules/sprintf-js/LICENSE
+          - scripts/phi_test_node/node_modules/sprintf-js/package.json
+          - scripts/phi_test_node/node_modules/sprintf-js/README.md
+        - scripts/phi_test_node/node_modules/tar/
+          - scripts/phi_test_node/node_modules/tar/LICENSE.md
+          - scripts/phi_test_node/node_modules/tar/package.json
+          - scripts/phi_test_node/node_modules/tar/README.md
+        - scripts/phi_test_node/node_modules/type-fest/
+          - scripts/phi_test_node/node_modules/type-fest/source/
+            - scripts/phi_test_node/node_modules/type-fest/source/async-return-type.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/basic.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/conditional-except.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/conditional-keys.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/conditional-pick.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/except.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/literal-union.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/merge-exclusive.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/merge.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/mutable.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/opaque.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/package-json.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/partial-deep.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/promisable.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/promise-value.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/readonly-deep.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/require-at-least-one.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/require-exactly-one.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/set-optional.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/set-required.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/stringified.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/tsconfig-json.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/union-to-intersection.d.ts
+            - scripts/phi_test_node/node_modules/type-fest/source/value-of.d.ts
+          - scripts/phi_test_node/node_modules/type-fest/index.d.ts
+          - scripts/phi_test_node/node_modules/type-fest/license
+          - scripts/phi_test_node/node_modules/type-fest/package.json
+          - scripts/phi_test_node/node_modules/type-fest/readme.md
+        - scripts/phi_test_node/node_modules/undici-types/
+          - scripts/phi_test_node/node_modules/undici-types/agent.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/api.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/balanced-pool.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/cache-interceptor.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/cache.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/client-stats.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/client.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/connector.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/content-type.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/cookies.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/diagnostics-channel.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/dispatcher.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/env-http-proxy-agent.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/errors.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/eventsource.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/fetch.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/formdata.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/global-dispatcher.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/global-origin.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/h2c-client.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/handlers.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/header.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/index.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/interceptors.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/LICENSE
+          - scripts/phi_test_node/node_modules/undici-types/mock-agent.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/mock-call-history.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/mock-client.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/mock-errors.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/mock-interceptor.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/mock-pool.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/package.json
+          - scripts/phi_test_node/node_modules/undici-types/patch.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/pool-stats.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/pool.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/proxy-agent.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/readable.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/README.md
+          - scripts/phi_test_node/node_modules/undici-types/retry-agent.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/retry-handler.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/snapshot-agent.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/util.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/utility.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/webidl.d.ts
+          - scripts/phi_test_node/node_modules/undici-types/websocket.d.ts
+        - scripts/phi_test_node/node_modules/yallist/
+          - scripts/phi_test_node/node_modules/yallist/LICENSE.md
+          - scripts/phi_test_node/node_modules/yallist/package.json
+          - scripts/phi_test_node/node_modules/yallist/README.md
+        - scripts/phi_test_node/node_modules/.package-lock.json
+      - scripts/phi_test_node/package-lock.json
+      - scripts/phi_test_node/package.json
+      - scripts/phi_test_node/results.txt
+      - scripts/phi_test_node/test_phi_redaction.mjs
+    - scripts/audit_model_fp.py
+    - scripts/build_hard_negative_patch.py
+    - scripts/build_model_agnostic_phi_spans.py
     - scripts/build_phi_allowlist_trie.py
     - scripts/build_registry_bundle.py
+    - scripts/check_onnx_inputs.py
     - scripts/check_pydantic_models.py
+    - scripts/clean_distilled_phi_labels.py
     - scripts/dev_pull_model.sh
     - scripts/devserver.sh
     - scripts/discover_aws_region.sh
+    - scripts/distill_phi_labels.py
     - scripts/download_piiranha_model.py
     - scripts/eval_hybrid_pipeline.py
     - scripts/evaluate_coder.py
     - scripts/evaluate_cpt.py
+    - scripts/export_phi_model_for_transformersjs.py
     - scripts/fit_thresholds_from_eval.py
     - scripts/generate_addon_templates.py
     - scripts/generate_gitingest.py
+    - scripts/generate_synthetic_phi_data.py
+    - scripts/normalize_phi_labels.py
     - scripts/patch.py
     - scripts/phi_audit.py
     - scripts/preflight.py
@@ -857,9 +2772,13 @@ Git: `v18` @ `00dffde`
     - scripts/render_report.py
     - scripts/review_llm_fallback_errors.py
     - scripts/run_coder_hybrid.py
+    - scripts/sanitize_dataset.py
+    - scripts/sanitize_platinum_spans.py
     - scripts/scrub_golden_jsons.py
     - scripts/self_correct_registry.py
     - scripts/smoke_run.sh
+    - scripts/test_phi_redaction_sample.py
+    - scripts/train_distilbert_ner.py
     - scripts/train_registry_sklearn.py
     - scripts/train_roberta.py
     - scripts/train_roberta_pm3.py
@@ -878,6 +2797,7 @@ Git: `v18` @ `00dffde`
       - tests/api/test_phi_redactor_ui.py
       - tests/api/test_registry_extract_endpoint.py
       - tests/api/test_ui.py
+      - tests/api/test_unified_process.py
     - tests/coder/
       - tests/coder/test_candidate_expansion.py
       - tests/coder/test_coder_qa_regressions.py
@@ -1008,6 +2928,10 @@ Git: `v18` @ `00dffde`
       - tests/reporter/test_reporter_engine.py
       - tests/reporter/test_struct_from_free_text.py
       - tests/reporter/test_template_render.py
+    - tests/scripts/
+      - tests/scripts/test_audit_model_fp_cli.py
+      - tests/scripts/test_audit_model_fp_logic.py
+      - tests/scripts/test_train_distilbert_ner_cli.py
     - tests/unit/
       - tests/unit/.gitkeep
       - tests/unit/__init__.py
@@ -1018,11 +2942,17 @@ Git: `v18` @ `00dffde`
       - tests/unit/test_inmemory_procedure_store.py
       - tests/unit/test_knowledge.py
       - tests/unit/test_no_legacy_imports.py
+      - tests/unit/test_normalize_phi_labels.py
       - tests/unit/test_openai_payload_compat.py
       - tests/unit/test_openai_responses_primary.py
       - tests/unit/test_openai_timeouts.py
+      - tests/unit/test_phi_distillation.py
+      - tests/unit/test_phi_distillation_refinery.py
+      - tests/unit/test_phi_platinum_filters.py
       - tests/unit/test_procedure_type_detector.py
+      - tests/unit/test_protected_veto.py
       - tests/unit/test_rules.py
+      - tests/unit/test_sanitize_dataset.py
       - tests/unit/test_schemas.py
       - tests/unit/test_structured_reporter.py
       - tests/unit/test_template_cache.py
@@ -1031,20 +2961,22 @@ Git: `v18` @ `00dffde`
       - tests/unit/test_validation_engine.py
     - tests/utils/
       - tests/utils/case_filter.py
+    - tests/.DS_Store
     - tests/conftest.py
     - tests/test_clean_ip_registry.py
     - tests/test_openai_responses_parse.py
     - tests/test_phi_redaction_contract.py
     - tests/test_registry_normalization.py
+  - .DS_Store
   - .env
-  - .env.example
+  - .env.backup
   - .gitattributes
   - .gitignore
   - .pre-commit-config.yaml
   - .setup.stamp
   - alembic.ini
-  - aws-g5-key.pem
   - CLAUDE.md
+  - cpt_check.py
   - diagnose_codex.sh
   - gitingest.md
   - ip_golden_knowledge_v2_2.json
@@ -1391,6 +3323,271 @@ python scripts/train_roberta.py \
 
 ---
 
+## 🔒 PHI Label Distillation (Silver vs Platinum)
+
+**Silver (Piiranha → token BIO):** fast offline distillation for client-sized models.
+
+**Run:**
+```bash
+python scripts/distill_phi_labels.py --limit-notes 50 --device cpu
+```
+Or:
+```bash
+make distill-phi-silver
+```
+
+**Output:** `data/ml_training/distilled_phi_labels.jsonl`
+
+**Sanitizer (post-hoc):** clean older distills or add belt-and-suspenders protection.
+```bash
+python scripts/sanitize_dataset.py
+```
+Or:
+```bash
+make sanitize-phi-silver
+```
+**Output:** `data/ml_training/distilled_phi_CLEANED.jsonl`
+**Normalize (post-hoc):** collapse remaining granular Piiranha classes (e.g., `PASSWORD`) into a small stable schema for client training.
+```bash
+python scripts/normalize_phi_labels.py
+```
+Or:
+```bash
+make normalize-phi-silver
+```
+**Output:** `data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl`
+
+**Workflow:** distill → sanitize → normalize → train on the STANDARD file for client models.
+
+**Password policy:** default is `id` (recommended) which maps `PASSWORD → ID`; optional `--password-policy drop` maps `PASSWORD → O`.
+
+---
+
+## ✅ Client NER Evaluation (DistilBERT)
+
+**Evaluate without retraining:**
+```bash
+make eval-phi-client
+```
+
+**Safety regression audit (must-not-redact guardrails):**
+```bash
+make audit-phi-client
+```
+
+> **SAFETY INVARIANT**: Post-veto must-not-redact audit violations **must be 0**.
+> Raw model violations may be non-zero; the post-processing veto layer guarantees safety.
+> The audit specifically checks: CPT codes, LN stations, anatomy terms, and device terms.
+
+**Hard-negative finetuning workflow** (optional if post-veto is already 0):
+```bash
+make audit-phi-client           # Identify violations
+make patch-phi-client-hardneg   # Patch training data with hard negatives
+make finetune-phi-client-hardneg # Finetune model on patched data
+```
+
+**If seqeval missing:**
+```bash
+pip install evaluate seqeval
+```
+
+**Interpretation:** review `artifacts/phi_distilbert_ner/eval_metrics.json` for `overall_f1`.
+
+---
+
+## 🌐 Client-side PHI Redactor (Transformers.js)
+
+**Export local ONNX bundle:**
+```bash
+make export-phi-client-model
+```
+
+**Export quantized (opt-in):**
+```bash
+make export-phi-client-model-quant
+```
+
+### Bundle Layout
+
+The ONNX model **must** live in an `onnx/` subfolder:
+```
+ui/phi_redactor/vendor/phi_distilbert_ner/
+├── config.json
+├── tokenizer.json
+├── tokenizer_config.json
+├── vocab.txt
+├── protected_terms.json
+└── onnx/
+    ├── model.onnx
+    └── model_quantized.onnx (optional)
+```
+
+The worker reads these files at runtime:
+- `/ui/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json`
+- `/ui/phi_redactor/vendor/phi_distilbert_ner/onnx/model*.onnx`
+
+### Quantization Warning
+
+> **Known issue**: Quantized ONNX models may produce "all-O / empty output" in WASM runtime.
+> **Recommendation**: Start with unquantized model (`forceUnquantized: true`). Only enable quantized after verification.
+
+### Configuration Defaults
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `aiThreshold` | `0.45` | Confidence threshold for PHI detection |
+| `forceUnquantized` | `true` | Use unquantized model (safe default) |
+
+### Hybrid Detection Architecture (ML + Regex)
+
+The client-side PHI redactor uses a **hybrid detection pipeline** to guarantee detection of structured header PHI even during ML "cold start" when the model may return 0 entities.
+
+**Pipeline flow:**
+```
+┌─────────────────────────────────────────────────────────────┐
+│  FOR EACH CHUNK (2500 chars, 250 overlap):                  │
+│                                                             │
+│    1. ML NER (DistilBERT via Transformers.js)               │
+│       └── Returns spans with label/score/source="ner"       │
+│                                                             │
+│    2. Regex Detectors (deterministic)                       │
+│       ├── PATIENT_HEADER_RE → PATIENT span (score=1.0)      │
+│       └── MRN_RE → ID span (score=1.0, source="regex_*")    │
+│                                                             │
+│    3. Dedupe exact duplicates within chunk                  │
+│    4. Convert to absolute offsets                           │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│  POST-PROCESSING (after all chunks):                        │
+│                                                             │
+│    5. mergeOverlapsBestOf — prefer regex on overlap         │
+│    6. expandToWordBoundaries — fix partial-word redactions  │
+│    7. mergeOverlapsBestOf — re-merge after expansion        │
+│    8. applyVeto (protectedVeto.js) — filter false positives │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+                    Final Detections
+```
+
+**Key files:**
+- `modules/api/static/phi_redactor/redactor.worker.js` — Hybrid detection worker
+- `modules/api/static/phi_redactor/protectedVeto.js` — Veto/allow-list layer
+
+**Regex patterns (guaranteed detection):**
+```javascript
+// Patient header names: "Patient: Smith, John" or "Pt Name: John Smith"
+const PATIENT_HEADER_RE = /(?:Patient(?:\s+Name)?|Pt|Name|Subject)\s*[:\-]?\s*([A-Z][a-z]+,...)/gim;
+
+// MRN / IDs: "MRN: 12345" or "ID: 55-22-11"
+const MRN_RE = /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID|EDIPI|DOD\s*ID)\s*[:\#]?\s*([A-Z0-9\-]{4,15})\b/gi;
+```
+
+**Why hybrid is needed:**
+- ML models can return 0 entities on first inference ("cold start")
+- Header PHI (patient name, MRN) is critical and must never be missed
+- Regex provides deterministic guarantees while ML catches free-text PHI
+- Regex spans have `score: 1.0` to survive thresholding
+
+**Key merge behaviors (`mergeOverlapsBestOf`):**
+- On overlap: prefer regex spans over ML spans (avoids double-highlights)
+- Same label + adjacent/overlapping: union into single span
+- Different labels + ≥80% overlap: keep higher-scoring span
+- Different labels + <80% overlap: keep both spans
+
+**Word boundary expansion (`expandToWordBoundaries`):**
+- Fixes partial-word redactions like `"id[REDACTED]"` → `"[REDACTED]"`
+- Expands span start/end to include adjacent alphanumeric chars
+- Treats apostrophe/hyphen as word-chars when adjacent to alnum (e.g., "O'Brien")
+
+**Veto layer (protectedVeto.js):**
+The veto layer runs AFTER detection to filter false positives:
+- LN stations (4R, 7, 11Rs) — anatomy, not PHI
+- Segments (RB1, LB1+2) — anatomy, not PHI
+- Measurements (5ml, 24 French) — clinical, not PHI
+- Provider names (Dr. Smith, Attending: Jones) — staff, not patient PHI
+- CPT codes in billing context (31653) — codes, not PHI
+- Clinical terms (EBUS, TBNA, BAL) — procedures, not PHI
+
+**Smoke test:**
+1. Start dev server and open `/ui/phi_redactor/`.
+2. Paste text containing:
+   - Codes: `31653`, `77012`
+   - LN stations: `4R`, `7` (with "station" nearby), `10R`, `11Ri`
+   - Anatomy: `Left Upper Lobe`
+   - Devices: `Dumon`, `Chartis`, `Zephyr`, `PleurX`
+   - Real PHI: patient name, DOB, phone, address
+3. Expected:
+   - PHI highlights for patient/DOB/phone/address
+   - Must-not-redact items are NOT highlighted
+
+### Troubleshooting (0 detections / empty output)
+
+If the UI returns **0 detections** on obvious PHI:
+
+1. Re-export **unquantized** bundle:
+   ```bash
+   make export-phi-client-model
+   ```
+2. Confirm ONNX signature includes `attention_mask`:
+   ```bash
+   python scripts/check_onnx_inputs.py modules/api/static/phi_redactor/vendor/phi_distilbert_ner/onnx/model.onnx
+   ```
+   - If missing: the export is invalid for token-classification; re-export until `attention_mask` is present.
+3. Run `/ui/phi_redactor/` with `forceUnquantized: true` and `debug: true`, then paste:
+   ```
+   Patient: John Doe. DOB: 01/01/1970. Phone: 555-123-4567.
+   ```
+4. Check browser console:
+   - `[PHI] token preds label counts` proves whether the model is predicting **all `O`**.
+   - If token list is empty, the worker logs a one-time `logits` sample to distinguish formatting vs inference failure.
+5. Only after unquantized works, export quantized and test with `forceUnquantized: false`:
+   ```bash
+   make export-phi-client-model-quant
+   ```
+   If quantized collapses to all-`O`, keep unquantized.
+
+> **DEPLOYMENT REQUIREMENT**: Post-veto must-not-redact audit violations **must be 0**.
+> Raw model violations may be non-zero; the veto layer guarantees safety.
+
+**Refinery:** drops common false positives (e.g., temps like `105C`, CPT codes in ZIPCODE).
+**Label schema:** `--label-schema standard` maps Piiranha labels into `PATIENT/GEO/PROVIDER/...`.
+
+**Platinum (Hybrid Redactor → char spans):** highest-precision, model-agnostic spans for both server and client training.
+
+**Run:**
+```bash
+python scripts/build_model_agnostic_phi_spans.py --limit-notes 50
+```
+Or:
+```bash
+make build-phi-platinum
+```
+
+**Output:** `data/ml_training/phi_platinum_spans.jsonl`
+**Note:** Platinum is the long-term source of truth; fix edge cases in the hybrid redactor, regenerate, and retrain both models.
+
+**Optional sanitizer:** retroactive cleanup for platinum spans.
+```bash
+python scripts/sanitize_platinum_spans.py
+```
+**Output:** `data/ml_training/phi_platinum_spans_CLEANED.jsonl`
+**Workflow:** build → optional sanitize → train (align char spans to tokenizer outputs).
+
+**Provider policy:** default is `drop` (name-like spans in provider contexts are removed).
+
+**Shared safeguards (Silver + Platinum):**
+- CPT false-positive suppression (token-level wipes vs span-level drops in CPT context).
+- Temperature false-positive suppression (token-level wipes vs span-level drops).
+- Provider suppression (doctors are not redacted by default).
+- Protected clinical term veto (anatomy/device/allow-list, LN stations, segments).
+- Address plausibility gate for GEO-like spans.
+- Standard schema mapping for downstream alignment.
+
+**Differences:** Silver applies tokenizer-aware subword wipes (CPT/LN stations) plus an optional post-hoc sanitizer, while Platinum applies equivalent span-level filters using line context with an optional span sanitizer for retroactive cleanup.
+
+---
+
 ## 🚀 Implementation Roadmap
 
 ### Phase 1: Data Preparation (Local)
@@ -1653,6 +3850,10 @@ procedure-suite/
 │   │   ├── fastapi_app.py             # Main FastAPI backend (NOT api/app.py!)
 │   │   ├── readiness.py               # require_ready dependency for endpoints
 │   │   ├── routes_registry.py         # Registry API routes
+│   │   ├── static/phi_redactor/       # Client-side PHI redactor UI
+│   │   │   ├── redactor.worker.js     # Hybrid ML+Regex detection worker
+│   │   │   ├── protectedVeto.js       # Veto/allow-list layer
+│   │   │   └── vendor/phi_distilbert_ner/  # ONNX model bundle
 │   │   └── services/
 │   │       └── qa_pipeline.py         # Parallelized QA pipeline
 │   ├── infra/                         # Infrastructure & optimization
@@ -2092,6 +4293,19 @@ Check that background warmup is working:
 2. `/ready` should return 503 during warmup
 3. After warmup, `/ready` returns 200
 
+**Dev server fails with MODEL_BACKEND=onnx missing registry model:**
+```
+missing registry model at data/models/registry_runtime/registry_model_int8.onnx
+```
+Solutions:
+- Set `MODEL_BACKEND` to a non-onnx mode for local UI work, or
+- Copy `data/models/registry_runtime/` from your GPU machine
+
+**PHI UI shows "Failed to fetch" for tokenizer/config/model files:**
+- Ensure FastAPI serves `/ui/phi_redactor/vendor/...` as static files
+- Ensure CORS allows worker fetches (Origin `null` can happen in Web Workers)
+- Check browser DevTools Network tab for 404s or CORS errors
+
 ---
 
 ## Contact & Resources
@@ -2103,13 +4317,16 @@ Check that background warmup is working:
 - **Rules Engine**: `data/rules/coding_rules.py`
 - **Optimization Roadmap**: `docs/optimization_12_16_25.md`
 - **Settings Reference**: `modules/infra/settings.py`
+- **PHI Redactor Worker**: `modules/api/static/phi_redactor/redactor.worker.js`
+- **PHI Veto Layer**: `modules/api/static/phi_redactor/protectedVeto.js`
 
 ---
 
-*Last updated: December 17, 2025*
+*Last updated: December 24, 2025*
 *Architecture: Extraction-First with RoBERTa ML + Deterministic Rules Engine*
 *Runtime: Async FastAPI + ThreadPool CPU offload + LLM concurrency control*
 *Deployment Target: Railway (ONNX INT8, Uvicorn single-worker)*
+*PHI Redactor: Hybrid ML+Regex detection with veto layer*
 
 ```
 
@@ -2150,6 +4367,8 @@ dependencies = [
   "cryptography>=42.0,<45",
   "presidio-analyzer>=2.2,<3",
   "pyyaml>=6.0,<7",
+  "onnx>=1.16,<2",
+  "optimum[onnxruntime]>=1.20,<2",
 ]
 
 [project.optional-dependencies]
@@ -2287,8 +4506,10 @@ presidio-analyzer>=2.2,<3
 pyyaml>=6.0,<7
 
 # ONNX inference (for BiomedBERT registry predictor)
+onnx>=1.16,<2
 onnxruntime>=1.16,<2
 transformers>=4.35,<5
+optimum[onnxruntime]>=1.20,<2
 
 # API dependencies (required for FastAPI server)
 fastapi>=0.115
@@ -2297,13 +4518,14 @@ uvicorn>=0.30
 pydantic-settings>=2.0.0
 
 
+
 ```
 
 ---
 ### `Makefile`
 ```
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder dev-iu pull-model-pytorch
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -2316,6 +4538,7 @@ PORT ?= 8000
 MODEL_BACKEND ?= pytorch
 PROCSUITE_SKIP_WARMUP ?= 1
 REGISTRY_RUNTIME_DIR ?= data/models/registry_runtime
+DEVICE ?= cpu
 
 setup:
 	@if [ -f $(SETUP_STAMP) ]; then echo "Setup already done"; exit 0; fi
@@ -2348,6 +4571,97 @@ run-coder:
 		--kb $(KB_PATH) \
 		--keyword-dir data/keyword_mappings \
 		--out-json outputs/coder_suggestions.jsonl
+
+distill-phi:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/distill_phi_labels.py \
+		--in-dir data/knowledge/golden_extractions \
+		--out data/ml_training/distilled_phi_labels.jsonl \
+		--teacher-model data/models/hf/piiranha-v1-detect-personal-information \
+		--device cpu
+
+distill-phi-silver:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/distill_phi_labels.py \
+		--in-dir data/knowledge/golden_extractions \
+		--out data/ml_training/distilled_phi_labels.jsonl \
+		--teacher-model data/models/hf/piiranha-v1-detect-personal-information \
+		--label-schema standard \
+		--device $(DEVICE)
+
+sanitize-phi-silver:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/sanitize_dataset.py \
+		--in data/ml_training/distilled_phi_labels.jsonl \
+		--out data/ml_training/distilled_phi_CLEANED.jsonl
+
+normalize-phi-silver:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/normalize_phi_labels.py \
+		--in data/ml_training/distilled_phi_CLEANED.jsonl \
+		--out data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
+		--password-policy id
+
+eval-phi-client:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--data data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
+		--output-dir artifacts/phi_distilbert_ner \
+		--eval-only
+
+audit-phi-client:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/audit_model_fp.py \
+		--model-dir artifacts/phi_distilbert_ner \
+		--data data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
+		--limit 5000
+
+patch-phi-client-hardneg:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_hard_negative_patch.py \
+		--audit-report artifacts/phi_distilbert_ner/audit_report.json \
+		--data-in data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
+		--data-out data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl
+
+# Default: MPS with memory-saving options (gradient accumulation, smaller batches)
+# Removes MPS memory limits to use available system RAM
+# If OOM on Apple Silicon, use: make finetune-phi-client-hardneg-cpu
+finetune-phi-client-hardneg:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--resume-from artifacts/phi_distilbert_ner \
+		--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl \
+		--epochs 1 \
+		--lr 1e-5 \
+		--train-batch 4 \
+		--eval-batch 16 \
+		--gradient-accumulation-steps 2 \
+		--mps-high-watermark-ratio 0.0 \
+		--save-steps 500 \
+		--eval-steps 500 \
+		--logging-steps 50
+
+# CPU fallback: reliable but slower (~5-6 hours for 1 epoch)
+finetune-phi-client-hardneg-cpu:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--resume-from artifacts/phi_distilbert_ner \
+		--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl \
+		--epochs 1 \
+		--lr 1e-5 \
+		--train-batch 8 \
+		--eval-batch 16 \
+		--save-steps 500 \
+		--eval-steps 500 \
+		--logging-steps 50 \
+		--cpu
+
+export-phi-client-model:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
+		--model-dir artifacts/phi_distilbert_ner \
+		--out-dir modules/api/static/phi_redactor/vendor/phi_distilbert_ner
+
+export-phi-client-model-quant:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
+		--model-dir artifacts/phi_distilbert_ner \
+		--out-dir modules/api/static/phi_redactor/vendor/phi_distilbert_ner \
+		--quantize
+
+build-phi-platinum:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
+		--in-dir data/knowledge/golden_extractions \
+		--out data/ml_training/phi_platinum_spans.jsonl
 
 pull-model-pytorch:
 	MODEL_BUNDLE_S3_URI_PYTORCH="$(MODEL_BUNDLE_S3_URI_PYTORCH)" REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" ./scripts/dev_pull_model.sh
@@ -2408,6 +4722,18 @@ help:
 	@echo "  validate-schemas - Validate JSON schemas and Pydantic models"
 	@echo "  validate-kb    - Validate knowledge base"
 	@echo "  run-coder      - Run smart-hybrid coder over notes"
+	@echo "  distill-phi    - Distill PHI labels for student NER training"
+	@echo "  distill-phi-silver - Distill Piiranha silver PHI labels"
+	@echo "  sanitize-phi-silver - Post-hoc sanitizer for silver PHI labels"
+	@echo "  normalize-phi-silver - Normalize silver labels to stable schema"
+	@echo "  build-phi-platinum - Build hybrid redactor PHI spans"
+	@echo "  eval-phi-client - Evaluate DistilBERT NER model (no retraining)"
+	@echo "  audit-phi-client - Run false-positive audit guardrails"
+	@echo "  patch-phi-client-hardneg - Patch training data with audit violations"
+	@echo "  finetune-phi-client-hardneg - Finetune model on hard negatives (MPS w/ gradient accumulation)"
+	@echo "  finetune-phi-client-hardneg-cpu - Finetune on CPU (slower but reliable fallback)"
+	@echo "  export-phi-client-model - Export client-side ONNX bundle (unquantized) for transformers.js"
+	@echo "  export-phi-client-model-quant - Export client-side ONNX bundle + INT8 quantized model"
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"
 	@echo "  codex-train    - Full training pipeline"
@@ -2420,6 +4746,8 @@ help:
 ### `runtime.txt`
 ```
 python-3.11
+
+
 
 ```
 
@@ -2465,6 +4793,7 @@ from pathlib import Path
 from typing import Any, AsyncIterator, List
 
 from fastapi import FastAPI, Request, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -2482,6 +4811,7 @@ from modules.api.routes.phi_demo_cases import router as phi_demo_router
 from modules.api.routes_registry import router as registry_extract_router
 from modules.api.readiness import require_ready
 from modules.infra.executors import run_cpu
+from modules.api.routes.unified_process import router as unified_process_router
 
 # All API schemas (base + QA pipeline)
 from modules.api.schemas import (
@@ -2694,6 +5024,46 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+# CORS (dev-friendly defaults)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # dev: allow all
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.middleware("http")
+async def _phi_redactor_headers(request: Request, call_next):
+    """
+    Ensure the PHI redactor UI (including /vendor/* model assets) works in
+    cross-origin isolated contexts and when embedded/loaded from other origins
+    during development.
+    """
+    resp = await call_next(request)
+    path = request.url.path
+    if path.startswith("/ui/phi_redactor"):
+        # Required for SharedArrayBuffer in modern browsers (cross-origin isolation).
+        resp.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+        resp.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+        # Allow these assets to be requested as subresources in COEP contexts.
+        resp.headers["Cross-Origin-Resource-Policy"] = "cross-origin"
+        # Dev convenience: make vendor assets fetchable from any origin.
+        # (CORSMiddleware adds CORS headers when an Origin header is present,
+        # but some contexts can still surface this as a "CORS error" without it.)
+        resp.headers.setdefault("Access-Control-Allow-Origin", "*")
+        resp.headers.setdefault("Access-Control-Allow-Methods", "*")
+        resp.headers.setdefault("Access-Control-Allow-Headers", "*")
+        # Chrome Private Network Access (PNA): when the UI is loaded from a
+        # "public" secure context (e.g., an https webview) and it fetches
+        # localhost resources, Chrome sends a preflight with
+        # Access-Control-Request-Private-Network: true and expects this header.
+        if request.headers.get("access-control-request-private-network", "").lower() == "true":
+            resp.headers["Access-Control-Allow-Private-Network"] = "true"
+        # Avoid stale caching during rapid iteration/debugging.
+        resp.headers.setdefault("Cache-Control", "no-store")
+    return resp
+
 # Include ML Advisor router
 app.include_router(ml_advisor_router, prefix="/api/v1", tags=["ML Advisor"])
 # Include PHI router
@@ -2706,6 +5076,8 @@ app.include_router(metrics_router, tags=["metrics"])
 app.include_router(phi_demo_router)
 # Registry extraction router (hybrid-first pipeline)
 app.include_router(registry_extract_router, tags=["registry"])
+# Unified process router (UI entry point)
+app.include_router(unified_process_router, prefix="/api")
 
 def _phi_redactor_response(path: Path) -> FileResponse:
     resp = FileResponse(path)
@@ -6794,4 +9166,12 @@ python scripts/scrub_golden_jsons.py \
   --report-path artifacts/redactions.jsonl
 *Last updated: December 2025*
 
+# PHI without registry onnx IU start
+MODEL_BACKEND=pytorch ./scripts/devserver.sh
+MODEL_BACKEND=auto ./scripts/devserver.sh
+
+cd scripts/phi_test_node
+node test_phi_redaction.mjs --count 30
+
+make finetune-phi-client-hardneg
 ```

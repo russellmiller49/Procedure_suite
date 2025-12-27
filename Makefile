@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -13,6 +13,7 @@ MODEL_BACKEND ?= pytorch
 PROCSUITE_SKIP_WARMUP ?= 1
 REGISTRY_RUNTIME_DIR ?= data/models/registry_runtime
 DEVICE ?= cpu
+PRODIGY_EPOCHS ?= 1
 
 setup:
 	@if [ -f $(SETUP_STAMP) ]; then echo "Setup already done"; exit 0; fi
@@ -137,6 +138,77 @@ build-phi-platinum:
 		--in-dir data/knowledge/golden_extractions \
 		--out data/ml_training/phi_platinum_spans.jsonl
 
+# Prodigy-based PHI label correction workflow
+PRODIGY_COUNT ?= 100
+PRODIGY_DATASET ?= phi_corrections
+# Prodigy is installed in system Python 3.12
+PRODIGY_PYTHON ?= /Library/Frameworks/Python.framework/Versions/3.12/bin/python3
+
+prodigy-prepare:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_phi_batch.py \
+		--count $(PRODIGY_COUNT) \
+		--model-dir artifacts/phi_distilbert_ner \
+		--output data/ml_training/prodigy_batch.jsonl
+
+# Prepare from a specific input file (e.g., synthetic_phi.jsonl)
+PRODIGY_INPUT_FILE ?= synthetic_phi.jsonl
+prodigy-prepare-file:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_phi_batch.py \
+		--count $(PRODIGY_COUNT) \
+		--input-file $(PRODIGY_INPUT_FILE) \
+		--model-dir artifacts/phi_distilbert_ner \
+		--output data/ml_training/prodigy_batch.jsonl
+
+prodigy-annotate:
+	$(PRODIGY_PYTHON) -m prodigy ner.manual $(PRODIGY_DATASET) blank:en \
+		data/ml_training/prodigy_batch.jsonl \
+		--label PATIENT,DATE,ID,GEO,CONTACT
+
+prodigy-export:
+	$(PRODIGY_PYTHON) scripts/prodigy_export_corrections.py \
+		--dataset $(PRODIGY_DATASET) \
+		--merge-with data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
+		--output data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl
+
+# Train from scratch on corrected data
+prodigy-retrain:
+	@echo "Training from scratch on corrected data..."
+	@echo "Checking for GPU acceleration (Metal/CUDA)..."
+	$(CONDA_ACTIVATE) && $(PYTHON) -c "import torch; mps=torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False; cuda=torch.cuda.is_available(); print(f'MPS: {mps}, CUDA: {cuda}')" && \
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--data data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl \
+		--output-dir artifacts/phi_distilbert_ner \
+		--epochs 3 \
+		--train-batch 4 \
+		--eval-batch 16 \
+		--gradient-accumulation-steps 2 \
+		--mps-high-watermark-ratio 0.0
+
+# Fine-tune existing model on corrected data (recommended for iterative improvement)
+# Override epochs: make prodigy-finetune PRODIGY_EPOCHS=3
+prodigy-finetune:
+	@echo "Fine-tuning existing model on corrected data..."
+	@echo "Epochs: $(PRODIGY_EPOCHS)"
+	@echo "Checking for GPU acceleration (Metal/CUDA)..."
+	$(CONDA_ACTIVATE) && $(PYTHON) -c "import torch; mps=torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False; cuda=torch.cuda.is_available(); print(f'MPS: {mps}, CUDA: {cuda}')" && \
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--resume-from artifacts/phi_distilbert_ner \
+		--patched-data data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl \
+		--output-dir artifacts/phi_distilbert_ner \
+		--epochs $(PRODIGY_EPOCHS) \
+		--lr 1e-5 \
+		--train-batch 4 \
+		--eval-batch 16 \
+		--gradient-accumulation-steps 2 \
+		--mps-high-watermark-ratio 0.0
+
+prodigy-cycle: prodigy-prepare
+	@echo "Batch prepared at data/ml_training/prodigy_batch.jsonl"
+	@echo "Run 'make prodigy-annotate' to start Prodigy annotation UI"
+	@echo "After annotation, run 'make prodigy-export' then either:"
+	@echo "  make prodigy-finetune  (recommended - preserves learned weights)"
+	@echo "  make prodigy-retrain   (train from scratch)"
+
 pull-model-pytorch:
 	MODEL_BUNDLE_S3_URI_PYTORCH="$(MODEL_BUNDLE_S3_URI_PYTORCH)" REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" ./scripts/dev_pull_model.sh
 
@@ -208,6 +280,13 @@ help:
 	@echo "  finetune-phi-client-hardneg-cpu - Finetune on CPU (slower but reliable fallback)"
 	@echo "  export-phi-client-model - Export client-side ONNX bundle (unquantized) for transformers.js"
 	@echo "  export-phi-client-model-quant - Export client-side ONNX bundle + INT8 quantized model"
+	@echo "  prodigy-prepare - Prepare batch for Prodigy annotation (PRODIGY_COUNT=100)"
+	@echo "  prodigy-annotate - Launch Prodigy annotation UI (PRODIGY_DATASET=phi_corrections)"
+	@echo "  prodigy-export  - Export Prodigy corrections to training format"
+	@echo "  prodigy-retrain - Retrain model from scratch with corrections"
+	@echo "  prodigy-finetune - Fine-tune existing model with corrections (recommended)"
+	@echo "                    Override epochs: make prodigy-finetune PRODIGY_EPOCHS=3"
+	@echo "  prodigy-cycle   - Full Prodigy iteration workflow"
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"
 	@echo "  codex-train    - Full training pipeline"

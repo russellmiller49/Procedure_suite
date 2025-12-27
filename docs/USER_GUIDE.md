@@ -343,6 +343,129 @@ Lower thresholds = more cases use fast path (faster but may miss edge cases)
 
 ---
 
+## 🛡️ PHI Redaction & Training
+
+The Procedure Suite includes tools for training and improving PHI (Protected Health Information) redaction models.
+
+### PHI Audit
+
+Audit a note for PHI detection:
+
+```bash
+python scripts/phi_audit.py --note-path test_redact.txt
+```
+
+### Scrubbing Golden JSON Files
+
+Scrub PHI from golden extraction files:
+
+```bash
+python scripts/scrub_golden_jsons.py \
+  --input-dir data/knowledge/golden_extractions \
+  --pattern 'golden_*.json' \
+  --report-path artifacts/redactions.jsonl
+```
+
+### PHI Model Training with Prodigy
+
+Use Prodigy for iterative PHI model improvement:
+
+**Workflow:**
+```bash
+make prodigy-prepare      # Sample new notes for annotation
+make prodigy-annotate     # Annotate in Prodigy UI
+make prodigy-export       # Export corrections to training format
+make prodigy-finetune     # Fine-tune model (recommended)
+```
+
+**Training Options:**
+
+| Command | Description |
+|---------|-------------|
+| `make prodigy-finetune` | Fine-tunes existing model (1 epoch, low LR), preserves learned weights |
+| `make prodigy-retrain` | Trains from scratch (3 epochs), loses previous training |
+
+**Fine-tuning details:**
+- `--resume-from artifacts/phi_distilbert_ner` - Starts from your trained weights
+- `--epochs 1` - Just one pass over the data (override with `PRODIGY_EPOCHS=3`)
+- `--lr 1e-5` - Low learning rate to avoid catastrophic forgetting
+- Automatically detects and uses Metal (MPS) or CUDA when available
+- Removes MPS memory limits to use full system memory
+
+**Manual fine-tuning (same as `make prodigy-finetune`):**
+```bash
+python scripts/train_distilbert_ner.py \
+    --resume-from artifacts/phi_distilbert_ner \
+    --patched-data data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl \
+    --output-dir artifacts/phi_distilbert_ner \
+    --epochs 1 \
+    --lr 1e-5 \
+    --train-batch 4 \
+    --eval-batch 16 \
+    --gradient-accumulation-steps 2 \
+    --mps-high-watermark-ratio 0.0
+```
+
+### Model Locations & Exporting for UI
+
+The PHI model exists in two locations:
+
+1. **Training location** (PyTorch format): `artifacts/phi_distilbert_ner/`
+   - Updated by `make prodigy-finetune` or `make prodigy-retrain`
+   - Contains PyTorch model weights, tokenizer, and label mappings
+
+2. **Client-side location** (ONNX format): `modules/api/static/phi_redactor/vendor/phi_distilbert_ner/`
+   - Used by the browser UI at `http://localhost:8000/ui/phi_redactor/`
+   - Contains ONNX model files, tokenizer, and configuration
+
+**Important**: After training, you must export the model to update the UI:
+
+```bash
+make export-phi-client-model
+```
+
+This converts the PyTorch model to ONNX format and copies it to the static directory. The UI will continue using the old model until you run this export step.
+
+**Export options:**
+- `make export-phi-client-model` - Exports unquantized ONNX model (default)
+- `make export-phi-client-model-quant` - Exports quantized ONNX model (smaller, but may have accuracy trade-offs)
+
+### Hard Negative Fine-tuning
+
+Fine-tune on hard negatives (cases where the model made mistakes):
+
+```bash
+make finetune-phi-client-hardneg
+```
+
+This uses:
+- `--resume-from artifacts/phi_distilbert_ner`
+- `--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl`
+- Memory-optimized settings for MPS/CUDA
+
+### Testing PHI Redaction
+
+Test the client-side PHI redactor:
+
+```bash
+cd scripts/phi_test_node
+node test_phi_redaction.mjs --count 30
+```
+
+### Server Configuration for PHI
+
+Start the dev server with different model backends:
+
+```bash
+# Use PyTorch backend (for PHI without registry ONNX)
+MODEL_BACKEND=pytorch ./scripts/devserver.sh
+
+# Auto-detect best backend
+MODEL_BACKEND=auto ./scripts/devserver.sh
+```
+
+---
+
 ## 📞 Getting Help
 
 - **API Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
@@ -350,21 +473,5 @@ Lower thresholds = more cases use fast path (faster but may miss edge cases)
 - **Questions**: Open an issue on the repository
 
 ---
-Redaction Scripts:
-python scripts/phi_audit.py --note-path test_redact.txt
 
-
-python scripts/scrub_golden_jsons.py \
-  --input-dir data/knowledge/golden_extractions \
-  --pattern 'golden_*.json' \
-  --report-path artifacts/redactions.jsonl
 *Last updated: December 2025*
-
-# PHI without registry onnx IU start
-MODEL_BACKEND=pytorch ./scripts/devserver.sh
-MODEL_BACKEND=auto ./scripts/devserver.sh
-
-cd scripts/phi_test_node
-node test_phi_redaction.mjs --count 30
-
-make finetune-phi-client-hardneg

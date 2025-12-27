@@ -37,8 +37,10 @@ const MRN_RE =
   /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID|EDIPI|DOD\s*ID)\s*[:\#]?\s*([A-Z0-9\-]*\d[A-Z0-9\-]*)\b/gi;
 
 // Matches: MRN with spaces like "A92 555" or "AB 123 456" (2-3 groups of alphanumerics)
+// IMPORTANT: Each segment MUST contain at least one digit to avoid matching "Li in the" as MRN
+// Removed plain "ID" prefix as too generic (matches "ID Li in the ICU")
 const MRN_SPACED_RE =
-  /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID)\s*[:\#]?\s*([A-Z0-9]{2,5}\s+[A-Z0-9]{2,5}(?:\s+[A-Z0-9]{2,5})?)\b/gi;
+  /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID)\s*[:\#]?\s*([A-Z0-9]*\d[A-Z0-9]*\s+[A-Z0-9]*\d[A-Z0-9]*(?:\s+[A-Z0-9]*\d[A-Z0-9]*)?)\b/gi;
 
 // Matches inline narrative patient names followed by age: "Emma Jones, a 64-year-old male..."
 // Also supports "Last, First" format: "Belardes, Lisa is a 64-year-old..."
@@ -89,10 +91,14 @@ const PROCEDURE_FOR_NAME_RE =
 const PLACEHOLDER_NAME_RE =
   /(?:Patient(?:\s+Name)?|Pt(?:\s+Name)?|Name|Subject)\s*[:\-]?\s*(<[A-Z]+>|\[[A-Za-z_]+\]|\*{2,}[A-Za-z_]+\*{2,})/gi;
 
-// Matches "Patient 69F" shorthand pattern (no colon, alphanumeric identifier)
-// Fallback for non-standard patient identifiers like age/gender clusters
-const PATIENT_SHORTHAND_RE =
-  /\bPatient\s+(\d{1,3}\s*[MF](?:emale)?)\b/gi;
+// REMOVED: PATIENT_SHORTHAND_RE - Age/gender demographics (e.g., "68 female") are NOT PHI
+// Pattern was causing false positives by redacting age/gender info after "Patient"
+// const PATIENT_SHORTHAND_RE = /\bPatient\s+(\d{1,3}\s*[MF](?:emale)?)\b/gi;
+
+// Matches case/accession/specimen IDs: "case c-847", "specimen A-12345", "pathology P-9876"
+// These are identifiers that can be PHI and should be captured
+const CASE_ID_RE =
+  /\b(?:case|accession|specimen|path(?:ology)?)\s*[:\#]?\s*([A-Za-z]-?\d{3,6})\b/gi;
 
 // Matches names at sentence start followed by clinical verbs: "Robert has a LLL nodule..."
 // Must be at sentence start (after period/newline) and followed by clinical context
@@ -114,8 +120,9 @@ const LINE_START_CLINICAL_NAME_RE =
 // Matches informal/lowercase names followed by "here for": "jason phillips here for right lung lavage"
 // Case-insensitive to catch dictation notes where names aren't capitalized
 // The "here for" phrase is a strong indicator of patient context in informal notes
+// Uses negative lookahead to exclude pronouns and common words that aren't names
 const INFORMAL_NAME_HERE_RE =
-  /^([a-z]+\s+[a-z]+)\s+here\s+for\b/gim;
+  /^(?!(?:it|he|she|we|they|you|this|that|here|there|i|me|us|pt|who|what)\s+)([a-z]+\s+[a-z]+)\s+here\s+for\b/gim;
 
 // Matches underscore-wrapped template placeholders: "___Lisa Anderson___", "___BB-8472-K___", "___03/19/1961___"
 // These appear in de-identification templates where PHI is wrapped in triple underscores
@@ -146,10 +153,11 @@ const PROCEDURE_NOTE_NAME_RE =
 const STANDALONE_ALPHANUMERIC_ID_RE =
   /\b([A-Z]{2,3}-\d{3,6}(?:-[A-Z0-9])?)\b/g;
 
-// Matches "pt [Name]" prefix patterns in informal notes: "pt Juan C R long term trach"
-// Supports mixed case and middle initials
+// Matches "pt [Name]" or "patient [Name]" when followed by identifier keywords
+// Requires: "patient angela davis mrn" or "pt john doe dob" etc.
+// SAFE: Won't match "patient severe pneumonia" because "pneumonia" is not a keyword
 const PT_LOWERCASE_NAME_RE =
-  /\bpt\s+([A-Za-z][a-z]*(?:\s+[A-Z])?(?:\s+[A-Z])?(?:\s+[A-Za-z][a-z]+)?)\b/gi;
+  /\b(?:pt|patient)\s+([a-z]+\s+[a-z]+)(?=\s+(?:mrn|id|dob|age|here|for)\b)/gi;
 
 // Matches lowercase full names at start of line followed by date: "oscar godsey 5/15/19"
 // Common in dictation notes where names aren't capitalized
@@ -376,7 +384,8 @@ function runRegexDetectors(text) {
   DID_PROCEDURE_NAME_RE.lastIndex = 0;
   PROCEDURE_FOR_NAME_RE.lastIndex = 0;
   PLACEHOLDER_NAME_RE.lastIndex = 0;
-  PATIENT_SHORTHAND_RE.lastIndex = 0;
+  CASE_ID_RE.lastIndex = 0;
+  // REMOVED: PATIENT_SHORTHAND_RE.lastIndex = 0; (pattern deleted)
   SENTENCE_START_NAME_RE.lastIndex = 0;
   LINE_START_NAME_RE.lastIndex = 0;
   LINE_START_CLINICAL_NAME_RE.lastIndex = 0;
@@ -445,21 +454,8 @@ function runRegexDetectors(text) {
     }
   }
 
-  // 1b) Patient shorthand: "Patient 69F" (age/gender cluster as identifier)
-  for (const match of text.matchAll(PATIENT_SHORTHAND_RE)) {
-    const fullMatch = match[0];
-    const shorthandGroup = match[1];
-    const groupOffset = fullMatch.indexOf(shorthandGroup);
-    if (groupOffset !== -1 && match.index != null) {
-      spans.push({
-        start: match.index + groupOffset,
-        end: match.index + groupOffset + shorthandGroup.length,
-        label: "PATIENT",
-        score: 0.9,
-        source: "regex_shorthand",
-      });
-    }
-  }
+  // REMOVED: 1b) Patient shorthand - Age/gender demographics are NOT PHI
+  // Pattern PATIENT_SHORTHAND_RE was deleted to prevent "68 female" false positives
 
   // 2) MRN / IDs
   for (const match of text.matchAll(MRN_RE)) {
@@ -490,6 +486,24 @@ function runRegexDetectors(text) {
         score: 1.0,
         source: "regex_mrn_spaced",
       });
+    }
+  }
+
+  // 2b) Case/accession/specimen IDs: "case c-847", "specimen A-12345"
+  for (const match of text.matchAll(CASE_ID_RE)) {
+    const idGroup = match[1];
+    if (idGroup && match.index != null) {
+      const fullMatch = match[0];
+      const groupOffset = fullMatch.indexOf(idGroup);
+      if (groupOffset !== -1) {
+        spans.push({
+          start: match.index + groupOffset,
+          end: match.index + groupOffset + idGroup.length,
+          label: "ID",
+          score: 0.95,
+          source: "regex_case_id",
+        });
+      }
     }
   }
 
@@ -1447,9 +1461,10 @@ function extendGeoSpans(spans, fullText) {
 
     // Look for facility suffix words AFTER the span
     // Fixes: "Horizon University Medical Center" where "Center" was split off
+    // Fixes: "Center," being split due to trailing punctuation
     const afterWindow = fullText.slice(end, Math.min(fullText.length, end + 40));
-    // Match optional comma/space + one or more facility suffix words
-    const suffixMatch = afterWindow.match(/^(\s*,?\s*(?:(?:Medical|Health|Healthcare)\s+)?(?:Center|Hospital|Clinic|Institute|University|Foundation|Memorial|Regional|General|Community|Children(?:'?s)?|Pediatric|Veterans|VA)(?:\s+(?:Medical\s+)?(?:Center|Hospital|Clinic))?)/i);
+    // Match optional comma/space + one or more facility suffix words + optional trailing punctuation
+    const suffixMatch = afterWindow.match(/^(\s*,?\s*(?:(?:Medical|Health|Healthcare)\s+)?(?:Center|Hospital|Clinic|Institute|University|Foundation|Memorial|Regional|General|Community|Children(?:'?s)?|Pediatric|Veterans|VA)(?:\s+(?:Medical\s+)?(?:Center|Hospital|Clinic))?[,;.]?)/i);
 
     if (suffixMatch) {
       newEnd = end + suffixMatch[1].length;
