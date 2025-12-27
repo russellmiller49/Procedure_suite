@@ -51,6 +51,8 @@ Final Detections
 | `scripts/train_distilbert_ner.py` | Train DistilBERT NER model |
 | `scripts/export_phi_model_for_transformersjs.py` | Export ONNX for browser |
 | `scripts/audit_model_fp.py` | Audit for false positive violations |
+| `scripts/prodigy_prepare_phi_batch.py` | Prodigy: Pre-annotate notes with DistilBERT |
+| `scripts/prodigy_export_corrections.py` | Prodigy: Export corrections to BIO format |
 
 ### Training Data
 | Location | Purpose |
@@ -58,6 +60,10 @@ Final Detections
 | `data/ml_training/distilled_phi_labels.jsonl` | Raw Piiranha output |
 | `data/ml_training/distilled_phi_CLEANED.jsonl` | Sanitized |
 | `data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl` | Normalized (training ready) |
+| `data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl` | With Prodigy corrections merged |
+| `data/ml_training/prodigy_batch.jsonl` | Current Prodigy annotation batch |
+| `data/ml_training/prodigy_manifest.json` | Tracks annotated windows |
+| `synthetic_phi.jsonl` | Dense synthetic PHI data (300 records) |
 
 ## PHI Label Schema
 
@@ -171,7 +177,7 @@ make export-phi-client-model
 - Override epochs: `make prodigy-finetune PRODIGY_EPOCHS=3`
 - Prodigy runs in system Python 3.12 (not conda)
 
-### 4. Update Protected Terms Config
+### 5. Update Protected Terms Config
 Edit `modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json`:
 - `anatomy_terms`: Anatomical terms to protect
 - `device_manufacturers`: Company names that look like person names

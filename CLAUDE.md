@@ -1231,8 +1231,8 @@ Solutions:
 
 ---
 
-*Last updated: December 24, 2025*
+*Last updated: December 26, 2025*
 *Architecture: Extraction-First with RoBERTa ML + Deterministic Rules Engine*
 *Runtime: Async FastAPI + ThreadPool CPU offload + LLM concurrency control*
 *Deployment Target: Railway (ONNX INT8, Uvicorn single-worker)*
-*PHI Redactor: Hybrid ML+Regex detection with veto layer*
+*PHI Redactor: Hybrid ML+Regex detection with veto layer + Prodigy iterative correction*
