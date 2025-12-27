@@ -1,0 +1,130 @@
+"""Phase 6 patch application (safe dict->rebuild, no in-place mutation)."""
+
+from __future__ import annotations
+
+import copy
+
+from modules.registry.schema import RegistryRecord
+
+
+class SelfCorrectionApplyError(RuntimeError):
+    pass
+
+
+def apply_patch_to_record(*, record: RegistryRecord, patch: list[dict]) -> RegistryRecord:
+    record_dict = record.model_dump()
+    patched = copy.deepcopy(record_dict)
+
+    try:
+        for idx, op in enumerate(patch):
+            _apply_op(patched, op, idx=idx)
+    except Exception as exc:  # noqa: BLE001
+        raise SelfCorrectionApplyError(f"Failed applying JSON Patch: {exc}") from exc
+
+    try:
+        return RegistryRecord(**patched)
+    except Exception as exc:  # noqa: BLE001
+        raise SelfCorrectionApplyError(f"Patched record failed validation: {exc}") from exc
+
+
+def _apply_op(doc: object, op: dict, *, idx: int) -> None:
+    verb = op.get("op")
+    if verb not in {"add", "replace"}:
+        raise SelfCorrectionApplyError(f"patch[{idx}].op='{verb}' is not supported")
+
+    path = op.get("path")
+    if not isinstance(path, str) or not path.startswith("/"):
+        raise SelfCorrectionApplyError(f"patch[{idx}].path is invalid: {path!r}")
+
+    if "value" not in op:
+        raise SelfCorrectionApplyError(f"patch[{idx}] missing required 'value'")
+    value = op.get("value")
+
+    tokens = _parse_pointer(path)
+    if not tokens:
+        raise SelfCorrectionApplyError(f"patch[{idx}].path points to document root, which is forbidden")
+
+    if verb == "replace" and not _pointer_exists(doc, tokens):
+        raise SelfCorrectionApplyError(f"patch[{idx}].path does not exist for replace: {path}")
+
+    parent = _traverse(doc, tokens[:-1], create=(verb == "add"))
+    _set_child(parent, tokens[-1], value, verb=verb)
+
+
+def _parse_pointer(path: str) -> list[str]:
+    parts = path.split("/")[1:]
+    return [_unescape(p) for p in parts]
+
+
+def _unescape(token: str) -> str:
+    return token.replace("~1", "/").replace("~0", "~")
+
+
+def _pointer_exists(doc: object, tokens: list[str]) -> bool:
+    cur: object = doc
+    for token in tokens:
+        if isinstance(cur, dict):
+            if token not in cur:
+                return False
+            cur = cur[token]
+        elif isinstance(cur, list):
+            try:
+                index = int(token)
+            except ValueError:
+                return False
+            if index < 0 or index >= len(cur):
+                return False
+            cur = cur[index]
+        else:
+            return False
+    return True
+
+
+def _traverse(doc: object, tokens: list[str], *, create: bool) -> object:
+    cur: object = doc
+    for token in tokens:
+        if isinstance(cur, dict):
+            nxt = cur.get(token)
+            if nxt is None:
+                if not create:
+                    raise SelfCorrectionApplyError(f"Missing object at '{token}'")
+                nxt = {}
+                cur[token] = nxt
+            cur = nxt
+        elif isinstance(cur, list):
+            index = int(token)
+            if index < 0 or index >= len(cur):
+                raise SelfCorrectionApplyError(f"List index out of range at '{token}'")
+            cur = cur[index]
+        else:
+            raise SelfCorrectionApplyError(f"Cannot traverse non-container at '{token}'")
+    return cur
+
+
+def _set_child(parent: object, token: str, value: object, *, verb: str) -> None:
+    if isinstance(parent, dict):
+        if verb == "replace" and token not in parent:
+            raise SelfCorrectionApplyError(f"replace target '{token}' does not exist")
+        parent[token] = value
+        return
+
+    if isinstance(parent, list):
+        if token == "-" and verb == "add":
+            parent.append(value)
+            return
+        index = int(token)
+        if verb == "replace":
+            if index < 0 or index >= len(parent):
+                raise SelfCorrectionApplyError("replace list index out of range")
+            parent[index] = value
+            return
+        if verb == "add":
+            if index < 0 or index > len(parent):
+                raise SelfCorrectionApplyError("add list index out of range")
+            parent.insert(index, value)
+            return
+
+    raise SelfCorrectionApplyError(f"Cannot set child on non-container type {type(parent).__name__}")
+
+
+__all__ = ["apply_patch_to_record", "SelfCorrectionApplyError"]

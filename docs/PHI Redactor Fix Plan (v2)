@@ -1,0 +1,226 @@
+PHI Redactor Fix Plan (v2)
+User Preferences
+•	Priority: Fix false positives first (veto layer), then false negatives (regex)
+•	Provider Names: Keep visible (not redacted) - Dr. names, Attending, Fellow, etc.
+•	ML Model: Fix veto layer immediately AND retrain model in parallel
+ 
+Critical Discovery: Veto Gap
+The STOPWORDS_ALWAYS set only filters NAME_LIKE_LABELS (PATIENT, GEO). When the model predicts clinical verbs as DATE, ID, or CONTACT, they slip through the veto!
+ 
+Example from console:
+•	"forceps" (DATE score=0.54) → vetoed by clinical_allow_list ✓
+•	"placed" (DATE score=0.xx) → NOT vetoed because STOPWORDS only checks PATIENT/GEO ✗
+Solution: Add clinical verbs to CLINICAL_ALLOW_LIST (which gets checked for ALL labels), not just STOPWORDS_ALWAYS.
+ 
+Problem Summary
+The PHI redactor UI is exhibiting two categories of failures:
+False Negatives (PHI Leaking Through) - CRITICAL
+•	Inline patient names like "Emma Jones, a 64-year-old male..." NOT being detected
+•	Current PATIENT_HEADER_RE only matches header patterns like "Patient: Name"
+•	ML model failing to catch narrative-style names
+False Positives (Over-Redaction) - HIGH PRIORITY
+•	Clinical verbs: "intubated", "identified", "placed", "transferred", "discharged", "tolerated"
+•	"was + verb" phrases: "was placed", "was sterilely", "was identified"
+•	Clinical abbreviations: "ip" (IP), "d/c" (discharge), "Medical Thoracoscopy"
+•	Device model numbers: "EB-1990i", "EB-580S"
+•	Duration patterns: "1-2wks"
+•	Common clinical words: "under", "acceptable", "parameters", "precautions"
+ 
+Files to Modify
+1.	protectedVeto.js - Add clinical verbs to CLINICAL_ALLOW_LIST + unblock passive voice
+2.	redactor.worker.js - Fix INLINE_PATIENT_NAME_RE for "Last, First" format
+ 
+Implementation Steps
+Track A: Immediate Veto Fix
+A.1 Add Clinical Verbs to CLINICAL_ALLOW_LIST (protectedVeto.js, line ~133)
+CRITICAL FIX: CLINICAL_ALLOW_LIST is checked for ALL labels (not just PATIENT/GEO like STOPWORDS_ALWAYS).
+const CLINICAL_ALLOW_LIST = makeNormalizedSet([
+  // ... existing terms ...
+
+  // === CRITICAL FIX: Clinical Verbs (Fix for Veto Gap) ===
+  // These are often misclassified as DATE/ID/CONTACT.
+  "placed", "identified", "performed", "obtained", "removed", "inserted",
+  "advanced", "positioned", "withdrawn", "administered", "collected",
+  "sampled", "biopsied", "examined", "visualized", "located", "accessed",
+  "secured", "completed", "transported", "admitted", "discharged",
+  "intubated", "extubated", "tolerated", "prepared", "draped",
+  "noted", "observed", "seen", "confirmed", "stable", "well",
+  "transferred", "sterilely", "aseptically", "routine", "uneventful",
+  // Safety net for passive voice auxiliaries
+  "was", "were", "is", "are", "been", "being"
+]);
+A.2 Unblock Passive Voice Detection (protectedVeto.js, line ~386)
+CRITICAL: Remove the NAME_LIKE_LABELS.has(label) restriction so passive voice check applies to ALL labels (DATE/ID/CONTACT too).
+// BEFORE (current - only checks PATIENT/GEO):
+if (!veto && NAME_LIKE_LABELS.has(label)) {
+  // passive voice logic
+}
+
+// AFTER (fixed - checks ALL labels):
+if (!veto) {
+  const beforeWindow = fullText.slice(Math.max(0, start - 12), start).toLowerCase();
+  if (/\b(?:was|were|is|are|been|being)\s*$/.test(beforeWindow)) {
+    if (/^[a-z]+(?:ed|en)$/i.test(trimmed) || STOPWORDS_ALWAYS.has(norm)) {
+      veto = true; reason = "passive_voice_verb";
+    }
+  }
+}
+A.3 Fix Regex for "Last, First" Names (redactor.worker.js, line ~38)
+CRITICAL: Current regex only matches "First Last", not "Belardes, Lisa" format.
+// BEFORE:
+const INLINE_PATIENT_NAME_RE =
+  /\b([A-Z][a-z]+(?:\s+[A-Z]\.?)?\s+[A-Z][a-z]+),?\s+...
+
+// AFTER (supports comma-separated names):
+const INLINE_PATIENT_NAME_RE =
+  /\b([A-Z][a-z]+(?:(?:\s+|,\s+)[A-Z]\.?)?\s+[A-Z][a-z]+),?\s+(?:a\s+)?(?:\d{1,3}\s*-?\s*(?:year|yr|y\/?o|yo)[\s-]*old|aged?\s+\d{1,3})\b/gi;
+Note: CLINICAL_ALLOW_LIST is a hardcoded Set in protectedVeto.js, NOT loaded from protected_terms.json.
+Track B: ML Model Retraining (DETAILED)
+Objective: Retrain the DistilBERT NER model with hard negatives to reduce false positives at the model level (before veto layer).
+ 
+Key Files:
+•	Training script: train_distilbert_ner.py
+•	Audit script: audit_model_fp.py
+•	Hard negative builder: build_hard_negative_patch.py
+•	Training data: data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl
+•	Model artifacts: artifacts/phi_distilbert_ner/
+•	ONNX output: modules/api/static/phi_redactor/vendor/phi_distilbert_ner/onnx/
+ 
+B.1 Audit Current Model for Violations
+make audit-phi-client
+What it does:
+•	Runs scripts/audit_model_fp.py against current model
+•	Checks for must-not-redact violations: CPT codes, LN stations (4R, 7, 11L, etc.), device terms, anatomy
+•	Outputs: artifacts/phi_distilbert_ner/audit_report.json
+Expected output:
+Raw model violations: X
+Post-veto violations: 0 (REQUIRED - veto layer catches remaining)
+Categories audited:
+•	CPT codes in billing context (31653, 77012, etc.)
+•	LN station patterns (4R, 7, 10L, 11Rs, etc.)
+•	Device terms (Dumon, Zephyr, PleurX, etc.)
+•	Clinical verbs (placed, identified, performed, etc.)
+ 
+B.2 Build Hard Negative Patch
+make patch-phi-client-hardneg
+What it does:
+•	Runs scripts/build_hard_negative_patch.py
+•	Reads violations from audit_report.json
+•	Creates synthetic training examples where violation tokens are tagged as "O" (not PHI)
+•	Output: data/ml_training/hard_negatives_patch.jsonl
+Technical details:
+•	Each violation becomes a training example with correct "O" labels
+•	Maintains BIO format compatibility
+•	Preserves surrounding context for model learning
+ 
+B.3 Fine-tune Model with Hard Negatives
+make finetune-phi-client-hardneg
+What it does:
+•	Runs scripts/train_distilbert_ner.py with:
+o	--resume-from artifacts/phi_distilbert_ner/ (start from current model)
+o	--epochs 1 (single epoch to avoid overfitting)
+o	--learning-rate 1e-5 (lower LR for fine-tuning)
+o	--class-weights (inverse frequency weighting)
+o	Hard negative examples appended to training data
+Training parameters:
+WeightedLossTrainer:
+  - class_weights: computed from label frequencies with sqrt smoothing
+  - evaluation_strategy: "epoch"
+  - save_strategy: "epoch"
+  - load_best_model_at_end: True
+Output: Updated model in artifacts/phi_distilbert_ner/
+ 
+B.4 Re-export ONNX Model
+make export-phi-client-model
+What it does:
+•	Runs scripts/export_onnx.py
+•	Converts fine-tuned PyTorch model to ONNX format
+•	Copies to modules/api/static/phi_redactor/vendor/phi_distilbert_ner/onnx/model.onnx
+Bundle structure:
+vendor/phi_distilbert_ner/
+├── config.json
+├── tokenizer.json
+├── tokenizer_config.json
+├── vocab.txt
+├── protected_terms.json
+└── onnx/
+    └── model.onnx
+CRITICAL: Verify ONNX has attention_mask input:
+python scripts/check_onnx_inputs.py modules/api/static/phi_redactor/vendor/phi_distilbert_ner/onnx/model.onnx
+ 
+B.5 Verify Fix
+make audit-phi-client  # Re-run audit
+Success criteria:
+•	Raw model violations: REDUCED (compared to B.1)
+•	Post-veto violations: 0 (REQUIRED)
+Manual verification:
+1.	Start dev server
+2.	Open /ui/phi_redactor/
+3.	Test with known false positive cases from audits
+4.	Confirm clinical terms no longer highlighted
+ 
+B.6 (Optional) Quantized Export
+If file size is a concern:
+make export-phi-client-model-quant
+Warning: Quantized models may produce empty output in WASM. Test thoroughly before deploying.
+ 
+Iterative Improvement Cycle
+If violations persist after B.5:
+1.	Re-run audit to identify remaining violations
+2.	Append new hard negatives to patch file
+3.	Fine-tune for another epoch
+4.	Re-export and verify
+Convergence target: Raw model violations < 10, post-veto = 0
+Previously Completed (Phase 1)
+Already implemented:
+•	✅ STOPWORDS_ALWAYS expanded with clinical verbs + function words
+•	✅ CLINICAL_ALLOW_LIST expanded with IP abbreviations, procedures
+•	✅ Device model regex (EB-1990i, etc.)
+•	✅ Duration regex (1-2wks, etc.)
+•	✅ Passive voice detection
+•	✅ Inline patient name regex
+•	✅ PT_NAME_MRN_RE pattern
+•	✅ TITLE_NAME_RE pattern
+ 
+Testing Plan
+Immediate (Track A)
+1.	Test with the Belardes note - verify:
+o	"Belardes, Lisa" → REDACTED ✓
+o	"was placed", "was identified", "was sterilely" → NOT redacted
+o	"tolerated" → NOT redacted
+o	"IP consult" → NOT redacted
+o	Providers (Miller, Kabadi, Alisha) → NOT redacted
+2.	Test with Kenneth Coleman note - verify all fixes work
+After Retraining (Track B)
+make audit-phi-client  # Must show 0 post-veto violations
+ 
+Current Status
+Track	Status	Notes
+A (Veto Layer)	✅ COMPLETE	6+ audit cycles, extensive regex + veto improvements
+B (ML Retraining)	🔄 READY TO START	Diminishing returns on regex/veto approach
+ 
+Track B Quick Start
+# Step 1: Audit current model
+make audit-phi-client
+
+# Step 2: Build hard negatives from violations
+make patch-phi-client-hardneg
+
+# Step 3: Fine-tune model (1 epoch, LR=1e-5)
+make finetune-phi-client-hardneg
+
+# Step 4: Export to ONNX
+make export-phi-client-model
+
+# Step 5: Verify fix
+make audit-phi-client  # Must show 0 post-veto violations
+ 
+Expected Outcomes
+After Track B:
+•	Model will have higher precision on clinical text
+•	Fewer false positives to veto (reduced veto layer burden)
+•	Better generalization to unseen clinical verbs
+•	Case-insensitive name detection improvement
+•	Raw model violations should decrease significantly
+Safety invariant: Post-veto violations MUST remain 0. The veto layer is the final safety net.
+

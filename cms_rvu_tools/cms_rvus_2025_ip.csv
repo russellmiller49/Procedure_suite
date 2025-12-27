@@ -1,0 +1,76 @@
+HCPCS,DESCRIPTION,WORK_RVU,NON_FAC_PE_RVU,FAC_PE_RVU,MP_RVU,NON_FAC_TOTAL,FAC_TOTAL,GLOB_DAYS,MULT_PROC,STATUS
+31622,Bronchoscopy dx w/wash,2.53,4.99,1.37,0.30,7.82,4.20,000,3,A
+31623,Bronchoscopy w/brush,2.63,5.55,1.25,0.30,8.48,4.18,000,3,A
+31624,Bronchoscopy w/bal,2.63,5.02,1.31,0.30,7.95,4.24,000,3,A
+31625,Bronchoscopy w/bx,3.11,7.32,1.47,0.35,10.78,4.93,000,3,A
+31626,Bronchoscopy w/markers,3.91,19.53,1.93,0.40,23.84,6.24,000,2,A
+31627,Bronchoscopy w/nav,2.27,27.97,0.55,0.25,30.49,3.07,ZZZ,0,A
+31628,Bronch w/lung bx 1 lobe,3.55,7.56,1.60,0.38,11.49,5.53,000,3,A
+31629,Bronch w/tbna,3.75,9.55,1.74,0.40,13.70,5.89,000,3,A
+31630,Bronch w/dilation,3.81,0.00,2.04,0.42,0.00,6.27,000,2,A
+31631,Bronch w/tracheal stent,4.36,0.00,2.31,0.48,0.00,7.15,000,2,A
+31632,Bronch tblb addl lobe,1.00,0.92,0.42,0.12,2.04,1.54,ZZZ,0,A
+31633,Bronch tbna addl lobe,1.35,1.06,0.50,0.15,2.56,2.00,ZZZ,0,A
+31634,Bronch w/balloon occl,3.50,0.00,1.75,0.38,0.00,5.63,000,2,A
+31635,Bronch w/fb removal,3.42,5.35,1.74,0.38,9.15,5.54,000,3,A
+31636,Bronch w/bronch stent,4.30,0.00,2.10,0.45,0.00,6.85,000,2,A
+31637,Bronch place addl stent,1.58,0.00,0.65,0.18,0.00,2.41,ZZZ,0,A
+31638,Bronch w/stent revision,4.88,0.00,2.36,0.52,0.00,7.76,000,2,A
+31640,Bronch w/tumor excision,4.50,0.00,2.25,0.48,0.00,7.23,000,2,A
+31641,Bronch w/tumor destruct,5.25,0.00,2.60,0.55,0.00,8.40,000,2,A
+31645,Bronch w/ther asp init,2.78,4.47,1.37,0.32,7.57,4.47,000,3,A
+31646,Bronch w/ther asp subs,2.40,3.90,1.20,0.28,6.58,3.88,000,3,A
+31647,Bronch w/valve init,7.50,0.00,3.75,0.80,0.00,12.05,000,2,A
+31648,Bronch valve removal,4.00,0.00,2.00,0.44,0.00,6.44,000,2,A
+31649,Bronch valve remov addl,1.50,0.00,0.60,0.16,0.00,2.26,ZZZ,0,A
+31651,Bronch valve place addl,2.50,0.00,1.00,0.28,0.00,3.78,ZZZ,0,A
+31652,Bronch ebus 1-2 nodes,4.46,31.25,2.02,0.48,36.19,6.96,000,3,A
+31653,Bronch ebus 3+ nodes,4.96,32.06,2.22,0.52,37.54,7.70,000,3,A
+31654,Bronch ebus periph,1.40,2.17,0.56,0.15,3.72,2.11,ZZZ,0,A
+31660,Bronch thermoplasty 1,4.00,0.00,1.53,0.44,0.00,5.97,000,2,A
+31661,Bronch thermoplasty 2+,4.25,0.00,1.61,0.46,0.00,6.32,000,2,A
+32408,Core bx lung percut,3.18,0.00,1.30,0.27,0.00,4.75,000,2,A
+32550,Ins tunnel pleur cath,3.92,0.00,1.60,0.36,0.00,5.88,000,0,A
+32551,Tube thoracostomy,3.04,0.00,1.24,0.28,0.00,4.56,000,0,A
+32552,Rem tunnel pleur cath,2.53,0.00,1.03,0.24,0.00,3.80,000,0,A
+32554,Thoracentesis w/o img,1.82,0.78,0.50,0.28,2.88,2.60,000,0,A
+32555,Thoracentesis w/img,2.27,0.92,0.63,0.29,3.48,3.19,000,0,A
+32556,Pleural drain cath no img,2.50,1.12,0.83,0.29,3.91,3.62,000,0,A
+32557,Pleural drain cath w/img,3.12,1.38,1.04,0.34,4.84,4.50,000,0,A
+32560,Instill pleurodesis agent,1.54,0.77,0.63,0.14,2.45,2.31,000,0,A
+32561,Instill fibrin 1st day,1.39,0.70,0.57,0.13,2.22,2.09,000,0,A
+32562,Instill fibrin subseq,1.24,0.62,0.50,0.12,1.98,1.86,ZZZ,0,A
+32601,Thoracoscopy dx,5.50,0.00,2.25,0.50,0.00,8.25,000,2,A
+32604,Thoracoscopy w/peric bx,8.77,0.00,3.58,0.80,0.00,13.15,000,2,A
+32606,Thoracoscopy mediastinal,9.50,0.00,3.88,0.87,0.00,14.25,000,2,A
+32607,Thoracoscopy wedge bx,10.25,0.00,4.19,0.94,0.00,15.38,000,2,A
+32608,Thoracoscopy wedge bilat,10.75,0.00,4.40,0.98,0.00,16.13,000,2,A
+32609,Thoracoscopy bx segment,11.25,0.00,4.60,1.03,0.00,16.88,000,2,A
+32650,Thoracoscopy pleurodesis,10.00,0.00,4.09,0.91,0.00,15.00,090,2,A
+32651,Thoracoscopy decort part,18.00,0.00,7.36,1.64,0.00,27.00,090,2,A
+32652,Thoracoscopy decort tot,22.00,0.00,8.99,2.01,0.00,33.00,090,2,A
+32653,Thoracoscopy remove fb,15.00,0.00,6.13,1.37,0.00,22.50,090,2,A
+32654,Thoracoscopy hemorrhage,16.00,0.00,6.54,1.46,0.00,24.00,090,2,A
+32656,Thoracoscopy pleurectomy,14.00,0.00,5.72,1.28,0.00,21.00,090,2,A
+32657,Thoracoscopy wedge resect,15.00,0.00,6.13,1.37,0.00,22.50,090,2,A
+32666,Thoracoscopy ther wedge,17.00,0.00,6.95,1.55,0.00,25.50,090,2,A
+32669,Thoracoscopy segmentect,20.00,0.00,8.18,1.82,0.00,30.00,090,2,A
+99151,Mod sed same phys <5 yr,0.50,0.22,0.18,0.04,0.76,0.72,XXX,0,A
+99152,Mod sed same phys 5+ yr,0.25,0.12,0.08,0.04,0.41,0.37,XXX,0,A
+99153,Mod sed addl 15 min,0.00,0.35,0.33,0.02,0.37,0.35,ZZZ,0,A
+99155,Mod sed other phys <5,1.90,0.48,0.34,0.20,2.58,2.44,XXX,0,A
+99156,Mod sed other phys 5+,1.65,0.55,0.41,0.18,2.38,2.24,XXX,0,A
+99157,Mod sed other addl 15,1.25,0.58,0.47,0.11,1.94,1.83,ZZZ,0,A
+99221,Initial hosp care low,2.42,1.18,0.86,0.16,3.76,3.44,XXX,0,A
+99222,Initial hosp care mod,2.60,1.28,1.05,0.22,4.10,3.87,XXX,0,A
+99223,Initial hosp care high,3.50,1.64,1.38,0.26,5.40,5.14,XXX,0,A
+99231,Subseq hosp care low,1.00,0.47,0.38,0.09,1.56,1.47,XXX,0,A
+99232,Subseq hosp care mod,1.59,0.75,0.63,0.12,2.46,2.34,XXX,0,A
+99233,Subseq hosp care high,2.40,1.12,0.94,0.18,3.70,3.52,XXX,0,A
+99238,Hospital discharge <30,1.50,0.91,0.80,0.11,2.52,2.41,XXX,0,A
+99239,Hospital discharge >30,2.15,1.24,1.10,0.15,3.54,3.40,XXX,0,A
+99291,Critical care 1st hr,4.50,2.52,1.58,0.37,7.39,6.45,XXX,0,A
+99292,Critical care addl 30m,2.25,1.26,0.79,0.19,3.70,3.23,ZZZ,0,A
+71045,Xray chest 1 view,0.18,0.56,0.09,0.02,0.76,0.29,XXX,0,A
+71046,Xray chest 2 views,0.22,0.72,0.11,0.02,0.96,0.35,XXX,0,A
+76942,Us guide needle place,0.67,0.75,0.35,0.05,1.47,1.07,XXX,0,A

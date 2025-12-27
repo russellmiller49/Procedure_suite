@@ -1,0 +1,3 @@
+Robotic navigation{% if proc.platform %} using the {{ proc.platform }} platform{% endif %} was performed to reach the target{% if proc.lesion_location %} at {{ proc.lesion_location }}{% endif %}.
+{% if proc.registration_method or proc.registration_error_mm is not none %}Registration{% if proc.registration_method %} was {{ proc.registration_method | lower }}{% endif %}{% if proc.registration_error_mm is not none %} with a registration error of {{ proc.registration_error_mm }} mm{% endif %}.{% endif %}
+{% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}

@@ -1,0 +1,5 @@
+A follow-up bronchoscopy was performed. Necrotic tissue at {{ proc.site }} was debrided{% if proc.debridement_tool %} with {{ proc.debridement_tool }}{% endif %}.
+Airway patency improved{% if proc.pre_patency_pct is not none and proc.post_patency_pct is not None %} from {{ proc.pre_patency_pct }}% to {{ proc.post_patency_pct }}%{% endif %}.
+{% if proc.bleeding is not none %}Bleeding after debridement: {% if proc.bleeding %}present{% else %}none{% endif %}.{% endif %}
+{% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}
+The patient tolerated the procedure well.

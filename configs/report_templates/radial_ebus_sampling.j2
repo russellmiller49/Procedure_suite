@@ -1,0 +1,8 @@
+{% if survey %}Radial endobronchial ultrasound was performed at the {{ survey.location }}{% if survey.rebus_features %}, demonstrating an {{ survey.rebus_features | lower }} pattern{% endif %}.{% elif proc.ultrasound_pattern %}Radial endobronchial ultrasound demonstrated an {{ proc.ultrasound_pattern | lower }} view{% if proc.lesion_size_mm is not none %} with lesion size {{ proc.lesion_size_mm }} mm{% endif %}.{% endif %}
+
+The probe was withdrawn leaving the guide sheath in situ. Sampling was performed via the guide sheath{% if proc.guide_sheath_diameter %} ({{ proc.guide_sheath_diameter }}){% endif %} using {{ proc.sampling_tools | join(', ') }}{% if proc.passes_per_tool %} with {{ proc.passes_per_tool }}{% endif %}.
+{% if proc.fluoro_used is not none %}Fluoroscopy used: {% if proc.fluoro_used %}Yes{% else %}No{% endif %}.{% endif %}{% if proc.rose_result %} ROSE: {{ proc.rose_result }}.{% endif %}
+{% if proc.specimens %}Specimens: {{ proc.specimens | join(', ') }}.{% endif %}
+{% if proc.cxr_ordered %}Post-procedure chest x-ray: ordered.{% endif %}
+{% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}
+The patient tolerated the procedure well.

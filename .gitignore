@@ -1,0 +1,60 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.cache
+.pytest_cache/
+.env
+.env.local
+.env.*
+*.egg-info/
+.DS_Store
+
+# API Keys and sensitive files
+*api_key*
+*API_KEY*
+*secret*
+*SECRET*
+*password*
+*PASSWORD*
+# Note: geminiquota.py is now safe (uses env var), so we can track it
+*.key
+*.pem
+
+# Model artifacts
+RoBERTa-base-PM-M3-Voc-distill-hf.tar.gz
+biomed_roberta_base-hf.tar.gz
+aws-g5-key.pem
+
+data/models/
+*.bin
+*.pt
+*.onnx
+runs/
+
+# Local audit artifacts
+artifacts/phi_audit/
+
+# Local distilled artifacts (never commit model binaries)
+distilled/
+dist/registry_bundle/
+
+# Hugging Face model snapshots (large; keep out of git)
+modules/api/static/phi_redactor/vendor/**
+!modules/api/static/phi_redactor/vendor/.gitkeep
+
+# Hugging Face model snapshots (downloaded locally; keep out of git)
+data/models/hf/**
+!data/models/hf/.gitkeep
+
+# Explicit: prevent committing the large distill checkpoint if it exists locally
+data/models/RoBERTa-base-PM-M3-Voc-distill/RoBERTa-base-PM-M3-Voc-distill-hf/pytorch_model.bin
+
+# model artifacts
+artifacts/
+
+# model artifacts
+artifacts/
+
+# local training artifacts
+artifacts/

@@ -1,0 +1,25 @@
+Interventional Pulmonology Procedure Note (Synthetic)
+
+Date of Procedure: 05/10/2022
+Patient: Fisher, Sarah
+
+INDICATION: Airway inspection and therapeutic bronchoscopy.
+
+SURGEON: Jordan Parks, MD
+ASSISTANT: Michael Manson, DO
+ANESTHESIOLOGIST: Taylor Reed, MD
+
+DESCRIPTION OF PROCEDURE:
+Following intravenous medications as per the record, the T190 video bronchoscope was introduced through the ETT.
+At the distal edge of the stent there was some minor granulation tissue which was nonobstructive.
+Cryotherapy was then performed with 30 second freeze/thaw cycles to induce tissue sloughing.
+Finally, a total of 5 mL of Kenalog 10 mg/mL solution was injected into the submucosa.
+
+RECOMMENDATIONS:
+1. Follow up in about a week.
+
+________________________________________
+Jonathan Lee, MD Interventional Pulmonology
+Date/Time: 03/15/2025 11:15
+Electronically Signed
+

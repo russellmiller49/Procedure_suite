@@ -1,0 +1,20 @@
+TITLE: Bilateral ultrasound-guided thoracenteses, same day
+
+INDICATION
+Recurrent symptomatic pleural effusions, right and left.
+
+ANESTHESIA / SEDATION
+None beyond local anesthetic.
+
+IMAGING
+Real-time ultrasound guidance used for both sides; permanent images archived in PACS with identifiers recorded in the note.
+
+PROCEDURE
+RIGHT thoracentesis: 8th intercostal space mid-axillary; 1200 mL serous fluid removed; specimen sent.
+LEFT thoracentesis: 8th intercostal space posterior-axillary; 900 mL serous fluid removed; specimen sent.
+
+COMPLICATIONS
+None. Post-procedure CXR ordered to confirm status (confirmation imaging considered routine).
+
+DISPOSITION
+Patient tolerated well. Bilateral medical necessity documented due to symptomatic effusions on both sides.

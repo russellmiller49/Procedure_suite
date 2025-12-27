@@ -1,0 +1,7 @@
+The {{ proc.side }} chest was prepped and draped in sterile fashion. A pigtail catheter ({{ proc.size_fr }}) was inserted using the Seldinger technique at the {{ proc.intercostal_space }} intercostal space along the {{ proc.entry_location }}.
+{% if proc.anesthesia_lidocaine_ml is not none %}Local anesthesia with {{ proc.anesthesia_lidocaine_ml }} mL of 1% lidocaine was administered.{% endif %}
+Entry into the pleural space was confirmed with return of fluid and air. The catheter was advanced over a guidewire, secured, and attached to the drainage system.
+{% if proc.fluid_removed_ml is not none %}Fluid Removed: {{ proc.fluid_removed_ml }} mL{% if proc.fluid_appearance %} - {{ proc.fluid_appearance }}{% endif %}.{% endif %}
+{% if proc.specimen_tests %}Specimens: {{ proc.specimen_tests | join(', ') }}.{% endif %}
+{% if proc.cxr_ordered %}A post-procedure chest x-ray was ordered.{% endif %}
+The patient tolerated the procedure well.
