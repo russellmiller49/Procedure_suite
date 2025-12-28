@@ -11,6 +11,8 @@ const cancelBtn = document.getElementById("cancelBtn");
 const applyBtn = document.getElementById("applyBtn");
 const revertBtn = document.getElementById("revertBtn");
 const submitBtn = document.getElementById("submitBtn");
+const addRedactionBtn = document.getElementById("addRedactionBtn");
+const entityTypeSelect = document.getElementById("entityTypeSelect");
 
 /**
  * Get merge mode from query param or localStorage.
@@ -153,6 +155,20 @@ async function main() {
   let decorations = [];
 
   let running = false;
+  let currentSelection = null;
+
+  // Track selection changes for manual redaction
+  editor.onDidChangeCursorSelection((e) => {
+    const selection = e.selection;
+    const hasSelection = !selection.isEmpty();
+
+    currentSelection = hasSelection ? selection : null;
+
+    // Only enable Add button if we have a selection and aren't running detection
+    if (addRedactionBtn) {
+      addRedactionBtn.disabled = !hasSelection || running;
+    }
+  });
 
   function setScrubbedConfirmed(value) {
     scrubbedConfirmed = value;
@@ -191,6 +207,16 @@ async function main() {
       .map((d) => {
         const startPos = offsetToPosition(d.start, lineStarts, textLength);
         const endPos = offsetToPosition(d.end, lineStarts, textLength);
+
+        // Determine class and hover based on source (manual vs auto)
+        const className = d.source === "manual"
+          ? "phi-detection-manual"
+          : "phi-detection";
+
+        const hoverMessage = d.source === "manual"
+          ? `**${d.label}** (Manual)`
+          : `**${d.label}** (${d.source}, score ${formatScore(d.score)})`;
+
         return {
           range: new monaco.Range(
             startPos.lineNumber,
@@ -199,10 +225,8 @@ async function main() {
             endPos.column
           ),
           options: {
-            inlineClassName: "phi-detection",
-            hoverMessage: {
-              value: `**${d.label}** (${d.source}, score ${formatScore(d.score)})`,
-            },
+            inlineClassName: className,
+            hoverMessage: { value: hoverMessage },
           },
         };
       });
@@ -234,10 +258,14 @@ async function main() {
       });
       checkbox.checked = checked;
 
+      // Add conditional classes for manual detections
+      const sourceClass = d.source === "manual" ? "pill source source-manual" : "pill source";
+      const scoreText = d.source === "manual" ? "Manual" : `score ${formatScore(d.score)}`;
+
       const meta = el("div", { className: "detMeta" }, [
         el("span", { className: "pill label", text: d.label }),
-        el("span", { className: "pill source", text: d.source }),
-        el("span", { className: "pill score", text: `score ${formatScore(d.score)}` }),
+        el("span", { className: sourceClass, text: d.source }),
+        el("span", { className: "pill score", text: scoreText }),
         el("span", { className: "pill", text: `${d.start}–${d.end}` }),
       ]);
 
@@ -496,6 +524,43 @@ async function main() {
     setStatus("Reverted to baseline");
     setProgress("");
   });
+
+  // Manual redaction: Add button click handler
+  if (addRedactionBtn) {
+    addRedactionBtn.addEventListener("click", () => {
+      if (!currentSelection || currentSelection.isEmpty()) return;
+
+      const startOffset = model.getOffsetAt(currentSelection.getStartPosition());
+      const endOffset = model.getOffsetAt(currentSelection.getEndPosition());
+      const selectedText = model.getValue().slice(startOffset, endOffset);
+      const entityType = entityTypeSelect ? entityTypeSelect.value : "OTHER";
+
+      // Create new detection object
+      const newDetection = {
+        id: `manual_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+        label: entityType,
+        text: selectedText,
+        start: startOffset,
+        end: endOffset,
+        score: 1.0,
+        source: "manual"  // Critical for styling distinction
+      };
+
+      // Add to global state (manual additions "win" by being at end)
+      detections.push(newDetection);
+      detectionsById.set(newDetection.id, newDetection);
+
+      // Re-render sidebar and editor highlights
+      renderDetections();
+
+      // Reset UI: Clear selection and disable button
+      editor.setSelection(new monaco.Selection(0, 0, 0, 0));
+      currentSelection = null;
+      addRedactionBtn.disabled = true;
+
+      setStatus(`Added manual redaction: ${entityType}`);
+    });
+  }
 
   submitBtn.addEventListener("click", async () => {
     if (!scrubbedConfirmed) {

@@ -1,29 +1,77 @@
 # PHI Review System
 
-A HIPAA-compliant medical coding system with physician-in-the-loop Protected Health Information (PHI) review.
+A HIPAA-compliant medical coding system with physician-in-the-loop Protected Health Information (PHI) review using **client-side hybrid detection** (DistilBERT ML + regex patterns).
 
 ## Architecture Overview
 
+### Client-Side Hybrid Detection Pipeline (Primary)
+
+The PHI redaction system uses a **client-side hybrid pipeline** that runs entirely in the browser:
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           PHYSICIAN WORKFLOW                                 │
+│                     CLIENT-SIDE PHI DETECTION PIPELINE                       │
+├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
-│   ┌──────────┐    ┌──────────────┐    ┌─────────────┐    ┌──────────────┐  │
-│   │ 1. Input │───▶│ 2. Auto-Scrub│───▶│ 3. Review   │───▶│ 4. Confirm   │  │
-│   │ Note     │    │ (Presidio)   │    │ Highlights  │    │ & Submit     │  │
-│   └──────────┘    └──────────────┘    └─────────────┘    └──────┬───────┘  │
-│                                                                  │          │
-└──────────────────────────────────────────────────────────────────┼──────────┘
-                                                                   │
-                          ┌────────────────────────────────────────┘
-                          │
-                          ▼
+│   1. Text Input ─────────────────────▶ Monaco Editor                         │
+│                                                                              │
+│   2. Web Worker Detection ────────────────────────────────────────────────   │
+│      ├── ML Detection (DistilBERT via Transformers.js / ONNX)               │
+│      └── Regex Detection (structured patterns: names, MRN, dates)           │
+│                                                                              │
+│   3. Protected Terms Veto (protectedVeto.js) ─────────────────────────────   │
+│      └── Filters false positives: LN stations, anatomy, devices, CPT codes  │
+│                                                                              │
+│   4. User Review ─────────────────────────────────────────────────────────   │
+│      ├── Highlight + checkbox toggle (exclude false positives)              │
+│      └── Manual Additions (Selection + Add Redaction button)                │
+│                                                                              │
+│   5. Apply Redactions ──────────────▶ [REDACTED] placeholders               │
+│                                                                              │
+│   6. Submit Scrubbed Text ──────────▶ Server (only scrubbed text sent)      │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Key Components
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| Monaco UI | `/ui/phi_redactor/index.html` | Interactive editor |
+| App Logic | `/ui/phi_redactor/app.js` | UI state, manual redaction |
+| Worker | `/ui/phi_redactor/redactor.worker.js` | Hybrid ML+regex detection |
+| Veto Layer | `/ui/phi_redactor/protectedVeto.js` | Filter false positives |
+| ONNX Model | `/ui/phi_redactor/vendor/phi_distilbert_ner/` | DistilBERT NER |
+
+### Why Client-Side?
+
+1. **No PHI leaves the browser** until user confirms redactions
+2. **Instant feedback** - no network latency for detection
+3. **User control** - physician reviews and corrects before submission
+4. **Offline capable** - works without server connection
+
+### Manual Redaction Feature
+
+Users can add redactions for PHI missed by auto-detection:
+1. Select text in the editor
+2. Choose entity type from dropdown (Patient, ID, Date, etc.)
+3. Click "Add" button
+4. Manual detections appear with **amber/yellow highlighting** (vs red for auto)
+5. Manual detections appear in sidebar with "manual" source tag
+
+---
+
+### Server-Side Processing Layer (After Client Redaction)
+
+Once the physician confirms redactions, the scrubbed text is submitted to the server:
+
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                         SECURE PROCESSING LAYER                              │
 │                                                                              │
 │   ┌──────────────────┐         ┌──────────────────────────────────────────┐ │
 │   │ PHI VAULT        │         │ PROCEDURE DATA                          │ │
-│   │                  │         │                                          │ │
+│   │ (Optional)       │         │                                          │ │
 │   │ • Encrypted PHI  │◀───────▶│ • Scrubbed text (no PHI)                │ │
 │   │ • AES-256        │  UUID   │ • Entity map (for reconstruction)       │ │
 │   │ • Key rotation   │  Link   │ • Processing status                     │ │
@@ -66,9 +114,9 @@ Unlike traditional HITL architectures that require a separate review workforce, 
 
 ### 2. Prevents Semantic Destruction
 
-Auto-scrubbers like Presidio often over-flag clinical terms. The physician can:
-- **Unflag** false positives (e.g., "LEFT UPPER LOBE" flagged as location)
-- **Add** missed PHI that the auto-scrubber missed
+The hybrid detection system includes a **protected terms veto layer** that prevents over-flagging clinical terms, but the physician can also:
+- **Unflag** false positives via checkboxes (e.g., "LEFT UPPER LOBE" incorrectly flagged)
+- **Add** missed PHI via selection + "Add" button
 - **Preserve** clinically essential context for accurate coding
 
 ### 3. HIPAA Compliance
@@ -248,61 +296,59 @@ The main review component with:
 
 ## Setup Instructions
 
-### Backend
+### Client-Side PHI Redactor (Primary)
+
+The PHI redactor runs entirely in the browser. No special setup needed:
 
 ```bash
-cd phi_review_system/backend
+# Start the main dev server
+uvicorn modules.api.fastapi_app:app --reload --port 8000
 
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate
+# Access the PHI Redactor at:
+# http://localhost:8000/ui/phi_redactor/
+```
+
+The client-side model files are served from:
+- `/ui/phi_redactor/vendor/phi_distilbert_ner/` - ONNX model bundle
+
+### Backend (For LLM Processing)
+
+The backend only receives scrubbed text. No Presidio required:
+
+```bash
+cd procedure_suite
 
 # Install dependencies
-pip install fastapi uvicorn sqlalchemy[asyncio] asyncpg presidio-analyzer cryptography pydantic
+pip install -e .
 
-# Download spaCy model for Presidio
-python -m spacy download en_core_web_lg
-
-# Set environment variables
+# Set environment variables (optional - for vault storage)
 export DATABASE_URL="postgresql+asyncpg://user:pass@localhost:5432/phi_vault"
 export ENCRYPTION_KEY=$(python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())")
 
 # Run the server
-uvicorn main:app --reload --port 8000
-```
-
-### Frontend
-
-```bash
-cd phi_review_system/frontend
-
-# If using Vite
-npm create vite@latest phi-review-ui -- --template react
-cd phi-review-ui
-npm install
-
-# Copy components
-cp ../PHIReviewEditor.jsx src/
-cp ../PHIReviewDemo.jsx src/
-
-# Update App.jsx to use PHIReviewDemo
-# Run dev server
-npm run dev
+uvicorn modules.api.fastapi_app:app --reload --port 8000
 ```
 
 ## Configuration
 
-### Presidio Allow-Lists
+### Protected Terms Veto Layer
 
-Critical for preventing over-scrubbing. Configure in `dependencies.py`:
+The client-side veto layer (`/ui/phi_redactor/protectedVeto.js`) prevents over-redaction of clinical terms:
 
-```python
-anatomical_terms = [
-    "left", "right", "bilateral",
-    "upper lobe", "middle lobe", "lower lobe",
-    "left upper lobe", "right middle lobe",
-    # ... etc
-]
+**Protected Categories:**
+- **LN Stations**: 4R, 7, 11L, etc. (when "station" context present)
+- **Anatomy**: trachea, carina, RUL, LLL, bronchus intermedius
+- **Devices**: Ion, Monarch, Galaxy, Zephyr, Chartis, PleurX
+- **Procedures**: EBUS, TBNA, BAL, bronchoscopy
+- **CPT Codes**: 31653, 77012 (when in billing context)
+- **Provider Names**: Dr. Smith, Attending, Fellow (not patient PHI)
+
+To add new protected terms, edit `protectedVeto.js`:
+
+```javascript
+// In protectedVeto.js
+const PROTECTED_DEVICES = ["ion", "monarch", "galaxy", /* add new */];
+const LN_STATIONS = ["1", "2L", "2R", /* add new */];
 ```
 
 ### Encryption Key Rotation
@@ -347,27 +393,32 @@ WHERE metadata->>'authorized' = 'false';
 
 ## ML Improvement Loop
 
-The `scrubbing_feedback` table captures:
-- What Presidio got wrong (false positives/negatives)
-- Precision and recall metrics per document
-- Breakdown by document type and specialty
+### Prodigy-Based Iterative Correction
 
-Use this data to:
-1. Add terms to Presidio allow-lists
-2. Create custom Presidio recognizers
-3. Fine-tune underlying NER models
-4. Track improvement over time
+The system uses [Prodigy](https://prodi.gy/) for human-in-the-loop model improvement:
 
-```sql
--- Presidio accuracy by specialty
-SELECT 
-  specialty,
-  AVG(precision) as avg_precision,
-  AVG(recall) as avg_recall,
-  AVG(f1_score) as avg_f1
-FROM scrubbing_feedback
-GROUP BY specialty;
+1. **Sample notes** → Pre-annotate with DistilBERT model
+2. **Prodigy ner.manual** → Human reviews/corrects annotations
+3. **Export corrections** → Merge with training data
+4. **Fine-tune model** → Retrain DistilBERT on corrected data
+
+See `CLAUDE.md` for detailed Prodigy workflow commands:
+
+```bash
+make prodigy-prepare      # Sample + pre-annotate
+make prodigy-annotate     # Launch Prodigy UI
+make prodigy-export       # Export corrections
+make prodigy-finetune     # Fine-tune model
+make gold-cycle           # Full gold standard workflow
 ```
+
+### Key Training Data Files
+
+| File | Purpose |
+|------|---------|
+| `phi_gold_standard_v1.jsonl` | Pure human-verified Prodigy annotations |
+| `phi_train_gold.jsonl` | Training set (80% of notes) |
+| `phi_test_gold.jsonl` | Test set (20% of notes) |
 
 ## Security Considerations
 
