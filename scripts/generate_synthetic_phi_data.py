@@ -54,6 +54,26 @@ CITIES = [
 
 STATES = ["NY", "CA", "TX", "FL", "IL", "PA", "OH", "GA", "NC", "MI", "NJ", "VA", "WA", "AZ", "MA", "TN", "IN", "MO", "MD", "WI"]
 
+STATE_NAMES = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+    "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+    "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
+    "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+    "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
+    "Wisconsin", "Wyoming",
+]
+
+FACILITY_BASES = [
+    "Naval Medical Center", "Medical Center", "University Medical Center",
+    "General Hospital", "Regional Hospital", "Memorial Hospital", "Community Hospital",
+    "Children's Hospital", "University Hospital", "County Medical Center",
+    "VA Medical Center", "Health Center", "Health System", "Cancer Center",
+    "Pulmonary Institute", "Medical Clinic", "Specialty Clinic",
+    "University of",
+]
+
 # Medical procedure context templates
 PROCEDURE_TEMPLATES = [
     "Patient: {patient}. DOB: {date}. Phone: {phone}.",
@@ -73,6 +93,10 @@ PROCEDURE_TEMPLATES = [
     "SSN ending in {ssn_last4} verified for {patient}. DOB: {date}.",
     "MRN: {mrn} - {patient}, DOB {date}, Phone {phone}",
     "Address: {address}\nPatient: {patient}\nDOB: {date}",
+    "Facility: {facility}\nPatient: {patient}\nDOB: {date}",
+    "Procedure performed at {facility} on {date}. Patient: {patient}.",
+    "Transferred to {facility}. Patient {patient} scheduled for bronchoscopy on {date}.",
+    "Operative location: {facility}\nMRN: {mrn}\nPatient: {patient}",
 ]
 
 # Templates with just names
@@ -205,6 +229,23 @@ def generate_address() -> str:
     return random.choice(formats)
 
 
+def generate_facility_name() -> str:
+    """Generate a facility name with city/state suffix at the end."""
+    base = random.choice(FACILITY_BASES)
+    city = random.choice(CITIES)
+    state = random.choice(STATE_NAMES)
+    suffix_style = random.choice(["city", "city_state", "state"])
+
+    if base.lower().endswith("of"):
+        return f"{base} {state}"
+
+    if suffix_style == "city":
+        return f"{base} {city}"
+    if suffix_style == "city_state":
+        return f"{base} {city} {state}"
+    return f"{base} {state}"
+
+
 def tokenize_and_tag(
     text: str,
     tokenizer: Any,
@@ -290,6 +331,7 @@ def generate_example(
         ssn_last4 = generate_ssn_last4()
         mrn = generate_mrn()
         address = generate_address()
+        facility = generate_facility_name()
 
         # Build text with placeholders
         text = template.format(
@@ -300,6 +342,7 @@ def generate_example(
             ssn_last4=ssn_last4,
             mrn=mrn,
             address=address,
+            facility=facility,
         )
 
         # Find entity positions
@@ -337,6 +380,11 @@ def generate_example(
             start = text.find(address)
             if start >= 0:
                 entities.append({"start": start, "end": start + len(address), "label": "GEO"})
+
+        if "{facility}" in template:
+            start = text.find(facility)
+            if start >= 0:
+                entities.append({"start": start, "end": start + len(facility), "label": "GEO"})
 
     elif template_type == "name":
         template = random.choice(NAME_TEMPLATES)

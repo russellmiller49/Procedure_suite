@@ -64,9 +64,15 @@ const PATIENT_HEADER_RE =
 const HEADER_NAME_LABEL_RE =
   /\b(?:Patient(?:\s+Name)?|Pt\.?(?:\s+Name)?|Pat\.?|Name|Subject)\s*[:\-]/gi;
 const HEADER_NAME_TERMINATOR_RE =
-  /\b(?:DOB|DOD|Date\s+of\s+Birth|Birth\s*Date|Birthdate|Date|MRN|ID|EDIPI|Age|Sex|Gender|Phone|Address)\b(?=\s*[:#-]|\s+\d)/i;
+  /\b(?:DOB|DOD|Date\s+of\s+Birth|Birth\s*Date|Birthdate|Date|MRN|ID|EDIPI|Age|Sex|Gender|Phone|Address|Procedure|Indication(?:s)?|Findings|Impression|Assessment|Plan|History|Technique|Diagnosis)\b(?=\s*[:#-]|\s+\d)/i;
 const HEADER_NAME_TOKENS_RE =
   /^\s*([A-Z][A-Za-z'.-]*(?:\s*,\s*[A-Z][A-Za-z'.-]*)?(?:\s+[A-Z][A-Za-z'.-]*)*)/;
+const HEADER_NAME_STOPWORDS = new Set([
+  "procedure", "indication", "indications", "findings", "impression",
+  "assessment", "plan", "history", "technique", "diagnosis",
+  "date", "dob", "dod", "mrn", "id", "age", "sex", "gender",
+  "phone", "address", "medications", "medication", "anesthesia", "sedation", "general"
+]);
 
 // IMPORTANT: Must contain at least one digit to avoid matching medical acronyms like "rEBUS"
 const MRN_RE =
@@ -196,6 +202,19 @@ const DATE_ISO_RE = /\b(\d{4}[-\/]\d{1,2}[-\/]\d{1,2})\b/g;
 const DOB_HEADER_RE =
   /\b(?:DOB|Date\s+of\s+Birth|Birth\s*Date|Birthdate)\s*[:\-]?\s*(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{1,2}[-\s]?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[-\s,]?\s*\d{1,2}[-,\s]+\d{2,4}|(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}[-,\s]+\d{2,4})\b/gi;
 
+// Facility / institution patterns (treated as PHI → GEO)
+const FACILITY_NAME_RE =
+  /\b(?:The\s+)?(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*)(?:\s+(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*|&|of|the|and|for|at|de|la|st\.?|st|saint|mount|mt)){0,12}\s+(?:Medical\s+(?:Center|Centre|Pavilion)|Hospital\s+Center|Hospital|Hospitals|Clinic|Clinics|Health\s+(?:System|Center)|Cancer\s+Center|Institute|Clinical\s+Center)\b(?!\s+Review\b)(?:\s+(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*)(?:\s+(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*)){0,2})?/g;
+
+const FACILITY_CAMEL_HEALTH_RE =
+  /\b[A-Z][A-Za-z]+Health\b(?:\s+(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*)){0,6}\b/g;
+
+const FACILITY_ENDING_HEALTH_RE =
+  /\b(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*)(?:\s+(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*|&|of|the|and)){1,10}\s+(?:Health|Healthcare)\b/g;
+
+const STATE_MEDICINE_RE =
+  /\b(?:Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New\s+Hampshire|New\s+Jersey|New\s+Mexico|New\s+York|North\s+Carolina|North\s+Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode\s+Island|South\s+Carolina|South\s+Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West\s+Virginia|Wisconsin|Wyoming)\s+Medicine\b/g;
+
 // =============================================================================
 // Helpers
 // =============================================================================
@@ -226,6 +245,10 @@ function runRegexDetectors(text) {
   resetRegex(
     PATIENT_HEADER_RE,
     HEADER_NAME_LABEL_RE,
+    FACILITY_NAME_RE,
+    FACILITY_CAMEL_HEALTH_RE,
+    FACILITY_ENDING_HEALTH_RE,
+    STATE_MEDICINE_RE,
     MRN_RE,
     MRN_SPACED_RE,
     INLINE_PATIENT_NAME_RE,
@@ -887,6 +910,24 @@ function runRegexDetectors(text) {
     }
   }
 
+  // Facility/institution names
+  for (const re of [FACILITY_NAME_RE, FACILITY_CAMEL_HEALTH_RE, FACILITY_ENDING_HEALTH_RE, STATE_MEDICINE_RE]) {
+    re.lastIndex = 0;
+    for (const match of text.matchAll(re)) {
+      if (match.index == null) continue;
+      const raw = match[0];
+      if (!raw || raw.length < 4) continue;
+      if (/\d/.test(raw)) continue;
+      spans.push({
+        start: match.index,
+        end: match.index + raw.length,
+        label: "GEO",
+        score: 0.95,
+        source: "regex_facility",
+      });
+    }
+  }
+
   return spans;
 }
 
@@ -951,6 +992,46 @@ function expandToWordBoundaries(spans, fullText) {
       return { ...span, start, end, text: fullText.slice(start, end) };
     }
     return span;
+  });
+}
+
+// =============================================================================
+// Header name extension
+// =============================================================================
+
+function extendPatientSpansForTrailingNameToken(spans, fullText) {
+  return spans.map((span) => {
+    const label = String(span.label || "").toUpperCase().replace(/^[BI]-/, "");
+    if (label !== "PATIENT") return span;
+
+    const lineStart = fullText.lastIndexOf("\n", Math.max(0, span.start - 1));
+    const start = lineStart === -1 ? 0 : lineStart + 1;
+    const lineEnd = fullText.indexOf("\n", span.end);
+    const end = lineEnd === -1 ? fullText.length : lineEnd;
+    const lineText = fullText.slice(start, end);
+
+    const relStart = span.start - start;
+    const relEnd = span.end - start;
+    const before = lineText.slice(0, relStart);
+
+    HEADER_NAME_LABEL_RE.lastIndex = 0;
+    if (!HEADER_NAME_LABEL_RE.test(before)) return span;
+
+    const after = lineText.slice(relEnd);
+    const termIdx = after.search(HEADER_NAME_TERMINATOR_RE);
+    const candidate = termIdx === -1 ? after : after.slice(0, termIdx);
+    const match = candidate.match(/^\s+([A-Z][A-Za-z'.-]{1,})/);
+    if (!match) return span;
+
+    const token = match[1];
+    if (HEADER_NAME_STOPWORDS.has(token.toLowerCase())) return span;
+
+    const newEnd = span.end + match[0].length;
+    return {
+      ...span,
+      end: newEnd,
+      text: fullText.slice(span.start, newEnd),
+    };
   });
 }
 
@@ -1140,16 +1221,19 @@ async function main() {
       // 4) Expand to word boundaries
       merged = expandToWordBoundaries(merged, note.text);
 
-      // 5) Extend GEO spans
+      // 5) Extend PATIENT spans for trailing header name tokens
+      merged = extendPatientSpansForTrailingNameToken(merged, note.text);
+
+      // 6) Extend GEO spans
       merged = extendGeoSpans(merged, note.text);
 
-      // 6) Re-merge
+      // 7) Re-merge
       merged = mergeOverlapsBestOf(merged);
 
-      // 7) Apply veto
+      // 8) Apply veto
       const final = applyVeto(merged, note.text, protectedTerms, { debug: false });
 
-      // 8) Apply redactions
+      // 9) Apply redactions
       const redactedText = applyRedactions(note.text, final);
 
       totalRedactions += final.length;

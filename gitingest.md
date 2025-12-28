@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2025-12-26T23:44:26-08:00`
-Git: `v19` @ `02ade34`
+Generated: `2025-12-28T11:42:23-08:00`
+Git: `v19` @ `f55f6fd`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -68,22 +68,23 @@ Git: `v19` @ `02ade34`
     - archive/README.md
   - artifacts/
     - artifacts/phi_distilbert_ner/
-      - artifacts/phi_distilbert_ner/checkpoint-1200/
-        - artifacts/phi_distilbert_ner/checkpoint-1200/config.json
-        - artifacts/phi_distilbert_ner/checkpoint-1200/model.safetensors
-        - artifacts/phi_distilbert_ner/checkpoint-1200/special_tokens_map.json
-        - artifacts/phi_distilbert_ner/checkpoint-1200/tokenizer.json
-        - artifacts/phi_distilbert_ner/checkpoint-1200/tokenizer_config.json
-        - artifacts/phi_distilbert_ner/checkpoint-1200/trainer_state.json
-        - artifacts/phi_distilbert_ner/checkpoint-1200/vocab.txt
-      - artifacts/phi_distilbert_ner/checkpoint-433/
-        - artifacts/phi_distilbert_ner/checkpoint-433/config.json
-        - artifacts/phi_distilbert_ner/checkpoint-433/model.safetensors
-        - artifacts/phi_distilbert_ner/checkpoint-433/special_tokens_map.json
-        - artifacts/phi_distilbert_ner/checkpoint-433/tokenizer.json
-        - artifacts/phi_distilbert_ner/checkpoint-433/tokenizer_config.json
-        - artifacts/phi_distilbert_ner/checkpoint-433/trainer_state.json
-        - artifacts/phi_distilbert_ner/checkpoint-433/vocab.txt
+      - artifacts/phi_distilbert_ner/checkpoint-200/
+        - artifacts/phi_distilbert_ner/checkpoint-200/config.json
+        - artifacts/phi_distilbert_ner/checkpoint-200/model.safetensors
+        - artifacts/phi_distilbert_ner/checkpoint-200/special_tokens_map.json
+        - artifacts/phi_distilbert_ner/checkpoint-200/tokenizer.json
+        - artifacts/phi_distilbert_ner/checkpoint-200/tokenizer_config.json
+        - artifacts/phi_distilbert_ner/checkpoint-200/trainer_state.json
+        - artifacts/phi_distilbert_ner/checkpoint-200/vocab.txt
+      - artifacts/phi_distilbert_ner/checkpoint-300/
+        - artifacts/phi_distilbert_ner/checkpoint-300/config.json
+        - artifacts/phi_distilbert_ner/checkpoint-300/model.safetensors
+        - artifacts/phi_distilbert_ner/checkpoint-300/special_tokens_map.json
+        - artifacts/phi_distilbert_ner/checkpoint-300/tokenizer.json
+        - artifacts/phi_distilbert_ner/checkpoint-300/tokenizer_config.json
+        - artifacts/phi_distilbert_ner/checkpoint-300/trainer_state.json
+        - artifacts/phi_distilbert_ner/checkpoint-300/vocab.txt
+      - artifacts/phi_distilbert_ner/audit_gold_report.json
       - artifacts/phi_distilbert_ner/audit_report.json
       - artifacts/phi_distilbert_ner/config.json
       - artifacts/phi_distilbert_ner/eval_metrics.json
@@ -2742,6 +2743,7 @@ Git: `v19` @ `02ade34`
       - scripts/phi_test_node/package.json
       - scripts/phi_test_node/results.txt
       - scripts/phi_test_node/test_phi_redaction.mjs
+      - scripts/phi_test_node/test_union_mode.mjs
     - scripts/audit_model_fp.py
     - scripts/build_hard_negative_patch.py
     - scripts/build_model_agnostic_phi_spans.py
@@ -2750,6 +2752,7 @@ Git: `v19` @ `02ade34`
     - scripts/check_onnx_inputs.py
     - scripts/check_pydantic_models.py
     - scripts/clean_distilled_phi_labels.py
+    - scripts/clear_unannotated_prodigy_batch.py
     - scripts/create_slim_branch.py
     - scripts/dev_pull_model.sh
     - scripts/devserver.sh
@@ -2759,6 +2762,7 @@ Git: `v19` @ `02ade34`
     - scripts/eval_hybrid_pipeline.py
     - scripts/evaluate_coder.py
     - scripts/evaluate_cpt.py
+    - scripts/export_phi_gold_standard.py
     - scripts/export_phi_model_for_transformersjs.py
     - scripts/fit_thresholds_from_eval.py
     - scripts/generate_addon_templates.py
@@ -2782,6 +2786,7 @@ Git: `v19` @ `02ade34`
     - scripts/scrub_golden_jsons.py
     - scripts/self_correct_registry.py
     - scripts/smoke_run.sh
+    - scripts/split_phi_gold.py
     - scripts/test_phi_redaction_sample.py
     - scripts/train_distilbert_ner.py
     - scripts/train_registry_sklearn.py
@@ -2984,15 +2989,19 @@ Git: `v19` @ `02ade34`
   - cpt_check.py
   - diagnose_codex.sh
   - gitingest.md
+  - institutions.jsonl
   - ip_golden_knowledge_v2_2.json
   - Makefile
+  - new_synthetic.jsonl
   - pm3_lr2e5_e12_a0.3_t2.0run_metrics.json
   - pyproject.toml
   - README.md
   - requirements-train.txt
   - requirements.txt
   - runtime.txt
+  - synthetic_notes.jsonl
   - synthetic_phi.jsonl
+  - Syntheticnotes_12_27_25.txt
   - test_redact.txt
   - update_nodejs_conda.sh
 ```
@@ -3483,7 +3492,10 @@ make export-phi-client-model
 | `scripts/prodigy_export_corrections.py` | Convert Prodigy → BIO training format |
 | `data/ml_training/prodigy_manifest.json` | Track annotated windows (avoids re-sampling) |
 | `data/ml_training/prodigy_batch.jsonl` | Current batch for annotation |
-| `data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl` | Training data with Prodigy corrections |
+| `data/ml_training/phi_gold_standard_v1.jsonl` | Gold standard export (pure Prodigy data) |
+| `data/ml_training/phi_train_gold.jsonl` | Gold training set (80% of notes) |
+| `data/ml_training/phi_test_gold.jsonl` | Gold test set (20% of notes) |
+| `data/ml_training/ARCHIVE_distilled_phi_raw.jsonl` | Old mixed data (archived) |
 | `synthetic_phi.jsonl` | Dense synthetic PHI data (300 records) |
 
 ### Tips
@@ -3501,6 +3513,76 @@ Prodigy requires a separate Python environment (system Python 3.12):
 # Prodigy is installed in system Python, not conda
 /Library/Frameworks/Python.framework/Versions/3.12/bin/python3 -m prodigy --help
 ```
+
+---
+
+## ⭐ Gold Standard PHI Training (Recommended)
+
+The gold workflow uses **only human-verified Prodigy annotations** for maximum quality training. Unlike the mixed "silver" data, gold standard data contains no unverified machine labels.
+
+### Why Gold Standard?
+
+- **Pure human verification**: Every annotation explicitly reviewed
+- **No data leakage**: Notes split at encounter level (all windows from same note in same split)
+- **Higher quality**: Smaller but cleaner dataset produces better model convergence
+- **Audit-friendly**: Clear provenance for all training labels
+
+### Gold Workflow Commands
+
+| Command | Purpose |
+|---------|---------|
+| `make gold-export` | Export pure gold from Prodigy dataset (no merging) |
+| `make gold-split` | 80/20 train/test split with note-level grouping |
+| `make gold-train` | Train with 10 epochs on smaller high-quality data |
+| `make gold-audit` | Safety audit on gold test set |
+| `make gold-eval` | Evaluate metrics on gold test set |
+| `make gold-cycle` | Full workflow: export → split → train → audit → eval |
+
+### Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `GOLD_EPOCHS` | `10` | Training epochs (more for smaller dataset) |
+| `GOLD_DATASET` | `phi_corrections` | Prodigy dataset to export |
+| `GOLD_OUTPUT_DIR` | `data/ml_training` | Output directory |
+| `GOLD_MODEL_DIR` | `artifacts/phi_distilbert_ner` | Model directory |
+
+### Example: Complete Gold Workflow
+
+```bash
+# 1. Export pure gold from Prodigy (no merging with old data)
+make gold-export
+
+# 2. Split into train/test with note-level grouping
+make gold-split
+
+# 3. Train on pure gold (10 epochs default)
+make gold-train
+
+# 4. Safety audit (post-veto violations must be 0)
+make gold-audit
+
+# 5. Evaluate F1 metrics
+make gold-eval
+
+# Or run full cycle:
+make gold-cycle
+```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `scripts/export_phi_gold_standard.py` | Export Prodigy → BIO format (no merging) |
+| `scripts/split_phi_gold.py` | Train/test split with note grouping |
+| `phi_gold_standard_v1.jsonl` | Full gold export from Prodigy |
+| `phi_train_gold.jsonl` | Training set (80% of notes) |
+| `phi_test_gold.jsonl` | Test set (20% of notes) |
+| `ARCHIVE_distilled_phi_raw.jsonl` | Old mixed data (preserved for reference) |
+
+### Transition from Mixed Data
+
+The old `distilled_phi_WITH_CORRECTIONS.jsonl` (mixed Piiranha + Prodigy) has been archived. The gold workflow replaces it with pure human-verified data for higher quality training.
 
 ---
 
@@ -4634,7 +4716,7 @@ pydantic-settings>=2.0.0
 ### `Makefile`
 ```
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -4819,9 +4901,22 @@ prodigy-retrain:
 		--gradient-accumulation-steps 2 \
 		--mps-high-watermark-ratio 0.0
 
+# Corrections file for Prodigy workflow
+CORRECTIONS_FILE := data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl
+
+# Guard: Ensure corrections file exists before fine-tuning
+check-corrections-fresh:
+	@if [ ! -f $(CORRECTIONS_FILE) ]; then \
+		echo "ERROR: $(CORRECTIONS_FILE) not found."; \
+		echo "Run 'make prodigy-export' first to export Prodigy corrections."; \
+		exit 1; \
+	fi
+	@echo "Using corrections file: $(CORRECTIONS_FILE)"
+	@echo "Last modified: $$(stat -f '%Sm' $(CORRECTIONS_FILE) 2>/dev/null || stat -c '%y' $(CORRECTIONS_FILE) 2>/dev/null || echo 'unknown')"
+
 # Fine-tune existing model on corrected data (recommended for iterative improvement)
 # Override epochs: make prodigy-finetune PRODIGY_EPOCHS=3
-prodigy-finetune:
+prodigy-finetune: check-corrections-fresh
 	@echo "Fine-tuning existing model on corrected data..."
 	@echo "Epochs: $(PRODIGY_EPOCHS)"
 	@echo "Checking for GPU acceleration (Metal/CUDA)..."
@@ -4843,6 +4938,104 @@ prodigy-cycle: prodigy-prepare
 	@echo "After annotation, run 'make prodigy-export' then either:"
 	@echo "  make prodigy-finetune  (recommended - preserves learned weights)"
 	@echo "  make prodigy-retrain   (train from scratch)"
+
+# Clear unannotated examples from Prodigy batch file
+prodigy-clear-unannotated:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/clear_unannotated_prodigy_batch.py \
+		--batch-file data/ml_training/prodigy_batch.jsonl \
+		--dataset $(PRODIGY_DATASET) \
+		--backup
+
+# ==============================================================================
+# Gold Standard PHI Workflow (Pure Human-Verified Data)
+# ==============================================================================
+# Uses only Prodigy-verified annotations for maximum quality training.
+# Run: make gold-cycle (or individual targets)
+
+GOLD_EPOCHS ?= 10
+GOLD_DATASET ?= phi_corrections
+GOLD_OUTPUT_DIR ?= data/ml_training
+GOLD_MODEL_DIR ?= artifacts/phi_distilbert_ner
+
+# Export pure gold from Prodigy (no merging with old data)
+# Uses PRODIGY_PYTHON because Prodigy is installed in system Python 3.12
+gold-export:
+	$(PRODIGY_PYTHON) scripts/export_phi_gold_standard.py \
+		--dataset $(GOLD_DATASET) \
+		--output $(GOLD_OUTPUT_DIR)/phi_gold_standard_v1.jsonl \
+		--model-dir $(GOLD_MODEL_DIR)
+
+# Split into train/test (80/20) with grouping by note ID
+gold-split:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/split_phi_gold.py \
+		--input $(GOLD_OUTPUT_DIR)/phi_gold_standard_v1.jsonl \
+		--train-out $(GOLD_OUTPUT_DIR)/phi_train_gold.jsonl \
+		--test-out $(GOLD_OUTPUT_DIR)/phi_test_gold.jsonl \
+		--seed 42
+
+# Train on pure gold data (Higher epochs for smaller high-quality data)
+gold-train:
+	@echo "Training on pure Gold Standard data..."
+	@echo "Epochs: $(GOLD_EPOCHS)"
+	@echo "Checking for GPU acceleration (Metal/CUDA)..."
+	$(CONDA_ACTIVATE) && $(PYTHON) -c "import torch; mps=torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False; cuda=torch.cuda.is_available(); print(f'MPS: {mps}, CUDA: {cuda}')" && \
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--patched-data $(GOLD_OUTPUT_DIR)/phi_train_gold.jsonl \
+		--resume-from $(GOLD_MODEL_DIR) \
+		--output-dir $(GOLD_MODEL_DIR) \
+		--epochs $(GOLD_EPOCHS) \
+		--lr 1e-5 \
+		--train-batch 4 \
+		--eval-batch 16 \
+		--gradient-accumulation-steps 2 \
+		--mps-high-watermark-ratio 0.0 \
+		--eval-steps 100 \
+		--save-steps 200 \
+		--logging-steps 50
+
+# Audit on gold test set (Critical for safety verification)
+gold-audit:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/audit_model_fp.py \
+		--model-dir $(GOLD_MODEL_DIR) \
+		--data $(GOLD_OUTPUT_DIR)/phi_test_gold.jsonl \
+		--report-out $(GOLD_MODEL_DIR)/audit_gold_report.json
+
+# Evaluate metrics on gold test set
+gold-eval:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--patched-data $(GOLD_OUTPUT_DIR)/phi_test_gold.jsonl \
+		--output-dir $(GOLD_MODEL_DIR) \
+		--eval-only
+
+# Full cycle: export → split → train → audit → eval
+gold-cycle: gold-export gold-split gold-train gold-audit gold-eval
+	@echo "Gold standard workflow complete."
+	@echo "Audit report: $(GOLD_MODEL_DIR)/audit_gold_report.json"
+
+# Light fine-tune on expanded gold data (fewer epochs, for incremental updates)
+GOLD_FINETUNE_EPOCHS ?= 3
+gold-finetune:
+	@echo "Fine-tuning on expanded Gold Standard data..."
+	@echo "Epochs: $(GOLD_FINETUNE_EPOCHS) (use GOLD_FINETUNE_EPOCHS=N to override)"
+	@echo "Checking for GPU acceleration (Metal/CUDA)..."
+	$(CONDA_ACTIVATE) && $(PYTHON) -c "import torch; mps=torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False; cuda=torch.cuda.is_available(); print(f'MPS: {mps}, CUDA: {cuda}')" && \
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--patched-data $(GOLD_OUTPUT_DIR)/phi_train_gold.jsonl \
+		--resume-from $(GOLD_MODEL_DIR) \
+		--output-dir $(GOLD_MODEL_DIR) \
+		--epochs $(GOLD_FINETUNE_EPOCHS) \
+		--lr 5e-6 \
+		--train-batch 4 \
+		--eval-batch 16 \
+		--gradient-accumulation-steps 2 \
+		--mps-high-watermark-ratio 0.0 \
+		--eval-steps 50 \
+		--save-steps 100 \
+		--logging-steps 25
+
+# Incremental cycle: export → split → finetune → audit (lighter than full train)
+gold-incremental: gold-export gold-split gold-finetune gold-audit
+	@echo "Incremental gold update complete."
 
 pull-model-pytorch:
 	MODEL_BUNDLE_S3_URI_PYTORCH="$(MODEL_BUNDLE_S3_URI_PYTORCH)" REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" ./scripts/dev_pull_model.sh
@@ -4922,6 +5115,18 @@ help:
 	@echo "  prodigy-finetune - Fine-tune existing model with corrections (recommended)"
 	@echo "                    Override epochs: make prodigy-finetune PRODIGY_EPOCHS=3"
 	@echo "  prodigy-cycle   - Full Prodigy iteration workflow"
+	@echo "  prodigy-clear-unannotated - Remove unannotated examples from batch file"
+	@echo ""
+	@echo "Gold Standard PHI Workflow (pure human-verified data):"
+	@echo "  gold-export    - Export pure gold from Prodigy dataset"
+	@echo "  gold-split     - 80/20 train/test split with note grouping"
+	@echo "  gold-train     - Train on gold data (10 epochs default)"
+	@echo "  gold-finetune  - Light fine-tune (3 epochs, lower LR) for incremental updates"
+	@echo "  gold-audit     - Safety audit on gold test set"
+	@echo "  gold-eval      - Evaluate metrics on gold test set"
+	@echo "  gold-cycle     - Full workflow: export → split → train → audit → eval"
+	@echo "  gold-incremental - Incremental: export → split → finetune → audit"
+	@echo ""
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"
 	@echo "  codex-train    - Full training pipeline"
@@ -9437,6 +9642,56 @@ This uses:
 - `--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl`
 - Memory-optimized settings for MPS/CUDA
 
+### Gold Standard PHI Training Workflow
+
+Train on pure human-verified data from Prodigy annotations. This workflow uses only Prodigy-verified annotations for maximum quality training.
+
+**Complete Workflow (Step-by-Step):**
+
+```bash
+# Step 1: Export pure gold from Prodigy
+make gold-export
+
+# Step 2: Split into train/test (80/20 with note grouping)
+make gold-split
+
+# Step 3: Train on gold data (10 epochs default)
+make gold-train
+
+# Step 4: Safety audit on gold test set
+make gold-audit
+
+# Step 5: Evaluate F1 metrics on gold test set
+make gold-eval
+
+# Step 6: Export updated ONNX for browser
+make export-phi-client-model
+```
+
+**Or run the full cycle (Steps 1-5) with one command:**
+
+```bash
+make gold-cycle
+```
+
+**Training Configuration:**
+- **Epochs**: 10 (default, override with `GOLD_EPOCHS=15`)
+- **Learning rate**: 1e-5
+- **Batch size**: 4 (with gradient accumulation = 2, effective batch = 8)
+- **GPU acceleration**: Automatically detects and uses Metal (MPS) or CUDA
+- **Memory optimization**: Removes MPS memory limits to use full system memory on Mac
+
+**Output Files:**
+- `data/ml_training/phi_gold_standard_v1.jsonl` - Exported gold data
+- `data/ml_training/phi_train_gold.jsonl` - Training split (80%)
+- `data/ml_training/phi_test_gold.jsonl` - Test split (20%)
+- `artifacts/phi_distilbert_ner/audit_gold_report.json` - Safety audit report
+
+**When to use:**
+- When you have a sufficient amount of Prodigy-verified annotations
+- For maximum quality training on human-verified data
+- When you want to train for more epochs on smaller, high-quality datasets
+
 ### Testing PHI Redaction
 
 Test the client-side PHI redactor:
@@ -9457,7 +9712,7 @@ MODEL_BACKEND=pytorch ./scripts/devserver.sh
 # Auto-detect best backend
 MODEL_BACKEND=auto ./scripts/devserver.sh
 ```
-
+http://localhost:8000/ui/phi_redactor/
 ---
 
 ## 📞 Getting Help

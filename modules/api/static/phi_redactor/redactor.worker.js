@@ -68,9 +68,15 @@ const PATIENT_HEADER_ALLCAPS_RE =
 const HEADER_NAME_LABEL_RE =
   /\b(?:Patient(?:\s+Name)?|Pt\.?(?:\s+Name)?|Pat\.?|Name|Subject)\s*[:\-]/gi;
 const HEADER_NAME_TERMINATOR_RE =
-  /\b(?:DOB|DOD|Date\s+of\s+Birth|Birth\s*Date|Birthdate|Date|MRN|ID|EDIPI|Age|Sex|Gender|Phone|Address)\b(?=\s*[:#-]|\s+\d)/i;
+  /\b(?:DOB|DOD|Date\s+of\s+Birth|Birth\s*Date|Birthdate|Date|MRN|ID|EDIPI|Age|Sex|Gender|Phone|Address|Procedure|Indication(?:s)?|Findings|Impression|Assessment|Plan|History|Technique|Diagnosis)\b(?=\s*[:#-]|\s+\d)/i;
 const HEADER_NAME_TOKENS_RE =
   /^\s*([A-Z][A-Za-z'.-]*(?:\s*,\s*[A-Z][A-Za-z'.-]*)?(?:\s+[A-Z][A-Za-z'.-]*)*)/;
+const HEADER_NAME_STOPWORDS = new Set([
+  "procedure", "indication", "indications", "findings", "impression",
+  "assessment", "plan", "history", "technique", "diagnosis",
+  "date", "dob", "dod", "mrn", "id", "age", "sex", "gender",
+  "phone", "address", "medications", "medication", "anesthesia", "sedation", "general"
+]);
 
 // Matches: "MRN: 12345" or "ID: 55-22-11" or "DOD NUMBER: 194174412" or "DOD#: 12345678"
 // IMPORTANT: Must contain at least one digit to avoid matching medical acronyms like "rEBUS"
@@ -241,6 +247,25 @@ const LOWERCASE_FOR_NAME_RE =
 // Captures full name including trailing initial (D, M, etc.) or suffix (Jr, Sr, III)
 const LAST_FIRST_INITIAL_RE =
   /\b([A-Z][a-z]+\s*,\s*[A-Z][a-z]+(?:\s+[A-Z]\.?|\s+(?:Jr|Sr|II|III|IV)\.?)?)\b/g;
+
+// Facility / institution patterns (treated as PHI → GEO)
+// Goal: prevent partial redactions like "[REDACTED] Ridge Medical Center" by capturing the full facility span.
+// Note: explicitly avoids "Becker's Hospital Review" by blocking "Hospital" matches followed by "Review".
+const FACILITY_NAME_RE =
+  /\b(?:The\s+)?(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*)(?:\s+(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*|&|of|the|and|for|at|de|la|st\.?|st|saint|mount|mt)){0,12}\s+(?:Medical\s+(?:Center|Centre|Pavilion)|Hospital\s+Center|Hospital|Hospitals|Clinic|Clinics|Health\s+(?:System|Center)|Cancer\s+Center|Institute|Clinical\s+Center)\b(?!\s+Review\b)(?:\s+(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*)(?:\s+(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*)){0,2})?/g;
+
+// CamelCase health-system brands: "AdventHealth Orlando", "OhioHealth Riverside Methodist Hospital"
+const FACILITY_CAMEL_HEALTH_RE =
+  /\b[A-Z][A-Za-z]+Health\b(?:\s+(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*)){0,6}\b/g;
+
+// Multi-token health-system names ending with Health/Healthcare: "Indiana University Health", "Lakeland Regional Health"
+// Requires >= 2 tokens before the Health word to avoid matching specialties like "Mental Health".
+const FACILITY_ENDING_HEALTH_RE =
+  /\b(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*)(?:\s+(?:[A-Z]{2,}|(?:[A-Z]\.){2,}|[A-Z][A-Za-z'’.-]*|&|of|the|and)){1,10}\s+(?:Health|Healthcare)\b/g;
+
+// State-name medicine institutions: "Michigan Medicine"
+const STATE_MEDICINE_RE =
+  /\b(?:Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New\s+Hampshire|New\s+Jersey|New\s+Mexico|New\s+York|North\s+Carolina|North\s+Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode\s+Island|South\s+Carolina|South\s+Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West\s+Virginia|Wisconsin|Wyoming)\s+Medicine\b/g;
 
 // Date patterns - various formats commonly found in medical notes
 // Matches: "18Apr2022", "18-Apr-2022", "18 Apr 2022" (DDMMMYYYY variants)
@@ -430,6 +455,10 @@ function runRegexDetectors(text) {
   PATIENT_HEADER_RE.lastIndex = 0;
   PATIENT_HEADER_ALLCAPS_RE.lastIndex = 0;
   HEADER_NAME_LABEL_RE.lastIndex = 0;
+  FACILITY_NAME_RE.lastIndex = 0;
+  FACILITY_CAMEL_HEALTH_RE.lastIndex = 0;
+  FACILITY_ENDING_HEALTH_RE.lastIndex = 0;
+  STATE_MEDICINE_RE.lastIndex = 0;
   MRN_RE.lastIndex = 0;
   MRN_SPACED_RE.lastIndex = 0;
   INLINE_PATIENT_NAME_RE.lastIndex = 0;
@@ -1254,6 +1283,25 @@ function runRegexDetectors(text) {
     }
   }
 
+  // 12) Facility/institution names
+  // Ensures facility names are redacted as PHI (GEO) and avoids partial-token redactions.
+  for (const re of [FACILITY_NAME_RE, FACILITY_CAMEL_HEALTH_RE, FACILITY_ENDING_HEALTH_RE, STATE_MEDICINE_RE]) {
+    re.lastIndex = 0;
+    for (const match of text.matchAll(re)) {
+      if (match.index == null) continue;
+      const raw = match[0];
+      if (!raw || raw.length < 4) continue;
+      if (/\d/.test(raw)) continue;
+      spans.push({
+        start: match.index,
+        end: match.index + raw.length,
+        label: "GEO",
+        score: 0.95,
+        source: "regex_facility",
+      });
+    }
+  }
+
   return spans;
 }
 
@@ -1929,6 +1977,46 @@ function extendPatientSpansForTrailingInitials(spans, fullText) {
   });
 }
 
+/**
+ * Extend PATIENT spans by one trailing name token when in a Name:/Patient: header line.
+ * Fixes: "Patient: DIEDRICH, THERESA MARIE" where "MARIE" is left behind.
+ */
+function extendPatientSpansForTrailingNameToken(spans, fullText) {
+  return spans.map((span) => {
+    const label = String(span.label || "").toUpperCase().replace(/^[BI]-/, "");
+    if (label !== "PATIENT") return span;
+
+    const lineStart = fullText.lastIndexOf("\n", Math.max(0, span.start - 1));
+    const start = lineStart === -1 ? 0 : lineStart + 1;
+    const lineEnd = fullText.indexOf("\n", span.end);
+    const end = lineEnd === -1 ? fullText.length : lineEnd;
+    const lineText = fullText.slice(start, end);
+
+    const relStart = span.start - start;
+    const relEnd = span.end - start;
+    const before = lineText.slice(0, relStart);
+
+    HEADER_NAME_LABEL_RE.lastIndex = 0;
+    if (!HEADER_NAME_LABEL_RE.test(before)) return span;
+
+    const after = lineText.slice(relEnd);
+    const termIdx = after.search(HEADER_NAME_TERMINATOR_RE);
+    const candidate = termIdx === -1 ? after : after.slice(0, termIdx);
+    const match = candidate.match(/^\s+([A-Z][A-Za-z'.-]{1,})/);
+    if (!match) return span;
+
+    const token = match[1];
+    if (HEADER_NAME_STOPWORDS.has(token.toLowerCase())) return span;
+
+    const newEnd = span.end + match[0].length;
+    return {
+      ...span,
+      end: newEnd,
+      text: fullText.slice(span.start, newEnd)
+    };
+  });
+}
+
 // =============================================================================
 // Debug helpers (optional)
 // =============================================================================
@@ -2107,6 +2195,7 @@ self.onmessage = async (e) => {
 
         // 7) Extend PATIENT spans for trailing initials
         merged = extendPatientSpansForTrailingInitials(merged, text);
+        merged = extendPatientSpansForTrailingNameToken(merged, text);
 
         // 8) Extend GEO spans to include city prefixes
         merged = extendGeoSpans(merged, text);
@@ -2141,6 +2230,7 @@ self.onmessage = async (e) => {
 
         // 7) Extend PATIENT spans for trailing initials
         merged = extendPatientSpansForTrailingInitials(merged, text);
+        merged = extendPatientSpansForTrailingNameToken(merged, text);
 
         // 8) Extend GEO spans to include city prefixes
         merged = extendGeoSpans(merged, text);

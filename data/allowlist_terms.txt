@@ -61,3 +61,6 @@ station 10l
 station 11r
 station 11l
 
+# Clinical terms that should not be redacted
+anesthesia
+excised

@@ -87,6 +87,14 @@
       "windows_count": 236,
       "source_file": "data/ml_training/prodigy_batch.jsonl",
       "status": "pending"
+    },
+    {
+      "batch_id": "2025-12-28_batch_111029",
+      "created_at": "2025-12-28T11:10:32.259297",
+      "notes_count": 30,
+      "windows_count": 30,
+      "source_file": "data/ml_training/prodigy_batch.jsonl",
+      "status": "pending"
     }
   ],
   "annotated_windows": [
@@ -1454,6 +1462,36 @@
     "new_synthetic.jsonl:43:2",
     "new_synthetic.jsonl:14:0",
     "new_synthetic.jsonl:14:1",
-    "new_synthetic.jsonl:14:2"
+    "new_synthetic.jsonl:14:2",
+    "institutions.jsonl:24:0",
+    "institutions.jsonl:15:0",
+    "institutions.jsonl:7:0",
+    "institutions.jsonl:17:0",
+    "institutions.jsonl:3:0",
+    "institutions.jsonl:9:0",
+    "institutions.jsonl:6:0",
+    "institutions.jsonl:22:0",
+    "institutions.jsonl:21:0",
+    "institutions.jsonl:13:0",
+    "institutions.jsonl:27:0",
+    "institutions.jsonl:5:0",
+    "institutions.jsonl:20:0",
+    "institutions.jsonl:28:0",
+    "institutions.jsonl:18:0",
+    "institutions.jsonl:4:0",
+    "institutions.jsonl:25:0",
+    "institutions.jsonl:0:0",
+    "institutions.jsonl:19:0",
+    "institutions.jsonl:2:0",
+    "institutions.jsonl:26:0",
+    "institutions.jsonl:23:0",
+    "institutions.jsonl:29:0",
+    "institutions.jsonl:16:0",
+    "institutions.jsonl:8:0",
+    "institutions.jsonl:1:0",
+    "institutions.jsonl:11:0",
+    "institutions.jsonl:14:0",
+    "institutions.jsonl:12:0",
+    "institutions.jsonl:10:0"
   ]
 }

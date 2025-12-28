@@ -1,0 +1,30 @@
+{"text": "Patient transferred from San Diego Naval Medical Center via ambulance.", "spans": [{"start": 25, "end": 55, "label": "ORG"}]}
+{"text": "Records obtained from Washington Hospital Center regarding the prior surgery.", "spans": [{"start": 22, "end": 48, "label": "ORG"}]}
+{"text": "Scheduled for follow-up at Virginia Mason Medical Center next week.", "spans": [{"start": 27, "end": 56, "label": "ORG"}]}
+{"text": "Consultation note from New York-Presbyterian Hospital indicates stable vitals.", "spans": [{"start": 23, "end": 53, "label": "ORG"}]}
+{"text": "Dr. Smith at Chicago Lake Shore Hospital requested the biopsy slides.", "spans": [{"start": 13, "end": 40, "label": "ORG"}]}
+{"text": "Discharged to Seattle Children's Hospital for specialized pediatric care.", "spans": [{"start": 14, "end": 41, "label": "ORG"}]}
+{"text": "Lab results pending from Arizona Heart Institute.", "spans": [{"start": 25, "end": 48, "label": "ORG"}]}
+{"text": "The procedure was performed at Boston Medical Center by Dr. Jones.", "spans": [{"start": 31, "end": 52, "label": "ORG"}]}
+{"text": "History of admission at Colorado Acute Long Term Hospital.", "spans": [{"start": 24, "end": 57, "label": "ORG"}]}
+{"text": "Reviewing scans from Oregon Health & Science University.", "spans": [{"start": 21, "end": 55, "label": "ORG"}]}
+{"text": "Patient is a resident at Maryland General Hospital.", "spans": [{"start": 25, "end": 50, "label": "ORG"}]}
+{"text": "Transfer summary from Cleveland Clinic shows no complications.", "spans": [{"start": 22, "end": 38, "label": "ORG"}]}
+{"text": "She was treated at Dakota Plains Surgical Center prior to arrival.", "spans": [{"start": 19, "end": 48, "label": "ORG"}]}
+{"text": "Received pathology report from Indiana University Health.", "spans": [{"start": 31, "end": 55, "label": "ORG"}]}
+{"text": "Admitted to Pennsylvania Hospital for observation.", "spans": [{"start": 12, "end": 33, "label": "ORG"}]}
+{"text": "We contacted Miami Valley Hospital for the imaging discs.", "spans": [{"start": 13, "end": 34, "label": "ORG"}]}
+{"text": "Previous echograms done at Houston Methodist Hospital.", "spans": [{"start": 27, "end": 53, "label": "ORG"}]}
+{"text": "Referred to Oklahoma Heart Hospital for cardiac catheterization.", "spans": [{"start": 12, "end": 35, "label": "ORG"}]}
+{"text": "Notes from Jersey City Medical Center are illegible.", "spans": [{"start": 11, "end": 37, "label": "ORG"}]}
+{"text": "The team at Kansas City Orthopaedic Institute approved the rehab plan.", "spans": [{"start": 12, "end": 45, "label": "ORG"}]}
+{"text": "Surgery scheduled at Iowa Methodist Medical Center.", "spans": [{"start": 21, "end": 50, "label": "ORG"}]}
+{"text": "Sent to Utah Valley Hospital for further evaluation.", "spans": [{"start": 8, "end": 28, "label": "ORG"}]}
+{"text": "Awaiting records from Nevada Regional Medical Center.", "spans": [{"start": 22, "end": 52, "label": "ORG"}]}
+{"text": "The patient prefers Tennessee Valley Healthcare System.", "spans": [{"start": 20, "end": 53, "label": "ORG"}]}
+{"text": "Diagnosis confirmed at Wisconsin Institutes for Medical Research.", "spans": [{"start": 23, "end": 64, "label": "ORG"}]}
+{"text": "Dr. Doe from Georgia Regional Hospital called regarding the meds.", "spans": [{"start": 13, "end": 38, "label": "ORG"}]}
+{"text": "Post-op care at Alabama Orthopedic Clinic was excellent.", "spans": [{"start": 16, "end": 41, "label": "ORG"}]}
+{"text": "Images sent to Montana Chemical Dependency Center.", "spans": [{"start": 15, "end": 49, "label": "ORG"}]}
+{"text": "The clinic at Vermont Medical Center is closed on Sundays.", "spans": [{"start": 14, "end": 36, "label": "ORG"}]}
+{"text": "Records faxed from Delaware Valley Hospital.", "spans": [{"start": 19, "end": 43, "label": "ORG"}]}
