@@ -60,6 +60,14 @@ const { applyVeto } = await import(VETO_PATH);
 const PATIENT_HEADER_RE =
   /(?:Patient(?:\s+Name)?|Pt\.?(?:\s+Name)?|Pat\.?|Name|Subject)\s*[:\-]\s*([A-Z][a-z]+\s*,\s*[A-Z]\.?|[A-Z]\.?\s+[A-Z][a-z]+|[A-Z][a-z]+\s*,\s*[A-Z][a-z]+(?:\s+[A-Z]\.?)?|[A-Z][a-z]+\s+[A-Z]'?[A-Za-z]+|[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/gim;
 
+// Greedy header scan: capture full name after Name/Patient labels until a terminator.
+const HEADER_NAME_LABEL_RE =
+  /\b(?:Patient(?:\s+Name)?|Pt\.?(?:\s+Name)?|Pat\.?|Name|Subject)\s*[:\-]/gi;
+const HEADER_NAME_TERMINATOR_RE =
+  /\b(?:DOB|DOD|Date\s+of\s+Birth|Birth\s*Date|Birthdate|Date|MRN|ID|EDIPI|Age|Sex|Gender|Phone|Address)\b(?=\s*[:#-]|\s+\d)/i;
+const HEADER_NAME_TOKENS_RE =
+  /^\s*([A-Z][A-Za-z'.-]*(?:\s*,\s*[A-Z][A-Za-z'.-]*)?(?:\s+[A-Z][A-Za-z'.-]*)*)/;
+
 // IMPORTANT: Must contain at least one digit to avoid matching medical acronyms like "rEBUS"
 const MRN_RE =
   /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID|EDIPI|DOD\s*ID)\s*[:\#]?\s*([A-Z0-9\-]*\d[A-Z0-9\-]*)\b/gi;
@@ -178,6 +186,9 @@ const LOWERCASE_NAME_NOTE_RE =
 const DATE_DDMMMYYYY_RE =
   /\b(\d{1,2}[-\s]?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[-\s]?\d{2,4})\b/gi;
 
+const DATE_DDMMMYYYY_SPACED_RE =
+  /\b(\d{1,2}\s+[A-Za-z]{3}\s+\d{4})\b/gi;
+
 const DATE_SLASH_RE = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
 
 const DATE_ISO_RE = /\b(\d{4}[-\/]\d{1,2}[-\/]\d{1,2})\b/g;
@@ -214,6 +225,7 @@ function runRegexDetectors(text) {
 
   resetRegex(
     PATIENT_HEADER_RE,
+    HEADER_NAME_LABEL_RE,
     MRN_RE,
     MRN_SPACED_RE,
     INLINE_PATIENT_NAME_RE,
@@ -240,6 +252,7 @@ function runRegexDetectors(text) {
     INFORMAL_NAME_HERE_TO_RE,
     LOWERCASE_NAME_NOTE_RE,
     DATE_DDMMMYYYY_RE,
+    DATE_DDMMMYYYY_SPACED_RE,
     DATE_SLASH_RE,
     DATE_ISO_RE,
     DOB_HEADER_RE
@@ -267,7 +280,36 @@ function runRegexDetectors(text) {
     }
   }
 
-  // 1a) Placeholder/artifact names: "<PERSON>", "[Name]", "***NAME***"
+  // 1b) Greedy header scan: "Name: Booth Mark Johnson DOB: 1/2/1980"
+  for (const match of text.matchAll(HEADER_NAME_LABEL_RE)) {
+    if (match.index == null) continue;
+    const labelEnd = match.index + match[0].length;
+    const after = text.slice(labelEnd);
+    const lineBreak = after.search(/[\r\n]/);
+    const lineSlice = lineBreak === -1 ? after : after.slice(0, lineBreak);
+
+    const termIdx = lineSlice.search(HEADER_NAME_TERMINATOR_RE);
+    const candidate = termIdx === -1 ? lineSlice : lineSlice.slice(0, termIdx);
+    if (!candidate) continue;
+
+    const nameMatch = candidate.match(HEADER_NAME_TOKENS_RE);
+    if (!nameMatch) continue;
+
+    const nameGroup = nameMatch[1];
+    const fullMatch = nameMatch[0];
+    const groupOffset = fullMatch.indexOf(nameGroup);
+    if (groupOffset !== -1) {
+      spans.push({
+        start: labelEnd + groupOffset,
+        end: labelEnd + groupOffset + nameGroup.length,
+        label: "PATIENT",
+        score: 1.0,
+        source: "regex_header_greedy",
+      });
+    }
+  }
+
+  // 1c) Placeholder/artifact names: "<PERSON>", "[Name]", "***NAME***"
   for (const match of text.matchAll(PLACEHOLDER_NAME_RE)) {
     const fullMatch = match[0];
     const placeholderGroup = match[1];
@@ -283,7 +325,7 @@ function runRegexDetectors(text) {
     }
   }
 
-  // 1b) Patient shorthand: "Patient 69F" (age/gender cluster as identifier)
+  // 1d) Patient shorthand: "Patient 69F" (age/gender cluster as identifier)
   for (const match of text.matchAll(PATIENT_SHORTHAND_RE)) {
     const fullMatch = match[0];
     const shorthandGroup = match[1];
@@ -791,7 +833,21 @@ function runRegexDetectors(text) {
     }
   }
 
-  // 7-9) Other date patterns
+  // 7) Space-separated dates: "13 Feb 2028"
+  for (const match of text.matchAll(DATE_DDMMMYYYY_SPACED_RE)) {
+    const dateGroup = match[1];
+    if (dateGroup && match.index != null) {
+      spans.push({
+        start: match.index,
+        end: match.index + dateGroup.length,
+        label: "DATE",
+        score: 0.96,
+        source: "regex_date_ddmmm_spaced",
+      });
+    }
+  }
+
+  // 8-10) Other date patterns
   for (const match of text.matchAll(DATE_DDMMMYYYY_RE)) {
     const dateGroup = match[1];
     if (dateGroup && match.index != null) {

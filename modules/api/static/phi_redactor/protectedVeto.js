@@ -90,7 +90,7 @@ const STOPWORDS_ALWAYS = new Set([
   "her", "him", "them", "us", "me", "his", "its", "their", "our", "my", "your",
   // Clinical verbs commonly mis-tagged (past participles that look like names)
   "intubated", "extubated", "identified", "placed", "transferred", "discharged", "tolerated",
-  "performed", "removed", "obtained", "collected", "noted", "observed", "seen",
+  "performed", "removed", "excised", "obtained", "collected", "noted", "observed", "seen",
   "inserted", "advanced", "positioned", "withdrawn", "administered", "given",
   "sampled", "biopsied", "examined", "evaluated", "assessed", "confirmed",
   "visualized", "located", "accessed", "secured", "completed", "terminated",
@@ -190,7 +190,7 @@ const CLINICAL_ALLOW_LIST = makeNormalizedSet([
   // === CRITICAL FIX: Clinical Verbs (Fix for Veto Gap) ===
   // These are often misclassified as DATE/ID/CONTACT by the ML model.
   // STOPWORDS_ALWAYS only filters PATIENT/GEO labels, so these MUST be here.
-  "placed", "identified", "performed", "obtained", "removed", "inserted",
+  "placed", "identified", "performed", "obtained", "removed", "excised", "inserted",
   "advanced", "positioned", "withdrawn", "administered", "collected",
   "sampled", "biopsied", "examined", "visualized", "located", "accessed",
   "secured", "completed", "transported", "admitted", "discharged",
@@ -398,7 +398,8 @@ const CLINICAL_ALLOW_PARTIAL = makeNormalizedSet([
   "diffuse", "parenchymal", "interstitial", "infiltrative", "fibrotic",
   "pulmonary", "respiratory", "bronchial", "alveolar", "pleural",
   // Header phrases
-  "description of", "indication for", "reason for"
+  "description of", "indication for", "reason for",
+  "anesthesia"
 ]);
 
 // =============================================================================

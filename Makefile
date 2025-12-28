@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-audit gold-eval gold-cycle
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -295,6 +295,31 @@ gold-cycle: gold-export gold-split gold-train gold-audit gold-eval
 	@echo "Gold standard workflow complete."
 	@echo "Audit report: $(GOLD_MODEL_DIR)/audit_gold_report.json"
 
+# Light fine-tune on expanded gold data (fewer epochs, for incremental updates)
+GOLD_FINETUNE_EPOCHS ?= 3
+gold-finetune:
+	@echo "Fine-tuning on expanded Gold Standard data..."
+	@echo "Epochs: $(GOLD_FINETUNE_EPOCHS) (use GOLD_FINETUNE_EPOCHS=N to override)"
+	@echo "Checking for GPU acceleration (Metal/CUDA)..."
+	$(CONDA_ACTIVATE) && $(PYTHON) -c "import torch; mps=torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False; cuda=torch.cuda.is_available(); print(f'MPS: {mps}, CUDA: {cuda}')" && \
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--patched-data $(GOLD_OUTPUT_DIR)/phi_train_gold.jsonl \
+		--resume-from $(GOLD_MODEL_DIR) \
+		--output-dir $(GOLD_MODEL_DIR) \
+		--epochs $(GOLD_FINETUNE_EPOCHS) \
+		--lr 5e-6 \
+		--train-batch 4 \
+		--eval-batch 16 \
+		--gradient-accumulation-steps 2 \
+		--mps-high-watermark-ratio 0.0 \
+		--eval-steps 50 \
+		--save-steps 100 \
+		--logging-steps 25
+
+# Incremental cycle: export → split → finetune → audit (lighter than full train)
+gold-incremental: gold-export gold-split gold-finetune gold-audit
+	@echo "Incremental gold update complete."
+
 pull-model-pytorch:
 	MODEL_BUNDLE_S3_URI_PYTORCH="$(MODEL_BUNDLE_S3_URI_PYTORCH)" REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" ./scripts/dev_pull_model.sh
 
@@ -379,9 +404,11 @@ help:
 	@echo "  gold-export    - Export pure gold from Prodigy dataset"
 	@echo "  gold-split     - 80/20 train/test split with note grouping"
 	@echo "  gold-train     - Train on gold data (10 epochs default)"
+	@echo "  gold-finetune  - Light fine-tune (3 epochs, lower LR) for incremental updates"
 	@echo "  gold-audit     - Safety audit on gold test set"
 	@echo "  gold-eval      - Evaluate metrics on gold test set"
 	@echo "  gold-cycle     - Full workflow: export → split → train → audit → eval"
+	@echo "  gold-incremental - Incremental: export → split → finetune → audit"
 	@echo ""
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"

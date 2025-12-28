@@ -64,6 +64,14 @@ const PATIENT_HEADER_RE =
 const PATIENT_HEADER_ALLCAPS_RE =
   /(?:PATIENT(?:\s+NAME)?|PT\.?(?:\s+NAME)?|NAME|SUBJECT)\s*[:\-]\s*([A-Z]{2,}(?:\s+[A-Z]\.?)?\s+[A-Z]{2,}(?:\s+[A-Z]{2,})?)/g;
 
+// Greedy header scan: capture full name after Name/Patient labels until a terminator.
+const HEADER_NAME_LABEL_RE =
+  /\b(?:Patient(?:\s+Name)?|Pt\.?(?:\s+Name)?|Pat\.?|Name|Subject)\s*[:\-]/gi;
+const HEADER_NAME_TERMINATOR_RE =
+  /\b(?:DOB|DOD|Date\s+of\s+Birth|Birth\s*Date|Birthdate|Date|MRN|ID|EDIPI|Age|Sex|Gender|Phone|Address)\b(?=\s*[:#-]|\s+\d)/i;
+const HEADER_NAME_TOKENS_RE =
+  /^\s*([A-Z][A-Za-z'.-]*(?:\s*,\s*[A-Z][A-Za-z'.-]*)?(?:\s+[A-Z][A-Za-z'.-]*)*)/;
+
 // Matches: "MRN: 12345" or "ID: 55-22-11" or "DOD NUMBER: 194174412" or "DOD#: 12345678"
 // IMPORTANT: Must contain at least one digit to avoid matching medical acronyms like "rEBUS"
 const MRN_RE =
@@ -238,6 +246,10 @@ const LAST_FIRST_INITIAL_RE =
 // Matches: "18Apr2022", "18-Apr-2022", "18 Apr 2022" (DDMMMYYYY variants)
 const DATE_DDMMMYYYY_RE =
   /\b(\d{1,2}[-\s]?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[-\s]?\d{2,4})\b/gi;
+
+// Matches: "13 Feb 2028" (DD Mon YYYY with required spaces)
+const DATE_DDMMMYYYY_SPACED_RE =
+  /\b(\d{1,2}\s+[A-Za-z]{3}\s+\d{4})\b/gi;
 
 // Matches: "6/3/2016", "06/03/2016", "6-3-2016" (M/D/YYYY or MM/DD/YYYY)
 const DATE_SLASH_RE =
@@ -417,6 +429,7 @@ function runRegexDetectors(text) {
   // Reset global regex state
   PATIENT_HEADER_RE.lastIndex = 0;
   PATIENT_HEADER_ALLCAPS_RE.lastIndex = 0;
+  HEADER_NAME_LABEL_RE.lastIndex = 0;
   MRN_RE.lastIndex = 0;
   MRN_SPACED_RE.lastIndex = 0;
   INLINE_PATIENT_NAME_RE.lastIndex = 0;
@@ -451,6 +464,7 @@ function runRegexDetectors(text) {
   LOWERCASE_FOR_NAME_RE.lastIndex = 0;
   LAST_FIRST_INITIAL_RE.lastIndex = 0;
   DATE_DDMMMYYYY_RE.lastIndex = 0;
+  DATE_DDMMMYYYY_SPACED_RE.lastIndex = 0;
   DATE_SLASH_RE.lastIndex = 0;
   DATE_ISO_RE.lastIndex = 0;
   DOB_HEADER_RE.lastIndex = 0;
@@ -506,7 +520,36 @@ function runRegexDetectors(text) {
     }
   }
 
-  // 1a) Placeholder/artifact names: "<PERSON>", "[Name]", "***NAME***"
+  // 1b) Greedy header scan: "Name: Booth Mark Johnson DOB: 1/2/1980"
+  for (const match of text.matchAll(HEADER_NAME_LABEL_RE)) {
+    if (match.index == null) continue;
+    const labelEnd = match.index + match[0].length;
+    const after = text.slice(labelEnd);
+    const lineBreak = after.search(/[\r\n]/);
+    const lineSlice = lineBreak === -1 ? after : after.slice(0, lineBreak);
+
+    const termIdx = lineSlice.search(HEADER_NAME_TERMINATOR_RE);
+    const candidate = termIdx === -1 ? lineSlice : lineSlice.slice(0, termIdx);
+    if (!candidate) continue;
+
+    const nameMatch = candidate.match(HEADER_NAME_TOKENS_RE);
+    if (!nameMatch) continue;
+
+    const nameGroup = nameMatch[1];
+    const fullMatch = nameMatch[0];
+    const groupOffset = fullMatch.indexOf(nameGroup);
+    if (groupOffset !== -1) {
+      spans.push({
+        start: labelEnd + groupOffset,
+        end: labelEnd + groupOffset + nameGroup.length,
+        label: "PATIENT",
+        score: 1.0,
+        source: "regex_header_greedy",
+      });
+    }
+  }
+
+  // 1c) Placeholder/artifact names: "<PERSON>", "[Name]", "***NAME***"
   for (const match of text.matchAll(PLACEHOLDER_NAME_RE)) {
     const fullMatch = match[0];
     const placeholderGroup = match[1];
@@ -1128,7 +1171,21 @@ function runRegexDetectors(text) {
     }
   }
 
-  // 7) Date formats: "18Apr2022", "18-Apr-2022"
+  // 7) Space-separated dates: "13 Feb 2028"
+  for (const match of text.matchAll(DATE_DDMMMYYYY_SPACED_RE)) {
+    const dateGroup = match[1];
+    if (dateGroup && match.index != null) {
+      spans.push({
+        start: match.index,
+        end: match.index + dateGroup.length,
+        label: "DATE",
+        score: 0.96,
+        source: "regex_date_ddmmm_spaced",
+      });
+    }
+  }
+
+  // 8) Date formats: "18Apr2022", "18-Apr-2022"
   for (const match of text.matchAll(DATE_DDMMMYYYY_RE)) {
     const dateGroup = match[1];
     if (dateGroup && match.index != null) {
@@ -1142,7 +1199,7 @@ function runRegexDetectors(text) {
     }
   }
 
-  // 8) Slash/dash dates: "6/3/2016", "06-03-2016"
+  // 9) Slash/dash dates: "6/3/2016", "06-03-2016"
   for (const match of text.matchAll(DATE_SLASH_RE)) {
     const dateGroup = match[1];
     if (dateGroup && match.index != null) {
@@ -1156,7 +1213,7 @@ function runRegexDetectors(text) {
     }
   }
 
-  // 9) ISO dates: "2024-01-15" (YYYY-MM-DD)
+  // 10) ISO dates: "2024-01-15" (YYYY-MM-DD)
   for (const match of text.matchAll(DATE_ISO_RE)) {
     const dateGroup = match[1];
     if (dateGroup && match.index != null) {
@@ -1170,7 +1227,7 @@ function runRegexDetectors(text) {
     }
   }
 
-  // 10) Timestamps: "10:00:00 AM", "14:30", "2:15 PM"
+  // 11) Timestamps: "10:00:00 AM", "14:30", "2:15 PM"
   // Only match if preceded by date context (to avoid matching times in other contexts like "station 4:30")
   for (const match of text.matchAll(TIME_RE)) {
     const timeGroup = match[1];

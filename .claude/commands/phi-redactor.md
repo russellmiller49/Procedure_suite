@@ -9,18 +9,22 @@ The PHI redactor is a **hybrid client-side detection system** combining:
 2. **Regex Detection** - Deterministic header/pattern matching
 3. **Veto Layer** - Post-processing filter to prevent false positives
 
+**Detection Mode:** Union (default) - Both ML and regex run, results combined, overlaps resolved after veto.
+
 ```
 Input Text
     ↓
 [Windowed Processing: 2500 chars, 250 overlap]
     ↓
-ML NER (DistilBERT) + Regex Patterns
+ML NER (DistilBERT) + Regex Patterns  ← Union mode: both run
     ↓
-Merge Overlaps (prefer regex)
+Combine Results (dedupeSpans)
     ↓
 Expand to Word Boundaries
     ↓
 Apply Veto Layer (protectedVeto.js)
+    ↓
+Final Overlap Resolution
     ↓
 Final Detections
 ```
@@ -30,7 +34,7 @@ Final Detections
 ### Client-Side UI (Browser)
 | File | Purpose |
 |------|---------|
-| `modules/api/static/phi_redactor/redactor.worker.js` | Web Worker for ML inference + regex detection |
+| `modules/api/static/phi_redactor/redactor.worker.js` | Web Worker: ML inference + regex detection (union mode) |
 | `modules/api/static/phi_redactor/protectedVeto.js` | Veto/allow-list layer (prevents false positives) |
 | `modules/api/static/phi_redactor/app.js` | Main UI application (Monaco editor integration) |
 | `modules/api/static/phi_redactor/vendor/phi_distilbert_ner/` | ONNX model bundle |
@@ -53,17 +57,21 @@ Final Detections
 | `scripts/audit_model_fp.py` | Audit for false positive violations |
 | `scripts/prodigy_prepare_phi_batch.py` | Prodigy: Pre-annotate notes with DistilBERT |
 | `scripts/prodigy_export_corrections.py` | Prodigy: Export corrections to BIO format |
+| `scripts/export_phi_gold_standard.py` | Gold: Export pure Prodigy annotations |
+| `scripts/split_phi_gold.py` | Gold: Train/test split with note grouping |
 
 ### Training Data
 | Location | Purpose |
 |----------|---------|
+| `data/ml_training/phi_gold_standard_v1.jsonl` | **Gold Standard**: Pure Prodigy exports |
+| `data/ml_training/phi_train_gold.jsonl` | Gold training set (80% of notes) |
+| `data/ml_training/phi_test_gold.jsonl` | Gold test set (20% of notes) |
+| `data/ml_training/ARCHIVE_distilled_phi_raw.jsonl` | Old mixed data (archived) |
 | `data/ml_training/distilled_phi_labels.jsonl` | Raw Piiranha output |
-| `data/ml_training/distilled_phi_CLEANED.jsonl` | Sanitized |
-| `data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl` | Normalized (training ready) |
-| `data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl` | With Prodigy corrections merged |
+| `data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl` | Normalized silver data |
 | `data/ml_training/prodigy_batch.jsonl` | Current Prodigy annotation batch |
 | `data/ml_training/prodigy_manifest.json` | Tracks annotated windows |
-| `synthetic_phi.jsonl` | Dense synthetic PHI data (300 records) |
+| `synthetic_phi.jsonl` | Dense synthetic PHI data |
 
 ## PHI Label Schema
 
@@ -110,8 +118,59 @@ Edit `redactor.worker.js`:
 const INLINE_PATIENT_NAME_RE = /\b([A-Z][a-z]+\s+[A-Z][a-z]+),?\s+(?:a\s+)?\d+-year-old/gi;
 ```
 
-### 3. Retrain the Model (From Scratch)
-When regex/veto isn't enough and you need fresh training data.
+### 3. Gold Standard Training (RECOMMENDED)
+Pure human-verified Prodigy annotations for highest quality.
+
+```bash
+# Full gold workflow (initial training or major updates)
+make gold-export      # Export from Prodigy dataset
+make gold-split       # 80/20 train/test split with note grouping
+make gold-train       # Train with 10 epochs
+make gold-audit       # Safety audit on test set
+make gold-eval        # Evaluate F1 metrics
+
+# Or run full cycle:
+make gold-cycle
+
+# Export to browser
+make export-phi-client-model
+```
+
+**Key Files:**
+- `phi_gold_standard_v1.jsonl` - Full gold export
+- `phi_train_gold.jsonl` - Training set (80% of notes)
+- `phi_test_gold.jsonl` - Test set (20% of notes)
+
+### 4. Adding More Training Data (Incremental)
+When you have new notes to add to gold training data.
+
+```bash
+# 1. Prepare new notes for Prodigy
+make prodigy-prepare-file PRODIGY_INPUT_FILE=new_notes.jsonl PRODIGY_COUNT=50
+
+# 2. Annotate in Prodigy UI
+make prodigy-annotate
+
+# 3. Incremental update (lighter than full train)
+make gold-incremental   # export → split → finetune(3 epochs) → audit
+
+# Or step-by-step:
+make gold-export        # Re-export ALL gold (old + new)
+make gold-split         # Re-split expanded dataset
+make gold-finetune      # Light fine-tune (3 epochs, 5e-6 LR)
+make gold-audit         # Verify safety
+
+# Export to browser
+make export-phi-client-model
+```
+
+**Override fine-tune epochs:**
+```bash
+make gold-finetune GOLD_FINETUNE_EPOCHS=5
+```
+
+### 5. Legacy Silver Training (From Scratch)
+When starting fresh from Piiranha distillation.
 
 ```bash
 # 1. Distill new training data
@@ -126,58 +185,39 @@ make normalize-phi-silver
 # 4. Train
 python scripts/train_distilbert_ner.py --epochs 3
 
-# 5. Evaluate
+# 5. Evaluate & audit
 make eval-phi-client
-
-# 6. Audit for violations
 make audit-phi-client
 
-# 7. Export to ONNX
+# 6. Export to ONNX
 make export-phi-client-model
 ```
 
-### 4. Iterative Correction with Prodigy (Recommended)
-Human-in-the-loop workflow using [Prodigy](https://prodi.gy/) for targeted improvements.
+### 6. Prodigy Annotation Workflow
+Human-in-the-loop using [Prodigy](https://prodi.gy/).
 
 ```bash
 # Option A: From golden notes (random sample)
-make prodigy-prepare
+make prodigy-prepare PRODIGY_COUNT=100
 
-# Option B: From specific file (e.g., dense synthetic PHI)
+# Option B: From specific file
 make prodigy-prepare-file PRODIGY_INPUT_FILE=synthetic_phi.jsonl
 
 # Launch Prodigy UI (opens at http://localhost:8080)
 make prodigy-annotate
 
-# After annotation, export corrections
-make prodigy-export
-
-# Fine-tune model (preserves learned weights - RECOMMENDED)
-make prodigy-finetune PRODIGY_EPOCHS=2
-
-# OR train from scratch (loses learned weights)
-make prodigy-retrain
-
-# Evaluate and export
-make eval-phi-client
-make export-phi-client-model
+# After annotation, use gold workflow
+make gold-export
+make gold-split
+make gold-finetune  # or gold-train for full training
 ```
 
-**Key Prodigy Files:**
-| File | Purpose |
-|------|---------|
-| `scripts/prodigy_prepare_phi_batch.py` | Pre-annotate notes with DistilBERT |
-| `scripts/prodigy_export_corrections.py` | Convert Prodigy → BIO training format |
-| `data/ml_training/prodigy_manifest.json` | Track annotated windows |
-| `synthetic_phi.jsonl` | Dense synthetic PHI data (300 records) |
-
-**Tips:**
-- Use `prodigy-finetune` (not `prodigy-retrain`) to preserve learned weights
-- Drop dataset to re-annotate: `prodigy drop phi_corrections`
-- Override epochs: `make prodigy-finetune PRODIGY_EPOCHS=3`
+**Prodigy Tips:**
 - Prodigy runs in system Python 3.12 (not conda)
+- Drop dataset to re-annotate: `prodigy drop phi_corrections`
+- Check stats: `prodigy stats phi_corrections`
 
-### 5. Update Protected Terms Config
+### 7. Update Protected Terms Config
 Edit `modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json`:
 - `anatomy_terms`: Anatomical terms to protect
 - `device_manufacturers`: Company names that look like person names
@@ -185,21 +225,47 @@ Edit `modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.
 - `station_markers`: LN station context words
 - `code_markers`: CPT/billing context words
 
+## Makefile Quick Reference
+
+| Target | Description |
+|--------|-------------|
+| `gold-export` | Export pure gold from Prodigy |
+| `gold-split` | 80/20 split with note grouping |
+| `gold-train` | Full training (10 epochs, 1e-5 LR) |
+| `gold-finetune` | Light fine-tune (3 epochs, 5e-6 LR) |
+| `gold-audit` | Safety audit on gold test |
+| `gold-eval` | Evaluate metrics on gold test |
+| `gold-cycle` | Full: export → split → train → audit → eval |
+| `gold-incremental` | Incremental: export → split → finetune → audit |
+| `prodigy-prepare` | Prepare batch from golden folder |
+| `prodigy-prepare-file` | Prepare batch from specific file |
+| `prodigy-annotate` | Launch Prodigy UI |
+| `audit-phi-client` | Audit on silver data |
+| `export-phi-client-model` | Export ONNX for browser |
+
 ## Debugging
 
 ### Console Logging
 Enable debug mode in the UI:
 ```javascript
-// In app.js WORKER_CONFIG
+// In app.js WORKER_CONFIG or via URL ?debug=1
 const WORKER_CONFIG = {
   debug: true,  // Enables console logging
   aiThreshold: 0.45,
   forceUnquantized: true,
+  mergeMode: "union",  // default: both ML + regex
 };
 ```
 
+### Check Detection Sources
+With debug enabled:
+```
+[PHI] mergeMode: union
+[PHI] mlSpans: X  regexSpans: Y
+[PHI] afterVeto: Z
+```
+
 ### Check Veto Reasons
-With debug enabled, check browser console for:
 ```
 [VETO] reason "text" (LABEL score=0.xx)
 ```
@@ -216,20 +282,20 @@ Common veto reasons:
 If model returns 0 detections:
 1. Check `[PHI] raw spans count: X` in console
 2. If 0, model may have cold-start issue
-3. Regex patterns should still catch header PHI
+3. Regex patterns should still catch header PHI (union mode)
 4. Try refreshing the page (re-initializes model)
 
 ## Testing
 
 ```bash
-# Run PHI redactor UI tests
-pytest tests/api/test_phi_redactor_ui.py -v
+# Audit for must-not-redact violations (gold test set)
+make gold-audit
 
-# Run PHI contract tests (if available)
-pytest tests/test_phi_redaction_contract.py -v
-
-# Audit for must-not-redact violations
+# Audit on silver data
 make audit-phi-client
+
+# Evaluate metrics
+make gold-eval
 ```
 
 ### Smoke Test Checklist
