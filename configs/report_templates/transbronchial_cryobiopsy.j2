@@ -1,0 +1,5 @@
+Radial EBUS survey{% if proc.radial_vessel_check %} confirmed absence of significant vessels at the biopsy site{% endif %}. Transbronchial cryobiopsy was performed using a{% if proc.cryoprobe_size_mm %} {{ proc.cryoprobe_size_mm }} mm{% endif %} cryoprobe with{% if proc.freeze_seconds and proc.thaw_seconds %} {{ proc.freeze_seconds }} second freeze and {{ proc.thaw_seconds }} second thaw{% else %} freeze–thaw cycles{% endif %} per sample.
+{% if proc.blocker_type or proc.blocker_volume_ml or proc.blocker_location %}An endobronchial blocker{% if proc.blocker_type %} ({{ proc.blocker_type }}){% endif %}{% if proc.blocker_location %} at {{ proc.blocker_location }}{% endif %}{% if proc.blocker_volume_ml is not none %} was inflated with {{ proc.blocker_volume_ml }} mL{% endif %} for tamponade after each sample.{% endif %}
+Samples were collected in the {{ proc.lung_segment }} with a total of {{ proc.num_samples }} samples submitted.{% if proc.tests %} Samples sent for {{ proc.tests | join(', ') }}.{% endif %}
+{% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}
+No immediate complications.

@@ -1,0 +1,2 @@
+Transbronchial needle aspiration was performed at the {{ proc.lung_segment }} using {{ proc.needle_tools }} with {{ proc.samples_collected }} samples collected.
+{% if proc.tests %}Samples were sent for {{ proc.tests | join(', ') }}.{% endif %}

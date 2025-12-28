@@ -1,0 +1,24 @@
+TITLE: Linear EBUS-TBNA mediastinal staging (≥3 stations)
+
+INDICATION
+Mediastinal/hilar lymphadenopathy for lung cancer staging.
+
+ANESTHESIA
+Monitored anesthesia care (MAC) provided by the anesthesia team. No moderate sedation by the bronchoscopist.
+
+PROCEDURE / TECHNIQUE
+Flexible bronchoscopy. Linear EBUS used for nodal evaluation.
+
+STATIONS SAMPLED (IASLC)
+4R: 22G, 3 passes, ROSE adequate.
+7: 22G, 4 passes, ROSE adequate.
+11R: 22G, 3 passes, ROSE adequate.
+
+RADIAL/NAVIGATION
+No radial miniprobe used; no computer-assisted navigation initiated.
+
+COMPLICATIONS
+None.
+
+DISPOSITION
+Stable to recovery.

@@ -1,0 +1,3 @@
+Endobronchial or transbronchial brushings were obtained at the {{ proc.lung_segment }} with a total of {{ proc.samples_collected }} samples collected and submitted.
+{% if proc.brush_tool %}Performed with {{ proc.brush_tool }}.{% endif %}
+{% if proc.tests %}Samples were sent for {{ proc.tests | join(', ') }}.{% endif %}

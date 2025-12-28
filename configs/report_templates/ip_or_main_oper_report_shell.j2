@@ -1,0 +1,42 @@
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: {{ encounter.date or "" }}
+CC Referred Physician: {{ encounter.referred_physician or "" }}
+
+INDICATION FOR OPERATION:
+{% if patient.name %}{{ patient.name }}{% else %}The patient{% endif %}{% if patient.age %} is a {{ patient.age }}-year-old{% endif %}{% if patient.sex %} {{ patient.sex }}{% endif %}{% if indication_text %} who presents with {{ indication_text }}{% endif %}.
+
+CONSENT: Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The consent was witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS: {{ preop_diagnosis_text or "See chart" }}
+POSTOPERATIVE DIAGNOSIS: {{ postop_diagnosis_text or "See chart" }}
+
+PROCEDURE(S): {{ procedures_summary or "See procedure details below" }}
+
+CPT CODES (candidates - verify locally): {{ cpt_summary or "Not available; verify locally" }}
+
+ATTENDING: {{ encounter.attending or "" }}
+ASSISTANT: {{ encounter.assistant or "None" }}
+
+ANESTHESIA: {{ (anesthesia.description or anesthesia.type) if anesthesia else "See chart" }}
+MONITORING: Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer.
+
+PROCEDURE IN DETAIL:
+{{ procedure_details_block }}
+
+ESTIMATED BLOOD LOSS: {{ estimated_blood_loss or "Minimal" }}
+COMPLICATIONS: {{ complications_text or "None" }}
+
+SPECIMEN(S): {{ specimens_text or "Not collected" }}
+
+IMPRESSION/PLAN:
+{{ impression_plan or "Pending" }}
+{% if acknowledged_omissions %}
+
+## Missing Details (not present in original dictation)
+{% for proc_id, items in acknowledged_omissions.items() %}
+{% if items %}
+- **{{ proc_id }}**: {{ items | join('; ') }}
+{% endif %}
+{% endfor %}
+{% endif %}

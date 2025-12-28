@@ -1,0 +1,61 @@
+HCPCS,MOD,DESCRIPTION,STATUS CODE,WORK RVU,NON-FAC PE RVU,FACILITY PE RVU,MP RVU,NON-FAC TOTAL,FACILITY TOTAL,PCTC IND,GLOB DAYS,MULT PROC,BILAT SURG,ASST SURG,CO-SURG,TEAM SURG,CONV FACTOR
+31622,,Diagnostic fiberoptic bronchoscopy,A,3.50,31.75,4.22,0.28,35.53,8.00,0,000,2,0,0,0,0,32.35
+31623,,Bronchoscopy; with brushing,A,4.02,32.69,4.74,0.31,37.02,9.07,0,000,2,0,0,0,0,32.35
+31624,,Bronchoscopy; with BAL,A,4.02,32.82,4.87,0.32,37.16,9.21,0,000,2,0,0,0,0,32.35
+31625,,Bronchoscopy; with biopsy(s),A,4.39,33.26,5.24,0.35,38.00,9.98,0,000,2,0,0,0,0,32.35
+31626,,Bronchoscopy; with TBNA,A,4.75,33.70,5.60,0.38,38.83,10.73,0,000,2,0,0,0,0,32.35
+31627,,Generated Description,A,3.5,5.8,5.8,0.3,9.6,9.6,0,000,2,0,0,0,0,32.35
+31628,,Bronchoscopy; with transbronchial lung bx,A,5.03,34.01,5.88,0.40,39.44,11.31,0,000,2,0,0,0,0,32.35
+31629,,Bronchoscopy; with TBNA of mediastinal nodes,A,5.75,34.94,6.60,0.46,41.15,12.81,0,000,2,0,0,0,0,32.35
+31630,,Bronchoscopy; with tracheal/bronchial dilation,A,4.89,33.84,5.74,0.39,39.12,11.02,0,000,2,0,0,0,0,32.35
+31631,,Bronchoscopy; with placement of tracheal stent,A,9.00,38.83,10.23,0.72,48.55,19.95,0,000,2,0,1,2,0,32.35
+31632,,Bronchoscopy; with transbronchial lung biopsy,A,5.15,34.15,6.00,0.41,39.71,11.56,0,000,2,0,0,0,0,32.35
+31633,,Bronchoscopy; with transbronchial needle aspiration biopsy,A,5.75,34.94,6.60,0.46,41.15,12.81,0,000,2,0,0,0,0,32.35
+31634,,Bronchoscopy; with balloon occlusion,A,6.50,35.80,7.35,0.52,42.82,14.37,0,000,2,0,1,2,0,32.35
+31635,,Bronchoscopy; with removal of foreign body,A,5.50,34.65,6.35,0.44,40.59,12.29,0,000,2,0,0,0,0,32.35
+31636,,Bronchoscopy; with placement of bronchial stent(s),A,6.5,12.0,12.0,0.6,19.1,19.1,0,000,2,0,0,0,0,32.35
+31645,,Bronchoscopy; with therapeutic aspiration,A,4.39,33.26,5.24,0.35,38.00,9.98,0,000,2,0,0,0,0,32.35
+31646,,Bronchoscopy; with bronchial valve placement,A,8.25,38.11,9.48,0.66,47.02,18.39,0,000,2,0,1,2,0,32.35
+31647,,Bronchoscopy; with balloon dilation,A,5.25,34.40,6.10,0.42,40.07,11.77,0,000,2,0,0,0,0,32.35
+31648,,Bronchoscopy; with excision of tumor,A,7.50,36.90,8.35,0.60,45.00,16.45,0,000,2,0,1,2,0,32.35
+31649,,Bronchoscopy; with removal of bronchial valve,A,6.00,35.20,6.85,0.48,41.68,13.33,0,000,2,0,0,0,0,32.35
+31651,,Bronchoscopy; with fiducial marker placement,A,4.75,33.70,5.60,0.38,38.83,10.73,0,000,2,0,0,0,0,32.35
+31652,,Endobronchial ultrasound (EBUS),A,6.25,35.55,7.10,0.50,42.30,13.85,0,000,2,0,0,2,0,32.35
+31653,,EBUS with TBNA; first lesion,A,7.00,36.35,7.85,0.56,43.91,15.41,0,000,2,0,0,2,0,32.35
+31654,,EBUS with TBNA; each additional lesion,A,3.00,31.25,3.72,0.24,34.49,6.96,0,ZZZ,3,0,0,0,0,32.35
+31660,,Bronchoscopy; with bronchial thermoplasty,A,10.50,40.30,11.73,0.84,51.64,23.07,0,000,2,0,1,2,0,32.35
+31661,,Bronchoscopy; with bronchial thermoplasty; subsequent sessions,A,10.00,39.80,11.23,0.80,50.60,22.03,0,000,2,0,1,2,0,32.35
+32408,,Core needle biopsy; lung or mediastinum; percutaneous,A,3.65,32.05,4.52,0.29,35.99,8.46,0,010,2,0,1,0,0,32.35
+32550,,Insertion of indwelling tunneled pleural catheter ,A,3.92,0.00,0.00,0.00,3.92,3.92,0,000,2,0,0,0,0,32.35
+32551,,"Tube thoracostomy, includes water seal or suction,",A,3.04,0.00,0.00,0.00,3.04,3.04,0,000,2,0,0,0,0,32.35
+32552,,Generated Description,A,2.53,0.00,0.00,0.00,2.53,2.53,0,000,2,0,0,0,0,32.35
+32553,,Generated Description,A,3.55,0.00,0.00,0.00,3.55,3.55,0,000,2,0,0,0,0,32.35
+32554,,"Thoracentesis, needle or catheter, diagnostic",A,1.82,0.5,0.5,0.28,2.60,2.60,0,000,2,0,0,0,0,32.35
+32555,,"Thoracentesis, therapeutic, including imaging when",A,2.27,0.63,0.63,0.29,3.19,3.19,0,000,2,0,0,0,0,32.35
+32556,,Pleural drainage with insertion of indwelling cath,A,2.5,0.83,0.83,0.29,3.62,3.62,0,000,2,0,0,0,0,32.35
+32557,,Pleural drainage with insertion of indwelling cath,A,3.12,1.04,1.04,0.34,4.50,4.50,0,000,2,0,0,0,0,32.35
+32560,,Generated Description,A,1.54,0.00,0.00,0.00,1.54,1.54,0,000,2,0,0,0,0,32.35
+32561,,Generated Description,A,1.39,0.00,0.00,0.00,1.39,1.39,0,000,2,0,0,0,0,32.35
+32601,,"Diagnostic thoracoscopy, unilateral",A,5.5,0.00,0.00,0.00,5.50,5.50,0,000,2,0,0,0,0,32.35
+32604,,Thoracoscopy; pericardial sac with biopsy,A,8.77,0.00,0.00,0.00,8.77,8.77,0,000,2,0,0,0,0,32.35
+32606,,Thoracoscopy; mediastinal space with biopsy,A,8.39,0.00,0.00,0.00,8.39,8.39,0,000,2,0,0,0,0,32.35
+32607,,Thoracoscopy; lung biopsy infiltrate(s),A,5.50,0.00,0.00,0.00,5.50,5.50,0,000,2,0,0,0,0,32.35
+32608,,Thoracoscopy; lung biopsy nodule(s)/mass(es),A,6.84,0.00,0.00,0.00,6.84,6.84,0,000,2,0,0,0,0,32.35
+32609,,Thoracoscopy; with biopsy(ies) of pleura,A,4.58,0.00,0.00,0.00,4.58,4.58,0,000,2,0,0,0,0,32.35
+99151,,Generated Description,A,0.5,0.18,0.18,0.04,0.72,0.72,0,000,2,0,0,0,0,32.35
+99152,,Generated Description,A,2.0,2.5,2.5,0.1,4.6,4.6,0,000,2,0,0,0,0,32.35
+99155,,Generated Description,A,1.9,0.34,0.34,0.2,2.44,2.44,0,000,2,0,0,0,0,32.35
+99156,,Generated Description,A,1.65,0.41,0.41,0.18,2.24,2.24,0,000,2,0,0,0,0,32.35
+99211,,Office visit; established patient; minimal,A,0.18,0.67,0.67,0.01,0.86,0.86,0,XXX,0,0,9,9,9,32.35
+99212,,Office visit; est patient; straightforward,A,0.48,1.07,1.07,0.04,1.59,1.59,0,XXX,0,0,9,9,9,32.35
+99213,,Office visit; est patient; low complexity,A,0.97,1.57,1.57,0.08,2.62,2.62,0,XXX,0,0,9,9,9,32.35
+99214,,Office visit; est patient; moderate complexity,A,1.50,2.21,2.21,0.12,3.83,3.83,0,XXX,0,0,9,9,9,32.35
+99215,,Office visit; est patient; high complexity,A,2.11,2.93,2.93,0.17,5.21,5.21,0,XXX,0,0,9,9,9,32.35
+99221,,Initial hospital care; low complexity,A,1.58,0.80,0.80,0.13,2.51,2.51,0,XXX,0,0,9,9,9,32.35
+99222,,Initial hospital care; moderate complexity,A,2.43,1.23,1.23,0.19,3.85,3.85,0,XXX,0,0,9,9,9,32.35
+99223,,Initial hospital care; high complexity,A,3.55,1.80,1.80,0.28,5.63,5.63,0,XXX,0,0,9,9,9,32.35
+99231,,Subsequent hospital care; straightforward,A,0.76,0.39,0.39,0.06,1.21,1.21,0,XXX,0,0,9,9,9,32.35
+99232,,Subsequent hospital care; moderate complexity,A,1.50,0.76,0.76,0.12,2.38,2.38,0,XXX,0,0,9,9,9,32.35
+99233,,Subsequent hospital care; high complexity,A,2.21,1.12,1.12,0.17,3.50,3.50,0,XXX,0,0,9,9,9,32.35
+99238,,Generated Description,A,1.5,0.8,0.8,0.11,2.41,2.41,0,000,2,0,0,0,0,32.35
+99239,,Generated Description,A,2.15,1.1,1.1,0.15,3.40,3.40,0,000,2,0,0,0,0,32.35
