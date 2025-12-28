@@ -283,7 +283,10 @@ make export-phi-client-model
 | `scripts/prodigy_export_corrections.py` | Convert Prodigy → BIO training format |
 | `data/ml_training/prodigy_manifest.json` | Track annotated windows (avoids re-sampling) |
 | `data/ml_training/prodigy_batch.jsonl` | Current batch for annotation |
-| `data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl` | Training data with Prodigy corrections |
+| `data/ml_training/phi_gold_standard_v1.jsonl` | Gold standard export (pure Prodigy data) |
+| `data/ml_training/phi_train_gold.jsonl` | Gold training set (80% of notes) |
+| `data/ml_training/phi_test_gold.jsonl` | Gold test set (20% of notes) |
+| `data/ml_training/ARCHIVE_distilled_phi_raw.jsonl` | Old mixed data (archived) |
 | `synthetic_phi.jsonl` | Dense synthetic PHI data (300 records) |
 
 ### Tips
@@ -301,6 +304,76 @@ Prodigy requires a separate Python environment (system Python 3.12):
 # Prodigy is installed in system Python, not conda
 /Library/Frameworks/Python.framework/Versions/3.12/bin/python3 -m prodigy --help
 ```
+
+---
+
+## ⭐ Gold Standard PHI Training (Recommended)
+
+The gold workflow uses **only human-verified Prodigy annotations** for maximum quality training. Unlike the mixed "silver" data, gold standard data contains no unverified machine labels.
+
+### Why Gold Standard?
+
+- **Pure human verification**: Every annotation explicitly reviewed
+- **No data leakage**: Notes split at encounter level (all windows from same note in same split)
+- **Higher quality**: Smaller but cleaner dataset produces better model convergence
+- **Audit-friendly**: Clear provenance for all training labels
+
+### Gold Workflow Commands
+
+| Command | Purpose |
+|---------|---------|
+| `make gold-export` | Export pure gold from Prodigy dataset (no merging) |
+| `make gold-split` | 80/20 train/test split with note-level grouping |
+| `make gold-train` | Train with 10 epochs on smaller high-quality data |
+| `make gold-audit` | Safety audit on gold test set |
+| `make gold-eval` | Evaluate metrics on gold test set |
+| `make gold-cycle` | Full workflow: export → split → train → audit → eval |
+
+### Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `GOLD_EPOCHS` | `10` | Training epochs (more for smaller dataset) |
+| `GOLD_DATASET` | `phi_corrections` | Prodigy dataset to export |
+| `GOLD_OUTPUT_DIR` | `data/ml_training` | Output directory |
+| `GOLD_MODEL_DIR` | `artifacts/phi_distilbert_ner` | Model directory |
+
+### Example: Complete Gold Workflow
+
+```bash
+# 1. Export pure gold from Prodigy (no merging with old data)
+make gold-export
+
+# 2. Split into train/test with note-level grouping
+make gold-split
+
+# 3. Train on pure gold (10 epochs default)
+make gold-train
+
+# 4. Safety audit (post-veto violations must be 0)
+make gold-audit
+
+# 5. Evaluate F1 metrics
+make gold-eval
+
+# Or run full cycle:
+make gold-cycle
+```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `scripts/export_phi_gold_standard.py` | Export Prodigy → BIO format (no merging) |
+| `scripts/split_phi_gold.py` | Train/test split with note grouping |
+| `phi_gold_standard_v1.jsonl` | Full gold export from Prodigy |
+| `phi_train_gold.jsonl` | Training set (80% of notes) |
+| `phi_test_gold.jsonl` | Test set (20% of notes) |
+| `ARCHIVE_distilled_phi_raw.jsonl` | Old mixed data (preserved for reference) |
+
+### Transition from Mixed Data
+
+The old `distilled_phi_WITH_CORRECTIONS.jsonl` (mixed Piiranha + Prodigy) has been archived. The gold workflow replaces it with pure human-verified data for higher quality training.
 
 ---
 

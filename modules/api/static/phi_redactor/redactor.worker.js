@@ -22,6 +22,33 @@ const OVERLAP = 250;
 const STEP = WINDOW - OVERLAP;
 
 // =============================================================================
+// MERGE MODE CONFIGURATION
+// =============================================================================
+
+/**
+ * MERGE_MODE controls how overlapping spans from different sources are handled.
+ *
+ * "best_of" (legacy): Prefers regex over ML on overlap, runs merge BEFORE veto.
+ *   - PROBLEM: If regex span is vetoed, overlapping ML span is already lost.
+ *
+ * "union" (recommended): Keeps all candidates until AFTER veto.
+ *   - Removes only exact duplicates before veto
+ *   - Resolves overlaps AFTER veto has approved survivors
+ *   - Safer: veto can't cause span loss from merge happening too early
+ */
+const MERGE_MODE_DEFAULT = "union";
+
+/**
+ * Get the merge mode from config, with fallback to default.
+ * Main thread can pass mergeMode via config (from query param or localStorage).
+ */
+function getMergeMode(config) {
+  const mode = config?.mergeMode;
+  if (mode === "union" || mode === "best_of") return mode;
+  return MERGE_MODE_DEFAULT;
+}
+
+// =============================================================================
 // HYBRID REGEX DETECTION (guarantees headers/IDs)
 // =============================================================================
 
@@ -31,10 +58,16 @@ const STEP = WINDOW - OVERLAP;
 const PATIENT_HEADER_RE =
   /(?:Patient(?:\s+Name)?|Pt\.?(?:\s+Name)?|Pat\.?|Name|Subject)\s*[:\-]\s*([A-Z][a-z]+\s*,\s*[A-Z]\.?|[A-Z]\.?\s+[A-Z][a-z]+|[A-Z][a-z]+\s*,\s*[A-Z][a-z]+(?:\s+[A-Z]\.?)?|[A-Z][a-z]+\s+[A-Z]'?[A-Za-z]+|[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/gim;
 
-// Matches: "MRN: 12345" or "ID: 55-22-11"
+// Matches ALL-CAPS patient names after header labels: "PATIENT NAME: CHARLES D HOLLINGER"
+// NER often fails on all-uppercase names, so we need a dedicated regex
+// Captures 2-4 uppercase words (with optional middle initial) after patient/name labels
+const PATIENT_HEADER_ALLCAPS_RE =
+  /(?:PATIENT(?:\s+NAME)?|PT\.?(?:\s+NAME)?|NAME|SUBJECT)\s*[:\-]\s*([A-Z]{2,}(?:\s+[A-Z]\.?)?\s+[A-Z]{2,}(?:\s+[A-Z]{2,})?)/g;
+
+// Matches: "MRN: 12345" or "ID: 55-22-11" or "DOD NUMBER: 194174412" or "DOD#: 12345678"
 // IMPORTANT: Must contain at least one digit to avoid matching medical acronyms like "rEBUS"
 const MRN_RE =
-  /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID|EDIPI|DOD\s*ID)\s*[:\#]?\s*([A-Z0-9\-]*\d[A-Z0-9\-]*)\b/gi;
+  /\b(?:MRN|MR|Medical\s*Record|Patient\s*ID|ID|EDIPI|DOD\s*(?:ID|NUMBER|NUM|#))\s*[:\#]?\s*([A-Z0-9\-]*\d[A-Z0-9\-]*)\b/gi;
 
 // Matches: MRN with spaces like "A92 555" or "AB 123 456" (2-3 groups of alphanumerics)
 // IMPORTANT: Each segment MUST contain at least one digit to avoid matching "Li in the" as MRN
@@ -153,6 +186,11 @@ const PROCEDURE_NOTE_NAME_RE =
 const STANDALONE_ALPHANUMERIC_ID_RE =
   /\b([A-Z]{2,3}-\d{3,6}(?:-[A-Z0-9])?)\b/g;
 
+// Matches parenthetical IDs after patient context: "Patient: Smith, John (22352321)"
+// Requires 6-15 digits to avoid matching list markers like (1) or (2)
+const PAREN_ID_RE =
+  /\((\d{6,15})\)/g;
+
 // Matches "pt [Name]" or "patient [Name]" when followed by identifier keywords
 // Requires: "patient angela davis mrn" or "pt john doe dob" etc.
 // SAFE: Won't match "patient severe pneumonia" because "pneumonia" is not a keyword
@@ -212,6 +250,11 @@ const DATE_ISO_RE =
 // Matches: "DOB: 01/15/1960" or "Date of Birth: January 15, 1960"
 const DOB_HEADER_RE =
   /\b(?:DOB|Date\s+of\s+Birth|Birth\s*Date|Birthdate)\s*[:\-]?\s*(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{1,2}[-\s]?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[-\s,]?\s*\d{1,2}[-,\s]+\d{2,4}|(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}[-,\s]+\d{2,4})\b/gi;
+
+// Matches timestamps: "10:00:00 AM", "14:30", "2:15 PM", "08:45:30"
+// Used to capture time components when they appear near procedure dates
+const TIME_RE =
+  /\b(\d{1,2}:\d{2}(?::\d{2})?\s*(?:AM|PM|am|pm)?)\b/g;
 
 // =============================================================================
 // Transformers.js env
@@ -373,6 +416,7 @@ function runRegexDetectors(text) {
 
   // Reset global regex state
   PATIENT_HEADER_RE.lastIndex = 0;
+  PATIENT_HEADER_ALLCAPS_RE.lastIndex = 0;
   MRN_RE.lastIndex = 0;
   MRN_SPACED_RE.lastIndex = 0;
   INLINE_PATIENT_NAME_RE.lastIndex = 0;
@@ -397,6 +441,7 @@ function runRegexDetectors(text) {
   FIRST_NAME_CLINICAL_RE.lastIndex = 0;
   PROCEDURE_NOTE_NAME_RE.lastIndex = 0;
   STANDALONE_ALPHANUMERIC_ID_RE.lastIndex = 0;
+  PAREN_ID_RE.lastIndex = 0;
   PT_LOWERCASE_NAME_RE.lastIndex = 0;
   LOWERCASE_NAME_DATE_RE.lastIndex = 0;
   LOWERCASE_NAME_AGE_GENDER_RE.lastIndex = 0;
@@ -409,6 +454,7 @@ function runRegexDetectors(text) {
   DATE_SLASH_RE.lastIndex = 0;
   DATE_ISO_RE.lastIndex = 0;
   DOB_HEADER_RE.lastIndex = 0;
+  TIME_RE.lastIndex = 0;
 
   // Helper: check if followed by provider credentials (to exclude provider names)
   function isFollowedByCredentials(matchEnd) {
@@ -435,6 +481,28 @@ function runRegexDetectors(text) {
         score: 1.0,
         source: "regex_header",
       });
+    }
+  }
+
+  // 1-allcaps) ALL-CAPS patient names after headers: "PATIENT NAME: CHARLES D HOLLINGER"
+  // NER often fails on all-uppercase names, so we need dedicated regex
+  for (const match of text.matchAll(PATIENT_HEADER_ALLCAPS_RE)) {
+    const fullMatch = match[0];
+    const nameGroup = match[1];
+    const groupOffset = fullMatch.indexOf(nameGroup);
+    if (groupOffset !== -1 && match.index != null) {
+      // Skip if the name is a known medical term (e.g., "PREOPERATIVE DIAGNOSIS")
+      const nameNorm = nameGroup.toLowerCase().replace(/[^a-z\s]/g, "").trim();
+      const isMedicalTerm = /^(preoperative|postoperative|intraoperative|surgical|medical|clinical|diagnostic|therapeutic)\s+(diagnosis|procedure|findings|impression|history)$/i.test(nameGroup);
+      if (!isMedicalTerm) {
+        spans.push({
+          start: match.index + groupOffset,
+          end: match.index + groupOffset + nameGroup.length,
+          label: "PATIENT",
+          score: 1.0,
+          source: "regex_header_allcaps",
+        });
+      }
     }
   }
 
@@ -504,6 +572,21 @@ function runRegexDetectors(text) {
           source: "regex_case_id",
         });
       }
+    }
+  }
+
+  // 2c) Parenthetical IDs: "(22352321)" - numeric IDs in parentheses after patient context
+  for (const match of text.matchAll(PAREN_ID_RE)) {
+    const idGroup = match[1];
+    if (idGroup && match.index != null) {
+      // Capture the ID inside the parentheses (not the parentheses themselves)
+      spans.push({
+        start: match.index + 1, // Skip opening paren
+        end: match.index + 1 + idGroup.length,
+        label: "ID",
+        score: 0.95,
+        source: "regex_paren_id",
+      });
     }
   }
 
@@ -1087,6 +1170,33 @@ function runRegexDetectors(text) {
     }
   }
 
+  // 10) Timestamps: "10:00:00 AM", "14:30", "2:15 PM"
+  // Only match if preceded by date context (to avoid matching times in other contexts like "station 4:30")
+  for (const match of text.matchAll(TIME_RE)) {
+    const timeGroup = match[1];
+    if (timeGroup && match.index != null) {
+      // Check if preceded by date-related context to reduce false positives
+      const before = text.slice(Math.max(0, match.index - 80), match.index).toLowerCase();
+      // Allow various delimiters between date and time: space, "/", ",", "@", "at"
+      const hasDateContext =
+        // "date/time of procedure:", "scheduled for:", etc.
+        /(?:date|time|procedure|scheduled|at|on)\s*[:\-]?\s*(?:\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})?[\s\/,@]*$/i.test(before) ||
+        // Date immediately before (with optional delimiter): "2/18/2018/ " or "2/18/2018 "
+        /\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}[\/\s,@]*$/.test(before) ||
+        // Time header without date: "TIME:" or "TIME OF PROCEDURE:"
+        /\btime\s*(?:of\s+procedure)?[:\-]\s*$/i.test(before);
+      if (hasDateContext) {
+        spans.push({
+          start: match.index,
+          end: match.index + timeGroup.length,
+          label: "DATE",
+          score: 0.85,
+          source: "regex_time",
+        });
+      }
+    }
+  }
+
   return spans;
 }
 
@@ -1309,6 +1419,45 @@ function dedupeSpans(spans) {
   return out;
 }
 
+/**
+ * Deduplicate EXACT duplicates only (same start, end, label).
+ * Does NOT drop spans due to overlap with different source/label.
+ * Used in union mode before veto to preserve all candidates.
+ *
+ * Key difference from dedupeSpans: ignores source in the key, so two spans
+ * at the same position with the same label are treated as duplicates even
+ * if one is from regex and one from ML.
+ *
+ * @param {Array<{start: number, end: number, label: string, source?: string, score?: number}>} spans
+ * @returns {Array} Deduplicated spans (only exact matches removed)
+ */
+function dedupeExactSpansOnly(spans) {
+  const seen = new Map(); // key -> span with highest score
+
+  for (const s of spans) {
+    // Key includes start, end, and label (but NOT source)
+    // Two spans at same position with same label are duplicates regardless of source
+    const key = `${s.start}:${s.end}:${s.label}`;
+
+    const existing = seen.get(key);
+    if (!existing) {
+      seen.set(key, s);
+    } else {
+      // Keep the one with higher score (prefer regex > ML on tie)
+      const existingScore = existing.score ?? 0;
+      const newScore = s.score ?? 0;
+      const existingIsRegex = isRegexSpan(existing);
+      const newIsRegex = isRegexSpan(s);
+
+      if (newScore > existingScore || (newScore === existingScore && newIsRegex && !existingIsRegex)) {
+        seen.set(key, s);
+      }
+    }
+  }
+
+  return Array.from(seen.values());
+}
+
 function isRegexSpan(s) {
   return typeof s?.source === "string" && s.source.startsWith("regex_");
 }
@@ -1417,6 +1566,214 @@ function expandToWordBoundaries(spans, fullText) {
     }
     return span;
   });
+}
+
+/**
+ * Escape special regex characters in a string.
+ */
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Session-based name tracking for document consistency.
+ *
+ * Collects high-confidence PATIENT names from existing detections,
+ * then scans for any undetected occurrences of those names elsewhere
+ * in the document. This ensures that if "John Smith" is detected once
+ * with high confidence, all other mentions of "John Smith" are also caught.
+ *
+ * @param {Array} spans - Current span array
+ * @param {string} text - Full document text
+ * @param {Object} options - { debug: boolean }
+ * @returns {Array} Updated spans with additional session name matches
+ */
+function addSessionNameMatches(spans, text, options = {}) {
+  const { debug } = options;
+  const log = debug ? console.log.bind(console) : () => {};
+
+  if (!spans || spans.length === 0 || !text) return spans;
+
+  // Collect confirmed high-confidence PATIENT names
+  const confirmedNames = new Set();
+  for (const span of spans) {
+    const labelNorm = String(span.label || "").toUpperCase().replace(/^[BI]-/, "");
+    if (labelNorm === "PATIENT" && (span.score ?? 0) >= 0.85) {
+      const nameText = text.slice(span.start, span.end).trim();
+      // Only track names with at least 4 characters (avoid initials)
+      if (nameText.length >= 4) {
+        confirmedNames.add(nameText);
+      }
+    }
+  }
+
+  if (confirmedNames.size === 0) {
+    if (debug) log("[PHI] sessionNames: no high-confidence names found");
+    return spans;
+  }
+
+  if (debug) log("[PHI] sessionNames: tracking", confirmedNames.size, "confirmed names");
+
+  // Build a set of already-covered ranges for efficient lookup
+  const coveredRanges = spans.map(s => ({ start: s.start, end: s.end }));
+
+  function isCovered(start, end) {
+    for (const r of coveredRanges) {
+      // Fully contained within existing span
+      if (start >= r.start && end <= r.end) return true;
+    }
+    return false;
+  }
+
+  const newSpans = [...spans];
+  let addedCount = 0;
+
+  // Scan for undetected occurrences of confirmed names
+  for (const name of confirmedNames) {
+    const nameRe = new RegExp(escapeRegex(name), 'gi');
+    let match;
+    while ((match = nameRe.exec(text)) !== null) {
+      const start = match.index;
+      const end = start + match[0].length;
+
+      // Skip if already covered by an existing span
+      if (isCovered(start, end)) continue;
+
+      // Add as a new PATIENT span with session source
+      newSpans.push({
+        start,
+        end,
+        label: "PATIENT",
+        score: 0.95,
+        source: "regex_session_name",
+        text: match[0],
+      });
+      addedCount++;
+    }
+  }
+
+  if (debug && addedCount > 0) {
+    log("[PHI] sessionNames: added", addedCount, "new matches");
+  }
+
+  return newSpans;
+}
+
+/**
+ * Final overlap resolution AFTER veto has approved all survivors.
+ * Produces non-overlapping spans sorted by start position.
+ *
+ * Selection rules for overlaps:
+ * 1. Same label → union (min start, max end)
+ * 2. Different labels:
+ *    a) Prefer larger coverage (more characters)
+ *    b) On tie: risk priority (ID > PATIENT > CONTACT > GEO > DATE)
+ *    c) On tie: higher score
+ *
+ * IMPORTANT: Never creates spans bigger than the chosen candidate (no gap-bridging).
+ *
+ * @param {Array<{start: number, end: number, label: string, score?: number, source?: string}>} spans
+ * @returns {Array} Non-overlapping spans sorted by start
+ */
+function finalResolveOverlaps(spans) {
+  if (!spans || spans.length === 0) return [];
+
+  // Risk priority: higher number = more critical to redact
+  const RISK_PRIORITY = {
+    ID: 5, // MRNs, SSNs, etc. - highest risk
+    PATIENT: 4, // Patient names
+    CONTACT: 3, // Phone, email, fax
+    GEO: 2, // Addresses, locations
+    DATE: 1, // Dates (often lower risk)
+  };
+
+  function getRiskPriority(label) {
+    const normalized = String(label || "").toUpperCase().replace(/^[BI]-/, "");
+    return RISK_PRIORITY[normalized] ?? 0;
+  }
+
+  function spanLength(span) {
+    return span.end - span.start;
+  }
+
+  // Sort by start, then by end descending (larger spans first on same start)
+  const sorted = [...spans].sort((a, b) => {
+    if (a.start !== b.start) return a.start - b.start;
+    return b.end - a.end; // Larger span first
+  });
+
+  const result = [];
+
+  for (const span of sorted) {
+    if (result.length === 0) {
+      result.push({ ...span });
+      continue;
+    }
+
+    const last = result[result.length - 1];
+
+    // Check for overlap (not just adjacency)
+    if (span.start < last.end) {
+      // Overlapping spans
+      const lastLabel = String(last.label || "").toUpperCase().replace(/^[BI]-/, "");
+      const spanLabel = String(span.label || "").toUpperCase().replace(/^[BI]-/, "");
+
+      // Rule 1: Same label → union
+      if (lastLabel === spanLabel) {
+        // Union: extend last to cover both
+        result[result.length - 1] = {
+          ...last,
+          start: Math.min(last.start, span.start),
+          end: Math.max(last.end, span.end),
+          score: Math.max(last.score ?? 0, span.score ?? 0),
+        };
+        continue;
+      }
+
+      // Rule 2: Different labels → selection based on priority
+      const lastLen = spanLength(last);
+      const spanLen = spanLength(span);
+      const lastPriority = getRiskPriority(lastLabel);
+      const spanPriority = getRiskPriority(spanLabel);
+      const lastScore = last.score ?? 0;
+      const spanScore = span.score ?? 0;
+
+      // Calculate overlap ratio to decide if we should keep both
+      const overlapStart = Math.max(last.start, span.start);
+      const overlapEnd = Math.min(last.end, span.end);
+      const overlapLen = Math.max(0, overlapEnd - overlapStart);
+      const overlapRatio = overlapLen / Math.min(lastLen, spanLen);
+
+      // If overlap is < 50%, keep both (they cover different regions)
+      if (overlapRatio < 0.5) {
+        result.push({ ...span });
+        continue;
+      }
+
+      // High overlap - pick winner based on: coverage > risk priority > score
+      let keepLast = true;
+
+      if (spanLen > lastLen) {
+        keepLast = false;
+      } else if (spanLen === lastLen) {
+        if (spanPriority > lastPriority) {
+          keepLast = false;
+        } else if (spanPriority === lastPriority && spanScore > lastScore) {
+          keepLast = false;
+        }
+      }
+
+      if (!keepLast) {
+        result[result.length - 1] = { ...span };
+      }
+      // If keepLast, we simply don't add span - last stays as winner
+    } else {
+      // No overlap - add span
+      result.push({ ...span });
+    }
+  }
+
+  return result;
 }
 
 /**
@@ -1664,23 +2021,90 @@ self.onmessage = async (e) => {
         if (cancelled) break;
       }
 
-      // 5) Merge/dedupe across windows
-      let merged = mergeOverlapsBestOf(allSpans);
+      // Determine merge mode from config
+      const mergeMode = getMergeMode(config);
 
-      // 6) Expand to word boundaries (fixes partial-word redactions)
-      merged = expandToWordBoundaries(merged, text);
+      if (debug) {
+        log("[PHI] mergeMode:", mergeMode);
+        log("[PHI] allSpans (all windows):", allSpans.length);
+        // Count ML vs regex spans
+        const mlCount = allSpans.filter((s) => !isRegexSpan(s)).length;
+        const regexCount = allSpans.filter((s) => isRegexSpan(s)).length;
+        log("[PHI] mlSpans:", mlCount, "regexSpans:", regexCount);
+      }
 
-      // 7) Extend PATIENT spans for trailing initials (fixes "Carey , Cloyd [REDACTED] D" → "[REDACTED]")
-      merged = extendPatientSpansForTrailingInitials(merged, text);
+      let merged;
 
-      // 8) Extend GEO spans to include city prefixes (fixes "San [REDACTED]" → "[REDACTED]")
-      merged = extendGeoSpans(merged, text);
+      if (mergeMode === "union") {
+        // ========== UNION MODE PIPELINE ==========
+        // Keeps all candidates until AFTER veto, then resolves overlaps.
+        // This prevents valid ML spans from being dropped when overlapping
+        // regex spans are later vetoed as false positives.
 
-      // 9) Re-merge after expansion
-      merged = mergeOverlapsBestOf(merged);
+        // 5) Remove only exact duplicates (keeps all overlap candidates)
+        merged = dedupeExactSpansOnly(allSpans);
+        if (debug) log("[PHI] afterExactDedupe:", merged.length);
 
-      // 10) Apply veto (protected allow-list)
-      merged = applyVeto(merged, text, protectedTerms, { debug });
+        // 6) Expand to word boundaries (fixes partial-word redactions)
+        merged = expandToWordBoundaries(merged, text);
+
+        // 7) Extend PATIENT spans for trailing initials
+        merged = extendPatientSpansForTrailingInitials(merged, text);
+
+        // 8) Extend GEO spans to include city prefixes
+        merged = extendGeoSpans(merged, text);
+        if (debug) log("[PHI] afterExpand:", merged.length);
+
+        // 9) Apply veto BEFORE final overlap resolution
+        const beforeVetoCount = merged.length;
+        merged = applyVeto(merged, text, protectedTerms, { debug });
+        if (debug) {
+          log("[PHI] vetoedCount:", beforeVetoCount - merged.length);
+          log("[PHI] afterVeto:", merged.length);
+        }
+
+        // 9b) Session-based name tracking for document consistency
+        merged = addSessionNameMatches(merged, text, { debug });
+        if (debug) log("[PHI] afterSessionNames:", merged.length);
+
+        // 10) Final overlap resolution AFTER veto has approved survivors
+        merged = finalResolveOverlaps(merged);
+        if (debug) log("[PHI] afterFinalResolve:", merged.length);
+
+      } else {
+        // ========== LEGACY BEST_OF MODE PIPELINE ==========
+        // (Original behavior - may drop valid ML spans if regex span is later vetoed)
+
+        // 5) Merge/dedupe across windows (may drop ML spans on overlap)
+        merged = mergeOverlapsBestOf(allSpans);
+        if (debug) log("[PHI] afterMergeBestOf:", merged.length);
+
+        // 6) Expand to word boundaries (fixes partial-word redactions)
+        merged = expandToWordBoundaries(merged, text);
+
+        // 7) Extend PATIENT spans for trailing initials
+        merged = extendPatientSpansForTrailingInitials(merged, text);
+
+        // 8) Extend GEO spans to include city prefixes
+        merged = extendGeoSpans(merged, text);
+        if (debug) log("[PHI] afterExpand:", merged.length);
+
+        // 9) Re-merge after expansion
+        merged = mergeOverlapsBestOf(merged);
+        if (debug) log("[PHI] afterReMerge:", merged.length);
+
+        // 10) Apply veto
+        const beforeVetoCount = merged.length;
+        merged = applyVeto(merged, text, protectedTerms, { debug });
+        if (debug) {
+          log("[PHI] vetoedCount:", beforeVetoCount - merged.length);
+          log("[PHI] afterVeto:", merged.length);
+        }
+
+        // 10b) Session-based name tracking for document consistency
+        merged = addSessionNameMatches(merged, text, { debug });
+        if (debug) log("[PHI] afterSessionNames:", merged.length);
+      }
 
       post("done", { detections: merged });
     } catch (err) {

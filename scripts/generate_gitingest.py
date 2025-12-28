@@ -70,6 +70,7 @@ IMPORTANT_FILES = [
     "docs/ARCHITECTURE.md",
     "docs/INSTALLATION.md",
     "docs/USER_GUIDE.md",
+    "claude/commands/phi-redactor.md",
 ]
 
 

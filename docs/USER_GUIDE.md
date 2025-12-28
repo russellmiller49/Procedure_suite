@@ -443,6 +443,56 @@ This uses:
 - `--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl`
 - Memory-optimized settings for MPS/CUDA
 
+### Gold Standard PHI Training Workflow
+
+Train on pure human-verified data from Prodigy annotations. This workflow uses only Prodigy-verified annotations for maximum quality training.
+
+**Complete Workflow (Step-by-Step):**
+
+```bash
+# Step 1: Export pure gold from Prodigy
+make gold-export
+
+# Step 2: Split into train/test (80/20 with note grouping)
+make gold-split
+
+# Step 3: Train on gold data (10 epochs default)
+make gold-train
+
+# Step 4: Safety audit on gold test set
+make gold-audit
+
+# Step 5: Evaluate F1 metrics on gold test set
+make gold-eval
+
+# Step 6: Export updated ONNX for browser
+make export-phi-client-model
+```
+
+**Or run the full cycle (Steps 1-5) with one command:**
+
+```bash
+make gold-cycle
+```
+
+**Training Configuration:**
+- **Epochs**: 10 (default, override with `GOLD_EPOCHS=15`)
+- **Learning rate**: 1e-5
+- **Batch size**: 4 (with gradient accumulation = 2, effective batch = 8)
+- **GPU acceleration**: Automatically detects and uses Metal (MPS) or CUDA
+- **Memory optimization**: Removes MPS memory limits to use full system memory on Mac
+
+**Output Files:**
+- `data/ml_training/phi_gold_standard_v1.jsonl` - Exported gold data
+- `data/ml_training/phi_train_gold.jsonl` - Training split (80%)
+- `data/ml_training/phi_test_gold.jsonl` - Test split (20%)
+- `artifacts/phi_distilbert_ner/audit_gold_report.json` - Safety audit report
+
+**When to use:**
+- When you have a sufficient amount of Prodigy-verified annotations
+- For maximum quality training on human-verified data
+- When you want to train for more epochs on smaller, high-quality datasets
+
 ### Testing PHI Redaction
 
 Test the client-side PHI redactor:
@@ -463,7 +513,7 @@ MODEL_BACKEND=pytorch ./scripts/devserver.sh
 # Auto-detect best backend
 MODEL_BACKEND=auto ./scripts/devserver.sh
 ```
-
+http://localhost:8000/ui/phi_redactor/
 ---
 
 ## 📞 Getting Help
@@ -475,3 +525,5 @@ MODEL_BACKEND=auto ./scripts/devserver.sh
 ---
 
 *Last updated: December 2025*
+## Generate slim branch
+python scripts/create_slim_branch.py --source v19 --target slim-review --force

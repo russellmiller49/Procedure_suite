@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-audit gold-eval gold-cycle
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -184,9 +184,22 @@ prodigy-retrain:
 		--gradient-accumulation-steps 2 \
 		--mps-high-watermark-ratio 0.0
 
+# Corrections file for Prodigy workflow
+CORRECTIONS_FILE := data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl
+
+# Guard: Ensure corrections file exists before fine-tuning
+check-corrections-fresh:
+	@if [ ! -f $(CORRECTIONS_FILE) ]; then \
+		echo "ERROR: $(CORRECTIONS_FILE) not found."; \
+		echo "Run 'make prodigy-export' first to export Prodigy corrections."; \
+		exit 1; \
+	fi
+	@echo "Using corrections file: $(CORRECTIONS_FILE)"
+	@echo "Last modified: $$(stat -f '%Sm' $(CORRECTIONS_FILE) 2>/dev/null || stat -c '%y' $(CORRECTIONS_FILE) 2>/dev/null || echo 'unknown')"
+
 # Fine-tune existing model on corrected data (recommended for iterative improvement)
 # Override epochs: make prodigy-finetune PRODIGY_EPOCHS=3
-prodigy-finetune:
+prodigy-finetune: check-corrections-fresh
 	@echo "Fine-tuning existing model on corrected data..."
 	@echo "Epochs: $(PRODIGY_EPOCHS)"
 	@echo "Checking for GPU acceleration (Metal/CUDA)..."
@@ -208,6 +221,79 @@ prodigy-cycle: prodigy-prepare
 	@echo "After annotation, run 'make prodigy-export' then either:"
 	@echo "  make prodigy-finetune  (recommended - preserves learned weights)"
 	@echo "  make prodigy-retrain   (train from scratch)"
+
+# Clear unannotated examples from Prodigy batch file
+prodigy-clear-unannotated:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/clear_unannotated_prodigy_batch.py \
+		--batch-file data/ml_training/prodigy_batch.jsonl \
+		--dataset $(PRODIGY_DATASET) \
+		--backup
+
+# ==============================================================================
+# Gold Standard PHI Workflow (Pure Human-Verified Data)
+# ==============================================================================
+# Uses only Prodigy-verified annotations for maximum quality training.
+# Run: make gold-cycle (or individual targets)
+
+GOLD_EPOCHS ?= 10
+GOLD_DATASET ?= phi_corrections
+GOLD_OUTPUT_DIR ?= data/ml_training
+GOLD_MODEL_DIR ?= artifacts/phi_distilbert_ner
+
+# Export pure gold from Prodigy (no merging with old data)
+# Uses PRODIGY_PYTHON because Prodigy is installed in system Python 3.12
+gold-export:
+	$(PRODIGY_PYTHON) scripts/export_phi_gold_standard.py \
+		--dataset $(GOLD_DATASET) \
+		--output $(GOLD_OUTPUT_DIR)/phi_gold_standard_v1.jsonl \
+		--model-dir $(GOLD_MODEL_DIR)
+
+# Split into train/test (80/20) with grouping by note ID
+gold-split:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/split_phi_gold.py \
+		--input $(GOLD_OUTPUT_DIR)/phi_gold_standard_v1.jsonl \
+		--train-out $(GOLD_OUTPUT_DIR)/phi_train_gold.jsonl \
+		--test-out $(GOLD_OUTPUT_DIR)/phi_test_gold.jsonl \
+		--seed 42
+
+# Train on pure gold data (Higher epochs for smaller high-quality data)
+gold-train:
+	@echo "Training on pure Gold Standard data..."
+	@echo "Epochs: $(GOLD_EPOCHS)"
+	@echo "Checking for GPU acceleration (Metal/CUDA)..."
+	$(CONDA_ACTIVATE) && $(PYTHON) -c "import torch; mps=torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False; cuda=torch.cuda.is_available(); print(f'MPS: {mps}, CUDA: {cuda}')" && \
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--patched-data $(GOLD_OUTPUT_DIR)/phi_train_gold.jsonl \
+		--resume-from $(GOLD_MODEL_DIR) \
+		--output-dir $(GOLD_MODEL_DIR) \
+		--epochs $(GOLD_EPOCHS) \
+		--lr 1e-5 \
+		--train-batch 4 \
+		--eval-batch 16 \
+		--gradient-accumulation-steps 2 \
+		--mps-high-watermark-ratio 0.0 \
+		--eval-steps 100 \
+		--save-steps 200 \
+		--logging-steps 50
+
+# Audit on gold test set (Critical for safety verification)
+gold-audit:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/audit_model_fp.py \
+		--model-dir $(GOLD_MODEL_DIR) \
+		--data $(GOLD_OUTPUT_DIR)/phi_test_gold.jsonl \
+		--report-out $(GOLD_MODEL_DIR)/audit_gold_report.json
+
+# Evaluate metrics on gold test set
+gold-eval:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+		--patched-data $(GOLD_OUTPUT_DIR)/phi_test_gold.jsonl \
+		--output-dir $(GOLD_MODEL_DIR) \
+		--eval-only
+
+# Full cycle: export → split → train → audit → eval
+gold-cycle: gold-export gold-split gold-train gold-audit gold-eval
+	@echo "Gold standard workflow complete."
+	@echo "Audit report: $(GOLD_MODEL_DIR)/audit_gold_report.json"
 
 pull-model-pytorch:
 	MODEL_BUNDLE_S3_URI_PYTORCH="$(MODEL_BUNDLE_S3_URI_PYTORCH)" REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" ./scripts/dev_pull_model.sh
@@ -287,6 +373,16 @@ help:
 	@echo "  prodigy-finetune - Fine-tune existing model with corrections (recommended)"
 	@echo "                    Override epochs: make prodigy-finetune PRODIGY_EPOCHS=3"
 	@echo "  prodigy-cycle   - Full Prodigy iteration workflow"
+	@echo "  prodigy-clear-unannotated - Remove unannotated examples from batch file"
+	@echo ""
+	@echo "Gold Standard PHI Workflow (pure human-verified data):"
+	@echo "  gold-export    - Export pure gold from Prodigy dataset"
+	@echo "  gold-split     - 80/20 train/test split with note grouping"
+	@echo "  gold-train     - Train on gold data (10 epochs default)"
+	@echo "  gold-audit     - Safety audit on gold test set"
+	@echo "  gold-eval      - Evaluate metrics on gold test set"
+	@echo "  gold-cycle     - Full workflow: export → split → train → audit → eval"
+	@echo ""
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"
 	@echo "  codex-train    - Full training pipeline"

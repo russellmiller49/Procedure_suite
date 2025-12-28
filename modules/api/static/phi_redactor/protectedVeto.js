@@ -347,7 +347,41 @@ const CLINICAL_ALLOW_LIST = makeNormalizedSet([
   "nodule", "nodules", "history", "summary", "note", "notes",
   "report", "reports", "time", "times", "record", "records",
   "documentation", "assessment", "impression", "diagnosis",
-  "prognosis", "findings", "indication", "indications"
+  "prognosis", "findings", "indication", "indications",
+
+  // === Sentence-start clinical terms (Dec 27, 2025 - False Positive Prevention) ===
+  // These commonly appear capitalized at sentence start and are not names
+  "consent", "informed consent", "consented", "consenting",
+  "decision", "decisions", "decided", "deciding",
+  "after", "before", "during", "following", "prior",
+  "mask", "mask airway", "laryngeal mask", "lma", "laryngeal mask airway",
+  "preoperative", "postoperative", "preop", "postop",
+  "preoperative diagnosis", "postoperative diagnosis",
+  "intraoperative", "perioperative", "intraoperatively", "perioperatively",
+
+  // === Medical document headers that should never be redacted as names ===
+  "preoperative diagnosis", "postoperative diagnosis",
+  "preop diagnosis", "postop diagnosis",
+  "procedure", "procedures", "indication", "indications",
+  "findings", "impression", "impressions", "plan", "plans",
+  "assessment", "assessments", "history", "technique",
+  "complications", "complication", "disposition", "recommendations",
+
+  // === Medical adjectives commonly capitalized (Dec 27, 2025) ===
+  // These appear in diagnoses and get mis-tagged as names when capitalized
+  "diffuse", "parenchymal", "interstitial", "acute", "chronic",
+  "bilateral", "unilateral", "focal", "multifocal", "localized",
+  "progressive", "recurrent", "persistent", "intermittent",
+  "benign", "malignant", "metastatic", "primary", "secondary",
+  "obstructive", "restrictive", "infiltrative", "fibrotic",
+  "pulmonary", "respiratory", "bronchial", "alveolar", "pleural",
+
+  // === Header preposition phrases that are not names ===
+  "description of", "description of procedure", "description of operation",
+  "date of", "time of", "date of procedure", "time of procedure",
+  "type of", "type of procedure", "type of anesthesia",
+  "indication for", "indication for procedure", "indication for operation",
+  "reason for", "reason for procedure"
 ]);
 
 // =============================================================================
@@ -359,7 +393,38 @@ const CLINICAL_ALLOW_PARTIAL = makeNormalizedSet([
   "histologic", "histological", "cytologic", "cytological",
   "immunohistochemical", "immunohistochemistry",
   "bronchoscopic", "bronchoscopically", "thoracoscopic", "thoracoscopically",
-  "endobronchial", "transbronchial", "mediastinoscopy", "mediastinoscopic"
+  "endobronchial", "transbronchial", "mediastinoscopy", "mediastinoscopic",
+  // Medical adjectives that should veto entire span if present
+  "diffuse", "parenchymal", "interstitial", "infiltrative", "fibrotic",
+  "pulmonary", "respiratory", "bronchial", "alveolar", "pleural",
+  // Header phrases
+  "description of", "indication for", "reason for"
+]);
+
+// =============================================================================
+// MEDICAL_HEADERS: Document headers that should never be redacted as names
+// These are section headers in medical documents, not patient names
+// =============================================================================
+const MEDICAL_HEADERS = makeNormalizedSet([
+  "preoperative diagnosis", "postoperative diagnosis",
+  "preop diagnosis", "postop diagnosis",
+  "pre operative diagnosis", "post operative diagnosis",
+  "indication", "indications", "procedure", "procedures",
+  "findings", "impression", "impressions", "plan", "plans",
+  "assessment", "assessments", "history", "technique",
+  "complications", "complication", "disposition", "recommendations",
+  "consent", "informed consent", "anesthesia", "sedation",
+  "equipment", "specimens", "pathology", "cytology"
+]);
+
+// =============================================================================
+// FIELD_LABELS: Labels for form fields that should not be redacted
+// e.g., "DATE:" followed by the actual date - the word "DATE" isn't PHI
+// =============================================================================
+const FIELD_LABELS = makeNormalizedSet([
+  "date", "time", "dob", "name", "patient", "mrn", "id",
+  "date of procedure", "date of birth", "procedure date",
+  "time of procedure", "start time", "end time"
 ]);
 
 // =============================================================================
@@ -591,6 +656,26 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     let reason = null;
 
     // -------------------------------------------------------------------------
+    // 0-PRE) MEDICAL_HEADERS: Document section headers are never PHI
+    // Catches "PREOPERATIVE DIAGNOSIS:", "Indication:", etc.
+    // -------------------------------------------------------------------------
+    if (!veto && MEDICAL_HEADERS.has(norm)) {
+      veto = true; reason = "medical_header";
+    }
+
+    // -------------------------------------------------------------------------
+    // 0-PRE-b) FIELD_LABELS: Field label words are not PHI
+    // Catches "DATE:", "NAME:", "MRN:" labels (not the values)
+    // Check if followed by colon to confirm it's a label, not a value
+    // -------------------------------------------------------------------------
+    if (!veto && FIELD_LABELS.has(norm)) {
+      const afterText = fullText.slice(end, Math.min(fullText.length, end + 10));
+      if (/^\s*:/.test(afterText)) {
+        veto = true; reason = "field_label";
+      }
+    }
+
+    // -------------------------------------------------------------------------
     // 0) STOPWORDS (label-aware)
     // Only for name-like labels (PATIENT/GEO) to avoid interfering with ID/CONTACT/DATE.
     // -------------------------------------------------------------------------
@@ -639,6 +724,26 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
         const firstWord = trimmed.split(/\s+/)[0].toLowerCase();
         if (STOPWORDS_ALWAYS.has(firstWord) || /^[a-z]+(?:ed|en|ing|s)$/i.test(firstWord)) {
           veto = true; reason = "patient_followed_by_verb";
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 0c2) Sentence-start desensitization: Clinical terms at sentence start
+    // When a clinical term appears at sentence start (after period/newline),
+    // it's capitalized but is not a name. Veto if the normalized term is clinical.
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      const beforeWindow = fullText.slice(Math.max(0, start - 15), start);
+      // Check if at sentence start (after period+space, newline, or document start)
+      const atSentenceStart = /(?:^|[.!?]\s+|\n\s*)$/.test(beforeWindow) ||
+        (start === 0) ||
+        (start < 3 && /^\s*$/.test(beforeWindow));
+      if (atSentenceStart) {
+        // Check if the first word (or entire span) is a clinical term
+        const firstWord = norm.split(/\s+/)[0];
+        if (CLINICAL_ALLOW_LIST.has(norm) || CLINICAL_ALLOW_LIST.has(firstWord)) {
+          veto = true; reason = "sentence_start_clinical";
         }
       }
     }

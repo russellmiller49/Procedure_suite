@@ -12,12 +12,31 @@ const applyBtn = document.getElementById("applyBtn");
 const revertBtn = document.getElementById("revertBtn");
 const submitBtn = document.getElementById("submitBtn");
 
+/**
+ * Get merge mode from query param or localStorage.
+ * - ?merge=union (default, safer - keeps all candidates until after veto)
+ * - ?merge=best_of (legacy - may lose ML spans if regex span is vetoed)
+ * - localStorage.phi_merge_mode (persistent dev override)
+ */
+function getConfiguredMergeMode() {
+  const params = new URLSearchParams(location.search);
+  const qp = params.get("merge");
+  if (qp === "union" || qp === "best_of") return qp;
+
+  const ls = localStorage.getItem("phi_merge_mode");
+  if (ls === "union" || ls === "best_of") return ls;
+
+  return "union"; // default: safer mode
+}
+
 const WORKER_CONFIG = {
   aiThreshold: 0.5,
   debug: true,
   // Quantized INT8 ONNX can silently collapse to all-"O" under WASM.
   // Keep this ON until quantized inference is validated end-to-end.
   forceUnquantized: true,
+  // Merge mode: "union" (default, safer) or "best_of" (legacy)
+  mergeMode: getConfiguredMergeMode(),
 };
 
 runBtn.disabled = true;
