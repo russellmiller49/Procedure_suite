@@ -7,13 +7,13 @@ Randomly selects notes from golden JSON files and runs PHI redaction,
 producing side-by-side comparison of original and redacted content.
 
 Usage:
-    python scripts/test_phi_redaction_sample.py [--count N] [--output FILE] [--no-gliner]
+    python scripts/test_phi_redaction_sample.py [--count N] [--output FILE] [--no-piiranha]
 
 Examples:
     python scripts/test_phi_redaction_sample.py                    # 10 random notes to stdout
     python scripts/test_phi_redaction_sample.py --count 5          # 5 random notes
     python scripts/test_phi_redaction_sample.py --output test.txt  # Save to file
-    python scripts/test_phi_redaction_sample.py --no-gliner        # Regex-only mode (faster)
+    python scripts/test_phi_redaction_sample.py --no-piiranha        # Regex-only mode (faster)
 
 Author: Claude Code
 """
@@ -149,9 +149,9 @@ def main():
         help="Output file path (default: stdout)"
     )
     parser.add_argument(
-        "--no-gliner",
+        "--no-piiranha",
         action="store_true",
-        help="Disable GLiNER ML model (regex-only, faster)"
+        help="Disable Piiranha ML model (regex-only, faster)"
     )
     parser.add_argument(
         "--keep-dates",
@@ -204,18 +204,18 @@ def main():
     print(f"Selected {sample_size} random notes.", file=sys.stderr)
 
     # Initialize redactor
-    print(f"Initializing PHI Redactor (GLiNER: {not args.no_gliner})...", file=sys.stderr)
+    print(f"Initializing PHI Redactor (Piiranha: {not args.no_piiranha})...", file=sys.stderr)
     config = RedactionConfig(
         redact_procedure_dates=not args.keep_dates
     )
-    redactor = PHIRedactor(config=config, use_gliner=not args.no_gliner)
+    redactor = PHIRedactor(config=config, use_piiranha=not args.no_piiranha)
 
     # Process notes
     output_lines = []
     output_lines.append("=" * 80)
     output_lines.append("PHI REDACTION TEST REPORT")
     output_lines.append(f"Sample size: {sample_size} notes")
-    output_lines.append(f"Mode: {'Regex + GLiNER' if not args.no_gliner else 'Regex-only'}")
+    output_lines.append(f"Mode: {'Regex + Piiranha' if not args.no_piiranha else 'Regex-only'}")
     output_lines.append("=" * 80)
     output_lines.append("")
 

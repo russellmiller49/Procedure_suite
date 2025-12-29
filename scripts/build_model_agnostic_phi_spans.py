@@ -459,11 +459,11 @@ def main() -> int:
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT_PATH)
     parser.add_argument("--limit-notes", type=int, default=None)
     parser.add_argument(
-        "--use-gliner",
+        "--use-piiranha",
         action=argparse.BooleanOptionalAction,
         default=True,
     )
-    parser.add_argument("--gliner-threshold", type=float, default=0.6)
+    parser.add_argument("--piiranha-threshold", type=float, default=0.5)
     parser.add_argument("--label-schema", choices=["standard"], default="standard")
     parser.add_argument("--provider-policy", choices=["keep", "drop", "label"], default="drop")
     parser.add_argument("--provider-label", type=str, default="PROVIDER")
@@ -487,10 +487,10 @@ def main() -> int:
         return 1
 
     config = RedactionConfig(
-        gliner_threshold=args.gliner_threshold,
+        piiranha_threshold=args.piiranha_threshold,
         protect_physician_names=True,
     )
-    redactor = PHIRedactor(config=config, use_gliner=args.use_gliner)
+    redactor = PHIRedactor(config=config, use_piiranha=args.use_piiranha)
 
     counters = {
         "files_scanned": 0,

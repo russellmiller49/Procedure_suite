@@ -1,13 +1,13 @@
 """
-Hybrid Regex + GLiNER PHI Redaction for Interventional Pulmonology Procedural Notes
-==================================================================================
+Hybrid Regex + Piiranha PHI Redaction for Interventional Pulmonology Procedural Notes
+====================================================================================
 
-Combines rule-based regex patterns with ML-based entity recognition (GLiNER)
+Combines rule-based regex patterns with ML-based entity recognition (Piiranha)
 for comprehensive PHI de-identification while preserving clinically relevant information.
 
 Design Philosophy:
 1. REGEX FIRST: Fast, deterministic rules for structured PHI patterns
-2. ML SECOND: GLiNER catches contextual PHI that regex misses
+2. ML SECOND: Piiranha catches contextual PHI that regex misses
 3. PROTECT LAYER: Whitelist patterns that should never be redacted
 
 Author: Russell (IP Physician / Developer)
@@ -44,7 +44,7 @@ class Detection:
     end: int
     text: str
     confidence: float
-    source: str  # "regex" or "gliner"
+    source: str  # "regex" or "piiranha"
     action: RedactionAction = RedactionAction.REDACT
 
 
@@ -60,7 +60,7 @@ class RedactionConfig:
     protect_physician_names: bool = True
     protect_device_names: bool = True
     protect_anatomical_terms: bool = True
-    gliner_threshold: float = 0.5
+    piiranha_threshold: float = 0.5
 
 
 # =============================================================================
@@ -288,53 +288,36 @@ EMAIL_RE = re.compile(
 
 
 # =============================================================================
-# 3. GLiNER CONFIGURATION
+# 3. PIIRANHA CONFIGURATION
 # =============================================================================
 
-# Labels optimized for procedural notes
-GLINER_LABELS = [
-    # PHI to REDACT
-    "patient name",
-    "patient identifier", 
-    "date of birth",
-    "social security number",
-    "medical record number",
-    "facility name",
-    "hospital name",
-    "address",
-    "phone number",
-    "email address",
+# Piiranha label mapping (Piiranha uses standard NER labels)
+# Map Piiranha labels to redaction actions
+PIIRANHA_LABEL_ACTIONS = {
+    # Redact these (standard PHI labels)
+    "GIVENNAME": RedactionAction.REDACT,
+    "SURNAME": RedactionAction.REDACT,
+    "USERNAME": RedactionAction.REDACT,
+    "FIRSTNAME": RedactionAction.REDACT,
+    "LASTNAME": RedactionAction.REDACT,
+    "PATIENT": RedactionAction.REDACT,
+    "STREETNAME": RedactionAction.REDACT,
+    "BUILDINGNUM": RedactionAction.REDACT,
+    "ZIPCODE": RedactionAction.REDACT,
+    "CITY": RedactionAction.REDACT,
+    "GEO": RedactionAction.REDACT,
+    "DATE": RedactionAction.REDACT,
+    "SSN": RedactionAction.REDACT,
+    "PHONE": RedactionAction.REDACT,
+    "EMAIL": RedactionAction.REDACT,
+    "MRN": RedactionAction.REDACT,
+    "ID": RedactionAction.REDACT,
+    "PASSWORD": RedactionAction.REDACT,
     
-    # Context to PROTECT (used for filtering)
-    "physician name",
-    "doctor name", 
-    "medical device",
-    "anatomical location",
-    "procedure name",
-    "medication name"
-]
-
-# Mapping GLiNER labels to actions
-GLINER_LABEL_ACTIONS = {
-    # Redact these
-    "patient name": RedactionAction.REDACT,
-    "patient identifier": RedactionAction.REDACT,
-    "date of birth": RedactionAction.REDACT,
-    "social security number": RedactionAction.REDACT,
-    "medical record number": RedactionAction.REDACT,
-    "facility name": RedactionAction.REDACT,
-    "hospital name": RedactionAction.REDACT,
-    "address": RedactionAction.REDACT,
-    "phone number": RedactionAction.REDACT,
-    "email address": RedactionAction.REDACT,
-    
-    # Protect these
-    "physician name": RedactionAction.PROTECT,
-    "doctor name": RedactionAction.PROTECT,
-    "medical device": RedactionAction.PROTECT,
-    "anatomical location": RedactionAction.PROTECT,
-    "procedure name": RedactionAction.PROTECT,
-    "medication name": RedactionAction.PROTECT,
+    # Protect these (provider/clinical context)
+    "PROVIDER": RedactionAction.PROTECT,
+    "DOCTOR": RedactionAction.PROTECT,
+    "PHYSICIAN": RedactionAction.PROTECT,
 }
 
 
@@ -344,49 +327,78 @@ GLINER_LABEL_ACTIONS = {
 
 class PHIRedactor:
     """
-    Hybrid PHI redactor combining regex patterns with GLiNER ML model.
+    Hybrid PHI redactor combining regex patterns with Piiranha ML model.
     
     Pipeline:
     1. Identify protection zones (physicians, devices, anatomy)
     2. Apply regex patterns for structured PHI
-    3. Apply GLiNER for contextual PHI
+    3. Apply Piiranha for contextual PHI
     4. Resolve overlaps (protection wins)
     5. Apply redactions
     """
     
-    def __init__(self, config: Optional[RedactionConfig] = None, use_gliner: bool = True):
+    def __init__(self, config: Optional[RedactionConfig] = None, use_piiranha: bool = True):
         self.config = config or RedactionConfig()
-        self.use_gliner = use_gliner
-        self.gliner_model = None
+        self.use_piiranha = use_piiranha
+        self.piiranha_pipeline = None
         
-        if use_gliner:
-            self._load_gliner()
+        if use_piiranha:
+            self._load_piiranha()
     
-    def _load_gliner(self):
-        """Load GLiNER model with fallback."""
+    def _load_piiranha(self):
+        """Load full Piiranha model from HuggingFace with fallback to local."""
         try:
-            from gliner import GLiNER
-            # Try multiple model sizes
-            model_options = [
-                "urchade/gliner_small-v2.1",
-                "urchade/gliner_medium-v2.1",
-                "urchade/gliner_base"
-            ]
-            for model_name in model_options:
-                try:
-                    self.gliner_model = GLiNER.from_pretrained(model_name)
-                    logger.info(f"Loaded GLiNER model: {model_name}")
-                    break
-                except Exception as e:
-                    logger.debug(f"Could not load {model_name}: {e}")
-                    continue
+            from transformers import AutoModelForTokenClassification, AutoTokenizer, pipeline
+            from pathlib import Path
             
-            if self.gliner_model is None:
-                logger.warning("GLiNER not available - using regex-only mode")
-                self.use_gliner = False
+            # Use the full Piiranha model from HuggingFace
+            model_id = "iiiorg/piiranha-v1-detect-personal-information"
+            
+            try:
+                # Try loading from HuggingFace directly (will download if needed)
+                logger.info(f"Loading Piiranha model from HuggingFace: {model_id}")
+                model = AutoModelForTokenClassification.from_pretrained(model_id)
+                tokenizer = AutoTokenizer.from_pretrained(model_id)
+                self.piiranha_pipeline = pipeline(
+                    "token-classification",
+                    model=model,
+                    tokenizer=tokenizer,
+                    aggregation_strategy="simple",
+                    device=-1,  # CPU by default
+                )
+                logger.info(f"Loaded Piiranha model from HuggingFace: {model_id}")
+            except Exception as e:
+                # Fallback to local path if HuggingFace download fails
+                logger.warning(f"Could not load from HuggingFace ({e}), trying local path...")
+                model_path = Path("data/models/hf/piiranha-v1-detect-personal-information")
+                
+                if model_path.exists():
+                    try:
+                        model = AutoModelForTokenClassification.from_pretrained(
+                            str(model_path), 
+                            local_files_only=True
+                        )
+                        tokenizer = AutoTokenizer.from_pretrained(
+                            str(model_path), 
+                            local_files_only=True
+                        )
+                        self.piiranha_pipeline = pipeline(
+                            "token-classification",
+                            model=model,
+                            tokenizer=tokenizer,
+                            aggregation_strategy="simple",
+                            device=-1,  # CPU by default
+                        )
+                        logger.info(f"Loaded Piiranha model from local path: {model_path}")
+                    except Exception as e2:
+                        logger.warning(f"Could not load Piiranha model from local path: {e2} - using regex-only mode")
+                        self.use_piiranha = False
+                else:
+                    logger.warning(f"Piiranha model not found locally and HuggingFace load failed - using regex-only mode")
+                    self.use_piiranha = False
         except ImportError:
-            logger.warning("GLiNER not installed - using regex-only mode")
-            self.use_gliner = False
+            logger.warning("Transformers not installed - using regex-only mode")
+            self.use_piiranha = False
     
     def _find_protection_zones(self, text: str) -> List[Tuple[int, int, str]]:
         """
@@ -587,34 +599,55 @@ class PHIRedactor:
         
         return detections
     
-    def _apply_gliner(self, text: str) -> List[Detection]:
-        """Apply GLiNER model to detect contextual PHI."""
-        if not self.use_gliner or self.gliner_model is None:
+    def _apply_piiranha(self, text: str) -> List[Detection]:
+        """Apply Piiranha model to detect contextual PHI."""
+        if not self.use_piiranha or self.piiranha_pipeline is None:
             return []
         
         detections = []
         try:
-            entities = self.gliner_model.predict_entities(
-                text, 
-                GLINER_LABELS,
-                threshold=self.config.gliner_threshold
-            )
+            # Piiranha pipeline returns entities with start, end, entity_group, score, word
+            entities = self.piiranha_pipeline(text)
             
             for entity in entities:
-                label = entity.get("label", "").lower()
-                action = GLINER_LABEL_ACTIONS.get(label, RedactionAction.REVIEW)
+                # Get label from entity_group, entity, or label field (Piiranha uses entity_group)
+                label = (
+                    entity.get("entity_group") or 
+                    entity.get("entity") or 
+                    entity.get("label") or 
+                    ""
+                ).upper()
+                
+                if not label:
+                    continue
+                
+                score = entity.get("score", 0.5)
+                
+                # Filter by threshold
+                if score < self.config.piiranha_threshold:
+                    continue
+                
+                action = PIIRANHA_LABEL_ACTIONS.get(label, RedactionAction.REDACT)
+                
+                # Get text from word field (aggregation_strategy="simple" provides this)
+                entity_text = entity.get("word", "")
+                if not entity_text:
+                    # Fallback: extract text from original using start/end
+                    start = entity.get("start", 0)
+                    end = entity.get("end", 0)
+                    entity_text = text[start:end] if start < len(text) and end <= len(text) else ""
                 
                 detections.append(Detection(
-                    entity_type=label.upper().replace(" ", "_"),
-                    start=entity["start"],
-                    end=entity["end"],
-                    text=entity["text"],
-                    confidence=entity.get("score", 0.5),
-                    source="gliner",
+                    entity_type=label,
+                    start=entity.get("start", 0),
+                    end=entity.get("end", 0),
+                    text=entity_text,
+                    confidence=score,
+                    source="piiranha",
                     action=action
                 ))
         except Exception as e:
-            logger.error(f"GLiNER prediction error: {e}")
+            logger.error(f"Piiranha prediction error: {e}")
         
         return detections
     
@@ -744,11 +777,11 @@ class PHIRedactor:
         patient_names = self._learn_patient_names(text, regex_detections)
         name_mentions = self._detect_name_mentions(text, patient_names)
         
-        # Step 4: Apply GLiNER
-        gliner_detections = self._apply_gliner(text)
+        # Step 4: Apply Piiranha
+        piiranha_detections = self._apply_piiranha(text)
         
         # Step 5: Combine all detections
-        all_detections = regex_detections + name_mentions + gliner_detections
+        all_detections = regex_detections + name_mentions + piiranha_detections
         
         # Step 6: Filter out protected zones
         filtered_detections = [
@@ -823,32 +856,32 @@ def process_json_structure(data: Any, redactor: PHIRedactor, target_fields: Opti
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Hybrid Regex + GLiNER PHI Redaction for Procedural Notes"
+        description="Hybrid Regex + Piiranha PHI Redaction for Procedural Notes"
     )
     parser.add_argument("input_file", help="Path to input file (JSON or text)")
     parser.add_argument("output_file", help="Path to save redacted output")
     parser.add_argument("--fields", nargs='+', 
                         help="Specific JSON keys to scrub (e.g., 'note_text' 'body')")
-    parser.add_argument("--no-gliner", action="store_true",
-                        help="Disable GLiNER (regex-only mode)")
+    parser.add_argument("--no-piiranha", action="store_true",
+                        help="Disable Piiranha (regex-only mode)")
     parser.add_argument("--keep-dates", action="store_true",
                         help="Do not redact procedure dates")
     parser.add_argument("--audit", action="store_true",
                         help="Output audit log alongside results")
     parser.add_argument("--threshold", type=float, default=0.5,
-                        help="GLiNER confidence threshold (default: 0.5)")
+                        help="Piiranha confidence threshold (default: 0.5)")
     
     args = parser.parse_args()
     
     # Configure
     config = RedactionConfig(
         redact_procedure_dates=not args.keep_dates,
-        gliner_threshold=args.threshold
+        piiranha_threshold=args.threshold
     )
     
     # Initialize redactor
-    print(f"Initializing PHI Redactor (GLiNER: {not args.no_gliner})...")
-    redactor = PHIRedactor(config=config, use_gliner=not args.no_gliner)
+    print(f"Initializing PHI Redactor (Piiranha: {not args.no_piiranha})...")
+    redactor = PHIRedactor(config=config, use_piiranha=not args.no_piiranha)
     
     # Read input
     print(f"Reading {args.input_file}...")

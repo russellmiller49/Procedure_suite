@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2025-12-28T15:06:57-08:00`
-Git: `v19` @ `55c8912`
+Generated: `2025-12-28T18:24:13-08:00`
+Git: `v19` @ `7acb08e`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -516,6 +516,7 @@ Git: `v19` @ `55c8912`
       - modules/ml_coder/thresholds.py
       - modules/ml_coder/training.py
       - modules/ml_coder/utils.py
+      - modules/ml_coder/valid_ip_codes.py
     - modules/phi/
       - modules/phi/adapters/
         - modules/phi/adapters/__init__.py
@@ -2753,6 +2754,7 @@ Git: `v19` @ `55c8912`
     - scripts/check_pydantic_models.py
     - scripts/clean_distilled_phi_labels.py
     - scripts/clear_unannotated_prodigy_batch.py
+    - scripts/code_validation.py
     - scripts/create_slim_branch.py
     - scripts/dev_pull_model.sh
     - scripts/devserver.sh
