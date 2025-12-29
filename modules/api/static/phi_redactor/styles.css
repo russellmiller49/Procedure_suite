@@ -305,6 +305,100 @@ button.secondary {
   color: #ffc107;
 }
 
+/* Results container */
+.resultsContainer {
+  padding: 12px;
+  max-height: 300px;
+  overflow: auto;
+}
+
+/* Results tables */
+.result-section {
+  margin-bottom: 16px;
+}
+
+.result-section h3 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--text);
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.result-table th,
+.result-table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.result-table th {
+  background: rgba(255, 255, 255, 0.05);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.result-table td code {
+  background: rgba(106, 166, 255, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.result-table .totals-row {
+  background: rgba(99, 211, 146, 0.1);
+  font-weight: 600;
+}
+
+.result-table .totals-row td {
+  border-top: 2px solid var(--border);
+}
+
+/* Status banner */
+.status-banner {
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.status-banner.success {
+  background: rgba(99, 211, 146, 0.15);
+  border: 1px solid rgba(99, 211, 146, 0.4);
+  color: var(--ok);
+}
+
+.status-banner.warning {
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.4);
+  color: #ffc107;
+}
+
+.status-banner.error {
+  background: rgba(255, 106, 106, 0.15);
+  border: 1px solid rgba(255, 106, 106, 0.4);
+  color: var(--danger);
+}
+
+.raw-json-toggle {
+  margin-top: 12px;
+}
+
+.raw-json-toggle summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
 @media (max-width: 1100px) {
   .layout {
     grid-template-columns: 1fr;

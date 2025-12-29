@@ -31,6 +31,7 @@ if str(_REPO_ROOT) not in sys.path:
 
 GOLDEN_DIR = Path("data/knowledge/golden_extractions")
 EDGE_SOURCE_NAME = "synthetic_edge_case_notes_with_registry.jsonl"
+KB_PATH = _REPO_ROOT / "data" / "knowledge" / "ip_coding_billing_v2_9.json"
 
 # Old/low-quality source files to exclude.
 EXCLUDED_SOURCE_PREFIXES = {
@@ -38,6 +39,37 @@ EXCLUDED_SOURCE_PREFIXES = {
     "synthetic_CPT_corrected",        # Old corrected data
     "recovered_metadata",             # Recovery artifacts
 }
+
+
+def _load_valid_ip_codes() -> Set[str]:
+    """
+    Load VALID_IP_CODES set from the knowledge base file.
+    
+    Uses scripts/code_validation.py logic to extract billable codes
+    from data/knowledge/ip_coding_billing_v2_9.json.
+    """
+    try:
+        from scripts.code_validation import build_valid_ip_codes
+        
+        if not KB_PATH.exists():
+            # Fallback: return empty set if KB file doesn't exist
+            return set()
+        
+        valid_codes, _ = build_valid_ip_codes(
+            KB_PATH,
+            keep_addon_plus=False,
+            include_reference_codes=False,
+        )
+        return valid_codes
+    except Exception as e:
+        # Fallback: return empty set on any error
+        import warnings
+        warnings.warn(f"Failed to load VALID_IP_CODES from {KB_PATH}: {e}")
+        return set()
+
+
+# Valid IP codes set - built from knowledge base file
+VALID_IP_CODES: Set[str] = _load_valid_ip_codes()
 
 def _is_valid_source(source_file: str) -> bool:
     """Check if an entry's source_file is valid for ingestion."""

@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2025-12-28T11:42:23-08:00`
-Git: `v19` @ `f55f6fd`
+Generated: `2025-12-28T15:06:57-08:00`
+Git: `v19` @ `55c8912`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -2977,6 +2977,12 @@ Git: `v19` @ `f55f6fd`
     - tests/test_openai_responses_parse.py
     - tests/test_phi_redaction_contract.py
     - tests/test_registry_normalization.py
+  - Training_data/
+    - Training_data/synthetic_notes.jsonl
+    - Training_data/synthetic_phi.jsonl
+    - Training_data/synthetic_phi_institutions.jsonl
+    - Training_data/Syntheticnotes_12_27_25.txt
+    - Training_data/syntheticnotes_12_27_25_expanded.jsonl
   - .DS_Store
   - .env
   - .env.backup
@@ -2999,9 +3005,6 @@ Git: `v19` @ `f55f6fd`
   - requirements-train.txt
   - requirements.txt
   - runtime.txt
-  - synthetic_notes.jsonl
-  - synthetic_phi.jsonl
-  - Syntheticnotes_12_27_25.txt
   - test_redact.txt
   - update_nodejs_conda.sh
 ```

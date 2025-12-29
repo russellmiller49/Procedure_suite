@@ -115,6 +115,188 @@ function safeSnippet(text, start, end) {
   return `${oneLine.slice(0, 117)}…`;
 }
 
+/**
+ * Render the formatted results from the server response.
+ * Shows status banner, CPT codes table, and registry summary.
+ */
+function renderResults(data) {
+  const statusBanner = document.getElementById("statusBanner");
+  const cptTable = document.getElementById("cptTable");
+  const registrySummary = document.getElementById("registrySummary");
+  const serverResponse = document.getElementById("serverResponse");
+
+  // Show raw JSON in collapsible section
+  serverResponse.textContent = JSON.stringify(data, null, 2);
+
+  // Render status banner
+  if (data.needs_manual_review) {
+    statusBanner.className = "status-banner error";
+    statusBanner.textContent = "⚠️ Manual review required";
+  } else if (data.audit_warnings?.length > 0) {
+    statusBanner.className = "status-banner warning";
+    statusBanner.textContent = `⚠️ ${data.audit_warnings.length} warning(s) - review recommended`;
+  } else {
+    statusBanner.className = "status-banner success";
+    const difficulty = data.coder_difficulty || "HIGH_CONF";
+    statusBanner.textContent = `✓ High confidence extraction (${difficulty})`;
+  }
+  statusBanner.classList.remove("hidden");
+
+  // Render CPT table
+  if (data.suggestions?.length > 0 || data.cpt_codes?.length > 0) {
+    renderCPTTable(data);
+    cptTable.classList.remove("hidden");
+  } else {
+    cptTable.classList.add("hidden");
+  }
+
+  // Render registry summary
+  if (data.registry) {
+    renderRegistrySummary(data.registry);
+    registrySummary.classList.remove("hidden");
+  } else {
+    registrySummary.classList.add("hidden");
+  }
+}
+
+/**
+ * Render the CPT codes table with descriptions, confidence, RVU, and payment.
+ */
+function renderCPTTable(data) {
+  const tbody = document.getElementById("cptTableBody");
+  const suggestions = data.suggestions || [];
+  const billing = data.per_code_billing || [];
+
+  // Create billing lookup
+  const billingMap = {};
+  billing.forEach(b => billingMap[b.cpt_code] = b);
+
+  let html = `
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Confidence</th>
+        <th>RVU</th>
+        <th>Payment</th>
+      </tr>
+    </thead>
+    <tbody>
+  `;
+
+  // If we have suggestions, use those (more detailed)
+  if (suggestions.length > 0) {
+    suggestions.forEach(s => {
+      const b = billingMap[s.code] || {};
+      const confidence = s.confidence ? `${(s.confidence * 100).toFixed(0)}%` : "—";
+      const rvu = b.work_rvu?.toFixed(2) || "—";
+      const payment = b.facility_payment ? `$${b.facility_payment.toFixed(2)}` : "—";
+
+      html += `
+        <tr>
+          <td><code>${s.code}</code></td>
+          <td>${s.description || "—"}</td>
+          <td>${confidence}</td>
+          <td>${rvu}</td>
+          <td>${payment}</td>
+        </tr>
+      `;
+    });
+  } else if (data.cpt_codes?.length > 0) {
+    // Fallback to simple cpt_codes list
+    data.cpt_codes.forEach(code => {
+      const b = billingMap[code] || {};
+      const rvu = b.work_rvu?.toFixed(2) || "—";
+      const payment = b.facility_payment ? `$${b.facility_payment.toFixed(2)}` : "—";
+
+      html += `
+        <tr>
+          <td><code>${code}</code></td>
+          <td>${b.description || "—"}</td>
+          <td>—</td>
+          <td>${rvu}</td>
+          <td>${payment}</td>
+        </tr>
+      `;
+    });
+  }
+
+  // Totals row
+  if (data.total_work_rvu || data.estimated_payment) {
+    const totalRvu = data.total_work_rvu?.toFixed(2) || "—";
+    const totalPayment = data.estimated_payment ? `$${data.estimated_payment.toFixed(2)}` : "—";
+    html += `
+      <tr class="totals-row">
+        <td colspan="3"><strong>TOTALS</strong></td>
+        <td><strong>${totalRvu}</strong></td>
+        <td><strong>${totalPayment}</strong></td>
+      </tr>
+    `;
+  }
+
+  html += "</tbody>";
+  tbody.innerHTML = html;
+}
+
+/**
+ * Recursively render all non-null registry fields.
+ * Flattens nested objects with arrow notation paths.
+ */
+function renderRegistrySummary(registry) {
+  const tbody = document.getElementById("registryTableBody");
+  const rows = [];
+
+  // Recursively extract non-null fields
+  function extractFields(obj, prefix = "") {
+    if (obj === null || obj === undefined) return;
+
+    for (const [key, value] of Object.entries(obj)) {
+      const path = prefix ? `${prefix}.${key}` : key;
+
+      if (value === null || value === undefined) continue;
+      if (value === false) continue; // Skip false booleans (procedures not performed)
+      if (Array.isArray(value) && value.length === 0) continue; // Skip empty arrays
+
+      if (typeof value === "object" && !Array.isArray(value)) {
+        // Recurse into nested objects
+        extractFields(value, path);
+      } else {
+        // Format the value for display
+        let displayValue;
+        if (Array.isArray(value)) {
+          displayValue = value.join(", ");
+        } else if (typeof value === "boolean") {
+          displayValue = value ? "Yes" : "No";
+        } else {
+          displayValue = String(value);
+        }
+
+        // Format the key for display (snake_case → Title Case with arrow separators)
+        const displayKey = path
+          .split(".")
+          .map(part => part.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()))
+          .join(" → ");
+
+        rows.push([displayKey, displayValue]);
+      }
+    }
+  }
+
+  extractFields(registry);
+
+  // Build table HTML
+  let html = "<tbody>";
+  if (rows.length === 0) {
+    html += '<tr><td colspan="2" class="subtle" style="text-align: center;">No registry data extracted</td></tr>';
+  } else {
+    rows.forEach(([label, value]) => {
+      html += `<tr><td><strong>${label}</strong></td><td>${value}</td></tr>`;
+    });
+  }
+  html += "</tbody>";
+  tbody.innerHTML = html;
+}
+
 async function main() {
   if (!window.__monacoReady) {
     setStatus("Monaco loader missing");
@@ -608,7 +790,7 @@ async function main() {
       }
       
       console.log("Success:", data);
-      serverResponseEl.textContent = JSON.stringify(data, null, 2);
+      renderResults(data);
       setStatus("Submitted (scrubbed text only)");
     } catch (err) {
       console.error("Submit error:", err);

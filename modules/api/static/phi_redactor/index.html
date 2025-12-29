@@ -83,8 +83,29 @@
         <div id="editor" class="editor"></div>
 
         <div class="result">
-          <div class="resultHeader">Server response</div>
-          <pre id="serverResponse" class="resultBody">(none)</pre>
+          <div class="resultHeader">Results</div>
+          <div id="resultsContainer" class="resultsContainer">
+            <!-- Status banner -->
+            <div id="statusBanner" class="status-banner hidden"></div>
+
+            <!-- CPT Codes Table -->
+            <div id="cptTable" class="result-section hidden">
+              <h3>CPT Codes</h3>
+              <table class="result-table" id="cptTableBody"></table>
+            </div>
+
+            <!-- Registry Summary -->
+            <div id="registrySummary" class="result-section hidden">
+              <h3>Registry Data</h3>
+              <table class="result-table" id="registryTableBody"></table>
+            </div>
+
+            <!-- Raw JSON toggle -->
+            <details class="raw-json-toggle">
+              <summary>View Raw JSON</summary>
+              <pre id="serverResponse" class="resultBody">(none)</pre>
+            </details>
+          </div>
         </div>
       </section>
 
