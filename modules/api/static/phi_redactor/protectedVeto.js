@@ -63,6 +63,15 @@ const AMBIGUOUS_MANUFACTURERS = new Set([
   "pentax", "medtronic", "merit", "conmed", "erbe", "karl storz"
 ]);
 
+const AMBIGUOUS_MANUFACTURER_CONTEXT = {
+  cook: /cook\s+(medical|catheter|guide|stent)/i,
+  king: /king\s+(airway|tube|system)/i,
+  edwards: /edwards\s+(lifesciences|valve)/i,
+  wang: /wang\s+(needle|aspirat)/i
+};
+
+const AMBIGUOUS_MANUFACTURER_NAME_ONLY = new Set(["young", "rose", "mark"]);
+
 const DEVICE_CONTEXT_KEYWORDS = [
   "medical", "needle", "catheter", "echotip", "fiducial", "marker",
   "system", "platform", "robot", "forceps", "biopsy", "galaxy",
@@ -505,11 +514,22 @@ function isDeviceManufacturerContext(slice, fullText, start, end) {
   const norm = normalizeTerm(slice);
   if (!AMBIGUOUS_MANUFACTURERS.has(norm)) return false;
 
-  const after = fullText.slice(end, Math.min(fullText.length, end + 60)).toLowerCase();
-  const around = getContext(fullText, start, end, 50).toLowerCase();
+  const after = fullText.slice(end, Math.min(fullText.length, end + 60));
+  const around = getContext(fullText, start, end, 50);
+  const specificPattern = AMBIGUOUS_MANUFACTURER_CONTEXT[norm];
+
+  if (specificPattern) {
+    return specificPattern.test(around);
+  }
+  if (AMBIGUOUS_MANUFACTURER_NAME_ONLY.has(norm)) {
+    return false;
+  }
+
+  const afterLower = after.toLowerCase();
+  const aroundLower = around.toLowerCase();
 
   for (const keyword of DEVICE_CONTEXT_KEYWORDS) {
-    if (after.includes(keyword) || around.includes(keyword)) return true;
+    if (afterLower.includes(keyword) || aroundLower.includes(keyword)) return true;
   }
   return false;
 }
@@ -1081,11 +1101,18 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
 
       // Spans starting with punctuation are likely tokenization artifacts
       if (!veto && /^[^a-zA-Z0-9]/.test(trimmed)) {
-        veto = true; reason = "starts_with_punct";
+        const allowLeadingParen = trimmed.startsWith("(") && (label === "CONTACT" || label === "PHONE");
+        if (!allowLeadingParen) {
+          veto = true; reason = "starts_with_punct";
+        }
       }
 
       if (!veto && trimmed.length <= 2) {
-        if (label === "PATIENT") {
+        const nextChar = next[0] || "";
+        const allowDanglingO = trimmed.length === 1 && trimmed.toLowerCase() === "o" && nextChar === "'";
+        if (allowDanglingO) {
+          // Allow "O'" as in O'Brien even for non-PATIENT labels.
+        } else if (label === "PATIENT") {
           // Do NOT veto: could be a real short surname.
         } else if (!/^\d+$/.test(trimmed)) {
           veto = true; reason = "too_short_non_patient";

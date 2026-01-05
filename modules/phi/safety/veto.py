@@ -11,6 +11,7 @@ Key changes (Dec 2025):
 - Enhanced CBCT/coding context detection for numeric allowlist
 """
 
+import re
 from typing import List, Tuple
 
 from modules.phi.safety.protected_terms import (
@@ -29,6 +30,18 @@ STOPWORDS = {
     "did", "does", "do", "will", "would", "could", "should", "may", "might",
     "on", "as", "from", "but", "not", "no", "yes", "so", "if", "then",
 }
+
+ID_LABELS = {"ID", "MRN", "SSN"}
+
+AMBIGUOUS_DEVICE_TERMS = {"cook", "king", "edwards", "young", "wang", "mark"}
+AMBIGUOUS_DEVICE_CONTEXT_PATTERNS = {
+    "cook": re.compile(r"\bcook\s+(medical|catheter|guide|stent)\b", re.IGNORECASE),
+    "king": re.compile(r"\bking\s+(airway|tube|system)\b", re.IGNORECASE),
+    "edwards": re.compile(r"\bedwards\s+(lifesciences|valve)\b", re.IGNORECASE),
+    "wang": re.compile(r"\bwang\s+(needle|aspirat)\b", re.IGNORECASE),
+}
+AMBIGUOUS_DEVICE_NAME_ONLY = {"young", "mark"}
+AMBIGUOUS_CONTEXT_WINDOW = 4
 
 CPT_CONTEXT_WORDS = {
     "cpt",
@@ -57,6 +70,17 @@ def _normalize_token(token: str) -> str:
     if token.startswith("##"):
         token = token[2:]
     return normalize(token)
+
+
+def _normalize_label(label: str) -> str:
+    label = (label or "").upper()
+    if label.startswith(("B-", "I-")) and "-" in label:
+        _, label = label.split("-", 1)
+    return label
+
+
+def _is_id_label(label: str) -> bool:
+    return _normalize_label(label) in ID_LABELS
 
 
 def _extract_entity_spans(tags: List[str]) -> List[Tuple[int, int, str]]:
@@ -100,6 +124,17 @@ def _extract_entity_spans(tags: List[str]) -> List[Tuple[int, int, str]]:
     return spans
 
 
+def _span_has_any_label(tags: List[str], start: int, end: int, labels: set[str]) -> bool:
+    for i in range(start, end + 1):
+        tag = tags[i]
+        if not tag or tag == "O" or "-" not in tag:
+            continue
+        _, tag_label = tag.split("-", 1)
+        if tag_label.upper() in labels:
+            return True
+    return False
+
+
 def _reconstruct_span_text(tokens: List[str], start: int, end: int) -> str:
     """Reconstruct surface text from a span of tokens, handling wordpieces."""
     result = []
@@ -115,6 +150,26 @@ def _reconstruct_span_text(tokens: List[str], start: int, end: int) -> str:
     return " ".join(result)
 
 
+def _get_context_text(tokens: List[str], start: int, end: int, window: int) -> str:
+    ctx_start = max(0, start - window)
+    ctx_end = min(len(tokens) - 1, end + window)
+    return _reconstruct_span_text(tokens, ctx_start, ctx_end)
+
+
+def _is_protected_device_with_context(norm_word: str, tokens: List[str], start: int, end: int) -> bool:
+    if not is_protected_device(norm_word):
+        return False
+    if norm_word not in AMBIGUOUS_DEVICE_TERMS:
+        return True
+    if norm_word in AMBIGUOUS_DEVICE_NAME_ONLY:
+        return False
+    pattern = AMBIGUOUS_DEVICE_CONTEXT_PATTERNS.get(norm_word)
+    if not pattern:
+        return False
+    context = normalize(_get_context_text(tokens, start, end, AMBIGUOUS_CONTEXT_WINDOW))
+    return bool(pattern.search(context))
+
+
 def _is_protected_in_span(tokens: List[str], start: int, end: int) -> bool:
     """Check if any reconstructed word in the span matches a protected term."""
     idx = start
@@ -122,7 +177,7 @@ def _is_protected_in_span(tokens: List[str], start: int, end: int) -> bool:
         word, word_end = reconstruct_wordpiece(tokens, idx)
         word_end = min(word_end, end)  # Don't extend beyond span
         norm_word = normalize(word)
-        if is_protected_device(norm_word) or is_protected_anatomy_phrase(norm_word):
+        if _is_protected_device_with_context(norm_word, tokens, idx, word_end) or is_protected_anatomy_phrase(norm_word):
             return True
         idx = word_end + 1
     return False
@@ -137,6 +192,9 @@ def _is_stopword_only_span(tokens: List[str], start: int, end: int) -> bool:
         return True
     # Very short span (< 2 chars after normalization)
     if len(norm) < 2:
+        if norm == "o":
+            if "'" in text or _next_token_is_apostrophe(tokens, end):
+                return False
         return True
     # Check if all words are stopwords
     words = norm.split()
@@ -150,10 +208,22 @@ def _is_punctuation_token(token: str) -> bool:
     return all(c in "()[]{},.;:!?/\\-_\"'" for c in token)
 
 
-def _span_starts_with_punct(tokens: List[str], start: int) -> bool:
+def _next_token_is_apostrophe(tokens: List[str], end: int) -> bool:
+    if end + 1 >= len(tokens):
+        return False
+    token = tokens[end + 1]
+    return token == "'" or token.startswith("##'") or token.startswith("'")
+
+
+def _span_starts_with_punct(tokens: List[str], start: int, label: str) -> bool:
     """Check if span starts with punctuation token."""
     if start < len(tokens):
-        return _is_punctuation_token(tokens[start])
+        token = tokens[start]
+        if not _is_punctuation_token(token):
+            return False
+        if token == "(" and label in ("CONTACT", "PHONE"):
+            return False
+        return True
     return False
 
 
@@ -286,6 +356,8 @@ def apply_protected_veto(
     entity_spans = _extract_entity_spans(pred_tags)
 
     for start, end, label in entity_spans:
+        if _is_id_label(label):
+            continue
         should_drop = False
 
         # Check if span contains protected device/anatomy term
@@ -297,7 +369,7 @@ def apply_protected_veto(
             should_drop = True
 
         # Check if span starts with punctuation (e.g., "(")
-        elif _span_starts_with_punct(tokens, start):
+        elif _span_starts_with_punct(tokens, start, label):
             should_drop = True
 
         if should_drop:
@@ -310,8 +382,11 @@ def apply_protected_veto(
     idx = 0
     while idx < len(tokens):
         word, end_idx = reconstruct_wordpiece(tokens, idx)
+        if _span_has_any_label(pred_tags, idx, end_idx, ID_LABELS):
+            idx = end_idx + 1
+            continue
         norm_word = normalize(word)
-        if is_protected_device(norm_word) or is_protected_anatomy_phrase(norm_word):
+        if _is_protected_device_with_context(norm_word, tokens, idx, end_idx) or is_protected_anatomy_phrase(norm_word):
             for j in range(idx, end_idx + 1):
                 corrected[j] = "O"
         idx = end_idx + 1
@@ -327,13 +402,18 @@ def apply_protected_veto(
         idx = end_idx + 1
     for i in range(len(words) - 2):
         if words[i] in ("left", "right") and words[i + 1] in ("upper", "lower", "middle") and words[i + 2] == "lobe":
-            for j in word_spans[i] + word_spans[i + 1] + word_spans[i + 2]:
+            span_indices = word_spans[i] + word_spans[i + 1] + word_spans[i + 2]
+            if _span_has_any_label(pred_tags, span_indices[0], span_indices[-1], ID_LABELS):
+                continue
+            for j in span_indices:
                 corrected[j] = "O"
 
     # CPT codes via stable split with context cues
     for i in range(len(tokens) - 1):
         cpt = _is_stable_cpt_split(tokens, i)
         if not cpt:
+            continue
+        if _span_has_any_label(pred_tags, i, i + 1, ID_LABELS):
             continue
         if _has_cpt_context(tokens, i, i + 1, text):
             corrected[i] = "O"
@@ -343,6 +423,9 @@ def apply_protected_veto(
     i = 0
     while i < len(tokens):
         code, end_i = _reconstruct_numeric_code(tokens, i)
+        if _span_has_any_label(pred_tags, i, end_i, ID_LABELS):
+            i = end_i + 1
+            continue
         if _is_numeric_code(code) and _has_cpt_context(tokens, i, end_i, text):
             for j in range(i, end_i + 1):
                 corrected[j] = "O"
@@ -353,6 +436,8 @@ def apply_protected_veto(
     # LN stations via digit+side (+ optional i/s) and station 7 context
     for i in range(len(tokens) - 1):
         if tokens[i].isdigit() and len(tokens[i]) in (1, 2) and tokens[i + 1].startswith("##"):
+            if _span_has_any_label(pred_tags, i, i + 1, ID_LABELS):
+                continue
             side = tokens[i + 1][2:].lower()
             if side in ("r", "l") and not _is_volume_context(tokens, i):
                 station = tokens[i] + side
@@ -368,6 +453,8 @@ def apply_protected_veto(
 
     for i, tok in enumerate(tokens):
         if tok == "7" and not _is_volume_context(tokens, i):
+            if _span_has_any_label(pred_tags, i, i, ID_LABELS):
+                continue
             start = max(0, i - 6)
             end = min(len(tokens), i + 7)
             context = {_normalize_token(t) for t in tokens[start:end]}

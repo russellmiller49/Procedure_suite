@@ -147,8 +147,9 @@ build-phi-platinum:
 # Prodigy-based PHI label correction workflow
 PRODIGY_COUNT ?= 100
 PRODIGY_DATASET ?= phi_corrections
-# Prodigy is installed in system Python 3.12
-PRODIGY_PYTHON ?= /Library/Frameworks/Python.framework/Versions/3.12/bin/python3
+# Prodigy should run in the same environment as the rest of the tooling.
+# (The previous default hardcoded a macOS system Python path and breaks on Linux/WSL.)
+PRODIGY_PYTHON ?= $(PYTHON)
 
 prodigy-prepare:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_phi_batch.py \
@@ -166,12 +167,12 @@ prodigy-prepare-file:
 		--output data/ml_training/prodigy_batch.jsonl
 
 prodigy-annotate:
-	$(PRODIGY_PYTHON) -m prodigy ner.manual $(PRODIGY_DATASET) blank:en \
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) -m prodigy ner.manual $(PRODIGY_DATASET) blank:en \
 		data/ml_training/prodigy_batch.jsonl \
 		--label PATIENT,DATE,ID,GEO,CONTACT
 
 prodigy-export:
-	$(PRODIGY_PYTHON) scripts/prodigy_export_corrections.py \
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/prodigy_export_corrections.py \
 		--dataset $(PRODIGY_DATASET) \
 		--merge-with data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
 		--output data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl
@@ -247,9 +248,9 @@ GOLD_OUTPUT_DIR ?= data/ml_training
 GOLD_MODEL_DIR ?= artifacts/phi_distilbert_ner
 
 # Export pure gold from Prodigy (no merging with old data)
-# Uses PRODIGY_PYTHON because Prodigy is installed in system Python 3.12
+# Run in the same conda env as the rest of the pipeline (WSL/Linux friendly).
 gold-export:
-	$(PRODIGY_PYTHON) scripts/export_phi_gold_standard.py \
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/export_phi_gold_standard.py \
 		--dataset $(GOLD_DATASET) \
 		--output $(GOLD_OUTPUT_DIR)/phi_gold_standard_v1.jsonl \
 		--model-dir $(GOLD_MODEL_DIR)
